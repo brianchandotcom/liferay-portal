@@ -12,7 +12,9 @@
  * details.
  */
 
-import request, {TQueries, serializeQueries} from './request';
+import {TTableRequestParams} from '../components/table/types';
+import {serializeTableRequestParams} from '../components/table/utils';
+import request from './request';
 
 export function createProperty(name: string) {
 	return request('/channels', {
@@ -27,16 +29,16 @@ export function deleteConnection() {
 	return request('/data-sources', {method: 'DELETE'});
 }
 
-export function fetchAccountGroups(params: TQueries) {
-	const queryString = serializeQueries(params);
+export function fetchAccountGroups(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
 
 	return request(`/contacts/account-groups?${queryString}`, {
 		method: 'GET',
 	});
 }
 
-export function fetchChannels(params: TQueries) {
-	const queryString = serializeQueries(params);
+export function fetchChannels(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
 
 	return request(`/commerce-channels?${queryString}`, {
 		method: 'GET',
@@ -52,16 +54,16 @@ export function fetchConnection(token: string) {
 	});
 }
 
-export function fetchContactsOrganization(params: TQueries) {
-	const queryString = serializeQueries(params);
+export function fetchContactsOrganization(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
 
 	return request(`/contacts/organizations?${queryString}`, {
 		method: 'GET',
 	});
 }
 
-export function fetchContactsUsersGroup(params: TQueries) {
-	const queryString = serializeQueries(params);
+export function fetchContactsUsersGroup(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
 
 	return request(`/contacts/user-groups?${queryString}`, {
 		method: 'GET',
@@ -78,8 +80,8 @@ export function fetchProperties() {
 	return request('/channels?sort=createDate:desc', {method: 'GET'});
 }
 
-export function fetchSites(params: TQueries) {
-	const queryString = serializeQueries(params);
+export function fetchSites(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
 
 	return request(`/sites?${queryString}`, {
 		method: 'GET',
@@ -146,8 +148,8 @@ export function fetchSelectedFields() {
 	return request('/fields', {method: 'GET'});
 }
 
-export function fetchPeopleFields(params: TQueries) {
-	const queryString = serializeQueries(params);
+export function fetchPeopleFields(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
 
 	return request(
 		`/fields/people?${queryString.replace('keywords', 'keyword')}`,

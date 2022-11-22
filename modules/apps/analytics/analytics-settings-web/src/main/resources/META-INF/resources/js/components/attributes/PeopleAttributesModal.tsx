@@ -15,7 +15,7 @@
 import React from 'react';
 
 import {fetchPeopleFields, updatePeopleFields} from '../../utils/api';
-import Modal, {ICommonModalProps, getFields} from './Modal';
+import Modal, {ICommonModalProps} from './Modal';
 
 const columns = [
 	{
@@ -54,7 +54,7 @@ const PeopleAttributesModal: React.FC<ICommonModalProps> = ({
 		observer={observer}
 		onCancel={onCancel}
 		onSubmit={async (items) => {
-			const {ok} = await updatePeopleFields(getFields(items));
+			const {ok} = await updatePeopleFields(items);
 
 			ok && onSubmit();
 		}}

@@ -15,18 +15,23 @@
 import classNames from 'classnames';
 import React from 'react';
 
-interface ILoadingProps {
+interface ILoadingProps extends React.HTMLAttributes<HTMLSpanElement> {
 	absolute?: boolean;
 	inline?: boolean;
 }
 
 const Loading: React.FC<ILoadingProps> = ({
 	absolute = false,
+	className,
 	inline = false,
+	style,
 }) => {
 	return (
 		<span
-			className={classNames({'inline-item inline-item-before': inline})}
+			className={classNames(className, {
+				'inline-item inline-item-before': inline,
+			})}
+			style={style}
 		>
 			<span
 				aria-hidden="true"

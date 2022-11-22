@@ -46,7 +46,10 @@ const TableStateRenderer: React.FC<ITableStateRendererProps> = ({
 			empty={empty}
 			error={error}
 			loading={loading}
-			loadingProps={{absolute: true}}
+			loadingProps={{
+				absolute: true,
+				style: {display: 'block', minHeight: 300},
+			}}
 		>
 			{!keywords && (
 				<StateRenderer.Empty>

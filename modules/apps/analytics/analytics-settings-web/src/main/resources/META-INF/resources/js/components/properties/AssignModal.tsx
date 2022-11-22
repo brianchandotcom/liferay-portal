@@ -19,7 +19,6 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {updateProperty} from '../../utils/api';
-import {getIds} from '../../utils/shared';
 import Loading from '../Loading';
 import ChannelTab from './ChannelTab';
 import {TProperty} from './Properties';
@@ -93,27 +92,19 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 
 				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
 					<ClayTabs.TabPane aria-labelledby="tab-1">
-						{activeTabKeyValue === ETabs.Channel && (
-							<ChannelTab
-								onChannelsChange={(items) =>
-									setCommerceChannelIds(
-										getIds(items, commerceChannelIds)
-									)
-								}
-								property={property}
-							/>
-						)}
+						<ChannelTab
+							initialIds={commerceChannelIds}
+							onChannelsChange={setCommerceChannelIds}
+							property={property}
+						/>
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane aria-labelledby="tab-2">
-						{activeTabKeyValue === ETabs.Sites && (
-							<SitesTab
-								onSitesChange={(items) =>
-									setSiteIds(getIds(items, siteIds))
-								}
-								property={property}
-							/>
-						)}
+						<SitesTab
+							initialIds={siteIds}
+							onSitesChange={setSiteIds}
+							property={property}
+						/>
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>
 			</ClayModal.Body>

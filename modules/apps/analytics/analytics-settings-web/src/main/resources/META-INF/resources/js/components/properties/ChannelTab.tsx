@@ -15,7 +15,6 @@
 import React from 'react';
 
 import {fetchChannels} from '../../utils/api';
-import {TFormattedItems} from '../table/Table';
 import {TProperty} from './Properties';
 import Tab, {TRawItem} from './Tab';
 
@@ -39,11 +38,13 @@ const columns = [
 ];
 
 interface IChannelTabProps {
-	onChannelsChange: (items: TFormattedItems) => void;
+	initialIds: number[];
+	onChannelsChange: (ids: number[]) => void;
 	property: TProperty;
 }
 
 const ChannelTab: React.FC<IChannelTabProps> = ({
+	initialIds,
 	onChannelsChange,
 	property,
 }) => (
@@ -55,6 +56,7 @@ const ChannelTab: React.FC<IChannelTabProps> = ({
 		emptyStateTitle={Liferay.Language.get('there-are-no-channels')}
 		enableCheckboxs={!!property.commerceSyncEnabled}
 		header={columns}
+		initialIds={initialIds}
 		noResultsTitle={Liferay.Language.get('no-channels-were-found')}
 		onItemsChange={onChannelsChange}
 		property={property}

@@ -16,7 +16,12 @@ import React, {createContext, useContext, useReducer} from 'react';
 
 import {DEFAULT_FILTER, TFilter} from '../../utils/filter';
 import {DEFAULT_PAGINATION, TPagination} from '../../utils/pagination';
-import {TFormattedItems, TItem} from './Table';
+import {TFormattedItems, TItem} from './types';
+import {
+	getFormattedItems,
+	getGlobalChecked,
+	updateFormattedItems,
+} from './utils';
 
 export enum Events {
 	ChangeFilter = 'CHANGE_FILTER',
@@ -53,43 +58,6 @@ const TableContextDispatch = createContext<any>(null);
 const useData = () => useContext(TableContextData);
 const useDispatch = () => useContext(TableContextDispatch);
 
-const getGlobalChecked = (formattedItems: TFormattedItems): boolean =>
-	!!Object.values(formattedItems).length &&
-	Object.values(formattedItems).every(({checked}) => checked);
-
-const updateFormattedItems = (
-	formattedItems: TFormattedItems,
-	checked: boolean
-): TFormattedItems =>
-	Object.values(formattedItems).reduce(
-		(accumulator: TFormattedItems, item) => {
-			if (item.disabled) {
-				return {
-					...accumulator,
-					[item.id]: item,
-				};
-			}
-
-			return {
-				...accumulator,
-				[item.id]: {
-					...item,
-					checked,
-				},
-			};
-		},
-		{}
-	);
-
-const getFormattedItems = (items: TItem[]): TFormattedItems => {
-	return items.reduce((accumulator: TFormattedItems, item) => {
-		return {
-			...accumulator,
-			[item.id]: item,
-		};
-	}, {});
-};
-
 function reducer(state: TState, action: {payload: any; type: Events}) {
 	switch (action.type) {
 		case Events.ChangeFilter: {
@@ -123,11 +91,7 @@ function reducer(state: TState, action: {payload: any; type: Events}) {
 			};
 		}
 		case Events.FormatData: {
-			const {
-				items,
-				pagination = state.pagination,
-				rows = state.rows,
-			} = action.payload;
+			const {items, page, pageSize, totalCount} = action.payload;
 
 			const formattedItems = {
 				...getFormattedItems(items),
@@ -138,8 +102,13 @@ function reducer(state: TState, action: {payload: any; type: Events}) {
 				...state,
 				formattedItems,
 				globalChecked: getGlobalChecked(formattedItems),
-				pagination,
-				rows,
+				pagination: {
+					maxCount: state.pagination.maxCount || totalCount,
+					page,
+					pageSize,
+					totalCount,
+				},
+				rows: items.map(({id}: TItem) => id),
 			};
 		}
 		case Events.ChangePagination: {

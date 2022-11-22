@@ -19,42 +19,22 @@ import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar, {
 	ClayResultsBar,
 } from '@clayui/management-toolbar';
-import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {OrderBy, TFilter} from '../../utils/filter';
 import {Events, useData, useDispatch} from './Context';
-import {TColumn} from './Table';
-
-function getOrderBy({type}: TFilter): OrderBy {
-	return type === OrderBy.Asc ? OrderBy.Desc : OrderBy.Asc;
-}
-
-function getOrderBySymbol({type}: TFilter): string {
-	return type === OrderBy.Asc ? 'order-list-up' : 'order-list-down';
-}
-
-function getResultsLanguage(rows: string[]) {
-	if (rows.length > 1) {
-		return sub(
-			Liferay.Language.get('x-results-for').toLowerCase(),
-			rows.length
-		);
-	}
-
-	return sub(Liferay.Language.get('x-result-for').toLowerCase(), rows.length);
-}
+import {TColumn} from './types';
+import {getOrderBy, getOrderBySymbol, getResultsLanguage} from './utils';
 
 interface IManagementToolbarProps {
 	columns: TColumn[];
 	disabled: boolean;
-	lazyRequest: () => void;
+	makeRequest: () => void;
 }
 
 const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 	columns,
 	disabled,
-	lazyRequest,
+	makeRequest,
 }) => {
 	const {filter, globalChecked, keywords: storedKeywords, rows} = useData();
 	const dispatch = useDispatch();
@@ -70,7 +50,7 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 						<ClayCheckbox
 							checked={globalChecked}
 							disabled={disabled}
-							onChange={lazyRequest}
+							onChange={makeRequest}
 						/>
 					</ClayManagementToolbar.Item>
 

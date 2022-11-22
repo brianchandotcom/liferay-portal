@@ -12,26 +12,30 @@
  * details.
  */
 
-import {TFormattedItems} from '../components/table/Table';
+import {TFilter} from '../../utils/filter';
 
-export function getIds(items: TFormattedItems, initialIds: number[]): number[] {
-	const ids = [...initialIds];
+export type TColumn = {
+	expanded: boolean;
+	label: string;
+	show?: boolean;
+	sortable?: boolean;
+	value: string;
+};
 
-	Object.values(items).forEach((item) => {
-		if (ids.length) {
-			ids.forEach((id, index) => {
-				if (id === Number(item.id) && !item.checked) {
-					ids.splice(index, 1);
-				}
-				else if (id !== Number(item.id) && item.checked) {
-					ids.push(Number(item.id));
-				}
-			});
-		}
-		else if (item.checked) {
-			ids.push(Number(item.id));
-		}
-	});
+export type TItem = {
+	checked: boolean;
+	columns: {label: string; show?: boolean}[];
+	disabled: boolean;
+	id: string;
+};
 
-	return [...new Set(ids)];
-}
+export type TFormattedItems = {[key: string]: TItem};
+
+export type TTableRequestParams = {
+	filter: TFilter;
+	keywords: string;
+	pagination: {
+		page: number;
+		pageSize: number;
+	};
+};

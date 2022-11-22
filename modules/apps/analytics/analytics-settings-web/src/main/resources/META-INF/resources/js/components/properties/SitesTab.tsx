@@ -15,7 +15,6 @@
 import React from 'react';
 
 import {fetchSites} from '../../utils/api';
-import {TFormattedItems} from '../table/Table';
 import {TProperty} from './Properties';
 import Tab, {TRawItem} from './Tab';
 
@@ -39,15 +38,21 @@ const columns = [
 ];
 
 interface ISiteTabProps {
-	onSitesChange: (items: TFormattedItems) => void;
+	initialIds: number[];
+	onSitesChange: (ids: number[]) => void;
 	property: TProperty;
 }
 
-const SitesTab: React.FC<ISiteTabProps> = ({onSitesChange, property}) => (
+const SitesTab: React.FC<ISiteTabProps> = ({
+	initialIds,
+	onSitesChange,
+	property,
+}) => (
 	<Tab
 		columns={columns.map(({value}) => value) as Array<keyof TRawItem>}
 		emptyStateTitle={Liferay.Language.get('there-are-no-sites')}
 		header={columns}
+		initialIds={initialIds}
 		noResultsTitle={Liferay.Language.get('no-sites-were-found')}
 		onItemsChange={onSitesChange}
 		property={property}

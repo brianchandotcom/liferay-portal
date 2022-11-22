@@ -18,9 +18,9 @@ import React, {useState} from 'react';
 
 import {updateAttributesConfiguration} from '../../utils/api';
 import {SUCCESS_MESSAGE} from '../../utils/constants';
-import {TQueries} from '../../utils/request';
-import {getIds} from '../../utils/shared';
-import Table, {TColumn, TFormattedItems} from '../table/Table';
+import Table from '../table/Table';
+import {TColumn, TFormattedItems, TTableRequestParams} from '../table/types';
+import {getIds} from '../table/utils';
 import {EPeople} from './People';
 
 type TRawItem = {
@@ -46,7 +46,7 @@ interface IModalProps {
 	noResultsTitle: string;
 	observer: any;
 	onCloseModal: () => void;
-	requestFn: (params: TQueries) => Promise<any>;
+	requestFn: (params: TTableRequestParams) => Promise<any>;
 	syncAllAccounts: boolean;
 	syncAllContacts: boolean;
 	syncedIds: {

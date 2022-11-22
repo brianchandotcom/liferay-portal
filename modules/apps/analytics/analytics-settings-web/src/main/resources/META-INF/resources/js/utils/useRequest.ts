@@ -45,12 +45,10 @@ function useInternalRequest<TData>(
 		try {
 			if (response.error) {
 				throw response.error;
-			}
-			else {
+			} else {
 				setData(response);
 			}
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 
 			setError(true);

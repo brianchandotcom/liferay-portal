@@ -20,7 +20,7 @@ import React from 'react';
 
 import {OrderBy} from '../../utils/filter';
 import {Events, useData, useDispatch} from './Context';
-import {TColumn} from './Table';
+import {TColumn} from './types';
 
 interface IContentProps {
 	columns: TColumn[];

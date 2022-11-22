@@ -13,12 +13,14 @@
  */
 
 export type TPagination = {
+	maxCount: number;
 	page: number;
 	pageSize: number;
 	totalCount: number;
 };
 
 export const DEFAULT_PAGINATION = {
+	maxCount: 0,
 	page: 1,
 	pageSize: 20,
 	totalCount: 0,

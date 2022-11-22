@@ -12,33 +12,17 @@
  * details.
  */
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect} from 'react';
 
-import {TPagination} from '../../utils/pagination';
-import {TQueries} from '../../utils/request';
+import {DEFAULT_FILTER} from '../../utils/filter';
+import {DEFAULT_PAGINATION, TPagination} from '../../utils/pagination';
 import {useLazyRequest, useRequest} from '../../utils/useRequest';
 import Content from './Content';
 import TableContext, {Events, useData, useDispatch} from './Context';
 import ManagementToolbar from './ManagementToolbar';
 import PaginationBar from './PaginationBar';
 import StateRenderer from './StateRenderer';
-
-export type TColumn = {
-	expanded: boolean;
-	label: string;
-	show?: boolean;
-	sortable?: boolean;
-	value: string;
-};
-
-export type TItem = {
-	checked: boolean;
-	columns: {label: string; show?: boolean}[];
-	disabled: boolean;
-	id: string;
-};
-
-export type TFormattedItems = {[key: string]: TItem};
+import {TColumn, TFormattedItems, TItem, TTableRequestParams} from './types';
 
 interface ITableProps<TRawItem> {
 	columns: TColumn[];
@@ -47,7 +31,7 @@ interface ITableProps<TRawItem> {
 	mapperItems: (items: TRawItem[]) => TItem[];
 	noResultsTitle: string;
 	onItemsChange?: (items: TFormattedItems) => void;
-	requestFn: (params: TQueries) => Promise<any>;
+	requestFn: (params: TTableRequestParams) => Promise<any>;
 }
 
 interface TData<TRawItem> extends TPagination {
@@ -63,8 +47,6 @@ function Table<TRawItem>({
 	onItemsChange,
 	requestFn,
 }: ITableProps<TRawItem>) {
-	const _contentRef = useRef<HTMLDivElement>(null);
-
 	const {
 		filter,
 		formattedItems,
@@ -74,28 +56,29 @@ function Table<TRawItem>({
 	} = useData();
 	const dispatch = useDispatch();
 
-	const {data, error, loading, refetch} = useRequest<TData<TRawItem>>(
-		requestFn,
-		{
-			filter,
-			keywords,
-			pagination,
-		}
-	);
+	const {data, error, loading, refetch} = useRequest<
+		TData<TRawItem>,
+		TTableRequestParams
+	>(requestFn, {
+		filter,
+		keywords,
+		pagination: {
+			page: pagination.page,
+			pageSize: pagination.pageSize,
+		},
+	});
 
-	const [lazyRequest, lazyResult] = useLazyRequest<TData<TRawItem>>(
-		requestFn,
-		{
-			filter,
-			keywords,
-			pagination: {
-				...pagination,
-				pageSize: pagination.totalCount,
-			},
-		}
-	);
-
-	const height = useHeightHack(loading || lazyResult.loading, _contentRef);
+	const [makeRequest, lazyResult] = useLazyRequest<
+		TData<TRawItem>,
+		TTableRequestParams
+	>(requestFn, {
+		filter: DEFAULT_FILTER,
+		keywords: '',
+		pagination: {
+			page: DEFAULT_PAGINATION.page,
+			pageSize: pagination.maxCount,
+		},
+	});
 
 	const empty = !data?.items.length;
 
@@ -115,17 +98,13 @@ function Table<TRawItem>({
 	useEffect(() => {
 		if (data) {
 			const {items, page, pageSize, totalCount} = data;
-			const mappedItems = mapperItems(items);
 
 			dispatch({
 				payload: {
-					items: mappedItems,
-					pagination: {
-						page,
-						pageSize,
-						totalCount,
-					},
-					rows: mappedItems.map(({id}: TItem) => id),
+					items: mapperItems(items),
+					page,
+					pageSize,
+					totalCount,
 				},
 				type: Events.FormatData,
 			});
@@ -145,52 +124,23 @@ function Table<TRawItem>({
 				disabled={
 					disabled || (empty && !keywords) || lazyResult.loading
 				}
-				lazyRequest={lazyRequest}
+				makeRequest={makeRequest}
 			/>
 
-			<div ref={_contentRef} style={{height, position: 'relative'}}>
-				<StateRenderer
-					empty={empty}
-					emptyStateTitle={emptyStateTitle}
-					error={error || lazyResult.error}
-					loading={loading || lazyResult.loading}
-					noResultsTitle={noResultsTitle}
-					refetch={refetch}
-				>
-					<Content columns={columns} disabled={disabled} />
-				</StateRenderer>
-			</div>
+			<StateRenderer
+				empty={empty}
+				emptyStateTitle={emptyStateTitle}
+				error={error || lazyResult.error}
+				loading={loading || lazyResult.loading}
+				noResultsTitle={noResultsTitle}
+				refetch={refetch}
+			>
+				<Content columns={columns} disabled={disabled} />
+			</StateRenderer>
 
 			<PaginationBar disabled={empty} />
 		</>
 	);
-}
-
-function useHeightHack(
-	loading: boolean,
-	containerRef: React.RefObject<HTMLDivElement>
-) {
-	const [height, setHeight] = useState<number | undefined>(undefined);
-
-	useEffect(() => {
-		if (loading) {
-			return;
-		}
-
-		const tableNode = containerRef.current?.querySelector(
-			'.table-responsive'
-		);
-
-		if (
-			tableNode &&
-			tableNode.getBoundingClientRect().height &&
-			tableNode.getBoundingClientRect().height !== height
-		) {
-			setHeight(tableNode.getBoundingClientRect().height + 24);
-		}
-	}, [containerRef, height, loading]);
-
-	return height;
 }
 
 function TableWrapper<TRawItem>(props: ITableProps<TRawItem>) {

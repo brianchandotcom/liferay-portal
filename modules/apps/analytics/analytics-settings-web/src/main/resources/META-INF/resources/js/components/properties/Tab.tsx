@@ -15,8 +15,9 @@
 import {Text} from '@clayui/core';
 import React from 'react';
 
-import {TQueries} from '../../utils/request';
-import Table, {TColumn, TFormattedItems} from '../table/Table';
+import Table from '../table/Table';
+import {TColumn, TTableRequestParams} from '../table/types';
+import {getIds} from '../table/utils';
 import {TProperty} from './Properties';
 
 export type TRawItem = {
@@ -33,10 +34,11 @@ interface ITabProps {
 	emptyStateTitle: string;
 	enableCheckboxs?: boolean;
 	header: TColumn[];
+	initialIds: number[];
 	noResultsTitle: string;
-	onItemsChange: (items: TFormattedItems) => void;
+	onItemsChange: (ids: number[]) => void;
 	property: TProperty;
-	requestFn: (params: TQueries) => Promise<any>;
+	requestFn: (params: TTableRequestParams) => Promise<any>;
 }
 
 const Tab: React.FC<ITabProps> = ({
@@ -45,6 +47,7 @@ const Tab: React.FC<ITabProps> = ({
 	emptyStateTitle,
 	enableCheckboxs = true,
 	header,
+	initialIds,
 	noResultsTitle,
 	onItemsChange,
 	property,
@@ -76,7 +79,7 @@ const Tab: React.FC<ITabProps> = ({
 				}));
 			}}
 			noResultsTitle={noResultsTitle}
-			onItemsChange={onItemsChange}
+			onItemsChange={(items) => onItemsChange(getIds(items, initialIds))}
 			requestFn={requestFn}
 		/>
 	</>

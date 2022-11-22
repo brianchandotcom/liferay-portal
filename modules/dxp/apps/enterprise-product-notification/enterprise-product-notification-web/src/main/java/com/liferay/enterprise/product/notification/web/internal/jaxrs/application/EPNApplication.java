@@ -38,8 +38,8 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
  */
 @Component(
 	property = {
-		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/enterprise-product-notification",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=EPN.Application",
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/com-liferay-enterprise-product-notification-web",
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=com.liferay.enterprise.product.notification.web.Application",
 		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
 		"auth.verifier.guest.allowed=false", "liferay.oauth2=false"
 	},

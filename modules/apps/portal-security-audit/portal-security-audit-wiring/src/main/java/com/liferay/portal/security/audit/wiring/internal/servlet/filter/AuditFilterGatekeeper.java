@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
-	immediate = true, service = {}
+	service = {}
 )
 public class AuditFilterGatekeeper {
 

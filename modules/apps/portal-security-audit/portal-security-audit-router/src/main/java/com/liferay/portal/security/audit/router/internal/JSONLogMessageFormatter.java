@@ -23,10 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mika Koivisto
  */
-@Component(
-	immediate = true, property = "format=JSON",
-	service = LogMessageFormatter.class
-)
+@Component(property = "format=JSON", service = LogMessageFormatter.class)
 public class JSONLogMessageFormatter implements LogMessageFormatter {
 
 	@Override

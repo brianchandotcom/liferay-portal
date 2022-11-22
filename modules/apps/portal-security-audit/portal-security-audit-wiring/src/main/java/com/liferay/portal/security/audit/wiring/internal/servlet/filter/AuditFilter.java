@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration",
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"after-filter=Session Max Allowed Filter", "servlet-context-name=",
 		"servlet-filter-name=Audit Filter", "url-pattern=/*",

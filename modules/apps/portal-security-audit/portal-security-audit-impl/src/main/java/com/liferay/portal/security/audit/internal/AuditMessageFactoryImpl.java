@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Amos Fong
  */
-@Component(immediate = true, service = AuditMessageFactory.class)
+@Component(service = AuditMessageFactory.class)
 public class AuditMessageFactoryImpl implements AuditMessageFactory {
 
 	@Override

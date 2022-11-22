@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration",
-	immediate = true, property = "eventTypes=*",
-	service = AuditMessageProcessor.class
+	property = "eventTypes=*", service = AuditMessageProcessor.class
 )
 public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 

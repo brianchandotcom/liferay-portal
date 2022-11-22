@@ -1546,9 +1546,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return dynamicQuery.add(junction);
 	}
 
-	private void _checkKBArticles(Date expirationDate)
-		throws PortalException {
-
+	private void _checkKBArticles(Date expirationDate) throws PortalException {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Expiring file entries with expiration date previous to " +

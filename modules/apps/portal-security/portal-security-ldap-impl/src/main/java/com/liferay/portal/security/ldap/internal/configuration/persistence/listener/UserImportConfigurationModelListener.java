@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration",
 	service = {
 		ConfigurationModelListener.class,

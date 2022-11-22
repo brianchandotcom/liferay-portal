@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(
-	immediate = true,
 	property = {
 		"initial.deployment=true",
 		"verify.process.name=com.liferay.portal.security.service.access.policy.service"

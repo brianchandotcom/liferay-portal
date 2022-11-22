@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = AutoLogin.class)
+@Component(service = AutoLogin.class)
 public class RememberMeAutoLogin extends BaseAutoLogin {
 
 	@Override

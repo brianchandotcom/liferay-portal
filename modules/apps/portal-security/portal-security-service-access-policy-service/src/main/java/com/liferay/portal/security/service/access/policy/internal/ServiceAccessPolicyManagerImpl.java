@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = ServiceAccessPolicyManager.class)
+@Component(service = ServiceAccessPolicyManager.class)
 public class ServiceAccessPolicyManagerImpl
 	implements ServiceAccessPolicyManager {
 

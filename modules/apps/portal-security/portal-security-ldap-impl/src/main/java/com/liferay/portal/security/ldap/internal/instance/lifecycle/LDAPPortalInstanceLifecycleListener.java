@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class LDAPPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 

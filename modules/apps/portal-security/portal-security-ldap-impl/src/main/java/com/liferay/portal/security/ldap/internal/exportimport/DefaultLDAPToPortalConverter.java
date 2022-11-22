@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Edward Han
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = LDAPToPortalConverter.class)
+@Component(service = LDAPToPortalConverter.class)
 public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 	@Override

@@ -55,7 +55,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Marta Medio
  */
 @Component(
-	immediate = true,
 	property = {
 		"default.registration.property=filter.init.auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=*",
 		"default.registration.property=filter.init.auth.verifier.OAuth2RESTAuthVerifier.urls.includes=*",

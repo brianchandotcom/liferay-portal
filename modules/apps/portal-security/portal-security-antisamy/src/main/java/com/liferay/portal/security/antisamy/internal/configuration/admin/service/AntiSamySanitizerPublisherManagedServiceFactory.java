@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration",
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.portal.security.antisamy.configuration.AntiSamyClassNameConfiguration",
 	service = ManagedServiceFactory.class
 )

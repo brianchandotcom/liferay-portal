@@ -122,6 +122,39 @@ definition {
 	}
 
 	@priority = "4"
+	test RestartingPortalDuplicatesOSGiConfiguration {
+		property test.name.skip.portal.instance = "FileInstall#RestartingPortalDuplicatesOSGiConfiguration";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var symbolicLink = "${liferayHome}/osgi/config/com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration-abc.config";
+		var symbolicLinkResource = "${liferayHome}/osgi/temp/abc.config";
+
+		FileUtil.write("${symbolicLinkResource}", "urlsIncludes=\"abc\"");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "create-symbolic-link -Dsymbolic.link=${symbolicLink} -Dsymbolic.link.resource=${symbolicLinkResource}");
+
+		var mysqlStatement = '''
+			SELECT COUNT(*) FROM lportal.Configuration_
+			WHERE configurationId LIKE 'com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration%';
+		''';
+
+		var originalCount = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(keepOSGiState = "true");
+
+		var actualCount = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+
+		if ("${originalCount}" != "${actualCount}") {
+			fail("Expected MYSQL entries=${originalCount}, after restarting portal MYSQL entries=${actualCount}");
+		}
+	}
+
+	@priority = "4"
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
 

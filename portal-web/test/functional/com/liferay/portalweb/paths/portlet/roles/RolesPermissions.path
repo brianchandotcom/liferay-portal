@@ -11,6 +11,31 @@
 
 <tbody>
 <tr>
+	<td>PERMISSION_ITEM_HEADER</td>
+	<td>//form//h3[contains(.,'${permissionNavItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_CHECKBOX</td>
+	<td>xpath=(//*[contains(@class,'sheet-subtitle') or contains(@class,'sheet-tertiary-title')])[normalize-space(text())='${key_permissionSheetSubtitle}']//following-sibling::div[2]//tr[contains(.,'${key_permissionValue}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_CHANGE_SCOPE</td>
+	<td>xpath=(//*[contains(@class,'sheet-subtitle') or contains(@class,'sheet-tertiary-title')])[normalize-space(text())='${key_permissionSheetSubtitle}']//following-sibling::div[2]//tr[contains(.,'${key_permissionValue}')]//button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_SITE_SCOPE</td>
+	<td>xpath=(//*[contains(@class,'sheet-subtitle') or contains(@class,'sheet-tertiary-title')])[normalize-space(text())='${key_permissionSheetSubtitle}']//following-sibling::div[2]//tr[contains(.,'${key_permissionValue}')]//span[normalize-space(text())='${key_siteNameScope}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_SITE_SCOPE_REMOVE</td>
+	<td>xpath=(//*[contains(@class,'sheet-subtitle') or contains(@class,'sheet-tertiary-title')])[normalize-space(text())='${key_permissionSheetSubtitle}']//following-sibling::div[2]//tr[contains(.,'${key_permissionValue}')]//span[normalize-space(text())='${key_siteNameScope}']/..//button[*[name()='svg'][contains(@class,'times-small')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSION_HEADER</td>
 	<td>//form//h3[contains(.,'${permissionNavigationValue}')]</td>
 	<td></td>

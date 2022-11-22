@@ -1,5 +1,52 @@
 definition {
 
+	macro _changePermisionScope {
+		if (isSet(siteNameScope)) {
+			AssertClick(
+				key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
+				key_permissionValue = "${permissionValue}",
+				locator1 = "RolesPermissions#PERMISSION_CHANGE_SCOPE",
+				value1 = "Change");
+
+			SelectFrame(locator1 = "RolesPermissionsSelectSite#SELECT_SITE_IFRAME");
+
+			AssertClick(
+				locator1 = "NavBar#RECENT",
+				value1 = "Recent");
+
+			if ("${assetLibrariesScope}" == "true") {
+				AssertClick(
+					locator1 = "NavBar#ASSET_LIBRARIES",
+					value1 = "Asset Libraries");
+			}
+			else {
+				AssertClick(
+					locator1 = "NavBar#MY_SITES",
+					value1 = "My Sites");
+			}
+
+			Click(
+				key_card = "${siteNameScope}",
+				locator1 = "Card#CARD_TITLE");
+
+			SelectFrame(value1 = "relative=top");
+
+			AssertTextEquals.assertPartialText(
+				key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
+				key_permissionValue = "${permissionValue}",
+				key_siteNameScope = "${siteNameScope}",
+				locator1 = "RolesPermissions#PERMISSION_SITE_SCOPE",
+				value1 = "${siteNameScope}");
+		}
+		else if (isSet(removeSiteScope)) {
+			Click(
+				key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
+				key_permissionValue = "${permissionValue}",
+				key_siteNameScope = "${removeSiteScope}",
+				locator1 = "RolesPermissions#PERMISSION_SITE_SCOPE_REMOVE");
+		}
+	}
+
 	macro _goToRoleAssigneeType {
 		LexiconEntry.gotoEntry(rowEntry = "${roleTitle}");
 
@@ -404,6 +451,80 @@ definition {
 		ScrollWebElementIntoView(locator1 = "RolesPermissions#SAVE_BUTTON");
 
 		PortletEntry.save();
+	}
+
+	macro editPermissionCmdCPUI {
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		task ("Navigate to the item in the right header via search bar") {
+			Type(
+				locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+				value1 = "${permissionNavItem}");
+
+			AssertClick(
+				key_permissionNavHeader = "${permissionNavHeader}",
+				key_permissionNavItem = "${permissionNavItem}",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION",
+				value1 = "${permissionNavItem}");
+
+			AssertTextEquals(
+				locator1 = "RolesPermissions#PERMISSION_ITEM_HEADER",
+				value1 = "${permissionNavItem}");
+		}
+
+		if (!(isSet(permissionValues))) {
+			var permissionValues = "${permissionValue}";
+		}
+
+		task ("Define/remove the given permissions") {
+			for (var permissionValue : list "${permissionValues}") {
+				if ("${define}" == "true") {
+					Check(
+						key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
+						key_permissionValue = "${permissionValue}",
+						locator1 = "RolesPermissions#PERMISSION_CHECKBOX");
+				}
+				else if ("${remove}" == "true") {
+					Uncheck(
+						key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
+						key_permissionValue = "${permissionValue}",
+						locator1 = "RolesPermissions#PERMISSION_CHECKBOX");
+				}
+
+				Role._changePermisionScope(
+					assetLibrariesScope = "${assetLibrariesScope}",
+					permissionSheetSubtitle = "${permissionSheetSubtitle}",
+					permissionValue = "${permissionValue}",
+					removeSiteScope = "${removeSiteScope}",
+					siteNameScope = "${siteNameScope}");
+			}
+		}
+
+		ScrollWebElementIntoView(locator1 = "RolesPermissions#SAVE_BUTTON");
+
+		PortletEntry.save();
+	}
+
+	macro editRole {
+		if (isSet(roleTitleEdit)) {
+			PortletEntry.inputTitle(title = "${roleTitleEdit}");
+		}
+
+		if (isSet(roleDescriptionEdit)) {
+			PortletEntry.inputDescription(description = "${roleDescriptionEdit}");
+		}
+
+		if (isSet(roleKeyEdit)) {
+			Type(
+				locator1 = "TextInput#KEY",
+				value1 = "${roleKeyEdit}");
+		}
+
+		AssertClick(
+			locator1 = "Button#SUBMIT",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro openRolesAdmin {

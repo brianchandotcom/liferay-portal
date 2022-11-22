@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -29,12 +30,15 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -93,13 +97,18 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				else {
 					KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 						resourcePrimKey, WorkflowConstants.STATUS_ANY);
+					int position = ParamUtil.getInteger(
+						actionRequest, "position");
 
-					if (kbArticle.getParentResourcePrimKey() !=
-							parentResourcePrimKey) {
+					if ((kbArticle.getParentResourcePrimKey() !=
+							parentResourcePrimKey) ||
+						(position != -1)) {
 
 						_kbArticleService.moveKBArticle(
 							resourcePrimKey, parentResourceClassNameId,
-							parentResourcePrimKey, kbArticle.getPriority());
+							parentResourcePrimKey,
+							_getPriority(
+								kbArticle, parentResourcePrimKey, position));
 					}
 				}
 			}
@@ -160,6 +169,45 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+	}
+
+	private double _getPriority(
+		KBArticle kbArticle, long parentResourcePrimKey, int position) {
+
+		if (position < 0) {
+			return kbArticle.getPriority();
+		}
+
+		List<KBArticle> kbArticles = _kbArticleService.getKBArticles(
+			kbArticle.getGroupId(), parentResourcePrimKey,
+			WorkflowConstants.STATUS_ANY, 0, position + 1,
+			new KBArticlePriorityComparator(true));
+
+		if (ListUtil.isEmpty(kbArticles)) {
+			return kbArticle.getPriority();
+		}
+
+		KBArticle nextKBArticle = kbArticles.get(kbArticles.size() - 1);
+
+		double nextKBArticlePriority = nextKBArticle.getPriority();
+
+		if ((position == 0) && (nextKBArticlePriority > 1)) {
+			return nextKBArticlePriority - 1;
+		}
+
+		double previousKBArticlePriority = 0;
+
+		if (kbArticles.size() <= position) {
+			previousKBArticlePriority = nextKBArticlePriority;
+			nextKBArticlePriority = nextKBArticlePriority + 1;
+		}
+		else if (kbArticles.size() >= 2) {
+			KBArticle previousKBArticle = kbArticles.get(kbArticles.size() - 2);
+
+			previousKBArticlePriority = previousKBArticle.getPriority();
+		}
+
+		return (previousKBArticlePriority + nextKBArticlePriority) / 2;
 	}
 
 	private boolean _isDragAndDrop(boolean dragAndDrop) {

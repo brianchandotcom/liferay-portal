@@ -74,6 +74,14 @@
 		<cacheable>false</cacheable>
 	</template>
 	<template>
+		<template-key>navbar-links-ftl</template-key>
+		<name>portlet-display-template-name-navbar-links</name>
+		<description>portlet-display-template-description-navbar-links</description>
+		<language>ftl</language>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_navbar_links.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+	<template>
 		<template-key>navigation-macro-ftl</template-key>
 		<name>portlet-display-template-name-navigation-menu-macro</name>
 		<description>portlet-display-template-description-navigation-menu-macro</description>

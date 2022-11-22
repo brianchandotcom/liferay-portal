@@ -575,6 +575,8 @@ definition {
 	@description = "COMMERCE-10082 | As a buyer user, I want to be able to only add to cart quantities that are allowed when adding to cart a multiple Skus product"
 	@priority = "4"
 	test CanAssertMultipleSkusProductInvalidAllowedOrderQuantity {
+		property portal.acceptance = "false";
+
 		var productName = "Brake Fluid";
 
 		task ("Given a Minium site") {
@@ -615,26 +617,73 @@ definition {
 			CommerceNavigator.gotoProductDetails(productName = "${productName}");
 		}
 
-		task ("Then inputs not allowed values -> add to cart -> an error is thrown") {
-			for (var quantity : list "2,4,6") {
-				Type(
+		task ("Then the allowed quantities set are selectable") {
+			for (var quantity : list "1,3,5") {
+				AssertElementPresent(
+					key_optionValue = "${quantity}",
 					key_productName = "${productName}",
-					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
-					value1 = "${quantity}");
-
-				AssertTextEquals(
-					key_productName = "${productName}",
-					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
-					value1 = "${quantity}");
-
-				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
-
-				Alert.viewErrorMessage(errorMessage = "Unable to add product to the cart.");
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_OPTION");
 			}
 		}
 
-		task ("And inputs allowed values -> add to cart -> product is successfully added to cart") {
-			for (var quantity : list "1,3,5") {
+		task ("And other quantities are not selectable") {
+			for (var quantity : list "2,4,6,7,8") {
+				AssertElementNotPresent(
+					key_optionValue = "${quantity}",
+					key_productName = "${productName}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_OPTION");
+			}
+		}
+	}
+
+	@description = "COMMERCE-10317 | As a buyer user, I want to be able to only add to cart quantities that are lower or equal to a given maximum value when adding to cart a multiple skus product"
+	@priority = "4"
+	test CanAssertMultipleSkusProductInvalidMaximumOrderQuantity {
+		property portal.acceptance = "false";
+
+		var maximumQuantity = "4";
+		var productName = "Brake Fluid";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a Business Account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Maximum Order Quantity is set to '4' for a multiple Skus product(Brake Fluid)") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				maxOrderQuantity = "${maximumQuantity}",
+				productName = "${productName}");
+		}
+
+		task ("And the buyer navigates to the product detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceNavigator.gotoProductDetails(productName = "${productName}");
+		}
+
+		task ("When the buyer inputs invalid quantities on the quantity selector(e.g. 5, 6)") {
+			for (var quantity : list "5,6") {
 				Type(
 					key_productName = "${productName}",
 					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
@@ -645,17 +694,150 @@ definition {
 					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
 					value1 = "${quantity}");
 
-				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+				task ("Then the quantity selector pop-over shows an error for the maximum order quantity and add to cart button is not clickable") {
+					AssertElementPresent(
+						key_productName = "${productName}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
 
-				AssertElementPresent(
-					key_itemCount = "1",
-					locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
 
-				CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "true",
+						quantity = "${maximumQuantity}",
+						quantityConfiguration = "max");
+				}
+			}
+		}
 
-				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-fluid");
+		task ("When the buyer inputs valid quantity values(e.g. 2, 3, 4)") {
+			for (var quantity : list "2,3,4") {
+				Type(
+					key_productName = "${productName}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
 
-				WaitForPageLoad();
+				AssertTextEquals(
+					key_productName = "${productName}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is not showing any error and add to cart button is clickable") {
+					AssertElementNotPresent(
+						key_productName = "${productName}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementNotPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+				}
+			}
+		}
+	}
+
+	@description = "COMMERCE-10316 | As a buyer user, I want to be able to only add to cart quantities that are at least the given minimum value when adding to cart a multiple skus product"
+	@priority = "4"
+	test CanAssertMultipleSkusProductInvalidMinimumOrderQuantity {
+		property portal.acceptance = "false";
+
+		var minimumQuantity = "3";
+		var productName = "Brake Fluid";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a Business Account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Minimum Order Quantity is set to '3' for a multiple Skus product(Brake Fluid)") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				minOrderQuantity = "${minimumQuantity}",
+				productName = "${productName}");
+		}
+
+		task ("When the buyer navigates to the product detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceNavigator.gotoProductDetails(productName = "${productName}");
+		}
+
+		task ("Then on the product details page, assert that the add to cart button is disabled if the quantity selector is empty") {
+			Type(
+				key_productName = "${productName}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+				value1 = "");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
+		}
+
+		task ("When the buyer inputs invalid quantities on the quantity selector(e.g. 1, 2)") {
+			for (var quantity : list "1,2") {
+				Type(
+					key_productName = "${productName}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over shows an error for the minimum order quantity and add to cart button is not clickable") {
+					AssertElementPresent(
+						key_productName = "${productName}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "true",
+						quantity = "${minimumQuantity}",
+						quantityConfiguration = "min");
+				}
+			}
+		}
+
+		task ("When the buyer inputs valid quantity values") {
+			for (var quantity : list "3,4,5") {
+				Type(
+					key_productName = "${productName}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is not showing any error and add to cart button is clickable") {
+					AssertElementNotPresent(
+						key_productName = "${productName}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementNotPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "false",
+						quantity = "${minimumQuantity}",
+						quantityConfiguration = "min");
+				}
 			}
 		}
 	}
@@ -663,6 +845,9 @@ definition {
 	@description = "COMMERCE-10081 | As a buyer user, I want to be able to only add to cart quantities that are multiples of a given value when adding to cart a multiple Skus product"
 	@priority = "4"
 	test CanAssertMultipleSkusProductInvalidMultipleOrderQuantity {
+		property portal.acceptance = "false";
+
+		var multipleQuantity = "3";
 		var productName = "Brake Fluid";
 
 		task ("Given a Minium site") {
@@ -686,7 +871,7 @@ definition {
 
 		task ("And Multiple Order Quantity is set to '3' for a multiple Skus product(Brake Fluid)") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				multipleOrderQuantity = "3",
+				multipleOrderQuantity = "${multipleQuantity}",
 				productName = "${productName}");
 		}
 
@@ -715,9 +900,18 @@ definition {
 					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
 					value1 = "${quantity}");
 
-				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+				task ("Then the quantity selector pop-over shows an error for the multiple order quantity and add to cart button is not clickable") {
+					AssertElementPresent(
+						key_productName = "${productName}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
 
-				Alert.viewErrorMessage(errorMessage = "Unable to add product to the cart.");
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "true",
+						quantity = "${multipleQuantity}",
+						quantityConfiguration = "multiple");
+				}
 			}
 		}
 
@@ -733,17 +927,421 @@ definition {
 					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
 					value1 = "${quantity}");
 
-				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+				task ("Then the quantity selector pop-over is not showing any error and add to cart button is clickable") {
+					AssertElementNotPresent(
+						key_productName = "${productName}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
 
-				AssertElementPresent(
-					key_itemCount = "1",
-					locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+					AssertElementNotPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
 
-				CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "false",
+						quantity = "${multipleQuantity}",
+						quantityConfiguration = "multiple");
+				}
+			}
+		}
+	}
 
-				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-fluid");
+	@description = "COMMERCE-10319 | As a buyer user, I want to be able to only add to cart quantities based on a combination of a maximum value and a multiple value when adding to cart a multiple skus product"
+	@priority = "4"
+	test CanAssertMultipleSkusProductMaximumMultipleCombinationInvalidQuantities {
+		property portal.acceptance = "false";
 
-				WaitForPageLoad();
+		var productName1 = "Brake Fluid";
+		var productName2 = "Hoses";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a Business Account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Order Quantity configurations are set for Brake Fluid") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				maxOrderQuantity = "10",
+				multipleOrderQuantity = "4",
+				productName = "${productName1}");
+		}
+
+		task ("And Order Quantity configurations are set for Hoses") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				maxOrderQuantity = "4",
+				multipleOrderQuantity = "5",
+				productName = "${productName2}");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to Brake Fluid details page") {
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceNavigator.gotoProductDetails(productName = "${productName1}");
+		}
+
+		task ("And inputs invalid quantities for Brake Fluid(e.g. 5, 11, 12)") {
+			for (var quantity : list "5,11,12") {
+				Type(
+					key_productName = "${productName1}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName1}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is showing errors and add to cart button is not clickable") {
+					AssertElementPresent(
+						key_productName = "${productName1}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					if (("${quantity}" == "11") || ("${quantity}" == "12")) {
+						var maximumConditionNotSatisfied = "true";
+					}
+					else if ("${quantity}" == "5") {
+						var maximumConditionNotSatisfied = "false";
+					}
+
+					if (("${quantity}" == "5") || ("${quantity}" == "11")) {
+						var multipleConditionNotSatisfied = "true";
+					}
+					else if ("${quantity}" == "12") {
+						var multipleConditionNotSatisfied = "false";
+					}
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "${maximumConditionNotSatisfied}",
+						quantity = "10",
+						quantityConfiguration = "max");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "${multipleConditionNotSatisfied}",
+						quantity = "4",
+						quantityConfiguration = "multiple");
+				}
+			}
+		}
+
+		task ("When the buyer inputs valid quantities for Brake Fluid(e.g. 4, 8)") {
+			for (var quantity : list "4,8") {
+				Type(
+					key_productName = "${productName1}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName1}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is not showing any error and add to cart button is clickable") {
+					AssertElementNotPresent(
+						key_productName = "${productName1}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementNotPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "false",
+						quantity = "10",
+						quantityConfiguration = "max");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "false",
+						quantity = "4",
+						quantityConfiguration = "multiple");
+				}
+			}
+		}
+
+		task ("When the buyer navigates to Hoses details page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceNavigator.gotoProductDetails(productName = "${productName2}");
+		}
+
+		task ("And inputs invalid quantities for Hoses(e.g. 3, 5, 6, 7)") {
+			for (var quantity : list "3,5,6,7") {
+				Type(
+					key_productName = "${productName2}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName2}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is showing errors and add to cart button is not clickable") {
+					AssertElementPresent(
+						key_productName = "${productName2}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					if (("${quantity}" == "5") || ("${quantity}" == "6") || ("${quantity}" == "7")) {
+						var maximumConditionNotSatisfied = "true";
+					}
+					else if ("${quantity}" == "3") {
+						var maximumConditionNotSatisfied = "false";
+					}
+
+					if (("${quantity}" == "3") || ("${quantity}" == "6") || ("${quantity}" == "7")) {
+						var multipleConditionNotSatisfied = "true";
+					}
+					else if ("${quantity}" == "5") {
+						var multipleConditionNotSatisfied = "false";
+					}
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "${maximumConditionNotSatisfied}",
+						quantity = "4",
+						quantityConfiguration = "max");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "${multipleConditionNotSatisfied}",
+						quantity = "5",
+						quantityConfiguration = "multiple");
+				}
+			}
+		}
+	}
+
+	@description = "COMMERCE-10318 | As a buyer user, I want to be able to only add to cart quantities based on a combination of a minimum value and a multiple value when adding to cart a multiple skus product"
+	@priority = "4"
+	test CanAssertMultipleSkusProductMinimumMultipleCombinationInvalidQuantities {
+		property portal.acceptance = "false";
+
+		var productName1 = "Brake Fluid";
+		var productName2 = "Hoses";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a Business Account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And Order Quantity configurations are set for Brake Fluid") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				minOrderQuantity = "5",
+				multipleOrderQuantity = "2",
+				productName = "${productName1}");
+		}
+
+		task ("And Order Quantity configurations are set for Hoses") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				minOrderQuantity = "3",
+				multipleOrderQuantity = "4",
+				productName = "${productName2}");
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And navigates to Brake Fluid details page") {
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceNavigator.gotoProductDetails(productName = "${productName1}");
+		}
+
+		task ("And inputs invalid quantities for Brake Fluid(e.g. 3, 4, 7)") {
+			for (var quantity : list "3,4,7") {
+				Type(
+					key_productName = "${productName1}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName1}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is showing errors and add to cart button is not clickable") {
+					AssertElementPresent(
+						key_productName = "${productName1}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					if (("${quantity}" == "3") || ("${quantity}" == "4")) {
+						var minimumConditionNotSatisfied = "true";
+					}
+					else if ("${quantity}" == "7") {
+						var minimumConditionNotSatisfied = "false";
+					}
+
+					if (("${quantity}" == "3") || ("${quantity}" == "7")) {
+						var multipleConditionNotSatisfied = "true";
+					}
+					else if ("${quantity}" == "4") {
+						var multipleConditionNotSatisfied = "false";
+					}
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "${minimumConditionNotSatisfied}",
+						quantity = "5",
+						quantityConfiguration = "min");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "${multipleConditionNotSatisfied}",
+						quantity = "2",
+						quantityConfiguration = "multiple");
+				}
+			}
+		}
+
+		task ("When the buyer inputs valid quantities for Brake Fluid(e.g. 6, 8, 12)") {
+			for (var quantity : list "6,8,12") {
+				Type(
+					key_productName = "${productName1}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName1}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is not showing any error and add to cart button is clickable") {
+					AssertElementNotPresent(
+						key_productName = "${productName1}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementNotPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "false",
+						quantity = "5",
+						quantityConfiguration = "min");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "false",
+						quantity = "2",
+						quantityConfiguration = "multiple");
+				}
+			}
+		}
+
+		task ("When the buyer navigates to Hoses details page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceNavigator.gotoProductDetails(productName = "${productName2}");
+		}
+
+		task ("And inputs invalid quantities for Hoses(e.g. 2, 3, 5)") {
+			for (var quantity : list "2,3,5") {
+				Type(
+					key_productName = "${productName2}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName2}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is showing errors and add to cart button is not clickable") {
+					AssertElementPresent(
+						key_productName = "${productName2}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					if ("${quantity}" == "2") {
+						var minimumConditionNotSatisfied = "true";
+					}
+					else {
+						var minimumConditionNotSatisfied = "false";
+					}
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "${minimumConditionNotSatisfied}",
+						quantity = "3",
+						quantityConfiguration = "min");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "true",
+						quantity = "4",
+						quantityConfiguration = "multiple");
+				}
+			}
+		}
+
+		task ("When the buyer inputs valid quantities for Hoses(e.g. 4, 8, 12)") {
+			for (var quantity : list "4,8,12") {
+				Type(
+					key_productName = "${productName2}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				AssertTextEquals(
+					key_productName = "${productName2}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+					value1 = "${quantity}");
+
+				task ("Then the quantity selector pop-over is not showing any error and add to cart button is clickable") {
+					AssertElementNotPresent(
+						key_productName = "${productName2}",
+						locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR_HAS_ERROR");
+
+					AssertElementNotPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "false",
+						quantity = "3",
+						quantityConfiguration = "min");
+
+					FrontStore.viewQuantitySelectorPopoverListItem(
+						conditionNotSatisfied = "false",
+						quantity = "4",
+						quantityConfiguration = "multiple");
+				}
 			}
 		}
 	}

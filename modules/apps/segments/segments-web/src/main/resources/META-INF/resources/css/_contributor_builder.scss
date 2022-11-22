@@ -37,6 +37,10 @@
 				.content-wrapper {
 					padding: 40px 24px;
 
+					.panel-header-link {
+						box-shadow: revert;
+					}
+
 					> .conjunction-button {
 						margin: 16px 0;
 					}

@@ -166,59 +166,61 @@ class ContributorBuilder extends React.Component {
 										collapsable
 										defaultExpanded={true}
 										displayTitle={
-											<div className="align-items-center d-flex flex-wrap justify-content-between">
-												<h2 className="mb-0 sheet-title">
-													{Liferay.Language.get(
-														'conditions'
-													)}
-												</h2>
+											<ClayPanel.Header className="p-0">
+												<div className="align-items-center d-flex flex-wrap justify-content-between">
+													<h2 className="mb-0 sheet-title">
+														{Liferay.Language.get(
+															'conditions'
+														)}
+													</h2>
 
-												<div className="criterion-string">
-													<div className="btn-group">
-														<div className="btn-group-item inline-item mt-0">
-															{membersCountLoading && (
-																<ClayLoadingIndicator
-																	className="mr-4"
-																	small
-																/>
-															)}
-
-															{!membersCountLoading && (
-																<span className="mr-4">
-																	{Liferay.Language.get(
-																		'conditions-match'
-																	)}
-
-																	<b className="ml-2 text-dark">
-																		{getPluralMessage(
-																			Liferay.Language.get(
-																				'x-member'
-																			),
-																			Liferay.Language.get(
-																				'x-members'
-																			),
-																			membersCount
-																		)}
-																	</b>
-																</span>
-															)}
-
-															<ClayButton
-																displayType="secondary"
-																onClick={
-																	onPreviewMembers
-																}
-																small
-																type="button"
-															>
-																{Liferay.Language.get(
-																	'view-members'
+													<div className="criterion-string">
+														<div className="btn-group">
+															<div className="btn-group-item inline-item mt-0">
+																{membersCountLoading && (
+																	<ClayLoadingIndicator
+																		className="mr-4"
+																		small
+																	/>
 																)}
-															</ClayButton>
+
+																{!membersCountLoading && (
+																	<span className="mr-4">
+																		{Liferay.Language.get(
+																			'conditions-match'
+																		)}
+
+																		<b className="ml-2 text-dark">
+																			{getPluralMessage(
+																				Liferay.Language.get(
+																					'x-member'
+																				),
+																				Liferay.Language.get(
+																					'x-members'
+																				),
+																				membersCount
+																			)}
+																		</b>
+																	</span>
+																)}
+
+																<ClayButton
+																	displayType="secondary"
+																	onClick={
+																		onPreviewMembers
+																	}
+																	small
+																	type="button"
+																>
+																	{Liferay.Language.get(
+																		'view-members'
+																	)}
+																</ClayButton>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
+											</ClayPanel.Header>
 										}
 									>
 										<ClayPanel.Body>
@@ -307,8 +309,8 @@ class ContributorBuilder extends React.Component {
 														</React.Fragment>
 													);
 												})}
-										</ClayPanel.Body>
-									</ClayPanel>
+										</ClayLayout.Sheet>
+									)}
 								</div>
 							</ClayLayout.ContainerFluid>
 						</div>

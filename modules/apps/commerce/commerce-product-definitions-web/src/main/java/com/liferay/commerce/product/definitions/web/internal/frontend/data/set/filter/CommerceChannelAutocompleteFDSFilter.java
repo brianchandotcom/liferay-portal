@@ -27,7 +27,8 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
 	service = FDSFilter.class
 )
-public class CommerceChannelFDSFilter extends BaseAutocompleteFDSFilter {
+public class CommerceChannelAutocompleteFDSFilter
+	extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getAPIURL() {

@@ -12,32 +12,32 @@
  * details.
  */
 
-package com.liferay.commerce.warehouse.web.internal.frontend.data.set.filter;
+package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.warehouse.web.internal.constants.CommerceInventoryWarehouseFDSNames;
+import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Crescenzo Rega
+ * @author Marco Leo
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS,
+	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
 	service = FDSFilter.class
 )
-public class CommerceInventoryWarehouseChannelFDSFilter
+public class CommerceCatalogAutocompleteFDSFilter
 	extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
+		return "/o/headless-commerce-admin-catalog/v1.0/catalogs?sort=name:asc";
 	}
 
 	@Override
 	public String getId() {
-		return "channelId";
+		return "catalogId";
 	}
 
 	@Override
@@ -52,12 +52,12 @@ public class CommerceInventoryWarehouseChannelFDSFilter
 
 	@Override
 	public String getLabel() {
-		return "channel";
+		return "catalog";
 	}
 
 	@Override
 	public boolean isMultipleSelection() {
-		return true;
+		return false;
 	}
 
 }

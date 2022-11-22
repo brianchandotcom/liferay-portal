@@ -12,32 +12,32 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
+package com.liferay.commerce.warehouse.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
+import com.liferay.commerce.warehouse.web.internal.constants.CommerceInventoryWarehouseFDSNames;
 import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marco Leo
+ * @author Crescenzo Rega
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
+	property = "frontend.data.set.name=" + CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS,
 	service = FDSFilter.class
 )
-public class AssetCategoryFDSFilter extends BaseAutocompleteFDSFilter {
+public class CommerceInventoryWarehouseChannelAutocompleteFDSFilter
+	extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0" +
-			"/taxonomy-categories?sort=name:asc";
+		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
 	}
 
 	@Override
 	public String getId() {
-		return "categoryIds";
+		return "channelId";
 	}
 
 	@Override
@@ -52,7 +52,12 @@ public class AssetCategoryFDSFilter extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "category";
+		return "channel";
+	}
+
+	@Override
+	public boolean isMultipleSelection() {
+		return true;
 	}
 
 }

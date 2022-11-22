@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
+package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
 import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
@@ -24,19 +24,21 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
+	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
 	service = FDSFilter.class
 )
-public class CommerceAccountFDSFilter extends BaseAutocompleteFDSFilter {
+public class AssetCategoryAutocompleteFDSFilter
+	extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-commerce-admin-account/v1.0/accounts?sort=name:asc";
+		return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0" +
+			"/taxonomy-categories?sort=name:asc";
 	}
 
 	@Override
 	public String getId() {
-		return "accountId";
+		return "categoryIds";
 	}
 
 	@Override
@@ -51,12 +53,7 @@ public class CommerceAccountFDSFilter extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "account";
-	}
-
-	@Override
-	public boolean isMultipleSelection() {
-		return true;
+		return "category";
 	}
 
 }

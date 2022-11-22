@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.frontend.data.set.filter;
+package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 
@@ -24,19 +24,20 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_DEFINITIONS,
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ALL_ORDERS,
 	service = FDSFilter.class
 )
-public class CommerceCatalogFDSFilter extends BaseAutocompleteFDSFilter {
+public class CommerceChannelAutocompleteFDSFilter
+	extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-commerce-admin-catalog/v1.0/catalogs?sort=name:asc";
+		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
 	}
 
 	@Override
 	public String getId() {
-		return "catalogId";
+		return "channelId";
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class CommerceCatalogFDSFilter extends BaseAutocompleteFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "catalog";
+		return "channel";
 	}
 
 	@Override

@@ -15,16 +15,18 @@ import i18n from '../../../../../../common/I18n';
 
 const PopoverIcon = () => (
 	<ClayTooltipProvider>
-		<ClayButtonWithIcon
-			className="text-brand-primary-darken-2"
-			data-tooltip-align="right"
-			displayType={null}
-			size="sm"
-			symbol="info-circle"
-			title={i18n.translate(
-				'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed'
-			)}
-		/>
+		<span>
+			<ClayButtonWithIcon
+				className="text-brand-primary-darken-2"
+				data-tooltip-align="right"
+				displayType={null}
+				size="sm"
+				symbol="info-circle"
+				title={i18n.translate(
+					'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed'
+				)}
+			/>
+		</span>
 	</ClayTooltipProvider>
 );
 

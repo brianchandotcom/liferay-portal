@@ -13,7 +13,6 @@ import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../common/I18n';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
-import {Liferay} from '../../../../../common/services/liferay';
 import {getDXPCloudEnvironment} from '../../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../../components/ActivationStatus/index';
 import {useCustomerPortal} from '../../../context';
@@ -40,7 +39,6 @@ const DXPCloud = () => {
 				query: getDXPCloudEnvironment,
 				variables: {
 					filter: `accountKey eq '${project.accountKey}'`,
-					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
 

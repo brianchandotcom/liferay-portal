@@ -105,7 +105,6 @@ page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.security.auth.ScreenNameValidator" %><%@
 page import="com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil" %><%@

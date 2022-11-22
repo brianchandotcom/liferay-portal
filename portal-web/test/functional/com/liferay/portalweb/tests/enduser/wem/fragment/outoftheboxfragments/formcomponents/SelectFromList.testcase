@@ -64,8 +64,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151159. The page designer map the Select from List fragment to objects fields on content pages."
-	@priority = "4"
+	@priority = "5"
 	test MapPicklistFieldOnContentPage {
+		property portal.acceptance = "true";
+
 		task ("Given a page designer has a mapped Form Container on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -285,8 +287,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154568. The page designer can map a Form Container to Object field with relationship on system object"
-	@priority = "4"
+	@priority = "5"
 	test MapRelationshipWithSystemObject {
+		property portal.acceptance = "true";
+		
 		task ("Given a page designer has a mapped Form Container to an Object with relationship on system object") {
 			task ("Add relationship with Account object") {
 				ObjectAdmin.addObjectRelationshipViaAPI(

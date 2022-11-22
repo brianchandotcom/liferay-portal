@@ -42,25 +42,12 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddFolder {
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Folder Description",
-			mgFolderName = "DM Folder Name");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Folder Name");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test AddFolderDocument {
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Folder Description",
-			mgFolderName = "DM Folder Name");
+	@refactordone
+	test CanAddDocumentInFolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

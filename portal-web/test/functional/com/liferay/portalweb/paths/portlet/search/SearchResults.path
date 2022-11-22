@@ -277,7 +277,7 @@
 </tr>
 <tr>
 	<td>SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY</td>
-	<td>//div[contains(@id,'insightsResponsePanelContent')]//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(@class,'cm-string')][normalize-space()='${key_text}']</td>
+	<td>//div[contains(@id,'insightsResponsePanelContent')]//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

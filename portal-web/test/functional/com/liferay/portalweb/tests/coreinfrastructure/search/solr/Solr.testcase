@@ -69,11 +69,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
 		AssertElementPresent(
-			key_text = "\"explain\"",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
-
-		AssertElementPresent(
-			key_text = "\"_explanation\"",
+			key_text = "explain",
 			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 
 		Portlet.gotoPortletOptions(
@@ -92,12 +88,8 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
-		AssertElementPresent(
-			key_text = "\"explain\"",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
-
 		AssertElementNotPresent(
-			key_text = "\"_explanation\"",
+			key_text = "explain",
 			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 	}
 

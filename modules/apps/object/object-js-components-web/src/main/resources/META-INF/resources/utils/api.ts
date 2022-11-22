@@ -27,6 +27,7 @@ interface NotificationTemplate {
 	body: LocalizedValue<string>;
 	cc: string;
 	description: string;
+	editorType: 'freemarker' | 'richText';
 	from: string;
 	fromName: LocalizedValue<string>;
 	id: number;

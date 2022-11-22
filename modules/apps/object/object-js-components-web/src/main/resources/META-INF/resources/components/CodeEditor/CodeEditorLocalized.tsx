@@ -59,10 +59,10 @@ const availableLocales = Object.keys(Liferay.Language.available)
 export function CodeEditorLocalized({
 	CustomSidebarContent,
 	ariaLabels = {
-		default: 'Default',
-		openLocalizations: 'Open Localizations',
-		translated: 'Translated',
-		untranslated: 'Untranslated',
+		default: Liferay.Language.get('default'),
+		openLocalizations: Liferay.Language.get('open-localizations'),
+		translated: Liferay.Language.get('translated'),
+		untranslated: Liferay.Language.get('untranslated'),
 	},
 	mode,
 	onSelectedLocaleChange,

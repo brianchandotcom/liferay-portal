@@ -21,7 +21,6 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {
 	API,
 	Card,
-	CodeEditorLocalized,
 	Input,
 	InputLocalized,
 	RichTextLocalized,
@@ -37,7 +36,7 @@ import {Attachments} from './Attachments';
 import {DefinitionOfTerms} from './DefinitionOfTerms';
 
 import './EditNotificationTemplate.scss';
-import FreemarkerEditorSidebarContent from './FreemarkerEditorSidebarContent';
+import {FreeMarkerTemplateEditor} from './FreeMarkerTemplateEditor';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -90,14 +89,9 @@ type TUserNotificationRecipients = {
 
 export type TNotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
-	bcc: string;
 	body: LocalizedValue<string>;
-	cc: string;
 	description: string;
 	editorType: editorTypeOptions;
-	freemarkerTemplate: {lineCount?: number; template?: string};
-	from: string;
-	fromName: LocalizedValue<string>;
 	name: string;
 	objectDefinitionId: number | null;
 	recipientType: string;
@@ -106,7 +100,6 @@ export type TNotificationTemplate = {
 		| Partial<TUserNotificationRecipients>[]
 		| [];
 	subject: LocalizedValue<string>;
-	to: LocalizedValue<string>;
 	type: string;
 };
 
@@ -259,13 +252,14 @@ export default function EditNotificationTemplate({
 		recipientInitialValue = [];
 	}
 
-	const initialValues = {
+	const initialValues: TNotificationTemplate = {
 		...(Liferay.FeatureFlags['LPS-162133'] && {
 			recipientType:
 				notificationTemplateType === 'userNotification'
 					? 'term'
 					: 'email',
 		}),
+		attachmentObjectFieldIds: [],
 		body: {
 			[defaultLanguageId]: '',
 		},
@@ -273,6 +267,7 @@ export default function EditNotificationTemplate({
 		editorType: 'richText' as editorTypeOptions,
 		name: '',
 		objectDefinitionId: 0,
+		recipientType: '',
 		recipients: recipientInitialValue,
 		subject: {
 			[defaultLanguageId]: '',
@@ -356,6 +351,7 @@ export default function EditNotificationTemplate({
 					attachmentObjectFieldIds,
 					body,
 					description,
+					editorType,
 					name,
 					objectDefinitionId,
 					recipientType,
@@ -369,6 +365,7 @@ export default function EditNotificationTemplate({
 					attachmentObjectFieldIds,
 					body,
 					description,
+					editorType,
 					name,
 					objectDefinitionId,
 					recipientType,
@@ -894,38 +891,21 @@ export default function EditNotificationTemplate({
 											/>
 										) : (
 											<>
-												<CodeEditorLocalized
-													CustomSidebarContent={
-														<FreemarkerEditorSidebarContent
-															objectDefinitions={
-																objectDefinitions
-															}
-														/>
+												<FreeMarkerTemplateEditor
+													baseResourceURL={
+														baseResourceURL
 													}
-													mode="freemarker"
-													onSelectedLocaleChange={({
-														label,
-													}) => {
-														setSelectedLocale(
-															label
-														);
-													}}
-													onTranslationsChange={(
-														translations
-													) => {
-														setValues({
-															...values,
-															body: translations,
-														});
-													}}
-													placeholder={`<#--${Liferay.Language.get(
-														'add-elements-from-the-sidebar-to-define-your-template'
-													)}-->`}
+													objectDefinitions={
+														objectDefinitions
+													}
 													selectedLocale={
 														selectedLocale
 													}
-													sidebarElements={[]}
-													translations={values.body}
+													setSelectedLocale={
+														setSelectedLocale
+													}
+													setValues={setValues}
+													values={values}
 												/>
 
 												<Text

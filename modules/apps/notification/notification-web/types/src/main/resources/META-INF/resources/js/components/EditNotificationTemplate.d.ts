@@ -34,17 +34,9 @@ declare type TUserNotificationRecipients = {
 };
 export declare type TNotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
-	bcc: string;
 	body: LocalizedValue<string>;
-	cc: string;
 	description: string;
 	editorType: editorTypeOptions;
-	freemarkerTemplate: {
-		lineCount?: number;
-		template?: string;
-	};
-	from: string;
-	fromName: LocalizedValue<string>;
 	name: string;
 	objectDefinitionId: number | null;
 	recipientType: string;
@@ -53,7 +45,6 @@ export declare type TNotificationTemplate = {
 		| Partial<TUserNotificationRecipients>[]
 		| [];
 	subject: LocalizedValue<string>;
-	to: LocalizedValue<string>;
 	type: string;
 };
 export default function EditNotificationTemplate({

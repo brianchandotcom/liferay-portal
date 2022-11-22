@@ -14,10 +14,21 @@
 
 /// <reference types="react" />
 
-interface FreemarkerEditorSidebarContentProps {
+import {TNotificationTemplate} from './EditNotificationTemplate';
+interface FreeMarkerTemplateEditorProps {
+	baseResourceURL: string;
 	objectDefinitions: ObjectDefinition[];
+	selectedLocale: Liferay.Language.Locale;
+	setSelectedLocale: (value: Liferay.Language.Locale) => void;
+	setValues: (values: Partial<TNotificationTemplate>) => void;
+	values: TNotificationTemplate;
 }
-export default function FreemarkerEditorSidebarContent({
+export declare function FreeMarkerTemplateEditor({
+	baseResourceURL,
 	objectDefinitions,
-}: FreemarkerEditorSidebarContentProps): JSX.Element;
+	selectedLocale,
+	setSelectedLocale,
+	setValues,
+	values,
+}: FreeMarkerTemplateEditorProps): JSX.Element;
 export {};

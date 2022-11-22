@@ -2196,7 +2196,7 @@ definition {
 
 		MenuItem.click(menuItem = "Move");
 
-		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		var key_dmFolderName = "${dmSubFolderName}";
 

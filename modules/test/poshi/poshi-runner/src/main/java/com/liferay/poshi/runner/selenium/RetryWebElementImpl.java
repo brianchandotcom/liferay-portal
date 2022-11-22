@@ -476,6 +476,8 @@ public class RetryWebElementImpl extends RemoteWebElement {
 			return;
 		}
 
+		_webElement.click();
+
 		for (int i = 0; i < webElementValue.length(); i++) {
 			_webElement.sendKeys(Keys.BACK_SPACE);
 		}

@@ -387,8 +387,6 @@ definition {
 
 			MenuItem.viewOrder(menuItemList = "Assets,Equity,Expenses,Free,Liabilities,Nominal,Personal,Real,Revenue,Saving");
 
-			AssertNotVisible(locator1 = "MenuItem#SEARCH_FIELD");
-
 			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
 
 			ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = "${objectDefinitionId}");

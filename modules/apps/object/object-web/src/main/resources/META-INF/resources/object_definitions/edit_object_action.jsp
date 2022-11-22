@@ -20,12 +20,15 @@
 ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = (ObjectDefinitionsActionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectAction();
+ObjectDefinition objectDefinition = objectDefinitionsActionsDisplayContext.getObjectDefinition();
 %>
 
 <react:component
 	module="js/components/ObjectAction/EditObjectAction"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"isApproved", objectDefinition.isApproved()
+		).put(
 			"objectAction", objectDefinitionsActionsDisplayContext.getObjectActionJSONObject(objectAction)
 		).put(
 			"objectActionCodeEditorElements", objectDefinitionsActionsDisplayContext.getObjectActionCodeEditorElements()

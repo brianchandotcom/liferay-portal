@@ -14,7 +14,7 @@
 
 package com.liferay.notification.internal.type;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Map;
@@ -43,11 +43,12 @@ public class FunctionNotificationTypeFactory {
 			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
 
+		String externalReferenceCode =
+			ConfigurationFactoryUtil.getExternalReferenceCode(properties);
+
 		_componentInstance = _componentFactory.newInstance(
 			HashMapDictionaryBuilder.<String, Object>put(
-				"notification.type",
-				"function#" +
-					ConfigurableUtil.getExternalReferenceCode(properties)
+				"notification.type", "function#" + externalReferenceCode
 			).putAll(
 				properties
 			).remove(

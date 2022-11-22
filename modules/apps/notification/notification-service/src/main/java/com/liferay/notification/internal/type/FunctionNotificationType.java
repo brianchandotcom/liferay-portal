@@ -20,6 +20,7 @@ import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationType;
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,7 +77,7 @@ public class FunctionNotificationType extends BaseNotificationType {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
-		_companyId = ConfigurableUtil.getCompanyId(
+		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionNotificationTypeConfiguration =
 			ConfigurableUtil.createConfigurable(

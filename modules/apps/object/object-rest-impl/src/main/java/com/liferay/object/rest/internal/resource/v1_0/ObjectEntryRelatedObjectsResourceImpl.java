@@ -16,6 +16,8 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
@@ -42,11 +44,44 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	public ObjectEntryRelatedObjectsResourceImpl(
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		ObjectRelationshipService objectRelationshipService) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+		_objectRelatedModelsProviderRegistry =
+			objectRelatedModelsProviderRegistry;
 		_objectRelationshipService = objectRelationshipService;
+	}
+
+	@Override
+	public void deleteCurrentObjectEntry(
+			Long currentObjectEntryId, String objectRelationshipName,
+			Long relatedObjectEntryId)
+		throws Exception {
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				_objectDefinition.getStorageType());
+
+		_checkCurrentObjectEntry(objectEntryManager, currentObjectEntryId);
+
+		_checkRelatedObjectEntry(
+			objectEntryManager, objectRelationshipName, relatedObjectEntryId);
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		ObjectRelatedModelsProvider objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				_objectDefinition.getClassName(), objectRelationship.getType());
+
+		objectRelatedModelsProvider.disassociateRelatedModels(
+			contextUser.getUserId(),
+			objectRelationship.getObjectRelationshipId(), currentObjectEntryId,
+			relatedObjectEntryId);
 	}
 
 	@Override
@@ -134,6 +169,29 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				relatedObjectEntryId));
 	}
 
+	private void _checkCurrentObjectEntry(
+			ObjectEntryManager objectEntryManager, long relatedObjectEntryId)
+		throws Exception {
+
+		objectEntryManager.getObjectEntry(
+			_getDTOConverterContext(relatedObjectEntryId), _objectDefinition,
+			relatedObjectEntryId);
+	}
+
+	private void _checkRelatedObjectEntry(
+			ObjectEntryManager objectEntryManager,
+			String objectRelationshipName, long relatedObjectEntryId)
+		throws Exception {
+
+		objectEntryManager.getObjectEntry(
+			_getDTOConverterContext(relatedObjectEntryId),
+			_getRelatedObjectDefinition(
+				_objectRelationshipService.getObjectRelationship(
+					_objectDefinition.getObjectDefinitionId(),
+					objectRelationshipName)),
+			relatedObjectEntryId);
+	}
+
 	private DefaultDTOConverterContext _getDTOConverterContext(
 		Long objectEntryId) {
 
@@ -142,6 +200,21 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			contextHttpServletRequest, objectEntryId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
+	}
+
+	private ObjectDefinition _getRelatedObjectDefinition(
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
+
+		if (objectDefinitionId1 != _objectDefinition.getObjectDefinitionId()) {
+			return _objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+		}
+
+		return _objectDefinitionLocalService.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
 	}
 
 	private ObjectEntry _getRelatedObjectEntry(
@@ -180,6 +253,8 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
 	private final ObjectRelationshipService _objectRelationshipService;
 
 }

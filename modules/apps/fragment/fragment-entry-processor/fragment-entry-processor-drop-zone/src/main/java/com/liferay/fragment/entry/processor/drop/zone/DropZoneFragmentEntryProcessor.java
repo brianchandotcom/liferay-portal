@@ -216,6 +216,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 	public void validateFragmentEntryHTML(String html, String configuration)
 		throws PortalException {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167932"))) {
+			return;
+		}
+
 		Document document = _getDocument(html);
 
 		Elements elements = document.select("lfr-drop-zone");

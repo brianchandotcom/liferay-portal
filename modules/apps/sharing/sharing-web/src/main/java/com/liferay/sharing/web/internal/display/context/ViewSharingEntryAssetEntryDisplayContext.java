@@ -86,8 +86,10 @@ public class ViewSharingEntryAssetEntryDisplayContext {
 		return redirect;
 	}
 
-	public List<DropdownItem> getSharingEntryMenu() throws PortalException {
-		return _viewSharedAssetsDisplayContext.getSharingEntryMenu(
+	public List<DropdownItem> getSharingEntryDropdownItems()
+		throws PortalException {
+
+		return _viewSharedAssetsDisplayContext.getSharingEntryDropdownItems(
 			_sharingEntry);
 	}
 

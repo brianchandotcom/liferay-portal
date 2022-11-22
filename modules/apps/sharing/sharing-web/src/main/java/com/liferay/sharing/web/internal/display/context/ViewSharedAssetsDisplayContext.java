@@ -46,11 +46,11 @@ import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
-import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
+import com.liferay.sharing.servlet.taglib.ui.SharingEntryDropdownItemContributor;
 import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
-import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemContributorRegistry;
+import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryDropdownItemContributorRegistry;
 
 import java.util.List;
 import java.util.Objects;
@@ -74,8 +74,8 @@ public class ViewSharedAssetsDisplayContext {
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
 		SharingEntryLocalService sharingEntryLocalService,
-		SharingEntryMenuItemContributorRegistry
-			sharingEntryMenuItemContributorRegistry,
+		SharingEntryDropdownItemContributorRegistry
+			sharingEntryDropdownItemContributorRegistry,
 		SharingDropdownItemFactory sharingDropdownItemFactory,
 		SharingPermission sharingPermission) {
 
@@ -87,8 +87,8 @@ public class ViewSharedAssetsDisplayContext {
 		_sharingConfigurationFactory = sharingConfigurationFactory;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 		_sharingEntryLocalService = sharingEntryLocalService;
-		_sharingEntryMenuItemContributorRegistry =
-			sharingEntryMenuItemContributorRegistry;
+		_sharingEntryDropdownItemContributorRegistry =
+			sharingEntryDropdownItemContributorRegistry;
 		_sharingDropdownItemFactory = sharingDropdownItemFactory;
 		_sharingPermission = sharingPermission;
 
@@ -216,17 +216,19 @@ public class ViewSharedAssetsDisplayContext {
 			sharingEntry, _themeDisplay.getLocale());
 	}
 
-	public List<DropdownItem> getSharingEntryMenu(SharingEntry sharingEntry)
+	public List<DropdownItem> getSharingEntryDropdownItems(
+			SharingEntry sharingEntry)
 		throws PortalException {
 
 		if (!isSharingEntryVisible(sharingEntry)) {
 			return null;
 		}
 
-		SharingEntryMenuItemContributor sharingEntryMenuItemContributor =
-			_sharingEntryMenuItemContributorRegistry.
-				getSharingEntryMenuItemContributor(
-					sharingEntry.getClassNameId());
+		SharingEntryDropdownItemContributor
+			sharingEntryDropdownItemContributor =
+				_sharingEntryDropdownItemContributorRegistry.
+					getSharingEntryMenuItemContributor(
+						sharingEntry.getClassNameId());
 
 		return DropdownItemListBuilder.add(
 			() -> _hasEditPermission(
@@ -253,7 +255,7 @@ public class ViewSharedAssetsDisplayContext {
 				sharingEntry.getClassName(), sharingEntry.getClassPK(),
 				_httpServletRequest)
 		).addAll(
-			sharingEntryMenuItemContributor.getSharingEntryMenuItems(
+			sharingEntryDropdownItemContributor.getSharingEntryDropdownItems(
 				sharingEntry, _themeDisplay)
 		).build();
 	}
@@ -380,11 +382,11 @@ public class ViewSharedAssetsDisplayContext {
 		_sharedAssetsFilterItemRegistry;
 	private final SharingConfigurationFactory _sharingConfigurationFactory;
 	private final SharingDropdownItemFactory _sharingDropdownItemFactory;
+	private final SharingEntryDropdownItemContributorRegistry
+		_sharingEntryDropdownItemContributorRegistry;
 	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;
-	private final SharingEntryMenuItemContributorRegistry
-		_sharingEntryMenuItemContributorRegistry;
 	private final SharingPermission _sharingPermission;
 	private final ThemeDisplay _themeDisplay;
 

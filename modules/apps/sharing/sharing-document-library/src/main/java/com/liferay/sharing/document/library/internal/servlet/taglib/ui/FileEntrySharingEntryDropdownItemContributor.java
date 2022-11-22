@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
+import com.liferay.sharing.servlet.taglib.ui.SharingEntryDropdownItemContributor;
 
 import java.util.List;
 
@@ -41,13 +41,13 @@ import org.osgi.service.component.annotations.Reference;
 		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 		"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
 	},
-	service = SharingEntryMenuItemContributor.class
+	service = SharingEntryDropdownItemContributor.class
 )
-public class FileEntrySharingEntryMenuItemContributor
-	implements SharingEntryMenuItemContributor {
+public class FileEntrySharingEntryDropdownItemContributor
+	implements SharingEntryDropdownItemContributor {
 
 	@Override
-	public List<DropdownItem> getSharingEntryMenuItems(
+	public List<DropdownItem> getSharingEntryDropdownItems(
 		SharingEntry sharingEntry, ThemeDisplay themeDisplay) {
 
 		return DropdownItemListBuilder.add(

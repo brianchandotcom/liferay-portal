@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
+import com.liferay.sharing.servlet.taglib.ui.SharingEntryDropdownItemContributor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,24 +39,25 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, service = SharingEntryMenuItemContributorRegistry.class
+	immediate = true,
+	service = SharingEntryDropdownItemContributorRegistry.class
 )
-public class SharingEntryMenuItemContributorRegistry {
+public class SharingEntryDropdownItemContributorRegistry {
 
-	public SharingEntryMenuItemContributor getSharingEntryMenuItemContributor(
-			long classNameId)
+	public SharingEntryDropdownItemContributor
+			getSharingEntryMenuItemContributor(long classNameId)
 		throws PortalException {
 
 		ClassName className = _classNameLocalService.getClassName(classNameId);
 
-		return new CompositeSharingEntryMenuItemContributor(
+		return new CompositeSharingEntryDropdownItemContributor(
 			_serviceTrackerMap.getService(className.getClassName()));
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, SharingEntryMenuItemContributor.class,
+			bundleContext, SharingEntryDropdownItemContributor.class,
 			"model.class.name");
 	}
 
@@ -68,44 +69,45 @@ public class SharingEntryMenuItemContributorRegistry {
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private ServiceTrackerMap<String, List<SharingEntryMenuItemContributor>>
+	private ServiceTrackerMap<String, List<SharingEntryDropdownItemContributor>>
 		_serviceTrackerMap;
 
-	private static final class CompositeSharingEntryMenuItemContributor
-		implements SharingEntryMenuItemContributor {
+	private static final class CompositeSharingEntryDropdownItemContributor
+		implements SharingEntryDropdownItemContributor {
 
-		public CompositeSharingEntryMenuItemContributor(
-			List<SharingEntryMenuItemContributor>
-				sharingEntryMenuItemContributors) {
+		public CompositeSharingEntryDropdownItemContributor(
+			List<SharingEntryDropdownItemContributor>
+				sharingEntryDropdownItemContributors) {
 
-			_sharingEntryMenuItemContributors =
-				sharingEntryMenuItemContributors;
+			_sharingEntryDropdownItemContributors =
+				sharingEntryDropdownItemContributors;
 		}
 
 		@Override
-		public List<DropdownItem> getSharingEntryMenuItems(
+		public List<DropdownItem> getSharingEntryDropdownItems(
 			SharingEntry sharingEntry, ThemeDisplay themeDisplay) {
 
-			if (ListUtil.isEmpty(_sharingEntryMenuItemContributors)) {
+			if (ListUtil.isEmpty(_sharingEntryDropdownItemContributors)) {
 				return Collections.emptyList();
 			}
 
 			List<DropdownItem> dropdownItems = new ArrayList<>();
 
-			for (SharingEntryMenuItemContributor
-					sharingEntryMenuItemContributor :
-						_sharingEntryMenuItemContributors) {
+			for (SharingEntryDropdownItemContributor
+					sharingEntryDropdownItemContributor :
+						_sharingEntryDropdownItemContributors) {
 
 				dropdownItems.addAll(
-					sharingEntryMenuItemContributor.getSharingEntryMenuItems(
-						sharingEntry, themeDisplay));
+					sharingEntryDropdownItemContributor.
+						getSharingEntryDropdownItems(
+							sharingEntry, themeDisplay));
 			}
 
 			return dropdownItems;
 		}
 
-		private final List<SharingEntryMenuItemContributor>
-			_sharingEntryMenuItemContributors;
+		private final List<SharingEntryDropdownItemContributor>
+			_sharingEntryDropdownItemContributors;
 
 	}
 

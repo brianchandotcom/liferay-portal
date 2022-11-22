@@ -23,9 +23,9 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public interface SharingEntryMenuItemContributor {
+public interface SharingEntryDropdownItemContributor {
 
-	public List<DropdownItem> getSharingEntryMenuItems(
+	public List<DropdownItem> getSharingEntryDropdownItems(
 		SharingEntry sharingEntry, ThemeDisplay themeDisplay);
 
 }

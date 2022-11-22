@@ -56,7 +56,7 @@ else {
 			</li>
 			<li class="tbar-item">
 				<clay:dropdown-actions
-					dropdownItems="<%= viewSharingEntryAssetEntryDisplayContext.getSharingEntryMenu() %>"
+					dropdownItems="<%= viewSharingEntryAssetEntryDisplayContext.getSharingEntryDropdownItems() %>"
 				/>
 			</li>
 		</ul>

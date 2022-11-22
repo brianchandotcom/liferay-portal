@@ -57,7 +57,15 @@ const HEADERS = [
 	},
 ];
 
-const STATUS_DISABLED = ['Bound', 'Quoted'];
+const STATUS_EDIT_DISABLED = ['Bound', 'Quoted'];
+
+const STATUS_DELETE_DISABLED = [
+	'Bound',
+	'Quoted',
+	'Rejected',
+	'Reviewed',
+	'Underwriting',
+];
 
 const PARAMETERS = {
 	sort: 'applicationCreateDate:desc',
@@ -118,12 +126,20 @@ const RecentApplications = () => {
 		alert(`Edit ${externalReferenceCode} Action`);
 	};
 
-	const setDisabledAction = (identifier: string) => {
+	const setDisabledEditAction = (identifier: string) => {
 		const application = applications.find(
 			(application) => application.key === identifier
 		) as TableContent;
 
-		return STATUS_DISABLED.includes(application.name);
+		return STATUS_EDIT_DISABLED.includes(application.name);
+	};
+
+	const setDisabledDeleteAction = (externalReferenceCode: string) => {
+		const application = applications.find(
+			(application) => application.key === externalReferenceCode
+		) as TableContent;
+
+		return STATUS_DELETE_DISABLED.includes(application.name);
 	};
 
 	useEffect(() => {
@@ -288,11 +304,12 @@ const RecentApplications = () => {
 				actions={[
 					{
 						action: handleEditApplication,
-						disabled: setDisabledAction,
+						disabled: setDisabledEditAction,
 						value: 'Edit',
 					},
 					{
 						action: handleDeleteApplication,
+						disabled: setDisabledDeleteAction,
 						value: 'Delete',
 					},
 				]}

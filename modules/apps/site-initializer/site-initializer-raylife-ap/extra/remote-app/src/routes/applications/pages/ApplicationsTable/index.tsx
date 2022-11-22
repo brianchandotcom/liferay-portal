@@ -76,7 +76,15 @@ const HEADERS = [
 	},
 ];
 
-const STATUS_DISABLED = ['Bound', 'Quoted'];
+const STATUS_EDIT_DISABLED = ['Bound', 'Quoted'];
+
+const STATUS_DELETE_DISABLED = [
+	'Bound',
+	'Quoted',
+	'Rejected',
+	'Reviewed',
+	'Underwriting',
+];
 
 type Application = {
 	applicationCreateDate: Date;
@@ -100,6 +108,7 @@ type TableItemType = {
 };
 
 type TableRowContentType = {[keys: string]: string};
+
 type itemsApplications = {
 	[keys: string]: string;
 };
@@ -244,12 +253,20 @@ const ApplicationsTable = () => {
 		alert(`Edit ${externalReferenceCode} Action`);
 	};
 
-	const setDisabledAction = (identifier: string) => {
+	const setDisabledEditAction = (externalReferenceCode: string) => {
 		const application = applications.find(
-			(application) => application.key === identifier
+			(application) => application.key === externalReferenceCode
 		) as TableContent;
 
-		return STATUS_DISABLED.includes(application.name);
+		return STATUS_EDIT_DISABLED.includes(application.name);
+	};
+
+	const setDisabledDeleteAction = (externalReferenceCode: string) => {
+		const application = applications.find(
+			(application) => application.key === externalReferenceCode
+		) as TableContent;
+
+		return STATUS_DELETE_DISABLED.includes(application.name);
 	};
 
 	const itemsCreate = (listItem: string[], checkedItem: []) => {
@@ -758,11 +775,12 @@ const ApplicationsTable = () => {
 				actions={[
 					{
 						action: handleEditApplication,
-						disabled: setDisabledAction,
+						disabled: setDisabledEditAction,
 						value: 'Edit',
 					},
 					{
 						action: handleDeleteApplication,
+						disabled: setDisabledDeleteAction,
 						value: 'Delete',
 					},
 				]}

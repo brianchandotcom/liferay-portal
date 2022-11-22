@@ -108,7 +108,10 @@ export default function () {
 						.join('');
 				}
 
-				if (minProductNameLenght < productName < maxProductNameLenght) {
+				if (
+					minProductNameLenght < productName.length &&
+					productName.length < maxProductNameLenght
+				) {
 					return productName.substring(0, 4);
 				}
 

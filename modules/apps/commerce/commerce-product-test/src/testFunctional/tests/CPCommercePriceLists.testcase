@@ -2034,7 +2034,7 @@ definition {
 			panel = "Commerce",
 			portlet = "Price Lists");
 
-		while ((IsElementPresent(key_name = "Test Price List", locator1 = "CommerceEntry#ASSERT_PRICE_LIST_STATUS", value1 = "APPROVED")) && (maxIterations = "40")) {
+		while ((IsTextEqual(key_name = "Test Price List", locator1 = "CommerceEntry#ASSERT_PRICE_LIST_STATUS", value1 = "APPROVED")) && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Price List to expire
 
@@ -2186,7 +2186,7 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
 			value1 = "$ 30.00");
 
-		while ((IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00")) && (maxIterations = "40")) {
+		while ((IsTextEqual(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00")) && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Price List to expire
 
@@ -2538,7 +2538,7 @@ definition {
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Relevance");
 
-		while ((IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00")) && (maxIterations = "40")) {
+		while ((IsTextEqual(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00")) && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Price List to expire
 

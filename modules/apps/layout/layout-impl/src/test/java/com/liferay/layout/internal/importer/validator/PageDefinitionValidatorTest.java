@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.layout.page.template.validator.test;
+package com.liferay.layout.internal.importer.validator;
 
-import com.liferay.layout.page.template.validator.PageDefinitionValidator;
 import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

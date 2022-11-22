@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Arthur Chan
  */
-@Component(immediate = true, service = OIDCUserInfoProcessor.class)
+@Component(service = OIDCUserInfoProcessor.class)
 public class OIDCUserInfoProcessor {
 
 	public long processUserInfo(

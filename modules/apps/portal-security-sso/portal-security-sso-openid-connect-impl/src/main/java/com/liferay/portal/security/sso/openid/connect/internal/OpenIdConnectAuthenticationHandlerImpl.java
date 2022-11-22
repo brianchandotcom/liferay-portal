@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Edward C. Han
  * @author Arthur Chan
  */
-@Component(immediate = true, service = OpenIdConnectAuthenticationHandler.class)
+@Component(service = OpenIdConnectAuthenticationHandler.class)
 public class OpenIdConnectAuthenticationHandlerImpl
 	implements OpenIdConnectAuthenticationHandler {
 

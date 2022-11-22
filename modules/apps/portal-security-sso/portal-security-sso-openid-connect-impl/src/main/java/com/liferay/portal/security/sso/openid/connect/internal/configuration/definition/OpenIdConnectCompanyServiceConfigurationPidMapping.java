@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = ConfigurationPidMapping.class)
+@Component(service = ConfigurationPidMapping.class)
 public class OpenIdConnectCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

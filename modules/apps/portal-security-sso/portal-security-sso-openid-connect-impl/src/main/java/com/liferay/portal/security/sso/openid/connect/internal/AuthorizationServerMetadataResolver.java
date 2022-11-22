@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Arthur Chan
  */
-@Component(
-	immediate = true, service = AuthorizationServerMetadataResolver.class
-)
+@Component(service = AuthorizationServerMetadataResolver.class)
 public class AuthorizationServerMetadataResolver {
 
 	public OIDCProviderMetadata resolveOIDCProviderMetadata(

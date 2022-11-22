@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Edward C. Han
  */
 @Component(
-	immediate = true,
 	property = {
 		"servlet-context-name=",
 		"servlet-filter-name=OpenId Connect Session Validation Filter",

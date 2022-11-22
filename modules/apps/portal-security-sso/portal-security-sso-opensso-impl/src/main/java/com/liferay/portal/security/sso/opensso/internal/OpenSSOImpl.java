@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Marta Medio
  */
-@Component(immediate = true, service = OpenSSO.class)
+@Component(service = OpenSSO.class)
 public class OpenSSOImpl implements OpenSSO {
 
 	@Override

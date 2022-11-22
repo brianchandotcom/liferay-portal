@@ -61,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  * @review
  */
 @Component(
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration",
 	service = {
 		ManagedServiceFactory.class,

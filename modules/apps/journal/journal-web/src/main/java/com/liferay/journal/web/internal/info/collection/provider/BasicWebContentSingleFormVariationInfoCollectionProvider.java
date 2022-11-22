@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -174,8 +173,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	private SearchContext _populateSearchContext(
 		CollectionQuery collectionQuery, SearchContext searchContext) {
 
-		searchContext.setAndSearch(true);
-
 		Map<String, Serializable> attributes = searchContext.getAttributes();
 
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
@@ -202,10 +199,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		String[] title = configuration.get(Field.TITLE);
 
 		if (ArrayUtil.isNotEmpty(title) && Validator.isNotNull(title[0])) {
-			searchContext.setAttribute(
-				Field.getLocalizedName(
-					LocaleUtil.getSiteDefault(), Field.TITLE),
-				title[0]);
+			searchContext.setAttribute(Field.TITLE, title[0]);
 		}
 
 		ServiceContext serviceContext =

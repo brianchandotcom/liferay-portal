@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.utility.page.validator;
+package com.liferay.layout.internal.importer.validator;
 
 import com.liferay.portal.json.validator.JSONValidator;
 import com.liferay.portal.json.validator.JSONValidatorException;

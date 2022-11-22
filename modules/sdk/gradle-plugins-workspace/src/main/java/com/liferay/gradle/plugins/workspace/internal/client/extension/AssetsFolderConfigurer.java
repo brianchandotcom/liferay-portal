@@ -14,19 +14,53 @@
 
 package com.liferay.gradle.plugins.workspace.internal.client.extension;
 
-import java.util.Optional;
+import groovy.lang.Closure;
 
+import java.util.Optional;
+import java.util.concurrent.Callable;
+
+import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskProvider;
 
 /**
  * @author Gregory Amerson
  */
-public interface ClientExtensionTypeConfigurer {
+public class AssetsFolderConfigurer implements ClientExtensionConfigurer {
 
+	@Override
 	public void apply(
 		Project project, Optional<ClientExtension> clientExtensionOptional,
-		TaskProvider<Copy> assembleClientExtensionTaskProvider);
+		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
+
+		assembleClientExtensionTaskProvider.configure(
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy copy) {
+					copy.into(
+						new Callable<String>() {
+
+							@Override
+							public String call() throws Exception {
+								return "static";
+							}
+
+						},
+						new Closure<Void>(copy) {
+
+							public void doCall(CopySpec copySpec) {
+								copySpec.from(project.file("assets"));
+								copySpec.include("**/*");
+								copySpec.setIncludeEmptyDirs(false);
+							}
+
+						});
+				}
+
+			});
+	}
 
 }

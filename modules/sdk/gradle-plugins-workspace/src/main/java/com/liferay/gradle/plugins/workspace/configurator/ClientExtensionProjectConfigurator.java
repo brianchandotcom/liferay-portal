@@ -24,10 +24,11 @@ import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
+import com.liferay.gradle.plugins.workspace.internal.client.extension.AssetsFolderConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtensionTypeConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.ConfigurationRuntimeTypeConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.CustomElementTypeConfigurer;
+import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtensionConfigurer;
+import com.liferay.gradle.plugins.workspace.internal.client.extension.ConfigurationTypeConfigurer;
+import com.liferay.gradle.plugins.workspace.internal.client.extension.NodeBuildConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
@@ -45,6 +46,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -95,14 +97,27 @@ public class ClientExtensionProjectConfigurator
 
 		_clientExtensionConfigurers.put(
 			"configuration",
-			Collections.singletonList(
-				new ConfigurationRuntimeTypeConfigurer()));
+			Collections.singletonList(new ConfigurationTypeConfigurer()));
 		_clientExtensionConfigurers.put(
 			"customElement",
-			Collections.singletonList(new CustomElementTypeConfigurer()));
+			Arrays.asList(
+				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
+		_clientExtensionConfigurers.put(
+			"globalCSS",
+			Arrays.asList(
+				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
+		_clientExtensionConfigurers.put(
+			"globalJS",
+			Arrays.asList(
+				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
 		_clientExtensionConfigurers.put(
 			"themeCSS",
-			Collections.singletonList(new ThemeCSSTypeConfigurer()));
+			Arrays.asList(
+				new AssetsFolderConfigurer(), new ThemeCSSTypeConfigurer()));
+		_clientExtensionConfigurers.put(
+			"themeJS",
+			Arrays.asList(
+				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
 
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
@@ -165,7 +180,7 @@ public class ClientExtensionProjectConfigurator
 									createClientExtensionConfigTask.setType(
 										runtimeTypeJsonNode.asText()));
 
-							List<ClientExtensionTypeConfigurer>
+							List<ClientExtensionConfigurer>
 								clientExtensionTypeConfigurers =
 									_clientExtensionConfigurers.getOrDefault(
 										runtimeTypeJsonNode.asText(),
@@ -195,7 +210,7 @@ public class ClientExtensionProjectConfigurator
 									createClientExtensionConfigTask.
 										addClientExtension(clientExtension));
 
-							List<ClientExtensionTypeConfigurer>
+							List<ClientExtensionConfigurer>
 								clientExtensionTypeConfigurers =
 									_clientExtensionConfigurers.getOrDefault(
 										clientExtension.type,
@@ -385,25 +400,6 @@ public class ClientExtensionProjectConfigurator
 					new File(project.getBuildDir(), "clientExtension"));
 
 				copy.from(createClientExtensionConfigTaskProvider);
-
-				copy.into(
-					new Callable<String>() {
-
-						@Override
-						public String call() throws Exception {
-							return "static";
-						}
-
-					},
-					new Closure<Void>(copy) {
-
-						public void doCall(CopySpec copySpec) {
-							copySpec.from(project.file("assets"));
-							copySpec.include("**/*");
-							copySpec.setIncludeEmptyDirs(false);
-						}
-
-					});
 			});
 
 		buildClientExtensionZipTaskProvider.configure(
@@ -521,7 +517,7 @@ public class ClientExtensionProjectConfigurator
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
-	private final Map<String, List<ClientExtensionTypeConfigurer>>
+	private final Map<String, List<ClientExtensionConfigurer>>
 		_clientExtensionConfigurers = new HashMap<>();
 	private final boolean _defaultRepositoryEnabled;
 

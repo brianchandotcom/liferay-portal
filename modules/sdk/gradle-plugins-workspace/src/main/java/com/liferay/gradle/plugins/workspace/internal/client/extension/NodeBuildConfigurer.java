@@ -54,8 +54,7 @@ import org.osgi.framework.Version;
 /**
  * @author Gregory Amerson
  */
-public class CustomElementTypeConfigurer
-	implements ClientExtensionTypeConfigurer {
+public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 
 	@Override
 	public void apply(

@@ -48,7 +48,7 @@ import org.gradle.api.tasks.bundling.War;
 /**
  * @author Gregory Amerson
  */
-public class ThemeCSSTypeConfigurer implements ClientExtensionTypeConfigurer {
+public class ThemeCSSTypeConfigurer implements ClientExtensionConfigurer {
 
 	@Override
 	public void apply(

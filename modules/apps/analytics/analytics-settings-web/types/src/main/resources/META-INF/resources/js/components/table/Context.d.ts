@@ -15,7 +15,7 @@
 import React from 'react';
 import {TFilter} from '../../utils/filter';
 import {TPagination} from '../../utils/pagination';
-import {TFormattedItems} from './Table';
+import {TFormattedItems} from './types';
 export declare enum Events {
 	ChangeFilter = 'CHANGE_FILTER',
 	ChangeItems = 'CHANGE_ITEMS',

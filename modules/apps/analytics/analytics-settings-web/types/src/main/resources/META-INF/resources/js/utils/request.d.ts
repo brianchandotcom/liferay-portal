@@ -12,17 +12,5 @@
  * details.
  */
 
-import {TFilter} from './filter';
-import {TPagination} from './pagination';
 declare function request(path: string, config: RequestInit): Promise<any>;
-export declare type TQueries = {
-	filter: TFilter;
-	keywords: string;
-	pagination: TPagination;
-};
-export declare function serializeQueries({
-	filter: {type, value},
-	keywords,
-	pagination: {page, pageSize},
-}: TQueries): string;
 export default request;

@@ -13,8 +13,7 @@
  */
 
 import React from 'react';
-import {TQueries} from '../../utils/request';
-import {TColumn, TFormattedItems} from '../table/Table';
+import {TColumn, TTableRequestParams} from '../table/types';
 declare type TRawItem = {
 	example: string;
 	name: string;
@@ -32,10 +31,9 @@ interface IModalProps {
 	columns: TColumn[];
 	observer: any;
 	onCancel: () => void;
-	onSubmit: (items: TFormattedItems) => void;
-	requestFn: (params: TQueries) => Promise<any>;
+	onSubmit: (items: TRawItem[]) => void;
+	requestFn: (params: TTableRequestParams) => Promise<any>;
 	title: string;
 }
 declare const Modal: React.FC<IModalProps>;
-export declare function getFields(items: TFormattedItems): TRawItem[];
 export default Modal;

@@ -13,8 +13,7 @@
  */
 
 import React from 'react';
-import {TQueries} from '../../utils/request';
-import {TColumn} from '../table/Table';
+import {TColumn, TTableRequestParams} from '../table/types';
 import {EPeople} from './People';
 export interface ICommonModalProps {
 	observer: any;
@@ -32,7 +31,7 @@ interface IModalProps {
 	noResultsTitle: string;
 	observer: any;
 	onCloseModal: () => void;
-	requestFn: (params: TQueries) => Promise<any>;
+	requestFn: (params: TTableRequestParams) => Promise<any>;
 	syncAllAccounts: boolean;
 	syncAllContacts: boolean;
 	syncedIds: {

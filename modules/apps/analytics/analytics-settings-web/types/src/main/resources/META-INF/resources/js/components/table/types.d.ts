@@ -12,8 +12,31 @@
  * details.
  */
 
-import {TFormattedItems} from '../components/table/Table';
-export declare function getIds(
-	items: TFormattedItems,
-	initialIds: number[]
-): number[];
+import {TFilter} from '../../utils/filter';
+export declare type TColumn = {
+	expanded: boolean;
+	label: string;
+	show?: boolean;
+	sortable?: boolean;
+	value: string;
+};
+export declare type TItem = {
+	checked: boolean;
+	columns: {
+		label: string;
+		show?: boolean;
+	}[];
+	disabled: boolean;
+	id: string;
+};
+export declare type TFormattedItems = {
+	[key: string]: TItem;
+};
+export declare type TTableRequestParams = {
+	filter: TFilter;
+	keywords: string;
+	pagination: {
+		page: number;
+		pageSize: number;
+	};
+};

@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import {TColumn} from './Table';
+import {TColumn} from './types';
 interface IContentProps {
 	columns: TColumn[];
 	disabled: boolean;

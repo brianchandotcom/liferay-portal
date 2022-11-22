@@ -12,19 +12,25 @@
  * details.
  */
 
-import {TQueries} from './request';
+import {TTableRequestParams} from '../components/table/types';
 export declare function createProperty(name: string): Promise<any>;
 export declare function deleteConnection(): Promise<any>;
-export declare function fetchAccountGroups(params: TQueries): Promise<any>;
-export declare function fetchChannels(params: TQueries): Promise<any>;
+export declare function fetchAccountGroups(
+	params: TTableRequestParams
+): Promise<any>;
+export declare function fetchChannels(
+	params: TTableRequestParams
+): Promise<any>;
 export declare function fetchConnection(token: string): Promise<any>;
 export declare function fetchContactsOrganization(
-	params: TQueries
+	params: TTableRequestParams
 ): Promise<any>;
-export declare function fetchContactsUsersGroup(params: TQueries): Promise<any>;
+export declare function fetchContactsUsersGroup(
+	params: TTableRequestParams
+): Promise<any>;
 export declare function fetchAttributesConfiguration(): Promise<any>;
 export declare function fetchProperties(): Promise<any>;
-export declare function fetchSites(params: TQueries): Promise<any>;
+export declare function fetchSites(params: TTableRequestParams): Promise<any>;
 export declare function updateProperty({
 	channelId,
 	commerceChannelIds,
@@ -52,7 +58,9 @@ export declare function updateAttributesConfiguration({
 	syncedUserGroupIds?: string[];
 }): Promise<any>;
 export declare function fetchSelectedFields(): Promise<any>;
-export declare function fetchPeopleFields(params: TQueries): Promise<any>;
+export declare function fetchPeopleFields(
+	params: TTableRequestParams
+): Promise<any>;
 declare type TField = {
 	example: string;
 	name: string;

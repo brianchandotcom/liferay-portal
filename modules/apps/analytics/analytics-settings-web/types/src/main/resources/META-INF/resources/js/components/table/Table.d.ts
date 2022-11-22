@@ -14,26 +14,7 @@
 
 /// <reference types="react" />
 
-import {TQueries} from '../../utils/request';
-export declare type TColumn = {
-	expanded: boolean;
-	label: string;
-	show?: boolean;
-	sortable?: boolean;
-	value: string;
-};
-export declare type TItem = {
-	checked: boolean;
-	columns: {
-		label: string;
-		show?: boolean;
-	}[];
-	disabled: boolean;
-	id: string;
-};
-export declare type TFormattedItems = {
-	[key: string]: TItem;
-};
+import {TColumn, TFormattedItems, TItem, TTableRequestParams} from './types';
 interface ITableProps<TRawItem> {
 	columns: TColumn[];
 	disabled?: boolean;
@@ -41,7 +22,7 @@ interface ITableProps<TRawItem> {
 	mapperItems: (items: TRawItem[]) => TItem[];
 	noResultsTitle: string;
 	onItemsChange?: (items: TFormattedItems) => void;
-	requestFn: (params: TQueries) => Promise<any>;
+	requestFn: (params: TTableRequestParams) => Promise<any>;
 }
 declare function TableWrapper<TRawItem>(
 	props: ITableProps<TRawItem>

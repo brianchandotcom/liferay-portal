@@ -13,10 +13,10 @@
  */
 
 import React from 'react';
-import {TFormattedItems} from '../table/Table';
 import {TProperty} from './Properties';
 interface IChannelTabProps {
-	onChannelsChange: (items: TFormattedItems) => void;
+	initialIds: number[];
+	onChannelsChange: (ids: number[]) => void;
 	property: TProperty;
 }
 declare const ChannelTab: React.FC<IChannelTabProps>;

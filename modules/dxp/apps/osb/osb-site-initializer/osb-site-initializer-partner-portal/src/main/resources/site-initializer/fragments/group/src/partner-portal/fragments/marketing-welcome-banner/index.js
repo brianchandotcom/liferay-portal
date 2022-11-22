@@ -15,11 +15,11 @@ const posDissmissBanner = fragmentElement.querySelector('.pos-dismiss');
 const dissmissButtonBanner = fragmentElement.querySelector('.on-click-button');
 
 fragmentElement.querySelector('.dismiss-button').onclick = () => {
-	predissmissBanner.classList.toggle('d-flex');
+	predissmissBanner.classList.toggle('d-lg-flex');
 	predissmissBanner.classList.toggle('d-none');
 
 	posDissmissBanner.classList.toggle('d-none');
-	posDissmissBanner.classList.toggle('d-flex');
+	posDissmissBanner.classList.toggle('d-lg-flex');
 
 	dissmissButtonBanner.classList.toggle('d-none');
 	dissmissButtonBanner.classList.toggle('d-flex');

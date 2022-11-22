@@ -79,9 +79,7 @@ const MultiSelect = ({
 
 				<ClayForm.FeedbackGroup>
 					{Boolean(helpText) && (
-						<ClayForm.FeedbackItem>
-							{helpText}
-						</ClayForm.FeedbackItem>
+						<ClayForm.Text>{helpText}</ClayForm.Text>
 					)}
 
 					{errorMessages.map((errorMessage) => (

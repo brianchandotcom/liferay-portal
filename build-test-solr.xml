@@ -29,43 +29,19 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 
 	<macrodef name="configure-blacklist-osgi-config">
 		<sequential>
-			<if>
-				<or>
-					<contains string="${env.CI_TEST_SUITE}" substring="portal-release" />
-					<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-app-release" />
-				</or>
-				<then>
-					<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames="com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl,com.liferay.portal.search.elasticsearch.monitoring.web,com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.learning.to.rank.api,com.liferay.portal.search.learning.to.rank.impl,com.liferay.portal.search.similar.results.web,com.liferay.portal.search.similar.results.web.spi,com.liferay.portal.search.tuning.rankings.api,com.liferay.portal.search.tuning.rankings.web,com.liferay.portal.search.tuning.synonyms.api,com.liferay.portal.search.tuning.synonyms.web,com.liferay.portal.search.tuning.web,com.liferay.portal.search.tuning.web.api,com.liferay.portal.workflow.kaleo.metrics.integration,com.liferay.portal.workflow.metrics.api,com.liferay.portal.workflow.metrics.rest.api,com.liferay.portal.workflow.metrics.rest.impl,com.liferay.portal.workflow.metrics.rest.spi,com.liferay.portal.workflow.metrics.service,com.liferay.portal.workflow.metrics.sla.api,com.liferay.portal.workflow.metrics.web,com.liferay.search.experiences.api,com.liferay.search.experiences.rest.api,com.liferay.search.experiences.rest.client,com.liferay.search.experiences.rest.impl,com.liferay.search.experiences.service,com.liferay.search.experiences.web,Liferay\ Commerce\ -\ Liferay\ Commerce\ -\ API,Liferay\ Commerce\ -\ Liferay\ Commerce\ -\ Impl,Liferay\ CE\ Commerce\ -\ Liferay\ CE\ Commerce\ -\ API,Liferay\ CE\ Commerce\ -\ Liferay\ CE\ Commerce\ -\ Impl"</echo>
-				</then>
-				<else>
-					<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames="com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl,com.liferay.portal.search.elasticsearch.monitoring.web,com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.learning.to.rank.api,com.liferay.portal.search.learning.to.rank.impl,com.liferay.portal.search.similar.results.web,com.liferay.portal.search.similar.results.web.spi,com.liferay.portal.search.tuning.rankings.api,com.liferay.portal.search.tuning.rankings.web,com.liferay.portal.search.tuning.synonyms.api,com.liferay.portal.search.tuning.synonyms.web,com.liferay.portal.search.tuning.web,com.liferay.portal.search.tuning.web.api,com.liferay.portal.workflow.kaleo.metrics.integration,com.liferay.portal.workflow.metrics.api,com.liferay.portal.workflow.metrics.rest.api,com.liferay.portal.workflow.metrics.rest.impl,com.liferay.portal.workflow.metrics.rest.spi,com.liferay.portal.workflow.metrics.service,com.liferay.portal.workflow.metrics.sla.api,com.liferay.portal.workflow.metrics.web,com.liferay.search.experiences.api,com.liferay.search.experiences.rest.api,com.liferay.search.experiences.rest.client,com.liferay.search.experiences.rest.impl,com.liferay.search.experiences.service,com.liferay.search.experiences.web</echo>
-
-					<pathconvert pathsep="," property="commerce.modules">
-						<path>
-							<fileset
-								dir="${liferay.home}/osgi/modules"
-							>
-								<include name="com.liferay.commerce.*" />
-								<include name="com.liferay.headless.commerce.*" />
-							</fileset>
-						</path>
-						<chainedmapper>
-							<mapper
-								from="^(.*)/(.*\.jar)"
-								to="\2"
-								type="regexp"
-							/>
-							<mapper
-								from="*.jar"
-								to="*"
-								type="glob"
-							/>
-						</chainedmapper>
-					</pathconvert>
-
-					<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">,${commerce.modules}"</echo>
-				</else>
-			</if>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=[\
+"com.liferay.portal.search.elasticsearch7.api",\
+"com.liferay.portal.search.elasticsearch7.impl",\
+"com.liferay.portal.search.elasticsearch7.spi",\
+"com.liferay.portal.search.elasticsearch.monitoring.web",\
+"com.liferay.search.experiences.api",\
+"com.liferay.search.experiences.lang",\
+"com.liferay.search.experiences.rest.api",\
+"com.liferay.search.experiences.rest.client",\
+"com.liferay.search.experiences.rest.impl",\
+"com.liferay.search.experiences.service",\
+"com.liferay.search.experiences.web"\
+]</echo>
 		</sequential>
 	</macrodef>
 

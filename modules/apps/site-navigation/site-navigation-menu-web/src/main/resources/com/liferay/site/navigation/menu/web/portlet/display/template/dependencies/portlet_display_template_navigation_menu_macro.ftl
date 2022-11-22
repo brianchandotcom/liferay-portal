@@ -1,6 +1,7 @@
 <#macro buildChildrenNavItems
 	displayDepth
 	navItem
+	menuItem = true
 	navItemLevel = 2
 >
 	<#assign
@@ -20,7 +21,11 @@
 
 		<li class="${nav_child_css_class}" id="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" role="presentation">
 			<#if childNavigationItem.isBrowsable()>
-				<a class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
+				<#if menuItem>
+					<a class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
+				<#else>
+					<a class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()}>${childNavigationItem.getName()}</a>
+				</#if>
 			<#else>
 				<span class="dropdown-item font-weight-semi-bold navigation-menu__submenu">${childNavigationItem.getName()}</span>
 			</#if>
@@ -30,6 +35,7 @@
 			<ul class="list-unstyled pl-3">
 				<@buildChildrenNavItems
 					displayDepth=displayDepth
+					menuItem=false
 					navItem=childNavigationItem
 					navItemLevel=(navItemLevel + 1)
 				/>

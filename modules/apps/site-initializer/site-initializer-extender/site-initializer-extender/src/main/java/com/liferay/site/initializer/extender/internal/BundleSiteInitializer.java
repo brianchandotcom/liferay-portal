@@ -2534,8 +2534,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			long groupId = serviceContext.getScopeGroupId();
-
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject objectEntryJSONObject = jsonArray.getJSONObject(i);
 
@@ -2548,7 +2546,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectEntry = _objectEntryManager.addOrUpdateObjectEntry(
 					serviceContext.getCompanyId(), defaultDTOConverterContext,
 					externalReferenceCode, objectDefinition, objectEntry,
-					String.valueOf(groupId));
+					String.valueOf(serviceContext.getScopeGroupId()));
 
 				if (Validator.isNotNull(externalReferenceCode)) {
 					objectEntryIdsStringUtilReplaceValues.put(

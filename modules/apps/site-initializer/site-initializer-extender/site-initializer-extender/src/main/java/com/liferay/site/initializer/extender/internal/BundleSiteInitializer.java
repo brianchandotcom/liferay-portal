@@ -3326,10 +3326,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addRoles(
 			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			serviceContext);
-
 		_addUserAccounts(serviceContext);
-
 		_addUserRoles(serviceContext);
+		_addRolesAssignments(serviceContext);
 	}
 
 	private void _addPortletSettings(ServiceContext serviceContext)
@@ -3433,6 +3432,78 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addOrUpdateResourcePermissions(
 			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			"/site-initializer/resource-permissions.json", serviceContext);
+	}
+
+	private void _addRolesAssignments(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/roles-assignments.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONArray groupsJSONArray = jsonObject.getJSONArray("groups");
+
+			if (JSONUtil.isEmpty(groupsJSONArray)) {
+				continue;
+			}
+
+			List<Long> groupIds = new ArrayList<>();
+
+			for (int j = 0; j < groupsJSONArray.length(); j++) {
+				JSONObject groupJSONObject = jsonArray.getJSONObject(i);
+
+				String groupType = groupJSONObject.getString("groupType");
+
+				if (StringUtil.equals(groupType, "Organization")) {
+					com.liferay.portal.kernel.model.Organization organization =
+						_organizationLocalService.getOrganization(
+							serviceContext.getCompanyId(),
+							groupJSONObject.getString("groupName"));
+
+					groupIds.add(organization.getOrganizationId());
+				}
+				else if (StringUtil.equals(groupType, "Site")) {
+					groupIds.add(serviceContext.getScopeGroupId());
+				}
+				else if (StringUtil.equals(groupType, "User")) {
+					User user = _userLocalService.getUserByScreenName(
+						serviceContext.getCompanyId(),
+						groupJSONObject.getString("groupName"));
+
+					groupIds.add(user.getUserId());
+				}
+				else if (StringUtil.equals(groupType, "UserGroups")) {
+					UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+						serviceContext.getCompanyId(),
+						groupJSONObject.getString("groupName"));
+
+					groupIds.add(userGroup.getUserGroupId());
+				}
+			}
+
+			if (groupIds.isEmpty()) {
+				continue;
+			}
+
+			Role role = _roleLocalService.getRole(
+				serviceContext.getCompanyId(),
+				jsonObject.getString("roleName"));
+
+			if (role == null) {
+				continue;
+			}
+
+			_groupLocalService.setRoleGroups(
+				role.getRoleId(), ArrayUtil.toLongArray(groupIds));
+		}
 	}
 
 	private void _addSiteConfiguration(ServiceContext serviceContext)

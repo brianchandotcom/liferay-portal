@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jonathan McCann
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class AddSambaExpandoBridgePortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 

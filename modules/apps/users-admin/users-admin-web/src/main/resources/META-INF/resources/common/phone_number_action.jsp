@@ -17,79 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("contact_information.jsp-className");
-long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Phone phone = (Phone)row.getObject();
 
-long phoneId = phone.getPhoneId();
+ContactInformationActionDropdownItemsProvider contactInformationActionDropdownItemsProvider = new ContactInformationActionDropdownItemsProvider(request, renderResponse, ListTypeConstants.PHONE, "/common/edit_phone_number.jsp", phone.getPhoneId());
 %>
 
-<liferay-ui:icon-menu
-	direction="left-side"
-	icon="<%= StringPool.BLANK %>"
-	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
-	showWhenSingleIcon="<%= true %>"
->
-	<liferay-ui:icon
-		message="edit"
-		url='<%=
-			PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCPath(
-				"/common/edit_phone_number.jsp"
-			).setRedirect(
-				currentURL
-			).setParameter(
-				"className", className
-			).setParameter(
-				"classPK", classPK
-			).setParameter(
-				"primaryKey", phoneId
-			).buildString()
-		%>'
-	/>
-
-	<%
-	PortletURL portletURL = PortletURLBuilder.createActionURL(
-		renderResponse
-	).setActionName(
-		"/users_admin/update_contact_information"
-	).setRedirect(
-		currentURL
-	).setParameter(
-		"className", className
-	).setParameter(
-		"classPK", classPK
-	).setParameter(
-		"listType", ListTypeConstants.PHONE
-	).setParameter(
-		"primaryKey", phoneId
-	).buildPortletURL();
-	%>
-
-	<liferay-ui:icon
-		message="make-primary"
-		url='<%=
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(portletURL, renderResponse)
-			).setCMD(
-				"makePrimary"
-			).buildString()
-		%>'
-	/>
-
-	<liferay-ui:icon
-		message="remove"
-		url="<%=
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(portletURL, renderResponse)
-			).setCMD(
-				Constants.DELETE
-			).buildString()
-		%>"
-	/>
-</liferay-ui:icon-menu>
+<clay:dropdown-actions
+	aria-label='<%= LanguageUtil.get(request, "edit-phone-number") %>'
+	dropdownItems="<%= contactInformationActionDropdownItemsProvider.getActionDropdownItems() %>"
+/>

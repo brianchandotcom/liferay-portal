@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration",
-	immediate = true, service = CookiesManager.class
+	service = CookiesManager.class
 )
 public class CookiesManagerImpl implements CookiesManager {
 

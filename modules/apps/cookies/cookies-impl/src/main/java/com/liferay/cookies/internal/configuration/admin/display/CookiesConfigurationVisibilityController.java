@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Olivér Kecskeméty
  */
 @Component(
-	immediate = true,
 	property = {
 		"configuration.pid=com.liferay.cookies.configuration.banner.CookiesBannerConfiguration",
 		"configuration.pid=com.liferay.cookies.configuration.consent.CookiesConsentConfiguration"

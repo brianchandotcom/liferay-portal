@@ -15,6 +15,7 @@
 package com.liferay.client.extension.type;
 
 import com.liferay.client.extension.type.annotation.CETProperty;
+import com.liferay.client.extension.type.annotation.CETPropertyType;
 import com.liferay.client.extension.type.annotation.CETType;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -27,20 +28,23 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface IFrameCET extends CET {
 
 	@CETProperty(
-		defaultValue = "", name = "friendlyURLMapping", type = "string"
+		defaultValue = "", name = "friendlyURLMapping",
+		type = CETPropertyType.String
 	)
 	public String getFriendlyURLMapping();
 
 	@CETProperty(
-		defaultValue = "", name = "portletCategoryName", type = "string"
+		defaultValue = "", name = "portletCategoryName",
+		type = CETPropertyType.String
 	)
 	public String getPortletCategoryName();
 
-	@CETProperty(defaultValue = "", name = "url", type = "string", url = true)
+	@CETProperty(defaultValue = "", name = "url", type = CETPropertyType.URL)
 	public String getURL();
 
 	@CETProperty(
-		defaultValue = "false", name = "instanceable", type = "boolean"
+		defaultValue = "false", name = "instanceable",
+		type = CETPropertyType.Boolean
 	)
 	public boolean isInstanceable();
 

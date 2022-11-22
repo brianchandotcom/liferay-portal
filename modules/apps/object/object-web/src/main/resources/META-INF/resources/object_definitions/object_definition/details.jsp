@@ -65,211 +65,209 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			<liferay-ui:message key="information" />
 		</h2>
 
-		<liferay-frontend:fieldset-group>
-			<clay:sheet-section>
-				<h3 class="sheet-subtitle">
-					<liferay-ui:message key="object-definition-data" />
-				</h3>
+		<clay:sheet-section>
+			<h3 class="sheet-subtitle">
+				<liferay-ui:message key="object-definition-data" />
+			</h3>
 
-				<clay:row>
-					<clay:col
-						md="11"
-					>
-						<aui:input name="externalReferenceCode" type="hidden" />
-						<aui:input name="objectDefinitionId" type="hidden" />
-
-						<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
-
-						<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="label" />
-
-						<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="pluralLabel" />
-
-						<aui:input cssClass="disabled" label="object-definition-table-name" name="DBTableName" readonly="true" type="text" />
-					</clay:col>
-				</clay:row>
-
-				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input disabled="<%= !objectDefinition.isApproved() || objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
-				</aui:field-wrapper>
-			</clay:sheet-section>
-
-			<clay:sheet-section>
-				<h3 class="sheet-subtitle">
-					<liferay-ui:message key="entry-display" />
-				</h3>
-
-				<clay:row>
-					<clay:col
-						md="11"
-					>
-						<aui:select disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="titleObjectFieldId" showEmptyOption="<%= false %>">
-
-							<%
-							for (ObjectField objectField : nonrelationshipObjectFields) {
-							%>
-
-								<c:choose>
-									<c:when test='<%= Objects.equals(objectField.getName(), "id") %>'>
-										<aui:option label='<%= LanguageUtil.get(request, "id") %>' selected="<%= true %>" value="<%= objectField.getObjectFieldId() %>" />
-									</c:when>
-									<c:otherwise>
-										<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" localizeLabel="<%= false %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
-									</c:otherwise>
-								</c:choose>
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</clay:col>
-				</clay:row>
-
-				<clay:row
-					cssClass="hide"
+			<clay:row>
+				<clay:col
+					md="11"
 				>
-					<clay:col
-						md="11"
-					>
-						<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="descriptionObjectFieldId" showEmptyOption="<%= true %>">
+					<aui:input name="externalReferenceCode" type="hidden" />
+					<aui:input name="objectDefinitionId" type="hidden" />
 
-							<%
-							for (ObjectField objectField : nonrelationshipObjectFields) {
-							%>
+					<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
 
-								<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getDescriptionObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+					<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="label" />
 
-							<%
-							}
-							%>
+					<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="pluralLabel" />
 
-						</aui:select>
-					</clay:col>
-				</clay:row>
-			</clay:sheet-section>
+					<aui:input cssClass="disabled" label="object-definition-table-name" name="DBTableName" readonly="true" type="text" />
+				</clay:col>
+			</clay:row>
 
-			<clay:sheet-section>
-				<h3 class="sheet-subtitle">
-					<liferay-ui:message key="scope" />
-				</h3>
+			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+				<aui:input disabled="<%= !objectDefinition.isApproved() || objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectDefinition.isActive() %>" />
+			</aui:field-wrapper>
+		</clay:sheet-section>
 
-				<clay:row>
-					<clay:col
-						md="11"
-					>
-						<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
+		<clay:sheet-section>
+			<h3 class="sheet-subtitle">
+				<liferay-ui:message key="entry-display" />
+			</h3>
 
-							<%
-							for (ObjectScopeProvider objectScopeProvider : objectDefinitionsDetailsDisplayContext.getObjectScopeProviders()) {
-							%>
+			<clay:row>
+				<clay:col
+					md="11"
+				>
+					<aui:select disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="titleObjectFieldId" showEmptyOption="<%= false %>">
 
-								<aui:option label="<%= objectScopeProvider.getLabel(locale) %>" selected="<%= Objects.equals(objectScopeProvider.getKey(), objectDefinitionsDetailsDisplayContext.getScope()) %>" value="<%= objectScopeProvider.getKey() %>" />
+						<%
+						for (ObjectField objectField : nonrelationshipObjectFields) {
+						%>
 
-							<%
-							}
-							%>
+							<c:choose>
+								<c:when test='<%= Objects.equals(objectField.getName(), "id") %>'>
+									<aui:option label='<%= LanguageUtil.get(request, "id") %>' selected="<%= true %>" value="<%= objectField.getObjectFieldId() %>" />
+								</c:when>
+								<c:otherwise>
+									<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" localizeLabel="<%= false %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+								</c:otherwise>
+							</c:choose>
 
-						</aui:select>
-					</clay:col>
-				</clay:row>
+						<%
+						}
+						%>
 
-				<clay:row>
-					<clay:col
-						md="11"
-					>
-						<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="panelCategoryKey" showEmptyOption="<%= false %>">
-							<aui:option label='<%= LanguageUtil.get(request, "choose-an-option") %>' selected="<%= true %>" value="" />
+					</aui:select>
+				</clay:col>
+			</clay:row>
 
-							<%
-							for (KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getKeyValuePairs()) {
-							%>
-
-								<aui:option label="<%= keyValuePair.getValue() %>" selected="<%= Objects.equals(keyValuePair.getKey(), objectDefinition.getPanelCategoryKey()) %>" value="<%= keyValuePair.getKey() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</clay:col>
-				</clay:row>
-			</clay:sheet-section>
-
-			<clay:sheet-section
-				cssClass='<%= objectDefinition.isSystem() ? "hide" : "" %>'
+			<clay:row
+				cssClass="hide"
 			>
-				<h3 class="sheet-subtitle">
-					<liferay-ui:message key="account-restriction" />
-				</h3>
+				<clay:col
+					md="11"
+				>
+					<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="descriptionObjectFieldId" showEmptyOption="<%= true %>">
+
+						<%
+						for (ObjectField objectField : nonrelationshipObjectFields) {
+						%>
+
+							<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getDescriptionObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</clay:col>
+			</clay:row>
+		</clay:sheet-section>
+
+		<clay:sheet-section>
+			<h3 class="sheet-subtitle">
+				<liferay-ui:message key="scope" />
+			</h3>
+
+			<clay:row>
+				<clay:col
+					md="11"
+				>
+					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
+
+						<%
+						for (ObjectScopeProvider objectScopeProvider : objectDefinitionsDetailsDisplayContext.getObjectScopeProviders()) {
+						%>
+
+							<aui:option label="<%= objectScopeProvider.getLabel(locale) %>" selected="<%= Objects.equals(objectScopeProvider.getKey(), objectDefinitionsDetailsDisplayContext.getScope()) %>" value="<%= objectScopeProvider.getKey() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</clay:col>
+			</clay:row>
+
+			<clay:row>
+				<clay:col
+					md="11"
+				>
+					<aui:select disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="panelCategoryKey" showEmptyOption="<%= false %>">
+						<aui:option label='<%= LanguageUtil.get(request, "choose-an-option") %>' selected="<%= true %>" value="" />
+
+						<%
+						for (KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getKeyValuePairs()) {
+						%>
+
+							<aui:option label="<%= keyValuePair.getValue() %>" selected="<%= Objects.equals(keyValuePair.getKey(), objectDefinition.getPanelCategoryKey()) %>" value="<%= keyValuePair.getKey() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</clay:col>
+			</clay:row>
+		</clay:sheet-section>
+
+		<clay:sheet-section
+			cssClass='<%= objectDefinition.isSystem() ? "hide" : "" %>'
+		>
+			<h3 class="sheet-subtitle">
+				<liferay-ui:message key="account-restriction" />
+			</h3>
+
+			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+				<aui:input disabled="<%= ListUtil.isEmpty(accountEntryRelationshipObjectFields) || (objectDefinition.isAccountEntryRestricted() && objectDefinition.isApproved()) %>" label="" labelOff="inactive" labelOn="active" name="accountEntryRestricted" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "handleAccountEntryRestrictionToggleChange();" %>' type="toggle-switch" value="<%= objectDefinition.isAccountEntryRestricted() %>" />
+			</aui:field-wrapper>
+
+			<clay:row>
+				<clay:col
+					md="11"
+				>
+					<aui:select disabled="<%= ListUtil.isEmpty(accountEntryRelationshipObjectFields) || !objectDefinition.isAccountEntryRestricted() || (objectDefinition.isAccountEntryRestricted() && objectDefinition.isApproved()) %>" name="accountEntryRestrictedObjectFieldId" showEmptyOption="<%= false %>">
+						<aui:option label='<%= LanguageUtil.get(request, "choose-an-option") %>' selected="<%= true %>" value="0" />
+
+						<%
+						for (ObjectField accountEntryRelationshipObjectField : accountEntryRelationshipObjectFields) {
+						%>
+
+							<aui:option label="<%= accountEntryRelationshipObjectField.getLabel(locale) %>" selected="<%= Objects.equals(accountEntryRelationshipObjectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= accountEntryRelationshipObjectField.getObjectFieldId() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</clay:col>
+			</clay:row>
+		</clay:sheet-section>
+
+		<clay:sheet-section>
+			<h3 class="sheet-subtitle">
+				<liferay-ui:message key="configuration" />
+			</h3>
+
+			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+				<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="show-widget" labelOn="show-widget" name="portlet" type="toggle-switch" value="<%= objectDefinition.isPortlet() %>" />
+			</aui:field-wrapper>
+
+			<c:if test="<%= objectDefinition.isDefaultStorageType() %>">
+				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+					<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="enable-categorization" labelOn="enable-categorization" name="enableCategorization" type="toggle-switch" value="<%= objectDefinition.isEnableCategorization() %>" />
+				</aui:field-wrapper>
 
 				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input disabled="<%= ListUtil.isEmpty(accountEntryRelationshipObjectFields) || (objectDefinition.isAccountEntryRestricted() && objectDefinition.isApproved()) %>" label="" labelOff="inactive" labelOn="active" name="accountEntryRestricted" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "handleAccountEntryRestrictionToggleChange();" %>' type="toggle-switch" value="<%= objectDefinition.isAccountEntryRestricted() %>" />
+					<aui:input disabled="<%= objectDefinition.isEnableComments() || objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="enable-comments" labelOn="enable-comments" name="enableComments" type="toggle-switch" value="<%= objectDefinition.isEnableComments() %>" />
 				</aui:field-wrapper>
+
+				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+					<aui:input disabled="<%= objectDefinition.isApproved() || objectDefinition.isSystem() %>" label="" labelOff="enable-entry-history" labelOn="enable-entry-history" name="enableObjectEntryHistory" type="toggle-switch" value="<%= objectDefinition.isEnableObjectEntryHistory() %>" />
+				</aui:field-wrapper>
+			</c:if>
+		</clay:sheet-section>
+
+		<c:if test="<%= !objectDefinition.isDefaultStorageType() %>">
+			<clay:sheet-section>
+				<h3 class="sheet-subtitle">
+					<liferay-ui:message key="external-data-source" />
+				</h3>
 
 				<clay:row>
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= ListUtil.isEmpty(accountEntryRelationshipObjectFields) || !objectDefinition.isAccountEntryRestricted() || (objectDefinition.isAccountEntryRestricted() && objectDefinition.isApproved()) %>" name="accountEntryRestrictedObjectFieldId" showEmptyOption="<%= false %>">
-							<aui:option label='<%= LanguageUtil.get(request, "choose-an-option") %>' selected="<%= true %>" value="0" />
-
-							<%
-							for (ObjectField accountEntryRelationshipObjectField : accountEntryRelationshipObjectFields) {
-							%>
-
-								<aui:option label="<%= accountEntryRelationshipObjectField.getLabel(locale) %>" selected="<%= Objects.equals(accountEntryRelationshipObjectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= accountEntryRelationshipObjectField.getObjectFieldId() %>" />
-
-							<%
-							}
-							%>
-
+						<aui:select disabled="<%= true %>" name="storageType" showEmptyOption="<%= false %>">
+							<aui:option label="<%= LanguageUtil.get(request, objectDefinition.getStorageType()) %>" selected="<%= true %>" value="" />
 						</aui:select>
 					</clay:col>
 				</clay:row>
 			</clay:sheet-section>
-
-			<clay:sheet-section>
-				<h3 class="sheet-subtitle">
-					<liferay-ui:message key="configuration" />
-				</h3>
-
-				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="show-widget" labelOn="show-widget" name="portlet" type="toggle-switch" value="<%= objectDefinition.isPortlet() %>" />
-				</aui:field-wrapper>
-
-				<c:if test="<%= objectDefinition.isDefaultStorageType() %>">
-					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="enable-categorization" labelOn="enable-categorization" name="enableCategorization" type="toggle-switch" value="<%= objectDefinition.isEnableCategorization() %>" />
-					</aui:field-wrapper>
-
-					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= objectDefinition.isEnableComments() || objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="enable-comments" labelOn="enable-comments" name="enableComments" type="toggle-switch" value="<%= objectDefinition.isEnableComments() %>" />
-					</aui:field-wrapper>
-
-					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= objectDefinition.isApproved() || objectDefinition.isSystem() %>" label="" labelOff="enable-entry-history" labelOn="enable-entry-history" name="enableObjectEntryHistory" type="toggle-switch" value="<%= objectDefinition.isEnableObjectEntryHistory() %>" />
-					</aui:field-wrapper>
-				</c:if>
-			</clay:sheet-section>
-
-			<c:if test="<%= !objectDefinition.isDefaultStorageType() %>">
-				<clay:sheet-section>
-					<h3 class="sheet-subtitle">
-						<liferay-ui:message key="external-data-source" />
-					</h3>
-
-					<clay:row>
-						<clay:col
-							md="11"
-						>
-							<aui:select disabled="<%= true %>" name="storageType" showEmptyOption="<%= false %>">
-								<aui:option label="<%= LanguageUtil.get(request, objectDefinition.getStorageType()) %>" selected="<%= true %>" value="" />
-							</aui:select>
-						</clay:col>
-					</clay:row>
-				</clay:sheet-section>
-			</c:if>
-		</liferay-frontend:fieldset-group>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>
 

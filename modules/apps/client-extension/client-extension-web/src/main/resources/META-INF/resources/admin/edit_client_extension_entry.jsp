@@ -45,34 +45,32 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 	</liferay-ui:error>
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<aui:field-wrapper label="name" name="name">
-				<liferay-ui:input-localized
-					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-					name="name"
-					xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
-				/>
-			</aui:field-wrapper>
-
-			<liferay-editor:editor
-				contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
-				editorName="contentEditor"
-				name="description"
-				placeholder="description"
+		<aui:field-wrapper label="name" name="name">
+			<liferay-ui:input-localized
+				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+				name="name"
+				xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
 			/>
+		</aui:field-wrapper>
 
-			<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />
+		<liferay-editor:editor
+			contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
+			editorName="contentEditor"
+			name="description"
+			placeholder="description"
+		/>
 
-			<aui:input disabled="<%= true %>" label="type" name="typeLabel" type="text" value="<%= editClientExtensionEntryDisplayContext.getTypeLabel() %>" />
+		<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />
 
-			<aui:input name="type" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getType() %>" />
+		<aui:input disabled="<%= true %>" label="type" name="typeLabel" type="text" value="<%= editClientExtensionEntryDisplayContext.getTypeLabel() %>" />
 
-			<liferay-util:include page="<%= editClientExtensionEntryDisplayContext.getEditJSP() %>" servletContext="<%= application %>" />
+		<aui:input name="type" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getType() %>" />
 
-			<c:if test="<%= editClientExtensionEntryDisplayContext.isPropertiesVisible() %>">
-				<aui:input label="properties" name="properties" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
-			</c:if>
-		</liferay-frontend:fieldset-group>
+		<liferay-util:include page="<%= editClientExtensionEntryDisplayContext.getEditJSP() %>" servletContext="<%= application %>" />
+
+		<c:if test="<%= editClientExtensionEntryDisplayContext.isPropertiesVisible() %>">
+			<aui:input label="properties" name="properties" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

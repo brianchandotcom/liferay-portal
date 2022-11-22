@@ -70,39 +70,37 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 		cssClass="form"
 	>
 		<liferay-frontend:edit-form-body>
-			<liferay-frontend:fieldset-group>
-				<liferay-frontend:fieldset>
-					<aui:select label="scope" name="scope">
+			<liferay-frontend:fieldset>
+				<aui:select label="scope" name="scope">
 
-						<%
-						for (Group availableGroup : availableGroups) {
-							String availableGroupScopeType = StringPool.BLANK;
-							String availableGroupScopeLayoutUuid = StringPool.BLANK;
+					<%
+					for (Group availableGroup : availableGroups) {
+						String availableGroupScopeType = StringPool.BLANK;
+						String availableGroupScopeLayoutUuid = StringPool.BLANK;
 
-							if (availableGroup.isCompany()) {
-								availableGroupScopeType = "company";
-							}
-							else if (availableGroup.isLayout()) {
-								availableGroupScopeType = "layout";
-
-								Layout availableGroupLayout = LayoutLocalServiceUtil.getLayout(availableGroup.getClassPK());
-
-								availableGroupScopeLayoutUuid = availableGroupLayout.getUuid();
-							}
-						%>
-
-							<aui:option label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>" selected="<%= (group != null) && (group.getGroupId() == availableGroup.getGroupId()) %>" value='<%= availableGroupScopeType + "," + availableGroupScopeLayoutUuid %>' />
-
-						<%
+						if (availableGroup.isCompany()) {
+							availableGroupScopeType = "company";
 						}
-						%>
+						else if (availableGroup.isLayout()) {
+							availableGroupScopeType = "layout";
 
-						<c:if test="<%= !layout.hasScopeGroup() %>">
-							<aui:option label='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(request, "create-new") + ")" %>' value='<%= "layout," + layout.getUuid() %>' />
-						</c:if>
-					</aui:select>
-				</liferay-frontend:fieldset>
-			</liferay-frontend:fieldset-group>
+							Layout availableGroupLayout = LayoutLocalServiceUtil.getLayout(availableGroup.getClassPK());
+
+							availableGroupScopeLayoutUuid = availableGroupLayout.getUuid();
+						}
+					%>
+
+						<aui:option label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>" selected="<%= (group != null) && (group.getGroupId() == availableGroup.getGroupId()) %>" value='<%= availableGroupScopeType + "," + availableGroupScopeLayoutUuid %>' />
+
+					<%
+					}
+					%>
+
+					<c:if test="<%= !layout.hasScopeGroup() %>">
+						<aui:option label='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(request, "create-new") + ")" %>' value='<%= "layout," + layout.getUuid() %>' />
+					</c:if>
+				</aui:select>
+			</liferay-frontend:fieldset>
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>

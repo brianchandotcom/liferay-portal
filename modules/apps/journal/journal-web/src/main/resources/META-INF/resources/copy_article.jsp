@@ -48,23 +48,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 		<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
 		<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input name="id" type="resource" value="<%= oldArticleId %>" />
+		<liferay-frontend:fieldset>
+			<aui:input name="id" type="resource" value="<%= oldArticleId %>" />
 
-				<c:choose>
-					<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
-						<aui:input name="newId" type="resource" value='<%= LanguageUtil.get(request, "autogenerate-id") %>' />
+			<c:choose>
+				<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
+					<aui:input name="newId" type="resource" value='<%= LanguageUtil.get(request, "autogenerate-id") %>' />
 
-						<aui:input name="newArticleId" type="hidden" />
-						<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
-					</c:when>
-					<c:otherwise>
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
-					</c:otherwise>
-				</c:choose>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+					<aui:input name="newArticleId" type="hidden" />
+					<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" bean="<%= null %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="" model="<%= JournalArticle.class %>" name="newArticleId" value="<%= newArticleId %>" />
+				</c:otherwise>
+			</c:choose>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

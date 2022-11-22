@@ -30,50 +30,48 @@
 	<aui:input name="oldLayoutTemplateId" type="hidden" value="<%= nestedPortletsDisplayContext.getLayoutTemplateId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				cssClass="display-style-icon"
-			>
-				<h4><liferay-ui:message key="layout-template" /></h4>
+		<liferay-frontend:fieldset
+			cssClass="display-style-icon"
+		>
+			<h4><liferay-ui:message key="layout-template" /></h4>
 
-				<clay:row>
+			<clay:row>
 
-					<%
-					String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
+				<%
+				String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
 
-					for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
-					%>
+				for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
+				%>
 
-						<clay:col
-							md="3"
-							size="6"
-							sm="4"
-						>
-							<div class="radio radio-card radio-top-left">
-								<label>
-									<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
+					<clay:col
+						md="3"
+						size="6"
+						sm="4"
+					>
+						<div class="radio radio-card radio-top-left">
+							<label>
+								<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
 
-									<div class="card">
-										<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image: url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>');">
-										</div>
+								<div class="card">
+									<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image: url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>');">
+									</div>
 
-										<div class="card-body">
-											<div class="card-col-field">
-												<%= layoutTemplate.getName(locale) %>
-											</div>
+									<div class="card-body">
+										<div class="card-col-field">
+											<%= layoutTemplate.getName(locale) %>
 										</div>
 									</div>
-								</label>
-							</div>
-						</clay:col>
+								</div>
+							</label>
+						</div>
+					</clay:col>
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</clay:row>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			</clay:row>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

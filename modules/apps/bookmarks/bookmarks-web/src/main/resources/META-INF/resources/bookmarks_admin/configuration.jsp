@@ -66,117 +66,115 @@ catch (NoSuchFolderException nsfe) {
 				<aui:input name="preferences--folderColumns--" type="hidden" />
 				<aui:input name="preferences--entryColumns--" type="hidden" />
 
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset
-						collapsible="<%= true %>"
-						id="bookmarksFoldersListingPanel"
-						label="folders-listing"
-					>
-						<div class="form-group">
-							<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
+				<liferay-frontend:fieldset
+					collapsible="<%= true %>"
+					id="bookmarksFoldersListingPanel"
+					label="folders-listing"
+				>
+					<div class="form-group">
+						<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
-							<aui:button name="selectFolderButton" value="select" />
+						<aui:button name="selectFolderButton" value="select" />
 
-							<%
-							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
-							%>
+						<%
+						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+						%>
 
-							<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-						</div>
+						<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					</div>
 
-						<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>" />
+					<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>" />
 
-						<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showSubfolders() %>" />
+					<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showSubfolders() %>" />
 
-						<aui:field-wrapper label="show-columns">
+					<aui:field-wrapper label="show-columns">
 
-							<%
-							Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
+						<%
+						Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
 
-							// Left list
+						// Left list
 
-							List<KeyValuePair> leftList = new ArrayList<>();
+						List<KeyValuePair> leftList = new ArrayList<>();
 
-							for (String folderColumn : folderColumns) {
-								leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
+						for (String folderColumn : folderColumns) {
+							leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
+						}
+
+						// Right list
+
+						List<KeyValuePair> rightList = new ArrayList<>();
+
+						Arrays.sort(folderColumns);
+
+						for (String folderColumn : availableFolderColumns) {
+							if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
+								rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 							}
+						}
 
-							// Right list
+						rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+						%>
 
-							List<KeyValuePair> rightList = new ArrayList<>();
+						<liferay-ui:input-move-boxes
+							leftBoxName="currentFolderColumns"
+							leftList="<%= leftList %>"
+							leftReorder="<%= Boolean.TRUE.toString() %>"
+							leftTitle="current"
+							rightBoxName="availableFolderColumns"
+							rightList="<%= rightList %>"
+							rightTitle="available"
+						/>
+					</aui:field-wrapper>
+				</liferay-frontend:fieldset>
 
-							Arrays.sort(folderColumns);
+				<liferay-frontend:fieldset
+					collapsible="<%= true %>"
+					id="bookmarksListingPanel"
+					label="bookmarks-listing"
+				>
+					<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>" />
 
-							for (String folderColumn : availableFolderColumns) {
-								if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
-									rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
-								}
+					<aui:field-wrapper label="show-columns">
+
+						<%
+						Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
+
+						// Left list
+
+						List<KeyValuePair> leftList = new ArrayList<>();
+
+						for (int i = 0; i < entryColumns.length; i++) {
+							String entryColumn = entryColumns[i];
+
+							leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
+						}
+
+						// Right list
+
+						List<KeyValuePair> rightList = new ArrayList<>();
+
+						Arrays.sort(entryColumns);
+
+						for (String entryColumn : availableEntryColumns) {
+							if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
+								rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
 							}
+						}
 
-							rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-							%>
+						rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+						%>
 
-							<liferay-ui:input-move-boxes
-								leftBoxName="currentFolderColumns"
-								leftList="<%= leftList %>"
-								leftReorder="<%= Boolean.TRUE.toString() %>"
-								leftTitle="current"
-								rightBoxName="availableFolderColumns"
-								rightList="<%= rightList %>"
-								rightTitle="available"
-							/>
-						</aui:field-wrapper>
-					</liferay-frontend:fieldset>
-
-					<liferay-frontend:fieldset
-						collapsible="<%= true %>"
-						id="bookmarksListingPanel"
-						label="bookmarks-listing"
-					>
-						<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>" />
-
-						<aui:field-wrapper label="show-columns">
-
-							<%
-							Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
-
-							// Left list
-
-							List<KeyValuePair> leftList = new ArrayList<>();
-
-							for (int i = 0; i < entryColumns.length; i++) {
-								String entryColumn = entryColumns[i];
-
-								leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
-							}
-
-							// Right list
-
-							List<KeyValuePair> rightList = new ArrayList<>();
-
-							Arrays.sort(entryColumns);
-
-							for (String entryColumn : availableEntryColumns) {
-								if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
-									rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
-								}
-							}
-
-							rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-							%>
-
-							<liferay-ui:input-move-boxes
-								leftBoxName="currentEntryColumns"
-								leftList="<%= leftList %>"
-								leftReorder="<%= Boolean.TRUE.toString() %>"
-								leftTitle="current"
-								rightBoxName="availableEntryColumns"
-								rightList="<%= rightList %>"
-								rightTitle="available"
-							/>
-						</aui:field-wrapper>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+						<liferay-ui:input-move-boxes
+							leftBoxName="currentEntryColumns"
+							leftList="<%= leftList %>"
+							leftReorder="<%= Boolean.TRUE.toString() %>"
+							leftTitle="current"
+							rightBoxName="availableEntryColumns"
+							rightList="<%= rightList %>"
+							rightTitle="available"
+						/>
+					</aui:field-wrapper>
+				</liferay-frontend:fieldset>
 
 				<aui:script>
 					var <portlet:namespace />selectFolderButton = document.getElementById(
@@ -215,13 +213,11 @@ catch (NoSuchFolderException nsfe) {
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
-						<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= bookmarksGroupServiceOverriddenConfiguration.emailFromName() %>" />
+				<liferay-frontend:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= bookmarksGroupServiceOverriddenConfiguration.emailFromName() %>" />
 
-						<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= bookmarksGroupServiceOverriddenConfiguration.emailFromAddress() %>" />
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= bookmarksGroupServiceOverriddenConfiguration.emailFromAddress() %>" />
+				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 
 			<%
@@ -229,27 +225,23 @@ catch (NoSuchFolderException nsfe) {
 			%>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBodyLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedBody() %>"
-						emailDefinitionTerms="<%= emailDefinitionTerms %>"
-						emailEnabled="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedEnabled() %>"
-						emailParam="emailEntryAdded"
-						emailSubjectLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedSubject() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedEnabled() %>"
+					emailParam="emailEntryAdded"
+					emailSubjectLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedSubject() %>"
+				/>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBodyLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedBody() %>"
-						emailDefinitionTerms="<%= emailDefinitionTerms %>"
-						emailEnabled="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedEnabled() %>"
-						emailParam="emailEntryUpdated"
-						emailSubjectLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedSubject() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedEnabled() %>"
+					emailParam="emailEntryUpdated"
+					emailSubjectLocalizedValuesMap="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedSubject() %>"
+				/>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>

@@ -34,29 +34,27 @@
 			<clay:col
 				md="6"
 			>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset
-						cssClass="ml-3"
-					>
-						<clay:row>
-							<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
-								<aui:option label="top-level" />
-								<aui:option label="parent-level" />
-								<aui:option label="siblings" />
-								<aui:option label="children" />
-							</aui:select>
-						</clay:row>
+				<liferay-frontend:fieldset
+					cssClass="ml-3"
+				>
+					<clay:row>
+						<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
+							<aui:option label="top-level" />
+							<aui:option label="parent-level" />
+							<aui:option label="siblings" />
+							<aui:option label="children" />
+						</aui:select>
+					</clay:row>
 
-						<clay:row>
-							<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
-								<aui:option label="icon" />
-								<aui:option label="descriptive" />
-								<aui:option label="list" />
-								<aui:option label="list-hierarchy" />
-							</aui:select>
-						</clay:row>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+					<clay:row>
+						<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
+							<aui:option label="icon" />
+							<aui:option label="descriptive" />
+							<aui:option label="list" />
+							<aui:option label="list-hierarchy" />
+						</aui:select>
+					</clay:row>
+				</liferay-frontend:fieldset>
 			</clay:col>
 
 			<clay:col

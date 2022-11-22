@@ -37,21 +37,15 @@
 			refresh="<%= false %>"
 		>
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<%@ include file="/display_settings.jspf" %>
-				</liferay-frontend:fieldset-group>
+				<%@ include file="/display_settings.jspf" %>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<%@ include file="/spell_check_settings.jspf" %>
-				</liferay-frontend:fieldset-group>
+				<%@ include file="/spell_check_settings.jspf" %>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<%@ include file="/other_settings.jspf" %>
-				</liferay-frontend:fieldset-group>
+				<%@ include file="/other_settings.jspf" %>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>

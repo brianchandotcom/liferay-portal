@@ -43,32 +43,30 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 		<liferay-frontend:edit-form-body>
-			<liferay-frontend:fieldset-group>
 
-				<%
-				boolean first = true;
+			<%
+			boolean first = true;
 
-				for (String curPortletMode : allPortletModes) {
-					String mobileDevicesParam = "portletSetupSupportedClientsMobileDevices_" + curPortletMode;
-					boolean mobileDevicesDefault = selPortlet.hasPortletMode(ContentTypes.XHTML_MP, PortletModeFactory.getPortletMode(curPortletMode));
-				%>
+			for (String curPortletMode : allPortletModes) {
+				String mobileDevicesParam = "portletSetupSupportedClientsMobileDevices_" + curPortletMode;
+				boolean mobileDevicesDefault = selPortlet.hasPortletMode(ContentTypes.XHTML_MP, PortletModeFactory.getPortletMode(curPortletMode));
+			%>
 
-					<liferay-frontend:fieldset
-						collapsed="<%= !first %>"
-						collapsible="<%= true %>"
-						label='<%= LanguageUtil.get(request, "portlet-mode") + ": " + LanguageUtil.get(request, curPortletMode) %>'
-					>
-						<aui:input disabled="<%= true %>" inlineLabel="right" label="regular-browsers" labelCssClass="simple-toggle-switch" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="toggle-switch" value="<%= true %>" />
+				<liferay-frontend:fieldset
+					collapsed="<%= !first %>"
+					collapsible="<%= true %>"
+					label='<%= LanguageUtil.get(request, "portlet-mode") + ": " + LanguageUtil.get(request, curPortletMode) %>'
+				>
+					<aui:input disabled="<%= true %>" inlineLabel="right" label="regular-browsers" labelCssClass="simple-toggle-switch" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="toggle-switch" value="<%= true %>" />
 
-						<aui:input inlineLabel="right" label="mobile-devices" labelCssClass="simple-toggle-switch" name="<%= mobileDevicesParam %>" type="toggle-switch" value="<%= GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault))) %>" />
-					</liferay-frontend:fieldset>
+					<aui:input inlineLabel="right" label="mobile-devices" labelCssClass="simple-toggle-switch" name="<%= mobileDevicesParam %>" type="toggle-switch" value="<%= GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault))) %>" />
+				</liferay-frontend:fieldset>
 
-				<%
-					first = false;
-				}
-				%>
+			<%
+				first = false;
+			}
+			%>
 
-			</liferay-frontend:fieldset-group>
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>

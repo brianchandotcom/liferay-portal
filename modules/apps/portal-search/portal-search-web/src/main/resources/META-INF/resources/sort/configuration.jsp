@@ -59,53 +59,51 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
-				<div class="display-template">
-					<liferay-template:template-selector
-						className="<%= SortDisplayContext.class.getName() %>"
-						displayStyle="<%= sortPortletInstanceConfiguration.displayStyle() %>"
-						displayStyleGroupId="<%= sortDisplayContext.getDisplayStyleGroupId() %>"
-						refreshURL="<%= configurationRenderURL %>"
-						showEmptyOption="<%= true %>"
-					/>
-				</div>
-			</liferay-frontend:fieldset>
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="display-settings"
+		>
+			<div class="display-template">
+				<liferay-template:template-selector
+					className="<%= SortDisplayContext.class.getName() %>"
+					displayStyle="<%= sortPortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= sortDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+					showEmptyOption="<%= true %>"
+				/>
+			</div>
+		</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<p class="sheet-text">
-					<liferay-ui:message key="sort-advanced-configuration-description" />
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="advanced-configuration"
+		>
+			<p class="sheet-text">
+				<liferay-ui:message key="sort-advanced-configuration-description" />
 
-					<liferay-learn:message
-						key="sorting-search-results"
-						resource="portal-search-web"
-					/>
-				</p>
+				<liferay-learn:message
+					key="sorting-search-results"
+					resource="portal-search-web"
+				/>
+			</p>
 
-				<div>
-					<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
+			<div>
+				<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 
-					<react:component
-						module="js/components/SortConfigurationOptions"
-						props='<%=
-							HashMapBuilder.<String, Object>put(
-								"fieldsInputName", PortletPreferencesJspUtil.getInputName(SortPortletPreferences.PREFERENCE_KEY_FIELDS)
-							).put(
-								"fieldsJSONArray", fieldsJSONArray
-							).put(
-								"namespace", liferayPortletResponse.getNamespace()
-							).build()
-						%>'
-					/>
-				</div>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+				<react:component
+					module="js/components/SortConfigurationOptions"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"fieldsInputName", PortletPreferencesJspUtil.getInputName(SortPortletPreferences.PREFERENCE_KEY_FIELDS)
+						).put(
+							"fieldsJSONArray", fieldsJSONArray
+						).put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).build()
+					%>'
+				/>
+			</div>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

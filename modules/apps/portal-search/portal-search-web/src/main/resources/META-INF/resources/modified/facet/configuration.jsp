@@ -61,55 +61,53 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error key="unparsableDate" message="unparsable-date" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
-				<div class="display-template">
-					<liferay-template:template-selector
-						className="<%= ModifiedFacetTermDisplayContext.class.getName() %>"
-						displayStyle="<%= modifiedFacetPortletInstanceConfiguration.displayStyle() %>"
-						displayStyleGroupId="<%= modifiedFacetDisplayContext.getDisplayStyleGroupId() %>"
-						refreshURL="<%= configurationRenderURL %>"
-						showEmptyOption="<%= true %>"
-					/>
-				</div>
-			</liferay-frontend:fieldset>
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="display-settings"
+		>
+			<div class="display-template">
+				<liferay-template:template-selector
+					className="<%= ModifiedFacetTermDisplayContext.class.getName() %>"
+					displayStyle="<%= modifiedFacetPortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= modifiedFacetDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+					showEmptyOption="<%= true %>"
+				/>
+			</div>
+		</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<aui:fieldset id='<%= liferayPortletResponse.getNamespace() + "rangesId" %>'>
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="advanced-configuration"
+		>
+			<aui:fieldset id='<%= liferayPortletResponse.getNamespace() + "rangesId" %>'>
 
-					<%
-					int[] rangesIndexes = new int[rangesJSONArray.length()];
+				<%
+				int[] rangesIndexes = new int[rangesJSONArray.length()];
 
-					for (int i = 0; i < rangesJSONArray.length(); i++) {
-						rangesIndexes[i] = i;
+				for (int i = 0; i < rangesJSONArray.length(); i++) {
+					rangesIndexes[i] = i;
 
-						JSONObject jsonObject = rangesJSONArray.getJSONObject(i);
-					%>
+					JSONObject jsonObject = rangesJSONArray.getJSONObject(i);
+				%>
 
-						<div class="lfr-form-row lfr-form-row-inline range-form-row">
-							<div class="row-fields">
-								<aui:input cssClass="label-input" label="label" name='<%= "label_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("label") %>' />
+					<div class="lfr-form-row lfr-form-row-inline range-form-row">
+						<div class="row-fields">
+							<aui:input cssClass="label-input" label="label" name='<%= "label_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("label") %>' />
 
-								<aui:input cssClass="range-input" label="range" name='<%= "range_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("range") %>' />
-							</div>
+							<aui:input cssClass="range-input" label="range" name='<%= "range_" + i %>' required="<%= true %>" value='<%= jsonObject.getString("range") %>' />
 						</div>
+					</div>
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-					<aui:input cssClass="ranges-input" name="<%= PortletPreferencesJspUtil.getInputName(ModifiedFacetPortletPreferences.PREFERENCE_KEY_RANGES) %>" type="hidden" value="<%= modifiedFacetPortletPreferences.getRangesString() %>" />
+				<aui:input cssClass="ranges-input" name="<%= PortletPreferencesJspUtil.getInputName(ModifiedFacetPortletPreferences.PREFERENCE_KEY_RANGES) %>" type="hidden" value="<%= modifiedFacetPortletPreferences.getRangesString() %>" />
 
-					<aui:input name="rangesIndexes" type="hidden" value="<%= StringUtil.merge(rangesIndexes) %>" />
-				</aui:fieldset>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+				<aui:input name="rangesIndexes" type="hidden" value="<%= StringUtil.merge(rangesIndexes) %>" />
+			</aui:fieldset>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

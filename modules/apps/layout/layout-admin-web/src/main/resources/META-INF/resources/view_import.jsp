@@ -27,27 +27,25 @@
 	name="fm"
 >
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-ui:message key="import-help" />
+		<liferay-ui:message key="import-help" />
 
-			<a href="https://portal.liferay.dev/docs" target="_blank">
-				<liferay-ui:message key="read-more" />
-			</a>
+		<a href="https://portal.liferay.dev/docs" target="_blank">
+			<liferay-ui:message key="read-more" />
+		</a>
 
-			<br /><br />
+		<br /><br />
 
-			<liferay-frontend:fieldset>
-				<aui:input label="file" name="file" type="file">
-					<aui:validator name="required" />
+		<liferay-frontend:fieldset>
+			<aui:input label="file" name="file" type="file">
+				<aui:validator name="required" />
 
-					<aui:validator name="acceptFiles">
-						'zip'
-					</aui:validator>
-				</aui:input>
+				<aui:validator name="acceptFiles">
+					'zip'
+				</aui:validator>
+			</aui:input>
 
-				<aui:input checked="<%= true %>" label="overwrite-existing-utility-pages" name="overwrite" type="checkbox" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:input checked="<%= true %>" label="overwrite-existing-utility-pages" name="overwrite" type="checkbox" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

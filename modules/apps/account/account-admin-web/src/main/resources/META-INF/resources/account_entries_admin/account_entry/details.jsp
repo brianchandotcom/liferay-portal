@@ -40,30 +40,28 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 			<liferay-ui:message key="information" />
 		</h2>
 
-		<liferay-frontend:fieldset-group>
-			<liferay-util:include page="/account_entries_admin/account_entry/display_data.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/account_entries_admin/account_entry/display_data.jsp" servletContext="<%= application %>" />
 
-			<c:choose>
-				<c:when test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, accountEntryDisplay.getType()) && accountEntryDisplay.isEmailAddressDomainValidationEnabled() %>">
-					<div class="business-account-only">
-						<liferay-util:include page="/account_entries_admin/account_entry/domains.jsp" servletContext="<%= application %>" />
-					</div>
-				</c:when>
-				<c:when test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, accountEntryDisplay.getType()) %>">
-					<div class="person-account-only">
-						<liferay-util:include page="/account_entries_admin/account_entry/person_account_entry_user.jsp" servletContext="<%= application %>" />
-					</div>
-				</c:when>
-			</c:choose>
+		<c:choose>
+			<c:when test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, accountEntryDisplay.getType()) && accountEntryDisplay.isEmailAddressDomainValidationEnabled() %>">
+				<div class="business-account-only">
+					<liferay-util:include page="/account_entries_admin/account_entry/domains.jsp" servletContext="<%= application %>" />
+				</div>
+			</c:when>
+			<c:when test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, accountEntryDisplay.getType()) %>">
+				<div class="person-account-only">
+					<liferay-util:include page="/account_entries_admin/account_entry/person_account_entry_user.jsp" servletContext="<%= application %>" />
+				</div>
+			</c:when>
+		</c:choose>
 
-			<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
-				<liferay-util:include page="/account_entries_admin/account_entry/default_addresses.jsp" servletContext="<%= application %>" />
-			</c:if>
+		<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
+			<liferay-util:include page="/account_entries_admin/account_entry/default_addresses.jsp" servletContext="<%= application %>" />
+		</c:if>
 
-			<liferay-util:include page="/account_entries_admin/account_entry/categorization.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/account_entries_admin/account_entry/categorization.jsp" servletContext="<%= application %>" />
 
-			<liferay-util:include page="/account_entries_admin/account_entry/custom_fields.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:fieldset-group>
+		<liferay-util:include page="/account_entries_admin/account_entry/custom_fields.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

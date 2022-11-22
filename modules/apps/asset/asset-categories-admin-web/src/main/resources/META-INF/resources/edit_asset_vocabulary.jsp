@@ -51,41 +51,39 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 
 		<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
 
-		<liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset
+			collapsed="<%= false %>"
+			collapsible="<%= true %>"
+			label="details"
+		>
+			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
+
+			<aui:input name="description" placeholder="description" />
+
+			<aui:input helpMessage="multi-valued-help" inlineLabel="right" label="allow-multiple-categories" labelCssClass="simple-toggle-switch" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
+
+			<label><liferay-ui:message key="visibility" /> <liferay-ui:icon-help message="visibility-help" /></label>
+
+			<div class="form-group" id="<portlet:namespace />visibilityOptions">
+				<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) : true %>" disabled="<%= !(vocabulary == null) %>" id="visibilityTypePublic" label="public" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC %>" />
+
+				<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) : false %>" disabled="<%= !(vocabulary == null) %>" label="internal" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>" />
+			</div>
+		</liferay-frontend:fieldset>
+
+		<%@ include file="/edit_vocabulary_settings.jspf" %>
+
+		<c:if test="<%= vocabulary == null %>">
 			<liferay-frontend:fieldset
-				collapsed="<%= false %>"
+				collapsed="<%= true %>"
 				collapsible="<%= true %>"
-				label="details"
+				label="permissions"
 			>
-				<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
-
-				<aui:input name="description" placeholder="description" />
-
-				<aui:input helpMessage="multi-valued-help" inlineLabel="right" label="allow-multiple-categories" labelCssClass="simple-toggle-switch" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
-
-				<label><liferay-ui:message key="visibility" /> <liferay-ui:icon-help message="visibility-help" /></label>
-
-				<div class="form-group" id="<portlet:namespace />visibilityOptions">
-					<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) : true %>" disabled="<%= !(vocabulary == null) %>" id="visibilityTypePublic" label="public" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC %>" />
-
-					<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) : false %>" disabled="<%= !(vocabulary == null) %>" label="internal" name="visibilityType" type="radio" value="<%= AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>" />
-				</div>
+				<liferay-ui:input-permissions
+					modelName="<%= AssetVocabulary.class.getName() %>"
+				/>
 			</liferay-frontend:fieldset>
-
-			<%@ include file="/edit_vocabulary_settings.jspf" %>
-
-			<c:if test="<%= vocabulary == null %>">
-				<liferay-frontend:fieldset
-					collapsed="<%= true %>"
-					collapsible="<%= true %>"
-					label="permissions"
-				>
-					<liferay-ui:input-permissions
-						modelName="<%= AssetVocabulary.class.getName() %>"
-					/>
-				</liferay-frontend:fieldset>
-			</c:if>
-		</liferay-frontend:fieldset-group>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

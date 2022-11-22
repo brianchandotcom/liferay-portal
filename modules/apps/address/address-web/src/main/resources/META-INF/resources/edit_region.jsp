@@ -45,30 +45,28 @@ renderResponse.setTitle((region == null) ? LanguageUtil.get(request, "add-region
 	<aui:model-context bean="<%= region %>" model="<%= Region.class %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<div class="form-group">
-				<label>
-					<liferay-ui:message key="name" />
+		<div class="form-group">
+			<label>
+				<liferay-ui:message key="name" />
 
-					<liferay-ui:icon-help message="region-name-field-help" />
-				</label>
+				<liferay-ui:icon-help message="region-name-field-help" />
+			</label>
 
-				<liferay-ui:input-localized
-					autoFocus="<%= true %>"
-					cssClass="form-group"
-					name="title"
-					xml="<%= (region == null) ? StringPool.BLANK : region.getTitleMapAsXML() %>"
-				/>
-			</div>
+			<liferay-ui:input-localized
+				autoFocus="<%= true %>"
+				cssClass="form-group"
+				name="title"
+				xml="<%= (region == null) ? StringPool.BLANK : region.getTitleMapAsXML() %>"
+			/>
+		</div>
 
-			<aui:input helpMessage="region-key-field-help" label="key" name="name" />
+		<aui:input helpMessage="region-key-field-help" label="key" name="name" />
 
-			<aui:input label="region-code" name="regionCode" />
+		<aui:input label="region-code" name="regionCode" />
 
-			<aui:input id="priority" label="priority" name="position" />
+		<aui:input id="priority" label="priority" name="position" />
 
-			<aui:input checked="<%= (region == null) ? true : region.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
-		</liferay-frontend:fieldset-group>
+		<aui:input checked="<%= (region == null) ? true : region.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

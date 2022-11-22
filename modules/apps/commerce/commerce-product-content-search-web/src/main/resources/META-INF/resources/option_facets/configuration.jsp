@@ -35,31 +35,29 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = new CPOp
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error key="exceededMaxTermsLimit" message="maximum-terms-cannot-exceed-100" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
-				<div class="display-template">
-					<liferay-template:template-selector
-						className="<%= CPOptionsSearchFacetDisplayContext.class.getName() %>"
-						displayStyle='<%= portletPreferences.getValue("displayStyle", "") %>'
-						displayStyleGroupId="<%= cpOptionsSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-						refreshURL="<%= configurationRenderURL %>"
-						showEmptyOption="<%= true %>"
-					/>
-				</div>
-			</liferay-frontend:fieldset>
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="display-settings"
+		>
+			<div class="display-template">
+				<liferay-template:template-selector
+					className="<%= CPOptionsSearchFacetDisplayContext.class.getName() %>"
+					displayStyle='<%= portletPreferences.getValue("displayStyle", "") %>'
+					displayStyleGroupId="<%= cpOptionsSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+					showEmptyOption="<%= true %>"
+				/>
+			</div>
+		</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<aui:input label="max-terms" name="preferences--maxTerms--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxTerms", null), 10) %>' />
-				<aui:input label="frequency-threshold" name="preferences--frequencyThreshold--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("frequencyThreshold", null), 1) %>' />
-				<aui:input label="display-frequencies" name="preferences--frequenciesVisible--" type="checkbox" value='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true) %>' />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="advanced-configuration"
+		>
+			<aui:input label="max-terms" name="preferences--maxTerms--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("maxTerms", null), 10) %>' />
+			<aui:input label="frequency-threshold" name="preferences--frequencyThreshold--" value='<%= GetterUtil.getInteger(portletPreferences.getValue("frequencyThreshold", null), 1) %>' />
+			<aui:input label="display-frequencies" name="preferences--frequenciesVisible--" type="checkbox" value='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true) %>' />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

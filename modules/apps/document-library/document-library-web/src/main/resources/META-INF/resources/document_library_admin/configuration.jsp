@@ -48,39 +48,37 @@ DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServic
 			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
-						<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= dlGroupServiceSettings.getEmailFromName() %>" />
+				<liferay-frontend:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= dlGroupServiceSettings.getEmailFromName() %>" />
 
-						<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= dlGroupServiceSettings.getEmailFromAddress() %>" />
-					</liferay-frontend:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= dlGroupServiceSettings.getEmailFromAddress() %>" />
+				</liferay-frontend:fieldset>
 
-					<liferay-frontend:fieldset
-						collapsible="<%= true %>"
-						label="definition-of-terms"
-					>
-						<dl>
+				<liferay-frontend:fieldset
+					collapsible="<%= true %>"
+					label="definition-of-terms"
+				>
+					<dl>
 
-							<%
-							Map<String, String> emailDefinitionTerms = DLUtil.getEmailFromDefinitionTerms(renderRequest, dlGroupServiceSettings.getEmailFromAddress(), dlGroupServiceSettings.getEmailFromName());
+						<%
+						Map<String, String> emailDefinitionTerms = DLUtil.getEmailFromDefinitionTerms(renderRequest, dlGroupServiceSettings.getEmailFromAddress(), dlGroupServiceSettings.getEmailFromName());
 
-							for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
-							%>
+						for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
+						%>
 
-								<dt>
-									<%= entry.getKey() %>
-								</dt>
-								<dd>
-									<%= entry.getValue() %>
-								</dd>
+							<dt>
+								<%= entry.getKey() %>
+							</dt>
+							<dd>
+								<%= entry.getValue() %>
+							</dd>
 
-							<%
-							}
-							%>
+						<%
+						}
+						%>
 
-						</dl>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+					</dl>
+				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 
 			<%
@@ -88,53 +86,44 @@ DLGroupServiceSettings dlGroupServiceSettings = dlRequestHelper.getDLGroupServic
 			%>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBody="<%= dlGroupServiceSettings.getEmailFileEntryAddedBodyXml() %>"
-						emailDefinitionTerms="<%= emailDefinitionTerms %>"
-						emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryAddedEnabled() %>"
-						emailParam="emailFileEntryAdded"
-						emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryAddedSubjectXml() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= dlGroupServiceSettings.getEmailFileEntryAddedBodyXml() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryAddedEnabled() %>"
+					emailParam="emailFileEntryAdded"
+					emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryAddedSubjectXml() %>"
+				/>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBody="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedBodyXml() %>"
-						emailDefinitionTerms="<%= emailDefinitionTerms %>"
-						emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled() %>"
-						emailParam="emailFileEntryUpdated"
-						emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedSubjectXml() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedBodyXml() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled() %>"
+					emailParam="emailFileEntryUpdated"
+					emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedSubjectXml() %>"
+				/>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBody="<%= dlGroupServiceSettings.getEmailFileEntryReviewBodyXml() %>"
-						emailDefinitionTerms="<%= emailDefinitionTerms %>"
-						emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryReviewEnabled() %>"
-						emailParam="emailFileEntryReview"
-						emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryReviewSubjectXml() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= dlGroupServiceSettings.getEmailFileEntryReviewBodyXml() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryReviewEnabled() %>"
+					emailParam="emailFileEntryReview"
+					emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryReviewSubjectXml() %>"
+				/>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBody="<%= dlGroupServiceSettings.getEmailFileEntryExpiredBodyXml() %>"
-						emailDefinitionTerms="<%= emailDefinitionTerms %>"
-						emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryExpiredEnabled() %>"
-						emailParam="emailFileEntryExpired"
-						emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryExpiredSubjectXml() %>"
-					/>
-				</liferay-frontend:fieldset-group>
-			</liferay-ui:section>
-		</liferay-ui:tabs>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= dlGroupServiceSettings.getEmailFileEntryExpiredBodyXml() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryExpiredEnabled() %>"
+					emailParam="emailFileEntryExpired"
+					emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryExpiredSubjectXml() %>"
+				/>
+			</liferay-ui:section> </liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

@@ -52,42 +52,40 @@ SiteFacetPortletPreferences siteFacetPortletPreferences = new SiteFacetPortletPr
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
-				<div class="display-template">
-					<liferay-template:template-selector
-						className="<%= ScopeSearchFacetDisplayContext.class.getName() %>"
-						displayStyle="<%= siteFacetPortletInstanceConfiguration.displayStyle() %>"
-						displayStyleGroupId="<%= scopeSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-						refreshURL="<%= configurationRenderURL %>"
-						showEmptyOption="<%= true %>"
-					/>
-				</div>
-			</liferay-frontend:fieldset>
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="display-settings"
+		>
+			<div class="display-template">
+				<liferay-template:template-selector
+					className="<%= ScopeSearchFacetDisplayContext.class.getName() %>"
+					displayStyle="<%= siteFacetPortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= scopeSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+					showEmptyOption="<%= true %>"
+				/>
+			</div>
+		</liferay-frontend:fieldset>
 
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<aui:input label="site-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= siteFacetPortletPreferences.getParameterName() %>" />
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="advanced-configuration"
+		>
+			<aui:input label="site-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= siteFacetPortletPreferences.getParameterName() %>" />
 
-				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= siteFacetPortletPreferences.getMaxTerms() %>" />
+			<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= siteFacetPortletPreferences.getMaxTerms() %>" />
 
-				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= siteFacetPortletPreferences.getFrequencyThreshold() %>" />
+			<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= siteFacetPortletPreferences.getFrequencyThreshold() %>" />
 
-				<aui:select label="order-terms-by" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_ORDER) %>" value="<%= siteFacetPortletPreferences.getOrder() %>">
-					<aui:option label="term-frequency-descending" value="count:desc" />
-					<aui:option label="term-frequency-ascending" value="count:asc" />
-					<aui:option label="term-value-ascending" value="key:asc" />
-					<aui:option label="term-value-descending" value="key:desc" />
-				</aui:select>
+			<aui:select label="order-terms-by" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_ORDER) %>" value="<%= siteFacetPortletPreferences.getOrder() %>">
+				<aui:option label="term-frequency-descending" value="count:desc" />
+				<aui:option label="term-frequency-ascending" value="count:asc" />
+				<aui:option label="term-value-ascending" value="key:asc" />
+				<aui:option label="term-value-descending" value="key:desc" />
+			</aui:select>
 
-				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= siteFacetPortletPreferences.isFrequenciesVisible() %>" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(SiteFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= siteFacetPortletPreferences.isFrequenciesVisible() %>" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

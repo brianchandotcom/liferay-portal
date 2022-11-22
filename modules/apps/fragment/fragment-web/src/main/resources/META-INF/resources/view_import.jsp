@@ -78,18 +78,16 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 
 		<liferay-ui:error exception="<%= InvalidFileException.class %>" message="the-selected-file-is-not-a-valid-zip-file" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input label="select-file" name="file" type="file">
-					<aui:validator name="required" />
+		<liferay-frontend:fieldset>
+			<aui:input label="select-file" name="file" type="file">
+				<aui:validator name="required" />
 
-					<aui:validator name="acceptFiles">
-						'zip'
-					</aui:validator>
-				</aui:input>
+				<aui:validator name="acceptFiles">
+					'zip'
+				</aui:validator>
+			</aui:input>
 
-				<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwrite" type="checkbox" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwrite" type="checkbox" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

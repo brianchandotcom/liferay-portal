@@ -49,22 +49,20 @@ renderResponse.setTitle(oldName);
 	<liferay-ui:error exception="<%= RestoreEntryException.class %>" message='<%= LanguageUtil.format(request, "an-entry-with-name-x-already-exists", HtmlUtil.escape(oldName)) %>' translateMessage="<%= false %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<c:choose>
-					<c:when test="<%= overridable %>">
-						<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+		<liferay-frontend:fieldset>
+			<c:choose>
+				<c:when test="<%= overridable %>">
+					<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
-						<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
-					</c:when>
-					<c:otherwise>
-						<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
-					</c:otherwise>
-				</c:choose>
+					<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
+				</c:otherwise>
+			</c:choose>
 
-				<aui:input label='<%= overridable ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= trashHelper.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), oldName) %>" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:input label='<%= overridable ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= trashHelper.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), oldName) %>" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

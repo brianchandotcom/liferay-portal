@@ -16,63 +16,61 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:fieldset-group>
-	<liferay-frontend:fieldset>
-		<liferay-asset:asset-tags-error />
+<liferay-frontend:fieldset>
+	<liferay-asset:asset-tags-error />
+
+	<%
+	DuplicateQueryRuleException dqre = null;
+	%>
+
+	<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
 
 		<%
-		DuplicateQueryRuleException dqre = null;
+		dqre = (DuplicateQueryRuleException)errorException;
+
+		String name = "categories";
+
+		if (Objects.equals(dqre.getName(), "assetTags")) {
+			name = "tags";
+		}
+		else if (Objects.equals(dqre.getName(), "keywords")) {
+			name = "keywords";
+		}
 		%>
 
-		<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
+		<liferay-util:buffer
+			var="messageArgument"
+		>
+			<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key="<%= name %>" />)</em>
+		</liferay-util:buffer>
 
-			<%
-			dqre = (DuplicateQueryRuleException)errorException;
+		<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
-			String name = "categories";
+	<p><liferay-ui:message key="displayed-items-must-match-these-rules" /></p>
 
-			if (Objects.equals(dqre.getName(), "assetTags")) {
-				name = "tags";
-			}
-			else if (Objects.equals(dqre.getName(), "keywords")) {
-				name = "keywords";
-			}
-			%>
+	<div id="<portlet:namespace />ConditionForm"></div>
 
-			<liferay-util:buffer
-				var="messageArgument"
-			>
-				<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key="<%= name %>" />)</em>
-			</liferay-util:buffer>
-
-			<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<p><liferay-ui:message key="displayed-items-must-match-these-rules" /></p>
-
-		<div id="<portlet:namespace />ConditionForm"></div>
-
-		<div>
-			<react:component
-				module="js/components/AssetFilterBuilder/index"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL()
-					).put(
-						"groupIds", ListUtil.fromArray(assetPublisherDisplayContext.getReferencedModelsGroupIds())
-					).put(
-						"namespace", liferayPortletResponse.getNamespace()
-					).put(
-						"pathThemeImages", themeDisplay.getPathThemeImages()
-					).put(
-						"rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray()
-					).put(
-						"tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL()
-					).put(
-						"vocabularyIds", assetPublisherDisplayContext.getVocabularyIds()
-					).build()
-				%>'
-			/>
-		</div>
-	</liferay-frontend:fieldset>
-</liferay-frontend:fieldset-group>
+	<div>
+		<react:component
+			module="js/components/AssetFilterBuilder/index"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL()
+				).put(
+					"groupIds", ListUtil.fromArray(assetPublisherDisplayContext.getReferencedModelsGroupIds())
+				).put(
+					"namespace", liferayPortletResponse.getNamespace()
+				).put(
+					"pathThemeImages", themeDisplay.getPathThemeImages()
+				).put(
+					"rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray()
+				).put(
+					"tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL()
+				).put(
+					"vocabularyIds", assetPublisherDisplayContext.getVocabularyIds()
+				).build()
+			%>'
+		/>
+	</div>
+</liferay-frontend:fieldset>

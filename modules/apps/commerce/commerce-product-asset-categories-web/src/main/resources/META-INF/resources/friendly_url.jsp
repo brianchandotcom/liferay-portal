@@ -57,18 +57,16 @@ renderResponse.setTitle(category.getTitle(locale));
 	<aui:input name="categoryId" type="hidden" value="<%= category.getCategoryId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<label for="<portlet:namespace />urlTitleMapAsXML"><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
+		<liferay-frontend:fieldset>
+			<label for="<portlet:namespace />urlTitleMapAsXML"><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
 
-				<liferay-ui:input-localized
-					defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
-					inputAddon="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>"
-					name="urlTitleMapAsXML"
-					xml="<%= HttpComponentsUtil.decodeURL(titleMapAsXML) %>"
-				/>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<liferay-ui:input-localized
+				defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+				inputAddon="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>"
+				name="urlTitleMapAsXML"
+				xml="<%= HttpComponentsUtil.decodeURL(titleMapAsXML) %>"
+			/>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

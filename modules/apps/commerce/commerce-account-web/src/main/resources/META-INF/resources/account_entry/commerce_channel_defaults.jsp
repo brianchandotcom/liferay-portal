@@ -32,22 +32,20 @@ renderResponse.setTitle((commerceAccountDisplayContext.getAccountEntryId() == 0)
 			<liferay-ui:message key="channel-defaults" />
 		</h2>
 
-		<liferay-frontend:fieldset-group>
-			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#commerce_addresses" />
+		<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#commerce_addresses" />
 
-			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#terms" />
+		<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#terms" />
 
-			<%@ include file="/account_entry/commerce_shipping_options/default_commerce_shipping_options.jspf" %>
+		<%@ include file="/account_entry/commerce_shipping_options/default_commerce_shipping_options.jspf" %>
 
-			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#price_lists" />
+		<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#price_lists" />
 
-			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#discounts" />
+		<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#discounts" />
 
-			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#currencies" />
+		<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#currencies" />
 
-			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#payment_methods" />
+		<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/channel_defaults.jsp#payment_methods" />
 
-			<%@ include file="/account_entry/users/default_users.jspf" %>
-		</liferay-frontend:fieldset-group>
+		<%@ include file="/account_entry/users/default_users.jspf" %>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

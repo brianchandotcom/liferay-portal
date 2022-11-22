@@ -57,18 +57,16 @@ zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 
 		</liferay-ui:error>
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input label="openweathermap-api-key" name="preferences--apiKey--" type="text" value="<%= apiKey %>" />
+		<liferay-frontend:fieldset>
+			<aui:input label="openweathermap-api-key" name="preferences--apiKey--" type="text" value="<%= apiKey %>" />
 
-				<aui:input label="enter-one-city-or-zip-code-per-line" name="preferences--zips--" type="textarea" value="<%= zipsString %>" wrapperCssClass="lfr-textarea-container" />
+			<aui:input label="enter-one-city-or-zip-code-per-line" name="preferences--zips--" type="textarea" value="<%= zipsString %>" wrapperCssClass="lfr-textarea-container" />
 
-				<aui:select label="temperature-format" name="preferences--fahrenheit--">
-					<aui:option label="fahrenheit" selected="<%= fahrenheit %>" value="1" />
-					<aui:option label="celsius" selected="<%= !fahrenheit %>" value="0" />
-				</aui:select>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:select label="temperature-format" name="preferences--fahrenheit--">
+				<aui:option label="fahrenheit" selected="<%= fahrenheit %>" value="1" />
+				<aui:option label="celsius" selected="<%= !fahrenheit %>" value="0" />
+			</aui:select>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

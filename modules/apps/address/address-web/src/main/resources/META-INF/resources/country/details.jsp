@@ -48,43 +48,41 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 	<aui:model-context bean="<%= country %>" model="<%= Country.class %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<div class="form-group">
-				<label>
-					<liferay-ui:message key="name" />
+		<div class="form-group">
+			<label>
+				<liferay-ui:message key="name" />
 
-					<liferay-ui:icon-help message="country-name-field-help" />
-				</label>
+				<liferay-ui:icon-help message="country-name-field-help" />
+			</label>
 
-				<liferay-ui:input-localized
-					autoFocus="<%= true %>"
-					cssClass="form-group"
-					maxLength="<%= String.valueOf(titleMaxLength) %>"
-					name="title"
-					xml="<%= (country == null) ? StringPool.BLANK : country.getTitleMapAsXML() %>"
-				/>
-			</div>
+			<liferay-ui:input-localized
+				autoFocus="<%= true %>"
+				cssClass="form-group"
+				maxLength="<%= String.valueOf(titleMaxLength) %>"
+				name="title"
+				xml="<%= (country == null) ? StringPool.BLANK : country.getTitleMapAsXML() %>"
+			/>
+		</div>
 
-			<aui:input helpMessage="country-key-field-help" label="key" name="name" />
+		<aui:input helpMessage="country-key-field-help" label="key" name="name" />
 
-			<aui:input checked="<%= (country == null) ? false : country.getBillingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="billingAllowed" type="toggle-switch" />
+		<aui:input checked="<%= (country == null) ? false : country.getBillingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="billingAllowed" type="toggle-switch" />
 
-			<aui:input checked="<%= (country == null) ? false : country.getShippingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="shippingAllowed" type="toggle-switch" />
+		<aui:input checked="<%= (country == null) ? false : country.getShippingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="shippingAllowed" type="toggle-switch" />
 
-			<aui:input id="twoLettersISOCode" label="two-letter-iso-code" name="a2" />
+		<aui:input id="twoLettersISOCode" label="two-letter-iso-code" name="a2" />
 
-			<aui:input id="threeLettersISOCode" label="three-letter-iso-code" name="a3" />
+		<aui:input id="threeLettersISOCode" label="three-letter-iso-code" name="a3" />
 
-			<aui:input id="numericISOCode" name="number" />
+		<aui:input id="numericISOCode" name="number" />
 
-			<aui:input label="country-calling-code" name="idd" />
+		<aui:input label="country-calling-code" name="idd" />
 
-			<aui:input checked="<%= (country == null) ? false : country.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
+		<aui:input checked="<%= (country == null) ? false : country.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
 
-			<aui:input id="priority" label="priority" name="position" />
+		<aui:input id="priority" label="priority" name="position" />
 
-			<aui:input checked="<%= (country == null) ? true : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
-		</liferay-frontend:fieldset-group>
+		<aui:input checked="<%= (country == null) ? true : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

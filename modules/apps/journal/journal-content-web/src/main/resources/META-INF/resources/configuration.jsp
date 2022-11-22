@@ -32,15 +32,13 @@
 	<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<div id="<portlet:namespace />articlePreview">
-					<liferay-util:include page="/journal_resources.jsp" servletContext="<%= application %>">
-						<liferay-util:param name="refererPortletName" value="<%= liferayPortletResponse.getNamespace() %>" />
-					</liferay-util:include>
-				</div>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset>
+			<div id="<portlet:namespace />articlePreview">
+				<liferay-util:include page="/journal_resources.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="refererPortletName" value="<%= liferayPortletResponse.getNamespace() %>" />
+				</liferay-util:include>
+			</div>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

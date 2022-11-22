@@ -65,13 +65,11 @@ renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 
 		<aui:model-context bean="<%= assetTagsDisplayContext.getTag() %>" model="<%= AssetTag.class %>" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input name="tagId" type="hidden" value="<%= assetTagsDisplayContext.getTagId() %>" />
+		<liferay-frontend:fieldset>
+			<aui:input name="tagId" type="hidden" value="<%= assetTagsDisplayContext.getTagId() %>" />
 
-				<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" placeholder="name" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" placeholder="name" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

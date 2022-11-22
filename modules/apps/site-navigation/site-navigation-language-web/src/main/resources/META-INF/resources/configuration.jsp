@@ -30,42 +30,40 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsed="<%= false %>"
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
-				<div class="display-template">
-					<liferay-template:template-selector
-						className="<%= LanguageEntry.class.getName() %>"
-						displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
-						displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
-						refreshURL="<%= configurationRenderURL %>"
-					/>
-				</div>
-
-				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
-			</liferay-frontend:fieldset>
-
-			<liferay-frontend:fieldset
-				collapsed="<%= true %>"
-				collapsible="<%= true %>"
-				label="languages"
-			>
-				<aui:input name="preferences--languageIds--" type="hidden" />
-
-				<liferay-ui:input-move-boxes
-					leftBoxName="currentLanguageIds"
-					leftList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
-					leftReorder="<%= Boolean.TRUE.toString() %>"
-					leftTitle="current"
-					rightBoxName="availableLanguageIds"
-					rightList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"
-					rightTitle="available"
+		<liferay-frontend:fieldset
+			collapsed="<%= false %>"
+			collapsible="<%= true %>"
+			label="display-settings"
+		>
+			<div class="display-template">
+				<liferay-template:template-selector
+					className="<%= LanguageEntry.class.getName() %>"
+					displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
 				/>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			</div>
+
+			<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
+		</liferay-frontend:fieldset>
+
+		<liferay-frontend:fieldset
+			collapsed="<%= true %>"
+			collapsible="<%= true %>"
+			label="languages"
+		>
+			<aui:input name="preferences--languageIds--" type="hidden" />
+
+			<liferay-ui:input-move-boxes
+				leftBoxName="currentLanguageIds"
+				leftList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
+				leftReorder="<%= Boolean.TRUE.toString() %>"
+				leftTitle="current"
+				rightBoxName="availableLanguageIds"
+				rightList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"
+				rightTitle="available"
+			/>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

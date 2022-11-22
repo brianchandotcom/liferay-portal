@@ -46,15 +46,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getN
 
 		<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input name="name" />
+		<liferay-frontend:fieldset>
+			<aui:input name="name" />
 
-				<aui:input name="description" />
+			<aui:input name="description" />
 
-				<aui:input label="copy-templates" name="copyTemplates" type="checkbox" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:input label="copy-templates" name="copyTemplates" type="checkbox" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

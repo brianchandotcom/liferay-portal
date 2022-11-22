@@ -32,55 +32,53 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 	</p>
 </liferay-ui:error>
 
-<liferay-frontend:fieldset-group>
-	<liferay-frontend:fieldset
-		collapsible="<%= false %>"
-		label='<%= LanguageUtil.get(request, "details") %>'
-	>
-		<aui:model-context bean="<%= depotAdminDetailsDisplayContext.getGroup() %>" model="<%= Group.class %>" />
+<liferay-frontend:fieldset
+	collapsible="<%= false %>"
+	label='<%= LanguageUtil.get(request, "details") %>'
+>
+	<aui:model-context bean="<%= depotAdminDetailsDisplayContext.getGroup() %>" model="<%= Group.class %>" />
 
-		<aui:input name="assetLibraryId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getDepotEntryId()) %>" />
+	<aui:input name="assetLibraryId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getDepotEntryId()) %>" />
 
-		<aui:input name="groupId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getGroupId()) %>" />
+	<aui:input name="groupId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getGroupId()) %>" />
 
-		<aui:input name="name" placeholder="name" required="<%= true %>" value="<%= depotAdminDetailsDisplayContext.getDepotName(locale) %>" />
+	<aui:input name="name" placeholder="name" required="<%= true %>" value="<%= depotAdminDetailsDisplayContext.getDepotName(locale) %>" />
 
-		<aui:input name="description" placeholder="description" />
-	</liferay-frontend:fieldset>
+	<aui:input name="description" placeholder="description" />
+</liferay-frontend:fieldset>
 
-	<liferay-frontend:fieldset
-		collapsible="<%= true %>"
-		cssClass="panel-group-flush"
-		label='<%= LanguageUtil.get(request, "applications") %>'
-	>
-		<p class="text-muted">
-			<liferay-ui:message key="asset-library-applications-description" />
-		</p>
+<liferay-frontend:fieldset
+	collapsible="<%= true %>"
+	cssClass="panel-group-flush"
+	label='<%= LanguageUtil.get(request, "applications") %>'
+>
+	<p class="text-muted">
+		<liferay-ui:message key="asset-library-applications-description" />
+	</p>
 
-		<clay:row>
+	<clay:row>
 
-			<%
-			for (DepotApplication depotApplication : depotAdminDetailsDisplayContext.getDepotApplications()) {
-			%>
+		<%
+		for (DepotApplication depotApplication : depotAdminDetailsDisplayContext.getDepotApplications()) {
+		%>
 
-				<clay:col
-					md="6"
-				>
-					<aui:input label="<%= depotApplication.getLabel(locale) %>" name='<%= "DepotAppCustomization--" + depotApplication.getPortletId() + "--" %>' type="checkbox" value="<%= depotAdminDetailsDisplayContext.isEnabled(depotApplication.getPortletId()) %>" />
-				</clay:col>
+			<clay:col
+				md="6"
+			>
+				<aui:input label="<%= depotApplication.getLabel(locale) %>" name='<%= "DepotAppCustomization--" + depotApplication.getPortletId() + "--" %>' type="checkbox" value="<%= depotAdminDetailsDisplayContext.isEnabled(depotApplication.getPortletId()) %>" />
+			</clay:col>
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</clay:row>
-	</liferay-frontend:fieldset>
+	</clay:row>
+</liferay-frontend:fieldset>
 
-	<liferay-util:include page="/screen/navigation/entries/sharing.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/screen/navigation/entries/sharing.jsp" servletContext="<%= application %>" />
 
-	<liferay-util:include page="/screen/navigation/entries/asset_auto_tagger.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/screen/navigation/entries/asset_auto_tagger.jsp" servletContext="<%= application %>" />
 
-	<liferay-util:include page="/screen/navigation/entries/documents_and_media.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/screen/navigation/entries/documents_and_media.jsp" servletContext="<%= application %>" />
 
-	<liferay-util:include page="/screen/navigation/entries/recycle_bin.jsp" servletContext="<%= application %>" />
-</liferay-frontend:fieldset-group>
+<liferay-util:include page="/screen/navigation/entries/recycle_bin.jsp" servletContext="<%= application %>" />

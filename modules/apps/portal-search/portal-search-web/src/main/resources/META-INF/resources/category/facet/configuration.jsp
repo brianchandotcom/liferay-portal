@@ -59,65 +59,63 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
-				<div class="display-template">
-					<liferay-template:template-selector
-						className="<%= AssetCategoriesSearchFacetDisplayContext.class.getName() %>"
-						displayStyle="<%= categoryFacetPortletInstanceConfiguration.displayStyle() %>"
-						displayStyleGroupId="<%= assetCategoriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-						refreshURL="<%= configurationRenderURL %>"
-						showEmptyOption="<%= true %>"
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="display-settings"
+		>
+			<div class="display-template">
+				<liferay-template:template-selector
+					className="<%= AssetCategoriesSearchFacetDisplayContext.class.getName() %>"
+					displayStyle="<%= categoryFacetPortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= assetCategoriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+					showEmptyOption="<%= true %>"
+				/>
+			</div>
+		</liferay-frontend:fieldset>
+
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="advanced-configuration"
+		>
+			<aui:input label="category-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= categoryFacetPortletPreferences.getParameterName() %>" />
+
+			<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= categoryFacetPortletPreferences.getMaxTerms() %>" />
+
+			<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= categoryFacetPortletPreferences.getFrequencyThreshold() %>" />
+
+			<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= categoryFacetPortletPreferences.isFrequenciesVisible() %>" />
+
+			<div id="<portlet:namespace />selectVocabularies">
+				<react:component
+					module="js/components/SelectVocabularies"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"disabled", assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected()
+						).put(
+							"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
+						).put(
+							"learnMessages", LearnMessageUtil.getJSONObject("portal-search-web")
+						).put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"vocabularyIdsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS)
+						).build()
+					%>'
+				/>
+			</div>
+
+			<c:if test="<%= assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected() %>">
+				<p class="mt-3 sheet-text">
+					<liferay-ui:message key="select-vocabularies-configuration-disabled-description" />
+
+					<liferay-learn:message
+						key="tag-and-category-facet"
+						resource="portal-search-web"
 					/>
-				</div>
-			</liferay-frontend:fieldset>
-
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="advanced-configuration"
-			>
-				<aui:input label="category-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= categoryFacetPortletPreferences.getParameterName() %>" />
-
-				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= categoryFacetPortletPreferences.getMaxTerms() %>" />
-
-				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= categoryFacetPortletPreferences.getFrequencyThreshold() %>" />
-
-				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= categoryFacetPortletPreferences.isFrequenciesVisible() %>" />
-
-				<div id="<portlet:namespace />selectVocabularies">
-					<react:component
-						module="js/components/SelectVocabularies"
-						props='<%=
-							HashMapBuilder.<String, Object>put(
-								"disabled", assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected()
-							).put(
-								"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
-							).put(
-								"learnMessages", LearnMessageUtil.getJSONObject("portal-search-web")
-							).put(
-								"namespace", liferayPortletResponse.getNamespace()
-							).put(
-								"vocabularyIdsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS)
-							).build()
-						%>'
-					/>
-				</div>
-
-				<c:if test="<%= assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected() %>">
-					<p class="mt-3 sheet-text">
-						<liferay-ui:message key="select-vocabularies-configuration-disabled-description" />
-
-						<liferay-learn:message
-							key="tag-and-category-facet"
-							resource="portal-search-web"
-						/>
-					</p>
-				</c:if>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+				</p>
+			</c:if>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

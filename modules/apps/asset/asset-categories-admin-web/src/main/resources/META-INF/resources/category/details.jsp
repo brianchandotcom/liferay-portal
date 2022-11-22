@@ -64,141 +64,139 @@ renderResponse.setTitle(title);
 
 		<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsed="<%= false %>"
-				collapsible="<%= true %>"
-				label="details"
-			>
-				<aui:input label="name" localized="<%= true %>" name="title" placeholder="name" required="<%= true %>" type="text" value="<%= (category == null) ? StringPool.BLANK : assetCategoriesDisplayContext.getCategoryLocalizationXML(category) %>">
-					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AssetCategory.class.getName(), "name") %></aui:validator>
-				</aui:input>
+		<liferay-frontend:fieldset
+			collapsed="<%= false %>"
+			collapsible="<%= true %>"
+			label="details"
+		>
+			<aui:input label="name" localized="<%= true %>" name="title" placeholder="name" required="<%= true %>" type="text" value="<%= (category == null) ? StringPool.BLANK : assetCategoriesDisplayContext.getCategoryLocalizationXML(category) %>">
+				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AssetCategory.class.getName(), "name") %></aui:validator>
+			</aui:input>
 
-				<div>
-					<label for="<portlet:namespace />description"><liferay-ui:message key="description" /></label>
+			<div>
+				<label for="<portlet:namespace />description"><liferay-ui:message key="description" /></label>
 
-					<liferay-ui:input-localized
-						availableLocales="<%= assetCategoriesDisplayContext.getAvailableLocales() %>"
-						cssClass="form-control"
-						defaultLanguageId="<%= assetCategoriesDisplayContext.getDefaultLanguageId(category) %>"
-						editorName="ckeditor"
-						formName="fm"
-						name="description"
-						selectedLanguageId="<%= assetCategoriesDisplayContext.getSelectedLanguageId(category) %>"
-						type="editor"
-						xml="<%= (category == null) ? StringPool.BLANK : category.getDescription() %>"
-					/>
-				</div>
+				<liferay-ui:input-localized
+					availableLocales="<%= assetCategoriesDisplayContext.getAvailableLocales() %>"
+					cssClass="form-control"
+					defaultLanguageId="<%= assetCategoriesDisplayContext.getDefaultLanguageId(category) %>"
+					editorName="ckeditor"
+					formName="fm"
+					name="description"
+					selectedLanguageId="<%= assetCategoriesDisplayContext.getSelectedLanguageId(category) %>"
+					type="editor"
+					xml="<%= (category == null) ? StringPool.BLANK : category.getDescription() %>"
+				/>
+			</div>
 
-				<c:choose>
-					<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
+			<c:choose>
+				<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
 
-						<%
-						AssetCategory parentCategory = AssetCategoryLocalServiceUtil.fetchCategory(parentCategoryId);
-						%>
+					<%
+					AssetCategory parentCategory = AssetCategoryLocalServiceUtil.fetchCategory(parentCategoryId);
+					%>
 
-						<aui:field-wrapper label="parent-category">
-							<div>
-								<div id="<portlet:namespace />parentCategoryContainer">
-									<div class="field-content">
-										<div class="form-group" id="namespace_assetCategoriesSelector_<%= vocabularyId %>">
-											<div class="input-group">
-												<div class="input-group-item">
-													<div class="form-control form-control-tag-group input-group">
-														<div class="input-group-item">
-															<c:if test="<%= parentCategory != null %>">
-																<clay:label
-																	dismissible="<%= true %>"
-																	label="<%= parentCategory.getTitle(locale) %>"
-																/>
+					<aui:field-wrapper label="parent-category">
+						<div>
+							<div id="<portlet:namespace />parentCategoryContainer">
+								<div class="field-content">
+									<div class="form-group" id="namespace_assetCategoriesSelector_<%= vocabularyId %>">
+										<div class="input-group">
+											<div class="input-group-item">
+												<div class="form-control form-control-tag-group input-group">
+													<div class="input-group-item">
+														<c:if test="<%= parentCategory != null %>">
+															<clay:label
+																dismissible="<%= true %>"
+																label="<%= parentCategory.getTitle(locale) %>"
+															/>
 
-																<input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
-															</c:if>
+															<input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
+														</c:if>
 
-															<input class="form-control-inset" type="text" value="" />
-														</div>
+														<input class="form-control-inset" type="text" value="" />
 													</div>
 												</div>
+											</div>
 
-												<div class="input-group-item input-group-item-shrink">
-													<button class="btn btn-secondary" type="button">
-														<liferay-ui:message key="select" />
-													</button>
-												</div>
+											<div class="input-group-item input-group-item-shrink">
+												<button class="btn btn-secondary" type="button">
+													<liferay-ui:message key="select" />
+												</button>
 											</div>
 										</div>
 									</div>
 								</div>
-
-								<%
-								List<Map<String, Object>> selectedCategories = new ArrayList<>();
-
-								if (parentCategory != null) {
-									selectedCategories.add(
-										HashMapBuilder.<String, Object>put(
-											"label", parentCategory.getTitle(locale)
-										).put(
-											"value", parentCategory.getCategoryId()
-										).build());
-								}
-								%>
-
-								<react:component
-									module="js/AssetCategoriesSelectorTag.es"
-									props='<%=
-										HashMapBuilder.<String, Object>put(
-											"categoryIds", Collections.singletonList(parentCategoryId)
-										).put(
-											"groupIds", Collections.singletonList(scopeGroupId)
-										).put(
-											"namespace", liferayPortletResponse.getNamespace()
-										).put(
-											"portletURL", assetCategoriesDisplayContext.getCategorySelectorURL()
-										).put(
-											"selectedCategories", selectedCategories
-										).put(
-											"vocabularyIds", Collections.singletonList(vocabularyId)
-										).build()
-									%>'
-								/>
 							</div>
-						</aui:field-wrapper>
-					</c:when>
-					<c:otherwise>
-						<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
-					</c:otherwise>
-				</c:choose>
+
+							<%
+							List<Map<String, Object>> selectedCategories = new ArrayList<>();
+
+							if (parentCategory != null) {
+								selectedCategories.add(
+									HashMapBuilder.<String, Object>put(
+										"label", parentCategory.getTitle(locale)
+									).put(
+										"value", parentCategory.getCategoryId()
+									).build());
+							}
+							%>
+
+							<react:component
+								module="js/AssetCategoriesSelectorTag.es"
+								props='<%=
+									HashMapBuilder.<String, Object>put(
+										"categoryIds", Collections.singletonList(parentCategoryId)
+									).put(
+										"groupIds", Collections.singletonList(scopeGroupId)
+									).put(
+										"namespace", liferayPortletResponse.getNamespace()
+									).put(
+										"portletURL", assetCategoriesDisplayContext.getCategorySelectorURL()
+									).put(
+										"selectedCategories", selectedCategories
+									).put(
+										"vocabularyIds", Collections.singletonList(vocabularyId)
+									).build()
+								%>'
+							/>
+						</div>
+					</aui:field-wrapper>
+				</c:when>
+				<c:otherwise>
+					<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
+				</c:otherwise>
+			</c:choose>
+		</liferay-frontend:fieldset>
+
+		<c:if test="<%= assetCategoriesDisplayContext.isShowSelectAssetDisplayPage() %>">
+			<liferay-frontend:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="display-page"
+			>
+				<liferay-asset:select-asset-display-page
+					classNameId="<%= PortalUtil.getClassNameId(AssetCategory.class) %>"
+					classPK="<%= (category != null) ? category.getCategoryId() : 0 %>"
+					classTypeId="<%= 0 %>"
+					groupId="<%= scopeGroupId %>"
+					parentClassPK="<%= parentCategoryId %>"
+					showViewInContextLink="<%= true %>"
+				/>
 			</liferay-frontend:fieldset>
+		</c:if>
 
-			<c:if test="<%= assetCategoriesDisplayContext.isShowSelectAssetDisplayPage() %>">
-				<liferay-frontend:fieldset
-					collapsed="<%= true %>"
-					collapsible="<%= true %>"
-					label="display-page"
-				>
-					<liferay-asset:select-asset-display-page
-						classNameId="<%= PortalUtil.getClassNameId(AssetCategory.class) %>"
-						classPK="<%= (category != null) ? category.getCategoryId() : 0 %>"
-						classTypeId="<%= 0 %>"
-						groupId="<%= scopeGroupId %>"
-						parentClassPK="<%= parentCategoryId %>"
-						showViewInContextLink="<%= true %>"
-					/>
-				</liferay-frontend:fieldset>
-			</c:if>
-
-			<c:if test="<%= (category == null) && !assetCategoriesDisplayContext.isItemSelector() %>">
-				<liferay-frontend:fieldset
-					collapsed="<%= true %>"
-					collapsible="<%= true %>"
-					label="permissions"
-				>
-					<liferay-ui:input-permissions
-						modelName="<%= AssetCategory.class.getName() %>"
-					/>
-				</liferay-frontend:fieldset>
-			</c:if>
-		</liferay-frontend:fieldset-group>
+		<c:if test="<%= (category == null) && !assetCategoriesDisplayContext.isItemSelector() %>">
+			<liferay-frontend:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="permissions"
+			>
+				<liferay-ui:input-permissions
+					modelName="<%= AssetCategory.class.getName() %>"
+				/>
+			</liferay-frontend:fieldset>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<c:choose>

@@ -29,40 +29,38 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<div>
-					<span aria-hidden="true" class="loading-animation"></span>
+		<liferay-frontend:fieldset>
+			<div>
+				<span aria-hidden="true" class="loading-animation"></span>
 
-					<%
-					long sxpBlueprintId = PrefsParamUtil.getLong(portletPreferences, request, "sxpBlueprintId");
+				<%
+				long sxpBlueprintId = PrefsParamUtil.getLong(portletPreferences, request, "sxpBlueprintId");
 
-					SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprint(sxpBlueprintId);
-					%>
+				SXPBlueprint sxpBlueprint = SXPBlueprintLocalServiceUtil.fetchSXPBlueprint(sxpBlueprintId);
+				%>
 
-					<react:component
-						module="sxp_blueprint_options/js/configuration/index"
-						props='<%=
-							HashMapBuilder.<String, Object>put(
-								"initialFederatedSearchKey", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "federatedSearchKey")
-							).put(
-								"initialSXPBlueprintId", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "sxpBlueprintId")
-							).put(
-								"initialSXPBlueprintTitle", (sxpBlueprint != null) ? HtmlUtil.escape(sxpBlueprint.getTitle(locale)) : StringPool.BLANK
-							).put(
-								"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
-							).put(
-								"portletNamespace", liferayPortletResponse.getNamespace()
-							).put(
-								"preferenceKeyFederatedSearchKey", _getInputName("federatedSearchKey")
-							).put(
-								"preferenceKeySXPBlueprintId", _getInputName("sxpBlueprintId")
-							).build()
-						%>'
-					/>
-				</div>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+				<react:component
+					module="sxp_blueprint_options/js/configuration/index"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"initialFederatedSearchKey", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "federatedSearchKey")
+						).put(
+							"initialSXPBlueprintId", SXPBlueprintOptionsPortletPreferencesUtil.getValue(portletPreferences, "sxpBlueprintId")
+						).put(
+							"initialSXPBlueprintTitle", (sxpBlueprint != null) ? HtmlUtil.escape(sxpBlueprint.getTitle(locale)) : StringPool.BLANK
+						).put(
+							"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
+						).put(
+							"portletNamespace", liferayPortletResponse.getNamespace()
+						).put(
+							"preferenceKeyFederatedSearchKey", _getInputName("federatedSearchKey")
+						).put(
+							"preferenceKeySXPBlueprintId", _getInputName("sxpBlueprintId")
+						).build()
+					%>'
+				/>
+			</div>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

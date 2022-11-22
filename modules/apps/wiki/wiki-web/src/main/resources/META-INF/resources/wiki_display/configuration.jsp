@@ -39,106 +39,104 @@ boolean nodeInGroup = false;
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<c:choose>
-					<c:when test="<%= !nodes.isEmpty() %>">
-						<aui:select label="node" name="preferences--nodeId--">
-							<aui:option value="" />
+		<liferay-frontend:fieldset>
+			<c:choose>
+				<c:when test="<%= !nodes.isEmpty() %>">
+					<aui:select label="node" name="preferences--nodeId--">
+						<aui:option value="" />
+
+						<%
+						for (WikiNode node : nodes) {
+							int pagesCount = WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true);
+
+							if (pagesCount == 0) {
+								continue;
+							}
+
+							node = node.toEscapedModel();
+
+							if (nodeId == node.getNodeId()) {
+								nodeInGroup = true;
+							}
+						%>
+
+							<aui:option label="<%= node.getName() %>" selected="<%= nodeId == node.getNodeId() %>" value="<%= node.getNodeId() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-are-no-available-nodes-for-selection" />
+					</div>
+				</c:otherwise>
+			</c:choose>
+
+			<c:choose>
+				<c:when test="<%= nodeInGroup %>">
+					<div id="<portlet:namespace />pageSelectorContainer">
+						<aui:select label="page" name="preferences--title--">
 
 							<%
-							for (WikiNode node : nodes) {
-								int pagesCount = WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true);
+							int total = WikiPageLocalServiceUtil.getPagesCount(nodeId, true);
 
-								if (pagesCount == 0) {
-									continue;
-								}
+							List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(nodeId, true, 0, total);
 
-								node = node.toEscapedModel();
-
-								if (nodeId == node.getNodeId()) {
-									nodeInGroup = true;
-								}
+							for (int i = 0; i < pages.size(); i++) {
+								WikiPage wikiPage = pages.get(i);
 							%>
 
-								<aui:option label="<%= node.getName() %>" selected="<%= nodeId == node.getNodeId() %>" value="<%= node.getNodeId() %>" />
+								<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) %>" />
 
 							<%
 							}
 							%>
 
 						</aui:select>
-					</c:when>
-					<c:otherwise>
-						<div class="alert alert-info">
-							<liferay-ui:message key="there-are-no-available-nodes-for-selection" />
-						</div>
-					</c:otherwise>
-				</c:choose>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<aui:input name="preferences--title--" type="hidden" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
+				</c:otherwise>
+			</c:choose>
 
-				<c:choose>
-					<c:when test="<%= nodeInGroup %>">
-						<div id="<portlet:namespace />pageSelectorContainer">
-							<aui:select label="page" name="preferences--title--">
+			<script>
+				var nodeIdSelect = document.getElementById('<portlet:namespace />nodeId');
+				var pageSelectorContainer = document.getElementById(
+					'<portlet:namespace />pageSelectorContainer'
+				);
 
-								<%
-								int total = WikiPageLocalServiceUtil.getPagesCount(nodeId, true);
+				if (nodeIdSelect) {
+					var nodeId = nodeIdSelect.value;
 
-								List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(nodeId, true, 0, total);
-
-								for (int i = 0; i < pages.size(); i++) {
-									WikiPage wikiPage = pages.get(i);
-								%>
-
-									<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<aui:input name="preferences--title--" type="hidden" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
-					</c:otherwise>
-				</c:choose>
-
-				<script>
-					var nodeIdSelect = document.getElementById('<portlet:namespace />nodeId');
-					var pageSelectorContainer = document.getElementById(
-						'<portlet:namespace />pageSelectorContainer'
-					);
-
-					if (nodeIdSelect) {
-						var nodeId = nodeIdSelect.value;
-
-						nodeIdSelect.addEventListener('change', () => {
-							if (pageSelectorContainer) {
-								if (nodeIdSelect.value === nodeId) {
-									pageSelectorContainer.classList.remove('hide');
-								}
-								else {
-									pageSelectorContainer.classList.add('hide');
-								}
+					nodeIdSelect.addEventListener('change', () => {
+						if (pageSelectorContainer) {
+							if (nodeIdSelect.value === nodeId) {
+								pageSelectorContainer.classList.remove('hide');
 							}
-
-							if (nodeIdSelect.value && nodeIdSelect.value !== nodeId) {
-								var renderURL = Liferay.Util.PortletURL.createRenderURL(
-									'<%= configurationRenderURL %>',
-									{
-										nodeId: nodeIdSelect.value,
-									}
-								);
-
-								document.<portlet:namespace />fm.action = renderURL;
-								document.<portlet:namespace />fm.submit();
+							else {
+								pageSelectorContainer.classList.add('hide');
 							}
-						});
-					}
-				</script>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+						}
+
+						if (nodeIdSelect.value && nodeIdSelect.value !== nodeId) {
+							var renderURL = Liferay.Util.PortletURL.createRenderURL(
+								'<%= configurationRenderURL %>',
+								{
+									nodeId: nodeIdSelect.value,
+								}
+							);
+
+							document.<portlet:namespace />fm.action = renderURL;
+							document.<portlet:namespace />fm.submit();
+						}
+					});
+				}
+			</script>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

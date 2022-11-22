@@ -48,13 +48,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", HtmlUtil.escape(d
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input name="name" />
+		<liferay-frontend:fieldset>
+			<aui:input name="name" />
 
-				<aui:input name="description" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:input name="description" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

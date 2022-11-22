@@ -40,17 +40,15 @@ portletDisplay.setURLBack(backURL);
 		<aui:input name="objectDefinitionId" type="hidden" value="<%= objectDefinition.getObjectDefinitionId() %>" />
 		<aui:input name="ddmFormValues" type="hidden" value="" />
 
-		<liferay-frontend:fieldset-group>
-			<clay:sheet-section>
-				<clay:row>
-					<clay:col
-						md="12"
-					>
-						<%= objectEntryDisplayContext.renderDDMForm(pageContext) %>
-					</clay:col>
-				</clay:row>
-			</clay:sheet-section>
-		</liferay-frontend:fieldset-group>
+		<clay:sheet-section>
+			<clay:row>
+				<clay:col
+					md="12"
+				>
+					<%= objectEntryDisplayContext.renderDDMForm(pageContext) %>
+				</clay:col>
+			</clay:row>
+		</clay:sheet-section>
 
 		<%@ include file="/object_entries/object_entry/categorization.jspf" %>
 	</liferay-frontend:edit-form-body>

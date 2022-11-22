@@ -44,55 +44,53 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				id="groupStatisticsDisplayActivityCounterNamesPanel"
-				label="counters"
-			>
-				<div id="<portlet:namespace />displayActivityCounterNames">
-					<liferay-frontend:fieldset
-						label=""
-					>
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			id="groupStatisticsDisplayActivityCounterNamesPanel"
+			label="counters"
+		>
+			<div id="<portlet:namespace />displayActivityCounterNames">
+				<liferay-frontend:fieldset
+					label=""
+				>
 
-						<%
-						for (int i = 0; i < displayActivityCounterNameIndexCount; i++) {
-							String index = String.valueOf(i);
+					<%
+					for (int i = 0; i < displayActivityCounterNameIndexCount; i++) {
+						String index = String.valueOf(i);
 
-							displayActivityCounterNameIndexes[i] = index;
-						%>
+						displayActivityCounterNameIndexes[i] = index;
+					%>
 
-							<div class="lfr-form-row">
-								<div class="row-fields">
-									<liferay-util:include page="/add_activity_counter.jsp" servletContext="<%= application %>">
-										<liferay-util:param name="portletResource" value="<%= portletName %>" />
-										<liferay-util:param name="index" value="<%= index %>" />
-									</liferay-util:include>
-								</div>
+						<div class="lfr-form-row">
+							<div class="row-fields">
+								<liferay-util:include page="/add_activity_counter.jsp" servletContext="<%= application %>">
+									<liferay-util:param name="portletResource" value="<%= portletName %>" />
+									<liferay-util:param name="index" value="<%= index %>" />
+								</liferay-util:include>
 							</div>
+						</div>
 
-						<%
-						}
-						%>
+					<%
+					}
+					%>
 
-					</liferay-frontend:fieldset>
-				</div>
+				</liferay-frontend:fieldset>
+			</div>
 
-				<aui:input name="displayActivityCounterNameIndexes" type="hidden" value="<%= StringUtil.merge(displayActivityCounterNameIndexes) %>" />
+			<aui:input name="displayActivityCounterNameIndexes" type="hidden" value="<%= StringUtil.merge(displayActivityCounterNameIndexes) %>" />
 
-				<aui:script use="liferay-auto-fields">
-					new Liferay.AutoFields({
-						contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
-						fieldIndexes: '<portlet:namespace />displayActivityCounterNameIndexes',
-						namespace: '<portlet:namespace />',
-						url:
-							'<liferay-portlet:renderURL portletName="<%= SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>',
-						urlNamespace:
-							'<%= "_" + SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS + "_" %>',
-					}).render();
-				</aui:script>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:script use="liferay-auto-fields">
+				new Liferay.AutoFields({
+					contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
+					fieldIndexes: '<portlet:namespace />displayActivityCounterNameIndexes',
+					namespace: '<portlet:namespace />',
+					url:
+						'<liferay-portlet:renderURL portletName="<%= SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>',
+					urlNamespace:
+						'<%= "_" + SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS + "_" %>',
+				}).render();
+			</aui:script>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

@@ -29,18 +29,16 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsed="<%= false %>"
-				label="site-membership-preference"
-			>
-				<div class="sheet-text">
-					<liferay-ui:message key="account-users-need-site-membership-in-order-to-access-the-site-and-use-this-widget" />
-				</div>
+		<liferay-frontend:fieldset
+			collapsed="<%= false %>"
+			label="site-membership-preference"
+		>
+			<div class="sheet-text">
+				<liferay-ui:message key="account-users-need-site-membership-in-order-to-access-the-site-and-use-this-widget" />
+			</div>
 
-				<aui:input name="preferences--enableAutomaticSiteMembership--" type="checkbox" value='<%= PrefsParamUtil.getBoolean(portletPreferences, request, "enableAutomaticSiteMembership", true) %>' />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:input name="preferences--enableAutomaticSiteMembership--" type="checkbox" value='<%= PrefsParamUtil.getBoolean(portletPreferences, request, "enableAutomaticSiteMembership", true) %>' />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

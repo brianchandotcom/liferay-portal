@@ -84,48 +84,46 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 	<aui:model-context bean="<%= layoutSetPrototype %>" model="<%= LayoutSetPrototype.class %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
+		<liferay-frontend:fieldset>
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
 
-				<aui:input name="description" placeholder="description" />
+			<aui:input name="description" placeholder="description" />
 
-				<aui:input helpMessage="allow-site-administrators-to-create-sites-from-this-site-template" inlineLabel="right" label="active" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" value="<%= layoutSetPrototype.isActive() %>" />
+			<aui:input helpMessage="allow-site-administrators-to-create-sites-from-this-site-template" inlineLabel="right" label="active" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" value="<%= layoutSetPrototype.isActive() %>" />
 
-				<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" inlineLabel="right" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" labelCssClass="simple-toggle-switch" name="layoutsUpdateable" type="toggle-switch" value="<%= layoutsUpdateable %>" />
+			<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" inlineLabel="right" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" labelCssClass="simple-toggle-switch" name="layoutsUpdateable" type="toggle-switch" value="<%= layoutsUpdateable %>" />
 
-				<aui:input helpMessage="ready-for-propagation-help" label="ready-for-propagation" name="readyForPropagation" type="toggle-switch" value="<%= readyForPropagation %>" />
+			<aui:input helpMessage="ready-for-propagation-help" label="ready-for-propagation" name="readyForPropagation" type="toggle-switch" value="<%= readyForPropagation %>" />
 
-				<%
-				Set<String> servletContextNames = CustomJspRegistryUtil.getServletContextNames();
+			<%
+			Set<String> servletContextNames = CustomJspRegistryUtil.getServletContextNames();
 
-				String customJspServletContextName = StringPool.BLANK;
+			String customJspServletContextName = StringPool.BLANK;
 
-				if (layoutSetPrototype != null) {
-					UnicodeProperties settingsProperties = layoutSetPrototype.getSettingsProperties();
+			if (layoutSetPrototype != null) {
+				UnicodeProperties settingsProperties = layoutSetPrototype.getSettingsProperties();
 
-					customJspServletContextName = GetterUtil.getString(settingsProperties.get("customJspServletContextName"));
-				}
-				%>
+				customJspServletContextName = GetterUtil.getString(settingsProperties.get("customJspServletContextName"));
+			}
+			%>
 
-				<c:if test="<%= !servletContextNames.isEmpty() %>">
-					<aui:select label="application-adapter" name="customJspServletContextName">
-						<aui:option label="none" />
+			<c:if test="<%= !servletContextNames.isEmpty() %>">
+				<aui:select label="application-adapter" name="customJspServletContextName">
+					<aui:option label="none" />
 
-						<%
-						for (String servletContextName : servletContextNames) {
-						%>
+					<%
+					for (String servletContextName : servletContextNames) {
+					%>
 
-							<aui:option selected="<%= customJspServletContextName.equals(servletContextName) %>" value="<%= servletContextName %>"><%= CustomJspRegistryUtil.getDisplayName(servletContextName) %></aui:option>
+						<aui:option selected="<%= customJspServletContextName.equals(servletContextName) %>" value="<%= servletContextName %>"><%= CustomJspRegistryUtil.getDisplayName(servletContextName) %></aui:option>
 
-						<%
-						}
-						%>
+					<%
+					}
+					%>
 
-					</aui:select>
-				</c:if>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+				</aui:select>
+			</c:if>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

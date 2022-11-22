@@ -43,39 +43,37 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 			/>
 		</c:if>
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:field-wrapper>
-					<p class="sheet-text">
-						<liferay-ui:message key="select-vocabularies-description" />
-					</p>
+		<liferay-frontend:fieldset>
+			<aui:field-wrapper>
+				<p class="sheet-text">
+					<liferay-ui:message key="select-vocabularies-description" />
+				</p>
 
-					<div class="vocabularies-selection-wrapper">
-						<span
-							aria-hidden="true"
-							class="loading-animation
-							vocabularies-selection-loader"
-						>
-						</span>
+				<div class="vocabularies-selection-wrapper">
+					<span
+						aria-hidden="true"
+						class="loading-animation
+						vocabularies-selection-loader"
+					>
+					</span>
 
-						<react:component
-							module="js/components/VocabulariesSelectionBox"
-							props='<%=
-								HashMapBuilder.<String, Object>put(
-									"leftBoxName", "availableAssetVocabularyIds"
-								).put(
-									"leftList", contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyJSONArray()
-								).put(
-									"rightBoxName", "currentAssetVocabularyIds"
-								).put(
-									"rightList", contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyJSONArray()
-								).build()
-							%>'
-						/>
-					</div>
-				</aui:field-wrapper>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+					<react:component
+						module="js/components/VocabulariesSelectionBox"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"leftBoxName", "availableAssetVocabularyIds"
+							).put(
+								"leftList", contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyJSONArray()
+							).put(
+								"rightBoxName", "currentAssetVocabularyIds"
+							).put(
+								"rightList", contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyJSONArray()
+							).build()
+						%>'
+					/>
+				</div>
+			</aui:field-wrapper>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

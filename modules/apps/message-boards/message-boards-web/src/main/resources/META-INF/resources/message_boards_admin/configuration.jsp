@@ -60,81 +60,77 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 			<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
-						<aui:input name="preferences--allowAnonymousPosting--" type="checkbox" value="<%= mbGroupServiceSettings.isAllowAnonymousPosting() %>" />
+				<liferay-frontend:fieldset>
+					<aui:input name="preferences--allowAnonymousPosting--" type="checkbox" value="<%= mbGroupServiceSettings.isAllowAnonymousPosting() %>" />
 
-						<aui:input helpMessage="message-boards-message-subscribe-by-default-help" label="subscribe-by-default" name="preferences--subscribeByDefault--" type="checkbox" value="<%= subscribeByDefault %>" />
+					<aui:input helpMessage="message-boards-message-subscribe-by-default-help" label="subscribe-by-default" name="preferences--subscribeByDefault--" type="checkbox" value="<%= subscribeByDefault %>" />
 
-						<aui:select name="preferences--messageFormat--">
+					<aui:select name="preferences--messageFormat--">
 
-							<%
-							for (int i = 0; i < MBMessageConstants.FORMATS.length; i++) {
-							%>
+						<%
+						for (int i = 0; i < MBMessageConstants.FORMATS.length; i++) {
+						%>
 
-								<c:if test="<%= com.liferay.message.boards.util.MBUtil.isValidMessageFormat(MBMessageConstants.FORMATS[i]) %>">
-									<aui:option label='<%= LanguageUtil.get(request, "message-boards.message-formats." + MBMessageConstants.FORMATS[i]) %>' selected="<%= messageFormat.equals(MBMessageConstants.FORMATS[i]) %>" value="<%= MBMessageConstants.FORMATS[i] %>" />
-								</c:if>
+							<c:if test="<%= com.liferay.message.boards.util.MBUtil.isValidMessageFormat(MBMessageConstants.FORMATS[i]) %>">
+								<aui:option label='<%= LanguageUtil.get(request, "message-boards.message-formats." + MBMessageConstants.FORMATS[i]) %>' selected="<%= messageFormat.equals(MBMessageConstants.FORMATS[i]) %>" value="<%= MBMessageConstants.FORMATS[i] %>" />
+							</c:if>
 
-							<%
-							}
-							%>
+						<%
+						}
+						%>
 
-						</aui:select>
+					</aui:select>
 
-						<aui:input label="enable-report-inappropriate-content" name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
+					<aui:input label="enable-report-inappropriate-content" name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
 
-						<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
+					<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 
-						<aui:input name="preferences--threadAsQuestionByDefault--" type="checkbox" value="<%= threadAsQuestionByDefault %>" />
+					<aui:input name="preferences--threadAsQuestionByDefault--" type="checkbox" value="<%= threadAsQuestionByDefault %>" />
 
-						<aui:select label="show-recent-posts-from-last" name="preferences--recentPostsDateOffset--" value="<%= mbGroupServiceSettings.getRecentPostsDateOffset() %>">
-							<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' value="1" />
-							<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' value="7" />
-							<aui:option label='<%= LanguageUtil.format(request, "x-days", "30", false) %>' value="30" />
-							<aui:option label='<%= LanguageUtil.format(request, "x-days", "365", false) %>' value="365" />
-						</aui:select>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+					<aui:select label="show-recent-posts-from-last" name="preferences--recentPostsDateOffset--" value="<%= mbGroupServiceSettings.getRecentPostsDateOffset() %>">
+						<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' value="1" />
+						<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' value="7" />
+						<aui:option label='<%= LanguageUtil.format(request, "x-days", "30", false) %>' value="30" />
+						<aui:option label='<%= LanguageUtil.format(request, "x-days", "365", false) %>' value="365" />
+					</aui:select>
+				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
-						<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= mbGroupServiceSettings.getEmailFromName() %>" />
+				<liferay-frontend:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= mbGroupServiceSettings.getEmailFromName() %>" />
 
-						<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= mbGroupServiceSettings.getEmailFromAddress() %>" />
+					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= mbGroupServiceSettings.getEmailFromAddress() %>" />
 
-						<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= mbGroupServiceSettings.isEmailHtmlFormat() %>" />
-					</liferay-frontend:fieldset>
+					<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= mbGroupServiceSettings.isEmailHtmlFormat() %>" />
+				</liferay-frontend:fieldset>
 
-					<liferay-frontend:fieldset
-						collapsed="<%= true %>"
-						collapsible="<%= true %>"
-						label="definition-of-terms"
-					>
-						<dl>
+				<liferay-frontend:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="definition-of-terms"
+				>
+					<dl>
 
-							<%
-							Map<String, String> emailDefinitionTerms = MBMailUtil.getEmailFromDefinitionTerms(renderRequest);
+						<%
+						Map<String, String> emailDefinitionTerms = MBMailUtil.getEmailFromDefinitionTerms(renderRequest);
 
-							for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
-							%>
+						for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
+						%>
 
-								<dt>
-									<%= entry.getKey() %>
-								</dt>
-								<dd>
-									<%= entry.getValue() %>
-								</dd>
+							<dt>
+								<%= entry.getKey() %>
+							</dt>
+							<dd>
+								<%= entry.getValue() %>
+							</dd>
 
-							<%
-							}
-							%>
+						<%
+						}
+						%>
 
-						</dl>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+					</dl>
+				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 
 			<%
@@ -142,27 +138,23 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 			%>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBody="<%= mbGroupServiceSettings.getEmailMessageAddedBodyXml() %>"
-						emailDefinitionTerms="<%= emailDefinitionTerms %>"
-						emailEnabled="<%= mbGroupServiceSettings.isEmailMessageAddedEnabled() %>"
-						emailParam="emailMessageAdded"
-						emailSubject="<%= mbGroupServiceSettings.getEmailMessageAddedSubjectXml() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= mbGroupServiceSettings.getEmailMessageAddedBodyXml() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= mbGroupServiceSettings.isEmailMessageAddedEnabled() %>"
+					emailParam="emailMessageAdded"
+					emailSubject="<%= mbGroupServiceSettings.getEmailMessageAddedSubjectXml() %>"
+				/>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBody="<%= mbGroupServiceSettings.getEmailMessageUpdatedBodyXml() %>"
-						emailDefinitionTerms="<%= emailDefinitionTerms %>"
-						emailEnabled="<%= mbGroupServiceSettings.isEmailMessageUpdatedEnabled() %>"
-						emailParam="emailMessageUpdated"
-						emailSubject="<%= mbGroupServiceSettings.getEmailMessageUpdatedSubjectXml() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= mbGroupServiceSettings.getEmailMessageUpdatedBodyXml() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= mbGroupServiceSettings.isEmailMessageUpdatedEnabled() %>"
+					emailParam="emailMessageUpdated"
+					emailSubject="<%= mbGroupServiceSettings.getEmailMessageUpdatedSubjectXml() %>"
+				/>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
@@ -170,175 +162,173 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					<liferay-ui:message key="enter-the-name,-image,-and-priority-level-in-descending-order" />
 				</div>
 
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
-						<table class="lfr-table">
-							<tr>
-								<td>
-									<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
-								</td>
-								<td>
-									<aui:select label="localized-language" name="prioritiesLanguageId" onChange='<%= liferayPortletResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
-
-										<%
-										for (Locale curLocale : locales) {
-											if (curLocale.equals(defaultLocale)) {
-												continue;
-											}
-										%>
-
-											<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
-
-										<%
-										}
-										%>
-
-									</aui:select>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<br />
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<table class="lfr-table">
-										<tr>
-											<td class="lfr-label">
-												<liferay-ui:message key="name" />
-											</td>
-											<td class="lfr-label">
-												<liferay-ui:message key="image" />
-											</td>
-											<td class="lfr-label">
-												<liferay-ui:message key="priority" />
-											</td>
-										</tr>
-
-										<%
-										priorities = mbGroupServiceSettings.getPriorities(defaultLanguageId);
-
-										for (int i = 0; i < 10; i++) {
-											String name = StringPool.BLANK;
-											String image = StringPool.BLANK;
-											String value = StringPool.BLANK;
-
-											if (priorities.length > i) {
-												String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
-
-												try {
-													name = priority[0];
-													image = priority[1];
-													value = priority[2];
-												}
-												catch (Exception e) {
-												}
-
-												if (Validator.isNull(name) && Validator.isNull(image)) {
-													value = StringPool.BLANK;
-												}
-											}
-										%>
-
-											<tr>
-												<td>
-													<aui:input label="" name='<%= "priorityName" + i + "_" + defaultLanguageId %>' size="15" title="priority-name" value="<%= name %>" />
-												</td>
-												<td>
-													<aui:input label="" name='<%= "priorityImage" + i + "_" + defaultLanguageId %>' size="40" title="priority-image" value="<%= image %>" />
-												</td>
-												<td>
-													<aui:input label="" name='<%= "priorityValue" + i + "_" + defaultLanguageId %>' size="4" title="priority-value" value="<%= value %>" />
-												</td>
-											</tr>
-
-										<%
-										}
-										%>
-
-									</table>
-								</td>
-								<td>
-									<table class="<%= (currentLocale.equals(defaultLocale) ? "hide" : "") + " lfr-table" %>" id="<portlet:namespace />localized-priorities-table">
-										<tr>
-											<td class="lfr-label">
-												<liferay-ui:message key="name" />
-											</td>
-											<td class="lfr-label">
-												<liferay-ui:message key="image" />
-											</td>
-											<td class="lfr-label">
-												<liferay-ui:message key="priority" />
-											</td>
-										</tr>
-
-										<%
-										for (int i = 0; i < 10; i++) {
-										%>
-
-											<tr>
-												<td>
-													<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= liferayPortletResponse.getNamespace() + "onPrioritiesChanged();" %>' size="15" title="priority-name" />
-												</td>
-												<td>
-													<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= liferayPortletResponse.getNamespace() + "onPrioritiesChanged();" %>' size="40" title="priority-image" />
-												</td>
-												<td>
-													<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= liferayPortletResponse.getNamespace() + "onPrioritiesChanged();" %>' size="4" title="priority-value" />
-												</td>
-											</tr>
-
-										<%
-										}
-										%>
-
-									</table>
+				<liferay-frontend:fieldset>
+					<table class="lfr-table">
+						<tr>
+							<td>
+								<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
+							</td>
+							<td>
+								<aui:select label="localized-language" name="prioritiesLanguageId" onChange='<%= liferayPortletResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
 
 									<%
 									for (Locale curLocale : locales) {
 										if (curLocale.equals(defaultLocale)) {
 											continue;
 										}
-
-										String[] tempPriorities = mbGroupServiceSettings.getPriorities(LocaleUtil.toLanguageId(curLocale));
-
-										for (int j = 0; j < 10; j++) {
-											String name = StringPool.BLANK;
-											String image = StringPool.BLANK;
-											String value = StringPool.BLANK;
-
-											if (tempPriorities.length > j) {
-												String[] priority = StringUtil.split(tempPriorities[j], StringPool.PIPE);
-
-												try {
-													name = priority[0];
-													image = priority[1];
-													value = priority[2];
-												}
-												catch (Exception e) {
-												}
-
-												if (Validator.isNull(name) && Validator.isNull(image)) {
-													value = StringPool.BLANK;
-												}
-											}
 									%>
 
-											<aui:input name='<%= "priorityName" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= name %>" />
-											<aui:input name='<%= "priorityImage" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= image %>" />
-											<aui:input name='<%= "priorityValue" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= value %>" />
+										<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 									<%
-										}
 									}
 									%>
 
-								</td>
-							</tr>
-						</table>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+								</aui:select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<br />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<table class="lfr-table">
+									<tr>
+										<td class="lfr-label">
+											<liferay-ui:message key="name" />
+										</td>
+										<td class="lfr-label">
+											<liferay-ui:message key="image" />
+										</td>
+										<td class="lfr-label">
+											<liferay-ui:message key="priority" />
+										</td>
+									</tr>
+
+									<%
+									priorities = mbGroupServiceSettings.getPriorities(defaultLanguageId);
+
+									for (int i = 0; i < 10; i++) {
+										String name = StringPool.BLANK;
+										String image = StringPool.BLANK;
+										String value = StringPool.BLANK;
+
+										if (priorities.length > i) {
+											String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
+
+											try {
+												name = priority[0];
+												image = priority[1];
+												value = priority[2];
+											}
+											catch (Exception e) {
+											}
+
+											if (Validator.isNull(name) && Validator.isNull(image)) {
+												value = StringPool.BLANK;
+											}
+										}
+									%>
+
+										<tr>
+											<td>
+												<aui:input label="" name='<%= "priorityName" + i + "_" + defaultLanguageId %>' size="15" title="priority-name" value="<%= name %>" />
+											</td>
+											<td>
+												<aui:input label="" name='<%= "priorityImage" + i + "_" + defaultLanguageId %>' size="40" title="priority-image" value="<%= image %>" />
+											</td>
+											<td>
+												<aui:input label="" name='<%= "priorityValue" + i + "_" + defaultLanguageId %>' size="4" title="priority-value" value="<%= value %>" />
+											</td>
+										</tr>
+
+									<%
+									}
+									%>
+
+								</table>
+							</td>
+							<td>
+								<table class="<%= (currentLocale.equals(defaultLocale) ? "hide" : "") + " lfr-table" %>" id="<portlet:namespace />localized-priorities-table">
+									<tr>
+										<td class="lfr-label">
+											<liferay-ui:message key="name" />
+										</td>
+										<td class="lfr-label">
+											<liferay-ui:message key="image" />
+										</td>
+										<td class="lfr-label">
+											<liferay-ui:message key="priority" />
+										</td>
+									</tr>
+
+									<%
+									for (int i = 0; i < 10; i++) {
+									%>
+
+										<tr>
+											<td>
+												<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= liferayPortletResponse.getNamespace() + "onPrioritiesChanged();" %>' size="15" title="priority-name" />
+											</td>
+											<td>
+												<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= liferayPortletResponse.getNamespace() + "onPrioritiesChanged();" %>' size="40" title="priority-image" />
+											</td>
+											<td>
+												<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= liferayPortletResponse.getNamespace() + "onPrioritiesChanged();" %>' size="4" title="priority-value" />
+											</td>
+										</tr>
+
+									<%
+									}
+									%>
+
+								</table>
+
+								<%
+								for (Locale curLocale : locales) {
+									if (curLocale.equals(defaultLocale)) {
+										continue;
+									}
+
+									String[] tempPriorities = mbGroupServiceSettings.getPriorities(LocaleUtil.toLanguageId(curLocale));
+
+									for (int j = 0; j < 10; j++) {
+										String name = StringPool.BLANK;
+										String image = StringPool.BLANK;
+										String value = StringPool.BLANK;
+
+										if (tempPriorities.length > j) {
+											String[] priority = StringUtil.split(tempPriorities[j], StringPool.PIPE);
+
+											try {
+												name = priority[0];
+												image = priority[1];
+												value = priority[2];
+											}
+											catch (Exception e) {
+											}
+
+											if (Validator.isNull(name) && Validator.isNull(image)) {
+												value = StringPool.BLANK;
+											}
+										}
+								%>
+
+										<aui:input name='<%= "priorityName" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= name %>" />
+										<aui:input name='<%= "priorityImage" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= image %>" />
+										<aui:input name='<%= "priorityValue" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= value %>" />
+
+								<%
+									}
+								}
+								%>
+
+							</td>
+						</tr>
+					</table>
+				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
@@ -346,37 +336,14 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					<liferay-ui:message key="enter-rank-and-minimum-post-pairs-per-line" />
 				</div>
 
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
-						<table class="lfr-table">
-							<tr>
-								<td class="lfr-label">
-									<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
-								</td>
-								<td class="lfr-label">
-									<aui:select label="localized-language" name="ranksLanguageId" onChange='<%= liferayPortletResponse.getNamespace() + "updateRanksLanguage();" %>' showEmptyOption="<%= true %>">
-
-										<%
-										for (Locale curLocale : locales) {
-											if (curLocale.equals(defaultLocale)) {
-												continue;
-											}
-										%>
-
-											<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
-
-										<%
-										}
-										%>
-
-									</aui:select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' title="ranks" type="textarea" value="<%= StringUtil.merge(mbGroupServiceSettings.getRanks(defaultLanguageId), StringPool.NEW_LINE) %>" />
-								</td>
-								<td>
+				<liferay-frontend:fieldset>
+					<table class="lfr-table">
+						<tr>
+							<td class="lfr-label">
+								<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
+							</td>
+							<td class="lfr-label">
+								<aui:select label="localized-language" name="ranksLanguageId" onChange='<%= liferayPortletResponse.getNamespace() + "updateRanksLanguage();" %>' showEmptyOption="<%= true %>">
 
 									<%
 									for (Locale curLocale : locales) {
@@ -385,32 +352,50 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 										}
 									%>
 
-										<aui:input name='<%= "ranks_" + LocaleUtil.toLanguageId(curLocale) %>' type="textarea" value="<%= StringUtil.merge(mbGroupServiceSettings.getRanks(LocaleUtil.toLanguageId(curLocale)), StringPool.NEW_LINE) %>" wrapperCssClass="hide" />
+										<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 									<%
 									}
 									%>
 
-									<aui:input cssClass="hide lfr-textarea-container" label="" name="ranks_temp" onChange='<%= liferayPortletResponse.getNamespace() + "onRanksChanged();" %>' title="ranks" type="textarea" />
-								</td>
-							</tr>
-						</table>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+								</aui:select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<aui:input cssClass="lfr-textarea-container" label="" name='<%= "ranks_" + defaultLanguageId %>' title="ranks" type="textarea" value="<%= StringUtil.merge(mbGroupServiceSettings.getRanks(defaultLanguageId), StringPool.NEW_LINE) %>" />
+							</td>
+							<td>
+
+								<%
+								for (Locale curLocale : locales) {
+									if (curLocale.equals(defaultLocale)) {
+										continue;
+									}
+								%>
+
+									<aui:input name='<%= "ranks_" + LocaleUtil.toLanguageId(curLocale) %>' type="textarea" value="<%= StringUtil.merge(mbGroupServiceSettings.getRanks(LocaleUtil.toLanguageId(curLocale)), StringPool.NEW_LINE) %>" wrapperCssClass="hide" />
+
+								<%
+								}
+								%>
+
+								<aui:input cssClass="hide lfr-textarea-container" label="" name="ranks_temp" onChange='<%= liferayPortletResponse.getNamespace() + "onRanksChanged();" %>' title="ranks" type="textarea" />
+							</td>
+						</tr>
+					</table>
+				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 
 			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 				<liferay-ui:section>
-					<liferay-frontend:fieldset-group>
-						<liferay-rss:rss-settings
-							delta="<%= rssDelta %>"
-							displayStyle="<%= rssDisplayStyle %>"
-							enabled="<%= enableRSS %>"
-							feedType="<%= rssFeedType %>"
-						/>
-					</liferay-frontend:fieldset-group>
-				</liferay-ui:section>
-			</c:if>
+					<liferay-rss:rss-settings
+						delta="<%= rssDelta %>"
+						displayStyle="<%= rssDisplayStyle %>"
+						enabled="<%= enableRSS %>"
+						feedType="<%= rssFeedType %>"
+					/>
+				</liferay-ui:section> </c:if>
 		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>
 

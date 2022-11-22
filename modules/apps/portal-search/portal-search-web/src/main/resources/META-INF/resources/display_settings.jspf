@@ -20,53 +20,50 @@
 	<aui:option label="let-the-user-choose" value="let-the-user-choose" />
 </aui:select>
 
-<liferay-frontend:fieldset-group>
-	<span class="h3"><liferay-ui:message key="facets" /></span>
+<span class="h3"><liferay-ui:message key="facets" /></span>
 
-	<%
-	List<SearchFacet> searchFacets = ListUtil.copy(searchDisplayContext.getSearchFacets());
+<%
+List<SearchFacet> searchFacets = ListUtil.copy(searchDisplayContext.getSearchFacets());
 
-	for (SearchFacet searchFacet : searchFacets) {
-		searchFacet.init(company.getCompanyId(), searchDisplayContext.getSearchConfiguration());
-	}
+for (SearchFacet searchFacet : searchFacets) {
+	searchFacet.init(company.getCompanyId(), searchDisplayContext.getSearchConfiguration());
+}
 
-	searchFacets = ListUtil.sort(searchFacets, SearchFacetComparator.INSTANCE);
+searchFacets = ListUtil.sort(searchFacets, SearchFacetComparator.INSTANCE);
 
-	for (SearchFacet searchFacet : searchFacets) {
-	%>
+for (SearchFacet searchFacet : searchFacets) {
+%>
 
-		<liferay-frontend:fieldset
-			collapsible="<%= true %>"
-			id='<%= AUIUtil.normalizeId(searchFacet.getClassName()) + "FacetConfigurationPanel" %>'
-			label="<%= searchFacet.getTitle() %>"
-		>
-			<aui:input label="enabled" name='<%= "preferences--" + searchFacet.getClassName() + "--" %>' type="checkbox" value="<%= searchDisplayContext.isDisplayFacet(searchFacet.getClassName()) %>" />
+	<liferay-frontend:fieldset
+		collapsible="<%= true %>"
+		id='<%= AUIUtil.normalizeId(searchFacet.getClassName()) + "FacetConfigurationPanel" %>'
+		label="<%= searchFacet.getTitle() %>"
+	>
+		<aui:input label="enabled" name='<%= "preferences--" + searchFacet.getClassName() + "--" %>' type="checkbox" value="<%= searchDisplayContext.isDisplayFacet(searchFacet.getClassName()) %>" />
 
-			<div class="facet-configuration" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>FacetConfiguration" style="margin-left: 40px;">
-				<div id="<%= StringUtil.replace(searchFacet.getClassName(), CharPool.PERIOD, CharPool.UNDERLINE) %>">
+		<div class="facet-configuration" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>FacetConfiguration" style="margin-left: 40px;">
+			<div id="<%= StringUtil.replace(searchFacet.getClassName(), CharPool.PERIOD, CharPool.UNDERLINE) %>">
 
-					<%
-					request.setAttribute("facet_configuration.jsp-searchFacet", searchFacet);
-					%>
+				<%
+				request.setAttribute("facet_configuration.jsp-searchFacet", searchFacet);
+				%>
 
-					<div class="advance-configuration">
-						<liferay-util:include page="/facets/facet_configuration.jsp" servletContext="<%= application %>" />
-					</div>
+				<div class="advance-configuration">
+					<liferay-util:include page="/facets/facet_configuration.jsp" servletContext="<%= application %>" />
 				</div>
 			</div>
+		</div>
 
-			<hr />
+		<hr />
 
-			<aui:script>
-				Liferay.Util.toggleBoxes(
-					'<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>',
-					'<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>FacetConfiguration'
-				);
-			</aui:script>
-		</liferay-frontend:fieldset>
+		<aui:script>
+			Liferay.Util.toggleBoxes(
+				'<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>',
+				'<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>FacetConfiguration'
+			);
+		</aui:script>
+	</liferay-frontend:fieldset>
 
-	<%
-	}
-	%>
-
-</liferay-frontend:fieldset-group>
+<%
+}
+%>

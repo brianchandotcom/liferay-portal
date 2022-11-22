@@ -33,37 +33,35 @@
 			<clay:col
 				md="6"
 			>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
-						<div class="display-template">
-							<liferay-template:template-selector
-								className="<%= BreadcrumbEntry.class.getName() %>"
-								displayStyle="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>"
-								displayStyleGroupId="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupId() %>"
-								refreshURL="<%= configurationRenderURL %>"
-							/>
-						</div>
-					</liferay-frontend:fieldset>
+				<liferay-frontend:fieldset>
+					<div class="display-template">
+						<liferay-template:template-selector
+							className="<%= BreadcrumbEntry.class.getName() %>"
+							displayStyle="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>"
+							displayStyleGroupId="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupId() %>"
+							refreshURL="<%= configurationRenderURL %>"
+						/>
+					</div>
+				</liferay-frontend:fieldset>
 
-					<liferay-frontend:fieldset
-						id='<%= liferayPortletResponse.getNamespace() + "checkBoxes" %>'
+				<liferay-frontend:fieldset
+					id='<%= liferayPortletResponse.getNamespace() + "checkBoxes" %>'
+				>
+					<clay:col
+						md="6"
 					>
-						<clay:col
-							md="6"
-						>
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>" />
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>" />
-						</clay:col>
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>" />
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>" />
+					</clay:col>
 
-						<clay:col
-							md="6"
-						>
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showLayout" %>' label="show-page" name="preferences--showLayout--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>" />
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showParentGroups" %>' label="show-parent-sites" name="preferences--showParentGroups--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>" />
-							<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showPortletBreadcrumb" %>' label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>" />
-						</clay:col>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+					<clay:col
+						md="6"
+					>
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showLayout" %>' label="show-page" name="preferences--showLayout--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>" />
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showParentGroups" %>' label="show-parent-sites" name="preferences--showParentGroups--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>" />
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showPortletBreadcrumb" %>' label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>" />
+					</clay:col>
+				</liferay-frontend:fieldset>
 			</clay:col>
 
 			<clay:col

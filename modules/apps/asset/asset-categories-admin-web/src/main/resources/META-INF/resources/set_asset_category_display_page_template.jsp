@@ -37,20 +37,18 @@ renderResponse.setTitle(LanguageUtil.format(request, "assign-display-page-templa
 	name="fm"
 >
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				label="display-page"
-			>
-				<liferay-asset:select-asset-display-page
-					classNameId="<%= PortalUtil.getClassNameId(AssetCategory.class) %>"
-					classPK="<%= 0 %>"
-					classTypeId="<%= 0 %>"
-					groupId="<%= scopeGroupId %>"
-					parentClassPK='<%= ParamUtil.getLong(request, "parentCategoryId") %>'
-					showViewInContextLink="<%= true %>"
-				/>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+		<liferay-frontend:fieldset
+			label="display-page"
+		>
+			<liferay-asset:select-asset-display-page
+				classNameId="<%= PortalUtil.getClassNameId(AssetCategory.class) %>"
+				classPK="<%= 0 %>"
+				classTypeId="<%= 0 %>"
+				groupId="<%= scopeGroupId %>"
+				parentClassPK='<%= ParamUtil.getLong(request, "parentCategoryId") %>'
+				showViewInContextLink="<%= true %>"
+			/>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

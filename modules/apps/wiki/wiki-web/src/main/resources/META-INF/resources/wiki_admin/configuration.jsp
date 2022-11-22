@@ -56,40 +56,38 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 			<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:fieldset>
-						<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromName() %>" />
+				<liferay-frontend:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromName() %>" />
 
-						<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromAddress() %>" />
-					</liferay-frontend:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromAddress() %>" />
+				</liferay-frontend:fieldset>
 
-					<liferay-frontend:fieldset
-						collapsed="<%= true %>"
-						collapsible="<%= true %>"
-						label="definition-of-terms"
-					>
-						<dl>
+				<liferay-frontend:fieldset
+					collapsed="<%= true %>"
+					collapsible="<%= true %>"
+					label="definition-of-terms"
+				>
+					<dl>
 
-							<%
-							Map<String, String> definitionTerms = mailTemplatesHelper.getEmailFromDefinitionTerms();
+						<%
+						Map<String, String> definitionTerms = mailTemplatesHelper.getEmailFromDefinitionTerms();
 
-							for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
-							%>
+						for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
+						%>
 
-								<dt>
-									<%= definitionTerm.getKey() %>
-								</dt>
-								<dd>
-									<%= definitionTerm.getValue() %>
-								</dd>
+							<dt>
+								<%= definitionTerm.getKey() %>
+							</dt>
+							<dd>
+								<%= definitionTerm.getValue() %>
+							</dd>
 
-							<%
-							}
-							%>
+						<%
+						}
+						%>
 
-						</dl>
-					</liferay-frontend:fieldset>
-				</liferay-frontend:fieldset-group>
+					</dl>
+				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 
 			<%
@@ -97,39 +95,33 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 			%>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBodyLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedBody() %>"
-						emailDefinitionTerms="<%= definitionTerms %>"
-						emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() %>"
-						emailParam="emailPageAdded"
-						emailSubjectLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedSubject() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedBody() %>"
+					emailDefinitionTerms="<%= definitionTerms %>"
+					emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() %>"
+					emailParam="emailPageAdded"
+					emailSubjectLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedSubject() %>"
+				/>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:fieldset-group>
-					<liferay-frontend:email-notification-settings
-						emailBodyLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedBody() %>"
-						emailDefinitionTerms="<%= definitionTerms %>"
-						emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled() %>"
-						emailParam="emailPageUpdated"
-						emailSubjectLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedSubject() %>"
-					/>
-				</liferay-frontend:fieldset-group>
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedBody() %>"
+					emailDefinitionTerms="<%= definitionTerms %>"
+					emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled() %>"
+					emailParam="emailPageUpdated"
+					emailSubjectLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedSubject() %>"
+				/>
 			</liferay-ui:section>
 
 			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 				<liferay-ui:section>
-					<liferay-frontend:fieldset-group>
-						<liferay-rss:rss-settings
-							delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
-							displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
-							enabled="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>"
-							feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"
-						/>
-					</liferay-frontend:fieldset-group>
+					<liferay-rss:rss-settings
+						delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
+						displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
+						enabled="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>"
+						feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"
+					/>
 				</liferay-ui:section>
 			</c:if>
 		</liferay-ui:tabs>

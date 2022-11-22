@@ -33,17 +33,15 @@
 			<liferay-ui:message key="define-the-behavior-of-this-search" />
 		</div>
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
-				<aui:input name="preferences--enableHighlighting--" type="checkbox" value="<%= journalContentSearchPortletInstanceConfiguration.enableHighlighting() %>" />
+		<liferay-frontend:fieldset>
+			<aui:input name="preferences--enableHighlighting--" type="checkbox" value="<%= journalContentSearchPortletInstanceConfiguration.enableHighlighting() %>" />
 
-				<aui:input label="only-show-results-for-web-content-listed-in-a-web-content-display-widget" name="preferences--showListed--" type="checkbox" value="<%= journalContentSearchPortletInstanceConfiguration.showListed() %>" />
+			<aui:input label="only-show-results-for-web-content-listed-in-a-web-content-display-widget" name="preferences--showListed--" type="checkbox" value="<%= journalContentSearchPortletInstanceConfiguration.showListed() %>" />
 
-				<div class="<%= !journalContentSearchPortletInstanceConfiguration.showListed() ? StringPool.BLANK : " hide" %>" id="<portlet:namespace />webContentDisplay">
-					<aui:input cssClass="lfr-input-text-container" name="preferences--targetPortletId--" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
-				</div>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<div class="<%= !journalContentSearchPortletInstanceConfiguration.showListed() ? StringPool.BLANK : " hide" %>" id="<portlet:namespace />webContentDisplay">
+				<aui:input cssClass="lfr-input-text-container" name="preferences--targetPortletId--" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
+			</div>
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

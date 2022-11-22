@@ -63,85 +63,83 @@ String suggestionsContributorConfiguration = StringBundler.concat(StringPool.OPE
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
-				<liferay-template:template-selector
-					className="<%= SearchBarPortletDisplayContext.class.getName() %>"
-					displayStyle="<%= searchBarPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= searchBarPortletDisplayContext.getDisplayStyleGroupId() %>"
-					refreshURL="<%= configurationRenderURL %>"
-					showEmptyOption="<%= true %>"
-				/>
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="display-settings"
+		>
+			<liferay-template:template-selector
+				className="<%= SearchBarPortletDisplayContext.class.getName() %>"
+				displayStyle="<%= searchBarPortletInstanceConfiguration.displayStyle() %>"
+				displayStyleGroupId="<%= searchBarPortletDisplayContext.getDisplayStyleGroupId() %>"
+				refreshURL="<%= configurationRenderURL %>"
+				showEmptyOption="<%= true %>"
+			/>
 
-				<aui:input helpMessage="invisible-help" label="invisible" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_INVISIBLE) %>" type="checkbox" value="<%= searchBarPortletPreferences.isInvisible() %>" />
+			<aui:input helpMessage="invisible-help" label="invisible" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_INVISIBLE) %>" type="checkbox" value="<%= searchBarPortletPreferences.isInvisible() %>" />
 
-				<c:if test="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>">
-					<div class="alert alert-info text-center">
-						<liferay-ui:message key="the-header-search-bar-configuration-takes-precedence" />
-					</div>
-				</c:if>
-
-				<aui:input disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" label="keywords-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_KEYWORDS_PARAMETER_NAME) %>" value="<%= searchBarPortletPreferences.getKeywordsParameterName() %>" />
-
-				<aui:select disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" label="scope" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>" value="<%= searchBarPortletPreferences.getSearchScopePreferenceString() %>">
-					<aui:option label="this-site" value="this-site" />
-					<aui:option label="everything" value="everything" />
-					<aui:option label="let-the-user-choose" value="let-the-user-choose" />
-				</aui:select>
-
-				<aui:input disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" label="scope-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SCOPE_PARAMETER_NAME) %>" value="<%= searchBarPortletPreferences.getScopeParameterName() %>" />
-
-				<aui:input helpMessage="destination-page-help" label="destination-page" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION) %>" value="<%= searchBarPortletPreferences.getDestinationString() %>" />
-			</liferay-frontend:fieldset>
-
-			<c:if test="<%= searchBarPortletDisplayContext.isSuggestionsEndpointEnabled() %>">
-				<liferay-frontend:fieldset
-					collapsible="<%= true %>"
-					label="suggestions-configuration"
-				>
-					<aui:input label="enable-suggestions" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SUGGESTIONS_ENABLED) %>" type="checkbox" value="<%= searchBarPortletPreferences.isSuggestionsEnabled() %>" />
-
-					<div class="options-container <%= !searchBarPortletPreferences.isSuggestionsEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />suggestionsOptionsContainer">
-						<aui:input label="character-threshold-for-displaying-suggestions" min="0" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SUGGESTIONS_DISPLAY_THRESHOLD) %>" size="10" type="number" value="<%= searchBarPortletInstanceConfiguration.suggestionsDisplayThreshold() %>">
-							<aui:validator name="min">0</aui:validator>
-						</aui:input>
-
-						<div>
-							<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
-
-							<react:component
-								module="js/components/SearchBarConfigurationSuggestions"
-								props='<%=
-									HashMapBuilder.<String, Object>put(
-										"initialSuggestionsContributorConfiguration", suggestionsContributorConfiguration
-									).put(
-										"isDXP", ReleaseInfo.isDXP()
-									).put(
-										"namespace", liferayPortletResponse.getNamespace()
-									).put(
-										"suggestionsContributorConfigurationName", PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SUGGESTIONS_CONTRIBUTOR_CONFIGURATION)
-									).build()
-								%>'
-							/>
-						</div>
-					</div>
-				</liferay-frontend:fieldset>
+			<c:if test="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>">
+				<div class="alert alert-info text-center">
+					<liferay-ui:message key="the-header-search-bar-configuration-takes-precedence" />
+				</div>
 			</c:if>
 
+			<aui:input disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" label="keywords-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_KEYWORDS_PARAMETER_NAME) %>" value="<%= searchBarPortletPreferences.getKeywordsParameterName() %>" />
+
+			<aui:select disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" label="scope" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>" value="<%= searchBarPortletPreferences.getSearchScopePreferenceString() %>">
+				<aui:option label="this-site" value="this-site" />
+				<aui:option label="everything" value="everything" />
+				<aui:option label="let-the-user-choose" value="let-the-user-choose" />
+			</aui:select>
+
+			<aui:input disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" label="scope-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SCOPE_PARAMETER_NAME) %>" value="<%= searchBarPortletPreferences.getScopeParameterName() %>" />
+
+			<aui:input helpMessage="destination-page-help" label="destination-page" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION) %>" value="<%= searchBarPortletPreferences.getDestinationString() %>" />
+		</liferay-frontend:fieldset>
+
+		<c:if test="<%= searchBarPortletDisplayContext.isSuggestionsEndpointEnabled() %>">
 			<liferay-frontend:fieldset
 				collapsible="<%= true %>"
-				label="advanced-configuration"
+				label="suggestions-configuration"
 			>
-				<aui:input disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" helpMessage="use-advanced-search-syntax-help" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_USE_ADVANCED_SEARCH_SYNTAX) %>" type="checkbox" value="<%= searchBarPortletPreferences.isUseAdvancedSearchSyntax() %>" />
+				<aui:input label="enable-suggestions" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SUGGESTIONS_ENABLED) %>" type="checkbox" value="<%= searchBarPortletPreferences.isSuggestionsEnabled() %>" />
 
-				<aui:input disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" helpMessage="show-results-from-staged-sites-help" label="show-results-from-staged-sites" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SHOW_STAGED_RESULTS) %>" type="checkbox" value="<%= searchBarPortletPreferences.isShowStagedResults() %>" />
+				<div class="options-container <%= !searchBarPortletPreferences.isSuggestionsEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />suggestionsOptionsContainer">
+					<aui:input label="character-threshold-for-displaying-suggestions" min="0" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SUGGESTIONS_DISPLAY_THRESHOLD) %>" size="10" type="number" value="<%= searchBarPortletInstanceConfiguration.suggestionsDisplayThreshold() %>">
+						<aui:validator name="min">0</aui:validator>
+					</aui:input>
 
-				<aui:input helpMessage="enter-the-key-of-an-alternate-search-this-widget-is-participating-on-if-not-set-widget-participates-on-default-search" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= searchBarPortletPreferences.getFederatedSearchKeyString() %>" />
+					<div>
+						<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
+
+						<react:component
+							module="js/components/SearchBarConfigurationSuggestions"
+							props='<%=
+								HashMapBuilder.<String, Object>put(
+									"initialSuggestionsContributorConfiguration", suggestionsContributorConfiguration
+								).put(
+									"isDXP", ReleaseInfo.isDXP()
+								).put(
+									"namespace", liferayPortletResponse.getNamespace()
+								).put(
+									"suggestionsContributorConfigurationName", PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SUGGESTIONS_CONTRIBUTOR_CONFIGURATION)
+								).build()
+							%>'
+						/>
+					</div>
+				</div>
 			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+		</c:if>
+
+		<liferay-frontend:fieldset
+			collapsible="<%= true %>"
+			label="advanced-configuration"
+		>
+			<aui:input disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" helpMessage="use-advanced-search-syntax-help" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_USE_ADVANCED_SEARCH_SYNTAX) %>" type="checkbox" value="<%= searchBarPortletPreferences.isUseAdvancedSearchSyntax() %>" />
+
+			<aui:input disabled="<%= searchBarPortletDisplayContext.isDisplayWarningIgnoredConfiguration() %>" helpMessage="show-results-from-staged-sites-help" label="show-results-from-staged-sites" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SHOW_STAGED_RESULTS) %>" type="checkbox" value="<%= searchBarPortletPreferences.isShowStagedResults() %>" />
+
+			<aui:input helpMessage="enter-the-key-of-an-alternate-search-this-widget-is-participating-on-if-not-set-widget-participates-on-default-search" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= searchBarPortletPreferences.getFederatedSearchKeyString() %>" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

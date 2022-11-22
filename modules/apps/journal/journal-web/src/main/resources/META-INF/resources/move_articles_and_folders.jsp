@@ -46,128 +46,126 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 
 		<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
+		<liferay-frontend:fieldset>
 
-				<%
-				List<JournalFolder> validMoveFolders = journalMovesEntriesDisplayContext.getValidMoveFolders();
-				%>
+			<%
+			List<JournalFolder> validMoveFolders = journalMovesEntriesDisplayContext.getValidMoveFolders();
+			%>
 
-				<c:if test="<%= !validMoveFolders.isEmpty() %>">
-					<h4><liferay-ui:message arguments="<%= validMoveFolders.size() %>" key="x-folders-are-ready-to-be-moved" translateArguments="<%= false %>" /></h4>
+			<c:if test="<%= !validMoveFolders.isEmpty() %>">
+				<h4><liferay-ui:message arguments="<%= validMoveFolders.size() %>" key="x-folders-are-ready-to-be-moved" translateArguments="<%= false %>" /></h4>
 
-					<ul class="list-unstyled">
+				<ul class="list-unstyled">
 
-						<%
-						for (JournalFolder folder : validMoveFolders) {
-						%>
+					<%
+					for (JournalFolder folder : validMoveFolders) {
+					%>
 
-							<li class="move-folder">
-								<span class="folder-title">
-									<%= HtmlUtil.escape(folder.getName()) %>
-								</span>
-							</li>
+						<li class="move-folder">
+							<span class="folder-title">
+								<%= HtmlUtil.escape(folder.getName()) %>
+							</span>
+						</li>
 
-						<%
-						}
-						%>
+					<%
+					}
+					%>
 
-					</ul>
-				</c:if>
+				</ul>
+			</c:if>
 
-				<%
-				List<JournalFolder> invalidMoveFolders = journalMovesEntriesDisplayContext.getInvalidMoveFolders();
-				%>
+			<%
+			List<JournalFolder> invalidMoveFolders = journalMovesEntriesDisplayContext.getInvalidMoveFolders();
+			%>
 
-				<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
-					<h4><liferay-ui:message arguments="<%= invalidMoveFolders.size() %>" key="x-folders-cannot-be-moved" translateArguments="<%= false %>" /></h4>
+			<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
+				<h4><liferay-ui:message arguments="<%= invalidMoveFolders.size() %>" key="x-folders-cannot-be-moved" translateArguments="<%= false %>" /></h4>
 
-					<ul class="list-unstyled">
+				<ul class="list-unstyled">
 
-						<%
-						for (JournalFolder folder : invalidMoveFolders) {
-						%>
+					<%
+					for (JournalFolder folder : invalidMoveFolders) {
+					%>
 
-							<li class="icon-warning-sign move-error move-folder">
-								<span class="folder-title">
-									<%= HtmlUtil.escape(folder.getName()) %>
-								</span>
-								<span class="error-message">
-									<liferay-ui:message key="you-do-not-have-the-required-permissions" />
-								</span>
-							</li>
+						<li class="icon-warning-sign move-error move-folder">
+							<span class="folder-title">
+								<%= HtmlUtil.escape(folder.getName()) %>
+							</span>
+							<span class="error-message">
+								<liferay-ui:message key="you-do-not-have-the-required-permissions" />
+							</span>
+						</li>
 
-						<%
-						}
-						%>
+					<%
+					}
+					%>
 
-					</ul>
-				</c:if>
+				</ul>
+			</c:if>
 
-				<aui:input name="rowIdsJournalFolder" type="hidden" value="<%= ListUtil.toString(validMoveFolders, JournalFolder.FOLDER_ID_ACCESSOR) %>" />
+			<aui:input name="rowIdsJournalFolder" type="hidden" value="<%= ListUtil.toString(validMoveFolders, JournalFolder.FOLDER_ID_ACCESSOR) %>" />
 
-				<%
-				List<JournalArticle> validMoveArticles = journalMovesEntriesDisplayContext.getValidMoveArticles();
-				%>
+			<%
+			List<JournalArticle> validMoveArticles = journalMovesEntriesDisplayContext.getValidMoveArticles();
+			%>
 
-				<c:if test="<%= !validMoveArticles.isEmpty() %>">
-					<h4><liferay-ui:message arguments="<%= validMoveArticles.size() %>" key="x-web-content-instances-are-ready-to-be-moved" translateArguments="<%= false %>" /></h4>
+			<c:if test="<%= !validMoveArticles.isEmpty() %>">
+				<h4><liferay-ui:message arguments="<%= validMoveArticles.size() %>" key="x-web-content-instances-are-ready-to-be-moved" translateArguments="<%= false %>" /></h4>
 
-					<ul class="list-unstyled">
+				<ul class="list-unstyled">
 
-						<%
-						for (JournalArticle validMoveArticle : validMoveArticles) {
-						%>
+					<%
+					for (JournalArticle validMoveArticle : validMoveArticles) {
+					%>
 
-							<li class="move-article">
-								<span class="article-title" title="<%= HtmlUtil.escapeAttribute(validMoveArticle.getTitle(locale)) %>">
-									<%= HtmlUtil.escape(validMoveArticle.getTitle(locale)) %>
-								</span>
-							</li>
+						<li class="move-article">
+							<span class="article-title" title="<%= HtmlUtil.escapeAttribute(validMoveArticle.getTitle(locale)) %>">
+								<%= HtmlUtil.escape(validMoveArticle.getTitle(locale)) %>
+							</span>
+						</li>
 
-						<%
-						}
-						%>
+					<%
+					}
+					%>
 
-					</ul>
-				</c:if>
+				</ul>
+			</c:if>
 
-				<%
-				List<JournalArticle> invalidMoveArticles = journalMovesEntriesDisplayContext.getInvalidMoveArticles();
-				%>
+			<%
+			List<JournalArticle> invalidMoveArticles = journalMovesEntriesDisplayContext.getInvalidMoveArticles();
+			%>
 
-				<c:if test="<%= !invalidMoveArticles.isEmpty() %>">
-					<h4><liferay-ui:message arguments="<%= invalidMoveArticles.size() %>" key="x-web-content-instances-cannot-be-moved" translateArguments="<%= false %>" /></h4>
+			<c:if test="<%= !invalidMoveArticles.isEmpty() %>">
+				<h4><liferay-ui:message arguments="<%= invalidMoveArticles.size() %>" key="x-web-content-instances-cannot-be-moved" translateArguments="<%= false %>" /></h4>
 
-					<ul class="list-unstyled">
+				<ul class="list-unstyled">
 
-						<%
-						for (JournalArticle invalidMoveArticle : invalidMoveArticles) {
-						%>
+					<%
+					for (JournalArticle invalidMoveArticle : invalidMoveArticles) {
+					%>
 
-							<li class="icon-warning-sign move-article move-error">
-								<span class="article-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveArticle.getTitle()) %>">
-									<%= HtmlUtil.escape(invalidMoveArticle.getTitle()) %>
-								</span>
-								<span class="error-message">
-									<liferay-ui:message key="you-do-not-have-the-required-permissions" />
-								</span>
-							</li>
+						<li class="icon-warning-sign move-article move-error">
+							<span class="article-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveArticle.getTitle()) %>">
+								<%= HtmlUtil.escape(invalidMoveArticle.getTitle()) %>
+							</span>
+							<span class="error-message">
+								<liferay-ui:message key="you-do-not-have-the-required-permissions" />
+							</span>
+						</li>
 
-						<%
-						}
-						%>
+					<%
+					}
+					%>
 
-					</ul>
-				</c:if>
+				</ul>
+			</c:if>
 
-				<aui:input name="rowIdsJournalArticle" type="hidden" value="<%= ListUtil.toString(validMoveArticles, JournalArticle.ARTICLE_ID_ACCESSOR) %>" />
+			<aui:input name="rowIdsJournalArticle" type="hidden" value="<%= ListUtil.toString(validMoveArticles, JournalArticle.ARTICLE_ID_ACCESSOR) %>" />
 
-				<aui:input label="new-folder" name="folderName" title="new-folder" type="resource" value="<%= journalMovesEntriesDisplayContext.getNewFolderName() %>" />
+			<aui:input label="new-folder" name="folderName" title="new-folder" type="resource" value="<%= journalMovesEntriesDisplayContext.getNewFolderName() %>" />
 
-				<aui:button name="selectFolderButton" value="select" />
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			<aui:button name="selectFolderButton" value="select" />
+		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

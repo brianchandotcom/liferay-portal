@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(
-	configurationPid = "com.liferay.notification.internal.configuration.ClientExtensionNotificationTypeConfiguration",
+	configurationPid = "com.liferay.notification.internal.configuration.FunctionNotificationTypeConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
-public class ClientExtensionNotificationTypeFactory {
+public class FunctionNotificationTypeFactory {
 
 	@Activate
 	protected void activate(
@@ -46,7 +46,7 @@ public class ClientExtensionNotificationTypeFactory {
 		_componentInstance = _componentFactory.newInstance(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"notification.type",
-				"client-extension#" +
+				"function#" +
 					ConfigurableUtil.getExternalReferenceCode(properties)
 			).putAll(
 				properties
@@ -63,11 +63,10 @@ public class ClientExtensionNotificationTypeFactory {
 	}
 
 	@Reference(
-		target = "(component.factory=com.liferay.notification.internal.type.ClientExtensionNotificationType)"
+		target = "(component.factory=com.liferay.notification.internal.type.FunctionNotificationType)"
 	)
-	private ComponentFactory<ClientExtensionNotificationType> _componentFactory;
+	private ComponentFactory<FunctionNotificationType> _componentFactory;
 
-	private ComponentInstance<ClientExtensionNotificationType>
-		_componentInstance;
+	private ComponentInstance<FunctionNotificationType> _componentInstance;
 
 }

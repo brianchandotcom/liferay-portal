@@ -15,18 +15,12 @@
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView';
-import StatusBadge from '../../../components/StatusBadge';
-import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import QATable from '../../../components/Table/QATable';
 import i18n from '../../../i18n';
-import {
-	PickList,
-	TestrayCase,
-	testrayCaseResultImpl,
-} from '../../../services/rest';
+import {TestrayCase} from '../../../services/rest';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
+import CaseResultHistory from './CaseResultHistory';
 import useCaseActions from './useCaseActions';
 
 const Case = () => {
@@ -82,89 +76,16 @@ const Case = () => {
 			</Container>
 
 			<Container className="mt-3">
-				<ListView
-					initialContext={{
-						columns: {
-							caseType: false,
-							dateCreated: false,
-							dateModified: false,
-							issues: false,
-							team: false,
+				<CaseResultHistory
+					listViewProps={{
+						variables: {
+							filter: searchUtil.eq('caseId', caseId as string),
 						},
 					}}
-					managementToolbarProps={{
-						title: i18n.translate('test-history'),
-						visible: true,
-					}}
-					resource={testrayCaseResultImpl.resource}
 					tableProps={{
 						actions,
-						columns: [
-							{
-								clickable: true,
-								key: 'dateCreated',
-								render: (date) => dayjs(date).format('lll'),
-								size: 'sm',
-								value: i18n.translate('create-date'),
-							},
-							{
-								clickable: true,
-								key: 'build',
-								render: (build) => {
-									return build?.gitHash;
-								},
-								value: i18n.translate('git-hash'),
-							},
-							{
-								clickable: true,
-								key: 'product-version',
-								render: (_, {build}) =>
-									build?.productVersion?.name,
-								value: i18n.translate('product-version'),
-							},
-							{
-								clickable: true,
-								key: 'run',
-								render: (run) => run?.externalReferencePK,
-								size: 'lg',
-								value: i18n.translate('environment'),
-							},
-							{
-								clickable: true,
-								key: 'routine',
-								render: (_, {build}) => build?.routine?.name,
-								value: i18n.translate('routine'),
-							},
-							{
-								key: 'dueStatus',
-								render: (dueStatus: PickList) => {
-									return (
-										<StatusBadge
-											type={
-												dueStatus.key as StatusBadgeType
-											}
-										>
-											{dueStatus.name}
-										</StatusBadge>
-									);
-								},
-								value: i18n.translate('status'),
-							},
-							{
-								key: 'warnings',
-								value: i18n.translate('warnings'),
-							},
-							{key: 'issues', value: i18n.translate('issues')},
-							{key: 'errors', value: i18n.translate('errors')},
-						],
 						navigateTo: ({build, id}) =>
 							`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
-					}}
-					transformData={(response) =>
-						testrayCaseResultImpl.transformDataFromList(response)
-					}
-					variables={{
-						filter: searchUtil.eq('caseId', caseId as string),
 					}}
 				/>
 			</Container>

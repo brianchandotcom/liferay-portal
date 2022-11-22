@@ -12,18 +12,40 @@
  * details.
  */
 
-import EmptyState from '../../../../../../components/EmptyState';
+import {useOutletContext, useParams} from 'react-router-dom';
+
 import Container from '../../../../../../components/Layout/Container';
-import i18n from '../../../../../../i18n';
+import {TestrayCaseResult} from '../../../../../../services/rest';
+import {searchUtil} from '../../../../../../util/search';
+import CaseResultHistory from '../../../../Cases/CaseResultHistory';
 
-const CaseResultHistory = () => (
-	<Container>
-		<EmptyState
-			description=" "
-			title={i18n.translate('no-content-yet')}
-			type="EMPTY_SEARCH"
-		/>
-	</Container>
-);
+type CaseResultOutlet = {
+	caseResult: TestrayCaseResult;
+};
 
-export default CaseResultHistory;
+const History = () => {
+	const {caseResult} = useOutletContext<CaseResultOutlet>();
+
+	const {projectId} = useParams();
+
+	return (
+		<Container>
+			<CaseResultHistory
+				listViewProps={{
+					variables: {
+						filter: searchUtil.eq(
+							'caseId',
+							caseResult.case?.id as number
+						),
+					},
+				}}
+				tableProps={{
+					navigateTo: ({build, id}) =>
+						`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
+				}}
+			/>
+		</Container>
+	);
+};
+
+export default History;

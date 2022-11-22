@@ -57,6 +57,8 @@ public interface CET {
 
 	public String getTypeSettings();
 
+	public String getViewJSP();
+
 	public boolean hasProperties();
 
 	public boolean isReadOnly();

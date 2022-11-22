@@ -81,31 +81,33 @@ if (portletTitleBasedNavigation) {
 
 		<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:field-wrapper label="current-parent">
-					<aui:input label="" name="currentParentTitle" readonly="<%= true %>" value="<%= parentTitle %>" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:field-wrapper label="current-parent">
+						<aui:input label="" name="currentParentTitle" readonly="<%= true %>" value="<%= parentTitle %>" />
 
-					<aui:input cssClass="input-mini" label="priority" name="currentPriority" readonly="<%= true %>" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
-				</aui:field-wrapper>
+						<aui:input cssClass="input-mini" label="priority" name="currentPriority" readonly="<%= true %>" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
+					</aui:field-wrapper>
 
-				<aui:field-wrapper label="new-parent">
-					<div id="<portlet:namespace />newParent">
-						<aui:input label="" name="parentTitle" readonly="<%= true %>" value="<%= parentTitle %>" />
+					<aui:field-wrapper label="new-parent">
+						<div id="<portlet:namespace />newParent">
+							<aui:input label="" name="parentTitle" readonly="<%= true %>" value="<%= parentTitle %>" />
 
-						<aui:input cssClass="input-mini" id="parentPriority" label="priority" name="priority" type="text" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
-					</div>
+							<aui:input cssClass="input-mini" id="parentPriority" label="priority" name="priority" type="text" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
+						</div>
 
-					<aui:button name="selectKBObjectButton" value="select" />
-				</aui:field-wrapper>
-			</aui:fieldset>
+						<aui:button name="selectKBObjectButton" value="select" />
+					</aui:field-wrapper>
+				</aui:fieldset>
 
-			<div class="sheet-footer">
-				<aui:button type="submit" value="move" />
+				<div class="sheet-footer">
+					<aui:button type="submit" value="move" />
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</div>
 			</div>
-		</aui:fieldset-group>
+		</div>
 	</aui:form>
 </div>
 

@@ -81,107 +81,109 @@ renderResponse.setTitle(headerTitle);
 
 		<aui:model-context bean="<%= folder %>" model="<%= BookmarksFolder.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-				<aui:input name="description" />
-			</aui:fieldset>
+					<aui:input name="description" />
+				</aui:fieldset>
 
-			<c:if test="<%= folder != null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="parent-folder">
-
-					<%
-					String parentFolderName = LanguageUtil.get(request, "home");
-
-					try {
-						BookmarksFolder parentFolder = BookmarksFolderServiceUtil.getFolder(parentFolderId);
-
-						parentFolderName = parentFolder.getName();
-					}
-					catch (NoSuchFolderException nsfe) {
-					}
-					%>
-
-					<div class="form-group">
-						<aui:input label="parent-folder" name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
-
-						<aui:button name="selectFolderButton" value="select" />
-
-						<aui:script>
-							var <portlet:namespace />selectFolderButton = document.getElementById(
-								'<portlet:namespace />selectFolderButton'
-							);
-
-							if (<portlet:namespace />selectFolderButton) {
-								<portlet:namespace />selectFolderButton.addEventListener(
-									'click',
-									(event) => {
-										Liferay.Util.openSelectionModal({
-											onSelect: function (event) {
-												var folderData = {
-													idString: 'parentFolderId',
-													idValue: event.entityid,
-													nameString: 'parentFolderName',
-													nameValue: event.entityname,
-												};
-
-												Liferay.Util.selectFolder(
-													folderData,
-													'<portlet:namespace />'
-												);
-											},
-											selectEventName: '<portlet:namespace />selectFolder',
-											title:
-												'<liferay-ui:message arguments="folder" key="select-x" />',
-											url:
-												'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
-										});
-									}
-								);
-							}
-						</aui:script>
+				<c:if test="<%= folder != null %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="parent-folder">
 
 						<%
-						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+						String parentFolderName = LanguageUtil.get(request, "home");
+
+						try {
+							BookmarksFolder parentFolder = BookmarksFolderServiceUtil.getFolder(parentFolderId);
+
+							parentFolderName = parentFolder.getName();
+						}
+						catch (NoSuchFolderException nsfe) {
+						}
 						%>
 
-						<aui:button disabled="<%= parentFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-					</div>
+						<div class="form-group">
+							<aui:input label="parent-folder" name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
 
-					<aui:input disabled="<%= mergeWithParentFolderDisabled %>" inlineLabel="right" label="merge-with-parent-folder" labelCssClass="simple-toggle-switch" name="mergeWithParentFolder" type="toggle-switch" />
-				</aui:fieldset>
-			</c:if>
+							<aui:button name="selectFolderButton" value="select" />
 
-			<liferay-expando:custom-attributes-available
-				className="<%= BookmarksFolder.class.getName() %>"
-			>
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-					<liferay-expando:custom-attribute-list
-						className="<%= BookmarksFolder.class.getName() %>"
-						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</aui:fieldset>
-			</liferay-expando:custom-attributes-available>
+							<aui:script>
+								var <portlet:namespace />selectFolderButton = document.getElementById(
+									'<portlet:namespace />selectFolderButton'
+								);
 
-			<c:if test="<%= folder == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<aui:field-wrapper label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= BookmarksFolder.class.getName() %>"
+								if (<portlet:namespace />selectFolderButton) {
+									<portlet:namespace />selectFolderButton.addEventListener(
+										'click',
+										(event) => {
+											Liferay.Util.openSelectionModal({
+												onSelect: function (event) {
+													var folderData = {
+														idString: 'parentFolderId',
+														idValue: event.entityid,
+														nameString: 'parentFolderName',
+														nameValue: event.entityname,
+													};
+
+													Liferay.Util.selectFolder(
+														folderData,
+														'<portlet:namespace />'
+													);
+												},
+												selectEventName: '<portlet:namespace />selectFolder',
+												title:
+													'<liferay-ui:message arguments="folder" key="select-x" />',
+												url:
+													'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
+											});
+										}
+									);
+								}
+							</aui:script>
+
+							<%
+							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+							%>
+
+							<aui:button disabled="<%= parentFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+						</div>
+
+						<aui:input disabled="<%= mergeWithParentFolderDisabled %>" inlineLabel="right" label="merge-with-parent-folder" labelCssClass="simple-toggle-switch" name="mergeWithParentFolder" type="toggle-switch" />
+					</aui:fieldset>
+				</c:if>
+
+				<liferay-expando:custom-attributes-available
+					className="<%= BookmarksFolder.class.getName() %>"
+				>
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+						<liferay-expando:custom-attribute-list
+							className="<%= BookmarksFolder.class.getName() %>"
+							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+							editable="<%= true %>"
+							label="<%= true %>"
 						/>
-					</aui:field-wrapper>
-				</aui:fieldset>
-			</c:if>
+					</aui:fieldset>
+				</liferay-expando:custom-attributes-available>
 
-			<div class="sheet-footer">
-				<aui:button type="submit" />
+				<c:if test="<%= folder == null %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<aui:field-wrapper label="permissions">
+							<liferay-ui:input-permissions
+								modelName="<%= BookmarksFolder.class.getName() %>"
+							/>
+						</aui:field-wrapper>
+					</aui:fieldset>
+				</c:if>
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<div class="sheet-footer">
+					<aui:button type="submit" />
+
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</div>
 			</div>
-		</aui:fieldset-group>
+		</div>
 	</aui:form>
 </clay:container-fluid>
 

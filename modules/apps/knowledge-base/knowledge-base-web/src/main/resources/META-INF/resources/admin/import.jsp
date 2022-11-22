@@ -51,7 +51,8 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 			<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<aui:fieldset-group markupView="lexicon">
+		<div class="sheet">
+	<div class="panel-group panel-group-flush">
 			<aui:fieldset>
 				<aui:field-wrapper>
 					<div class="alert alert-info">
@@ -63,7 +64,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 
 				<aui:input helpMessage="apply-numerical-prefixes-of-article-files-as-priorities-help" label="apply-numerical-prefixes-of-article-files-as-priorities" name="prioritizeByNumericalPrefix" type="checkbox" value="true" />
 			</aui:fieldset>
-		</aui:fieldset-group>
+		</div></div>
 
 		<aui:button-row>
 			<aui:button name="submit" type="submit" />

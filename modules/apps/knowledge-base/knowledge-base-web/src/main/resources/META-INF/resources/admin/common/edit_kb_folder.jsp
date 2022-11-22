@@ -57,41 +57,43 @@ renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "n
 
 		<aui:model-context bean="<%= kbFolder %>" model="<%= KBFolder.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input name="name" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:input name="name" />
 
-				<aui:input name="description" />
-			</aui:fieldset>
-
-			<liferay-expando:custom-attributes-available
-				className="<%= KBFolder.class.getName() %>"
-			>
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-					<liferay-expando:custom-attribute-list
-						className="<%= KBFolder.class.getName() %>"
-						classPK="<%= (kbFolder != null) ? kbFolder.getKbFolderId() : 0 %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
+					<aui:input name="description" />
 				</aui:fieldset>
-			</liferay-expando:custom-attributes-available>
 
-			<c:if test="<%= kbFolder == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<aui:field-wrapper>
-						<liferay-ui:input-permissions
-							modelName="<%= KBFolder.class.getName() %>"
+				<liferay-expando:custom-attributes-available
+					className="<%= KBFolder.class.getName() %>"
+				>
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+						<liferay-expando:custom-attribute-list
+							className="<%= KBFolder.class.getName() %>"
+							classPK="<%= (kbFolder != null) ? kbFolder.getKbFolderId() : 0 %>"
+							editable="<%= true %>"
+							label="<%= true %>"
 						/>
-					</aui:field-wrapper>
-				</aui:fieldset>
-			</c:if>
+					</aui:fieldset>
+				</liferay-expando:custom-attributes-available>
 
-			<div class="sheet-footer">
-				<aui:button type="submit" value="save" />
+				<c:if test="<%= kbFolder == null %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<aui:field-wrapper>
+							<liferay-ui:input-permissions
+								modelName="<%= KBFolder.class.getName() %>"
+							/>
+						</aui:field-wrapper>
+					</aui:fieldset>
+				</c:if>
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<div class="sheet-footer">
+					<aui:button type="submit" value="save" />
+
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</div>
 			</div>
-		</aui:fieldset-group>
+		</div>
 	</aui:form>
 </clay:container-fluid>

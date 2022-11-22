@@ -46,29 +46,31 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 
 	<aui:input name="sourceId" type="hidden" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<div class="form-group">
-				<aui:input name="name" required="<%= true %>" />
+	<div class="sheet">
+		<div class="panel-group panel-group-flush">
+			<aui:fieldset>
+				<div class="form-group">
+					<aui:input name="name" required="<%= true %>" />
 
-				<aui:input label="jdbc-driver-class-name" name="driverClassName" required="<%= true %>" />
+					<aui:input label="jdbc-driver-class-name" name="driverClassName" required="<%= true %>" />
 
-				<aui:input label="jdbc-url" name="driverUrl" required="<%= true %>" />
+					<aui:input label="jdbc-url" name="driverUrl" required="<%= true %>" />
 
-				<aui:input autocomplete="off" label="jdbc-user-name" name="driverUserName" required="<%= true %>" />
+					<aui:input autocomplete="off" label="jdbc-user-name" name="driverUserName" required="<%= true %>" />
 
-				<aui:input label="jdbc-password" name="driverPassword" type="password" />
-			</div>
-		</aui:fieldset>
-
-		<c:if test="<%= source == null %>">
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= Source.class.getName() %>"
-				/>
+					<aui:input label="jdbc-password" name="driverPassword" type="password" />
+				</div>
 			</aui:fieldset>
-		</c:if>
-	</aui:fieldset-group>
+
+			<c:if test="<%= source == null %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= Source.class.getName() %>"
+					/>
+				</aui:fieldset>
+			</c:if>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

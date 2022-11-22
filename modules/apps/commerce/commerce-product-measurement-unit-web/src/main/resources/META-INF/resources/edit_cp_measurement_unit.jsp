@@ -57,29 +57,31 @@ else {
 
 		<aui:model-context bean="<%= cpMeasurementUnit %>" model="<%= CPMeasurementUnit.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input name="name" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:input name="name" />
 
-				<aui:input name="key" />
+					<aui:input name="key" />
 
-				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="primary" type="toggle-switch" value="<%= primary %>" />
+					<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="primary" type="toggle-switch" value="<%= primary %>" />
 
-				<%
-				String taglibLabel = "ratio-to-primary";
+					<%
+					String taglibLabel = "ratio-to-primary";
 
-				if (primaryCPMeasurementUnit != null) {
-					taglibLabel = LanguageUtil.format(request, "ratio-to-x", HtmlUtil.escape(primaryCPMeasurementUnit.getName(locale)), false);
-				}
-				%>
+					if (primaryCPMeasurementUnit != null) {
+						taglibLabel = LanguageUtil.format(request, "ratio-to-x", HtmlUtil.escape(primaryCPMeasurementUnit.getName(locale)), false);
+					}
+					%>
 
-				<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
-					<aui:input label="<%= taglibLabel %>" name="rate" />
-				</div>
+					<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
+						<aui:input label="<%= taglibLabel %>" name="rate" />
+					</div>
 
-				<aui:input name="priority" />
-			</aui:fieldset>
-		</aui:fieldset-group>
+					<aui:input name="priority" />
+				</aui:fieldset>
+			</div>
+		</div>
 	</div>
 
 	<aui:button-row>

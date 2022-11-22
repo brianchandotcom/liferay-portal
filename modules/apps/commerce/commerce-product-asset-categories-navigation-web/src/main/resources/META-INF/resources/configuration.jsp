@@ -34,7 +34,8 @@ if (assetVocabulary != null) {
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid container-fluid-max-xl">
-			<aui:fieldset-group markupView="lexicon">
+			<div class="sheet">
+	<div class="panel-group panel-group-flush">
 				<aui:fieldset>
 					<div class="display-template">
 						<liferay-template:template-selector
@@ -105,7 +106,7 @@ if (assetVocabulary != null) {
 						</div>
 					</div>
 				</aui:fieldset>
-			</aui:fieldset-group>
+			</div></div>
 		</div>
 	</div>
 

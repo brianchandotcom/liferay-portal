@@ -37,87 +37,89 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 		<div class="dialog-body">
 			<clay:container-fluid>
-				<aui:fieldset-group markupView="lexicon">
-					<aui:fieldset>
-						<label><liferay-ui:message key="find-members" /></label>
+				<div class="sheet">
+					<div class="panel-group panel-group-flush">
+						<aui:fieldset>
+							<label><liferay-ui:message key="find-members" /></label>
 
-						<small class="text-capitalize text-muted">
-							<liferay-ui:icon
-								cssClass="footnote"
-								icon="check"
-								label="<%= true %>"
-								markupView="lexicon"
-								message="previous-invitation-was-sent"
-							/>
-						</small>
+							<small class="text-capitalize text-muted">
+								<liferay-ui:icon
+									cssClass="footnote"
+									icon="check"
+									label="<%= true %>"
+									markupView="lexicon"
+									message="previous-invitation-was-sent"
+								/>
+							</small>
 
-						<aui:input id="inviteUserSearch" label="" name="userName" placeholder="search" />
+							<aui:input id="inviteUserSearch" label="" name="userName" placeholder="search" />
 
-						<div class="search" id="<portlet:namespace />membersList"></div>
+							<div class="search" id="<portlet:namespace />membersList"></div>
 
-						<label><liferay-ui:message key="email-addresses-to-send-invite" /><liferay-ui:icon-help message="to-add,-click-members-on-the-top-list" /></label>
+							<label><liferay-ui:message key="email-addresses-to-send-invite" /><liferay-ui:icon-help message="to-add,-click-members-on-the-top-list" /></label>
 
-						<div class="user-invited" id="<portlet:namespace />invitedMembersList"></div>
+							<div class="user-invited" id="<portlet:namespace />invitedMembersList"></div>
 
-						<div class="button-holder controls">
-							<aui:input label="invite-by-email" name="emailAddress" />
+							<div class="button-holder controls">
+								<aui:input label="invite-by-email" name="emailAddress" />
 
-							<aui:button name="emailButton" value="add-email-address" />
-						</div>
-
-						<label><liferay-ui:message key="email-addresses-to-send-invite" /></label>
-
-						<div class="email-invited" id="<portlet:namespace />invitedEmailList"></div>
-
-						<%
-						List<Role> roles = RoleLocalServiceUtil.search(layout.getCompanyId(), null, null, new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleNameComparator(false));
-
-						roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
-						%>
-
-						<c:if test="<%= !roles.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
-							<div class="invite-to">
-								<aui:select label="invite-to-role" name="roleId">
-									<aui:option value="0" />
-
-									<%
-									for (Role role : roles) {
-									%>
-
-										<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" value="<%= role.getRoleId() %>" />
-
-									<%
-									}
-									%>
-
-								</aui:select>
+								<aui:button name="emailButton" value="add-email-address" />
 							</div>
-						</c:if>
 
-						<%
-						List<Team> teams = TeamLocalServiceUtil.getGroupTeams(group.getGroupId());
-						%>
+							<label><liferay-ui:message key="email-addresses-to-send-invite" /></label>
 
-						<c:if test="<%= !teams.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_TEAMS) %>">
-							<div class="invite-to">
-								<aui:select label="invite-to-team" name="teamId">
-									<aui:option value="0" />
+							<div class="email-invited" id="<portlet:namespace />invitedEmailList"></div>
 
-									<%
-									for (Team team : teams) {
-									%>
+							<%
+							List<Role> roles = RoleLocalServiceUtil.search(layout.getCompanyId(), null, null, new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleNameComparator(false));
 
-										<aui:option label="<%= HtmlUtil.escape(team.getName()) %>" value="<%= team.getTeamId() %>" />
+							roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
+							%>
 
-									<%
-									}
-									%>
+							<c:if test="<%= !roles.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
+								<div class="invite-to">
+									<aui:select label="invite-to-role" name="roleId">
+										<aui:option value="0" />
 
-								</aui:select>
-							</div>
-						</c:if>
-					</aui:fieldset>
-				</aui:fieldset-group>
+										<%
+										for (Role role : roles) {
+										%>
+
+											<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" value="<%= role.getRoleId() %>" />
+
+										<%
+										}
+										%>
+
+									</aui:select>
+								</div>
+							</c:if>
+
+							<%
+							List<Team> teams = TeamLocalServiceUtil.getGroupTeams(group.getGroupId());
+							%>
+
+							<c:if test="<%= !teams.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_TEAMS) %>">
+								<div class="invite-to">
+									<aui:select label="invite-to-team" name="teamId">
+										<aui:option value="0" />
+
+										<%
+										for (Team team : teams) {
+										%>
+
+											<aui:option label="<%= HtmlUtil.escape(team.getName()) %>" value="<%= team.getTeamId() %>" />
+
+										<%
+										}
+										%>
+
+									</aui:select>
+								</div>
+							</c:if>
+						</aui:fieldset>
+					</div>
+				</div>
 			</clay:container-fluid>
 		</div>
 

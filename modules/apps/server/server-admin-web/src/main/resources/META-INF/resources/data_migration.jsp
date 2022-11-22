@@ -29,100 +29,102 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:fieldset-group markupView="lexicon">
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
 
-			<%
-			int i = 0;
+				<%
+				int i = 0;
 
-			for (ConvertProcess convertProcess : convertProcesses) {
-				Class<?> clazz = convertProcess.getClass();
-				String parameterDescription = convertProcess.getParameterDescription();
-				String[] parameterNames = convertProcess.getParameterNames();
-			%>
+				for (ConvertProcess convertProcess : convertProcesses) {
+					Class<?> clazz = convertProcess.getClass();
+					String parameterDescription = convertProcess.getParameterDescription();
+					String[] parameterNames = convertProcess.getParameterNames();
+				%>
 
-				<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="<%= convertProcess.getDescription() %>">
-					<c:choose>
-						<c:when test="<%= convertProcess.hasCustomView() %>">
-
-							<%
-							convertProcess.includeCustomView(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
-							%>
-
-						</c:when>
-						<c:when test="<%= parameterNames == null %>">
-							<div class="alert alert-info">
-								<liferay-ui:message key="<%= convertProcess.getConfigurationErrorMessage() %>" />
-							</div>
-						</c:when>
-						<c:otherwise>
-							<aui:field-wrapper label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
+					<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="<%= convertProcess.getDescription() %>">
+						<c:choose>
+							<c:when test="<%= convertProcess.hasCustomView() %>">
 
 								<%
-								for (String parameterName : parameterNames) {
+								convertProcess.includeCustomView(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 								%>
 
-									<c:choose>
-										<c:when test="<%= parameterName.contains(StringPool.EQUAL) && parameterName.contains(StringPool.SEMICOLON) %>">
+							</c:when>
+							<c:when test="<%= parameterNames == null %>">
+								<div class="alert alert-info">
+									<liferay-ui:message key="<%= convertProcess.getConfigurationErrorMessage() %>" />
+								</div>
+							</c:when>
+							<c:otherwise>
+								<aui:field-wrapper label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
 
-											<%
-											String[] parameterPair = StringUtil.split(parameterName, CharPool.EQUAL);
+									<%
+									for (String parameterName : parameterNames) {
+									%>
 
-											String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);
-											%>
-
-											<aui:select label="<%= parameterPair[0] %>" name="<%= clazz.getName() + StringPool.PERIOD + parameterPair[0] %>">
+										<c:choose>
+											<c:when test="<%= parameterName.contains(StringPool.EQUAL) && parameterName.contains(StringPool.SEMICOLON) %>">
 
 												<%
-												for (String parameterSelectEntry : parameterSelectEntries) {
+												String[] parameterPair = StringUtil.split(parameterName, CharPool.EQUAL);
+
+												String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);
 												%>
 
-													<aui:option label="<%= parameterSelectEntry %>" />
+												<aui:select label="<%= parameterPair[0] %>" name="<%= clazz.getName() + StringPool.PERIOD + parameterPair[0] %>">
+
+													<%
+													for (String parameterSelectEntry : parameterSelectEntries) {
+													%>
+
+														<aui:option label="<%= parameterSelectEntry %>" />
+
+													<%
+													}
+													%>
+
+												</aui:select>
+											</c:when>
+											<c:otherwise>
 
 												<%
+												String[] parameterPair = StringUtil.split(parameterName, CharPool.EQUAL);
+
+												String currentParameterName = null;
+												String currentParameterType = null;
+
+												if (parameterPair.length > 1) {
+													currentParameterName = parameterPair[0];
+													currentParameterType = parameterPair[1];
+												}
+												else {
+													currentParameterName = parameterName;
 												}
 												%>
 
-											</aui:select>
-										</c:when>
-										<c:otherwise>
+												<aui:input cssClass="lfr-input-text-container" label="<%= currentParameterName %>" name="<%= clazz.getName() + StringPool.PERIOD + currentParameterName %>" type='<%= (currentParameterType != null) ? currentParameterType : "" %>' />
+											</c:otherwise>
+										</c:choose>
 
-											<%
-											String[] parameterPair = StringUtil.split(parameterName, CharPool.EQUAL);
+									<%
+									}
+									%>
 
-											String currentParameterName = null;
-											String currentParameterType = null;
+								</aui:field-wrapper>
 
-											if (parameterPair.length > 1) {
-												currentParameterName = parameterPair[0];
-												currentParameterType = parameterPair[1];
-											}
-											else {
-												currentParameterName = parameterName;
-											}
-											%>
+								<aui:button-row>
+									<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + clazz.getName() %>' value="execute" />
+								</aui:button-row>
+							</c:otherwise>
+						</c:choose>
+					</aui:fieldset>
 
-											<aui:input cssClass="lfr-input-text-container" label="<%= currentParameterName %>" name="<%= clazz.getName() + StringPool.PERIOD + currentParameterName %>" type='<%= (currentParameterType != null) ? currentParameterType : "" %>' />
-										</c:otherwise>
-									</c:choose>
+				<%
+					i++;
+				}
+				%>
 
-								<%
-								}
-								%>
-
-							</aui:field-wrapper>
-
-							<aui:button-row>
-								<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + clazz.getName() %>' value="execute" />
-							</aui:button-row>
-						</c:otherwise>
-					</c:choose>
-				</aui:fieldset>
-
-			<%
-				i++;
-			}
-			%>
-
-		</aui:fieldset-group>
+			</div>
+		</div>
 	</c:otherwise>
 </c:choose>

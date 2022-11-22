@@ -59,11 +59,13 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 		</div>
 	</c:if>
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="comments" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+	<div class="sheet">
+		<div class="panel-group panel-group-flush">
+			<aui:fieldset>
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="comments" />
+			</aui:fieldset>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button type="submit" />

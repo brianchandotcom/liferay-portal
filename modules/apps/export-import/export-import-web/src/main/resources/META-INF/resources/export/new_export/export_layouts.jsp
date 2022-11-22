@@ -128,56 +128,58 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 		<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 		<div class="export-dialog-tree">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<c:choose>
-						<c:when test="<%= exportImportConfiguration == null %>">
-							<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" placeholder="process-name-placeholder" />
-						</c:when>
-						<c:otherwise>
-							<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" value="<%= exportImportConfiguration.getName() %>" />
-						</c:otherwise>
-					</c:choose>
-				</aui:fieldset>
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<aui:fieldset>
+						<c:choose>
+							<c:when test="<%= exportImportConfiguration == null %>">
+								<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" placeholder="process-name-placeholder" />
+							</c:when>
+							<c:otherwise>
+								<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" value="<%= exportImportConfiguration.getName() %>" />
+							</c:otherwise>
+						</c:choose>
+					</aui:fieldset>
 
-				<liferay-staging:deletions
-					cmd="<%= Constants.EXPORT %>"
-					exportImportConfigurationId="<%= exportImportConfigurationId %>"
-				/>
+					<liferay-staging:deletions
+						cmd="<%= Constants.EXPORT %>"
+						exportImportConfigurationId="<%= exportImportConfigurationId %>"
+					/>
 
-				<c:if test="<%= !group.isDepot() && !group.isCompany() && !group.isLayoutPrototype() %>">
-					<liferay-staging:select-pages
-						action="<%= Constants.EXPORT %>"
+					<c:if test="<%= !group.isDepot() && !group.isCompany() && !group.isLayoutPrototype() %>">
+						<liferay-staging:select-pages
+							action="<%= Constants.EXPORT %>"
+							disableInputs="<%= configuredExport %>"
+							exportImportConfigurationId="<%= exportImportConfigurationId %>"
+							groupId="<%= liveGroupId %>"
+							privateLayout="<%= privateLayout %>"
+							treeId="<%= treeId %>"
+						/>
+					</c:if>
+
+					<liferay-staging:content
+						cmd="<%= Constants.EXPORT %>"
 						disableInputs="<%= configuredExport %>"
 						exportImportConfigurationId="<%= exportImportConfigurationId %>"
-						groupId="<%= liveGroupId %>"
-						privateLayout="<%= privateLayout %>"
-						treeId="<%= treeId %>"
+						type="<%= Constants.EXPORT %>"
 					/>
-				</c:if>
 
-				<liferay-staging:content
-					cmd="<%= Constants.EXPORT %>"
-					disableInputs="<%= configuredExport %>"
-					exportImportConfigurationId="<%= exportImportConfigurationId %>"
-					type="<%= Constants.EXPORT %>"
-				/>
+					<liferay-staging:permissions
+						action="<%= Constants.EXPORT %>"
+						descriptionCSSClass="permissions-description"
+						disableInputs="<%= configuredExport %>"
+						exportImportConfigurationId="<%= exportImportConfigurationId %>"
+						global="<%= group.isCompany() %>"
+						labelCSSClass="permissions-label"
+					/>
 
-				<liferay-staging:permissions
-					action="<%= Constants.EXPORT %>"
-					descriptionCSSClass="permissions-description"
-					disableInputs="<%= configuredExport %>"
-					exportImportConfigurationId="<%= exportImportConfigurationId %>"
-					global="<%= group.isCompany() %>"
-					labelCSSClass="permissions-label"
-				/>
+					<div class="sheet-footer">
+						<aui:button type="submit" value="export" />
 
-				<div class="sheet-footer">
-					<aui:button type="submit" value="export" />
-
-					<aui:button href="<%= backURL %>" type="cancel" />
+						<aui:button href="<%= backURL %>" type="cancel" />
+					</div>
 				</div>
-			</aui:fieldset-group>
+			</div>
 		</div>
 	</aui:form>
 </clay:container-fluid>

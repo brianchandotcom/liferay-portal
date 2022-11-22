@@ -45,15 +45,17 @@ CommerceOrderNote commerceOrderNote = commerceOrderContentDisplayContext.getComm
 
 		<aui:model-context bean="<%= commerceOrderNote %>" model="<%= CommerceOrderNote.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" name="content" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:input autoFocus="<%= true %>" name="content" />
 
-				<c:if test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrderNote.getCommerceOrderId(), CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES) %>">
-					<aui:input helpMessage="restricted-help" label="private" name="restricted" />
-				</c:if>
-			</aui:fieldset>
-		</aui:fieldset-group>
+					<c:if test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrderNote.getCommerceOrderId(), CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES) %>">
+						<aui:input helpMessage="restricted-help" label="private" name="restricted" />
+					</c:if>
+				</aui:fieldset>
+			</div>
+		</div>
 	</div>
 
 	<aui:button-row>

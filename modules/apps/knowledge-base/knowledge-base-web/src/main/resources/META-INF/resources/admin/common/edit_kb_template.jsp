@@ -46,37 +46,39 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 
 		<aui:model-context bean="<%= kbTemplate %>" model="<%= KBTemplate.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
 
-				<liferay-editor:editor
-					contents="<%= content %>"
-					editorName="ckeditor"
-					name="contentEditor"
-					placeholder="content"
-					required="<%= true %>"
-				>
-					<aui:validator errorMessage='<%= LanguageUtil.format(resourceBundle, "the-x-field-is-required", "content", true) %>' name="required" />
-				</liferay-editor:editor>
+					<liferay-editor:editor
+						contents="<%= content %>"
+						editorName="ckeditor"
+						name="contentEditor"
+						placeholder="content"
+						required="<%= true %>"
+					>
+						<aui:validator errorMessage='<%= LanguageUtil.format(resourceBundle, "the-x-field-is-required", "content", true) %>' name="required" />
+					</liferay-editor:editor>
 
-				<aui:input name="content" type="hidden" />
-			</aui:fieldset>
-
-			<c:if test="<%= kbTemplate == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= KBTemplate.class.getName() %>"
-					/>
+					<aui:input name="content" type="hidden" />
 				</aui:fieldset>
-			</c:if>
 
-			<div class="sheet-footer">
-				<aui:button type="submit" value="publish" />
+				<c:if test="<%= kbTemplate == null %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<liferay-ui:input-permissions
+							modelName="<%= KBTemplate.class.getName() %>"
+						/>
+					</aui:fieldset>
+				</c:if>
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<div class="sheet-footer">
+					<aui:button type="submit" value="publish" />
+
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</div>
 			</div>
-		</aui:fieldset-group>
+		</div>
 	</aui:form>
 </clay:container-fluid>
 

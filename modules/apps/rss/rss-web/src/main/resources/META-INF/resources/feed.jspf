@@ -17,97 +17,99 @@
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(rssFeed.getURL()) && (syndFeed != null) %>">
 		<div class="feed <%= last ? "last" : StringPool.BLANK %>">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<aui:fieldset>
 
-					<%
-					SyndImage syndImage = syndFeed.getImage();
-					%>
+						<%
+						SyndImage syndImage = syndFeed.getImage();
+						%>
 
-					<c:if test="<%= (syndImage != null) && rssPortletInstanceConfiguration.showFeedImage() %>">
-						<div class="feed-image feed-image-<%= rssPortletInstanceConfiguration.feedImageAlignment() %>">
-							<img alt="<%= HtmlUtil.escapeAttribute(syndImage.getDescription()) %>" class="img-fluid" src="<%= HtmlUtil.escapeHREF(rssFeed.getSyndFeedImageURL()) %>" />
-						</div>
-					</c:if>
-
-					<c:if test="<%= rssPortletInstanceConfiguration.showFeedTitle() %>">
-						<h3 class="feed-title">
-							<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeed.getSyndFeedLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeed.getTitle()) %></aui:a>
-						</h3>
-					</c:if>
-
-					<c:if test="<%= (syndFeed.getPublishedDate() != null) && rssPortletInstanceConfiguration.showFeedDescription() %>">
-						<div class="feed-date feed-published-date small">
-							<liferay-ui:icon
-								icon="calendar"
-								label="<%= true %>"
-								markupView="lexicon"
-								message="<%= dateFormatDateTime.format(syndFeed.getPublishedDate()) %>"
-							/>
-						</div>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(syndFeed.getDescription()) && rssPortletInstanceConfiguration.showFeedDescription() %>">
-						<div class="feed-description">
-							<%= HtmlUtil.escape(syndFeed.getDescription()) %>
-						</div>
-					</c:if>
-				</aui:fieldset>
-
-				<%
-				List<RSSFeedEntry> rssFeedEntryDisplayContexts = rssFeed.getRSSFeedEntries(themeDisplay);
-				%>
-
-				<c:if test="<%= !rssFeedEntryDisplayContexts.isEmpty() %>">
-
-					<%
-					for (int j = 0; (j < rssFeedEntryDisplayContexts.size()) && (j < rssPortletInstanceConfiguration.entriesPerFeed()); j++) {
-						RSSFeedEntry rssFeedEntry = rssFeedEntryDisplayContexts.get(j);
-
-						SyndEntry syndEntry = rssFeedEntry.getSyndEntry();
-					%>
-
-						<aui:fieldset collapsed="<%= !themeDisplay.isStateMaximized() && (j >= rssPortletInstanceConfiguration.expandedEntriesPerFeed()) %>" collapsible="<%= true %>" cssClass="feed-entry" id='<%= liferayPortletResponse.getNamespace() + "feed_" + i + "_panelId_" + j %>' label="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
-							<div class="feed-entry-content">
-								<c:if test="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() && Validator.isNotNull(syndEntry.getAuthor()) %>">
-									<strong class="feed-entry-author small">
-										<%= HtmlUtil.escape(syndEntry.getAuthor()) %>
-									</strong>
-								</c:if>
-
-								<c:if test="<%= syndEntry.getPublishedDate() != null %>">
-									<div class="feed-date small">
-										<liferay-ui:icon
-											icon="calendar"
-											label="<%= true %>"
-											markupView="lexicon"
-											message="<%= dateFormatDateTime.format(syndEntry.getPublishedDate()) %>"
-										/>
-									</div>
-								</c:if>
-
-								<c:if test="<%= Validator.isNotNull(rssFeedEntry.getSyndEnclosureLink()) %>">
-									<div class="feed-entry-enclosure">
-										<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeedEntry.getSyndEnclosureLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeedEntry.getSyndEnclosureLinkTitle()) %></aui:a>
-									</div>
-								</c:if>
-
-								<%= rssFeedEntry.getSanitizedContent() %>
-
-								<br />
-
-								<c:if test="<%= Validator.isNotNull(rssFeedEntry.getSyndEntryLink()) %>">
-									<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink()) %>"><liferay-ui:message key="read-more" /></aui:a>
-								</c:if>
+						<c:if test="<%= (syndImage != null) && rssPortletInstanceConfiguration.showFeedImage() %>">
+							<div class="feed-image feed-image-<%= rssPortletInstanceConfiguration.feedImageAlignment() %>">
+								<img alt="<%= HtmlUtil.escapeAttribute(syndImage.getDescription()) %>" class="img-fluid" src="<%= HtmlUtil.escapeHREF(rssFeed.getSyndFeedImageURL()) %>" />
 							</div>
-						</aui:fieldset>
+						</c:if>
+
+						<c:if test="<%= rssPortletInstanceConfiguration.showFeedTitle() %>">
+							<h3 class="feed-title">
+								<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeed.getSyndFeedLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeed.getTitle()) %></aui:a>
+							</h3>
+						</c:if>
+
+						<c:if test="<%= (syndFeed.getPublishedDate() != null) && rssPortletInstanceConfiguration.showFeedDescription() %>">
+							<div class="feed-date feed-published-date small">
+								<liferay-ui:icon
+									icon="calendar"
+									label="<%= true %>"
+									markupView="lexicon"
+									message="<%= dateFormatDateTime.format(syndFeed.getPublishedDate()) %>"
+								/>
+							</div>
+						</c:if>
+
+						<c:if test="<%= Validator.isNotNull(syndFeed.getDescription()) && rssPortletInstanceConfiguration.showFeedDescription() %>">
+							<div class="feed-description">
+								<%= HtmlUtil.escape(syndFeed.getDescription()) %>
+							</div>
+						</c:if>
+					</aui:fieldset>
 
 					<%
-					}
+					List<RSSFeedEntry> rssFeedEntryDisplayContexts = rssFeed.getRSSFeedEntries(themeDisplay);
 					%>
 
-				</c:if>
-			</aui:fieldset-group>
+					<c:if test="<%= !rssFeedEntryDisplayContexts.isEmpty() %>">
+
+						<%
+						for (int j = 0; (j < rssFeedEntryDisplayContexts.size()) && (j < rssPortletInstanceConfiguration.entriesPerFeed()); j++) {
+							RSSFeedEntry rssFeedEntry = rssFeedEntryDisplayContexts.get(j);
+
+							SyndEntry syndEntry = rssFeedEntry.getSyndEntry();
+						%>
+
+							<aui:fieldset collapsed="<%= !themeDisplay.isStateMaximized() && (j >= rssPortletInstanceConfiguration.expandedEntriesPerFeed()) %>" collapsible="<%= true %>" cssClass="feed-entry" id='<%= liferayPortletResponse.getNamespace() + "feed_" + i + "_panelId_" + j %>' label="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
+								<div class="feed-entry-content">
+									<c:if test="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() && Validator.isNotNull(syndEntry.getAuthor()) %>">
+										<strong class="feed-entry-author small">
+											<%= HtmlUtil.escape(syndEntry.getAuthor()) %>
+										</strong>
+									</c:if>
+
+									<c:if test="<%= syndEntry.getPublishedDate() != null %>">
+										<div class="feed-date small">
+											<liferay-ui:icon
+												icon="calendar"
+												label="<%= true %>"
+												markupView="lexicon"
+												message="<%= dateFormatDateTime.format(syndEntry.getPublishedDate()) %>"
+											/>
+										</div>
+									</c:if>
+
+									<c:if test="<%= Validator.isNotNull(rssFeedEntry.getSyndEnclosureLink()) %>">
+										<div class="feed-entry-enclosure">
+											<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeedEntry.getSyndEnclosureLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeedEntry.getSyndEnclosureLinkTitle()) %></aui:a>
+										</div>
+									</c:if>
+
+									<%= rssFeedEntry.getSanitizedContent() %>
+
+									<br />
+
+									<c:if test="<%= Validator.isNotNull(rssFeedEntry.getSyndEntryLink()) %>">
+										<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink()) %>"><liferay-ui:message key="read-more" /></aui:a>
+									</c:if>
+								</div>
+							</aui:fieldset>
+
+						<%
+						}
+						%>
+
+					</c:if>
+				</div>
+			</div>
 		</div>
 	</c:when>
 	<c:when test="<%= portletDisplay.isShowConfigurationIcon() %>">

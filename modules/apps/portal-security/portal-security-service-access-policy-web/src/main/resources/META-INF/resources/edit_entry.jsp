@@ -64,71 +64,73 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 	<aui:model-context bean="<%= sapEntry %>" model="<%= SAPEntry.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input disabled="<%= systemSAPEntry %>" name="name" required="<%= true %>">
-				<aui:validator errorMessage="this-field-is-required-and-must-contain-only-following-characters" name="custom">
-					function(val, fieldNode, ruleValue) {
-						var allowedCharacters = '<%= HtmlUtil.escapeJS(SAPEntryConstants.NAME_ALLOWED_CHARACTERS) %>';
+	<div class="sheet">
+		<div class="panel-group panel-group-flush">
+			<aui:fieldset>
+				<aui:input disabled="<%= systemSAPEntry %>" name="name" required="<%= true %>">
+					<aui:validator errorMessage="this-field-is-required-and-must-contain-only-following-characters" name="custom">
+						function(val, fieldNode, ruleValue) {
+							var allowedCharacters = '<%= HtmlUtil.escapeJS(SAPEntryConstants.NAME_ALLOWED_CHARACTERS) %>';
 
-						val = val.trim();
+							val = val.trim();
 
-						var regex = new RegExp('[^' + allowedCharacters + ']');
+							var regex = new RegExp('[^' + allowedCharacters + ']');
 
-						return !regex.test(val);
-					}
-				</aui:validator>
-			</aui:input>
-
-			<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="enabled" type="toggle-switch" value="<%= (sapEntry != null) ? sapEntry.isEnabled() : false %>" />
-
-			<aui:input disabled="<%= systemSAPEntry %>" helpMessage="default-sap-entry-help" inlineLabel="right" label="default" labelCssClass="simple-toggle-switch" name="defaultSAPEntry" type="toggle-switch" value="<%= (sapEntry != null) ? sapEntry.isDefaultSAPEntry() : false %>" />
-
-			<aui:input name="title" required="<%= true %>" />
-
-			<aui:input cssClass="hide" helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />
-
-			<div id="<portlet:namespace />allowedServiceSignaturesFriendlyContentBox">
-
-				<%
-				for (int i = 0; i < allowedServiceSignaturesArray.length; i++) {
-					String serviceClassName = StringPool.BLANK;
-					String actionMethodName = StringPool.BLANK;
-
-					String[] allowedServiceSignatureArray = StringUtil.split(allowedServiceSignaturesArray[i], CharPool.POUND);
-
-					if (allowedServiceSignatureArray.length > 0) {
-						serviceClassName = GetterUtil.getString(allowedServiceSignatureArray[0]);
-
-						if (allowedServiceSignatureArray.length > 1) {
-							actionMethodName = GetterUtil.getString(allowedServiceSignatureArray[1]);
+							return !regex.test(val);
 						}
-					}
-				%>
+					</aui:validator>
+				</aui:input>
 
-					<div class="lfr-form-row">
-						<div class="row-fields">
-							<clay:col
-								md="6"
-							>
-								<aui:input cssClass="service-class-name" data-service-class-name="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' label="service-class" name="serviceClassName" type="text" value="<%= serviceClassName %>" />
-							</clay:col>
+				<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="enabled" type="toggle-switch" value="<%= (sapEntry != null) ? sapEntry.isEnabled() : false %>" />
 
-							<clay:col
-								md="6"
-							>
-								<aui:input cssClass="action-method-name" id='<%= "actionMethodName" + i %>' label="method-name" name="actionMethodName" type="text" value="<%= actionMethodName %>" />
-							</clay:col>
+				<aui:input disabled="<%= systemSAPEntry %>" helpMessage="default-sap-entry-help" inlineLabel="right" label="default" labelCssClass="simple-toggle-switch" name="defaultSAPEntry" type="toggle-switch" value="<%= (sapEntry != null) ? sapEntry.isDefaultSAPEntry() : false %>" />
+
+				<aui:input name="title" required="<%= true %>" />
+
+				<aui:input cssClass="hide" helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />
+
+				<div id="<portlet:namespace />allowedServiceSignaturesFriendlyContentBox">
+
+					<%
+					for (int i = 0; i < allowedServiceSignaturesArray.length; i++) {
+						String serviceClassName = StringPool.BLANK;
+						String actionMethodName = StringPool.BLANK;
+
+						String[] allowedServiceSignatureArray = StringUtil.split(allowedServiceSignaturesArray[i], CharPool.POUND);
+
+						if (allowedServiceSignatureArray.length > 0) {
+							serviceClassName = GetterUtil.getString(allowedServiceSignatureArray[0]);
+
+							if (allowedServiceSignatureArray.length > 1) {
+								actionMethodName = GetterUtil.getString(allowedServiceSignatureArray[1]);
+							}
+						}
+					%>
+
+						<div class="lfr-form-row">
+							<div class="row-fields">
+								<clay:col
+									md="6"
+								>
+									<aui:input cssClass="service-class-name" data-service-class-name="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' label="service-class" name="serviceClassName" type="text" value="<%= serviceClassName %>" />
+								</clay:col>
+
+								<clay:col
+									md="6"
+								>
+									<aui:input cssClass="action-method-name" id='<%= "actionMethodName" + i %>' label="method-name" name="actionMethodName" type="text" value="<%= actionMethodName %>" />
+								</clay:col>
+							</div>
 						</div>
-					</div>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</div>
-		</aui:fieldset>
-	</aui:fieldset-group>
+				</div>
+			</aui:fieldset>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button type="submit" value="save" />

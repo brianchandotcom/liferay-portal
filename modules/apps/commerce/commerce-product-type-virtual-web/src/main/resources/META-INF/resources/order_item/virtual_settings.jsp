@@ -59,67 +59,69 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 	<liferay-ui:error exception="<%= CommerceVirtualOrderItemFileEntryIdException.class %>" message="please-select-an-existing-file" />
 	<liferay-ui:error exception="<%= CommerceVirtualOrderItemUrlException.class %>" message="please-enter-a-valid-url" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<div class="row">
-				<div class="col-md-3">
-					<h4 class="text-default"><liferay-ui:message key="insert-the-url-or-select-a-file-of-your-virtual-product" /></h4>
+	<div class="sheet">
+		<div class="panel-group panel-group-flush">
+			<aui:fieldset>
+				<div class="row">
+					<div class="col-md-3">
+						<h4 class="text-default"><liferay-ui:message key="insert-the-url-or-select-a-file-of-your-virtual-product" /></h4>
+					</div>
+
+					<div class="col-md-9">
+						<aui:input disabled="<%= useFileEntry %>" name="url" />
+
+						<h4 class="<%= textCssClass %>" id="lfr-virtual-order-item-button-row-message"><liferay-ui:message key="or" /></h4>
+
+						<p class="text-default">
+							<span class="<%= (fileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntryRemove" role="button">
+								<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+							</span>
+							<span id="<portlet:namespace />fileEntryNameInput">
+								<c:choose>
+									<c:when test="<%= fileEntry != null %>">
+										<a href="<%= HtmlUtil.escapeHREF(commerceVirtualOrderItemEditDisplayContext.getDownloadFileEntryURL()) %>">
+											<%= HtmlUtil.escape(fileEntry.getFileName()) %>
+										</a>
+									</c:when>
+									<c:otherwise>
+										<span class="text-muted"><liferay-ui:message key="none" /></span>
+									</c:otherwise>
+								</c:choose>
+							</span>
+						</p>
+
+						<aui:button name="selectFile" value="select" />
+					</div>
 				</div>
+			</aui:fieldset>
 
-				<div class="col-md-9">
-					<aui:input disabled="<%= useFileEntry %>" name="url" />
+			<aui:fieldset>
+				<aui:select name="activationStatus">
 
-					<h4 class="<%= textCssClass %>" id="lfr-virtual-order-item-button-row-message"><liferay-ui:message key="or" /></h4>
+					<%
+					for (int activationStatus : commerceVirtualOrderItemEditDisplayContext.getActivationStatuses()) {
+					%>
 
-					<p class="text-default">
-						<span class="<%= (fileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntryRemove" role="button">
-							<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-						</span>
-						<span id="<portlet:namespace />fileEntryNameInput">
-							<c:choose>
-								<c:when test="<%= fileEntry != null %>">
-									<a href="<%= HtmlUtil.escapeHREF(commerceVirtualOrderItemEditDisplayContext.getDownloadFileEntryURL()) %>">
-										<%= HtmlUtil.escape(fileEntry.getFileName()) %>
-									</a>
-								</c:when>
-								<c:otherwise>
-									<span class="text-muted"><liferay-ui:message key="none" /></span>
-								</c:otherwise>
-							</c:choose>
-						</span>
-					</p>
+						<aui:option label="<%= commerceVirtualOrderItemEditDisplayContext.getActivationStatusLabel(activationStatus) %>" selected="<%= (commerceVirtualOrderItem != null) && (activationStatus == commerceVirtualOrderItem.getActivationStatus()) %>" value="<%= activationStatus %>" />
 
-					<aui:button name="selectFile" value="select" />
-				</div>
-			</div>
-		</aui:fieldset>
+					<%
+					}
+					%>
 
-		<aui:fieldset>
-			<aui:select name="activationStatus">
+				</aui:select>
 
-				<%
-				for (int activationStatus : commerceVirtualOrderItemEditDisplayContext.getActivationStatuses()) {
-				%>
+				<aui:input helpMessage="duration-help" label="duration" name="durationDays" suffix="days" type="long" value="<%= durationDays %>">
+					<aui:validator name="number" />
+				</aui:input>
 
-					<aui:option label="<%= commerceVirtualOrderItemEditDisplayContext.getActivationStatusLabel(activationStatus) %>" selected="<%= (commerceVirtualOrderItem != null) && (activationStatus == commerceVirtualOrderItem.getActivationStatus()) %>" value="<%= activationStatus %>" />
+				<aui:input label="number-of-downloads" name="usages" />
 
-				<%
-				}
-				%>
+				<aui:input label="max-number-of-downloads" name="maxUsages" />
 
-			</aui:select>
-
-			<aui:input helpMessage="duration-help" label="duration" name="durationDays" suffix="days" type="long" value="<%= durationDays %>">
-				<aui:validator name="number" />
-			</aui:input>
-
-			<aui:input label="number-of-downloads" name="usages" />
-
-			<aui:input label="max-number-of-downloads" name="maxUsages" />
-
-			<aui:input name="active" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+				<aui:input name="active" />
+			</aui:fieldset>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

@@ -64,44 +64,46 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
 		<liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="please-enter-a-valid-category" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<div class="form-group">
-					<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(request, "home") %>' />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<div class="form-group">
+						<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(request, "home") %>' />
 
-					<aui:button name="selectCategoryButton" value="select" />
-				</div>
+						<aui:button name="selectCategoryButton" value="select" />
+					</div>
 
-				<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post" name="addExplanationPost" onClick='<%= liferayPortletResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
+					<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(request, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post" name="addExplanationPost" onClick='<%= liferayPortletResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
 
-				<div class="hide" id="<portlet:namespace />explanationPost">
-					<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
-						<aui:validator name="required">
-							function() {
-								var addExplanationPostCheckbox = document.getElementById('<portlet:namespace />addExplanationPost');
+					<div class="hide" id="<portlet:namespace />explanationPost">
+						<aui:input maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="subject" style="width: 350px;" value="">
+							<aui:validator name="required">
+								function() {
+									var addExplanationPostCheckbox = document.getElementById('<portlet:namespace />addExplanationPost');
 
-								if (addExplanationPostCheckbox) {
-									return addExplanationPostCheckbox.checked;
+									if (addExplanationPostCheckbox) {
+										return addExplanationPostCheckbox.checked;
+									}
 								}
-							}
-						</aui:validator>
-					</aui:input>
+							</aui:validator>
+						</aui:input>
 
-					<aui:field-wrapper label="body">
-						<c:choose>
-							<c:when test='<%= message.isFormatBBCode() || messageFormat.equals("bbcode") %>'>
-								<%@ include file="/message_boards/bbcode_editor.jspf" %>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="/message_boards/html_editor.jspf" %>
-							</c:otherwise>
-						</c:choose>
+						<aui:field-wrapper label="body">
+							<c:choose>
+								<c:when test='<%= message.isFormatBBCode() || messageFormat.equals("bbcode") %>'>
+									<%@ include file="/message_boards/bbcode_editor.jspf" %>
+								</c:when>
+								<c:otherwise>
+									<%@ include file="/message_boards/html_editor.jspf" %>
+								</c:otherwise>
+							</c:choose>
 
-						<aui:input name="body" type="hidden" />
-					</aui:field-wrapper>
-				</div>
-			</aui:fieldset>
-		</aui:fieldset-group>
+							<aui:input name="body" type="hidden" />
+						</aui:field-wrapper>
+					</div>
+				</aui:fieldset>
+			</div>
+		</div>
 
 		<aui:button-row>
 			<aui:button type="submit" value="move" />

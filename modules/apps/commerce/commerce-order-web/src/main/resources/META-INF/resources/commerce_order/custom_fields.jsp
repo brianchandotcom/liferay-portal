@@ -24,30 +24,32 @@ long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 
 <liferay-portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderURL" />
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:form action="<%= editCommerceOrderURL %>" method="post" name="orderCustomFieldFm">
-		<aui:fieldset>
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="customFields" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderId %>" />
+<div class="sheet">
+	<div class="panel-group panel-group-flush">
+		<aui:form action="<%= editCommerceOrderURL %>" method="post" name="orderCustomFieldFm">
+			<aui:fieldset>
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="customFields" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderId %>" />
 
-			<liferay-ui:error-marker
-				key="<%= WebKeys.ERROR_SECTION %>"
-				value="custom-fields"
-			/>
+				<liferay-ui:error-marker
+					key="<%= WebKeys.ERROR_SECTION %>"
+					value="custom-fields"
+				/>
 
-			<aui:model-context bean="<%= commerceOrderEditDisplayContext.getCommerceOrder() %>" model="<%= CommerceOrder.class %>" />
+				<aui:model-context bean="<%= commerceOrderEditDisplayContext.getCommerceOrder() %>" model="<%= CommerceOrder.class %>" />
 
-			<liferay-expando:custom-attribute-list
-				className="<%= CommerceOrder.class.getName() %>"
-				classPK="<%= commerceOrderId %>"
-				editable="<%= true %>"
-				label="<%= true %>"
-			/>
+				<liferay-expando:custom-attribute-list
+					className="<%= CommerceOrder.class.getName() %>"
+					classPK="<%= commerceOrderId %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
 
-			<aui:button-row>
-				<aui:button type="submit" />
-			</aui:button-row>
-		</aui:fieldset>
-	</aui:form>
-</aui:fieldset-group>
+				<aui:button-row>
+					<aui:button type="submit" />
+				</aui:button-row>
+			</aui:fieldset>
+		</aui:form>
+	</div>
+</div>

@@ -29,7 +29,8 @@ ObjectLayoutBox categorizationObjectLayoutBox = objectEntryDisplayContext.getObj
 
 		<liferay-asset:asset-tags-error />
 
-		<aui:fieldset-group markupView="lexicon">
+		<div class="sheet">
+	<div class="panel-group panel-group-flush">
 			<aui:fieldset collapsed="<%= categorizationObjectLayoutBox.isCollapsable() %>" collapsible="<%= categorizationObjectLayoutBox.isCollapsable() %>" label="categorization">
 				<c:choose>
 					<c:when test="<%= objectEntryDisplayContext.isReadOnly() %>">
@@ -59,6 +60,6 @@ ObjectLayoutBox categorizationObjectLayoutBox = objectEntryDisplayContext.getObj
 					</c:otherwise>
 				</c:choose>
 			</aui:fieldset>
-		</aui:fieldset-group>
+		</div></div>
 	</div>
 </c:if>

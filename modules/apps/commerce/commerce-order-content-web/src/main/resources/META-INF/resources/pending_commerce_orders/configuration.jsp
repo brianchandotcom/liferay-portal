@@ -26,19 +26,21 @@
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid container-fluid-max-xl">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<div class="display-template">
-						<liferay-template:template-selector
-							className="<%= CommerceOpenOrderContentPortlet.class.getName() %>"
-							displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
-							displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
-							refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
-							showEmptyOption="<%= true %>"
-						/>
-					</div>
-				</aui:fieldset>
-			</aui:fieldset-group>
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<aui:fieldset>
+						<div class="display-template">
+							<liferay-template:template-selector
+								className="<%= CommerceOpenOrderContentPortlet.class.getName() %>"
+								displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
+								displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
+								refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
+								showEmptyOption="<%= true %>"
+							/>
+						</div>
+					</aui:fieldset>
+				</div>
+			</div>
 		</div>
 	</div>
 

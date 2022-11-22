@@ -76,114 +76,118 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 
 	<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<c:choose>
-				<c:when test="<%= role == null %>">
-					<aui:select label="type" name="roleType">
+	<div class="sheet">
+		<div class="panel-group panel-group-flush">
+			<aui:fieldset>
+				<c:choose>
+					<c:when test="<%= role == null %>">
+						<aui:select label="type" name="roleType">
 
-						<%
-						for (RoleTypeContributor roleTypeContributor : RoleTypeContributorRetrieverUtil.getRoleTypeContributors(request)) {
-						%>
+							<%
+							for (RoleTypeContributor roleTypeContributor : RoleTypeContributorRetrieverUtil.getRoleTypeContributors(request)) {
+							%>
 
-							<aui:option label="<%= roleTypeContributor.getName() %>" value="<%= roleTypeContributor.getType() %>" />
+								<aui:option label="<%= roleTypeContributor.getName() %>" value="<%= roleTypeContributor.getType() %>" />
 
-						<%
-						}
-						%>
+							<%
+							}
+							%>
 
-					</aui:select>
-				</c:when>
-				<c:otherwise>
-					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>" />
+						</aui:select>
+					</c:when>
+					<c:otherwise>
+						<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>" />
 
-					<c:if test="<%= role == null %>">
-						<aui:input name="roleType" type="hidden" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
+						<c:if test="<%= role == null %>">
+							<aui:input name="roleType" type="hidden" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="title-field-help" name="title" />
+				<aui:input name="description" />
+
+				<c:if test="<%= role != null %>">
+
+					<%
+					String[] subtypes = currentRoleTypeContributor.getSubtypes();
+					%>
+
+					<c:if test="<%= subtypes.length > 0 %>">
+						<aui:select name="subtype">
+							<aui:option value="" />
+
+							<%
+							for (String curSubtype : subtypes) {
+							%>
+
+								<aui:option label="<%= curSubtype %>" selected="<%= subtype.equals(curSubtype) %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
 					</c:if>
-				</c:otherwise>
-			</c:choose>
-
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="title-field-help" name="title" />
-			<aui:input name="description" />
-
-			<c:if test="<%= role != null %>">
+				</c:if>
 
 				<%
-				String[] subtypes = currentRoleTypeContributor.getSubtypes();
+				String nameLabel = LanguageUtil.get(request, "role-key");
 				%>
 
-				<c:if test="<%= subtypes.length > 0 %>">
-					<aui:select name="subtype">
-						<aui:option value="" />
+				<liferay-ui:error exception="<%= RoleNameException.class %>">
+					<p>
+						<liferay-ui:message arguments="<%= new String[] {nameLabel, RoleConstants.getNameGeneralRestrictions(locale, PropsValues.ROLES_NAME_ALLOW_NUMERIC), RoleConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+					</p>
 
-						<%
-						for (String curSubtype : subtypes) {
-						%>
+					<p>
+						<liferay-ui:message arguments="<%= new String[] {nameLabel, RoleConstants.NAME_INVALID_CHARACTERS} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+					</p>
+				</liferay-ui:error>
 
-							<aui:option label="<%= curSubtype %>" selected="<%= subtype.equals(curSubtype) %>" />
+				<c:choose>
+					<c:when test="<%= (role != null) && role.isSystem() %>">
+						<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="viewNameField" type="text" value="<%= roleName %>" />
+						<aui:input name="name" type="hidden" value="<%= roleName %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="key-field-help" label="key" name="name" />
+					</c:otherwise>
+				</c:choose>
 
-						<%
-						}
-						%>
-
-					</aui:select>
+				<c:if test="<%= (role != null) && roleName.equals(RoleConstants.SITE_ADMINISTRATOR) %>">
+					<aui:input helpMessage="allow-subsite-management-help" inlineLabel="right" label="allow-subsite-management" labelCssClass="simple-toggle-switch" name="manageSubgroups" type="toggle-switch" value="<%= ResourcePermissionLocalServiceUtil.hasResourcePermission(company.getCompanyId(), Group.class.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleId, ActionKeys.MANAGE_SUBGROUPS) %>" />
 				</c:if>
-			</c:if>
 
-			<%
-			String nameLabel = LanguageUtil.get(request, "role-key");
-			%>
+				<%
+				ExpandoBridge roleExpandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), Role.class.getName(), (role != null) ? role.getRoleId() : 0);
 
-			<liferay-ui:error exception="<%= RoleNameException.class %>">
-				<p>
-					<liferay-ui:message arguments="<%= new String[] {nameLabel, RoleConstants.getNameGeneralRestrictions(locale, PropsValues.ROLES_NAME_ALLOW_NUMERIC), RoleConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
-				</p>
+				Map<String, Serializable> roleCustomAttributes = roleExpandoBridge.getAttributes();
+				%>
 
-				<p>
-					<liferay-ui:message arguments="<%= new String[] {nameLabel, RoleConstants.NAME_INVALID_CHARACTERS} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
-				</p>
-			</liferay-ui:error>
+				<c:if test="<%= !roleCustomAttributes.isEmpty() %>">
+					<div class="sheet">
+						<div class="panel-group panel-group-flush">
+							<aui:fieldset>
+								<liferay-expando:custom-attribute-list
+									className="<%= Role.class.getName() %>"
+									classPK="<%= (role != null) ? role.getRoleId() : 0 %>"
+									editable="<%= true %>"
+									label="<%= true %>"
+								/>
+							</aui:fieldset>
+						</div>
+					</div>
+				</c:if>
 
-			<c:choose>
-				<c:when test="<%= (role != null) && role.isSystem() %>">
-					<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="viewNameField" type="text" value="<%= roleName %>" />
-					<aui:input name="name" type="hidden" value="<%= roleName %>" />
-				</c:when>
-				<c:otherwise>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="key-field-help" label="key" name="name" />
-				</c:otherwise>
-			</c:choose>
+				<aui:button-row>
+					<aui:button type="submit" />
 
-			<c:if test="<%= (role != null) && roleName.equals(RoleConstants.SITE_ADMINISTRATOR) %>">
-				<aui:input helpMessage="allow-subsite-management-help" inlineLabel="right" label="allow-subsite-management" labelCssClass="simple-toggle-switch" name="manageSubgroups" type="toggle-switch" value="<%= ResourcePermissionLocalServiceUtil.hasResourcePermission(company.getCompanyId(), Group.class.getName(), ResourceConstants.SCOPE_GROUP_TEMPLATE, String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleId, ActionKeys.MANAGE_SUBGROUPS) %>" />
-			</c:if>
-
-			<%
-			ExpandoBridge roleExpandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), Role.class.getName(), (role != null) ? role.getRoleId() : 0);
-
-			Map<String, Serializable> roleCustomAttributes = roleExpandoBridge.getAttributes();
-			%>
-
-			<c:if test="<%= !roleCustomAttributes.isEmpty() %>">
-				<aui:fieldset-group markupView="lexicon">
-					<aui:fieldset>
-						<liferay-expando:custom-attribute-list
-							className="<%= Role.class.getName() %>"
-							classPK="<%= (role != null) ? role.getRoleId() : 0 %>"
-							editable="<%= true %>"
-							label="<%= true %>"
-						/>
-					</aui:fieldset>
-				</aui:fieldset-group>
-			</c:if>
-
-			<aui:button-row>
-				<aui:button type="submit" />
-
-				<aui:button href="<%= backURL %>" type="cancel" />
-			</aui:button-row>
-		</aui:fieldset>
-	</aui:fieldset-group>
+					<aui:button href="<%= backURL %>" type="cancel" />
+				</aui:button-row>
+			</aui:fieldset>
+		</div>
+	</div>
 </aui:form>
 
 <c:if test="<%= role == null %>">

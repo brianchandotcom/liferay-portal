@@ -38,7 +38,8 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 	<aui:input name="sampleFileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getSampleFileEntryId() %>" />
 	<aui:input name="termsOfUseJournalArticleResourcePrimKey" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey() %>" />
 
-	<aui:fieldset-group markupView="lexicon">
+	<div class="sheet">
+	<div class="panel-group panel-group-flush">
 		<aui:fieldset>
 			<aui:input checked="<%= override %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="override" type="toggle-switch" value="<%= override %>" />
 		</aui:fieldset>
@@ -122,7 +123,7 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 				<%@ include file="/terms_of_use.jspf" %>
 			</aui:fieldset>
 		</div>
-	</aui:fieldset-group>
+	</div></div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

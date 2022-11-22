@@ -34,24 +34,26 @@ String redirect = ParamUtil.getString(request, "redirect");
 			<clay:container-fluid>
 				<liferay-ui:error exception="<%= PortletItemNameException.class %>" message="please-enter-a-valid-setup-name" />
 
-				<aui:fieldset-group markupView="lexicon">
-					<aui:fieldset>
+				<div class="sheet">
+					<div class="panel-group panel-group-flush">
+						<aui:fieldset>
 
-						<%
-						String name = StringPool.BLANK;
+							<%
+							String name = StringPool.BLANK;
 
-						boolean useCustomTitle = GetterUtil.getBoolean(portletPreferences.getValue("portletSetupUseCustomTitle", null));
+							boolean useCustomTitle = GetterUtil.getBoolean(portletPreferences.getValue("portletSetupUseCustomTitle", null));
 
-						if (useCustomTitle) {
-							name = PortletConfigurationUtil.getPortletTitle(portletPreferences, LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()));
-						}
-						%>
+							if (useCustomTitle) {
+								name = PortletConfigurationUtil.getPortletTitle(portletPreferences, LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()));
+							}
+							%>
 
-						<aui:input name="name" placeholder="name" required="<%= true %>" type="text" value="<%= name %>">
-							<aui:validator name="maxLength">75</aui:validator>
-						</aui:input>
-					</aui:fieldset>
-				</aui:fieldset-group>
+							<aui:input name="name" placeholder="name" required="<%= true %>" type="text" value="<%= name %>">
+								<aui:validator name="maxLength">75</aui:validator>
+							</aui:input>
+						</aui:fieldset>
+					</div>
+				</div>
 			</clay:container-fluid>
 		</div>
 

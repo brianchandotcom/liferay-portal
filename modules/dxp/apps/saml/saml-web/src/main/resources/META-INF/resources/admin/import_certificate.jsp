@@ -176,11 +176,13 @@ if (Validator.isNotNull(tempFileName)) {
 					</div>
 
 					<div class="certificate-preview col-lg-9 col-sm-12">
-						<aui:fieldset-group markupView="lexicon">
-							<aui:fieldset label="preview">
-								<%= previews %>
-							</aui:fieldset>
-						</aui:fieldset-group>
+						<div class="sheet">
+							<div class="panel-group panel-group-flush">
+								<aui:fieldset label="preview">
+									<%= previews %>
+								</aui:fieldset>
+							</div>
+						</div>
 					</div>
 				</div>
 			</c:if>

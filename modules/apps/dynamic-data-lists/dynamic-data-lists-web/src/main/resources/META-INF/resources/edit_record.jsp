@@ -220,20 +220,22 @@ else {
 						/>
 					</c:when>
 					<c:otherwise>
-						<aui:fieldset-group markupView="lexicon">
-							<aui:fieldset>
-								<liferay-ddm:html
-									classNameId="<%= classNameId %>"
-									classPK="<%= classPK %>"
-									ddmFormValues="<%= ddmFormValues %>"
-									defaultEditLocale="<%= defaultEditLocale %>"
-									defaultLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
-									groupId="<%= recordSet.getGroupId() %>"
-									repeatable="<%= translating ? false : true %>"
-									requestedLocale="<%= locale %>"
-								/>
-							</aui:fieldset>
-						</aui:fieldset-group>
+						<div class="sheet">
+							<div class="panel-group panel-group-flush">
+								<aui:fieldset>
+									<liferay-ddm:html
+										classNameId="<%= classNameId %>"
+										classPK="<%= classPK %>"
+										ddmFormValues="<%= ddmFormValues %>"
+										defaultEditLocale="<%= defaultEditLocale %>"
+										defaultLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
+										groupId="<%= recordSet.getGroupId() %>"
+										repeatable="<%= translating ? false : true %>"
+										requestedLocale="<%= locale %>"
+									/>
+								</aui:fieldset>
+							</div>
+						</div>
 					</c:otherwise>
 				</c:choose>
 

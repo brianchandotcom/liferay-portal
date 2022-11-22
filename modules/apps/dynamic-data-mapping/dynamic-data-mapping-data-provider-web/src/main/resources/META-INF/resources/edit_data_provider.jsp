@@ -52,49 +52,51 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<clay:container-fluid
 		cssClass="container-form-lg lfr-ddm-edit-data-provider"
 	>
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<liferay-util:buffer
-					var="requiredMark"
-				>
-					<span class="hide-accessible sr-only"><liferay-ui:message key="required" />&nbsp;</span>
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<liferay-util:buffer
+						var="requiredMark"
+					>
+						<span class="hide-accessible sr-only"><liferay-ui:message key="required" />&nbsp;</span>
 
-					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
-						<use xlink:href="<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>#asterisk" />
-					</svg>
-				</liferay-util:buffer>
+						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+							<use xlink:href="<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>#asterisk" />
+						</svg>
+					</liferay-util:buffer>
 
-				<label class="required-warning">
-					<liferay-ui:message arguments="<%= requiredMark %>" key="all-fields-marked-with-x-are-required" translateArguments="<%= false %>" />
-				</label>
+					<label class="required-warning">
+						<liferay-ui:message arguments="<%= requiredMark %>" key="all-fields-marked-with-x-are-required" translateArguments="<%= false %>" />
+					</label>
 
-				<aui:input name="name" placeholder="enter-the-data-providers-name" required="<%= true %>" type="text" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceName() %>" />
+					<aui:input name="name" placeholder="enter-the-data-providers-name" required="<%= true %>" type="text" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceName() %>" />
 
-				<aui:input name="description" placeholder="enter-a-short-description" type="textarea" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceDescription() %>" />
-			</aui:fieldset>
+					<aui:input name="description" placeholder="enter-a-short-description" type="textarea" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceDescription() %>" />
+				</aui:fieldset>
 
-			<aui:fieldset>
-				<%= ddmDataProviderDisplayContext.getDataProviderInstanceDDMFormHTML() %>
-			</aui:fieldset>
+				<aui:fieldset>
+					<%= ddmDataProviderDisplayContext.getDataProviderInstanceDDMFormHTML() %>
+				</aui:fieldset>
 
-			<c:if test="<%= ddmDataProviderInstance == null %>">
-				<div id="<portlet:namespace />dataProviderPermissions">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= DDMDataProviderInstance.class.getName() %>"
-						/>
-					</aui:fieldset>
-				</div>
-			</c:if>
+				<c:if test="<%= ddmDataProviderInstance == null %>">
+					<div id="<portlet:namespace />dataProviderPermissions">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+							<liferay-ui:input-permissions
+								modelName="<%= DDMDataProviderInstance.class.getName() %>"
+							/>
+						</aui:fieldset>
+					</div>
+				</c:if>
 
-			<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-				<div class="sheet-footer">
-					<aui:button id="submit" label="save" type="submit" />
+				<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
+					<div class="sheet-footer">
+						<aui:button id="submit" label="save" type="submit" />
 
-					<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
-				</div>
-			</c:if>
-		</aui:fieldset-group>
+						<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+					</div>
+				</c:if>
+			</div>
+		</div>
 	</clay:container-fluid>
 
 	<aui:button cssClass="hide" type="submit" />

@@ -21,13 +21,15 @@
 <aui:form action="<%= configurationActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveMessage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<aui:fieldset-group>
-		<aui:fieldset>
-			<liferay-ui:input-editor
-				contents="<%= message %>"
-			/>
-		</aui:fieldset>
-	</aui:fieldset-group>
+	<div class="sheet">
+		<div class="panel-group panel-group-flush">
+			<aui:fieldset>
+				<liferay-ui:input-editor
+					contents="<%= message %>"
+				/>
+			</aui:fieldset>
+		</div>
+	</div>
 
 	<aui:input name="preferences--message--" type="hidden" />
 

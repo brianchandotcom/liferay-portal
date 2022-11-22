@@ -40,90 +40,92 @@ renderResponse.setTitle(userName);
 %>
 
 <clay:container-fluid>
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<h4 class="text-default">
-				<liferay-ui:message arguments="<%= userName %>" key="requested-by-x" />
-			</h4>
+	<div class="sheet">
+		<div class="panel-group panel-group-flush">
+			<aui:fieldset>
+				<h4 class="text-default">
+					<liferay-ui:message arguments="<%= userName %>" key="requested-by-x" />
+				</h4>
 
-			<div class="nameplate">
-				<div class="nameplate-field">
-					<liferay-ui:user-portrait
-						userId="<%= membershipRequest.getUserId() %>"
-					/>
-				</div>
-
-				<div class="nameplate-content">
-					<small class="text-default">
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-					</small>
-
-					<p>
-						<%= HtmlUtil.escape(membershipRequest.getComments()) %>
-					</p>
-				</div>
-			</div>
-
-			<%
-			User membershipRequestReplierUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getReplierUserId());
-
-			String replier = StringPool.BLANK;
-
-			if (membershipRequestReplierUser != null) {
-				if (membershipRequestReplierUser.isDefaultUser()) {
-					Company membershipRequestReplierCompany = CompanyLocalServiceUtil.getCompanyById(membershipRequestReplierUser.getCompanyId());
-
-					replier = HtmlUtil.escape(membershipRequestReplierCompany.getName());
-				}
-				else {
-					replier = HtmlUtil.escape(membershipRequestReplierUser.getFullName());
-				}
-			}
-			else {
-				replier = LanguageUtil.get(request, "the-user-could-not-be-found");
-			}
-			%>
-
-			<h4 class="text-default">
-				<liferay-ui:message arguments="<%= replier %>" key="replied-by-x" />
-			</h4>
-
-			<div class="nameplate">
-				<c:if test="<%= membershipRequestReplierUser != null %>">
+				<div class="nameplate">
 					<div class="nameplate-field">
 						<liferay-ui:user-portrait
-							user="<%= membershipRequestReplierUser %>"
+							userId="<%= membershipRequest.getUserId() %>"
 						/>
 					</div>
-				</c:if>
 
-				<div class="nameplate-content">
-					<small class="text-default">
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getReplyDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-					</small>
+					<div class="nameplate-content">
+						<small class="text-default">
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</small>
 
-					<p>
-						<%= HtmlUtil.escape(membershipRequest.getReplyComments()) %>
-					</p>
+						<p>
+							<%= HtmlUtil.escape(membershipRequest.getComments()) %>
+						</p>
+					</div>
 				</div>
-			</div>
 
-			<h4 class="text-default">
-				<strong><liferay-ui:message key="status" /></strong>
-			</h4>
+				<%
+				User membershipRequestReplierUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getReplierUserId());
 
-			<c:choose>
-				<c:when test="<%= membershipRequest.getStatusId() == MembershipRequestConstants.STATUS_APPROVED %>">
-					<p class="approved status">
-						<liferay-ui:message key="approved" />
-					</p>
-				</c:when>
-				<c:when test="<%= membershipRequest.getStatusId() == MembershipRequestConstants.STATUS_DENIED %>">
-					<p class="denied status">
-						<liferay-ui:message key="denied" />
-					</p>
-				</c:when>
-			</c:choose>
-		</aui:fieldset>
-	</aui:fieldset-group>
+				String replier = StringPool.BLANK;
+
+				if (membershipRequestReplierUser != null) {
+					if (membershipRequestReplierUser.isDefaultUser()) {
+						Company membershipRequestReplierCompany = CompanyLocalServiceUtil.getCompanyById(membershipRequestReplierUser.getCompanyId());
+
+						replier = HtmlUtil.escape(membershipRequestReplierCompany.getName());
+					}
+					else {
+						replier = HtmlUtil.escape(membershipRequestReplierUser.getFullName());
+					}
+				}
+				else {
+					replier = LanguageUtil.get(request, "the-user-could-not-be-found");
+				}
+				%>
+
+				<h4 class="text-default">
+					<liferay-ui:message arguments="<%= replier %>" key="replied-by-x" />
+				</h4>
+
+				<div class="nameplate">
+					<c:if test="<%= membershipRequestReplierUser != null %>">
+						<div class="nameplate-field">
+							<liferay-ui:user-portrait
+								user="<%= membershipRequestReplierUser %>"
+							/>
+						</div>
+					</c:if>
+
+					<div class="nameplate-content">
+						<small class="text-default">
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getReplyDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</small>
+
+						<p>
+							<%= HtmlUtil.escape(membershipRequest.getReplyComments()) %>
+						</p>
+					</div>
+				</div>
+
+				<h4 class="text-default">
+					<strong><liferay-ui:message key="status" /></strong>
+				</h4>
+
+				<c:choose>
+					<c:when test="<%= membershipRequest.getStatusId() == MembershipRequestConstants.STATUS_APPROVED %>">
+						<p class="approved status">
+							<liferay-ui:message key="approved" />
+						</p>
+					</c:when>
+					<c:when test="<%= membershipRequest.getStatusId() == MembershipRequestConstants.STATUS_DENIED %>">
+						<p class="denied status">
+							<liferay-ui:message key="denied" />
+						</p>
+					</c:when>
+				</c:choose>
+			</aui:fieldset>
+		</div>
+	</div>
 </clay:container-fluid>

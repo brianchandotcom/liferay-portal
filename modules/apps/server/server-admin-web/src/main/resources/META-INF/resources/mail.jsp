@@ -16,12 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:fieldset-group markupView="lexicon">
-	<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="companyId" value="<%= String.valueOf(CompanyConstants.SYSTEM) %>" />
-	</liferay-util:include>
+<div class="sheet">
+	<div class="panel-group panel-group-flush">
+		<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="companyId" value="<%= String.valueOf(CompanyConstants.SYSTEM) %>" />
+		</liferay-util:include>
 
-	<aui:button-row>
-		<aui:button cssClass="save-server-button" data-cmd="updateMail" primary="<%= true %>" value="save" />
-	</aui:button-row>
-</aui:fieldset-group>
+		<aui:button-row>
+			<aui:button cssClass="save-server-button" data-cmd="updateMail" primary="<%= true %>" value="save" />
+		</aui:button-row>
+	</div>
+</div>

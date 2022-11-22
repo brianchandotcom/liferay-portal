@@ -101,41 +101,43 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 		<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 		<div class="export-dialog-tree">
-			<aui:fieldset-group markupView="lexicon">
-				<liferay-staging:configuration-header
-					exportImportConfiguration="<%= exportImportConfiguration %>"
-				/>
-
-				<liferay-staging:deletions
-					cmd="<%= Constants.EXPORT %>"
-					exportImportConfigurationId="<%= exportImportConfigurationId %>"
-				/>
-
-				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
-					<liferay-staging:select-pages
-						action="<%= Constants.EXPORT %>"
-						exportImportConfigurationId="<%= exportImportConfigurationId %>"
-						groupId="<%= liveGroupId %>"
-						privateLayout="<%= privateLayout %>"
-						treeId="<%= treeId %>"
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<liferay-staging:configuration-header
+						exportImportConfiguration="<%= exportImportConfiguration %>"
 					/>
-				</c:if>
 
-				<liferay-staging:content
-					cmd="<%= cmd %>"
-					exportImportConfigurationId="<%= exportImportConfigurationId %>"
-					showAllPortlets="<%= true %>"
-					type="<%= Constants.EXPORT %>"
-				/>
+					<liferay-staging:deletions
+						cmd="<%= Constants.EXPORT %>"
+						exportImportConfigurationId="<%= exportImportConfigurationId %>"
+					/>
 
-				<liferay-staging:permissions
-					action="<%= Constants.EXPORT %>"
-					descriptionCSSClass="permissions-description"
-					exportImportConfigurationId="<%= exportImportConfigurationId %>"
-					global="<%= group.isCompany() %>"
-					labelCSSClass="permissions-label"
-				/>
-			</aui:fieldset-group>
+					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
+						<liferay-staging:select-pages
+							action="<%= Constants.EXPORT %>"
+							exportImportConfigurationId="<%= exportImportConfigurationId %>"
+							groupId="<%= liveGroupId %>"
+							privateLayout="<%= privateLayout %>"
+							treeId="<%= treeId %>"
+						/>
+					</c:if>
+
+					<liferay-staging:content
+						cmd="<%= cmd %>"
+						exportImportConfigurationId="<%= exportImportConfigurationId %>"
+						showAllPortlets="<%= true %>"
+						type="<%= Constants.EXPORT %>"
+					/>
+
+					<liferay-staging:permissions
+						action="<%= Constants.EXPORT %>"
+						descriptionCSSClass="permissions-description"
+						exportImportConfigurationId="<%= exportImportConfigurationId %>"
+						global="<%= group.isCompany() %>"
+						labelCSSClass="permissions-label"
+					/>
+				</div>
+			</div>
 
 			<div class="sheet-footer">
 				<aui:button type="submit" value="save" />

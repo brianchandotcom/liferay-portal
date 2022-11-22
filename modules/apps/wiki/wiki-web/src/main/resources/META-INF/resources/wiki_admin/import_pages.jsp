@@ -69,24 +69,26 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
 		<aui:input name="importer" type="hidden" value="<%= tabs2 %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<liferay-ui:tabs
-				names="<%= StringUtil.merge(importers) %>"
-				param="tabs2"
-				url="<%= portletURL.toString() %>"
-			/>
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<liferay-ui:tabs
+					names="<%= StringUtil.merge(importers) %>"
+					param="tabs2"
+					url="<%= portletURL.toString() %>"
+				/>
 
-			<liferay-ui:error exception="<%= ImportFilesException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
-			<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
+				<liferay-ui:error exception="<%= ImportFilesException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
+				<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-			<liferay-util:include page='<%= wikiImporterRegistry.getProperty(tabs2, "page") %>' servletContext="<%= application %>" />
+				<liferay-util:include page='<%= wikiImporterRegistry.getProperty(tabs2, "page") %>' servletContext="<%= application %>" />
 
-			<div class="sheet-footer">
-				<aui:button type="submit" value="import" />
+				<div class="sheet-footer">
+					<aui:button type="submit" value="import" />
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</div>
 			</div>
-		</aui:fieldset-group>
+		</div>
 	</aui:form>
 
 	<liferay-ui:upload-progress

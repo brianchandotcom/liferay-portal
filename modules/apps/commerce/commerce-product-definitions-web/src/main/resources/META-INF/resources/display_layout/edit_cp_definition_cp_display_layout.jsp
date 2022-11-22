@@ -73,7 +73,8 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 
 		<aui:model-context bean="<%= cpDisplayLayout %>" model="<%= CPDisplayLayout.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
+		<div class="sheet">
+	<div class="panel-group panel-group-flush">
 			<aui:fieldset>
 				<liferay-ui:search-container
 					curParam="cpDefinitionCur"
@@ -130,7 +131,7 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 
 				<aui:button name="chooseDisplayPage" value="choose" />
 			</aui:fieldset>
-		</aui:fieldset-group>
+		</div></div>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" />

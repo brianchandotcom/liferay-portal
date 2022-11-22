@@ -50,41 +50,47 @@ Map<String, String> emailDefinitionTerms = EmailConfigurationUtil.getEmailDefini
 
 			<liferay-ui:section>
 				<clay:container-fluid>
-					<aui:fieldset-group markupView="lexicon">
-						<aui:fieldset>
-							<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
+					<div class="sheet">
+						<div class="panel-group panel-group-flush">
+							<aui:fieldset>
+								<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
 
-							<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= emailFromAddress %>" />
-						</aui:fieldset>
-					</aui:fieldset-group>
+								<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= emailFromAddress %>" />
+							</aui:fieldset>
+						</div>
+					</div>
 				</clay:container-fluid>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
 				<clay:container-fluid>
-					<aui:fieldset-group markupView="lexicon">
-						<liferay-frontend:email-notification-settings
-							emailBodyLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailDeliveryBody() %>"
-							emailDefinitionTerms="<%= emailDefinitionTerms %>"
-							emailEnabled="<%= enabled %>"
-							emailParam="emailDelivery"
-							emailSubjectLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailDeliverySubject() %>"
-						/>
-					</aui:fieldset-group>
+					<div class="sheet">
+						<div class="panel-group panel-group-flush">
+							<liferay-frontend:email-notification-settings
+								emailBodyLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailDeliveryBody() %>"
+								emailDefinitionTerms="<%= emailDefinitionTerms %>"
+								emailEnabled="<%= enabled %>"
+								emailParam="emailDelivery"
+								emailSubjectLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailDeliverySubject() %>"
+							/>
+						</div>
+					</div>
 				</clay:container-fluid>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
 				<clay:container-fluid>
-					<aui:fieldset-group markupView="lexicon">
-						<liferay-frontend:email-notification-settings
-							emailBodyLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailNotificationsBody() %>"
-							emailDefinitionTerms="<%= emailDefinitionTerms %>"
-							emailEnabled="<%= enabled %>"
-							emailParam="emailNotifications"
-							emailSubjectLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailNotificationsSubject() %>"
-						/>
-					</aui:fieldset-group>
+					<div class="sheet">
+						<div class="panel-group panel-group-flush">
+							<liferay-frontend:email-notification-settings
+								emailBodyLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailNotificationsBody() %>"
+								emailDefinitionTerms="<%= emailDefinitionTerms %>"
+								emailEnabled="<%= enabled %>"
+								emailParam="emailNotifications"
+								emailSubjectLocalizedValuesMap="<%= reportsGroupServiceEmailConfiguration.emailNotificationsSubject() %>"
+							/>
+						</div>
+					</div>
 				</clay:container-fluid>
 			</liferay-ui:section>
 		</liferay-ui:tabs>

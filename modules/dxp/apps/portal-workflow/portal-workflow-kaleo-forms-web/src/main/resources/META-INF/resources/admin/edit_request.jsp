@@ -47,20 +47,22 @@ renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getNa
 		<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
 
-				<%
-				DDMTemplate ddmTemplate = kaleoProcess.getDDMTemplate();
-				%>
+					<%
+					DDMTemplate ddmTemplate = kaleoProcess.getDDMTemplate();
+					%>
 
-				<liferay-ddm:html
-					classNameId="<%= PortalUtil.getClassNameId(DDMTemplate.class) %>"
-					classPK="<%= ddmTemplate.getTemplateId() %>"
-					requestedLocale="<%= locale %>"
-				/>
-			</aui:fieldset>
-		</aui:fieldset-group>
+					<liferay-ddm:html
+						classNameId="<%= PortalUtil.getClassNameId(DDMTemplate.class) %>"
+						classPK="<%= ddmTemplate.getTemplateId() %>"
+						requestedLocale="<%= locale %>"
+					/>
+				</aui:fieldset>
+			</div>
+		</div>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />

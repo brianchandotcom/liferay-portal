@@ -80,122 +80,124 @@ renderResponse.setTitle(headerTitle);
 
 			<aui:model-context bean="<%= entry %>" model="<%= BookmarksEntry.class %>" />
 
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<c:if test="<%= showFolderSelector %>">
-
-						<%
-						String folderName = StringPool.BLANK;
-
-						if (folderId > 0) {
-							BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
-
-							folderId = folder.getFolderId();
-							folderName = folder.getName();
-						}
-						%>
-
-						<div class="form-group">
-							<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
-
-							<aui:button name="selectFolderButton" value="select" />
-
-							<aui:script>
-								var <portlet:namespace />selectFolderButton = document.getElementById(
-									'<portlet:namespace />selectFolderButton'
-								);
-
-								if (<portlet:namespace />selectFolderButton) {
-									<portlet:namespace />selectFolderButton.addEventListener(
-										'click',
-										(event) => {
-											Liferay.Util.openSelectionModal({
-												onSelect: function (event) {
-													var folderData = {
-														idString: 'folderId',
-														idValue: event.entityid,
-														nameString: 'folderName',
-														nameValue: event.entityname,
-													};
-
-													Liferay.Util.selectFolder(
-														folderData,
-														'<portlet:namespace />'
-													);
-												},
-												selectEventName: '<portlet:namespace />selectFolder',
-												title:
-													'<liferay-ui:message arguments="folder" key="select-x" />',
-												url:
-													'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
-											});
-										}
-									);
-								}
-							</aui:script>
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<aui:fieldset>
+						<c:if test="<%= showFolderSelector %>">
 
 							<%
-							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+							String folderName = StringPool.BLANK;
+
+							if (folderId > 0) {
+								BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
+
+								folderId = folder.getFolderId();
+								folderName = folder.getName();
+							}
 							%>
 
-							<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-						</div>
-					</c:if>
+							<div class="form-group">
+								<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
 
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+								<aui:button name="selectFolderButton" value="select" />
 
-					<aui:input name="url" />
+								<aui:script>
+									var <portlet:namespace />selectFolderButton = document.getElementById(
+										'<portlet:namespace />selectFolderButton'
+									);
 
-					<aui:input name="description" />
-				</aui:fieldset>
+									if (<portlet:namespace />selectFolderButton) {
+										<portlet:namespace />selectFolderButton.addEventListener(
+											'click',
+											(event) => {
+												Liferay.Util.openSelectionModal({
+													onSelect: function (event) {
+														var folderData = {
+															idString: 'folderId',
+															idValue: event.entityid,
+															nameString: 'folderName',
+															nameValue: event.entityname,
+														};
 
-				<liferay-expando:custom-attributes-available
-					className="<%= BookmarksEntry.class.getName() %>"
-				>
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-						<liferay-expando:custom-attribute-list
+														Liferay.Util.selectFolder(
+															folderData,
+															'<portlet:namespace />'
+														);
+													},
+													selectEventName: '<portlet:namespace />selectFolder',
+													title:
+														'<liferay-ui:message arguments="folder" key="select-x" />',
+													url:
+														'<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
+												});
+											}
+										);
+									}
+								</aui:script>
+
+								<%
+								String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+								%>
+
+								<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+							</div>
+						</c:if>
+
+						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+
+						<aui:input name="url" />
+
+						<aui:input name="description" />
+					</aui:fieldset>
+
+					<liferay-expando:custom-attributes-available
+						className="<%= BookmarksEntry.class.getName() %>"
+					>
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+							<liferay-expando:custom-attribute-list
+								className="<%= BookmarksEntry.class.getName() %>"
+								classPK="<%= entryId %>"
+								editable="<%= true %>"
+								label="<%= true %>"
+							/>
+						</aui:fieldset>
+					</liferay-expando:custom-attributes-available>
+
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+						<liferay-asset:asset-categories-selector
 							className="<%= BookmarksEntry.class.getName() %>"
 							classPK="<%= entryId %>"
-							editable="<%= true %>"
-							label="<%= true %>"
+							visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
+						/>
+
+						<liferay-asset:asset-tags-selector
+							className="<%= BookmarksEntry.class.getName() %>"
+							classPK="<%= entryId %>"
 						/>
 					</aui:fieldset>
-				</liferay-expando:custom-attributes-available>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-					<liferay-asset:asset-categories-selector
-						className="<%= BookmarksEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-						visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
-					/>
-
-					<liferay-asset:asset-tags-selector
-						className="<%= BookmarksEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
-				</aui:fieldset>
-
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-					<liferay-asset:input-asset-links
-						className="<%= BookmarksEntry.class.getName() %>"
-						classPK="<%= entryId %>"
-					/>
-				</aui:fieldset>
-
-				<c:if test="<%= entry == null %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= BookmarksEntry.class.getName() %>"
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+						<liferay-asset:input-asset-links
+							className="<%= BookmarksEntry.class.getName() %>"
+							classPK="<%= entryId %>"
 						/>
 					</aui:fieldset>
-				</c:if>
 
-				<div class="sheet-footer">
-					<aui:button type="submit" />
+					<c:if test="<%= entry == null %>">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+							<liferay-ui:input-permissions
+								modelName="<%= BookmarksEntry.class.getName() %>"
+							/>
+						</aui:fieldset>
+					</c:if>
 
-					<aui:button href="<%= redirect %>" type="cancel" />
+					<div class="sheet-footer">
+						<aui:button type="submit" />
+
+						<aui:button href="<%= redirect %>" type="cancel" />
+					</div>
 				</div>
-			</aui:fieldset-group>
+			</div>
 		</div>
 	</aui:form>
 </clay:container-fluid>

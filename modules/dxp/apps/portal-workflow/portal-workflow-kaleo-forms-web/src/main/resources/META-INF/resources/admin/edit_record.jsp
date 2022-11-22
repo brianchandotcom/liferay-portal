@@ -69,35 +69,37 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 			<aui:input name="workflowTaskId" type="hidden" value="<%= String.valueOf(workflowTaskId) %>" />
 
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<aui:fieldset>
 
-					<%
-					long classNameId = 0;
-					long classPK = 0;
+						<%
+						long classNameId = 0;
+						long classPK = 0;
 
-					if (ddmTemplateId > 0) {
-						classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
-						classPK = ddmTemplateId;
-					}
-					else {
-						DDLRecordSet ddlRecordSet = kaleoProcess.getDDLRecordSet();
+						if (ddmTemplateId > 0) {
+							classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
+							classPK = ddmTemplateId;
+						}
+						else {
+							DDLRecordSet ddlRecordSet = kaleoProcess.getDDLRecordSet();
 
-						DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+							DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-						classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-						classPK = ddmStructure.getStructureId();
-					}
-					%>
+							classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+							classPK = ddmStructure.getStructureId();
+						}
+						%>
 
-					<liferay-ddm:html
-						classNameId="<%= classNameId %>"
-						classPK="<%= classPK %>"
-						ddmFormValues="<%= kaleoFormsAdminDisplayContext.getDDMFormValues(ddlRecord.getDDMStorageId()) %>"
-						requestedLocale="<%= locale %>"
-					/>
-				</aui:fieldset>
-			</aui:fieldset-group>
+						<liferay-ddm:html
+							classNameId="<%= classNameId %>"
+							classPK="<%= classPK %>"
+							ddmFormValues="<%= kaleoFormsAdminDisplayContext.getDDMFormValues(ddlRecord.getDDMStorageId()) %>"
+							requestedLocale="<%= locale %>"
+						/>
+					</aui:fieldset>
+				</div>
+			</div>
 
 			<aui:button-row>
 				<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />

@@ -34,7 +34,8 @@ long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRe
 	<aui:input name="commerceChannelIds" type="hidden" />
 
 	<div class="lfr-form-content">
-		<aui:fieldset-group markupView="lexicon">
+		<div class="sheet">
+	<div class="panel-group panel-group-flush">
 			<aui:fieldset>
 				<aui:input checked="<%= country.isGroupFilterEnabled() %>" inlineLabel="right" label="enable-filter-channels" labelCssClass="simple-toggle-switch" name="channelFilterEnabled" type="toggle-switch" value="<%= country.isGroupFilterEnabled() %>" />
 
@@ -65,7 +66,7 @@ long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRe
 					<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
-		</aui:fieldset-group>
+		</div></div>
 	</div>
 </aui:form>
 

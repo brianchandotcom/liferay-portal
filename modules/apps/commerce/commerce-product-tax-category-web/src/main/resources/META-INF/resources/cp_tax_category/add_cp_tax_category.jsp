@@ -42,20 +42,22 @@ else {
 
 		<aui:model-context model="<%= CPTaxCategory.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input name="externalReferenceCode" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:input name="externalReferenceCode" />
 
-				<aui:input name="name" />
+					<aui:input name="name" />
 
-				<aui:input name="description" />
-			</aui:fieldset>
+					<aui:input name="description" />
+				</aui:fieldset>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
+				<aui:button-row>
+					<aui:button cssClass="btn-lg" type="submit" />
 
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:fieldset-group>
+					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+				</aui:button-row>
+			</div>
+		</div>
 	</div>
 </aui:form>

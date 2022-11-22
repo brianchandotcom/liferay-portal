@@ -42,13 +42,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-note"));
 
 		<aui:model-context bean="<%= commerceOrderNote %>" model="<%= CommerceOrderNote.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" name="content" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:input autoFocus="<%= true %>" name="content" />
 
-				<aui:input helpMessage="restricted-help" label="private" name="restricted" />
-			</aui:fieldset>
-		</aui:fieldset-group>
+					<aui:input helpMessage="restricted-help" label="private" name="restricted" />
+				</aui:fieldset>
+			</div>
+		</div>
 	</div>
 
 	<aui:button-row>

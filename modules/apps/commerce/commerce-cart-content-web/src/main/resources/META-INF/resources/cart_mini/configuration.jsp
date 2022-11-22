@@ -30,19 +30,21 @@ CommerceCartContentMiniDisplayContext commerceCartContentMiniDisplayContext = (C
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid container-fluid-max-xl">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<div class="display-template">
-						<liferay-template:template-selector
-							className="<%= CommerceCartContentMiniPortlet.class.getName() %>"
-							displayStyle="<%= commerceCartContentMiniDisplayContext.getDisplayStyle() %>"
-							displayStyleGroupId="<%= commerceCartContentMiniDisplayContext.getDisplayStyleGroupId() %>"
-							refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
-							showEmptyOption="<%= true %>"
-						/>
-					</div>
-				</aui:fieldset>
-			</aui:fieldset-group>
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<aui:fieldset>
+						<div class="display-template">
+							<liferay-template:template-selector
+								className="<%= CommerceCartContentMiniPortlet.class.getName() %>"
+								displayStyle="<%= commerceCartContentMiniDisplayContext.getDisplayStyle() %>"
+								displayStyleGroupId="<%= commerceCartContentMiniDisplayContext.getDisplayStyleGroupId() %>"
+								refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
+								showEmptyOption="<%= true %>"
+							/>
+						</div>
+					</aui:fieldset>
+				</div>
+			</div>
 		</div>
 	</div>
 

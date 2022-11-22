@@ -48,66 +48,68 @@ if (Validator.isNotNull(backURL)) {
 		<liferay-ui:error exception="<%= CommerceCurrencyFractionDigitsException.class %>" message="the-decimal-place-bounds-are-invalid" />
 		<liferay-ui:error exception="<%= CommerceCurrencyNameException.class %>" message="please-enter-a-valid-name" />
 
-		<aui:fieldset-group cssClass="mb-4" markupView="lexicon">
-			<aui:fieldset>
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="name" />
+		<div class="mb-4 sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="name" />
 
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" />
+					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" />
 
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="symbol" />
+					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="symbol" />
 
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="formatPattern" value="<%= commerceCurrenciesDisplayContext.getDefaultFormatPattern() %>" />
+					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="formatPattern" value="<%= commerceCurrenciesDisplayContext.getDefaultFormatPattern() %>" />
 
-				<aui:input bean="<%= commerceCurrency %>" label="maximum-decimal-places" model="<%= CommerceCurrency.class %>" name="maxFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMaxFractionDigits()) %>">
-					<aui:validator name="number" />
-					<aui:validator name="min">0</aui:validator>
-				</aui:input>
+					<aui:input bean="<%= commerceCurrency %>" label="maximum-decimal-places" model="<%= CommerceCurrency.class %>" name="maxFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMaxFractionDigits()) %>">
+						<aui:validator name="number" />
+						<aui:validator name="min">0</aui:validator>
+					</aui:input>
 
-				<aui:input bean="<%= commerceCurrency %>" label="minimum-decimal-places" model="<%= CommerceCurrency.class %>" name="minFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMinFractionDigits()) %>">
-					<aui:validator name="number" />
-					<aui:validator name="min">0</aui:validator>
-				</aui:input>
+					<aui:input bean="<%= commerceCurrency %>" label="minimum-decimal-places" model="<%= CommerceCurrency.class %>" name="minFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMinFractionDigits()) %>">
+						<aui:validator name="number" />
+						<aui:validator name="min">0</aui:validator>
+					</aui:input>
 
-				<aui:select bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="roundingMode">
+					<aui:select bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="roundingMode">
+
+						<%
+						for (RoundingMode curRoundingMode : RoundingMode.values()) {
+						%>
+
+							<aui:option label="<%= commerceCurrenciesDisplayContext.getRoundingModeLabel(curRoundingMode.name()) %>" selected="<%= roundingMode.equals(curRoundingMode.name()) %>" value="<%= curRoundingMode.name() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
+					<aui:input bean="<%= commerceCurrency %>" inlineLabel="right" labelCssClass="simple-toggle-switch" model="<%= CommerceCurrency.class %>" name="primary" type="toggle-switch" value="<%= primary %>" />
 
 					<%
-					for (RoundingMode curRoundingMode : RoundingMode.values()) {
-					%>
+					String taglibLabel = "exchange-rate";
 
-						<aui:option label="<%= commerceCurrenciesDisplayContext.getRoundingModeLabel(curRoundingMode.name()) %>" selected="<%= roundingMode.equals(curRoundingMode.name()) %>" value="<%= curRoundingMode.name() %>" />
-
-					<%
+					if (primaryCommerceCurrency != null) {
+						taglibLabel = LanguageUtil.format(request, "exchange-rate-with-x", primaryCommerceCurrency.getName(locale), false);
 					}
 					%>
 
-				</aui:select>
+					<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
+						<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? BigDecimal.ZERO : commerceCurrency.round(commerceCurrency.getRate()) %>">
+							<aui:validator name="number" />
+						</aui:input>
+					</div>
 
-				<aui:input bean="<%= commerceCurrency %>" inlineLabel="right" labelCssClass="simple-toggle-switch" model="<%= CommerceCurrency.class %>" name="primary" type="toggle-switch" value="<%= primary %>" />
+					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="priority" />
 
-				<%
-				String taglibLabel = "exchange-rate";
+					<aui:input bean="<%= commerceCurrency %>" checked="<%= (commerceCurrency == null) ? false : commerceCurrency.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" model="<%= CommerceCurrency.class %>" name="active" type="toggle-switch" />
+				</aui:fieldset>
 
-				if (primaryCommerceCurrency != null) {
-					taglibLabel = LanguageUtil.format(request, "exchange-rate-with-x", primaryCommerceCurrency.getName(locale), false);
-				}
-				%>
-
-				<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
-					<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? BigDecimal.ZERO : commerceCurrency.round(commerceCurrency.getRate()) %>">
-						<aui:validator name="number" />
-					</aui:input>
-				</div>
-
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="priority" />
-
-				<aui:input bean="<%= commerceCurrency %>" checked="<%= (commerceCurrency == null) ? false : commerceCurrency.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" model="<%= CommerceCurrency.class %>" name="active" type="toggle-switch" />
-			</aui:fieldset>
-
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:fieldset-group>
+				<aui:button-row>
+					<aui:button cssClass="btn-lg" type="submit" />
+					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+				</aui:button-row>
+			</div>
+		</div>
 	</div>
 </aui:form>
 

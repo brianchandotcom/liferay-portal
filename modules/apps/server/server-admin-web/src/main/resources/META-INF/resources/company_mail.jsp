@@ -24,25 +24,27 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateMail" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<h2>
-			<liferay-ui:message key="mail-settings" />
-		</h2>
+	<div class="sheet">
+		<div class="panel-group panel-group-flush">
+			<h2>
+				<liferay-ui:message key="mail-settings" />
+			</h2>
 
-		<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="preferencesCompanyId" value="<%= String.valueOf(company.getCompanyId()) %>" />
-		</liferay-util:include>
+			<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="preferencesCompanyId" value="<%= String.valueOf(company.getCompanyId()) %>" />
+			</liferay-util:include>
 
-		<clay:sheet-footer>
-			<div class="btn-group">
-				<div class="btn-group-item">
-					<aui:button cssClass="save-server-button" type="submit" value="save" />
+			<clay:sheet-footer>
+				<div class="btn-group">
+					<div class="btn-group-item">
+						<aui:button cssClass="save-server-button" type="submit" value="save" />
+					</div>
+
+					<div class="btn-group-item">
+						<aui:button href="<%= redirectURL %>" type="cancel" />
+					</div>
 				</div>
-
-				<div class="btn-group-item">
-					<aui:button href="<%= redirectURL %>" type="cancel" />
-				</div>
-			</div>
-		</clay:sheet-footer>
-	</aui:fieldset-group>
+			</clay:sheet-footer>
+		</div>
+	</div>
 </aui:form>

@@ -48,7 +48,8 @@ else {
 
 		<aui:model-context bean="<%= region %>" model="<%= Region.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
+		<div class="sheet">
+	<div class="panel-group panel-group-flush">
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="name" />
 
@@ -58,7 +59,7 @@ else {
 
 				<aui:input checked="<%= (region == null) ? false : region.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 			</aui:fieldset>
-		</aui:fieldset-group>
+		</div></div>
 	</div>
 
 	<aui:button-row>

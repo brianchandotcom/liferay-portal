@@ -23,16 +23,18 @@
 		<aui:button cssClass="save-server-button" data-cmd="shutdown" value="cancel-shutdown" />
 	</c:when>
 	<c:otherwise>
-		<aui:fieldset-group markupView="lexicon">
-			<aui:input label="number-of-minutes" name="minutes" size="3" type="text">
-				<aui:validator name="digits" />
-				<aui:validator name="min">1</aui:validator>
-				<aui:validator name="required" />
-			</aui:input>
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:input label="number-of-minutes" name="minutes" size="3" type="text">
+					<aui:validator name="digits" />
+					<aui:validator name="min">1</aui:validator>
+					<aui:validator name="required" />
+				</aui:input>
 
-			<aui:input cssClass="lfr-textarea-container" label="custom-message" name="message" type="textarea" />
+				<aui:input cssClass="lfr-textarea-container" label="custom-message" name="message" type="textarea" />
 
-			<aui:button cssClass="save-server-button" data-cmd="shutdown" primary="<%= true %>" value="shutdown" />
-		</aui:fieldset-group>
+				<aui:button cssClass="save-server-button" data-cmd="shutdown" primary="<%= true %>" value="shutdown" />
+			</div>
+		</div>
 	</c:otherwise>
 </c:choose>

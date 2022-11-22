@@ -47,32 +47,34 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 	<pre><%= HtmlUtil.escape(se.getMessage()) %></pre>
 </liferay-ui:error>
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:select name="language">
+<div class="sheet">
+	<div class="panel-group panel-group-flush">
+		<aui:select name="language">
 
-		<%
-		for (String supportedLanguage : ServerScriptingUtil.getSupportedLanguages()) {
-		%>
+			<%
+			for (String supportedLanguage : ServerScriptingUtil.getSupportedLanguages()) {
+			%>
 
-			<aui:option label="<%= TextFormatter.format(supportedLanguage, TextFormatter.J) %>" selected="<%= supportedLanguage.equals(language) %>" value="<%= supportedLanguage %>" />
+				<aui:option label="<%= TextFormatter.format(supportedLanguage, TextFormatter.J) %>" selected="<%= supportedLanguage.equals(language) %>" value="<%= supportedLanguage %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:select>
+		</aui:select>
 
-	<aui:select name="output">
-		<aui:option label="text" selected='<%= output.equals("text") %>' value="text" />
-		<aui:option label="html" selected='<%= output.equals("html") %>' value="html" />
-	</aui:select>
+		<aui:select name="output">
+			<aui:option label="text" selected='<%= output.equals("text") %>' value="text" />
+			<aui:option label="html" selected='<%= output.equals("html") %>' value="html" />
+		</aui:select>
 
-	<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
+		<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
 
-	<aui:button-row>
-		<aui:button cssClass="save-server-button" data-cmd="runScript" primary="<%= true %>" value="execute" />
-	</aui:button-row>
-</aui:fieldset-group>
+		<aui:button-row>
+			<aui:button cssClass="save-server-button" data-cmd="runScript" primary="<%= true %>" value="execute" />
+		</aui:button-row>
+	</div>
+</div>
 
 <c:if test="<%= Validator.isNotNull(scriptOutput) %>">
 	<b><liferay-ui:message key="output" /></b>

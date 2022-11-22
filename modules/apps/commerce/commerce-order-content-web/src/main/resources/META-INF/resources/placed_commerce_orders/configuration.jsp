@@ -26,23 +26,25 @@
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid container-fluid-max-xl">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<div class="display-template">
-						<liferay-template:template-selector
-							className="<%= CommerceOrderContentPortlet.class.getName() %>"
-							displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
-							displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
-							refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
-							showEmptyOption="<%= true %>"
-						/>
-					</div>
-				</aui:fieldset>
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<aui:fieldset>
+						<div class="display-template">
+							<liferay-template:template-selector
+								className="<%= CommerceOrderContentPortlet.class.getName() %>"
+								displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
+								displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
+								refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
+								showEmptyOption="<%= true %>"
+							/>
+						</div>
+					</aui:fieldset>
 
-				<aui:fieldset collapsible="<%= true %>" label="order-date-display">
-					<aui:input checked="<%= commerceOrderContentDisplayContext.isShowCommerceOrderCreateTime() %>" id="showCommerceOrderCreateTime" label="show-commerce-order-create-time" name="preferences--showCommerceOrderCreateTime--" type="toggle-switch" />
-				</aui:fieldset>
-			</aui:fieldset-group>
+					<aui:fieldset collapsible="<%= true %>" label="order-date-display">
+						<aui:input checked="<%= commerceOrderContentDisplayContext.isShowCommerceOrderCreateTime() %>" id="showCommerceOrderCreateTime" label="show-commerce-order-create-time" name="preferences--showCommerceOrderCreateTime--" type="toggle-switch" />
+					</aui:fieldset>
+				</div>
+			</div>
 		</div>
 	</div>
 

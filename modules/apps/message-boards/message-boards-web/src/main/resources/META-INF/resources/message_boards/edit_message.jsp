@@ -188,288 +188,290 @@ if (portletTitleBasedNavigation) {
 
 		<liferay-asset:asset-tags-error />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<c:if test="<%= curParentMessage != null %>">
-					<div class="reply-to-message">
-						<span class="control-label">
-							<liferay-ui:message key="replying-to" />:
-						</span>
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
+					<c:if test="<%= curParentMessage != null %>">
+						<div class="reply-to-message">
+							<span class="control-label">
+								<liferay-ui:message key="replying-to" />:
+							</span>
 
-						<%
-						request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
-						request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
-						request.setAttribute("edit_message.jsp-category", null);
-						request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
-						request.setAttribute("edit_message.jsp-message", curParentMessage);
-						request.setAttribute("edit_message.jsp-thread", thread);
-						%>
+							<%
+							request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
+							request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
+							request.setAttribute("edit_message.jsp-category", null);
+							request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
+							request.setAttribute("edit_message.jsp-message", curParentMessage);
+							request.setAttribute("edit_message.jsp-thread", thread);
+							%>
 
-						<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
-					</div>
-				</c:if>
-
-				<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
-
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="subject" value="<%= subject %>" />
-
-				<aui:field-wrapper cssClass="message-content">
-					<c:choose>
-						<c:when test='<%= ((messageId != 0) && message.isFormatBBCode()) || ((messageId == 0) && messageFormat.equals("bbcode")) %>'>
-							<%@ include file="/message_boards/bbcode_editor.jspf" %>
-						</c:when>
-						<c:otherwise>
-							<%@ include file="/message_boards/html_editor.jspf" %>
-						</c:otherwise>
-					</c:choose>
-
-					<aui:input name="body" type="hidden" />
-				</aui:field-wrapper>
-			</aui:fieldset>
-
-			<liferay-expando:custom-attributes-available
-				className="<%= MBMessage.class.getName() %>"
-			>
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-					<liferay-expando:custom-attribute-list
-						className="<%= MBMessage.class.getName() %>"
-						classPK="<%= messageId %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</aui:fieldset>
-			</liferay-expando:custom-attributes-available>
-
-			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
-					<%@ include file="/message_boards/edit_message_attachment.jspf" %>
-
-					<div class="<%= (existingAttachmentsFileEntries.size() == 0) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />fileAttachments">
-						<liferay-ui:search-container
-							emptyResultsMessage="this-message-does-not-have-file-attachments"
-							headerNames="file-name,size,action"
-							id="messageAttachments"
-							total="<%= existingAttachmentsFileEntries.size() %>"
-						>
-							<liferay-ui:search-container-results
-								results="<%= existingAttachmentsFileEntries %>"
-							/>
-
-							<liferay-ui:search-container-row
-								className="com.liferay.portal.kernel.repository.model.FileEntry"
-								escapedModel="<%= true %>"
-								keyProperty="fileEntryId"
-								modelVar="fileEntry"
-							>
-								<liferay-ui:search-container-column-text
-									href='<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED) %>'
-									name="file-name"
-									value="<%= fileEntry.getTitle() %>"
-								/>
-
-								<liferay-ui:search-container-column-text
-									name="size"
-									value="<%= LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) %>"
-								/>
-
-								<liferay-ui:search-container-column-text
-									cssClass="entry-action"
-									name="action"
-								>
-									<liferay-portlet:actionURL name="/message_boards/edit_message_attachments" var="deleteURL">
-										<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
-										<portlet:param name="fileName" value="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>" />
-									</liferay-portlet:actionURL>
-
-									<liferay-ui:icon-menu
-										direction="left-side"
-										icon="<%= StringPool.BLANK %>"
-										markupView="lexicon"
-										message="actions"
-									>
-										<div class="delete-attachment" data-rowid="<%= fileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
-											<liferay-ui:icon-delete
-												trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-												url="javascript:void(0);"
-											/>
-										</div>
-									</liferay-ui:icon-menu>
-								</liferay-ui:search-container-column-text>
-							</liferay-ui:search-container-row>
-
-							<liferay-ui:search-iterator
-								markupView="lexicon"
-								paginate="<%= false %>"
-							/>
-						</liferay-ui:search-container>
-					</div>
-				</aui:fieldset>
-			</c:if>
-
-			<c:if test="<%= curParentMessage == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-					<liferay-asset:asset-categories-selector
-						className="<%= MBMessage.class.getName() %>"
-						classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
-						visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
-					/>
-
-					<liferay-asset:asset-tags-selector
-						className="<%= MBMessage.class.getName() %>"
-						classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
-					/>
-				</aui:fieldset>
-			</c:if>
-
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-				<liferay-asset:input-asset-links
-					className="<%= MBMessage.class.getName() %>"
-					classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
-				/>
-			</aui:fieldset>
-
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="more-settings">
-				<c:if test="<%= curParentMessage == null %>">
-
-					<%
-					MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-
-					boolean disabled = false;
-					boolean question = threadAsQuestionByDefault;
-
-					String displayStyle = category.getDisplayStyle();
-
-					if (message != null) {
-						if (thread.isQuestion() || message.isAnswer()) {
-							question = true;
-
-							if ((category != null) && Objects.equals(displayStyle, "question")) {
-								disabled = true;
-							}
-						}
-					}
-					else if ((category != null) && Objects.equals(displayStyle, "question")) {
-						disabled = true;
-						question = true;
-					}
-					%>
-
-					<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
-				</c:if>
-
-				<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && allowAnonymousPosting %>">
-					<aui:input helpMessage="message-boards-message-anonymous-help" name="anonymous" type="checkbox" />
-				</c:if>
-
-				<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
-					<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
-				</c:if>
-
-				<c:if test="<%= (priorities.length > 0) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY) %>">
-
-					<%
-					double threadPriority = BeanParamUtil.getDouble(message, request, "priority");
-					%>
-
-					<aui:select name="priority">
-						<aui:option value="" />
-
-						<%
-						for (int i = 0; i < priorities.length; i++) {
-							String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
-
-							try {
-								String priorityName = priority[0];
-
-								double priorityValue = GetterUtil.getDouble(priority[2]);
-						%>
-
-								<c:if test="<%= priorityValue > 0 %>">
-									<aui:option label="<%= HtmlUtil.escape(priorityName) %>" selected="<%= threadPriority == priorityValue %>" value="<%= priorityValue %>" />
-								</c:if>
-
-						<%
-							}
-							catch (Exception e) {
-							}
-						}
-						%>
-
-					</aui:select>
-				</c:if>
-
-				<c:if test="<%= PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED %>">
-					<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-pingbacks" name="allowPingbacks" value="<%= allowPingbacks %>" />
-				</c:if>
-			</aui:fieldset>
-
-			<c:if test="<%= message == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= MBMessage.class.getName() %>"
-					/>
-				</aui:fieldset>
-			</c:if>
-
-			<c:if test="<%= (message == null) && captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
-				<liferay-captcha:captcha />
-			</c:if>
-
-			<%
-			boolean pending = false;
-
-			if (message != null) {
-				pending = message.isPending();
-			}
-			%>
-
-			<c:if test="<%= pending %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-				</div>
-			</c:if>
-
-			<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
-				</div>
-			</c:if>
-
-			<div class="sheet-footer">
-				<div class="btn-group">
-
-					<%
-					String saveButtonLabel = "save";
-
-					if ((message == null) || message.isDraft() || message.isApproved()) {
-						saveButtonLabel = "save-as-draft";
-					}
-
-					String publishButtonLabel = "publish";
-
-					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBMessage.class.getName())) {
-						publishButtonLabel = "submit-for-publication";
-					}
-					%>
-
-					<div class="btn-group-item">
-						<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-					</div>
-
-					<c:if test="<%= themeDisplay.isSignedIn() %>">
-						<div class="btn-group-item">
-							<aui:button name="saveButton" value="<%= saveButtonLabel %>" />
+							<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 						</div>
 					</c:if>
 
-					<div class="btn-group-item">
-						<aui:button href="<%= redirect %>" type="cancel" />
+					<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="subject" value="<%= subject %>" />
+
+					<aui:field-wrapper cssClass="message-content">
+						<c:choose>
+							<c:when test='<%= ((messageId != 0) && message.isFormatBBCode()) || ((messageId == 0) && messageFormat.equals("bbcode")) %>'>
+								<%@ include file="/message_boards/bbcode_editor.jspf" %>
+							</c:when>
+							<c:otherwise>
+								<%@ include file="/message_boards/html_editor.jspf" %>
+							</c:otherwise>
+						</c:choose>
+
+						<aui:input name="body" type="hidden" />
+					</aui:field-wrapper>
+				</aui:fieldset>
+
+				<liferay-expando:custom-attributes-available
+					className="<%= MBMessage.class.getName() %>"
+				>
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+						<liferay-expando:custom-attribute-list
+							className="<%= MBMessage.class.getName() %>"
+							classPK="<%= messageId %>"
+							editable="<%= true %>"
+							label="<%= true %>"
+						/>
+					</aui:fieldset>
+				</liferay-expando:custom-attributes-available>
+
+				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+						<%@ include file="/message_boards/edit_message_attachment.jspf" %>
+
+						<div class="<%= (existingAttachmentsFileEntries.size() == 0) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />fileAttachments">
+							<liferay-ui:search-container
+								emptyResultsMessage="this-message-does-not-have-file-attachments"
+								headerNames="file-name,size,action"
+								id="messageAttachments"
+								total="<%= existingAttachmentsFileEntries.size() %>"
+							>
+								<liferay-ui:search-container-results
+									results="<%= existingAttachmentsFileEntries %>"
+								/>
+
+								<liferay-ui:search-container-row
+									className="com.liferay.portal.kernel.repository.model.FileEntry"
+									escapedModel="<%= true %>"
+									keyProperty="fileEntryId"
+									modelVar="fileEntry"
+								>
+									<liferay-ui:search-container-column-text
+										href='<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED) %>'
+										name="file-name"
+										value="<%= fileEntry.getTitle() %>"
+									/>
+
+									<liferay-ui:search-container-column-text
+										name="size"
+										value="<%= LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) %>"
+									/>
+
+									<liferay-ui:search-container-column-text
+										cssClass="entry-action"
+										name="action"
+									>
+										<liferay-portlet:actionURL name="/message_boards/edit_message_attachments" var="deleteURL">
+											<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+											<portlet:param name="redirect" value="<%= currentURL %>" />
+											<portlet:param name="messageId" value="<%= String.valueOf(messageId) %>" />
+											<portlet:param name="fileName" value="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>" />
+										</liferay-portlet:actionURL>
+
+										<liferay-ui:icon-menu
+											direction="left-side"
+											icon="<%= StringPool.BLANK %>"
+											markupView="lexicon"
+											message="actions"
+										>
+											<div class="delete-attachment" data-rowid="<%= fileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
+												<liferay-ui:icon-delete
+													trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
+													url="javascript:void(0);"
+												/>
+											</div>
+										</liferay-ui:icon-menu>
+									</liferay-ui:search-container-column-text>
+								</liferay-ui:search-container-row>
+
+								<liferay-ui:search-iterator
+									markupView="lexicon"
+									paginate="<%= false %>"
+								/>
+							</liferay-ui:search-container>
+						</div>
+					</aui:fieldset>
+				</c:if>
+
+				<c:if test="<%= curParentMessage == null %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+						<liferay-asset:asset-categories-selector
+							className="<%= MBMessage.class.getName() %>"
+							classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+							visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
+						/>
+
+						<liferay-asset:asset-tags-selector
+							className="<%= MBMessage.class.getName() %>"
+							classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+						/>
+					</aui:fieldset>
+				</c:if>
+
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+					<liferay-asset:input-asset-links
+						className="<%= MBMessage.class.getName() %>"
+						classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+					/>
+				</aui:fieldset>
+
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="more-settings">
+					<c:if test="<%= curParentMessage == null %>">
+
+						<%
+						MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+
+						boolean disabled = false;
+						boolean question = threadAsQuestionByDefault;
+
+						String displayStyle = category.getDisplayStyle();
+
+						if (message != null) {
+							if (thread.isQuestion() || message.isAnswer()) {
+								question = true;
+
+								if ((category != null) && Objects.equals(displayStyle, "question")) {
+									disabled = true;
+								}
+							}
+						}
+						else if ((category != null) && Objects.equals(displayStyle, "question")) {
+							disabled = true;
+							question = true;
+						}
+						%>
+
+						<aui:input disabled="<%= disabled %>" helpMessage="message-boards-message-question-help" label="mark-as-a-question" name="question" type="checkbox" value="<%= question %>" />
+					</c:if>
+
+					<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && allowAnonymousPosting %>">
+						<aui:input helpMessage="message-boards-message-anonymous-help" name="anonymous" type="checkbox" />
+					</c:if>
+
+					<c:if test="<%= (message == null) && themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
+						<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
+					</c:if>
+
+					<c:if test="<%= (priorities.length > 0) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.UPDATE_THREAD_PRIORITY) %>">
+
+						<%
+						double threadPriority = BeanParamUtil.getDouble(message, request, "priority");
+						%>
+
+						<aui:select name="priority">
+							<aui:option value="" />
+
+							<%
+							for (int i = 0; i < priorities.length; i++) {
+								String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
+
+								try {
+									String priorityName = priority[0];
+
+									double priorityValue = GetterUtil.getDouble(priority[2]);
+							%>
+
+									<c:if test="<%= priorityValue > 0 %>">
+										<aui:option label="<%= HtmlUtil.escape(priorityName) %>" selected="<%= threadPriority == priorityValue %>" value="<%= priorityValue %>" />
+									</c:if>
+
+							<%
+								}
+								catch (Exception e) {
+								}
+							}
+							%>
+
+						</aui:select>
+					</c:if>
+
+					<c:if test="<%= PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED %>">
+						<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="allow-pingbacks" name="allowPingbacks" value="<%= allowPingbacks %>" />
+					</c:if>
+				</aui:fieldset>
+
+				<c:if test="<%= message == null %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<liferay-ui:input-permissions
+							modelName="<%= MBMessage.class.getName() %>"
+						/>
+					</aui:fieldset>
+				</c:if>
+
+				<c:if test="<%= (message == null) && captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
+					<liferay-captcha:captcha />
+				</c:if>
+
+				<%
+				boolean pending = false;
+
+				if (message != null) {
+					pending = message.isPending();
+				}
+				%>
+
+				<c:if test="<%= pending %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+					</div>
+				</c:if>
+
+				<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
+					<div class="alert alert-info">
+						<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+					</div>
+				</c:if>
+
+				<div class="sheet-footer">
+					<div class="btn-group">
+
+						<%
+						String saveButtonLabel = "save";
+
+						if ((message == null) || message.isDraft() || message.isApproved()) {
+							saveButtonLabel = "save-as-draft";
+						}
+
+						String publishButtonLabel = "publish";
+
+						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBMessage.class.getName())) {
+							publishButtonLabel = "submit-for-publication";
+						}
+						%>
+
+						<div class="btn-group-item">
+							<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+						</div>
+
+						<c:if test="<%= themeDisplay.isSignedIn() %>">
+							<div class="btn-group-item">
+								<aui:button name="saveButton" value="<%= saveButtonLabel %>" />
+							</div>
+						</c:if>
+
+						<div class="btn-group-item">
+							<aui:button href="<%= redirect %>" type="cancel" />
+						</div>
 					</div>
 				</div>
 			</div>
-		</aui:fieldset-group>
+		</div>
 	</aui:form>
 </clay:container-fluid>
 

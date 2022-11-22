@@ -39,7 +39,8 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 
 	<aui:model-context bean="<%= country %>" model="<%= Country.class %>" />
 
-	<aui:fieldset-group markupView="lexicon">
+	<div class="sheet">
+	<div class="panel-group panel-group-flush">
 		<aui:fieldset>
 			<aui:fieldset>
 				<liferay-ui:input-localized
@@ -72,7 +73,7 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 				</c:if>
 			</aui:fieldset>
 		</aui:fieldset>
-	</aui:fieldset-group>
+	</div></div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

@@ -40,109 +40,111 @@ renderResponse.setTitle(oAuth2Application.getName());
 		<aui:input name="mvcRenderCommandName" type="hidden" value="/oauth2_provider/view_connected_applications" />
 		<aui:input name="oAuth2AuthorizationIds" type="hidden" value='<%= ParamUtil.getString(request, "oAuth2AuthorizationId") %>' />
 
-		<aui:fieldset-group markupView="lexicon">
-			<div class="panel-body">
-				<liferay-ui:icon
-					cssClass="app-icon"
-					src="<%= oAuth2ConnectedApplicationsPortletDisplayContext.getThumbnailURL() %>"
-				/>
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<div class="panel-body">
+					<liferay-ui:icon
+						cssClass="app-icon"
+						src="<%= oAuth2ConnectedApplicationsPortletDisplayContext.getThumbnailURL() %>"
+					/>
 
-				<h1 class="name">
-					<%= HtmlUtil.escape(oAuth2Application.getName()) %>
-				</h1>
+					<h1 class="name">
+						<%= HtmlUtil.escape(oAuth2Application.getName()) %>
+					</h1>
 
-				<p class="description text-truncate">
-					<%= HtmlUtil.escape(oAuth2Application.getDescription()) %>
-				</p>
+					<p class="description text-truncate">
+						<%= HtmlUtil.escape(oAuth2Application.getDescription()) %>
+					</p>
 
-				<c:if test="<%= !Validator.isBlank(oAuth2Application.getHomePageURL()) || !Validator.isBlank(oAuth2Application.getPrivacyPolicyURL()) %>">
-					<p class="application-information text-truncate">
-						<span><liferay-ui:message key="application-information" /></span>:
+					<c:if test="<%= !Validator.isBlank(oAuth2Application.getHomePageURL()) || !Validator.isBlank(oAuth2Application.getPrivacyPolicyURL()) %>">
+						<p class="application-information text-truncate">
+							<span><liferay-ui:message key="application-information" /></span>:
 
-						<c:if test="<%= !Validator.isBlank(oAuth2Application.getHomePageURL()) %>">
-							<aui:a href="<%= HtmlUtil.escapeJSLink(oAuth2Application.getHomePageURL()) %>" label="website" target="_blank" />
-						</c:if>
-
-						<c:if test="<%= !Validator.isBlank(oAuth2Application.getPrivacyPolicyURL()) %>">
 							<c:if test="<%= !Validator.isBlank(oAuth2Application.getHomePageURL()) %>">
-								<%= StringUtil.toLowerCase(LanguageUtil.get(request, "and")) %>
+								<aui:a href="<%= HtmlUtil.escapeJSLink(oAuth2Application.getHomePageURL()) %>" label="website" target="_blank" />
 							</c:if>
 
-							<aui:a href="<%= HtmlUtil.escapeJSLink(oAuth2Application.getPrivacyPolicyURL()) %>" label="privacy-policy" target="_blank" />
-						</c:if>
+							<c:if test="<%= !Validator.isBlank(oAuth2Application.getPrivacyPolicyURL()) %>">
+								<c:if test="<%= !Validator.isBlank(oAuth2Application.getHomePageURL()) %>">
+									<%= StringUtil.toLowerCase(LanguageUtil.get(request, "and")) %>
+								</c:if>
+
+								<aui:a href="<%= HtmlUtil.escapeJSLink(oAuth2Application.getPrivacyPolicyURL()) %>" label="privacy-policy" target="_blank" />
+							</c:if>
+						</p>
+					</c:if>
+
+					<h4 class="permissions">
+						<liferay-ui:message key="permissions" />
+					</h4>
+
+					<ul class="list-group">
+
+						<%
+						for (String applicationName : assignableScopes.getApplicationNames()) {
+						%>
+
+							<li class="list-group-item list-group-item-flex">
+								<clay:content-col>
+									<clay:icon
+										symbol="check"
+									/>
+								</clay:content-col>
+
+								<clay:content-col
+									expand="<%= true %>"
+								>
+									<h4 class="list-group-title text-truncate"><%= HtmlUtil.escape(assignableScopes.getApplicationDescription(applicationName)) %></h4>
+
+									<p class="list-group-subtitle text-truncate"><%= StringUtil.merge(assignableScopes.getApplicationScopeDescription(themeDisplay.getCompanyId(), applicationName), ", ") %></p>
+								</clay:content-col>
+							</li>
+
+						<%
+						}
+						%>
+
+					</ul>
+
+					<h4 class="activity">
+						<liferay-ui:message key="activity" />
+					</h4>
+
+					<p class="last-access text-truncate">
+						<span><liferay-ui:message key="last-access" /></span>:
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getAccessTokenCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 					</p>
-				</c:if>
 
-				<h4 class="permissions">
-					<liferay-ui:message key="permissions" />
-				</h4>
+					<p class="authorization text-truncate">
+						<span><liferay-ui:message key="authorization" /></span>:
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</p>
 
-				<ul class="list-group">
-
-					<%
-					for (String applicationName : assignableScopes.getApplicationNames()) {
-					%>
-
-						<li class="list-group-item list-group-item-flex">
-							<clay:content-col>
-								<clay:icon
-									symbol="check"
-								/>
-							</clay:content-col>
-
-							<clay:content-col
-								expand="<%= true %>"
-							>
-								<h4 class="list-group-title text-truncate"><%= HtmlUtil.escape(assignableScopes.getApplicationDescription(applicationName)) %></h4>
-
-								<p class="list-group-subtitle text-truncate"><%= StringUtil.merge(assignableScopes.getApplicationScopeDescription(themeDisplay.getCompanyId(), applicationName), ", ") %></p>
-							</clay:content-col>
-						</li>
+					<p class="authorization text-truncate">
+						<span><liferay-ui:message key="remoteIPInfo" /></span>:
+						<%= HtmlUtil.escape(oAuth2Authorization.getRemoteIPInfo()) %>, <%= HtmlUtil.escape(oAuth2Authorization.getRemoteHostInfo()) %>
+					</p>
 
 					<%
+					Date expirationDate = oAuth2Authorization.getRefreshTokenExpirationDate();
+
+					if (expirationDate == null) {
+						expirationDate = oAuth2Authorization.getAccessTokenExpirationDate();
 					}
 					%>
 
-				</ul>
+					<p class="authorization text-truncate">
+						<span><liferay-ui:message key="expiration" /></span>:
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(locale, Math.abs(System.currentTimeMillis() - expirationDate.getTime()), true) %>" key='<%= expirationDate.before(new Date()) ? "x-ago" : "within-x" %>' translateArguments="<%= false %>" />
+					</p>
 
-				<h4 class="activity">
-					<liferay-ui:message key="activity" />
-				</h4>
-
-				<p class="last-access text-truncate">
-					<span><liferay-ui:message key="last-access" /></span>:
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getAccessTokenCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-				</p>
-
-				<p class="authorization text-truncate">
-					<span><liferay-ui:message key="authorization" /></span>:
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-				</p>
-
-				<p class="authorization text-truncate">
-					<span><liferay-ui:message key="remoteIPInfo" /></span>:
-					<%= HtmlUtil.escape(oAuth2Authorization.getRemoteIPInfo()) %>, <%= HtmlUtil.escape(oAuth2Authorization.getRemoteHostInfo()) %>
-				</p>
-
-				<%
-				Date expirationDate = oAuth2Authorization.getRefreshTokenExpirationDate();
-
-				if (expirationDate == null) {
-					expirationDate = oAuth2Authorization.getAccessTokenExpirationDate();
-				}
-				%>
-
-				<p class="authorization text-truncate">
-					<span><liferay-ui:message key="expiration" /></span>:
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(locale, Math.abs(System.currentTimeMillis() - expirationDate.getTime()), true) %>" key='<%= expirationDate.before(new Date()) ? "x-ago" : "within-x" %>' translateArguments="<%= false %>" />
-				</p>
-
-				<p class="buttons">
-					<aui:button cssClass="remove-access" id="removeAccess" value="remove-access" />
-					<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" value="cancel" />
-				</p>
+					<p class="buttons">
+						<aui:button cssClass="remove-access" id="removeAccess" value="remove-access" />
+						<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" value="cancel" />
+					</p>
+				</div>
 			</div>
-		</aui:fieldset-group>
+		</div>
 	</aui:form>
 </clay:container-fluid>
 

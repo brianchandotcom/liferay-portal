@@ -55,7 +55,8 @@
 				localPublishing="<%= localPublishing %>"
 			/>
 
-			<aui:fieldset-group markupView="lexicon">
+			<div class="sheet">
+	<div class="panel-group panel-group-flush">
 				<aui:fieldset>
 					<c:choose>
 						<c:when test="<%= exportImportConfiguration == null %>">
@@ -117,7 +118,7 @@
 						/>
 					</aui:fieldset>
 				</c:if>
-			</aui:fieldset-group>
+			</div></div>
 		</div>
 
 		<aui:button-row>

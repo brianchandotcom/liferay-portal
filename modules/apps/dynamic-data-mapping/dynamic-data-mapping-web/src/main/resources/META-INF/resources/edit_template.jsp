@@ -193,137 +193,139 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				</aui:script>
 			</c:if>
 
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<c:if test="<%= (template != null) && (groupId != PortalUtil.getScopeGroupId(request, refererPortletName)) %>">
-						<aui:field-wrapper>
-							<div class="alert alert-warning">
-								<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
-							</div>
-						</aui:field-wrapper>
-					</c:if>
+			<div class="sheet">
+				<div class="panel-group panel-group-flush">
+					<aui:fieldset>
+						<c:if test="<%= (template != null) && (groupId != PortalUtil.getScopeGroupId(request, refererPortletName)) %>">
+							<aui:field-wrapper>
+								<div class="alert alert-warning">
+									<liferay-ui:message key="this-template-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-template" />
+								</div>
+							</aui:field-wrapper>
+						</c:if>
 
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
-					<liferay-ui:panel-container
-						cssClass="lfr-structure-entry-details-container"
-						extended="<%= false %>"
-						id="templateDetailsPanelContainer"
-						persistState="<%= true %>"
-					>
-						<liferay-ui:panel
-							collapsible="<%= true %>"
-							defaultState="closed"
+						<liferay-ui:panel-container
+							cssClass="lfr-structure-entry-details-container"
 							extended="<%= false %>"
-							id="templateDetailsSectionPanel"
-							markupView="lexicon"
+							id="templateDetailsPanelContainer"
 							persistState="<%= true %>"
-							title="details"
 						>
-							<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
-								<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+							<liferay-ui:panel
+								collapsible="<%= true %>"
+								defaultState="closed"
+								extended="<%= false %>"
+								id="templateDetailsSectionPanel"
+								markupView="lexicon"
+								persistState="<%= true %>"
+								title="details"
+							>
+								<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
+									<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
-									<%
-									for (String languageType : ddmDisplay.getTemplateLanguageTypes()) {
-										StringBundler sb = new StringBundler(6);
+										<%
+										for (String languageType : ddmDisplay.getTemplateLanguageTypes()) {
+											StringBundler sb = new StringBundler(6);
 
-										sb.append(LanguageUtil.get(request, languageType + "[stands-for]"));
-										sb.append(StringPool.SPACE);
-										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(StringPool.PERIOD);
-										sb.append(languageType);
-										sb.append(StringPool.CLOSE_PARENTHESIS);
-									%>
+											sb.append(LanguageUtil.get(request, languageType + "[stands-for]"));
+											sb.append(StringPool.SPACE);
+											sb.append(StringPool.OPEN_PARENTHESIS);
+											sb.append(StringPool.PERIOD);
+											sb.append(languageType);
+											sb.append(StringPool.CLOSE_PARENTHESIS);
+										%>
 
-										<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(languageType) %>" value="<%= languageType %>" />
+											<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(languageType) %>" value="<%= languageType %>" />
 
-									<%
-									}
-									%>
+										<%
+										}
+										%>
 
-								</aui:select>
-							</c:if>
-
-							<c:if test="<%= !ddmDisplayContext.autogenerateTemplateKey() %>">
-								<aui:input disabled="<%= (template != null) ? true : false %>" name="templateKey" />
-							</c:if>
-
-							<aui:input name="description" />
-
-							<c:if test="<%= template != null %>">
-								<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= template.getTemplateKey() %>" />
-
-								<portlet:resourceURL id="/dynamic_data_mapping/get_template" var="getTemplateURL">
-									<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
-								</portlet:resourceURL>
-
-								<aui:input name="url" type="resource" value="<%= getTemplateURL.toString() %>" />
-
-								<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-									<aui:input name="webDavURL" type="resource" value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
-								</c:if>
-							</c:if>
-
-							<c:choose>
-								<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-									<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode">
-										<aui:option label="create" />
-										<aui:option label="edit" />
 									</aui:select>
-								</c:when>
-								<c:otherwise>
-									<c:if test='<%= ParamUtil.getBoolean(request, "showCacheableInput") %>'>
-										<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= cacheable %>" />
+								</c:if>
+
+								<c:if test="<%= !ddmDisplayContext.autogenerateTemplateKey() %>">
+									<aui:input disabled="<%= (template != null) ? true : false %>" name="templateKey" />
+								</c:if>
+
+								<aui:input name="description" />
+
+								<c:if test="<%= template != null %>">
+									<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= template.getTemplateKey() %>" />
+
+									<portlet:resourceURL id="/dynamic_data_mapping/get_template" var="getTemplateURL">
+										<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
+									</portlet:resourceURL>
+
+									<aui:input name="url" type="resource" value="<%= getTemplateURL.toString() %>" />
+
+									<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
+										<aui:input name="webDavURL" type="resource" value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
 									</c:if>
+								</c:if>
 
-									<div id="<portlet:namespace />smallImageContainer">
-										<div class="lfr-ddm-small-image-header">
-											<aui:input name="smallImage" />
-										</div>
+								<c:choose>
+									<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
+										<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode">
+											<aui:option label="create" />
+											<aui:option label="edit" />
+										</aui:select>
+									</c:when>
+									<c:otherwise>
+										<c:if test='<%= ParamUtil.getBoolean(request, "showCacheableInput") %>'>
+											<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= cacheable %>" />
+										</c:if>
 
-										<div class="lfr-ddm-small-image-content toggler-content-collapsed">
-											<clay:row>
-												<c:if test="<%= smallImage && (template != null) %>">
+										<div id="<portlet:namespace />smallImageContainer">
+											<div class="lfr-ddm-small-image-header">
+												<aui:input name="smallImage" />
+											</div>
+
+											<div class="lfr-ddm-small-image-content toggler-content-collapsed">
+												<clay:row>
+													<c:if test="<%= smallImage && (template != null) %>">
+														<clay:col
+															md="6"
+														>
+															<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
+														</clay:col>
+													</c:if>
+
 													<clay:col
-														md="6"
+														md="<%= (smallImage && (template != null)) ? String.valueOf(6) : String.valueOf(12) %>"
 													>
-														<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
+														<aui:fieldset>
+															<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
+
+															<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
+														</aui:fieldset>
+
+														<aui:fieldset>
+															<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
+
+															<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
+														</aui:fieldset>
 													</clay:col>
-												</c:if>
-
-												<clay:col
-													md="<%= (smallImage && (template != null)) ? String.valueOf(6) : String.valueOf(12) %>"
-												>
-													<aui:fieldset>
-														<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
-
-														<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
-													</aui:fieldset>
-
-													<aui:fieldset>
-														<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
-
-														<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
-													</aui:fieldset>
-												</clay:col>
-											</clay:row>
+												</clay:row>
+											</div>
 										</div>
-									</div>
-								</c:otherwise>
-							</c:choose>
-						</liferay-ui:panel>
-					</liferay-ui:panel-container>
+									</c:otherwise>
+								</c:choose>
+							</liferay-ui:panel>
+						</liferay-ui:panel-container>
 
-					<c:choose>
-						<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-							<%@ include file="/edit_template_form.jspf" %>
-						</c:when>
-						<c:otherwise>
-							<%@ include file="/edit_template_display.jspf" %>
-						</c:otherwise>
-					</c:choose>
-				</aui:fieldset>
-			</aui:fieldset-group>
+						<c:choose>
+							<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
+								<%@ include file="/edit_template_form.jspf" %>
+							</c:when>
+							<c:otherwise>
+								<%@ include file="/edit_template_display.jspf" %>
+							</c:otherwise>
+						</c:choose>
+					</aui:fieldset>
+				</div>
+			</div>
 		</div>
 	</aui:form>
 

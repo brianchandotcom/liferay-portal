@@ -51,42 +51,44 @@ if (portletTitleBasedNavigation) {
 
 		<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-
-				<%
-				String parentCategoryName = StringPool.BLANK;
-
-				try {
-					MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
-
-					parentCategoryName = parentCategory.getName();
-				}
-				catch (NoSuchCategoryException nsce) {
-				}
-				%>
-
-				<div class="form-group">
-					<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
-
-					<aui:button name="selectCategoryButton" value="select" />
+		<div class="sheet">
+			<div class="panel-group panel-group-flush">
+				<aui:fieldset>
 
 					<%
-					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '" + liferayPortletResponse.getNamespace() + "');";
+					String parentCategoryName = StringPool.BLANK;
+
+					try {
+						MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
+
+						parentCategoryName = parentCategory.getName();
+					}
+					catch (NoSuchCategoryException nsce) {
+					}
 					%>
 
-					<aui:button disabled="<%= parentCategoryId <= 0 %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					<div class="form-group">
+						<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
+
+						<aui:button name="selectCategoryButton" value="select" />
+
+						<%
+						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '" + liferayPortletResponse.getNamespace() + "');";
+						%>
+
+						<aui:button disabled="<%= parentCategoryId <= 0 %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					</div>
+
+					<aui:input label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
+				</aui:fieldset>
+
+				<div class="sheet-footer">
+					<aui:button type="submit" value="move" />
+
+					<aui:button href="<%= redirect %>" type="cancel" />
 				</div>
-
-				<aui:input label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
-			</aui:fieldset>
-
-			<div class="sheet-footer">
-				<aui:button type="submit" value="move" />
-
-				<aui:button href="<%= redirect %>" type="cancel" />
 			</div>
-		</aui:fieldset-group>
+		</div>
 	</aui:form>
 </div>
 

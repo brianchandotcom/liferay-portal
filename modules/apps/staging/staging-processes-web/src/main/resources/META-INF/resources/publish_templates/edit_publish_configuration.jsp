@@ -140,50 +140,52 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 			<div id="<portlet:namespace />publishOptions">
 				<div class="export-dialog-tree">
-					<aui:fieldset-group markupView="lexicon">
-						<liferay-staging:configuration-header
-							exportImportConfiguration="<%= exportImportConfiguration %>"
-						/>
-
-						<liferay-staging:deletions
-							cmd="<%= Constants.PUBLISH %>"
-							exportImportConfigurationId="<%= exportImportConfigurationId %>"
-						/>
-
-						<c:if test="<%= !group.isCompany() && GroupCapabilityUtil.isSupportsPages(group) %>">
-							<liferay-staging:select-pages
-								action="<%= Constants.PUBLISH %>"
-								exportImportConfigurationId="<%= exportImportConfigurationId %>"
-								groupId="<%= stagingGroupId %>"
-								privateLayout="<%= privateLayout %>"
-								treeId="<%= treeId %>"
+					<div class="sheet">
+						<div class="panel-group panel-group-flush">
+							<liferay-staging:configuration-header
+								exportImportConfiguration="<%= exportImportConfiguration %>"
 							/>
-						</c:if>
 
-						<liferay-staging:content
-							cmd="<%= cmd %>"
-							exportImportConfigurationId="<%= exportImportConfigurationId %>"
-							showAllPortlets="<%= true %>"
-							type="<%= stagingGroup.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>"
-						/>
+							<liferay-staging:deletions
+								cmd="<%= Constants.PUBLISH %>"
+								exportImportConfigurationId="<%= exportImportConfigurationId %>"
+							/>
 
-						<liferay-staging:permissions
-							action="<%= Constants.PUBLISH %>"
-							descriptionCSSClass="permissions-description"
-							exportImportConfigurationId="<%= exportImportConfigurationId %>"
-							global="<%= group.isCompany() %>"
-							labelCSSClass="permissions-label"
-						/>
-
-						<c:if test="<%= stagingGroup.isStagedRemotely() %>">
-							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
-								<liferay-staging:remote-options
+							<c:if test="<%= !group.isCompany() && GroupCapabilityUtil.isSupportsPages(group) %>">
+								<liferay-staging:select-pages
+									action="<%= Constants.PUBLISH %>"
 									exportImportConfigurationId="<%= exportImportConfigurationId %>"
+									groupId="<%= stagingGroupId %>"
 									privateLayout="<%= privateLayout %>"
+									treeId="<%= treeId %>"
 								/>
-							</aui:fieldset>
-						</c:if>
-					</aui:fieldset-group>
+							</c:if>
+
+							<liferay-staging:content
+								cmd="<%= cmd %>"
+								exportImportConfigurationId="<%= exportImportConfigurationId %>"
+								showAllPortlets="<%= true %>"
+								type="<%= stagingGroup.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>"
+							/>
+
+							<liferay-staging:permissions
+								action="<%= Constants.PUBLISH %>"
+								descriptionCSSClass="permissions-description"
+								exportImportConfigurationId="<%= exportImportConfigurationId %>"
+								global="<%= group.isCompany() %>"
+								labelCSSClass="permissions-label"
+							/>
+
+							<c:if test="<%= stagingGroup.isStagedRemotely() %>">
+								<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
+									<liferay-staging:remote-options
+										exportImportConfigurationId="<%= exportImportConfigurationId %>"
+										privateLayout="<%= privateLayout %>"
+									/>
+								</aui:fieldset>
+							</c:if>
+						</div>
+					</div>
 				</div>
 
 				<aui:button-row>

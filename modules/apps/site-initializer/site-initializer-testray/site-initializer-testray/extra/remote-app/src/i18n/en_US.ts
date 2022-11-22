@@ -376,6 +376,7 @@ export default {
 	'update-x': 'Update {0}',
 	'updated': 'Updated',
 	'upload-csv': 'Upload CSV',
+	'user-group': 'User Group',
 	'user-groups': 'User Groups',
 	'user-information': 'User Information',
 	'users': 'Users',

@@ -24,6 +24,7 @@ type Filter = {
  */
 
 export const searchUtil = {
+
 	/**
 	 * @description Contains
 	 * @example contains(title,'edmon')

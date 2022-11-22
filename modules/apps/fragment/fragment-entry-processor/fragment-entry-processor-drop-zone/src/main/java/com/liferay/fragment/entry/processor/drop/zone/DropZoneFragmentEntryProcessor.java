@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashSet;
@@ -163,6 +165,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public void validateFragmentEntryHTML(String html, String configuration)
 		throws PortalException {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167932"))) {
+			return;
+		}
 
 		Document document = _getDocument(html);
 

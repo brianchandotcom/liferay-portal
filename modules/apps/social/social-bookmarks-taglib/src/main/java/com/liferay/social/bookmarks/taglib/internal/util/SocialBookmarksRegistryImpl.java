@@ -58,13 +58,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 
 	@Override
 	public List<SocialBookmark> getSocialBookmarks() {
-		List<SocialBookmark> socialBookmarks = new ArrayList<>();
-
-		for (String type : getSocialBookmarksTypes()) {
-			socialBookmarks.add(getSocialBookmark(type));
-		}
-
-		return socialBookmarks;
+		return new ArrayList<>(_socialBookmarks.values());
 	}
 
 	@Override

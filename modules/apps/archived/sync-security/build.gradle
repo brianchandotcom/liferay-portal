@@ -2,7 +2,7 @@ dependencies {
 	compileInclude group: "com.google.collections", name: "google-collections", version: "1.0"
 	compileInclude group: "com.googlecode.jsontoken", name: "jsontoken", version: "1.1"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
-	compileInclude group: "joda-time", name: "joda-time", version: "1.6"
+	compileInclude group: "joda-time", name: "joda-time", version: "2.12.1"
 
 	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

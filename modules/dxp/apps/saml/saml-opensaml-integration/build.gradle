@@ -5,7 +5,7 @@ dependencies {
 	compileInclude group: "commons-collections", name: "commons-collections", version: "3.2.2"
 	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
 	compileInclude group: "io.dropwizard.metrics", name: "metrics-core", version: "3.1.2"
-	compileInclude group: "joda-time", name: "joda-time", version: "2.9"
+	compileInclude group: "joda-time", name: "joda-time", version: "2.12.1"
 	compileInclude group: "net.shibboleth.utilities", name: "java-support", version: "7.3.0"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient-cache", version: "4.5.13"
 	compileInclude group: "org.bouncycastle", name: "bcpkix-jdk15on", version: "1.69"
@@ -13,7 +13,7 @@ dependencies {
 	compileInclude group: "org.bouncycastle", name: "bcutil-jdk15on", version: "1.69"
 	compileInclude group: "org.codehaus.woodstox", name: "stax2-api", version: "3.1.4"
 	compileInclude group: "org.cryptacular", name: "cryptacular", version: "1.2.4"
-	compileInclude group: "org.joda", name: "joda-convert", version: "1.2"
+	compileInclude group: "org.joda", name: "joda-convert", version: "2.2.1"
 	compileInclude group: "xerces", name: "xercesImpl", version: "2.12.2"
 	compileInclude group: "xml-resolver", name: "xml-resolver", version: "1.2"
 

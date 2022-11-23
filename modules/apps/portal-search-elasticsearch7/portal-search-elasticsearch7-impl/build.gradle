@@ -39,7 +39,7 @@ dependencies {
 	compileInclude group: "commons-io", name: "commons-io", version: "2.11.0"
 	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
 	compileInclude group: "commons-logging", name: "commons-logging", version: "1.2"
-	compileInclude group: "joda-time", name: "joda-time", version: "2.10.10"
+	compileInclude group: "joda-time", name: "joda-time", version: "2.12.1"
 	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	compileInclude group: "org.apache.lucene", name: "lucene-core", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-highlighter", version: luceneVersion

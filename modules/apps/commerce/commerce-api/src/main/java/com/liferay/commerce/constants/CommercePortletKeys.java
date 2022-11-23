@@ -48,6 +48,10 @@ public class CommercePortletKeys {
 		"com_liferay_commerce_address_web_internal_portlet_" +
 			"CommerceCountryPortlet";
 
+	public static final String COMMERCE_DASHBOARD_FORECASTS_CHART =
+		"com_liferay_commerce_dashboard_web_internal_portlet_" +
+			"CommerceDashboardForecastsChartPortlet";
+
 	public static final String COMMERCE_HEALTH_CHECK =
 		"com_liferay_commerce_health_status_web_internal_portlet_" +
 			"CommerceHealthCheckPortlet";

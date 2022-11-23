@@ -9,7 +9,9 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../common/I18n';
+
 export const ALERT_DOWNLOAD_TYPE = {
-	danger: 'danger',
-	success: 'success',
+	danger: i18n.translate('danger'),
+	success: i18n.translate('success'),
 };

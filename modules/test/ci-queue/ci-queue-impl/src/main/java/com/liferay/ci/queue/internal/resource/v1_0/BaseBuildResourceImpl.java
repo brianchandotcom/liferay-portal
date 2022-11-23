@@ -50,7 +50,7 @@ public abstract class BaseBuildResourceImpl implements BuildResource {
 	@javax.ws.rs.Produces("text/plain")
 	@Override
 	public String build() throws Exception {
-		return StringPool.BLANK;
+		return "success";
 	}
 
 	/**
@@ -67,7 +67,7 @@ public abstract class BaseBuildResourceImpl implements BuildResource {
 	@javax.ws.rs.Produces("text/plain")
 	@Override
 	public Response build(String string) throws Exception {
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.ok(string);
 
 		return responseBuilder.build();
 	}

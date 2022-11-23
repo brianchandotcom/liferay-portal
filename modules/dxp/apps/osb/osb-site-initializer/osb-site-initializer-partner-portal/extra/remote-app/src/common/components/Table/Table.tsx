@@ -17,12 +17,18 @@ interface TableProps<T> {
 	borderless?: boolean;
 	className?: string;
 	columns: TableColumn<T>[];
+	customClickOnRow?: (row: T) => void;
 	noWrap?: boolean;
 	responsive?: boolean;
 	rows: T[];
 }
 
-const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
+const Table = <T extends unknown>({
+	columns,
+	customClickOnRow,
+	rows,
+	...props
+}: TableProps<T>) => (
 	<ClayTable {...props} tableVerticalAlignment="middle">
 		<ClayTable.Head>
 			<ClayTable.Row>
@@ -51,6 +57,11 @@ const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 								className="border-0 font-weight-normal py-4 text-neutral-10"
 								headingCell
 								key={index}
+								onClick={() => {
+									if (customClickOnRow) {
+										return customClickOnRow(row);
+									}
+								}}
 							>
 								{column.render
 									? column.render(data, row)

@@ -856,83 +856,79 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<DropdownItem> getDropdownItems(Group group) throws Exception {
-		return new DropdownItemList() {
-			{
-				List<AssetRendererFactory<?>> assetRendererFactories =
-					ListUtil.sort(
-						AssetRendererFactoryRegistryUtil.
-							getAssetRendererFactories(
-								_themeDisplay.getCompanyId()),
-						new AssetRendererFactoryTypeNameComparator(
-							_themeDisplay.getLocale()));
+		DropdownItemList dropdownItemList = new DropdownItemList();
 
-				for (AssetRendererFactory<?> assetRendererFactory :
-						assetRendererFactories) {
+		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				_themeDisplay.getCompanyId()),
+			new AssetRendererFactoryTypeNameComparator(
+				_themeDisplay.getLocale()));
 
-					if (!assetRendererFactory.isSelectable()) {
-						continue;
-					}
+		for (AssetRendererFactory<?> assetRendererFactory :
+				assetRendererFactories) {
 
-					long curGroupId = group.getGroupId();
-
-					if (group.isStagingGroup() &&
-						!group.isStagedPortlet(
-							assetRendererFactory.getPortletId())) {
-
-						curGroupId = group.getLiveGroupId();
-					}
-
-					if (!assetRendererFactory.isSupportsClassTypes()) {
-						add(
-							dropdownItem -> {
-								dropdownItem.putData(
-									"href",
-									_getAssetEntryItemSelectorPortletURL(
-										assetRendererFactory,
-										_DEFAULT_SUBTYPE_SELECTION_ID));
-								dropdownItem.putData(
-									"title",
-									LanguageUtil.format(
-										_httpServletRequest, "select-x",
-										assetRendererFactory.getTypeName(
-											_themeDisplay.getLocale()),
-										false));
-								dropdownItem.setLabel(
-									assetRendererFactory.getTypeName(
-										_themeDisplay.getLocale()));
-							});
-
-						continue;
-					}
-
-					ClassTypeReader classTypeReader =
-						assetRendererFactory.getClassTypeReader();
-
-					List<ClassType> assetAvailableClassTypes =
-						classTypeReader.getAvailableClassTypes(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								curGroupId),
-							_themeDisplay.getLocale());
-
-					for (ClassType classType : assetAvailableClassTypes) {
-						add(
-							dropdownItem -> {
-								dropdownItem.putData(
-									"href",
-									_getAssetEntryItemSelectorPortletURL(
-										assetRendererFactory,
-										classType.getClassTypeId()));
-								dropdownItem.putData(
-									"title",
-									LanguageUtil.format(
-										_httpServletRequest, "select-x",
-										classType.getName(), false));
-								dropdownItem.setLabel(classType.getName());
-							});
-					}
-				}
+			if (!assetRendererFactory.isSelectable()) {
+				continue;
 			}
-		};
+
+			long curGroupId = group.getGroupId();
+
+			if (group.isStagingGroup() &&
+				!group.isStagedPortlet(assetRendererFactory.getPortletId())) {
+
+				curGroupId = group.getLiveGroupId();
+			}
+
+			if (!assetRendererFactory.isSupportsClassTypes()) {
+				dropdownItemList.add(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"href",
+							_getAssetEntryItemSelectorPortletURL(
+								assetRendererFactory,
+								_DEFAULT_SUBTYPE_SELECTION_ID));
+						dropdownItem.putData(
+							"title",
+							LanguageUtil.format(
+								_httpServletRequest, "select-x",
+								assetRendererFactory.getTypeName(
+									_themeDisplay.getLocale()),
+								false));
+						dropdownItem.setLabel(
+							assetRendererFactory.getTypeName(
+								_themeDisplay.getLocale()));
+					});
+
+				continue;
+			}
+
+			ClassTypeReader classTypeReader =
+				assetRendererFactory.getClassTypeReader();
+
+			List<ClassType> assetAvailableClassTypes =
+				classTypeReader.getAvailableClassTypes(
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(curGroupId),
+					_themeDisplay.getLocale());
+
+			for (ClassType classType : assetAvailableClassTypes) {
+				dropdownItemList.add(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"href",
+							_getAssetEntryItemSelectorPortletURL(
+								assetRendererFactory,
+								classType.getClassTypeId()));
+						dropdownItem.putData(
+							"title",
+							LanguageUtil.format(
+								_httpServletRequest, "select-x",
+								classType.getName(), false));
+						dropdownItem.setLabel(classType.getName());
+					});
+			}
+		}
+
+		return dropdownItemList;
 	}
 
 	public LocalizedValuesMap getEmailAssetEntryAddedBody() {

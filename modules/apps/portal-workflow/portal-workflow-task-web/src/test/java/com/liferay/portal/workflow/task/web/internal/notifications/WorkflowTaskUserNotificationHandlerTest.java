@@ -150,43 +150,6 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	@Test
-	public void testIsApplicable() {
-		User user1 = Mockito.mock(User.class);
-
-		Mockito.when(
-			user1.getUserId()
-		).thenReturn(
-			_USER_ID
-		);
-
-		_allowedUsers.add(user1);
-
-		User user2 = Mockito.mock(User.class);
-
-		Mockito.when(
-			user2.getUserId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
-		_allowedUsers.add(user2);
-
-		Assert.assertTrue(
-			_workflowTaskUserNotificationHandler.isApplicable(
-				mockUserNotificationEvent(
-					_VALID_ENTRY_CLASS_NAME, null, _VALID_WORKFLOW_TASK_ID),
-				_serviceContext));
-
-		_allowedUsers.remove(user1);
-
-		Assert.assertFalse(
-			_workflowTaskUserNotificationHandler.isApplicable(
-				mockUserNotificationEvent(
-					_VALID_ENTRY_CLASS_NAME, null, _VALID_WORKFLOW_TASK_ID),
-				_serviceContext));
-	}
-
-	@Test
 	public void testNullWorkflowTaskIdShouldReturnBlankLink() throws Exception {
 		Assert.assertEquals(
 			StringPool.BLANK,

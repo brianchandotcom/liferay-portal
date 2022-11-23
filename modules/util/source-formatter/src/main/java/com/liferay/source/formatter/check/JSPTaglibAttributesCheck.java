@@ -28,6 +28,12 @@ public class JSPTaglibAttributesCheck extends BaseTagAttributesCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		_checkMissingAttributes(fileName, content);
+
+		return content;
+	}
+
+	private void _checkMissingAttributes(String fileName, String content) {
 		int x = -1;
 
 		while (true) {
@@ -67,8 +73,6 @@ public class JSPTaglibAttributesCheck extends BaseTagAttributesCheck {
 						"'aria-labelledby', 'title'",
 				getLineNumber(content, x));
 		}
-
-		return content;
 	}
 
 }

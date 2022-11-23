@@ -161,8 +161,11 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 			long oAuthClientEntryId = ParamUtil.getLong(
 				actionRequest, "oAuthClientEntryId");
 
-			_openIdConnectAuthenticationHandler.requestAuthentication(
-				oAuthClientEntryId, httpServletRequest, httpServletResponse);
+			if (oAuthClientEntryId > 0) {
+				_openIdConnectAuthenticationHandler.requestAuthentication(
+					oAuthClientEntryId, httpServletRequest,
+					httpServletResponse);
+			}
 		}
 		catch (Exception exception) {
 			actionResponse.setRenderParameter(

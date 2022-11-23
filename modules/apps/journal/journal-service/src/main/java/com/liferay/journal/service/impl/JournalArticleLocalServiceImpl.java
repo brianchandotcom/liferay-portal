@@ -5838,19 +5838,7 @@ public class JournalArticleLocalServiceImpl
 			(_classNameLocalService.getClassNameId(DDMStructure.class) !=
 				article.getClassNameId())) {
 
-			Group companyGroup = _groupLocalService.getCompanyGroup(
-				article.getCompanyId());
-
-			Group companyStagingGroup = companyGroup.getStagingGroup();
-
-			if ((article.getGroupId() != companyGroup.getGroupId()) &&
-				((companyStagingGroup == null) ||
-				 (companyStagingGroup.getGroupId() != article.getGroupId()))) {
-
-				throw new ArticleFriendlyURLException();
-			}
-
-			urlTitle = latestArticle.getUrlTitle();
+			throw new ArticleFriendlyURLException();
 		}
 
 		article.setFolderId(folderId);

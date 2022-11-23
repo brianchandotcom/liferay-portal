@@ -890,17 +890,16 @@ public class AssetPublisherDisplayContext {
 									_getAssetEntryItemSelectorPortletURL(
 										assetRendererFactory,
 										_DEFAULT_SUBTYPE_SELECTION_ID));
-
-								String type = assetRendererFactory.getTypeName(
-									_themeDisplay.getLocale());
-
 								dropdownItem.putData(
 									"title",
 									LanguageUtil.format(
-										_httpServletRequest, "select-x", type,
+										_httpServletRequest, "select-x",
+										assetRendererFactory.getTypeName(
+											_themeDisplay.getLocale()),
 										false));
-
-								dropdownItem.setLabel(type);
+								dropdownItem.setLabel(
+									assetRendererFactory.getTypeName(
+										_themeDisplay.getLocale()));
 							});
 
 						continue;
@@ -915,26 +914,20 @@ public class AssetPublisherDisplayContext {
 								curGroupId),
 							_themeDisplay.getLocale());
 
-					for (ClassType assetAvailableClassType :
-							assetAvailableClassTypes) {
-
+					for (ClassType classType : assetAvailableClassTypes) {
 						add(
 							dropdownItem -> {
 								dropdownItem.putData(
 									"href",
 									_getAssetEntryItemSelectorPortletURL(
 										assetRendererFactory,
-										assetAvailableClassType.
-											getClassTypeId()));
-
-								String type = assetAvailableClassType.getName();
-
+										classType.getClassTypeId()));
 								dropdownItem.putData(
 									"title",
 									LanguageUtil.format(
-										_httpServletRequest, "select-x", type,
-										false));
-								dropdownItem.setLabel(type);
+										_httpServletRequest, "select-x",
+										classType.getName(), false));
+								dropdownItem.setLabel(classType.getName());
 							});
 					}
 				}

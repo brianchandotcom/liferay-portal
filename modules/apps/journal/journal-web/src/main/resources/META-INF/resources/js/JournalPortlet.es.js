@@ -72,10 +72,24 @@ export default function _JournalPortlet({
 
 	const editingDefaultValues = classNameId && classNameId !== '0';
 
-	const handleContextualSidebarButtonClick = () => {
+	const handleContextualSidebarButton = () => {
 		contextualSidebarContainer?.classList.toggle(
 			'contextual-sidebar-visible'
 		);
+	};
+
+	const handleContextualSidebarButtonClick = () => {
+		handleContextualSidebarButton();
+
+		const isOpen = contextualSidebarContainer.classList.contains(
+			'contextual-sidebar-visible'
+		);
+		const title = isOpen
+			? Liferay.Language.get('close-configuration-panel')
+			: Liferay.Language.get('open-configuration-panel');
+
+		contextualSidebarButton.setAttribute('aria-label', title);
+		contextualSidebarButton.setAttribute('title', title);
 	};
 
 	const handleDDMFormError = (error) => {
@@ -389,7 +403,7 @@ export default function _JournalPortlet({
 	}
 
 	if (window.innerWidth > Liferay.BREAKPOINTS.PHONE) {
-		handleContextualSidebarButtonClick();
+		handleContextualSidebarButton();
 	}
 
 	return {

@@ -249,7 +249,9 @@ export default function propsTransformer({
 
 		if (map.size > 1) {
 			openToast({
-				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				message: Liferay.Language.get(
+					'it-is-not-possible-to-simultaneously-change-the-permissions-of-different-asset-types'
+				),
 				title: Liferay.Language.get('error'),
 				type: 'danger',
 			});

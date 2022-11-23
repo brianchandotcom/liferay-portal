@@ -15,8 +15,12 @@
 package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
@@ -24,23 +28,33 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import org.hamcrest.CoreMatchers;
 
@@ -85,6 +99,78 @@ public class ObjectEntryResourceTest {
 
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+	}
+
+	@Test
+	public void testExecuteStandaloneObjectAction() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-166918", "true"
+			).build());
+
+		Queue<Object[]> argumentsQueue = new LinkedList<>();
+
+		ObjectScriptingExecutor objectScriptingExecutor =
+			(ObjectScriptingExecutor)ReflectionTestUtil.getAndSetFieldValue(
+				_objectActionExecutorRegistry.getObjectActionExecutor(
+					ObjectActionExecutorConstants.KEY_GROOVY),
+				"_objectScriptingExecutor",
+				ProxyUtil.newProxyInstance(
+					ObjectScriptingExecutor.class.getClassLoader(),
+					new Class<?>[] {ObjectScriptingExecutor.class},
+					(proxy, method, arguments) -> {
+						argumentsQueue.add(arguments);
+
+						return Collections.emptyMap();
+					}));
+
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true, null,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"script", "println \"Hello World\""
+			).build());
+
+		HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				String.valueOf(_objectEntry1.getObjectEntryId()),
+				"/object-actions/", objectAction.getName()),
+			Http.Method.PUT);
+
+		Assert.assertEquals(1, argumentsQueue.size());
+
+		_assertObjectScriptingExecutorArguments(argumentsQueue.poll());
+
+		HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				_objectEntry1.getExternalReferenceCode(), "/object-actions/",
+				objectAction.getName()),
+			Http.Method.PUT);
+
+		Assert.assertEquals(1, argumentsQueue.size());
+
+		_assertObjectScriptingExecutorArguments(argumentsQueue.poll());
+
+		ReflectionTestUtil.setFieldValue(
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				ObjectActionExecutorConstants.KEY_GROOVY),
+			"_objectScriptingExecutor", objectScriptingExecutor);
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-166918", "false"
+			).build());
 	}
 
 	@Test
@@ -200,6 +286,31 @@ public class ObjectEntryResourceTest {
 			objectRelationship);
 	}
 
+	private void _assertObjectScriptingExecutorArguments(Object[] arguments)
+		throws Exception {
+
+		Assert.assertEquals(
+			HashMapBuilder.<String, Object>put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+			).put(
+				"createDate", _objectEntry1.getCreateDate()
+			).put(
+				"creator", String.valueOf(TestPropsValues.getUserId())
+			).put(
+				"externalReferenceCode",
+				_objectEntry1.getExternalReferenceCode()
+			).put(
+				"id", _objectEntry1.getObjectEntryId()
+			).put(
+				"modifiedDate", _objectEntry1.getModifiedDate()
+			).put(
+				"status", _objectEntry1.getStatus()
+			).build(),
+			arguments[0]);
+		Assert.assertEquals(Collections.emptySet(), arguments[1]);
+		Assert.assertEquals("println \"Hello World\"", arguments[2]);
+	}
+
 	private static final String _OBJECT_FIELD_NAME_1 =
 		"x" + RandomTestUtil.randomString();
 
@@ -211,6 +322,12 @@ public class ObjectEntryResourceTest {
 
 	private static final String _OBJECT_FIELD_VALUE_2 =
 		RandomTestUtil.randomString();
+
+	@Inject
+	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;

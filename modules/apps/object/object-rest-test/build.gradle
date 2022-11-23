@@ -10,6 +10,7 @@ dependencies {
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:object:object-api")
 	testIntegrationCompile project(":apps:object:object-rest-api")
+	testIntegrationCompile project(":apps:object:object-scripting-api")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

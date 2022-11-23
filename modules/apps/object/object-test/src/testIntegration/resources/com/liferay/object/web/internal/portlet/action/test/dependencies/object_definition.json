@@ -25,7 +25,10 @@
 			"active": true,
 			"conditionExpression": "",
 			"description": "",
-			"name": "Action",
+			"label": {
+				"en_US": "Action 1"
+			},
+			"name": "Action1",
 			"objectActionExecutorKey": "groovy",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
@@ -41,7 +44,10 @@
 			"active": true,
 			"conditionExpression": "",
 			"description": "",
-			"name": "Action",
+			"label": {
+				"en_US": "Action 2"
+			},
+			"name": "Action2",
 			"objectActionExecutorKey": "notification",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
@@ -57,7 +63,10 @@
 			"active": true,
 			"conditionExpression": "",
 			"description": "",
-			"name": "Action",
+			"label": {
+				"en_US": "Action 3"
+			},
+			"name": "Action3",
 			"objectActionExecutorKey": "webhook",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {

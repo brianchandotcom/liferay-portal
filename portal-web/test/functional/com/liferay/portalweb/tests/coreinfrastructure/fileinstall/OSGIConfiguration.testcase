@@ -226,6 +226,51 @@ definition {
 			text = "1");
 	}
 
+	@description = "LPS-132645 Verify the default factory config created by the OSGI configurator can be recreated using an OSGI config file if it is deleted."
+	@priority = "3"
+	test RecreateDefaultFactoryConfig {
+		property test.name.skip.portal.instance = "FileInstall#OverrideDefaultFactoryConfig";
+
+		task ("Given the default factory config created by the OSGI configurator is deleted") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "API Authentication",
+				configurationName = "Tunnel Authentication",
+				configurationScope = "System Scope");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Delete",
+				rowEntry = "/api/liferay/do");
+
+			AssertTextNotPresent(
+				locator1 = "//body",
+				value1 = "/api/liferay/do");
+		}
+
+		task ("When the default factory config is recreated via an OSGI config file") {
+			var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~default";
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "${configName}.config",
+				osgiConfigs = "urlsIncludes=\"/api/liferay/do\"");
+		}
+
+		task ("Then the default factory configuration should be successfully re-added") {
+			OSGiConfig.waitForOSGiConfig();
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "urlsIncludes=\"/api/liferay/do\"");
+		}
+
+		task ("And a second default config entry is not added to the database") {
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "1");
+		}
+	}
+
 	@description = "Verify when an existing factory config is renamed, the old entry is removed and the new one is added."
 	@priority = "3"
 	test RenameFactoryConfig {

@@ -78,6 +78,7 @@ const AccountContextProvider: React.FC<{
 			id: user?.id,
 			image: user.image,
 			roleBriefs: user?.roleBriefs,
+			userGroupBriefs: user?.userGroupBriefs,
 			uuid: user?.uuid,
 		})
 	);

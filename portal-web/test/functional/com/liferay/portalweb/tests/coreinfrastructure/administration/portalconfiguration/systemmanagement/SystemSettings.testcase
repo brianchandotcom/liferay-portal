@@ -253,11 +253,11 @@ definition {
 				key_fieldValue = "Person",
 				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
 
-			OSGiConfig.assertTextNotInOSGIConfig(
+			OSGiConfig.assertTextNotInOSGiConfig(
 				osgiConfigFileName = "${exportConfigFileName}",
 				text = "groupKey");
 
-			OSGiConfig.assertTextInOSGIConfig(
+			OSGiConfig.assertTextInOSGiConfig(
 				osgiConfigFileName = "${exportConfigFileName}",
 				text = "groupId");
 		}
@@ -348,11 +348,11 @@ definition {
 				key_fieldValue = "Person",
 				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
 
-			OSGiConfig.assertTextNotInOSGIConfig(
+			OSGiConfig.assertTextNotInOSGiConfig(
 				osgiConfigFileName = "${exportConfigFileName}",
 				text = "groupKey");
 
-			OSGiConfig.assertTextInOSGIConfig(
+			OSGiConfig.assertTextInOSGiConfig(
 				osgiConfigFileName = "${exportConfigFileName}",
 				text = "groupId");
 		}

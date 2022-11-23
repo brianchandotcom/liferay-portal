@@ -1,6 +1,6 @@
 definition {
 
-	macro assertOSGIConfigNotExist {
+	macro assertOSGiConfigDoesNotExist {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var osgiConfigExists = FileUtil.exists("${liferayHome}/osgi/configs/${osgiConfigFileName}");
@@ -10,7 +10,7 @@ definition {
 		}
 	}
 
-	macro assertTextInOSGIConfig {
+	macro assertTextInOSGiConfig {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
@@ -23,7 +23,7 @@ definition {
 		}
 	}
 
-	macro assertTextNotInOSGIConfig {
+	macro assertTextNotInOSGiConfig {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");

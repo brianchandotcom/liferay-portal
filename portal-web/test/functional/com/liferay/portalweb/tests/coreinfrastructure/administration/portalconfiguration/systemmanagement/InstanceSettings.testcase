@@ -843,11 +843,11 @@ definition {
 				locator1 = "FormFields#REPEATABLE_TEXT_MULTILINE_FIELD",
 				value1 = "'");
 
-			OSGiConfig.assertTextNotInOSGIConfig(
+			OSGiConfig.assertTextNotInOSGiConfig(
 				osgiConfigFileName = "${exportConfigFileName}",
 				text = "companyWebId");
 
-			OSGiConfig.assertTextInOSGIConfig(
+			OSGiConfig.assertTextInOSGiConfig(
 				osgiConfigFileName = "${exportConfigFileName}",
 				text = "companyId");
 		}

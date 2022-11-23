@@ -27,7 +27,7 @@ definition {
 		task ("Given no osgi config file exists for a specific config") {
 			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
 
-			OSGiConfig.assertOSGIConfigNotExist(osgiConfigFileName = "${configName}.config");
+			OSGiConfig.assertOSGiConfigDoesNotExist(osgiConfigFileName = "${configName}.config");
 		}
 
 		task ("When the config is updated via UI") {
@@ -53,7 +53,7 @@ definition {
 		}
 
 		task ("And a new config file is not created") {
-			OSGiConfig.assertOSGIConfigNotExist(osgiConfigFileName = "${configName}.config");
+			OSGiConfig.assertOSGiConfigDoesNotExist(osgiConfigFileName = "${configName}.config");
 		}
 	}
 
@@ -67,7 +67,7 @@ definition {
 		task ("Given an osgi config file exists for a specific config") {
 			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
 
-			OSGiConfig.assertTextInOSGIConfig(
+			OSGiConfig.assertTextInOSGiConfig(
 				osgiConfigFileName = "${configName}.config",
 				text = "checkInterval=I\"33\"");
 		}
@@ -101,7 +101,7 @@ definition {
 		}
 
 		task ("And the OSGI config file is updated to match the database entry") {
-			OSGiConfig.assertTextInOSGIConfig(
+			OSGiConfig.assertTextInOSGiConfig(
 				osgiConfigFileName = "${configName}.config",
 				text = "checkInterval=I\"44\"");
 		}
@@ -144,7 +144,7 @@ definition {
 		task ("Given no osgi config file exists for a specific config") {
 			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
 
-			OSGiConfig.assertOSGIConfigNotExist(osgiConfigFileName = "${configName}.config");
+			OSGiConfig.assertOSGiConfigDoesNotExist(osgiConfigFileName = "${configName}.config");
 		}
 
 		task ("And given a config is added to the database via UI") {

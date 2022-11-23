@@ -586,6 +586,15 @@ public class UserAccountResourceImpl
 
 		User user = null;
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			contextHttpServletRequest);
+
+		serviceContext.setExpandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				User.class.getName(), contextCompany.getCompanyId(),
+				userAccount.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale()));
+
 		if (contextUser.isDefaultUser()) {
 			if (_captchaSettings.isCreateAccountCaptchaEnabled()) {
 				CaptchaUtil.check(contextHttpServletRequest);
@@ -601,14 +610,7 @@ public class UserAccountResourceImpl
 				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
 				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
 				userAccount.getJobTitle(), new long[0], new long[0],
-				new long[0], new long[0], true,
-				ServiceContextRequestUtil.createServiceContext(
-					CustomFieldsUtil.toMap(
-						User.class.getName(), contextCompany.getCompanyId(),
-						userAccount.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale()),
-					contextCompany.getGroupId(), contextHttpServletRequest,
-					null));
+				new long[0], new long[0], true, serviceContext);
 
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
@@ -641,13 +643,7 @@ public class UserAccountResourceImpl
 				_getServiceBuilderEmailAddresses(userAccount),
 				_getServiceBuilderPhones(userAccount),
 				_getWebsites(userAccount), Collections.emptyList(), true,
-				ServiceContextRequestUtil.createServiceContext(
-					CustomFieldsUtil.toMap(
-						User.class.getName(), contextCompany.getCompanyId(),
-						userAccount.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale()),
-					contextCompany.getGroupId(), contextHttpServletRequest,
-					null));
+				serviceContext);
 		}
 
 		UserAccountContactInformation userAccountContactInformation =

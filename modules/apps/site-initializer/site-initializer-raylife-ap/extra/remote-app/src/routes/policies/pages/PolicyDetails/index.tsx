@@ -19,6 +19,7 @@ import {
 	getPolicyByExternalReferenceCode,
 } from '../../../../common/services';
 import {getQuotesById} from '../../../../common/services/Quote';
+import PolicyActiveClaims from '../components/PolicyActiveClaims';
 import PolicyDetail from '../components/PolicyDetail';
 import PolicySummary from '../components/PolicySummary';
 
@@ -99,6 +100,8 @@ const PolicyDetails = () => {
 					</>
 				)}
 			</div>
+
+			<PolicyActiveClaims />
 		</div>
 	);
 };

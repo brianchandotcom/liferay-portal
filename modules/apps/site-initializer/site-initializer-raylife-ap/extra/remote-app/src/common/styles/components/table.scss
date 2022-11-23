@@ -7,7 +7,7 @@
 	}
 
 	tbody {
-		td:after {
+		td::after {
 			background-image: linear-gradient(
 				to right,
 				#aaa 0%,

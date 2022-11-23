@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
@@ -67,6 +68,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -292,6 +294,8 @@ public class LayoutsTreeDisplayContext {
 			"isPrivateLayoutsTree", isPrivateLayout()
 		).put(
 			"items", _getLayoutsJSONArray()
+		).put(
+			"selectedLayoutPath", _getSelectedLayoutPath()
 		).put(
 			"selectedLayoutId", getSelPlid()
 		).build();
@@ -691,6 +695,22 @@ public class LayoutsTreeDisplayContext {
 		_redirect = redirect;
 
 		return _redirect;
+	}
+
+	private List<Long> _getSelectedLayoutPath() throws Exception {
+		long selPlid = getSelPlid();
+
+		if (selPlid <= 0) {
+			return Collections.emptyList();
+		}
+
+		List<Long> selectedLayoutPath = ListUtil.toList(
+			_layoutService.getAncestorLayouts(selPlid),
+			layout -> layout.getPlid());
+
+		selectedLayoutPath.add(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		return selectedLayoutPath;
 	}
 
 	private long _getSiteNavigationMenuId() {

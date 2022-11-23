@@ -55,8 +55,10 @@ public class ClientExtension {
 		String pid = clientExtensionTypePids.getProperty(type);
 
 		if ((pid != null) &&
-			(type.equals(_OAUTH_HEADLESS_SERVER_TYPE) ||
-			 type.equals(_OAUTH_USER_AGENT_TYPE)) &&
+			(type.equals(_NOTIFICATION_TYPE_TYPE) ||
+			 type.equals(_OAUTH_HEADLESS_SERVER_TYPE) ||
+			 type.equals(_OAUTH_USER_AGENT_TYPE) ||
+			 type.equals(_WORKFLOW_ACTION_TYPE)) &&
 			(_typeSettings.get("homePageURL") == null)) {
 
 			_typeSettings.put(
@@ -117,11 +119,15 @@ public class ClientExtension {
 
 	private static final String _BASE_URL_PREFIX = "${portalURL}/o/";
 
+	private static final String _NOTIFICATION_TYPE_TYPE = "notificationType";
+
 	private static final String _OAUTH_HEADLESS_SERVER_TYPE =
 		"oauthApplicationHeadlessServer";
 
 	private static final String _OAUTH_USER_AGENT_TYPE =
 		"oauthApplicationUserAgent";
+
+	private static final String _WORKFLOW_ACTION_TYPE = "workflowAction";
 
 	private final Map<String, Object> _typeSettings = new HashMap<>();
 

@@ -33,6 +33,8 @@ runGradleTest {
 
 		assert sampleConfigFile.exists()
 
+		assert sampleConfigFile.text.contains("CETConfiguration")
+
 		Task createClientExtensionConfigTask = sampleThemeFaviconProject.tasks["createClientExtensionConfig"]
 
 		File clientExtensionYamlFile = sampleThemeFaviconProject.file("client-extension.yaml")

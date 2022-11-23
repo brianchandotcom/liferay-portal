@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.TaskForm;
 import com.liferay.portal.workflow.kaleo.definition.TaskFormReference;
@@ -37,8 +38,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
-@Component(property = "node.type=TASK", service = NodeValidator.class)
+@Component(service = NodeValidator.class)
 public class TaskNodeValidator extends BaseNodeValidator<Task> {
+
+	@Override
+	public NodeType getNodeType() {
+		return NodeType.TASK;
+	}
 
 	@Override
 	protected void doValidate(Definition definition, Task task)

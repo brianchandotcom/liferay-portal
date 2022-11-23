@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.JoinXor;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
@@ -24,8 +25,13 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(property = "node.type=JOIN_XOR", service = NodeValidator.class)
+@Component(service = NodeValidator.class)
 public class JoinXorNodeValidator extends BaseNodeValidator<JoinXor> {
+
+	@Override
+	public NodeType getNodeType() {
+		return NodeType.JOIN_XOR;
+	}
 
 	@Override
 	protected void doValidate(Definition definition, JoinXor joinXor)

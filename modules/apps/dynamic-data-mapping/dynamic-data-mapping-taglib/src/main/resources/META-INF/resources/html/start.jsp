@@ -209,6 +209,16 @@
 					'#<portlet:namespace /><%= fieldsNamespace %>PaletteContentBox a'
 				);
 
+				const triggerMenu = A.one(
+					'#<portlet:namespace /><%= fieldsNamespace %>Menu'
+				);
+
+				const listContainer = triggerMenu.getData('menuListContainer');
+
+				if (childrenItems._nodes && !childrenItems._nodes.length && listContainer) {
+					childrenItems = listContainer.all(childrenItems._query);
+				}
+
 				childrenItems.each((item) => {
 					if (item.hasClass('active')) {
 						item.removeClass('active');
@@ -223,7 +233,7 @@
 
 				languageId = languageId.replace('_', '-');
 
-				var triggerContent = Lang.sub(
+				const triggerContent = Lang.sub(
 					'<span class="inline-item">{flag}</span><span class="btn-section">{languageId}</span>',
 					{
 						flag: Liferay.Util.getLexiconIconTpl(languageId.toLowerCase()),
@@ -231,9 +241,8 @@
 					}
 				);
 
-				var trigger = A.one('#<portlet:namespace /><%= fieldsNamespace %>Menu');
-
-				trigger.setHTML(triggerContent);
+				triggerMenu.setHTML(triggerContent);
+				triggerMenu.setData('menuListContainer', listContainer);
 			};
 
 			Liferay.on('inputLocalized:localeChanged', onLocaleChange);

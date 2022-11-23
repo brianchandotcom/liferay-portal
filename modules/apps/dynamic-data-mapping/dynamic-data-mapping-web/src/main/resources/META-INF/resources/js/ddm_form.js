@@ -1237,13 +1237,24 @@ AUI.add(
 						.getInputName()
 						.replace(regexpFieldsNamespace, '');
 
-					const labelItem = A.one(
+					const labelItemSelector =
 						'#' +
-							fieldsNamespace +
-							'PaletteContentBox a[data-value="' +
-							locale +
-							'"] .label'
+						fieldsNamespace +
+						'PaletteContentBox a[data-value="' +
+						locale +
+						'"] .label';
+
+					let labelItem = A.one(labelItemSelector);
+
+					const triggerMenu = A.one('#' + fieldsNamespace + 'Menu');
+
+					const listContainer = triggerMenu.getData(
+						'menuListContainer'
 					);
+
+					if (!labelItem && listContainer) {
+						labelItem = listContainer.one(labelItemSelector);
+					}
 
 					if (
 						labelItem &&
@@ -1265,6 +1276,8 @@ AUI.add(
 							labelItem.addClass('label-success');
 						}
 					}
+
+					triggerMenu.setData('menuListContainer', listContainer);
 				},
 
 				syncValueUI() {

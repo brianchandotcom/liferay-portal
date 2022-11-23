@@ -598,8 +598,6 @@ definition {
 	@description = "LPS-148112 - Verify that File Size and Format defined by admin are working correctly when using the 'Show Files' option"
 	@priority = "4"
 	test CanDefineMaximumFileSizeOnShowFilesOption {
-		property portal.upstream = "quarantine";
-
 		task ("Add new Custom Object (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 153423",
@@ -848,8 +846,6 @@ definition {
 	@description = "LPS-148112 - Verify that admin can edit the Storage Folder path in Published objects"
 	@priority = "4"
 	test CanEditPublishedObjectStorageFolder {
-		property portal.upstream = "quarantine";
-
 		task ("Add new Custom Object scoped by site (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 153424",
@@ -1110,8 +1106,6 @@ definition {
 	@description = "LPS-148112 - Verify that attchment field is working fine to the selecting Request Files: Directly from User's Computer when 'Show files' option is off"
 	@priority = "4"
 	test CanSaveDirectlyFromUsersComputerOptionWithShowFilesDisable {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153414",
 			objectName = "CustomObject153414",
@@ -1608,8 +1602,6 @@ definition {
 	@description = "LPS-148112 - Verify if on the side panel that only valid paths can be used on the 'Show files' settings"
 	@priority = "4"
 	test CanValidOnlyPathsDefinedOnShowFilesOption {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153421",
 			objectName = "CustomObject153421",

@@ -19,6 +19,40 @@ definition {
 	}
 
 	@priority = "4"
+	test ExternalDataSourceSmoke {
+		property skip.start.app.server = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "ServiceBuilder#ExternalDataSourceSmoke";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var appServerDir = PropsUtil.get("app.server.dir");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "replace-file -Dfile=${appServerDir}/webapps/ROOT/WEB-INF/classes/portal-ext.properties -Dtoken=jdbc.default -Dvalue=jdbc.test");
+
+		Portlet.startServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/test/external-data-source-test-api -DliferayHome=${liferayHome}");
+
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.external.data.source.test.api_");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/test/external-data-source-test-service -DliferayHome=${liferayHome}");
+
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.external.data.source.test.service_");
+
+		SignIn.signInTestSetup();
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
+	@priority = "4"
 	test RenameFinderColumn {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ServiceBuilder#RenameFinderColumn";

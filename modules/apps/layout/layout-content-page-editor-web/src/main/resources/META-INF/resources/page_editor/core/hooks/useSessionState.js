@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useCallback, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import isNullOrUndefined from '../../app/utils/isNullOrUndefined';
 
@@ -32,19 +32,14 @@ export function useSessionState(key, defaultValue = undefined) {
 		return defaultValue;
 	});
 
-	const updateState = useCallback(
-		(nextState) => {
-			setState(nextState);
+	useEffect(() => {
+		if (isNullOrUndefined(state)) {
+			window.sessionStorage.removeItem(key);
+		}
+		else {
+			window.sessionStorage.setItem(key, JSON.stringify(state));
+		}
+	}, [key, state]);
 
-			if (isNullOrUndefined(nextState)) {
-				window.sessionStorage.removeItem(key);
-			}
-			else {
-				window.sessionStorage.setItem(key, JSON.stringify(nextState));
-			}
-		},
-		[key]
-	);
-
-	return [state, updateState];
+	return [state, setState];
 }

@@ -132,7 +132,7 @@ const DealRegistrationList = () => {
 
 	return (
 		<div className="border-0 my-4">
-			<h1>Partner Deal Registration</h1>
+			<h1>Partner Opportunity Registration</h1>
 
 			<TableHeader>
 				<div className="d-flex">
@@ -169,7 +169,7 @@ const DealRegistrationList = () => {
 							)
 						}
 					>
-						Register New Deal
+						Register New Opportunity
 					</ClayButton>
 				</div>
 			</TableHeader>

@@ -34,7 +34,7 @@ const Review = ({
 				className="bg-neutral-0"
 				description="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus"
 				name="review"
-				title="Review Deal Registration"
+				title="Review Opportunity Registration"
 			>
 				<Table
 					borderless

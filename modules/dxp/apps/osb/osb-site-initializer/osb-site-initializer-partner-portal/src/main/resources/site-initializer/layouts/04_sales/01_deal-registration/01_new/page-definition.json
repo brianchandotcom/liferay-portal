@@ -140,19 +140,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"ar_SA": "Deal Registration",
-																"ca_ES": "Deal Registration",
-																"de_DE": "Deal Registration",
-																"en_US": "Deal Registration",
-																"es_ES": "Deal Registration",
-																"fi_FI": "Deal Registration",
-																"fr_FR": "Deal Registration",
-																"hu_HU": "Deal Registration",
-																"ja_JP": "Deal Registration",
-																"nl_NL": "Deal Registration",
-																"pt_BR": "Deal Registration",
-																"sv_SE": "Deal Registration",
-																"zh_CN": "Deal Registration"
+																"ar_SA": "Opportunity Registration",
+																"ca_ES": "Opportunity Registration",
+																"de_DE": "Opportunity Registration",
+																"en_US": "Opportunity Registration",
+																"es_ES": "Opportunity Registration",
+																"fi_FI": "Opportunity Registration",
+																"fr_FR": "Opportunity Registration",
+																"hu_HU": "Opportunity Registration",
+																"ja_JP": "Opportunity Registration",
+																"nl_NL": "Opportunity Registration",
+																"pt_BR": "Opportunity Registration",
+																"sv_SE": "Opportunity Registration",
+																"zh_CN": "Opportunity Registration"
 															}
 														}
 													}

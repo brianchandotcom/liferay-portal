@@ -59,7 +59,7 @@ public class JournalDisplayPageFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (isDepotOrGlobalScopeArticle(article) ||
-			_isGlobalStructure(article)) {
+			_isEditGlobalScopeStructureDefaultValues(article)) {
 
 			return false;
 		}
@@ -82,7 +82,9 @@ public class JournalDisplayPageFormNavigatorEntry
 		return "/article/asset_display_page.jsp";
 	}
 
-	private boolean _isGlobalStructure(JournalArticle article) {
+	private boolean _isEditGlobalScopeStructureDefaultValues(
+		JournalArticle article) {
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 

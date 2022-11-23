@@ -208,4 +208,44 @@ definition {
 		}
 	}
 
+	@description = "Verify when an existing factory config is renamed, the old entry is removed and the new one is added."
+	@priority = "3"
+	test RenameFactoryConfig {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~original.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property test.name.skip.portal.instance = "OSGIConfiguration#RenameFactoryConfig";
+
+		task ("Given an existing factory config") {
+			var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration";
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}~original%'",
+				text = "enabled=\"true\"");
+		}
+
+		task ("When the factory config is renamed") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var configDir = "${liferayHome}/osgi/configs/${configName}";
+
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "move-file -Dfile=${configDir}~original.config -Dtofile=${configDir}~new.config");
+		}
+
+		task ("Then the old entry is removed from the database") {
+			OSGiConfig.waitForOSGiConfig();
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}~original%'",
+				text = "0");
+		}
+
+		task ("And the new one is added") {
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}~new%'",
+				text = "enabled=\"true\"");
+		}
+	}
+
 }

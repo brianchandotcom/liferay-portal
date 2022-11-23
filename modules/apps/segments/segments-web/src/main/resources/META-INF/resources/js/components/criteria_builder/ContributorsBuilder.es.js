@@ -52,6 +52,7 @@ class ContributorBuilder extends React.Component {
 		previewMembersURL: PropTypes.string,
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 		renderEmptyValuesErrors: PropTypes.bool,
+		scopeName: PropTypes.string,
 		supportedConjunctions: PropTypes.arrayOf(conjunctionShape).isRequired,
 		supportedOperators: PropTypes.arrayOf(operatorShape).isRequired,
 		supportedPropertyTypes: propertyTypesShape.isRequired,
@@ -112,6 +113,7 @@ class ContributorBuilder extends React.Component {
 			onPreviewMembers,
 			propertyGroups,
 			renderEmptyValuesErrors,
+			scopeName,
 			supportedConjunctions,
 			supportedOperators,
 			supportedPropertyTypes,
@@ -187,19 +189,8 @@ class ContributorBuilder extends React.Component {
 										>
 											<ClayPanel.Body className="align-items-center d-flex justify-content-between p-4">
 												<p className="mb-0 mr-6">
-													{Liferay.Language.get(
-														'select-the-scope-of-your-segment-to-specify-where-it-can-be-used'
-													)}
+													{scopeName}
 												</p>
-
-												<ClayButton
-													displayType="secondary"
-													size="sm"
-												>
-													{Liferay.Language.get(
-														'select'
-													)}
-												</ClayButton>
 											</ClayPanel.Body>
 										</ClayPanel>
 									)}

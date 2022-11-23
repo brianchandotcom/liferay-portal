@@ -69,6 +69,7 @@ class SegmentEdit extends Component {
 		propertyGroups: PropTypes.array,
 		redirect: PropTypes.string.isRequired,
 		requestMembersCountURL: PropTypes.string,
+		scopeName: PropTypes.string,
 		segmentsConfigurationURL: PropTypes.string,
 		setFieldValue: PropTypes.func,
 		setValues: PropTypes.func,
@@ -290,6 +291,7 @@ class SegmentEdit extends Component {
 				propertyGroups={propertyGroups}
 				renderEmptyValuesErrors={queryHasEmptyValues}
 				requestMembersCountURL={requestMembersCountURL}
+				scopeName={this.props.scopeName}
 				segmentName={segmentName}
 				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
 				supportedOperators={SUPPORTED_OPERATORS}

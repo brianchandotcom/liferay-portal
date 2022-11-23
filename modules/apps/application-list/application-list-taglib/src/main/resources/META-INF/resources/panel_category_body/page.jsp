@@ -47,7 +47,7 @@
 								).build()
 							%>'
 							href="<%= url %>"
-							id="portlet_<%= panelApp.getPortletId() %>"
+							id='<%= "portlet_" + panelApp.getPortletId() %>'
 						>
 							<%= label %>
 

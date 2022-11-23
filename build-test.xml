@@ -11793,6 +11793,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<get-ip-address />
 
 		<echo append="true" file="${test.ext.properties.file}">
+			app.server.bin.dir=${app.server.bin.dir}
 			app.server.temp.dir=${app.server.tomcat.temp.dir}
 			app.server.type=${app.server.type}
 			component.names=${component.names}

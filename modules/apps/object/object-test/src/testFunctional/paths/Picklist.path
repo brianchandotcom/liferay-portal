@@ -127,7 +127,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_FIELD_RELATIONSHIP_OBJECT</td>
-		<td>//div[(@class='form-builder-select-field input-group-container')and contains(.,'${key_selectField}')]/div[@class='form-control results-chosen select-field-trigger']</td>
+		<td>//div[contains(@class, 'form-builder-select-field input-group-container')and contains(.,'${key_selectField}')]/div[@class='form-control results-chosen select-field-trigger']</td>
 		<td></td>
 	</tr>
 	<tr>

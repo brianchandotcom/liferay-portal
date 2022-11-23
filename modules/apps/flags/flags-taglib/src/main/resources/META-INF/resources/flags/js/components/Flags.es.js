@@ -14,23 +14,14 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {useModal} from '@clayui/modal';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React from 'react';
 
-import ThemeContext from '../ThemeContext.es';
-import {
-	OTHER_REASON_VALUE,
-	STATUS_ERROR,
-	STATUS_LOGIN,
-	STATUS_REPORT,
-	STATUS_SUCCESS,
-} from '../constants.es';
+import useFlags from '../hooks/useFlags.es';
 import FlagsModal from './FlagsModal.es';
 
 const Flags = ({
+	namespace,
 	baseData,
 	btnProps,
 	captchaURI,
@@ -46,100 +37,19 @@ const Flags = ({
 	uri,
 	viewMode,
 }) => {
-	const [isSending, setIsSending] = useState(false);
-	const [reportDialogOpen, setReportDialogOpen] = useState(false);
-	const [status, setStatus] = useState(
-		forceLogin ? STATUS_LOGIN : STATUS_REPORT
-	);
-	const [error, setError] = useState(null);
-
-	const [otherReason, setOtherReason] = useState('');
-	const [reporterEmailAddress, setReporterEmailAddress] = useState('');
-	const [selectedReason, setSelectedReason] = useState(
-		Object.keys(reasons)[0]
-	);
-
-	const {namespace} = useContext(ThemeContext);
-
-	const getReason = () => {
-		if (selectedReason === OTHER_REASON_VALUE) {
-			return otherReason || Liferay.Language.get('no-reason-specified');
-		}
-
-		return selectedReason;
-	};
-
-	const handleClickShow = () => {
-		setReportDialogOpen(true);
-	};
-
-	const handleClickClose = () => {
-		setError(false);
-		setReportDialogOpen(false);
-	};
-
-	const form = {
-		otherReason,
-		reporterEmailAddress,
+	const {
+		error,
+		form,
+		handleClickShow,
+		handleInputChange,
+		handleSubmitReport,
+		isSending,
+		observer,
+		onClose,
+		reportDialogOpen,
 		selectedReason,
-	};
-
-	const handleInputChange = (event) => {
-		const target = event.target;
-		const value =
-			target.type === 'checkbox' ? target.checked : target.value.trim();
-		const name = target.name;
-
-		if (name === 'otherReason') {
-			setOtherReason(value);
-		}
-		else if (name === 'reporterEmailAddress') {
-			setReporterEmailAddress(value);
-		}
-		else if (name === 'selectedReason') {
-			setSelectedReason(value);
-		}
-	};
-
-	const isMounted = useIsMounted();
-
-	const handleSubmitReport = (event) => {
-		event.preventDefault();
-
-		setIsSending(true);
-
-		const formDataObj = {
-			...baseData,
-			[`${namespace}reason`]: getReason(),
-			[`${namespace}reporterEmailAddress`]: signedIn
-				? Liferay.ThemeDisplay.getUserEmailAddress()
-				: reporterEmailAddress,
-		};
-
-		fetch(uri, {
-			body: objectToFormData(formDataObj, new FormData(event.target)),
-			method: 'post',
-		})
-			.then((res) => res.json())
-			.then(({error}) => {
-				if (isMounted()) {
-					setError(error);
-					setIsSending(false);
-					if (!error) {
-						setStatus(STATUS_SUCCESS);
-					}
-				}
-			})
-			.catch(() => {
-				if (isMounted()) {
-					setStatus(STATUS_ERROR);
-				}
-			});
-	};
-
-	const {observer, onClose} = useModal({
-		onClose: handleClickClose,
-	});
+		status,
+	} = useFlags({baseData, forceLogin, namespace, reasons, signedIn, uri});
 
 	return (
 		<>
@@ -171,6 +81,7 @@ const Flags = ({
 					{message}
 				</span>
 			</ClayButton>
+
 			{reportDialogOpen && (
 				<FlagsModal
 					captchaURI={captchaURI}
@@ -181,6 +92,7 @@ const Flags = ({
 					handleInputChange={handleInputChange}
 					handleSubmit={handleSubmitReport}
 					isSending={isSending}
+					namespace={namespace}
 					observer={observer}
 					pathTermsOfUse={pathTermsOfUse}
 					reasons={reasons}
@@ -192,6 +104,7 @@ const Flags = ({
 		</>
 	);
 };
+
 Flags.propTypes = {
 	baseData: PropTypes.object.isRequired,
 	btnProps: PropTypes.object,
@@ -200,6 +113,7 @@ Flags.propTypes = {
 	disabled: PropTypes.bool,
 	forceLogin: PropTypes.bool,
 	message: PropTypes.string,
+	namespace: PropTypes.string,
 	onlyIcon: PropTypes.bool,
 	pathTermsOfUse: PropTypes.string.isRequired,
 	reasons: PropTypes.object.isRequired,

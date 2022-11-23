@@ -16,9 +16,8 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import ThemeContext from '../ThemeContext.es';
 import {
 	OTHER_REASON_VALUE,
 	STATUS_ERROR,
@@ -36,6 +35,7 @@ const ModalContentForm = ({
 	error,
 	form = {},
 	handleClose,
+	namespace,
 	handleInputChange,
 	handleSubmit,
 	isSending,
@@ -44,8 +44,6 @@ const ModalContentForm = ({
 	selectedReason,
 	signedIn,
 }) => {
-	const {namespace} = useContext(ThemeContext);
-
 	return (
 		<form
 			aria-label={Liferay.Language.get('report-inappropriate-content')}
@@ -238,6 +236,7 @@ const FlagsModal = ({
 	handleInputChange,
 	handleSubmit,
 	isSending,
+	namespace,
 	observer,
 	pathTermsOfUse,
 	reasons,
@@ -260,6 +259,7 @@ const FlagsModal = ({
 					handleInputChange={handleInputChange}
 					handleSubmit={handleSubmit}
 					isSending={isSending}
+					namespace={namespace}
 					pathTermsOfUse={pathTermsOfUse}
 					reasons={reasons}
 					selectedReason={selectedReason}

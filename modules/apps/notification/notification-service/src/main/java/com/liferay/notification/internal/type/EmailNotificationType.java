@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
@@ -384,10 +383,6 @@ public class EmailNotificationType extends BaseNotificationType {
 				notificationTemplate.getEditorType())) {
 
 			return formatLocalizedContent(bodyMap, notificationContext);
-		}
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-162598"))) {
-			return StringPool.BLANK;
 		}
 
 		String body = notificationTemplate.getBody(userLocale);

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class IndexerRequestBufferOverflowHandler {
 
-	public boolean bufferOverflowed(
+	public void bufferOverflowed(
 		IndexerRequestBuffer indexerRequestBuffer, int maxBufferSize) {
 
 		int currentBufferSize = indexerRequestBuffer.size();
@@ -47,7 +47,7 @@ public class IndexerRequestBufferOverflowHandler {
 					"Buffer size is less than maximum: " + maxBufferSize);
 			}
 
-			return false;
+			return;
 		}
 
 		int numRequests = Math.round(
@@ -65,8 +65,6 @@ public class IndexerRequestBufferOverflowHandler {
 				BufferOverflowThreadLocal.setOverflowMode(false);
 			}
 		}
-
-		return true;
 	}
 
 	@Activate

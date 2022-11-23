@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.TaskForm;
 import com.liferay.portal.workflow.kaleo.definition.TaskFormReference;
@@ -35,9 +36,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(property = "node.type=TASK", service = NodeBuilder.class)
+@Component(service = NodeBuilder.class)
 public class TaskNodeBuilder
 	extends BaseNodeBuilder<Task> implements NodeBuilder {
+
+	@Override
+	public NodeType getNodeType() {
+		return NodeType.TASK;
+	}
 
 	@Override
 	protected Task createNode(KaleoNode kaleoNode) throws PortalException {

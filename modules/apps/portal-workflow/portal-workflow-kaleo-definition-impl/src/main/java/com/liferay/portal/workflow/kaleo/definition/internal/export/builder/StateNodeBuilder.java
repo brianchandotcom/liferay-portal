@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
 
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
@@ -22,9 +23,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(property = "node.type=STATE", service = NodeBuilder.class)
+@Component(service = NodeBuilder.class)
 public class StateNodeBuilder
 	extends BaseNodeBuilder<State> implements NodeBuilder {
+
+	@Override
+	public NodeType getNodeType() {
+		return NodeType.STATE;
+	}
 
 	@Override
 	protected State createNode(KaleoNode kaleoNode) {

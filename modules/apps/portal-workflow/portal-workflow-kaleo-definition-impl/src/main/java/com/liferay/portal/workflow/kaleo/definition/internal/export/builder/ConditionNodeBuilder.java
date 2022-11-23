@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
@@ -26,9 +27,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(property = "node.type=CONDITION", service = NodeBuilder.class)
+@Component(service = NodeBuilder.class)
 public class ConditionNodeBuilder
 	extends BaseNodeBuilder<Condition> implements NodeBuilder {
+
+	@Override
+	public NodeType getNodeType() {
+		return NodeType.CONDITION;
+	}
 
 	@Override
 	protected Condition createNode(KaleoNode kaleoNode) throws PortalException {

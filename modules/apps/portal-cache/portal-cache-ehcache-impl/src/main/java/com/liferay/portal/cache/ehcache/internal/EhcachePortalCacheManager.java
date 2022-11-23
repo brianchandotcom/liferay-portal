@@ -170,10 +170,15 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 						(LowLevelCache<K, MVCCModel>)value);
 				}
 
-				if (_transactionalPortalCacheEnabled &&
-					_isTransactionalPortalCache(portalCacheName)) {
+				if (_transactionalPortalCacheEnabled) {
+					for (String namePattern : _transactionalPortalCacheNames) {
+						if (StringUtil.wildcardMatches(
+								portalCacheName, namePattern, CharPool.QUESTION,
+								CharPool.STAR, CharPool.PERCENT, true)) {
 
-					value = new TransactionalPortalCache<>(value, mvcc);
+							value = new TransactionalPortalCache<>(value, mvcc);
+						}
+					}
 				}
 
 				return value;
@@ -418,19 +423,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			portalCache.registerPortalCacheListener(
 				portalCacheListener, portalCacheListenerScope);
 		}
-	}
-
-	private boolean _isTransactionalPortalCache(String portalCacheName) {
-		for (String namePattern : _transactionalPortalCacheNames) {
-			if (StringUtil.wildcardMatches(
-					portalCacheName, namePattern, CharPool.QUESTION,
-					CharPool.STAR, CharPool.PERCENT, true)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private void _reconfigEhcache(Configuration configuration) {

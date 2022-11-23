@@ -17,11 +17,14 @@ package com.liferay.portal.workflow.kaleo.definition.parser;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 
 /**
  * @author Michael C. Han
  */
 public interface NodeValidator<T extends Node> {
+
+	public NodeType getNodeType();
 
 	public void validate(Definition definition, T node)
 		throws WorkflowException;

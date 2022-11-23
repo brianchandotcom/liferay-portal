@@ -143,20 +143,19 @@ out.println(PortalUtil.escapeRedirect("/"));
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Define user permissions view control panel menu") {
-			Role.openRolesAdmin();
-
-			Role.definePermissionCmdCP(
-				permissionDefinitionKeys = "CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX",
-				permissionDefinitionValue = "View Control Panel Menu",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
 				roleTitle = "User");
 		}
 
 		task ("Define user permissions") {
-			Role.openRolesAdmin();
-
-			Role.definePermissionCmdCP(
-				permissionDefinitionKeys = "CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX,CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "User");
+			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
+					roleTitle = "User");
+			}
 		}
 
 		task ("Add user") {
@@ -310,11 +309,9 @@ out.println(PortalUtil.escapeRedirect("/"));
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateViewPermissionCanNotUpdateOtherUsersPassword";
 
 		task ("Define user permission") {
-			Role.openRolesAdmin();
-
-			Role.definePermissionCmdCP(
-				permissionDefinitionKeys = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_VIEW_CHECKBOX",
-				permissionDefinitionValue = "View",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.User",
 				roleTitle = "User");
 		}
 

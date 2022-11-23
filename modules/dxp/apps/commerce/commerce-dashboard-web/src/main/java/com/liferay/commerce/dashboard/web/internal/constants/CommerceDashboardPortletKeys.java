@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.dashboard.web.internal.constants;
 
+import com.liferay.commerce.constants.CommercePortletKeys;
+
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
@@ -21,8 +23,7 @@ package com.liferay.commerce.dashboard.web.internal.constants;
 public class CommerceDashboardPortletKeys {
 
 	public static final String COMMERCE_DASHBOARD_FORECASTS_CHART =
-		"com_liferay_commerce_dashboard_web_internal_portlet_" +
-			"CommerceDashboardForecastsChartPortlet";
+		CommercePortletKeys.COMMERCE_DASHBOARD_FORECASTS_CHART;
 
 	public static final String COMMERCE_DASHBOARD_HISTORY_CHART =
 		"com_liferay_commerce_dashboard_web_internal_portlet_" +

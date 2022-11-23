@@ -78,9 +78,12 @@ const PatternField = ({
 					id="destinationURL"
 					name={`${portletNamespace}destinationURL_${index}`}
 					onBlur={({currentTarget}) => {
-						const error = !urlAllowRelative(currentTarget.value);
+						const error = Boolean(
+							destinationUrl &&
+								!urlAllowRelative(currentTarget.value)
+						);
 
-						handlePatternError(destinationUrl && error, index);
+						handlePatternError(error, index);
 					}}
 					onChange={({currentTarget}) =>
 						setDestinationUrl(currentTarget.value)
@@ -145,6 +148,16 @@ const RedirectPattern = ({
 		pattern: '',
 	});
 
+	const [patterns, setPatterns] = useState(
+		initialPatternsList && !!initialPatternsList.length
+			? initialPatternsList.map((item) => ({
+					...item,
+					error: false,
+					id: uuidv4(),
+			  }))
+			: [emptyRow()]
+	);
+
 	const addRow = (index) => {
 		const tempList = [...patterns];
 		tempList.splice(index + 1, 0, emptyRow());
@@ -157,19 +170,9 @@ const RedirectPattern = ({
 		setPatterns(tempList);
 	};
 
-	const [patterns, setPatterns] = useState(
-		initialPatternsList && !!initialPatternsList.length
-			? initialPatternsList.map((item) => ({
-					...item,
-					error: false,
-					id: uuidv4(),
-			  }))
-			: [emptyRow()]
-	);
-
 	const handleUrlError = (error, index) => {
 		const tempList = [...patterns];
-		tempList[index].error = error;
+		tempList[index].error = {...tempList[index], error};
 		setPatterns(tempList);
 	};
 

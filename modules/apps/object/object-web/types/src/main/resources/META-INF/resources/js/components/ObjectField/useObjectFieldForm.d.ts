@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 interface IUseObjectFieldForm {
 	forbiddenChars?: string[];
 	forbiddenLastChars?: string[];

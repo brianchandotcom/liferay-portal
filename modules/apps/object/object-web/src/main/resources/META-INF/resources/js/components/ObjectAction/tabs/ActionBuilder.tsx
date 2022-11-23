@@ -736,24 +736,25 @@ export default function ActionBuilder({
 				)}
 			</Card>
 
-			{values.objectActionTriggerKey === 'standalone' && (
-				<Card title={Liferay.Language.get('error-message')}>
-					<InputLocalized
-						error={errors.errorMessage}
-						label={Liferay.Language.get('message')}
-						name="label"
-						onChange={(value) =>
-							setValues({
-								errorMessage: value,
-							})
-						}
-						required
-						translations={
-							values.errorMessage ?? {[defaultLanguageId]: ''}
-						}
-					/>
-				</Card>
-			)}
+			{Liferay.FeatureFlags['LPS-148804'] &&
+				values.objectActionTriggerKey === 'standalone' && (
+					<Card title={Liferay.Language.get('error-message')}>
+						<InputLocalized
+							error={errors.errorMessage}
+							label={Liferay.Language.get('message')}
+							name="label"
+							onChange={(value) =>
+								setValues({
+									errorMessage: value,
+								})
+							}
+							required
+							translations={
+								values.errorMessage ?? {[defaultLanguageId]: ''}
+							}
+						/>
+					</Card>
+				)}
 		</>
 	);
 }

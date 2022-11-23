@@ -35,22 +35,26 @@ export default function BasicInfo({
 }: IProps) {
 	return (
 		<Card title={Liferay.Language.get('basic-info')}>
-			<InputLocalized
-				error={errors.label}
-				label={Liferay.Language.get('action-label')}
-				name="label"
-				onChange={(label) =>
-					setValues({
-						...values,
-						...(!isApproved && {
-							name: toCamelCase(label[defaultLanguageId] ?? ''),
-						}),
-						label,
-					})
-				}
-				required
-				translations={values.label ?? {[defaultLanguageId]: ''}}
-			/>
+			{Liferay.FeatureFlags['LPS-148804'] && (
+				<InputLocalized
+					error={errors.label}
+					label={Liferay.Language.get('action-label')}
+					name="label"
+					onChange={(label) =>
+						setValues({
+							...values,
+							...(!isApproved && {
+								name: toCamelCase(
+									label[defaultLanguageId] ?? ''
+								),
+							}),
+							label,
+						})
+					}
+					required
+					translations={values.label ?? {[defaultLanguageId]: ''}}
+				/>
+			)}
 
 			<Input
 				disabled={isApproved}

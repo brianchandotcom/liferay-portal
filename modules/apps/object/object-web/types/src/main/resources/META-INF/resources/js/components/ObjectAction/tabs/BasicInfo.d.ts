@@ -15,17 +15,17 @@
 import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
 export default function BasicInfo({
-	isApproved,
 	errors,
 	handleChange,
+	isApproved,
 	readOnly,
 	setValues,
 	values,
 }: IProps): JSX.Element;
 interface IProps {
-	isApproved: boolean;
 	errors: FormError<ObjectAction & ObjectActionParameters>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	isApproved: boolean;
 	readOnly?: boolean;
 	setValues: (values: Partial<ObjectAction>) => void;
 	values: Partial<ObjectAction>;

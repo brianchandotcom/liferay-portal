@@ -53,7 +53,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 					int notificationsCount = PanelCategoryUtil.getNotificationsCount(request, childPanelCategory, panelCategoryHelper);
 					%>
 
-					<a aria-expanded="<%= active %>" class="<%= PanelCategoryUtil.isHeaderActive(request, childPanelCategory, panelCategoryHelper) ? "active" : "" %> collapse-icon collapse-icon-middle nav-link <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading panel-header" data-qa-id="appGroup" data-toggle="liferay-collapse" href="#<%= id %>">
+					<a aria-expanded="<%= active %>" class="<%= PanelCategoryUtil.isHeaderActive(request, childPanelCategory, panelCategoryHelper) ? "active" : "" %> collapse-icon collapse-icon-middle nav-link <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading panel-header" data-qa-id="appGroup" data-toggle="liferay-collapse" href="#<%= id %>" id="<%= id %>-link">
 						<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>">
 							<%= childPanelCategory.getLabel(themeDisplay.getLocale()) %>
 
@@ -126,7 +126,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 								</c:if>
 							</c:if>
 
-							<ul aria-labelledby="<%= id %>" class="nav nav-equal-height nav-stacked" role="menu">
+							<ul aria-labelledby="<%= id %>-link" class="nav nav-equal-height nav-stacked" role="menu">
 
 								<%
 								for (PanelApp panelApp : childPanelCategoryPanelApps) {

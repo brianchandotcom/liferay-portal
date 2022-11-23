@@ -16,10 +16,9 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {useSessionState} from '@liferay/layout-content-page-editor-web';
 import {fetch, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 const ENTER_KEYCODE = 13;
 const ROOT_ITEM_ID = '0';
@@ -30,6 +29,7 @@ export default function PagesTree({
 	isPrivateLayoutsTree,
 	items,
 	selectedLayoutId,
+	selectedLayoutPath,
 }) {
 	const {loadMoreItemsURL, maxPageSize, moveItemURL, namespace} = config;
 
@@ -81,10 +81,7 @@ export default function PagesTree({
 		[moveItemURL]
 	);
 
-	const [
-		expandedKeys,
-		setExpandedKeys,
-	] = useSessionState(`${namespace}_expandedKeys`, [ROOT_ITEM_ID]);
+	const [expandedKeys, setExpandedKeys] = useState(selectedLayoutPath);
 
 	return (
 		<div className="pages-tree">

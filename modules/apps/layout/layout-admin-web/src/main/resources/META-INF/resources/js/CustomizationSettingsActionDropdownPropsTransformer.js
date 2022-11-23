@@ -12,9 +12,23 @@
  * details.
  */
 
+import {openConfirmModal} from 'frontend-js-web';
+
 const ACTIONS = {
 	resetCustomizationView(itemData) {
-		submitForm(document.hrefFm, itemData.resetCustomizationViewURL);
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-reset-your-customizations-to-default'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(
+						document.hrefFm,
+						itemData.resetCustomizationViewURL
+					);
+				}
+			},
+		});
 	},
 
 	toggleCustomizedViewMessage(itemData) {

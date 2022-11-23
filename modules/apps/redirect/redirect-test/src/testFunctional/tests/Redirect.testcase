@@ -1419,8 +1419,6 @@ definition {
 			groupName = "Test Site Name",
 			sourceURL = "google");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/hu/google");
 
 		AssertLocation(value1 = "https://www.google.hu/");

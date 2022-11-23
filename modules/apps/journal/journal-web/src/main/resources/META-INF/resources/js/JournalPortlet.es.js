@@ -89,7 +89,12 @@ export default function _JournalPortlet({
 			: Liferay.Language.get('open-configuration-panel');
 
 		contextualSidebarButton.setAttribute('aria-label', title);
+		contextualSidebarButton.setAttribute('aria-selected', isOpen);
 		contextualSidebarButton.setAttribute('title', title);
+
+		if (isOpen) {
+			contextualSidebarContainer.focus();
+		}
 	};
 
 	const handleDDMFormError = (error) => {

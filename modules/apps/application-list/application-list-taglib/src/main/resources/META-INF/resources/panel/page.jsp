@@ -26,7 +26,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 %>
 
-<div id="<portlet:namespace /><%= panelCategory.getKey() %>_panel" tabindex="0">
+<div class="m-1" id="<portlet:namespace /><%= panelCategory.getKey() %>_panel" tabindex="0">
 	<div class="list-group">
 
 		<%

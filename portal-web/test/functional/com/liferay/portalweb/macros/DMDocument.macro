@@ -1920,9 +1920,9 @@ definition {
 				value1 = "ta");
 
 			AssertClick(
-				key_tagName = "tagtwo",
+				key_tagName = "tagone",
 				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
-				value1 = "tagtwo");
+				value1 = "tagone");
 		}
 		else {
 			Type(

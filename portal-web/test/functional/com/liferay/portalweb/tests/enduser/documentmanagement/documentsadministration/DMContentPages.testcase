@@ -40,10 +40,13 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Content Page Name",
-			widgetName = "Documents and Media");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
@@ -65,6 +68,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete on a content page."
+	@e2etest
 	@priority = "5"
 	@refactordone
 	test CanCreateTagUsingAutocomplete {
@@ -76,23 +80,29 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Content Page Name",
-			widgetName = "Documents and Media");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addMultiplePG(
+			contentPage = "true",
+			dmDocumentFileList = "Document_1.doc,Document_2.docx");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(tagName = "tagone");
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_2");
 
@@ -102,7 +112,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_2");
 
-		DMDocument.viewTagInfo(tagName = "tagtwo");
+		DMDocument.viewTagInfo(tagName = "tagone");
 	}
 
 	@description = "This test ensures that user can edit document in folder via a content page."
@@ -118,10 +128,13 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Content Page Name",
-			widgetName = "Documents and Media");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		PageEditor.publish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
@@ -134,11 +147,13 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addPG(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -171,10 +186,19 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page Name",
-			widgetName = "Documents and Media");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -183,16 +207,22 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		JSONDocument.addShortcut(
-			dmDocumentTitle = "Document_1.jpg",
-			sourceGroupName = "Site Name",
-			targetGroupName = "Test Site Name");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
-		JSONDocument.deleteFile(
+		DMDocument.addDMShortcutPG(
+			contentPage = "Test Content Page Name",
 			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Site Name");
+			siteName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewDefault();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 

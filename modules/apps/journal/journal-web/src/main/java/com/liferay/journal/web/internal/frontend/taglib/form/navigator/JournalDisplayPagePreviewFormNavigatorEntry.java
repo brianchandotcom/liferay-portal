@@ -51,7 +51,8 @@ public class JournalDisplayPagePreviewFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (!isEditDefaultValues(article) &&
-			(_isDepotArticle(article) || isGlobalScopeArticle(article))) {
+			(_isDepotArticle(article) ||
+			 isDepotOrGlobalScopeArticle(article))) {
 
 			return true;
 		}

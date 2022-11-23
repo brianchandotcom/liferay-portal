@@ -141,6 +141,8 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if (_isDragAndDrop(dragAndDrop)) {
+				hideDefaultSuccessMessage(actionRequest);
+
 				JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
 
 				JSONPortletResponseUtil.writeJSON(
@@ -164,6 +166,8 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String message)
 		throws IOException {
+
+		hideDefaultErrorMessage(actionRequest);
 
 		JSONObject jsonObject = JSONUtil.put("errorMessage", message);
 

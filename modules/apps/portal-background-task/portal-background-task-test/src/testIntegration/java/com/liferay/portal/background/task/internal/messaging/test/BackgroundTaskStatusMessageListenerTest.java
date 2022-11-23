@@ -15,14 +15,11 @@
 package com.liferay.portal.background.task.internal.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -32,11 +29,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -56,18 +55,33 @@ public class BackgroundTaskStatusMessageListenerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testDoReceive() throws Exception {
+	public void testSendUserNotifications() throws Exception {
 		_user = UserTestUtil.addUser();
 
+		BackgroundTaskExecutor backgroundTaskExecutor =
+			(BackgroundTaskExecutor)ProxyUtil.newProxyInstance(
+				BackgroundTaskStatusMessageListenerTest.class.getClassLoader(),
+				new Class<?>[] {BackgroundTaskExecutor.class},
+				(proxy, method, argus) -> {
+					if (Objects.equals(method.getName(), "execute")) {
+						return new BackgroundTaskResult(
+							BackgroundTaskConstants.STATUS_FAILED);
+					}
+
+					return null;
+				});
+
+		Class<?> backgroundTaskExecutorClass =
+			backgroundTaskExecutor.getClass();
+
 		_backgroundTaskExecutorRegistry.registerBackgroundTaskExecutor(
-			TestBackgroundTaskExecutor.class.getName(),
-			new TestBackgroundTaskExecutor());
+			backgroundTaskExecutorClass.getName(), backgroundTaskExecutor);
 
 		try {
 			_backgroundTaskManager.addBackgroundTask(
 				_user.getUserId(), CompanyConstants.SYSTEM,
 				BackgroundTaskStatusMessageListenerTest.class.getName(),
-				TestBackgroundTaskExecutor.class.getName(), new HashMap<>(),
+				backgroundTaskExecutorClass.getName(), new HashMap<>(),
 				new ServiceContext());
 
 			List<UserNotificationEvent> userNotificationEvents =
@@ -91,12 +105,12 @@ public class BackgroundTaskStatusMessageListenerTest {
 				BackgroundTaskStatusMessageListenerTest.class.getName(),
 				jsonObject.getString("name"));
 			Assert.assertEquals(
-				TestBackgroundTaskExecutor.class.getName(),
+				backgroundTaskExecutorClass.getName(),
 				jsonObject.getString("taskExecutorClassName"));
 		}
 		finally {
 			_backgroundTaskExecutorRegistry.unregisterBackgroundTaskExecutor(
-				TestBackgroundTaskExecutor.class.getName());
+				backgroundTaskExecutorClass.getName());
 		}
 	}
 
@@ -115,28 +129,5 @@ public class BackgroundTaskStatusMessageListenerTest {
 	@Inject
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
-
-	private static class TestBackgroundTaskExecutor
-		extends BaseBackgroundTaskExecutor {
-
-		@Override
-		public BackgroundTaskExecutor clone() {
-			return this;
-		}
-
-		@Override
-		public BackgroundTaskResult execute(BackgroundTask backgroundTask) {
-			return new BackgroundTaskResult(
-				BackgroundTaskConstants.STATUS_FAILED);
-		}
-
-		@Override
-		public BackgroundTaskDisplay getBackgroundTaskDisplay(
-			BackgroundTask backgroundTask) {
-
-			return null;
-		}
-
-	}
 
 }

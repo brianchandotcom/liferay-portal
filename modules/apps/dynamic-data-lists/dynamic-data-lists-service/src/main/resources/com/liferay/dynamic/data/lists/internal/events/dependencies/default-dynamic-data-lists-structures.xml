@@ -355,7 +355,7 @@
 			</dynamic-element>
 			<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" name="endDate" required="false" showLabel="true" type="ddm-date">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="label"><![CDATA[end date]]></entry>
+					<entry name="label"><![CDATA[end-date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>

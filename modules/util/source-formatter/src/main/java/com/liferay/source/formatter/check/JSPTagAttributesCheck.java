@@ -261,9 +261,9 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 			addMessage(
 				fileName,
-				"Should always specify some 'aria-label', 'aria-labelledby' " +
-					"or 'title' attribute when using 'clay:dropdown-actions' " +
-						"taglib",
+				"When using <clay:dropdown-actions>, always specify one of " +
+					"the follwing attributes: 'aria-label', " +
+						"'aria-labelledby', 'title'",
 				getLineNumber(content, x));
 		}
 	}

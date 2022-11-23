@@ -14,13 +14,13 @@
 	<#-- Instant redirect, when the page is hit directly or refreshed -->
 
 	<script>
-		window.location.replace("${catalog_url}");
+		window.location.replace("${redirect_url}");
 	</script>
 
 	<#-- Redirect for Senna (I.E. when you press "Go to Site"). This will cause a flash as the page has to fully load -->
 
 	<@liferay_aui.script>
-		window.location.replace("${catalog_url}");
+		window.location.replace("${redirect_url}");
 	</@>
 </#if>
 

@@ -315,6 +315,70 @@ definition {
 		}
 	}
 
+	@description = "LPS-109345 Bug: On Page Structure, it is allowed to edit an element of a locked experience"
+	@priority = "4"
+	test CanNotEditLockedExperience {
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Segment Name",
+				text = "test@liferay.com");
+		}
+
+		task ("Add a Heading fragment to content page") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Create an experience and add on content page") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Segment Name");
+
+			Button.clickPublish();
+		}
+
+		task ("Select the new experience") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.openABTestPanel();
+
+			ContentPages.changeExperience(experienceName = "New Experience");
+		}
+
+		task ("Create AB test with a variant and run") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
+
+			ABTest.createVariant(variantName = "Variant name");
+
+			ABTest.runTest();
+		}
+
+		task ("Click on Edit icon of the page") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.gotoTab(tabName = "Browser");
+		}
+
+		task ("On the hierarchy tree, select any element of the page") {
+			AssertVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			AssertElementNotPresent(
+				key_index = "1",
+				key_nodeName = "Heading",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, after edit the mandatory information, A/B Test sidebar appears with the A/B Testing configuration"
 	@priority = "3"
 	test ChangesAppliedAfterEdit {

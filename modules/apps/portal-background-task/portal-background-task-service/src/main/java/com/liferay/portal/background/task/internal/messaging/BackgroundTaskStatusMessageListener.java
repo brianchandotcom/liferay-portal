@@ -190,16 +190,17 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 
 		User user = _userLocalService.fetchUser(backgroundTask.getUserId());
 
+		long[] userIds = null;
+
 		if ((user != null) && !user.isDefaultUser()) {
-			_sendUserNotificationEvents(backgroundTask, user.getUserId());
-
-			return;
+			userIds = new long[] {user.getUserId()};
 		}
+		else {
+			Role role = _roleLocalService.fetchRole(
+				backgroundTask.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		Role role = _roleLocalService.fetchRole(
-			backgroundTask.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+			userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+		}
 
 		for (long userId : userIds) {
 			_sendUserNotificationEvents(backgroundTask, userId);

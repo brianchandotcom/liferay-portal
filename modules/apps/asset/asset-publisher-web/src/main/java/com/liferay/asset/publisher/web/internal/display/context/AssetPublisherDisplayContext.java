@@ -916,9 +916,9 @@ public class AssetPublisherDisplayContext {
 
 					long finalCurGroupId = curGroupId;
 
-					add(
-						dropdownItem -> {
-							if (!assetRendererFactory.isSupportsClassTypes()) {
+					if (!assetRendererFactory.isSupportsClassTypes()) {
+						add(
+							dropdownItem -> {
 								dropdownItem.putData(
 									"href", assetBrowserURL.toString());
 
@@ -932,21 +932,23 @@ public class AssetPublisherDisplayContext {
 										false));
 
 								dropdownItem.setLabel(type);
-							}
-							else {
-								ClassTypeReader classTypeReader =
-									assetRendererFactory.getClassTypeReader();
+							});
+					}
+					else {
+						ClassTypeReader classTypeReader =
+							assetRendererFactory.getClassTypeReader();
 
-								List<ClassType> assetAvailableClassTypes =
-									classTypeReader.getAvailableClassTypes(
-										PortalUtil.
-											getCurrentAndAncestorSiteGroupIds(
-												finalCurGroupId),
-										_themeDisplay.getLocale());
+						List<ClassType> assetAvailableClassTypes =
+							classTypeReader.getAvailableClassTypes(
+								PortalUtil.getCurrentAndAncestorSiteGroupIds(
+									finalCurGroupId),
+								_themeDisplay.getLocale());
 
-								for (ClassType assetAvailableClassType :
-										assetAvailableClassTypes) {
+						for (ClassType assetAvailableClassType :
+								assetAvailableClassTypes) {
 
+							add(
+								dropdownItem -> {
 									assetBrowserURL.setParameter(
 										"subtypeSelectionId",
 										String.valueOf(
@@ -971,9 +973,9 @@ public class AssetPublisherDisplayContext {
 											_httpServletRequest, "select-x",
 											type, false));
 									dropdownItem.setLabel(type);
-								}
-							}
-						});
+								});
+						}
+					}
 				}
 			}
 		};

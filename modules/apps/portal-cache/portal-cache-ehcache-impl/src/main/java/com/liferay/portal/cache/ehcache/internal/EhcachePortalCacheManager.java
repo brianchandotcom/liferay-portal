@@ -284,63 +284,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				"Portal cache manager name is not specified");
 		}
 
-		_initPortalCacheManager();
-
-		for (Properties properties :
-				_portalCacheManagerConfiguration.
-					getPortalCacheManagerListenerPropertiesSet()) {
-
-			PortalCacheManagerListener portalCacheManagerListener =
-				portalCacheManagerListenerFactory.create(this, properties);
-
-			if (portalCacheManagerListener != null) {
-				registerPortalCacheManagerListener(portalCacheManagerListener);
-			}
-		}
-	}
-
-	protected BaseEhcachePortalCacheManagerConfigurator
-		baseEhcachePortalCacheManagerConfigurator;
-	protected BundleContext bundleContext;
-	protected PortalCacheListenerFactory portalCacheListenerFactory;
-	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
-		portalCacheManagerListenerFactory;
-	protected volatile Props props;
-
-	private void _initPortalCacheListeners(
-		PortalCache<K, V> portalCache,
-		PortalCacheConfiguration portalCacheConfiguration) {
-
-		if (portalCacheConfiguration == null) {
-			return;
-		}
-
-		for (Properties properties :
-				portalCacheConfiguration.
-					getPortalCacheListenerPropertiesSet()) {
-
-			PortalCacheListener<K, V> portalCacheListener =
-				portalCacheListenerFactory.create(properties);
-
-			if (portalCacheListener == null) {
-				continue;
-			}
-
-			PortalCacheListenerScope portalCacheListenerScope =
-				(PortalCacheListenerScope)properties.remove(
-					PortalCacheConfiguration.
-						PORTAL_CACHE_LISTENER_PROPERTIES_KEY_SCOPE);
-
-			if (portalCacheListenerScope == null) {
-				portalCacheListenerScope = PortalCacheListenerScope.ALL;
-			}
-
-			portalCache.registerPortalCacheListener(
-				portalCacheListener, portalCacheListenerScope);
-		}
-	}
-
-	private void _initPortalCacheManager() {
 		_transactionalPortalCacheEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED));
 
@@ -422,6 +365,59 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			};
 
 		_mBeanServerServiceTracker.open();
+
+		for (Properties properties :
+				_portalCacheManagerConfiguration.
+					getPortalCacheManagerListenerPropertiesSet()) {
+
+			PortalCacheManagerListener portalCacheManagerListener =
+				portalCacheManagerListenerFactory.create(this, properties);
+
+			if (portalCacheManagerListener != null) {
+				registerPortalCacheManagerListener(portalCacheManagerListener);
+			}
+		}
+	}
+
+	protected BaseEhcachePortalCacheManagerConfigurator
+		baseEhcachePortalCacheManagerConfigurator;
+	protected BundleContext bundleContext;
+	protected PortalCacheListenerFactory portalCacheListenerFactory;
+	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+		portalCacheManagerListenerFactory;
+	protected volatile Props props;
+
+	private void _initPortalCacheListeners(
+		PortalCache<K, V> portalCache,
+		PortalCacheConfiguration portalCacheConfiguration) {
+
+		if (portalCacheConfiguration == null) {
+			return;
+		}
+
+		for (Properties properties :
+				portalCacheConfiguration.
+					getPortalCacheListenerPropertiesSet()) {
+
+			PortalCacheListener<K, V> portalCacheListener =
+				portalCacheListenerFactory.create(properties);
+
+			if (portalCacheListener == null) {
+				continue;
+			}
+
+			PortalCacheListenerScope portalCacheListenerScope =
+				(PortalCacheListenerScope)properties.remove(
+					PortalCacheConfiguration.
+						PORTAL_CACHE_LISTENER_PROPERTIES_KEY_SCOPE);
+
+			if (portalCacheListenerScope == null) {
+				portalCacheListenerScope = PortalCacheListenerScope.ALL;
+			}
+
+			portalCache.registerPortalCacheListener(
+				portalCacheListener, portalCacheListenerScope);
+		}
 	}
 
 	private boolean _isTransactionalPortalCache(String portalCacheName) {

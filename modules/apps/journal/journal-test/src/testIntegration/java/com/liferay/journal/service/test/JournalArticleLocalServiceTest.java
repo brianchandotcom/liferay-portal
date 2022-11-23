@@ -183,7 +183,7 @@ public class JournalArticleLocalServiceTest {
 		Assert.assertEquals(friendlyURLMap, journalArticle.getFriendlyURLMap());
 	}
 
-	@Test
+	@Test(expected = ArticleFriendlyURLException.class)
 	public void testArticleFriendlyURLValidationCompanyGroup()
 		throws Exception {
 
@@ -195,16 +195,10 @@ public class JournalArticleLocalServiceTest {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			Collections.emptyMap());
 
-		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
-
-		journalArticle = _updateJournalArticle(
-			Collections.emptyMap(), journalArticle);
-
-		Assert.assertNotNull(journalArticle.getUrlTitle());
-		Assert.assertEquals(friendlyURLMap, journalArticle.getFriendlyURLMap());
+		_updateJournalArticle(Collections.emptyMap(), journalArticle);
 	}
 
-	@Test
+	@Test(expected = ArticleFriendlyURLException.class)
 	public void testArticleFriendlyURLValidationCompanyGroupStagingEnabled()
 		throws Exception {
 
@@ -233,15 +227,7 @@ public class JournalArticleLocalServiceTest {
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				Collections.emptyMap());
 
-			Map<Locale, String> friendlyURLMap =
-				journalArticle.getFriendlyURLMap();
-
-			journalArticle = _updateJournalArticle(
-				Collections.emptyMap(), journalArticle);
-
-			Assert.assertNotNull(journalArticle.getUrlTitle());
-			Assert.assertEquals(
-				friendlyURLMap, journalArticle.getFriendlyURLMap());
+			_updateJournalArticle(Collections.emptyMap(), journalArticle);
 		}
 		finally {
 			try {

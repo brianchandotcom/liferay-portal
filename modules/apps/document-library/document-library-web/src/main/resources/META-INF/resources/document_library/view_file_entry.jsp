@@ -108,7 +108,6 @@ if (portletTitleBasedNavigation) {
 						</li>
 						<li class="nav-item">
 							<liferay-frontend:sidebar-toggler-button
-								aria-label='<%= LanguageUtil.get(request, "info") %>'
 								cssClass="btn btn-monospaced btn-secondary btn-sm btn-unstyled"
 								icon="info-circle-open"
 								sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId_" + fileEntry.getFileEntryId() %>'

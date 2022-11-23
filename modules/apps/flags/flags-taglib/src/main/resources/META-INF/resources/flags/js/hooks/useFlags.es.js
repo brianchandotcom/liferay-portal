@@ -77,9 +77,11 @@ const useFlags = ({
 
 		if (name === 'otherReason') {
 			setOtherReason(value);
-		} else if (name === 'reporterEmailAddress') {
+		}
+		else if (name === 'reporterEmailAddress') {
 			setReporterEmailAddress(value);
-		} else if (name === 'selectedReason') {
+		}
+		else if (name === 'selectedReason') {
 			setSelectedReason(value);
 		}
 	};

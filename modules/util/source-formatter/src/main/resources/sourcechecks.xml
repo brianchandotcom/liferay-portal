@@ -1050,6 +1050,7 @@
 		<check name="JSPTaglibAttributesCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on taglib attributes." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPTaglibVariableCheck">
 			<category name="Naming Conventions" />

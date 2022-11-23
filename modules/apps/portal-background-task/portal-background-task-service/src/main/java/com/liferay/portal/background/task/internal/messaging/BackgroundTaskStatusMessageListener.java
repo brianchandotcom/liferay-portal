@@ -166,21 +166,6 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 			backgroundTask.getBackgroundTaskId());
 	}
 
-	private void _sendUserNotificationEvents(
-			BackgroundTask backgroundTask, long userId)
-		throws Exception {
-
-		_userNotificationEventLocalService.sendUserNotificationEvents(
-			userId, "BackgroundTask",
-			UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
-			JSONUtil.put(
-				"name", backgroundTask.getName()
-			).put(
-				"taskExecutorClassName",
-				backgroundTask.getTaskExecutorClassName()
-			));
-	}
-
 	private void _sendUserNotificationEvents(Message message) throws Exception {
 		long backgroundTaskId = message.getLong(
 			BackgroundTaskConstants.BACKGROUND_TASK_ID);
@@ -203,7 +188,15 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 		}
 
 		for (long userId : userIds) {
-			_sendUserNotificationEvents(backgroundTask, userId);
+			_userNotificationEventLocalService.sendUserNotificationEvents(
+				userId, "BackgroundTask",
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
+				JSONUtil.put(
+					"name", backgroundTask.getName()
+				).put(
+					"taskExecutorClassName",
+					backgroundTask.getTaskExecutorClassName()
+				));
 		}
 	}
 

@@ -110,11 +110,14 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						</c:if>
 
 						<clay:button
+							aria-label='<%= LanguageUtil.get(request, "close-configuration-panel") %>'
 							borderless="<%= true %>"
+							cssClass="lfr-portal-tooltip"
+							displayType="secondary"
 							icon="cog"
 							id='<%= liferayPortletResponse.getNamespace() + "contextualSidebarButton" %>'
 							small="<%= true %>"
-							title='<%= LanguageUtil.get(request, "configuration") %>'
+							title='<%= LanguageUtil.get(request, "close-configuration-panel") %>'
 							type="button"
 						/>
 					</div>

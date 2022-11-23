@@ -14,18 +14,17 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.export;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
-import com.liferay.portal.workflow.kaleo.definition.NodeTypeDependentObjectRegistry;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
 
-import java.util.Map;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -36,41 +35,24 @@ public class NodeExporterRegistry {
 	public NodeExporter getNodeExporter(NodeType nodeType)
 		throws KaleoDefinitionValidationException {
 
-		return _nodeExporters.getNodeTypeDependentObjects(nodeType);
+		return _serviceTrackerMap.getService(nodeType);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addNodeExporter(
-		NodeExporter nodeExporter, Map<String, Object> properties) {
-
-		String nodeType = (String)properties.get("node.type");
-
-		if (nodeType == null) {
-			throw new IllegalArgumentException(
-				"The property \"node.type\" is null");
-		}
-
-		_nodeExporters.addNodeTypeDependentObject(nodeType, nodeExporter);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, NodeExporter.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(nodeExporter, emitter) -> emitter.emit(
+					nodeExporter.getNodeType())));
 	}
 
-	protected void removeNodeExporter(
-		NodeExporter nodeExporter, Map<String, Object> properties) {
-
-		String nodeType = (String)properties.get("node.type");
-
-		if (nodeType == null) {
-			throw new IllegalArgumentException(
-				"The property \"node.type\" is null");
-		}
-
-		_nodeExporters.removeNodeTypeDependentObjects(nodeType);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final NodeTypeDependentObjectRegistry<NodeExporter> _nodeExporters =
-		new NodeTypeDependentObjectRegistry<>();
+	private ServiceTrackerMap<NodeType, NodeExporter> _serviceTrackerMap;
 
 }

@@ -21,8 +21,6 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.dom4j.DocumentException;
-
 /**
  * @author Alan Huang
  */
@@ -30,8 +28,7 @@ public class TLDStylingCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		_checkMissingCDATA(fileName, content);
 

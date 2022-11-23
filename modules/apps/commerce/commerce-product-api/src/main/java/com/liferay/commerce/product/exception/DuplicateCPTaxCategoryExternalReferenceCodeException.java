@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.product.exception;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 /**
  * @author Marco Leo
  */
-public class DuplicateCPTaxCategoryExternalReferenceCodeException extends SystemException {
+public class DuplicateCPTaxCategoryExternalReferenceCodeException
+	extends SystemException {
 
 	public DuplicateCPTaxCategoryExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateCPTaxCategoryExternalReferenceCodeException extends System
 		super(msg);
 	}
 
-	public DuplicateCPTaxCategoryExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateCPTaxCategoryExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateCPTaxCategoryExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateCPTaxCategoryExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

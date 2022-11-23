@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.document.library.kernel.exception;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateDLFileEntryExternalReferenceCodeException extends SystemException {
+public class DuplicateDLFileEntryExternalReferenceCodeException
+	extends SystemException {
 
 	public DuplicateDLFileEntryExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateDLFileEntryExternalReferenceCodeException extends SystemEx
 		super(msg);
 	}
 
-	public DuplicateDLFileEntryExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateDLFileEntryExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateDLFileEntryExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateDLFileEntryExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.inventory.exception;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -18,20 +19,28 @@ import com.liferay.portal.kernel.exception.SystemException;
 /**
  * @author Luca Pellizzon
  */
-public class DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException extends SystemException {
+public class
+	DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException
+		extends SystemException {
 
 	public DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException() {
 	}
 
-	public DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException(String msg) {
+	public DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException(
+		String msg) {
+
 		super(msg);
 	}
 
-	public DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateCommerceInventoryReplenishmentItemExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

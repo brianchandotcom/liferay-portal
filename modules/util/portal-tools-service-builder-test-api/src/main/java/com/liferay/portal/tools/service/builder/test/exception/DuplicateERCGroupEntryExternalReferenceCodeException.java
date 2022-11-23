@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portal.tools.service.builder.test.exception;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateERCGroupEntryExternalReferenceCodeException extends SystemException {
+public class DuplicateERCGroupEntryExternalReferenceCodeException
+	extends SystemException {
 
 	public DuplicateERCGroupEntryExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateERCGroupEntryExternalReferenceCodeException extends System
 		super(msg);
 	}
 
-	public DuplicateERCGroupEntryExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateERCGroupEntryExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateERCGroupEntryExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateERCGroupEntryExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

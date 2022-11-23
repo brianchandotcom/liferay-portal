@@ -536,8 +536,8 @@ public class InputAssetLinksDisplayContext {
 
 		@Override
 		public int compare(Map<String, Object> map1, Map<String, Object> map2) {
-			String message1 = "";
-			String message2 = "";
+			String message1 = StringPool.BLANK;
+			String message2 = StringPool.BLANK;
 
 			if (map1.containsKey("message") && map2.containsKey("message")) {
 				message1 = (String)map1.get("message");

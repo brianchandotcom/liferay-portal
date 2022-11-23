@@ -93,7 +93,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 					"/edit_user_group.jsp", "redirect",
 					_renderResponse.createRenderURL());
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "add"));
+					LanguageUtil.get(_httpServletRequest, "add-user-group"));
 			}
 		).build();
 	}

@@ -104,19 +104,19 @@ for (long groupId : groupIds) {
 	String title = LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
 %>
 
-<clay:dropdown-menu
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"currentURL", currentURL
-		).build()
-	%>'
-	aria-label="<%= title %>"
-	displayType="secondary"
-	dropdownItems="<%= assetPublisherDisplayContext.getDropdownItems(group) %>"
-	label="select"
-	propsTransformer="js/AssetEntrySelectionDropdownPropsTransformer"
-	title="<%= title %>"
-/>
+	<clay:dropdown-menu
+		additionalProps='<%=
+			HashMapBuilder.<String, Object>put(
+				"currentURL", currentURL
+			).build()
+		%>'
+		aria-label="<%= title %>"
+		displayType="secondary"
+		dropdownItems="<%= assetPublisherDisplayContext.getDropdownItems(group) %>"
+		label="select"
+		propsTransformer="js/AssetEntrySelectionDropdownPropsTransformer"
+		title="<%= title %>"
+	/>
 
 <%
 }

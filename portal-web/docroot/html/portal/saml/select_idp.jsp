@@ -30,6 +30,7 @@ JSONArray relevantIdpConnectionsJSONArray = samlSsoLoginContext.getJSONArray("re
 
 	<c:choose>
 		<c:when test="<%= relevantIdpConnectionsJSONArray.length() == 1 %>">
+			<p><liferay-ui:message key="redirecting-to-your-identity-provider" /></p>
 
 			<%
 			JSONObject relevantIdpConnectionJSONObject = relevantIdpConnectionsJSONArray.getJSONObject(0);

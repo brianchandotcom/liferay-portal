@@ -51,9 +51,6 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 					new IntegerEntityField("id", locale -> "userId"))),
 			new ComplexEntityField("customFields", entityFields),
 			new DateTimeEntityField(
-				"lastPostDate", locale -> "lastPostDate",
-				locale -> "lastPostDate"),
-			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
 				locale -> Field.CREATE_DATE),
@@ -61,6 +58,9 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new DateTimeEntityField(
+				"lastPostDate", locale -> "lastPostDate",
+				locale -> "lastPostDate"),
 			new EntityField(
 				"showAsAnswer", EntityField.Type.BOOLEAN,
 				locale -> Field.getSortableFieldName("answer_String"),

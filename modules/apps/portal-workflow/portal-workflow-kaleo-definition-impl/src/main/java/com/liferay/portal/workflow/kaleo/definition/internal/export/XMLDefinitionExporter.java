@@ -14,6 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.export;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
@@ -36,8 +40,10 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -74,10 +80,24 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_namespace = "urn:liferay.com:liferay-workflow_" + _version;
 		_schemaVersion = StringUtil.replace(
 			_version, CharPool.PERIOD, CharPool.UNDERLINE);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, NodeExporter.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(nodeExporter, emitter) -> emitter.emit(
+					nodeExporter.getNodeType())));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private String _export(Definition definition)
@@ -121,8 +141,8 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 			Collection<Node> nodes = definition.getNodes();
 
 			for (Node node : nodes) {
-				NodeExporter nodeExporter =
-					_nodeExporterRegistry.getNodeExporter(node.getNodeType());
+				NodeExporter nodeExporter = _serviceTrackerMap.getService(
+					node.getNodeType());
 
 				nodeExporter.exportNode(
 					node, workflowDefinitionElement, _namespace);
@@ -140,11 +160,8 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 	private DefinitionBuilder _definitionBuilder;
 
 	private String _namespace;
-
-	@Reference
-	private NodeExporterRegistry _nodeExporterRegistry;
-
 	private String _schemaVersion;
+	private ServiceTrackerMap<NodeType, NodeExporter> _serviceTrackerMap;
 	private String _version = ReleaseInfo.getVersion();
 
 }

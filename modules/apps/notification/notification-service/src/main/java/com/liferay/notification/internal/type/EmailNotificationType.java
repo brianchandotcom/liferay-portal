@@ -58,8 +58,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -91,8 +89,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.mail.internet.InternetAddress;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -406,9 +402,7 @@ public class EmailNotificationType extends BaseNotificationType {
 				NotificationTemplate.class.getName() + StringPool.POUND +
 					notificationTemplate.getNotificationTemplateId(),
 				body),
-			true);
-
-		_setRestClient(template);
+			false);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -541,41 +535,6 @@ public class EmailNotificationType extends BaseNotificationType {
 
 			return null;
 		}
-	}
-
-	private void _setRestClient(Template template) {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		List<ServiceContext> serviceContexts = new ArrayList<>();
-
-		while (httpServletRequest == null) {
-			serviceContext = ServiceContextThreadLocal.popServiceContext();
-
-			serviceContexts.add(serviceContext);
-
-			httpServletRequest = serviceContext.getRequest();
-		}
-
-		for (ServiceContext serviceContextItem : serviceContexts) {
-			ServiceContextThreadLocal.pushServiceContext(serviceContextItem);
-		}
-
-		if (httpServletRequest == null) {
-			throw new NullPointerException("HttpServletRequest is null");
-		}
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setResponse(new DummyHttpServletResponse());
-
-		template.put("themeDisplay", themeDisplay);
-
-		_templateContextContributor.prepare(template, httpServletRequest);
-
-		template.remove("themeDisplay");
 	}
 
 	private InternetAddress[] _toInternetAddresses(String string)

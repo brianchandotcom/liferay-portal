@@ -125,7 +125,9 @@ public class PageFragmentInstanceDefinitionMapper {
 
 						setSiteKey(
 							() -> {
-								if (fragmentEntry.getGroupId() == 0) {
+								if ((fragmentEntry == null) ||
+									(fragmentEntry.getGroupId() == 0)) {
+
 									return null;
 								}
 

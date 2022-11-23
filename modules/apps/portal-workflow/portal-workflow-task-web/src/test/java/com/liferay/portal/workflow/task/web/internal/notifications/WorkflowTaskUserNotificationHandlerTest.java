@@ -213,9 +213,33 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	@Test
-	public void testValidWorkflowTaskIdShouldReturnLink() throws Exception {
+	public void testValidWorkflowTaskIdAllowedUserShouldReturnLink()
+		throws Exception {
+
+		User user1 = Mockito.mock(User.class);
+
+		Mockito.when(
+			user1.getUserId()
+		).thenReturn(
+			_USER_ID
+		);
+
+		_allowedUsers.add(user1);
+
 		Assert.assertEquals(
 			_VALID_LINK,
+			_workflowTaskUserNotificationHandler.getLink(
+				mockUserNotificationEvent(
+					_VALID_ENTRY_CLASS_NAME, null, _VALID_WORKFLOW_TASK_ID),
+				_serviceContext));
+	}
+
+	@Test
+	public void testValidWorkflowTaskIdNotAllowedUserShouldReturnBlankLink()
+		throws Exception {
+
+		Assert.assertEquals(
+			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getLink(
 				mockUserNotificationEvent(
 					_VALID_ENTRY_CLASS_NAME, null, _VALID_WORKFLOW_TASK_ID),

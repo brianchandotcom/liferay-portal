@@ -1,0 +1,7 @@
+apiDir: "../ci-queue-api/src/main/java"
+apiPackagePath: "com.liferay.ci.queue"
+application:
+    baseURI: "/ci-queue"
+    className: "CIQueueApplication"
+    name: "Liferay.CI.Queue"
+author: "Michael Hashimoto"

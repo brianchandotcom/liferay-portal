@@ -149,7 +149,19 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 					_portalCacheManagerConfiguration.
 						getPortalCacheConfiguration(portalCacheName);
 
-				value = _createPortalCache(portalCacheConfiguration, sharded);
+				EhcachePortalCacheConfiguration
+					ehcachePortalCacheConfiguration =
+						(EhcachePortalCacheConfiguration)
+							portalCacheConfiguration;
+
+				if (sharded) {
+					value = new ShardedEhcachePortalCache<>(
+						this, ehcachePortalCacheConfiguration);
+				}
+				else {
+					value = new EhcachePortalCache<>(
+						this, ehcachePortalCacheConfiguration);
+				}
 
 				_initPortalCacheListeners(value, portalCacheConfiguration);
 
@@ -294,20 +306,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
 	protected volatile Props props;
-
-	private PortalCache<K, V> _createPortalCache(
-		PortalCacheConfiguration portalCacheConfiguration, boolean sharded) {
-
-		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
-			(EhcachePortalCacheConfiguration)portalCacheConfiguration;
-
-		if (sharded) {
-			return new ShardedEhcachePortalCache<>(
-				this, ehcachePortalCacheConfiguration);
-		}
-
-		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
-	}
 
 	private void _initPortalCacheListeners(
 		PortalCache<K, V> portalCache,

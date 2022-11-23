@@ -37,12 +37,12 @@
 </tr>
 <tr>
 	<td>SELECT_SINGLE_SELECTION_ROW</td>
-	<td>//div[@class='ddm-field' and contains(@data-field-name,'SingleSelection')][${key_rowNumber}]</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'SingleSelection')][${key_rowNumber}] | //div[@data-ddm-field-row='${key_rowNumber}']//*[text()='Single Selection']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_SINGLE_SELECTION_ROW_OPTION</td>
-	<td>//div[@class='ddm-field' and contains(@data-field-name,'SingleSelection')][${key_rowNumber}]//span[text()='${key_optionValue}']</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'SingleSelection')][${key_rowNumber}]//span[text()='${key_optionValue}'] | //div[@data-ddm-field-row='${key_rowNumber}']//*[text()='${key_optionValue}']</td>
 	<td></td>
 </tr>
 <tr>

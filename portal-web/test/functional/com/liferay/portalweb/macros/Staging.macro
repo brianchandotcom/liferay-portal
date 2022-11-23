@@ -237,12 +237,45 @@ definition {
 			roleKey = "Staging Admin",
 			roleTitle = "Staging Admin");
 
-		Role.openRolesAdmin();
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Staging Admin",
+				roleType = "site");
+		}
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKeys = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACTION_CHECKBOX,SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_ACTION_CHECKBOX,SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_ACTION_CHECKBOX,SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VARIATION_ACTION_CHECKBOX,SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_PAGES_VARIATION_ACTION_CHECKBOX",
-			roleTitle = "Staging Admin",
-			roleType = "Site");
+		for (var resourceActionIndex : list "VIEW_SITE_ADMINISTRATION,MANAGE_ANNOUNCEMENTS,VIEW_MEMBERS,EXPORT_IMPORT_PORTLET_INFO,VIEW,EXPORT_IMPORT_LAYOUTS,UPDATE,DELETE,PUBLISH_STAGING,CONFIGURE_PORTLETS,PUBLISH_PORTLET_INFO,ASSIGN_USER_ROLES,PREVIEW_IN_DEVICE,ASSIGN_MEMBERS,PERMISSIONS,ADD_LAYOUT_SET_BRANCH,MANAGE_TEAMS,ADD_LAYOUT_BRANCH,MANAGE_SUBGROUPS,ADD_LAYOUT,MANAGE_STAGING,ADD_COMMUNITY,MANAGE_LAYOUTS,VIEW_STAGING,MANAGE_ARCHIVED_SETUPS,ADD_LAYOUT_UTILITY_PAGE_ENTRY") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Staging Admin",
+				roleType = "site");
+		}
+
+		for (var resourceActionIndex : list "UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS,ADD_LAYOUT,ADD_DISCUSSION,VIEW,UPDATE_LAYOUT_ADVANCED_OPTIONS,UPDATE_LAYOUT_BASIC,UPDATE_LAYOUT_CONTENT,UPDATE_LAYOUT_LIMITED") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Staging Admin",
+				roleType = "site");
+		}
+
+		for (var resourceActionIndex : list "UPDATE,PERMISSIONS,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.LayoutBranch",
+				roleTitle = "Staging Admin",
+				roleType = "site");
+		}
+
+		for (var resourceActionIndex : list "UPDATE,PERMISSIONS,MERGE,DELETE") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.LayoutSetBranch",
+				roleTitle = "Staging Admin",
+				roleType = "site");
+		}
 	}
 
 	macro assignStagingAdminToSite {

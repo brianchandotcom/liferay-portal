@@ -29,25 +29,17 @@ definition {
 	test BlogsOrganizationWorkflowStaging {
 		property test.name.skip.portal.instance = "PGStagingUsecase#BlogsOrganizationWorkflowStaging";
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
-			permissionNavigationValue = "Blogs",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
 			roleTitle = "Organization User",
-			roleType = "Organization");
+			roleType = "organization");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX",
-			permissionDefinitionValue = "Manage Pages",
-			permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES",
-			permissionNavigationValue = "Pages",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_LAYOUTS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Organization User",
-			roleType = "Organization");
+			roleType = "organization");
 
 		JSONOrganization.addOrganization(
 			organizationName = "Staging Organization Name",

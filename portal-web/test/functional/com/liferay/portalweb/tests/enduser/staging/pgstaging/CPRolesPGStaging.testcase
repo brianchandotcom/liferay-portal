@@ -64,12 +64,9 @@ definition {
 		}
 
 		task ("When: the user is assigned to regular role") {
-			Role.openRolesAdmin();
-
-			Role.definePermissionCP(
-				permissionDefinitionKey = "CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_STAGING_CHECKBOX",
-				permissionDefinitionValue = "View Staging",
-				permissionNavigationValue = "Settings",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_STAGING",
+				resourceName = "com.liferay.portal.kernel.model.Group",
 				roleTitle = "Regrole Name");
 
 			JSONRole.assignRoleToUser(

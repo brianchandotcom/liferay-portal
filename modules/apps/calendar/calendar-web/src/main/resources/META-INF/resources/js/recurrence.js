@@ -532,10 +532,6 @@ AUI.add(
 
 					const dayOfWeekInput = instance.get('dayOfWeekInput');
 
-					const daysOfWeekCheckboxes = instance.get(
-						'daysOfWeekCheckboxes'
-					);
-
 					const positionInput = instance.get('positionInput');
 
 					const repeatCheckbox = instance.get('repeatCheckbox');
@@ -549,20 +545,6 @@ AUI.add(
 					);
 
 					startTimeDayOfWeekInput.val(dayOfWeek);
-
-					daysOfWeekCheckboxes.each((item) => {
-						if (item.val() === dayOfWeek) {
-							item.set('checked', false);
-							item.set('disabled', false);
-						}
-						else if (item.get('disabled')) {
-							item.set('disabled', false);
-
-							if (!repeatCheckbox.get('checked')) {
-								item.set('checked', false);
-							}
-						}
-					});
 
 					dayOfWeekInput.val(dayOfWeek);
 

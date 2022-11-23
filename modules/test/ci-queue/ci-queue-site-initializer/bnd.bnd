@@ -1,0 +1,6 @@
+Bundle-Name: Liferay CI Queue Site Initializer
+Bundle-SymbolicName: com.liferay.ci.queue.site.initializer
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: CI Queue
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /ci-queue-site-initializer

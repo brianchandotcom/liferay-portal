@@ -147,7 +147,9 @@ export default function Action({
 			<ClayTabs.Content activeIndex={activeIndex} fade>
 				<ClayTabs.TabPane>
 					<BasicInfo
-						errors={errors}
+						errors={
+							Object.keys(errors).length ? errors : backEndErrors
+						}
 						handleChange={handleChange}
 						isApproved={isApproved!}
 						readOnly={readOnly}

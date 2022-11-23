@@ -15,13 +15,18 @@
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectActionNameException;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
@@ -42,8 +47,28 @@ public class ObjectActionNameExceptionMapper
 		ObjectActionNameException objectActionNameException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			objectActionNameException.getMessage());
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"fieldName", "name"
+				).put(
+					"message",
+					_language.get(
+						_acceptLanguage.getPreferredLocale(),
+						objectActionNameException.getMessageKey())
+				)
+			).toString(),
+			Response.Status.BAD_REQUEST, null, "ObjectActionNameException");
 	}
+
+	@Override
+	protected boolean isSanitize() {
+		return false;
+	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

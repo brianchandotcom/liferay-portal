@@ -105,6 +105,15 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingTaglibAttributes() throws Exception {
+		test(
+			"MissingTaglibAttributes.testjsp",
+			"Should always specify some 'aria-label', 'aria-labelledby' or " +
+				"'title' attribute when using 'clay:dropdown-actions' taglib",
+			19);
+	}
+
+	@Test
 	public void testMissingTaglibs() throws Exception {
 		test(
 			"MissingTaglibs.testjsp",
@@ -113,15 +122,6 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Missing taglib for tag with prefix 'liferay-portlet'",
 				"Missing taglib for tag with prefix 'liferay-ui'"
 			});
-	}
-
-	@Test
-	public void testNecessaryAttribute() throws Exception {
-		test(
-			"NecessaryAttribute.testjsp",
-			"Should always specify some 'aria-label', 'aria-labelledby' or " +
-				"'title' attribute when using 'clay:dropdown-actions' taglib",
-			19);
 	}
 
 	@Test

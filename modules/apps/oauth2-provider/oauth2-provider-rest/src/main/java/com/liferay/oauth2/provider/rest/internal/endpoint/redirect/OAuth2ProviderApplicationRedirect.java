@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.redirect;
 import com.liferay.petra.string.StringBundler;
 
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.Encoded;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -44,8 +45,8 @@ public class OAuth2ProviderApplicationRedirect {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public Response redirect(
-		@DefaultValue("") @QueryParam("code") String code,
-		@DefaultValue("") @QueryParam("error") String error) {
+		@DefaultValue("") @Encoded @QueryParam("code") String code,
+		@DefaultValue("") @Encoded @QueryParam("error") String error) {
 
 		return Response.ok(
 			StringBundler.concat(

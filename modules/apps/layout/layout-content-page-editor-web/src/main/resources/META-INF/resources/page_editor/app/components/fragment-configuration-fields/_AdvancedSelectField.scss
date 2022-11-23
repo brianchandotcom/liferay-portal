@@ -3,7 +3,8 @@
 $prefix: '.page-editor__single-select-with-icon';
 
 html#{$cadmin-selector} .cadmin .page-editor__select-field {
-	&:not(:hover):not(.custom) .page-editor__select-field__action-button {
+	&:not(:hover):not(.custom)
+		.page-editor__select-field__action-button:not(:focus) {
 		opacity: 0;
 	}
 

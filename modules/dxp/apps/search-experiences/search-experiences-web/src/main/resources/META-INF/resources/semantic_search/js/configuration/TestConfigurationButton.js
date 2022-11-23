@@ -36,6 +36,8 @@ function TestConfigurationButton({
 	sentenceTransformer,
 	textTruncationStrategy,
 	txtaiHostAddress,
+	txtaiPassword,
+	txtaiUsername,
 }) {
 	const [loading, setLoading] = useState(false);
 	const [testResultsMessage, setTestResultsMessage] = useState({}); // {message, type}
@@ -57,6 +59,8 @@ function TestConfigurationButton({
 		sentenceTransformer,
 		textTruncationStrategy,
 		txtaiHostAddress,
+		txtaiPassword,
+		txtaiUsername,
 	]);
 
 	/**
@@ -80,6 +84,8 @@ function TestConfigurationButton({
 		if (sentenceTransformer === SENTENCE_TRANSFORMER_TYPES.TXTAI) {
 			return {
 				txtaiHostAddress,
+				txtaiPassword,
+				txtaiUsername,
 			};
 		}
 

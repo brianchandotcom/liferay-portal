@@ -422,6 +422,8 @@ export default function ({
 						formik.values.textTruncationStrategy
 					}
 					txtaiHostAddress={formik.values.txtaiHostAddress}
+					txtaiPassword={formik.values.txtaiPassword}
+					txtaiUsername={formik.values.txtaiUsername}
 				/>
 			</div>
 

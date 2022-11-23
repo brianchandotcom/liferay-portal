@@ -146,15 +146,13 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			({score: scoreA}, {score: scoreB}) => scoreB - scoreA
 		);
 
-		await this.update(Number(parentTestraySubtask.id), {
-			dueStatus: SubTaskStatuses.IN_ANALYSIS,
-			userId: Number(Liferay.ThemeDisplay.getUserId()),
-		});
+		let sumScore = parentTestraySubtask.score ?? 0;
 
 		for (const testraySubTask of childTestraySubtasks) {
 			await this.update(Number(testraySubTask.id), {
 				dueStatus: SubTaskStatuses.MERGED,
 				mergedToSubtaskId: parentTestraySubtask.id,
+				score: 0,
 			});
 
 			const caseResults = await this.getCaseResultsFromSubtask(
@@ -162,15 +160,21 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			);
 
 			for (const caseResult of caseResults) {
+				sumScore += caseResult?.caseResult?.case?.priority || 0;
+
 				await testraySubtaskCaseResultImpl.update(
 					Number(caseResult.id),
 					{
-						name: '',
+						name: `${parentTestraySubtask.id}`,
 						subtaskId: parentTestraySubtask.id,
 					}
 				);
 			}
 		}
+
+		await this.update(Number(parentTestraySubtask.id), {
+			score: sumScore,
+		});
 	}
 }
 

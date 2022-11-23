@@ -258,10 +258,15 @@ public class BatchEngineAutoDeployListenerTest {
 
 		Assert.assertFalse(deployable);
 
-		int result = _batchEngineAutoDeployListener.deploy(
-			autoDeploymentContext);
+		try {
+			_batchEngineAutoDeployListener.deploy(autoDeploymentContext);
 
-		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
+			Assert.fail("Empty zip file is not deployable");
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				AutoDeployException.class, exception.getClass());
+		}
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(0)
@@ -396,6 +401,19 @@ public class BatchEngineAutoDeployListenerTest {
 	private File _asZipFile(String directory) throws Exception {
 		URL url = BatchEngineAutoDeployListenerTest.class.getResource(
 			directory);
+
+		if (url == null) {
+			File file = new File(RandomTestUtil.randomString(20) + ".zip");
+
+			try (ZipOutputStream zipOutputStream = new ZipOutputStream(
+					new FileOutputStream(file))) {
+
+				zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+				zipOutputStream.closeEntry();
+			}
+
+			return file;
+		}
 
 		Path zipFileDirectoryPath = Paths.get(url.toURI());
 

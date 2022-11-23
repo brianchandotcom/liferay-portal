@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.definition.Node;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
 /**
@@ -24,5 +25,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 public interface NodeBuilder<T extends Node> {
 
 	public T buildNode(KaleoNode kaleoNode) throws PortalException;
+
+	public NodeType getNodeType();
 
 }

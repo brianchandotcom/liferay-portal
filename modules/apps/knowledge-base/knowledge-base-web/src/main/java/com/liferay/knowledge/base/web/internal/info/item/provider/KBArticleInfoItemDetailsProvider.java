@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alicia García
  */
 @Component(
-	immediate = true, property = Constants.SERVICE_RANKING + ":Integer=10",
+	property = Constants.SERVICE_RANKING + ":Integer=10",
 	service = InfoItemDetailsProvider.class
 )
 public class KBArticleInfoItemDetailsProvider

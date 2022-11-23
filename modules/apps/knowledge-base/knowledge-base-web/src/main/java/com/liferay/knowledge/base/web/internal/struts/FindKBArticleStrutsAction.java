@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Shin
  */
 @Component(
-	immediate = true, property = "path=/knowledge_base/find_kb_article",
+	property = "path=/knowledge_base/find_kb_article",
 	service = StrutsAction.class
 )
 public class FindKBArticleStrutsAction implements StrutsAction {

@@ -64,7 +64,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eric Min
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=knowledge-base-portlet knowledge-base-portlet-admin",

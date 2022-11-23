@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tibor Lipusz
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.knowledge.base.model.KBArticle",
 	service = ModelDocumentContributor.class
 )

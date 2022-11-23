@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = LayoutDisplayPageProvider.class)
+@Component(service = LayoutDisplayPageProvider.class)
 public class KBArticleLayoutDisplayPageProvider
 	implements LayoutDisplayPageProvider<KBArticle> {
 

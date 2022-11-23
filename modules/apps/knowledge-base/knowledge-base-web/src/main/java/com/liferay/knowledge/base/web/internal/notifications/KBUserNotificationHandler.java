@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Alicia García
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 	service = UserNotificationHandler.class
 )

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lance Ji
  */
-@Component(immediate = true, service = AdminHelper.class)
+@Component(service = AdminHelper.class)
 public class AdminHelperImpl implements AdminHelper {
 
 	@Override

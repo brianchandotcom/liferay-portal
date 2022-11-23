@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Lance Ji
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class XStreamAliasRegister {
 
 	@Activate

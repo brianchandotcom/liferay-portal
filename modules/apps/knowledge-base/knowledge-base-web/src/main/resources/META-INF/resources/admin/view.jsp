@@ -236,6 +236,29 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 											<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 										</span>
+
+										<%
+										int childKBArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+										%>
+
+										<c:if test="<%= childKBArticlesCount > 0 %>">
+											<liferay-portlet:renderURL varImpl="childKBArticlesURL">
+												<portlet:param name="mvcPath" value="/admin/view_kb_articles.jsp" />
+												<portlet:param name="redirect" value="<%= currentURL %>" />
+												<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+												<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
+												<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
+												<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+												<portlet:param name="selectedItemId" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+											</liferay-portlet:renderURL>
+
+											<span class="text-default">
+												<aui:a href="<%= childKBArticlesURL.toString() %>">
+													<liferay-ui:message arguments="<%= childKBArticlesCount %>" key="x-child-articles" />
+												</aui:a>
+											</span>
+										</c:if>
+
 										<span class="text-default">
 											<aui:workflow-status helpMessage='<%= kbArticle.isExpired() ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>' markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
 										</span>

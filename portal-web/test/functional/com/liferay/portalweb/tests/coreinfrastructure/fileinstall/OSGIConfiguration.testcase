@@ -138,6 +138,24 @@ definition {
 		}
 	}
 
+	@description = "Verify multiple factory configurations can be created."
+	@priority = "3"
+	test DeployFactoryConfigs {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test1.config:com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test2.config";
+		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/test1\":urlsIncludes=\"/api/liferay/test2\"";
+		property test.name.skip.portal.instance = "OSGIConfiguration#DeployFactoryConfigs";
+
+		var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration";
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}~test1%'",
+			text = "urlsIncludes=\"/api/liferay/test1\"");
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}~test2%'",
+			text = "urlsIncludes=\"/api/liferay/test2\"");
+	}
+
 	@description = "Verify if a config exists only in the database, when a OSGI config file is added, the databse entry is updated."
 	@priority = "3"
 	test OSGIConfigFileUpdatesExistingConfigInDatabase {

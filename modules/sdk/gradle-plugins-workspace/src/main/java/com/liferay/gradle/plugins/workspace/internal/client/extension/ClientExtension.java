@@ -50,9 +50,9 @@ public class ClientExtension {
 		config.put("sourceCodeURL", sourceCodeURL);
 		config.put("type", type);
 
-		Properties clientExtensionTypePids = _getClientExtensionTypePids();
+		Properties clientExtensionProperties = _getClientExtensionProperties();
 
-		String pid = clientExtensionTypePids.getProperty(type);
+		String pid = clientExtensionProperties.getProperty(type);
 
 		if ((pid != null) &&
 			(type.equals(_NOTIFICATION_TYPE_TYPE) ||
@@ -107,12 +107,12 @@ public class ClientExtension {
 	public String sourceCodeURL = "";
 	public String type;
 
-	private Properties _getClientExtensionTypePids() throws Exception {
+	private Properties _getClientExtensionProperties() throws Exception {
 		Properties properties = new Properties();
 
 		properties.load(
 			ClientExtension.class.getResourceAsStream(
-				"ClientExtensionTypePids.properties"));
+				"client-extension.properties"));
 
 		return properties;
 	}

@@ -1094,6 +1094,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
+		Map<String, ObjectDefinition> objectDefinitionMap = new HashMap<>();
+
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".object-actions.json")) {
 				continue;
@@ -1111,6 +1113,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 					"Unable to transform object definition from JSON: " + json);
 
 				continue;
+			}
+
+			if (objectDefinition.getAccountEntryRestricted()) {
+				objectDefinitionMap.put(
+					objectDefinition.getName(), objectDefinition);
 			}
 
 			Page<ObjectDefinition> objectDefinitionsPage =
@@ -1188,6 +1195,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			() -> _addOrUpdateObjectRelationships(
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
+		_invoke(
+			() -> _updateObjectDefinitionAccountEntryRestricted(
+				objectDefinitionMap, serviceContext));
 		_invoke(
 			() -> _addOrUpdateObjectFields(
 				listTypeDefinitionIdsStringUtilReplaceValues,
@@ -4491,6 +4501,55 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues, false, serviceContext);
 		_updateLayoutSet(
 			documentsStringUtilReplaceValues, true, serviceContext);
+	}
+
+	private void _updateObjectDefinitionAccountEntryRestricted(
+			Map<String, ObjectDefinition> objectDefinitionMap,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		for (Map.Entry<String, ObjectDefinition> entry :
+				objectDefinitionMap.entrySet()) {
+
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						serviceContext.getCompanyId(), "C_" + entry.getKey());
+
+			ObjectDefinition accountEntryRestrictedObjectField =
+				entry.getValue();
+
+			com.liferay.object.model.ObjectField
+				accountEntryRestrictedServiceBuilderObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						serviceBuilderObjectDefinition.getObjectDefinitionId(),
+						accountEntryRestrictedObjectField.
+							getAccountEntryRestrictedObjectFieldName());
+
+			if (accountEntryRestrictedServiceBuilderObjectField == null) {
+				return;
+			}
+
+			Long accountEntryRestrictedObjectFieldId =
+				accountEntryRestrictedServiceBuilderObjectField.
+					getObjectFieldId();
+
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				serviceBuilderObjectDefinition.getExternalReferenceCode(),
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
+				accountEntryRestrictedObjectFieldId,
+				serviceBuilderObjectDefinition.getDescriptionObjectFieldId(),
+				serviceBuilderObjectDefinition.getTitleObjectFieldId(), true,
+				true, true, false,
+				serviceBuilderObjectDefinition.getEnableObjectEntryHistory(),
+				serviceBuilderObjectDefinition.getLabelMap(),
+				serviceBuilderObjectDefinition.getName(),
+				serviceBuilderObjectDefinition.getPanelAppOrder(),
+				serviceBuilderObjectDefinition.getPanelCategoryKey(),
+				serviceBuilderObjectDefinition.getPortlet(),
+				serviceBuilderObjectDefinition.getPluralLabelMap(),
+				serviceBuilderObjectDefinition.getScope());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

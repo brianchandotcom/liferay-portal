@@ -1054,6 +1054,56 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
 	}
 
+	private void _addObjectAccountEntryRestricted(
+			ObjectDefinitionResource objectDefinitionResource,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-definitions");
+
+		if (resourcePaths == null) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith(".object-actions.json")) {
+				continue;
+			}
+
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+			com.liferay.object.model.ObjectDefinition objectDefinitionPublish =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(),
+					"C_" + jsonObject.getString("name"));
+
+			if (!objectDefinitionPublish.isApproved()) {
+				ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
+					json);
+
+				if (objectDefinition == null) {
+					_log.error(
+						"Unable to transform object definition from JSON: " +
+							json);
+
+					continue;
+				}
+
+				objectDefinition =
+					objectDefinitionResource.patchObjectDefinition(
+						objectDefinitionPublish.getObjectDefinitionId(),
+						objectDefinition);
+
+				objectDefinitionResource.postObjectDefinitionPublish(
+					objectDefinition.getId());
+			}
+		}
+	}
+
 	private Map<String, String> _addObjectDefinitions(
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
@@ -1093,6 +1143,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
+		ObjectDefinition objectDefinition = null;
+
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".object-actions.json")) {
 				continue;
@@ -1103,7 +1155,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			json = _replace(json, listTypeDefinitionIdsStringUtilReplaceValues);
 
-			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
+			objectDefinition = ObjectDefinition.toDTO(json);
 
 			if (objectDefinition == null) {
 				_log.error(
@@ -1128,8 +1180,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionResource.postObjectDefinition(
 						objectDefinition);
 
-				objectDefinitionResource.postObjectDefinitionPublish(
-					objectDefinition.getId());
+				if (!json.contains("enableComments") &
+				!json.contains("accountEntryRestrictedObjectFieldName")) {
+
+					objectDefinitionResource.postObjectDefinitionPublish(
+						objectDefinition.getId());
+				}
 			}
 			else {
 				objectDefinition =
@@ -1186,6 +1242,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_invoke(
 			() -> _addOrUpdateObjectRelationships(
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
+
+		_invoke(
+			() -> _addObjectAccountEntryRestricted(
+				objectDefinitionResource, serviceContext));
+
+		objectDefinitionIdsStringUtilReplaceValues.put(
+			"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
+			String.valueOf(objectDefinition.getId()));
 
 		_invoke(
 			() -> _addOrUpdateObjectFields(

@@ -2877,8 +2877,14 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 		else if (sqlType == Types.DECIMAL) {
-			preparedStatement.setBigDecimal(
-				index, new BigDecimal(String.valueOf(value)));
+			String valueString = String.valueOf(value);
+
+			if (valueString.contains(StringPool.COMMA)) {
+				valueString = StringUtil.replace(
+					valueString, CharPool.COMMA, CharPool.PERIOD);
+			}
+
+			preparedStatement.setBigDecimal(index, new BigDecimal(valueString));
 		}
 		else if (sqlType == Types.DOUBLE) {
 			preparedStatement.setDouble(index, GetterUtil.getDouble(value));

@@ -531,9 +531,7 @@ public class InputAssetLinksDisplayContext {
 		implements Comparator<Map<String, Object>>, Serializable {
 
 		public SelectorEntriesMessageComparator(Locale locale) {
-			_locale = locale;
-
-			_collator = CollatorUtil.getInstance(_locale);
+			_collator = CollatorUtil.getInstance(locale);
 		}
 
 		@Override
@@ -550,7 +548,6 @@ public class InputAssetLinksDisplayContext {
 		}
 
 		private final Collator _collator;
-		private final Locale _locale;
 
 	}
 

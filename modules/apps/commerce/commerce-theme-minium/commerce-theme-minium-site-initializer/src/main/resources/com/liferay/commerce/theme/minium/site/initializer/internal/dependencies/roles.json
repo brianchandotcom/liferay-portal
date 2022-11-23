@@ -55,6 +55,12 @@
 			},
 			{
 				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.commerce.product.model.CommerceCatalog"
+			},
+			{
+				"actionIds": [
 					"VIEW_CONTROL_PANEL"
 				],
 				"resource": "90"

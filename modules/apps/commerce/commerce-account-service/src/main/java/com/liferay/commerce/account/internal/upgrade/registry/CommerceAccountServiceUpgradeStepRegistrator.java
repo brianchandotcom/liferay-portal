@@ -186,6 +186,13 @@ public class CommerceAccountServiceUpgradeStepRegistrator
 				AccountEntryUpgradeProcess(
 					_commerceChannelAccountEntryRelLocalService));
 
+		registry.register(
+			"10.1.0", "10.2.0",
+			new com.liferay.commerce.account.internal.upgrade.v10_2_0.
+				CommerceAccountRoleUpgradeProcess(
+					_companyLocalService, _resourceActionLocalService,
+					_resourcePermissionLocalService, _roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce account upgrade step registrator finished");
 		}

@@ -167,15 +167,6 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	@Test
-	public void testValidWorkflowTaskIdShouldReturnBody() throws Exception {
-		Assert.assertEquals(
-			_NOTIFICATION_MESSAGE,
-			_workflowTaskUserNotificationHandler.getBody(
-				mockUserNotificationEvent(null, null, _VALID_WORKFLOW_TASK_ID),
-				_serviceContext));
-	}
-
-	@Test
 	public void testValidWorkflowTaskIdAllowedUserShouldReturnLink()
 		throws Exception {
 
@@ -206,6 +197,15 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			_workflowTaskUserNotificationHandler.getLink(
 				mockUserNotificationEvent(
 					_VALID_ENTRY_CLASS_NAME, null, _VALID_WORKFLOW_TASK_ID),
+				_serviceContext));
+	}
+
+	@Test
+	public void testValidWorkflowTaskIdShouldReturnBody() throws Exception {
+		Assert.assertEquals(
+			_NOTIFICATION_MESSAGE,
+			_workflowTaskUserNotificationHandler.getBody(
+				mockUserNotificationEvent(null, null, _VALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 

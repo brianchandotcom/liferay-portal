@@ -397,7 +397,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 	</c:if>
 
 	<c:if test="<%= hasDirectReplacement %>">
-		<div style="display: block; visibility:hidden; height:0px" aria-labelledby="navUnderlineReplacementsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navReplacementsId %>" role="tabpanel">
+		<div aria-labelledby="navUnderlineReplacementsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navReplacementsId %>" role="tabpanel" style="display: block; visibility: hidden; height: 0px;">
 			<frontend-data-set:classic-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(

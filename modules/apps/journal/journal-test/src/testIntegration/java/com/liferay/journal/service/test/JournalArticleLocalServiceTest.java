@@ -154,6 +154,40 @@ public class JournalArticleLocalServiceTest {
 	@Test
 	public void testArticleFriendlyURLValidation() throws Exception {
 		_testArticleFriendlyURLValidation(_group);
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_group.getCompanyId());
+
+		_testArticleFriendlyURLValidation(companyGroup);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				companyGroup.getGroupId(), TestPropsValues.getUserId());
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+			_stagingLocalService.enableLocalStaging(
+				TestPropsValues.getUserId(), companyGroup, false, false,
+				serviceContext);
+
+			_testArticleFriendlyURLValidation(companyGroup.getStagingGroup());
+		}
+		finally {
+			try {
+				_stagingLocalService.disableStaging(
+					companyGroup, serviceContext);
+			}
+			catch (Exception exception) {
+			}
+
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	@Test(expected = ArticleFriendlyURLException.class)

@@ -65,58 +65,6 @@ definition {
 		DMDocument.viewPGViaMG(mgDocumentTitle = "DM Document Title");
 	}
 
-	@e2etest
-	@priority = "5"
-	@refactordone
-	test CanAddMultipleFolders {
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Folder1 Description",
-			mgFolderName = "DM Folder1 Name");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Folder1 Name");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Folder2 Description",
-			mgFolderName = "DM Folder2 Name");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Folder2 Name");
-	}
-
-	@priority = "5"
-	@refactordone
-	test CanEditSubfolder {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Subfolder Description",
-			dmFolderName = "DM Subfolder Name",
-			groupName = "Guest",
-			parentFolderName = "DM Folder Name");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
-
-		DMFolder.gotoPGViaMG(mgFolderName = "DM Subfolder Name");
-
-		DMFolder.editPGViaMG(
-			mgFolderDescription = "DM Folder Description Edit",
-			mgFolderDescriptionEdit = "DM Folder Description Edit",
-			mgFolderName = "DM Folder Name",
-			mgFolderNameEdit = "DM Folder Name Edit");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Folder Name Edit");
-	}
-
 	@priority = "3"
 	@refactordone
 	test CanAddMGWidgetTemplate {
@@ -158,6 +106,94 @@ definition {
 		MGPortlet.viewCustomADTCarouselPG();
 	}
 
+	@e2etest
+	@priority = "5"
+	@refactordone
+	test CanAddMultipleFolders {
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMFolder.addPGViaMG(
+			mgFolderDescription = "DM Folder1 Description",
+			mgFolderName = "DM Folder1 Name");
+
+		DMFolder.viewPGViaMG(mgFolderName = "DM Folder1 Name");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMFolder.addPGViaMG(
+			mgFolderDescription = "DM Folder2 Description",
+			mgFolderName = "DM Folder2 Name");
+
+		DMFolder.viewPGViaMG(mgFolderName = "DM Folder2 Name");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanDeleteDocument {
+		property portal.acceptance = "true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.deletePGViaMG(mgDocumentTitle = "DM Document Title");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanEditDocument {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.editPGViaMG(
+			mgDocumentDescription = "DM Document Description",
+			mgDocumentDescriptionEdit = "DM Document Description Edit",
+			mgDocumentTitle = "DM Document Title",
+			mgDocumentTitleEdit = "DM Document Title Edit");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanEditSubfolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Subfolder Description",
+			dmFolderName = "DM Subfolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
+
+		DMFolder.editPGViaMG(
+			mgFolderDescription = "DM Subfolder Description",
+			mgFolderDescriptionEdit = "DM Subfolder Description Edit",
+			mgFolderName = "DM Subfolder Name",
+			mgFolderNameEdit = "DM Subfolder Name Edit");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
+
+		DMFolder.viewPGViaMG(mgFolderName = "DM Subfolder Name Edit");
+	}
+
 	@description = "This test ensures that the restricted file extension cannot be uploaded via Media Gallery."
 	@priority = "3"
 	test CanLimitUploadedFileExtension {
@@ -187,6 +223,39 @@ definition {
 		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewNoFilesViaMG(mgDocumentTitle = "Document_1.jpeg");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanSearchForDocumentInFolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title",
+			searchAssetType = "Document");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = '''"DM Document Title"''');
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title",
+			searchAssetType = "Document");
 	}
 
 	@description = "This test ensures that a users can view file after configuring a new root folder."
@@ -254,93 +323,6 @@ definition {
 		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1");
 	}
 
-	@priority = "5"
-	@refactordone
-	test CanDeleteDocument {
-		property portal.acceptance = "true";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMDocument.deletePGViaMG(mgDocumentTitle = "DM Document Title");
-	}
-
-	@priority = "5"
-	@refactordone
-	test CanEditDocument {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMDocument.editPGViaMG(
-			mgDocumentDescription = "DM Document Description",
-			mgDocumentDescriptionEdit = "DM Document Description Edit",
-			mgDocumentTitle = "DM Document Title",
-			mgDocumentTitleEdit = "DM Document Title Edit");
-	}
-
-	@priority = "4"
-	@refactordone
-	test CanSearchForDocumentInFolder {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		SearchPortlets.searchEmbedded(searchTerm = '''"DM Document Title"''');
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document");
-	}
-
-	@priority = "3"
-	@refactordone
-	test DocumentWillNotAppearIfSearchQueryIsIrrelevant {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		SearchPortlets.searchEmbedded(searchTerm = "asdf");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "asdf");
-	}
-
 	@description = "This test covers LPS-107521. It ensures that the SVG file can be viewed."
 	@priority = "4"
 	@refactordone
@@ -383,6 +365,23 @@ definition {
 		DMDocument.viewPGViaMG(
 			mgDocumentTitle = "DM Document Title",
 			mgVideoPreview = "true");
+	}
+
+	@priority = "3"
+	@refactordone
+	test DocumentWillNotAppearIfSearchQueryIsIrrelevant {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "asdf");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "asdf");
 	}
 
 }

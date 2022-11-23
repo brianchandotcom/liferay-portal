@@ -614,11 +614,18 @@ definition {
 				value1 = "${description}");
 		}
 
-		if (isSet(actionsTemplateValue)) {
+		if (isSet(type)) {
 			AssertElementPresent(
-				key_inputOption = "Script (Groovy)",
-				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
-				value1 = "${actionsTemplateValue}");
+				key_inputOption = "Type",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TYPE_TEXTAREA",
+				value1 = "${type}");
+		}
+
+		if (isSet(script)) {
+			AssertElementPresent(
+				key_inputOption = "Script",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SCRIPT_TEXTAREA",
+				value1 = "${script}");
 		}
 
 		if (isSet(executionTypeOption)) {
@@ -683,7 +690,9 @@ definition {
 			key_inputOption = "Description",
 			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT");
 
-		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA");
+		AssertElementPresent(
+			key_inputOption = "Type",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TYPE_TEXTAREA");
 
 		AssertElementPresent(
 			key_selectorField = "Execution Type",
@@ -708,10 +717,18 @@ definition {
 					value1 = "${description}");
 			}
 
-			if (isSet(actionsTemplateValue)) {
+			if (isSet(type)) {
+				Select(
+					key_inputOption = "Type",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TYPE_TEXTAREA",
+					value1 = "${type}");
+			}
+
+			if (isSet(script)) {
 				Type(
-					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
-					value1 = "${actionsTemplateValue}");
+					key_inputOption = "Script",
+					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SCRIPT_TEXTAREA",
+					value1 = "${script}");
 			}
 
 			if (isSet(executionTypeOption)) {

@@ -556,6 +556,16 @@
 	<td>//input[contains(@id,'role-type')]/..//input[@type='text' and @value ='${key_roleType}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROPERTIES_SCRIPT_TEXTAREA</td>
+	<td>//label[contains(., 'Script')]/..//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_TYPE_TEXTAREA</td>
+	<td>//label[@for='type']/..//select[@id='type']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

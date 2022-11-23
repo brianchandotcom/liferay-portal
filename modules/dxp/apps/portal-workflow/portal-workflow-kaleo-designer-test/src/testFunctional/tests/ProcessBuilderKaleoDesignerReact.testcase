@@ -73,7 +73,6 @@ definition {
 	@description = "Verify that Action can be added"
 	@priority = "4"
 	test CanAddAction {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddAction";
 
 		Workflow.openWorkflowListView();
@@ -85,10 +84,14 @@ definition {
 			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
-			actionsTemplateValue = "Action Template",
 			executionTypeOption = "On Entry",
 			name = "Liferay Actions",
-			singleAction = "true");
+			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
+                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+
+                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);''',
+			singleAction = "true",
+			type = "Groovy");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 

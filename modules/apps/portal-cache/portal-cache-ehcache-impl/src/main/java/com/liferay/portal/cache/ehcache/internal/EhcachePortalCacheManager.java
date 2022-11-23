@@ -50,7 +50,6 @@ import java.io.Serializable;
 
 import java.net.URL;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -227,19 +226,15 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void removePortalCaches(long companyId) {
-		Set<PortalCache<K, V>> shardedPortalCaches = new HashSet<>();
-
 		for (PortalCache<K, V> portalCache : _portalCaches.values()) {
 			if (portalCache.isSharded()) {
-				shardedPortalCaches.add(portalCache);
+				ShardedEhcachePortalCache<K, V> shardedEhcachePortalCache =
+					(ShardedEhcachePortalCache<K, V>)
+						EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
+
+				shardedEhcachePortalCache.removeEhcache(companyId);
 			}
 		}
-
-		if (shardedPortalCaches.isEmpty()) {
-			return;
-		}
-
-		_removeShardedPortalCache(companyId, shardedPortalCaches);
 	}
 
 	public void setConfigFile(String configFile) {
@@ -529,18 +524,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 				portalCache.unregisterPortalCacheListener(portalCacheListener);
 			}
-		}
-	}
-
-	private void _removeShardedPortalCache(
-		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
-
-		for (PortalCache<K, V> shardedPortalCache : shardedPortalCaches) {
-			ShardedEhcachePortalCache<K, V> shardedEhcachePortalCache =
-				(ShardedEhcachePortalCache<K, V>)
-					EhcacheUnwrapUtil.getWrappedPortalCache(shardedPortalCache);
-
-			shardedEhcachePortalCache.removeEhcache(companyId);
 		}
 	}
 

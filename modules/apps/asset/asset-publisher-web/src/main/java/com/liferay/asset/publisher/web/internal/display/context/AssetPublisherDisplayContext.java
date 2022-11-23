@@ -933,48 +933,48 @@ public class AssetPublisherDisplayContext {
 
 								dropdownItem.setLabel(type);
 							});
+
+						continue;
 					}
-					else {
-						ClassTypeReader classTypeReader =
-							assetRendererFactory.getClassTypeReader();
 
-						List<ClassType> assetAvailableClassTypes =
-							classTypeReader.getAvailableClassTypes(
-								PortalUtil.getCurrentAndAncestorSiteGroupIds(
-									finalCurGroupId),
-								_themeDisplay.getLocale());
+					ClassTypeReader classTypeReader =
+						assetRendererFactory.getClassTypeReader();
 
-						for (ClassType assetAvailableClassType :
-								assetAvailableClassTypes) {
+					List<ClassType> assetAvailableClassTypes =
+						classTypeReader.getAvailableClassTypes(
+							PortalUtil.getCurrentAndAncestorSiteGroupIds(
+								finalCurGroupId),
+							_themeDisplay.getLocale());
 
-							add(
-								dropdownItem -> {
-									assetBrowserURL.setParameter(
-										"subtypeSelectionId",
-										String.valueOf(
-											assetAvailableClassType.
-												getClassTypeId()));
-									assetBrowserURL.setParameter(
-										"showNonindexable",
-										String.valueOf(Boolean.TRUE));
-									assetBrowserURL.setParameter(
-										"showScheduled",
-										String.valueOf(Boolean.TRUE));
+					for (ClassType assetAvailableClassType :
+							assetAvailableClassTypes) {
 
-									dropdownItem.putData(
-										"href", assetBrowserURL.toString());
+						add(
+							dropdownItem -> {
+								assetBrowserURL.setParameter(
+									"subtypeSelectionId",
+									String.valueOf(
+										assetAvailableClassType.
+											getClassTypeId()));
+								assetBrowserURL.setParameter(
+									"showNonindexable",
+									String.valueOf(Boolean.TRUE));
+								assetBrowserURL.setParameter(
+									"showScheduled",
+									String.valueOf(Boolean.TRUE));
 
-									String type =
-										assetAvailableClassType.getName();
+								dropdownItem.putData(
+									"href", assetBrowserURL.toString());
 
-									dropdownItem.putData(
-										"title",
-										LanguageUtil.format(
-											_httpServletRequest, "select-x",
-											type, false));
-									dropdownItem.setLabel(type);
-								});
-						}
+								String type = assetAvailableClassType.getName();
+
+								dropdownItem.putData(
+									"title",
+									LanguageUtil.format(
+										_httpServletRequest, "select-x", type,
+										false));
+								dropdownItem.setLabel(type);
+							});
 					}
 				}
 			}

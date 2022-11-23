@@ -24,11 +24,19 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -44,12 +52,18 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 	public BackgroundTaskStatusMessageListener(
 		BackgroundTaskLocalService backgroundTaskLocalService,
 		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry,
-		LockManager lockManager) {
+		LockManager lockManager, RoleLocalService roleLocalService,
+		UserLocalService userLocalService,
+		UserNotificationEventLocalService userNotificationEventLocalService) {
 
 		_backgroundTaskLocalService = backgroundTaskLocalService;
 		_backgroundTaskStatusRegistry = backgroundTaskStatusRegistry;
 
 		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(lockManager);
+
+		_roleLocalService = roleLocalService;
+		_userLocalService = userLocalService;
+		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
 	@Override
@@ -58,10 +72,13 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 
 		int status = message.getInteger("status");
 
-		if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
-			(status == BackgroundTaskConstants.STATUS_FAILED)) {
-
+		if (status == BackgroundTaskConstants.STATUS_CANCELLED) {
 			_executeBackgroundTasks(message);
+		}
+		else if (status == BackgroundTaskConstants.STATUS_FAILED) {
+			_executeBackgroundTasks(message);
+
+			_sendUserNotificationEvents(message);
 		}
 		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
 			long backgroundTaskId = message.getLong(
@@ -149,6 +166,46 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 			backgroundTask.getBackgroundTaskId());
 	}
 
+	private void _sendUserNotificationEvents(
+			BackgroundTask backgroundTask, long userId)
+		throws Exception {
+
+		_userNotificationEventLocalService.sendUserNotificationEvents(
+			userId, "BackgroundTask",
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
+			JSONUtil.put(
+				"name", backgroundTask.getName()
+			).put(
+				"taskExecutorClassName",
+				backgroundTask.getTaskExecutorClassName()
+			));
+	}
+
+	private void _sendUserNotificationEvents(Message message) throws Exception {
+		long backgroundTaskId = message.getLong(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID);
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.fetchBackgroundTask(backgroundTaskId);
+
+		User user = _userLocalService.fetchUser(backgroundTask.getUserId());
+
+		if ((user != null) && !user.isDefaultUser()) {
+			_sendUserNotificationEvents(backgroundTask, user.getUserId());
+
+			return;
+		}
+
+		Role role = _roleLocalService.fetchRole(
+			backgroundTask.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+
+		for (long userId : userIds) {
+			_sendUserNotificationEvents(backgroundTask, userId);
+		}
+	}
+
 	private void _translateBackgroundTaskStatusMessage(Message message) {
 		long backgroundTaskId = message.getLong(
 			BackgroundTaskConstants.BACKGROUND_TASK_ID);
@@ -185,5 +242,9 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 	private final BackgroundTaskLocalService _backgroundTaskLocalService;
 	private final BackgroundTaskLockHelper _backgroundTaskLockHelper;
 	private final BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
+	private final RoleLocalService _roleLocalService;
+	private final UserLocalService _userLocalService;
+	private final UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

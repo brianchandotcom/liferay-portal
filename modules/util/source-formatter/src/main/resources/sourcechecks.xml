@@ -1047,6 +1047,10 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on tag attributes." />
 		</check>
+		<check name="JSPTaglibAttributesCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on taglib attributes." />
+		</check>
 		<check name="JSPTaglibVariableCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks if variable names follow naming conventions." />

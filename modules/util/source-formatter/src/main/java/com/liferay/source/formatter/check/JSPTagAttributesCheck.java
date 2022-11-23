@@ -98,8 +98,6 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 		content = formatMultiLinesTagAttributes(absolutePath, content, false);
 
-		_checkNecessaryAttribute(fileName, content);
-
 		return content;
 	}
 
@@ -224,48 +222,6 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 		}
 
 		return tag;
-	}
-
-	private void _checkNecessaryAttribute(String fileName, String content) {
-		int x = -1;
-
-		while (true) {
-			x = content.indexOf("<clay:dropdown-actions", x + 1);
-
-			if (x == -1) {
-				break;
-			}
-
-			String tagString = getTag(content, x);
-
-			if (Validator.isNull(tagString)) {
-				continue;
-			}
-
-			Tag tag = parseTag(tagString, false);
-
-			if (tag == null) {
-				continue;
-			}
-
-			Map<String, String> attributesMap = tag.getAttributesMap();
-
-			Set<String> attributesSet = attributesMap.keySet();
-
-			if (attributesSet.contains("aria-label") ||
-				attributesSet.contains("aria-labelledby") ||
-				attributesSet.contains("title")) {
-
-				continue;
-			}
-
-			addMessage(
-				fileName,
-				"When using <clay:dropdown-actions>, always specify one of " +
-					"the follwing attributes: 'aria-label', " +
-						"'aria-labelledby', 'title'",
-				getLineNumber(content, x));
-		}
 	}
 
 	private String _formatMessageArgumentsValue(String attributeValue) {

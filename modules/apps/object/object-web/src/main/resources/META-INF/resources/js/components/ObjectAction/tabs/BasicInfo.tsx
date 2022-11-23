@@ -28,10 +28,11 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 export default function BasicInfo({
 	errors,
 	handleChange,
+	isApproved,
 	readOnly,
 	setValues,
 	values,
-}: IPros) {
+}: IProps) {
 	return (
 		<Card title={Liferay.Language.get('basic-info')}>
 			<InputLocalized
@@ -41,8 +42,10 @@ export default function BasicInfo({
 				onChange={(label) =>
 					setValues({
 						...values,
+						...(!isApproved && {
+							name: toCamelCase(label[defaultLanguageId] ?? ''),
+						}),
 						label,
-						name: toCamelCase(label[defaultLanguageId] ?? ''),
 					})
 				}
 				required
@@ -50,6 +53,7 @@ export default function BasicInfo({
 			/>
 
 			<Input
+				disabled={isApproved}
 				error={errors.name}
 				label={Liferay.Language.get('action-name')}
 				name="name"
@@ -80,9 +84,10 @@ export default function BasicInfo({
 	);
 }
 
-interface IPros {
+interface IProps {
 	errors: FormError<ObjectAction & ObjectActionParameters>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	isApproved: boolean;
 	readOnly?: boolean;
 	setValues: (values: Partial<ObjectAction>) => void;
 	values: Partial<ObjectAction>;

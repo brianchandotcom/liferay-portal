@@ -51,6 +51,7 @@ type ObjectsOptionsList = Array<
 
 export default function ActionBuilder({
 	errors,
+	isApproved,
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
@@ -436,6 +437,7 @@ export default function ActionBuilder({
 					viewMode="inline"
 				>
 					<SingleSelect
+						disabled={isApproved}
 						error={errors.objectActionTriggerKey}
 						onChange={({value}) =>
 							setValues({
@@ -734,7 +736,7 @@ export default function ActionBuilder({
 				)}
 			</Card>
 
-			{values.objectActionTriggerKey === 'standAloneAction' && (
+			{values.objectActionTriggerKey === 'standalone' && (
 				<Card title={Liferay.Language.get('error-message')}>
 					<InputLocalized
 						error={errors.errorMessage}
@@ -758,6 +760,7 @@ export default function ActionBuilder({
 
 interface IProps {
 	errors: ActionError;
+	isApproved: boolean;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];

@@ -167,7 +167,11 @@ public class ObjectDefinitionsActionsDisplayContext
 		).put(
 			"description", objectAction.getDescription()
 		).put(
+			"errorMessage", objectAction.getErrorMessageMap()
+		).put(
 			"id", objectAction.getObjectActionId()
+		).put(
+			"label", objectAction.getLabelMap()
 		).put(
 			"name", objectAction.getName()
 		).put(

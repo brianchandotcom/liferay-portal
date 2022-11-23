@@ -40,6 +40,7 @@ const TABS = [
 ];
 
 export default function Action({
+	isApproved,
 	objectAction: initialValues,
 	objectActionCodeEditorElements,
 	objectActionExecutors,
@@ -148,6 +149,7 @@ export default function Action({
 					<BasicInfo
 						errors={errors}
 						handleChange={handleChange}
+						isApproved={isApproved!}
 						readOnly={readOnly}
 						setValues={setValues}
 						values={values}
@@ -159,6 +161,7 @@ export default function Action({
 						errors={
 							Object.keys(errors).length ? errors : backEndErrors
 						}
+						isApproved={isApproved!}
 						objectActionCodeEditorElements={
 							objectActionCodeEditorElements
 						}
@@ -254,7 +257,7 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 			}
 		}
 		else if (
-			values.objectActionTriggerKey === 'standAloneAction' &&
+			values.objectActionTriggerKey === 'standalone' &&
 			invalidateRequired(values.errorMessage?.[defaultLanguageId])
 		) {
 			errors.errorMessage = REQUIRED_MSG;
@@ -310,6 +313,7 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 }
 
 interface IProps {
+	isApproved?: boolean;
 	objectAction: Partial<ObjectAction>;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];

@@ -21,6 +21,7 @@ import {
 	SidebarCategory,
 } from '@liferay/object-js-components-web';
 export default function Action({
+	isApproved,
 	objectAction: initialValues,
 	objectActionCodeEditorElements,
 	objectActionExecutors,
@@ -33,6 +34,7 @@ export default function Action({
 	validateExpressionURL,
 }: IProps): JSX.Element;
 interface IProps {
+	isApproved?: boolean;
 	objectAction: Partial<ObjectAction>;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];

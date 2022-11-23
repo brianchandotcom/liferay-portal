@@ -19,6 +19,7 @@ import './ActionBuilder.scss';
 import {ActionError} from '../index';
 export default function ActionBuilder({
 	errors,
+	isApproved,
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
@@ -30,6 +31,7 @@ export default function ActionBuilder({
 }: IProps): JSX.Element;
 interface IProps {
 	errors: ActionError;
+	isApproved: boolean;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];

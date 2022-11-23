@@ -16,6 +16,7 @@
 
 import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 export default function EditObjectAction({
+	isApproved,
 	objectAction: {id, ...values},
 	objectActionCodeEditorElements,
 	objectActionExecutors,
@@ -26,6 +27,7 @@ export default function EditObjectAction({
 	validateExpressionURL,
 }: IProps): JSX.Element;
 interface IProps {
+	isApproved: boolean;
 	objectAction: ObjectAction;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];

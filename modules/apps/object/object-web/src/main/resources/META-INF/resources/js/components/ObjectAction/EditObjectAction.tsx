@@ -18,6 +18,7 @@ import React from 'react';
 import ObjectAction from './index';
 
 export default function EditObjectAction({
+	isApproved,
 	objectAction: {id, ...values},
 	objectActionCodeEditorElements,
 	objectActionExecutors,
@@ -29,6 +30,7 @@ export default function EditObjectAction({
 }: IProps) {
 	return (
 		<ObjectAction
+			isApproved={isApproved}
 			objectAction={values}
 			objectActionCodeEditorElements={objectActionCodeEditorElements}
 			objectActionExecutors={objectActionExecutors}
@@ -52,6 +54,7 @@ export default function EditObjectAction({
 }
 
 interface IProps {
+	isApproved: boolean;
 	objectAction: ObjectAction;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];

@@ -80,4 +80,12 @@ ${configList}''';
 		FileUtil.replaceStringInFile("${filePath}", "${oldValue}", "${newValue}");
 	}
 
+	@description = "Wait for OSGi Configuration to update in the Database"
+	macro waitForOSGiConfig {
+
+		// LRQA-78134 Current workaround to wait for OSGi configurations until we get a reliable way of waiting for them to update in the database
+
+		Pause(locator1 = "5000");
+	}
+
 }

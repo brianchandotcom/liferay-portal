@@ -44,6 +44,8 @@ definition {
 				value1 = "44");
 
 			Button.clickSave();
+
+			OSGiConfig.waitForOSGiConfig();
 		}
 
 		task ("Then the config is added to the database") {
@@ -86,6 +88,8 @@ definition {
 				value1 = "44");
 
 			Button.clickUpdate();
+
+			OSGiConfig.waitForOSGiConfig();
 		}
 
 		task ("Then the config is updated in the database") {
@@ -123,13 +127,11 @@ definition {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 			FileUtil.write("${liferayHome}/osgi/modules/${configName}.config", "${config}");
+
+			OSGiConfig.waitForOSGiConfig();
 		}
 
 		task ("Then the config should not be added to the database") {
-			Portlet.shutdownServer();
-
-			Portlet.startServer(deleteLiferayHome = "false");
-
 			SQL.assertTextInMySQLStatementResult(
 				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
 				text = "0");
@@ -171,12 +173,8 @@ definition {
 			OSGiConfig.deployOSGiConfigFile(
 				osgiConfigFileName = "${configName}.config",
 				osgiConfigs = "checkInterval=I\"44\"");
-		}
 
-		task ("And the portal is restarted") {
-			Portlet.shutdownServer();
-
-			Portlet.startServer(deleteLiferayHome = "false");
+			OSGiConfig.waitForOSGiConfig();
 		}
 
 		task ("Then the config is updated in the database") {

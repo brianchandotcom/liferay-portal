@@ -25,7 +25,6 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.service.persistence.DispatchTriggerUtil;
 import com.liferay.dispatch.service.test.util.CronExpressionUtil;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -77,9 +76,7 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Test
 	public void testAddDispatchTriggerExceptions() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		_addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
@@ -113,15 +110,15 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Test
 	public void testAddDispatchTriggerWithCustomTimeZone() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
 				null, user.getUserId(),
 				TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST, null,
 				RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
+
+		_assertFetchPreviousFireDate(dispatchTrigger);
 
 		String dateString = "7/20/22 02:00:00 AM";
 
@@ -143,108 +140,32 @@ public class DispatchTriggerLocalServiceTest {
 			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
 			timeZoneId);
 
-		Date startDate = dispatchTrigger.getStartDate();
-
 		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
 
 		Assert.assertEquals(
-			startDate,
+			dispatchTrigger.getStartDate(),
 			new Date(date.getTime() - timeZone.getOffset(date.getTime())));
 
 		Assert.assertEquals(dispatchTrigger.getTimeZoneStartDate(), date);
-	}
 
-	@Test
-	public void testDeleteDispatchTrigger() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
-
-		DispatchTrigger dispatchTrigger1 = DispatchTriggerUtil.create(
-			RandomTestUtil.nextLong());
-
-		dispatchTrigger1.setCompanyId(user.getCompanyId());
-		dispatchTrigger1.setUserId(user.getUserId());
-		dispatchTrigger1.setActive(true);
-		dispatchTrigger1.setSystem(true);
-
-		dispatchTrigger1 = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(dispatchTrigger1, 1));
-
-		DispatchTrigger dispatchTrigger2 = DispatchTriggerUtil.create(
-			RandomTestUtil.nextLong());
-
-		dispatchTrigger2.setCompanyId(user.getCompanyId());
-		dispatchTrigger2.setUserId(user.getUserId());
-		dispatchTrigger2.setActive(true);
-		dispatchTrigger2.setSystem(false);
-
-		dispatchTrigger2 = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(dispatchTrigger2, 2));
-
-		String liferayMode = SystemProperties.get("liferay.mode");
-
-		try {
-			SystemProperties.clear("liferay.mode");
-
-			_dispatchTriggerLocalService.deleteDispatchTrigger(
-				dispatchTrigger1);
-
-			Assert.assertNotNull(
-				_dispatchTriggerLocalService.fetchDispatchTrigger(
-					dispatchTrigger1.getDispatchTriggerId()));
-
-			_dispatchTriggerLocalService.deleteDispatchTrigger(
-				dispatchTrigger2);
-
-			Assert.assertNull(
-				_dispatchTriggerLocalService.fetchDispatchTrigger(
-					dispatchTrigger2.getDispatchTriggerId()));
-		}
-		finally {
-			SystemProperties.set("liferay.mode", liferayMode);
-		}
-	}
-
-	@Test
-	public void testFetchPreviousFireDate() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
-
-		DispatchTrigger expectedDispatchTrigger =
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1);
-
-		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
-			expectedDispatchTrigger);
-
-		Assert.assertNull(
-			_dispatchTriggerLocalService.fetchPreviousFireDate(Long.MIN_VALUE));
-
-		Assert.assertNull(
-			_dispatchTriggerLocalService.fetchPreviousFireDate(
-				dispatchTrigger.getDispatchTriggerId()));
+		_assertDeleteDispatchTrigger(dispatchTrigger);
 	}
 
 	@Test
 	public void testGetUserDispatchTriggers() throws Exception {
-		int userCount = RandomTestUtil.randomInt(4, 10);
-
 		Map<User, Integer> userDispatchTriggersCounts = new HashMap<>();
 
-		while (userCount-- > 0) {
-			Company company = CompanyTestUtil.addCompany();
+		for (int i = 0; i < 3; i++) {
+			User user = UserTestUtil.addUser();
 
-			User user = UserTestUtil.addUser(company);
-
-			int dispatchTriggersCount = RandomTestUtil.randomInt(10, 20);
+			int dispatchTriggersCount = RandomTestUtil.randomInt(5, 15);
 
 			userDispatchTriggersCounts.put(user, dispatchTriggersCount);
 
 			while (dispatchTriggersCount-- > 0) {
 				_addDispatchTrigger(
 					DispatchTriggerTestUtil.randomDispatchTrigger(
-						user, dispatchTriggersCount));
+						user, RandomTestUtil.nextInt()));
 			}
 		}
 
@@ -276,9 +197,7 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Test
 	public void testUpdateDispatchTrigger() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger expectedDispatchTrigger =
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1);
@@ -329,9 +248,7 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Test
 	public void testUpdateDispatchTriggerExceptions() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger1 = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
@@ -373,16 +290,14 @@ public class DispatchTriggerLocalServiceTest {
 	public void testUpdateDispatchTriggerWhenMultiplePortalInstancesPresent()
 		throws Exception {
 
-		Company company1 = CompanyTestUtil.addCompany();
-
-		User user1 = UserTestUtil.addUser(company1);
+		User user1 = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger1 = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user1, 1));
 
-		Company company2 = CompanyTestUtil.addCompany();
+		Company company = CompanyTestUtil.addCompany();
 
-		User user2 = UserTestUtil.addUser(company2);
+		User user2 = UserTestUtil.addUser(company);
 
 		DispatchTrigger dispatchTrigger2 = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user2, 1));
@@ -437,6 +352,41 @@ public class DispatchTriggerLocalServiceTest {
 
 		Assert.assertEquals(
 			dispatchTaskStatus, actualDispatchTrigger.getDispatchTaskStatus());
+	}
+
+	private void _assertDeleteDispatchTrigger(DispatchTrigger dispatchTrigger)
+		throws Exception {
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		try {
+			SystemProperties.clear("liferay.mode");
+
+			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
+
+			if (dispatchTrigger.isSystem()) {
+				Assert.assertNotNull(
+					_dispatchTriggerLocalService.fetchDispatchTrigger(
+						dispatchTrigger.getDispatchTriggerId()));
+			}
+			else {
+				Assert.assertNull(
+					_dispatchTriggerLocalService.fetchDispatchTrigger(
+						dispatchTrigger.getDispatchTriggerId()));
+			}
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+	}
+
+	private void _assertFetchPreviousFireDate(DispatchTrigger dispatchTrigger) {
+		Assert.assertNull(
+			_dispatchTriggerLocalService.fetchPreviousFireDate(Long.MIN_VALUE));
+
+		Assert.assertNull(
+			_dispatchTriggerLocalService.fetchPreviousFireDate(
+				dispatchTrigger.getDispatchTriggerId()));
 	}
 
 	private void _basicAssertEquals(

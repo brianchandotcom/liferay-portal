@@ -24,6 +24,10 @@
 	</entity>
 	<entity local-service="true" name="ListTypeEntry" remote-service="true" uuid="true">
 
+		<!-- External reference code -->
+
+		<column name="externalReferenceCode" type="String" />
+
 		<!-- PK fields -->
 
 		<column name="listTypeEntryId" primary="true" type="long" />

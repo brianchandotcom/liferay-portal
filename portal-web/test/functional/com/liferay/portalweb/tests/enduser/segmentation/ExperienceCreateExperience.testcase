@@ -3578,6 +3578,57 @@ definition {
 		}
 	}
 
+	@description = "LPS-96828 Bug: In different experiences, the same non-instantiable widget can't be added."
+	@priority = "4"
+	test AddNonInstantiableWidget {
+		property portal.acceptance = "true";
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment Name",
+				text = "Test");
+		}
+
+		task ("Add an Experience") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "Experience Name",
+				segmentName = "Segment Name");
+		}
+
+		task ("Add an non-instantiable widget to default experience") {
+			PageEditor.changeExperience(newExperience = "Default");
+
+			PageEditor.addWidget(portletName = "Sign In");
+		}
+
+		task ("Add the same widget to the created experience") {
+			PageEditor.changeExperience(newExperience = "Experience Name");
+
+			PageEditor.addWidget(portletName = "Sign In");
+
+			Button.clickPublish();
+		}
+
+		task ("Check that widget is present at both experiences") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SignIn#PORTLET_TITLE",
+				value1 = "You are signed in as");
+
+			ContentPages.changeExperience(experienceName = "Experience Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SignIn#PORTLET_TITLE",
+				value1 = "You are signed in as");
+		}
+	}
+
 	@description = "LPS-125710 When a user, that Belongs To two or more different segments with experiences for them and these experiences are below of any other Anyone-targeted experience, lands on the page, the Anyone-targeted experience labeled as active will be shown"
 	@priority = "3"
 	@uitest

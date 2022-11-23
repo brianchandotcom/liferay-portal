@@ -30,26 +30,23 @@ export default function propsTransformer({
 				openSelectionModal({
 					customSelectEvent: true,
 					multiple: true,
-					onSelect(selectedItems) {
-						if (selectedItems) {
-							let assetClassName = '';
-							const assetEntryIds = [];
-
-							Array.from(selectedItems).forEach(
-								(selectedItem) => {
-									assetEntryIds.push(selectedItem.value);
-
-									assetClassName =
-										selectedItem.assetclassname;
-								}
-							);
+					onSelect(data) {
+						if (data.value && data.value.length) {
+							const selectedItems = data.value;
 
 							Liferay.Util.postForm(
 								document[`${portletNamespace}fm`],
 								{
 									data: {
-										assetEntryIds: assetEntryIds.join(','),
-										assetEntryType: assetClassName,
+										assetEntryIds: Array.from(selectedItems)
+											.map((selectedItem) => {
+												const assetEntry = JSON.parse(
+													selectedItem
+												);
+
+												return assetEntry.assetEntryId;
+											})
+											.join(','),
 										cmd: 'add-selection',
 										redirect: additionalProps.currentURL,
 									},

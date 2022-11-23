@@ -58,7 +58,9 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
@@ -122,7 +124,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -872,16 +873,6 @@ public class AssetPublisherDisplayContext {
 						continue;
 					}
 
-					PortletURL assetBrowserURL =
-						PortletProviderUtil.getPortletURL(
-							_httpServletRequest,
-							assetRendererFactory.getClassName(),
-							PortletProvider.Action.BROWSE);
-
-					if (assetBrowserURL == null) {
-						continue;
-					}
-
 					long curGroupId = group.getGroupId();
 
 					if (group.isStagingGroup() &&
@@ -891,34 +882,14 @@ public class AssetPublisherDisplayContext {
 						curGroupId = group.getLiveGroupId();
 					}
 
-					assetBrowserURL.setParameter(
-						"groupId", String.valueOf(curGroupId));
-					assetBrowserURL.setParameter(
-						"multipleSelection", String.valueOf(Boolean.TRUE));
-					assetBrowserURL.setParameter(
-						"selectedGroupIds", String.valueOf(curGroupId));
-					assetBrowserURL.setParameter(
-						"typeSelection", assetRendererFactory.getClassName());
-					assetBrowserURL.setParameter(
-						"showNonindexable", String.valueOf(Boolean.TRUE));
-					assetBrowserURL.setParameter(
-						"showScheduled", String.valueOf(Boolean.TRUE));
-
-					String eventName =
-						StringPool.UNDERLINE +
-							HtmlUtil.escapeJS(getPortletResource()) +
-								"_selectAsset";
-
-					assetBrowserURL.setParameter("eventName", eventName);
-
-					assetBrowserURL.setPortletMode(PortletMode.VIEW);
-					assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
 					if (!assetRendererFactory.isSupportsClassTypes()) {
 						add(
 							dropdownItem -> {
 								dropdownItem.putData(
-									"href", assetBrowserURL.toString());
+									"href",
+									_getAssetEntryItemSelectorPortletURL(
+										assetRendererFactory,
+										_DEFAULT_SUBTYPE_SELECTION_ID));
 
 								String type = assetRendererFactory.getTypeName(
 									_themeDisplay.getLocale());
@@ -949,20 +920,12 @@ public class AssetPublisherDisplayContext {
 
 						add(
 							dropdownItem -> {
-								assetBrowserURL.setParameter(
-									"subtypeSelectionId",
-									String.valueOf(
+								dropdownItem.putData(
+									"href",
+									_getAssetEntryItemSelectorPortletURL(
+										assetRendererFactory,
 										assetAvailableClassType.
 											getClassTypeId()));
-								assetBrowserURL.setParameter(
-									"showNonindexable",
-									String.valueOf(Boolean.TRUE));
-								assetBrowserURL.setParameter(
-									"showScheduled",
-									String.valueOf(Boolean.TRUE));
-
-								dropdownItem.putData(
-									"href", assetBrowserURL.toString());
 
 								String type = assetAvailableClassType.getName();
 
@@ -2186,6 +2149,30 @@ public class AssetPublisherDisplayContext {
 		return filteredAssetEntries;
 	}
 
+	private String _getAssetEntryItemSelectorPortletURL(
+		AssetRendererFactory<?> assetRendererFactory, long subtypeSelectionId) {
+
+		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
+			new AssetEntryItemSelectorCriterion();
+
+		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetEntryItemSelectorReturnType());
+		assetEntryItemSelectorCriterion.setGroupId(
+			_themeDisplay.getScopeGroupId());
+		assetEntryItemSelectorCriterion.setShowNonindexable(true);
+		assetEntryItemSelectorCriterion.setShowScheduled(true);
+		assetEntryItemSelectorCriterion.setSubtypeSelectionId(
+			subtypeSelectionId);
+		assetEntryItemSelectorCriterion.setTypeSelection(
+			assetRendererFactory.getClassName());
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+				_portletResponse.getNamespace() + "selectAsset",
+				assetEntryItemSelectorCriterion));
+	}
+
 	private String _getSegmentsAnonymousUserId() {
 		return GetterUtil.getString(
 			_portletRequest.getAttribute(
@@ -2271,6 +2258,8 @@ public class AssetPublisherDisplayContext {
 			_ddmStructureFieldLabel = classTypeField.getLabel();
 		}
 	}
+
+	private static final int _DEFAULT_SUBTYPE_SELECTION_ID = -1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherDisplayContext.class);

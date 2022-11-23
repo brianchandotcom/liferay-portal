@@ -59,7 +59,7 @@ public class JournalDisplayPageFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (isDepotOrGlobalScopeArticle(article) ||
-			_isEditGlobalScopeStructureDefaultValues(article)) {
+			_isEditDepotOrGlobalScopeStructureDefaultValues(article)) {
 
 			return false;
 		}
@@ -82,7 +82,7 @@ public class JournalDisplayPageFormNavigatorEntry
 		return "/article/asset_display_page.jsp";
 	}
 
-	private boolean _isEditGlobalScopeStructureDefaultValues(
+	private boolean _isEditDepotOrGlobalScopeStructureDefaultValues(
 		JournalArticle article) {
 
 		ServiceContext serviceContext =
@@ -133,7 +133,7 @@ public class JournalDisplayPageFormNavigatorEntry
 			return false;
 		}
 
-		if (group.isCompany()) {
+		if (group.isCompany() || group.isDepot()) {
 			return true;
 		}
 

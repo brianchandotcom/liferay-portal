@@ -1142,12 +1142,12 @@
 </tr>
 <tr>
 	<td>UPLOAD_ON_WIDGET_ON_ANY_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')][${key_rowNumber}]//button[contains(.,'Select')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')][${key_rowNumber}]//button[contains(.,'Select')] | //div[@class="ddm-field"][${key_rowNumber}]//span[text()='${key_fieldName}']/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>UPLOAD_ON_WIDGET_SINGLE_ROW</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')][1]//button[contains(.,'Select')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')][1]//button[contains(.,'Select')] | //div[@class="ddm-field"][1]//span[text()='${key_fieldName}']/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

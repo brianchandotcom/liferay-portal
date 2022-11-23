@@ -500,30 +500,25 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				continue;
 			}
 
-			_removeConfigurableEhcachePortalCacheListeners(portalCache);
+			BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
+				EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
+
+			Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
+				portalCacheListeners =
+					baseEhcachePortalCache.getPortalCacheListeners();
+
+			for (PortalCacheListener<K, V> portalCacheListener :
+					portalCacheListeners.keySet()) {
+
+				if (portalCacheListener instanceof
+						ConfigurableEhcachePortalCacheListener) {
+
+					portalCache.unregisterPortalCacheListener(
+						portalCacheListener);
+				}
+			}
 
 			_initPortalCacheListeners(portalCache, portalCacheConfiguration);
-		}
-	}
-
-	private void _removeConfigurableEhcachePortalCacheListeners(
-		PortalCache<K, V> portalCache) {
-
-		BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
-			EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
-
-		Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
-			portalCacheListeners =
-				baseEhcachePortalCache.getPortalCacheListeners();
-
-		for (PortalCacheListener<K, V> portalCacheListener :
-				portalCacheListeners.keySet()) {
-
-			if (portalCacheListener instanceof
-					ConfigurableEhcachePortalCacheListener) {
-
-				portalCache.unregisterPortalCacheListener(portalCacheListener);
-			}
 		}
 	}
 

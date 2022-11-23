@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.export;
 
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.workflow.kaleo.definition.Node;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,9 +24,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(property = "node.type=JOIN_XOR", service = NodeExporter.class)
+@Component(service = NodeExporter.class)
 public class JoinXorNodeExporter
 	extends BaseNodeExporter implements NodeExporter {
+
+	@Override
+	public NodeType getNodeType() {
+		return NodeType.JOIN_XOR;
+	}
 
 	@Override
 	protected Element createNodeElement(Element element, String namespace) {

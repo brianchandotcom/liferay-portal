@@ -172,7 +172,7 @@ const RedirectPattern = ({
 
 	const handleUrlError = (error, index) => {
 		const tempList = [...patterns];
-		tempList[index].error = {...tempList[index], error};
+		tempList[index] = {...tempList[index], error};
 		setPatterns(tempList);
 	};
 

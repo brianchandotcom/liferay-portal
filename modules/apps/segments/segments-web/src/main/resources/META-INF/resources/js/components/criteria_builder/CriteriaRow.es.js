@@ -339,6 +339,7 @@ class CriteriaRow extends Component {
 
 	_renderValueInput = (
 		disabled,
+		propertyLabel,
 		renderEmptyValuesErrors,
 		selectedProperty,
 		value
@@ -364,6 +365,7 @@ class CriteriaRow extends Component {
 				displayValue={this.props.criterion.displayValue || ''}
 				onChange={this._handleTypedInputChange}
 				options={selectedProperty.options}
+				propertyLabel={propertyLabel}
 				renderEmptyValueErrors={renderEmptyValuesErrors}
 				selectEntity={selectedProperty.selectEntity}
 				value={value}
@@ -470,9 +472,9 @@ class CriteriaRow extends Component {
 				</span>
 
 				<ClaySelectWithOption
-					aria-label={Liferay.Language.get(
+					aria-label={`${propertyLabel}: ${Liferay.Language.get(
 						'select-property-operator-option'
-					)}
+					)}`}
 					className="criterion-input form-control operator-input"
 					disabled={disabledInput}
 					onChange={this._handleInputChange('operatorName')}
@@ -487,6 +489,7 @@ class CriteriaRow extends Component {
 
 				{this._renderValueInput(
 					disabledInput,
+					propertyLabel,
 					renderEmptyValuesErrors,
 					selectedProperty,
 					value

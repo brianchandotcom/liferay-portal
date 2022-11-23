@@ -24,6 +24,7 @@ class DateTimeInput extends React.Component {
 	static propTypes = {
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
+		propertyLabel: propTypes.string.isRequired,
 		value: propTypes.string,
 	};
 
@@ -87,12 +88,14 @@ class DateTimeInput extends React.Component {
 
 	render() {
 		const {value} = this.state;
-		const {disabled} = this.props;
+		const {disabled, propertyLabel} = this.props;
 
 		return (
 			<div className="criterion-input date-input">
 				<input
-					aria-label={Liferay.Language.get('select-date')}
+					aria-label={`${propertyLabel}: ${Liferay.Language.get(
+						'select-date'
+					)}`}
 					className="form-control"
 					data-testid="date-input"
 					disabled={disabled}

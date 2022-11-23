@@ -24,6 +24,7 @@ class BooleanInput extends React.Component {
 		className: propTypes.string,
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
+		propertyLabel: propTypes.string.isRequired,
 		value: propTypes.string,
 	};
 
@@ -32,13 +33,15 @@ class BooleanInput extends React.Component {
 	};
 
 	render() {
-		const {className, disabled, value} = this.props;
+		const {className, disabled, propertyLabel, value} = this.props;
 
 		const classes = getCN('criterion-input', 'form-control', className);
 
 		return (
 			<ClaySelectWithOption
-				aria-label={Liferay.Language.get('select-option')}
+				aria-label={`${propertyLabel}: ${Liferay.Language.get(
+					'select-option'
+				)}`}
 				className={classes}
 				data-testid="options-boolean"
 				disabled={disabled}

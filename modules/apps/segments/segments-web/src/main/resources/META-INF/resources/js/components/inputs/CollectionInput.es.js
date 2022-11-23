@@ -26,6 +26,7 @@ class CollectionInput extends React.Component {
 	static propTypes = {
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
+		propertyLabel: propTypes.string.isRequired,
 		value: propTypes.string,
 	};
 
@@ -76,12 +77,15 @@ class CollectionInput extends React.Component {
 	};
 
 	render() {
-		const {disabled} = this.props;
+		const {disabled, propertyLabel} = this.props;
 		const {key, value} = this._stringToKeyValueObject(this.props.value);
 
 		return (
 			<>
 				<input
+					aria-label={`${propertyLabel}: ${Liferay.Language.get(
+						'input-a-key'
+					)}`}
 					className="criterion-input form-control"
 					data-testid="collection-key-input"
 					disabled={disabled}
@@ -93,6 +97,9 @@ class CollectionInput extends React.Component {
 				/>
 
 				<input
+					aria-label={`${propertyLabel}: ${Liferay.Language.get(
+						'input-a-value'
+					)}`}
 					className="criterion-input form-control"
 					data-testid="collection-value-input"
 					disabled={disabled}

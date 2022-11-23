@@ -23,6 +23,7 @@ class SelectEntityInput extends React.Component {
 		disabled: propTypes.bool,
 		displayValue: propTypes.oneOfType([propTypes.string, propTypes.number]),
 		onChange: propTypes.func.isRequired,
+		propertyLabel: propTypes.string.isRequired,
 		renderEmptyValueErrors: propTypes.bool,
 		selectEntity: propTypes.shape({
 			id: propTypes.string,
@@ -82,6 +83,7 @@ class SelectEntityInput extends React.Component {
 		const {
 			disabled,
 			displayValue,
+			propertyLabel,
 			renderEmptyValueErrors,
 			value,
 		} = this.props;
@@ -97,7 +99,9 @@ class SelectEntityInput extends React.Component {
 					/>
 
 					<input
-						aria-label={Liferay.Language.get('select-value')}
+						aria-label={`${propertyLabel}: ${Liferay.Language.get(
+							'select-option'
+						)}`}
 						className={classNames('form-control', {
 							'criterion-input--error':
 								!value && renderEmptyValueErrors,

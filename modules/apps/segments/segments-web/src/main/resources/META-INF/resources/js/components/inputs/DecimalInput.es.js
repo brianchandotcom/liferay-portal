@@ -21,6 +21,7 @@ class DecimalInput extends React.Component {
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		options: propTypes.array,
+		propertyLabel: propTypes.string.isRequired,
 		value: propTypes.oneOfType([propTypes.string, propTypes.number]),
 	};
 
@@ -39,11 +40,13 @@ class DecimalInput extends React.Component {
 	};
 
 	render() {
-		const {disabled, options, value} = this.props;
+		const {disabled, options, propertyLabel, value} = this.props;
 
 		return !options.length ? (
 			<input
-				aria-label={Liferay.Language.get('decimal-number')}
+				aria-label={`${propertyLabel}: ${Liferay.Language.get(
+					'input-a-value'
+				)}`}
 				className="criterion-input form-control"
 				data-testid="decimal-number"
 				disabled={disabled}

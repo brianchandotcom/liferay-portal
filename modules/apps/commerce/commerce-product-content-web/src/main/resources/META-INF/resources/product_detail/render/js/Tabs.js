@@ -17,25 +17,6 @@ import React, {useEffect, useState} from 'react';
 
 let tabs = [];
 
-function display(tabId, firstRender) {
-	for (let i = 0; i < tabs.length; i++) {
-		const currentTabId = tabs[i].id;
-		const tabElt = document.getElementById(currentTabId);
-
-		if (tabId === currentTabId) {
-			tabElt.classList.add('active', 'show');
-		}
-		else {
-			tabElt.classList.remove('active', 'show');
-		}
-		if (!firstRender) {
-			tabElt.style.display=null;
-			tabElt.style.visibility=null;
-			tabElt.style.height=null;
-		}
-	}
-}
-
 export default function ({
 	hasCPDefinitionSpecificationOptionValues,
 	hasCPMedia,
@@ -48,27 +29,47 @@ export default function ({
 	navSpecificationsId,
 }) {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
-  const [firstRender, setFirstRender] = useState(true);
+	const [firstRender, setFirstRender] = useState(true);
+
+	const display = (tabId) => {
+		for (let i = 0; i < tabs.length; i++) {
+			const currentTabId = tabs[i].id;
+			const tabElt = document.getElementById(currentTabId);
+
+			if (tabId === currentTabId) {
+				tabElt.classList.add('active', 'show');
+			}
+			else {
+				tabElt.classList.remove('active', 'show');
+			}
+			if (!firstRender && currentTabId === navReplacementsId) {
+				tabElt.style.display = null;
+				tabElt.style.visibility = null;
+				tabElt.style.height = null;
+			}
+		}
+	};
 
 	useEffect(() => {
 		tabs = document.getElementsByClassName(namespace + 'tab-element');
 		if (hasDescription) {
-			display(navDescriptionId, firstRender);
+			display(navDescriptionId);
 			setActiveTabKeyValue(0);
 		}
 		else if (hasCPDefinitionSpecificationOptionValues) {
-			display(navSpecificationsId, firstRender);
+			display(navSpecificationsId);
 			setActiveTabKeyValue(1);
 		}
 		else if (hasCPMedia) {
-			display(navCPMediaId, firstRender);
+			display(navCPMediaId);
 			setActiveTabKeyValue(2);
 		}
 		else if (hasReplacements) {
-			display(navReplacementsId, firstRender);
+			display(navReplacementsId);
 			setActiveTabKeyValue(3);
 		}
 		setFirstRender(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		hasCPDefinitionSpecificationOptionValues,
 		hasCPMedia,
@@ -91,7 +92,7 @@ export default function ({
 							'aria-controls': 'tabpanel-1',
 						}}
 						onClick={() => {
-							display(navDescriptionId, firstRender);
+							display(navDescriptionId);
 							setActiveTabKeyValue(0);
 						}}
 					>
@@ -108,7 +109,7 @@ export default function ({
 							'aria-controls': 'tabpanel-2',
 						}}
 						onClick={() => {
-							display(navSpecificationsId, firstRender);
+							display(navSpecificationsId);
 							setActiveTabKeyValue(1);
 						}}
 					>
@@ -125,7 +126,7 @@ export default function ({
 							'aria-controls': 'tabpanel-3',
 						}}
 						onClick={() => {
-							display(navCPMediaId, firstRender);
+							display(navCPMediaId);
 							setActiveTabKeyValue(2);
 						}}
 					>
@@ -142,7 +143,7 @@ export default function ({
 							'aria-controls': 'tabpanel-4',
 						}}
 						onClick={() => {
-							display(navReplacementsId, firstRender);
+							display(navReplacementsId);
 							setActiveTabKeyValue(3);
 						}}
 					>

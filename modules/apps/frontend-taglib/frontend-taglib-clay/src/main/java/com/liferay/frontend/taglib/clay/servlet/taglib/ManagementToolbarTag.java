@@ -1084,7 +1084,9 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 			iconTag.doTag(pageContext);
 
-			jspWriter.write("</button><button class=\"btn btn-monospaced");
+			jspWriter.write("</button><button aria-label=\"");
+			jspWriter.write(LanguageUtil.get(resourceBundle, "search"));
+			jspWriter.write("\" class=\"btn btn-monospaced");
 			jspWriter.write(" btn-unstyled\"");
 
 			if (disabled) {
@@ -1133,7 +1135,10 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 			if (getViewTypeItems() != null) {
 				jspWriter.write("<li class=\"nav-item\"><div class=\"dropdown");
-				jspWriter.write("\"><button class=\"dropdown-toggle nav-link");
+				jspWriter.write("\"><button aria-label=\"");
+				jspWriter.write(
+					LanguageUtil.get(resourceBundle, "show-view-options"));
+				jspWriter.write("\" class=\"dropdown-toggle nav-link");
 
 				if (!showDesignImprovementsFF) {
 					jspWriter.write(" nav-link-monospaced btn btn-monospaced");

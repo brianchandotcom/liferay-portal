@@ -19,13 +19,13 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
@@ -59,7 +59,8 @@ public class JournalDisplayPageFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (isDepotOrGlobalScopeArticle(article) ||
-			_isEditDepotOrGlobalScopeStructureDefaultValues(article)) {
+			((article == null) &&
+			 _isEditDepotOrGlobalScopeStructureDefaultValues())) {
 
 			return false;
 		}
@@ -82,9 +83,7 @@ public class JournalDisplayPageFormNavigatorEntry
 		return "/article/asset_display_page.jsp";
 	}
 
-	private boolean _isEditDepotOrGlobalScopeStructureDefaultValues(
-		JournalArticle article) {
-
+	private boolean _isEditDepotOrGlobalScopeStructureDefaultValues() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -94,15 +93,13 @@ public class JournalDisplayPageFormNavigatorEntry
 			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		long classNameId = BeanParamUtil.getLong(
-			article, portletRequest, "classNameId");
+		long classNameId = ParamUtil.getLong(portletRequest, "classNameId");
 
 		if (classNameId != _portal.getClassNameId(DDMStructure.class)) {
 			return false;
 		}
 
-		long classPK = BeanParamUtil.getLong(
-			article, portletRequest, "classPK");
+		long classPK = ParamUtil.getLong(portletRequest, "classPK");
 
 		if (classPK == 0) {
 			return false;
@@ -112,11 +109,10 @@ public class JournalDisplayPageFormNavigatorEntry
 			classPK);
 
 		if (ddmStructure == null) {
-			long groupId = BeanParamUtil.getLong(
-				article, portletRequest, "groupId");
+			long groupId = ParamUtil.getLong(portletRequest, "groupId");
 
-			String ddmStructureKey = BeanParamUtil.getString(
-				article, portletRequest, "ddmStructureKey");
+			String ddmStructureKey = ParamUtil.getString(
+				portletRequest, "ddmStructureKey");
 
 			ddmStructure = _ddmStructureLocalService.fetchStructure(
 				groupId, _portal.getClassNameId(JournalArticle.class),

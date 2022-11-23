@@ -17,17 +17,21 @@ import React, {useEffect, useState} from 'react';
 
 let tabs = [];
 
-function display(tabId) {
+function display(tabId, firstRender) {
 	for (let i = 0; i < tabs.length; i++) {
 		const currentTabId = tabs[i].id;
+		const tabElt = document.getElementById(currentTabId);
 
 		if (tabId === currentTabId) {
-			document.getElementById(tabId).classList.add('active', 'show');
+			tabElt.classList.add('active', 'show');
 		}
 		else {
-			document
-				.getElementById(currentTabId)
-				.classList.remove('active', 'show');
+			tabElt.classList.remove('active', 'show');
+		}
+		if (!firstRender) {
+			tabElt.style.display=null;
+			tabElt.style.visibility=null;
+			tabElt.style.height=null;
 		}
 	}
 }
@@ -44,25 +48,27 @@ export default function ({
 	navSpecificationsId,
 }) {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
+  const [firstRender, setFirstRender] = useState(true);
 
 	useEffect(() => {
 		tabs = document.getElementsByClassName(namespace + 'tab-element');
 		if (hasDescription) {
-			display(navDescriptionId);
+			display(navDescriptionId, firstRender);
 			setActiveTabKeyValue(0);
 		}
 		else if (hasCPDefinitionSpecificationOptionValues) {
-			display(navSpecificationsId);
+			display(navSpecificationsId, firstRender);
 			setActiveTabKeyValue(1);
 		}
 		else if (hasCPMedia) {
-			display(navCPMediaId);
+			display(navCPMediaId, firstRender);
 			setActiveTabKeyValue(2);
 		}
 		else if (hasReplacements) {
-			display(navReplacementsId);
+			display(navReplacementsId, firstRender);
 			setActiveTabKeyValue(3);
 		}
+		setFirstRender(false);
 	}, [
 		hasCPDefinitionSpecificationOptionValues,
 		hasCPMedia,
@@ -85,7 +91,7 @@ export default function ({
 							'aria-controls': 'tabpanel-1',
 						}}
 						onClick={() => {
-							display(navDescriptionId);
+							display(navDescriptionId, firstRender);
 							setActiveTabKeyValue(0);
 						}}
 					>
@@ -102,7 +108,7 @@ export default function ({
 							'aria-controls': 'tabpanel-2',
 						}}
 						onClick={() => {
-							display(navSpecificationsId);
+							display(navSpecificationsId, firstRender);
 							setActiveTabKeyValue(1);
 						}}
 					>
@@ -119,7 +125,7 @@ export default function ({
 							'aria-controls': 'tabpanel-3',
 						}}
 						onClick={() => {
-							display(navCPMediaId);
+							display(navCPMediaId, firstRender);
 							setActiveTabKeyValue(2);
 						}}
 					>
@@ -136,7 +142,7 @@ export default function ({
 							'aria-controls': 'tabpanel-4',
 						}}
 						onClick={() => {
-							display(navReplacementsId);
+							display(navReplacementsId, firstRender);
 							setActiveTabKeyValue(3);
 						}}
 					>

@@ -2069,8 +2069,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				_layoutUtilityPageEntryLocalService.
 					fetchLayoutUtilityPageEntryByExternalReferenceCode(
-						_groupId,
-						utilityPageTemplate.getExternalReferenceCode());
+						utilityPageTemplate.getExternalReferenceCode(),
+						_groupId);
 
 			_processLayoutUtilityPageTemplateEntry(
 				utilityPageTemplate.getExternalReferenceCode(), _groupId,

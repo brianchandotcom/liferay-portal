@@ -1,0 +1,8 @@
+{
+	"cacheable": true,
+	"fragmentEntryKey": "date",
+	"icon": "date",
+	"name": "date",
+	"thumbnail": "date.png",
+	"type": "component"
+}

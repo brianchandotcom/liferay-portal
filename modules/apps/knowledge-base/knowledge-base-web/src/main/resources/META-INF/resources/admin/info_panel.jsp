@@ -228,12 +228,6 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 							<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(kbArticle.getStatus()) %>" />
 						</dd>
 						<dt class="sidebar-dt">
-							<liferay-ui:message key="priority" />
-						</dt>
-						<dd class="sidebar-dd">
-							<%= kbArticle.getPriority() %>
-						</dd>
-						<dt class="sidebar-dt">
 							<liferay-ui:message key="create-date" />
 						</dt>
 						<dd class="sidebar-dd">

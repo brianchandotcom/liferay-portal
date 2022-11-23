@@ -914,8 +914,6 @@ public class AssetPublisherDisplayContext {
 					assetBrowserURL.setPortletMode(PortletMode.VIEW);
 					assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-					long finalCurGroupId = curGroupId;
-
 					if (!assetRendererFactory.isSupportsClassTypes()) {
 						add(
 							dropdownItem -> {
@@ -943,7 +941,7 @@ public class AssetPublisherDisplayContext {
 					List<ClassType> assetAvailableClassTypes =
 						classTypeReader.getAvailableClassTypes(
 							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								finalCurGroupId),
+								curGroupId),
 							_themeDisplay.getLocale());
 
 					for (ClassType assetAvailableClassType :

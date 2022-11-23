@@ -208,6 +208,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-132645 Verify the default factory config created by the OSGI configurator can be overriden by an OSGI config file."
+	@priority = "3"
+	test OverrideDefaultFactoryConfig {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~default.config";
+		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/new\"";
+		property test.name.skip.portal.instance = "OSGIConfiguration#OverrideDefaultFactoryConfig";
+
+		var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~default";
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+			text = "urlsIncludes=\"/api/liferay/new\"");
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+			text = "1");
+	}
+
 	@description = "Verify when an existing factory config is renamed, the old entry is removed and the new one is added."
 	@priority = "3"
 	test RenameFactoryConfig {

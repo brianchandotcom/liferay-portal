@@ -40,7 +40,6 @@ import com.liferay.source.formatter.util.FileUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -99,7 +98,7 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 		content = formatMultiLinesTagAttributes(absolutePath, content, false);
 
-		_checkNecessaryAttribute(fileName, absolutePath, content);
+		_checkNecessaryAttribute(fileName, content);
 
 		return content;
 	}
@@ -227,97 +226,45 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 		return tag;
 	}
 
-	private void _checkNecessaryAttribute(
-		String fileName, String absolutePath, String content) {
+	private void _checkNecessaryAttribute(String fileName, String content) {
+		int x = -1;
 
-		List<String> tagNecessaryAttributes = getAttributeValues(
-			_TAG_NECESSARY_ATTRIBUTES_KEY, absolutePath);
+		while (true) {
+			x = content.indexOf("<clay:dropdown-actions", x + 1);
 
-		List<String> tagNames = new ArrayList<>();
-		Map<String, List<String>> necessaryAttributeMap = new HashMap<>();
+			if (x == -1) {
+				break;
+			}
 
-		for (String tagNecessaryAttribute : tagNecessaryAttributes) {
-			int index = tagNecessaryAttribute.indexOf(StringPool.SPACE);
+			String tagString = getTag(content, x);
 
-			String tagName = tagNecessaryAttribute.substring(0, index);
-
-			tagNecessaryAttribute = tagNecessaryAttribute.substring(index + 1);
-
-			if (Validator.isNull(tagNecessaryAttribute)) {
+			if (Validator.isNull(tagString)) {
 				continue;
 			}
 
-			tagNames.add(tagName);
+			Tag tag = parseTag(tagString, false);
 
-			String[] necessaryAttributes = tagNecessaryAttribute.split(
-				StringPool.SPACE);
-
-			necessaryAttributeMap.put(
-				tagName, Arrays.asList(necessaryAttributes));
-		}
-
-		for (String tagName : tagNames) {
-			int x = -1;
-
-			outLoop:
-			while (true) {
-				x = content.indexOf("<" + tagName, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				String tagString = getTag(content, x);
-
-				if (Validator.isNull(tagString)) {
-					continue;
-				}
-
-				Tag tag = parseTag(tagString, false);
-
-				if (tag == null) {
-					continue;
-				}
-
-				Map<String, String> attributesMap = tag.getAttributesMap();
-
-				Set<String> attributesSet = attributesMap.keySet();
-
-				List<String> necessaryAttributes = necessaryAttributeMap.get(
-					tagName);
-
-				StringBundler messageSB = new StringBundler();
-
-				for (int i = 0; i < necessaryAttributes.size(); i++) {
-					String necessaryAttribute = necessaryAttributes.get(i);
-
-					if (attributesSet.contains(necessaryAttribute)) {
-						continue outLoop;
-					}
-
-					if ((i == (necessaryAttributes.size() - 1)) && (i != 0)) {
-						messageSB.setIndex(messageSB.index() - 2);
-						messageSB.append(StringPool.SPACE);
-						messageSB.append("or");
-						messageSB.append(StringPool.SPACE);
-					}
-
-					messageSB.append(StringPool.APOSTROPHE);
-					messageSB.append(necessaryAttribute);
-					messageSB.append(StringPool.APOSTROPHE);
-					messageSB.append(StringPool.COMMA);
-					messageSB.append(StringPool.SPACE);
-				}
-
-				messageSB.setIndex(messageSB.index() - 2);
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Should always specify some ", messageSB,
-						" attribute when using '", tagName, "' taglib"),
-					getLineNumber(content, x));
+			if (tag == null) {
+				continue;
 			}
+
+			Map<String, String> attributesMap = tag.getAttributesMap();
+
+			Set<String> attributesSet = attributesMap.keySet();
+
+			if (attributesSet.contains("aria-label") ||
+				attributesSet.contains("aria-labelledby") ||
+				attributesSet.contains("title")) {
+
+				continue;
+			}
+
+			addMessage(
+				fileName,
+				"Should always specify some 'aria-label', 'aria-labelledby' " +
+					"or 'title' attribute when using 'clay:dropdown-actions' " +
+						"taglib",
+				getLineNumber(content, x));
 		}
 	}
 
@@ -699,9 +646,6 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 		"liferay-ui:success", "liferay-util:dynamic-include",
 		"liferay-util:include", "liferay-util:param"
 	};
-
-	private static final String _TAG_NECESSARY_ATTRIBUTES_KEY =
-		"tagNecessaryAttributes";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSPTagAttributesCheck.class);

@@ -85,7 +85,7 @@ ${configList}''';
 
 		// LRQA-78134 Current workaround to wait for OSGi configurations until we get a reliable way of waiting for them to update in the database
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "8000");
 	}
 
 }

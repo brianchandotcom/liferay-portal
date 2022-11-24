@@ -17,6 +17,8 @@ package com.liferay.portal.search.searcher.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -39,6 +41,7 @@ import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -93,12 +96,17 @@ public class SearchResponseGetSearchTimeValueTest {
 				_group.getGroupId()
 			).queryString(
 				"omega"
-			).withSearchContext(
+			);
+
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
+
+		if (Objects.equals("Elasticsearch", searchEngine.getVendor())) {
+			searchRequestBuilder.withSearchContext(
 				searchContext -> searchContext.getQueryConfig(
 				).setSelectedIndexNames(
 					_indexNameBuilder.getIndexName(_companyId)
-				)
-			);
+				));
+		}
 
 		assertSearchResponseTook(searchRequestBuilder);
 	}
@@ -151,8 +159,18 @@ public class SearchResponseGetSearchTimeValueTest {
 		SearchResponse searchResponse = _searcher.search(
 			searchRequestBuilder.build());
 
-		Assert.assertNotNull(searchResponse.getSearchTimeValue());
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
+
+		if (Objects.equals("Elasticsearch", searchEngine.getVendor())) {
+			Assert.assertNotNull(searchResponse.getSearchTimeValue());
+		}
+		else {
+			Assert.assertNull(searchResponse.getSearchTimeValue());
+		}
 	}
+
+	@Inject
+	protected SearchEngineHelper searchEngineHelper;
 
 	private void _addGroupAndUser() throws Exception {
 		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();

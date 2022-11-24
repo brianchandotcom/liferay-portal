@@ -20,7 +20,7 @@
 	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168174")) %>'>
 
 		<%
-		BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
+		BlogImagesDisplayContext blogImagesDisplayContext = (BlogImagesDisplayContext)request.getAttribute(BlogImagesDisplayContext.class.getName());
 		%>
 
 		<liferay-document-library:repository-browser
@@ -59,7 +59,7 @@
 
 		blogImagesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 
-		BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
+		BlogImagesDisplayContext blogImagesDisplayContext = (BlogImagesDisplayContext)request.getAttribute(BlogImagesDisplayContext.class.getName());
 
 		blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
 

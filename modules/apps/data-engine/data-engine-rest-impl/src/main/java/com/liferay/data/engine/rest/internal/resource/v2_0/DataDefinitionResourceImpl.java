@@ -63,10 +63,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -187,6 +189,22 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			throw new RequiredStructureException.
 				MustNotDeleteStructureReferencedByStructureLinks(
 					dataDefinitionId);
+		}
+
+		List<DDMStructure> childrenStructures =
+			_ddmStructureLocalService.getChildrenStructures(dataDefinitionId);
+
+		if (!childrenStructures.isEmpty()) {
+			throw new RequiredStructureException.
+				MustNotDeleteStructureThatHasChild(dataDefinitionId);
+		}
+
+		List<DDMTemplate> templates = _ddmTemplateLocalService.getTemplates(
+			dataDefinitionId);
+
+		if (!templates.isEmpty()) {
+			throw new RequiredStructureException.
+				MustNotDeleteStructureReferencedByTemplates(dataDefinitionId);
 		}
 
 		DataLayoutResource dataLayoutResource = _getDataLayoutResource(false);
@@ -1565,6 +1583,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private DEDataDefinitionFieldLinkLocalService

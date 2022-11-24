@@ -3652,52 +3652,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-84331. Assert that Asset Lists correctly display where they are used."
-	@priority = "4"
-	test ViewAssetListUsages {
-		property portal.acceptance = "true";
-
-		task ("Create a public page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name");
-		}
-
-		task ("Create a manual asset list") {
-			JSONAssetlist.addManualAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Manual Asset List Test");
-		}
-
-		task ("Add an Asset Publisher portlet to the created public page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Select the created manual asset list to be used in the asset publisher portlet") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Asset List Test");
-		}
-
-		task ("Assert the created asset list is used exactly once") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.gotoEntryMenuItem(
-				assetListTitle = "Manual Asset List Test",
-				item = "View Usages");
-
-			AssertElementPresent(
-				locator1 = "AssetLists#ASSET_LIST_USAGES",
-				usageAmount = "1",
-				usageType = "All");
-		}
-	}
-
 	@description = "This is a test for LPS-125486. Collection should be available after delete Item Subtype."
 	@priority = "4"
 	test ViewCollectionAfterDeleteItemSubtype {
@@ -3872,6 +3826,126 @@ definition {
 			AssertVisible(
 				key_text = "view",
 				locator1 = "MenuItem#ANY_ICON");
+		}
+	}
+
+	@description = "This is a test for LPS-84331 and LPS-166045. The site designer could see the usage of Collections from site."
+	@priority = "5"
+	test ViewUsagesOfCollectionFromSite {
+		property portal.acceptance = "true";
+
+		task ("Given the site designer has collections") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("When the site designer select the dynamic collection on a Collection Display") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 1",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Then the site designer could directly see usages on the dynamic collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "usages",
+				tableEntry = "Dynamic Collection",
+				tableEntryInfo = "1");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "Dynamic Collection",
+				listEntrySubtitle = "1 Usages");
+		}
+
+		task ("When the site designer publish the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the site designer could see usages updated on the dynamic collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "Dynamic Collection",
+				listEntrySubtitle = "2 Usages");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "usages",
+				tableEntry = "Dynamic Collection",
+				tableEntryInfo = "2");
+		}
+
+		task ("When the site designer select the manual collection on an Asset Publisher") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection");
+		}
+
+		task ("Then the site designer could directly see usages on the manual collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "usages",
+				tableEntry = "Manual Collection",
+				tableEntryInfo = "1");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "Manual Collection",
+				listEntrySubtitle = "1 Usages");
+		}
+
+		task ("When the site designer open the dropdown menu of manual collection") {
+			AssetListsAdmin.gotoEntryMenuItem(
+				assetListTitle = "Manual Collection",
+				item = "View Usages");
+		}
+
+		task ("Then the site designer could access to the usages page") {
+			AssertElementPresent(
+				locator1 = "AssetLists#ASSET_LIST_USAGES",
+				usageAmount = "1",
+				usageType = "All");
 		}
 	}
 

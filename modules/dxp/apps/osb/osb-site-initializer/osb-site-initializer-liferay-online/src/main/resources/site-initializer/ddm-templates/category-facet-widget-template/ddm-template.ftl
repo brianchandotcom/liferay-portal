@@ -16,13 +16,13 @@
 			<#list entries as entry>
 				<button
 					class="btn btn-sm facet-term term-name mr-2 ${(entry.isSelected())?then('btn-dark', 'btn-light')}"
-					data-term-id="${entry.getAssetCategoryId()}"
+					data-term-id="${entry.getFilterValue()}"
 					disabled
 					onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 					type="button"
 			>
 					<span class="label-item label-item-expand">
-						${htmlUtil.escape(entry.getDisplayName())}
+						${htmlUtil.escape(entry.getBucketText())}
 					</span>
 				</button>
 			</#list>
@@ -30,7 +30,7 @@
 			<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
 				<button
 					class="btn btn-light btn-sm ml-1 facet-term term-name"
-					data-term-id="${entry.getAssetCategoryId()}"
+					data-term-id="${entry.getFilterValue()}"
 					disabled
 					onClick="Liferay.Search.FacetUtil.clearSelections(event);"
 					type="button"

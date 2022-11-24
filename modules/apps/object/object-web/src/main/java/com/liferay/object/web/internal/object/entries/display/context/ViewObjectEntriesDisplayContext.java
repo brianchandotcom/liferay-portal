@@ -46,8 +46,10 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -156,6 +158,10 @@ public class ViewObjectEntriesDisplayContext {
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "permissions"),
 				"get", "permissions", "modal-permissions"));
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148804"))) {
+			return fdsActionDropdownItems;
+		}
 
 		ObjectDefinition objectDefinition = getObjectDefinition();
 

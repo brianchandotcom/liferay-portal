@@ -83,6 +83,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -983,18 +984,22 @@ public class DefaultObjectEntryManagerImpl
 					dtoConverterContext.getUriInfo())
 			).build();
 
-			for (ObjectAction objectAction :
-					_objectActionLocalService.getObjectActions(
-						objectDefinition.getObjectDefinitionId(),
-						ObjectActionTriggerConstants.KEY_STANDALONE)) {
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-148804"))) {
 
-				actions.put(
-					objectAction.getName(),
-					_getAction(
-						ActionKeys.VIEW,
-						"putByExternalReferenceCodeObjectEntryExternal" +
-							"ReferenceCodeObjectActionObjectActionName",
-						objectEntry, dtoConverterContext.getUriInfo()));
+				for (ObjectAction objectAction :
+						_objectActionLocalService.getObjectActions(
+							objectDefinition.getObjectDefinitionId(),
+							ObjectActionTriggerConstants.KEY_STANDALONE)) {
+
+					actions.put(
+						objectAction.getName(),
+						_getAction(
+							ActionKeys.VIEW,
+							"putByExternalReferenceCodeObjectEntryExternal" +
+								"ReferenceCodeObjectActionObjectActionName",
+							objectEntry, dtoConverterContext.getUriInfo()));
+				}
 			}
 		}
 

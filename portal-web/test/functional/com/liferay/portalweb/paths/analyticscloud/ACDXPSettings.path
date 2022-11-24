@@ -37,8 +37,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE</td>
-	<td>//*[contains(@class, 'control-label') and contains(text(), 'Your DXP instance is connected to Analytics Cloud.')]</td>
+	<td>SITE_NAME</td>
+	<td>//td[contains(@class, 'lfr-site-name-column')]</td>
 	<td></td>
 </tr>
 <tr>

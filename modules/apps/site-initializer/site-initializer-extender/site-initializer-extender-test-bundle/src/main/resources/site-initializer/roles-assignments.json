@@ -2,12 +2,12 @@
 	{
 		"groups": [
 			{
-				"groupName": "Test Organization 1",
-				"groupType": "Organization"
-			},
-			{
 				"groupName": "testAlternateName1",
 				"groupType": "User"
+			},
+			{
+				"groupName": "Test Organization 1",
+				"groupType": "Organization"
 			},
 			{
 				"groupName": "Test User Group 1",
@@ -19,11 +19,11 @@
 	{
 		"groups": [
 			{
-				"groupType": "Site"
-			},
-			{
 				"groupName": "Test Organization 2",
 				"groupType": "Organization"
+			},
+			{
+				"groupType": "Site"
 			}
 		],
 		"roleName": "Test Role 2"

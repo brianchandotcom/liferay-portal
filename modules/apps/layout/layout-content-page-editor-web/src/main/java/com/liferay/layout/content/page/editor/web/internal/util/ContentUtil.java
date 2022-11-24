@@ -477,13 +477,6 @@ public class ContentUtil {
 					continue;
 				}
 
-				if (layoutStructure == null) {
-					layoutStructure = LayoutStructureUtil.getLayoutStructure(
-						fragmentEntryLink.getGroupId(),
-						fragmentEntryLink.getPlid(),
-						fragmentEntryLink.getSegmentsExperienceId());
-				}
-
 				LayoutStructureItem layoutStructureItem =
 					layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 						fragmentEntryLink.getFragmentEntryLinkId());

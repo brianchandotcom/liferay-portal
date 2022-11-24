@@ -22,6 +22,8 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsControlMenuJSPDynamicInclude.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
 %>
 
+<liferay-ui:success key='<%= LayoutAdminPortletKeys.GROUP_PAGES + "requestProcessed" %>' message="your-request-completed-successfully" />
+
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/customization_settings.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

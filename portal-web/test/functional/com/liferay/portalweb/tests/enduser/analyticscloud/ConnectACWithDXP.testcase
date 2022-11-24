@@ -49,5 +49,30 @@ definition {
 		}
 	}
 
+    @description = "Story: LRAC-11860 | Automation ID: LRAC-12440 | Test Summary: Connect AC Token Authentication Fails"
+	@priority = "5"
+	test CheckUnableConnectACWithInvalidToken {
+		task ("Go to Instance Settings > Analytics Cloud") {
+			ACDXPSettings.goToInstanceSettingsAC();
+		}
+
+        task ("Try connecting with an invalid token") {
+			Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
+
+            Type(
+                locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+                value1 = "InvalidTokenAC");
+
+            Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+		}
+
+        task ("Check that the connection is not made and an error message appears") {
+			ACDXPSettings.NavigateBetweenWizardSteps(wizardStepName = "Connect");
+
+            AssertElementNotPresent(locator1 = "Message#SUCCESS");
+            
+            Alert.viewErrorMessage(errorMessage = "An unexpected system error occurred.");
+		}
+	}
 
 }

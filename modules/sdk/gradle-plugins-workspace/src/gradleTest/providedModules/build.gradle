@@ -9,7 +9,7 @@ runGradleTest {
 	dependsOn initBundle
 
 	doLast {
-		File expectedFile = new File(initBundle.destinationDir, "osgi/modules/jackson-annotations-2.13.2.jar")
+		File expectedFile = new File(initBundle.destinationDir, "osgi/modules/jackson-annotations-2.13.4.jar")
 
 		assert expectedFile.exists()
 

@@ -19,6 +19,7 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupCommerceAccountRelException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
@@ -26,12 +27,11 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountChannelEntry;
-import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.AddressService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -134,12 +134,15 @@ public class AccountChannelEntryDTOConverter
 				CommerceChannelAccountEntryRelConstants.
 					TYPE_SHIPPING_ADDRESS)) {
 
-			Address address = _addressService.getAddress(
-				GetterUtil.getLong(
-					commerceChannelAccountEntryRel.getClassPK()));
+			CommerceAddress commerceAddress =
+				_commerceAddressService.getCommerceAddress(
+					GetterUtil.getLong(
+						commerceChannelAccountEntryRel.getClassPK()));
 
-			if (!Validator.isBlank(address.getExternalReferenceCode())) {
-				return address.getExternalReferenceCode();
+			if (!Validator.isBlank(
+					commerceAddress.getExternalReferenceCode())) {
+
+				return commerceAddress.getExternalReferenceCode();
 			}
 		}
 		else if (type ==
@@ -216,7 +219,7 @@ public class AccountChannelEntryDTOConverter
 	private AccountEntryService _accountEntryService;
 
 	@Reference
-	private AddressService _addressService;
+	private CommerceAddressService _commerceAddressService;
 
 	@Reference
 	private CommerceChannelAccountEntryRelService

@@ -17,6 +17,7 @@ import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import ResumeCard from '../../../../common/components/ResumeCard';
+import {Status} from '../../../../common/enums/status';
 import MDFRequestDTO from '../../../../common/interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
@@ -50,104 +51,129 @@ const MDFClaimPage = ({
 		)
 	);
 
-	const checkClaimLimit =
-		mdfRequest.mdfRequestToMdfClaims &&
-		mdfRequest?.mdfRequestToMdfClaims?.length >= 2
-			? true
-			: false;
+	const claimsNotDraft = mdfRequest.mdfRequestToMdfClaims?.filter(
+		(mdfRequestToMdfClaim) => {
+			return !mdfRequestToMdfClaim.claimStatus.includes(Status.DRAFT);
+		}
+	).length;
 
-	return (
-		<PRMForm name="New" title="Reimbursement Claim">
-			<PRMForm.Section
-				subtitle="Check each expense you would like claim and please provide proof of performance for each of the selected expenses."
-				title={`${mdfRequest?.overallCampaignDescription} (${mdfRequest?.id})`}
-			>
-				<p className="font-weight-bold my-4 text-paragraph">
-					Upload Proof of Performance Documents
-					<span className="text-danger">*</span>
-				</p>
+	const getClaimPage = (claimsNotDraft?: number) => {
+		if (claimsNotDraft && claimsNotDraft >= 2) {
+			return (
+				<PRMForm
+					name="Limit of Claims reached"
+					title="You already submitted 2 claims."
+				>
+					<PRMForm.Footer>
+						<div className="d-flex mr-auto">
+							<ClayButton
+								className="mr-4"
+								displayType="secondary"
+								onClick={() => onCancel()}
+							>
+								Cancel
+							</ClayButton>
+						</div>
+					</PRMForm.Footer>
+				</PRMForm>
+			);
+		}
 
-				{values.activities?.map((activity, index) => (
-					<ActivityClaimPanel
-						activity={activity}
-						activityIndex={index}
-						key={`${activity.id}-${index}`}
-						overallCampaignDescription={
-							mdfRequest.overallCampaignDescription
-						}
-						setFieldValue={setFieldValue}
-					/>
-				))}
-			</PRMForm.Section>
+		return (
+			<PRMForm name="New" title="Reimbursement Claim">
+				<PRMForm.Section
+					subtitle="Check each expense you would like claim and please provide proof of performance for each of the selected expenses."
+					title={`${mdfRequest?.overallCampaignDescription} (${mdfRequest?.id})`}
+				>
+					<p className="font-weight-bold my-4 text-paragraph">
+						Upload Proof of Performance Documents
+						<span className="text-danger">*</span>
+					</p>
 
-			<PRMForm.Section
-				subtitle="Total Claim is the reimbursement of your expenses, and is up to the Total MDF Requested. In case need to claim more than the MDF Requested you need to apply for a New MDF Request."
-				title="Total Claim"
-			>
-				<PRMFormik.Field
-					component={PRMForm.InputFile}
-					description="Upload an invoice for the Total Claim Amount"
-					displayType="secondary"
-					label="Reimbursement Invoice"
-					name="reimbursementInvoice"
-					onAccept={(value: File) =>
-						setFieldValue('reimbursementInvoice', value)
-					}
-					outline
-					small
-				/>
+					{values.activities?.map((activity, index) => (
+						<ActivityClaimPanel
+							activity={activity}
+							activityIndex={index}
+							key={`${activity.id}-${index}`}
+							overallCampaignDescription={
+								mdfRequest.overallCampaignDescription
+							}
+							setFieldValue={setFieldValue}
+						/>
+					))}
+				</PRMForm.Section>
 
-				<ResumeCard
-					className="mb-4"
-					leftContent="Total MDF Requested Amount"
-					rightContent={getIntlNumberFormat().format(
-						values.totalrequestedAmount || 0
-					)}
-				/>
-
-				<PRMFormik.Field
-					component={PRMForm.InputCurrency}
-					description="The amount to be claimed for the Total of  selected expenses"
-					label="Total Claim Amount"
-					name="totalClaimAmount"
-					onAccept={(value: number) =>
-						setFieldValue('totalClaimAmount', value)
-					}
-					required
-				/>
-			</PRMForm.Section>
-
-			<PRMForm.Footer>
-				<div className="d-flex mr-auto">
-					<ClayButton
-						className="pl-0"
-						disabled={isSubmitting}
-						displayType={null}
-						onClick={() => onSaveAsDraft(values, formikHelpers)}
-					>
-						Save as Draft
-					</ClayButton>
-				</div>
-
-				<div>
-					<ClayButton
-						className="mr-4"
+				<PRMForm.Section
+					subtitle="Total Claim is the reimbursement of your expenses, and is up to the Total MDF Requested. In case need to claim more than the MDF Requested you need to apply for a New MDF Request."
+					title="Total Claim"
+				>
+					<PRMFormik.Field
+						component={PRMForm.InputFile}
+						description="Upload an invoice for the Total Claim Amount"
 						displayType="secondary"
-						onClick={() => onCancel()}
-					>
-						Cancel
-					</ClayButton>
+						label="Reimbursement Invoice"
+						name="reimbursementInvoice"
+						onAccept={(value: File) =>
+							setFieldValue('reimbursementInvoice', value)
+						}
+						outline
+						small
+					/>
 
-					<ClayButton
-						disabled={!isValid || isSubmitting || checkClaimLimit}
-						type="submit"
-					>
-						Submit
-					</ClayButton>
-				</div>
-			</PRMForm.Footer>
-		</PRMForm>
-	);
+					<ResumeCard
+						className="mb-4"
+						leftContent="Total MDF Requested Amount"
+						rightContent={getIntlNumberFormat().format(
+							values.totalrequestedAmount || 0
+						)}
+					/>
+
+					<PRMFormik.Field
+						component={PRMForm.InputCurrency}
+						description="The amount to be claimed for the Total of  selected expenses"
+						label="Total Claim Amount"
+						name="totalClaimAmount"
+						onAccept={(value: number) =>
+							setFieldValue('totalClaimAmount', value)
+						}
+						required
+					/>
+				</PRMForm.Section>
+
+				<PRMForm.Footer>
+					<div className="d-flex mr-auto">
+						<ClayButton
+							className="pl-0"
+							disabled={isSubmitting}
+							displayType={null}
+							onClick={() => onSaveAsDraft(values, formikHelpers)}
+						>
+							Save as Draft
+						</ClayButton>
+					</div>
+
+					<div>
+						<ClayButton
+							className="mr-4"
+							displayType="secondary"
+							onClick={() => onCancel()}
+						>
+							Cancel
+						</ClayButton>
+
+						<ClayButton
+							disabled={!isValid || isSubmitting}
+							type="submit"
+						>
+							Submit
+						</ClayButton>
+					</div>
+				</PRMForm.Footer>
+			</PRMForm>
+		);
+	};
+
+	return getClaimPage(claimsNotDraft);
 };
 
 export default MDFClaimPage;

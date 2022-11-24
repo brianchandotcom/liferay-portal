@@ -67,7 +67,6 @@ page import="com.liferay.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.blogs.settings.BlogsGroupServiceSettings" %><%@
 page import="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" %><%@
 page import="com.liferay.blogs.web.internal.constants.BlogsWebConstants" %><%@
-page import="com.liferay.blogs.web.internal.constants.BlogsWebKeys" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogImagesDisplayContext" %><%@

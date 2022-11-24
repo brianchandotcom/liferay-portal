@@ -15,7 +15,6 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
 import com.liferay.blogs.web.internal.display.context.BlogEntriesDisplayContext;
 import com.liferay.blogs.web.internal.display.context.BlogImagesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -59,7 +58,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		renderRequest.setAttribute(
-			BlogsWebKeys.BLOG_ENTRIES_DISPLAY_CONTEXT,
+			BlogEntriesDisplayContext.class.getName(),
 			new BlogEntriesDisplayContext(
 				_htmlParser, _portal, renderRequest, renderResponse,
 				_trashHelper));

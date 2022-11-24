@@ -44,11 +44,10 @@ public class OAuth2ScopeGrantRemoveCompanyIdUpgradeProcess
 			while (oAuth2ScopeGrantResultSet.next()) {
 				String applicationName = oAuth2ScopeGrantResultSet.getString(
 					"applicationName");
-				long companyId = oAuth2ScopeGrantResultSet.getLong("companyId");
+				String companyId = String.valueOf(
+					oAuth2ScopeGrantResultSet.getLong("companyId"));
 
-				if (!StringUtil.endsWith(
-						applicationName, String.valueOf(companyId))) {
-
+				if (!StringUtil.endsWith(applicationName, companyId)) {
 					continue;
 				}
 
@@ -57,8 +56,8 @@ public class OAuth2ScopeGrantRemoveCompanyIdUpgradeProcess
 						oAuth2ScopeGrantResultSet.getString("scopeAliases"),
 						StringPool.SPACE));
 
-				String newApplicationName = StringUtil.removeLast(
-					applicationName, String.valueOf(companyId));
+				String newApplicationName = applicationName.substring(
+					0, applicationName.length() - companyId.length());
 
 				List<String> newScopeAliases = TransformUtil.transform(
 					scopeAliases,
@@ -67,6 +66,7 @@ public class OAuth2ScopeGrantRemoveCompanyIdUpgradeProcess
 
 				_updateOAuth2ScopeGrant(
 					newApplicationName,
+
 					oAuth2ScopeGrantResultSet.getLong("oauth2ScopeGrantId"),
 					newScopeAliases);
 			}

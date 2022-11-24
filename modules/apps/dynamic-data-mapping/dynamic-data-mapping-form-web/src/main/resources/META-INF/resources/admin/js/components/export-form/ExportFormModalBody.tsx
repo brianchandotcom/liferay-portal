@@ -75,14 +75,12 @@ const ExportFormModalBody: React.FC<IProps> = ({
 					}
 					value={fileExtension}
 				>
-					{Object.entries(
-						fileExtensions
-					).map(([fileExtension, label]) =>
+					{Object.values(fileExtensions).map((fileExtension) =>
 						fileExtension === 'csv' &&
 						csvExport === 'disabled' ? null : (
 							<ClaySelect.Option
 								key={fileExtension}
-								label={label}
+								label={fileExtension.toUpperCase()}
 								value={fileExtension}
 							/>
 						)

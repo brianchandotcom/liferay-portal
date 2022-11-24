@@ -13,5 +13,5 @@
  */
 
 export declare type TFileExtensions = {
-	[key: string]: string;
+	type: string;
 };

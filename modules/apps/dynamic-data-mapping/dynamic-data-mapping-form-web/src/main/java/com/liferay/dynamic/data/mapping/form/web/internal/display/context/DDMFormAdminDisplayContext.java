@@ -265,9 +265,9 @@ public class DDMFormAdminDisplayContext {
 		return _ddmFormWebConfiguration.autosaveInterval();
 	}
 
-	public Map<String, String> getAvailableExportExtensions() {
+	public Set<String> getAvailableExportTypes() {
 		return _ddmFormInstanceRecordWriterRegistry.
-			getDDMFormInstanceRecordWriterExtensions();
+			getDDMFormInstanceRecordWriterTypes();
 	}
 
 	public JSONArray getAvailableLanguageIdsJSONArray() {

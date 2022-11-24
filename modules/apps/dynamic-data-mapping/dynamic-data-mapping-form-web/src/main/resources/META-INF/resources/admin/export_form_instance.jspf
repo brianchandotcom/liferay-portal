@@ -21,7 +21,7 @@
 			HashMapBuilder.<String, Object>put(
 				"csvExport", ddmFormAdminDisplayContext.getCSVExport()
 			).put(
-				"fileExtensions", ddmFormAdminDisplayContext.getAvailableExportExtensions()
+				"fileExtensions", ddmFormAdminDisplayContext.getAvailableExportTypes()
 			).put(
 				"portletNamespace", liferayPortletResponse.getNamespace()
 			).build()

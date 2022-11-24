@@ -1,0 +1,40 @@
+[
+	{
+		"groups": [
+			{
+				"groupName": "Test Organization 1",
+				"groupType": "Organization"
+			},
+			{
+				"groupName": "testAlternateName1",
+				"groupType": "User"
+			},
+			{
+				"groupName": "Test User Group 1",
+				"groupType": "UserGroups"
+			}
+		],
+		"roleName": "Test Role 1"
+	},
+	{
+		"groups": [
+			{
+				"groupType": "Site"
+			},
+			{
+				"groupName": "Test Organization 2",
+				"groupType": "Organization"
+			}
+		],
+		"roleName": "Test Role 2"
+	},
+	{
+		"groups": [
+			{
+				"groupName": "testAlternateName2",
+				"groupType": "User"
+			}
+		],
+		"roleName": "Test Role 3"
+	}
+]

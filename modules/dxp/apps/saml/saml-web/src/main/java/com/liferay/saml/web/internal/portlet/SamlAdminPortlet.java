@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=saml-portlet-admin",
 		"com.liferay.portlet.display-category=category.hidden",

@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = CertificateTool.class)
+@Component(service = CertificateTool.class)
 public class CertificateToolImpl implements CertificateTool {
 
 	@Override

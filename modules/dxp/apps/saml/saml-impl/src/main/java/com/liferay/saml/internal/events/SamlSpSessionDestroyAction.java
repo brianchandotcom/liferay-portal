@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
 	property = "key=" + PropsKeys.SERVLET_SESSION_DESTROY_EVENTS,
 	service = LifecycleAction.class
 )

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Stian Sigvartsen
  */
-@Component(immediate = true, service = CertificateUploadResponseHandler.class)
+@Component(service = CertificateUploadResponseHandler.class)
 public class CertificateUploadResponseHandler implements UploadResponseHandler {
 
 	@Override

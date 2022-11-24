@@ -48,10 +48,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Stian Sigvartsen
  */
-@Component(
-	immediate = true, property = "path=/portal/saml/login",
-	service = StrutsAction.class
-)
+@Component(property = "path=/portal/saml/login", service = StrutsAction.class)
 public class SamlLoginAction extends BaseSamlStrutsAction {
 
 	@Override

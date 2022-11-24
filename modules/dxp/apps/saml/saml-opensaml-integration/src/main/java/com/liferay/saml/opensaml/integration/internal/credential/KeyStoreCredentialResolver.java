@@ -64,7 +64,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration",
-	immediate = true,
 	service = {CredentialResolver.class, LocalEntityManager.class}
 )
 public class KeyStoreCredentialResolver

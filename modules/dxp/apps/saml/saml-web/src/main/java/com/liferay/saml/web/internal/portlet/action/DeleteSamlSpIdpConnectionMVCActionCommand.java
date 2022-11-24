@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + SamlPortletKeys.SAML_ADMIN,
 		"mvc.command.name=/admin/delete_saml_sp_idp_connection"

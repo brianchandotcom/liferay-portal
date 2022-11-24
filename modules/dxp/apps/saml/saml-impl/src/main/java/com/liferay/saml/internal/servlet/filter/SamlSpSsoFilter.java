@@ -51,7 +51,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
 	property = {
 		"after-filter=Virtual Host Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST",

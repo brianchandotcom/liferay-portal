@@ -54,8 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true, property = "path=/portal/saml/keep_alive",
-	service = StrutsAction.class
+	property = "path=/portal/saml/keep_alive", service = StrutsAction.class
 )
 public class KeepAliveStrutsAction implements StrutsAction {
 

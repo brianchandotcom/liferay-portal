@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stian Sigvartsen
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + SamlPortletKeys.SAML_ADMIN,
 		"mvc.command.name=/admin/update_certificate"

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = AttributeResolverRegistry.class)
+@Component(service = AttributeResolverRegistry.class)
 public class AttributeResolverRegistry {
 
 	public AttributeResolver getAttributeResolver(String entityId) {

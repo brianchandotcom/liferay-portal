@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlConfiguration",
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + SamlPortletKeys.SAML_ADMIN,
 		"mvc.command.name=/", "mvc.command.name=/admin/view"

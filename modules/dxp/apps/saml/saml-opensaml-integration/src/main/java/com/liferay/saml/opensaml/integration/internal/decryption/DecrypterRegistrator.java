@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class DecrypterRegistrator {
 
 	@Activate

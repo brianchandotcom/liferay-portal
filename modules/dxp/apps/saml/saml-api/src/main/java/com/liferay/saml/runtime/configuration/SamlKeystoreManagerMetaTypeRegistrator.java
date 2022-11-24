@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class SamlKeystoreManagerMetaTypeRegistrator {
 
 	@Activate

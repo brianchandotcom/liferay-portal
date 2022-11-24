@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
 	property = {
 		"path=/portal/saml/slo", "path=/portal/saml/slo_logout",
 		"path=/portal/saml/slo_soap"

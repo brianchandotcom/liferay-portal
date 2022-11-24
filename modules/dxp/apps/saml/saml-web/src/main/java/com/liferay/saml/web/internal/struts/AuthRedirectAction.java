@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(
-	immediate = true, property = "path=/portal/saml/auth_redirect",
-	service = StrutsAction.class
+	property = "path=/portal/saml/auth_redirect", service = StrutsAction.class
 )
 public class AuthRedirectAction extends BaseSamlStrutsAction {
 

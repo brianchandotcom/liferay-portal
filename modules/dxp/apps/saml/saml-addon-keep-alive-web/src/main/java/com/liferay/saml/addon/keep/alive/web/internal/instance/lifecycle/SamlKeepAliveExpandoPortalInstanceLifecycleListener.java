@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class SamlKeepAliveExpandoPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener implements Clusterable {
 

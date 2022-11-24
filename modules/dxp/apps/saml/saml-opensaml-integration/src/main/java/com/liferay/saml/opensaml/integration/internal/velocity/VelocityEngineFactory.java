@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = VelocityEngineFactory.class)
+@Component(service = VelocityEngineFactory.class)
 public class VelocityEngineFactory {
 
 	public VelocityEngine getVelocityEngine() {

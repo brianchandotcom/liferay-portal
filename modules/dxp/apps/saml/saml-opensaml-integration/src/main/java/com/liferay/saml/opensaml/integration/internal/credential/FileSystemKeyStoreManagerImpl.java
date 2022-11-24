@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlConfiguration",
-	immediate = true, property = "default=true", service = KeyStoreManager.class
+	property = "default=true", service = KeyStoreManager.class
 )
 public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 

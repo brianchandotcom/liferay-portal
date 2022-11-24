@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = MetadataUtil.class)
+@Component(service = MetadataUtil.class)
 public class MetadataUtilImpl implements MetadataUtil {
 
 	@Override

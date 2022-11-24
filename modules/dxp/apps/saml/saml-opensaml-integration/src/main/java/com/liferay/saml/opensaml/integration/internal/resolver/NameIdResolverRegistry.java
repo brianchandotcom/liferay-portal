@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = NameIdResolverRegistry.class)
+@Component(service = NameIdResolverRegistry.class)
 public class NameIdResolverRegistry {
 
 	public NameIdResolver getNameIdResolver(String entityId) {

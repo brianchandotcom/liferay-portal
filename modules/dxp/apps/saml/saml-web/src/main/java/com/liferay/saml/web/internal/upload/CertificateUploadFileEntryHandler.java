@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Stian Sigvartsen
  */
-@Component(immediate = true, service = CertificateUploadFileEntryHandler.class)
+@Component(service = CertificateUploadFileEntryHandler.class)
 public class CertificateUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 

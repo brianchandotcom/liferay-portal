@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
 	property = Constants.SERVICE_PID + "=" + SamlProviderConfigurationHelperImpl.FACTORY_PID,
 	service = {
 		ManagedServiceFactory.class, SamlProviderConfigurationHelper.class

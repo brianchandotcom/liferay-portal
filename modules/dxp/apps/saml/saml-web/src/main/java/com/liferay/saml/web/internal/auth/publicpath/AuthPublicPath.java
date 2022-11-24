@@ -20,7 +20,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
 	property = {
 		"auth.public.path=/portal/saml/acs",
 		"auth.public.path=/portal/saml/auth_redirect",

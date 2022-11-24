@@ -99,7 +99,7 @@ function ActionsDropdown({
 			/>
 
 			{loading ? (
-				<ClayLoadingIndicator small />
+				<ClayLoadingIndicator className="mb-2 mt-2" />
 			) : (
 				<ClayButtonWithIcon
 					disabled={!itemChanges}
@@ -136,7 +136,7 @@ function ActionsDropdown({
 		}
 
 		if (loading) {
-			return <ClayLoadingIndicator small />;
+			return <ClayLoadingIndicator className="mb-2 mt-2" />;
 		}
 
 		const content = action.icon ? (
@@ -210,7 +210,7 @@ function ActionsDropdown({
 	}
 
 	if (loading && !inlineEditingAlwaysOn) {
-		return <ClayLoadingIndicator small />;
+		return <ClayLoadingIndicator className="mb-2 mt-2" />;
 	}
 
 	const renderItems = (items) =>
@@ -241,7 +241,7 @@ function ActionsDropdown({
 		});
 
 	return (
-		<div className="d-flex justify-content-end ml-auto">
+		<div className="d-flex justify-content-end">
 			{inlineEditingAlwaysOn && inlineEditingActions}
 
 			<ClayDropDown

@@ -32,6 +32,10 @@
 		border-right: none;
 	}
 
+	&.item-actions {
+		min-height: 58px;
+	}
+
 	&.item-actions,
 	&.item-selector {
 		width: 1%;

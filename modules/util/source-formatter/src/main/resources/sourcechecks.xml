@@ -620,6 +620,11 @@
 
 		<!-- Liferay Source Checks -->
 
+		<check name="IllegalImportsCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases of incorrect use of certain classes." />
+			<property name="enforceJavaUtilFunctionImports" value="true" />
+		</check>
 		<check name="JavaAnonymousInnerClassCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on anonymous classes." />
@@ -671,11 +676,6 @@
 		<check name="JavaIgnoreAnnotationCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds methods with `@Ignore` annotation in test classes." />
-		</check>
-		<check name="JavaIllegalImportsCheck">
-			<category name="Bug Prevention" />
-			<description name="Finds cases of incorrect use of certain classes." />
-			<property name="enforceJavaUtilFunctionImports" value="true" />
 		</check>
 		<check name="JavaInternalPackageCheck">
 			<category name="Bug Prevention" />
@@ -957,6 +957,11 @@
 			<category name="Styling" />
 			<description name="Finds empty if-statements and consecutive if-statements with identical bodies" />
 			<property name="enabled" value="false" />
+		</check>
+		<check name="IllegalImportsCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases of incorrect use of certain classes." />
+			<property name="enforceJavaUtilFunctionImports" value="true" />
 		</check>
 		<check name="JSPArrowFunctionCheck">
 			<category name="Bug Prevention" />

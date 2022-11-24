@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Hugo Huijser
  */
-public class JavaIllegalImportsCheck extends BaseFileCheck {
+public class IllegalImportsCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

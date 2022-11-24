@@ -15,7 +15,7 @@ paths:
                         text/plain:
                             schema:
                                 type: string
-            tags: [ "Build" ]
+            tags: ["Build"]
         post:
             operationId: build
             requestBody:
@@ -29,4 +29,4 @@ paths:
                         text/plain:
                             schema:
                                 type: string
-            tags: [ "Build" ]
+            tags: ["Build"]

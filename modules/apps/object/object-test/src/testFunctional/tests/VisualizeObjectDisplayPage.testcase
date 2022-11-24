@@ -106,8 +106,6 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Picklist type for table view on the Display Page"
 	@priority = "4"
 	test CanDefineFixedFilterForPicklistType {
-		property portal.upstream = "quarantine";
-
 		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
 		for (var itemsName : list "1,2") {
@@ -744,8 +742,6 @@ definition {
 	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"
 	@priority = "5"
 	test ObjectMappedURL {
-		property portal.acceptance = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 327",
 			objectName = "CustomObject327",

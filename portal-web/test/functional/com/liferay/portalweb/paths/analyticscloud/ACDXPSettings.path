@@ -23,7 +23,7 @@
 
 <tr>
 	<td>TOKEN_INPUT_FIELD</td>
-	<td>//input[contains(@id,'token')]</td>
+	<td>//input[contains(@id,'inputToken')]</td>
 	<td></td>
 </tr>
 <tr>

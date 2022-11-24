@@ -59,6 +59,7 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			%>
 
 			<clay:dropdown-actions
+				aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 				dropdownItems="<%= blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems() %>"
 			/>
 		</liferay-ui:search-container-column-text>
@@ -98,6 +99,7 @@ String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			%>
 
 			<clay:dropdown-actions
+				aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 				dropdownItems="<%= blogsEntryImageActionDropdownItemsProvider.getActionDropdownItems() %>"
 			/>
 		</liferay-ui:search-container-column-text>

@@ -99,6 +99,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= assetCategoryActionDropdownItemsProvider.getActionDropdownItems(curCategory) %>"
 							propsTransformer="js/CategoryActionDropdownPropsTransformer"
 						/>
@@ -162,6 +163,7 @@ AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvide
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= assetCategoryActionDropdownItemsProvider.getActionDropdownItems(curCategory) %>"
 							propsTransformer="js/CategoryActionDropdownPropsTransformer"
 						/>

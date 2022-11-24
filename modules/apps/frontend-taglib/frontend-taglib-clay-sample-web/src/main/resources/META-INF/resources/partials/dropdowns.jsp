@@ -86,6 +86,7 @@
 		md="2"
 	>
 		<clay:dropdown-actions
+			aria-label="Show Actions"
 			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 		/>
 	</clay:col>

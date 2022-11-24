@@ -134,6 +134,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 												%>
 
 												<clay:dropdown-actions
+													aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 													dropdownItems="<%= igViewFileVersionDisplayContext.getActionDropdownItems() %>"
 													propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
 												/>

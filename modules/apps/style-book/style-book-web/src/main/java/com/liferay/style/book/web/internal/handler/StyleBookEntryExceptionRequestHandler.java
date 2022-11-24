@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = StyleBookEntryExceptionRequestHandler.class
-)
+@Component(service = StyleBookEntryExceptionRequestHandler.class)
 public class StyleBookEntryExceptionRequestHandler {
 
 	public void handlePortalException(

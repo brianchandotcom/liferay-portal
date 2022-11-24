@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	service = StyleBookEntryPreviewImageEditorUploadFileEntryHandler.class
 )
 public class StyleBookEntryPreviewImageEditorUploadFileEntryHandler

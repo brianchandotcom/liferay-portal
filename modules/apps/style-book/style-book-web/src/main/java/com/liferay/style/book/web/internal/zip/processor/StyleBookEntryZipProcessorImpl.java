@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = StyleBookEntryZipProcessor.class)
+@Component(service = StyleBookEntryZipProcessor.class)
 public class StyleBookEntryZipProcessorImpl
 	implements StyleBookEntryZipProcessor {
 

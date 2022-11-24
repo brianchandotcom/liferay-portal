@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + StyleBookPortletKeys.STYLE_BOOK, "path=-",
 		"path=/style_books", "path=/style_books/style_books"

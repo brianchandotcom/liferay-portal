@@ -41,9 +41,12 @@
 	<td>//td[contains(@class, 'lfr-site-name-column')]</td>
 	<td></td>
 </tr>
+
+<!-- NAVIGATION WIZARD ITEMS -->
+
 <tr>
-	<td>SITE_NAME</td>
-	<td>//td[contains(@class, 'lfr-site-name-column')]</td>
+	<td>WIZARD_STEP_BUTTON</td>
+	<td>//div[text()='${key_wizardStepName}']/..//button[@class='multi-step-icon']</td>
 	<td></td>
 </tr>
 

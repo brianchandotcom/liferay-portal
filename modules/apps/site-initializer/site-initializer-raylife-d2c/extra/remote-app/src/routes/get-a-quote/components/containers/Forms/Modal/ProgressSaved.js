@@ -76,21 +76,21 @@ const ProgressSaved = ({
 				AVAILABLE_STEPS.BUSINESS.index === selectedStep.index &&
 				countCompletedFields(_fields?.business || {}) === 0
 			) {
-				status = APPLICATION_STATUS.OPEN;
+				status = APPLICATION_STATUS.INCOMPLETE;
 			}
 
 			if (
 				AVAILABLE_STEPS.EMPLOYEES.index === selectedStep.index &&
 				countCompletedFields(_fields?.employees || {}) === 0
 			) {
-				status = APPLICATION_STATUS.OPEN;
+				status = APPLICATION_STATUS.INCOMPLETE;
 			}
 
 			if (
 				AVAILABLE_STEPS.PROPERTY.index === selectedStep.index &&
 				countCompletedFields(_fields?.property || {}) === 0
 			) {
-				status = APPLICATION_STATUS.OPEN;
+				status = APPLICATION_STATUS.INCOMPLETE;
 			}
 
 			await updateRaylifeApplicationStatus(applicationId, status);

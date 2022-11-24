@@ -38,7 +38,7 @@ function SelectAssetCategory({
 	return (
 		<div className="select-category">
 			<form
-				className="mb-0 select-category-filter"
+				className="mb-0 px-1 py-3 select-category-filter"
 				onSubmit={(event) => event.preventDefault()}
 				role="search"
 			>
@@ -64,12 +64,12 @@ function SelectAssetCategory({
 
 			{selectedItemsCount ? (
 				<ClayLayout.Container
-					className="category-tree-count-feedback"
+					className="align-items-center category-tree-count-feedback d-flex px-4"
 					containerElement="section"
 					fluid
 				>
 					<div className="container p-0">
-						<p className="m-0">
+						<p className="m-0 text-2">
 							{selectedItemsCount > 1
 								? `${selectedItemsCount} ${Liferay.Language.get(
 										'items-selected'

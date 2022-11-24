@@ -1,22 +1,10 @@
 @import 'cadmin-variables';
 
-$spacer: 1rem;
-
 .category-tree-count-feedback {
-	align-items: center;
 	background: $cadmin-primary-l2;
-	display: flex;
 	min-height: 40px;
-	padding: 0 24px;
-
-	p {
-		font-size: 12px;
-	}
 }
 
 .select-category-filter {
-	background: #fff;
-	border-bottom: 1px solid #dee2e6;
-	margin-bottom: $spacer * 1.5;
-	padding: $spacer * 0.75;
+	border-bottom: 1px solid $cadmin-secondary-l3;
 }

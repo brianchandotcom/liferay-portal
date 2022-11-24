@@ -1112,6 +1112,7 @@ definition {
 	@description = "This is a use case for LPS-88378. Verify is possible export/import layout circular reference."
 	@priority = "3"
 	test ExportImportLayoutCircularReference {
+		property test.name.skip.portal.instance = "ExportImport#ExportImportLayoutCircularReference";
 		property testray.component.names = "Site Pages Administration,Web Content Administration";
 
 		task ("Given: User adds a new site and a page to it") {
@@ -1663,6 +1664,7 @@ definition {
 	@priority = "5"
 	test ExportImportSmoke {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ExportImport#ExportImportSmoke";
 		property testray.component.names = "Training";
 
 		task ("Given: User exports default site") {

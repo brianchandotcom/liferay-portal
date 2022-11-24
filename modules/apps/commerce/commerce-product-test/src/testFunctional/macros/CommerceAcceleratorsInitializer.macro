@@ -162,10 +162,6 @@ definition {
 			value1 = "${productDescription}");
 	}
 
-	macro assertMiniumCardDescriptionTruncated {
-		TestUtils.assertTruncatedText(element = "//p[@title='${key_productName}']/..//following-sibling::p[@class='card-body']//span[contains(normalize-space(text()),'${key_productDescription}')]");
-	}
-
 	macro changeProductsSorting {
 		Click(locator1 = "CommerceAccelerators#SORT_BY_DROPDOWN");
 

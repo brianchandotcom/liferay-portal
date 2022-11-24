@@ -366,6 +366,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SIDEBAR_ELEMENT_BUTTON</td>
+		<td>//button[contains(@class, 'sidebar-element-button')and contains(.,'${key_element}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SIDE_PANEL</td>
 		<td>//div[contains(@class, 'lfr-objects__side-panel-content')]</td>
 		<td></td>

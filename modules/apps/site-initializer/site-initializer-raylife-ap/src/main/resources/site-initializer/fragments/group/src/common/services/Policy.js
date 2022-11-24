@@ -84,3 +84,9 @@ export function getPoliciesChartExpiringPolicies(
 		`${DeliveryAPI}/?fields=endDate,totalCount,productName,termPremium&pageSize=200&filter=endDate ge ${currentYear}-${currentMonth}-${currentDay} and endDate le ${periodYear}-${periodMonth}-${periodDay}`
 	);
 }
+
+export function getPolicies() {
+	return axios.get(
+		`${DeliveryAPI}/?fields=endDate,totalCount,productName,termPremium&pageSize=200`
+	);
+}

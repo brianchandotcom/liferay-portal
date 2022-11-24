@@ -17,6 +17,7 @@ import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
 import {
+	getPolicies,
 	getPoliciesChartExpiringPolicies,
 	getProducts,
 } from '../../../common/services';
@@ -37,9 +38,14 @@ export default function () {
 	const [chartTitle, setChartTitle] = useState('');
 	const [loadData, setLoadData] = useState(false);
 
-	const [thisMonthTotalPolicies, setThisMonthTotalPolicies] = useState(0);
-	const [expiringPolicies, setExpiringPolicies] = useState(0);
-	const [threeMonthTotalPolicies, setThreeMonthsTotalPolicies] = useState(0);
+	const [totalOfPolicies, setTotalOfPolicies] = useState(0);
+	const [thisMonthExpiringPolicies, setThisMonthExpiringPolicies] = useState(
+		0
+	);
+	const [
+		threeMonthsExpiringPolicies,
+		setThreeMonthsExpiringPolicies,
+	] = useState(0);
 
 	const [columnsLegend, setColumnsLegend] = useState([]);
 	const [colors, setColors] = useState({});
@@ -75,51 +81,20 @@ export default function () {
 	const MAX_NAME_LENGHT = 15;
 
 	useEffect(() => {
-		Promise.allSettled([
-			getProducts(),
-			getPoliciesChartExpiringPolicies(
-				currentDateString[0],
-				currentDateString[1],
-				currentDateString[2],
-				nextMonthDate[0],
-				nextMonthDate[1],
-				nextMonthDate[2]
-			),
-		]).then((results) => {
-			const [
-				productQuotesResult,
-				expiringPoliciesResultThisMonth,
-			] = results;
+		Promise.allSettled([getProducts(), getPolicies()]).then((results) => {
+			const [productQuotesResult, allPoliciesResult] = results;
 
 			const columnsArr = [];
 			const colorsObj = {};
 
-			const totalFilteredPolicies =
-				expiringPoliciesResultThisMonth?.value?.data;
+			const totalOfPolicies = allPoliciesResult?.value?.data;
 
-			const arrayOfExpiringPolicies = [];
+			setTotalOfPolicies(totalOfPolicies?.totalCount);
 
-			totalFilteredPolicies?.items?.forEach((policy) => {
-				const policyEndDate = Date.parse(policy?.endDate);
-
-				const currentDate = new Date();
-
-				const differenceOfDays = policyEndDate - currentDate;
-
-				const renewalDue =
-					Math.floor(differenceOfDays / (1000 * 60 * 60 * 24)) + 1;
-
-				if (renewalDue < 15) {
-					arrayOfExpiringPolicies.push(policy);
-				}
-			});
-
-			setExpiringPolicies(arrayOfExpiringPolicies?.length);
-
-			if (selectedFilterDate === PERIOD.THIS_MONTH) {
+			const handleBuildLegend = (arrayOfexpiringPolicies) => {
 				productQuotesResult?.value?.data?.items?.map(
 					(productQuote, index) => {
-						const countExpiredPolicies = arrayOfExpiringPolicies?.filter(
+						const countExpiredPolicies = arrayOfexpiringPolicies?.filter(
 							(policy) => productQuote.name === policy.productName
 						).length;
 
@@ -148,16 +123,53 @@ export default function () {
 								productName,
 							];
 						}
-
-						setThisMonthTotalPolicies(
-							totalFilteredPolicies?.totalCount
-						);
 					}
 				);
 
-				setChartTitle(arrayOfExpiringPolicies?.length?.toString());
+				setChartTitle(arrayOfexpiringPolicies?.length.toString());
 				setColumnsLegend(columnsArr);
 				setColors(colorsObj);
+			};
+
+			if (selectedFilterDate === PERIOD.THIS_MONTH) {
+				getPoliciesChartExpiringPolicies(
+					currentDateString[0],
+					currentDateString[1],
+					currentDateString[2],
+					nextMonthDate[0],
+					nextMonthDate[1],
+					nextMonthDate[2]
+				).then((results) => {
+					const expiringPoliciesResultThisMonth = results;
+
+					const totalFilteredPolicies =
+						expiringPoliciesResultThisMonth?.data;
+
+					const arrayThisMonthExpiringPolicies = [];
+
+					totalFilteredPolicies?.items?.forEach((policy) => {
+						const policyEndDate = Date.parse(policy?.endDate);
+
+						const currentDate = new Date();
+
+						const differenceOfDays = policyEndDate - currentDate;
+
+						const renewalDue =
+							Math.floor(
+								differenceOfDays / (1000 * 60 * 60 * 24)
+							) + 1;
+
+						if (renewalDue < 15) {
+							arrayThisMonthExpiringPolicies.push(policy);
+						}
+					});
+
+					setThisMonthExpiringPolicies(
+						arrayThisMonthExpiringPolicies?.length
+					);
+
+					handleBuildLegend(arrayThisMonthExpiringPolicies);
+				});
 			}
 
 			if (selectedFilterDate === PERIOD.THREE_MONTH) {
@@ -171,9 +183,14 @@ export default function () {
 				).then((results) => {
 					const expiringPoliciesResultThreeMonths = results?.data;
 
-					setThreeMonthsTotalPolicies(
+					const arrayThreeMonthsExpiringPolicies =
+						expiringPoliciesResultThreeMonths?.items;
+
+					setThreeMonthsExpiringPolicies(
 						expiringPoliciesResultThreeMonths?.totalCount
 					);
+
+					handleBuildLegend(arrayThreeMonthsExpiringPolicies);
 				});
 			}
 
@@ -185,15 +202,15 @@ export default function () {
 	const chartLoadData = [
 		{
 			dataColumns: [
-				['expiring', expiringPolicies],
-				['remaining', thisMonthTotalPolicies - expiringPolicies],
+				['expiring', thisMonthExpiringPolicies],
+				['remaining', totalOfPolicies - thisMonthExpiringPolicies],
 			],
 			period: 1,
 		},
 		{
 			dataColumns: [
-				['expiring', expiringPolicies],
-				['remaining', threeMonthTotalPolicies - expiringPolicies],
+				['expiring', threeMonthsExpiringPolicies],
+				['remaining', totalOfPolicies - threeMonthsExpiringPolicies],
 			],
 			period: 2,
 		},

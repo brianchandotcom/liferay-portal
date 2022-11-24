@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -63,9 +65,11 @@ import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -86,6 +90,8 @@ public class IndexerClausesComplexQueryPartTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Assume.assumeTrue(!_isSearchEngine("solr"));
+
 		BlogsEntrySearchFixture blogsEntrySearchFixture =
 			new BlogsEntrySearchFixture(blogsEntryLocalService);
 
@@ -378,6 +384,12 @@ public class IndexerClausesComplexQueryPartTest {
 			_group.getGroupId(), _user.getUserId());
 	}
 
+	private boolean _isSearchEngine(String vendor) {
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
+
+		return Objects.equals(searchEngine.getVendor(), vendor);
+	}
+
 	private static final String _TITLE_EN_US = StringBundler.concat(
 		Field.TITLE, StringPool.UNDERLINE, LocaleUtil.US);
 
@@ -408,6 +420,9 @@ public class IndexerClausesComplexQueryPartTest {
 	private Queries _queries;
 
 	private MatchQuery _query;
+
+	@Inject
+	private SearchEngineHelper _searchEngineHelper;
 
 	@Inject
 	private Sorts _sorts;

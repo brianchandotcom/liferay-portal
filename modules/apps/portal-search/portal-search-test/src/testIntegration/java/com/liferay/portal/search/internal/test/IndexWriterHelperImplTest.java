@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -39,8 +41,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -60,6 +64,8 @@ public class IndexWriterHelperImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Assume.assumeTrue(!_isSearchEngine("Solr"));
+
 		_reindex(null);
 
 		Thread.sleep(10000);
@@ -176,6 +182,12 @@ public class IndexWriterHelperImplTest {
 		return companyIds;
 	}
 
+	private boolean _isSearchEngine(String vendor) {
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
+
+		return Objects.equals(searchEngine.getVendor(), vendor);
+	}
+
 	private void _populateOriginalCounts(
 		Map<Long, Long> originalCounts, String className,
 		boolean systemIndexer) {
@@ -253,5 +265,8 @@ public class IndexWriterHelperImplTest {
 
 	@Inject
 	private SearchEngineAdapter _searchEngineAdapter;
+
+	@Inject
+	private SearchEngineHelper _searchEngineHelper;
 
 }

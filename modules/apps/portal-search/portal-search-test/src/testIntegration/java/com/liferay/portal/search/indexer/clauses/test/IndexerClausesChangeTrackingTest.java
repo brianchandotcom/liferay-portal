@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -57,9 +59,11 @@ import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -83,6 +87,8 @@ public class IndexerClausesChangeTrackingTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Assume.assumeTrue(!_isSearchEngine("Solr"));
+
 		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
 		JournalArticleSearchFixture journalArticleSearchFixture =
@@ -349,6 +355,12 @@ public class IndexerClausesChangeTrackingTest {
 			_group.getGroupId(), _user.getUserId());
 	}
 
+	private boolean _isSearchEngine(String vendor) {
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
+
+		return Objects.equals(searchEngine.getVendor(), vendor);
+	}
+
 	private static final String _TITLE_EN_US = StringBundler.concat(
 		Field.TITLE, StringPool.UNDERLINE, LocaleUtil.US);
 
@@ -359,6 +371,10 @@ public class IndexerClausesChangeTrackingTest {
 	private Group _group;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+
+	@Inject
+	private SearchEngineHelper _searchEngineHelper;
+
 	private User _user;
 
 }

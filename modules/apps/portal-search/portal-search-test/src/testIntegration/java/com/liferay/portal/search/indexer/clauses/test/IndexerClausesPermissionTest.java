@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -62,9 +64,11 @@ import com.liferay.users.admin.test.util.search.UserSearchFixture;
 import java.time.Month;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -87,6 +91,8 @@ public class IndexerClausesPermissionTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Assume.assumeTrue(!_isSearchEngine("solr"));
+
 		BlogsEntrySearchFixture blogsEntrySearchFixture =
 			new BlogsEntrySearchFixture(blogsEntryLocalService);
 
@@ -362,6 +368,12 @@ public class IndexerClausesPermissionTest {
 	@Inject
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
+	private boolean _isSearchEngine(String vendor) {
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
+
+		return Objects.equals(searchEngine.getVendor(), vendor);
+	}
+
 	private static final String _TITLE_EN_US = StringBundler.concat(
 		Field.TITLE, StringPool.UNDERLINE, LocaleUtil.US);
 
@@ -378,6 +390,10 @@ public class IndexerClausesPermissionTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+
+	@Inject
+	private SearchEngineHelper _searchEngineHelper;
+
 	private User _user1;
 	private User _user2;
 

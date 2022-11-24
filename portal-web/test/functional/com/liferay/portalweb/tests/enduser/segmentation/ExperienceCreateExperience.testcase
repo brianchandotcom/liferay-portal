@@ -56,6 +56,104 @@ definition {
 		JSONOrganization.tearDownOrganizations();
 	}
 
+	@description = "LPS-103102 Bug: Segmentation is not working after remove the user section"
+	@priority = "4"
+	test AddExperienceAfterRemovingCriteria {
+		task ("Add a Organization via JSONWS") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+		}
+
+		task ("Assign user to organization created") {
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Add Segment with user and organization criteria") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "Segment Name");
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillProperty(criterionValue = "Test");
+
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			Segmentation.addSecondProperty(propertyOption = "Hierarchy Path");
+
+			Segmentation.fillProperty(
+				criterionValue = "Organization Name",
+				indexNumber = "2");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Change conjuntion to OR") {
+			Segmentation.editSegment(entry = "Segment Name");
+
+			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
+		}
+
+		task ("Delete the user criteria") {
+			Segmentation.deleteProperty();
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Create an experience for each segment in the Content Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Default Heading");
+
+			PageEditor.addExperience(
+				experienceName = "Experience Name",
+				segmentName = "Segment Name");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Experience Heading");
+
+			PageEditor.prioritizeExperience(experienceName = "Experience Name");
+
+			PageEditor.publish();
+		}
+
+		task ("Check heading for experience") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Experience Heading");
+		}
+
+		task ("Check heading for default experience") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Default Heading");
+		}
+	}
+
 	@description = "LPS-147302 Given there are several users segmented, one per segment
 	And there experiences created in a content page, one per user/segment
 	And the experiences are all over the default experience

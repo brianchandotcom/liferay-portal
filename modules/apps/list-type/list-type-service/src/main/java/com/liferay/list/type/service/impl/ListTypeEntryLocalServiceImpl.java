@@ -49,8 +49,8 @@ public class ListTypeEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ListTypeEntry addListTypeEntry(
-			long userId, long listTypeDefinitionId, String key,
-			Map<Locale, String> nameMap)
+			String externalReferenceCode, long userId,
+			long listTypeDefinitionId, String key, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		_validateKey(listTypeDefinitionId, key);
@@ -110,7 +110,8 @@ public class ListTypeEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ListTypeEntry updateListTypeEntry(
-			long listTypeEntryId, Map<Locale, String> nameMap)
+			String externalReferenceCode, long listTypeEntryId,
+			Map<Locale, String> nameMap)
 		throws PortalException {
 
 		_validateName(nameMap);

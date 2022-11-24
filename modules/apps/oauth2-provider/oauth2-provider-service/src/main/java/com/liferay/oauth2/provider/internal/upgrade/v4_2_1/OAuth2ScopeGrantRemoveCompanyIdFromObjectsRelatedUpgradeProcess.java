@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Carlos Correa
  */
-public class OAuth2ScopeGrantRemoveCompanyIdUpgradeProcess
+public class OAuth2ScopeGrantRemoveCompanyIdFromObjectsRelatedUpgradeProcess
 	extends UpgradeProcess {
 
 	@Override
@@ -66,7 +66,6 @@ public class OAuth2ScopeGrantRemoveCompanyIdUpgradeProcess
 
 				_updateOAuth2ScopeGrant(
 					newApplicationName,
-
 					oAuth2ScopeGrantResultSet.getLong("oauth2ScopeGrantId"),
 					newScopeAliases);
 			}

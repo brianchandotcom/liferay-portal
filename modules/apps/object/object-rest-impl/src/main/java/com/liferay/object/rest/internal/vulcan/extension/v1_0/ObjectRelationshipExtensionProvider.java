@@ -196,7 +196,7 @@ public class ObjectRelationshipExtensionProvider
 		for (String fieldName : fieldNames) {
 			ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
-					fetchObjectRelationshipByObjectDefinitionId(
+					fetchObjectRelationshipByObjectDefinitionId1(
 						objectDefinition.getObjectDefinitionId(), fieldName);
 
 			if ((objectRelationship == null) ||

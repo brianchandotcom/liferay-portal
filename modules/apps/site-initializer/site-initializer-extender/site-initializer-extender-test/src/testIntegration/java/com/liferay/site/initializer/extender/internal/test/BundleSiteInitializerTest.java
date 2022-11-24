@@ -1321,11 +1321,15 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(role1);
 		Assert.assertEquals(1, role1.getType());
 
+		_assertRolesAssignments(3, role1.getRoleId());
+
 		Role role2 = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 2");
 
 		Assert.assertNotNull(role2);
 		Assert.assertEquals(1, role2.getType());
+
+		_assertRolesAssignments(2, role2.getRoleId());
 
 		Role role3 = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 3");
@@ -1333,11 +1337,22 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(role3);
 		Assert.assertEquals(1, role3.getType());
 
+		_assertRolesAssignments(1, role3.getRoleId());
+
 		Role role4 = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 4");
 
 		Assert.assertNotNull(role4);
 		Assert.assertEquals(2, role4.getType());
+
+		_assertRolesAssignments(0, role4.getRoleId());
+	}
+
+	private void _assertRolesAssignments(int roleAssignmentsCount, long roleId) {
+		List<Group> groups = _groupLocalService.getRoleGroups(roleId);
+
+		Assert.assertNotNull(groups);
+		Assert.assertEquals(groups.toString(), roleAssignmentsCount, groups.size());
 	}
 
 	private void _assertSAPEntries(Group group) {

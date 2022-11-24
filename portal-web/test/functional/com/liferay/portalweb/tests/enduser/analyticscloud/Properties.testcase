@@ -52,8 +52,6 @@ definition {
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.connectAnalyticsCloud();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Navigate to the Synced Sites Menu tab") {
@@ -98,8 +96,6 @@ definition {
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.connectAnalyticsCloud();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Assign the new site to existing property") {
@@ -342,8 +338,6 @@ definition {
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.connectAnalyticsCloud();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Assign the new site to a new property") {

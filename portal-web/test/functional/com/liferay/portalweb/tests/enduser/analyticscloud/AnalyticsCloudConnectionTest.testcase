@@ -192,8 +192,6 @@ definition {
 
 			ACDXPSettings.connectAnalyticsCloud();
 
-			Alert.viewSuccessMessage();
-
 			ACDXPSettings.navToSyncedSitesMenu();
 
 			ACDXPSettings.createCombinedProperties();

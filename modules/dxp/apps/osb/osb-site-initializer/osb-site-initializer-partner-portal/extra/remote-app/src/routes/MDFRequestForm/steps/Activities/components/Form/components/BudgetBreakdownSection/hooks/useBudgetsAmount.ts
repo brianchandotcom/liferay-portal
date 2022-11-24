@@ -27,10 +27,8 @@ export default function useBudgetsAmount(
 			0
 		);
 
-		if (amountValue) {
-			setBudgetsAmount(amountValue);
-			onAmountUpdate(amountValue);
-		}
+		setBudgetsAmount(amountValue);
+		onAmountUpdate(amountValue);
 	}, [debouncedBudgets, onAmountUpdate]);
 
 	return budgetsAmount;

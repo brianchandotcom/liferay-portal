@@ -53,36 +53,30 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 	@Override
 	public void executeObjectAction(
-		String objectActionName, String objectActionTriggerKey,
-		long objectDefinitionId, JSONObject payloadJSONObject, long userId) {
+			String objectActionName, String objectActionTriggerKey,
+			long objectDefinitionId, JSONObject payloadJSONObject, long userId)
+		throws Exception {
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918"))) {
 			throw new UnsupportedOperationException();
 		}
 
-		try {
-			ObjectAction objectAction =
-				_objectActionLocalService.getObjectAction(
-					objectDefinitionId, objectActionName,
-					objectActionTriggerKey);
+		ObjectAction objectAction = _objectActionLocalService.getObjectAction(
+			objectDefinitionId, objectActionName, objectActionTriggerKey);
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
 
-			_updatePayloadJSONObject(
-				objectDefinition, payloadJSONObject,
-				_userLocalService.getUser(userId));
+		_updatePayloadJSONObject(
+			objectDefinition, payloadJSONObject,
+			_userLocalService.getUser(userId));
 
-			_executeObjectAction(
-				objectAction, objectDefinition, payloadJSONObject, userId,
-				ObjectEntryVariablesUtil.getActionVariables(
-					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-					_systemObjectDefinitionMetadataRegistry));
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
+		_executeObjectAction(
+			objectAction, objectDefinition, payloadJSONObject, userId,
+			ObjectEntryVariablesUtil.getActionVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				_systemObjectDefinitionMetadataRegistry));
 	}
 
 	@Override
@@ -152,11 +146,11 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				ObjectActionConstants.STATUS_SUCCESS);
 		}
 		catch (Exception exception) {
-			_log.error(exception);
-
 			_objectActionLocalService.updateStatus(
 				objectAction.getObjectActionId(),
 				ObjectActionConstants.STATUS_FAILED);
+
+			throw exception;
 		}
 	}
 
@@ -195,9 +189,14 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 					objectDefinition.getObjectDefinitionId(),
 					objectActionTriggerKey)) {
 
-			_executeObjectAction(
-				objectAction, objectDefinition, payloadJSONObject, userId,
-				variables);
+			try {
+				_executeObjectAction(
+					objectAction, objectDefinition, payloadJSONObject, userId,
+					variables);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 		}
 	}
 

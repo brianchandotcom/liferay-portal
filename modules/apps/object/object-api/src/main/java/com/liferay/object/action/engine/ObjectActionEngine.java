@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 public interface ObjectActionEngine {
 
 	public void executeObjectAction(
-		String objectActionName, String objectActionTriggerKey,
-		long objectDefinitionId, JSONObject payloadJSONObject, long userId);
+			String objectActionName, String objectActionTriggerKey,
+			long objectDefinitionId, JSONObject payloadJSONObject, long userId)
+		throws Exception;
 
 	public void executeObjectActions(
 		String className, long companyId, String objectActionTriggerKey,

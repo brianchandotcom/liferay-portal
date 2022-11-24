@@ -43,7 +43,7 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 
-		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+		Alert.viewErrorMessage(errorMessage = "An unexpected system error occurred.");
 	}
 
 	macro teardownAnalyticsCloud {

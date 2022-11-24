@@ -391,9 +391,39 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public ObjectRelationship fetchObjectRelationshipByObjectDefinitionId(
+		long objectDefinitionId, String objectRelationshipName) {
+
+		List<ObjectRelationship> objectRelationships = dslQuery(
+			DSLQueryFactoryUtil.select(
+			).from(
+				ObjectRelationshipTable.INSTANCE
+			).where(
+				Predicate.withParentheses(
+					ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
+						objectDefinitionId
+					).or(
+						ObjectRelationshipTable.INSTANCE.objectDefinitionId2.eq(
+							objectDefinitionId)
+					)
+				).and(
+					ObjectRelationshipTable.INSTANCE.name.eq(
+						objectRelationshipName)
+				).and(
+					ObjectRelationshipTable.INSTANCE.reverse.eq(false)
+				)
+			));
+
+		if (objectRelationships.isEmpty()) {
+			return null;
+		}
+
+		return objectRelationships.get(0);
+	}
+
+	@Override
 	public ObjectRelationship fetchObjectRelationshipByObjectDefinitionId1(
-			long objectDefinitionId1, String name)
-		throws Exception {
+		long objectDefinitionId1, String name) {
 
 		return objectRelationshipPersistence.fetchByODI1_N_First(
 			objectDefinitionId1, name, null);

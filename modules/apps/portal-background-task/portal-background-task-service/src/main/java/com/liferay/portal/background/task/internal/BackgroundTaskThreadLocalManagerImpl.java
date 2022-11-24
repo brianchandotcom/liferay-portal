@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = BackgroundTaskThreadLocalManager.class)
+@Component(service = BackgroundTaskThreadLocalManager.class)
 public class BackgroundTaskThreadLocalManagerImpl
 	implements BackgroundTaskThreadLocalManager {
 

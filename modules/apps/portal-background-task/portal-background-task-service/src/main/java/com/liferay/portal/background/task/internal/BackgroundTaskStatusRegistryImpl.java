@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = BackgroundTaskStatusRegistry.class)
+@Component(service = BackgroundTaskStatusRegistry.class)
 public class BackgroundTaskStatusRegistryImpl
 	implements BackgroundTaskStatusRegistry {
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrew Betts
  */
-@Component(immediate = true, service = BackgroundTaskDisplayFactory.class)
+@Component(service = BackgroundTaskDisplayFactory.class)
 public class BackgroundTaskDisplayFactoryImpl
 	implements BackgroundTaskDisplayFactory {
 

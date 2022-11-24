@@ -193,8 +193,12 @@ public class EditableValuesMappingExportImportContentProcessor
 		_exportDDMTemplateReference(
 			portletDataContext, stagedModel, editableJSONObject);
 
-		String className = _infoSearchClassMapperRegistry.getSearchClassName(
-			_portal.getClassName(classNameId));
+		String className = _portal.getClassName(classNameId);
+
+		editableJSONObject.put("className", className);
+
+		className = _infoSearchClassMapperRegistry.getSearchClassName(
+			className);
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
@@ -222,8 +226,6 @@ public class EditableValuesMappingExportImportContentProcessor
 
 			return;
 		}
-
-		editableJSONObject.put("className", _portal.getClassName(classNameId));
 
 		if (exportReferencedContent) {
 			try {

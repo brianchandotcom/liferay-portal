@@ -38,7 +38,12 @@
 					padding: 40px 24px;
 
 					.panel-header-link {
-						box-shadow: revert;
+						border-bottom-left-radius: 0;
+						border-bottom-right-radius: 0;
+						padding-bottom: 16px;
+						padding-left: 24px;
+						padding-right: 64px;
+						padding-top: 16px;
 					}
 
 					> .conjunction-button {

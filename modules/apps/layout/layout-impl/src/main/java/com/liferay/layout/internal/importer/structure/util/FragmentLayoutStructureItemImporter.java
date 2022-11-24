@@ -252,21 +252,28 @@ public class FragmentLayoutStructureItemImporter
 		long groupId = layoutGroup.getGroupId();
 
 		String groupKey = GetterUtil.getString(
-			fragmentDefinitionMap.get("siteKey"));
+			fragmentDefinitionMap.get("siteKey"), null);
 
-		Group fragmentEntryGroup = _groupLocalService.fetchGroup(
-			layout.getCompanyId(), groupKey);
+		boolean useGlobalAsFallback = true;
 
-		if (fragmentEntryGroup != null) {
+		if (groupKey != null) {
+			useGlobalAsFallback = false;
+
+			Group fragmentEntryGroup = _groupLocalService.fetchGroup(
+				layout.getCompanyId(), groupKey);
+
 			Company company = _companyLocalService.fetchCompany(
 				layout.getCompanyId());
 
-			if (fragmentEntryGroup.getGroupId() == company.getGroupId()) {
+			if ((fragmentEntryGroup != null) &&
+				(fragmentEntryGroup.getGroupId() == company.getGroupId())) {
+
 				groupId = company.getGroupId();
 			}
 		}
 
-		FragmentEntry fragmentEntry = _getFragmentEntry(groupId, fragmentKey);
+		FragmentEntry fragmentEntry = _getFragmentEntry(
+			layout.getCompanyId(), groupId, fragmentKey, useGlobalAsFallback);
 
 		FragmentRenderer fragmentRenderer =
 			_fragmentRendererRegistry.getFragmentRenderer(fragmentKey);
@@ -742,9 +749,24 @@ public class FragmentLayoutStructureItemImporter
 		return configurationTypes;
 	}
 
-	private FragmentEntry _getFragmentEntry(long groupId, String fragmentKey) {
+	private FragmentEntry _getFragmentEntry(
+			long companyId, long groupId, String fragmentKey,
+			boolean useGlobalAsFallback)
+		throws Exception {
+
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(groupId, fragmentKey);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		if (useGlobalAsFallback) {
+			Company company = _companyLocalService.getCompanyById(companyId);
+
+			fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
+				company.getGroupId(), fragmentKey);
+		}
 
 		if (fragmentEntry != null) {
 			return fragmentEntry;

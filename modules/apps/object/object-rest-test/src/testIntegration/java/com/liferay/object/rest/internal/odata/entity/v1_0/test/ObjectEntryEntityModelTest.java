@@ -92,7 +92,7 @@ public class ObjectEntryEntityModelTest {
 				objectDefinition);
 		}
 
-		_objectEntryResourceServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Test
@@ -171,8 +171,8 @@ public class ObjectEntryEntityModelTest {
 				new IntegerEntityField("userId", locale -> Field.USER_ID)
 			).putAll(
 				_getExpectedEntityFieldsMap(
-					customObjectFields, relatedObjectDefinition,
-					objectRelationship)
+					customObjectFields, objectRelationship,
+					relatedObjectDefinition)
 			).build(),
 			_getObjectDefinitionEntityFieldsMap(objectDefinition));
 	}
@@ -225,10 +225,10 @@ public class ObjectEntryEntityModelTest {
 		return new ObjectFieldBuilder(
 		).dbType(
 			dbType
-		).name(
-			"a" + RandomTestUtil.randomString()
 		).labelMap(
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).name(
+			"a" + RandomTestUtil.randomString()
 		).objectFieldSettings(
 			Collections.emptyList()
 		).build();
@@ -248,10 +248,10 @@ public class ObjectEntryEntityModelTest {
 
 	private Map<String, EntityField> _getExpectedEntityFieldsMap(
 		List<ObjectField> customObjectFields,
-		ObjectDefinition relatedObjectDefinition,
-		ObjectRelationship objectRelationship) {
+		ObjectRelationship objectRelationship,
+		ObjectDefinition relatedObjectDefinition) {
 
-		HashMap<String, EntityField> expectedEntityFieldsMap = new HashMap<>();
+		Map<String, EntityField> expectedEntityFieldsMap = new HashMap<>();
 
 		for (ObjectField customObjectField : customObjectFields) {
 			EntityField entityField = _toExpectedEntityField(customObjectField);
@@ -261,7 +261,6 @@ public class ObjectEntryEntityModelTest {
 
 		String pkObjectFieldName =
 			relatedObjectDefinition.getPKObjectFieldName();
-
 		String relationshipEntityFieldPrefix = StringBundler.concat(
 			"r_", objectRelationship.getName(), "_");
 
@@ -300,31 +299,27 @@ public class ObjectEntryEntityModelTest {
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
+		Map<String, EntityField> objectEntityFieldsMap = null;
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			ObjectEntryEntityModelTest.class);
 
-		_objectEntryResourceServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundle.getBundleContext(), ObjectEntryResource.class,
-				"entity.class.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundle.getBundleContext(), ObjectEntryResource.class,
+			"entity.class.name");
 
-		ObjectEntryResource objectEntryResource =
-			_objectEntryResourceServiceTrackerMap.getService(
-				StringBundler.concat(
-					ObjectEntry.class.getName(), StringPool.POUND,
-					objectDefinition.getOSGiJaxRsName()));
-
-		Map<String, EntityField> objectEntityFieldsMap = null;
+		ObjectEntryResource objectEntryResource = _serviceTrackerMap.getService(
+			StringBundler.concat(
+				ObjectEntry.class.getName(), StringPool.POUND,
+				objectDefinition.getOSGiJaxRsName()));
 
 		if (objectEntryResource instanceof EntityModelResource) {
-			Class<?> objectEntryResourceClass = objectEntryResource.getClass();
+			Class<?> clazz = objectEntryResource.getClass();
 
-			Method setObjectDefinitionMethod =
-				objectEntryResourceClass.getMethod(
-					"setObjectDefinition", ObjectDefinition.class);
+			Method method = clazz.getMethod(
+				"setObjectDefinition", ObjectDefinition.class);
 
-			setObjectDefinitionMethod.invoke(
-				objectEntryResource, objectDefinition);
+			method.invoke(objectEntryResource, objectDefinition);
 
 			EntityModelResource entityModelResource =
 				(EntityModelResource)objectEntryResource;
@@ -399,8 +394,6 @@ public class ObjectEntryEntityModelTest {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private final List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
-	private ServiceTrackerMap<String, ObjectEntryResource>
-		_objectEntryResourceServiceTrackerMap;
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
@@ -410,5 +403,6 @@ public class ObjectEntryEntityModelTest {
 
 	private final List<ObjectRelationship> _objectRelationships =
 		new ArrayList<>();
+	private ServiceTrackerMap<String, ObjectEntryResource> _serviceTrackerMap;
 
 }

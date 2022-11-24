@@ -181,6 +181,18 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 					"thread-safe, see LPS-70963");
 		}
 
+		// LPS-164101
+
+		if (isAttributeValue(_ENFORCE_COOKIES_MANAGER_UTIL_KEY, absolutePath) &&
+			content.contains("com.liferay.portal.kernel.util.CookieKeys")) {
+
+			addMessage(
+				fileName,
+				"Use com.liferay.portal.kernel.cookies.CookiesManagerUtil " +
+					"instead of com.liferay.portal.kernel.util.CookieKeys, " +
+						"see LPS-164101");
+		}
+
 		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
 			content.contains("org.slf4j.Logger")) {
 
@@ -192,6 +204,9 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ENFORCE_COOKIES_MANAGER_UTIL_KEY =
+		"enforceCookiesManagerUtil";
 
 	private static final String _ENFORCE_JAVA_UTIL_FUNCTION_IMPORTS_KEY =
 		"enforceJavaUtilFunctionImports";

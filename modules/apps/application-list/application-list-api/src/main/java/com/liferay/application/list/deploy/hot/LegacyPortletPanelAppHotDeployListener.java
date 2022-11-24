@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = HotDeployListener.class)
+@Component(service = HotDeployListener.class)
 public class LegacyPortletPanelAppHotDeployListener
 	extends BaseHotDeployListener {
 

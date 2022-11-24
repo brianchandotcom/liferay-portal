@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openConfirmModal, openToast} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -112,19 +112,13 @@ export function handleAction(
 			event.preventDefault();
 
 			setLoading(true);
-			executeAsyncItemAction(url, method)
-				.then(() => {
-					openToast({
-						message:
-							successMessage ||
-							Liferay.Language.get('action-completed'),
-						type: 'success',
-					});
-					setLoading(false);
-				})
-				.catch((_) => {
-					setLoading(false);
-				});
+
+			executeAsyncItemAction({
+				method,
+				setActionItemLoading: setLoading,
+				successMessage,
+				url,
+			});
 		}
 		else if (target === 'inlineEdit') {
 			event.preventDefault();

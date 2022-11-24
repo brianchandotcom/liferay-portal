@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {navigate, openConfirmModal, openToast} from 'frontend-js-web';
+import {navigate, openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -87,16 +87,9 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 			) {
 				event.preventDefault();
 
-				executeAsyncItemAction(
-					formattedHref,
-					currentAction.method
-				).then(() => {
-					openToast({
-						message:
-							currentAction.data?.successMessage ||
-							Liferay.Language.get('action-completed'),
-						type: 'success',
-					});
+				executeAsyncItemAction({
+					method: currentAction.method,
+					url: formattedHref,
 				});
 			}
 			else if (currentAction.onClick) {

@@ -261,6 +261,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_BODY</td>
+	<td>//p[@class='card-title' and contains(@title,'${key_productName}')]/../../../div[contains(@class,'card-body')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUANTITY_SELECTOR_POPOVER_LIST_ITEM</td>
 	<td>//div[contains(@class,'quantity-selector-popover')]//small[text()='${key_quantityConfigurationText}']/b[text()='${key_quantity}']</td>
 	<td></td>

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = CheckEntryMessageListener.class)
+@Component(service = CheckEntryMessageListener.class)
 public class CheckEntryMessageListener extends BaseMessageListener {
 
 	@Activate

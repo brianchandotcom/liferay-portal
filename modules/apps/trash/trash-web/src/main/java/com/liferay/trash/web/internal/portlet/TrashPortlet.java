@@ -65,7 +65,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-trash",
 		"com.liferay.portlet.display-category=category.hidden",

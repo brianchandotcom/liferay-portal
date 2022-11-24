@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = TrashHelper.class)
+@Component(service = TrashHelper.class)
 public class TrashHelperImpl implements TrashHelper {
 
 	@Override

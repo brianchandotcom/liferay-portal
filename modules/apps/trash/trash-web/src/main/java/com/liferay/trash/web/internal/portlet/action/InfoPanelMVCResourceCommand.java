@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + TrashPortletKeys.TRASH,
 		"mvc.command.name=/trash/info_panel"

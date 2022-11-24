@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SortFieldNameTranslator.class)
+@Component(service = SortFieldNameTranslator.class)
 public class TrashSortFieldNameTranslator implements SortFieldNameTranslator {
 
 	@Override

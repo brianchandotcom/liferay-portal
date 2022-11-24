@@ -1821,6 +1821,9 @@ public interface PropsKeys {
 	public static final String NOTIFICATIONS_MAX_EVENTS =
 		"notifications.max.events";
 
+	public static final String NOTIFICATIONS_TEMPLATE_RESTRICT_VARIABLES =
+		"notifications.template.restrict.variables";
+
 	public static final String OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION =
 		"object.entry.script.variables.version";
 

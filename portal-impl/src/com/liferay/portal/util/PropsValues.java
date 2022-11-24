@@ -1511,6 +1511,10 @@ public class PropsValues {
 	public static final int NOTIFICATIONS_MAX_EVENTS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.NOTIFICATIONS_MAX_EVENTS));
 
+	public static final boolean NOTIFICATIONS_TEMPLATE_RESTRICT_VARIABLES =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.NOTIFICATIONS_TEMPLATE_RESTRICT_VARIABLES));
+
 	public static final int OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION));

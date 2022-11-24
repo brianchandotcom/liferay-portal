@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=iframe",
 		"com.liferay.portlet.css-class-wrapper=portlet-iframe",

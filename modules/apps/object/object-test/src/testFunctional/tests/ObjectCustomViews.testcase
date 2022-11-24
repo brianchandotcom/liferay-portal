@@ -2353,4 +2353,70 @@ definition {
 
 	}
 
+	@description = "LPS-169019 - Verify it's possible to filter by Create Date"
+	@priority = "4"
+	test CanFilterEntriesByCreateDate {
+		task ("Given a Custom Object and two entries") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 169019",
+				objectName = "CustomObject169019",
+				pluralLabelName = "Custom Objects 169019");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject169019");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject169019");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject169019",
+				value = "Entry Test");
+		}
+
+		task ("When add a Custom View with filters Create Date") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 169019");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			var listMetaData = "Custom Field,Create Date";
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(filterBy = "Create Date");
+
+			Button.clickSave();
+		}
+
+		task ("Then assert that entry can be filtered by Create Date") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject169019");
+
+			ObjectCustomViews.clickOnFilterOnEntries();
+
+			ObjectCustomViews.defineDateOnFilter(
+				filterName = "Create Date",
+				displayDateDay = DateUtil.getCurrentDate(),
+				displayDateMonth = DateUtil.getCurrentMonth(),
+				displayDateYear = DateUtil.getCurrentYear());
+
+			ObjectPortlet.viewEntry(entry = "Entry Test");
+		}
+	}
+
 }

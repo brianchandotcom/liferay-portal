@@ -239,6 +239,10 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	public boolean isSubscriptionOrder() {
 		List<CommerceOrderItem> commerceOrderItems = getCommerceOrderItems();
 
+		if (commerceOrderItems.isEmpty()) {
+			return false;
+		}
+
 		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
 		if (commerceOrderItem.isSubscription()) {

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -45,6 +46,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -949,6 +951,21 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticlePersistence.filterCountByG_L(groupId, layoutUuid);
 	}
 
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, long folderId, long classNameId, String ddmStructureKey,
+		int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status, start, end, orderByComparator);
+
+		return journalArticleFinder.filterFindByG_F_C_S_L(
+			groupId, ListUtil.fromArray(folderId),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKey,
+			LocaleUtil.getMostRelevantLocale(), queryDefinition);
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group, class name ID, DDM structure key, and workflow status.
@@ -992,8 +1009,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return journalArticleFinder.filterFindByG_C_S_L(
-			groupId, classNameId, ddmStructureKey,
+		return journalArticleFinder.filterFindByG_F_C_S_L(
+			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
 			LocaleUtil.getMostRelevantLocale(), queryDefinition);
 	}
 
@@ -1040,8 +1057,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return journalArticleFinder.filterFindByG_C_S_L(
-			groupId, classNameId, ddmStructureKey, locale, queryDefinition);
+		return journalArticleFinder.filterFindByG_F_C_S_L(
+			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
+			locale, queryDefinition);
 	}
 
 	/**
@@ -1081,10 +1099,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return journalArticleFinder.filterFindByG_C_S_L(
-			groupId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			ddmStructureKey, LocaleUtil.getMostRelevantLocale(),
-			queryDefinition);
+		return journalArticleFinder.filterFindByG_F_C_S_L(
+			groupId, Collections.emptyList(),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKey,
+			LocaleUtil.getMostRelevantLocale(), queryDefinition);
 	}
 
 	/**
@@ -1162,9 +1180,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return journalArticleFinder.filterFindByG_C_S_L(
-			groupId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			ddmStructureKey, locale, queryDefinition);
+		return journalArticleFinder.filterFindByG_F_C_S_L(
+			groupId, Collections.emptyList(),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKey,
+			locale, queryDefinition);
 	}
 
 	/**
@@ -1230,6 +1249,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, status);
 	}
 
+	@Override
+	public int getArticlesCountByStructureId(
+		long groupId, long folderId, long classNameId, String ddmStructureKey,
+		int status) {
+
+		return journalArticleFinder.filterCountByG_F_C_S(
+			groupId, ListUtil.fromArray(folderId), classNameId, ddmStructureKey,
+			new QueryDefinition<JournalArticle>(status));
+	}
+
 	/**
 	 * Returns the number of web content articles matching the group, class name
 	 * ID, DDM structure key, and workflow status.
@@ -1251,8 +1280,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public int getArticlesCountByStructureId(
 		long groupId, long classNameId, String ddmStructureKey, int status) {
 
-		return journalArticleFinder.filterCountByG_C_S(
-			groupId, classNameId, ddmStructureKey,
+		return journalArticleFinder.filterCountByG_F_C_S(
+			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
 			new QueryDefinition<JournalArticle>(status));
 	}
 
@@ -1326,7 +1355,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @return the number of matching folders containing web content articles
 	 */
 	@Override
@@ -2030,7 +2059,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
@@ -2101,7 +2130,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
@@ -2183,7 +2212,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
@@ -2257,7 +2286,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
@@ -2310,7 +2339,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or
@@ -2371,7 +2400,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  companyId the primary key of the web content article's company
 	 * @param  groupId the primary key of the group (optionally <code>0</code>)
 	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
+	 *         (optionally {@link Collections#EMPTY_LIST})
 	 * @param  classNameId the primary key of the DDMStructure class if the web
 	 *         content article is related to a DDM structure, the primary key of
 	 *         the class name associated with the article, or

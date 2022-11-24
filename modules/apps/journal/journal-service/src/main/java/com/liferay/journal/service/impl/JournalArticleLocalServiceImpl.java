@@ -2886,8 +2886,8 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return journalArticleFinder.findByG_C_S_L(
-			groupId, classNameId, ddmStructureKey,
+		return journalArticleFinder.findByG_F_C_S_L(
+			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
 			LocaleUtil.getMostRelevantLocale(), queryDefinition);
 	}
 
@@ -2900,8 +2900,9 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return journalArticleFinder.findByG_C_S_L(
-			groupId, classNameId, ddmStructureKey, locale, queryDefinition);
+		return journalArticleFinder.findByG_F_C_S_L(
+			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
+			locale, queryDefinition);
 	}
 
 	@Override
@@ -2912,10 +2913,10 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return journalArticleFinder.findByG_C_S_L(
-			groupId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			ddmStructureKey, LocaleUtil.getMostRelevantLocale(),
-			queryDefinition);
+		return journalArticleFinder.findByG_F_C_S_L(
+			groupId, Collections.emptyList(),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKey,
+			LocaleUtil.getMostRelevantLocale(), queryDefinition);
 	}
 
 	@Override
@@ -2937,9 +2938,10 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, start, end, orderByComparator);
 
-		return journalArticleFinder.findByG_C_S_L(
-			groupId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			ddmStructureKey, locale, queryDefinition);
+		return journalArticleFinder.findByG_F_C_S_L(
+			groupId, Collections.emptyList(),
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKey,
+			locale, queryDefinition);
 	}
 
 	@Override
@@ -3329,10 +3331,10 @@ public class JournalArticleLocalServiceImpl
 				QueryUtil.ALL_POS, new ArticleVersionComparator());
 
 		articles.addAll(
-			journalArticleFinder.findByG_C_S_L(
-				0, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				ddmStructureKeys, LocaleUtil.getMostRelevantLocale(),
-				approvedQueryDefinition));
+			journalArticleFinder.findByG_F_C_S_L(
+				0, Collections.emptyList(),
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKeys,
+				LocaleUtil.getMostRelevantLocale(), approvedQueryDefinition));
 
 		QueryDefinition<JournalArticle> trashQueryDefinition =
 			new QueryDefinition<>(
@@ -3340,10 +3342,10 @@ public class JournalArticleLocalServiceImpl
 				QueryUtil.ALL_POS, new ArticleVersionComparator());
 
 		articles.addAll(
-			journalArticleFinder.findByG_C_S_L(
-				0, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				ddmStructureKeys, LocaleUtil.getMostRelevantLocale(),
-				trashQueryDefinition));
+			journalArticleFinder.findByG_F_C_S_L(
+				0, Collections.emptyList(),
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKeys,
+				LocaleUtil.getMostRelevantLocale(), trashQueryDefinition));
 
 		return articles;
 	}
@@ -3364,9 +3366,10 @@ public class JournalArticleLocalServiceImpl
 		List<JournalArticle> articles = new ArrayList<>();
 
 		articles.addAll(
-			journalArticleFinder.findByG_C_S_L(
-				0, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				ddmStructureKeys, locale, approvedQueryDefinition));
+			journalArticleFinder.findByG_F_C_S_L(
+				0, Collections.emptyList(),
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKeys,
+				locale, approvedQueryDefinition));
 
 		QueryDefinition<JournalArticle> trashQueryDefinition =
 			new QueryDefinition<>(
@@ -3374,9 +3377,10 @@ public class JournalArticleLocalServiceImpl
 				QueryUtil.ALL_POS, new ArticleVersionComparator());
 
 		articles.addAll(
-			journalArticleFinder.findByG_C_S_L(
-				0, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				ddmStructureKeys, locale, trashQueryDefinition));
+			journalArticleFinder.findByG_F_C_S_L(
+				0, Collections.emptyList(),
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, ddmStructureKeys,
+				locale, trashQueryDefinition));
 
 		return articles;
 	}

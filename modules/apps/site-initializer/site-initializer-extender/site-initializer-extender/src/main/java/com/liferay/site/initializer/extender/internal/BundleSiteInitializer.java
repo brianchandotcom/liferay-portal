@@ -3326,8 +3326,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addRoles(
 			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			serviceContext);
+
 		_addUserAccounts(serviceContext);
+
 		_addUserRoles(serviceContext);
+
 		_addRolesAssignments(serviceContext);
 	}
 

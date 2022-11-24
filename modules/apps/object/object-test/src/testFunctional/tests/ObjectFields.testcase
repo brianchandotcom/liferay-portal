@@ -1153,6 +1153,47 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 	}
 
+	@description = "LPS-162177 - Verify the ERC element is included in Actions - Expression Builder"
+	@priority = "5"
+	test CanSeeERCFieldOnActionSidebar {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162177",
+				objectName = "CustomObject162177",
+				pluralLabelName = "Custom Objects 162177");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162177");
+		}
+
+		task ("When the user navigates to the Actions tab and opens the Expression Builder") {
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.gotoAddObjectAction();
+
+			Click(
+				key_tabName = "Action Builder",
+				locator1 = "ObjectAction#TAB_GENERIC");
+
+			ObjectAdmin.enableCondition();
+
+			Click.javaScriptClick(
+				key_title = "Expand input area.",
+				locator1 = "Button#ANY_TITLE");
+		}
+
+		task ("Then External Reference Code is included in the list of elements") {
+			SelectFrameTop();
+
+			AssertElementPresent(
+				key_element = "External Reference Code",
+				locator1 = "ObjectAdmin#SIDEBAR_ELEMENT_BUTTON");
+		}
+	}
+
 	@description = "LPS-162176 - Verify that the ERC is displayed on the object definition page"
 	@priority = "5"
 	test CanSeeERCFieldOnObjectPage {

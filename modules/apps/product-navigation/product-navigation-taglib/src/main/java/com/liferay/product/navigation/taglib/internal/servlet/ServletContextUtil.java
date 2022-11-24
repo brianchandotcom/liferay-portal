@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ServletContextUtil {
 
 	public static String getContextPath() {

@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=" + PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,
 	service = ViewPortletProvider.class
 )

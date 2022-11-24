@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ProductNavigationProductMenuHelper.class)
+@Component(service = ProductNavigationProductMenuHelper.class)
 public class ProductNavigationProductMenuHelperImpl
 	implements ProductNavigationProductMenuHelper {
 

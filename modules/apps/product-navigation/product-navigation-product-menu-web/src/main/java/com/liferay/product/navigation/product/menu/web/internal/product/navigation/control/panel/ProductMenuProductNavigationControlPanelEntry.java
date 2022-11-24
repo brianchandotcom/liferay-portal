@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU,
 	service = ControlPanelEntry.class
 )

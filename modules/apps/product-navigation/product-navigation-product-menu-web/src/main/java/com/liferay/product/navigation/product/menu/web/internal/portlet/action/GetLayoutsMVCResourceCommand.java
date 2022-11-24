@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU,
 		"mvc.command.name=/product_navigation_product_menu/get_layouts"

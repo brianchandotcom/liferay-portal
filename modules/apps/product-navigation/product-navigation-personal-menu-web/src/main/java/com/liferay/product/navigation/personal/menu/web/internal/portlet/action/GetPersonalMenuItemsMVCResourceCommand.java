@@ -57,7 +57,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + PersonalMenuPortletKeys.PERSONAL_MENU,
 		"mvc.command.name=/product_navigation_personal_menu/get_personal_menu_items"

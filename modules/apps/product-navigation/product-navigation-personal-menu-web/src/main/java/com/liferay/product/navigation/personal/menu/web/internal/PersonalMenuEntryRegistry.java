@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = PersonalMenuEntryRegistry.class)
+@Component(service = PersonalMenuEntryRegistry.class)
 public class PersonalMenuEntryRegistry {
 
 	public List<List<PersonalMenuEntry>> getGroupedPersonalMenuEntries() {

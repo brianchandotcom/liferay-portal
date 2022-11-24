@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration",
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration.scoped",
 	service = {
 		ManagedServiceFactory.class, PersonalMenuConfigurationRegistry.class

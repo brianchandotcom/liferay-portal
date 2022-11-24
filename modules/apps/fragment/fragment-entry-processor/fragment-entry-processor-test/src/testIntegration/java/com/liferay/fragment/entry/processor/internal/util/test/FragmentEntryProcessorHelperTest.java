@@ -511,7 +511,8 @@ public class FragmentEntryProcessorHelperTest {
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				null, null, FragmentEntryLinkConstants.EDIT, LocaleUtil.SPAIN);
+				null, null, FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.getSiteDefault());
 
 		return _fragmentEntryProcessorHelper.getFieldValue(
 			editableValuesJSONObject, new HashMap<>(),

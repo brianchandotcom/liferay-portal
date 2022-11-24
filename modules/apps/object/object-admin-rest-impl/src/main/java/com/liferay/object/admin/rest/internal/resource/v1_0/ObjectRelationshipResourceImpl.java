@@ -19,7 +19,9 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectRelationshipDTOConverter;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectRelationshipEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -64,6 +67,24 @@ public class ObjectRelationshipResourceImpl
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	@Override
+	public Page<ObjectRelationship>
+			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+				String objectDefinitionExternalReferenceCode, String search,
+				Filter filter, Pagination pagination)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		return getObjectDefinitionObjectRelationshipsPage(
+			objectDefinition.getObjectDefinitionId(), search, filter,
+			pagination);
 	}
 
 	@NestedField(
@@ -121,6 +142,63 @@ public class ObjectRelationshipResourceImpl
 		return _toObjectRelationship(
 			_objectRelationshipService.getObjectRelationship(
 				objectRelationshipId));
+	}
+
+	@Override
+	public ObjectRelationship
+			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
+				String objectDefinitionExternalReferenceCode,
+				ObjectRelationship objectRelationship)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		com.liferay.object.model.ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectRelationship.
+						getObjectDefinitionExternalReferenceCode2(),
+					contextCompany.getCompanyId());
+
+		if (objectDefinition2 == null) {
+			objectDefinition2 =
+				_objectDefinitionLocalService.addObjectDefinition(
+					objectRelationship.
+						getObjectDefinitionExternalReferenceCode2(),
+					contextUser.getUserId());
+		}
+
+		long objectDefinitionId2 = objectDefinition2.getObjectDefinitionId();
+
+		objectRelationship.setParameterObjectFieldId(
+			() -> {
+				if (Validator.isNull(
+						objectRelationship.getParameterObjectFieldName())) {
+
+					return 0L;
+				}
+
+				ObjectField objectField =
+					_objectFieldLocalService.getObjectField(
+						objectDefinitionId2,
+						objectRelationship.getParameterObjectFieldName());
+
+				return objectField.getObjectFieldId();
+			});
+
+		return _toObjectRelationship(
+			_objectRelationshipService.addObjectRelationship(
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionTypeAsString(),
+				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
+				objectRelationship.getName(),
+				objectRelationship.getTypeAsString()));
 	}
 
 	@Override
@@ -204,6 +282,9 @@ public class ObjectRelationshipResourceImpl
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelationshipDTOConverter _objectRelationshipDTOConverter;

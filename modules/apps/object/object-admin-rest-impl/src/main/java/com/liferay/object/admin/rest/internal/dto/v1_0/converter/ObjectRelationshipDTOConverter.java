@@ -16,8 +16,12 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.converter;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -51,7 +55,11 @@ public class ObjectRelationshipDTOConverter
 			return null;
 		}
 
-		ObjectDefinition objectDefinition =
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				serviceBuilderObjectRelationship.getObjectDefinitionId1());
+
+		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.getObjectDefinition(
 				serviceBuilderObjectRelationship.getObjectDefinitionId2());
 
@@ -64,16 +72,35 @@ public class ObjectRelationshipDTOConverter
 				label = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectRelationship.getLabelMap());
 				name = serviceBuilderObjectRelationship.getName();
+				objectDefinitionExternalReferenceCode1 =
+					objectDefinition1.getExternalReferenceCode();
 				objectDefinitionExternalReferenceCode2 =
-					objectDefinition.getExternalReferenceCode();
+					objectDefinition2.getExternalReferenceCode();
 				objectDefinitionId1 =
 					serviceBuilderObjectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					serviceBuilderObjectRelationship.getObjectDefinitionId2();
-				objectDefinitionName2 = objectDefinition.getShortName();
+				objectDefinitionName2 = objectDefinition2.getShortName();
 				parameterObjectFieldId =
 					serviceBuilderObjectRelationship.
 						getParameterObjectFieldId();
+
+				setParameterObjectFieldName(
+					() -> {
+						if (Validator.isNull(
+								serviceBuilderObjectRelationship.
+									getParameterObjectFieldId())) {
+
+							return StringPool.BLANK;
+						}
+
+						ObjectField objectField =
+							_objectFieldLocalService.getObjectField(
+								serviceBuilderObjectRelationship.
+									getParameterObjectFieldId());
+
+						return objectField.getName();
+					});
 				reverse = serviceBuilderObjectRelationship.isReverse();
 				type = ObjectRelationship.Type.create(
 					serviceBuilderObjectRelationship.getType());
@@ -83,5 +110,8 @@ public class ObjectRelationshipDTOConverter
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

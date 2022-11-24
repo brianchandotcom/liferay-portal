@@ -266,8 +266,7 @@ public class FragmentLayoutStructureItemImporter
 			}
 		}
 
-		FragmentEntry fragmentEntry = _getFragmentEntry(
-			layout.getCompanyId(), groupId, fragmentKey);
+		FragmentEntry fragmentEntry = _getFragmentEntry(groupId, fragmentKey);
 
 		FragmentRenderer fragmentRenderer =
 			_fragmentRendererRegistry.getFragmentRenderer(fragmentKey);
@@ -743,21 +742,9 @@ public class FragmentLayoutStructureItemImporter
 		return configurationTypes;
 	}
 
-	private FragmentEntry _getFragmentEntry(
-			long companyId, long groupId, String fragmentKey)
-		throws Exception {
-
+	private FragmentEntry _getFragmentEntry(long groupId, String fragmentKey) {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(groupId, fragmentKey);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		Company company = _companyLocalService.getCompanyById(companyId);
-
-		fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
-			company.getGroupId(), fragmentKey);
 
 		if (fragmentEntry != null) {
 			return fragmentEntry;

@@ -78,12 +78,14 @@ export default function _JournalPortlet({
 		);
 	};
 
-	const handleContextualSidebarButtonClick = () => {
-		handleContextualSidebarButton();
-
-		const isOpen = contextualSidebarContainer.classList.contains(
+	const isContextualSidebarOpen = () =>
+		contextualSidebarContainer.classList.contains(
 			'contextual-sidebar-visible'
 		);
+
+	const updateContextualSidebarAriaAttributes = () => {
+		const isOpen = isContextualSidebarOpen();
+
 		const title = isOpen
 			? Liferay.Language.get('close-configuration-panel')
 			: Liferay.Language.get('open-configuration-panel');
@@ -91,8 +93,14 @@ export default function _JournalPortlet({
 		contextualSidebarButton.setAttribute('aria-label', title);
 		contextualSidebarButton.setAttribute('aria-selected', isOpen);
 		contextualSidebarButton.setAttribute('title', title);
+	};
 
-		if (isOpen) {
+	const handleContextualSidebarButtonClick = () => {
+		handleContextualSidebarButton();
+
+		updateContextualSidebarAriaAttributes();
+
+		if (isContextualSidebarOpen()) {
 			contextualSidebarContainer.focus();
 		}
 	};
@@ -410,6 +418,8 @@ export default function _JournalPortlet({
 	if (window.innerWidth > Liferay.BREAKPOINTS.PHONE) {
 		handleContextualSidebarButton();
 	}
+
+	updateContextualSidebarAriaAttributes();
 
 	return {
 		dispose() {

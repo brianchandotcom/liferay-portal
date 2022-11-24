@@ -16,18 +16,15 @@ package com.liferay.dynamic.data.mapping.internal.io.exporter;
 
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
@@ -40,44 +37,27 @@ public class DDMFormInstanceRecordWriterRegistryImpl
 	public DDMFormInstanceRecordWriter getDDMFormInstanceRecordWriter(
 		String type) {
 
-		return _ddmFormInstanceRecordWriters.get(type);
+		return _serviceTrackerMap.getService(type);
 	}
 
+	@Override
 	public Set<String> getDDMFormInstanceRecordWriterTypes() {
-		return _ddmFormInstanceRecordWriters.keySet();
+		return _serviceTrackerMap.keySet();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDDMFormInstanceRecordWriter(
-		DDMFormInstanceRecordWriter ddmFormInstanceRecordWriter,
-		Map<String, Object> properties) {
-
-		String type = MapUtil.getString(
-			properties, "ddm.form.instance.record.writer.type");
-
-		_ddmFormInstanceRecordWriters.put(type, ddmFormInstanceRecordWriter);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMFormInstanceRecordWriter.class,
+			"ddm.form.instance.record.writer.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmFormInstanceRecordWriters.clear();
+		_serviceTrackerMap.close();
 	}
 
-	protected void removeDDMFormInstanceRecordWriter(
-		DDMFormInstanceRecordWriter ddmFormInstanceRecordWriter,
-		Map<String, Object> properties) {
-
-		String type = MapUtil.getString(
-			properties, "ddm.form.instance.record.writer.type");
-
-		_ddmFormInstanceRecordWriters.remove(type);
-	}
-
-	private final Map<String, DDMFormInstanceRecordWriter>
-		_ddmFormInstanceRecordWriters = new TreeMap<>();
+	private ServiceTrackerMap<String, DDMFormInstanceRecordWriter>
+		_serviceTrackerMap;
 
 }

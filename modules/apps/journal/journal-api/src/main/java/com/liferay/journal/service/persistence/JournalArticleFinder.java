@@ -40,13 +40,14 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
-	public int countByG_C_S(
-		long groupId, long classNameId, String ddmStructureKey,
+	public int countByG_F_C(
+		long groupId, java.util.List<Long> folderIds, long classNameId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
-	public int countByG_F_C(
+	public int countByG_F_C_S(
 		long groupId, java.util.List<Long> folderIds, long classNameId,
+		String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
@@ -97,13 +98,14 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
-	public int filterCountByG_C_S(
-		long groupId, long classNameId, String ddmStructureKey,
+	public int filterCountByG_F_C(
+		long groupId, java.util.List<Long> folderIds, long classNameId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
-	public int filterCountByG_F_C(
+	public int filterCountByG_F_C_S(
 		long groupId, java.util.List<Long> folderIds, long classNameId,
+		String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
@@ -185,23 +187,23 @@ public interface JournalArticleFinder {
 				<com.liferay.journal.model.JournalArticle> queryDefinition);
 
 	public java.util.List<com.liferay.journal.model.JournalArticle>
-		filterFindByG_C_S_L(
-			long groupId, long classNameId, String ddmStructureKey,
-			java.util.Locale locale,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.journal.model.JournalArticle> queryDefinition);
-
-	public java.util.List<com.liferay.journal.model.JournalArticle>
-		filterFindByG_C_S_L(
-			long groupId, long classNameId, String[] ddmStructureKeys,
-			java.util.Locale locale,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.journal.model.JournalArticle> queryDefinition);
-
-	public java.util.List<com.liferay.journal.model.JournalArticle>
 		filterFindByG_F_C_L(
 			long groupId, java.util.List<Long> folderIds, long classNameId,
 			java.util.Locale locale,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.journal.model.JournalArticle> queryDefinition);
+
+	public java.util.List<com.liferay.journal.model.JournalArticle>
+		filterFindByG_F_C_S_L(
+			long groupId, java.util.List<Long> folderIds, long classNameId,
+			String ddmStructureKey, java.util.Locale locale,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.journal.model.JournalArticle> queryDefinition);
+
+	public java.util.List<com.liferay.journal.model.JournalArticle>
+		filterFindByG_F_C_S_L(
+			long groupId, java.util.List<Long> folderIds, long classNameId,
+			String[] ddmStructureKeys, java.util.Locale locale,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.journal.model.JournalArticle> queryDefinition);
 
@@ -301,16 +303,16 @@ public interface JournalArticleFinder {
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
 	public java.util.List<com.liferay.journal.model.JournalArticle>
-		findByG_C_S_L(
-			long groupId, long classNameId, String ddmStructureKey,
-			java.util.Locale locale,
+		findByG_F_C_S_L(
+			long groupId, java.util.List<Long> folderIds, long classNameId,
+			String ddmStructureKey, java.util.Locale locale,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.journal.model.JournalArticle> queryDefinition);
 
 	public java.util.List<com.liferay.journal.model.JournalArticle>
-		findByG_C_S_L(
-			long groupId, long classNameId, String[] ddmStructureKeys,
-			java.util.Locale locale,
+		findByG_F_C_S_L(
+			long groupId, java.util.List<Long> folderIds, long classNameId,
+			String[] ddmStructureKeys, java.util.Locale locale,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.journal.model.JournalArticle> queryDefinition);
 

@@ -635,6 +635,12 @@ public interface JournalArticleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getArticlesByLayoutUuidCount(long groupId, String layoutUuid);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, long folderId, long classNameId, String ddmStructureKey,
+		int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator);
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group, class name ID, DDM structure key, and workflow status.
@@ -855,6 +861,11 @@ public interface JournalArticleService extends BaseService {
 	public int getArticlesCountByArticleId(
 		long groupId, String articleId, int status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesCountByStructureId(
+		long groupId, long folderId, long classNameId, String ddmStructureKey,
+		int status);
+
 	/**
 	 * Returns the number of web content articles matching the group, class name
 	 * ID, DDM structure key, and workflow status.
@@ -927,7 +938,7 @@ public interface JournalArticleService extends BaseService {
 	 *
 	 * @param groupId the primary key of the web content article's group
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @return the number of matching folders containing web content articles
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1429,7 +1440,7 @@ public interface JournalArticleService extends BaseService {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1494,7 +1505,7 @@ public interface JournalArticleService extends BaseService {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1566,7 +1577,7 @@ public interface JournalArticleService extends BaseService {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1630,7 +1641,7 @@ public interface JournalArticleService extends BaseService {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1677,7 +1688,7 @@ public interface JournalArticleService extends BaseService {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1731,7 +1742,7 @@ public interface JournalArticleService extends BaseService {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or

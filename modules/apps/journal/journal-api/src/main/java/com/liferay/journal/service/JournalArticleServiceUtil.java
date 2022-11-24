@@ -757,6 +757,16 @@ public class JournalArticleServiceUtil {
 		return getService().getArticlesByLayoutUuidCount(groupId, layoutUuid);
 	}
 
+	public static List<JournalArticle> getArticlesByStructureId(
+		long groupId, long folderId, long classNameId, String ddmStructureKey,
+		int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return getService().getArticlesByStructureId(
+			groupId, folderId, classNameId, ddmStructureKey, status, start, end,
+			orderByComparator);
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group, class name ID, DDM structure key, and workflow status.
@@ -1005,6 +1015,14 @@ public class JournalArticleServiceUtil {
 			groupId, articleId, status);
 	}
 
+	public static int getArticlesCountByStructureId(
+		long groupId, long folderId, long classNameId, String ddmStructureKey,
+		int status) {
+
+		return getService().getArticlesCountByStructureId(
+			groupId, folderId, classNameId, ddmStructureKey, status);
+	}
+
 	/**
 	 * Returns the number of web content articles matching the group, class name
 	 * ID, DDM structure key, and workflow status.
@@ -1088,7 +1106,7 @@ public class JournalArticleServiceUtil {
 	 *
 	 * @param groupId the primary key of the web content article's group
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @return the number of matching folders containing web content articles
 	 */
 	public static int getFoldersAndArticlesCount(
@@ -1667,7 +1685,7 @@ public class JournalArticleServiceUtil {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1738,7 +1756,7 @@ public class JournalArticleServiceUtil {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1816,7 +1834,7 @@ public class JournalArticleServiceUtil {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1886,7 +1904,7 @@ public class JournalArticleServiceUtil {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1938,7 +1956,7 @@ public class JournalArticleServiceUtil {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or
@@ -1997,7 +2015,7 @@ public class JournalArticleServiceUtil {
 	 * @param companyId the primary key of the web content article's company
 	 * @param groupId the primary key of the group (optionally <code>0</code>)
 	 * @param folderIds the primary keys of the web content article folders
-	 (optionally {@link java.util.Collections#EMPTY_LIST})
+	 (optionally {@link Collections#EMPTY_LIST})
 	 * @param classNameId the primary key of the DDMStructure class if the web
 	 content article is related to a DDM structure, the primary key of
 	 the class name associated with the article, or

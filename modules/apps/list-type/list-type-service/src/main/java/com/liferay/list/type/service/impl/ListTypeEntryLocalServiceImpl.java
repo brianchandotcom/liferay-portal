@@ -65,6 +65,13 @@ public class ListTypeEntryLocalServiceImpl
 		listTypeEntry.setUserId(user.getUserId());
 		listTypeEntry.setUserName(user.getFullName());
 
+		if (Validator.isNotNull(externalReferenceCode)) {
+			listTypeEntry.setExternalReferenceCode(externalReferenceCode);
+		}
+		else {
+			listTypeEntry.setExternalReferenceCode(key);
+		}
+
 		listTypeEntry.setListTypeDefinitionId(listTypeDefinitionId);
 		listTypeEntry.setKey(key);
 		listTypeEntry.setNameMap(nameMap);
@@ -118,6 +125,10 @@ public class ListTypeEntryLocalServiceImpl
 
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
 			listTypeEntryId);
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			listTypeEntry.setExternalReferenceCode(externalReferenceCode);
+		}
 
 		listTypeEntry.setNameMap(nameMap);
 

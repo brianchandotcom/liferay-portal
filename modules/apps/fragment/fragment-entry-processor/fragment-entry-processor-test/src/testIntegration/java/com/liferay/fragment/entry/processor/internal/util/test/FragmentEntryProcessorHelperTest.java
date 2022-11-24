@@ -69,6 +69,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.InputStream;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -123,6 +126,38 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	public void testGetFieldValueFromDateConfig() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
+
+		String pattern = "dd/MM/yy";
+
+		DateFormat dateFormatPattern = new SimpleDateFormat(pattern);
+
+		Assert.assertEquals(
+			dateFormatPattern.format(journalArticle.getCreateDate()),
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"config",
+					JSONUtil.put(
+						"dateFormat",
+						JSONUtil.put(
+							String.valueOf(LocaleUtil.getSiteDefault()),
+							pattern))
+				).put(
+					"fieldId", "JournalArticle_createDate"
+				)));
+	}
+
+	@Test
 	public void testGetFieldValueFromEmptyCollectionValue() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle(
 			_addImageFileEntry(), "ImageFieldName",
@@ -160,6 +195,27 @@ public class FragmentEntryProcessorHelperTest {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"fieldId", "title"
+				)));
+	}
+
+	@Test
+	public void testGetFieldValueFromNullDateConfig() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			_DEFAULT_DATE_FORMAT.format(journalArticle.getCreateDate()),
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "JournalArticle_createDate"
 				)));
 	}
 
@@ -203,6 +259,34 @@ public class FragmentEntryProcessorHelperTest {
 			));
 
 		Assert.assertTrue(actual instanceof JSONObject);
+	}
+
+	@Test
+	public void testGetFieldValueFromWrongDateConfig() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			_DEFAULT_DATE_FORMAT.format(journalArticle.getCreateDate()),
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"config",
+					JSONUtil.put(
+						"dateFormat",
+						JSONUtil.put(
+							String.valueOf(LocaleUtil.getSiteDefault()),
+							"xx/xx/xx"))
+				).put(
+					"fieldId", "JournalArticle_createDate"
+				)));
 	}
 
 	@Test
@@ -488,6 +572,9 @@ public class FragmentEntryProcessorHelperTest {
 
 		return jsonObject.toString();
 	}
+
+	private static final DateFormat _DEFAULT_DATE_FORMAT = new SimpleDateFormat(
+		"MM/dd/yy hh:mm a", LocaleUtil.US);
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;

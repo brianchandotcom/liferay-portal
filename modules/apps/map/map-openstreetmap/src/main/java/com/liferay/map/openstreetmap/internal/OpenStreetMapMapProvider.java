@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = MapProvider.class)
+@Component(service = MapProvider.class)
 public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 
 	@Override

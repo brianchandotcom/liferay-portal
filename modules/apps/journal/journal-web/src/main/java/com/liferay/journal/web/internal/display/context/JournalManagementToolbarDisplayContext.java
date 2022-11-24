@@ -25,7 +25,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
@@ -228,12 +227,10 @@ public class JournalManagementToolbarDisplayContext
 			"trashEnabled", _isTrashEnabled()
 		).put(
 			"viewDDMStructureArticlesURL",
-			PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
+			PortletURLBuilder.create(
+				getPortletURL()
 			).setNavigation(
 				"structure"
-			).setParameter(
-				"folderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID
 			).buildString()
 		).build();
 	}

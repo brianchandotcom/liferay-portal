@@ -796,10 +796,7 @@ definition {
 				siteName = "${siteName}");
 
 			if ("${actionType}" == "View WC") {
-
-				// Pause is necessary because the web content event is sent too fast and doesn't have time to process if you navigate to another page quickly. See LRAC-11461
-
-				Pause(locator1 = "5000");
+				ACUtils.waitForSendingRequest();
 			}
 
 			if ("${actionType}" == "View Blog") {
@@ -822,6 +819,8 @@ definition {
 
 			if ("${actionType}" == "View Form") {
 				FormPortlet.waitFormRenderer(text = "Submit");
+
+				ACUtils.waitForSendingRequest();
 			}
 
 			if ("${actionType}" == "Submit Form") {

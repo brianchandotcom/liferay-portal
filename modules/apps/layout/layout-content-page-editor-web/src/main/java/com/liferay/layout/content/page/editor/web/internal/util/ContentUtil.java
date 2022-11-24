@@ -504,9 +504,30 @@ public class ContentUtil {
 			}
 
 			try {
+				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+					LayoutDisplayPageProviderRegistryUtil.
+						getLayoutDisplayPageProvider(
+							layoutClassedModelUsage.getClassName());
+
+				LayoutDisplayPageObjectProvider<?>
+					layoutDisplayPageObjectProvider =
+						layoutDisplayPageProvider.
+							getLayoutDisplayPageObjectProvider(
+								new InfoItemReference(
+									layoutClassedModelUsage.getClassName(),
+									layoutClassedModelUsage.getClassPK()));
+
+				if (layoutDisplayPageObjectProvider == null) {
+					LayoutClassedModelUsageLocalServiceUtil.
+						deleteLayoutClassedModelUsage(layoutClassedModelUsage);
+
+					continue;
+				}
+
 				mappedContentsJSONArray.put(
 					_getPageContentJSONObject(
-						layoutClassedModelUsage, httpServletRequest));
+						layoutClassedModelUsage,
+						layoutDisplayPageObjectProvider, httpServletRequest));
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -672,6 +693,7 @@ public class ContentUtil {
 
 	private static JSONObject _getPageContentJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -679,7 +701,7 @@ public class ContentUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		JSONObject mappedContentJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			"actions",
 			_getActionsJSONObject(
 				layoutClassedModelUsage, themeDisplay, httpServletRequest)
@@ -690,24 +712,12 @@ public class ContentUtil {
 		).put(
 			"classPK", layoutClassedModelUsage.getClassPK()
 		).put(
+			"classTypeId", layoutDisplayPageObjectProvider.getClassTypeId()
+		).put(
 			"icon",
 			_getIcon(
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK())
-		);
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			LayoutDisplayPageProviderRegistryUtil.getLayoutDisplayPageProvider(
-				layoutClassedModelUsage.getClassName());
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					layoutClassedModelUsage.getClassName(),
-					layoutClassedModelUsage.getClassPK()));
-
-		return mappedContentJSONObject.put(
-			"classTypeId", layoutDisplayPageObjectProvider.getClassTypeId()
 		).put(
 			"status", _getStatusJSONObject(layoutClassedModelUsage)
 		).put(

@@ -470,7 +470,7 @@ definition {
 	@description = "COMMERCE-8971. Verify that the Diagram Product name and short description are displayed on the product card."
 	@priority = "4"
 	test CanAssertDiagramNameAndDescriptionOnTheProductCard {
-		property portal.acceptance = "COMMERCE-8971";
+		property portal.acceptance = "false";
 
 		task ("Given a Diagram product with an image, name and short description") {
 			CommerceProducts.openProductsAdmin();
@@ -522,9 +522,11 @@ definition {
 		task ("Then the product name and a truncated description is displayed because the description is longer") {
 			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Test Diagram 2");
 
-			CommerceAcceleratorsInitializer.assertMiniumCardDescriptionTruncated(
-				productDescription = "This is a longer description. This is a longer description. This is a longer description. This is a longer description.",
-				productName = "Test Diagram 2");
+			AssertCssValue(
+				key_productName = "Test Diagram 2",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_BODY",
+				locator2 = "height",
+				value1 = "212.906px");
 		}
 	}
 

@@ -6,9 +6,9 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="CDNCheck" files="src/main/java/com/liferay/source/formatter/check/CDNCheck\.java" />
+		<suppress checks="IllegalImportsCheck" files="src/main/java/com/liferay/source/formatter/check/IllegalImportsCheck\.java" />
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="src/main/java/com/liferay/source/formatter/check/JavaDeprecatedKernelClassesCheck\.java" />
 		<suppress checks="JavaHibernateSQLCheck" files="src/main/java/com/liferay/source/formatter/check/JavaHibernateSQLCheck\.java" />
-		<suppress checks="JavaIllegalImportsCheck" files="src/main/java/com/liferay/source/formatter/check/JavaIllegalImportsCheck\.java" />
 		<suppress checks="JavaInterfaceCheck" files="src/main/java/com/liferay/source/formatter/check/JavaInterfaceCheck\.java" />
 		<suppress checks="JavaModuleIllegalImportsCheck" files="src/main/java/com/liferay/source/formatter/check/JavaModuleIllegalImportsCheck\.java" />
 		<suppress checks="JavaStopWatchCheck" files="src/main/java/com/liferay/source/formatter/check/JavaStopWatchCheck\.java" />

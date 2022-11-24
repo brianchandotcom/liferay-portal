@@ -1,11 +1,19 @@
 task runGradleTest
 
 runGradleTest {
+	dependsOn ":sample-custom-element:createClientExtensionConfig"
 	dependsOn ":sample-iframe:buildClientExtensionZip"
 	dependsOn ":sample-theme-css:buildClientExtensionZip"
 	dependsOn ":sample-theme-favicon:buildClientExtensionZip"
 
 	doLast {
+		Project sampleCustomElementProject = project(":sample-custom-element")
+
+		File clientExtensionConfigFile = new File(sampleCustomElementProject.buildDir, "sample-custom-element.client-extension-config.json")
+
+		assert clientExtensionConfigFile.text.contains("fizz=buzz")
+		assert clientExtensionConfigFile.text.contains("foo=bar")
+
 		Project sampleIFrameProject = project(":sample-iframe")
 
 		FileTree sampleIFrameDistZipFileTree = zipTree(sampleIFrameProject.file("dist/sample-iframe.zip"))

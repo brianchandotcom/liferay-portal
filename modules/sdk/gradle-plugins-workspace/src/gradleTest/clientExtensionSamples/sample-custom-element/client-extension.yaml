@@ -1,0 +1,15 @@
+sample-custom-element:
+    cssURLs:
+        - style.css
+    friendlyURLMapping: vanilla-counter
+    htmlElementName: vanilla-counter
+    instanceable: false
+    name: Able Custom Element
+    portletCategoryName: category.remote-apps
+    properties:
+        fizz: buzz
+        foo: bar
+    type: customElement
+    urls:
+        - index.js
+    useESM: false

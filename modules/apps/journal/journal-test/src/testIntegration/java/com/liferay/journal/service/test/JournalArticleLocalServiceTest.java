@@ -153,12 +153,12 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testArticleFriendlyURLValidation() throws Exception {
-		_testArticleFriendlyURLValidation(_group);
+		_assertArticleFriendlyURLMap(_group);
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			_group.getCompanyId());
 
-		_testArticleFriendlyURLValidation(companyGroup);
+		_assertArticleFriendlyURLMap(companyGroup);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -175,7 +175,7 @@ public class JournalArticleLocalServiceTest {
 				TestPropsValues.getUserId(), companyGroup, false, false,
 				serviceContext);
 
-			_testArticleFriendlyURLValidation(companyGroup.getStagingGroup());
+			_assertArticleFriendlyURLMap(companyGroup.getStagingGroup());
 		}
 		finally {
 			try {
@@ -699,6 +699,36 @@ public class JournalArticleLocalServiceTest {
 			"Predefined Value", field.getValue(unavailableLocale));
 	}
 
+	private void _assertArticleFriendlyURLMap(Group group) throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			Collections.emptyMap());
+
+		Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
+
+		String friendlyURL = _friendlyURLNormalizer.normalizeWithPeriods(
+			StringBundler.concat(
+				RandomTestUtil.randomString(5), StringPool.PERIOD,
+				RandomTestUtil.randomString(5), StringPool.SLASH,
+				RandomTestUtil.randomString(5)));
+
+		Assert.assertTrue(friendlyURL.contains(StringPool.DASH));
+		Assert.assertFalse(friendlyURL.contains(StringPool.PERIOD));
+		Assert.assertTrue(friendlyURL.contains(StringPool.SLASH));
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		journalArticle = _updateJournalArticle(
+			HashMapBuilder.put(
+				locale, friendlyURL
+			).build(),
+			journalArticle);
+
+		friendlyURLMap.put(locale, friendlyURL);
+
+		Assert.assertEquals(friendlyURLMap, journalArticle.getFriendlyURLMap());
+	}
+
 	private void _assertArticleUser(
 		JournalArticle journalArticle, User expectedOwnerUser,
 		User expectedStatusByUser) {
@@ -778,38 +808,6 @@ public class JournalArticleLocalServiceTest {
 				serviceContext);
 
 		return new Tuple(article, ddmStructure);
-	}
-
-	private void _testArticleFriendlyURLValidation(Group group)
-		throws Exception {
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			Collections.emptyMap());
-
-		Locale locale = _portal.getSiteDefaultLocale(group.getGroupId());
-
-		String friendlyURL = _friendlyURLNormalizer.normalizeWithPeriods(
-			StringBundler.concat(
-				RandomTestUtil.randomString(5), StringPool.PERIOD,
-				RandomTestUtil.randomString(5), StringPool.SLASH,
-				RandomTestUtil.randomString(5)));
-
-		Assert.assertTrue(friendlyURL.contains(StringPool.DASH));
-		Assert.assertFalse(friendlyURL.contains(StringPool.PERIOD));
-		Assert.assertTrue(friendlyURL.contains(StringPool.SLASH));
-
-		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
-
-		journalArticle = _updateJournalArticle(
-			HashMapBuilder.put(
-				locale, friendlyURL
-			).build(),
-			journalArticle);
-
-		friendlyURLMap.put(locale, friendlyURL);
-
-		Assert.assertEquals(friendlyURLMap, journalArticle.getFriendlyURLMap());
 	}
 
 	private JournalArticle _updateJournalArticle(

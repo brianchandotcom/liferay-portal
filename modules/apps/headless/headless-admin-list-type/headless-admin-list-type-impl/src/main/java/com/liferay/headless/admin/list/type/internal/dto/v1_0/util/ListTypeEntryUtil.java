@@ -33,6 +33,8 @@ public class ListTypeEntryUtil {
 			{
 				dateCreated = serviceBuilderListTypeEntry.getCreateDate();
 				dateModified = serviceBuilderListTypeEntry.getModifiedDate();
+				externalReferenceCode =
+					serviceBuilderListTypeEntry.getExternalReferenceCode();
 				id = serviceBuilderListTypeEntry.getListTypeEntryId();
 				key = serviceBuilderListTypeEntry.getKey();
 				name = serviceBuilderListTypeEntry.getName(locale);

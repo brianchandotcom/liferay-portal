@@ -161,7 +161,7 @@ definition {
 
 			Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
 
-			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON_DISABLED");
+			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
 
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 		}

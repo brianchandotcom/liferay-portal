@@ -128,7 +128,9 @@ public class UpgradeReport {
 						_getDatabaseTablesInfo(), _getUpgradeProcessesInfo(),
 						_getLogEventsInfo("errors"),
 						_getLogEventsInfo("warnings"),
-						releaseManagerOSGiCommands.check()
+						(releaseManagerOSGiCommands == null) ?
+							StringPool.BLANK :
+								releaseManagerOSGiCommands.check()
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 		}

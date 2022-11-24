@@ -34,20 +34,20 @@ definition {
 		}
 	}
 
-    @description = "Story: LRAC-11860 | Automation ID: LRAC-12437 | Test Summary: Empty state of connection screen"
+	@description = "Story: LRAC-11860 | Automation ID: LRAC-12437 | Test Summary: Empty state of connection screen"
 	@priority = "3"
 	test CheckConnectionEmptyStateMessage {
-        task ("Go to Instance Settings > Analytics Cloud") {
+		task ("Go to Instance Settings > Analytics Cloud") {
 			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
-        task ("Check that there is no token in the field") {
+		task ("Check that there is no token in the field") {
 			AssertTextEquals(
-                locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
-                value1 = "");
+				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+				value1 = "");
 		}
 
-        task ("Check that the connect button is disabled") {
+		task ("Check that the connect button is disabled") {
 			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
 		}
 	}
@@ -57,38 +57,38 @@ definition {
 	test CheckIsPossibleConnectACWithValidToken {
 		property portal.release = "true";
 
-        task ("Connect AC with DXP") {
+		task ("Connect AC with DXP") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
 
-        task ("Check that the connection was successful") {
+		task ("Check that the connection was successful") {
 			ACDXPSettings.assertSuccessfulConnection();
 		}
 	}
 
-    @description = "Story: LRAC-11860 | Automation ID: LRAC-12440 | Test Summary: Connect AC Token Authentication Fails"
+	@description = "Story: LRAC-11860 | Automation ID: LRAC-12440 | Test Summary: Connect AC Token Authentication Fails"
 	@priority = "5"
 	test CheckUnableConnectACWithInvalidToken {
 		task ("Go to Instance Settings > Analytics Cloud") {
 			ACDXPSettings.goToInstanceSettingsAC();
 		}
 
-        task ("Try connecting with an invalid token") {
+		task ("Try connecting with an invalid token") {
 			Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
 
-            Type(
-                locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
-                value1 = "InvalidTokenAC");
+			Type(
+				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+				value1 = "InvalidTokenAC");
 
-            Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+			Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 		}
 
-        task ("Check that the connection is not made and an error message appears") {
+		task ("Check that the connection is not made and an error message appears") {
 			ACDXPSettings.NavigateBetweenWizardSteps(wizardStepName = "Connect");
 
-            AssertElementNotPresent(locator1 = "Message#SUCCESS");
-            
-            Alert.viewErrorMessage(errorMessage = "An unexpected system error occurred.");
+			AssertElementNotPresent(locator1 = "Message#SUCCESS");
+
+			Alert.viewErrorMessage(errorMessage = "An unexpected system error occurred.");
 		}
 	}
 

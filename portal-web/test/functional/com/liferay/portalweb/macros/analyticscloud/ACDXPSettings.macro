@@ -3,15 +3,9 @@ definition {
 	macro assertSuccessfulConnection {
 		ACDXPSettings.NavigateBetweenWizardSteps(wizardStepName = "Connect");
 
-        AssertTextEquals(
+		AssertTextEquals(
 			locator1 = "Message#SUCCESS",
 			value1 = "Connected");
-	}
-
-	macro NavigateBetweenWizardSteps {
-		var key_wizardStepName = "${wizardStepName}";
-		
-		Click(locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON");
 	}
 
 	macro assignSiteToExistingProperty {
@@ -150,6 +144,12 @@ definition {
 		PortalSettings.openInstanceSettingsAdmin();
 
 		Click(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_DXP_OPTION");
+	}
+
+	macro NavigateBetweenWizardSteps {
+		var key_wizardStepName = "${wizardStepName}";
+
+		Click(locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON");
 	}
 
 	macro navToAnalyticsCloudConnectionMenu {

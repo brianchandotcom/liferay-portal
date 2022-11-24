@@ -310,14 +310,16 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			articleSearchContainer.setOrderByType(_getOrderByType());
 			articleSearchContainer.setResultsAndTotal(
 				() -> JournalArticleServiceUtil.getArticlesByStructureId(
-					_getGroupId(), getDDMStructureKey(),
-					WorkflowConstants.STATUS_APPROVED,
+					_getGroupId(), _getFolderId(),
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+					getDDMStructureKey(), WorkflowConstants.STATUS_APPROVED,
 					articleSearchContainer.getStart(),
 					articleSearchContainer.getEnd(),
 					articleSearchContainer.getOrderByComparator()),
 				JournalArticleServiceUtil.getArticlesCountByStructureId(
-					_getGroupId(), getDDMStructureKey(),
-					WorkflowConstants.STATUS_APPROVED));
+					_getGroupId(), _getFolderId(),
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+					getDDMStructureKey(), WorkflowConstants.STATUS_APPROVED));
 
 			_articleSearchContainer = articleSearchContainer;
 

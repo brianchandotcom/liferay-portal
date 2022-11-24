@@ -1157,13 +1157,16 @@ public class JournalDisplayContext {
 		if (Validator.isNotNull(getDDMStructureKey())) {
 			articleSearchContainer.setResultsAndTotal(
 				() -> JournalArticleServiceUtil.getArticlesByStructureId(
-					_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
-					getStatus(), articleSearchContainer.getStart(),
+					_themeDisplay.getScopeGroupId(), getFolderId(),
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+					getDDMStructureKey(), getStatus(),
+					articleSearchContainer.getStart(),
 					articleSearchContainer.getEnd(),
 					articleSearchContainer.getOrderByComparator()),
 				JournalArticleServiceUtil.getArticlesCountByStructureId(
-					_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
-					getStatus()));
+					_themeDisplay.getScopeGroupId(), getFolderId(),
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+					getDDMStructureKey(), getStatus()));
 			articleSearchContainer.setRowChecker(_getEntriesChecker());
 
 			if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {

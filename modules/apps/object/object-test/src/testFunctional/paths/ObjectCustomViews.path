@@ -255,6 +255,26 @@
 		<td>//button[contains(@type, 'button') and contains(@title, 'Clear All')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SEARCH_DROPDOWN_MENU_FILTER</td>
+		<td>//div[contains(@class,'dropdown-section')]//input[contains(@class, 'input-group-inset')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FROM_DATE_INPUT</td>
+		<td>//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_fieldName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LABEL_SECTION_FILTER_ENTRY</td>
+		<td>//*[@class='tbar-section']//*[@class='label-section' and contains(.,'${key_filter}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TOGGLE_SWITCH_EXCLUDE_STATUS</td>
+		<td>//div[contains(@id,'clay-dropdown-menu')]//input[contains(@class,'toggle-switch-check')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

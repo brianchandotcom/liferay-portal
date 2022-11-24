@@ -188,10 +188,39 @@ definition {
 		}
 	}
 
+	macro clickOnFilterOnEntries {
+		Click(
+			key_buttonName = "Filter",
+			locator1 = "ObjectCustomViews#DROPDOWN_BUTTON_ON_OBJECT_VIEW");
+
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_DROPDOWN_MENU_ON_MODAL_DEFAULT_SORT");
+	}
+
 	macro clickSaveOnModal {
 		Click(
 			key_name = "Save",
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+	}
+
+	macro defineDateOnFilter {
+		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
+
+		Type(
+			locator1 = "ObjectCustomViews#SEARCH_DROPDOWN_MENU_FILTER",
+			value1 = "${filterName}");
+
+		Click(
+			key_fieldName = "${filterName}",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+
+		Type(
+			key_fieldName = "yyyy-mm-dd",
+			locator1 = "ObjectCustomViews#FROM_DATE_INPUT",
+			value1 = "${displayDate}");
+
+		Click(
+			key_text = "Add Filter",
+			locator1 = "Button#ANY");
 	}
 
 	macro deleteObjectCustomViewViaUI {

@@ -1,4 +1,4 @@
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "release.portal.api"
-	compileOnly project(":ci-queue-api")
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.4.3.51-ga51"
+	compileOnly project(":test:ci-queue:ci-queue-api")
 }

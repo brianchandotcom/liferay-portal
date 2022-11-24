@@ -527,7 +527,8 @@ public class RepositoryBrowserTagDisplayContext {
 				_httpServletRequest, searchContainer.getOrderByColParam()));
 		searchContainer.setOrderByType(
 			ParamUtil.getString(
-				_httpServletRequest, searchContainer.getOrderByTypeParam()));
+				_httpServletRequest, searchContainer.getOrderByTypeParam(),
+				"asc"));
 
 		searchContainer.setResultsAndTotal(
 			() -> DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(

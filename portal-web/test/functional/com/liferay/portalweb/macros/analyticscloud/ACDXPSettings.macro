@@ -1,7 +1,12 @@
 definition {
 
 	macro assertSuccessfulConnection {
-		AssertElementPresent(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE");
+		ACDXPSettings.NavigateBetweenWizardSteps(wizardStepName = "Connect");
+
+        AssertTextEquals(
+			locator1 = "Message#SUCCESS",
+			value1 = "Connected");
+	}
 	}
 
 	macro assignSiteToExistingProperty {

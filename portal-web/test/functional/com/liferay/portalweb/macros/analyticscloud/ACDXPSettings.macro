@@ -109,10 +109,10 @@ definition {
 	macro disconnectDXPFromAnalyticsCloud {
 		ACDXPSettings.goToInstanceSettingsAC();
 
-		if (IsElementPresent(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON")) {
+		if (IsElementNotPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED")) {
 			ClickNoError(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 
-			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?");
+			Click(locator1 = "ACSettings#DISCONNECT_CONFIRMATION_BUTTON");
 		}
 	}
 

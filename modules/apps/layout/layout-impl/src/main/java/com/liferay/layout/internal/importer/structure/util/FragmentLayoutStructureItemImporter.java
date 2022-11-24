@@ -258,7 +258,12 @@ public class FragmentLayoutStructureItemImporter
 			layout.getCompanyId(), groupKey);
 
 		if (fragmentEntryGroup != null) {
-			groupId = fragmentEntryGroup.getGroupId();
+			Company company = _companyLocalService.fetchCompany(
+				layout.getCompanyId());
+
+			if (fragmentEntryGroup.getGroupId() == company.getGroupId()) {
+				groupId = company.getGroupId();
+			}
 		}
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(

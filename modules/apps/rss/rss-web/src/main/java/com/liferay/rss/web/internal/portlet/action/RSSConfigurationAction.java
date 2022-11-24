@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + RSSPortletKeys.RSS,
+	property = "javax.portlet.name=" + RSSPortletKeys.RSS,
 	service = ConfigurationAction.class
 )
 public class RSSConfigurationAction extends DefaultConfigurationAction {

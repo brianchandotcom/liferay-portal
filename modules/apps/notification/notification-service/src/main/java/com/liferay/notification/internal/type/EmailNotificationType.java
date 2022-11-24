@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -580,9 +579,6 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
-
-	@Reference(target = "(name=RESTClient)")
-	private TemplateContextContributor _templateContextContributor;
 
 	@Reference
 	private TemplateNodeFactory _templateNodeFactory;

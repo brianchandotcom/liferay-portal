@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/portal/api/jsonws/*",
 		"osgi.http.whiteboard.filter.name=com.liferay.portal.remote.json.web.service.extender.internal.servlet.JSONWebServiceAuthVerifierFilter",

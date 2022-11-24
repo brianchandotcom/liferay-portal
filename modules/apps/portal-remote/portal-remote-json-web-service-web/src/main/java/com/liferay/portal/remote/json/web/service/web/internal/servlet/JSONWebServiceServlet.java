@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Spasic
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/portal/api/jsonws",
 		"osgi.http.whiteboard.servlet.name=com.liferay.portal.remote.json.web.service.extender.internal.servlet.JSONWebServiceServlet",

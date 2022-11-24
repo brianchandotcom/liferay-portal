@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	immediate = true, property = "path=/portal/api/jsonws",
-	service = StrutsAction.class
-)
+@Component(property = "path=/portal/api/jsonws", service = StrutsAction.class)
 public class JSONWebServiceStrutsAction implements StrutsAction {
 
 	@Override

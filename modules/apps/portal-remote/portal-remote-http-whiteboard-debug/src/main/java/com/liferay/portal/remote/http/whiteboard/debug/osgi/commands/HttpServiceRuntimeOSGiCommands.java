@@ -38,7 +38,6 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=http"},
 	service = HttpServiceRuntimeOSGiCommands.class
 )

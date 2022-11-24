@@ -50,8 +50,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.portal.remote.cors.configuration.WebContextCORSConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class CORSServletFilterServletContextHelperTracker {
 

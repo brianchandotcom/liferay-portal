@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Spasic
  * @author Raymond Augé
  */
-@Component(immediate = true, service = JSONWebServiceActionsManager.class)
+@Component(service = JSONWebServiceActionsManager.class)
 public class JSONWebServiceActionsManagerImpl
 	implements JSONWebServiceActionsManager {
 

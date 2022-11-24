@@ -46,7 +46,6 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=jaxrs"},
 	service = JaxRsServiceRuntimeOSGiCommands.class
 )

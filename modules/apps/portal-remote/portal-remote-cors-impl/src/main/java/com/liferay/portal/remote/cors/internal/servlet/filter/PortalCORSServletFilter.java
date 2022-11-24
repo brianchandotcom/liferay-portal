@@ -70,7 +70,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
 	property = {
 		Constants.SERVICE_PID + "=com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration",
 		"before-filter=Upload Servlet Request Filter", "dispatcher=FORWARD",

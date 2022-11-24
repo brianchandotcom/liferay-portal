@@ -34,6 +34,7 @@ import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
@@ -59,8 +60,10 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
@@ -74,6 +77,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -84,6 +88,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -116,10 +121,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1230,6 +1237,94 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return scopeAssetPublisherAddItemHolders;
+	}
+
+	public List<DropdownItem> getScopeDropdownItems(PortletURL addScopeURL)
+		throws PortalException {
+
+		DropdownItemList dropdownItemList = new DropdownItemList();
+
+		Set<Group> availableGroups = new HashSet<>();
+
+		Company company = _themeDisplay.getCompany();
+
+		availableGroups.add(company.getGroup());
+
+		availableGroups.add(_themeDisplay.getScopeGroup());
+
+		Layout layout = _themeDisplay.getLayout();
+
+		if (layout.hasScopeGroup()) {
+			availableGroups.add(layout.getScopeGroup());
+		}
+
+		for (Group group : availableGroups) {
+			if (ArrayUtil.contains(getGroupIds(), group.getGroupId())) {
+				continue;
+			}
+
+			dropdownItemList.add(
+				dropdownItem -> {
+					dropdownItem.putData("action", "addScope");
+					dropdownItem.putData(
+						"url",
+						PortletURLBuilder.create(
+							addScopeURL
+						).setParameter(
+							"groupId", group.getGroupId()
+						).setParameter(
+							"title",
+							group.getScopeDescriptiveName(_themeDisplay)
+						).buildString());
+					dropdownItem.setLabel(
+						group.getScopeDescriptiveName(_themeDisplay));
+				});
+		}
+
+		ItemSelector itemSelector =
+			(ItemSelector)_httpServletRequest.getAttribute(
+				AssetPublisherWebKeys.ITEM_SELECTOR);
+
+		String itemSelectorEventName =
+			StringPool.UNDERLINE + HtmlUtil.escapeJS(getPortletResource()) +
+				"_selectSite";
+
+		GroupItemSelectorCriterion groupItemSelectorCriterion =
+			new GroupItemSelectorCriterion(layout.isPrivateLayout());
+
+		groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new GroupItemSelectorReturnType());
+		groupItemSelectorCriterion.setIncludeChildSites(true);
+		groupItemSelectorCriterion.setIncludeLayoutScopes(true);
+		groupItemSelectorCriterion.setIncludeMySites(false);
+		groupItemSelectorCriterion.setIncludeParentSites(true);
+		groupItemSelectorCriterion.setIncludeRecentSites(false);
+		groupItemSelectorCriterion.setIncludeSitesThatIAdminister(true);
+
+		String label = LanguageUtil.get(
+			_httpServletRequest, "other-site-or-asset-library");
+
+		dropdownItemList.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "openScopeSelector");
+				dropdownItem.putData(
+					"url",
+					PortletURLBuilder.create(
+						itemSelector.getItemSelectorURL(
+							RequestBackedPortletURLFactoryUtil.create(
+								_portletRequest),
+							itemSelectorEventName, groupItemSelectorCriterion)
+					).setPortletResource(
+						getPortletResource()
+					).setParameter(
+						"groupId", layout.getGroupId()
+					).setParameter(
+						"plid", layout.getPlid()
+					).buildString());
+				dropdownItem.setLabel(label + StringPool.TRIPLE_PERIOD);
+			});
+
+		return dropdownItemList;
 	}
 
 	public SearchContainer<AssetEntry> getSearchContainer() {

@@ -226,9 +226,11 @@ public class JavaSourceUtil extends SourceUtil {
 				continue;
 			}
 
-			String linePart = parameters.substring(0, x);
+			String linePart = StringUtil.removeSubstring(
+				parameters.substring(0, x), "->");
 
 			if ((ToolsUtil.getLevel(linePart, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(linePart, "<", ">") == 0) &&
 				(ToolsUtil.getLevel(linePart, "{", "}") == 0)) {
 
 				parametersList.add(StringUtil.trim(linePart));

@@ -331,6 +331,18 @@ public class ObjectActionLocalServiceImpl
 			String conditionExpression, String objectActionTriggerKey)
 		throws PortalException {
 
+		if (Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_STANDALONE) &&
+			Validator.isNotNull(conditionExpression)) {
+
+			throw new ObjectActionTriggerKeyException(
+				StringBundler.concat(
+					"The object action trigger key ",
+					ObjectActionTriggerConstants.KEY_STANDALONE,
+					" cannot have a condition expression"));
+		}
+
 		if (!ListUtil.exists(
 				ObjectActionTriggerUtil.getDefaultObjectActionTriggers(),
 				objectActionTrigger -> StringUtil.equals(

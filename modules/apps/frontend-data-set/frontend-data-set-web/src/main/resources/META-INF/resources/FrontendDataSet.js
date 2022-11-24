@@ -522,6 +522,7 @@ const FrontendDataSet = ({
 		) : null;
 
 	function executeAsyncItemAction({
+		errorMessage,
 		method = 'GET',
 		setActionItemLoading,
 		successMessage,
@@ -554,9 +555,11 @@ const FrontendDataSet = ({
 				}
 				else {
 					openToast({
-						message: Liferay.Language.get(
-							'an-unexpected-error-occurred'
-						),
+						message:
+							errorMessage ||
+							Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
 						type: 'danger',
 					});
 
@@ -565,9 +568,9 @@ const FrontendDataSet = ({
 			})
 			.catch(() => {
 				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
+					message:
+						errorMessage ||
+						Liferay.Language.get('an-unexpected-error-occurred'),
 					type: 'danger',
 				});
 

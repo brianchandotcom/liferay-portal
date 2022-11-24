@@ -88,6 +88,7 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 				event.preventDefault();
 
 				executeAsyncItemAction({
+					errorMessage: currentAction.data?.errorMessage,
 					method: currentAction.method,
 					url: formattedHref,
 				});
@@ -161,6 +162,7 @@ ActionLinkRenderer.propTypes = {
 		PropTypes.shape({
 			data: PropTypes.shape({
 				confirmationMessage: PropTypes.string,
+				errorMessage: PropTypes.string,
 				method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
 				permissionKey: PropTypes.string,
 				successMessage: PropTypes.string,

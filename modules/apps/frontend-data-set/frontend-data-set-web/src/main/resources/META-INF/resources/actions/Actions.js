@@ -64,6 +64,7 @@ const formatActions = (actions, itemData) => {
 export function handleAction(
 	{
 		confirmationMessage,
+		errorMessage,
 		event,
 		itemId,
 		method,
@@ -114,6 +115,7 @@ export function handleAction(
 			setLoading(true);
 
 			executeAsyncItemAction({
+				errorMessage,
 				method,
 				setActionItemLoading: setLoading,
 				successMessage,
@@ -204,6 +206,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 			handleAction(
 				{
 					confirmationMessage: data?.confirmationMessage,
+					errorMessage: data?.errorMessage,
 					event,
 					itemId,
 					method: action.method ?? action.data?.method,
@@ -253,6 +256,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 const actionType = PropTypes.shape({
 	data: PropTypes.shape({
 		confirmationMessage: PropTypes.string,
+		errorMessage: PropTypes.string,
 		method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
 		permissionKey: PropTypes.string,
 		successMessage: PropTypes.string,

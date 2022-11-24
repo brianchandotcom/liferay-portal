@@ -170,7 +170,7 @@ public class ViewObjectEntriesDisplayContext {
 					objectDefinition.getObjectDefinitionId(),
 					ObjectActionTriggerConstants.KEY_STANDALONE)) {
 
-			fdsActionDropdownItems.add(
+			FDSActionDropdownItem fdsActionDropdownItem =
 				new FDSActionDropdownItem(
 					StringBundler.concat(
 						_apiURL,
@@ -178,7 +178,13 @@ public class ViewObjectEntriesDisplayContext {
 						"/object-actions/", objectAction.getName()),
 					null, objectAction.getName(),
 					objectAction.getLabel(_objectRequestHelper.getLocale()),
-					"put", objectAction.getName(), "async"));
+					"put", objectAction.getName(), "async");
+
+			fdsActionDropdownItem.putData(
+				"errorMessage",
+				objectAction.getErrorMessage(_objectRequestHelper.getLocale()));
+
+			fdsActionDropdownItems.add(fdsActionDropdownItem);
 		}
 
 		return fdsActionDropdownItems;

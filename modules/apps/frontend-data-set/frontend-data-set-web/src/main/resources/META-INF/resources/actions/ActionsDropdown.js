@@ -192,6 +192,7 @@ function ActionsDropdown({
 
 					handleAction(
 						{
+							errorMessage: actionData?.errorMessage,
 							event,
 							itemId,
 							method: action.method ?? actionData?.method,

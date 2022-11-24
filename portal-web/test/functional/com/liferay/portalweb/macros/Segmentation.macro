@@ -21,6 +21,25 @@ definition {
 			value1 = "${propertyOption}");
 	}
 
+	macro addSecondProperty {
+		var key_propertyOption = "${propertyOption}";
+
+		Click(locator1 = "Segmentation#PROPERTIES_SEARCH");
+
+		if (IsElementPresent(locator1 = "Segmentation#ADD_FIELD_POSITION_EMPTY")) {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				locator2 = "Segmentation#ADD_FIELD_POSITION_EMPTY",
+				value1 = "${propertyOption}");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "Segmentation#ADD_FIELD_TYPE",
+				locator2 = "Segmentation#ADD_FIELD_POSITION_EDIT",
+				value1 = "${propertyOption}");
+		}
+	}
+
 	macro assignSiteRoles {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = "${segmentName}",

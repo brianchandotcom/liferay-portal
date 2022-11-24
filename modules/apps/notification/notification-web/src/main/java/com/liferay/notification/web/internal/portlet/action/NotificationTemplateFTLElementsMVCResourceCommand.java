@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.notification.web.internal.portlet;
+package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.notification.web.internal.portlet;
+package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;

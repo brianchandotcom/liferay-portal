@@ -1628,7 +1628,7 @@ public class DefaultObjectEntryManagerImplTest {
 	private String _addListTypeEntry() throws Exception {
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(
-				_adminUser.getUserId(),
+				RandomTestUtil.randomString(), _adminUser.getUserId(),
 				_listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(

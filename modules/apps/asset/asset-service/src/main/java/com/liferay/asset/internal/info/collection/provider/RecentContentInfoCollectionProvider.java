@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = InfoCollectionProvider.class)
+@Component(service = InfoCollectionProvider.class)
 public class RecentContentInfoCollectionProvider
 	extends BaseAssetsInfoCollectionProvider
 	implements InfoCollectionProvider<AssetEntry> {

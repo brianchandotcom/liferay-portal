@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = RelatedInfoItemCollectionProvider.class)
+@Component(service = RelatedInfoItemCollectionProvider.class)
 public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider
 	implements RelatedInfoItemCollectionProvider<AssetEntry, AssetCategory> {
 

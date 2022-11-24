@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = AssetEntryInfoDisplayFieldProvider.class)
+@Component(service = AssetEntryInfoDisplayFieldProvider.class)
 public class AssetEntryInfoDisplayFieldProviderImpl
 	implements AssetEntryInfoDisplayFieldProvider {
 

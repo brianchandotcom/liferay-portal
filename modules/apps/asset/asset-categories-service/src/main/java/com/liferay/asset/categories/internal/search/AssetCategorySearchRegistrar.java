@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luan Maoski
  * @author Lucas Marques
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class AssetCategorySearchRegistrar {
 
 	@Activate

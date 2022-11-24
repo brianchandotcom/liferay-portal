@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Eduardo García
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(service = StagedModelDataHandler.class)
 public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 	extends BaseStagedModelDataHandler<AssetListEntrySegmentsEntryRel> {
 

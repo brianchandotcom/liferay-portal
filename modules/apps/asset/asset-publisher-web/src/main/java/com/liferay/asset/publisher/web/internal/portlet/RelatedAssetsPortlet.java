@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=related-assets",
 		"com.liferay.portlet.add-default-resource=true",

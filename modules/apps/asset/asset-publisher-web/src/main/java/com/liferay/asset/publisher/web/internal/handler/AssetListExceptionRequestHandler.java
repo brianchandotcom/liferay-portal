@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = AssetListExceptionRequestHandler.class)
+@Component(service = AssetListExceptionRequestHandler.class)
 public class AssetListExceptionRequestHandler {
 
 	public void handlePortalException(

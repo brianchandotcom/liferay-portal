@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + AssetPublisherPortletKeys.RELATED_ASSETS,
 	service = PortletFilter.class
 )

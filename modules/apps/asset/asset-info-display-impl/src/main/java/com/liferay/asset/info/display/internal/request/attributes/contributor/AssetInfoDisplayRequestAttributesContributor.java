@@ -40,9 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(
-	immediate = true, service = InfoDisplayRequestAttributesContributor.class
-)
+@Component(service = InfoDisplayRequestAttributesContributor.class)
 public class AssetInfoDisplayRequestAttributesContributor
 	implements InfoDisplayRequestAttributesContributor {
 

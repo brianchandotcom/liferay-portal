@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = RelatedInfoItemCollectionProvider.class)
+@Component(service = RelatedInfoItemCollectionProvider.class)
 public class RelatedAssetsRelatedInfoItemCollectionProvider
 	extends BaseAssetsInfoCollectionProvider
 	implements RelatedInfoItemCollectionProvider<AssetEntry, AssetEntry> {

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	immediate = true, service = AssetPublisherCustomizer.class
+	service = AssetPublisherCustomizer.class
 )
 public class DefaultAssetPublisherCustomizer
 	implements AssetPublisherCustomizer {

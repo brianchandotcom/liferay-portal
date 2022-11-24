@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = InfoItemDetailsProvider.class)
+@Component(service = InfoItemDetailsProvider.class)
 public class AssetCategoryInfoItemDetailsProvider
 	implements InfoItemDetailsProvider<AssetCategory> {
 

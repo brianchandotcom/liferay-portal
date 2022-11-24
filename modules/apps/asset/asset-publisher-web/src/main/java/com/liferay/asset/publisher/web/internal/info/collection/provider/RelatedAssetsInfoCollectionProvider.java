@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = InfoCollectionProvider.class)
+@Component(service = InfoCollectionProvider.class)
 public class RelatedAssetsInfoCollectionProvider
 	implements InfoCollectionProvider<AssetEntry> {
 

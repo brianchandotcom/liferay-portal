@@ -93,7 +93,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.list.internal.configuration.AssetListConfiguration",
-	immediate = true, service = AssetListAssetEntryProvider.class
+	service = AssetListAssetEntryProvider.class
 )
 public class AssetListAssetEntryProviderImpl
 	implements AssetListAssetEntryProvider {

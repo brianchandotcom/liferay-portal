@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER,
 		"javax.portlet.name=" + AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS,

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = AssetInfoEditURLProvider.class)
+@Component(service = AssetInfoEditURLProvider.class)
 public class AssetInfoEditURLProviderImpl implements AssetInfoEditURLProvider {
 
 	@Override

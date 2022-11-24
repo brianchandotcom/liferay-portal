@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = DocumentContributor.class)
+@Component(service = DocumentContributor.class)
 public class AssetEntryDocumentContributor
 	implements DocumentContributor<AssetEntry> {
 

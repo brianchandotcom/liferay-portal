@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = AssetPublisherCustomizerRegistry.class)
+@Component(service = AssetPublisherCustomizerRegistry.class)
 public class DefaultAssetPublisherCustomizerRegistry
 	implements AssetPublisherCustomizerRegistry {
 

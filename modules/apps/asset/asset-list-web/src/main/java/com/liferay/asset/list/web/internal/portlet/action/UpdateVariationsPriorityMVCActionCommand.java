@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Yurena Cabrera
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST,
 		"mvc.command.name=/asset_list/update_variations_priority"

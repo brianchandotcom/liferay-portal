@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST,
 	service = ControlPanelEntry.class
 )

@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Katie Nesterovich
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration",
 	service = ConfigurationModelListener.class
 )

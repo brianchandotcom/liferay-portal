@@ -68,7 +68,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
 	property = "item.class.name=com.liferay.asset.kernel.model.AssetCategory",
 	service = RelatedInfoItemCollectionProvider.class
 )

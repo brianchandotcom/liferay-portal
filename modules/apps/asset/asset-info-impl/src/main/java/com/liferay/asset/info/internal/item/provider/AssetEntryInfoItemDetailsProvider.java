@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(immediate = true, service = InfoItemDetailsProvider.class)
+@Component(service = InfoItemDetailsProvider.class)
 public class AssetEntryInfoItemDetailsProvider
 	implements InfoItemDetailsProvider<AssetEntry> {
 

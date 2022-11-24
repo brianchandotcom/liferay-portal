@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary",
 	service = StagedModelRepository.class
 )

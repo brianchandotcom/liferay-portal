@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = {AddPortletProvider.class, ViewPortletProvider.class}
 )

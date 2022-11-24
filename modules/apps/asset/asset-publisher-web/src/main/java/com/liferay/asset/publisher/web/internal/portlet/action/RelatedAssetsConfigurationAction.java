@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + AssetPublisherPortletKeys.RELATED_ASSETS,
 	service = ConfigurationAction.class
 )

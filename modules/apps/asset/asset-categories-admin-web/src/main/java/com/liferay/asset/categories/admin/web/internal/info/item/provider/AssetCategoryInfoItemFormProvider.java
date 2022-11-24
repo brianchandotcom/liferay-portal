@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = InfoItemFormProvider.class)
+@Component(service = InfoItemFormProvider.class)
 public class AssetCategoryInfoItemFormProvider
 	implements InfoItemFormProvider<AssetCategory> {
 

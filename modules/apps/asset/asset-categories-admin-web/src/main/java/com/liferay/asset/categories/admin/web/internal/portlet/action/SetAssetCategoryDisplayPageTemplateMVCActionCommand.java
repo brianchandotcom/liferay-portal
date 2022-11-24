@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Barbara Cabrera
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
 		"mvc.command.name=/asset_categories_admin/set_asset_category_display_page_template"

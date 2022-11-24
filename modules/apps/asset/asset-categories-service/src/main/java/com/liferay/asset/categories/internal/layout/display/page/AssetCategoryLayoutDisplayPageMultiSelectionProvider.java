@@ -52,9 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	immediate = true, service = LayoutDisplayPageMultiSelectionProvider.class
-)
+@Component(service = LayoutDisplayPageMultiSelectionProvider.class)
 public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 	implements LayoutDisplayPageMultiSelectionProvider<AssetCategory> {
 

@@ -40,10 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	immediate = true,
-	service = LayoutDisplayPageInfoItemFieldValuesProvider.class
-)
+@Component(service = LayoutDisplayPageInfoItemFieldValuesProvider.class)
 public class AssetCategoryLayoutDisplayPageInfoItemFieldValuesProvider
 	implements LayoutDisplayPageInfoItemFieldValuesProvider<AssetCategory> {
 

@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=tag-cloud",
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-tags-navigation",

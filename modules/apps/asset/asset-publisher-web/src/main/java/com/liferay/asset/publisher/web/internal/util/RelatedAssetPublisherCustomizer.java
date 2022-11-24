@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = AssetPublisherCustomizer.class)
+@Component(service = AssetPublisherCustomizer.class)
 public class RelatedAssetPublisherCustomizer
 	extends DefaultAssetPublisherCustomizer {
 

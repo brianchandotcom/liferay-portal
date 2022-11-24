@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	immediate = true, service = AssetEntriesCheckerHelper.class
+	service = AssetEntriesCheckerHelper.class
 )
 public class AssetEntriesCheckerHelper {
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfiguration",
-	immediate = true, service = {}
+	service = {}
 )
 public class AssetPublisherSelectionStyleConfigurationUtil {
 

@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
 	service = PortletDataHandler.class
 )

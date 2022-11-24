@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Juan Fernández
  */
-@Component(
-	immediate = true, property = "model.class.name=*",
-	service = AssetEntryValidator.class
-)
+@Component(property = "model.class.name=*", service = AssetEntryValidator.class)
 public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 	@Override

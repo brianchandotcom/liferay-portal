@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Javier de Arcos
  */
-@Component(immediate = true, service = ServiceWrapper.class)
+@Component(service = ServiceWrapper.class)
 public class AssetTagLocalServiceWrapper
 	extends com.liferay.asset.kernel.service.AssetTagLocalServiceWrapper {
 

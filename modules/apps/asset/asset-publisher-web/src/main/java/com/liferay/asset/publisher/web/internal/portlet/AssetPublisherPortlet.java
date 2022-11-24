@@ -96,7 +96,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=asset-list",
 		"com.liferay.portlet.add-default-resource=true",

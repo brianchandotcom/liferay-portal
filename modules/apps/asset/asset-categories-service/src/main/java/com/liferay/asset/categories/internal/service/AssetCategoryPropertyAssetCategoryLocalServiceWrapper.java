@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ServiceWrapper.class)
+@Component(service = ServiceWrapper.class)
 public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 	extends AssetCategoryLocalServiceWrapper {
 

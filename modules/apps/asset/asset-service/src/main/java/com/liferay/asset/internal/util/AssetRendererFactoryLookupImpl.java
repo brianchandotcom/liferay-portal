@@ -45,7 +45,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Cristina Rodríguez Yrezábal
  * @author Mariano Álvaro Sáiz
  */
-@Component(immediate = true, service = AssetRendererFactoryLookup.class)
+@Component(service = AssetRendererFactoryLookup.class)
 public class AssetRendererFactoryLookupImpl
 	implements AssetRendererFactoryLookup {
 

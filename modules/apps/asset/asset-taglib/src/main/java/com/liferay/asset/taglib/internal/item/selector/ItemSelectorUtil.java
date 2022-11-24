@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ItemSelectorUtil {
 
 	public static ItemSelector getItemSelector() {

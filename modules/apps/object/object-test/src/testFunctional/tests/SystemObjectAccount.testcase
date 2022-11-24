@@ -26,15 +26,15 @@ definition {
 	test CanAssociateAnyTypeOfAccount {
 		property portal.acceptance = "true";
 
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
+		Account.addBusinessAccount(
 			accountDescription = "Bussines Account Description",
 			accountName = "Bussines Account Name");
 
 		Navigator.gotoBack();
 
-		Accounts.addPersonAccount(accountName = "Person Account Name");
+		Account.addPersonAccount(accountName = "Person Account Name");
 
 		Navigator.gotoBack();
 
@@ -115,9 +115,9 @@ definition {
 	@description = "LPS-151765 - Verify if is possible to create Relationship one to many on System Object Account and to relate with the Custom Object"
 	@priority = "4"
 	test CanCreateRelationshipRelatedWithCustomObject {
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
+		Account.addBusinessAccount(
 			accountDescription = "Accounts Name Description for Test",
 			accountName = "Accounts Name for Test");
 
@@ -145,9 +145,9 @@ definition {
 	@description = "LPS-151765 - Verify if Cascade deletion type of Relationship One to Many can delete and you also will delete the child related entry (if you also have permissions for it)"
 	@priority = "4"
 	test CanDeleteRelationshipWhenDeletionTypeIsCascade {
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
+		Account.addBusinessAccount(
 			accountDescription = "Accounts Name Description for Test",
 			accountName = "Accounts for Test");
 
@@ -221,7 +221,7 @@ definition {
 
 		ObjectPortlet.deleteEntry(entry = "Entry Test");
 
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
 		Search.searchCP(searchTerm = "Accounts for Test");
 
@@ -251,9 +251,9 @@ definition {
 	@description = "LPS-151765 - Verify it's not possible to delete an entry if the relationship is one to many with prevent deletion type"
 	@priority = "4"
 	test CannotDeleteEntryWhenDeletionTypeIsPrevent {
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
+		Account.addBusinessAccount(
 			accountDescription = "Accounts Name Description for Test",
 			accountName = "Accounts Name for Test 153532");
 
@@ -332,9 +332,9 @@ definition {
 	@description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"
 	@priority = "4"
 	test CannotDeleteRelationshipWhenDeletionTypeIsDisassociate {
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
+		Account.addBusinessAccount(
 			accountDescription = "Accounts Name Description for Test",
 			accountName = "Accounts for Test");
 
@@ -408,7 +408,7 @@ definition {
 
 		ObjectPortlet.deleteEntry(entry = "Entry Test");
 
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
 		Search.searchCP(searchTerm = "Accounts for Test");
 

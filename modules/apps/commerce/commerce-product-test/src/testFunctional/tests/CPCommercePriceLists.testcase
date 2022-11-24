@@ -614,15 +614,15 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
-		Accounts.addBusinessAccount(
+		Account.addBusinessAccount(
 			accountDescription = "This is an Account added for Account Group.",
 			accountName = "Account1");
 
 		Navigator.gotoBack();
 
-		Accounts.addBusinessAccount(
+		Account.addBusinessAccount(
 			accountDescription = "This is an Account added for Account Group.",
 			accountName = "Account2");
 

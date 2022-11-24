@@ -957,7 +957,7 @@ definition {
 
 		CommerceNavigator.gotoSpeedwellDashboardItem(dashboardItem = "Login & Security");
 
-		Accounts.viewAccountDetails(
+		Account.viewAccountDetails(
 			accountName = "Test Test",
 			accountType = "Person");
 

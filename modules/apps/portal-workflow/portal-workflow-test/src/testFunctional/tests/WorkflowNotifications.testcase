@@ -58,7 +58,7 @@ definition {
 			userScreenName = "buyeruser",
 			userSiteMembership = "Minium");
 
-		Accounts.addAssigneeToRoleViaRolesTab(
+		Account.addAssigneeToRoleViaRolesTab(
 			accountRoleTitle = "Account Administrator",
 			assigneeName = "Buyer");
 
@@ -140,7 +140,7 @@ definition {
 			userScreenName = "buyeruser",
 			userSiteMembership = "Minium");
 
-		Accounts.addAssigneeToRoleViaRolesTab(
+		Account.addAssigneeToRoleViaRolesTab(
 			accountRoleTitle = "Account Administrator",
 			assigneeName = "Buyer");
 

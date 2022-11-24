@@ -60,13 +60,13 @@ definition {
 	}
 
 	macro deleteMemberInvitedViaAccounts {
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
 
 		Navigator.gotoNavTab(navTab = "Users");
 
-		Accounts.goToEntryMenuItem(
+		Account.goToEntryMenuItem(
 			menuItem = "Remove",
 			rowEntry = "test01@liferay.com");
 

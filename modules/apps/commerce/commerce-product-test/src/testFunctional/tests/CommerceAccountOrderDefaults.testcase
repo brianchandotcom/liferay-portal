@@ -58,13 +58,13 @@ definition {
 		}
 
 		task ("and the delivery term is set as the default for the Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Delivery Term 2",
 				termType = "Delivery");
@@ -142,13 +142,13 @@ definition {
 		}
 
 		task ("and the second discount is set as the Account Default") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultDiscount(
+			Account.setDefaultDiscount(
 				channelEntry = "Minium Portal",
 				discountTitle = "Discount 2 20% off");
 		}
@@ -194,13 +194,13 @@ definition {
 		}
 
 		task ("and the payment term is set to the Account Order Default") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Payment Term 2",
 				termType = "Payment");
@@ -250,23 +250,23 @@ definition {
 	@priority = "4"
 	test CanDeleteDefaultCurrency {
 		task ("Given an account with a default Currency") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCurrency(currencyName = "Euro");
+			Account.setDefaultCurrency(currencyName = "Euro");
 		}
 
 		task ("When the admin deletes the default currency") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.deleteDefaultSetting(
+			Account.deleteDefaultSetting(
 				currentDefault = "Euro",
 				settingHeader = "Currencies");
 
@@ -313,11 +313,11 @@ definition {
 		}
 
 		task ("And Test Price 1 is set as default for Minium Portal Channel") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.setDefaultPriceList(
 				channelEntry = "Minium Portal",
@@ -358,23 +358,23 @@ definition {
 	@priority = "5"
 	test CanEditDefaultCurrency {
 		task ("Given an account with a default Currency") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCurrency(currencyName = "Euro");
+			Account.setDefaultCurrency(currencyName = "Euro");
 		}
 
 		task ("When the admin edits the default currency") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.editCommerceDefaultSetting(
+			Account.editCommerceDefaultSetting(
 				currentDefault = "Euro",
 				newDefault = "Brazilian Real",
 				settingHeader = "Currencies",
@@ -382,11 +382,11 @@ definition {
 		}
 
 		task ("Then the new default currency should persist") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			AssertElementPresent(
 				key_entryDetail = "Brazilian Real",
@@ -405,11 +405,11 @@ definition {
 		}
 
 		task ("When the admin goes into the "Channel Defaults" for the account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("And goes into the section "Delivery Terms And Conditions"") {
@@ -437,20 +437,20 @@ definition {
 		}
 
 		task ("When the admin links the channel "Minium Portal" to a delivery") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Delivery Term 1",
 				termType = "Delivery");
 		}
 
 		task ("Then the option "All Channels" will become "All Other Channels"") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Delivery",
@@ -470,44 +470,44 @@ definition {
 				row = "1",
 				value1 = "All Channels");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.removeDefaultCommerceTerms(
+			Account.removeDefaultCommerceTerms(
 				entryDetails = "Delivery Term 1",
 				termType = "Delivery");
 		}
 
 		task ("When the admin links "All Channels" to a delivery") {
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				termEntry = "Delivery Term 1",
 				termType = "Delivery");
 		}
 
 		task ("And the entries table contains "All Channels" linked to the delivery") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+			Account.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Channels,Delivery Term 1,Yes,No",
 				termType = "Delivery");
 		}
 
 		task ("And admin links the channel "Minium Portal" to a delivery") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Delivery Term 2",
 				termType = "Delivery");
 		}
 
 		task ("Then entries tables should show "All Other Channels" instead of "All Channels" ") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+			Account.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Other Channels,Delivery Term 1,Yes,No",
 				termType = "Delivery");
 		}
@@ -523,11 +523,11 @@ definition {
 		}
 
 		task ("When the admin goes into the "Channel Defaults" for the account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("And goes into the section "Payment Terms And Conditions"") {
@@ -555,20 +555,20 @@ definition {
 		}
 
 		task ("And when the admin links the channel "Minium Portal" to a payment") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Payment Term 1",
 				termType = "Payment");
 		}
 
 		task ("Then the option "All Channels" will become "All Other Channels"") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Payment",
@@ -588,44 +588,44 @@ definition {
 				row = "1",
 				value1 = "All Channels");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.removeDefaultCommerceTerms(
+			Account.removeDefaultCommerceTerms(
 				entryDetails = "Payment Term 1",
 				termType = "Payment");
 		}
 
 		task ("And when the admin links "All Channels" to a payment") {
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				termEntry = "Payment Term 1",
 				termType = "Payment");
 		}
 
 		task ("And the entries table contains "All Channels" linked to the payment") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+			Account.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Channels,Payment Term 1,Yes,No",
 				termType = "Payment");
 		}
 
 		task ("And admin links the channel "Minium Portal" to a payment") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Payment Term 2",
 				termType = "Payment");
 		}
 
 		task ("Then entries tables should show "All Other Channels" instead of "All Channels" ") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+			Account.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Other Channels,Payment Term 1,Yes,No",
 				termType = "Payment");
 		}
@@ -643,26 +643,26 @@ definition {
 
 		task ("and given that the account has a default currency set to both channels") {
 			for (var channelNames : list "Minium Portal,Channel2") {
-				Accounts.openAccountsAdmin();
+				Account.openAccountsAdmin();
 
 				LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-				Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+				Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-				Accounts.setDefaultCurrency(
+				Account.setDefaultCurrency(
 					channelEntry = "${channelNames}",
 					currencyName = "Euro");
 			}
 		}
 
 		task ("When the admin adds another default currency") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCurrency(
+			Account.setDefaultCurrency(
 				allOtherChannels = "true",
 				currencyName = "British Pound");
 		}
@@ -681,9 +681,9 @@ definition {
 	@priority = "3"
 	test CanNotAssignDefaultAddressesToTheSameChannel {
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-			Accounts.addAddress(
+			Account.addAddress(
 				addressCity = "Chicago",
 				addressCountry = "United States",
 				addressName = "Test Billing Address",
@@ -694,7 +694,7 @@ definition {
 				addressType = "Billing",
 				phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
 
-			Accounts.addAddress(
+			Account.addAddress(
 				addressCity = "Shibuya-ku",
 				addressCountry = "Japan",
 				addressName = "Test Shipping Address",
@@ -705,7 +705,7 @@ definition {
 				addressType = "Shipping",
 				phoneNumber = "+81 3-5456-5796");
 
-			Accounts.addAddress(
+			Account.addAddress(
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Test Billing and Shipping Address",
@@ -726,27 +726,27 @@ definition {
 		}
 
 		task ("Given there is a default billing address set for Minium Portal Channel") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.addDefaultCommerceAddressEntry(
+			Account.addDefaultCommerceAddressEntry(
 				addressEntry = "Test Billing Address",
 				addressType = "Billing",
 				channelEntry = "Minium Portal");
 		}
 
 		task ("And there is a default billing address set for All Other Channels") {
-			Accounts.addDefaultCommerceAddressEntry(
+			Account.addDefaultCommerceAddressEntry(
 				addressEntry = "Test Billing and Shipping Address",
 				addressType = "Billing",
 				channelEntry = "All Other Channels");
 		}
 
 		task ("When the admin clicks + button to set another default, and tries to set a default for All Other Channels again") {
-			Accounts.addDefaultCommerceAddressEntry(
+			Account.addDefaultCommerceAddressEntry(
 				addressEntry = "Test Billing Address",
 				addressType = "Billing",
 				channelEntry = "All Other Channels");
@@ -783,11 +783,11 @@ definition {
 					userScreenName = "buyeruser${num}",
 					userSiteMembership = "Minium ${num}");
 
-				Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+				Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 				task ("And each account having 3 addresses: one billing, one shipping and one shipping and billing for the account") {
 					for (var typeList : list "Billing,Shipping,Billing and Shipping") {
-						Accounts.addAddressViaSetDefaultAddress(
+						Account.addAddressViaSetDefaultAddress(
 							addressCity = "Diamond Bar",
 							addressCountry = "United States",
 							addressName = "${typeList} Address Entry 1",
@@ -802,14 +802,14 @@ definition {
 		}
 
 		task ("And a default billing and default shipping address is selected for Minium 1 Portal Channel for Test Account 1") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			for (var typeList : list "Billing,Shipping") {
-				Accounts.addDefaultCommerceAddressEntry(
+				Account.addDefaultCommerceAddressEntry(
 					addressEntry = "${typeList} Address Entry 1",
 					addressType = "${typeList}",
 					channelEntry = "Minium 1 Portal");
@@ -868,13 +868,13 @@ definition {
 	@priority = "4"
 	test CannotUseDisabledCurrency {
 		task ("Given an account with a default Currency") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCurrency(currencyName = "Euro");
+			Account.setDefaultCurrency(currencyName = "Euro");
 		}
 
 		task ("and the currency is disabled") {
@@ -884,11 +884,11 @@ definition {
 
 			DropdownMenuItem.click(menuItem = "Deactivate");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			ScrollWebElementIntoView(
 				key_settingHeader = "Currencies",
@@ -961,13 +961,13 @@ definition {
 		}
 
 		task ("and the delivery term is set as the default for the Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Delivery Term 2",
 				termType = "Delivery");
@@ -1061,13 +1061,13 @@ definition {
 		}
 
 		task ("and a payment term is set to the Account Order Default") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Payment Term 2",
 				termType = "Payment");
@@ -1127,10 +1127,10 @@ definition {
 	@priority = "3"
 	test CanRemoveDefaultAddresses {
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
-				Accounts.addAddressViaSetDefaultAddress(
+				Account.addAddressViaSetDefaultAddress(
 					addressCity = "Diamond Bar",
 					addressCountry = "United States",
 					addressName = "${typeList} Address Entry 1",
@@ -1152,18 +1152,18 @@ definition {
 		}
 
 		task ("Given there is a default billing and a default shipping address set for the Account and Channel") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.addDefaultCommerceAddressEntry(
+			Account.addDefaultCommerceAddressEntry(
 				addressEntry = "Billing Address Entry 1",
 				addressType = "Billing",
 				channelEntry = "Test Channel 1");
 
-			Accounts.addDefaultCommerceAddressEntry(
+			Account.addDefaultCommerceAddressEntry(
 				addressEntry = "Shipping Address Entry 1",
 				addressType = "Shipping",
 				channelEntry = "Test Channel 2");
@@ -1171,7 +1171,7 @@ definition {
 
 		task ("When admin removes both default addresses from the account") {
 			for (var typeList : list "Billing,Shipping") {
-				Accounts.removeDefaultCommerceTerms(
+				Account.removeDefaultCommerceTerms(
 					entryDetails = "${typeList} Address Entry 1",
 					termType = "${typeList}");
 			}
@@ -1249,11 +1249,11 @@ definition {
 		}
 
 		task ("When Test Price 1 is set as default for Minium Portal Channel for Commerce Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.setDefaultPriceList(
 				channelEntry = "Minium Portal",
@@ -1284,11 +1284,11 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.deleteAccountChannelDefaultsEntry(
 				channelName = "Minium Portal",
@@ -1349,11 +1349,11 @@ definition {
 		}
 
 		task ("And Test Price List 1 is set as default for Minium Portal Channel") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.setDefaultPriceList(
 				channelEntry = "Minium Portal",
@@ -1410,7 +1410,7 @@ definition {
 
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 
-			Accounts.setDefaultDiscount(
+			Account.setDefaultDiscount(
 				discountTitle = "Discount 1 10% off",
 				override = "true");
 		}
@@ -1440,10 +1440,10 @@ definition {
 	@priority = "3"
 	test CanSelectOnlyAllOtherChannelsForDefaultBillingAddress {
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
-				Accounts.addAddressViaSetDefaultAddress(
+				Account.addAddressViaSetDefaultAddress(
 					addressCity = "Diamond Bar",
 					addressCountry = "United States",
 					addressName = "${typeList} Address Entry 1",
@@ -1465,14 +1465,14 @@ definition {
 		}
 
 		task ("Given a default billing address is selected for each Channel (Minium Portal, Test Channel 1 and Test Channel 2)") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			for (var channelEntries : list "Minium Portal,Test Channel 1,Test Channel 2") {
-				Accounts.addDefaultCommerceAddressEntry(
+				Account.addDefaultCommerceAddressEntry(
 					addressEntry = "Billing Address Entry 1",
 					addressType = "Billing",
 					channelEntry = "${channelEntries}");
@@ -1528,11 +1528,11 @@ definition {
 		}
 
 		task ("When a default price list for Minium Portal Channel, Test Channel 1, Test Channel 2 is set") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.setDefaultPriceList(
 				channelEntry = "Minium Portal",
@@ -1588,10 +1588,10 @@ definition {
 	@priority = "3"
 	test CanSelectOnlyAllOtherChannelsForDefaultShippingAddress {
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
-				Accounts.addAddressViaSetDefaultAddress(
+				Account.addAddressViaSetDefaultAddress(
 					addressCity = "Diamond Bar",
 					addressCountry = "United States",
 					addressName = "${typeList} Address Entry 1",
@@ -1613,14 +1613,14 @@ definition {
 		}
 
 		task ("Given a default shipping address is selected for each Channel (Minium Portal, Test Channel 1 and Test Channel 2)") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			for (var channelEntries : list "Minium Portal,Test Channel 1,Test Channel 2") {
-				Accounts.addDefaultCommerceAddressEntry(
+				Account.addDefaultCommerceAddressEntry(
 					addressEntry = "Shipping Address Entry 1",
 					addressType = "Shipping",
 					channelEntry = "${channelEntries}");
@@ -1656,10 +1656,10 @@ definition {
 	@priority = "3"
 	test CanSetDefaultAddressFromDetailsTab {
 		task ("Given 2 Minium sites and a buyer user is associated with both sites, and 3 addresses: one billing, one shipping and one shipping and billing for the account") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
-				Accounts.addAddressViaSetDefaultAddress(
+				Account.addAddressViaSetDefaultAddress(
 					addressCity = "Diamond Bar",
 					addressCountry = "United States",
 					addressName = "${typeList} Address Entry 1",
@@ -1682,28 +1682,28 @@ definition {
 		}
 
 		task ("When setting the default billing address and default shipping address per channel in Details tab") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Details");
+			Account.gotoAssigneeTab(assigneeTab = "Details");
 
-			Accounts.setDefaultBillingAddress(addressName = "Billing Address Entry 1");
+			Account.setDefaultBillingAddress(addressName = "Billing Address Entry 1");
 
-			Accounts.setDefaultShippingAddress(addressName = "Shipping Address Entry 1");
+			Account.setDefaultShippingAddress(addressName = "Shipping Address Entry 1");
 		}
 
 		task ("Then the default addresses set in Details tab will be visible in the table as configured for All Channels after going to the Channel Defaults tab") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			for (var typeList : list "Billing,Shipping") {
-				Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				Account.viewDefaultDeliveryCommerceTermsEntry(
 					termEntry = "All Channels,${typeList} Address Entry 1",
 					termType = "${typeList}");
 			}
 
 			for (var typeList : list "Billing,Shipping") {
-				Accounts.removeDefaultCommerceTerms(
+				Account.removeDefaultCommerceTerms(
 					entryDetails = "${typeList} Address Entry 1",
 					termType = "${typeList}");
 			}
@@ -1711,7 +1711,7 @@ definition {
 
 		task ("When setting the default billing address and default shipping address for Minium 1 Portal Channel per channel in Channel Defaults tab") {
 			for (var typeList : list "Billing,Shipping") {
-				Accounts.addDefaultCommerceAddressEntry(
+				Account.addDefaultCommerceAddressEntry(
 					addressEntry = "${typeList} Address Entry 1",
 					addressType = "${typeList}",
 					channelEntry = "Minium 1 Portal");
@@ -1780,22 +1780,22 @@ definition {
 		task ("When setting the default billing and shipping addresses in Details tab") {
 			User.logoutAndLoginPG();
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Details");
+			Account.gotoAssigneeTab(assigneeTab = "Details");
 
-			Accounts.setDefaultBillingAddress(addressName = "Billing and Shipping Address Entry 1");
+			Account.setDefaultBillingAddress(addressName = "Billing and Shipping Address Entry 1");
 
-			Accounts.setDefaultShippingAddress(addressName = "Billing and Shipping Address Entry 1");
+			Account.setDefaultShippingAddress(addressName = "Billing and Shipping Address Entry 1");
 		}
 
 		task ("Then the default addresses set in Details tab will be visible in the table as configured for All Other Channels after going to the Channel Defaults tab") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			for (var typeList : list "Billing,Shipping") {
-				Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				Account.viewDefaultDeliveryCommerceTermsEntry(
 					row = "2",
 					termEntry = "All Other Channels,${typeList} Address Entry 1",
 					termType = "${typeList}");
@@ -1857,10 +1857,10 @@ definition {
 	@priority = "3"
 	test CanSetDefaultBillingAddressPerChannel {
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
-				Accounts.addAddressViaSetDefaultAddress(
+				Account.addAddressViaSetDefaultAddress(
 					addressCity = "Diamond Bar",
 					addressCountry = "United States",
 					addressName = "${typeList} Address Entry 1",
@@ -1882,11 +1882,11 @@ definition {
 		}
 
 		task ("When admin wants to set a default billing address for the account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Billing",
@@ -1922,24 +1922,24 @@ definition {
 		}
 
 		task ("When a default billing address is selected for Minium Portal Channel and the account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.addDefaultCommerceAddressEntry(
+			Account.addDefaultCommerceAddressEntry(
 				addressEntry = "Billing Address Entry 1",
 				addressType = "Billing",
 				channelEntry = "Minium Portal");
 		}
 
 		task ("And admin clicks back to the default address") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Billing",
@@ -2030,21 +2030,21 @@ definition {
 	@priority = "5"
 	test CanSetDefaultCurrencyPerChannel {
 		task ("Given an account with a default Currency") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCurrency(currencyName = "Euro");
+			Account.setDefaultCurrency(currencyName = "Euro");
 		}
 
 		task ("When the admin views the account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then the default currency should persist") {
@@ -2112,11 +2112,11 @@ definition {
 		}
 
 		task ("When Test Price 1 is set default for Minium Portal Channel for Commerce Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.setDefaultPriceList(
 				channelEntry = "Minium Portal",
@@ -2124,11 +2124,11 @@ definition {
 		}
 
 		task ("And Test Price 2 is set default for Minium 2 Portal Channel for Commerce Account 2") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account 2");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.setDefaultPriceList(
 				channelEntry = "Minium 2 Portal",
@@ -2174,10 +2174,10 @@ definition {
 	@priority = "3"
 	test CanSetDefaultShippingAddressPerChannel {
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
-				Accounts.addAddressViaSetDefaultAddress(
+				Account.addAddressViaSetDefaultAddress(
 					addressCity = "Diamond Bar",
 					addressCountry = "United States",
 					addressName = "${typeList} Address Entry 1",
@@ -2199,11 +2199,11 @@ definition {
 		}
 
 		task ("When admin wants to set a default shipping address for the account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Shipping",
@@ -2239,24 +2239,24 @@ definition {
 		}
 
 		task ("When a default shipping address is selected for Minium Portal Channel and the account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.addDefaultCommerceAddressEntry(
+			Account.addDefaultCommerceAddressEntry(
 				addressEntry = "Shipping Address Entry 1",
 				addressType = "Shipping",
 				channelEntry = "Minium Portal");
 		}
 
 		task ("And admin clicks back to the default address") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Shipping",
@@ -2364,7 +2364,7 @@ definition {
 
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 
-			Accounts.setDefaultDiscount(
+			Account.setDefaultDiscount(
 				channelEntry = "Minium Portal",
 				discountTitle = "Discount 2 20% off");
 		}
@@ -2381,13 +2381,13 @@ definition {
 		}
 
 		task ("When the default discount is changed to 10%") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.editCommerceDefaultSetting(
+			Account.editCommerceDefaultSetting(
 				channelEntry = "Minium Portal",
 				currentDefault = "Discount 2 20% off",
 				newDefault = "Discount 1 10% off",
@@ -2419,15 +2419,15 @@ definition {
 		}
 
 		task ("When the admin sets a default currency for the account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then the disabled currency should not be available") {
-			Accounts.assertDisabledCurrencyIsNotAvailable(disabledCurrency = "Euro");
+			Account.assertDisabledCurrencyIsNotAvailable(disabledCurrency = "Euro");
 		}
 	}
 
@@ -2450,17 +2450,17 @@ definition {
 		}
 
 		task ("and the first account's default currency is set to Euro") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			ScrollWebElementIntoView(
 				key_settingHeader = "Currencies",
 				locator1 = "Account#DEFAULT_SETTINGS_HEADER");
 
-			Accounts.setDefaultCurrency(
+			Account.setDefaultCurrency(
 				channelEntry = "Minium Portal",
 				currencyName = "Euro");
 		}
@@ -2590,13 +2590,13 @@ definition {
 		}
 
 		task ("and the delivery term is set as the default for the Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				assertInactive = "Delivery Term 4",
 				channelEntry = "Minium Portal",
 				override = "true",
@@ -2744,7 +2744,7 @@ definition {
 
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account 2");
 
-			Accounts.setDefaultDiscount(
+			Account.setDefaultDiscount(
 				discountTitle = "Discount 1 10% off",
 				override = "true");
 		}
@@ -2862,7 +2862,7 @@ definition {
 
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account 2");
 
-			Accounts.setDefaultDiscount(
+			Account.setDefaultDiscount(
 				channelEntry = "Minium 2 Portal",
 				discountTitle = "Discount 2 20% off",
 				override = "true");
@@ -2987,7 +2987,7 @@ definition {
 
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account 2");
 
-			Accounts.setDefaultDiscount(
+			Account.setDefaultDiscount(
 				discountTitle = "Discount 3 30% off",
 				override = "true");
 		}
@@ -3073,13 +3073,13 @@ definition {
 		}
 
 		task ("and the payment term is set as the default for the Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				assertInactive = "Payment Term 4",
 				channelEntry = "Minium Portal",
 				override = "true",
@@ -3221,11 +3221,11 @@ definition {
 		}
 
 		task ("When Test Price 3 is set default for Minium Portal Channel for Commerce Account with override eligibility set to true") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.setDefaultPriceList(
 				channelEntry = "Minium Portal",
@@ -3289,11 +3289,11 @@ definition {
 		}
 
 		task ("When Test Price 3 is set default for Minium Portal Channel for Commerce Account 2") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account 2");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.setDefaultPriceList(
 				channelEntry = "Minium 2 Portal",
@@ -3382,13 +3382,13 @@ definition {
 		}
 
 		task ("and the delivery term is set as the default for the Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Delivery Term 1",
 				termType = "Delivery");
@@ -3501,13 +3501,13 @@ definition {
 		}
 
 		task ("and the payment term is set as the default for the Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			Accounts.setDefaultCommerceTermsEntry(
+			Account.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
 				termEntry = "Payment Term 2",
 				termType = "Payment");

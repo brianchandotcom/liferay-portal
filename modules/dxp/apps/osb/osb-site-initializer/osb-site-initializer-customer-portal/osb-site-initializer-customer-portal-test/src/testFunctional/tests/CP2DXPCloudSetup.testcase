@@ -47,11 +47,11 @@ definition {
 	@priority = "4"
 	test CanAddAnotherAdmin {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -85,11 +85,11 @@ definition {
 		}
 
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -119,11 +119,11 @@ definition {
 	@priority = "5"
 	test CanChoosePrimaryDataCenter {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -149,11 +149,11 @@ definition {
 	@priority = "5"
 	test CanClickSubmitButtonWithAllFilledIn {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -179,11 +179,11 @@ definition {
 	@priority = "4"
 	test CanSkipForNowToOverview {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -211,11 +211,11 @@ definition {
 	@priority = "4"
 	test CanViewDXPCloudSetupSuccessMessage {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -255,11 +255,11 @@ definition {
 	@priority = "4"
 	test IfSelectsCancelThenTheUserGoesBackPreviousPage {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -297,11 +297,11 @@ definition {
 	@priority = "4"
 	test IsDXPCloudEmailRequired {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -341,11 +341,11 @@ definition {
 	@priority = "3"
 	test IsDXPCloudEmailValid {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -381,11 +381,11 @@ definition {
 	@priority = "4"
 	test IsProjectIDRequired {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -425,11 +425,11 @@ definition {
 	@priority = "4"
 	test IsSystemAdminFirstNameRequired {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -469,11 +469,11 @@ definition {
 	@priority = "4"
 	test IsSystemAdminGitUserRequired {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -513,11 +513,11 @@ definition {
 	@priority = "4"
 	test IsSystemAdminLastNameRequired {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -557,11 +557,11 @@ definition {
 	@priority = "4"
 	test NameAndVersionOfChosenProject {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -600,11 +600,11 @@ definition {
 	@priority = "5"
 	test OpenSetUpModal {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -642,11 +642,11 @@ definition {
 	@priority = "4"
 	test SeeIfTheCardActivationStatusChanges {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}

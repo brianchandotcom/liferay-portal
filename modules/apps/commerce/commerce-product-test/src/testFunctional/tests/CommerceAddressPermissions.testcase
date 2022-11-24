@@ -26,14 +26,14 @@ definition {
 		}
 
 		task ("Setup: Add 3 addresses to the account(Billing, Shipping, Billing & Shipping)") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
-				Accounts.addAddressViaSetDefaultAddress(
+				Account.addAddressViaSetDefaultAddress(
 					addressCity = "Diamond Bar",
 					addressCountry = "United States",
 					addressName = "Liferay ${typeList}",

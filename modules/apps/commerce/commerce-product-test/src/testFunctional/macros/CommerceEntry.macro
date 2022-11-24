@@ -32,11 +32,11 @@ definition {
 		}
 
 		if (isSet(existingUser) && ("${existingUser}" == "true")) {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 
-			Accounts.assignUsers(
+			Account.assignUsers(
 				accountName = "${accountName}",
 				assigneeName = "${userEmailAddress}");
 		}
@@ -70,7 +70,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "${userRole}",
 				accountUserName = "${userEmailAddress}");
 		}

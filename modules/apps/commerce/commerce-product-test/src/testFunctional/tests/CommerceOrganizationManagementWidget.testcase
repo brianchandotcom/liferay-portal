@@ -194,7 +194,7 @@ definition {
 		}
 
 		task ("And given the account belongs to Organization 2") {
-			Accounts.assignOrganizations(
+			Account.assignOrganizations(
 				accountName = "Commerce Account",
 				assigneeName = "Organization 2");
 		}

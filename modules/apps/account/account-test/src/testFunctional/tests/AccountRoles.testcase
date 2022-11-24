@@ -63,7 +63,7 @@ definition {
 				password = "test",
 				userEmailAddress = "useramea@liferay.com");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntryMenuItemNoError(
 				menuItem = "Manage Users",
@@ -102,7 +102,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea1@liferay.com");
 
-			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+			Account.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("And he is a member of a business account") {
@@ -110,21 +110,21 @@ definition {
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.assignUsers(
+			Account.assignUsers(
 				accountName = "Account Name",
 				assigneeName = "userfn1");
 		}
 
 		task ("When this user is granted permissions to Update account entry View account role tab and Add account role for Account Name") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+			Account.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
 
 			for (var resourceActionIndex : list "UPDATE,ADD_ACCOUNT_ROLE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
@@ -134,11 +134,11 @@ definition {
 					roleType = "account");
 			}
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Specific Role",
 				accountUserName = "userfn1 userln1");
 		}
@@ -148,19 +148,19 @@ definition {
 				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn1 userln1");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+			Account.gotoAssigneeTab(assigneeTab = "Roles");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Role");
+			Account.addOwnedAccountRole(accountRoleTitle = "Account Role");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+			Account.gotoAssigneeTab(assigneeTab = "Roles");
 
 			LexiconEntry.viewEntryName(rowEntry = "Account Role");
 		}
@@ -190,15 +190,15 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea1@liferay.com");
 
-			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+			Account.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("When the user with access permissions is given an account role wih permissions to update an account, view existing users and account roles, and assign account roles in an Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Assign Account Roles");
+			Account.addOwnedAccountRole(accountRoleTitle = "Assign Account Roles");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES,VIEW_USERS") {
 				Permissions.definePermissionViaJSONAPI(
@@ -214,11 +214,11 @@ definition {
 				roleTitle = "Assign Account Roles",
 				roleType = "account");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaRolesTab(
+			Account.addAssigneeToRoleViaRolesTab(
 				accountRoleTitle = "Assign Account Roles",
 				assigneeName = "userfn1 userln1");
 		}
@@ -228,11 +228,11 @@ definition {
 				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn1 userln1");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaRolesTab(
+			Account.addAssigneeToRoleViaRolesTab(
 				accountRoleTitle = "Assign Account Roles",
 				assigneeName = "userfn2 userln2");
 
@@ -264,7 +264,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea1@liferay.com");
 
-			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+			Account.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("And user is assigned a business account and prepare an Owned account role for testing") {
@@ -272,25 +272,25 @@ definition {
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.assignUsers(
+			Account.assignUsers(
 				accountName = "Account Name",
 				assigneeName = "userfn1");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "New Account Role");
+			Account.addOwnedAccountRole(accountRoleTitle = "New Account Role");
 		}
 
 		task ("When this user is granted permissions to Define Account Role Permission") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+			Account.gotoAssigneeTab(assigneeTab = "Roles");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Define Permissions Role");
+			Account.addOwnedAccountRole(accountRoleTitle = "Define Permissions Role");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
@@ -306,11 +306,11 @@ definition {
 				roleTitle = "Define Permissions Role",
 				roleType = "account");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Define Permissions Role",
 				accountUserName = "userfn1 userln1");
 		}
@@ -320,17 +320,17 @@ definition {
 				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn1 userln1");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+			Account.gotoAssigneeTab(assigneeTab = "Roles");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Define Permissions",
 				rowEntry = "New Account Role");
 
-			Accounts.definePermissions(
+			Account.definePermissions(
 				key_navItem = "Accounts",
 				key_subItem = "Accounts",
 				permissionKey = "ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_VIEW",
@@ -341,7 +341,7 @@ definition {
 				key_permissionNavigationValue = "Accounts",
 				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
 
-			Accounts.defineGroupScopePermissions(
+			Account.defineGroupScopePermissions(
 				key_navItem = "Account Management",
 				permissionKey = "ACCOUNTS_APPLICATION_PERMISSIONS_VIEW",
 				permissionNavigationKey = "PERMISSIONS_NAVITEM");
@@ -370,7 +370,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea1@liferay.com");
 
-			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+			Account.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
@@ -385,21 +385,21 @@ definition {
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.assignUsers(
+			Account.assignUsers(
 				accountName = "Account Name",
 				assigneeName = "userfn1");
 		}
 
 		task ("When this user is granted permissions to Delete account role for Account Name") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+			Account.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "DELETE",
@@ -407,11 +407,11 @@ definition {
 				roleTitle = "Account Specific Role",
 				roleType = "account");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Specific Role",
 				accountUserName = "userfn1 userln1");
 		}
@@ -421,17 +421,17 @@ definition {
 				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn1 userln1");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.deleteOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+			Account.deleteOwnedAccountRole(accountRoleTitle = "Account Specific Role");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+			Account.gotoAssigneeTab(assigneeTab = "Roles");
 
 			LexiconEntry.viewNoEntry(rowEntry = "Account Specific Role");
 		}
@@ -474,11 +474,11 @@ definition {
 				password = "test",
 				userEmailAddress = "useramea@liferay.com");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+			Account.gotoAssigneeTab(assigneeTab = "Organizations");
 		}
 
 		task ("Then the account manager should only be able to see not be able to change the organizations listed in that account") {
@@ -581,7 +581,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea1@liferay.com");
 
-			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+			Account.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("And he is a member of a business account") {
@@ -589,21 +589,21 @@ definition {
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.assignUsers(
+			Account.assignUsers(
 				accountName = "Account Name",
 				assigneeName = "userfn1");
 		}
 
 		task ("And add owned account role with Update account entry, View account role tab permissions ") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+			Account.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
@@ -621,11 +621,11 @@ definition {
 				roleTitle = "Account Specific Role",
 				roleType = "account");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Specific Role",
 				accountUserName = "userfn1 userln1");
 		}
@@ -635,19 +635,19 @@ definition {
 				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn1 userln1");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.updateOwnedAccountRole(
+			Account.updateOwnedAccountRole(
 				accountRoleTitle = "Account Specific Role",
 				accountRoleTitleEdit = "Account Specific Role Edit");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+			Account.gotoAssigneeTab(assigneeTab = "Roles");
 
 			LexiconEntry.viewEntryName(rowEntry = "Account Specific Role Edit");
 		}
@@ -670,7 +670,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea1@liferay.com");
 
-			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+			Account.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("And he is a member of two business accounts") {
@@ -679,22 +679,22 @@ definition {
 					accountEntryName = "Account Name ${accountNum}",
 					accountEntryType = "Business");
 
-				Accounts.openAccountsAdmin();
+				Account.openAccountsAdmin();
 
 				LexiconEntry.gotoEntry(rowEntry = "Account Name ${accountNum}");
 
-				Accounts.assignUsers(
+				Account.assignUsers(
 					accountName = "Account Name ${accountNum}",
 					assigneeName = "userfn1");
 			}
 		}
 
 		task ("When this user is granted permissions to Update account entry and View account roles for Account Name 1") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name 1");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role1");
+			Account.addOwnedAccountRole(accountRoleTitle = "Account Specific Role1");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
@@ -704,21 +704,21 @@ definition {
 					roleType = "account");
 			}
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name 1");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Specific Role1",
 				accountUserName = "userfn1 userln1");
 		}
 
 		task ("And user is granted permissions to only Update an account entry for Account Name 2") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role2");
+			Account.addOwnedAccountRole(accountRoleTitle = "Account Specific Role2");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
@@ -726,11 +726,11 @@ definition {
 				roleTitle = "Account Specific Role2",
 				roleType = "account");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Specific Role2",
 				accountUserName = "userfn1 userln1");
 		}
@@ -740,11 +740,11 @@ definition {
 				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn1 userln1");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name 1");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+			Account.gotoAssigneeTab(assigneeTab = "Roles");
 
 			LexiconEntry.viewEntryName(rowEntry = "Account Specific Role1");
 		}
@@ -756,7 +756,7 @@ definition {
 		}
 
 		task ("and this user cannot view account roles in Account Name 2") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
 

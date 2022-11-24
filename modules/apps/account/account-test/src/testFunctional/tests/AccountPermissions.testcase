@@ -33,7 +33,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Accounts.tearDownCP();
+			Account.tearDownCP();
 		}
 	}
 
@@ -68,7 +68,7 @@ definition {
 				accountRole = "Account Administrator",
 				userEmailAddress = "userea@liferay.com");
 
-			Accounts.setAddAccountEntryPermissions(
+			Account.setAddAccountEntryPermissions(
 				roleTitle = "Reg Role Name",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -80,7 +80,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.addBusinessAccount(
+			Account.addBusinessAccount(
 				accountDescription = "Accounts Name Description for Test",
 				accountName = "Accounts Name for Test");
 		}
@@ -128,13 +128,13 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-			Accounts.addAddressViaSetDefaultAddress(
+			Account.addAddressViaSetDefaultAddress(
 				addressCity = "Shibuya-ku",
 				addressCountry = "Japan",
 				addressName = "Liferay Japan K. K.",
@@ -209,11 +209,11 @@ definition {
 		}
 
 		task ("Then the account user is successfully added") {
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
-			Accounts.viewAssignee(assigneeName = "userfn1");
+			Account.viewAssignee(assigneeName = "userfn1");
 		}
 	}
 
@@ -253,13 +253,13 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-			Accounts.addAddressViaSetDefaultAddress(
+			Account.addAddressViaSetDefaultAddress(
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
@@ -332,11 +332,11 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "user1 user1");
 		}
@@ -393,7 +393,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Deactivate",
 				rowEntry = "Account Name");
 
@@ -403,7 +403,7 @@ definition {
 		}
 
 		task ("Then assert the account is deactivated") {
-			Accounts.viewInactiveAccount(accountName = "Account Name");
+			Account.viewInactiveAccount(accountName = "Account Name");
 		}
 	}
 
@@ -452,7 +452,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Delete",
 				rowEntry = "Account Name");
 
@@ -506,7 +506,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
@@ -653,11 +653,11 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
-			Accounts.viewErrorWhenAddingUserWithBlockedDomain(
+			Account.viewErrorWhenAddingUserWithBlockedDomain(
 				accountName = "Account Name",
 				assigneeName = "gmailUser",
 				emailDomainName = "gmail.com",
@@ -670,7 +670,7 @@ definition {
 		task ("Then the new user is not added into the account") {
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
@@ -715,13 +715,13 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-			Accounts.addAddressViaSetDefaultAddress(
+			Account.addAddressViaSetDefaultAddress(
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
@@ -731,9 +731,9 @@ definition {
 				addressType = "Billing",
 				phoneNumber = "+1-877-543-3729");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Details");
+			Account.gotoAssigneeTab(assigneeTab = "Details");
 
-			Accounts.setDefaultBillingAddress(addressName = "Liferay, Inc.");
+			Account.setDefaultBillingAddress(addressName = "Liferay, Inc.");
 		}
 
 		task ("Then the default billing address is successfully set") {
@@ -741,7 +741,7 @@ definition {
 				key_tab = "Details",
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
-			Accounts.viewDefaultBillingAddress(
+			Account.viewDefaultBillingAddress(
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
@@ -788,13 +788,13 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-			Accounts.addAddressViaSetDefaultAddress(
+			Account.addAddressViaSetDefaultAddress(
 				addressCity = "Shibuya-ku",
 				addressCountry = "Japan",
 				addressName = "Liferay Japan K. K.",
@@ -805,9 +805,9 @@ definition {
 				addressType = "Shipping",
 				phoneNumber = "+81 3-5456-5796");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Details");
+			Account.gotoAssigneeTab(assigneeTab = "Details");
 
-			Accounts.setDefaultShippingAddress(addressName = "Liferay Japan K. K.");
+			Account.setDefaultShippingAddress(addressName = "Liferay Japan K. K.");
 		}
 
 		task ("Then the default shipping address is successfully set") {
@@ -815,7 +815,7 @@ definition {
 				key_tab = "Details",
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
-			Accounts.viewDefaultShippingAddress(
+			Account.viewDefaultShippingAddress(
 				addressCity = "Shibuya-ku",
 				addressCountry = "Japan",
 				addressName = "Liferay Japan K. K.",
@@ -870,11 +870,11 @@ definition {
 					organizationSite = "true");
 			}
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.assignMultipleOrganizations(
+			Account.assignMultipleOrganizations(
 				accountName = "Account Name",
 				organizationNumber = "1,3,4");
 		}
@@ -888,7 +888,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.unassignMultipleOrganizations(
+			Account.unassignMultipleOrganizations(
 				accountName = "Account Name",
 				organizationNumber = "1,3,4");
 		}
@@ -896,7 +896,7 @@ definition {
 		task ("Then assert there isn't any orgs in Account Name") {
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.viewNoAssignee(
+			Account.viewNoAssignee(
 				accountName = "Account Name",
 				assigneeType = "Organizations");
 		}
@@ -941,11 +941,11 @@ definition {
 				organizationName = "Organization for Account",
 				organizationSite = "true");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.assignOrganizations(
+			Account.assignOrganizations(
 				accountName = "Account Name",
 				assigneeName = "Organization for Account");
 		}
@@ -959,9 +959,9 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+			Account.gotoAssigneeTab(assigneeTab = "Organizations");
 
-			Accounts.removeOrganizationAsAssignee(
+			Account.removeOrganizationAsAssignee(
 				accountName = "Account Name",
 				assigneeName = "Organization for Account");
 		}
@@ -969,7 +969,7 @@ definition {
 		task ("Then assert there isn org in Account Name") {
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.viewNoAssignee(
+			Account.viewNoAssignee(
 				accountName = "Account Name",
 				assigneeType = "Organizations");
 		}
@@ -1006,11 +1006,11 @@ definition {
 		}
 
 		task ("and an Account User is given a role by the Account Administrator") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+			Account.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
 
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -1027,7 +1027,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Specific Role",
 				accountUserName = "user1 user1");
 
@@ -1039,7 +1039,7 @@ definition {
 		}
 
 		task ("When the Account Administrator unassigns that role") {
-			Accounts.unassignUserRole(
+			Account.unassignUserRole(
 				accountRoleTitle = "Account Specific Role",
 				accountUserName = "user1 user1");
 		}
@@ -1094,7 +1094,7 @@ definition {
 		}
 
 		task ("When the member logs in and searches for an account via ID") {
-			Accounts.searchAccountsViaId(accountName = "Account Name");
+			Account.searchAccountsViaId(accountName = "Account Name");
 		}
 
 		task ("Then the search results display the account") {
@@ -1213,7 +1213,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 		}
@@ -1319,7 +1319,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 		}
@@ -1433,7 +1433,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
@@ -1476,7 +1476,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account Member");
 
-			Accounts.assignUsers(
+			Account.assignUsers(
 				accountName = "Test Account Member",
 				assigneeName = "userfn userln");
 		}
@@ -1532,11 +1532,11 @@ definition {
 			}
 
 			for (var accountNames : list "Account Name 1,Account Name 2,Account Name 3,Account Name 4,Account Name 5") {
-				Accounts.openAccountsAdmin();
+				Account.openAccountsAdmin();
 
 				LexiconEntry.gotoEntry(rowEntry = "${accountNames}");
 
-				Accounts.assignUsers(
+				Account.assignUsers(
 					accountName = "${accountNames}",
 					assigneeName = "userfn userln");
 			}
@@ -1635,7 +1635,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 		}
@@ -1769,7 +1769,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.goToEntryMenuItem(
+		Account.goToEntryMenuItem(
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
 
@@ -1778,7 +1778,7 @@ definition {
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 		for (var users : list "user1 user1,user2 user2") {
-			Accounts.goToEntryMenuItem(
+			Account.goToEntryMenuItem(
 				menuItem = "Remove",
 				rowEntry = "${users}");
 
@@ -1791,7 +1791,7 @@ definition {
 			portletName = "Account Management",
 			searchTerm = "Account Name");
 
-		Accounts.goToEntryMenuItem(
+		Account.goToEntryMenuItem(
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
 
@@ -1841,7 +1841,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.editPG(
+			Account.editPG(
 				accountName = "Account Name",
 				accountNameEdit = "Edit Account Name");
 		}
@@ -1934,7 +1934,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		Accounts.setAddAccountEntryPermissions(
+		Account.setAddAccountEntryPermissions(
 			roleTitle = "Reg Role Name",
 			userEmailAddress = "userea@liferay.com");
 
@@ -1950,11 +1950,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.addBusinessAccount(accountName = "New Active Account");
+		Account.addBusinessAccount(accountName = "New Active Account");
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.goToEntryMenuItem(
+		Account.goToEntryMenuItem(
 			menuItem = "Deactivate",
 			rowEntry = "Account Name");
 
@@ -1962,7 +1962,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Accounts.viewInactiveAccount(accountName = "Account Name");
+		Account.viewInactiveAccount(accountName = "Account Name");
 
 		LexiconEntry.viewNoEntry(rowEntry = "New Active Account");
 
@@ -2005,7 +2005,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		Accounts.setAddAccountEntryPermissions(
+		Account.setAddAccountEntryPermissions(
 			roleTitle = "Reg Role Name",
 			userEmailAddress = "userea@liferay.com");
 
@@ -2015,7 +2015,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.addPersonAccount(accountName = "Person Account");
+		Account.addPersonAccount(accountName = "Person Account");
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
@@ -2078,11 +2078,11 @@ definition {
 				userScreenName = "usersn2");
 
 			task ("And given a new account role is created") {
-				Accounts.openAccountsAdmin();
+				Account.openAccountsAdmin();
 
 				LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-				Accounts.addOwnedAccountRole(accountRoleTitle = "Test Account Role");
+				Account.addOwnedAccountRole(accountRoleTitle = "Test Account Role");
 			}
 		}
 
@@ -2091,16 +2091,16 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "userfn2");
 
 			for (var accountUserName : list "userfn,userfn2") {
-				Accounts.openAccountsAdmin();
+				Account.openAccountsAdmin();
 
 				LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-				Accounts.addAssigneeToRoleViaUsersTab(
+				Account.addAssigneeToRoleViaUsersTab(
 					accountRoleTitle = "Test Account Role",
 					accountUserName = "${accountUserName}");
 			}

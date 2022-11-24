@@ -47,11 +47,11 @@ definition {
 	@priority = "4"
 	test CancelButtonIsPresent {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
 				accountUserName = "Test Test");
 		}
@@ -88,11 +88,11 @@ definition {
 	@priority = "4"
 	test CanGoBackOnTeamMembersPage {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
 				accountUserName = "Test Test");
 		}

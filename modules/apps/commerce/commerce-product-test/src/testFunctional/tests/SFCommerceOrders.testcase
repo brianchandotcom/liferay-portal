@@ -642,7 +642,7 @@ definition {
 	test EditOrderFromPendingOrderDetailsPage {
 		property portal.acceptance = "true";
 
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
 		CommerceNavigator.gotoEntry(entryName = "Commerce Account");
 

@@ -31,11 +31,11 @@ definition {
 		}
 
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}

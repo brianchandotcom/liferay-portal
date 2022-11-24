@@ -50,11 +50,11 @@ definition {
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
 				accountUserName = "Test Test");
 		}
@@ -109,21 +109,21 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "test.user@liferay.com");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
 
-			Accounts.assignUsers(
+			Account.assignUsers(
 				accountName = "${testAccount}",
 				assigneeName = "Test User");
 		}
 
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
 				accountUserName = "Test Test");
 		}

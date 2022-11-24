@@ -24,11 +24,11 @@ definition {
 			roleTitle = "${orgRoleTitle}",
 			userScreenName = "${userScreenName}");
 
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 
-		Accounts.assignOrganizations(
+		Account.assignOrganizations(
 			accountName = "${accountName}",
 			assigneeName = "${orgName}");
 	}

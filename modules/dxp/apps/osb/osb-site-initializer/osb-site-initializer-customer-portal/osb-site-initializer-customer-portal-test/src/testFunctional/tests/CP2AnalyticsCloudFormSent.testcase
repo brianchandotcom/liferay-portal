@@ -46,11 +46,11 @@ definition {
 	@priority = "3"
 	test MessageConfirmingFormHasAlreadyBeenSent {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -125,11 +125,11 @@ definition {
 	@priority = "3"
 	test UserDoesNotGoThroughOnboarding {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}

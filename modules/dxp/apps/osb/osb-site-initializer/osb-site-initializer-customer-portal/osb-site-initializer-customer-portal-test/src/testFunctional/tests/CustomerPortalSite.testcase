@@ -216,7 +216,7 @@ definition {
 	@priority = "4"
 	test TestsAccountsAreCreatedForCP20 {
 		task ("Assert that after the Customer Portal was created, test accounts were also created") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#ACCOUNTS_TABLE",

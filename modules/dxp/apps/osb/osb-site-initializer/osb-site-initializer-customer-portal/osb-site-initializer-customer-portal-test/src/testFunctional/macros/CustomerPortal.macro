@@ -235,7 +235,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Users");
 
-		Accounts.goToEntryMenuItem(
+		Account.goToEntryMenuItem(
 			menuItem = "Assign Roles",
 			rowEntry = "${accountUserName}");
 
@@ -337,11 +337,11 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "test.user@liferay.com");
 
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 
-		Accounts.assignUsers(
+		Account.assignUsers(
 			accountName = "${accountName}",
 			assigneeName = "${userName}");
 	}
@@ -490,13 +490,13 @@ definition {
 	}
 
 	macro openAccountsAdminForCP {
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 		Navigator.gotoNavTab(navTab = "Users");
 
-		Accounts.goToEntryMenuItem(
+		Account.goToEntryMenuItem(
 			menuItem = "Assign Roles",
 			rowEntry = "Test Test");
 	}

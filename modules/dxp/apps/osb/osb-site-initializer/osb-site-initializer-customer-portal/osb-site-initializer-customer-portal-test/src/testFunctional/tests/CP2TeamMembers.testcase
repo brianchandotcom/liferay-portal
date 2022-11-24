@@ -46,11 +46,11 @@ definition {
 	@priority = "5"
 	test CanViewErrorMessageForBannedEmail {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -80,11 +80,11 @@ definition {
 	@priority = "4"
 	test IfMaxAdminDropDisabled {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -120,11 +120,11 @@ definition {
 	@priority = "4"
 	test IfMaxRequestorDropDisabled {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -160,11 +160,11 @@ definition {
 	@priority = "5"
 	test IfSkipForNowJumpToNextStep {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -194,11 +194,11 @@ definition {
 	@priority = "2"
 	test IsMaxNumberCorrect {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -235,15 +235,15 @@ definition {
 		}
 
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
 				accountUserName = "Test Test");
 		}
@@ -278,15 +278,15 @@ definition {
 		}
 
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Member",
 				accountUserName = "Test Test");
 		}
@@ -324,11 +324,11 @@ definition {
 		}
 
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -355,11 +355,11 @@ definition {
 	@priority = "3"
 	test IsSendInvitationsButtonDisabled {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}
@@ -391,11 +391,11 @@ definition {
 	@priority = "4"
 	test MultipleEmailsWithRoleAtOnce {
 		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}

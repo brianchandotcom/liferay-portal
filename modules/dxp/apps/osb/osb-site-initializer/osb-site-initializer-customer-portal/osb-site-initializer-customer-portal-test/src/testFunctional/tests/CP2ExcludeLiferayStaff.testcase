@@ -45,7 +45,7 @@ definition {
 	@priority = "4"
 	test IfStaffCanSeeProjectHeIsNotRelated {
 		task ("Check how many projects are available in CP2.0") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.tableListInAccountsAdmin(projectsList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account QA 7.0,Test Account QA 7.1,Test Account QA 7.2,Test Account QA 7.3,Test Account QA 7.4");
 		}
@@ -61,11 +61,11 @@ definition {
 	@priority = "5"
 	test IfStaffIsAdmWillPassOnboarding {
 		task ("Navigate to Account Administrator and make the user an admin of the project") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
 		}

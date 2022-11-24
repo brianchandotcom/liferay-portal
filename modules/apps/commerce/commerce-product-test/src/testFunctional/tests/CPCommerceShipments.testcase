@@ -1759,13 +1759,13 @@ definition {
 				accountEntryName = "Commerce Account",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-			Accounts.addAddress(
+			Account.addAddress(
 				addressCity = "Test Address",
 				addressCountry = "United States",
 				addressName = "Test Name",

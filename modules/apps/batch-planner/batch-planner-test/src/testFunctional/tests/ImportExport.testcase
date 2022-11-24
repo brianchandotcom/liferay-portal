@@ -161,9 +161,9 @@ definition {
 		task ("Then only those fields should be imported") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "",
 				accountName = "Test Business Account",
 				accountType = "Business",
@@ -171,7 +171,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
@@ -179,7 +179,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "",
 				accountName = "Test Person Account",
 				accountType = "Person",
@@ -587,9 +587,9 @@ definition {
 		task ("Then the accounts should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
@@ -597,7 +597,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
@@ -605,7 +605,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
@@ -647,9 +647,9 @@ definition {
 		task ("Then the accounts in the file should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
@@ -657,7 +657,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
@@ -665,7 +665,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
@@ -698,9 +698,9 @@ definition {
 		task ("Then the accounts should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
@@ -708,7 +708,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
@@ -716,7 +716,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
@@ -749,9 +749,9 @@ definition {
 		task ("Then the accounts should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
@@ -759,7 +759,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
@@ -767,7 +767,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
@@ -1165,23 +1165,23 @@ definition {
 				executionName = "Triggered by Scheduled Account Import",
 				executionStatus = "Completed");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business");
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest");
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person");
@@ -1721,11 +1721,11 @@ definition {
 
 			Button.click(button = "Back to the List");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.viewNoEntry(rowEntry = "Test Guest Account");
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
@@ -1733,7 +1733,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
@@ -1871,7 +1871,7 @@ definition {
 		task ("Then the import should be stopped and no entity should be imported") {
 			AssertElementPresent(locator1 = "Message#ERROR_MODAL_CONTENT");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.viewNoEntry(rowEntry = "Test Business Account");
 

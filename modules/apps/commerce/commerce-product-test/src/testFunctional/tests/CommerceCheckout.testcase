@@ -225,11 +225,11 @@ definition {
 
 		CommerceNavigator.gotoSpeedwellDashboardItem(dashboardItem = "Login & Security");
 
-		Accounts.goToEntryMenuItem(
+		Account.goToEntryMenuItem(
 			menuItem = "Select Account",
 			rowEntry = "Buyer User");
 
-		Accounts.viewSelectedAccount(entryName = "Buyer User");
+		Account.viewSelectedAccount(entryName = "Buyer User");
 
 		CommerceNavigator.gotoMiniCart();
 

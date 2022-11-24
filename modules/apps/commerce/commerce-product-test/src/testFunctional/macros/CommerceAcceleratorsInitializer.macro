@@ -165,7 +165,7 @@ definition {
 	}
 
 	macro createNewAccountViaFront {
-		Accounts.addBusinessAccount(accountName = "${accountName}");
+		Account.addBusinessAccount(accountName = "${accountName}");
 	}
 
 	macro createNewOrderFromAccountSelectorDropdown {
@@ -199,7 +199,7 @@ definition {
 	}
 
 	macro deactivateCommerceAccountViaFront {
-		Accounts.deactivateAccount(accountName = "${accountName}");
+		Account.deactivateAccount(accountName = "${accountName}");
 	}
 
 	macro gotoAccountSelectorAccountsList {
@@ -219,14 +219,14 @@ definition {
 	}
 
 	macro inviteNewMemberWithRoleToAccount {
-		Accounts.addNewUserToBusinessAccount(
+		Account.addNewUserToBusinessAccount(
 			accountName = "${accountName}",
 			userEmailAddress = "${emailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
 			userScreenName = "${userScreenName}");
 
-		Accounts.addAssigneeToRoleViaUsersTab(
+		Account.addAssigneeToRoleViaUsersTab(
 			accountRoleTitle = "${role}",
 			accountUserName = "${emailAddress}");
 	}

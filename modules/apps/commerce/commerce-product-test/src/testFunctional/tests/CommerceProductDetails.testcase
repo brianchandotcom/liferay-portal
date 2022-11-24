@@ -787,11 +787,11 @@ definition {
 		task ("And the administrator user is set as a buyer for the account") {
 			Refresh();
 
-			Accounts.assignUsers(
+			Account.assignUsers(
 				accountName = "Commerce Account",
 				assigneeName = "Admin User");
 
-			Accounts.addAssigneeToRoleViaUsersTab(
+			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Buyer",
 				accountUserName = "administrator@liferay.com");
 		}

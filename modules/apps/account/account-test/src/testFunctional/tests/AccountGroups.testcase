@@ -18,7 +18,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Accounts.tearDownCP();
+			Account.tearDownCP();
 		}
 	}
 
@@ -563,7 +563,7 @@ definition {
 			LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts ${accountNumber} from AG");
 		}
 
-		Accounts.openAccountsAdmin();
+		Account.openAccountsAdmin();
 
 		for (var rowEntry : list "Delete Accounts 1 from AG,Delete Accounts 2 from AG,Delete Accounts 3 from AG") {
 			LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");

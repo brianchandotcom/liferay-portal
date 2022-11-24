@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemServiceVerifier.class)
+@Component(service = InfoItemServiceVerifier.class)
 public class InfoItemServiceVerifierImpl implements InfoItemServiceVerifier {
 
 	@Override

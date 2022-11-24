@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = InfoEditURLProviderRegistry.class)
+@Component(service = InfoEditURLProviderRegistry.class)
 public class InfoEditURLProviderRegistryImpl
 	implements InfoEditURLProviderRegistry {
 

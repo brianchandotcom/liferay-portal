@@ -85,8 +85,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	immediate = true, property = "path=/portal/add_info_item",
-	service = StrutsAction.class
+	property = "path=/portal/add_info_item", service = StrutsAction.class
 )
 public class AddInfoItemStrutsAction implements StrutsAction {
 

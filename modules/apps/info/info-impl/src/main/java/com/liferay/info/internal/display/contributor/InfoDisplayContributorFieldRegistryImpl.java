@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	immediate = true, service = InfoDisplayContributorFieldRegistry.class
-)
+@Component(service = InfoDisplayContributorFieldRegistry.class)
 public class InfoDisplayContributorFieldRegistryImpl
 	implements InfoDisplayContributorFieldRegistry {
 

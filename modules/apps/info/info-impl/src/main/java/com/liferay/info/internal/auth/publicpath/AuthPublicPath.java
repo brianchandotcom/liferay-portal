@@ -20,8 +20,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	immediate = true, property = "auth.public.path=/portal/add_info_item",
-	service = Object.class
+	property = "auth.public.path=/portal/add_info_item", service = Object.class
 )
 public class AuthPublicPath {
 }

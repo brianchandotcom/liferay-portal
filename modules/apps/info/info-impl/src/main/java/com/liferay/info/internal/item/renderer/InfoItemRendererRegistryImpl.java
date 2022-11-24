@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemRendererRegistry.class)
+@Component(service = InfoItemRendererRegistry.class)
 public class InfoItemRendererRegistryImpl implements InfoItemRendererRegistry {
 
 	@Override

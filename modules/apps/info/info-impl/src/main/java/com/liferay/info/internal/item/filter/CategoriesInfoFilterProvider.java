@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = InfoFilterProvider.class)
+@Component(service = InfoFilterProvider.class)
 public class CategoriesInfoFilterProvider
 	implements InfoFilterProvider<CategoriesInfoFilter> {
 

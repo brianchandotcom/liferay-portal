@@ -85,7 +85,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemServiceRegistry.class)
+@Component(service = InfoItemServiceRegistry.class)
 public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 
 	@Override

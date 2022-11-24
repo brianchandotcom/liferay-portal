@@ -39,9 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-@Component(
-	immediate = true, service = InfoItemFieldReaderFieldSetProvider.class
-)
+@Component(service = InfoItemFieldReaderFieldSetProvider.class)
 public class InfoItemFieldReaderFieldSetProviderImpl
 	implements InfoItemFieldReaderFieldSetProvider {
 

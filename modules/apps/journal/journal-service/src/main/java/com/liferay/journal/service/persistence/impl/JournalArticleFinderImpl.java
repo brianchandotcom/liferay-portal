@@ -1212,69 +1212,6 @@ public class JournalArticleFinderImpl
 		}
 	}
 
-	protected List<JournalArticle> doFindByG_F(
-		long groupId, List<Long> folderIds,
-		QueryDefinition<JournalArticle> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(
-				getClass(), FIND_BY_G_F, queryDefinition, "JournalArticle");
-
-			sql = replaceStatusJoin(sql, groupId, queryDefinition);
-
-			OrderByComparator<JournalArticle> orderByComparator =
-				queryDefinition.getOrderByComparator();
-
-			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, JournalArticle.class.getName(),
-					"JournalArticle.resourcePrimKey", groupId);
-			}
-
-			sql = StringUtil.replace(
-				sql, "[$FOLDER_ID$]",
-				getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity(
-				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (_isOrderByTitle(orderByComparator)) {
-				queryPos.add(1);
-			}
-			else {
-				queryPos.add(0);
-			}
-
-			queryPos.add(groupId);
-			queryPos.add(queryDefinition.getStatus());
-
-			for (Long folderId : folderIds) {
-				queryPos.add(folderId);
-			}
-
-			return (List<JournalArticle>)QueryUtil.list(
-				sqlQuery, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected List<JournalArticle> doFindByG_ST(
 		long groupId, int status,
 		QueryDefinition<JournalArticle> queryDefinition,
@@ -1952,49 +1889,6 @@ public class JournalArticleFinderImpl
 		return sql;
 	}
 
-	protected String replaceStructureTemplate(
-		String sql, String[] ddmStructureKeys, String[] ddmTemplateKeys) {
-
-		if (isNullArray(ddmStructureKeys) && isNullArray(ddmTemplateKeys)) {
-			return StringUtil.removeSubstring(
-				sql, "([$STRUCTURE_TEMPLATE$]) AND");
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if (!isNullArray(ddmStructureKeys)) {
-			sb.append("(");
-
-			for (int i = 0; i < ddmStructureKeys.length; i++) {
-				sb.append(_DDM_STRUCTURE_KEY_SQL);
-				sb.append("OR ");
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			sb.append(")");
-		}
-
-		if (!isNullArray(ddmTemplateKeys)) {
-			if (!isNullArray(ddmStructureKeys)) {
-				sb.append(_AND_OR_CONNECTOR);
-			}
-
-			sb.append("(");
-
-			for (int i = 0; i < ddmTemplateKeys.length; i++) {
-				sb.append(_DDM_TEMPLATE_KEY_SQL);
-				sb.append("OR ");
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			sb.append(")");
-		}
-
-		return StringUtil.replace(sql, "[$STRUCTURE_TEMPLATE$]", sb.toString());
-	}
-
 	private Predicate _getAndOrPredicate(
 		boolean andOperator, Predicate... predicates) {
 
@@ -2271,14 +2165,6 @@ public class JournalArticleFinderImpl
 
 		return false;
 	}
-
-	private static final String _AND_OR_CONNECTOR = "[$AND_OR_CONNECTOR$] ";
-
-	private static final String _DDM_STRUCTURE_KEY_SQL =
-		"(JournalArticle.DDMStructureKey LIKE ? [$AND_OR_NULL_CHECK$]) ";
-
-	private static final String _DDM_TEMPLATE_KEY_SQL =
-		"(JournalArticle.DDMTemplateKey LIKE ? [$AND_OR_NULL_CHECK$]) ";
 
 	private static final String _TITLE_FIELD =
 		"JournalArticleLocalization.title";

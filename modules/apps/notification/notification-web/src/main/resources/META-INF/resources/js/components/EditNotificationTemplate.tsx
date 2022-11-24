@@ -539,13 +539,11 @@ export default function EditNotificationTemplate({
 
 						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('settings')}>
-								{Liferay.FeatureFlags['LPS-162598'] && (
-									<Text as="span" color="secondary">
-										{Liferay.Language.get(
-											'use-terms-to-populate-fields-dynamically'
-										)}
-									</Text>
-								)}
+								<Text as="span" color="secondary">
+									{Liferay.Language.get(
+										'use-terms-to-populate-fields-dynamically'
+									)}
+								</Text>
 
 								{Liferay.FeatureFlags['LPS-162133'] &&
 								values.type === 'userNotification' ? (
@@ -816,13 +814,11 @@ export default function EditNotificationTemplate({
 					</div>
 
 					<Card title={Liferay.Language.get('content')}>
-						{Liferay.FeatureFlags['LPS-162598'] && (
-							<Text as="span" color="secondary">
-								{Liferay.Language.get(
-									'use-terms-to-populate-fields-dynamically-with-the-exception-of-the-freemarker-template-editor'
-								)}
-							</Text>
-						)}
+						<Text as="span" color="secondary">
+							{Liferay.Language.get(
+								'use-terms-to-populate-fields-dynamically-with-the-exception-of-the-freemarker-template-editor'
+							)}
+						</Text>
 
 						<InputLocalized
 							{...(values.type === 'userNotification' && {
@@ -843,88 +839,29 @@ export default function EditNotificationTemplate({
 
 						{values.type === 'email' && (
 							<>
-								{Liferay.FeatureFlags['LPS-162598'] ? (
-									<>
-										<SingleSelect<EditorType>
-											label={Liferay.Language.get(
-												'editor-type'
-											)}
-											onChange={({value}: EditorType) => {
-												setValues({
-													...values,
-													editorType: value,
-												});
-											}}
-											options={
-												EDITOR_TYPES as EditorType[]
-											}
-											required
-											value={
-												EDITOR_TYPES.find(
-													({value}) =>
-														value ===
-														values.editorType
-												)?.label
-											}
-										/>
+								<SingleSelect<EditorType>
+									label={Liferay.Language.get('editor-type')}
+									onChange={({value}: EditorType) => {
+										setValues({
+											...values,
+											editorType: value,
+										});
+									}}
+									options={EDITOR_TYPES as EditorType[]}
+									required
+									value={
+										EDITOR_TYPES.find(
+											({value}) =>
+												value === values.editorType
+										)?.label
+									}
+								/>
 
-										{values.editorType === 'richText' ? (
-											<RichTextLocalized
-												editorConfig={editorConfig}
-												label={Liferay.Language.get(
-													'template'
-												)}
-												name="template"
-												onSelectedLocaleChange={({
-													label,
-												}) => setSelectedLocale(label)}
-												onTranslationsChange={(
-													translation
-												) => {
-													setValues({
-														...values,
-														body: translation,
-													});
-												}}
-												selectedLocale={selectedLocale}
-												translations={values.body}
-											/>
-										) : (
-											<>
-												<FreeMarkerTemplateEditor
-													baseResourceURL={
-														baseResourceURL
-													}
-													objectDefinitions={
-														objectDefinitions
-													}
-													selectedLocale={
-														selectedLocale
-													}
-													setSelectedLocale={
-														setSelectedLocale
-													}
-													setValues={setValues}
-													values={values}
-												/>
-
-												<Text
-													as="span"
-													color="secondary"
-													size={3}
-												>
-													{Liferay.Language.get(
-														'object-terms-cannot-be-used-in-freemarker-templates'
-													)}
-												</Text>
-											</>
-										)}
-									</>
-								) : (
+								{values.editorType === 'richText' ? (
 									<RichTextLocalized
 										editorConfig={editorConfig}
-										label={Liferay.Language.get('body')}
-										name="body"
+										label={Liferay.Language.get('template')}
+										name="template"
 										onSelectedLocaleChange={({label}) =>
 											setSelectedLocale(label)
 										}
@@ -937,6 +874,31 @@ export default function EditNotificationTemplate({
 										selectedLocale={selectedLocale}
 										translations={values.body}
 									/>
+								) : (
+									<>
+										<FreeMarkerTemplateEditor
+											baseResourceURL={baseResourceURL}
+											objectDefinitions={
+												objectDefinitions
+											}
+											selectedLocale={selectedLocale}
+											setSelectedLocale={
+												setSelectedLocale
+											}
+											setValues={setValues}
+											values={values}
+										/>
+
+										<Text
+											as="span"
+											color="secondary"
+											size={3}
+										>
+											{Liferay.Language.get(
+												'object-terms-cannot-be-used-in-freemarker-templates'
+											)}
+										</Text>
+									</>
 								)}
 							</>
 						)}

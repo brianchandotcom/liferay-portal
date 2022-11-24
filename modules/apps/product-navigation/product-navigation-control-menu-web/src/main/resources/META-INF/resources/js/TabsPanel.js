@@ -13,8 +13,9 @@
  */
 
 import ClayTabs from '@clayui/tabs';
+import {useSessionState} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 
 import {AddPanelContext} from './AddPanel';
 import TabsContent from './TabsContent';
@@ -22,7 +23,10 @@ import TabsContent from './TabsContent';
 const TabsPanel = ({tabs}) => {
 	const {portletNamespace} = useContext(AddPanelContext);
 
-	const [activeTabId, setActiveTabId] = useState(0);
+	const [activeTabId, setActiveTabId] = useSessionState(
+		`${portletNamespace}_active-tab-id`,
+		0
+	);
 
 	const getTabId = (tabId) => `${portletNamespace}_tab_${tabId}`;
 	const getTabPanelId = (tabId) => `${portletNamespace}_tabPanel_${tabId}`;

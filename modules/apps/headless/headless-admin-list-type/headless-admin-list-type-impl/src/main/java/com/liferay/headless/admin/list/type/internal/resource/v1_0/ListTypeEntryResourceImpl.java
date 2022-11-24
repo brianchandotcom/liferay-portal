@@ -131,7 +131,8 @@ public class ListTypeEntryResourceImpl
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryService.addListTypeEntry(
-				listTypeDefinitionId, listTypeEntry.getKey(),
+				listTypeEntry.getExternalReferenceCode(), listTypeDefinitionId,
+				listTypeEntry.getKey(),
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeEntry.getName_i18n())));
 	}
@@ -144,7 +145,7 @@ public class ListTypeEntryResourceImpl
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryService.updateListTypeEntry(
-				listTypeEntryId,
+				listTypeEntry.getExternalReferenceCode(), listTypeEntryId,
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeEntry.getName_i18n())));
 	}

@@ -310,13 +310,22 @@ public class ObjectRelationshipLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectRelationship
-			fetchObjectRelationshipByObjectDefinitionId(
-				long objectDefinitionId, String name)
-		throws Exception {
+		fetchObjectRelationshipByObjectDefinitionId(
+			long objectDefinitionId, String objectRelationshipName) {
 
 		return _objectRelationshipLocalService.
 			fetchObjectRelationshipByObjectDefinitionId(
-				objectDefinitionId, name);
+				objectDefinitionId, objectRelationshipName);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectRelationship
+		fetchObjectRelationshipByObjectDefinitionId1(
+			long objectDefinitionId1, String name) {
+
+		return _objectRelationshipLocalService.
+			fetchObjectRelationshipByObjectDefinitionId1(
+				objectDefinitionId1, name);
 	}
 
 	@Override

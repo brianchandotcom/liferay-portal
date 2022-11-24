@@ -70,7 +70,18 @@ public class FDSSampleDisplayContext {
 				"Sample Delete", null, null, null),
 			new FDSActionDropdownItem(
 				"#test-copy", "copy", "sampleMoveFolderMessage", "Sample Copy",
-				null, null, null));
+				null, null, null),
+			new FDSActionDropdownItem(
+				"http://localhost:8080", "truck", "asyncSuccess",
+				"Async Success", "get", null, "async"),
+			new FDSActionDropdownItem(
+				"http://localhost", "times-circle",
+				"asyncErrorConnectionRefused", "Async Connection Refused",
+				"get", null, "async"),
+			new FDSActionDropdownItem(
+				"http://localhost:8080/abc", "staging",
+				"asyncErrorResourceNotFound", "Async Resource Not Found", "get",
+				null, "async"));
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

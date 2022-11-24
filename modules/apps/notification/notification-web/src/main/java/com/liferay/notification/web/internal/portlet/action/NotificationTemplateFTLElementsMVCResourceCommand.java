@@ -14,7 +14,6 @@
 
 package com.liferay.notification.web.internal.portlet.action;
 
-import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
@@ -30,8 +29,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -94,24 +91,17 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 		for (TemplateVariableGroup templateVariableGroup :
 				templateVariableGroupsMap.values()) {
 
-			_prepareJSONObject(jsonArray, false, locale, templateVariableGroup);
+			jsonArray.put(
+				_getTemplateVariableGroupJSONObject(
+					false, locale, templateVariableGroup));
 		}
 
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class, objectDefinition.getClassName());
 
-		InfoForm infoForm = null;
-
-		try {
-			infoForm = infoItemFormProvider.getInfoForm(
-				StringPool.BLANK, _portal.getScopeGroupId(resourceRequest));
-		}
-		catch (NoSuchFormVariationException noSuchFormVariationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFormVariationException);
-			}
-		}
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, _portal.getScopeGroupId(resourceRequest));
 
 		for (InfoFieldSetEntry infoFieldSetEntry :
 				infoForm.getInfoFieldSetEntries()) {
@@ -140,52 +130,54 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 				}
 			}
 
-			_prepareJSONObject(jsonArray, true, locale, templateVariableGroup);
+			jsonArray.put(
+				_getTemplateVariableGroupJSONObject(
+					true, locale, templateVariableGroup));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
 	}
 
-	private void _prepareJSONObject(
-			JSONArray jsonArray, boolean infoField, Locale locale,
+	private JSONObject _getTemplateVariableGroupJSONObject(
+			boolean infoField, Locale locale,
 			TemplateVariableGroup templateVariableGroup)
 		throws Exception {
 
-		JSONObject jsonObject1 = _jsonFactory.createJSONObject(
-			_jsonFactory.looseSerializeDeep(templateVariableGroup));
+		JSONObject templateVariableGroupJSONObject =
+			_jsonFactory.createJSONObject(
+				_jsonFactory.looseSerializeDeep(templateVariableGroup));
 
-		jsonObject1.put(
-			"items", jsonObject1.get("templateVariableDefinitions"));
+		JSONArray jsonArray = (JSONArray)templateVariableGroupJSONObject.get(
+			"templateVariableDefinitions");
 
-		jsonObject1.remove("templateVariableDefinitions");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = (JSONObject)jsonArray.get(i);
 
-		JSONArray jsonArray1 = (JSONArray)jsonObject1.get("items");
-
-		for (int i = 0; i < jsonArray1.length(); i++) {
-			JSONObject jsonObject2 = (JSONObject)jsonArray1.get(i);
-
-			jsonObject2.put(
+			jsonObject.put(
 				"helpText",
-				_language.get(locale, (String)jsonObject2.get("help"))
+				_language.get(locale, (String)jsonObject.get("help"))
 			).put(
-				"label", _language.get(locale, (String)jsonObject2.get("label"))
+				"label", _language.get(locale, (String)jsonObject.get("label"))
 			);
 
-			String content = (String)jsonObject2.get("name");
+			String content = (String)jsonObject.get("name");
 
 			if (infoField) {
 				content = StringBundler.concat("${", content, ".getData()}");
 			}
 
-			jsonObject2.put("content", content);
+			jsonObject.put("content", content);
 		}
 
-		jsonArray.put(jsonObject1);
-	}
+		templateVariableGroupJSONObject.put(
+			"items",
+			templateVariableGroupJSONObject.get("templateVariableDefinitions"));
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		NotificationTemplateFTLElementsMVCResourceCommand.class);
+		templateVariableGroupJSONObject.remove("templateVariableDefinitions");
+
+		return templateVariableGroupJSONObject;
+	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

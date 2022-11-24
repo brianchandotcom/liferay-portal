@@ -317,6 +317,8 @@ export default {
 		'Subtask {0} must be assigned to you to be used in a merge.',
 	'subtask-x-must-be-assigned-to-you-to-be-user-in-a-split':
 		'Subtask {0} must be assigned to you to be used in a split.',
+	'subtask-x-must-be-in-analysis-to-be-used-in-a-split':
+		'Subtask {0} must be in analysis to be used in a split.',
 	'subtasks': 'Subtasks',
 	'suite': 'Suite',
 	'suite-name': 'Suite Name',

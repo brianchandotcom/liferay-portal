@@ -24,6 +24,7 @@ import {Liferay} from '../../../services/liferay';
 import {TestraySubTaskCaseResult} from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
 import {searchUtil} from '../../../util/search';
+import {SubTaskStatuses} from '../../../util/statuses';
 
 const SubtasksCaseResults = () => {
 	const {subtaskId} = useParams();
@@ -33,6 +34,9 @@ const SubtasksCaseResults = () => {
 		selectRows: number[]
 	) => {
 		const alerts = [];
+		const selectedRows = selectRows.map((rowId) =>
+			subtasksCaseResults.find(({id}) => rowId === id)
+		) as TestraySubTaskCaseResult[];
 
 		if (subtasksCaseResults.length === selectRows.length) {
 			alerts.push({
@@ -42,25 +46,41 @@ const SubtasksCaseResults = () => {
 			});
 		}
 
+		const subtaskStatusCheck = () => {
+			const subtasksOpenStatus = selectedRows.filter(
+				({subTask}) =>
+					subTask?.dueStatus &&
+					subTask?.dueStatus.key === SubTaskStatuses.OPEN
+			);
+
+			if (subtasksOpenStatus.length) {
+				return [
+					{
+						text: i18n.sub(
+							'subtask-x-must-be-in-analysis-to-be-used-in-a-split',
+							subtasksOpenStatus[0].subTask?.name as string
+						),
+					},
+				];
+			}
+		};
+
 		const subtaskUserCheck = () => {
-			const selectedRows = selectRows.map((rowId) =>
-				subtasksCaseResults.find(({id}) => rowId === id)
-			) as TestraySubTaskCaseResult[];
+			const subtaskName = selectedRows.map(({subTask}) => subTask?.name);
 
 			const subtasksWithDifferentAssignedUsers = selectedRows.filter(
 				({subTask}) =>
 					subTask?.user?.id &&
-					subTask?.user.id.toString() !==
+					subTask?.user?.id?.toString() ===
 						Liferay.ThemeDisplay.getUserId()
 			);
 
-			if (subtasksWithDifferentAssignedUsers.length) {
+			if (!subtasksWithDifferentAssignedUsers.length) {
 				return [
 					{
 						text: i18n.sub(
 							'subtask-x-must-be-assigned-to-you-to-be-user-in-a-split',
-							subtasksWithDifferentAssignedUsers[0].subTask
-								?.name as string
+							subtaskName[0] as string
 						),
 					},
 				];
@@ -68,8 +88,9 @@ const SubtasksCaseResults = () => {
 		};
 
 		const alreadyAssigned = subtaskUserCheck() || [];
+		const statusOpen = subtaskStatusCheck() || [];
 
-		return [...alerts, ...alreadyAssigned];
+		return [...alerts, ...alreadyAssigned, ...statusOpen];
 	};
 
 	return (

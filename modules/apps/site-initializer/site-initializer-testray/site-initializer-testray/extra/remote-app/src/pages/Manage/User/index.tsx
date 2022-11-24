@@ -57,20 +57,24 @@ const UserListView: React.FC<UserListViewProps> = ({
 				actions,
 				columns: [
 					{
+						clickable: true,
 						key: 'givenName',
 						render: (givenName, {familyName}) =>
 							`${givenName} ${familyName}`,
 						value: i18n.translate('name'),
 					},
 					{
+						clickable: true,
 						key: 'alternateName',
 						value: i18n.translate('screen-name'),
 					},
 					{
+						clickable: true,
 						key: 'emailAddress',
 						value: i18n.translate('email-address'),
 					},
 					{
+						clickable: true,
 						key: 'userGroupBriefs',
 						render: (userGroups: UserGroup[] = []) =>
 							userGroups.map(({name}) => name).join(', '),

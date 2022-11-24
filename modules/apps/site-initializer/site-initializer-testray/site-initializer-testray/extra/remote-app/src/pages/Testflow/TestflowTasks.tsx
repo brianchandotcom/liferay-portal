@@ -115,7 +115,7 @@ const TestFlowTasks = () => {
 			.map(({name}) => ({
 				header: name,
 				text: i18n.sub(
-					'subtask-x-must-be-assigned-to-you-to-be-user-id-a-merge',
+					'subtask-x-must-be-assigned-to-you-to-be-user-in-a-merge',
 					name
 				),
 			}));

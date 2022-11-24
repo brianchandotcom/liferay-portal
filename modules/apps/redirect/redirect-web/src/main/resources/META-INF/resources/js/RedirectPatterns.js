@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import uuidv4 from 'uuid/v4';
@@ -35,6 +36,7 @@ const PatternField = ({
 	index,
 	pattern = '',
 	portletNamespace,
+	strings,
 }) => {
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
 
@@ -124,8 +126,12 @@ const PatternField = ({
 						</ClayForm.FeedbackItem>
 
 						<small>
-							{Liferay.Language.get(
-								'destination-url-error-help-message'
+							{sub(
+								Liferay.Language.get(
+									'destination-url-error-help-message'
+								),
+								strings.absoluteUrl,
+								strings.relativeUrl
 							)}
 						</small>
 					</ClayForm.FeedbackGroup>
@@ -140,6 +146,7 @@ const RedirectPattern = ({
 	description = Liferay.Language.get('redirect-patterns-description'),
 	patterns: initialPatternsList,
 	portletNamespace,
+	strings,
 }) => {
 	const emptyRow = () => ({
 		destinationURL: '',
@@ -206,6 +213,7 @@ const RedirectPattern = ({
 							key={item.id}
 							pattern={item.pattern}
 							portletNamespace={portletNamespace}
+							strings={strings}
 						/>
 					))}
 				</div>
@@ -232,6 +240,10 @@ RedirectPattern.propTypes = {
 		})
 	),
 	portletNamespace: PropTypes.string.isRequired,
+	strings: PropTypes.shape({
+		absoluteUrl: PropTypes.string,
+		relativeUrl: PropTypes.string,
+	}),
 };
 
 export default RedirectPattern;

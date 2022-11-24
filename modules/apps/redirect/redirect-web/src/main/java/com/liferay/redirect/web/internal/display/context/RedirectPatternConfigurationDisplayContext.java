@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 
 import java.util.ArrayList;
@@ -74,6 +75,14 @@ public class RedirectPatternConfigurationDisplayContext {
 			}
 		).put(
 			"portletNamespace", _liferayPortletResponse.getNamespace()
+		).put(
+			"strings",
+			HashMapBuilder.put(
+				"absoluteUrl", PortalUtil.getPortalURL(_httpServletRequest)
+			).put(
+				"relativeUrl",
+				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL
+			).build()
 		).build();
 	}
 

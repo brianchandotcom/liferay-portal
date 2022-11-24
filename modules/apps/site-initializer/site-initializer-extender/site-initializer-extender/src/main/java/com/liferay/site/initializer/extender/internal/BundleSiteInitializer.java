@@ -1074,24 +1074,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
+				json);
+
+			if (objectDefinition == null) {
+				_log.error(
+					"Unable to transform object definition from JSON: " +
+					json);
+
+				continue;
+			}
 
 			com.liferay.object.model.ObjectDefinition objectDefinitionPublish =
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					serviceContext.getCompanyId(),
-					"C_" + jsonObject.getString("name"));
+					"C_" + objectDefinition.getName());
 
 			if (!objectDefinitionPublish.isApproved()) {
-				ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
-					json);
-
-				if (objectDefinition == null) {
-					_log.error(
-						"Unable to transform object definition from JSON: " +
-							json);
-
-					continue;
-				}
 
 				objectDefinition =
 					objectDefinitionResource.patchObjectDefinition(
@@ -1180,8 +1179,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionResource.postObjectDefinition(
 						objectDefinition);
 
-				if (!json.contains("enableComments") &
-					!json.contains("accountEntryRestrictedObjectFieldName")) {
+				if (!json.contains("accountEntryRestrictedObjectFieldName")) {
 
 					objectDefinitionResource.postObjectDefinitionPublish(
 						objectDefinition.getId());
@@ -1246,10 +1244,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_invoke(
 			() -> _addObjectAccountEntryRestricted(
 				objectDefinitionResource, serviceContext));
-
-		objectDefinitionIdsStringUtilReplaceValues.put(
-			"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
-			String.valueOf(objectDefinition.getId()));
 
 		_invoke(
 			() -> _addOrUpdateObjectFields(

@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Vendel Toreki
  */
-@Component(
-	immediate = true, service = BackgroundTaskMessagingConfigurator.class
-)
+@Component(service = {})
 public class BackgroundTaskMessagingConfigurator {
 
 	@Activate

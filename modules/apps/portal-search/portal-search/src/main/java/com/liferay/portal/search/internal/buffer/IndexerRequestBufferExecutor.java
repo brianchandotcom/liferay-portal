@@ -66,7 +66,16 @@ public class IndexerRequestBufferExecutor {
 						indexerRequest));
 			}
 
-			_executeIndexerRequest(indexerRequest);
+			try {
+				indexerRequest.execute();
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to execute index request " + indexerRequest,
+						exception);
+				}
+			}
 
 			completedIndexerRequests.add(indexerRequest);
 
@@ -80,7 +89,26 @@ public class IndexerRequestBufferExecutor {
 		}
 
 		if (!BufferOverflowThreadLocal.isOverflowMode()) {
-			_commit();
+			IndexWriterHelper indexWriterHelper =
+				_indexWriterHelperServiceTracker.getService();
+
+			if (indexWriterHelper == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Index writer helper is null");
+				}
+
+				return;
+			}
+
+			try {
+				indexWriterHelper.commit();
+			}
+			catch (SearchException searchException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to commit search engine", searchException);
+				}
+			}
 		}
 	}
 
@@ -95,44 +123,6 @@ public class IndexerRequestBufferExecutor {
 	@Deactivate
 	protected void deactivate() {
 		_indexWriterHelperServiceTracker.close();
-	}
-
-	private void _commit() {
-		IndexWriterHelper indexWriterHelper = _getIndexWriterHelper();
-
-		if (indexWriterHelper == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Index writer helper is null");
-			}
-
-			return;
-		}
-
-		try {
-			indexWriterHelper.commit();
-		}
-		catch (SearchException searchException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to commit search engine", searchException);
-			}
-		}
-	}
-
-	private void _executeIndexerRequest(IndexerRequest indexerRequest) {
-		try {
-			indexerRequest.execute();
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to execute index request " + indexerRequest,
-					exception);
-			}
-		}
-	}
-
-	private IndexWriterHelper _getIndexWriterHelper() {
-		return _indexWriterHelperServiceTracker.getService();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

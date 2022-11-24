@@ -2268,4 +2268,89 @@ definition {
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "Sorry, no results were found.");
 	}
 
+	@description = "LPS-169016 - Verify it's possible to filter by status"
+	@priority = "4"
+	test CanFilterEntriesByStatus {
+
+		task ("Given a custom object with an entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 169016",
+				objectName = "CustomObject169016",
+				pluralLabelName = "Custom Objects 169016");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject169016");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject169016");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject169016",
+				value = "Entry Test");
+		}
+
+		task ("And given a single approver workflow and other entry") {
+
+			ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Custom Object 169016");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject169016",
+				value = "Entry Test 2");
+		}
+
+		task("When adding a custom view with a Status filter") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 169016");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			var listMetaData = "Custom Field,Status";
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(
+				filterBy = "Status",
+				filterType = "Includes",
+				filterValue = "Approved,Denied,Draft,Expired,Inactive,Incomplete,In Recycle Bin,Scheduled");
+
+			Button.clickSave();
+		}
+
+		task ("Then assert that the entry can be filtered by Status") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject169016");
+
+			Click(
+				key_filter = "Approved, Denied, Draft, Expired, Inactive, Incomplete, In Recycle Bin, Scheduled",
+				locator1 = "ObjectCustomViews#LABEL_SECTION_FILTER_ENTRY");
+
+			Check.checkNotVisible(locator1 = "ObjectCustomViews#TOGGLE_SWITCH_EXCLUDE_STATUS");
+
+			Button.click(button = "Edit Filter");
+
+			ObjectPortlet.viewEntry(entry = "Entry Test");
+		}
+
+	}
+
 }

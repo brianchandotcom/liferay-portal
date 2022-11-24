@@ -168,8 +168,6 @@ public class ViewSharedAssetsDisplayContext {
 			_liferayPortletRequest,
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
-			).setMVCRenderCommandName(
-				"/blogs/view"
 			).buildPortletURL(),
 			null, "no-entries-were-found");
 

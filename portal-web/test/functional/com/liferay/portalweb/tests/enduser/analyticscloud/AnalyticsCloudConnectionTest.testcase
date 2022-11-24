@@ -418,14 +418,6 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can connect AC to DXP"
-	@priority = 5
-	test ConnectACtoDXP {
-		property portal.release = "true";
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
-	}
-
 	@description = "Bug: LRAC-10629 | Automation ID: LRAC-11443 | Test Summary: Sites and Contacts connection status is not changing when renaming the data source"
 	@priority = 3
 	test ConnectionStatusNotChangeWhenRenameDataSource {

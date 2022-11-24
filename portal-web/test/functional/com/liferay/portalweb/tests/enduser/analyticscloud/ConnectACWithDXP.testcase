@@ -92,4 +92,14 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can connect AC to DXP"
+	@priority = "5"
+	test ConnectACToDXPAndSyncSitesAndContacts {
+		property portal.release = "true";
+
+		// Maybe this test will be covered by another one in the future of new stories
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+	}
+
 }

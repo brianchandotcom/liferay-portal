@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.servlet.taglib.util.BasicFragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -118,13 +119,11 @@ public class BasicFragmentEntryVerticalCard
 
 	@Override
 	public String getSubtitle() {
-		long usageCount = fragmentEntry.getUsageCount();
-
-		if (fragmentEntry.getGroupId() == themeDisplay.getCompanyGroupId()) {
-			usageCount = fragmentEntry.getGlobalUsageCount();
-		}
-
-		return LanguageUtil.format(_httpServletRequest, "x-usages", usageCount);
+		return LanguageUtil.format(
+			_httpServletRequest, "x-usages",
+			FragmentEntryLinkLocalServiceUtil.
+				getFragmentEntryLinksCountByFragmentEntryId(
+					fragmentEntry.getFragmentEntryId()));
 	}
 
 	@Override

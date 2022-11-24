@@ -393,7 +393,19 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
+				CommerceInventoryWarehouseIndexer.FIELD_ACTIVE, () -> active
+			).put(
 				CommerceInventoryWarehouseIndexer.FIELD_CITY, keywords
+			).put(
+				CommerceInventoryWarehouseIndexer.
+					FIELD_COUNTRY_TWO_LETTERS_ISO_CODE,
+				() -> {
+					if (Validator.isNotNull(commerceCountryCode)) {
+						return commerceCountryCode;
+					}
+
+					return null;
+				}
 			).put(
 				CommerceInventoryWarehouseIndexer.FIELD_STREET_1, keywords
 			).put(
@@ -409,18 +421,6 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 				LinkedHashMapBuilder.<String, Object>put(
 					"keywords", keywords
 				).build()
-			).put(
-				CommerceInventoryWarehouseIndexer.FIELD_ACTIVE, () -> active
-			).put(
-				CommerceInventoryWarehouseIndexer.
-					FIELD_COUNTRY_TWO_LETTERS_ISO_CODE,
-				() -> {
-					if (Validator.isNotNull(commerceCountryCode)) {
-						return commerceCountryCode;
-					}
-
-					return null;
-				}
 			).build());
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);

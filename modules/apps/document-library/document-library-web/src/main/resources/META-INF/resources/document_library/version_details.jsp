@@ -21,6 +21,8 @@
 		module="document_library/js/checkin/Checkin.es"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))
+			).put(
 				"dlVersionNumberIncreaseValues",
 				HashMapBuilder.<String, Object>put(
 					"MAJOR", DLVersionNumberIncrease.MAJOR
@@ -29,8 +31,6 @@
 				).put(
 					"NONE", DLVersionNumberIncrease.NONE
 				).build()
-			).put(
-				"checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))
 			).build()
 		%>'
 	/>

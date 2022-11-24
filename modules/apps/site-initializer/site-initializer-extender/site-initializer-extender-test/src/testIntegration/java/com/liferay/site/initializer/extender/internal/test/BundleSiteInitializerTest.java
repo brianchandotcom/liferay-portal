@@ -1348,11 +1348,14 @@ public class BundleSiteInitializerTest {
 		_assertRolesAssignments(0, role4.getRoleId());
 	}
 
-	private void _assertRolesAssignments(int roleAssignmentsCount, long roleId) {
+	private void _assertRolesAssignments(
+		int roleAssignmentsCount, long roleId) {
+
 		List<Group> groups = _groupLocalService.getRoleGroups(roleId);
 
 		Assert.assertNotNull(groups);
-		Assert.assertEquals(groups.toString(), roleAssignmentsCount, groups.size());
+		Assert.assertEquals(
+			groups.toString(), roleAssignmentsCount, groups.size());
 	}
 
 	private void _assertSAPEntries(Group group) {

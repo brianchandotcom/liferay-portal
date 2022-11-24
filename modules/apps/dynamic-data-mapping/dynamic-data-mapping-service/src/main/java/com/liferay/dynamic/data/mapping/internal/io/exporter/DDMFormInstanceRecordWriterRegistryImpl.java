@@ -17,11 +17,9 @@ package com.liferay.dynamic.data.mapping.internal.io.exporter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,10 +43,8 @@ public class DDMFormInstanceRecordWriterRegistryImpl
 		return _ddmFormInstanceRecordWriters.get(type);
 	}
 
-	@Override
-	public Map<String, String> getDDMFormInstanceRecordWriterExtensions() {
-		return Collections.unmodifiableMap(
-			_ddmFormInstanceRecordWriterExtensions);
+	public Set<String> getDDMFormInstanceRecordWriterTypes() {
+		return _ddmFormInstanceRecordWriters.keySet();
 	}
 
 	@Reference(
@@ -63,21 +59,11 @@ public class DDMFormInstanceRecordWriterRegistryImpl
 		String type = MapUtil.getString(
 			properties, "ddm.form.instance.record.writer.type");
 
-		String extension = MapUtil.getString(
-			properties, "ddm.form.instance.record.writer.extension");
-
-		if (Validator.isNull(extension)) {
-			extension = StringUtil.toUpperCase(type);
-		}
-
-		_ddmFormInstanceRecordWriterExtensions.put(type, extension);
-
 		_ddmFormInstanceRecordWriters.put(type, ddmFormInstanceRecordWriter);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_ddmFormInstanceRecordWriterExtensions.clear();
 		_ddmFormInstanceRecordWriters.clear();
 	}
 
@@ -88,12 +74,9 @@ public class DDMFormInstanceRecordWriterRegistryImpl
 		String type = MapUtil.getString(
 			properties, "ddm.form.instance.record.writer.type");
 
-		_ddmFormInstanceRecordWriterExtensions.remove(type);
 		_ddmFormInstanceRecordWriters.remove(type);
 	}
 
-	private final Map<String, String> _ddmFormInstanceRecordWriterExtensions =
-		new TreeMap<>();
 	private final Map<String, DDMFormInstanceRecordWriter>
 		_ddmFormInstanceRecordWriters = new TreeMap<>();
 

@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.io.exporter;
 
-import java.util.Map;
+import java.util.Set;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -27,6 +27,6 @@ public interface DDMFormInstanceRecordWriterRegistry {
 	public DDMFormInstanceRecordWriter getDDMFormInstanceRecordWriter(
 		String type);
 
-	public Map<String, String> getDDMFormInstanceRecordWriterExtensions();
+	public Set<String> getDDMFormInstanceRecordWriterTypes();
 
 }

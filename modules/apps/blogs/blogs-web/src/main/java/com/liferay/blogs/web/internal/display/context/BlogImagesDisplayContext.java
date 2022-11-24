@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -52,11 +53,19 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogImagesDisplayContext {
 
 	public BlogImagesDisplayContext(
-		LiferayPortletRequest liferayPortletRequest) {
+		LiferayPortletRequest liferayPortletRequest,
+		ModelResourcePermission<FileEntry> modelResourcePermission) {
 
 		_liferayPortletRequest = liferayPortletRequest;
+		_modelResourcePermission = modelResourcePermission;
 
 		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
+	}
+
+	public ModelResourcePermission<FileEntry>
+		getCustomFileEntryModelResourcePermission() {
+
+		return _modelResourcePermission;
 	}
 
 	public long getFolderId() throws PortalException {
@@ -191,6 +200,7 @@ public class BlogImagesDisplayContext {
 	private Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
+	private final ModelResourcePermission<FileEntry> _modelResourcePermission;
 	private String _orderByCol;
 	private String _orderByType;
 

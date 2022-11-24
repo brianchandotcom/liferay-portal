@@ -147,17 +147,17 @@ public class DBUpgrader {
 			upgradeModules();
 
 			StoreFactory.getStore();
-
-			_stopWatch.stop();
-
-			System.out.println(
-				"\nCompleted Liferay core upgrade process in " +
-					(_stopWatch.getTime() / Time.SECOND) + " seconds");
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
 		finally {
+			_stopWatch.stop();
+
+			System.out.println(
+				"\nCompleted Liferay core upgrade process in " +
+					(_stopWatch.getTime() / Time.SECOND) + " seconds");
+
 			if (PropsValues.UPGRADE_REPORT_ENABLED) {
 				_stopUpgradeReportLogAppender();
 			}

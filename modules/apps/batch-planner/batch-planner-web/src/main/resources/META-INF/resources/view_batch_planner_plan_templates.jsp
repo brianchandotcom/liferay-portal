@@ -57,6 +57,12 @@ BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplate
 				%>
 
 				<liferay-ui:search-container-column-text
+					cssClass="code"
+					name="id"
+					value="<%= String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
 					cssClass="font-weight-bold"
 					name="name"
 					value="<%= HtmlUtil.escape(batchPlannerPlan.getName()) %>"

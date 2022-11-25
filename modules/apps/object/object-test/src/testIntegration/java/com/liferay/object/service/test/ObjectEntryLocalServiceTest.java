@@ -38,6 +38,7 @@ import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.field.util.ObjectFieldFormulaEvaluatorUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -660,7 +661,7 @@ public class ObjectEntryLocalServiceTest {
 					"output", ObjectFieldConstants.BUSINESS_TYPE_TEXT)));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.object.service.impl.ObjectEntryLocalServiceImpl",
+				ObjectFieldFormulaEvaluatorUtil.class.getName(),
 				LoggerTestUtil.ERROR)) {
 
 			_addObjectEntry(

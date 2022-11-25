@@ -62,6 +62,8 @@ public interface SystemObjectDefinitionMetadata {
 
 	public Table getTable();
 
+	public String getTitleObjectFieldName();
+
 	public int getVersion();
 
 }

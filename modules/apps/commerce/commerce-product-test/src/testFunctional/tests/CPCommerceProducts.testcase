@@ -1316,10 +1316,6 @@ definition {
 			}
 		}
 
-		task ("Then there is no error in the logs") {
-			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
-		}
-
 		task ("And the product is created successfully with the uploaded image") {
 			CommerceProducts.openProductsAdmin();
 

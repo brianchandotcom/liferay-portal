@@ -56,6 +56,11 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		return "id";
 	}
 
+	@Override
+	public String getTitleObjectFieldName() {
+		return "id";
+	}
+
 	protected Map<Locale, String> createLabelMap(String labelKey) {
 		return LocalizedMapUtil.getLocalizedMap(_translate(labelKey));
 	}

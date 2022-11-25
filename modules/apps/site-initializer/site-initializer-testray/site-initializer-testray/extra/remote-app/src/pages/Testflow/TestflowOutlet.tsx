@@ -35,6 +35,9 @@ const TestflowOutlet = () => {
 	const {setDropdownIcon, setHeading, setTabs} = useHeader({
 		shouldUpdate: currentPathIsActive || archivedPathIsActive,
 		useDropdown: [],
+		useHeaderActions: {
+			actions: [],
+		},
 		useHeading: [
 			{
 				category: i18n.translate('task').toUpperCase(),

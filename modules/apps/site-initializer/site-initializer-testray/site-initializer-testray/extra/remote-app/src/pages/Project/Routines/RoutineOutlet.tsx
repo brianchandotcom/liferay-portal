@@ -47,7 +47,7 @@ const RoutineOutlet = () => {
 
 	useEffect(() => {
 		setHeaderActions({actions, item: testrayRoutine, mutate});
-	}, [actions, mutate, setHeaderActions, testrayRoutine]);
+	}, [actions, mutate, setHeaderActions, testrayRoutine, pathname]);
 
 	const basePath = `/project/${projectId}/routines/${routineId}`;
 

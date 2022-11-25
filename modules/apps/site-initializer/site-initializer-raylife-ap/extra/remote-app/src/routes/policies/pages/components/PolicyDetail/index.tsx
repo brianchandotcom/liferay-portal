@@ -42,16 +42,17 @@ type PolicyDetailsType = {
 	year: string;
 };
 
+enum NavBarLabel {
+	Drivers = 'Drivers',
+	Vehicles = 'Vehicles',
+}
+
 const PolicyDetail = ({
 	dataJSON,
 	email,
 	phone,
 }: ApplicationPolicyDetailsType) => {
-	enum navBarLabels {
-		Vehicles = 'Vehicles',
-		Drives = 'Drives',
-	}
-	const navbarLabel = [navBarLabels.Vehicles, navBarLabels.Drives];
+	const navbarLabel = [NavBarLabel.Vehicles, NavBarLabel.Drivers];
 	const [active, setActive] = useState(navbarLabel[0]);
 	const [applicationData, setApplicationData] = useState<any>();
 
@@ -88,7 +89,7 @@ const PolicyDetail = ({
 				/>
 			</div>
 
-			{active === navBarLabels.Vehicles &&
+			{active === NavBarLabel.Vehicles &&
 				applicationData?.vehicleInfo?.form.map(
 					(
 						curentVehicle: PolicyDetailsType,
@@ -174,7 +175,7 @@ const PolicyDetail = ({
 					)
 				)}
 
-			{active === navBarLabels.Drives &&
+			{active === NavBarLabel.Drivers &&
 				applicationData?.driverInfo?.form.map(
 					(curentDriver: PolicyDetailsType, indexDriver: number) => (
 						<div

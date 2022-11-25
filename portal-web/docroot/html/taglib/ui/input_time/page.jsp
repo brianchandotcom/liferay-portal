@@ -102,7 +102,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			var timePicker = new A.TimePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
 				{
 					container: '#<%= randomNamespace %>displayTime',
-					mask: '<%= amPm ? "%I:%M %p" : "%H:%M" %>',
+					mask: '<%= amPm ? "%l:%M %p" : "%H:%M" %>',
 					on: {
 						enterKey: function(event) {
 							var instance = this;

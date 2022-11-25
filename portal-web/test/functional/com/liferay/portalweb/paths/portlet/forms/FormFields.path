@@ -1112,7 +1112,7 @@
 </tr>
 <tr>
 	<td>UPLOAD_FIELD_BY_VALUE</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@id,'inputFile')][@value='${key_value}']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@id,'inputFile')][@value='${key_value}'] | //div[@class='ddm-field']//*[text()='${key_fieldName}']/..//input[(@aria-label='File') and (@value='${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>

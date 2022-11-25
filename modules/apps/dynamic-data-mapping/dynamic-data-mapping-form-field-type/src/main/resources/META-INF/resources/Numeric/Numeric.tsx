@@ -203,9 +203,8 @@ const Numeric: React.FC<IProps> = ({
 
 	const inputValue = useMemo<IMaskedNumber>(() => {
 		let newValue =
-			((localizedValue?.[editingLanguageId] ??
-				localizedValue?.[defaultLanguageId]) ||
-				value) ??
+			((value ?? localizedValue?.[editingLanguageId]) ||
+				localizedValue?.[defaultLanguageId]) ??
 			predefinedValue ??
 			'';
 

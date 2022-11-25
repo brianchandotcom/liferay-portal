@@ -84,6 +84,17 @@ public class NotificationTemplateResourceImpl
 	}
 
 	@Override
+	public NotificationTemplate getNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _toNotificationTemplate(
+			_notificationTemplateService.
+				fetchNotificationTemplateByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId()));
+	}
+
+	@Override
 	public Page<NotificationTemplate> getNotificationTemplatesPage(
 			String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -205,6 +216,29 @@ public class NotificationTemplateResourceImpl
 		return _toNotificationTemplate(
 			_notificationTemplateService.updateNotificationTemplate(
 				notificationContext));
+	}
+
+	@Override
+	public NotificationTemplate putNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode,
+			NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		com.liferay.notification.model.NotificationTemplate
+			serviceBuilderNotificationTemplate =
+				_notificationTemplateService.
+					fetchNotificationTemplateByExternalReferenceCode(
+						externalReferenceCode, contextCompany.getCompanyId());
+
+		notificationTemplate.setExternalReferenceCode(externalReferenceCode);
+
+		if (serviceBuilderNotificationTemplate != null) {
+			return putNotificationTemplate(
+				serviceBuilderNotificationTemplate.getNotificationTemplateId(),
+				notificationTemplate);
+		}
+
+		return postNotificationTemplate(notificationTemplate);
 	}
 
 	private Locale _getLocale() {

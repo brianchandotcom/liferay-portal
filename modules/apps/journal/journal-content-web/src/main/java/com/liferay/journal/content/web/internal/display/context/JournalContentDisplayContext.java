@@ -28,9 +28,9 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.constants.ItemSelectorCriteriaConstants;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
@@ -505,9 +505,6 @@ public class JournalContentDisplayContext {
 	}
 
 	public PortletURL getItemSelectorURL() {
-		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
-			ItemSelector.class.getName());
-
 		LiferayRenderRequest liferayRenderRequest =
 			(LiferayRenderRequest)LiferayPortletUtil.getLiferayPortletRequest(
 				_portletRequest);
@@ -519,24 +516,18 @@ public class JournalContentDisplayContext {
 			(LiferayRenderResponse)LiferayPortletUtil.getLiferayPortletResponse(
 				_portletResponse);
 
-		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
-			new AssetEntryItemSelectorCriterion();
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
 
-		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new AssetEntryItemSelectorReturnType());
+		itemSelectorCriterion.setItemType(JournalArticle.class.getName());
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+		itemSelectorCriterion.setStatus(WorkflowConstants.STATUS_ANY);
 
-		assetEntryItemSelectorCriterion.setGroupId(getGroupId());
-		assetEntryItemSelectorCriterion.setScopeGroupType(getScopeGroupType());
-		assetEntryItemSelectorCriterion.setShowNonindexable(true);
-		assetEntryItemSelectorCriterion.setShowScheduled(true);
-		assetEntryItemSelectorCriterion.setSingleSelect(true);
-		assetEntryItemSelectorCriterion.setTypeSelection(
-			JournalArticle.class.getName());
-
-		return itemSelector.getItemSelectorURL(
+		return _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory,
 			liferayRenderResponse.getNamespace() + "selectedItem",
-			assetEntryItemSelectorCriterion);
+			itemSelectorCriterion);
 	}
 
 	public Map<String, Object> getJournalTemplateContext() {

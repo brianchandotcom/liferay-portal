@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useFormikContext} from 'formik';
 import {useCallback} from 'react';
@@ -57,13 +58,20 @@ const MDFClaimPage = ({
 		}
 	).length;
 
-	const getClaimPage = (claimsNotDraft?: number) => {
+	const getClaimPage = () => {
 		if (claimsNotDraft && claimsNotDraft >= 2) {
 			return (
-				<PRMForm
-					name="Limit of Claims reached"
-					title="You already submitted 2 claims."
-				>
+				<PRMForm name="New" title="Reimbursement Claim">
+					<div className="d-flex justify-content-center mt-4">
+						<ClayAlert
+							className="m-0 w-100"
+							displayType="info"
+							title="Info:"
+						>
+							You already submitted 2 claims.
+						</ClayAlert>
+					</div>
+
 					<PRMForm.Footer>
 						<div className="d-flex mr-auto">
 							<ClayButton
@@ -173,7 +181,7 @@ const MDFClaimPage = ({
 		);
 	};
 
-	return getClaimPage(claimsNotDraft);
+	return getClaimPage();
 };
 
 export default MDFClaimPage;

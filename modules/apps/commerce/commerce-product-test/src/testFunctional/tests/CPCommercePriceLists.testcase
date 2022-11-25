@@ -1590,6 +1590,77 @@ definition {
 			value1 = "50.00");
 	}
 
+	@description = "Test for COMMERCE-9405. User with Discount Manager role can add price list entries"
+	@priority = "3"
+	test CanDiscountManagerViewPriceLists {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And Discount Manager role has VIEW Commerce Catalog permission") {
+			Role.openRolesAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Discount Manager");
+
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Catalogs > Commerce Catalog");
+		}
+
+		task ("And a user with Discount Manager role is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Discount Manager",
+				userEmailAddress = "discount.manager@liferay.com",
+				userFirstName = "Discount",
+				userLastName = "Manager",
+				userScreenName = "discount.manager");
+		}
+
+		task ("When the Discount Manager logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "discount.manager@liferay.com",
+				userLoginFullName = "Discount Manager");
+		}
+
+		task ("Then on the Applications Menu -> Commerce, the Discount Manager can see only Price Lists and Promotions") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Commerce");
+
+			for (var portlet : list "Catalogs,Channels,Inventory,Orders,Products,Shipments") {
+				AssertElementNotPresent(
+					key_category = "",
+					key_portlet = "${portlet}",
+					locator1 = "ApplicationsMenu#PORTLET");
+			}
+
+			for (var portlet : list "Price Lists,Promotions") {
+				AssertElementPresent(
+					key_category = "Pricing",
+					key_portlet = "${portlet}",
+					locator1 = "ApplicationsMenu#PORTLET");
+			}
+		}
+
+		task ("When the Discount Manager navigates to Price Lists page") {
+			ApplicationsMenuHelper.gotoPortlet(
+				category = "Pricing",
+				portlet = "Price Lists");
+		}
+
+		task ("Then the user is able to create a new price list") {
+			for (var entry : list "Master Base Price List,Minium Base Price List") {
+				AssertElementPresent(
+					key_entryName = "${entry}",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7597. We cannot delete base price lists and base promotions."
 	@priority = "3"
 	test CanNotDeleteBasePriceListsAndPromotions {

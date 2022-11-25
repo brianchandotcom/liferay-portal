@@ -347,18 +347,18 @@ definition {
 		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "PGMediagallery#ViewVideoViaMediaGallery";
 
-		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

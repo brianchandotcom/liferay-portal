@@ -136,6 +136,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_DISABLED_CLASS</td>
+	<td>//button[contains(@class,'disabled')][normalize-space()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRASH_DISABLED</td>
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-trash')]][@disabled='']</td>
 	<td></td>

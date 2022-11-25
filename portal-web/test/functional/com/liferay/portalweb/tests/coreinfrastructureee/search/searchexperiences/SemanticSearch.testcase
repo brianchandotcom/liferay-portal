@@ -151,6 +151,84 @@ definition {
 		}
 	}
 
+	test ViewHuggingFaceSystemSettingsRequiredFieldValidation {
+		property custom.properties = "feature.flag.LPS-163688=true";
+
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+		PortletEntry.inputText(
+			fieldLabel = "Hugging Face Access Token",
+			text = "");
+
+		AssertElementPresent(
+			key_text = "Test Configuration",
+			locator1 = "Button#ANY_DISABLED_CLASS");
+
+		Button.clickSave();
+
+		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
+
+		PortletEntry.inputText(
+			fieldLabel = "Hugging Face Access Token",
+			text = "test");
+
+		PortletEntry.inputText(
+			fieldLabel = "Model",
+			text = "");
+
+		AssertElementPresent(
+			key_text = "Test Configuration",
+			locator1 = "Button#ANY_DISABLED_CLASS");
+
+		Button.clickSave();
+
+		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
+
+		PortletEntry.inputText(
+			fieldLabel = "Model",
+			text = "facebook");
+
+		FormFields.viewFieldDropdownItem(itemName = "facebook/bart-base");
+
+		Click(
+			key_itemName = "facebook/bart-base",
+			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+
+		Type(
+			key_fieldLabel = "Model Timeout",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = "");
+
+		AssertElementPresent(
+			key_text = "Test Configuration",
+			locator1 = "Button#ANY_DISABLED_CLASS");
+
+		Button.clickSave();
+
+		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
+
+		Type(
+			key_fieldLabel = "Model Timeout",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = "25");
+
+		AssertElementNotPresent(
+			key_text = "Test Configuration",
+			locator1 = "Button#ANY_DISABLED_CLASS");
+
+		AssertElementPresent(
+			key_text = "Test Configuration",
+			locator1 = "Button#ANY_ENABLED");
+
+		PortletEntry.save();
+	}
+
 	test ViewTxtaiSystemSettingsTestConfiguration {
 		property custom.properties = "feature.flag.LPS-163688=true";
 		property test.name.skip.portal.instance = "SemanticSearch#ViewTxtaiSystemSettingsTestConfiguration";

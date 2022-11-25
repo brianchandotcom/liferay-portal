@@ -92,7 +92,7 @@ definition {
 			wikiPageContent = "<<TableOfContents>>",
 			wikiPageName = "Wiki Page Title");
 
-		PortalSettings.openToConfigInInstanceSettings(portlet = "Language");
+		PortalSettings.openToConfigInInstanceSettings(portletKey = "language");
 
 		PortalSettings.configureCurrentLanguagesCP(
 			currentPortalLanguages = "English (United Kingdom),Japanese (Japan)",

@@ -183,9 +183,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		modified(properties);
 
-		_searchPermissionFieldContributorServiceTrackerList =
-			ServiceTrackerListFactory.open(
-				bundleContext, SearchPermissionFieldContributor.class);
 		_searchPermissionFilterContributorServiceTrackerList =
 			ServiceTrackerListFactory.open(
 				bundleContext, SearchPermissionFilterContributor.class);
@@ -193,7 +190,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Deactivate
 	protected void deactivate() {
-		_searchPermissionFieldContributorServiceTrackerList.close();
 		_searchPermissionFilterContributorServiceTrackerList.close();
 	}
 
@@ -252,7 +248,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		throws Exception {
 
 		for (SearchPermissionFieldContributor searchPermissionFieldContributor :
-				_searchPermissionFieldContributorServiceTrackerList) {
+				_searchPermissionFieldContributorRegistry.
+					getSearchPermissionFieldContributors()) {
 
 			searchPermissionFieldContributor.contribute(
 				document, className, classPK);
@@ -603,8 +600,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchPermissionCheckerImpl.class);
 
-	private ServiceTrackerList<SearchPermissionFieldContributor>
-		_searchPermissionFieldContributorServiceTrackerList;
+	@Reference
+	private SearchPermissionFieldContributorRegistry
+		_searchPermissionFieldContributorRegistry;
+
 	private ServiceTrackerList<SearchPermissionFilterContributor>
 		_searchPermissionFilterContributorServiceTrackerList;
 

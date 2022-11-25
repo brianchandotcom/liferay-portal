@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.internal.permission;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
@@ -33,16 +31,14 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.internal.SearchPermissionFieldContributorRegistry;
 import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -103,23 +99,13 @@ public class SearchPermissionDocumentContributorImpl
 			companyId, groupId, className, classPK, viewActionId, document);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, SearchPermissionFieldContributor.class);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerList.close();
-	}
-
 	private void _addPermissionFields(
 		long companyId, long groupId, String className, long classPK,
 		String viewActionId, Document document) {
 
 		for (SearchPermissionFieldContributor searchPermissionFieldContributor :
-				_serviceTrackerList) {
+				_searchPermissionFieldContributorRegistry.
+					getSearchPermissionFieldContributors()) {
 
 			searchPermissionFieldContributor.contribute(
 				document, className, classPK);
@@ -193,7 +179,8 @@ public class SearchPermissionDocumentContributorImpl
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
-	private ServiceTrackerList<SearchPermissionFieldContributor>
-		_serviceTrackerList;
+	@Reference
+	private SearchPermissionFieldContributorRegistry
+		_searchPermissionFieldContributorRegistry;
 
 }

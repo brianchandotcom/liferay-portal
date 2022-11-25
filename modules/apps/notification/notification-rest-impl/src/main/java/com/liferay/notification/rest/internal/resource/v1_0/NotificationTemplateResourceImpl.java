@@ -285,6 +285,9 @@ public class NotificationTemplateResourceImpl
 					serviceBuilderNotificationTemplate.getDescription();
 				editorType = NotificationTemplate.EditorType.create(
 					serviceBuilderNotificationTemplate.getEditorType());
+				externalReferenceCode =
+					serviceBuilderNotificationTemplate.
+						getExternalReferenceCode();
 				id =
 					serviceBuilderNotificationTemplate.
 						getNotificationTemplateId();

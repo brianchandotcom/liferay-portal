@@ -186,12 +186,13 @@ public class KBArticleServiceWrapper
 
 	@Override
 	public String getGroupKBArticlesRSS(
-			int status, int rssDelta, String rssDisplayStyle, String rssFormat,
+			int status, int max, String type, double version,
+			String displayStyle,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbArticleService.getGroupKBArticlesRSS(
-			status, rssDelta, rssDisplayStyle, rssFormat, themeDisplay);
+			status, max, type, version, displayStyle, themeDisplay);
 	}
 
 	@Override
@@ -217,13 +218,13 @@ public class KBArticleServiceWrapper
 
 	@Override
 	public String getKBArticleRSS(
-			long resourcePrimKey, int status, int rssDelta,
-			String rssDisplayStyle, String rssFormat,
+			long resourcePrimKey, int status, int max, String type,
+			double version, String displayStyle,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbArticleService.getKBArticleRSS(
-			resourcePrimKey, status, rssDelta, rssDisplayStyle, rssFormat,
+			resourcePrimKey, status, max, type, version, displayStyle,
 			themeDisplay);
 	}
 

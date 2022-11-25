@@ -80,3 +80,7 @@ if ((range != null) || (exportImportConfiguration == null)) {
 	useRequestValues = true;
 }
 %>
+
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/select_pages/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>

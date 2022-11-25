@@ -4357,7 +4357,7 @@ public class JournalArticleLocalServiceImpl
 				article.getId(), languageId);
 		}
 
-		String content = JournalUtil.removeArticleLocale(article, languageId);
+		String content = _removeArticleLocale(article, languageId);
 
 		if (content != null) {
 			updateDDMFields(article, content);
@@ -9040,6 +9040,63 @@ public class JournalArticleLocalServiceImpl
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
+	}
+
+	private void _removeArticleLocale(Element element, String languageId) {
+		for (Element dynamicElementElement :
+				element.elements("dynamic-element")) {
+
+			for (Element dynamicContentElement :
+					dynamicElementElement.elements("dynamic-content")) {
+
+				String curLanguageId = GetterUtil.getString(
+					dynamicContentElement.attributeValue("language-id"));
+
+				if (curLanguageId.equals(languageId)) {
+					dynamicContentElement.detach();
+				}
+			}
+
+			_removeArticleLocale(dynamicElementElement, languageId);
+		}
+	}
+
+	private String _removeArticleLocale(
+		JournalArticle article, String languageId) {
+
+		Document document = article.getDocument();
+
+		if (document == null) {
+			return null;
+		}
+
+		Element rootElement = document.getRootElement();
+
+		String availableLocales = rootElement.attributeValue(
+			"available-locales");
+
+		if (availableLocales == null) {
+			return article.getContent();
+		}
+
+		availableLocales = StringUtil.removeFromList(
+			availableLocales, languageId);
+
+		if (availableLocales.endsWith(",")) {
+			availableLocales = availableLocales.substring(
+				0, availableLocales.length() - 1);
+		}
+
+		rootElement.addAttribute("available-locales", availableLocales);
+
+		_removeArticleLocale(rootElement, languageId);
+
+		try {
+			return document.formattedString(StringPool.DOUBLE_SPACE);
+		}
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
+		}
 	}
 
 	private String _replaceTempImages(JournalArticle article, String content)

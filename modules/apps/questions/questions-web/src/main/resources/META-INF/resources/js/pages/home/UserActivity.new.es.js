@@ -19,8 +19,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import ActivityQuestionRow from '../../components/ActivityQuestionRow.es';
 import PaginatedList from '../../components/PaginatedList.es';
-import QuestionRow from '../../components/QuestionRow.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
@@ -92,14 +92,6 @@ export default withRouter(
 			historyPushParser(buildUrl(page, pageSize));
 		}
 
-		const addSectionToQuestion = (question) => {
-			return {
-				...question,
-				messageBoardSection:
-					question?.messageBoardThread?.messageBoardSection,
-			};
-		};
-
 		useEffect(() => {
 			if (data) {
 				setCurrentQuestion(data?.messageBoardMessages?.items[0]);
@@ -161,7 +153,7 @@ export default withRouter(
 								totalCount={totalCount}
 							>
 								{(question) => (
-									<QuestionRow
+									<ActivityQuestionRow
 										context={context}
 										currentSection={
 											context.useTopicNamesInURL
@@ -184,9 +176,12 @@ export default withRouter(
 												setCurrentQuestion(question);
 											},
 										}}
-										question={addSectionToQuestion(
-											question
-										)}
+										question={{
+											...question,
+											messageBoardSection:
+												question?.messageBoardThread
+													?.messageBoardSection,
+										}}
 										rowSelected={
 											currentQuestion?.friendlyUrlPath
 										}

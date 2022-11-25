@@ -805,6 +805,7 @@ export const getUserActivityQuery = `
 					image
 					name
 				}
+				dateCreated
 				creatorStatistics {
 					postsNumber
 					rank

@@ -412,7 +412,7 @@ const Question = ({
 				})}
 			>
 				{!loading && !error && (
-					<div className="questions-container row">
+					<div className="questions-container">
 						{display.actions && display.rating && (
 							<div className="col-md-1 text-md-center">
 								<Rating
@@ -431,7 +431,7 @@ const Question = ({
 						<div
 							className={classNames('', {
 								'col-md-10': !display.styled,
-								'col-md-12 c-p-4': display.styled,
+								'col-md-12 ': display.styled,
 							})}
 						>
 							<div

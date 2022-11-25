@@ -12,11 +12,12 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import React, {useEffect, useState} from 'react';
 
 import Highlight from './Highlight.es';
 
-export default function ArticleBodyRenderer({
+export default function ArticleBodyAnwser({
 	articleBody,
 	compactMode = false,
 	companyName,
@@ -37,13 +38,18 @@ export default function ArticleBodyRenderer({
 	const _companyName = hasCompanyMx && companyName ? `(${companyName})` : '';
 
 	return (
-		<>
+		<div className="h-100 p-3 position-relative rectangle-comment w-100">
+			<div className="icon-quote-left position-absolute">
+				<ClayIcon symbol="quote-left" />
+			</div>
+
 			{encodingFormat !== 'bbcode' && compactMode && (
 				<div
 					className={`questions-article-body questions-labels-limit ${id}`}
 					dangerouslySetInnerHTML={{__html: articleBody}}
 				/>
 			)}
+
 			{encodingFormat !== 'bbcode' && !compactMode && (
 				<div className={`cke_readonly questions-article-body-${id}`}>
 					<Highlight innerHTML={true}>{articleBody}</Highlight>
@@ -59,6 +65,10 @@ export default function ArticleBodyRenderer({
 					}}
 				/>
 			)}
-		</>
+
+			<div className="icon-quote-right position-absolute">
+				<ClayIcon symbol="quote-right" />
+			</div>
+		</div>
 	);
 }

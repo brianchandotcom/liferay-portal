@@ -114,7 +114,7 @@ import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.escape.WikiEscapeUtil;
 import com.liferay.wiki.exception.DuplicatePageException;
-import com.liferay.wiki.exception.DuplicatePageExternalReferenceCodeException;
+import com.liferay.wiki.exception.DuplicateWikiPageExternalReferenceCodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.PageTitleException;
@@ -3444,9 +3444,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			groupId, externalReferenceCode);
 
 		if (wikiPage != null) {
-			throw new DuplicatePageExternalReferenceCodeException(
+			throw new DuplicateWikiPageExternalReferenceCodeException(
 				StringBundler.concat(
-					"Duplicate page external reference code ",
+					"Duplicate wiki page external reference code ",
 					externalReferenceCode, " in group ", groupId));
 		}
 	}

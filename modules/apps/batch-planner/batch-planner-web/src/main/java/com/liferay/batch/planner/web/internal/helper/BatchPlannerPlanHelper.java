@@ -221,7 +221,8 @@ public class BatchPlannerPlanHelper {
 				templateBatchPlannerPlan.isExport(),
 				templateBatchPlannerPlan.getExternalType(), externalURL,
 				templateBatchPlannerPlan.getInternalClassName(), name,
-				(int)file.length(), null, false);
+				(int)file.length(),
+				templateBatchPlannerPlan.getTaskItemDelegateName(), false);
 
 		List<BatchPlannerMapping> batchPlannerMappings =
 			_batchPlannerMappingService.getBatchPlannerMappings(

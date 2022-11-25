@@ -17,7 +17,7 @@ package com.liferay.message.boards.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
-import com.liferay.message.boards.exception.DuplicateMessageExternalReferenceCodeException;
+import com.liferay.message.boards.exception.DuplicateMBMessageExternalReferenceCodeException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
@@ -163,7 +163,7 @@ public class MBMessageLocalServiceTest {
 		Assert.assertEquals(subject, mbMessage.getBody());
 	}
 
-	@Test(expected = DuplicateMessageExternalReferenceCodeException.class)
+	@Test(expected = DuplicateMBMessageExternalReferenceCodeException.class)
 	public void testAddMessageWithExistingExternalReferenceCode()
 		throws Exception {
 

@@ -17,7 +17,7 @@ package com.liferay.blogs.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.attachments.test.BlogsEntryAttachmentFileEntryHelperTest;
 import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.exception.DuplicateEntryExternalReferenceCodeException;
+import com.liferay.blogs.exception.DuplicateBlogsEntryExternalReferenceCodeException;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntrySmallImageNameException;
 import com.liferay.blogs.exception.EntryTitleException;
@@ -144,7 +144,7 @@ public class BlogsEntryLocalServiceTest {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
-	@Test(expected = DuplicateEntryExternalReferenceCodeException.class)
+	@Test(expected = DuplicateBlogsEntryExternalReferenceCodeException.class)
 	public void testAddBlogsEntryWithExistingExternalReferenceCode()
 		throws Exception {
 

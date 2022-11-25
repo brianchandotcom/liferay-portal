@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.ProgressTrackerThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.wiki.exception.DuplicateNodeExternalReferenceCodeException;
+import com.liferay.wiki.exception.DuplicateWikiNodeExternalReferenceCodeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -63,7 +63,7 @@ public class WikiNodeLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test(expected = DuplicateNodeExternalReferenceCodeException.class)
+	@Test(expected = DuplicateWikiNodeExternalReferenceCodeException.class)
 	public void testAddNodeWithExistingExternalReferenceCode()
 		throws Exception {
 

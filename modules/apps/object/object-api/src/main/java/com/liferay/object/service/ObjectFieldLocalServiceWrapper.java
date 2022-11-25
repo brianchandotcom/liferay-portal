@@ -331,6 +331,14 @@ public class ObjectFieldLocalServiceWrapper
 			objectDefinitionId, name);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectField fetchObjectField(
+		String externalReferenceCode, long objectDefinitionId) {
+
+		return _objectFieldLocalService.fetchObjectField(
+			externalReferenceCode, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *

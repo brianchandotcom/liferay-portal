@@ -78,12 +78,14 @@ public class NotificationTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", notificationTemplateId=");
 		sb.append(notificationTemplateId);
 		sb.append(", companyId=");
@@ -129,6 +131,14 @@ public class NotificationTemplateCacheModel
 		}
 		else {
 			notificationTemplateImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			notificationTemplateImpl.setExternalReferenceCode("");
+		}
+		else {
+			notificationTemplateImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		notificationTemplateImpl.setNotificationTemplateId(
@@ -219,6 +229,7 @@ public class NotificationTemplateCacheModel
 
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		notificationTemplateId = objectInput.readLong();
 
@@ -248,6 +259,13 @@ public class NotificationTemplateCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(notificationTemplateId);
@@ -320,6 +338,7 @@ public class NotificationTemplateCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long notificationTemplateId;
 	public long companyId;
 	public long userId;

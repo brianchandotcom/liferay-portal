@@ -98,6 +98,21 @@ public interface NotificationTemplateModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this notification template.
+	 *
+	 * @return the external reference code of this notification template
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this notification template.
+	 *
+	 * @param externalReferenceCode the external reference code of this notification template
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the notification template ID of this notification template.
 	 *
 	 * @return the notification template ID of this notification template

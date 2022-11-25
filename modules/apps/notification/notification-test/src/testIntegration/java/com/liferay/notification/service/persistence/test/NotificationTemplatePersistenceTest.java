@@ -15,6 +15,7 @@
 package com.liferay.notification.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.notification.exception.DuplicateNotificationTemplateExternalReferenceCodeException;
 import com.liferay.notification.exception.NoSuchNotificationTemplateException;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalServiceUtil;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -129,6 +132,9 @@ public class NotificationTemplatePersistenceTest {
 
 		newNotificationTemplate.setUuid(RandomTestUtil.randomString());
 
+		newNotificationTemplate.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newNotificationTemplate.setCompanyId(RandomTestUtil.nextLong());
 
 		newNotificationTemplate.setUserId(RandomTestUtil.nextLong());
@@ -169,6 +175,9 @@ public class NotificationTemplatePersistenceTest {
 		Assert.assertEquals(
 			existingNotificationTemplate.getUuid(),
 			newNotificationTemplate.getUuid());
+		Assert.assertEquals(
+			existingNotificationTemplate.getExternalReferenceCode(),
+			newNotificationTemplate.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingNotificationTemplate.getNotificationTemplateId(),
 			newNotificationTemplate.getNotificationTemplateId());
@@ -215,6 +224,30 @@ public class NotificationTemplatePersistenceTest {
 			newNotificationTemplate.getType());
 	}
 
+	@Test(
+		expected = DuplicateNotificationTemplateExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		NotificationTemplate notificationTemplate = addNotificationTemplate();
+
+		NotificationTemplate newNotificationTemplate =
+			addNotificationTemplate();
+
+		newNotificationTemplate.setCompanyId(
+			notificationTemplate.getCompanyId());
+
+		newNotificationTemplate = _persistence.update(newNotificationTemplate);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newNotificationTemplate);
+
+		newNotificationTemplate.setExternalReferenceCode(
+			notificationTemplate.getExternalReferenceCode());
+
+		_persistence.update(newNotificationTemplate);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -231,6 +264,15 @@ public class NotificationTemplatePersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -262,10 +304,11 @@ public class NotificationTemplatePersistenceTest {
 	protected OrderByComparator<NotificationTemplate> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"NotificationTemplate", "mvccVersion", true, "uuid", true,
-			"notificationTemplateId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectDefinitionId", true, "description", true, "editorType", true,
-			"name", true, "recipientType", true, "subject", true, "type", true);
+			"externalReferenceCode", true, "notificationTemplateId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "objectDefinitionId", true,
+			"description", true, "editorType", true, "name", true,
+			"recipientType", true, "subject", true, "type", true);
 	}
 
 	@Test
@@ -502,6 +545,75 @@ public class NotificationTemplatePersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		NotificationTemplate newNotificationTemplate =
+			addNotificationTemplate();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newNotificationTemplate.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		NotificationTemplate newNotificationTemplate =
+			addNotificationTemplate();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			NotificationTemplate.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"notificationTemplateId",
+				newNotificationTemplate.getNotificationTemplateId()));
+
+		List<NotificationTemplate> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		NotificationTemplate notificationTemplate) {
+
+		Assert.assertEquals(
+			notificationTemplate.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				notificationTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(notificationTemplate.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				notificationTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+	}
+
 	protected NotificationTemplate addNotificationTemplate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -510,6 +622,9 @@ public class NotificationTemplatePersistenceTest {
 		notificationTemplate.setMvccVersion(RandomTestUtil.nextLong());
 
 		notificationTemplate.setUuid(RandomTestUtil.randomString());
+
+		notificationTemplate.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		notificationTemplate.setCompanyId(RandomTestUtil.nextLong());
 

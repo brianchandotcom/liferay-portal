@@ -63,6 +63,12 @@ public interface NotificationTemplateService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NotificationTemplate
+			fetchNotificationTemplateByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public NotificationTemplate getNotificationTemplate(
 			long notificationTemplateId)
 		throws PortalException;

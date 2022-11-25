@@ -217,6 +217,11 @@ public interface NotificationTemplateLocalService
 	public NotificationTemplate fetchNotificationTemplate(
 		long notificationTemplateId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NotificationTemplate
+		fetchNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the notification template with the matching UUID and company.
 	 *
@@ -248,6 +253,11 @@ public interface NotificationTemplateLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public NotificationTemplate getNotificationTemplate(
 			long notificationTemplateId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public NotificationTemplate getNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

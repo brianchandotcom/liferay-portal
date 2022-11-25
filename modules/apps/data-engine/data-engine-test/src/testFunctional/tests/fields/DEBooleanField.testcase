@@ -282,7 +282,7 @@ definition {
 		DEBuilder.viewToggleSwitchNotChecked(portalSetting = "Boolean");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldName = "Boolean",
+			fieldName = "Boolean 2",
 			fieldValue = "Boolean 2");
 	}
 

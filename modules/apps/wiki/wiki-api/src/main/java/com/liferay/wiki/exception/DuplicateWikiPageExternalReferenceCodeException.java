@@ -19,23 +19,23 @@ import com.liferay.portal.kernel.exception.SystemException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicatePageExternalReferenceCodeException
+public class DuplicateWikiPageExternalReferenceCodeException
 	extends SystemException {
 
-	public DuplicatePageExternalReferenceCodeException() {
+	public DuplicateWikiPageExternalReferenceCodeException() {
 	}
 
-	public DuplicatePageExternalReferenceCodeException(String msg) {
+	public DuplicateWikiPageExternalReferenceCodeException(String msg) {
 		super(msg);
 	}
 
-	public DuplicatePageExternalReferenceCodeException(
+	public DuplicateWikiPageExternalReferenceCodeException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public DuplicatePageExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateWikiPageExternalReferenceCodeException(Throwable throwable) {
 		super(throwable);
 	}
 

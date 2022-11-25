@@ -159,8 +159,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return _addObjectDefinition(
 			userId, null, null, labelMap, name, panelAppOrder, panelCategoryKey,
-			null, null, pluralLabelMap, scope, storageType, false, 0,
-			WorkflowConstants.STATUS_DRAFT, objectFields);
+			null, null, pluralLabelMap, scope, storageType, false,
+			StringPool.BLANK, 0, WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -228,6 +228,7 @@ public class ObjectDefinitionLocalServiceImpl
 				primaryKeyColumn.getName(), primaryKeyColumn.getName(),
 				systemObjectDefinitionMetadata.getPluralLabelMap(),
 				systemObjectDefinitionMetadata.getScope(),
+				systemObjectDefinitionMetadata.getTitleObjectFieldName(),
 				systemObjectDefinitionMetadata.getVersion(),
 				systemObjectDefinitionMetadata.getObjectFields());
 		}
@@ -290,15 +291,17 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, String className, String dbTableName,
 			Map<Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope, int version,
+			Map<Locale, String> pluralLabelMap, String scope,
+			String titleObjectFieldName, int version,
 			List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			userId, className, dbTableName, labelMap, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true, version,
-			WorkflowConstants.STATUS_APPROVED, objectFields);
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
+			titleObjectFieldName, version, WorkflowConstants.STATUS_APPROVED,
+			objectFields);
 	}
 
 	@Override
@@ -805,8 +808,9 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, String pkObjectFieldDBColumnName,
 			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope, String storageType, boolean system, int version,
-			int status, List<ObjectField> objectFields)
+			String scope, String storageType, boolean system,
+			String titleObjectFieldName, int version, int status,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);

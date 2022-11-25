@@ -100,7 +100,7 @@ const VehicleInfo = () => {
 	}, [state.steps.vehicleInfo]);
 
 	return (
-		<div className="bg-neutral-0 mx-8">
+		<div className="bg-neutral-0 mx-1 mx-md-8">
 			<ClayForm>
 				{form?.map((currentForm, index) => (
 					<VehicleInfoForm

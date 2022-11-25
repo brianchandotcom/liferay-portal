@@ -219,26 +219,34 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		</div>
 	);
 
+	const getChangeStatusMessage = () => {
+		let statusMessage = '';
+
+		if (state.hasFormChanges) {
+			statusMessage = 'Unsaved Changes';
+		}
+		else if (!state.hasFormChanges && !saveChanges) {
+			statusMessage = 'No Changes Made';
+		}
+		else if (saveChanges && !state.hasFormChanges) {
+			statusMessage = 'All Changes Saved';
+		}
+
+		return <ChangeStatusMessage text={statusMessage} />;
+	};
+
 	return (
 		<ClayIconProvider>
 			<div className="container">
 				<div className="border mt-4 sheet sheet-dataset-content">
-					<div className="d-flex justify-content-between">
-						<h5>New Application</h5>
+					<div className="align-items-center d-flex flex-column flex-md-row justify-content-md-between">
+						<h5 className="my-2 my-md-0">New Application</h5>
 
-						{state.hasFormChanges && (
-							<ChangeStatusMessage text="Unsaved Changes" />
-						)}
+						<div className="my-2 my-md-0">
+							{getChangeStatusMessage()}
+						</div>
 
-						{!state.hasFormChanges && !saveChanges && (
-							<ChangeStatusMessage text="No Changes Made" />
-						)}
-
-						{saveChanges && !state.hasFormChanges && (
-							<ChangeStatusMessage text="All Changes Saved" />
-						)}
-
-						<div>
+						<div className="my-2 my-md-0">
 							<ClayButton
 								className="text-uppercase"
 								displayType={null}

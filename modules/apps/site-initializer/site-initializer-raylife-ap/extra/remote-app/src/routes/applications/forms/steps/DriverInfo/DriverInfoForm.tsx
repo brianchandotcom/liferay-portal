@@ -301,7 +301,7 @@ const DriverInfoForm = ({
 				<div className="row">
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.firstName,
 							}
@@ -349,7 +349,7 @@ const DriverInfoForm = ({
 
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.lastName,
 							}
@@ -397,7 +397,7 @@ const DriverInfoForm = ({
 
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.relationToContact,
 							}
@@ -447,7 +447,7 @@ const DriverInfoForm = ({
 				<div className="row">
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.gender,
 							}
@@ -488,7 +488,7 @@ const DriverInfoForm = ({
 
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.maritalStatus,
 							}
@@ -529,7 +529,7 @@ const DriverInfoForm = ({
 
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.ageFirstLicenced,
 							}
@@ -572,7 +572,7 @@ const DriverInfoForm = ({
 				<div className="row">
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.occupation,
 							}
@@ -618,7 +618,7 @@ const DriverInfoForm = ({
 
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.otherOccupation,
 							}
@@ -676,7 +676,7 @@ const DriverInfoForm = ({
 
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.highestEducation,
 							}
@@ -726,7 +726,7 @@ const DriverInfoForm = ({
 				<div className="row">
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.governmentAffiliation,
 							}
@@ -787,7 +787,7 @@ const DriverInfoForm = ({
 
 					<div
 						className={classNames(
-							'col filled form-condensed form-group',
+							'col-md col-12 filled form-condensed form-group',
 							{
 								'has-error': hasError.millitaryAffiliation,
 							}

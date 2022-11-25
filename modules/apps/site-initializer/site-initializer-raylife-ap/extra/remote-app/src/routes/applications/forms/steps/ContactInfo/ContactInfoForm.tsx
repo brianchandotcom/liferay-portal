@@ -190,7 +190,7 @@ const ContactInfo = () => {
 	};
 
 	return (
-		<div className="mx-8">
+		<div className="mx-1 mx-md-8">
 			<div className="font-weight-bolder text-paragraph-sm text-uppercase">
 				Contact Information
 			</div>
@@ -198,7 +198,7 @@ const ContactInfo = () => {
 			<hr></hr>
 
 			<ClayForm>
-				<div className="d-flex flex-row">
+				<div className="d-flex flex-column flex-md-row">
 					<div
 						className={classNames(
 							'col filled form-condensed form-group',
@@ -284,10 +284,10 @@ const ContactInfo = () => {
 					</div>
 				</div>
 
-				<div className="d-flex flex-row">
+				<div className="d-flex flex-column flex-md-row">
 					<div
 						className={classNames(
-							'col filled form-condensed form-group position-relative"',
+							'col filled form-condensed form-group position-relative',
 							{
 								'has-error': hasError.dateOfBirth,
 							}
@@ -459,7 +459,7 @@ const ContactInfo = () => {
 			<hr></hr>
 
 			<ClayForm>
-				<div className="d-flex flex-row">
+				<div className="d-flex flex-column flex-md-row">
 					<div
 						className={classNames(
 							'col filled form-condensed form-group',
@@ -527,7 +527,7 @@ const ContactInfo = () => {
 					</div>
 				</div>
 
-				<div className="d-flex flex-row">
+				<div className="d-flex flex-column flex-md-row">
 					<div
 						className={classNames(
 							'col filled form-condensed form-group',

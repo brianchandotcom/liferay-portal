@@ -99,10 +99,14 @@ const Review = () => {
 	);
 
 	return (
-		<div className="mx-8">
+		<div className="mx-1 mx-md-8">
 			<h5 className="text-center">Review Quote</h5>
 
-			<ClayTable borderless hover={false}>
+			<ClayTable
+				borderless
+				className="review-responsive-table"
+				hover={false}
+			>
 				<ClayTable.Head className="border-bottom">
 					<ClayTable.Row className="no-gutters row text-uppercase">
 						<ClayTable.Cell className="col-6">

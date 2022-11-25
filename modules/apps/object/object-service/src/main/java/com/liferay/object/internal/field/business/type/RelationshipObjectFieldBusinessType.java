@@ -94,25 +94,27 @@ public class RelationshipObjectFieldBusinessType
 	public Object getValue(ObjectField objectField, Map<String, Object> values)
 		throws PortalException {
 
-		Object value = values.get(objectField.getName());
-
 		if (!Objects.equals(
 				objectField.getRelationshipType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
-			(GetterUtil.getLong(value) > 0)) {
+			values.containsKey(objectField.getName())) {
 
-			return value;
+			return values.get(objectField.getName());
+		}
+
+		String objectRelationshipERCFieldName = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+			objectField);
+
+		if (!values.containsKey(objectRelationshipERCFieldName)) {
+			return null;
 		}
 
 		String externalReferenceCode = GetterUtil.getString(
-			values.get(
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
-					objectField)));
+			values.get(objectRelationshipERCFieldName));
 
 		if (Validator.isNull(externalReferenceCode)) {
-			return null;
+			return 0;
 		}
 
 		ObjectRelationship objectRelationship =

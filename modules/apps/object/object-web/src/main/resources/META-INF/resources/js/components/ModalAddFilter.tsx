@@ -110,6 +110,15 @@ type CurrentFilter = {
 	valueList?: LabelValueObject[];
 };
 
+type AttachmentEntry = {
+	id: number;
+	link: {
+		href: string;
+		label: string;
+	};
+	name: string;
+};
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function ModalAddFilter({
@@ -284,9 +293,17 @@ export function ModalAddFilter({
 								) as LabelValueObject;
 							}
 
+							let label = entry[titleField?.name] as string;
+
+							if (titleField.businessType === 'Attachment') {
+								label = (entry as {
+									[key: string]: AttachmentEntry;
+								})[titleField.name].name;
+							}
+
 							return {
 								...newItemsObject,
-								label: entry[titleField?.name] as string,
+								label,
 							};
 						});
 

@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -98,7 +99,11 @@ public class TLDStylingCheck extends BaseFileCheck {
 			String cdata = description.substring(x + 9, y);
 
 			if (Validator.isNull(cdata) ||
-				(!cdata.contains("<") && !cdata.contains(">"))) {
+				(!cdata.contains(StringPool.AMPERSAND) &&
+				 !cdata.contains(StringPool.APOSTROPHE) &&
+				 !cdata.contains(StringPool.GREATER_THAN) &&
+				 !cdata.contains(StringPool.LESS_THAN) &&
+				 !cdata.contains(StringPool.QUOTE))) {
 
 				return StringUtil.replaceFirst(
 					content, description,

@@ -184,7 +184,7 @@ definition {
 			category = "Settings",
 			portlet = "Health Check");
 
-		for (var buttonRowNumber : list "1,2,4,5,6,7") {
+		for (var buttonRowNumber : list "1,2,3,4,5,6") {
 			if (!(IsElementPresent(key_buttonStatus = "disabled", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N"))) {
 				Click(
 					key_buttonRowNumber = "${buttonRowNumber}",

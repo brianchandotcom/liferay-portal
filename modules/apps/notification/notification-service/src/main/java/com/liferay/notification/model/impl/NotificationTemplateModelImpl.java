@@ -82,6 +82,7 @@ public class NotificationTemplateModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"notificationTemplateId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -97,6 +98,7 @@ public class NotificationTemplateModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("notificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -114,7 +116,7 @@ public class NotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,body TEXT null,description VARCHAR(75) null,editorType VARCHAR(75) null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,type_ VARCHAR(75) null)";
+		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,body TEXT null,description VARCHAR(75) null,editorType VARCHAR(75) null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationTemplate";
@@ -141,14 +143,20 @@ public class NotificationTemplateModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NOTIFICATIONTEMPLATEID_COLUMN_BITMASK = 4L;
+	public static final long NOTIFICATIONTEMPLATEID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -275,6 +283,13 @@ public class NotificationTemplateModelImpl
 			"uuid",
 			(BiConsumer<NotificationTemplate, String>)
 				NotificationTemplate::setUuid);
+		attributeGetterFunctions.put(
+			"externalReferenceCode",
+			NotificationTemplate::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<NotificationTemplate, String>)
+				NotificationTemplate::setExternalReferenceCode);
 		attributeGetterFunctions.put(
 			"notificationTemplateId",
 			NotificationTemplate::getNotificationTemplateId);
@@ -405,6 +420,35 @@ public class NotificationTemplateModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1127,6 +1171,8 @@ public class NotificationTemplateModelImpl
 
 		notificationTemplateImpl.setMvccVersion(getMvccVersion());
 		notificationTemplateImpl.setUuid(getUuid());
+		notificationTemplateImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		notificationTemplateImpl.setNotificationTemplateId(
 			getNotificationTemplateId());
 		notificationTemplateImpl.setCompanyId(getCompanyId());
@@ -1157,6 +1203,8 @@ public class NotificationTemplateModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		notificationTemplateImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
+		notificationTemplateImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		notificationTemplateImpl.setNotificationTemplateId(
 			this.<Long>getColumnOriginalValue("notificationTemplateId"));
 		notificationTemplateImpl.setCompanyId(
@@ -1272,6 +1320,18 @@ public class NotificationTemplateModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			notificationTemplateCacheModel.uuid = null;
+		}
+
+		notificationTemplateCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			notificationTemplateCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			notificationTemplateCacheModel.externalReferenceCode = null;
 		}
 
 		notificationTemplateCacheModel.notificationTemplateId =
@@ -1431,6 +1491,7 @@ public class NotificationTemplateModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _notificationTemplateId;
 	private long _companyId;
 	private long _userId;
@@ -1482,6 +1543,8 @@ public class NotificationTemplateModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put(
 			"notificationTemplateId", _notificationTemplateId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1524,33 +1587,35 @@ public class NotificationTemplateModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("notificationTemplateId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("notificationTemplateId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("objectDefinitionId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("body", 512L);
+		columnBitmasks.put("objectDefinitionId", 512L);
 
-		columnBitmasks.put("description", 1024L);
+		columnBitmasks.put("body", 1024L);
 
-		columnBitmasks.put("editorType", 2048L);
+		columnBitmasks.put("description", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("editorType", 4096L);
 
-		columnBitmasks.put("recipientType", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("subject", 16384L);
+		columnBitmasks.put("recipientType", 16384L);
 
-		columnBitmasks.put("type_", 32768L);
+		columnBitmasks.put("subject", 32768L);
+
+		columnBitmasks.put("type_", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

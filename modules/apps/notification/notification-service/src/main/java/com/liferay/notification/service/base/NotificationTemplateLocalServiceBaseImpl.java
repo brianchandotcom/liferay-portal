@@ -282,6 +282,24 @@ public abstract class NotificationTemplateLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
+	@Override
+	public NotificationTemplate
+		fetchNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return notificationTemplatePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public NotificationTemplate getNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return notificationTemplatePersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the notification template with the primary key.
 	 *

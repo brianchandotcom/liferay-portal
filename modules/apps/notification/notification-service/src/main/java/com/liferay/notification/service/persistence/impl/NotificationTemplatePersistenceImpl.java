@@ -14,6 +14,7 @@
 
 package com.liferay.notification.service.persistence.impl;
 
+import com.liferay.notification.exception.DuplicateNotificationTemplateExternalReferenceCodeException;
 import com.liferay.notification.exception.NoSuchNotificationTemplateException;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.model.NotificationTemplateTable;
@@ -2105,6 +2106,263 @@ public class NotificationTemplatePersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"notificationTemplate.companyId = ?";
 
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
+
+	/**
+	 * Returns the notification template where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchNotificationTemplateException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching notification template
+	 * @throws NoSuchNotificationTemplateException if a matching notification template could not be found
+	 */
+	@Override
+	public NotificationTemplate findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchNotificationTemplateException {
+
+		NotificationTemplate notificationTemplate = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (notificationTemplate == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchNotificationTemplateException(sb.toString());
+		}
+
+		return notificationTemplate;
+	}
+
+	/**
+	 * Returns the notification template where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching notification template, or <code>null</code> if a matching notification template could not be found
+	 */
+	@Override
+	public NotificationTemplate fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the notification template where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching notification template, or <code>null</code> if a matching notification template could not be found
+	 */
+	@Override
+	public NotificationTemplate fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, companyId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_C, finderArgs, this);
+		}
+
+		if (result instanceof NotificationTemplate) {
+			NotificationTemplate notificationTemplate =
+				(NotificationTemplate)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					notificationTemplate.getExternalReferenceCode()) ||
+				(companyId != notificationTemplate.getCompanyId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_NOTIFICATIONTEMPLATE_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				List<NotificationTemplate> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_C, finderArgs, list);
+					}
+				}
+				else {
+					NotificationTemplate notificationTemplate = list.get(0);
+
+					result = notificationTemplate;
+
+					cacheResult(notificationTemplate);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (NotificationTemplate)result;
+		}
+	}
+
+	/**
+	 * Removes the notification template where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the notification template that was removed
+	 */
+	@Override
+	public NotificationTemplate removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchNotificationTemplateException {
+
+		NotificationTemplate notificationTemplate = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(notificationTemplate);
+	}
+
+	/**
+	 * Returns the number of notification templates where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching notification templates
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByERC_C;
+
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"notificationTemplate.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(notificationTemplate.externalReferenceCode IS NULL OR notificationTemplate.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"notificationTemplate.companyId = ?";
+
 	public NotificationTemplatePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2131,6 +2389,14 @@ public class NotificationTemplatePersistenceImpl
 		entityCache.putResult(
 			NotificationTemplateImpl.class,
 			notificationTemplate.getPrimaryKey(), notificationTemplate);
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C,
+			new Object[] {
+				notificationTemplate.getExternalReferenceCode(),
+				notificationTemplate.getCompanyId()
+			},
+			notificationTemplate);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -2207,6 +2473,19 @@ public class NotificationTemplatePersistenceImpl
 			entityCache.removeResult(
 				NotificationTemplateImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		NotificationTemplateModelImpl notificationTemplateModelImpl) {
+
+		Object[] args = new Object[] {
+			notificationTemplateModelImpl.getExternalReferenceCode(),
+			notificationTemplateModelImpl.getCompanyId()
+		};
+
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByERC_C, args, notificationTemplateModelImpl);
 	}
 
 	/**
@@ -2353,6 +2632,34 @@ public class NotificationTemplatePersistenceImpl
 			notificationTemplate.setUuid(uuid);
 		}
 
+		if (Validator.isNull(notificationTemplate.getExternalReferenceCode())) {
+			notificationTemplate.setExternalReferenceCode(
+				notificationTemplate.getUuid());
+		}
+		else {
+			NotificationTemplate ercNotificationTemplate = fetchByERC_C(
+				notificationTemplate.getExternalReferenceCode(),
+				notificationTemplate.getCompanyId());
+
+			if (isNew) {
+				if (ercNotificationTemplate != null) {
+					throw new DuplicateNotificationTemplateExternalReferenceCodeException(
+						"Duplicate notification template with external reference code " +
+							notificationTemplate.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercNotificationTemplate != null) &&
+					(notificationTemplate.getNotificationTemplateId() !=
+						ercNotificationTemplate.getNotificationTemplateId())) {
+
+					throw new DuplicateNotificationTemplateExternalReferenceCodeException(
+						"Duplicate notification template with external reference code " +
+							notificationTemplate.getExternalReferenceCode());
+				}
+			}
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -2401,6 +2708,8 @@ public class NotificationTemplatePersistenceImpl
 		entityCache.putResult(
 			NotificationTemplateImpl.class, notificationTemplateModelImpl,
 			false, true);
+
+		cacheUniqueFindersCache(notificationTemplateModelImpl);
 
 		if (isNew) {
 			notificationTemplate.setNew(false);
@@ -2725,6 +3034,16 @@ public class NotificationTemplatePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setNotificationTemplateUtilPersistence(this);
 	}

@@ -646,6 +646,78 @@ public class NotificationTemplateUtil {
 	}
 
 	/**
+	 * Returns the notification template where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchNotificationTemplateException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching notification template
+	 * @throws NoSuchNotificationTemplateException if a matching notification template could not be found
+	 */
+	public static NotificationTemplate findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateException {
+
+		return getPersistence().findByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the notification template where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching notification template, or <code>null</code> if a matching notification template could not be found
+	 */
+	public static NotificationTemplate fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the notification template where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching notification template, or <code>null</code> if a matching notification template could not be found
+	 */
+	public static NotificationTemplate fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C(
+			externalReferenceCode, companyId, useFinderCache);
+	}
+
+	/**
+	 * Removes the notification template where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the notification template that was removed
+	 */
+	public static NotificationTemplate removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.notification.exception.
+			NoSuchNotificationTemplateException {
+
+		return getPersistence().removeByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the number of notification templates where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching notification templates
+	 */
+	public static int countByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().countByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
 	 * Caches the notification template in the entity cache if it is enabled.
 	 *
 	 * @param notificationTemplate the notification template

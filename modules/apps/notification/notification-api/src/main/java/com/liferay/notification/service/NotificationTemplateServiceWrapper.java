@@ -70,6 +70,17 @@ public class NotificationTemplateServiceWrapper
 
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
+			fetchNotificationTemplateByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationTemplateService.
+			fetchNotificationTemplateByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
+	public com.liferay.notification.model.NotificationTemplate
 			getNotificationTemplate(long notificationTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

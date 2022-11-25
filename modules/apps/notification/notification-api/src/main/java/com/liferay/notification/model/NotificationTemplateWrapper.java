@@ -47,6 +47,7 @@ public class NotificationTemplateWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("notificationTemplateId", getNotificationTemplateId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -77,6 +78,13 @@ public class NotificationTemplateWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long notificationTemplateId = (Long)attributes.get(
@@ -294,6 +302,16 @@ public class NotificationTemplateWrapper
 	@Override
 	public String getEditorType() {
 		return model.getEditorType();
+	}
+
+	/**
+	 * Returns the external reference code of this notification template.
+	 *
+	 * @return the external reference code of this notification template
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -684,6 +702,16 @@ public class NotificationTemplateWrapper
 	@Override
 	public void setEditorType(String editorType) {
 		model.setEditorType(editorType);
+	}
+
+	/**
+	 * Sets the external reference code of this notification template.
+	 *
+	 * @param externalReferenceCode the external reference code of this notification template
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

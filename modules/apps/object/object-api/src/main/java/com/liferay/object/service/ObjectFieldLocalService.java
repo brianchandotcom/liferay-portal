@@ -259,6 +259,10 @@ public interface ObjectFieldLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectField fetchObjectField(long objectDefinitionId, String name);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectField fetchObjectField(
+		String externalReferenceCode, long objectDefinitionId);
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *

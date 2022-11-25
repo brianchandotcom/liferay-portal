@@ -260,6 +260,16 @@ public class NotificationTemplateLocalServiceWrapper
 			notificationTemplateId);
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationTemplate
+		fetchNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return _notificationTemplateLocalService.
+			fetchNotificationTemplateByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the notification template with the matching UUID and company.
 	 *
@@ -315,6 +325,17 @@ public class NotificationTemplateLocalServiceWrapper
 
 		return _notificationTemplateLocalService.getNotificationTemplate(
 			notificationTemplateId);
+	}
+
+	@Override
+	public com.liferay.notification.model.NotificationTemplate
+			getNotificationTemplateByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationTemplateLocalService.
+			getNotificationTemplateByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	/**

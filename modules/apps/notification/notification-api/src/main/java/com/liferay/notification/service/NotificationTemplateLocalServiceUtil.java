@@ -227,6 +227,14 @@ public class NotificationTemplateLocalServiceUtil {
 		return getService().fetchNotificationTemplate(notificationTemplateId);
 	}
 
+	public static NotificationTemplate
+		fetchNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return getService().fetchNotificationTemplateByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the notification template with the matching UUID and company.
 	 *
@@ -275,6 +283,15 @@ public class NotificationTemplateLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getNotificationTemplate(notificationTemplateId);
+	}
+
+	public static NotificationTemplate
+			getNotificationTemplateByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getNotificationTemplateByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**

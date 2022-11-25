@@ -58,6 +58,15 @@ public class NotificationTemplateServiceUtil {
 		return getService().deleteNotificationTemplate(notificationTemplate);
 	}
 
+	public static NotificationTemplate
+			fetchNotificationTemplateByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchNotificationTemplateByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static NotificationTemplate getNotificationTemplate(
 			long notificationTemplateId)
 		throws PortalException {

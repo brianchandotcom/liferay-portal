@@ -16,11 +16,13 @@ import isOperationType from '../utils/isOperationType';
 
 const DEFAULT_ERROR = {
 	message: i18n.translate('an-unexpected-error-occurred'),
+	title: i18n.translate('error'),
 	type: 'danger',
 };
 
 const DEFAULT_SUCCESS = {
 	message: i18n.translate('your-request-completed-successfully'),
+	title: i18n.translate('success'),
 	type: 'success',
 };
 
@@ -39,8 +41,7 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 						DEFAULT_ERROR.message,
 					type: DEFAULT_ERROR.type,
 				});
-			}
-			else {
+			} else {
 				Liferay.Util.openToast(DEFAULT_ERROR);
 			}
 		}
@@ -55,6 +56,7 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 
 					return {
 						message: displayError.message || DEFAULT_ERROR.message,
+						title: displayError.title || DEFAULT_ERROR.title,
 						type: displayError.type || DEFAULT_ERROR.type,
 					};
 				}
@@ -76,6 +78,7 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 			if (isValidMutation || displaySuccess) {
 				Liferay.Util.openToast({
 					message: displaySuccess?.message || DEFAULT_SUCCESS.message,
+					title: displaySuccess?.title || DEFAULT_SUCCESS.title,
 					type: displaySuccess?.type || DEFAULT_SUCCESS.type,
 				});
 			}

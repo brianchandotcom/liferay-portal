@@ -32,7 +32,7 @@ const PopoverIconButton = ({
 	>
 		<p className="font-weight-bold m-0">
 			{i18n.translate(
-				'the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-roles-administratos-and-requesters-have-permissions-to-open-support-tickets'
+				'the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-role-administrators-and-requesters-have-permissions-to-open-support-tickets'
 			)}
 			&nbsp;
 			<a

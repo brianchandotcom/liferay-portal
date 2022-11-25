@@ -27,7 +27,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -52,7 +51,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -64,8 +62,6 @@ import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-
-import java.io.IOException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -393,44 +389,6 @@ public class JournalUtil {
 		return false;
 	}
 
-	public static String removeArticleLocale(
-		JournalArticle article, String languageId) {
-
-		Document document = article.getDocument();
-
-		if (document == null) {
-			return null;
-		}
-
-		Element rootElement = document.getRootElement();
-
-		String availableLocales = rootElement.attributeValue(
-			"available-locales");
-
-		if (availableLocales == null) {
-			return article.getContent();
-		}
-
-		availableLocales = StringUtil.removeFromList(
-			availableLocales, languageId);
-
-		if (availableLocales.endsWith(",")) {
-			availableLocales = availableLocales.substring(
-				0, availableLocales.length() - 1);
-		}
-
-		rootElement.addAttribute("available-locales", availableLocales);
-
-		_removeArticleLocale(rootElement, languageId);
-
-		try {
-			return document.formattedString(StringPool.DOUBLE_SPACE);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
-	}
-
 	public static String transform(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
 			String viewMode, String languageId, Document document,
@@ -683,27 +641,6 @@ public class JournalUtil {
 		tokens.put("theme_image_path", themeDisplayModel.getPathThemeImages());
 
 		_populateCustomTokens(tokens, themeDisplayModel.getCompanyId());
-	}
-
-	private static void _removeArticleLocale(
-		Element element, String languageId) {
-
-		for (Element dynamicElementElement :
-				element.elements("dynamic-element")) {
-
-			for (Element dynamicContentElement :
-					dynamicElementElement.elements("dynamic-content")) {
-
-				String curLanguageId = GetterUtil.getString(
-					dynamicContentElement.attributeValue("language-id"));
-
-				if (curLanguageId.equals(languageId)) {
-					dynamicContentElement.detach();
-				}
-			}
-
-			_removeArticleLocale(dynamicElementElement, languageId);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalUtil.class);

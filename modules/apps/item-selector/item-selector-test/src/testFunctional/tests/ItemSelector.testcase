@@ -19,6 +19,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			WikiPage.tearDownCP();
+
 			BlogsEntry.tearDownCP();
 
 			Depot.tearDownCP();
@@ -866,6 +868,43 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 
 		ContentPages.viewFragmentBackgroundImage(image = "document_1-jpeg");
+	}
+
+	@description = "Checks if user can edit a Wiki page adding an Image via URL."
+	@priority = "3"
+	test CanUploadImageInWikiPage {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		WikiNavigator.openToEditPage(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiNode.addImage(
+			contentImageName = "Document_2.jpg",
+			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
+			navTab = "URL");
+
+		WikiNode.viewImageIsPresent(
+			contentImageName = "Document_2.jpg",
+			wikiPageTitle = "Wiki Page Title");
 	}
 
 	// Ignored until LPS-159228 implemented

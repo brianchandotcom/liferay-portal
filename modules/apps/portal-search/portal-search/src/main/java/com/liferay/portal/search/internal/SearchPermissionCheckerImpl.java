@@ -183,14 +183,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		modified(properties);
 
-		_searchPermissionFilterContributorServiceTrackerList =
-			ServiceTrackerListFactory.open(
-				bundleContext, SearchPermissionFilterContributor.class);
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, SearchPermissionFilterContributor.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_searchPermissionFilterContributorServiceTrackerList.close();
+		_serviceTrackerList.close();
 	}
 
 	@Modified
@@ -572,8 +571,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		_add(booleanFilter, rolesTermsFilter);
 
 		for (SearchPermissionFilterContributor
-				searchPermissionFilterContributor :
-					_searchPermissionFilterContributorServiceTrackerList) {
+				searchPermissionFilterContributor : _serviceTrackerList) {
 
 			searchPermissionFilterContributor.contribute(
 				booleanFilter, companyId, groupIds, userId, permissionChecker,
@@ -605,7 +603,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		_searchPermissionFieldContributorRegistry;
 
 	private ServiceTrackerList<SearchPermissionFilterContributor>
-		_searchPermissionFilterContributorServiceTrackerList;
+		_serviceTrackerList;
 
 	private static class SearchPermissionContext implements Serializable {
 

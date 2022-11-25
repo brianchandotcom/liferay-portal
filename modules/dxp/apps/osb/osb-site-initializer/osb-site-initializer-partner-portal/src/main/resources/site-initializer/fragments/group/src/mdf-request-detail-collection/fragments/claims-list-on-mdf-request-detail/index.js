@@ -21,12 +21,16 @@ function getIntlNumberFormat() {
 	});
 }
 
-const currentPath = Liferay.currentURL.split('/');
-const mdfRequestId = +currentPath.at(-1);
-const SITE_URL = Liferay.ThemeDisplay.getLayoutRelativeURL()
-	.split('/')
-	.slice(0, 3)
-	.join('/');
+function getSiteVariables() {
+	const currentPath = Liferay.currentURL.split('/');
+	const mdfRequestId = +currentPath.at(-1);
+	const SITE_URL = Liferay.ThemeDisplay.getLayoutRelativeURL()
+		.split('/')
+		.slice(0, 3)
+		.join('/');
+
+	return [mdfRequestId, SITE_URL];
+}
 
 const ClaimStatus = {
 	APPROVED: 'Approved',
@@ -54,43 +58,50 @@ const statusClassName = {
 	[ClaimStatus.IN_FINANCE_REVIEW]: 'label label-tonal-light ml-2',
 };
 
-const Panel = ({mdfClaims}) => (
-	<div>
-		<div className="text-neutral-7 text-paragraph-xs">
-			Type: {mdfClaims.partial === 'true' ? 'Partial' : 'Full'}
-		</div>
+const Panel = ({mdfClaims}) => {
+	const [, SITE_URL] = getSiteVariables();
 
-		<div className="mb-1 mt-1 text-neutral-9 text-paragraph-sm">
-			Claim ({mdfClaims.id})
-		</div>
-
-		<div className="align-items-baseline d-flex justify-content-between">
-			<div className="align-items-baseline d-flex">
-				<p className="font-weight-bold text-neutral-9 text-paragraph-sm">
-					Claimed USD
-					{getIntlNumberFormat().format(mdfClaims.amountClaimed)}
-				</p>
-
-				<div className={statusClassName[mdfClaims.claimStatus]}>
-					{mdfClaims.claimStatus}
-				</div>
+	return (
+		<div>
+			<div className="text-neutral-7 text-paragraph-xs">
+				Type: {mdfClaims.partial === 'true' ? 'Partial' : 'Full'}
 			</div>
 
-			<button
-				className="btn btn-secondary btn-sm"
-				onClick={() =>
-					Liferay.Util.navigate(`${SITE_URL}/l/${mdfClaims.id}`)
-				}
-			>
-				View
-			</button>
+			<div className="mb-1 mt-1 text-neutral-9 text-paragraph-sm">
+				Claim ({mdfClaims.id})
+			</div>
+
+			<div className="align-items-baseline d-flex justify-content-between">
+				<div className="align-items-baseline d-flex">
+					<p className="font-weight-bold text-neutral-9 text-paragraph-sm">
+						Claimed USD
+						{getIntlNumberFormat().format(mdfClaims.amountClaimed)}
+					</p>
+
+					<div className={statusClassName[mdfClaims.claimStatus]}>
+						{mdfClaims.claimStatus}
+					</div>
+				</div>
+
+				<button
+					className="btn btn-secondary btn-sm"
+					onClick={() =>
+						Liferay.Util.navigate(`${SITE_URL}/l/${mdfClaims.id}`)
+					}
+				>
+					View
+				</button>
+			</div>
 		</div>
-	</div>
-);
+	);
+};
+
 export default function () {
 	const [claims, setClaims] = useState();
 	const [request, setRequest] = useState();
 	const [loading, setLoading] = useState();
+
+	const [mdfRequestId, SITE_URL] = getSiteVariables();
 
 	useEffect(() => {
 		const getClaimFromMDFRequest = async () => {
@@ -129,11 +140,16 @@ export default function () {
 		if (mdfRequestId) {
 			getClaimFromMDFRequest();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (loading) {
 		return <>Loading...</>;
 	}
+
+	const claimsNotDraft = claims?.items.filter((claim) => {
+		return !claim.claimStatus.includes(ClaimStatus.DRAFT);
+	});
 
 	return (
 		<>
@@ -157,10 +173,10 @@ export default function () {
 								Get Reimbursed
 							</h6>
 
-							{claims?.items.length < 2 ? (
+							{claimsNotDraft.length < 2 ? (
 								<h6 className="font-weight-normal text-neutral-8">
 									You can submit up to{' '}
-									{2 - claims.items.length} claim(s).
+									{2 - claimsNotDraft.length} claim(s).
 								</h6>
 							) : (
 								<h6 className="font-weight-normal text-neutral-8">
@@ -169,7 +185,7 @@ export default function () {
 							)}
 						</div>
 
-						{claims?.items.length < 2 && (
+						{claimsNotDraft.length < 2 && (
 							<button
 								className="btn btn-primary"
 								onClick={() =>

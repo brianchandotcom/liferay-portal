@@ -18,6 +18,7 @@ import com.liferay.journal.content.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.journal.content.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +43,8 @@ public class JournalContentWebUpgradeStepRegistrator
 			"1.0.0", "1.1.0",
 			new com.liferay.journal.content.web.internal.upgrade.v1_1_0.
 				UpgradePortletPreferences(
-					_groupLocalService, _journalArticleLocalService));
+					_groupLocalService, _journalArticleLocalService,
+					_layoutLocalService));
 	}
 
 	@Reference
@@ -50,5 +52,8 @@ public class JournalContentWebUpgradeStepRegistrator
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

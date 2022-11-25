@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<root available-locales="es_ES,en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Checkbox85383450" index-type="keyword" instance-id="u5jjzYdS" name="Checkbox85383450" type="checkbox">
+		<dynamic-content language-id="es_ES"><![CDATA[true]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[false]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Text20311054" index-type="keyword" instance-id="ML5jpklJ" name="Text20311054" type="text">
+		<dynamic-content language-id="es_ES"><![CDATA[Título]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Title]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Date50556571" index-type="keyword" instance-id="jzTC5Ryo" name="Date50556571" type="date">
+		<dynamic-content language-id="es_ES"><![CDATA[2022-11-26]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[2022-11-25]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="RichText65679286" index-type="text" instance-id="UJTufdcG" name="RichText65679286" type="rich_text">
+		<dynamic-content language-id="es_ES"><![CDATA[<p>Contenido</p>]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[<p>Content</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Image07275736" index-type="text" instance-id="jjAcPbMc" name="Image07275736" type="image">
+		<dynamic-content language-id="es_ES">
+			<![CDATA[[$DOCUMENT_JSON$]]]>
+		</dynamic-content>
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Image07275736" index-type="text" instance-id="0j24wbsf" name="Image07275736" type="image">
+		<dynamic-content language-id="es_ES">
+			<![CDATA[[$DOCUMENT_JSON$]]]>
+		</dynamic-content>
+		<dynamic-content language-id="en_US">
+			<![CDATA[[$DOCUMENT_JSON$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="LinkToLayout42614941" index-type="keyword" instance-id="VFcRBNyJ" name="LinkToLayout42614941" type="link_to_layout">
+		<dynamic-content language-id="es_ES">
+			<![CDATA[
+				{
+					"groupId": "20121",
+					"id": "2ced45a1-ea6e-13e1-c8ab-d5a9a52413c9",
+					"layoutId": "1",
+					"name": "Pages > Search",
+					"privateLayout": false,
+					"returnType": "com.liferay.item.selector.criteria.UUIDItemSelectorReturnType",
+					"title": "Search",
+					"value": "2ced45a1-ea6e-13e1-c8ab-d5a9a52413c9"
+				}
+			]]>
+		</dynamic-content>
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				{
+					"groupId": "20121",
+					"id": "f8be5937-a958-e8f2-b4f7-d3be0a7507f2",
+					"layoutId": "2",
+					"name": "Pages > Home",
+					"privateLayout": false,
+					"returnType": "com.liferay.item.selector.criteria.UUIDItemSelectorReturnType",
+					"title": "Home",
+					"value": "f8be5937-a958-e8f2-b4f7-d3be0a7507f2"
+				}
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

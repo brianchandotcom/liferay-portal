@@ -28,9 +28,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -45,6 +49,7 @@ import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -672,6 +677,111 @@ public class JournalArticleLocalServiceTest {
 
 		Assert.assertEquals(articles.toString(), 1, articles.size());
 		Assert.assertEquals(article, articles.get(0));
+	}
+
+	@Test
+	public void testRemoveArticleLocale() throws Exception {
+		DataDefinition dataDefinition = DataDefinition.toDTO(
+			_readFileToString("dependencies/ddm_form.json"));
+
+		dataDefinition.setName(
+			HashMapBuilder.<String, Object>put(
+				String.valueOf(LocaleUtil.SPAIN), "data-definition-es"
+			).put(
+				String.valueOf(LocaleUtil.US), "data-definition"
+			).build());
+
+		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
+			_dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourcedBuilder.user(
+				TestPropsValues.getUser()
+			).build();
+
+		dataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				_group.getGroupId(), "journal", dataDefinition);
+
+		String xml = _readFileToString(
+			"dependencies/journal_content_with_different_locales.xml");
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			_jsonFactory.looseSerialize(fileEntry));
+
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.addArticle(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				PortalUtil.getClassNameId(JournalArticle.class),
+				StringPool.BLANK, true, 0,
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, "title-es"
+				).put(
+					LocaleUtil.US, "title"
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, "description-es"
+				).put(
+					LocaleUtil.US, "description"
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, "friendly-url-es"
+				).put(
+					LocaleUtil.US, "friendly-url"
+				).build(),
+				StringUtil.replace(
+					xml, "[$DOCUMENT_JSON$]", jsonObject.toString()),
+				dataDefinition.getDataDefinitionKey(), null, null, 1, 1, 1965,
+				0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
+				null, null, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		journalArticle = _journalArticleLocalService.removeArticleLocale(
+			_group.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(),
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+
+		Assert.assertEquals("title", journalArticle.getTitle(LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			"description", journalArticle.getDescription(LocaleUtil.SPAIN));
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		Assert.assertNull(friendlyURLMap.get(LocaleUtil.SPAIN));
+
+		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
+
+		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
+
+		Assert.assertEquals(
+			availableLocales.toString(), 1, availableLocales.size());
+		Assert.assertFalse(availableLocales.contains(LocaleUtil.SPAIN));
+
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			Set<Locale> valueAvailableLocales = value.getAvailableLocales();
+
+			Assert.assertEquals(
+				valueAvailableLocales.toString(), 1,
+				valueAvailableLocales.size());
+			Assert.assertFalse(
+				valueAvailableLocales.contains(LocaleUtil.SPAIN));
+
+			Assert.assertEquals(
+				value.getString(value.getDefaultLocale()),
+				value.getString(LocaleUtil.SPAIN));
+		}
 	}
 
 	@Test

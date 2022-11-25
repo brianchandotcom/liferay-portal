@@ -17,7 +17,7 @@ package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.ContactConfiguration;
 import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
-import com.liferay.analytics.settings.rest.internal.manager.AnalyticsSettingsManager;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactConfigurationResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;

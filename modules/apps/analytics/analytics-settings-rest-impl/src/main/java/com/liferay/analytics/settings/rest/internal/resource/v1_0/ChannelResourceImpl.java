@@ -22,26 +22,19 @@ import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChanne
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ChannelDTOConverter;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ChannelDTOConverterContext;
-import com.liferay.analytics.settings.rest.internal.manager.AnalyticsSettingsManager;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Stream;
+import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -129,23 +122,14 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 					commerceSyncEnabledChannelIds),
 				_analyticsCloudClient.updateAnalyticsChannel(
 					channel.getChannelId(),
-					Stream.of(
-						analyticsConfiguration.syncedCommerceChannelIds()
-					).map(
-						Long::valueOf
-					).toArray(
-						Long[]::new
-					),
+					_analyticsSettingsManager.getCommerceChannelIds(
+						channel.getChannelId(), contextUser.getCompanyId()),
 					contextUser.getCompanyId(),
 					analyticsConfiguration.liferayAnalyticsDataSourceId(),
 					contextAcceptLanguage.getPreferredLocale(),
-					Stream.of(
-						analyticsConfiguration.syncedGroupIds()
-					).map(
-						Long::valueOf
-					).toArray(
-						Long[]::new
-					)));
+					_analyticsSettingsManager.getSiteIds(
+						channel.getChannelId(),
+						contextCompany.getCompanyId())));
 		}
 
 		if (dataSources.length > 1) {
@@ -153,6 +137,13 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		}
 
 		DataSource dataSource = dataSources[0];
+
+		if (!Objects.equals(
+				dataSource.getDataSourceId(),
+				analyticsConfiguration.liferayAnalyticsDataSourceId())) {
+
+			throw new PortalException("Invalid data source ID");
+		}
 
 		AnalyticsChannel analyticsChannel =
 			_analyticsCloudClient.updateAnalyticsChannel(
@@ -170,22 +161,18 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			ArrayUtil.isNotEmpty(analyticsDataSource.getCommerceChannelIds()),
 			null, ArrayUtil.isNotEmpty(analyticsDataSource.getSiteIds()));
 
-		_updateCommerceChannelGroups(
-			analyticsConfiguration.syncedCommerceChannelIds(),
-			channel.getChannelId(), contextCompany.getCompanyId(),
-			analyticsDataSource.getCommerceChannelIds());
-
-		_updateGroups(
-			analyticsConfiguration.syncedGroupIds(), channel.getChannelId(),
-			analyticsDataSource.getSiteIds());
-
 		_analyticsSettingsManager.updateCompanyConfiguration(
 			contextUser.getCompanyId(),
 			HashMapBuilder.<String, Object>put(
 				"syncedCommerceChannelIds",
-				analyticsDataSource.getCommerceChannelIds()
+				_analyticsSettingsManager.updateCommerceChannelIds(
+					channel.getChannelId(), contextCompany.getCompanyId(),
+					analyticsDataSource.getCommerceChannelIds())
 			).put(
-				"syncedGroupIds", analyticsDataSource.getSiteIds()
+				"syncedGroupIds",
+				_analyticsSettingsManager.updateSiteIds(
+					channel.getChannelId(), contextCompany.getCompanyId(),
+					analyticsDataSource.getSiteIds())
 			).build());
 
 		return _channelDTOConverter.toDTO(
@@ -211,12 +198,6 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 				contextCompany.getCompanyId(), channel.getName()));
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_commerceChannelClassNameId = _portal.getClassNameId(
-			"com.liferay.commerce.product.model.CommerceChannel");
-	}
-
 	@Reference
 	protected DTOConverterRegistry dtoConverterRegistry;
 
@@ -233,90 +214,6 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		throw new RuntimeException("Unable to get analytics data source");
 	}
 
-	private void _updateCommerceChannelGroups(
-			String[] analyticsConfigurationCommerceChannelIds, String channelId,
-			long companyId, Long[] dataSourceCommerceChannelIds)
-		throws Exception {
-
-		_updateTypeSetting(
-			channelId,
-			commerceChannelId -> _groupLocalService.fetchGroup(
-				companyId, _commerceChannelClassNameId, commerceChannelId),
-			ArrayUtil.filter(
-				dataSourceCommerceChannelIds,
-				commerceChannelId -> !ArrayUtil.contains(
-					analyticsConfigurationCommerceChannelIds,
-					String.valueOf(commerceChannelId))),
-			false);
-
-		_updateTypeSetting(
-			channelId,
-			commerceChannelId -> _groupLocalService.fetchGroup(
-				companyId, _commerceChannelClassNameId, commerceChannelId),
-			ArrayUtil.filter(
-				analyticsConfigurationCommerceChannelIds,
-				commerceChannelId -> !ArrayUtil.contains(
-					dataSourceCommerceChannelIds,
-					Long.valueOf(commerceChannelId))),
-			true);
-	}
-
-	private void _updateGroups(
-			String[] analyticsConfigurationGroupIds, String channelId,
-			Long[] dataSourceGroupIds)
-		throws Exception {
-
-		_updateTypeSetting(
-			channelId, groupId -> _groupLocalService.fetchGroup(groupId),
-			ArrayUtil.filter(
-				dataSourceGroupIds,
-				groupId -> !ArrayUtil.contains(
-					analyticsConfigurationGroupIds, String.valueOf(groupId))),
-			false);
-
-		_updateTypeSetting(
-			channelId, groupId -> _groupLocalService.fetchGroup(groupId),
-			ArrayUtil.filter(
-				analyticsConfigurationGroupIds,
-				groupId -> !ArrayUtil.contains(
-					dataSourceGroupIds, Long.valueOf(groupId))),
-			true);
-	}
-
-	private <T> void _updateTypeSetting(
-			String channelId, Function<Long, Group> fetchGroupFunction,
-			T[] groupIds, boolean remove)
-		throws Exception {
-
-		for (T groupId : groupIds) {
-			Group group = fetchGroupFunction.apply(GetterUtil.getLong(groupId));
-
-			if (group == null) {
-				continue;
-			}
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				group.getTypeSettingsProperties();
-
-			if (remove) {
-				String analyticsChannelId = typeSettingsUnicodeProperties.get(
-					"analyticsChannelId");
-
-				if (!channelId.equals(analyticsChannelId)) {
-					continue;
-				}
-
-				typeSettingsUnicodeProperties.remove("analyticsChannelId");
-			}
-			else {
-				typeSettingsUnicodeProperties.setProperty(
-					"analyticsChannelId", channelId);
-			}
-
-			_groupLocalService.updateGroup(group);
-		}
-	}
-
 	@Reference
 	private AnalyticsCloudClient _analyticsCloudClient;
 
@@ -325,13 +222,5 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	@Reference
 	private ChannelDTOConverter _channelDTOConverter;
-
-	private long _commerceChannelClassNameId;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

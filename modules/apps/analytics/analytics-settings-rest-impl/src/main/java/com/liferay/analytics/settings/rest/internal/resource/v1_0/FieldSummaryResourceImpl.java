@@ -16,7 +16,7 @@ package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.FieldSummary;
-import com.liferay.analytics.settings.rest.internal.manager.AnalyticsSettingsManager;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.FieldSummaryResource;
 
 import org.osgi.service.component.annotations.Component;

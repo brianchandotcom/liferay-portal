@@ -1985,6 +1985,18 @@ definition {
 			if (isSet(assetListName)) {
 				NavItem.click(navItem = "Collections");
 
+				if (isSet(depotName)) {
+					Click(
+						key_breadcrumbName = "Sites and Libraries",
+						locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+
+					Click(
+						key_groupTab = "Asset Library",
+						locator1 = "ItemSelector#NAVIGATION_GROUP_TAB");
+
+					LexiconCard.clickCard(card = "${depotName}");
+				}
+
 				LexiconCard.clickCard(card = "${assetListName}");
 
 				SelectFrameTop();

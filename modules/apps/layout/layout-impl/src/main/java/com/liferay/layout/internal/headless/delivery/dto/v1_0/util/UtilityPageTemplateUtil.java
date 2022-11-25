@@ -15,7 +15,7 @@
 package com.liferay.layout.internal.headless.delivery.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate;
-import com.liferay.layout.utility.page.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryTypesConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -61,10 +61,11 @@ public class UtilityPageTemplateUtil {
 	}
 
 	private static final Map<String, String> _types = HashMapBuilder.put(
-		"Error", LayoutUtilityPageEntryConstants.Type.ERROR_404.getLabel()
+		"Error", LayoutUtilityPageEntryTypesConstants.STATUS
 	).put(
-		"TermsOfUse",
-		LayoutUtilityPageEntryConstants.Type.TERMS_OF_USE.getLabel()
+		"ErrorCode404", LayoutUtilityPageEntryTypesConstants.LAYOUT
+	).put(
+		"TermsOfUse", LayoutUtilityPageEntryTypesConstants.TERMS_OF_USE
 	).build();
 
 }

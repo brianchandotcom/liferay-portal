@@ -5042,7 +5042,7 @@ components:
                     # @review
                     description:
                         The utility page template type.
-                    enum: [Error, TermsOfUse]
+                    enum: [Error, ErrorCode404, TermsOfUse]
                     type: string
             type: object
         WidgetInstance:

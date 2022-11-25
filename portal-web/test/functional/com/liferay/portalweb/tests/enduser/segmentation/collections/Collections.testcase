@@ -3829,7 +3829,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166045. The site designer could see the usage of Collections from asset library."
+	@description = "This is a test for LPS-166045. The site designer could see the usages of Collections from asset library."
 	@priority = "5"
 	test ViewUsagesOfCollectionFromAssetLibrary {
 		task ("Given the site designer has collections from asset library") {
@@ -3907,7 +3907,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-84331 and LPS-166045. The site designer could see the usage of Collections from site."
+	@description = "This is a test for LPS-84331 and LPS-166045. The site designer could see the usages of Collections from site."
 	@priority = "5"
 	test ViewUsagesOfCollectionFromSite {
 		property portal.acceptance = "true";

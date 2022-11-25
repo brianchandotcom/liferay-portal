@@ -254,6 +254,10 @@ definition {
 				locator1 = "CommerceEntry#VIEW_ITEM_FROM_LIST");
 
 			Click(
+				key_text = "Replacements",
+				locator1 = "Button#ANY");
+
+			Click(
 				key_itemName = "SKU1001",
 				locator1 = "CommerceEntry#VIEW_ITEM_FROM_LIST");
 		}

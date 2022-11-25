@@ -195,9 +195,6 @@ public class NotificationTemplateServiceTest {
 		notificationContext.setType(
 			NotificationConstants.TYPE_USER_NOTIFICATION);
 
-		_notificationTemplateLocalService.addNotificationTemplate(
-			notificationContext);
-
 		return notificationContext;
 	}
 
@@ -284,9 +281,18 @@ public class NotificationTemplateServiceTest {
 		try {
 			_setUser(user);
 
+			NotificationContext notificationContext =
+				_createNotificationContext(ownerUser);
+
+			notificationTemplate =
+				_notificationTemplateLocalService.addNotificationTemplate(
+					notificationContext);
+
+			notificationContext.setNotificationTemplate(notificationTemplate);
+
 			notificationTemplate =
 				_notificationTemplateService.updateNotificationTemplate(
-					_createNotificationContext(ownerUser));
+					notificationContext);
 		}
 		finally {
 			if (notificationTemplate != null) {

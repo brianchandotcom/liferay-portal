@@ -362,4 +362,94 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11903 | Automation ID: LRAC-12355 | Test Summary: Set time zone for existing workspace and validade that the events are shown in the activities card according to the new time zone"
+	@priority = "4"
+	test ViewEventChangedInActivitiesCardAfterChangeTimeZone {
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP") {
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site and blog") {
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to the blog page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+		
+		task ("Switch to new property in AC and go to Sites") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToSites();
+		}
+
+		task ("Change time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Get the date and time of activity on the site graph with the time zone in UTC") {
+			var timeUTC = ACSites.getPopoverDateAndTime();
+		}
+
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Change the timezone to Recife of Brazil") {
+			ACWorkspace.configureWorkspaceSettings(
+				timezone = "Brazil",
+				timezoneId = "UTC-03:00 Brasilia Time (America/Recife)");
+
+			ACUtils.waitForLoading();
+		}
+
+		task ("Go to Sites") {
+			ACNavigation.exitSettings();
+
+			ACNavigation.goToSites();
+		}
+
+		task ("Refresh the page") {
+			TestUtils.hardRefresh();
+		}
+
+		task ("Change time filter to 24 hours;") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Get the date and time of activity on the site graph with the time zone in Brazil") {
+			var timeBrazil = ACSites.getPopoverDateAndTime();
+		}
+
+		task ("Compare those of the times to verify that the time changes according to the time zone") {
+			TestUtils.assertNotEquals(
+				actual = "${timeBrazil}",
+				expected = "${timeUTC}");
+		}
+	}
+
 }

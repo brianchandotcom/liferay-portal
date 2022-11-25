@@ -424,7 +424,7 @@ definition {
 		}
 
 		task ("Then I receive executeStatus: completed") {
-			var executeStatus = getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
 
 			TestUtils.assertEquals(
 				actual = "${executeStatus}",

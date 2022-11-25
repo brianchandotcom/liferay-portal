@@ -14,6 +14,17 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addImage {
+		ItemSelector.gotoItemSelectorViaCKEditor();
+
+		ItemSelector.addImageFromURL(
+			contentImageName = "${contentImageName}",
+			imageSourceURL = "${imageSourceURL}",
+			navTab = "${navTab}");
+
+		Click(locator1 = "Button#PUBLISH_LOCALIZED");
+	}
+
 	macro addMainCP {
 		Navigator.openURL();
 
@@ -138,6 +149,18 @@ definition {
 			value1 = "${wikiNodeName}");
 
 		SiteAdmin.viewPortletTitle(portletTitle = "Wiki");
+	}
+
+	macro viewImageIsPresent {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		Click(
+			key_wikiNodeName = "${wikiPageTitle}",
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME");
+
+		AssertElementPresent(
+			key_contentImageName = "${contentImageName}",
+			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 	}
 
 	macro viewNoCP {

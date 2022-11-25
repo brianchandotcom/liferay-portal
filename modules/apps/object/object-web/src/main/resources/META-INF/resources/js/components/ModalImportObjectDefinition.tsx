@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {API, Input, openToast} from '@liferay/object-js-components-web';
+import {API, Input} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useRef, useState} from 'react';
 
@@ -38,6 +38,7 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 	nameMaxLength,
 	portletNamespace,
 }) => {
+	const [error, setError] = useState<string>('');
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
 		''
 	);
@@ -71,11 +72,7 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 			window.location.reload();
 		}
 		catch (error) {
-			onClose();
-			openToast({
-				message: (error as Error).message,
-				type: 'danger',
-			});
+			setError((error as Error).message);
 		}
 	};
 
@@ -129,6 +126,10 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 					id={importObjectDefinitionFormId}
 					onSubmit={handleSubmit}
 				>
+					{error && (
+						<ClayAlert displayType="danger">{error}</ClayAlert>
+					)}
+
 					<ClayAlert
 						displayType="info"
 						title={`${Liferay.Language.get('info')}:`}

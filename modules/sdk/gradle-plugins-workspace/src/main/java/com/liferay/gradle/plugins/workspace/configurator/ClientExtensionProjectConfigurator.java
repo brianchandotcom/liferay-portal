@@ -115,6 +115,9 @@ public class ClientExtensionProjectConfigurator
 			Arrays.asList(
 				new AssetsFolderConfigurer(), new ThemeCSSTypeConfigurer()));
 		_clientExtensionConfigurers.put(
+			"themeFavicon",
+			Collections.singletonList(new AssetsFolderConfigurer()));
+		_clientExtensionConfigurers.put(
 			"themeJS",
 			Arrays.asList(
 				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));

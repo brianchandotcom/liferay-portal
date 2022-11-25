@@ -691,8 +691,9 @@ public class JournalArticleFinderTest {
 			QueryDefinition<JournalArticle> queryDefinition, int expectedCount)
 		throws Exception {
 
-		int actualCount = _journalArticleFinder.countByG_C_S(
-			groupId, classNameId, ddmStructureKey, queryDefinition);
+		int actualCount = _journalArticleFinder.countByG_F_C_S(
+			groupId, Collections.emptyList(), classNameId, ddmStructureKey,
+			queryDefinition);
 
 		Assert.assertEquals(expectedCount, actualCount);
 

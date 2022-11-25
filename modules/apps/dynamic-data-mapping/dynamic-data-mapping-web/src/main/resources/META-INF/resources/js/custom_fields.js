@@ -231,7 +231,7 @@ AUI.add(
 
 					const input = instance.get('boundingBox').one('input');
 
-					if (/#[A-F\d]{6}/.test(input.val())) {
+					if (/#[A-F\d]{6}/.test(input.val().toUpperCase())) {
 						ColorCellEditor.superclass._defSaveFn.apply(
 							instance,
 							arguments
@@ -263,7 +263,7 @@ AUI.add(
 					const input = instance.get('boundingBox').one('input');
 
 					if (input) {
-						const val = input.val();
+						const val = input.val().toUpperCase();
 
 						if (/#[A-F\d]{6}/.test(val) || val === '') {
 							retVal = val;

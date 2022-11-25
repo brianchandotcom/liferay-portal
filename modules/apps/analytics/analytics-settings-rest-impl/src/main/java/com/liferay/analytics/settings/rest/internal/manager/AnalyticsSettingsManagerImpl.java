@@ -25,6 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -69,6 +71,24 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 	public void deleteCompanyConfiguration(long companyId)
 		throws ConfigurationException {
+
+		List<Group> groups = ListUtil.concat(
+			_groupLocalService.getGroups(
+				companyId, GroupConstants.ANY_PARENT_GROUP_ID, true),
+			_groupLocalService.getGroups(
+				companyId, "com.liferay.commerce.product.model.CommerceChannel",
+				0));
+
+		for (Group group : groups) {
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			if (typeSettingsUnicodeProperties.remove("analyticsChannelId") !=
+					null) {
+
+				_groupLocalService.updateGroup(group);
+			}
+		}
 
 		_configurationProvider.deleteCompanyConfiguration(
 			AnalyticsConfiguration.class, companyId);

@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:knowledge-base:knowledge-base-api")
 	testIntegrationCompile project(":apps:portal:portal-props-test-util")
+	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":apps:subscription:subscription-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

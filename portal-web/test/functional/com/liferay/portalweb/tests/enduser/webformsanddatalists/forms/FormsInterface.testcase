@@ -449,7 +449,7 @@ definition {
 		Form.closeSidebar();
 
 		FormFields.viewFieldSize(
-			fieldName = "FieldsGroup",
+			fieldName = "Fields Group",
 			size = "12");
 
 		FormFields.resizeFieldGroup(
@@ -457,7 +457,7 @@ definition {
 			moveForce = "-300");
 
 		FormFields.viewFieldSize(
-			fieldName = "FieldsGroup",
+			fieldName = "Fields Group",
 			size = "6");
 
 		Form.save();
@@ -467,7 +467,7 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormFields.viewFieldSize(
-			fieldName = "FieldsGroup",
+			fieldName = "Fields Group",
 			size = "6");
 	}
 

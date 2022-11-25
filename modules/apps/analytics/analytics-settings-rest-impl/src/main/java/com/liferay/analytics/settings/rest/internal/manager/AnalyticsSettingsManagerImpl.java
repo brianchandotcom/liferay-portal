@@ -25,6 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -70,6 +72,24 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	public void deleteCompanyConfiguration(long companyId)
 		throws ConfigurationException {
 
+		List<Group> groups = ListUtil.concat(
+			_groupLocalService.getGroups(
+				companyId, GroupConstants.ANY_PARENT_GROUP_ID, true),
+			_groupLocalService.getGroups(
+				companyId, "com.liferay.commerce.product.model.CommerceChannel",
+				0));
+
+		for (Group group : groups) {
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			if (typeSettingsUnicodeProperties.remove("analyticsChannelId") !=
+					null) {
+
+				_groupLocalService.updateGroup(group);
+			}
+		}
+
 		_configurationProvider.deleteCompanyConfiguration(
 			AnalyticsConfiguration.class, companyId);
 	}
@@ -81,27 +101,70 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			AnalyticsConfiguration.class, companyId);
 	}
 
-	public Long[] getCommerceChannelIds(String channelId, long companyId)
+	public Long[] getCommerceChannelIds(
+			String analyticsChannelId, long companyId)
 		throws Exception {
 
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
 
-		return _getChannelIds(
-			analyticsConfiguration.syncedCommerceChannelIds(), channelId,
-			commerceChannelId -> _groupLocalService.fetchGroup(
-				companyId, _commerceChannelClassNameId, commerceChannelId));
+		List<Long> commerceChannelIds = new ArrayList<>();
+
+		for (String commerceChannelId :
+				analyticsConfiguration.syncedCommerceChannelIds()) {
+
+			Group group = _groupLocalService.fetchGroup(
+				companyId, _commerceChannelClassNameId,
+				GetterUtil.getLong(commerceChannelId));
+
+			if (group == null) {
+				continue;
+			}
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			if (Objects.equals(
+					analyticsChannelId,
+					typeSettingsUnicodeProperties.getProperty(
+						"analyticsChannelId"))) {
+
+				commerceChannelIds.add(GetterUtil.getLong(commerceChannelId));
+			}
+		}
+
+		return commerceChannelIds.toArray(new Long[0]);
 	}
 
-	public Long[] getSiteIds(String channelId, long companyId)
+	public Long[] getSiteIds(String analyticsChannelId, long companyId)
 		throws Exception {
 
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
 
-		return _getChannelIds(
-			analyticsConfiguration.syncedGroupIds(), channelId,
-			groupId -> _groupLocalService.fetchGroup(groupId));
+		List<Long> groupIds = new ArrayList<>();
+
+		for (String groupId : analyticsConfiguration.syncedGroupIds()) {
+			Group group = _groupLocalService.fetchGroup(
+				GetterUtil.getLong(groupId));
+
+			if (group == null) {
+				continue;
+			}
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			if (Objects.equals(
+					analyticsChannelId,
+					typeSettingsUnicodeProperties.getProperty(
+						"analyticsChannelId"))) {
+
+				groupIds.add(GetterUtil.getLong(groupId));
+			}
+		}
+
+		return groupIds.toArray(new Long[0]);
 	}
 
 	public boolean isAnalyticsEnabled(long companyId) throws Exception {
@@ -123,14 +186,12 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	}
 
 	public String[] updateCommerceChannelIds(
-			String channelId, long companyId,
+			String analyticsChannelId, long companyId,
 			Long[] dataSourceCommerceChannelIds)
 		throws Exception {
 
 		_updateTypeSetting(
-			channelId,
-			commerceChannelId -> _groupLocalService.fetchGroup(
-				companyId, _commerceChannelClassNameId, commerceChannelId),
+			analyticsChannelId, _commerceChannelClassNameId, companyId,
 			dataSourceCommerceChannelIds, false);
 
 		AnalyticsConfiguration analyticsConfiguration =
@@ -143,25 +204,20 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			commerceChannelIds.add(String.valueOf(dataSourceCommerceChannelId));
 		}
 
-		Long[] removeChannelIds = ArrayUtil.filter(
-			_getChannelIds(
-				analyticsConfiguration.syncedCommerceChannelIds(), channelId,
-				commerceChannelId -> _groupLocalService.fetchGroup(
-					companyId, _commerceChannelClassNameId, commerceChannelId)),
+		Long[] removeCommerceChannelIds = ArrayUtil.filter(
+			getCommerceChannelIds(analyticsChannelId, companyId),
 			commerceChannelId -> !ArrayUtil.contains(
 				dataSourceCommerceChannelIds, commerceChannelId));
 
 		_updateTypeSetting(
-			channelId,
-			commerceChannelId -> _groupLocalService.fetchGroup(
-				companyId, _commerceChannelClassNameId, commerceChannelId),
-			removeChannelIds, true);
+			analyticsChannelId, _commerceChannelClassNameId, companyId,
+			removeCommerceChannelIds, true);
 
 		Stream<String> commerceChannelIdsStream = commerceChannelIds.stream();
 
 		return commerceChannelIdsStream.filter(
 			commerceChannelId -> !ArrayUtil.contains(
-				removeChannelIds, String.valueOf(commerceChannelId))
+				removeCommerceChannelIds, String.valueOf(commerceChannelId))
 		).toArray(
 			String[]::new
 		);
@@ -204,12 +260,12 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	}
 
 	public String[] updateSiteIds(
-			String channelId, long companyId, Long[] dataSourceSiteIds)
+			String analyticsChannelId, long companyId, Long[] dataSourceSiteIds)
 		throws Exception {
 
 		_updateTypeSetting(
-			channelId, siteId -> _groupLocalService.fetchGroup(siteId),
-			dataSourceSiteIds, false);
+			analyticsChannelId, _groupClassNameId, companyId, dataSourceSiteIds,
+			false);
 
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
@@ -222,14 +278,12 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		}
 
 		Long[] removeSiteIds = ArrayUtil.filter(
-			_getChannelIds(
-				analyticsConfiguration.syncedGroupIds(), channelId,
-				siteId -> _groupLocalService.fetchGroup(siteId)),
+			getSiteIds(analyticsChannelId, companyId),
 			siteId -> !ArrayUtil.contains(dataSourceSiteIds, siteId));
 
 		_updateTypeSetting(
-			channelId, siteId -> _groupLocalService.fetchGroup(siteId),
-			removeSiteIds, true);
+			analyticsChannelId, _groupClassNameId, companyId, removeSiteIds,
+			true);
 
 		Stream<String> siteIdsStream = siteIds.stream();
 
@@ -244,34 +298,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	protected void activate(Map<String, Object> properties) {
 		_commerceChannelClassNameId = _portal.getClassNameId(
 			"com.liferay.commerce.product.model.CommerceChannel");
-	}
 
-	private Long[] _getChannelIds(
-		String[] analyticsConfigurationIds, String channelId,
-		Function<Long, Group> fetchGroupFunction) {
-
-		List<Long> ids = new ArrayList<>();
-
-		for (String groupId : analyticsConfigurationIds) {
-			Group group = fetchGroupFunction.apply(GetterUtil.getLong(groupId));
-
-			if (group == null) {
-				continue;
-			}
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				group.getTypeSettingsProperties();
-
-			if (Objects.equals(
-					channelId,
-					typeSettingsUnicodeProperties.getProperty(
-						"analyticsChannelId"))) {
-
-				ids.add(GetterUtil.getLong(groupId));
-			}
-		}
-
-		return ids.toArray(new Long[0]);
+		_groupClassNameId = _portal.getClassNameId(Group.class);
 	}
 
 	private String _getConfigurationPid() {
@@ -328,12 +356,13 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	}
 
 	private <T> void _updateTypeSetting(
-			String channelId, Function<Long, Group> fetchGroupFunction,
-			T[] groupIds, boolean remove)
+			String analyticsChannelId, long classNameId, long companyId,
+			T[] classPKs, boolean remove)
 		throws Exception {
 
-		for (T groupId : groupIds) {
-			Group group = fetchGroupFunction.apply(GetterUtil.getLong(groupId));
+		for (T classPK : classPKs) {
+			Group group = _groupLocalService.fetchGroup(
+				companyId, classNameId, GetterUtil.getLong(classPK));
 
 			if (group == null) {
 				continue;
@@ -342,23 +371,26 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			UnicodeProperties typeSettingsUnicodeProperties =
 				group.getTypeSettingsProperties();
 
-			String analyticsChannelId = typeSettingsUnicodeProperties.get(
-				"analyticsChannelId");
-
 			if (remove) {
-				if (!channelId.equals(analyticsChannelId)) {
+				if (!analyticsChannelId.equals(
+						typeSettingsUnicodeProperties.get(
+							"analyticsChannelId"))) {
+
 					continue;
 				}
 
 				typeSettingsUnicodeProperties.remove("analyticsChannelId");
 			}
 			else {
-				if (channelId.equals(analyticsChannelId)) {
+				if (analyticsChannelId.equals(
+						typeSettingsUnicodeProperties.get(
+							"analyticsChannelId"))) {
+
 					continue;
 				}
 
 				typeSettingsUnicodeProperties.setProperty(
-					"analyticsChannelId", channelId);
+					"analyticsChannelId", analyticsChannelId);
 			}
 
 			_groupLocalService.updateGroup(group);
@@ -383,6 +415,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private long _groupClassNameId;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

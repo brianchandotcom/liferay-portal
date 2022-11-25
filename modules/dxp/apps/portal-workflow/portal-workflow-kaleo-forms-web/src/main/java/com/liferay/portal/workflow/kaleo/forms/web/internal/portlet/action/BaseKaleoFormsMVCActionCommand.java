@@ -141,7 +141,8 @@ public abstract class BaseKaleoFormsMVCActionCommand
 		DDLRecordSet ddlRecordSet = kaleoProcess.getDDLRecordSet();
 
 		DDMFormValues ddmFormValues = ddm.getDDMFormValues(
-			ddlRecordSet.getDDMStructureId(), StringPool.BLANK, serviceContext);
+			ddlRecordSet.getDDMStructureId(), kaleoProcess.getDDMTemplateId(),
+			StringPool.BLANK, serviceContext);
 
 		if (ddlRecord == null) {
 			long ddlRecordSetId = ParamUtil.getLong(

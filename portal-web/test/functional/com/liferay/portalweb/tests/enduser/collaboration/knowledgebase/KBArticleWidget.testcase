@@ -39,7 +39,7 @@ definition {
 	@priority = "3"
 	@refactordone
 	test DeleteKBArticleViaKBArticle {
-		property custom.properties = "feature.flag.LPS-125653=true${line.separator}feature.flag.LPS-156421=true";
+		property custom.properties = "feature.flag.LPS-156421=true";
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",

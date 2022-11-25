@@ -76,136 +76,126 @@ public class KBArticleInfoItemFormProviderTest {
 
 	@Test
 	public void testGetInfoForm() throws Exception {
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-125653", Boolean.TRUE.toString())) {
+		InfoItemFormProvider<KBArticle> infoItemFormProvider =
+			(InfoItemFormProvider<KBArticle>)
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemFormProvider.class, KBArticle.class.getName());
 
-			InfoItemFormProvider<KBArticle> infoItemFormProvider =
-				(InfoItemFormProvider<KBArticle>)
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemFormProvider.class, KBArticle.class.getName());
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(_kbArticle);
 
-			InfoForm infoForm = infoItemFormProvider.getInfoForm(_kbArticle);
+		List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
 
-			List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
+		infoFields.sort(
+			Comparator.comparing(
+				InfoField::getName, String::compareToIgnoreCase));
 
-			infoFields.sort(
-				Comparator.comparing(
-					InfoField::getName, String::compareToIgnoreCase));
+		Assert.assertEquals(infoFields.toString(), 8, infoFields.size());
 
-			Assert.assertEquals(infoFields.toString(), 8, infoFields.size());
+		Iterator<InfoField<?>> iterator = infoFields.iterator();
 
-			Iterator<InfoField<?>> iterator = infoFields.iterator();
+		InfoField infoField = iterator.next();
 
-			InfoField infoField = iterator.next();
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("authorName", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
 
-			Assert.assertEquals(
-				TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-			Assert.assertEquals("authorName", infoField.getName());
-			Assert.assertFalse(infoField.isLocalizable());
+		infoField = iterator.next();
 
-			infoField = iterator.next();
+		Assert.assertEquals(
+			ImageInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("authorProfileImage", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
 
-			Assert.assertEquals(
-				ImageInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-			Assert.assertEquals("authorProfileImage", infoField.getName());
-			Assert.assertFalse(infoField.isLocalizable());
+		infoField = iterator.next();
 
-			infoField = iterator.next();
+		Assert.assertEquals(
+			CategoriesInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("categories", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
 
-			Assert.assertEquals(
-				CategoriesInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-			Assert.assertEquals("categories", infoField.getName());
-			Assert.assertFalse(infoField.isLocalizable());
+		infoField = iterator.next();
 
-			infoField = iterator.next();
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("content", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
 
-			Assert.assertEquals(
-				TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-			Assert.assertEquals("content", infoField.getName());
-			Assert.assertFalse(infoField.isLocalizable());
+		infoField = iterator.next();
 
-			infoField = iterator.next();
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("description", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
 
-			Assert.assertEquals(
-				TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-			Assert.assertEquals("description", infoField.getName());
-			Assert.assertFalse(infoField.isLocalizable());
+		infoField = iterator.next();
 
-			infoField = iterator.next();
+		Assert.assertEquals(
+			TagsInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("tagNames", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
 
-			Assert.assertEquals(
-				TagsInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-			Assert.assertEquals("tagNames", infoField.getName());
-			Assert.assertFalse(infoField.isLocalizable());
+		infoField = iterator.next();
 
-			infoField = iterator.next();
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("title", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
 
-			Assert.assertEquals(
-				TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-			Assert.assertEquals("title", infoField.getName());
-			Assert.assertFalse(infoField.isLocalizable());
+		infoField = iterator.next();
 
-			infoField = iterator.next();
+		Assert.assertEquals(
+			CategoriesInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals(
+			"topic", StringUtil.toLowerCase(infoField.getName()));
 
-			Assert.assertEquals(
-				CategoriesInfoFieldType.INSTANCE, infoField.getInfoFieldType());
-			Assert.assertEquals(
-				"topic", StringUtil.toLowerCase(infoField.getName()));
-
-			Assert.assertFalse(iterator.hasNext());
-		}
+		Assert.assertFalse(iterator.hasNext());
 	}
 
 	@Test
 	public void testGetInfoItemFieldValues() throws Exception {
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-125653", Boolean.TRUE.toString())) {
+		InfoItemFieldValuesProvider<KBArticle> infoItemFieldValuesProvider =
+			(InfoItemFieldValuesProvider<KBArticle>)
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class,
+					KBArticle.class.getName());
 
-			InfoItemFieldValuesProvider<KBArticle> infoItemFieldValuesProvider =
-				(InfoItemFieldValuesProvider<KBArticle>)
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemFieldValuesProvider.class,
-						KBArticle.class.getName());
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(_kbArticle);
 
-			InfoItemFieldValues infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(_kbArticle);
+		InfoItemReference infoItemReference =
+			infoItemFieldValues.getInfoItemReference();
 
-			InfoItemReference infoItemReference =
-				infoItemFieldValues.getInfoItemReference();
+		Assert.assertEquals(
+			_kbArticle.getResourcePrimKey(),
+			infoItemReference.getClassPK());
+		Assert.assertEquals(
+			KBArticle.class.getName(), infoItemReference.getClassName());
 
-			Assert.assertEquals(
-				_kbArticle.getResourcePrimKey(),
-				infoItemReference.getClassPK());
-			Assert.assertEquals(
-				KBArticle.class.getName(), infoItemReference.getClassName());
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
 
-			Collection<InfoFieldValue<Object>> infoFieldValues =
-				infoItemFieldValues.getInfoFieldValues();
+		Assert.assertEquals(
+			infoFieldValues.toString(), 9, infoFieldValues.size());
 
-			Assert.assertEquals(
-				infoFieldValues.toString(), 9, infoFieldValues.size());
+		InfoFieldValue<Object> descriptionInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("description");
 
-			InfoFieldValue<Object> descriptionInfoFieldValue =
-				infoItemFieldValues.getInfoFieldValue("description");
+		Assert.assertEquals(
+			"Description", descriptionInfoFieldValue.getValue());
 
-			Assert.assertEquals(
-				"Description", descriptionInfoFieldValue.getValue());
+		InfoFieldValue<Object> titleInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("title");
 
-			InfoFieldValue<Object> titleInfoFieldValue =
-				infoItemFieldValues.getInfoFieldValue("title");
+		Assert.assertEquals(
+			"title KB Article", titleInfoFieldValue.getValue());
 
-			Assert.assertEquals(
-				"title KB Article", titleInfoFieldValue.getValue());
+		InfoFieldValue<Object> contentInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("content");
 
-			InfoFieldValue<Object> contentInfoFieldValue =
-				infoItemFieldValues.getInfoFieldValue("content");
-
-			Assert.assertEquals(
-				"<strong>Context text</strong>",
-				contentInfoFieldValue.getValue());
-		}
+		Assert.assertEquals(
+			"<strong>Context text</strong>",
+			contentInfoFieldValue.getValue());
 	}
 
 	private KBArticle _addKBArticle() throws Exception {

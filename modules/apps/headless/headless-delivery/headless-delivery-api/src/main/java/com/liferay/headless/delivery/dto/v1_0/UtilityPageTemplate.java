@@ -282,7 +282,8 @@ public class UtilityPageTemplate implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		ERROR("Error"), TERMS_OF_USE("TermsOfUse");
+		ERROR("Error"), ERROR_CODE404("ErrorCode404"),
+		TERMS_OF_USE("TermsOfUse");
 
 		@JsonCreator
 		public static Type create(String value) {

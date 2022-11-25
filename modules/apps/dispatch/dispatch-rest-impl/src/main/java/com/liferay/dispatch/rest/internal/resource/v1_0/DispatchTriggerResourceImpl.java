@@ -15,10 +15,13 @@
 package com.liferay.dispatch.rest.internal.resource.v1_0;
 
 import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.rest.dto.v1_0.DispatchTrigger;
 import com.liferay.dispatch.rest.internal.dto.v1_0.util.DispatchTriggerUtil;
 import com.liferay.dispatch.rest.resource.v1_0.DispatchTriggerResource;
 import com.liferay.dispatch.service.DispatchTriggerService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -27,6 +30,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +58,9 @@ public class DispatchTriggerResourceImpl
 
 	public DispatchTrigger postDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception {
+
+		_validateDispatchTaskExecutorType(
+			dispatchTrigger.getDispatchTaskExecutorType());
 
 		return DispatchTriggerUtil.toDispatchTrigger(
 			_dispatchTriggerService.addDispatchTrigger(
@@ -92,6 +100,21 @@ public class DispatchTriggerResourceImpl
 		_dispatchTriggerModelResourcePermission = modelResourcePermission;
 	}
 
+	private void _validateDispatchTaskExecutorType(
+		String dispatchTaskExecutorType) {
+
+		DispatchTaskExecutor dispatchTaskExecutor =
+			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
+				dispatchTaskExecutorType);
+
+		if (dispatchTaskExecutor == null) {
+			throw new BadRequestException(
+				StringBundler.concat(
+					"Unable to get dispatch task executor type for \"",
+					dispatchTaskExecutorType, "\""));
+		}
+	}
+
 	private static ModelResourcePermission
 		<com.liferay.dispatch.model.DispatchTrigger>
 			_dispatchTriggerModelResourcePermission;
@@ -100,6 +123,9 @@ public class DispatchTriggerResourceImpl
 		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
 	)
 	private Destination _destination;
+
+	@Reference
+	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 	@Reference
 	private DispatchTriggerService _dispatchTriggerService;

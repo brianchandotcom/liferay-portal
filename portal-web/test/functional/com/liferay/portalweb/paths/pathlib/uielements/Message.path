@@ -272,7 +272,7 @@
 </tr>
 <tr>
 	<td>ERROR_SPECIFIC_FORM_FIELD_REQUIRED</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'form-feedback-item')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'form-feedback-item')] | //div[@class='ddm-field']//*[text()='${key_fieldName}']/..//div[contains(@class,'form-feedback-item')]</td>
 	<td></td>
 </tr>
 <tr>

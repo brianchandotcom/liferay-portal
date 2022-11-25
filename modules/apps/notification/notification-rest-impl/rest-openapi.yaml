@@ -275,6 +275,51 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/NotificationTemplate"
             tags: ["NotificationTemplate"]
+    "/notification-templates/by-external-reference-code/{externalReferenceCode}":
+        get:
+            operationId: getNotificationTemplateByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NotificationTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NotificationTemplate"
+            tags: ["NotificationTemplate"]
+        put:
+            operationId: putNotificationTemplateByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/NotificationTemplate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/NotificationTemplate"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NotificationTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NotificationTemplate"
+            tags: ["NotificationTemplate"]
     "/notification-templates/{notificationTemplateId}":
         delete:
             operationId: deleteNotificationTemplate

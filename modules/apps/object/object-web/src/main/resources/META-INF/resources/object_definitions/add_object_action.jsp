@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = (ObjectDefinitionsActionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
@@ -39,6 +40,8 @@ ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = 
 			"objectDefinitionId", objectDefinitionsActionsDisplayContext.getObjectDefinitionId()
 		).put(
 			"objectDefinitionsRelationshipsURL", objectDefinitionsActionsDisplayContext.getObjectDefinitionsRelationshipsURL()
+		).put(
+			"systemObject", objectDefinition.isSystem()
 		).put(
 			"validateExpressionURL", objectDefinitionsActionsDisplayContext.getValidateExpressionURL()
 		).build()

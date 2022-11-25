@@ -17,6 +17,19 @@
 import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 import './ActionBuilder.scss';
 import {ActionError} from '../index';
+interface ActionBuilderProps {
+	errors: ActionError;
+	isApproved: boolean;
+	objectActionCodeEditorElements: SidebarCategory[];
+	objectActionExecutors: CustomItem[];
+	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
+	objectDefinitionsRelationshipsURL: string;
+	setValues: (values: Partial<ObjectAction>) => void;
+	systemObject: boolean;
+	validateExpressionURL: string;
+	values: Partial<ObjectAction>;
+}
 export default function ActionBuilder({
 	errors,
 	isApproved,
@@ -26,19 +39,8 @@ export default function ActionBuilder({
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	setValues,
+	systemObject,
 	validateExpressionURL,
 	values,
-}: IProps): JSX.Element;
-interface IProps {
-	errors: ActionError;
-	isApproved: boolean;
-	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
-	objectDefinitionId: number;
-	objectDefinitionsRelationshipsURL: string;
-	setValues: (values: Partial<ObjectAction>) => void;
-	validateExpressionURL: string;
-	values: Partial<ObjectAction>;
-}
+}: ActionBuilderProps): JSX.Element;
 export {};

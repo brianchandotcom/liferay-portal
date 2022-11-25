@@ -17,6 +17,17 @@ import React from 'react';
 
 import ObjectAction from './index';
 
+interface AddObjectActionProps {
+	apiURL: string;
+	objectActionCodeEditorElements: SidebarCategory[];
+	objectActionExecutors: CustomItem[];
+	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
+	objectDefinitionsRelationshipsURL: string;
+	systemObject: boolean;
+	validateExpressionURL: string;
+}
+
 export default function AddObjectAction({
 	apiURL,
 	objectActionCodeEditorElements,
@@ -24,8 +35,9 @@ export default function AddObjectAction({
 	objectActionTriggers = [],
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	systemObject,
 	validateExpressionURL,
-}: IProps) {
+}: AddObjectActionProps) {
 	return (
 		<ObjectAction
 			objectAction={{active: true}}
@@ -43,18 +55,9 @@ export default function AddObjectAction({
 			successMessage={Liferay.Language.get(
 				'the-object-action-was-created-successfully'
 			)}
+			systemObject={systemObject}
 			title={Liferay.Language.get('new-action')}
 			validateExpressionURL={validateExpressionURL}
 		/>
 	);
-}
-
-interface IProps {
-	apiURL: string;
-	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
-	objectDefinitionId: number;
-	objectDefinitionsRelationshipsURL: string;
-	validateExpressionURL: string;
 }

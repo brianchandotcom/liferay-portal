@@ -36,6 +36,29 @@ import PredefinedValuesTable from '../PredefinedValuesTable';
 
 import './ActionBuilder.scss';
 import {ActionError} from '../index';
+interface ActionBuilderProps {
+	errors: ActionError;
+	isApproved: boolean;
+	objectActionCodeEditorElements: SidebarCategory[];
+	objectActionExecutors: CustomItem[];
+	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
+	objectDefinitionsRelationshipsURL: string;
+	setValues: (values: Partial<ObjectAction>) => void;
+	systemObject: boolean;
+	validateExpressionURL: string;
+	values: Partial<ObjectAction>;
+}
+
+interface SelectItem {
+	label: string;
+	value: number;
+}
+
+interface WarningStates {
+	mandatoryRelationships: boolean;
+	requiredFields: boolean;
+}
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -58,9 +81,10 @@ export default function ActionBuilder({
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	setValues,
+	systemObject,
 	validateExpressionURL,
 	values,
-}: IProps) {
+}: ActionBuilderProps) {
 	const [newObjectActionExecutors, setNewObjectActionExecutors] = useState<
 		CustomItem[]
 	>(objectActionExecutors);
@@ -212,17 +236,30 @@ export default function ActionBuilder({
 
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
-			API.getNotificationTemplates().then((items) => {
-				const notificationsArray = items.map(({id, name, type}) => ({
-					label: name,
-					type,
-					value: id,
-				}));
+			const makeFetch = async () => {
+				const NotificationTemplatesResponse = await API.getNotificationTemplates();
 
-				setNotificationTemplates(notificationsArray);
-			});
+				let notificationArray: NotificationTemplate[] = NotificationTemplatesResponse;
+
+				if (systemObject) {
+					notificationArray = NotificationTemplatesResponse.filter(
+						(notificationTemplate) =>
+							notificationTemplate.type !== 'userNotification'
+					);
+				}
+
+				setNotificationTemplates(
+					notificationArray.map(({id, name, type}) => ({
+						label: name,
+						type,
+						value: id,
+					}))
+				);
+			};
+
+			makeFetch();
 		}
-	}, [values]);
+	}, [values, systemObject]);
 
 	const handleSave = (conditionExpression?: string) => {
 		setValues({conditionExpression});
@@ -782,27 +819,4 @@ export default function ActionBuilder({
 				)}
 		</>
 	);
-}
-
-interface IProps {
-	errors: ActionError;
-	isApproved: boolean;
-	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
-	objectDefinitionId: number;
-	objectDefinitionsRelationshipsURL: string;
-	setValues: (values: Partial<ObjectAction>) => void;
-	validateExpressionURL: string;
-	values: Partial<ObjectAction>;
-}
-
-interface SelectItem {
-	label: string;
-	value: number;
-}
-
-interface WarningStates {
-	mandatoryRelationships: boolean;
-	requiredFields: boolean;
 }

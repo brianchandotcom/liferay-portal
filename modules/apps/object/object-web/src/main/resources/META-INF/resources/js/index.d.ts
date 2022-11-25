@@ -28,6 +28,7 @@ type NotificationTemplate = {
 	objectDefinitionId: number | null;
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
+	type: 'email' | 'userNotification';
 };
 
 interface ObjectAction {

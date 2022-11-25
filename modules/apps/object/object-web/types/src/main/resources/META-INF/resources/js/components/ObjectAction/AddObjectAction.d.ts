@@ -15,6 +15,16 @@
 /// <reference types="react" />
 
 import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
+interface AddObjectActionProps {
+	apiURL: string;
+	objectActionCodeEditorElements: SidebarCategory[];
+	objectActionExecutors: CustomItem[];
+	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
+	objectDefinitionsRelationshipsURL: string;
+	systemObject: boolean;
+	validateExpressionURL: string;
+}
 export default function AddObjectAction({
 	apiURL,
 	objectActionCodeEditorElements,
@@ -22,15 +32,7 @@ export default function AddObjectAction({
 	objectActionTriggers,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	systemObject,
 	validateExpressionURL,
-}: IProps): JSX.Element;
-interface IProps {
-	apiURL: string;
-	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
-	objectDefinitionId: number;
-	objectDefinitionsRelationshipsURL: string;
-	validateExpressionURL: string;
-}
+}: AddObjectActionProps): JSX.Element;
 export {};

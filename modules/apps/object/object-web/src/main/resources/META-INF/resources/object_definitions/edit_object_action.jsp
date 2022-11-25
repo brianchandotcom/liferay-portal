@@ -17,10 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = (ObjectDefinitionsActionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectAction();
-ObjectDefinition objectDefinition = objectDefinitionsActionsDisplayContext.getObjectDefinition();
+ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
+ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = (ObjectDefinitionsActionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <react:component
@@ -40,6 +39,8 @@ ObjectDefinition objectDefinition = objectDefinitionsActionsDisplayContext.getOb
 			"objectDefinitionsRelationshipsURL", objectDefinitionsActionsDisplayContext.getObjectDefinitionsRelationshipsURL()
 		).put(
 			"readOnly", !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission()
+		).put(
+			"systemObject", objectDefinition.isSystem()
 		).put(
 			"validateExpressionURL", objectDefinitionsActionsDisplayContext.getValidateExpressionURL()
 		).build()

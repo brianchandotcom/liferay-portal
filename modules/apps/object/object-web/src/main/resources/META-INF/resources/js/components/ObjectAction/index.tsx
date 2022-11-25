@@ -39,6 +39,44 @@ const TABS = [
 	Liferay.Language.get('action-builder'),
 ];
 
+interface ActionProps {
+	isApproved?: boolean;
+	objectAction: Partial<ObjectAction>;
+	objectActionCodeEditorElements: SidebarCategory[];
+	objectActionExecutors: CustomItem[];
+	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
+	objectDefinitionsRelationshipsURL: string;
+	readOnly?: boolean;
+	requestParams: {
+		method: 'POST' | 'PUT';
+		url: string;
+	};
+	successMessage: string;
+	systemObject: boolean;
+	title: string;
+	validateExpressionURL: string;
+}
+
+interface ErrorMessage {
+	fieldName: keyof ObjectAction;
+	message?: string;
+	messages?: ErrorMessage[];
+}
+
+interface Error {
+	[key: string]: string | Error;
+}
+
+interface IUseObjectActionForm {
+	initialValues: Partial<ObjectAction>;
+	onSubmit: (field: ObjectAction) => void;
+}
+
+export type ActionError = FormError<ObjectAction & ObjectActionParameters> & {
+	predefinedValues?: {[key: string]: string};
+};
+
 export default function Action({
 	isApproved,
 	objectAction: initialValues,
@@ -50,8 +88,9 @@ export default function Action({
 	readOnly,
 	requestParams: {method, url},
 	successMessage,
+	systemObject,
 	validateExpressionURL,
-}: IProps) {
+}: ActionProps) {
 	const [backEndErrors, setBackEndErrors] = useState<Error>({});
 
 	const onSubmit = async (objectAction: ObjectAction) => {
@@ -177,6 +216,7 @@ export default function Action({
 							objectDefinitionsRelationshipsURL
 						}
 						setValues={setValues}
+						systemObject={systemObject}
 						validateExpressionURL={validateExpressionURL}
 						values={values}
 					/>
@@ -316,40 +356,3 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 
 	return {errors: errors as ActionError, values, ...otherProps};
 }
-
-interface IProps {
-	isApproved?: boolean;
-	objectAction: Partial<ObjectAction>;
-	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
-	objectDefinitionId: number;
-	objectDefinitionsRelationshipsURL: string;
-	readOnly?: boolean;
-	requestParams: {
-		method: 'POST' | 'PUT';
-		url: string;
-	};
-	successMessage: string;
-	title: string;
-	validateExpressionURL: string;
-}
-
-interface ErrorMessage {
-	fieldName: keyof ObjectAction;
-	message?: string;
-	messages?: ErrorMessage[];
-}
-
-interface Error {
-	[key: string]: string | Error;
-}
-
-interface IUseObjectActionForm {
-	initialValues: Partial<ObjectAction>;
-	onSubmit: (field: ObjectAction) => void;
-}
-
-export type ActionError = FormError<ObjectAction & ObjectActionParameters> & {
-	predefinedValues?: {[key: string]: string};
-};

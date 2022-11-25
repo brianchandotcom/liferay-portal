@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -131,7 +132,13 @@ public class MBMessageAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _message.getBody();
+		String summary = _message.getBody();
+
+		if (Validator.isNotNull(summary)) {
+			return _htmlParser.render(HtmlUtil.stripHtml(summary));
+		}
+
+		return summary;
 	}
 
 	@Override

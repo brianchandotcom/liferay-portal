@@ -114,6 +114,7 @@ import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.escape.WikiEscapeUtil;
 import com.liferay.wiki.exception.DuplicatePageException;
+import com.liferay.wiki.exception.DuplicatePageExternalReferenceCodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.PageTitleException;
@@ -254,6 +255,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		Date date = new Date();
 
 		long pageId = counterLocalService.increment();
+
+		_validateExternalReferenceCode(
+			externalReferenceCode, node.getGroupId());
 
 		content = SanitizerUtil.sanitize(
 			user.getCompanyId(), node.getGroupId(), userId,
@@ -3426,6 +3430,25 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		_wikiPageTitleValidator.validate(title);
 
 		_validate(nodeId, content, format);
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		WikiPage wikiPage = fetchLatestPageByExternalReferenceCode(
+			groupId, externalReferenceCode);
+
+		if (wikiPage != null) {
+			throw new DuplicatePageExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate page external reference code ",
+					externalReferenceCode, " in group ", groupId));
+		}
 	}
 
 	private static final String _OUTGOING_LINKS = "OUTGOING_LINKS";

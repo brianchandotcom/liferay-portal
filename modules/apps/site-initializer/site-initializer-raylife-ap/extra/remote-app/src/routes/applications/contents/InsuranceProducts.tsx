@@ -36,6 +36,11 @@ enum CARD {
 	BUSINESS = 'Business',
 }
 
+enum PRODUCTS {
+	AUTO = 'Auto',
+	BUSINESS_OWNERS_POLICY = 'Business Owners Policy',
+}
+
 const InsuranceProducts: React.FC<InsuranceProductsProps> = ({
 	selectedCard,
 }) => {
@@ -43,8 +48,8 @@ const InsuranceProducts: React.FC<InsuranceProductsProps> = ({
 
 	const cardNameSelected =
 		selectedCard[0].name === CARD.PERSONAL
-			? 'Auto'
-			: 'Business Owners Policy';
+			? PRODUCTS.AUTO
+			: PRODUCTS.BUSINESS_OWNERS_POLICY;
 
 	const [cardSelected, setCardSelected] = useState<string>(cardNameSelected);
 
@@ -109,16 +114,21 @@ const InsuranceProducts: React.FC<InsuranceProductsProps> = ({
 										<div className="col">
 											<ClayCard
 												className={classNames(
-													'application-card card-hover border border-secondary',
+													'application-card border border-secondary',
 													{
-														active:
+														'active':
 															cardSelected ===
 																cardPersonal.name ||
 															(index === 0 &&
 																!cardSelected),
+														'application-card-opacity':
+															cardPersonal.name !==
+															PRODUCTS.AUTO,
 													}
 												)}
 												onClick={() =>
+													cardPersonal.name ===
+														PRODUCTS.AUTO &&
 													onClickCard(
 														cardPersonal.name
 													)

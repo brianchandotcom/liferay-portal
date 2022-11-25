@@ -18,6 +18,10 @@
 		cursor: pointer;
 		transition: all 0.07s ease;
 	}
+
+	&.application-card-opacity {
+		opacity: 0.5 !important;
+	}
 }
 
 .card-hover:hover {

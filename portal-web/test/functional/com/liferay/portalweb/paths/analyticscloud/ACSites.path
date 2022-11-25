@@ -148,6 +148,11 @@
 	<td>//*[name()='svg']//*[contains(@class, 'analytics-sankey-title') and @y='0']//*[text()='${key_pageName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>POPOVER_ACTIVITIES_DATE_AND_TIME</td>
+	<td>//thead[@class="analytics-tooltip-chart-header"]//div[contains(@class,'text-right')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

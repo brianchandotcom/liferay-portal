@@ -56,7 +56,7 @@ export default function ActivityQuestionRow({
 
 	const isRowSelected = question.friendlyUrlPath === rowSelected;
 
-	const badgeField = useMemo(() => {
+	const messageType = useMemo(() => {
 		if (headline.startsWith(MESSAGE_TYPES.reply.prefix)) {
 			return {
 				label: Liferay.Language.get('comment-reply'),
@@ -90,7 +90,10 @@ export default function ActivityQuestionRow({
 				{'question-row-selected': isRowSelected}
 			)}
 		>
-			<ActivityHeaderBadge badgeField={badgeField} question={question} />
+			<ActivityHeaderBadge
+				messageType={messageType}
+				question={question}
+			/>
 
 			<Link
 				className="questions-title stretched-link"
@@ -98,20 +101,20 @@ export default function ActivityQuestionRow({
 				{...linkProps}
 			>
 				<ActivityHeader
-					badgeField={badgeField}
 					context={context}
+					messageType={messageType}
 					question={question}
 				/>
 			</Link>
 
 			<div className="c-mb-1 c-mt-2 stretched-link-layer">
-				<ActivityBody badgeField={badgeField} question={question} />
+				<ActivityBody messageType={messageType} question={question} />
 			</div>
 
 			<ActivityFooter
-				badgeField={badgeField}
 				creatorId={creatorId}
 				creatorInformation={creatorInformation}
+				messageType={messageType}
 				question={question}
 				sectionTitle={sectionTitle}
 			/>

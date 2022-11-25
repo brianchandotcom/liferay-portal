@@ -45,7 +45,7 @@ export default function ArticleBodyAnwser({
 
 			{encodingFormat !== 'bbcode' && compactMode && (
 				<div
-					className={`questions-article-body questions-labels-limit ${id}`}
+					className={`questions-article-body-${id} questions-labels-limit`}
 					dangerouslySetInnerHTML={{__html: articleBody}}
 				/>
 			)}

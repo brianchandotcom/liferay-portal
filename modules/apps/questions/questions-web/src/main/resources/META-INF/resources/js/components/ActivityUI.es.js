@@ -47,7 +47,10 @@ const getQuestionCreatedInDays = (dateCreated) => {
 	return diffDays;
 };
 
-const ActivityHeaderBadge = ({badgeField: {label, symbol, type}, question}) => {
+const ActivityHeaderBadge = ({
+	messageType: {label, symbol, type},
+	question,
+}) => {
 	const DAYS_SINCE_CREATED = getQuestionCreatedInDays(question.dateCreated);
 
 	return (
@@ -70,11 +73,11 @@ const ActivityHeaderBadge = ({badgeField: {label, symbol, type}, question}) => {
 								'questions-reply': symbol === 'reply',
 							}
 						)}
-						iconInvert={classNames({
-							'questions-reply-icon': symbol === 'reply',
-						})}
 						isActivityBadge
 						symbol={symbol}
+						symbolClassName={classNames({
+							'questions-reply-icon': symbol === 'reply',
+						})}
 						value={label}
 					/>
 				</li>
@@ -92,8 +95,8 @@ const ActivityHeaderBadge = ({badgeField: {label, symbol, type}, question}) => {
 };
 
 const ActivityHeader = ({
-	badgeField: {text},
 	context,
+	messageType: {text},
 	question: {id, locked, seen, status},
 }) => (
 	<h5
@@ -130,7 +133,7 @@ const ActivityHeader = ({
 	</h5>
 );
 
-const ActivityBody = ({badgeField: {symbol, type}, question}) => {
+const ActivityBody = ({messageType: {symbol, type}, question}) => {
 	if (type === MESSAGE_TYPES.answer.type) {
 		return (
 			<ArticleBodyRenderer
@@ -152,23 +155,22 @@ const ActivityBody = ({badgeField: {symbol, type}, question}) => {
 
 				<QuestionBadge
 					className="questions-reply"
-					iconInvert="questions-comment-reply-icon"
 					isActivityBadge
 					symbol={symbol}
+					symbolClassName="questions-comment-reply-icon"
 					value={stripHTML(question.articleBody)}
 				/>
 			</>
 		);
 	}
-	if (type === MESSAGE_TYPES.question.type) {
-		return null;
-	}
+
+	return null;
 };
 
 const ActivityFooter = ({
-	badgeField: {type},
 	creatorId,
 	creatorInformation,
+	messageType: {type},
 	question,
 	sectionTitle,
 }) => {

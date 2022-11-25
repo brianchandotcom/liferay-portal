@@ -18,22 +18,23 @@ import React from 'react';
 
 export default function QuestionsBadge({
 	className,
-	iconInvert,
 	isActivityBadge,
 	symbol,
+	symbolClassName,
 	tooltip,
 	value,
 }) {
 	return (
 		<div
 			className={classNames(
-				` c-py-2 c-px-3 rounded stretched-link-layer ${className}`,
+				` c-py-2 c-px-3 rounded stretched-link-layer`,
+				className,
 				{'badge-activity': isActivityBadge}
 			)}
 			data-tooltip-align="top"
 			title={tooltip}
 		>
-			{symbol && <ClayIcon className={`${iconInvert}`} symbol={symbol} />}
+			{symbol && <ClayIcon className={symbolClassName} symbol={symbol} />}
 
 			<span
 				className={classNames(

@@ -3590,7 +3590,7 @@ definition {
 
 		AssertElementPresent(
 			key_text = "Done",
-			locator1 = "Button#DISABLED_BUTTON_SPECIFIC");
+			locator1 = "Button#ANY_DISABLED");
 
 		Button.clickDone();
 

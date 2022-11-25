@@ -204,10 +204,18 @@ public class ObjectEntryInfoItemFormProvider
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+				 Objects.equals(
+					 objectField.getBusinessType(),
+					 ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			finalStep.attribute(
-				SelectInfoFieldType.OPTIONS, _getOptions(objectField));
+				SelectInfoFieldType.MULTIPLE,
+				objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)
+			).attribute(
+				SelectInfoFieldType.OPTIONS, _getOptions(objectField)
+			);
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

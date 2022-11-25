@@ -145,4 +145,20 @@ definition {
 		}
 	}
 
+	macro getPopoverDateAndTime {
+		while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART")) && (maxIterations = "50")) {
+			TestUtils.hardRefresh();
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+
+		var dateAndTime = selenium.getText("ACSites#POPOVER_ACTIVITIES_DATE_AND_TIME");
+
+		return "${dateAndTime}";
+	}
+
 }

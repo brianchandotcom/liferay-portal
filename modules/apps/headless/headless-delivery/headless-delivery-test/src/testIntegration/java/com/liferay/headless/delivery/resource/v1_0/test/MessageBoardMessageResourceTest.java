@@ -139,7 +139,7 @@ public class MessageBoardMessageResourceTest
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {
 			"childMessagesCount", "creatorId", "dateCreated", "dateModified",
-			"messageBoardSectionId", "messageBoardThreadId",
+			"lastPostDate", "messageBoardSectionId", "messageBoardThreadId",
 			"parentMessageBoardMessageId", "ratingsStatTotalScore",
 			"ratingValue", "viewCount"
 		};

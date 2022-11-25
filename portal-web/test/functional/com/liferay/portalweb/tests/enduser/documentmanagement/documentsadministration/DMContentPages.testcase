@@ -104,6 +104,8 @@ definition {
 
 		DMDocument.editTags(tagName = "tagone");
 
+		DMDocument.unselectDocuments(dmDocumentTitle = "Document_1");
+
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_2");
 
 		Click(locator1 = "Icon#EDIT_TAGS");

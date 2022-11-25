@@ -7585,7 +7585,6 @@ public class JournalArticleLocalServiceImpl
 
 		int numberOfPages = 1;
 		boolean paginate = false;
-		boolean pageFlow = false;
 
 		boolean cacheable = true;
 
@@ -7594,58 +7593,6 @@ public class JournalArticleLocalServiceImpl
 		document = document.clone();
 
 		Element rootElement = document.getRootElement();
-
-		List<Element> pages = rootElement.elements("page");
-
-		if (!pages.isEmpty()) {
-			pageFlow = true;
-
-			String targetPage = null;
-
-			Map<String, String[]> parameters =
-				portletRequestModel.getParameters();
-
-			if (parameters != null) {
-				String[] values = parameters.get("targetPage");
-
-				if ((values != null) && (values.length > 0)) {
-					targetPage = values[0];
-				}
-			}
-
-			Element pageElement = null;
-
-			if (Validator.isNotNull(targetPage)) {
-				targetPage = _html.escapeXPathAttribute(targetPage);
-
-				XPath xPathSelector = SAXReaderUtil.createXPath(
-					"/root/page[@id = " + targetPage + "]");
-
-				pageElement = (Element)xPathSelector.selectSingleNode(document);
-			}
-
-			if (pageElement != null) {
-				document = SAXReaderUtil.createDocument(pageElement);
-
-				rootElement = document.getRootElement();
-
-				numberOfPages = pages.size();
-			}
-			else {
-				if (page > pages.size()) {
-					page = 1;
-				}
-
-				pageElement = pages.get(page - 1);
-
-				document = SAXReaderUtil.createDocument(pageElement);
-
-				rootElement = document.getRootElement();
-
-				numberOfPages = pages.size();
-				paginate = true;
-			}
-		}
 
 		try {
 			if (_log.isDebugEnabled()) {
@@ -7708,25 +7655,22 @@ public class JournalArticleLocalServiceImpl
 					"friendlyURLs", friendlyURLMap
 				).build());
 
-			if (!pageFlow) {
-				JournalServiceConfiguration journalServiceConfiguration =
-					configurationProvider.getCompanyConfiguration(
-						JournalServiceConfiguration.class,
-						article.getCompanyId());
+			JournalServiceConfiguration journalServiceConfiguration =
+				configurationProvider.getCompanyConfiguration(
+					JournalServiceConfiguration.class, article.getCompanyId());
 
-				String[] pieces = StringUtil.split(
-					content,
-					journalServiceConfiguration.journalArticlePageBreakToken());
+			String[] pieces = StringUtil.split(
+				content,
+				journalServiceConfiguration.journalArticlePageBreakToken());
 
-				if (pieces.length > 1) {
-					if (page > pieces.length) {
-						page = 1;
-					}
-
-					content = pieces[page - 1];
-					numberOfPages = pieces.length;
-					paginate = true;
+			if (pieces.length > 1) {
+				if (page > pieces.length) {
+					page = 1;
 				}
+
+				content = pieces[page - 1];
+				numberOfPages = pieces.length;
+				paginate = true;
 			}
 		}
 		catch (Exception exception) {

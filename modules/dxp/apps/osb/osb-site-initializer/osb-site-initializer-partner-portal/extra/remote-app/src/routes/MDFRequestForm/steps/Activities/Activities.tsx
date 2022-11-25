@@ -78,7 +78,6 @@ const Activities = ({
 				<Listing
 					{...arrayHelpers}
 					activities={values.activities}
-					isValid={isValid}
 					onAdd={onAdd}
 					overallCampaignName={values.overallCampaignName}
 				/>

@@ -20,14 +20,12 @@ import getNewActivity from '../../utils/getNewActivity';
 
 interface IProps {
 	activities: MDFRequestActivity[];
-	isValid: boolean;
 	onAdd: () => void;
 	overallCampaignName: string;
 }
 
 const Listing = ({
 	activities,
-	isValid,
 	onAdd,
 	overallCampaignName,
 	push,
@@ -52,7 +50,7 @@ const Listing = ({
 						/>
 					))}
 
-				{!activities.length && !isValid && (
+				{!activities.length && (
 					<ClayAlert displayType="info" title="Info:">
 						No entries were found
 					</ClayAlert>

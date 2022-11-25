@@ -28,7 +28,7 @@ import java.util.Set;
  */
 public class UtilityPageTemplateUtil {
 
-	public static String convertToExternalValue(int value) {
+	public static String convertToExternalValue(String value) {
 		Set<String> externalValues = _types.keySet();
 
 		for (String externalValue : externalValues) {
@@ -40,7 +40,7 @@ public class UtilityPageTemplateUtil {
 		return null;
 	}
 
-	public static int convertToInternalValue(String label) {
+	public static String convertToInternalValue(String label) {
 		return _types.get(label);
 	}
 
@@ -60,11 +60,11 @@ public class UtilityPageTemplateUtil {
 		};
 	}
 
-	private static final Map<String, Integer> _types = HashMapBuilder.put(
-		"Error", LayoutUtilityPageEntryConstants.Type.ERROR_404.getType()
+	private static final Map<String, String> _types = HashMapBuilder.put(
+		"Error", LayoutUtilityPageEntryConstants.Type.ERROR_404.getLabel()
 	).put(
 		"TermsOfUse",
-		LayoutUtilityPageEntryConstants.Type.TERMS_OF_USE.getType()
+		LayoutUtilityPageEntryConstants.Type.TERMS_OF_USE.getLabel()
 	).build();
 
 }

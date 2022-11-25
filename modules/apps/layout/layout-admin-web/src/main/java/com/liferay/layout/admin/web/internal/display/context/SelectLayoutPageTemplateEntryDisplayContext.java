@@ -206,12 +206,12 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return _selectedTab;
 	}
 
-	public int getType() {
+	public String getType() {
 		if (_type != null) {
 			return _type;
 		}
 
-		_type = ParamUtil.getInteger(_httpServletRequest, "type");
+		_type = ParamUtil.getString(_httpServletRequest, "type");
 
 		return _type;
 	}
@@ -276,7 +276,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	private String _redirect;
 	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;
-	private Integer _type;
+	private String _type;
 	private List<String> _types;
 
 }

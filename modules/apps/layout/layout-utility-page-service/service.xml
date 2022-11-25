@@ -27,7 +27,7 @@
 		<column name="previewFileEntryId" type="long" />
 		<column name="defaultLayoutUtilityPageEntry" type="boolean" />
 		<column name="name" type="String" />
-		<column name="type" type="int" />
+		<column name="type" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

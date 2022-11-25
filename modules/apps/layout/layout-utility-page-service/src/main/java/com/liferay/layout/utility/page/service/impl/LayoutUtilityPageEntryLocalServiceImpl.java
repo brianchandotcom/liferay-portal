@@ -68,7 +68,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long userId, long groupId,
-			String name, int type, long masterLayoutPlid)
+			String name, String type, long masterLayoutPlid)
 		throws PortalException {
 
 		_validateName(groupId, name);
@@ -90,7 +90,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		long plid = 0;
 
 		Layout layout = _addLayout(
-			userId, groupId, name, type, masterLayoutPlid,
+			userId, groupId, name, masterLayoutPlid,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextThreadLocal.getServiceContext());
 
@@ -178,7 +178,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
-		long groupId, int type) {
+		long groupId, String type) {
 
 		return layoutUtilityPageEntryPersistence.fetchByG_D_T_First(
 			groupId, true, type, null);
@@ -186,7 +186,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
-			long groupId, int type)
+			long groupId, String type)
 		throws PortalException {
 
 		return layoutUtilityPageEntryPersistence.findByG_D_T_First(
@@ -202,20 +202,20 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return layoutUtilityPageEntryPersistence.findByG_T(
-			groupId, type, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
 		long groupId, int start, int end,
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
 
 		return layoutUtilityPageEntryPersistence.findByGroupId(
 			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String type, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return layoutUtilityPageEntryPersistence.findByG_T(
+			groupId, type, start, end, orderByComparator);
 	}
 
 	@Override
@@ -281,8 +281,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	}
 
 	private Layout _addLayout(
-			long userId, long groupId, String name, int type,
-			long masterLayoutPlid, int status, ServiceContext serviceContext)
+			long userId, long groupId, String name, long masterLayoutPlid,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<Locale, String> titleMap = Collections.singletonMap(
@@ -312,7 +312,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
-		serviceContext.setAttribute("layout.page.template.entry.type", type);
 
 		Layout layout = _layoutLocalService.addLayout(
 			userId, groupId, true, 0, 0, 0, titleMap, titleMap, null, null,
@@ -358,7 +357,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	}
 
 	private String _getUniqueCopyName(
-		long groupId, String sourceName, int type, Locale locale) {
+		long groupId, String sourceName, String type, Locale locale) {
 
 		String copy = _language.get(locale, "copy");
 

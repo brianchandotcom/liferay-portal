@@ -45,8 +45,8 @@ public class LayoutUtilityPageEntryServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId, String name, int type,
-			long masterLayoutPlid)
+			String externalReferenceCode, long groupId, String name,
+			String type, long masterLayoutPlid)
 		throws PortalException {
 
 		_groupPermission.check(
@@ -87,7 +87,7 @@ public class LayoutUtilityPageEntryServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
-			long groupId, int type)
+			long groupId, String type)
 		throws PortalException {
 
 		return layoutUtilityPageEntryLocalService.
@@ -104,20 +104,20 @@ public class LayoutUtilityPageEntryServiceImpl
 
 	@Override
 	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
-			groupId, type, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
 		long groupId, int start, int end,
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
 
 		return layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String type, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+			groupId, type, start, end, orderByComparator);
 	}
 
 	@Override

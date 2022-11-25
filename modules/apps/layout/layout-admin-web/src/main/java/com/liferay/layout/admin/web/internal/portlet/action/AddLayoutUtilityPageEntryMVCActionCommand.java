@@ -69,7 +69,7 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 		throws Exception {
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		int type = ParamUtil.getInteger(actionRequest, "type");
+		String type = ParamUtil.getString(actionRequest, "type");
 		long masterLayoutPlid = ParamUtil.getLong(
 			actionRequest, "masterLayoutPlid");
 

@@ -45,7 +45,7 @@ public class RenderLayoutUtilityPageEntryTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public int getType() {
+	public String getType() {
 		return _type;
 	}
 
@@ -56,7 +56,7 @@ public class RenderLayoutUtilityPageEntryTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		_type = type;
 	}
 
@@ -64,7 +64,7 @@ public class RenderLayoutUtilityPageEntryTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_type = 0;
+		_type = null;
 	}
 
 	@Override
@@ -115,6 +115,6 @@ public class RenderLayoutUtilityPageEntryTag extends IncludeTag {
 	private static final String _PAGE =
 		"/render_layout_utility_page_entry/page.jsp";
 
-	private int _type;
+	private String _type;
 
 }

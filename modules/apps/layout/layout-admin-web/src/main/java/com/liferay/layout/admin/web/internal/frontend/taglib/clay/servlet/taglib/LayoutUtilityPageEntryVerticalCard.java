@@ -19,28 +19,24 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutUtilityPageEntryActionDropdownItemsProvider;
-import com.liferay.layout.utility.page.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -60,7 +56,6 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			_layoutUtilityPageEntry.getPlid());
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -77,9 +72,6 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getHref() {
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
 				_draftLayout, themeDisplay);
 
@@ -105,9 +97,6 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getImageSrc() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		return _layoutUtilityPageEntry.getImagePreviewURL(themeDisplay);
 	}
 
@@ -143,11 +132,13 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		LayoutUtilityPageEntryConstants.Type type =
-			LayoutUtilityPageEntryConstants.parse(
-				_layoutUtilityPageEntry.getType());
+		LayoutUtilityPageEntryViewRenderer layoutUtilityPageEntryViewRenderer =
+			LayoutUtilityPageEntryViewRendererRegistryUtil.
+				getLayoutUtilityPageEntryViewRenderer(
+					_layoutUtilityPageEntry.getType());
 
-		return LanguageUtil.get(_httpServletRequest, type.getLabel());
+		return layoutUtilityPageEntryViewRenderer.getLabel(
+			themeDisplay.getLocale());
 	}
 
 	@Override
@@ -164,7 +155,6 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		LayoutUtilityPageEntryVerticalCard.class);
 
 	private final Layout _draftLayout;
-	private final HttpServletRequest _httpServletRequest;
 	private final LayoutUtilityPageEntry _layoutUtilityPageEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

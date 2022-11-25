@@ -234,9 +234,14 @@ public class ObjectEntryVariablesUtil {
 		Map<String, Object> variables = new HashMap<>();
 
 		if (objectDefinition.isSystem()) {
-			variables.putAll(
-				(Map<String, Object>)payloadJSONObject.get(
-					"model" + objectDefinition.getName()));
+			Object object = payloadJSONObject.get(
+				"model" + objectDefinition.getName());
+
+			if (object == null) {
+				return payloadJSONObject.toMap();
+			}
+
+			variables.putAll((Map<String, Object>)object);
 
 			String contentType = _getContentType(
 				dtoConverterRegistry, objectDefinition,

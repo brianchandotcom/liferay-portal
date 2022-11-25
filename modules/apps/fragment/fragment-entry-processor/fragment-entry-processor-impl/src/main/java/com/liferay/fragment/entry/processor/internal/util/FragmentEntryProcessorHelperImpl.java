@@ -17,7 +17,9 @@ package com.liferay.fragment.entry.processor.internal.util;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -494,6 +497,17 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		if (value instanceof String) {
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
+				Optional<Boolean> htmlOptional = infoField.getAttributeOptional(
+					TextInfoFieldType.HTML);
+
+				if (htmlOptional.orElse(false)) {
+					return _html.escape((String)value);
+				}
+			}
+
 			return (String)value;
 		}
 
@@ -532,6 +546,9 @@ public class FragmentEntryProcessorHelperImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryProcessorHelperImpl.class);
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

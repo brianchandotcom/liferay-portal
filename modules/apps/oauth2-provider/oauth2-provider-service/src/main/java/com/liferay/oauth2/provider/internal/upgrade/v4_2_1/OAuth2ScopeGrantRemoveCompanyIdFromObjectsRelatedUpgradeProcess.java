@@ -37,8 +37,9 @@ public class OAuth2ScopeGrantRemoveCompanyIdFromObjectsRelatedUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId, applicationName from OAuth2ScopeGrant " +
-					"where bundleSymbolicName = ?")) {
+				"select companyId, applicationName, oauth2ScopeGrantId, " +
+					"scopeAliases from OAuth2ScopeGrant where " +
+						"bundleSymbolicName = ?")) {
 
 			preparedStatement.setString(1, "com.liferay.object.rest.impl");
 

@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>FIELD_SIZE</td>
-	<td>//div[contains(@class,'col-md-${key_size}')]/div[contains(@data-field-name,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'col-md-${key_size}')]/div[contains(@data-field-name,'${key_fieldName}')] | //div[@class='col-ddm col-md-${key_size}']//*[text()='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>

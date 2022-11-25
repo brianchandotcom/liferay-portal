@@ -59,8 +59,16 @@ public class DispatchTriggerResourceImpl
 	public DispatchTrigger postDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception {
 
-		_validateDispatchTaskExecutorType(
-			dispatchTrigger.getDispatchTaskExecutorType());
+		DispatchTaskExecutor dispatchTaskExecutor =
+			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
+				dispatchTrigger.getDispatchTaskExecutorType());
+
+		if (dispatchTaskExecutor == null) {
+			throw new BadRequestException(
+				StringBundler.concat(
+					"Unable to get dispatch task executor type for \"",
+					dispatchTrigger.getDispatchTaskExecutorType(), "\""));
+		}
 
 		return DispatchTriggerUtil.toDispatchTrigger(
 			_dispatchTriggerService.addDispatchTrigger(
@@ -98,21 +106,6 @@ public class DispatchTriggerResourceImpl
 			modelResourcePermission) {
 
 		_dispatchTriggerModelResourcePermission = modelResourcePermission;
-	}
-
-	private void _validateDispatchTaskExecutorType(
-		String dispatchTaskExecutorType) {
-
-		DispatchTaskExecutor dispatchTaskExecutor =
-			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
-				dispatchTaskExecutorType);
-
-		if (dispatchTaskExecutor == null) {
-			throw new BadRequestException(
-				StringBundler.concat(
-					"Unable to get dispatch task executor type for \"",
-					dispatchTaskExecutorType, "\""));
-		}
 	}
 
 	private static ModelResourcePermission

@@ -325,46 +325,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9150 | Test Summary: Information banners should not be stacked after changing a time zone"
-	@priority = "5"
-	test ViewOnlyOneInformationBannerShownAfterChangeTimezone {
-		task ("Navigate to Workspace Settings") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToWorkspace();
-		}
-
-		task ("Change the timezone to Xinjiang of China") {
-			ACWorkspace.configureWorkspaceSettings(
-				timezone = "China",
-				timezoneId = "UTC+06:00 Xinjiang Time (Asia/Urumqi)");
-
-			ACUtils.waitForLoading();
-		}
-
-		task ("Refresh the page") {
-			Refresh();
-		}
-
-		task ("View the information banner") {
-			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+06:00 XinJiang Time");
-		}
-
-		task ("Change the timezone to Shanghai of China") {
-			ACWorkspace.configureWorkspaceSettings(
-				timezone = "China",
-				timezoneId = "UTC+08:00 China Time (Asia/Shanghai)");
-
-			ACUtils.waitForLoading();
-		}
-
-		task ("View only one information banner shown") {
-			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+08:00 China Time");
-
-			AssertElementNotPresent(locator1 = "Message#INFO_2");
-		}
-	}
-
 	@description = "Bug: LRAC-11903 | Automation ID: LRAC-12355 | Test Summary: Set time zone for existing workspace and validade that the events are shown in the activities card according to the new time zone"
 	@priority = "4"
 	test ViewEventChangedInActivitiesCardAfterChangeTimeZone {
@@ -395,7 +355,7 @@ definition {
 
 			ACUtils.closeAllSessionsAndWait();
 		}
-		
+
 		task ("Switch to new property in AC and go to Sites") {
 			ACUtils.launchAC();
 
@@ -452,6 +412,46 @@ definition {
 			TestUtils.assertNotEquals(
 				actual = "${timeBrazil}",
 				expected = "${timeUTC}");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9150 | Test Summary: Information banners should not be stacked after changing a time zone"
+	@priority = "5"
+	test ViewOnlyOneInformationBannerShownAfterChangeTimezone {
+		task ("Navigate to Workspace Settings") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToWorkspace();
+		}
+
+		task ("Change the timezone to Xinjiang of China") {
+			ACWorkspace.configureWorkspaceSettings(
+				timezone = "China",
+				timezoneId = "UTC+06:00 Xinjiang Time (Asia/Urumqi)");
+
+			ACUtils.waitForLoading();
+		}
+
+		task ("Refresh the page") {
+			Refresh();
+		}
+
+		task ("View the information banner") {
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+06:00 XinJiang Time");
+		}
+
+		task ("Change the timezone to Shanghai of China") {
+			ACWorkspace.configureWorkspaceSettings(
+				timezone = "China",
+				timezoneId = "UTC+08:00 China Time (Asia/Shanghai)");
+
+			ACUtils.waitForLoading();
+		}
+
+		task ("View only one information banner shown") {
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+08:00 China Time");
+
+			AssertElementNotPresent(locator1 = "Message#INFO_2");
 		}
 	}
 

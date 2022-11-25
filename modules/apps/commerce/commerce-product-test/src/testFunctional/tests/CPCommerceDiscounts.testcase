@@ -1020,7 +1020,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",

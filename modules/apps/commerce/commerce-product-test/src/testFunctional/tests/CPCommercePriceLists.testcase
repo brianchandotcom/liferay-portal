@@ -1952,7 +1952,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Pricing",
@@ -2079,7 +2079,7 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Pricing",

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.permission;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
@@ -35,15 +37,13 @@ import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -103,23 +103,15 @@ public class SearchPermissionDocumentContributorImpl
 			companyId, groupId, className, classPK, viewActionId, document);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addSearchPermissionFieldContributor(
-		SearchPermissionFieldContributor searchPermissionFieldContributor) {
-
-		_searchPermissionFieldContributors.add(
-			searchPermissionFieldContributor);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, SearchPermissionFieldContributor.class);
 	}
 
-	protected void removeSearchPermissionFieldContributor(
-		SearchPermissionFieldContributor searchPermissionFieldContributor) {
-
-		_searchPermissionFieldContributors.remove(
-			searchPermissionFieldContributor);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	private void _addPermissionFields(
@@ -127,7 +119,7 @@ public class SearchPermissionDocumentContributorImpl
 		String viewActionId, Document document) {
 
 		for (SearchPermissionFieldContributor searchPermissionFieldContributor :
-				_searchPermissionFieldContributors) {
+				_serviceTrackerList) {
 
 			searchPermissionFieldContributor.contribute(
 				document, className, classPK);
@@ -201,7 +193,7 @@ public class SearchPermissionDocumentContributorImpl
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
-	private final Collection<SearchPermissionFieldContributor>
-		_searchPermissionFieldContributors = new CopyOnWriteArrayList<>();
+	private ServiceTrackerList<SearchPermissionFieldContributor>
+		_serviceTrackerList;
 
 }

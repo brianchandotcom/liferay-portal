@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -63,15 +65,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Allen Chiang
@@ -178,49 +178,30 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		modified(properties);
+
+		_searchPermissionFieldContributorServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, SearchPermissionFieldContributor.class);
+		_searchPermissionFilterContributorServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, SearchPermissionFilterContributor.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_searchPermissionFieldContributorServiceTrackerList.close();
+		_searchPermissionFilterContributorServiceTrackerList.close();
+	}
+
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void modified(Map<String, Object> properties) {
 		searchPermissionCheckerConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SearchPermissionCheckerConfiguration.class, properties);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addSearchPermissionFieldContributor(
-		SearchPermissionFieldContributor searchPermissionFieldContributor) {
-
-		_searchPermissionFieldContributors.add(
-			searchPermissionFieldContributor);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addSearchPermissionFilterContributor(
-		SearchPermissionFilterContributor searchPermissionFilterContributor) {
-
-		_searchPermissionFilterContributors.add(
-			searchPermissionFilterContributor);
-	}
-
-	protected void removeSearchPermissionFieldContributor(
-		SearchPermissionFieldContributor searchPermissionFieldContributor) {
-
-		_searchPermissionFieldContributors.remove(
-			searchPermissionFieldContributor);
-	}
-
-	protected void removeSearchPermissionFilterContributor(
-		SearchPermissionFilterContributor searchPermissionFilterContributor) {
-
-		_searchPermissionFilterContributors.remove(
-			searchPermissionFilterContributor);
 	}
 
 	@Reference
@@ -271,7 +252,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		throws Exception {
 
 		for (SearchPermissionFieldContributor searchPermissionFieldContributor :
-				_searchPermissionFieldContributors) {
+				_searchPermissionFieldContributorServiceTrackerList) {
 
 			searchPermissionFieldContributor.contribute(
 				document, className, classPK);
@@ -595,7 +576,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		for (SearchPermissionFilterContributor
 				searchPermissionFilterContributor :
-					_searchPermissionFilterContributors) {
+					_searchPermissionFilterContributorServiceTrackerList) {
 
 			searchPermissionFilterContributor.contribute(
 				booleanFilter, companyId, groupIds, userId, permissionChecker,
@@ -622,10 +603,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchPermissionCheckerImpl.class);
 
-	private final Collection<SearchPermissionFieldContributor>
-		_searchPermissionFieldContributors = new CopyOnWriteArrayList<>();
-	private final Collection<SearchPermissionFilterContributor>
-		_searchPermissionFilterContributors = new CopyOnWriteArrayList<>();
+	private ServiceTrackerList<SearchPermissionFieldContributor>
+		_searchPermissionFieldContributorServiceTrackerList;
+	private ServiceTrackerList<SearchPermissionFilterContributor>
+		_searchPermissionFilterContributorServiceTrackerList;
 
 	private static class SearchPermissionContext implements Serializable {
 

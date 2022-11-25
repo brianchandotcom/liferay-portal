@@ -1176,7 +1176,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Check(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
+		Click.javaScriptClick(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
 
 		Button.clickSave();
 

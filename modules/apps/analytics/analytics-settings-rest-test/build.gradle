@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationCompile project(":apps:analytics:analytics-settings-api")
 	testIntegrationCompile project(":apps:analytics:analytics-settings-rest-api")
 	testIntegrationCompile project(":apps:analytics:analytics-settings-rest-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

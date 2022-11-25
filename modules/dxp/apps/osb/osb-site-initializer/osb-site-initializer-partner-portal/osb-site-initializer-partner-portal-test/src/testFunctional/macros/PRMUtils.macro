@@ -27,7 +27,6 @@ definition {
 
 	macro gotoPRM {
 		Navigator.openSiteURL(siteName = "Partner Portal");
-
 	}
 
 	macro signIn {

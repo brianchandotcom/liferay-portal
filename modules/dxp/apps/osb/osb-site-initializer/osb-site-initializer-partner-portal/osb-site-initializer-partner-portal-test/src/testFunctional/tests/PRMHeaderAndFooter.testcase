@@ -29,7 +29,7 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "partner@liferay.com");
 		}
-		
+
 		task ("Create a new Partner Portal Site") {
 			PRMUtils.addPRMSite();
 		}

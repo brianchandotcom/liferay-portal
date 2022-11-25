@@ -12,4 +12,16 @@ definition {
 			locator1 = "PRMNavigation#NAV_LINK");
 	}
 
+	macro viewPage {
+		for (var pageName : list "${pageList}") {
+			PRMNavigator.goToNavItem(navItem = "${pageName}");
+
+			PRMNavigator.assertActiveBreadcrumb(activeItem = "${pageName}");
+
+			var pageName = StringUtil.lowerCase("${pageName}");
+
+			AssertLocation.assertPartialLocation(value1 = "${pageName}");
+		}
+	}
+
 }

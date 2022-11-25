@@ -12,13 +12,10 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Staging Test Page");
-
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-		Staging.activateStagingCP(siteName = "Test Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "false",
+			branchingPublic = "false",
+			groupName = "Test Site Name");
 	}
 
 	tearDown {

@@ -81,6 +81,103 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException");
 	}
 
+	@description = "This is a use case for LPS-157219. It ensures a user can only view Site portlets from applications menu of a template with permissions."
+	@priority = "3"
+	test CanOnlyViewSitePortletsWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		task ("Given: Assign a new regular role to a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.addRegularRole(
+				roleKey = "Roles Regrole Name",
+				roleTitle = "Roles Regrole Name");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Roles Regrole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("And: Define view control panel menu permissions for regular role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Roles Regrole Name");
+		}
+
+		task ("And: Define access site control panel permissions for regular role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
+				roleTitle = "Roles Regrole Name");
+		}
+
+		task ("And: Define access site template control panel and update permissions for regular role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet",
+				roleTitle = "Roles Regrole Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.LayoutSetPrototype",
+				roleTitle = "Roles Regrole Name");
+		}
+
+		task ("And: Add a new template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		}
+
+		task ("When: The new user opens the applications menu from the site template") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+		}
+
+		task ("Then: Assert only the Sites and Site Templates portlets are displayed on the template's applications menu") {
+			for (var panelName : list "Applications,Commerce") {
+				AssertElementNotPresent(
+					key_panel = "${entryCount}",
+					locator1 = "ApplicationsMenu#PANEL");
+			}
+
+			AssertElementNotPresent(
+				key_category = "Users",
+				key_portlet = "Users and Organizations",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			AssertElementNotPresent(
+				key_category = "System",
+				key_portlet = "App Manager",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			for (var portletName : list "Sites,Site Templates") {
+				AssertVisible(
+					key_category = "Sites",
+					key_portlet = "${portletName}",
+					locator1 = "ApplicationsMenu#PORTLET");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-148855. The default site role shouldn't be inherited by Guest."
 	@priority = "5"
 	test DefaultSiteRoleIsNotInheritedByGuestUser {

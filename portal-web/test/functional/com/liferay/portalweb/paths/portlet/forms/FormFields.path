@@ -527,7 +527,7 @@
 
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
-	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]/../span | //fieldset//legend[text()='${key_fieldName}']/..//span</td>
+	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]/../span | //div[@class='ddm-field']//*[text()='${key_fieldName}']/..//span[text()='${key_radioOption}']</td>
 	<td></td>
 </tr>
 <tr>

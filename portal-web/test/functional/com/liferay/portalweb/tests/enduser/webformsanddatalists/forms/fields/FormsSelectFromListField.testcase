@@ -504,7 +504,7 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.selectRadioOption(
-			fieldName = "SingleSelection",
+			fieldName = "Single Selection",
 			radioOption = "United");
 
 		FormFields.selectSelectOption(

@@ -14,6 +14,8 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {ReactNode, cloneElement, useRef} from 'react';
 
 import {FieldBase} from '../FieldBase';
@@ -87,15 +89,30 @@ export function BaseSelect({
 						...restProps,
 					})
 				) : (
-					<ClayAutocomplete.Input
-						defaultValue={value}
-						disabled={disabled}
-						onClick={() => setDropdownActive((active) => !active)}
-						placeholder={placeholder}
-						ref={inputRef}
-						value={value}
-						{...restProps}
-					/>
+					<>
+						<ClayIcon
+							className={classNames('base-select__input-icon', {
+								'base-select__input-icon--disabled': disabled,
+							})}
+							onClick={() =>
+								!disabled &&
+								setDropdownActive((active) => !active)
+							}
+							symbol="caret-double"
+						/>
+
+						<ClayAutocomplete.Input
+							defaultValue={value}
+							disabled={disabled}
+							onClick={() =>
+								setDropdownActive((active) => !active)
+							}
+							placeholder={placeholder}
+							ref={inputRef}
+							value={value}
+							{...restProps}
+						/>
+					</>
 				)}
 
 				<ClayAutocomplete.DropDown

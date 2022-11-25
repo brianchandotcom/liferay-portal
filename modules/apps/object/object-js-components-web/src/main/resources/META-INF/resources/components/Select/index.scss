@@ -13,3 +13,16 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.base-select__input-icon {
+	bottom: 0;
+	margin: auto;
+	pointer-events: none;
+	position: absolute;
+	right: 1rem;
+	top: 0;
+
+	&--disabled {
+		color: #a7a9bc;
+	}
+}

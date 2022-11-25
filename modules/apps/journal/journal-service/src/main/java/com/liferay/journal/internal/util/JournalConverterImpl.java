@@ -116,42 +116,38 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	@Override
-	public Fields getDDMFields(DDMStructure ddmStructure, Document document)
-		throws PortalException {
-
-		Fields ddmFields = new Fields();
-
-		ddmFields.put(
-			new Field(
-				ddmStructure.getStructureId(), DDM.FIELDS_DISPLAY_NAME,
-				StringPool.BLANK));
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		Element rootElement = document.getRootElement();
-
-		String[] availableLanguageIds = StringUtil.split(
-			rootElement.attributeValue("available-locales"));
-		String defaultLanguageId = rootElement.attributeValue("default-locale");
-
-		Map<String, List<Element>> dynamicElementElementsMap =
-			_getDynamicElements(rootElement);
-
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			_addDDMFields(
-				availableLanguageIds, defaultLanguageId, ddmFields,
-				ddmFormField, ddmStructure, dynamicElementElementsMap);
-		}
-
-		return ddmFields;
-	}
-
-	@Override
 	public Fields getDDMFields(DDMStructure ddmStructure, String content)
 		throws PortalException {
 
 		try {
-			return getDDMFields(ddmStructure, SAXReaderUtil.read(content));
+			Document document = SAXReaderUtil.read(content);
+
+			Fields ddmFields = new Fields();
+
+			ddmFields.put(
+				new Field(
+					ddmStructure.getStructureId(), DDM.FIELDS_DISPLAY_NAME,
+					StringPool.BLANK));
+
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			Element rootElement = document.getRootElement();
+
+			String[] availableLanguageIds = StringUtil.split(
+				rootElement.attributeValue("available-locales"));
+			String defaultLanguageId = rootElement.attributeValue(
+				"default-locale");
+
+			Map<String, List<Element>> dynamicElementElementsMap =
+				_getDynamicElements(rootElement);
+
+			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+				_addDDMFields(
+					availableLanguageIds, defaultLanguageId, ddmFields,
+					ddmFormField, ddmStructure, dynamicElementElementsMap);
+			}
+
+			return ddmFields;
 		}
 		catch (DocumentException documentException) {
 			throw new PortalException(documentException);

@@ -796,7 +796,7 @@ definition {
 			siteURLKey = "${siteURLKey}",
 			threadSubject = "${threadSubject}");
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		Click(locator1 = "MessageBoards#CONTAINER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Lock");
 

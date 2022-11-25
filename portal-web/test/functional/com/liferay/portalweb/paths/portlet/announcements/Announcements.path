@@ -86,6 +86,11 @@
 	<td>//*[contains(@class,'entry-content') and contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CARD_VIEW_ENTRY_VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'control-entry')]//*[contains(@class,'dropdown-toggle')][.//*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

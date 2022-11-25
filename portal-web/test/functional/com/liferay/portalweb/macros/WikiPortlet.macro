@@ -41,11 +41,15 @@ definition {
 	macro subscribeToNodeCP {
 		var key_wikiNodeName = "${wikiNodeName}";
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Subscribe");
+		Click.waitForMenuToggleJSClick(locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		MenuItem.click(menuItem = "Subscribe");
 
 		Alert.viewSuccessMessage();
 
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		Click.waitForMenuToggleJSClick(locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
 
 		MenuItem.viewPresent(menuItem = "Unsubscribe");
 	}

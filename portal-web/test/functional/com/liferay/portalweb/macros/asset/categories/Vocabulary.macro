@@ -233,7 +233,11 @@ definition {
 	macro editCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click.waitForMenuToggleJSClick(
+			key_headerName = "${vocabularyName}",
+			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
 
 		if (isSet(vocabularyNameEdit)) {
 			PortletEntry.inputTitle(title = "${vocabularyNameEdit}");

@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>H2_HEADER_VERTICAL_ELLIPSIS</td>
+	<td>//h2[contains(.,'${key_headerName}')]//*[contains(@class,'dropdown-toggle')][.//*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>H2_HEADER_2</td>
 	<td>xpath=(//div[contains(@class,'portlet-header')]//h2)[2]</td>
 	<td></td>

@@ -1,7 +1,7 @@
 definition {
 
 	macro checkReplyToMessageForGuestPG {
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		Click(locator1 = "MessageBoards#CONTAINER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Permissions");
 

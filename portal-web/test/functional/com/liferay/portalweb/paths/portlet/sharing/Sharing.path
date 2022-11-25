@@ -125,7 +125,7 @@
 
 <tr>
 	<td>SHARED_CONTENT_CONTENT_OPTIONS</td>
-	<td>//tr/td[contains(.,'${key_contentTitle}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//tr/td[contains(.,'${key_contentTitle}')]/..//div//button[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,11 +151,6 @@
 <tr>
 	<td>SHARED_CONTENT_ASSET_TYPE</td>
 	<td>//p[contains(@class,'card-title') and contains(.,'${key_assetType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHARED_CONTENT_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_contentTitle}')]//a[contains(@title,'Actions')]</td>
 	<td></td>
 </tr>
 <tr>

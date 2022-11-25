@@ -289,7 +289,7 @@
 </tr>
 <tr>
 	<td>NODE_TABLE_ACTIONS_DROPDOWN</td>
-	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[5]//div/a</td>
+	<td>//dd[contains(@data-qa-id,'row') and contains(.,'${key_wikiNodeName}')]//*[contains(@class,'dropdown-toggle')][.//*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -28,7 +28,7 @@ definition {
 		var key_contentTitle = "${contentTitle}";
 
 		Click(
-			locator1 = "Sharing#SHARED_CONTENT_ELLIPSIS",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_OPTIONS",
 			value1 = "${contentTitle}");
 
 		MenuItem.click(menuItem = "Manage Collaborators");

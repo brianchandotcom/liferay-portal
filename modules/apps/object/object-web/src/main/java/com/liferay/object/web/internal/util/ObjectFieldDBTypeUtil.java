@@ -35,9 +35,21 @@ public class ObjectFieldDBTypeUtil {
 	public static InfoFieldType getInfoFieldType(ObjectField objectField) {
 		if (Objects.equals(
 				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			return FileInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
 
 			return BooleanInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_DATE)) {
+
+			return DateInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -53,18 +65,6 @@ public class ObjectFieldDBTypeUtil {
 					 ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
 
 			return NumberInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
-
-			return FileInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_DATE)) {
-
-			return DateInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

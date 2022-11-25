@@ -24,8 +24,6 @@ import java.util.stream.Stream;
  */
 public interface SearchRequestContributorsRegistry {
 
-	public Stream<SearchRequestContributor> stream();
-
 	public Stream<SearchRequestContributor> stream(
 		Collection<String> includeIds, Collection<String> excludeIds);
 

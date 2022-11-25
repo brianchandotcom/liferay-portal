@@ -398,7 +398,7 @@ definition {
 
 		Form.gotoFieldContainer(fieldName = "Fields Group");
 
-		FormFields.viewField(fieldName = "FieldsGroup");
+		FormFields.viewField(fieldName = "Fields Group");
 
 		FormFields.duplicateField();
 

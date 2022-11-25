@@ -23,6 +23,7 @@ import {
 	useGetContent,
 	useGetFieldValue,
 	useToControlsId,
+	useWithinCollection,
 } from '../../contexts/CollectionItemContext';
 import {useIsProcessorEnabled} from '../../contexts/EditableProcessorContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
@@ -113,6 +114,9 @@ const FragmentContent = ({
 		languageId,
 		segmentsExperienceId
 	);
+
+	const withinCollection = useWithinCollection();
+
 	const [content, setContent] = useState('');
 
 	/* eslint-disable-next-line react-hooks/exhaustive-deps */
@@ -182,7 +186,8 @@ const FragmentContent = ({
 							editable.element,
 							value,
 							editableConfig,
-							languageId
+							languageId,
+							withinCollection
 						);
 
 						editable.element.classList.add('page-editor__editable');
@@ -206,6 +211,7 @@ const FragmentContent = ({
 			fragmentElement = null;
 		};
 	}, [
+		cssClasses,
 		defaultContent,
 		dispatch,
 		editableValues,
@@ -218,7 +224,7 @@ const FragmentContent = ({
 		languageId,
 		segmentsExperienceId,
 		toControlsId,
-		cssClasses,
+		withinCollection,
 	]);
 
 	const responsiveConfig = getResponsiveConfig(

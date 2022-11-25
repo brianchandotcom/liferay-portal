@@ -177,6 +177,12 @@ const useGetContent = (
 	);
 };
 
+const useWithinCollection = () => {
+	const context = useContext(CollectionItemContext);
+
+	return !isNullOrUndefined(context.collectionItem);
+};
+
 const shouldRenderFragmentEntryLink = ({
 	editableValues,
 	hasLocalizable,
@@ -298,5 +304,6 @@ export {
 	useCustomCollectionSelectorURL,
 	useParentToControlsId,
 	useToControlsId,
+	useWithinCollection,
 	useGetFieldValue,
 };

@@ -83,9 +83,9 @@ public interface WikiPageLocalService
 	 */
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addPage(String, long, long, String, double, String, String, boolean,
-	 String, boolean, String, String, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addPage(String,
+	 long, long, String, double, String, String, boolean, String,
+	 boolean, String, String, ServiceContext)}
 	 */
 	@Deprecated
 	public WikiPage addPage(

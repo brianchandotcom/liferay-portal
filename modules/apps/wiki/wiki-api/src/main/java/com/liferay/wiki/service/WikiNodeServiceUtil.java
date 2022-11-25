@@ -44,8 +44,8 @@ public class WikiNodeServiceUtil {
 	 */
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addNode(String, String, String, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addNode(String,
+	 String, String, ServiceContext)}
 	 */
 	@Deprecated
 	public static WikiNode addNode(

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
+import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.io.Serializable;
 
@@ -134,6 +135,10 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 	public void setMaxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
+	}
+
+	public void setOrder(String order) {
+		_order = order;
 	}
 
 	public void setPaginationStartParameterName(
@@ -350,6 +355,12 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 				vocabularyName, vocabularyBucketDisplayContexts);
 		}
 
+		if (_order != null) {
+			bucketDisplayContexts.sort(
+				BucketDisplayContextComparatorFactoryUtil.
+					getBucketDisplayContextComparator(_order));
+		}
+
 		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContexts(
 			bucketDisplayContexts);
 		assetCategoriesSearchFacetDisplayContext.setBucketDisplayContextsMap(
@@ -482,6 +493,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	private int _frequencyThreshold;
 	private Locale _locale;
 	private int _maxTerms;
+	private String _order;
 	private String _paginationStartParameterName;
 	private String _parameterName;
 	private Portal _portal;

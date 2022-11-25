@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
@@ -67,15 +68,14 @@ public class JSResolveModulesServlet
 	}
 
 	public String getURL() {
-		return _url;
+		State state = _state.get();
+
+		return state.url;
 	}
 
 	@Override
 	public void onAfterUpdate() {
-		String hash = String.valueOf(UUID.randomUUID());
-
-		_expectedPathInfo = StringPool.SLASH + hash;
-		_url = "/js_resolve_modules/" + hash;
+		_state.set(new State());
 	}
 
 	@Override
@@ -84,7 +84,9 @@ public class JSResolveModulesServlet
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!_expectedPathInfo.equals(httpServletRequest.getPathInfo())) {
+		State state = _state.get();
+
+		if (!state.expectedPathInfo.equals(httpServletRequest.getPathInfo())) {
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
@@ -157,7 +159,20 @@ public class JSResolveModulesServlet
 	@Reference
 	private BrowserModulesResolver _browserModulesResolver;
 
-	private volatile String _expectedPathInfo;
-	private volatile String _url;
+	private final AtomicReference<State> _state = new AtomicReference<>();
+
+	private static class State {
+
+		public State() {
+			String hash = String.valueOf(UUID.randomUUID());
+
+			expectedPathInfo = StringPool.SLASH + hash;
+			url = "/js_resolve_modules/" + hash;
+		}
+
+		public final String expectedPathInfo;
+		public final String url;
+
+	}
 
 }

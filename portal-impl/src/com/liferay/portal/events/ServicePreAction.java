@@ -2047,7 +2047,9 @@ public class ServicePreAction extends Action {
 		if (PrefsPropsUtil.getBoolean(
 				user.getCompanyId(),
 				PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) &&
-			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE) {
+			PrefsPropsUtil.getBoolean(
+				user.getCompanyId(),
+				PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE)) {
 
 			addDefaultUserPublicLayouts = true;
 

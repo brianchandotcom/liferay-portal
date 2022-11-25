@@ -99,6 +99,9 @@ public class NotificationUtil {
 					0L);
 		}
 
+		serviceBuilderNotificationTemplate.setExternalReferenceCode(
+			notificationTemplate.getExternalReferenceCode());
+
 		serviceBuilderNotificationTemplate.setCompanyId(user.getCompanyId());
 		serviceBuilderNotificationTemplate.setUserId(user.getUserId());
 		serviceBuilderNotificationTemplate.setUserName(user.getFullName());

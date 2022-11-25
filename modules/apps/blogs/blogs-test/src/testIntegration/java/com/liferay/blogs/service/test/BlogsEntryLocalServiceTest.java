@@ -156,7 +156,7 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntryLocalServiceUtil.addEntry(
 			blogsEntry.getExternalReferenceCode(), blogsEntry.getUserId(),
 			blogsEntry.getTitle(), blogsEntry.getSubtitle(),
-			blogsEntry.getUrlTitle(), blogsEntry.getDescription(),
+			StringUtil.randomString(), blogsEntry.getDescription(),
 			blogsEntry.getContent(), blogsEntry.getDisplayDate(),
 			blogsEntry.isAllowPingbacks(), blogsEntry.isAllowTrackbacks(),
 			new String[] {blogsEntry.getTrackbacks()},

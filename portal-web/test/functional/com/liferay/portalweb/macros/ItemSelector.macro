@@ -51,9 +51,9 @@ definition {
 			key_text = "Add",
 			locator1 = "Button#ANY_DISABLED");
 
-		Click(locator1 = "TextInput#URL");
-
-		RobotType(locator1 = "${imageSourceURL}");
+		Type(
+			locator1 = "TextInput#URL",
+			value1 = "${imageSourceURL}");
 
 		AssertTextEquals(
 			locator1 = "TextInput#URL",

@@ -120,6 +120,11 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public String getTitleObjectFieldName() {
+		return "title";
+	}
+
+	@Override
 	public int getVersion() {
 		return 1;
 	}

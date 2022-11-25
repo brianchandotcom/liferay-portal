@@ -132,6 +132,11 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public String getTitleObjectFieldName() {
+		return "name";
+	}
+
+	@Override
 	public int getVersion() {
 		return 1;
 	}

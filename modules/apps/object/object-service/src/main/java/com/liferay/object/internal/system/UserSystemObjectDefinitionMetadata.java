@@ -121,6 +121,11 @@ public class UserSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public String getTitleObjectFieldName() {
+		return "givenName";
+	}
+
+	@Override
 	public int getVersion() {
 		return 1;
 	}

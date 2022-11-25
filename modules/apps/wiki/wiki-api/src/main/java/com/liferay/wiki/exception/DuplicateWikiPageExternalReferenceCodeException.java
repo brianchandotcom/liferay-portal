@@ -35,7 +35,9 @@ public class DuplicateWikiPageExternalReferenceCodeException
 		super(msg, throwable);
 	}
 
-	public DuplicateWikiPageExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateWikiPageExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

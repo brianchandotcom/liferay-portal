@@ -101,8 +101,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #addNode(String, long, String, String, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addNode(String,
+	 *             long, String, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)

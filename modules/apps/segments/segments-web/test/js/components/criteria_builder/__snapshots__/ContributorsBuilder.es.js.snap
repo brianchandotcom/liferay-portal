@@ -759,7 +759,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
           class="container-fluid container-fluid-max-xl"
         >
           <div
-            class="content-wrapper"
+            class="content-wrapper p-4"
           >
             <div
               class="sheet"
@@ -1569,7 +1569,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
           class="container-fluid container-fluid-max-xl"
         >
           <div
-            class="content-wrapper"
+            class="content-wrapper p-4"
           >
             <div
               class="sheet"

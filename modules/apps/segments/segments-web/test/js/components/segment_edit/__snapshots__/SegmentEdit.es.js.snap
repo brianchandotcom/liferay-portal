@@ -647,7 +647,7 @@ exports[`SegmentEdit renders with given values 1`] = `
               class="container-fluid container-fluid-max-xl"
             >
               <div
-                class="content-wrapper"
+                class="content-wrapper p-4"
               >
                 <div
                   class="sheet"

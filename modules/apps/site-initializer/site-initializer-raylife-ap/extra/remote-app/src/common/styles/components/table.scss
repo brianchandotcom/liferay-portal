@@ -7,36 +7,68 @@
 	}
 
 	tbody {
-		td::after {
-			background-image: linear-gradient(
-				to right,
-				#aaa 0%,
-				#aaa 20%,
-				transparent 20%
-			);
-			background-position: 0 0;
-			background-repeat: repeat-x;
-			background-size: 6px 1px;
-			bottom: 0;
-			content: '';
-			height: 1px;
-			left: 0;
-			position: absolute;
-			right: 0;
-		}
+		tr {
+			td {
+				.bound {
+					background-color: #d9e4fe;
+				}
 
-		.cursor-pointer {
-			cursor: pointer;
-			text-decoration: underline;
+				.underwriting {
+					background-color: #b5cdfe;
+				}
 
-			&:hover {
-				text-decoration: none;
+				.quoted {
+					background-color: #81a8ff;
+				}
+
+				.reviewed {
+					background-color: #4c84ff;
+				}
+
+				.incomplete {
+					background-color: #1f77d4;
+				}
+
+				.rejected {
+					background-color: #191970;
+				}
+
+				.open {
+					background-color: #ff7f0e;
+				}
+
+				:after {
+					background-image: linear-gradient(
+						to right,
+						#aaa 0%,
+						#aaa 20%,
+						transparent 20%
+					);
+					background-position: 0 0;
+					background-repeat: repeat-x;
+					background-size: 6px 1px;
+					bottom: 0;
+					content: '';
+					height: 1px;
+					left: 0;
+					position: absolute;
+					right: 0;
+				}
+
+				.cursor-pointer {
+					cursor: pointer;
+					text-decoration: underline;
+
+					&:hover {
+						text-decoration: none;
+					}
+				}
+
+				.status-color {
+					height: 8px;
+					width: 8px;
+				}
 			}
-		}
-
-		.status-color {
-			height: 8px;
-			width: 8px;
 		}
 	}
 

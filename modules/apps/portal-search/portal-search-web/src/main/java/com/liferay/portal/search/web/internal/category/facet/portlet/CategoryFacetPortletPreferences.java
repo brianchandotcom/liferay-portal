@@ -30,6 +30,8 @@ public interface CategoryFacetPortletPreferences {
 
 	public static final String PREFERENCE_KEY_MAX_TERMS = "maxTerms";
 
+	public static final String PREFERENCE_KEY_ORDER = "order";
+
 	public static final String PREFERENCE_KEY_PARAMETER_NAME = "parameterName";
 
 	public static final String PREFERENCE_VOCABULARY_IDS = "vocabularyIds";
@@ -39,6 +41,8 @@ public interface CategoryFacetPortletPreferences {
 	public int getFrequencyThreshold();
 
 	public int getMaxTerms();
+
+	public String getOrder();
 
 	public String getParameterName();
 

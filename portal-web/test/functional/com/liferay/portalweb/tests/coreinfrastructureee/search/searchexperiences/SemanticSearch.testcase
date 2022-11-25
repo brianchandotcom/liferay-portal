@@ -151,4 +151,52 @@ definition {
 		}
 	}
 
+	test ViewTxtaiSystemSettingsTestConfiguration {
+		property custom.properties = "feature.flag.LPS-163688=true";
+		property test.name.skip.portal.instance = "SemanticSearch#ViewTxtaiSystemSettingsTestConfiguration";
+		property txtai.enabled = "true";
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+		Button.click(button = "Test Configuration");
+
+		Alert.viewSuccessMessageText(successMessage = "Connection is successful");
+
+		Select(
+			ariaLabel = "Embedding Vector Dimensions",
+			locator1 = "Select#ANY_ARIA_LABEL",
+			value1 = "384");
+
+		Button.click(button = "Test Configuration");
+
+		Alert.viewWarningSpecific(warningMessage = "The dimensions from the connection do not match the configured embedding vector dimensions. Expected 384, but got 768.");
+
+		Select(
+			ariaLabel = "Embedding Vector Dimensions",
+			locator1 = "Select#ANY_ARIA_LABEL",
+			value1 = "768");
+
+		Button.click(button = "Test Configuration");
+
+		Alert.viewSuccessMessageText(successMessage = "Connection is successful");
+
+		PortletEntry.inputText(
+			fieldLabel = "txtai Host Address",
+			text = "");
+
+		Button.click(button = "Test Configuration");
+
+		Alert.viewWarningSpecific(warningMessage = "Unable to connect to txtai. Connection failed with: java.lang.IllegalArgumentException: Host name may not be null.");
+
+		AntCommand(
+			locator1 = "build-test-semantic-search.xml",
+			value1 = "stop-txtai");
+
+		Refresh();
+
+		Button.click(button = "Test Configuration");
+
+		Alert.viewWarningSpecific(warningMessage = "Unable to connect to txtai. Connection failed");
+	}
+
 }

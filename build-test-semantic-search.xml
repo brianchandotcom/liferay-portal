@@ -56,4 +56,8 @@ txtaiHostAddress="http://${txtai.container.ip}:8000"</echo>
 
 		<configure-portal-txtai-osgi-properties />
 	</target>
+
+	<target name="stop-txtai">
+		<stop-docker-container name="${container.prefix}_txtai" />
+	</target>
 </project>

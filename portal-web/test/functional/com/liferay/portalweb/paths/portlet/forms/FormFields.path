@@ -62,12 +62,12 @@
 </tr>
 <tr>
 	<td>FIELD_REPEATABLE_FIELD_GROUP</td>
-	<td>//div[@class='ddm-field' and contains(@data-field-name,'FieldsGroup')][${key_repeatableFieldNumber}]</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'FieldsGroup')][${key_repeatableFieldNumber}] | //div[@class='ddm-field'][${key_repeatableFieldNumber}]//*[text()='Fields Group']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_REPEATABLE_FIELD_IN_FIELD_GROUP</td>
-	<td>//div[@class='ddm-field' and contains(@data-field-name,'FieldsGroup')][${key_repeatableFieldNumber}]//div[@class='ddm-field' and contains(@data-field-name,'${key_fieldName}')]</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'FieldsGroup')][${key_repeatableFieldNumber}]//div[@class='ddm-field' and contains(@data-field-name,'${key_fieldName}')] | //div[@class='ddm-field'][${key_repeatableFieldNumber}]//*[text()='Fields Group']/..//*[text()='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>FIELD_ADD_SPECIFIC</td>
-	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')] | //div[@class="ddm-field"]//label[text()='Upload'][${key_repeatableFieldNumber}]/..//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')]</td>
+	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')] | //div[@class="ddm-field"]//label[text()='${key_fieldName}'][${key_repeatableFieldNumber}]/../..//button[contains(@class,'btn') and contains(@title,'Duplicate')]</td>
 	<td></td>
 </tr>
 <tr>

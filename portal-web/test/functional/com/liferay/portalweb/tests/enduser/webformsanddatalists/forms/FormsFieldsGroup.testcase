@@ -300,7 +300,7 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.addRepeatableField(
-			fieldName = "FieldsGroup",
+			fieldName = "Fields Group",
 			repeatableFieldNumber = "1");
 
 		FormFields.viewRepeatableFieldGroup(repeatableFieldNumber = "2");

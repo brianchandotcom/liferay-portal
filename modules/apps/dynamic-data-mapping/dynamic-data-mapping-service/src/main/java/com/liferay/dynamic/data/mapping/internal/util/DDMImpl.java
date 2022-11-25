@@ -220,6 +220,29 @@ public class DDMImpl implements DDM {
 
 	@Override
 	public DDMFormValues getDDMFormValues(
+			long ddmStructureId, long ddmTemplateId, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure ddmStructure = _getDDMStructure(
+			ddmStructureId, ddmTemplateId);
+
+		String serializedDDMFormValues = GetterUtil.getString(
+			serviceContext.getAttribute(fieldNamespace + "ddmFormValues"));
+
+		if (Validator.isNotNull(serializedDDMFormValues)) {
+			return getDDMFormValues(
+				ddmStructure.getFullHierarchyDDMForm(),
+				serializedDDMFormValues);
+		}
+
+		return _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure,
+			getFields(ddmStructureId, 0, fieldNamespace, serviceContext));
+	}
+
+	@Override
+	public DDMFormValues getDDMFormValues(
 			long ddmStructureId, String fieldNamespace,
 			ServiceContext serviceContext)
 		throws PortalException {

@@ -15,13 +15,15 @@
 package com.liferay.journal.content.web.internal.upgrade.v1_1_0;
 
 import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -36,6 +38,14 @@ import javax.portlet.PortletPreferences;
  */
 public class UpgradePortletPreferences
 	extends BasePortletPreferencesUpgradeProcess {
+
+	public UpgradePortletPreferences(
+		GroupLocalService groupLocalService,
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_groupLocalService = groupLocalService;
+		_journalArticleLocalService = journalArticleLocalService;
+	}
 
 	@Override
 	protected String[] getPortletIds() {
@@ -70,36 +80,39 @@ public class UpgradePortletPreferences
 				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 			}
 
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			String articleId = GetterUtil.getString(
+				portletPreferences.getValue("articleId", StringPool.BLANK));
 
-			if (group == null) {
+			if (Validator.isNull(articleId)) {
 				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+			}
+
+			JournalArticle journalArticle =
+				_journalArticleLocalService.fetchArticle(groupId, articleId);
+
+			if (journalArticle == null) {
+				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+			}
+
+			Group group = _groupLocalService.getGroup(groupId);
+
+			String scopeType = StringPool.BLANK;
+
+			if (group.isCompany()) {
+				scopeType = "company";
+			}
+			else if (group.isLayout()) {
+				scopeType = "layout";
 			}
 
 			String lfrScopeType = portletPreferences.getValue(
 				"lfrScopeType", StringPool.BLANK);
 
-			if (Validator.isBlank(lfrScopeType) ||
-				(group.isCompany() &&
-				 Objects.equals("company", lfrScopeType))) {
-
+			if (Objects.equals(lfrScopeType, scopeType)) {
 				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 			}
 
-			if (group.isLayout() && Objects.equals("layout", lfrScopeType)) {
-				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
-			}
-
-			if (!group.isCompany() && !group.isLayout()) {
-				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
-			}
-
-			portletPreferences.reset("assetEntryId");
-			portletPreferences.reset("articleId");
-			portletPreferences.reset("ddmTemplateKey");
-			portletPreferences.reset("groupId");
-
-			portletPreferences.store();
+			portletPreferences.setValue("lfrScopeType", scopeType);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -114,5 +127,8 @@ public class UpgradePortletPreferences
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradePortletPreferences.class);
+
+	private final GroupLocalService _groupLocalService;
+	private final JournalArticleLocalService _journalArticleLocalService;
 
 }

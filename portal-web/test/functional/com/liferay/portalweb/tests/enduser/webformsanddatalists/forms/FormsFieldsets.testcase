@@ -1831,11 +1831,11 @@ definition {
 		Form.closeSidebar();
 
 		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
+			fieldName = "Multiple Selection",
 			optionValue = "Option 1");
 
 		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
+			fieldName = "Multiple Selection",
 			optionValue = "Option 2");
 
 		Form.saveElementSet();
@@ -1848,14 +1848,14 @@ definition {
 
 		FormFields.viewField(fieldName = "Text");
 
-		FormFields.viewField(fieldName = "MultipleSelection");
+		FormFields.viewField(fieldName = "Multiple Selection");
 
 		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
+			fieldName = "Multiple Selection",
 			optionValue = "Option 1");
 
 		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
+			fieldName = "Multiple Selection",
 			optionValue = "Option 2");
 
 		Form.save();
@@ -1865,11 +1865,11 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
+			fieldName = "Multiple Selection",
 			optionValue = "Option 1");
 
 		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
+			fieldName = "Multiple Selection",
 			optionValue = "Option 2");
 	}
 

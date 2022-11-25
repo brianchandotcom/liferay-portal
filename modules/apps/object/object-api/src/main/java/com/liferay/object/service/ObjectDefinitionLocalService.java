@@ -107,7 +107,8 @@ public interface ObjectDefinitionLocalService
 			long userId, String className, String dbTableName,
 			Map<Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope, int version,
+			Map<Locale, String> pluralLabelMap, String scope,
+			String titleObjectFieldName, int version,
 			List<ObjectField> objectFields)
 		throws PortalException;
 

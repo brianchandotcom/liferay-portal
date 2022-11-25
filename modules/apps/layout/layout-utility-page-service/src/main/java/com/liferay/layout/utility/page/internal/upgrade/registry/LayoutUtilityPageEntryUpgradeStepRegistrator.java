@@ -35,6 +35,11 @@ public class LayoutUtilityPageEntryUpgradeStepRegistrator
 			"1.0.0", "1.1.0",
 			UpgradeProcessFactory.addColumns(
 				"LayoutUtilityPageEntry", "previewFileEntryId LONG"));
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			UpgradeProcessFactory.alterColumnType(
+				"LayoutUtilityPageEntry", "type_", "STRING null"));
 	}
 
 }

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -167,8 +166,7 @@ public class KBArticleInfoItemFormProviderTest {
 			infoItemFieldValues.getInfoItemReference();
 
 		Assert.assertEquals(
-			_kbArticle.getResourcePrimKey(),
-			infoItemReference.getClassPK());
+			_kbArticle.getResourcePrimKey(), infoItemReference.getClassPK());
 		Assert.assertEquals(
 			KBArticle.class.getName(), infoItemReference.getClassName());
 
@@ -187,15 +185,13 @@ public class KBArticleInfoItemFormProviderTest {
 		InfoFieldValue<Object> titleInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("title");
 
-		Assert.assertEquals(
-			"title KB Article", titleInfoFieldValue.getValue());
+		Assert.assertEquals("title KB Article", titleInfoFieldValue.getValue());
 
 		InfoFieldValue<Object> contentInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("content");
 
 		Assert.assertEquals(
-			"<strong>Context text</strong>",
-			contentInfoFieldValue.getValue());
+			"<strong>Context text</strong>", contentInfoFieldValue.getValue());
 	}
 
 	private KBArticle _addKBArticle() throws Exception {

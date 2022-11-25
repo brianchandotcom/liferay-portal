@@ -454,9 +454,15 @@ export default function ActionBuilder({
 				</Card>
 			</Card>
 
-			<Card title={Liferay.Language.get('condition')}>
+			<Card
+				disabled={values.objectActionTriggerKey === 'standalone'}
+				title={Liferay.Language.get('condition')}
+			>
 				<ClayForm.Group>
 					<ClayToggle
+						disabled={
+							values.objectActionTriggerKey === 'standalone'
+						}
 						label={Liferay.Language.get('enable-condition')}
 						name="condition"
 						onToggle={(enable) =>
@@ -499,6 +505,7 @@ export default function ActionBuilder({
 					/>
 				)}
 			</Card>
+
 			{warningAlerts.requiredFields && (
 				<ClayAlert
 					className="lfr-objects__side-panel-content-container"

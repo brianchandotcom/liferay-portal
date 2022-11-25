@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')] | //div[@class='ddm-field']//*[text()="${key_fieldName}"]</td>
 	<td></td>
 </tr>
 <tr>

@@ -102,9 +102,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #addPage(String, long, String, String, String, boolean, String, String,
-	 * String, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addPage(String,
+	 *             long, String, String, String, boolean, String, String,
+	 *             String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -332,8 +332,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	 * Returns the latest wiki page matching the group and the external
 	 * reference code
 	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the wiki page external reference code
+	 * @param  groupId the primary key of the group
+	 * @param  externalReferenceCode the wiki page external reference code
 	 * @return the latest matching wiki page, or <code>null</code> if no
 	 *         matching wiki page could be found
 	 */
@@ -397,8 +397,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	 * Returns the latest wiki page matching the group and the external
 	 * reference code
 	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the wiki page external reference code
+	 * @param  groupId the primary key of the group
+	 * @param  externalReferenceCode the wiki page external reference code
 	 * @return the latest matching wiki page
 	 * @throws PortalException if a portal exception occurred
 	 */

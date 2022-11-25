@@ -96,14 +96,14 @@ public class ObjectDefinitionLocalServiceWrapper
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			java.util.Map<java.util.Locale, String> pluralLabelMap,
-			String scope, int version,
+			String scope, String titleObjectFieldName, int version,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addSystemObjectDefinition(
 			userId, className, dbTableName, labelMap, name,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
-			version, objectFields);
+			titleObjectFieldName, version, objectFields);
 	}
 
 	/**

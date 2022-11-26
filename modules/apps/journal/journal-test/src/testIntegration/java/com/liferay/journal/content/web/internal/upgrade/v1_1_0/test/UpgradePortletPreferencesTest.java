@@ -111,6 +111,10 @@ public class UpgradePortletPreferencesTest {
 
 		_assertUpgradePortletPreferences(
 			expectedScopedPreferenceMap, journalArticle, layout, locale,
+			expectedScopedPreferenceMap);
+
+		_assertUpgradePortletPreferences(
+			expectedScopedPreferenceMap, journalArticle, layout, locale,
 			HashMapBuilder.put(
 				"portletSetupTitle", "Web Content Display"
 			).build());

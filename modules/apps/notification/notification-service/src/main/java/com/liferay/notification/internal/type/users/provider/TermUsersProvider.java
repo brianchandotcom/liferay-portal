@@ -21,6 +21,7 @@ import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -76,24 +77,30 @@ public class TermUsersProvider implements UsersProvider {
 			}
 		}
 
-		for (String screenName : screenNames) {
-			users.add(
-				_userLocalService.getUserByScreenName(
-					notificationRecipient.getCompanyId(), screenName));
-		}
+		users.addAll(
+			TransformUtil.unsafeTransform(
+				screenNames,
+				user -> _usersProviderHelper.hasViewPermission(
+					notificationContext.getClassName(),
+					notificationContext.getClassPK(), user),
+				screenName -> _userLocalService.getUserByScreenName(
+					notificationRecipient.getCompanyId(), screenName)));
 
 		for (NotificationTermEvaluator notificationTermEvaluator :
 				_notificationTermEvaluatorTracker.getNotificationTermEvaluators(
 					notificationContext.getClassName())) {
 
-			for (String term : terms) {
-				users.add(
-					_userLocalService.getUser(
+			users.addAll(
+				TransformUtil.unsafeTransform(
+					terms,
+					user -> _usersProviderHelper.hasViewPermission(
+						notificationContext.getClassName(),
+						notificationContext.getClassPK(), user),
+					term -> _userLocalService.getUser(
 						GetterUtil.getLong(
 							notificationTermEvaluator.evaluate(
 								NotificationTermEvaluator.Context.RECIPIENT,
-								notificationContext.getTermValues(), term))));
-			}
+								notificationContext.getTermValues(), term)))));
 		}
 
 		return users;
@@ -107,5 +114,8 @@ public class TermUsersProvider implements UsersProvider {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UsersProviderHelper _usersProviderHelper;
 
 }

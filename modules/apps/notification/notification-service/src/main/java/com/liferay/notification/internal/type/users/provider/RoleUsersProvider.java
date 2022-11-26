@@ -73,8 +73,12 @@ public class RoleUsersProvider implements UsersProvider {
 			}
 		}
 
-		return TransformUtil.transform(
-			userIds, userId -> _userLocalService.getUser(userId));
+		return TransformUtil.unsafeTransform(
+			userIds,
+			user -> _usersProviderHelper.hasViewPermission(
+				notificationContext.getClassName(),
+				notificationContext.getClassPK(), user),
+			userId -> _userLocalService.getUser(userId));
 	}
 
 	@Reference
@@ -82,5 +86,8 @@ public class RoleUsersProvider implements UsersProvider {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UsersProviderHelper _usersProviderHelper;
 
 }

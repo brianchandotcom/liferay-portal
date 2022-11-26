@@ -257,7 +257,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a column to display content in an <code>&lt;aui:row&gt;</code> component. Deprecated as of Athanasius (7.3.x), replaced by <code>clay:col</code>.]]></description>
+		<description>Creates a column to display content in an <![CDATA[<code>&lt;aui:row&gt;</code>]]> component. Deprecated as of Athanasius (7.3.x), replaced by <![CDATA[<code>clay:col</code>]]>.</description>
 		<name>col</name>
 		<tag-class>com.liferay.taglib.aui.ColTag</tag-class>
 		<body-content>JSP</body-content>
@@ -310,7 +310,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a container <code>&lt;div&gt;</code> tag to wrap <code>&lt;aui:row&gt;</code> components and offer additional styling. Deprecated as of Athanasius (7.3.x), replaced by <code>clay:container</code>.]]></description>
+		<description>Creates a container <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:row&gt;</code>]]> components and offer additional styling. Deprecated as of Athanasius (7.3.x), replaced by <![CDATA[<code>clay:container</code>]]>.</description>
 		<name>container</name>
 		<tag-class>com.liferay.taglib.aui.ContainerTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1336,7 +1336,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a row to hold <code>&lt;aui:col&gt;</code> components. Deprecated as of Athanasius (7.3.x), replaced by <code>clay:row</code>.]]></description>
+		<description>Creates a row to hold <![CDATA[<code>&lt;aui:col&gt;</code>]]> components. Deprecated as of Athanasius (7.3.x), replaced by <![CDATA[<code>clay:row</code>]]>.</description>
 		<name>row</name>
 		<tag-class>com.liferay.taglib.aui.RowTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1670,7 +1670,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of Cavanaugh (7.4.x), replaced by liferay-portal-workflow:status.</description>
+		<description>Deprecated as of Cavanaugh (7.4.x), replaced by <![CDATA[<code>liferay-portal-workflow:status</code>]]>.</description>
 		<name>workflow-status</name>
 		<tag-class>com.liferay.taglib.aui.WorkflowStatusTag</tag-class>
 		<body-content>JSP</body-content>

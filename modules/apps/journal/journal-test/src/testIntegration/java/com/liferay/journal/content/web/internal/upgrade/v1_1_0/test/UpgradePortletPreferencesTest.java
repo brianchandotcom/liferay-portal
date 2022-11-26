@@ -195,6 +195,49 @@ public class UpgradePortletPreferencesTest {
 	}
 
 	@Test
+	public void testUpgradePortletPreferencesNoJournalArticleSelected()
+		throws Exception {
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		HashMap<String, String> globalScopedPreferenceMap = HashMapBuilder.put(
+			"portletSetupTitle",
+			StringUtil.appendParentheticalSuffix(
+				"Web Content Display", _language.get(locale, "global"))
+		).put(
+			"scopeType", "company"
+		).build();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		_assertUpgradePortletPreferences(
+			globalScopedPreferenceMap, null, layout, locale,
+			globalScopedPreferenceMap);
+
+		HashMap<String, String> layoutScopedPreferenceMap = HashMapBuilder.put(
+			"portletSetupTitle",
+			StringUtil.appendParentheticalSuffix(
+				"Web Content Display", layout.getName(locale))
+		).put(
+			"scopeLayoutUuid", layout.getUuid()
+		).put(
+			"scopeType", "layout"
+		).build();
+
+		_assertUpgradePortletPreferences(
+			layoutScopedPreferenceMap, null, layout, locale,
+			layoutScopedPreferenceMap);
+
+		HashMap<String, String> siteScopedPreferenceMap = HashMapBuilder.put(
+			"portletSetupTitle", "Web Content Display"
+		).build();
+
+		_assertUpgradePortletPreferences(
+			siteScopedPreferenceMap, null, layout, locale,
+			siteScopedPreferenceMap);
+	}
+
+	@Test
 	public void testUpgradePortletPreferencesSiteScopedJournalArticle()
 		throws Exception {
 
@@ -266,10 +309,17 @@ public class UpgradePortletPreferencesTest {
 		String portletId = _addJournalContentPortletToLayout(
 			layout,
 			HashMapBuilder.put(
-				"articleId", new String[] {journalArticle.getArticleId()}
+				"articleId",
+				new String[] {
+					(journalArticle == null) ? StringPool.BLANK :
+						journalArticle.getArticleId()
+				}
 			).put(
 				"groupId",
-				new String[] {String.valueOf(journalArticle.getGroupId())}
+				new String[] {
+					(journalArticle == null) ? StringPool.BLANK :
+						String.valueOf(journalArticle.getGroupId())
+				}
 			).put(
 				"lfrScopeLayoutUuid",
 				new String[] {
@@ -308,11 +358,13 @@ public class UpgradePortletPreferencesTest {
 							layout, portletId))));
 
 		Assert.assertEquals(
-			journalArticle.getArticleId(),
+			(journalArticle == null) ? StringPool.BLANK :
+				journalArticle.getArticleId(),
 			portletPreferences.getValue("articleId", null));
 
 		Assert.assertEquals(
-			String.valueOf(journalArticle.getGroupId()),
+			(journalArticle == null) ? StringPool.BLANK :
+				String.valueOf(journalArticle.getGroupId()),
 			portletPreferences.getValue("groupId", null));
 
 		Assert.assertEquals(

@@ -1,0 +1,230 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"confirmationErrorMessage": {
+					"en_US": ""
+				},
+				"confirmationLabel": {
+					"en_US": ""
+				},
+				"dataType": "string",
+				"direction": [
+					"vertical"
+				],
+				"displayStyle": "singleline",
+				"fieldNamespace": "",
+				"fieldReference": "Text84859711",
+				"hideField": false,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+				},
+				"placeholder": {
+					"en_US": ""
+				},
+				"requireConfirmation": false,
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"tooltip": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text84859711",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "Fieldset20432685",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Date45216383"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Image46668212"
+								],
+								"size": 12
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"en_US": "Fields Group"
+			},
+			"localizable": false,
+			"name": "Fieldset20432685",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"dataType": "date",
+						"fieldNamespace": "",
+						"fieldReference": "Date45216383",
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "date",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Date"
+					},
+					"localizable": true,
+					"name": "Date45216383",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"dataType": "image",
+						"fieldNamespace": "",
+						"fieldReference": "Image46668212",
+						"objectFieldName": "",
+						"requiredDescription": true,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": {
+						}
+					},
+					"fieldType": "image",
+					"indexType": "text",
+					"indexable": true,
+					"label": {
+						"en_US": "Image"
+					},
+					"localizable": true,
+					"name": "Image46668212",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text84859711"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Fieldset20432685"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Nested"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "Nested"
+	},
+	"storageType": "default"
+}

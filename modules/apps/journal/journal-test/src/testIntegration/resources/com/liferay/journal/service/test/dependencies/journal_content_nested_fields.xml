@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<root available-locales="es_ES,en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Text84859711" index-type="keyword" instance-id="iv63m8pA" name="Text84859711" type="text">
+		<dynamic-content language-id="es_ES"><![CDATA[Super Heroes]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[SuperHeros]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Fieldset20432685" index-type="" instance-id="Ws4ltySg" name="Fieldset20432685" type="fieldset">
+		<dynamic-element field-reference="Date45216383" index-type="keyword" instance-id="CWwtPaEO" name="Date45216383" type="date">
+			<dynamic-content language-id="es_ES"><![CDATA[2022-11-25]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[2022-11-26]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Image46668212" index-type="text" instance-id="xc3JQwKs" name="Image46668212" type="image">
+			<dynamic-content language-id="es_ES"><![CDATA[[$DOCUMENT_JSON$]]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON$]]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="Fieldset20432685" index-type="" instance-id="1xiul6rn" name="Fieldset20432685" type="fieldset">
+		<dynamic-element field-reference="Date45216383" index-type="keyword" instance-id="sru3wvyr" name="Date45216383" type="date">
+			<dynamic-content language-id="es_ES"><![CDATA[2022-11-18]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[2022-11-19]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Image46668212" index-type="text" instance-id="7fffi07x" name="Image46668212" type="image">
+			<dynamic-content language-id="es_ES"><![CDATA[[$DOCUMENT_JSON$]]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON$]]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="Fieldset20432685" index-type="" instance-id="m0vqy3md" name="Fieldset20432685" type="fieldset">
+		<dynamic-element field-reference="Date45216383" index-type="keyword" instance-id="tg0iiqdv" name="Date45216383" type="date">
+			<dynamic-content language-id="es_ES"><![CDATA[2022-09-09]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[2022-11-12]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Image46668212" index-type="text" instance-id="o82awajf" name="Image46668212" type="image">
+			<dynamic-content language-id="es_ES"><![CDATA[[$DOCUMENT_JSON$]]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[[$DOCUMENT_JSON$]]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

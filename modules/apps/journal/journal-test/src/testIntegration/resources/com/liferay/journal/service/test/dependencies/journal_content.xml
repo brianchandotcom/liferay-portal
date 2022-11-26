@@ -19,78 +19,18 @@
 	</dynamic-element>
 	<dynamic-element field-reference="Image07275736" index-type="text" instance-id="jjAcPbMc" name="Image07275736" type="image">
 		<dynamic-content language-id="es_ES">
-			<![CDATA[
-				{
-					"alt": "",
-					"classNameId": 29302,
-					"description": "",
-					"fileEntryId": "44312",
-					"groupId": "20121",
-					"height": 128,
-					"resourcePrimKey": "44340",
-					"title": "robin.png",
-					"type": "document",
-					"url": "/documents/20121/0/robin.png/9fdb5625-a948-9021-2a99-e2adae3a14ab?version=1.0&t=1669403840143&download=true",
-					"uuid": "9fdb5625-a948-9021-2a99-e2adae3a14ab",
-					"width": 128
-				}
-			]]>
+			<![CDATA[[$DOCUMENT_JSON$]]]>
 		</dynamic-content>
 		<dynamic-content language-id="en_US">
-			<![CDATA[
-				{
-					"alt": "",
-					"classNameId": 29302,
-					"description": "",
-					"fileEntryId": "44286",
-					"groupId": "20121",
-					"height": 128,
-					"resourcePrimKey": "44340",
-					"title": "superman.png",
-					"type": "document",
-					"url": "/documents/20121/0/superman.png/5bff2398-9971-2bd5-a9ae-eb6798801e4e?version=1.0&t=1669403749155&download=true",
-					"uuid": "5bff2398-9971-2bd5-a9ae-eb6798801e4e",
-					"width": 128
-				}
-			]]>
+			<![CDATA[[$DOCUMENT_JSON$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element field-reference="Image07275736" index-type="text" instance-id="0j24wbsf" name="Image07275736" type="image">
 		<dynamic-content language-id="es_ES">
-			<![CDATA[
-				{
-					"alt": "",
-					"classNameId": 29302,
-					"description": "",
-					"fileEntryId": "44325",
-					"groupId": "20121",
-					"height": 128,
-					"resourcePrimKey": "44340",
-					"title": "batman.png",
-					"type": "document",
-					"url": "/documents/20121/0/batman.png/04322c20-dad7-e756-2c7e-38dbd7931c3d?version=1.0&t=1669403854792&download=true",
-					"uuid": "04322c20-dad7-e756-2c7e-38dbd7931c3d",
-					"width": 128
-				}
-			]]>
+			<![CDATA[[$DOCUMENT_JSON$]]]>
 		</dynamic-content>
 		<dynamic-content language-id="en_US">
-			<![CDATA[
-				{
-					"alt": "",
-					"classNameId": 29302,
-					"description": "",
-					"fileEntryId": "44273",
-					"groupId": "20121",
-					"height": 128,
-					"resourcePrimKey": "44340",
-					"title": "aquaman",
-					"type": "document",
-					"url": "/documents/20121/0/aquaman.png/f55c644a-fd8e-e5cd-2f9a-b8d9889c9a34?version=1.0&t=1669403731785&download=true",
-					"uuid": "f55c644a-fd8e-e5cd-2f9a-b8d9889c9a34",
-					"width": 128
-				}
-			]]>
+			<![CDATA[[$DOCUMENT_JSON$]]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element field-reference="LinkToLayout42614941" index-type="keyword" instance-id="VFcRBNyJ" name="LinkToLayout42614941" type="link_to_layout">

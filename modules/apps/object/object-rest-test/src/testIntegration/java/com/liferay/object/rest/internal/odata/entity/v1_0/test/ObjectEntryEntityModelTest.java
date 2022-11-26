@@ -283,14 +283,14 @@ public class ObjectEntryEntityModelTest {
 				expectedObjectRelationshipERCFieldName,
 				locale -> expectedObjectFieldName));
 
-		String expectedRelatedObjectIdName = pkObjectFieldName.replaceFirst(
-			"c_", "");
+		String expectedRelatedObjectDefinitionIdName =
+			pkObjectFieldName.replaceFirst("c_", "");
 
 		expectedEntityFieldsMap.put(
-			expectedRelatedObjectIdName,
+			expectedRelatedObjectDefinitionIdName,
 			new IdEntityField(
-				expectedRelatedObjectIdName, locale -> expectedObjectFieldName,
-				String::valueOf));
+				expectedRelatedObjectDefinitionIdName,
+				locale -> expectedObjectFieldName, String::valueOf));
 
 		return expectedEntityFieldsMap;
 	}

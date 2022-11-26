@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
@@ -103,6 +102,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
@@ -765,23 +765,97 @@ public class JournalArticleLocalServiceTest {
 			availableLocales.toString(), 1, availableLocales.size());
 		Assert.assertFalse(availableLocales.contains(LocaleUtil.SPAIN));
 
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmFormValues.getDDMFormFieldValues()) {
+		_validateDDMFormFieldValues(ddmFormValues.getDDMFormFieldValues());
+	}
 
-			Value value = ddmFormFieldValue.getValue();
+	@Test
+	public void testRemoveArticleLocaleWithNestedFields() throws Exception {
+		DataDefinition dataDefinition = DataDefinition.toDTO(
+			_readFileToString("dependencies/ddm_form_nested_fields.json"));
 
-			Set<Locale> valueAvailableLocales = value.getAvailableLocales();
+		dataDefinition.setName(
+			HashMapBuilder.<String, Object>put(
+				String.valueOf(LocaleUtil.SPAIN), "data-definition-es"
+			).put(
+				String.valueOf(LocaleUtil.US), "data-definition"
+			).build());
 
-			Assert.assertEquals(
-				valueAvailableLocales.toString(), 1,
-				valueAvailableLocales.size());
-			Assert.assertFalse(
-				valueAvailableLocales.contains(LocaleUtil.SPAIN));
+		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
+			_dataDefinitionResourceFactory.create();
 
-			Assert.assertEquals(
-				value.getString(value.getDefaultLocale()),
-				value.getString(LocaleUtil.SPAIN));
-		}
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourcedBuilder.user(
+				TestPropsValues.getUser()
+			).build();
+
+		dataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				_group.getGroupId(), "journal", dataDefinition);
+
+		String xml = _readFileToString(
+			"dependencies" +
+				"/journal_content_nested_fields_with_different_locales.xml");
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			_jsonFactory.looseSerialize(fileEntry));
+
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.addArticle(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				PortalUtil.getClassNameId(JournalArticle.class),
+				StringPool.BLANK, true, 0,
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, "title-es"
+				).put(
+					LocaleUtil.US, "title"
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, "description-es"
+				).put(
+					LocaleUtil.US, "description"
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, "friendly-url-es"
+				).put(
+					LocaleUtil.US, "friendly-url"
+				).build(),
+				StringUtil.replace(
+					xml, "[$DOCUMENT_JSON$]", jsonObject.toString()),
+				dataDefinition.getDataDefinitionKey(), null, null, 1, 1, 1965,
+				0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
+				null, null, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		journalArticle = _journalArticleLocalService.removeArticleLocale(
+			_group.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(),
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+
+		Assert.assertEquals("title", journalArticle.getTitle(LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			"description", journalArticle.getDescription(LocaleUtil.SPAIN));
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		Assert.assertNull(friendlyURLMap.get(LocaleUtil.SPAIN));
+
+		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
+
+		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
+
+		Assert.assertEquals(
+			availableLocales.toString(), 1, availableLocales.size());
+		Assert.assertFalse(availableLocales.contains(LocaleUtil.SPAIN));
+
+		_validateDDMFormFieldValues(ddmFormValues.getDDMFormFieldValues());
 	}
 
 	@Test
@@ -1103,6 +1177,35 @@ public class JournalArticleLocalServiceTest {
 			journalArticle.isIndexable(), false, null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				journalArticle.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private void _validateDDMFormFieldValues(
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			Value value = ddmFormFieldValue.getValue();
+
+			if (value != null) {
+				Set<Locale> valueAvailableLocales = value.getAvailableLocales();
+
+				Assert.assertEquals(
+					valueAvailableLocales.toString(), 1,
+					valueAvailableLocales.size());
+				Assert.assertFalse(
+					valueAvailableLocales.contains(LocaleUtil.SPAIN));
+
+				Assert.assertEquals(
+					value.getString(value.getDefaultLocale()),
+					value.getString(LocaleUtil.SPAIN));
+			}
+
+			if (ListUtil.isNotEmpty(
+					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
+
+				_validateDDMFormFieldValues(
+					ddmFormFieldValue.getNestedDDMFormFieldValues());
+			}
+		}
 	}
 
 	@Inject(

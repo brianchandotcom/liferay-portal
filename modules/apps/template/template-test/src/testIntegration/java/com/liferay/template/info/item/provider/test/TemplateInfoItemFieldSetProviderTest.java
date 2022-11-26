@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
@@ -222,10 +221,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldValuesByClassNameAndVariationKeyWhenTemplateEntryExists()
 		throws PortalException {
 
-		DDMStructure ddmStructure = _journalArticle.getDDMStructure();
-
-		DDMFormValues ddmFormValues = DDMFieldLocalServiceUtil.getDDMFormValues(
-			ddmStructure.getDDMForm(), _journalArticle.getId());
+		DDMFormValues ddmFormValues = _journalArticle.getDDMFormValues();
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap(false);

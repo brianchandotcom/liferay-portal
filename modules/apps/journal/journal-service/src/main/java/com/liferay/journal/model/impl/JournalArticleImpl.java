@@ -204,14 +204,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			JournalArticleLocalServiceUtil.getArticleLocalizationLanguageIds(
 				getId()));
 
-		DDMStructure ddmStructure = getDDMStructure();
-
-		if (ddmStructure == null) {
-			return availableLanguageIds.toArray(new String[0]);
-		}
-
-		DDMFormValues ddmFormValues = DDMFieldLocalServiceUtil.getDDMFormValues(
-			ddmStructure.getDDMForm(), getId());
+		DDMFormValues ddmFormValues = getDDMFormValues();
 
 		if (ddmFormValues != null) {
 			for (Locale availableLocale : ddmFormValues.getAvailableLocales()) {

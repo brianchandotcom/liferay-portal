@@ -53,8 +53,11 @@ public class DefaultUsersProvider implements UsersProvider {
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
 
-		return TransformUtil.transform(
+		return TransformUtil.unsafeTransform(
 			notificationRecipient.getNotificationRecipientSettings(),
+			user -> _usersProviderHelper.hasViewPermission(
+				notificationContext.getClassName(),
+				notificationContext.getClassPK(), user),
 			notificationRecipientSetting ->
 				_userLocalService.getUserByScreenName(
 					notificationRecipientSetting.getCompanyId(),
@@ -63,5 +66,8 @@ public class DefaultUsersProvider implements UsersProvider {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UsersProviderHelper _usersProviderHelper;
 
 }

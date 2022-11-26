@@ -21,17 +21,17 @@
 		<body-content>scriptless</body-content>
 	</tag>
 	<tag>
-		<description><![CDATA[Triggers rendering of the trees contained in the tree node currently being processed. Can only be used inside a nodeJspFragment of an oauth2-tree:render tag.]]></description>
+		<description>Triggers rendering of the trees contained in the tree node currently being processed. Can only be used inside a nodeJspFragment of an oauth2-tree:render tag.</description>
 		<name>render-children</name>
 		<tag-class>com.liferay.oauth2.provider.web.internal.tree.tag.RenderChildrenTag</tag-class>
 		<body-content>scriptless</body-content>
 		<variable>
-			<description><![CDATA[Contains the list of parent tree nodes of the current tree.]]></description>
+			<description>Contains the list of parent tree nodes of the current tree.</description>
 			<name-given>parentNodes</name-given>
 			<variable-class>java.util.Collection</variable-class>
 		</variable>
 		<variable>
-			<description><![CDATA[Contains the tree that is currently being rendered.]]></description>
+			<description>Contains the tree that is currently being rendered.</description>
 			<name-given>tree</name-given>
 			<variable-class>com.liferay.oauth2.provider.web.internal.tree.Tree</variable-class>
 		</variable>
@@ -46,12 +46,12 @@
 			<variable-class>java.util.Collection</variable-class>
 		</variable>
 		<variable>
-			<description><![CDATA[Contains the tree that is currently being rendered.]]></description>
+			<description>Contains the tree that is currently being rendered.</description>
 			<name-given>tree</name-given>
 			<variable-class>com.liferay.oauth2.provider.web.internal.tree.Tree</variable-class>
 		</variable>
 		<attribute>
-			<description><![CDATA[A collection of trees to be rendered]]></description>
+			<description>A collection of trees to be rendered</description>
 			<name>trees</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

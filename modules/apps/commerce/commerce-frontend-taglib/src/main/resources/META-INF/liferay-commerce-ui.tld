@@ -137,7 +137,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a configurable header.]]></description>
+		<description>Creates a configurable header.</description>
 		<name>header</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.HeaderTag</tag-class>
 		<body-content>JSP</body-content>
@@ -152,7 +152,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A bean associated with the model object.]]></description>
+			<description>A bean associated with the model object.</description>
 			<name>bean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -189,7 +189,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A class for the bean object.]]></description>
+			<description>A class for the bean object.</description>
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

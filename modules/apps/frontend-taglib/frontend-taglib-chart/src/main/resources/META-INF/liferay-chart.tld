@@ -10,7 +10,7 @@
 	<short-name>liferay-chart</short-name>
 	<uri>http://liferay.com/tld/chart</uri>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>area-spline</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.AreaSplineChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -35,7 +35,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>area-step</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.AreaStepChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -60,7 +60,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>bar</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.BarChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -85,7 +85,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>combination</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.CombinationChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -110,7 +110,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>donut</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.DonutChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -135,7 +135,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>gauge</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.GaugeChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -160,7 +160,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>geomap</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.GeomapTag</tag-class>
 		<body-content>empty</body-content>
@@ -185,7 +185,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>line</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.LineChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -210,7 +210,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>pie</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.PieChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -235,7 +235,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>predictive</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.PredictiveChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -260,7 +260,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>scatter</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.ScatterChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -285,7 +285,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>spline</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.SplineChartTag</tag-class>
 		<body-content>empty</body-content>
@@ -310,7 +310,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[]]></description>
+		<description></description>
 		<name>step</name>
 		<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.StepChartTag</tag-class>
 		<body-content>empty</body-content>

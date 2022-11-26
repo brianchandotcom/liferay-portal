@@ -10,25 +10,25 @@
 	<short-name>liferay-portal-workflow</short-name>
 	<uri>http://liferay.com/tld/portal-workflow</uri>
 	<tag>
-		<description><![CDATA[Creates a UI component that displays the current status of its associated workflow.]]></description>
+		<description>Creates a UI component that displays the current status of its associated workflow.</description>
 		<name>status</name>
 		<tag-class>com.liferay.portal.workflow.taglib.servlet.taglib.WorkflowStatusTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A bean associated with the workflow status component.]]></description>
+			<description>A bean associated with the workflow status component.</description>
 			<name>bean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A class for the bean object.]]></description>
+			<description>A class for the bean object.</description>
 			<name>modelClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -56,13 +56,13 @@
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A workflow status message that overrides the existing one.]]></description>
+			<description>A workflow status message that overrides the existing one.</description>
 			<name>statusMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A version for the workflow status that is displayed in a label next to the workflow status.]]></description>
+			<description>A version for the workflow status that is displayed in a label next to the workflow status.</description>
 			<name>version</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

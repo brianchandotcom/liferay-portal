@@ -15,6 +15,7 @@
 package com.liferay.journal.content.web.internal.upgrade.v1_1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -34,6 +35,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -46,6 +49,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.lang.reflect.Constructor;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -117,6 +121,108 @@ public class UpgradePortletPreferencesTest {
 			expectedScopedPreferenceMap, journalArticle, layout, locale,
 			HashMapBuilder.put(
 				"portletSetupTitle", "Web Content Display"
+			).build());
+
+		_assertUpgradePortletPreferences(
+			expectedScopedPreferenceMap, journalArticle, layout, locale,
+			HashMapBuilder.put(
+				"portletSetupTitle",
+				StringUtil.appendParentheticalSuffix(
+					"Web Content Display", layout.getName(locale))
+			).put(
+				"scopeLayoutUuid", layout.getUuid()
+			).put(
+				"scopeType", "layout"
+			).build());
+	}
+
+	@Test
+	public void testUpgradePortletPreferencesLayoutScopedJournalArticle()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		Group layoutGroup = GroupTestUtil.addGroup(
+			TestPropsValues.getUserId(), layout.getGroupId(), layout);
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		HashMap<String, String> expectedScopedPreferenceMap =
+			HashMapBuilder.put(
+				"portletSetupTitle",
+				StringUtil.appendParentheticalSuffix(
+					"Web Content Display", layout.getName(locale))
+			).put(
+				"scopeLayoutUuid", layout.getUuid()
+			).put(
+				"scopeType", "layout"
+			).build();
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			null, TestPropsValues.getUserId(), layoutGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			DDMStructureTestUtil.getSampleStructuredContent(
+				"content", Collections.emptyList(),
+				LocaleUtil.toLanguageId(locale)),
+			"BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT",
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertUpgradePortletPreferences(
+			expectedScopedPreferenceMap, journalArticle, layout, locale,
+			expectedScopedPreferenceMap);
+
+		_assertUpgradePortletPreferences(
+			expectedScopedPreferenceMap, journalArticle, layout, locale,
+			HashMapBuilder.put(
+				"portletSetupTitle",
+				StringUtil.appendParentheticalSuffix(
+					"Web Content Display", _language.get(locale, "global"))
+			).put(
+				"scopeType", "company"
+			).build());
+
+		_assertUpgradePortletPreferences(
+			expectedScopedPreferenceMap, journalArticle, layout, locale,
+			HashMapBuilder.put(
+				"portletSetupTitle", "Web Content Display"
+			).build());
+	}
+
+	@Test
+	public void testUpgradePortletPreferencesSiteScopedJournalArticle()
+		throws Exception {
+
+		HashMap<String, String> expectedScopedPreferenceMap =
+			HashMapBuilder.put(
+				"portletSetupTitle", "Web Content Display"
+			).build();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			layout.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		_assertUpgradePortletPreferences(
+			expectedScopedPreferenceMap, journalArticle, layout, locale,
+			expectedScopedPreferenceMap);
+
+		_assertUpgradePortletPreferences(
+			expectedScopedPreferenceMap, journalArticle, layout, locale,
+			HashMapBuilder.put(
+				"portletSetupTitle",
+				StringUtil.appendParentheticalSuffix(
+					"Web Content Display", _language.get(locale, "global"))
+			).put(
+				"scopeType", "company"
 			).build());
 
 		_assertUpgradePortletPreferences(

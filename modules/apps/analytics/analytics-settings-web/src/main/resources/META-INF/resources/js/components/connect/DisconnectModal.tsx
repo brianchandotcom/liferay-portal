@@ -90,6 +90,12 @@ const DisconnectModal: React.FC<IDisconnectModalProps> = ({
 										payload: EPageView.Wizard,
 										type: Events.ChangePageView,
 									});
+
+									Liferay.Util.openToast({
+										message: Liferay.Language.get(
+											'workspace-disconnected'
+										),
+									});
 								}
 							}}
 						>

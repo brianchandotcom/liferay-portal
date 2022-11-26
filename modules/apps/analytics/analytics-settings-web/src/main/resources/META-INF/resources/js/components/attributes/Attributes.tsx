@@ -19,7 +19,6 @@ import {useModal} from '@clayui/modal';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {fetchSelectedFields} from '../../utils/api';
-import {SUCCESS_MESSAGE} from '../../utils/constants';
 import Loading from '../Loading';
 import AccountsAttributesModal from './AccountsAttributesModal';
 import OrderAttributsModal from './OrderAttributsModal';
@@ -75,6 +74,7 @@ const Attributes: React.FC = () => {
 		closeFn: (value: boolean) => void
 	) => {
 		closeFn(false);
+
 		setSelectedFields({
 			...selectedFields,
 			[key]: <Loading inline />,
@@ -83,7 +83,7 @@ const Attributes: React.FC = () => {
 		setTimeout(syncData, 1000);
 
 		Liferay.Util.openToast({
-			message: SUCCESS_MESSAGE,
+			message: Liferay.Language.get('attributes-have-been-saved'),
 		});
 	};
 

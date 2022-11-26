@@ -74,7 +74,9 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({
 									className="mr-2"
 									columnTextAlignment="end"
 								>
-									{commerceChannelIds.length}
+									{commerceSyncEnabled
+										? commerceChannelIds.length
+										: '-'}
 								</ClayTable.Cell>
 
 								<ClayTable.Cell

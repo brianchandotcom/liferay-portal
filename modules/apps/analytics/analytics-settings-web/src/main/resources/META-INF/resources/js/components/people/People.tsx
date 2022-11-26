@@ -20,7 +20,7 @@ import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
 	fetchAttributesConfiguration,
@@ -29,10 +29,6 @@ import {
 import ModalAccountGroups from './AccountGroupsModal';
 import ModalOrganizations from './OrganizationsModal';
 import ModalUserGroups from './UserGroupsModal';
-
-function getLanguageCount(count: number, allSelected: boolean): string {
-	return allSelected ? Liferay.Language.get('all') : String(count);
-}
 
 export enum EPeople {
 	AccountGroupIds = 'syncedAccountGroupIds',
@@ -65,36 +61,6 @@ const People: React.FC = () => {
 		onOpenChange: onOpenChangeOrganizations,
 		open: openOrganizations,
 	} = useModal();
-
-	const userOrganizationList = useMemo(
-		() => [
-			{
-				count: getLanguageCount(
-					syncedIds.syncedUserGroupIds.length,
-					syncAllContacts
-				),
-				icon: 'users',
-				onOpenChange: () => onOpenChangeUser(true),
-				title: Liferay.Language.get('user-groups'),
-			},
-			{
-				count: getLanguageCount(
-					syncedIds.syncedOrganizationIds.length,
-					syncAllContacts
-				),
-				icon: 'organizations',
-				onOpenChange: () => onOpenChangeOrganizations(true),
-				title: Liferay.Language.get('organizations'),
-			},
-		],
-		[
-			onOpenChangeOrganizations,
-			onOpenChangeUser,
-			syncAllContacts,
-			syncedIds.syncedOrganizationIds.length,
-			syncedIds.syncedUserGroupIds.length,
-		]
-	);
 
 	const syncData = async () => {
 		const {
@@ -213,39 +179,62 @@ const People: React.FC = () => {
 					</Text>
 
 					<ClayList className="mt-3" showQuickActionsOnHover>
-						{userOrganizationList.map(
-							({count, icon, onOpenChange, title}) => (
-								<ClayList.Item
-									action
-									className="align-items-center"
-									disabled={syncAllContacts}
-									flex
-									key={title}
-									onClick={() =>
-										!syncAllContacts && onOpenChange()
-									}
-								>
-									<ClayList.ItemField>
-										<ClayIcon symbol={icon} />
-									</ClayList.ItemField>
+						<ClayList.Item
+							action
+							className="align-items-center"
+							disabled={syncAllContacts}
+							flex
+							key="user-groups"
+							onClick={() =>
+								!syncAllContacts && onOpenChangeUser(true)
+							}
+						>
+							<ClayList.ItemField>
+								<ClayIcon symbol="users" />
+							</ClayList.ItemField>
 
-									<ClayList.ItemField expand>
-										<ClayList.ItemTitle className="hover-title">
-											{title}
-										</ClayList.ItemTitle>
+							<ClayList.ItemField expand>
+								<ClayList.ItemTitle className="hover-title">
+									{Liferay.Language.get('user-groups')}
+								</ClayList.ItemTitle>
 
-										<ClayList.ItemText className="text-secondary">
-											{sub(
-												Liferay.Language.get(
-													'x-selected'
-												),
-												count
-											)}
-										</ClayList.ItemText>
-									</ClayList.ItemField>
-								</ClayList.Item>
-							)
-						)}
+								<ClayList.ItemText className="text-secondary">
+									{sub(
+										Liferay.Language.get('x-selected'),
+										syncedIds.syncedUserGroupIds.length
+									)}
+								</ClayList.ItemText>
+							</ClayList.ItemField>
+						</ClayList.Item>
+
+						<ClayList.Item
+							action
+							className="align-items-center"
+							disabled={syncAllContacts}
+							flex
+							key="organizations"
+							onClick={() =>
+								!syncAllContacts &&
+								onOpenChangeOrganizations(true)
+							}
+						>
+							<ClayList.ItemField>
+								<ClayIcon symbol="organizations" />
+							</ClayList.ItemField>
+
+							<ClayList.ItemField expand>
+								<ClayList.ItemTitle className="hover-title">
+									{Liferay.Language.get('organizations')}
+								</ClayList.ItemTitle>
+
+								<ClayList.ItemText className="text-secondary">
+									{sub(
+										Liferay.Language.get('x-selected'),
+										syncedIds.syncedOrganizationIds.length
+									)}
+								</ClayList.ItemText>
+							</ClayList.ItemField>
+						</ClayList.Item>
 					</ClayList>
 				</ClayPanel.Body>
 			</ClayPanel>
@@ -308,18 +297,14 @@ const People: React.FC = () => {
 							<ClayList.ItemField expand>
 								<ClayList.ItemTitle className="hover-title">
 									{Liferay.Language.get(
-										'sync-by-accounts-groups'
+										'sync-by-account-groups'
 									)}
 								</ClayList.ItemTitle>
 
 								<ClayList.ItemText className="mt-1 text-secondary">
 									{sub(
 										Liferay.Language.get('x-selected'),
-										getLanguageCount(
-											syncedIds.syncedAccountGroupIds
-												.length,
-											syncAllAccounts
-										)
+										syncedIds.syncedAccountGroupIds.length
 									)}
 								</ClayList.ItemText>
 							</ClayList.ItemField>

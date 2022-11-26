@@ -20,10 +20,6 @@ export const NOT_FOUND_GIF = `${IMAGES_PATH}/states/search_state.gif`;
 
 export const EMPTY_STATE_GIF = `${IMAGES_PATH}/states/empty_state.gif`;
 
-export const SUCCESS_MESSAGE = Liferay.Language.get(
-	'your-request-completed-successfully'
-);
-
 export const ERROR_MESSAGE = Liferay.Language.get(
 	'an-unexpected-system-error-occurred'
 );

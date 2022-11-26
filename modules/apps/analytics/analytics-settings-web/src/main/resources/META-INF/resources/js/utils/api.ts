@@ -90,10 +90,10 @@ export function fetchSites(params: TTableRequestParams) {
 
 export function updateProperty({
 	channelId,
-	commerceChannelIds,
+	commerceChannelIds = [],
 	commerceSyncEnabled,
 	dataSourceId,
-	siteIds,
+	siteIds = [],
 }: {
 	channelId: string;
 	commerceChannelIds?: number[];
@@ -105,15 +105,13 @@ export function updateProperty({
 		body: JSON.stringify({
 			channelId,
 			commerceSyncEnabled,
-			...(dataSourceId && {
-				dataSources: [
-					{
-						commerceChannelIds,
-						dataSourceId,
-						siteIds,
-					},
-				],
-			}),
+			dataSources: [
+				{
+					commerceChannelIds,
+					dataSourceId,
+					siteIds,
+				},
+			],
 		}),
 		method: 'PATCH',
 	});

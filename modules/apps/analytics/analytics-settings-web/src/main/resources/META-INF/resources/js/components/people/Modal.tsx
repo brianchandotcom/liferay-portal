@@ -17,7 +17,6 @@ import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
 import {updateAttributesConfiguration} from '../../utils/api';
-import {SUCCESS_MESSAGE} from '../../utils/constants';
 import Table from '../table/Table';
 import {TColumn, TFormattedItems, TTableRequestParams} from '../table/types';
 import {getIds} from '../table/utils';
@@ -118,7 +117,9 @@ const Modal: React.FC<IModalProps> = ({
 
 								if (ok) {
 									Liferay.Util.openToast({
-										message: SUCCESS_MESSAGE,
+										message: Liferay.Language.get(
+											'people-data-have-been-saved'
+										),
 									});
 
 									onCloseModal();

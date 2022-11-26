@@ -39,6 +39,12 @@ const Step: React.FC<IStepProps> = () => {
 							payload: EPageView.Default,
 							type: Events.ChangePageView,
 						});
+
+						Liferay.Util.openToast({
+							message: Liferay.Language.get(
+								'dxp-has-successfully-connected-to-analytics-cloud.-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
+							),
+						});
 					}}
 				>
 					{Liferay.Language.get('finish')}

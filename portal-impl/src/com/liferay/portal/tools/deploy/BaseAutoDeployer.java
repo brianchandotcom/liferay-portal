@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.servlet.SecurePluginContextListener;
 import com.liferay.portal.kernel.servlet.SecureServlet;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -552,69 +551,10 @@ public class BaseAutoDeployer implements AutoDeployer {
 				_log.error("Unable to copy portal TLD " + portalTld, exception);
 			}
 		}
-
-		// commons-logging*.jar
-
-		File pluginLibDir = new File(srcFile + "/WEB-INF/lib/");
-
-		if (PropsValues.AUTO_DEPLOY_COPY_COMMONS_LOGGING) {
-			String[] commonsLoggingJars = pluginLibDir.list(
-				new JarFileNameFilter("commons-logging"));
-
-			if (ArrayUtil.isEmpty(commonsLoggingJars)) {
-				String portalJarPath =
-					PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR +
-						"commons-logging.jar";
-
-				FileUtil.copyFile(
-					portalJarPath,
-					srcFile + "/WEB-INF/lib/commons-logging.jar");
-			}
-		}
-
-		// log4j*.jar
-
-		if (PropsValues.AUTO_DEPLOY_COPY_LOG4J) {
-			String[] log4jJars = pluginLibDir.list(
-				new JarFileNameFilter("log4j"));
-
-			if (ArrayUtil.isEmpty(log4jJars)) {
-				String portalJarPath =
-					PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR +
-						"log4j-api.jar";
-
-				FileUtil.copyFile(
-					portalJarPath, srcFile + "/WEB-INF/lib/log4j-api.jar");
-
-				portalJarPath =
-					PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR +
-						"log4j-1.2-api.jar";
-
-				FileUtil.copyFile(
-					portalJarPath, srcFile + "/WEB-INF/lib/log4j-1.2-api.jar");
-
-				portalJarPath =
-					PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR +
-						"log4j-core.jar";
-
-				FileUtil.copyFile(
-					portalJarPath, srcFile + "/WEB-INF/lib/log4j-core.jar");
-			}
-		}
 	}
 
 	private void _copyProperties(File srcFile, PluginPackage pluginPackage)
 		throws Exception {
-
-		if (PropsValues.AUTO_DEPLOY_COPY_COMMONS_LOGGING) {
-			copyDependencyXml(
-				"logging.properties", srcFile + "/WEB-INF/classes");
-		}
-
-		if (PropsValues.AUTO_DEPLOY_COPY_LOG4J) {
-			copyDependencyXml(
-				"log4j2.properties", srcFile + "/WEB-INF/classes");
-		}
 
 		File servicePropertiesFile = new File(
 			srcFile.getAbsolutePath() + "/WEB-INF/classes/service.properties");
@@ -1452,7 +1392,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 		BaseAutoDeployer.class);
 
 	private static final List<String> _jars = Arrays.asList(
-		"util-bridges.jar", "util-java.jar", "util-taglib.jar");
+		"util-bridges.jar", "util-java.jar");
 
 	private final String _pluginType;
 

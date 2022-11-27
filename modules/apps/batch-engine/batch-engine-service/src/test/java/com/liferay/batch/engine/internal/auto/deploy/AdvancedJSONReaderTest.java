@@ -38,7 +38,7 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class AdvancedJsonReaderTest {
+public class AdvancedJSONReaderTest {
 
 	@ClassRule
 	@Rule
@@ -59,12 +59,12 @@ public class AdvancedJsonReaderTest {
 		try (InputStream inputStream = new FileInputStream(
 				_getFile("advanced_sample.json"))) {
 
-			AdvancedJsonReader
+			AdvancedJSONReader
 				<BatchEngineAutoDeployListener.BatchEngineImportConfiguration>
-					advancedJsonReader = new AdvancedJsonReader<>(inputStream);
+					advancedJSONReader = new AdvancedJSONReader<>(inputStream);
 
 			BatchEngineAutoDeployListener.BatchEngineImportConfiguration
-				batchEngineImportConfiguration = advancedJsonReader.getObject(
+				batchEngineImportConfiguration = advancedJSONReader.getObject(
 					"configuration",
 					BatchEngineAutoDeployListener.
 						BatchEngineImportConfiguration.class);
@@ -81,14 +81,14 @@ public class AdvancedJsonReaderTest {
 		try (InputStream inputStream = new FileInputStream(
 				_getFile("advanced_sample.json"))) {
 
-			AdvancedJsonReader
+			AdvancedJSONReader
 				<BatchEngineAutoDeployListener.BatchEngineImportConfiguration>
-					advancedJsonReader = new AdvancedJsonReader<>(inputStream);
+					advancedJSONReader = new AdvancedJSONReader<>(inputStream);
 
 			try (ByteArrayOutputStream byteArrayOutputStream =
 					new ByteArrayOutputStream()) {
 
-				advancedJsonReader.transferJsonArray(
+				advancedJSONReader.transferJsonArray(
 					"items", byteArrayOutputStream);
 
 				String content = byteArrayOutputStream.toString();

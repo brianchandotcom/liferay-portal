@@ -39,10 +39,10 @@ public class AdvancedBatchEngineZipUnitImpl<T>
 	@Override
 	public T getBatchEngineConfiguration(Class<T> clazz) throws IOException {
 		try (InputStream inputStream = _zipFile.getInputStream(_zipEntry)) {
-			AdvancedJsonReader<T> advancedJsonReader = new AdvancedJsonReader<>(
+			AdvancedJSONReader<T> advancedJSONReader = new AdvancedJSONReader<>(
 				inputStream);
 
-			return advancedJsonReader.getObject("configuration", clazz);
+			return advancedJSONReader.getObject("configuration", clazz);
 		}
 	}
 
@@ -59,13 +59,13 @@ public class AdvancedBatchEngineZipUnitImpl<T>
 	@Override
 	public InputStream getDataInputStream() throws IOException {
 		try (InputStream inputStream = _zipFile.getInputStream(_zipEntry)) {
-			AdvancedJsonReader advancedJsonReader = new AdvancedJsonReader(
+			AdvancedJSONReader advancedJSONReader = new AdvancedJSONReader(
 				inputStream);
 
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			advancedJsonReader.transferJsonArray(
+			advancedJSONReader.transferJsonArray(
 				"items", byteArrayOutputStream);
 
 			return new ByteArrayInputStream(
@@ -85,10 +85,10 @@ public class AdvancedBatchEngineZipUnitImpl<T>
 		}
 
 		try (InputStream inputStream = _zipFile.getInputStream(_zipEntry)) {
-			AdvancedJsonReader advancedJsonReader = new AdvancedJsonReader(
+			AdvancedJSONReader advancedJSONReader = new AdvancedJSONReader(
 				inputStream);
 
-			return advancedJsonReader.hasKey("items");
+			return advancedJSONReader.hasKey("items");
 		}
 		catch (IOException ioException) {
 			_log.error(

@@ -28,9 +28,9 @@ import java.util.Arrays;
 /**
  * @author Igor Beslic
  */
-public class AdvancedJsonReader<T> {
+public class AdvancedJnReader<T> {
 
-	public AdvancedJsonReader(InputStream inputStream) {
+	public AdvancedJnReader(InputStream inputStream) {
 		_inputStream = inputStream;
 	}
 

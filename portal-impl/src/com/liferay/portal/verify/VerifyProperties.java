@@ -1651,6 +1651,7 @@ public class VerifyProperties {
 		"asset.tag.properties.enabled", "asset.tag.suggestions.enabled",
 		"auth.login.prompt.enabled", "auth.max.failures.limit",
 		"auth.user.uuid.store.enabled", "auto.deploy.blacklist.threshold",
+		"auto.deploy.copy.commons.logging", "auto.deploy.copy.log4j",
 		"auto.deploy.dest.dir", "auto.deploy.default.dest.dir",
 		"auto.deploy.jboss.dest.dir", "auto.deploy.jboss.dest.dir[5]",
 		"auto.deploy.jboss.prefix", "auto.deploy.tomcat.dest.dir",

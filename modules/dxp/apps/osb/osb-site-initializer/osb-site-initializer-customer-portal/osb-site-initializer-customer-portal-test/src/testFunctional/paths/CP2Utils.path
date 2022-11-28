@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_LOCATION</td>
+	<td>//*[contains(@name, 'primaryRegion')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_OPTIONS</td>
 	<td>//select/option[text()='${key_option}']</td>
 	<td></td>

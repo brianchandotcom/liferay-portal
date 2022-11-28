@@ -17,6 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import FeatureFlagContext from './FeatureFlagContext';
@@ -195,13 +196,18 @@ const FilterOrderControls = ({
 				(showDesignImprovements && sortingURL && showOrderToggle)) && (
 				<ManagementToolbar.Item>
 					<LinkOrButton
-						aria-label={
+						aria-label={sub(
 							showDesignImprovements
 								? Liferay.Language.get(
-										'reverse-order-direction'
+										'reverse-order-direction-currently-x'
 								  )
-								: Liferay.Language.get('reverse-sort-direction')
-						}
+								: Liferay.Language.get(
+										'reverse-sort-direction-currently-x'
+								  ),
+							sortingOrder === 'desc'
+								? Liferay.Language.get('descending')
+								: Liferay.Language.get('ascending')
+						)}
 						className="nav-link nav-link-monospaced"
 						disabled={disabled}
 						displayType="unstyled"

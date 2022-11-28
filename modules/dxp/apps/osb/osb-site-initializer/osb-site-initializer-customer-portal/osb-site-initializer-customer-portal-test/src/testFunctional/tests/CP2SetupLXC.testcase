@@ -107,7 +107,24 @@ definition {
 	@priority = "4"
 	test AssertThatTheUserCanOnlySubmitTheFormAfterFillingOutAllRequiredFields {
 
-		// TODO LPS-169246 AssertThatTheUserCanOnlySubmitTheFormAfterFillingOutAllRequiredFields pending implementation
+		 // Needs refactor since it depends on example FIFA account
+
+        task ("Given I fill in all the required fields") {
+            CP2LXCSetup.typeAllSetupLXCInfoFields(
+                email = "test@liferay.com",
+                fullName = "Test Test",
+                github = "testUser",
+                incidentManagementEmail = "test@liferay.com",
+                incidentManagementFullName = "Test User",
+                projectId = "3809080",
+                region = "South America");
+        }
+
+        task ("Then I assert that all fields are required") {
+            CP2LXCSetup.clearInfoSetupLXCFields();
+
+            CP2LXCSetup.viewMessageErrorList(fieldsList = "projectId,fullName,email,github,incidentManagementFullName,incidentManagementEmail");
+        }
 	
 	}
 

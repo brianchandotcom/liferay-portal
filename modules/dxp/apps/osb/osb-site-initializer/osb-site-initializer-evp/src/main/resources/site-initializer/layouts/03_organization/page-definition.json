@@ -14,7 +14,131 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"marginBottom": "4"
 							},
+							"indexed": true,
+							"layout": {
+								"contentDisplay": "FlexRow",
+								"justify": "End",
+								"marginBottom": 2,
+								"opacity": 100,
+								"widthType": "Fluid"
+							},
+							"name": "Form Button Container"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-button"
+									},
+									"fragmentConfig": {
+										"inverted": false,
+										"style": "primary",
+										"type": "solid",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/organization-form"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		},
+																		{
+																			"fieldName": "siteKey",
+																			"fieldValue": "[$GROUP_KEY$]"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Create an Organization"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginRight": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-button"
+									},
+									"fragmentConfig": {
+										"inverted": false,
+										"style": "primary",
+										"type": "solid",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/request-form"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		},
+																		{
+																			"fieldName": "siteKey",
+																			"fieldValue": "[$GROUP_KEY$]"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Create a Request"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
 							"indexed": true,
 							"layout": {
 								"opacity": 100,
@@ -363,7 +487,7 @@
 								"definition": {
 									"collectionConfig": {
 										"collectionReference": {
-											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_C_EVPOrganization"
+											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_20097_C_EVPOrganization"
 										},
 										"collectionType": "CollectionProvider"
 									},
@@ -406,7 +530,7 @@
 													"cssClasses": [
 														"evp-table-border"
 													],
-													"customCSS": ".evp-table-border {\nborder-bottom: 1px solid var(--color-neutral-4);\n}",
+													"customCSS": ".evp-table-border{\nborder-bottom: 1px solid var(--color-neutral-4) !important;\n}",
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"height": "65px"
@@ -433,7 +557,6 @@
 															"indexed": true,
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
 																"opacity": 100,
 																"widthType": "Fluid"
@@ -754,7 +877,6 @@
 															"layout": {
 																"align": "Center",
 																"contentDisplay": "FlexRow",
-																"justify": "Center",
 																"opacity": 100,
 																"widthType": "Fluid"
 															}

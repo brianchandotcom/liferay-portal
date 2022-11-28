@@ -193,7 +193,60 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h5"
+														"textType": "h5",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Request Id"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderColor": "colorNeutral4",
+												"height": "65px",
+												"maxWidth": "12%",
+												"paddingLeft": "2",
+												"width": "12%"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderColor": "colorNeutral4",
+												"contentDisplay": "FlexRow",
+												"opacity": 100,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "DIALECT-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h5",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -225,7 +278,7 @@
 												"borderColor": "colorNeutral4",
 												"height": "65px",
 												"maxWidth": "18%",
-												"width": "18%"
+												"width": "15%"
 											},
 											"indexed": true,
 											"layout": {
@@ -243,7 +296,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h5"
+														"textType": "h5",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -275,7 +329,7 @@
 												"borderColor": "colorNeutral4",
 												"height": "65px",
 												"maxWidth": "16%",
-												"width": "16%"
+												"width": "14%"
 											},
 											"indexed": true,
 											"layout": {
@@ -293,7 +347,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h5"
+														"textType": "h5",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -325,7 +380,7 @@
 												"borderColor": "colorNeutral4",
 												"height": "65px",
 												"maxWidth": "12%",
-												"width": "13%"
+												"width": "11%"
 											},
 											"indexed": true,
 											"layout": {
@@ -343,7 +398,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h5"
+														"textType": "h5",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -375,7 +431,7 @@
 												"borderColor": "colorNeutral4",
 												"height": "65px",
 												"maxWidth": "16%",
-												"width": "16%"
+												"width": "12%"
 											},
 											"indexed": true,
 											"layout": {
@@ -393,7 +449,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h5"
+														"textType": "h5",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -425,7 +482,7 @@
 												"borderColor": "colorNeutral4",
 												"height": "65px",
 												"maxWidth": "18%",
-												"width": "18%"
+												"width": "16%"
 											},
 											"indexed": true,
 											"layout": {
@@ -443,7 +500,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h5"
+														"textType": "h5",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -476,7 +534,7 @@
 								"definition": {
 									"collectionConfig": {
 										"collectionReference": {
-											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_C_EVPRequest"
+											"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_20097_C_EVPRequest"
 										},
 										"collectionType": "CollectionProvider"
 									},
@@ -519,7 +577,7 @@
 													"cssClasses": [
 														"evp-table-border"
 													],
-													"customCSS": ".evp-table-border {\nborder-bottom: 1px solid var(--color-neutral-4);\n}",
+													"customCSS": ".evp-table-border {\nborder-bottom: 1px solid var(--color-neutral-4) !important;\n}",
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"height": "65px"
@@ -558,7 +616,58 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "text-paragraph",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "ObjectEntry_objectEntryId",
+																						"itemReference": {
+																							"contextSource": "CollectionItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"height": "65px",
+																"maxWidth": "12%",
+																"paddingLeft": "2",
+																"width": "12%"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"contentDisplay": "FlexRow",
+																"opacity": 100,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "DIALECT-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -589,7 +698,7 @@
 															"fragmentStyle": {
 																"height": "65px",
 																"maxWidth": "18%",
-																"width": "18%"
+																"width": "15%"
 															},
 															"indexed": true,
 															"layout": {
@@ -606,7 +715,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "text-paragraph",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -637,7 +747,7 @@
 															"fragmentStyle": {
 																"height": "65px",
 																"maxWidth": "16%",
-																"width": "16%"
+																"width": "14%"
 															},
 															"indexed": true,
 															"layout": {
@@ -654,7 +764,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "text-paragraph",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -685,7 +796,7 @@
 															"fragmentStyle": {
 																"height": "65px",
 																"maxWidth": "12%",
-																"width": "12%"
+																"width": "11%"
 															},
 															"indexed": true,
 															"layout": {
@@ -702,7 +813,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "text-paragraph",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -733,7 +845,7 @@
 															"fragmentStyle": {
 																"height": "65px",
 																"maxWidth": "16%",
-																"width": "16%"
+																"width": "12%"
 															},
 															"indexed": true,
 															"layout": {
@@ -750,7 +862,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "text-paragraph",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -782,7 +895,7 @@
 																"height": "65px",
 																"maxWidth": "18%",
 																"paddingRight": "2",
-																"width": "18%"
+																"width": "16%"
 															},
 															"indexed": true,
 															"layout": {
@@ -800,7 +913,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "text-paragraph"
+																		"textType": "text-paragraph",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{

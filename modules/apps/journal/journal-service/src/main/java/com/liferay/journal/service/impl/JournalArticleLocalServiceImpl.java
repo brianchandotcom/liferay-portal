@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
@@ -46,6 +47,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
@@ -4357,13 +4359,7 @@ public class JournalArticleLocalServiceImpl
 				article.getId(), languageId);
 		}
 
-		String content = _removeArticleLocale(article, languageId);
-
-		if (content != null) {
-			updateDDMFields(article, content);
-		}
-
-		article = journalArticlePersistence.update(article);
+		_removeArticleLocale(article, languageId);
 
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
@@ -9042,60 +9038,46 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setServiceContext(serviceContext);
 	}
 
-	private void _removeArticleLocale(Element element, String languageId) {
-		for (Element dynamicElementElement :
-				element.elements("dynamic-element")) {
+	private void _removeArticleLocale(JournalArticle article, String languageId)
+		throws PortalException {
 
-			for (Element dynamicContentElement :
-					dynamicElementElement.elements("dynamic-content")) {
+		DDMFormValues ddmFormValues = article.getDDMFormValues();
 
-				String curLanguageId = GetterUtil.getString(
-					dynamicContentElement.attributeValue("language-id"));
+		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
 
-				if (curLanguageId.equals(languageId)) {
-					dynamicContentElement.detach();
-				}
-			}
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			_removeArticleLocale(dynamicElementElement, languageId);
+		if (!availableLocales.contains(locale)) {
+			return;
 		}
+
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		availableLocales.remove(locale);
+
+		_removeDDMFormFieldValues(
+			ddmFormValues.getDDMFormFieldValues(), locale);
+
+		_ddmFieldLocalService.updateDDMFormValues(
+			ddmStructure.getStructureId(), article.getId(), ddmFormValues);
 	}
 
-	private String _removeArticleLocale(
-		JournalArticle article, String languageId) {
+	private void _removeDDMFormFieldValues(
+		List<DDMFormFieldValue> ddmFormFieldValues, Locale locale) {
 
-		Document document = article.getDocument();
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			Value value = ddmFormFieldValue.getValue();
 
-		if (document == null) {
-			return null;
-		}
+			if (value != null) {
+				value.removeLocale(locale);
+			}
 
-		Element rootElement = document.getRootElement();
+			if (ListUtil.isNotEmpty(
+					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
 
-		String availableLocales = rootElement.attributeValue(
-			"available-locales");
-
-		if (availableLocales == null) {
-			return article.getContent();
-		}
-
-		availableLocales = StringUtil.removeFromList(
-			availableLocales, languageId);
-
-		if (availableLocales.endsWith(",")) {
-			availableLocales = availableLocales.substring(
-				0, availableLocales.length() - 1);
-		}
-
-		rootElement.addAttribute("available-locales", availableLocales);
-
-		_removeArticleLocale(rootElement, languageId);
-
-		try {
-			return document.formattedString(StringPool.DOUBLE_SPACE);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
+				_removeDDMFormFieldValues(
+					ddmFormFieldValue.getNestedDDMFormFieldValues(), locale);
+			}
 		}
 	}
 

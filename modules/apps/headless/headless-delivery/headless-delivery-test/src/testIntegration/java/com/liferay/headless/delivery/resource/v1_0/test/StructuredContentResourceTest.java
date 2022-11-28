@@ -377,6 +377,29 @@ public class StructuredContentResourceTest
 					structuredContent.getId(), _ddmTemplate.getTemplateKey()));
 	}
 
+	@Test
+	public void testPatchStructuredContentWithoutPriority() throws Exception {
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setPriority(1.0);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		StructuredContent patchStructuredContent =
+			structuredContentResource.patchStructuredContent(
+				postStructuredContent.getId(),
+				new StructuredContent() {
+					{
+						title = RandomTestUtil.randomString();
+					}
+				});
+
+		Assert.assertEquals(
+			Double.valueOf(1.0), patchStructuredContent.getPriority());
+	}
+
 	@Override
 	@Test
 	public void testPostSiteStructuredContent() throws Exception {

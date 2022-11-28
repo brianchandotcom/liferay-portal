@@ -14,6 +14,9 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -536,7 +539,9 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					journalArticle.getGroupId(), structuredContent)));
+					journalArticle.getGroupId(),
+					_getAssetPriority(journalArticle, structuredContent),
+					structuredContent)));
 	}
 
 	@Override
@@ -742,11 +747,20 @@ public class StructuredContentResourceImpl
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-				null, _createServiceContext(groupId, structuredContent)));
+				null,
+				_createServiceContext(
+					groupId,
+					Optional.ofNullable(
+						structuredContent.getPriority()
+					).orElse(
+						0.0
+					),
+					structuredContent)));
 	}
 
 	private ServiceContext _createServiceContext(
-		long groupId, StructuredContent structuredContent) {
+		long groupId, double assetPriority,
+		StructuredContent structuredContent) {
 
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
@@ -756,11 +770,7 @@ public class StructuredContentResourceImpl
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
 
-		Optional.ofNullable(
-			structuredContent.getPriority()
-		).ifPresent(
-			serviceContext::setAssetPriority
-		);
+		serviceContext.setAssetPriority(assetPriority);
 
 		return serviceContext;
 	}
@@ -782,6 +792,25 @@ public class StructuredContentResourceImpl
 					BooleanClauseOccur.MUST);
 			}
 		};
+	}
+
+	private double _getAssetPriority(
+			JournalArticle journalArticle, StructuredContent structuredContent)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return Optional.ofNullable(
+			structuredContent.getPriority()
+		).orElse(
+			assetEntry.getPriority()
+		);
 	}
 
 	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
@@ -1181,7 +1210,9 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					journalArticle.getGroupId(), structuredContent)));
+					journalArticle.getGroupId(),
+					_getAssetPriority(journalArticle, structuredContent),
+					structuredContent)));
 	}
 
 	private void _validateContentFields(

@@ -1055,8 +1055,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addObjectAccountEntryRestricted(
-			ObjectDefinitionResource objectDefinitionResource,
-			ServiceContext serviceContext)
+		Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
+		ObjectDefinitionResource objectDefinitionResource,
+		ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -1073,6 +1074,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
+
+			json = _replace(json, listTypeDefinitionIdsStringUtilReplaceValues);
 
 			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
 
@@ -1237,6 +1240,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_invoke(
 			() -> _addObjectAccountEntryRestricted(
+				listTypeDefinitionIdsStringUtilReplaceValues,
 				objectDefinitionResource, serviceContext));
 
 		_invoke(

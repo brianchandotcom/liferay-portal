@@ -581,6 +581,10 @@ definition {
 			var layoutName = "AC Page";
 		}
 
+		if (!(isSet(portletIndex))) {
+			var portletIndex = "1";
+		}
+
 		if (!(isSet(webContentTitle))) {
 			var webContentTitle = "Web Content AC Title";
 		}
@@ -605,7 +609,9 @@ definition {
 			layoutName = "${layoutName}",
 			widgetName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "${webContentTitle}");
+		WebContentDisplayPortlet.selectWebContent(
+			webContentTitle = "${webContentTitle}",
+			portletIndex = "${portletIndex}");
 
 		Navigator.gotoSitePage(
 			pageName = "${layoutName}",

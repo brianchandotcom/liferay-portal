@@ -28,10 +28,10 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 					<aui:option label="no-template" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), -1) %>" value="<%= -1 %>" />
 
 					<%
-					for (DDMTemplate ddTemplate : journalPreviewArticleContentTemplateDisplayContext.getDDMTemplates()) {
+					for (DDMTemplate ddmTemplate : journalPreviewArticleContentTemplateDisplayContext.getDDMTemplates()) {
 					%>
 
-						<aui:option label="<%= HtmlUtil.escape(ddTemplate.getName(locale)) %>" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), ddTemplate.getTemplateId()) %>" value="<%= ddTemplate.getTemplateId() %>" />
+						<aui:option label="<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), ddmTemplate.getTemplateId()) %>" value="<%= ddmTemplate.getTemplateId() %>" />
 
 					<%
 					}

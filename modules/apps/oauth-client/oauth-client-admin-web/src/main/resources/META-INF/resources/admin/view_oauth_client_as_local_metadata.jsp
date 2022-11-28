@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int oAuthClientASLocalMetadataCount = OAuthClientASLocalMetadataLocalServiceUtil.getOAuthClientASLocalMetadatasCount();
+int oAuthClientASLocalMetadatasCount = OAuthClientASLocalMetadataLocalServiceUtil.getOAuthClientASLocalMetadatasCount();
 
 OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMetadataManagementToolbarDisplayContext = new OAuthClientASLocalMetadataManagementToolbarDisplayContext(currentURLObj, liferayPortletRequest, liferayPortletResponse);
 %>
@@ -26,9 +26,9 @@ OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMeta
 	actionDropdownItems="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	additionalProps="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getAdditionalProps() %>"
 	creationMenu="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= oAuthClientASLocalMetadataCount == 0 %>"
+	disabled="<%= oAuthClientASLocalMetadatasCount == 0 %>"
 	filterDropdownItems="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= oAuthClientASLocalMetadataCount %>"
+	itemsTotal="<%= oAuthClientASLocalMetadatasCount %>"
 	searchContainerId="oAuthClientASLocalMetadataSearchContainer"
 	selectable="<%= true %>"
 	showCreationMenu="<%= true %>"
@@ -46,7 +46,7 @@ OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMeta
 		id="oAuthClientASLocalMetadataSearchContainer"
 		iteratorURL="<%= currentURLObj %>"
 		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-		total="<%= oAuthClientASLocalMetadataCount %>"
+		total="<%= oAuthClientASLocalMetadatasCount %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= OAuthClientASLocalMetadataServiceUtil.getCompanyOAuthClientASLocalMetadata(themeDisplay.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"

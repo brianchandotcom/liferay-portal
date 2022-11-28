@@ -338,6 +338,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ObjectField
+			createObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
+				@GraphQLName("objectDefinitionExternalReferenceCode") String
+					objectDefinitionExternalReferenceCode,
+				@GraphQLName("objectField") ObjectField objectField)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource ->
+				objectFieldResource.
+					postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
+						objectDefinitionExternalReferenceCode, objectField));
+	}
+
+	@GraphQLField
 	public ObjectField createObjectDefinitionObjectField(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
 			@GraphQLName("objectField") ObjectField objectField)

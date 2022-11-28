@@ -206,6 +206,426 @@ public abstract class BaseObjectFieldResourceTestCase {
 	}
 
 	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage()
+		throws Exception {
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getObjectDefinitionExternalReferenceCode();
+		String irrelevantObjectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getIrrelevantObjectDefinitionExternalReferenceCode();
+
+		Page<ObjectField> page =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantObjectDefinitionExternalReferenceCode != null) {
+			ObjectField irrelevantObjectField =
+				testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+					irrelevantObjectDefinitionExternalReferenceCode,
+					randomIrrelevantObjectField());
+
+			page =
+				objectFieldResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+						irrelevantObjectDefinitionExternalReferenceCode, null,
+						null, Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantObjectField),
+				(List<ObjectField>)page.getItems());
+			assertValid(page);
+		}
+
+		ObjectField objectField1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		ObjectField objectField2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		page =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectField1, objectField2),
+			(List<ObjectField>)page.getItems());
+		assertValid(page);
+
+		objectFieldResource.deleteObjectField(objectField1.getId());
+
+		objectFieldResource.deleteObjectField(objectField2.getId());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectField objectField1 = randomObjectField();
+
+		objectField1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, objectField1);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectField> page =
+				objectFieldResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+						objectDefinitionExternalReferenceCode, null,
+						getFilterString(entityField, "between", objectField1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(objectField1),
+				(List<ObjectField>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectField objectField1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectField objectField2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectField> page =
+				objectFieldResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+						objectDefinitionExternalReferenceCode, null,
+						getFilterString(entityField, "eq", objectField1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(objectField1),
+				(List<ObjectField>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectField objectField1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectField objectField2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectField> page =
+				objectFieldResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+						objectDefinitionExternalReferenceCode, null,
+						getFilterString(entityField, "eq", objectField1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(objectField1),
+				(List<ObjectField>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithPagination()
+		throws Exception {
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectField objectField1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		ObjectField objectField2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		ObjectField objectField3 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, randomObjectField());
+
+		Page<ObjectField> page1 =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(1, 2), null);
+
+		List<ObjectField> objectFields1 = (List<ObjectField>)page1.getItems();
+
+		Assert.assertEquals(objectFields1.toString(), 2, objectFields1.size());
+
+		Page<ObjectField> page2 =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ObjectField> objectFields2 = (List<ObjectField>)page2.getItems();
+
+		Assert.assertEquals(objectFields2.toString(), 1, objectFields2.size());
+
+		Page<ObjectField> page3 =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectField1, objectField2, objectField3),
+			(List<ObjectField>)page3.getItems());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSortDateTime()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, objectField1, objectField2) -> {
+				BeanTestUtil.setProperty(
+					objectField1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSortDouble()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, objectField1, objectField2) -> {
+				BeanTestUtil.setProperty(
+					objectField1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					objectField2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSortInteger()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, objectField1, objectField2) -> {
+				BeanTestUtil.setProperty(
+					objectField1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					objectField2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, objectField1, objectField2) -> {
+				Class<?> clazz = objectField1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						objectField1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						objectField2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						objectField1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						objectField2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						objectField1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						objectField2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, ObjectField, ObjectField, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectField objectField1 = randomObjectField();
+		ObjectField objectField2 = randomObjectField();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, objectField1, objectField2);
+		}
+
+		objectField1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, objectField1);
+
+		objectField2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				objectDefinitionExternalReferenceCode, objectField2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectField> ascPage =
+				objectFieldResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+						objectDefinitionExternalReferenceCode, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(objectField1, objectField2),
+				(List<ObjectField>)ascPage.getItems());
+
+			Page<ObjectField> descPage =
+				objectFieldResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+						objectDefinitionExternalReferenceCode, null, null,
+						Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(objectField2, objectField1),
+				(List<ObjectField>)descPage.getItems());
+		}
+	}
+
+	protected ObjectField
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_addObjectField(
+				String objectDefinitionExternalReferenceCode,
+				ObjectField objectField)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getObjectDefinitionExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage_getIrrelevantObjectDefinitionExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField()
+		throws Exception {
+
+		ObjectField randomObjectField = randomObjectField();
+
+		ObjectField postObjectField =
+			testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField_addObjectField(
+				randomObjectField);
+
+		assertEquals(randomObjectField, postObjectField);
+		assertValid(postObjectField);
+	}
+
+	protected ObjectField
+			testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField_addObjectField(
+				ObjectField objectField)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetObjectDefinitionObjectFieldsPage() throws Exception {
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();

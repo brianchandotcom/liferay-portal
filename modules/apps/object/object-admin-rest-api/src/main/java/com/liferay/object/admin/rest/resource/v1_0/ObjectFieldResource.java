@@ -56,6 +56,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectFieldResource {
 
+	public Page<ObjectField>
+			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+				String objectDefinitionExternalReferenceCode, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public ObjectField
+			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
+				String objectDefinitionExternalReferenceCode,
+				ObjectField objectField)
+		throws Exception;
+
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
 			Long objectDefinitionId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

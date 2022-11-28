@@ -79,6 +79,100 @@ public abstract class BaseObjectFieldResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectDefinitionExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectField")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<ObjectField>
+			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("objectDefinitionExternalReferenceCode")
+				String objectDefinitionExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("search")
+				String search,
+				@javax.ws.rs.core.Context Filter filter,
+				@javax.ws.rs.core.Context Pagination pagination,
+				@javax.ws.rs.core.Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields' -d $'{"DBType": ___, "businessType": ___, "defaultValue": ___, "externalReferenceCode": ___, "indexed": ___, "indexedAsKeyword": ___, "indexedLanguageId": ___, "label": ___, "listTypeDefinitionExternalReferenceCode": ___, "listTypeDefinitionId": ___, "name": ___, "objectFieldSettings": ___, "required": ___, "state": ___, "system": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectDefinitionExternalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectField")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectField
+			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("objectDefinitionExternalReferenceCode")
+				String objectDefinitionExternalReferenceCode,
+				ObjectField objectField)
+		throws Exception {
+
+		return new ObjectField();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-fields'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(

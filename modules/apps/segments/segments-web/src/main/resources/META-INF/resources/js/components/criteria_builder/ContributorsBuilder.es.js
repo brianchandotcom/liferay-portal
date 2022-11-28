@@ -170,191 +170,191 @@ class ContributorBuilder extends React.Component {
 
 							<ClayLayout.ContainerFluid>
 								<div className="content-wrapper p-4">
-									{Liferay.FeatureFlags['LPS-166954'] && (
-										<ClayPanel
-											className="mb-4"
-											collapsable
-											defaultExpanded={true}
-											displayTitle={
-												<ClayPanel.Title>
-													<h2 className="m-0 text-dark">
-														{Liferay.Language.get(
-															'scope'
-														)}
-													</h2>
-												</ClayPanel.Title>
-											}
-											displayType="secondary"
-											showCollapseIcon
-										>
-											<ClayPanel.Body className="align-items-center d-flex justify-content-between p-4">
-												<p className="mb-0 mr-6">
-													{scopeName}
-												</p>
-											</ClayPanel.Body>
-										</ClayPanel>
-									)}
-
-									{Liferay.FeatureFlags['LPS-166954'] && (
-										<ClayPanel
-											collapsable
-											defaultExpanded={true}
-											displayTitle={
-												<ClayPanel.Header className="p-0">
-													<div className="align-items-center d-flex flex-wrap justify-content-between">
-														<h2 className="mb-0 sheet-title">
+									{Liferay.FeatureFlags['LPS-166954'] ? (
+										<>
+											<ClayPanel
+												className="mb-4"
+												collapsable
+												defaultExpanded={true}
+												displayTitle={
+													<ClayPanel.Title>
+														<h2 className="m-0 text-dark">
 															{Liferay.Language.get(
-																'conditions'
+																'scope'
 															)}
 														</h2>
+													</ClayPanel.Title>
+												}
+												displayType="secondary"
+												showCollapseIcon
+											>
+												<ClayPanel.Body className="align-items-center d-flex justify-content-between p-4">
+													<p className="mb-0 mr-6">
+														{scopeName}
+													</p>
+												</ClayPanel.Body>
+											</ClayPanel>
 
-														<div className="criterion-string">
-															<div className="btn-group">
-																<div className="btn-group-item inline-item mt-0">
-																	{membersCountLoading && (
-																		<ClayLoadingIndicator
-																			className="mr-4"
-																			small
-																		/>
-																	)}
+											<ClayPanel
+												collapsable
+												defaultExpanded={true}
+												displayTitle={
+													<ClayPanel.Header className="p-0">
+														<div className="align-items-center d-flex flex-wrap justify-content-between">
+															<h2 className="mb-0 sheet-title">
+																{Liferay.Language.get(
+																	'conditions'
+																)}
+															</h2>
 
-																	{!membersCountLoading && (
-																		<span className="mr-4">
-																			{Liferay.Language.get(
-																				'conditions-match'
-																			)}
-
-																			<b className="ml-2 text-dark">
-																				{getPluralMessage(
-																					Liferay.Language.get(
-																						'x-member'
-																					),
-																					Liferay.Language.get(
-																						'x-members'
-																					),
-																					membersCount
-																				)}
-																			</b>
-																		</span>
-																	)}
-
-																	<ClayButton
-																		displayType="secondary"
-																		onClick={(
-																			event
-																		) => {
-																			handleViewMembersClick(
-																				event
-																			);
-																		}}
-																		small
-																		type="button"
-																	>
-																		{Liferay.Language.get(
-																			'view-members'
+															<div className="criterion-string">
+																<div className="btn-group">
+																	<div className="btn-group-item inline-item mt-0">
+																		{membersCountLoading && (
+																			<ClayLoadingIndicator
+																				className="mr-4"
+																				small
+																			/>
 																		)}
-																	</ClayButton>
+
+																		{!membersCountLoading && (
+																			<span className="mr-4">
+																				{Liferay.Language.get(
+																					'conditions-match'
+																				)}
+
+																				<b className="ml-2 text-dark">
+																					{getPluralMessage(
+																						Liferay.Language.get(
+																							'x-member'
+																						),
+																						Liferay.Language.get(
+																							'x-members'
+																						),
+																						membersCount
+																					)}
+																				</b>
+																			</span>
+																		)}
+
+																		<ClayButton
+																			displayType="secondary"
+																			onClick={(
+																				event
+																			) => {
+																				handleViewMembersClick(
+																					event
+																				);
+																			}}
+																			small
+																			type="button"
+																		>
+																			{Liferay.Language.get(
+																				'view-members'
+																			)}
+																		</ClayButton>
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-												</ClayPanel.Header>
-											}
-										>
-											<ClayPanel.Body>
-												{emptyContributors &&
-													(editingId === undefined ||
-														!editing) && (
-														<EmptyPlaceholder />
-													)}
+													</ClayPanel.Header>
+												}
+											>
+												<ClayPanel.Body>
+													{emptyContributors &&
+														(editingId ===
+															undefined ||
+															!editing) && (
+															<EmptyPlaceholder />
+														)}
 
-												{contributors
-													.filter((criteria) => {
-														const editingCriteria =
-															editingId ===
-																criteria.propertyKey &&
-															editing;
-														const emptyCriteriaQuery =
-															criteria.query ===
-															'';
+													{contributors
+														.filter((criteria) => {
+															const editingCriteria =
+																editingId ===
+																	criteria.propertyKey &&
+																editing;
+															const emptyCriteriaQuery =
+																criteria.query ===
+																'';
 
-														return (
-															editingCriteria ||
-															!emptyCriteriaQuery
-														);
-													})
-													.map((criteria, i) => {
-														return (
-															<React.Fragment
-																key={i}
-															>
-																{i !== 0 && (
-																	<>
-																		<Conjunction
-																			className="mb-4 ml-0 mt-4"
-																			conjunctionName={
-																				criteria.conjunctionId
-																			}
-																			editing={
-																				editing
-																			}
-																			onSelect={
-																				onConjunctionChange
-																			}
-																			supportedConjunctions={
-																				supportedConjunctions
-																			}
-																		/>
-																	</>
-																)}
+															return (
+																editingCriteria ||
+																!emptyCriteriaQuery
+															);
+														})
+														.map((criteria, i) => {
+															return (
+																<React.Fragment
+																	key={i}
+																>
+																	{i !==
+																		0 && (
+																		<>
+																			<Conjunction
+																				className="mb-4 ml-0 mt-4"
+																				conjunctionName={
+																					criteria.conjunctionId
+																				}
+																				editing={
+																					editing
+																				}
+																				onSelect={
+																					onConjunctionChange
+																				}
+																				supportedConjunctions={
+																					supportedConjunctions
+																				}
+																			/>
+																		</>
+																	)}
 
-																<CriteriaBuilder
-																	criteria={
-																		criteria.criteriaMap
-																	}
-																	editing={
-																		editing
-																	}
-																	emptyContributors={
-																		emptyContributors
-																	}
-																	entityName={
-																		criteria.entityName
-																	}
-																	modelLabel={
-																		criteria.modelLabel
-																	}
-																	onChange={
-																		this
-																			._handleCriteriaChange
-																	}
-																	propertyKey={
-																		criteria.propertyKey
-																	}
-																	renderEmptyValuesErrors={
-																		renderEmptyValuesErrors
-																	}
-																	supportedConjunctions={
-																		supportedConjunctions
-																	}
-																	supportedOperators={
-																		supportedOperators
-																	}
-																	supportedProperties={
-																		criteria.properties
-																	}
-																	supportedPropertyTypes={
-																		supportedPropertyTypes
-																	}
-																/>
-															</React.Fragment>
-														);
-													})}
-											</ClayPanel.Body>
-										</ClayPanel>
-									)}
-
-									{!Liferay.FeatureFlags['LPS-166954'] && (
+																	<CriteriaBuilder
+																		criteria={
+																			criteria.criteriaMap
+																		}
+																		editing={
+																			editing
+																		}
+																		emptyContributors={
+																			emptyContributors
+																		}
+																		entityName={
+																			criteria.entityName
+																		}
+																		modelLabel={
+																			criteria.modelLabel
+																		}
+																		onChange={
+																			this
+																				._handleCriteriaChange
+																		}
+																		propertyKey={
+																			criteria.propertyKey
+																		}
+																		renderEmptyValuesErrors={
+																			renderEmptyValuesErrors
+																		}
+																		supportedConjunctions={
+																			supportedConjunctions
+																		}
+																		supportedOperators={
+																			supportedOperators
+																		}
+																		supportedProperties={
+																			criteria.properties
+																		}
+																		supportedPropertyTypes={
+																			supportedPropertyTypes
+																		}
+																	/>
+																</React.Fragment>
+															);
+														})}
+												</ClayPanel.Body>
+											</ClayPanel>
+										</>
+									) : (
 										<ClayLayout.Sheet>
 											<div className="d-flex flex-wrap justify-content-between mb-4">
 												<h2 className="mb-2 sheet-title">

@@ -283,17 +283,17 @@
 
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON</td>
-	<td>//fieldset[./*[normalize-space()='Asset Entries']]//a[normalize-space()='Select']</td>
+	<td>//fieldset[./*[normalize-space()='Asset Entries']]//button[normalize-space()='Select']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_IN_DEPOT</td>
-	<td>//fieldset[./*[normalize-space()='Asset Entries']]//a[normalize-space()='Select in ${key_depotName}']</td>
+	<td>//fieldset[./*[normalize-space()='Asset Entries']]//button[normalize-space()='Select in ${key_depotName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET</td>
-	<td>//a[@data-title='Select ${key_assetType}']</td>
+	<td>//button[@data-title='Select ${key_assetType}']</td>
 	<td></td>
 </tr>
 </tbody>

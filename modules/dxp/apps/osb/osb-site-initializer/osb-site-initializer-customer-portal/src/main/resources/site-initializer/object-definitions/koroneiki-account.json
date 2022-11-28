@@ -25,6 +25,16 @@
 			"required": false
 		},
 		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Allow Self Provisioning"
+			},
+			"name": "allowSelfProvisioning",
+			"required": false
+		},
+		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,

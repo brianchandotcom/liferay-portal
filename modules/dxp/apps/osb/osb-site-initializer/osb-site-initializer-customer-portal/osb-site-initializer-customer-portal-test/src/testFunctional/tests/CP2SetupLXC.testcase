@@ -132,7 +132,17 @@ definition {
 	@priority = "3"
 	test AssertTheErrorMessageIfTheUserEntersAnInvalidBusinessEmailAddress {
 
-		// TODO LPS-169249 AssertTheErrorMessageIfTheUserEntersAnInvalidBusinessEmailAddress pending implementation
+		 // Needs refactor since it depends on example FIFA account
+
+        task ("Then I assert that a valid email address is required in the 'Incident Management Contact's Email Address' field") {
+            CP2Utils.typeSetupInfoFields(
+                label = "incidentManagementEmail",
+                value = "test.com");
+
+            CustomerPortal.clickOnModal(text = "Set Up Liferay Experience Cloud");
+
+            CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Please insert a valid email.");
+        }
 		
 	}
 

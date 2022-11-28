@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Edward C. Han
  */
-@Component(service = {})
+@Component(immediate = true, service = {})
 public class SafePortalLDAPUtil {
 
 	public static SafePortalLDAP getSafePortalLDAP() {

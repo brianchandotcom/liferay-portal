@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(service = {})
+@Component(immediate = true, service = {})
 public class LDAPFilterValidatorUtil {
 
 	public static LDAPFilterValidator getLDAPFilterValidator() {

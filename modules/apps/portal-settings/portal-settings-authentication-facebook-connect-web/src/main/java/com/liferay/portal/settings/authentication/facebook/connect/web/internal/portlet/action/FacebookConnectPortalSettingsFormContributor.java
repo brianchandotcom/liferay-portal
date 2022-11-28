@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  * @author Stian Sigvartsen
  */
-@Component(service = PortalSettingsFormContributor.class)
+@Component(immediate = true, service = PortalSettingsFormContributor.class)
 public class FacebookConnectPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

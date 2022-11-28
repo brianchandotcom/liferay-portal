@@ -132,7 +132,9 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			boolean idsAvailable = true;
 
 			for (Element element : elements) {
-				if (Validator.isNull(element.id())) {
+				String dropZoneId = element.attr("data-lfr-drop-zone-id");
+
+				if (Validator.isBlank(dropZoneId)) {
 					idsAvailable = false;
 
 					break;
@@ -156,7 +158,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 				for (int i = 0; i < elements.size(); i++) {
 					Element element = elements.get(i);
 
-					String id = element.id();
+					String dropZoneId = element.attr("data-lfr-drop-zone-id");
 
 					for (String itemId : dropZoneItemIds) {
 						LayoutStructureItem childLayoutStructureItem =
@@ -174,7 +176,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 									childLayoutStructureItem;
 
 						if (Objects.equals(
-								id,
+								dropZoneId,
 								fragmentDropZoneLayoutStructureItem.
 									getFragmentDropZoneId())) {
 
@@ -231,10 +233,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 		Set<String> elementIds = new LinkedHashSet<>();
 
 		for (Element element : elements) {
-			String id = element.id();
+			String dropZoneId = element.attr("data-lfr-drop-zone-id");
 
-			if (Validator.isNotNull(id)) {
-				elementIds.add(id);
+			if (Validator.isNotNull(dropZoneId)) {
+				elementIds.add(dropZoneId);
 			}
 		}
 

@@ -36,7 +36,7 @@ import com.liferay.site.navigation.taglib.internal.portlet.display.template.Port
 import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.taglib.internal.util.NavItemUtil;
-import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItem;
+import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItemImpl;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -308,13 +308,13 @@ public class NavigationMenuTag extends IncludeTag {
 				ancestorSiteNavigationMenuItems.get(i);
 
 			navItems.add(
-				new SiteNavigationMenuNavItem(
+				new SiteNavigationMenuNavItemImpl(
 					httpServletRequest, themeDisplay,
 					ancestorSiteNavigationMenuItem));
 		}
 
 		navItems.add(
-			new SiteNavigationMenuNavItem(
+			new SiteNavigationMenuNavItemImpl(
 				httpServletRequest, themeDisplay,
 				originalSiteNavigationMenuItem));
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.site.navigation.theme.SiteNavigationMenuNavItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.io.Serializable;
@@ -35,9 +36,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Pavel Savinov
  */
-public class SiteNavigationMenuNavItem extends NavItem {
+public class SiteNavigationMenuNavItemImpl
+	extends NavItem implements SiteNavigationMenuNavItem {
 
-	public SiteNavigationMenuNavItem(
+	public SiteNavigationMenuNavItemImpl(
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
@@ -54,11 +56,12 @@ public class SiteNavigationMenuNavItem extends NavItem {
 
 	@Override
 	public boolean equals(Object object) {
-		if (object instanceof SiteNavigationMenuNavItem) {
-			SiteNavigationMenuNavItem siteNavigationMenuNavItem =
-				(SiteNavigationMenuNavItem)object;
+		if (object instanceof SiteNavigationMenuNavItemImpl) {
+			SiteNavigationMenuNavItemImpl siteNavigationMenuNavItemImpl =
+				(SiteNavigationMenuNavItemImpl)object;
 
-			return _siteNavigationMenuItem.equals(siteNavigationMenuNavItem);
+			return _siteNavigationMenuItem.equals(
+				siteNavigationMenuNavItemImpl);
 		}
 
 		return false;
@@ -80,7 +83,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 					_httpServletRequest, _siteNavigationMenuItem)) {
 
 			children.add(
-				new SiteNavigationMenuNavItem(
+				new SiteNavigationMenuNavItemImpl(
 					_httpServletRequest, _themeDisplay,
 					dynamicSiteNavigationMenuItem));
 		}

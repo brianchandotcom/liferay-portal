@@ -121,7 +121,7 @@ public class NavItemUtil {
 
 				if (!siteNavigationMenuItemType.isDynamic()) {
 					navItems.add(
-						new SiteNavigationMenuNavItem(
+						new SiteNavigationMenuNavItemImpl(
 							httpServletRequest, themeDisplay,
 							siteNavigationMenuItem));
 
@@ -133,7 +133,7 @@ public class NavItemUtil {
 							httpServletRequest, siteNavigationMenuItem)) {
 
 					navItems.add(
-						new SiteNavigationMenuNavItem(
+						new SiteNavigationMenuNavItemImpl(
 							httpServletRequest, themeDisplay,
 							dynamicSiteNavigationMenuItem));
 				}

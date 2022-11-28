@@ -26,17 +26,17 @@ import java.util.Locale;
 public class ChannelDTOConverterContext extends DefaultDTOConverterContext {
 
 	public ChannelDTOConverterContext(
-		Object id, Locale locale, String[] channelIds) {
+		Object id, Locale locale, String[] analyticsChannelIds) {
 
 		super(false, new HashMap<>(), null, id, locale, null, null);
 
-		_channelIds = channelIds;
+		_analyticsChannelIds = analyticsChannelIds;
 	}
 
-	public boolean isCommerceSyncEnabled(String channelId) {
-		return ArrayUtil.contains(_channelIds, channelId);
+	public boolean isCommerceSyncEnabled(String analyticsChannelId) {
+		return ArrayUtil.contains(_analyticsChannelIds, analyticsChannelId);
 	}
 
-	private final String[] _channelIds;
+	private final String[] _analyticsChannelIds;
 
 }

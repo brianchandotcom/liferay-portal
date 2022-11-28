@@ -33,15 +33,17 @@ public interface AnalyticsSettingsManager {
 	public AnalyticsConfiguration getAnalyticsConfiguration(long companyId)
 		throws ConfigurationException;
 
-	public Long[] getCommerceChannelIds(String channelId, long companyId)
+	public Long[] getCommerceChannelIds(
+			String analyticsChannelId, long companyId)
 		throws Exception;
 
-	public Long[] getSiteIds(String channelId, long companyId) throws Exception;
+	public Long[] getSiteIds(String analyticsChannelId, long companyId)
+		throws Exception;
 
 	public boolean isAnalyticsEnabled(long companyId) throws Exception;
 
 	public String[] updateCommerceChannelIds(
-			String channelId, long companyId,
+			String analyticsChannelId, long companyId,
 			Long[] dataSourceCommerceChannelIds)
 		throws Exception;
 
@@ -50,7 +52,7 @@ public interface AnalyticsSettingsManager {
 		throws Exception;
 
 	public String[] updateSiteIds(
-			String channelId, long companyId, Long[] dataSourceSiteIds)
+			String analyticsChannelId, long companyId, Long[] dataSourceSiteIds)
 		throws Exception;
 
 }

@@ -296,8 +296,9 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 	@Override
 	public AnalyticsChannel updateAnalyticsChannel(
-			String channelId, Long[] commerceChannelIds, long companyId,
-			String dataSourceId, Locale locale, Long[] siteGroupIds)
+			String analyticsChannelId, Long[] commerceChannelIds,
+			long companyId, String dataSourceId, Locale locale,
+			Long[] siteGroupIds)
 		throws Exception {
 
 		try {
@@ -335,7 +336,7 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 				String.format(
 					"%s/api/1.0/channels/%s",
 					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
-					channelId));
+					analyticsChannelId));
 			options.setPatch(true);
 
 			String content = _http.URLtoString(options);

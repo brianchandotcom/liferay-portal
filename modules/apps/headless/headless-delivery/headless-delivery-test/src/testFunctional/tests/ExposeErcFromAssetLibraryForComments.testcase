@@ -242,7 +242,7 @@ definition {
 		task ("Then I receive an error code response about duplicate erc") {
 			TestUtils.assertPartialEquals(
 				actual = "${response}",
-				expected = "Duplicate MBMessage with external reference code ercComment");
+				expected = "Duplicate message-boards message with external reference code ercComment");
 		}
 
 		task ("And Then another comment with the same external reference code is not being created") {

@@ -15,9 +15,12 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
+import com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistryResolutionStateDigest;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolution;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolver;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdatesListener;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -34,7 +37,6 @@ import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.Servlet;
@@ -42,8 +44,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Rodolfo Roza Miranda
@@ -64,10 +72,6 @@ import org.osgi.service.component.annotations.Reference;
 public class JSResolveModulesServlet
 	extends HttpServlet implements NPMRegistryUpdatesListener {
 
-	public JSResolveModulesServlet() {
-		onAfterUpdate();
-	}
-
 	public String getURL() {
 		State state = _state.get();
 
@@ -76,7 +80,53 @@ public class JSResolveModulesServlet
 
 	@Override
 	public void onAfterUpdate() {
-		_state.set(new State());
+		_updateState(_npmRegistry.get());
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, NPMRegistry.class,
+			new ServiceTrackerCustomizer<NPMRegistry, NPMRegistry>() {
+
+				@Override
+				public NPMRegistry addingService(
+					ServiceReference<NPMRegistry> serviceReference) {
+
+					NPMRegistry npmRegistry = bundleContext.getService(
+						serviceReference);
+
+					_npmRegistry.set(npmRegistry);
+
+					_updateState(npmRegistry);
+
+					return npmRegistry;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<NPMRegistry> serviceReference,
+					NPMRegistry npmRegistry) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<NPMRegistry> serviceReference,
+					NPMRegistry npmRegistry) {
+
+					_npmRegistry.set(null);
+
+					_updateState(null);
+				}
+
+			});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
+
+		_serviceTracker = null;
 	}
 
 	@Override
@@ -86,6 +136,13 @@ public class JSResolveModulesServlet
 		throws IOException {
 
 		State state = _state.get();
+
+		if (state == null) {
+			httpServletResponse.sendError(
+				HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+
+			return;
+		}
 
 		if (!state.expectedPathInfo.equals(httpServletRequest.getPathInfo())) {
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
@@ -154,21 +211,35 @@ public class JSResolveModulesServlet
 		return Collections.emptyList();
 	}
 
+	private void _updateState(NPMRegistry npmRegistry) {
+		if (npmRegistry == null) {
+			_state.set(null);
+
+			return;
+		}
+
+		NPMRegistryResolutionStateDigest npmRegistryResolutionStateDigest =
+			new NPMRegistryResolutionStateDigest(npmRegistry);
+
+		_state.set(new State(npmRegistryResolutionStateDigest.getDigest()));
+	}
+
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	@Reference
 	private BrowserModulesResolver _browserModulesResolver;
 
+	private final AtomicReference<NPMRegistry> _npmRegistry =
+		new AtomicReference<>();
+	private ServiceTracker<NPMRegistry, NPMRegistry> _serviceTracker;
 	private final AtomicReference<State> _state = new AtomicReference<>();
 
 	private static class State {
 
-		public State() {
-			String hash = String.valueOf(UUID.randomUUID());
-
-			expectedPathInfo = StringPool.SLASH + hash;
-			url = "/js_resolve_modules/" + hash;
+		public State(String digest) {
+			expectedPathInfo = StringPool.SLASH + digest;
+			url = "/js_resolve_modules/" + digest;
 		}
 
 		public final String expectedPathInfo;

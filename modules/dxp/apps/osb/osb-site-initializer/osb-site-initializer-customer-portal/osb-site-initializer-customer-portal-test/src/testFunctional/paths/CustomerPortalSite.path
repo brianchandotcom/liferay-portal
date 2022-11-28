@@ -236,6 +236,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_ERROR_MESSAGE</td>
+	<td>//*[contains(@name, '${value}')]/parent::*//following-sibling::*//*[text()='${key_errorMessage}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class, 'text-center') and contains(text(), 'Thank you for submitting this request!')]</td>
 	<td></td>

@@ -119,4 +119,54 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 			url: '<%= editAssetListDisplayContext.getSelectSegmentsEntryURL() %>',
 		});
 	}
+
+	function <portlet:namespace />saveSelectBoxes() {
+		var form = document.<portlet:namespace />fm;
+
+		<%
+		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+
+		for (AssetRendererFactory<?> assetRendererFactory : assetRendererFactories) {
+			ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
+
+			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(editAssetListDisplayContext.getReferencedModelsGroupIds(), locale);
+
+			if (classTypes.isEmpty()) {
+				continue;
+			}
+
+			String className = assetListDisplayContext.getClassName(assetRendererFactory);
+		%>
+
+			Liferay.Util.setFormValues(form, {
+				classTypeIds<%= className %>: Liferay.Util.getSelectedOptionValues(
+					Liferay.Util.getFormElement(
+						form,
+						'<%= className %>currentClassTypeIds'
+					)
+				),
+			});
+
+		<%
+		}
+		%>
+
+		var currentClassNameIdsSelect = Liferay.Util.getFormElement(
+			form,
+			'currentClassNameIds'
+		);
+
+		if (currentClassNameIdsSelect) {
+			Liferay.Util.postForm(form, {
+				data: {
+					classNameIds: Liferay.Util.getSelectedOptionValues(
+						currentClassNameIdsSelect
+					),
+				},
+			});
+		}
+		else {
+			submitForm(form);
+		}
+	}
 </script>

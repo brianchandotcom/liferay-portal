@@ -22,6 +22,16 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 
 <aui:input name="TypeSettingsProperties--groupIds--" type="hidden" value="<%= StringUtil.merge(editAssetListDisplayContext.getSelectedGroupIds()) %>" />
 
+<liferay-util:buffer
+	var="removeLinkIcon"
+>
+	<liferay-ui:icon
+		icon="times-circle"
+		markupView="lexicon"
+		message="remove"
+	/>
+</liferay-util:buffer>
+
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	emptyResultsMessage="none"

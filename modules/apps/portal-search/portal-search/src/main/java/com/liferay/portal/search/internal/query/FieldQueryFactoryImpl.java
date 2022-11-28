@@ -55,9 +55,6 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		_serviceTrackerList.close();
 	}
 
-	@Reference
-	protected DescriptionFieldQueryBuilder descriptionFieldQueryBuilder;
-
 	private FieldQueryBuilder _getQueryBuilder(String fieldName) {
 		for (FieldQueryBuilderFactory fieldQueryBuilderFactory :
 				_serviceTrackerList) {
@@ -70,8 +67,11 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			}
 		}
 
-		return descriptionFieldQueryBuilder;
+		return _descriptionFieldQueryBuilder;
 	}
+
+	@Reference
+	private DescriptionFieldQueryBuilder _descriptionFieldQueryBuilder;
 
 	private ServiceTrackerList<FieldQueryBuilderFactory> _serviceTrackerList;
 

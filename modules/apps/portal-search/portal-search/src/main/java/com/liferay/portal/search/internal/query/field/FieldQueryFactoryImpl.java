@@ -66,11 +66,11 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			}
 		}
 
-		return descriptionFieldQueryBuilder;
+		return _descriptionFieldQueryBuilder;
 	}
 
 	@Reference
-	protected DescriptionFieldQueryBuilder descriptionFieldQueryBuilder;
+	private DescriptionFieldQueryBuilder _descriptionFieldQueryBuilder;
 
 	private ServiceTrackerList<FieldQueryBuilderFactory> _serviceTrackerList;
 

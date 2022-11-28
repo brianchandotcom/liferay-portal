@@ -74,6 +74,24 @@ public class ObjectFieldResourceImpl
 		return _entityModel;
 	}
 
+	@Override
+	public Page<ObjectField>
+			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+				String objectDefinitionExternalReferenceCode, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		return getObjectDefinitionObjectFieldsPage(
+			objectDefinition.getObjectDefinitionId(), search, filter,
+			pagination, sorts);
+	}
+
 	@NestedField(parentClass = ObjectDefinition.class, value = "objectFields")
 	@Override
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
@@ -141,6 +159,23 @@ public class ObjectFieldResourceImpl
 	public ObjectField getObjectField(Long objectFieldId) throws Exception {
 		return _toObjectField(
 			_objectFieldService.getObjectField(objectFieldId));
+	}
+
+	@Override
+	public ObjectField
+			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
+				String objectDefinitionExternalReferenceCode,
+				ObjectField objectField)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					contextCompany.getCompanyId());
+
+		return postObjectDefinitionObjectField(
+			objectDefinition.getObjectDefinitionId(), objectField);
 	}
 
 	@Override

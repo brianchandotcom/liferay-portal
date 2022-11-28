@@ -886,11 +886,6 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageName = "Wiki Page Title");
 
-		WikiNavigator.openToWikiNode(
-			groupName = "Guest",
-			siteURLKey = "guest",
-			wikiNodeName = "Main");
-
 		WikiNavigator.openToEditPage(
 			groupName = "Guest",
 			siteURLKey = "guest",

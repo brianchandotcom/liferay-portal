@@ -28,6 +28,42 @@ definition {
 
 			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
+
+		task ("Change the user role in the project") {
+            Account.openAccountsAdmin();
+
+            CustomerPortal.accountTableProject(title = "${testAccount}");
+
+            Account.addAssigneeToRoleViaUsersTab(
+                accountRoleTitle = "Account Administrator",
+                accountUserName = "Test Test");
+        }
+
+        task ("Go to Customer Portal Site") {
+            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+            CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+        }
+
+        task ("Given I go to the test account") {
+            CustomerPortal.search(searchItem = "${testAccount}");
+
+            CustomerPortal.enterOnProject(title = "${testAccount}");
+        }
+
+        task ("And I go through onboarding") {
+            CustomerPortal.clickOnStartProjectSetup();
+
+            CustomerPortal.clickOnSkipForNowButton();
+        }
+
+        task ("Then I click on the Liferay Experience Cloud option on side menu") {
+            CustomerPortal.clickAtButton(text = "Liferay Experience Cloud");
+        }
+
+        task ("And I enter Setup LXC") {
+            CustomerPortal.clickOnFinishActivationButton();
+        }
 	}
 
 	tearDown {

@@ -30,40 +30,40 @@ definition {
 		}
 
 		task ("Change the user role in the project") {
-            Account.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
-            CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-            Account.addAssigneeToRoleViaUsersTab(
-                accountRoleTitle = "Account Administrator",
-                accountUserName = "Test Test");
-        }
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-        task ("Go to Customer Portal Site") {
-            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		task ("Go to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-            CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
-        }
+			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+		}
 
-        task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
-        task ("And I go through onboarding") {
-            CustomerPortal.clickOnStartProjectSetup();
+		task ("And I go through onboarding") {
+			CustomerPortal.clickOnStartProjectSetup();
 
-            CustomerPortal.clickOnSkipForNowButton();
-        }
+			CustomerPortal.clickOnSkipForNowButton();
+		}
 
-        task ("Then I click on the Liferay Experience Cloud option on side menu") {
-            CustomerPortal.clickAtButton(text = "Liferay Experience Cloud");
-        }
+		task ("Then I click on the Liferay Experience Cloud option on side menu") {
+			CustomerPortal.clickAtButton(text = "Liferay Experience Cloud");
+		}
 
-        task ("And I enter Setup LXC") {
-            CustomerPortal.clickOnFinishActivationButton();
-        }
+		task ("And I enter Setup LXC") {
+			CustomerPortal.clickOnFinishActivationButton();
+		}
 	}
 
 	tearDown {
@@ -84,24 +84,23 @@ definition {
 	@priority = "3"
 	test AssertThatTheAdditionalFieldsHaveBeenRemoved {
 
-		 // Needs refactor since it depends on example FIFA account
+		// Needs refactor since it depends on example FIFA account
 
-        task ("Then I add three extra fields") {
-            CustomerPortal.clickAtButton(text = "Add Another Admin");
+		task ("Then I add three extra fields") {
+			CustomerPortal.clickAtButton(text = "Add Another Admin");
 
-            CP2LXCSetup.assertThatTheExtraFieldsAreVisible(
-                fieldsList = "fullName,email,github",
-                position = "2");
-        }
+			CP2LXCSetup.assertThatTheExtraFieldsAreVisible(
+				fieldsList = "fullName,email,github",
+				position = "2");
+		}
 
-        task ("And I assert that when I click the 'Remove Project Admin' button, no extra fields are shown in the form") {
-            CustomerPortal.clickAtButton(text = "Remove Project Admin");
+		task ("And I assert that when I click the 'Remove Project Admin' button, no extra fields are shown in the form") {
+			CustomerPortal.clickAtButton(text = "Remove Project Admin");
 
-            CP2LXCSetup.assertThatTheExtraFieldsIsNotVisible(
-                fieldsList = "fullName,email,github",
-                position = "2");
-        }
-		
+			CP2LXCSetup.assertThatTheExtraFieldsIsNotVisible(
+				fieldsList = "fullName,email,github",
+				position = "2");
+		}
 	}
 
 	@description = "Automation ID: LPS-169246 | Test Summary: Assert that the user can only submit the form after filling out all required fields (Project ID - Primary Region - Project Admin - First Name - Last Name - Email Address - GitHub Username - Incident Management Contact)"
@@ -109,25 +108,24 @@ definition {
 	@priority = "4"
 	test AssertThatTheUserCanOnlySubmitTheFormAfterFillingOutAllRequiredFields {
 
-		 // Needs refactor since it depends on example FIFA account
+		// Needs refactor since it depends on example FIFA account
 
-        task ("Given I fill in all the required fields") {
-            CP2LXCSetup.typeAllSetupLXCInfoFields(
-                email = "test@liferay.com",
-                fullName = "Test Test",
-                github = "testUser",
-                incidentManagementEmail = "test@liferay.com",
-                incidentManagementFullName = "Test User",
-                projectId = "3809080",
-                region = "South America");
-        }
+		task ("Given I fill in all the required fields") {
+			CP2LXCSetup.typeAllSetupLXCInfoFields(
+				email = "test@liferay.com",
+				fullName = "Test Test",
+				github = "testUser",
+				incidentManagementEmail = "test@liferay.com",
+				incidentManagementFullName = "Test User",
+				projectId = "3809080",
+				region = "South America");
+		}
 
-        task ("Then I assert that all fields are required") {
-            CP2LXCSetup.clearInfoSetupLXCFields();
+		task ("Then I assert that all fields are required") {
+			CP2LXCSetup.clearInfoSetupLXCFields();
 
-            CP2LXCSetup.viewMessageErrorList(fieldsList = "projectId,fullName,email,github,incidentManagementFullName,incidentManagementEmail");
-        }
-	
+			CP2LXCSetup.viewMessageErrorList(fieldsList = "projectId,fullName,email,github,incidentManagementFullName,incidentManagementEmail");
+		}
 	}
 
 	@description = "Automation ID: LPS-169249 | Test Summary: Assert that the user is not allowed to continue if they have entered an invalid business email address for the owner and incident management contacts"
@@ -135,18 +133,17 @@ definition {
 	@priority = "3"
 	test AssertTheErrorMessageIfTheUserEntersAnInvalidBusinessEmailAddress {
 
-		 // Needs refactor since it depends on example FIFA account
+		// Needs refactor since it depends on example FIFA account
 
-        task ("Then I assert that a valid email address is required in the 'Incident Management Contact's Email Address' field") {
-            CP2Utils.typeSetupInfoFields(
-                label = "incidentManagementEmail",
-                value = "test.com");
+		task ("Then I assert that a valid email address is required in the 'Incident Management Contact's Email Address' field") {
+			CP2Utils.typeSetupInfoFields(
+				label = "incidentManagementEmail",
+				value = "test.com");
 
-            CustomerPortal.clickOnModal(text = "Set Up Liferay Experience Cloud");
+			CustomerPortal.clickOnModal(text = "Set Up Liferay Experience Cloud");
 
-            CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Please insert a valid email.");
-        }
-		
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Please insert a valid email.");
+		}
 	}
 
 	@description = "Automation ID: LPS-169250 | Test Summary: Assert the success message: Thank you for submitting this request! Your Liferay Experience Cloud project will be provisioned within 3 business days. An email will be sent once your project is ready."
@@ -154,39 +151,38 @@ definition {
 	@priority = "3"
 	test AssertTheSuccessMessage {
 
-		 // Needs refactor since it depends on example FIFA account
+		// Needs refactor since it depends on example FIFA account
 
-        task ("Given I fill in all the required fields") {
-            CP2LXCSetup.typeAllSetupLXCInfoFields(
-                email = "test@liferay.com",
-                fullName = "Test Test",
-                github = "testUser",
-                incidentManagementEmail = "test@liferay.com",
-                incidentManagementFullName = "Test User",
-                projectId = "3809080",
-                region = "South America");
+		task ("Given I fill in all the required fields") {
+			CP2LXCSetup.typeAllSetupLXCInfoFields(
+				email = "test@liferay.com",
+				fullName = "Test Test",
+				github = "testUser",
+				incidentManagementEmail = "test@liferay.com",
+				incidentManagementFullName = "Test User",
+				projectId = "3809080",
+				region = "South America");
 
-            Button.click(button = "Submit");
-        }
+			Button.click(button = "Submit");
+		}
 
-        task ("I assert that the form has been submitted") {
-            CustomerPortal.viewConfirmationModal(text = "Thank you for submitting this request!");
+		task ("I assert that the form has been submitted") {
+			CustomerPortal.viewConfirmationModal(text = "Thank you for submitting this request!");
 
-            Button.click(button = "Done");
-        }
+			Button.click(button = "Done");
+		}
 
-        task ("Delete the entries and objects created") {
-            CustomerPortal.showCPObject(title = "Liferay Experience Cloud Environment");
+		task ("Delete the entries and objects created") {
+			CustomerPortal.showCPObject(title = "Liferay Experience Cloud Environment");
 
-            CP2Utils.deleteSpecificObjectEntry(
-                email = "test@liferay.com",
-                portlet = "Liferay Experience Cloud Environments");
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "Liferay Experience Cloud Environments");
 
-            CP2Utils.deleteActivationStatus(
-                position = "30",
-                status = "In Progress");
-        }
-		
+			CP2Utils.deleteActivationStatus(
+				position = "30",
+				status = "In Progress");
+		}
 	}
 
 	@description = "Automation ID: LPS-169247 | Test Summary: Assert that the user can add additional project administrators using the 'Add project administrator' button"
@@ -194,16 +190,15 @@ definition {
 	@priority = "4"
 	test CanViewTheAdditionalFields {
 
-		 // Needs refactor since it depends on example FIFA account
+		// Needs refactor since it depends on example FIFA account
 
-        task ("And I assert that by clicking the 'Add Another Admin' button three more fields are shown in the form") {
-            CustomerPortal.clickAtButton(text = "Add Another Admin");
+		task ("And I assert that by clicking the 'Add Another Admin' button three more fields are shown in the form") {
+			CustomerPortal.clickAtButton(text = "Add Another Admin");
 
-            CP2LXCSetup.assertThatTheExtraFieldsAreVisible(
-                fieldsList = "fullName,email,github",
-                position = "2");
-        }
-
+			CP2LXCSetup.assertThatTheExtraFieldsAreVisible(
+				fieldsList = "fullName,email,github",
+				position = "2");
+		}
 	}
 
 }

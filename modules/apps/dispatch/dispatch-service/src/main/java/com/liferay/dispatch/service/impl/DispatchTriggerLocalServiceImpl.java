@@ -14,11 +14,11 @@
 
 package com.liferay.dispatch.service.impl;
 
+import com.liferay.dispatch.exception.DispatchTriggerDispatchTaskExecutorTypeException;
 import com.liferay.dispatch.exception.DispatchTriggerEndDateException;
 import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
-import com.liferay.dispatch.exception.NoSuchDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
@@ -378,9 +378,9 @@ public class DispatchTriggerLocalServiceImpl
 				dispatchTaskExecutorType);
 
 		if (dispatchTaskExecutor == null) {
-			throw new NoSuchDispatchTaskExecutor(
+			throw new DispatchTriggerDispatchTaskExecutorTypeException(
 				StringBundler.concat(
-					"Unable to get dispatch task executor type for \"",
+					"Unknown dispatch task executor type \"",
 					dispatchTaskExecutorType, "\""));
 		}
 	}

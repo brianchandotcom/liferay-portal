@@ -3263,33 +3263,22 @@ definition {
 	}
 
 	macro viewDocumentToolbarCmdPG {
-		AssertVisible(
-			locator1 = "Button#DOWNLOAD",
-			value1 = "Download");
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Button#DOWNLOAD",
+			key_item = "Download",
+			locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM",
 			value1 = "Download");
 
-		AssertTextEquals(
-			locator1 = "Button#EDIT",
-			value1 = "Edit");
+		MenuItem.viewVisible(menuItem = "Edit");
 
-		AssertTextEquals(
-			locator1 = "Button#MOVE",
-			value1 = "Move");
+		MenuItem.viewVisible(menuItem = "Move");
 
-		AssertTextEquals(
-			locator1 = "Button#CHECKOUT",
-			value1 = "Checkout");
+		MenuItem.viewVisible(menuItem = "Checkout");
 
-		AssertTextEquals(
-			locator1 = "Button#PERMISSIONS",
-			value1 = "Permissions");
+		MenuItem.viewVisible(menuItem = "Permissions");
 
-		AssertTextEquals(
-			locator1 = "Button#MOVE_TO_RECYCLE_BIN",
-			value1 = "Delete");
+		MenuItem.viewVisible(menuItem = "Delete");
 	}
 
 	macro viewDocumentTypePG {

@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,6 +75,35 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex,
 			ddmFormValues, serviceContext);
+	}
+
+	/**
+	 * Adds a record referencing the record set.
+	 *
+	 * @param      groupId the primary key of the record's group
+	 * @param      recordSetId the primary key of the record set
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheet view
+	 * @param      fieldsMap the record values. The fieldsMap is a map of field
+	 *             names and its Serializable values.
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the UUID, guest permissions, and group permissions for
+	 *             the record.
+	 * @return     the record
+	 * @throws     PortalException if a portal exception occurred
+	 */
+	@Override
+	public DDLRecord addRecord(
+		long groupId, long recordSetId, int displayIndex,
+		Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		_ddlRecordSetModelResourcePermission.check(
+			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
+
+		return ddlRecordLocalService.addRecord(
+			getGuestOrUserId(), groupId, recordSetId, displayIndex, fieldsMap,
+			serviceContext);
 	}
 
 	/**

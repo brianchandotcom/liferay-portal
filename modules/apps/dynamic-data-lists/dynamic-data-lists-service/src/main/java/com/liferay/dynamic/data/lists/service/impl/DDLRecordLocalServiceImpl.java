@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -187,6 +188,46 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 
 		return record;
+	}
+
+	/**
+	 * Adds a record that's based on the fields map and that references the
+	 * record set.
+	 *
+	 * @param      userId the primary key of the record's creator/owner
+	 * @param      groupId the primary key of the record's group
+	 * @param      recordSetId the primary key of the record set
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheet view
+	 * @param      fieldsMap the record values. The fieldsMap is a map of field
+	 *             names and their serializable values.
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the UUID, guest permissions, and group permissions for
+	 *             the record.
+	 * @return     the record
+	 * @throws     PortalException if a portal exception occurred
+	 */
+	@Override
+	public DDLRecord addRecord(
+		long userId, long groupId, long recordSetId, int displayIndex,
+		Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDLRecordSet recordSet = _ddlRecordSetPersistence.findByPrimaryKey(
+			recordSetId);
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		Fields fields = toFields(
+			ddmStructure.getStructureId(), fieldsMap,
+			serviceContext.getLocale(), LocaleUtil.getSiteDefault());
+
+		DDMFormValues ddmFormValues = fieldsToDDMFormValuesConverter.convert(
+			ddmStructure, fields);
+
+		return ddlRecordLocalService.addRecord(
+			userId, groupId, recordSetId, displayIndex, ddmFormValues,
+			serviceContext);
 	}
 
 	/**

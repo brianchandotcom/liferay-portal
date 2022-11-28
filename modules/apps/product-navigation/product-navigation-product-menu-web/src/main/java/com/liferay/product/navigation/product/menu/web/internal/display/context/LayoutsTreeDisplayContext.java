@@ -68,7 +68,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -700,15 +700,18 @@ public class LayoutsTreeDisplayContext {
 	private List<Long> _getSelectedLayoutPath() throws Exception {
 		long selPlid = getSelPlid();
 
-		if (selPlid <= 0) {
-			return Collections.emptyList();
-		}
-
-		List<Long> selectedLayoutPath = ListUtil.toList(
-			_layoutService.getAncestorLayouts(selPlid),
-			layout -> layout.getPlid());
+		List<Long> selectedLayoutPath = new ArrayList<>();
 
 		selectedLayoutPath.add(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (selPlid <= 0) {
+			return selectedLayoutPath;
+		}
+
+		selectedLayoutPath.addAll(
+			ListUtil.toList(
+				_layoutService.getAncestorLayouts(selPlid),
+				layout -> layout.getPlid()));
 
 		return selectedLayoutPath;
 	}

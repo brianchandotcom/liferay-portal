@@ -937,9 +937,7 @@ definition {
 			locator1 = "Message#CHECKOUT_SUCCESS",
 			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 
-		AssertClick(
-			locator1 = "Button#CANCEL_CHECKOUT",
-			value1 = "Cancel Checkout");
+		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Cancel Checkout");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1142,9 +1140,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");
 
-		AssertClick(
-			locator1 = "Button#CHECKOUT",
-			value1 = "Checkout");
+		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Checkout");
 
 		Alert.viewSuccessMessage();
 
@@ -1328,9 +1324,7 @@ definition {
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
-		AssertClick(
-			locator1 = "Button#MOVE_TO_RECYCLE_BIN",
-			value1 = "Delete");
+		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1804,7 +1798,7 @@ definition {
 				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 				value1 = "${dmDocumentTitle}");
 
-			Click(locator1 = "Button#EDIT");
+			DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Edit");
 		}
 
 		WaitForPageLoad();

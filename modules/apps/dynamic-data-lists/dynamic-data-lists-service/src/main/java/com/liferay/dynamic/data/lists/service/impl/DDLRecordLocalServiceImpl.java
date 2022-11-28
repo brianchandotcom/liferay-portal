@@ -209,8 +209,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Override
 	public DDLRecord addRecord(
-		long userId, long groupId, long recordSetId, int displayIndex,
-		Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
+			long userId, long groupId, long recordSetId, int displayIndex,
+			Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDLRecordSet recordSet = _ddlRecordSetPersistence.findByPrimaryKey(

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
+
 import java.util.List;
 import java.util.Map;
 
@@ -94,8 +95,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 */
 	@Override
 	public DDLRecord addRecord(
-		long groupId, long recordSetId, int displayIndex,
-		Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
+			long groupId, long recordSetId, int displayIndex,
+			Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		_ddlRecordSetModelResourcePermission.check(

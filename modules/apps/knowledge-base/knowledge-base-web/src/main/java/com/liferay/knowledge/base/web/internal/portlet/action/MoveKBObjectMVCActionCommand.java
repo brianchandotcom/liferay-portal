@@ -175,6 +175,23 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private double _getNearestPriority(
+		double nextKBArticlePriority, double previousKBArticlePriority) {
+
+		if ((nextKBArticlePriority % 1) != 0) {
+			int roundedPriority = (int)Math.floor(nextKBArticlePriority);
+
+			if (roundedPriority > previousKBArticlePriority) {
+				return roundedPriority;
+			}
+		}
+		else if ((nextKBArticlePriority - 1) > previousKBArticlePriority) {
+			return nextKBArticlePriority - 1;
+		}
+
+		return (previousKBArticlePriority + nextKBArticlePriority) / 2;
+	}
+
 	private double _getPriority(
 		KBArticle kbArticle, long parentResourcePrimKey, int position) {
 
@@ -195,11 +212,12 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 
 		double nextKBArticlePriority = nextKBArticle.getPriority();
 
-		if ((position == 0) && (nextKBArticlePriority > 1)) {
-			return nextKBArticlePriority - 1;
-		}
-
 		double previousKBArticlePriority = 0;
+
+		if ((position == 0) && (nextKBArticlePriority > 1)) {
+			return _getNearestPriority(
+				nextKBArticlePriority, previousKBArticlePriority);
+		}
 
 		if (kbArticles.size() <= position) {
 			previousKBArticlePriority = nextKBArticlePriority;
@@ -211,7 +229,8 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			previousKBArticlePriority = previousKBArticle.getPriority();
 		}
 
-		return (previousKBArticlePriority + nextKBArticlePriority) / 2;
+		return _getNearestPriority(
+			nextKBArticlePriority, previousKBArticlePriority);
 	}
 
 	private boolean _isDragAndDrop(boolean dragAndDrop) {

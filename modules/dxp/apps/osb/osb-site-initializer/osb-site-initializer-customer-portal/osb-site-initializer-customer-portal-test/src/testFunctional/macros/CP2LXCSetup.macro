@@ -1,0 +1,86 @@
+definition {
+
+	macro assertThatTheExtraFieldsAreVisible {
+		for (var field : list "${fieldsList}") {
+			AssertElementPresent(
+				key_index = "${position}",
+				label = "${field}",
+				locator1 = "CustomerPortalSite#SETUP_FIELDS");
+		}
+	}
+
+	macro assertThatTheExtraFieldsIsNotVisible {
+		for (var field : list "${fieldsList}") {
+			AssertElementNotPresent(
+				key_index = "${position}",
+				label = "${field}",
+				locator1 = "CustomerPortalSite#SETUP_FIELDS");
+		}
+	}
+
+	macro clearInfoSetupLXCFields {
+		CP2Utils.typeSetupInfoFields(
+			label = "projectId",
+			value = "");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "fullName",
+			value = "");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "email",
+			value = "");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "github",
+			value = "");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "incidentManagementFullName",
+			value = "");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "incidentManagementEmail",
+			value = "");
+	}
+
+	macro typeAllSetupLXCInfoFields {
+		CP2Utils.typeSetupInfoFields(
+			label = "projectId",
+			value = "${projectId}");
+
+		Select(
+			locator1 = "CP2Utils#SELECT_LOCATION",
+			value1 = "${region}");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "fullName",
+			value = "${fullName}");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "email",
+			value = "${email}");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "github",
+			value = "${github}");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "incidentManagementFullName",
+			value = "${incidentManagementFullName}");
+
+		CP2Utils.typeSetupInfoFields(
+			label = "incidentManagementEmail",
+			value = "${incidentManagementEmail}");
+	}
+
+	macro viewMessageErrorList {
+		for (var value : list "${fieldsList}") {
+			AssertVisible(
+				key_errorMessage = "This field is required.",
+				locator1 = "CustomerPortalSite#SPECIFIC_ERROR_MESSAGE",
+				value = "${value}");
+		}
+	}
+
+}

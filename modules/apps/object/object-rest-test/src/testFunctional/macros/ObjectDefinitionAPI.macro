@@ -337,7 +337,12 @@ definition {
 			-u test@liferay.com:test
 		''';
 
-		var relationshipId = JSONCurlUtil.get("${curl}", "$..['id']");
+		if (isSet(relationshipName)) {
+			var relationshipId = JSONCurlUtil.get("${curl}");
+		}
+		else {
+			var relationshipId = JSONCurlUtil.get("${curl}", "$..['id']");
+		}
 
 		return "${relationshipId}";
 	}
@@ -675,7 +680,19 @@ definition {
 	}
 
 	macro deleteRelationship {
-		var relationshipId = ObjectDefinitionAPI._getRelationshipId(objectDefinitionId = "${objectDefinitionId}");
+		if (isSet(relationshipName)) {
+			var relationshipName = "${relationshipName}";
+			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "${name}");
+
+			var response = ObjectDefinitionAPI._getRelationshipId(
+				objectDefinitionId = "${objectDefinitionId}",
+				relationshipName = "${relationshipName}");
+
+			var relationshipId = JSONUtil.getWithJSONPath("${response}", "$..items[?(@.name=='${relationshipName}')]..id");
+		}
+		else {
+			var relationshipId = ObjectDefinitionAPI._getRelationshipId(objectDefinitionId = "${objectDefinitionId}");
+		}
 
 		ObjectDefinitionAPI._deleteRelationship(relationshipId = "${relationshipId}");
 	}
@@ -788,6 +805,33 @@ definition {
 		return "${staticObjectId1}";
 
 		return "${staticObjectId2}";
+	}
+
+	macro setUpGlobalObjectEntryId {
+		var objectEntryId1 = ObjectDefinitionAPI.createObjectEntryWithName(
+			en_US_plural_label = "foundations",
+			name = "Foundation First");
+		var objectEntryId2 = ObjectDefinitionAPI.createObjectEntryWithName(
+			en_US_plural_label = "foundations",
+			name = "Foundation Second");
+		var objectEntryId3 = ObjectDefinitionAPI.createObjectEntryWithName(
+			en_US_plural_label = "secondFoundations",
+			name = "Foundation First-1");
+		var objectEntryId4 = ObjectDefinitionAPI.createObjectEntryWithName(
+			en_US_plural_label = "secondFoundations",
+			name = "Foundation Second-1");
+		static var staticObjectEntryId1 = "${objectEntryId1}";
+		static var staticObjectEntryId2 = "${objectEntryId2}";
+		static var staticObjectEntryId3 = "${objectEntryId3}";
+		static var staticObjectEntryId4 = "${objectEntryId4}";
+
+		return "${staticObjectEntryId1}";
+
+		return "${staticObjectEntryId2}";
+
+		return "${staticObjectEntryId3}";
+
+		return "${staticObjectEntryId4}";
 	}
 
 	macro updateEmployee {

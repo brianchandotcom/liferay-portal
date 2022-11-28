@@ -204,7 +204,18 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 
 									<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() && group.isActive() %>">
 										<clay:content-col>
-											<aui:a cssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm" href="<%= siteVerticalCard.getHref() %>" target="_blank" />
+											<clay:link
+												aria-label='<%= LanguageUtil.format(request, "x-opens-new-window", siteVerticalCard.getTitle(), false) %>'
+												borderless="<%= true %>"
+												displayType="secondary"
+												href="<%= siteVerticalCard.getHref() %>"
+												icon="shortcut"
+												monospaced="<%= true %>"
+												small="<%= true %>"
+												target="_blank"
+												title='<%= LanguageUtil.get(request, "opens-new-window") %>'
+												type="button"
+											/>
 										</clay:content-col>
 									</c:if>
 								</clay:content-row>

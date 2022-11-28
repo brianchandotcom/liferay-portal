@@ -58,6 +58,9 @@ const AccountSubscriptionsList = ({
 		<div className="d-flex flex-wrap">
 			{open && (
 				<AccountSubscriptionModal
+					accountSubscriptionsStatus={
+						currentAccountSubscription.subscriptionStatus
+					}
 					externalReferenceCode={
 						currentAccountSubscription?.externalReferenceCode
 					}

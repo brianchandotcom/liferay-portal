@@ -159,8 +159,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return _addObjectDefinition(
 			userId, null, null, labelMap, name, panelAppOrder, panelCategoryKey,
-			null, null, pluralLabelMap, scope, storageType, false,
-			StringPool.BLANK, 0, WorkflowConstants.STATUS_DRAFT, objectFields);
+			null, null, pluralLabelMap, scope, storageType, false, null, 0,
+			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -199,7 +199,13 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectEntryTable.INSTANCE.objectEntryId.getName(),
 			objectDefinition.isSystem(), userId);
 
-		return objectDefinition;
+		// _setTitleObjectFieldId must be called after adding all object fields.
+		// However, to add the object fields, the object definition must already
+		// be persisted.
+
+		_setTitleObjectFieldId(objectDefinition, null);
+
+		return objectDefinitionPersistence.update(objectDefinition);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -913,6 +919,14 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
+		// _setTitleObjectFieldId must be called after adding all object fields.
+		// However, to add the object fields, the object definition must already
+		// be persisted.
+
+		_setTitleObjectFieldId(objectDefinition, titleObjectFieldName);
+
+		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
 		if (system) {
 			_createTable(
 				objectDefinition.getExtensionDBTableName(), objectDefinition);
@@ -1139,6 +1153,25 @@ public class ObjectDefinitionLocalServiceImpl
 					return null;
 				});
 		}
+	}
+
+	private void _setTitleObjectFieldId(
+			ObjectDefinition objectDefinition, String titleObjectFieldName)
+		throws PortalException {
+
+		if (Validator.isNull(titleObjectFieldName)) {
+			titleObjectFieldName = "id";
+		}
+
+		ObjectField objectField = _objectFieldPersistence.findByODI_N(
+			objectDefinition.getObjectDefinitionId(), titleObjectFieldName);
+
+		if (objectDefinition.isSystem()) {
+			_validateObjectFieldId(
+				objectDefinition, objectField.getObjectFieldId());
+		}
+
+		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
 	}
 
 	private ObjectDefinition _updateObjectDefinition(

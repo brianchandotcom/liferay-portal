@@ -610,8 +610,8 @@ definition {
 			widgetName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(
-			webContentTitle = "${webContentTitle}",
-			portletIndex = "${portletIndex}");
+			portletIndex = "${portletIndex}",
+			webContentTitle = "${webContentTitle}");
 
 		Navigator.gotoSitePage(
 			pageName = "${layoutName}",

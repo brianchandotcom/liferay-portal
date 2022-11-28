@@ -1144,6 +1144,111 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11636 | Automation ID: LRAC-12357 | Test Summary: Sorting the second/third column of the event analysis and verify that it will not sorting the first column"
+	@priority = "4"
+	test SortSecondOrThirdColumnInAnalysisResultNotSortFirstColumn {
+		var attributeNameList = "pageTitle,title,url";
+		var layoutName = "AC Page 2";
+		var webContentTitleList = "WC Test 1,WC Test 2,WC Test 3";
+
+		task ("Sign in as Test Test user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addPage(layoutName = "${layoutName}");
+		}
+
+		task ("Add a web content to the new page") {
+			ACUtils.createWCAndAddToPage(
+				layoutName = "${layoutName}",
+				portletIndex = "1",
+				webContentTitle = "WC Test 1");
+		}
+
+		task ("Add a web content to the new page") {
+			ACUtils.createWCAndAddToPage(
+				layoutName = "${layoutName}",
+				portletIndex = "2",
+				webContentTitle = "WC Test 2");
+		}
+
+		task ("Add a web content to the new page") {
+			ACUtils.createWCAndAddToPage(
+				layoutName = "${layoutName}",
+				portletIndex = "3",
+				webContentTitle = "WC Test 3");
+		}
+
+		task ("Go to DXP and view the web contents") {
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "${webContentTitleList}",
+				pageName = "${layoutName}",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the webContentViewed event to the analysis") {
+			ACEventAnalysis.addEvent(customEventName = "webContentViewed");
+		}
+
+		task ("Add the 3 breakdown to the analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Get the value of the first value of the column title") {
+			var breakdownOriginalValue1 = ACEventAnalysis.getColumnBreakdownValue(index = "2");
+		}
+
+		task ("Sort the analysis list") {
+			ACEventAnalysis.sortAnalysis(attributeName = "url");
+		}
+
+		task ("Get the value of the first value of the title column after sorting") {
+			var breakdownNewValue1 = ACEventAnalysis.getColumnBreakdownValue(index = "2");
+		}
+
+		task ("Compare to verify that the value of the unsorted column has not changed") {
+			TestUtils.assertEquals(
+				actual = "${breakdownNewValue1}",
+				expected = "${breakdownOriginalValue1}");
+		}
+
+		task ("Get the value of the first value of the pageTitle column") {
+			var breakdownOriginalValue2 = ACEventAnalysis.getColumnBreakdownValue(index = "1");
+		}
+
+		task ("Sort the analysis list") {
+			ACEventAnalysis.sortAnalysis(attributeName = "title");
+		}
+
+		task ("Get the value of the first value of the pageTitle column after sorting") {
+			var breakdownNewValue2 = ACEventAnalysis.getColumnBreakdownValue(index = "1");
+		}
+
+		task ("Compare to verify that the value of the unsorted column has not changed") {
+			TestUtils.assertEquals(
+				actual = "${breakdownNewValue2}",
+				expected = "${breakdownOriginalValue2}");
+		}
+	}
+
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10272 | Test Summary: Sorting the analysis result after rearranging the breakdowns"
 	@priority = "3"
 	test SortTheResultsAnalysisAfterRearrangingBreakdowns {
@@ -1263,111 +1368,6 @@ definition {
 				commonInformation = "site name",
 				index = "3",
 				informationValue = "custom 1 - site name - ${dataSource}");
-		}
-	}
-
-	@description = "Bug: LRAC-11636 | Automation ID: LRAC-12357 | Test Summary: Sorting the second/third column of the event analysis and verify that it will not sorting the first column"
-	@priority = "4"
-	test SortSecondOrThirdColumnInAnalysisResultNotSortFirstColumn {
-		var attributeNameList = "pageTitle,title,url";
-		var layoutName = "AC Page 2";
-		var webContentTitleList = "WC Test 1,WC Test 2,WC Test 3";
-
-		task ("Sign in as Test Test user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
-		}
-		
-		task ("Add a new site with a public widget page") {
-			ACUtils.addPage(layoutName = "${layoutName}");
-		}
-
-		task ("Add a web content to the new page") {
-			ACUtils.createWCAndAddToPage(
-				portletIndex = "1",
-				layoutName = "${layoutName}",
-				webContentTitle = "WC Test 1");
-		}
-
-		task ("Add a web content to the new page") {
-			ACUtils.createWCAndAddToPage(
-				portletIndex = "2",
-				layoutName = "${layoutName}",
-				webContentTitle = "WC Test 2");
-		}
-
-		task ("Add a web content to the new page") {
-			ACUtils.createWCAndAddToPage(
-				portletIndex = "3",
-				layoutName = "${layoutName}",
-				webContentTitle = "WC Test 3");
-		}
-
-		task ("Go to DXP and view the web contents") {
-			ACUtils.navigateToSitePage(
-				actionType = "View WC",
-				documentTitleList = "${webContentTitleList}",
-				pageName = "${layoutName}",
-				siteName = "Site Name");
-
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the webContentViewed event to the analysis") {
-			ACEventAnalysis.addEvent(customEventName = "webContentViewed");
-		}
-
-		task ("Add the 3 breakdown to the analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
-		}
-
-		task ("Change the time filter to 24 hours") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Get the value of the first value of the column title") {
-			var breakdownOriginalValue1 = ACEventAnalysis.getColumnBreakdownValue(index = "2");
-		}
-
-		task ("Sort the analysis list") {
-			ACEventAnalysis.sortAnalysis(attributeName = "url");
-		}
-
-		task ("Get the value of the first value of the title column after sorting") {
-			var breakdownNewValue1 = ACEventAnalysis.getColumnBreakdownValue(index = "2");
-		}
-
-		task ("Compare to verify that the value of the unsorted column has not changed") {
-			TestUtils.assertEquals(
-				actual = "${breakdownNewValue1}",
-				expected = "${breakdownOriginalValue1}");
-		}
-
-		task ("Get the value of the first value of the pageTitle column") {
-			var breakdownOriginalValue2 = ACEventAnalysis.getColumnBreakdownValue(index = "1");
-		}
-
-		task ("Sort the analysis list") {
-			ACEventAnalysis.sortAnalysis(attributeName = "title");
-		}
-
-		task ("Get the value of the first value of the pageTitle column after sorting") {
-			var breakdownNewValue2 = ACEventAnalysis.getColumnBreakdownValue(index = "1");
-		}
-
-		task ("Compare to verify that the value of the unsorted column has not changed") {
-			TestUtils.assertEquals(
-				actual = "${breakdownNewValue2}",
-				expected = "${breakdownOriginalValue2}");
 		}
 	}
 

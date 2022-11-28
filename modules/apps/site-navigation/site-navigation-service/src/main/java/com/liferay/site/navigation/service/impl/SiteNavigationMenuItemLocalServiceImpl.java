@@ -97,6 +97,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		siteNavigationMenuItem.setType(type);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
 		siteNavigationMenuItem.setOrder(order);
+		siteNavigationMenuItem.setExpandoBridgeAttributes(serviceContext);
 
 		return siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
 	}

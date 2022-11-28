@@ -29,10 +29,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -78,7 +76,8 @@ public class DispatchMessageListenerTest {
 		int executeCount = RandomTestUtil.randomInt(1, 3);
 
 		DispatchTrigger dispatchTrigger = _executeDispatchTrigger(
-			executeCount, 1000, RandomTestUtil.randomBoolean(), "missingType");
+			executeCount, 1000, true,
+			TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST);
 
 		List<DispatchLog> dispatchLogs =
 			_dispatchLogLocalService.getDispatchLogs(
@@ -92,7 +91,7 @@ public class DispatchMessageListenerTest {
 
 		for (DispatchLog dispatchLog : dispatchLogs) {
 			Assert.assertEquals(
-				DispatchTaskStatus.CANCELED.getStatus(),
+				DispatchTaskStatus.SUCCESSFUL.getStatus(),
 				dispatchLog.getStatus());
 		}
 	}
@@ -227,9 +226,7 @@ public class DispatchMessageListenerTest {
 			boolean overlapAllowed, String type)
 		throws Exception {
 
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(

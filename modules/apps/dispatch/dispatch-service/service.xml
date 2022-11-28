@@ -106,6 +106,7 @@
 		<exception>DispatchTriggerName</exception>
 		<exception>DispatchTriggerScheduler</exception>
 		<exception>DispatchTriggerStartDate</exception>
+		<exception>DispatchTriggerType</exception>
 		<exception>DuplicateDispatchTrigger</exception>
 	</exceptions>
 </service-builder>

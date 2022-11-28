@@ -1239,7 +1239,8 @@ definition {
 
 			task ("View warning message shown below the Maximum Number of Items to Display field") {
 				AssertTextEquals(
-					locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+					fieldLabel = "Maximum Number of Items to Display",
+					locator1 = "Message#SUBTITLE_WITH_LABEL",
 					value1 = "Setting a value above 200 can affect page performance severely.");
 			}
 		}

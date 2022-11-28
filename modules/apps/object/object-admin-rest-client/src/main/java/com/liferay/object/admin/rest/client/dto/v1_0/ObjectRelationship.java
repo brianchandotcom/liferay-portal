@@ -145,6 +145,32 @@ public class ObjectRelationship implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getObjectDefinitionExternalReferenceCode1() {
+		return objectDefinitionExternalReferenceCode1;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode1(
+		String objectDefinitionExternalReferenceCode1) {
+
+		this.objectDefinitionExternalReferenceCode1 =
+			objectDefinitionExternalReferenceCode1;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode1(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCode1UnsafeSupplier) {
+
+		try {
+			objectDefinitionExternalReferenceCode1 =
+				objectDefinitionExternalReferenceCode1UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectDefinitionExternalReferenceCode1;
+
 	public String getObjectDefinitionExternalReferenceCode2() {
 		return objectDefinitionExternalReferenceCode2;
 	}
@@ -254,6 +280,29 @@ public class ObjectRelationship implements Cloneable, Serializable {
 	}
 
 	protected Long parameterObjectFieldId;
+
+	public String getParameterObjectFieldName() {
+		return parameterObjectFieldName;
+	}
+
+	public void setParameterObjectFieldName(String parameterObjectFieldName) {
+		this.parameterObjectFieldName = parameterObjectFieldName;
+	}
+
+	public void setParameterObjectFieldName(
+		UnsafeSupplier<String, Exception>
+			parameterObjectFieldNameUnsafeSupplier) {
+
+		try {
+			parameterObjectFieldName =
+				parameterObjectFieldNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String parameterObjectFieldName;
 
 	public Boolean getReverse() {
 		return reverse;

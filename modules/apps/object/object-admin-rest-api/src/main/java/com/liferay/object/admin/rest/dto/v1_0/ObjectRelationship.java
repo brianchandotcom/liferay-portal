@@ -210,6 +210,39 @@ public class ObjectRelationship implements Serializable {
 	protected String name;
 
 	@Schema
+	public String getObjectDefinitionExternalReferenceCode1() {
+		return objectDefinitionExternalReferenceCode1;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode1(
+		String objectDefinitionExternalReferenceCode1) {
+
+		this.objectDefinitionExternalReferenceCode1 =
+			objectDefinitionExternalReferenceCode1;
+	}
+
+	@JsonIgnore
+	public void setObjectDefinitionExternalReferenceCode1(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCode1UnsafeSupplier) {
+
+		try {
+			objectDefinitionExternalReferenceCode1 =
+				objectDefinitionExternalReferenceCode1UnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectDefinitionExternalReferenceCode1;
+
+	@Schema
 	public String getObjectDefinitionExternalReferenceCode2() {
 		return objectDefinitionExternalReferenceCode2;
 	}
@@ -353,6 +386,36 @@ public class ObjectRelationship implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parameterObjectFieldId;
+
+	@Schema
+	public String getParameterObjectFieldName() {
+		return parameterObjectFieldName;
+	}
+
+	public void setParameterObjectFieldName(String parameterObjectFieldName) {
+		this.parameterObjectFieldName = parameterObjectFieldName;
+	}
+
+	@JsonIgnore
+	public void setParameterObjectFieldName(
+		UnsafeSupplier<String, Exception>
+			parameterObjectFieldNameUnsafeSupplier) {
+
+		try {
+			parameterObjectFieldName =
+				parameterObjectFieldNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parameterObjectFieldName;
 
 	@Schema
 	public Boolean getReverse() {
@@ -503,6 +566,20 @@ public class ObjectRelationship implements Serializable {
 			sb.append("\"");
 		}
 
+		if (objectDefinitionExternalReferenceCode1 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionExternalReferenceCode1\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinitionExternalReferenceCode1));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinitionExternalReferenceCode2 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -559,6 +636,20 @@ public class ObjectRelationship implements Serializable {
 			sb.append("\"parameterObjectFieldId\": ");
 
 			sb.append(parameterObjectFieldId);
+		}
+
+		if (parameterObjectFieldName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parameterObjectFieldName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parameterObjectFieldName));
+
+			sb.append("\"");
 		}
 
 		if (reverse != null) {

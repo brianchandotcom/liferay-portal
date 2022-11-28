@@ -56,6 +56,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectRelationshipResource {
 
+	public Page<ObjectRelationship>
+			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+				String objectDefinitionExternalReferenceCode, String search,
+				Filter filter, Pagination pagination)
+		throws Exception;
+
+	public ObjectRelationship
+			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
+				String objectDefinitionExternalReferenceCode,
+				ObjectRelationship objectRelationship)
+		throws Exception;
+
 	public Page<ObjectRelationship> getObjectDefinitionObjectRelationshipsPage(
 			Long objectDefinitionId, String search, Filter filter,
 			Pagination pagination)

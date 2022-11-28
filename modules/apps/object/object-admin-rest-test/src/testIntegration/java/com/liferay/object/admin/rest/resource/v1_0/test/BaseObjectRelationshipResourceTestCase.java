@@ -185,8 +185,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		ObjectRelationship objectRelationship = randomObjectRelationship();
 
 		objectRelationship.setName(regex);
+		objectRelationship.setObjectDefinitionExternalReferenceCode1(regex);
 		objectRelationship.setObjectDefinitionExternalReferenceCode2(regex);
 		objectRelationship.setObjectDefinitionName2(regex);
+		objectRelationship.setParameterObjectFieldName(regex);
 
 		String json = ObjectRelationshipSerDes.toJSON(objectRelationship);
 
@@ -197,9 +199,303 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		Assert.assertEquals(regex, objectRelationship.getName());
 		Assert.assertEquals(
 			regex,
+			objectRelationship.getObjectDefinitionExternalReferenceCode1());
+		Assert.assertEquals(
+			regex,
 			objectRelationship.getObjectDefinitionExternalReferenceCode2());
 		Assert.assertEquals(
 			regex, objectRelationship.getObjectDefinitionName2());
+		Assert.assertEquals(
+			regex, objectRelationship.getParameterObjectFieldName());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage()
+		throws Exception {
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+		String irrelevantObjectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getIrrelevantObjectDefinitionExternalReferenceCode();
+
+		Page<ObjectRelationship> page =
+			objectRelationshipResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantObjectDefinitionExternalReferenceCode != null) {
+			ObjectRelationship irrelevantObjectRelationship =
+				testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+					irrelevantObjectDefinitionExternalReferenceCode,
+					randomIrrelevantObjectRelationship());
+
+			page =
+				objectRelationshipResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+						irrelevantObjectDefinitionExternalReferenceCode, null,
+						null, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantObjectRelationship),
+				(List<ObjectRelationship>)page.getItems());
+			assertValid(page);
+		}
+
+		ObjectRelationship objectRelationship1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		ObjectRelationship objectRelationship2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		page =
+			objectRelationshipResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectRelationship1, objectRelationship2),
+			(List<ObjectRelationship>)page.getItems());
+		assertValid(page);
+
+		objectRelationshipResource.deleteObjectRelationship(
+			objectRelationship1.getId());
+
+		objectRelationshipResource.deleteObjectRelationship(
+			objectRelationship2.getId());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectRelationship objectRelationship1 = randomObjectRelationship();
+
+		objectRelationship1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode, objectRelationship1);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectRelationship> page =
+				objectRelationshipResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+						objectDefinitionExternalReferenceCode, null,
+						getFilterString(
+							entityField, "between", objectRelationship1),
+						Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(objectRelationship1),
+				(List<ObjectRelationship>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectRelationship objectRelationship1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectRelationship objectRelationship2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectRelationship> page =
+				objectRelationshipResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+						objectDefinitionExternalReferenceCode, null,
+						getFilterString(entityField, "eq", objectRelationship1),
+						Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(objectRelationship1),
+				(List<ObjectRelationship>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectRelationship objectRelationship1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectRelationship objectRelationship2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectRelationship> page =
+				objectRelationshipResource.
+					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+						objectDefinitionExternalReferenceCode, null,
+						getFilterString(entityField, "eq", objectRelationship1),
+						Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(objectRelationship1),
+				(List<ObjectRelationship>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageWithPagination()
+		throws Exception {
+
+		String objectDefinitionExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+
+		ObjectRelationship objectRelationship1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		ObjectRelationship objectRelationship2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		ObjectRelationship objectRelationship3 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionExternalReferenceCode,
+				randomObjectRelationship());
+
+		Page<ObjectRelationship> page1 =
+			objectRelationshipResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(1, 2));
+
+		List<ObjectRelationship> objectRelationships1 =
+			(List<ObjectRelationship>)page1.getItems();
+
+		Assert.assertEquals(
+			objectRelationships1.toString(), 2, objectRelationships1.size());
+
+		Page<ObjectRelationship> page2 =
+			objectRelationshipResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ObjectRelationship> objectRelationships2 =
+			(List<ObjectRelationship>)page2.getItems();
+
+		Assert.assertEquals(
+			objectRelationships2.toString(), 1, objectRelationships2.size());
+
+		Page<ObjectRelationship> page3 =
+			objectRelationshipResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+					objectDefinitionExternalReferenceCode, null, null,
+					Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				objectRelationship1, objectRelationship2, objectRelationship3),
+			(List<ObjectRelationship>)page3.getItems());
+	}
+
+	protected ObjectRelationship
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				String objectDefinitionExternalReferenceCode,
+				ObjectRelationship objectRelationship)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getIrrelevantObjectDefinitionExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship()
+		throws Exception {
+
+		ObjectRelationship randomObjectRelationship =
+			randomObjectRelationship();
+
+		ObjectRelationship postObjectRelationship =
+			testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship_addObjectRelationship(
+				randomObjectRelationship);
+
+		assertEquals(randomObjectRelationship, postObjectRelationship);
+		assertValid(postObjectRelationship);
+	}
+
+	protected ObjectRelationship
+			testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship_addObjectRelationship(
+				ObjectRelationship objectRelationship)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -789,6 +1085,19 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode1",
+					additionalAssertFieldName)) {
+
+				if (objectRelationship.
+						getObjectDefinitionExternalReferenceCode1() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectDefinitionExternalReferenceCode2",
 					additionalAssertFieldName)) {
 
@@ -835,6 +1144,16 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 					"parameterObjectFieldId", additionalAssertFieldName)) {
 
 				if (objectRelationship.getParameterObjectFieldId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parameterObjectFieldName", additionalAssertFieldName)) {
+
+				if (objectRelationship.getParameterObjectFieldName() == null) {
 					valid = false;
 				}
 
@@ -1008,6 +1327,22 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode1",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectRelationship1.
+							getObjectDefinitionExternalReferenceCode1(),
+						objectRelationship2.
+							getObjectDefinitionExternalReferenceCode1())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectDefinitionExternalReferenceCode2",
 					additionalAssertFieldName)) {
 
@@ -1068,6 +1403,19 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				if (!Objects.deepEquals(
 						objectRelationship1.getParameterObjectFieldId(),
 						objectRelationship2.getParameterObjectFieldId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parameterObjectFieldName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectRelationship1.getParameterObjectFieldName(),
+						objectRelationship2.getParameterObjectFieldName())) {
 
 					return false;
 				}
@@ -1223,6 +1571,17 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("objectDefinitionExternalReferenceCode1")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					objectRelationship.
+						getObjectDefinitionExternalReferenceCode1()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("objectDefinitionExternalReferenceCode2")) {
 			sb.append("'");
 			sb.append(
@@ -1256,6 +1615,16 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		if (entityFieldName.equals("parameterObjectFieldId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("parameterObjectFieldName")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					objectRelationship.getParameterObjectFieldName()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("reverse")) {
@@ -1314,6 +1683,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			{
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				objectDefinitionExternalReferenceCode1 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				objectDefinitionExternalReferenceCode2 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				objectDefinitionId1 = RandomTestUtil.randomLong();
@@ -1321,6 +1692,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				objectDefinitionName2 = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				parameterObjectFieldId = RandomTestUtil.randomLong();
+				parameterObjectFieldName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				reverse = RandomTestUtil.randomBoolean();
 			}
 		};

@@ -587,9 +587,9 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		AssertElementPresent(
-			key_pageName = "New Workflow",
-			locator1 = "ProcessBuilderListView#PROCESS_BUILDER_HEADER_TITLE");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "New Workflow");
 	}
 
 }

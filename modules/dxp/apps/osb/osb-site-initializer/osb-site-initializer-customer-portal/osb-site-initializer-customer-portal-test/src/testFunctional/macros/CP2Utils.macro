@@ -152,4 +152,17 @@ definition {
 				locator1 = "CP2Utils#PAGINATION_BUTTON_ITEM");
 		}
 	}
+
+	macro typeSetupInfoFields {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		var key_index = "${position}";
+
+		Type(
+			locator1 = "CustomerPortalSite#SETUP_FIELDS",
+			value1 = "${value}");
+	}
+
 }

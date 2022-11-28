@@ -21,6 +21,7 @@ import com.liferay.document.library.test.util.BaseWebServerTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -70,6 +71,23 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	}
 
 	@Test
+	public void testExistingFileEntryFriendlyURLHasFilesParts2()
+		throws Exception {
+
+		String urlTitle = RandomTestUtil.randomString();
+
+		FileEntry fileEntry = _addFileEntry(urlTitle);
+
+		String path = String.format(
+			"/%s/%s", group.getGroupId(), fileEntry.getUuid());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_createMockHttpServletRequest(path);
+
+		Assert.assertTrue(WebServerServlet.hasFiles(mockHttpServletRequest));
+	}
+
+	@Test
 	public void testExistingFileEntryFriendlyURLReturns200() throws Exception {
 		String urlTitle = RandomTestUtil.randomString();
 
@@ -96,6 +114,19 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	}
 
 	@Test
+	public void testNonexistantFileEntryFriendlyURLHasNoFilesParts2()
+		throws Exception {
+
+		String path = String.format(
+			"/%s/%s", group.getGroupId(), RandomTestUtil.randomString());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_createMockHttpServletRequest(path);
+
+		Assert.assertFalse(WebServerServlet.hasFiles(mockHttpServletRequest));
+	}
+
+	@Test
 	public void testNonexistantFileEntryFriendlyURLReturns404()
 		throws Exception {
 
@@ -109,8 +140,8 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 			mockHttpServletResponse.getStatus());
 	}
 
-	private void _addFileEntry(String urlTitle) throws Exception {
-		_dlAppLocalService.addFileEntry(
+	private FileEntry _addFileEntry(String urlTitle) throws Exception {
+		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),

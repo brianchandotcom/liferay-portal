@@ -71,6 +71,33 @@ definition {
 		Click(locator1 = "CP2Utils#CLOSE_BUTTON");
 	}
 
+	macro deleteActivationStatus {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+
+		CP2Utils.selectPaginationNumber(quantity = "40");
+
+		var key_status = "${status}";
+
+		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
+			CustomerPortal.viewCPObjectCustomInfo(position = "${position}");
+
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "activationStatus",
+				value = "");
+
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "manageContactsURL",
+				value = "");
+
+			Click(locator1 = "Button#SAVE");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro deleteSpecificObjectEntry {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",

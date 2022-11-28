@@ -327,7 +327,7 @@ public class KBDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-	_getAddChildArticleActionUnsafeConsumer(KBArticle kbArticle) {
+		_getAddChildArticleActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -973,6 +973,18 @@ public class KBDropdownItemsProvider {
 		return false;
 	}
 
+	private boolean _hasChildArticles(KBArticle kbArticle) {
+		int childArticlesCount = KBArticleServiceUtil.getKBArticlesCount(
+			_themeDisplay.getScopeGroupId(), kbArticle.getResourcePrimKey(),
+			WorkflowConstants.STATUS_ANY);
+
+		if (childArticlesCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _hasDeletePermission(KBArticle kbArticle) throws Exception {
 		if (KBArticlePermission.contains(
 				_themeDisplay.getPermissionChecker(), kbArticle,
@@ -1047,18 +1059,6 @@ public class KBDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), kbFolder,
 				KBActionKeys.ADD_KB_ARTICLE)) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _hasChildArticles(KBArticle kbArticle) {
-		int childArticlesCount = KBArticleServiceUtil.getKBArticlesCount(
-			_themeDisplay.getScopeGroupId(), kbArticle.getResourcePrimKey(),
-			WorkflowConstants.STATUS_ANY);
-
-		if (childArticlesCount > 0) {
 			return true;
 		}
 

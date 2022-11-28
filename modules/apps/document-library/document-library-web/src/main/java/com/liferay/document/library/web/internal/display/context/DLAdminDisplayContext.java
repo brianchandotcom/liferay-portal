@@ -915,16 +915,22 @@ public class DLAdminDisplayContext {
 
 	private void _setPortletPreference(String name, String value) {
 		if (_themeDisplay.isSignedIn()) {
-			PortletPreferences portletPreferences = _getPortletPreferences();
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
-			try {
-				portletPreferences.setValue(name, value);
+				PortletPreferences portletPreferences =
+					_getPortletPreferences();
 
-				portletPreferences.store();
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
+				try {
+					portletPreferences.setValue(name, value);
+
+					portletPreferences.store();
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception);
+					}
 				}
 			}
 		}

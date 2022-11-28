@@ -166,16 +166,16 @@ if (Validator.isNotNull(backURL)) {
 </liferay-ui:search-container>
 
 <%
-int incompleteBackgroundTaskCount = 0;
+int incompleteBackgroundTasksCount = 0;
 
 if ((backgroundTask != null) && backgroundTask.isInProgress()) {
-	incompleteBackgroundTaskCount = 1;
+	incompleteBackgroundTasksCount = 1;
 }
 %>
 
 <div class="hide incomplete-process-message">
 	<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+		<liferay-util:param name="incompleteBackgroundTasksCount" value="<%= String.valueOf(incompleteBackgroundTasksCount) %>" />
 	</liferay-util:include>
 </div>
 

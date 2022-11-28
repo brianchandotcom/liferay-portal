@@ -269,9 +269,7 @@ const RowWithActions = ({
 							)
 						}
 						onChange={() => selectItems(itemId)}
-						title={Liferay.Language.get(
-							'select-item'
-						)}
+						title={Liferay.Language.get('select-item')}
 						value={itemId}
 					/>
 				</DndTable.Cell>

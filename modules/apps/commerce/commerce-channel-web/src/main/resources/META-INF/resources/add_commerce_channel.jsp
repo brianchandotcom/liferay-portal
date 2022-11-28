@@ -28,10 +28,10 @@ String name = BeanParamUtil.getString(commerceChannel, request, "name");
 String commerceCurrencyCode = BeanParamUtil.getString(commerceChannel, request, "commerceCurrencyCode");
 String type = BeanParamUtil.getString(commerceChannel, request, "type");
 
-boolean isViewOnly = false;
+boolean viewOnly = false;
 
 if (commerceChannel != null) {
-	isViewOnly = !commerceChannelDisplayContext.hasPermission(commerceChannelId, ActionKeys.UPDATE);
+	viewOnly = !commerceChannelDisplayContext.hasPermission(commerceChannelId, ActionKeys.UPDATE);
 }
 
 PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditCommerceChannelRenderURL();
@@ -47,7 +47,7 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 		<div class="lfr-form-content">
 			<aui:model-context bean="<%= commerceChannel %>" model="<%= CommerceChannel.class %>" />
 
-			<aui:input autoFocus="<%= true %>" disabled="<%= isViewOnly %>" name="name" value="<%= name %>" />
+			<aui:input autoFocus="<%= true %>" disabled="<%= viewOnly %>" name="name" value="<%= name %>" />
 
 			<aui:select label="currency" name="currencyCode" required="<%= true %>" title="currency">
 
@@ -63,7 +63,7 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 
 			</aui:select>
 
-			<aui:select disabled="<%= isViewOnly %>" name="type" showEmptyOption="<%= true %>">
+			<aui:select disabled="<%= viewOnly %>" name="type" showEmptyOption="<%= true %>">
 
 				<%
 				for (CommerceChannelType commerceChannelType : commerceChannelTypes) {

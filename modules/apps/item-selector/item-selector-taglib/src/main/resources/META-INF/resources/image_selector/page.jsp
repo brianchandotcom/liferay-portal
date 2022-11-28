@@ -21,7 +21,7 @@ long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-sel
 String imageCropDirection = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:imageCropDirection"), "none");
 String imageCropRegion = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:imageCropRegion"));
 String imageURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:imageURL"));
-boolean isDraggable = GetterUtil.getBoolean(request.getAttribute("liferay-ui:image-selector:isDraggable"));
+boolean draggable = GetterUtil.getBoolean(request.getAttribute("liferay-ui:image-selector:isDraggable"));
 String itemSelectorEventName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorEventName"));
 String itemSelectorURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorURL"));
 long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:maxFileSize"));
@@ -35,7 +35,7 @@ if (fileEntryId == 0) {
 	cssClass += " drop-enabled";
 }
 
-if (isDraggable) {
+if (draggable) {
 	cssClass += " draggable-image " + imageCropDirection;
 }
 %>
@@ -57,7 +57,7 @@ if (isDraggable) {
 			).put(
 				"imageURL", imageURL
 			).put(
-				"isDraggable", isDraggable
+				"isDraggable", draggable
 			).put(
 				"itemSelectorEventName", itemSelectorEventName
 			).put(

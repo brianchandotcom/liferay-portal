@@ -40,7 +40,7 @@ String ddmFormHTML = (String)request.getAttribute("liferay-form:ddm-form-rendere
 DDMFormInstance ddmFormInstance = (DDMFormInstance)request.getAttribute("liferay-form:ddm-form-renderer:ddmFormInstance");
 boolean hasAddFormInstanceRecordPermission = GetterUtil.getBoolean(request.getAttribute("liferay-form:ddm-form-renderer:hasAddFormInstanceRecordPermission"));
 boolean hasViewFormInstancePermission = GetterUtil.getBoolean(request.getAttribute("liferay-form:ddm-form-renderer:hasViewFormInstancePermission"));
-boolean isFormAvailable = GetterUtil.getBoolean(request.getAttribute("liferay-form:ddm-form-renderer:isFormAvailable"));
+boolean formAvailable = GetterUtil.getBoolean(request.getAttribute("liferay-form:ddm-form-renderer:isFormAvailable"));
 String languageId = (String)request.getAttribute("liferay-form:ddm-form-renderer:languageId");
 String redirectURL = (String)request.getAttribute("liferay-form:ddm-form-renderer:redirectURL");
 %>

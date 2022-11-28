@@ -35,7 +35,7 @@ if (ddmFormInstance != null) {
 		%>
 
 		<c:choose>
-			<c:when test="<%= isFormAvailable %>">
+			<c:when test="<%= formAvailable %>">
 				<div class="portlet-forms">
 					<c:if test="<%= Validator.isNull(redirectURL) %>">
 						<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect", PortalUtil.getCurrentURL(request)) %>' />

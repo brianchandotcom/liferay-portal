@@ -17,6 +17,7 @@ package com.liferay.dispatch.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
+import com.liferay.dispatch.exception.DispatchTriggerTypeException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
@@ -111,6 +112,19 @@ public class DispatchTriggerLocalServiceTest {
 		Assert.assertEquals(
 			"Add dispatch trigger with no name",
 			DispatchTriggerNameException.class, exceptionClass);
+
+		try {
+			_addDispatchTrigger(
+				DispatchTriggerTestUtil.randomDispatchTrigger(
+					user, "INVALID EXECUTOR TYPE", 1));
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add dispatch trigger with invalid executor type",
+			DispatchTriggerTypeException.class, exceptionClass);
 	}
 
 	@Test

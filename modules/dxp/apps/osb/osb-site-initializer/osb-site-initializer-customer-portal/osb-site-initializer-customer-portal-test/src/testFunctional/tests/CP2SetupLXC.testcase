@@ -1,0 +1,86 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account DXP";
+	var testUserFirstName = "Test";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+	@description = "Automation ID: LPS-169248 | Test Summary: Assert that the user will have the option to remove additional Admins from the project before submitting the form"
+	@priority = "3"
+	test AssertThatTheAdditionalFieldsHaveBeenRemoved {
+
+		// TODO LPS-169248 AssertThatTheAdditionalFieldsHaveBeenRemoved pending implementation
+		
+	}
+
+	@description = "Automation ID: LPS-169246 | Test Summary: Assert that the user can only submit the form after filling out all required fields (Project ID - Primary Region - Project Admin - First Name - Last Name - Email Address - GitHub Username - Incident Management Contact)"
+	@priority = "4"
+	test AssertThatTheUserCanOnlySubmitTheFormAfterFillingOutAllRequiredFields {
+
+		// TODO LPS-169246 AssertThatTheUserCanOnlySubmitTheFormAfterFillingOutAllRequiredFields pending implementation
+	
+	}
+
+	@description = "Automation ID: LPS-169249 | Test Summary: Assert that the user is not allowed to continue if they have entered an invalid business email address for the owner and incident management contacts"
+	@priority = "3"
+	test AssertTheErrorMessageIfTheUserEntersAnInvalidBusinessEmailAddress {
+
+		// TODO LPS-169249 AssertTheErrorMessageIfTheUserEntersAnInvalidBusinessEmailAddress pending implementation
+		
+	}
+
+	@description = "Automation ID: LPS-169250 | Test Summary: Assert the success message: Thank you for submitting this request! Your Liferay Experience Cloud project will be provisioned within 3 business days. An email will be sent once your project is ready."
+	@priority = "3"
+	test AssertTheSuccessMessage {
+
+		// TODO LPS-169250 AssertTheSuccessMessage pending implementation
+		
+	}
+
+	@description = "Automation ID: LPS-169247 | Test Summary: Assert that the user can add additional project administrators using the 'Add project administrator' button"
+	@priority = "4"
+	test CanViewTheAdditionalFields {
+
+		// TODO LPS-169247 CanViewTheAdditionalFields pending implementation
+
+	}
+
+}

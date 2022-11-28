@@ -231,6 +231,16 @@ definition {
 			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 	}
 
+	macro assertRelationshipNotPresent {
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextEquals(
+			locator1 = "Message#NO_ENTRIES",
+			value1 = "No entries were found.");
+	}
+
 	macro assertScopeFieldSelected {
 		AssertSelectedLabel(
 			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",

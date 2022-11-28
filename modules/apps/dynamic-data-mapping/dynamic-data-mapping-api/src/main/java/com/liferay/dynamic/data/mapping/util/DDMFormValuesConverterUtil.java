@@ -25,11 +25,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Mateus Santana
@@ -125,13 +124,13 @@ public class DDMFormValuesConverterUtil {
 			return Collections.emptySet();
 		}
 
-		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+		Set<String> names = new HashSet<>();
 
-		return stream.map(
-			DDMFormFieldValue::getName
-		).collect(
-			Collectors.toSet()
-		);
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			names.add(ddmFormFieldValue.getName());
+		}
+
+		return names;
 	}
 
 	private static void _removeExtraNestedDDMFormFieldValues(
@@ -143,19 +142,15 @@ public class DDMFormValuesConverterUtil {
 
 		ddmFormFieldValue.setNestedDDMFormFields(new ArrayList<>());
 
-		Stream<DDMFormField> stream = nestedDDMFormFields.stream();
+		for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
+			for (DDMFormFieldValue nestedDDMFormFieldValue :
+					nestedDDMFormFieldValuesMap.get(
+						nestedDDMFormField.getName())) {
 
-		stream.map(
-			DDMFormField::getName
-		).map(
-			nestedDDMFormFieldValuesMap::get
-		).flatMap(
-			List::stream
-		).forEach(
-			nestedDDMFormFieldValue ->
 				ddmFormFieldValue.addNestedDDMFormFieldValue(
-					nestedDDMFormFieldValue)
-		);
+					nestedDDMFormFieldValue);
+			}
+		}
 	}
 
 }

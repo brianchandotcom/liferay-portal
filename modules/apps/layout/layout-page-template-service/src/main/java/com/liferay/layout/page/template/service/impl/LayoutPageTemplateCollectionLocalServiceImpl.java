@@ -161,6 +161,14 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByName(
+		long groupId, String name) {
+
+		return layoutPageTemplateCollectionPersistence.fetchByG_N(
+			groupId, name);
+	}
+
+	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int start, int end) {
 

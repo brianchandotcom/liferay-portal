@@ -83,7 +83,23 @@ definition {
 	@priority = "3"
 	test AssertThatTheAdditionalFieldsHaveBeenRemoved {
 
-		// TODO LPS-169248 AssertThatTheAdditionalFieldsHaveBeenRemoved pending implementation
+		 // Needs refactor since it depends on example FIFA account
+
+        task ("Then I add three extra fields") {
+            CustomerPortal.clickAtButton(text = "Add Another Admin");
+
+            CP2LXCSetup.assertThatTheExtraFieldsAreVisible(
+                fieldsList = "fullName,email,github",
+                position = "2");
+        }
+
+        task ("And I assert that when I click the 'Remove Project Admin' button, no extra fields are shown in the form") {
+            CustomerPortal.clickAtButton(text = "Remove Project Admin");
+
+            CP2LXCSetup.assertThatTheExtraFieldsIsNotVisible(
+                fieldsList = "fullName,email,github",
+                position = "2");
+        }
 		
 	}
 

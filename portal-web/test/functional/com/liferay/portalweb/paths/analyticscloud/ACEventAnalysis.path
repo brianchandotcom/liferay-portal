@@ -135,6 +135,11 @@
 	<td>//th[@class='table-head-title']//div[text()='${key_attributeName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLUMN_BREAKDOWN_VALUES</td>
+	<td>xpath=(//td[contains(@class,'align-top')]//span[@data-tooltip])[${index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

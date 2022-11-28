@@ -97,30 +97,41 @@ List<AssetEntry> assetEntries = assetPublisherHelper.getAssetEntries(renderReque
 
 <%
 long[] groupIds = assetPublisherDisplayContext.getGroupIds();
+%>
 
+<c:if test="<%= ArrayUtil.isNotEmpty(groupIds) %>">
+
+<div class="d-flex">
+
+<%
 for (long groupId : groupIds) {
 	Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 	String title = LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
 %>
 
-	<clay:dropdown-menu
-		additionalProps='<%=
-			HashMapBuilder.<String, Object>put(
-				"currentURL", currentURL
-			).build()
-		%>'
-		aria-label="<%= title %>"
-		displayType="secondary"
-		dropdownItems="<%= assetPublisherDisplayContext.getDropdownItems(group) %>"
-		label="select"
-		propsTransformer="js/AssetEntrySelectionDropdownPropsTransformer"
-		title="<%= title %>"
-	/>
+		<clay:dropdown-menu
+			additionalProps='<%=
+				HashMapBuilder.<String, Object>put(
+					"currentURL", currentURL
+				).build()
+			%>'
+			aria-label="<%= title %>"
+			cssClass="mr-2"
+			displayType="secondary"
+			dropdownItems="<%= assetPublisherDisplayContext.getDropdownItems(group) %>"
+			label="select"
+			propsTransformer="js/AssetEntrySelectionDropdownPropsTransformer"
+			title="<%= title %>"
+		/>
 
 <%
 }
 %>
+
+</div>
+
+</c:if>
 
 <script>
 	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {

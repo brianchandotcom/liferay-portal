@@ -3,7 +3,4 @@ Bundle-SymbolicName: com.liferay.commerce.machine.learning.forecast.alert.servic
 Bundle-Version: 5.0.26
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
-Require-Capability:\
-	liferay.extender;\
-		filter:="(&(liferay.extender=spring.extender)(version>=2.0)(!(version>=4.0)))"
 -dsannotations-options: inherit

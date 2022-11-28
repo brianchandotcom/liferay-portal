@@ -22,12 +22,15 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -145,6 +148,96 @@ public class LayoutsImporterTest {
 		}
 
 		_serviceRegistrations.clear();
+	}
+
+	@Test
+	public void testDoubleImportLayoutPageTemplate() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			String name = RandomTestUtil.randomString();
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionLocalService.
+					addLayoutPageTemplateCollection(
+						TestPropsValues.getUserId(), _group.getGroupId(), name,
+						RandomTestUtil.randomString(), serviceContext);
+
+			String layoutPageTemplateEntryName = RandomTestUtil.randomString();
+
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateEntryName,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+				_group.getGroupId());
+
+			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+					_layoutPageTemplateEntryLocalService.
+						getLayoutPageTemplateEntries(_group.getGroupId())) {
+
+				_layoutPageTemplateEntryLocalService.
+					deleteLayoutPageTemplateEntry(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			}
+
+			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+				_layoutsImporter.importFile(
+					TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
+					false);
+
+			Assert.assertEquals(
+				layoutsImporterResultEntries.toString(), 1,
+				layoutsImporterResultEntries.size());
+
+			LayoutsImporterResultEntry layoutsImporterResultEntry =
+				layoutsImporterResultEntries.get(0);
+
+			Assert.assertEquals(
+				layoutPageTemplateEntryName,
+				layoutsImporterResultEntry.getName());
+
+			Assert.assertEquals(
+				LayoutsImporterResultEntry.Status.IMPORTED,
+				layoutsImporterResultEntry.getStatus());
+
+			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+					_layoutPageTemplateEntryLocalService.
+						getLayoutPageTemplateEntries(_group.getGroupId())) {
+
+				_layoutPageTemplateEntryLocalService.
+					deleteLayoutPageTemplateEntry(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			}
+
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
+				false);
+
+			Assert.assertEquals(
+				layoutsImporterResultEntries.toString(), 1,
+				layoutsImporterResultEntries.size());
+
+			layoutsImporterResultEntry = layoutsImporterResultEntries.get(0);
+
+			Assert.assertEquals(
+				layoutPageTemplateEntryName,
+				layoutsImporterResultEntry.getName());
+
+			Assert.assertEquals(
+				LayoutsImporterResultEntry.Status.IMPORTED,
+				layoutsImporterResultEntry.getStatus());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test
@@ -1052,12 +1145,19 @@ public class LayoutsImporterTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutsExporter _layoutsExporter;
 
 	@Inject
 	private LayoutsImporter _layoutsImporter;

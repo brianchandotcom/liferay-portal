@@ -30,6 +30,7 @@ describe('SelectEntityInput', () => {
 		const {getByTestId} = render(
 			<SelectEntityInput
 				onChange={mockOnChange}
+				propertyLabel="Test label"
 				selectEntity={{
 					id: 'entitySelect',
 					title: 'Select Entity Test',

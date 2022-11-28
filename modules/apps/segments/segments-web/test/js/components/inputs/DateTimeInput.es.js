@@ -31,7 +31,11 @@ describe('DateTimeInput', () => {
 		const isoDefaultDate = '2019-01-23T00:00:00.000Z';
 
 		const {asFragment, getByTestId} = render(
-			<DateTimeInput onChange={mockOnChange} value={isoDefaultDate} />
+			<DateTimeInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				value={isoDefaultDate}
+			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot();
@@ -55,7 +59,11 @@ describe('DateTimeInput', () => {
 		const isoDefaultDate = '2019-01-23T00:00:00.000Z';
 
 		const {asFragment, getByTestId} = render(
-			<DateTimeInput onChange={mockOnChange} value={isoDefaultDate} />
+			<DateTimeInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				value={isoDefaultDate}
+			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot();

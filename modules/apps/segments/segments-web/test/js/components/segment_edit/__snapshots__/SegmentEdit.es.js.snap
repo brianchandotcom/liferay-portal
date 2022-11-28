@@ -737,7 +737,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                               </b>
                             </span>
                             <select
-                              aria-label="select-property-operator-option"
+                              aria-label="Value: select-property-operator-option"
                               class="form-control criterion-input form-control operator-input"
                             >
                               <option
@@ -762,7 +762,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                               </option>
                             </select>
                             <input
-                              aria-label="input-a-value"
+                              aria-label="Value: input-a-value"
                               class="criterion-input form-control"
                               data-testid="simple-string"
                               type="text"

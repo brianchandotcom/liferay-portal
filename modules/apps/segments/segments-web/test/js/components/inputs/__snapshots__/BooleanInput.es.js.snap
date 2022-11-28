@@ -3,7 +3,7 @@
 exports[`BooleanInput renders type boolean 1`] = `
 <DocumentFragment>
   <select
-    aria-label="select-option"
+    aria-label="Test label: select-option"
     class="form-control criterion-input form-control"
     data-testid="options-boolean"
   >

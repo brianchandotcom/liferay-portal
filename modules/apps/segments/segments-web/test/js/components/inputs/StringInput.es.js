@@ -28,7 +28,9 @@ describe('StringInput', () => {
 	afterEach(cleanup);
 
 	it('renders with type string', () => {
-		const {asFragment} = render(<StringInput onChange={jest.fn()} />);
+		const {asFragment} = render(
+			<StringInput onChange={jest.fn()} propertyLabel="Test label" />
+		);
 
 		expect(asFragment()).toMatchSnapshot();
 	});
@@ -37,7 +39,11 @@ describe('StringInput', () => {
 		const mockOnChange = jest.fn();
 
 		const {asFragment, getByTestId} = render(
-			<StringInput onChange={mockOnChange} value={defaultValue} />
+			<StringInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				value={defaultValue}
+			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot();
@@ -60,6 +66,7 @@ describe('StringInput', () => {
 		const {getByTestId} = render(
 			<StringInput
 				onChange={mockOnChange}
+				propertyLabel="Test label"
 				value={valueWithEscapedApostrophes}
 			/>
 		);
@@ -91,6 +98,7 @@ describe('StringInput', () => {
 			<StringInput
 				onChange={mockOnChange}
 				options={options}
+				propertyLabel="Test label"
 				value={defaultValue}
 			/>
 		);
@@ -125,6 +133,7 @@ describe('StringInput', () => {
 			<StringInput
 				onChange={mockOnChange}
 				options={options}
+				propertyLabel="Test label"
 				value={defaultValue}
 			/>
 		);

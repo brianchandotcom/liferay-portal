@@ -29,7 +29,11 @@ describe('BooleanInput', () => {
 		const defaultBoolValue = 'true';
 
 		const {asFragment, getByTestId} = render(
-			<BooleanInput onChange={mockOnChange} value={defaultBoolValue} />
+			<BooleanInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				value={defaultBoolValue}
+			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot();

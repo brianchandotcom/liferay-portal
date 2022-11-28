@@ -30,7 +30,11 @@ describe('DateInput', () => {
 		const defaultNumberValue = '2019-01-23';
 
 		const {asFragment, getByTestId} = render(
-			<DateInput onChange={mockOnChange} value={defaultNumberValue} />
+			<DateInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				value={defaultNumberValue}
+			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot();
@@ -53,7 +57,11 @@ describe('DateInput', () => {
 		const defaultNumberValue = '2019-01-23';
 
 		const {asFragment, getByTestId} = render(
-			<DateInput onChange={mockOnChange} value={defaultNumberValue} />
+			<DateInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				value={defaultNumberValue}
+			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot();

@@ -6,7 +6,7 @@ exports[`DateTimeInput renders now with wrong date 1`] = `
     class="criterion-input date-input"
   >
     <input
-      aria-label="select-date"
+      aria-label="Test label: select-date"
       class="form-control"
       data-testid="date-input"
       type="date"
@@ -22,7 +22,7 @@ exports[`DateTimeInput renders type date 1`] = `
     class="criterion-input date-input"
   >
     <input
-      aria-label="select-date"
+      aria-label="Test label: select-date"
       class="form-control"
       data-testid="date-input"
       type="date"

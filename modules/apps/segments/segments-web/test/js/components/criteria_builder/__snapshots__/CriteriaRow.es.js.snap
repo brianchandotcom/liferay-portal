@@ -28,11 +28,11 @@ exports[`CriteriaRow renders 1`] = `
         </b>
       </span>
       <select
-        aria-label="select-property-operator-option"
+        aria-label="Test Property: select-property-operator-option"
         class="form-control criterion-input form-control operator-input"
       />
       <input
-        aria-label="input-a-value"
+        aria-label="Test Property: input-a-value"
         class="criterion-input form-control"
         data-testid="simple-string"
         type="text"
@@ -101,12 +101,12 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
         </b>
       </span>
       <select
-        aria-label="select-property-operator-option"
+        aria-label="unknown_prop: select-property-operator-option"
         class="form-control criterion-input form-control operator-input"
         disabled=""
       />
       <input
-        aria-label="input-a-value"
+        aria-label="unknown_prop: input-a-value"
         class="criterion-input form-control"
         data-testid="simple-string"
         disabled=""

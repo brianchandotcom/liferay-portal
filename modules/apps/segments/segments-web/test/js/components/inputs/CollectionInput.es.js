@@ -34,6 +34,7 @@ describe('CollectionInput', () => {
 		const {asFragment} = render(
 			<CollectionInput
 				onChange={mockOnChange}
+				propertyLabel="Test label"
 				value={`${startingKey}=${startingValue}`}
 			/>
 		);
@@ -50,6 +51,7 @@ describe('CollectionInput', () => {
 		const {getByTestId} = render(
 			<CollectionInput
 				onChange={mockOnChange}
+				propertyLabel="Test label"
 				value={`${startingKey}=${startingValue}`}
 			/>
 		);
@@ -68,6 +70,7 @@ describe('CollectionInput', () => {
 		const {getByTestId} = render(
 			<CollectionInput
 				onChange={mockOnChange}
+				propertyLabel="Test label"
 				value={`${startingKey}=${startingValue}`}
 			/>
 		);
@@ -86,6 +89,7 @@ describe('CollectionInput', () => {
 		const {getByTestId} = render(
 			<CollectionInput
 				onChange={mockOnChange}
+				propertyLabel="Test label"
 				value={`${startingKey}=${startingValue}`}
 			/>
 		);
@@ -110,6 +114,7 @@ describe('CollectionInput', () => {
 		const {getByTestId} = render(
 			<CollectionInput
 				onChange={mockOnChange}
+				propertyLabel="Test label"
 				value={`${startingKey}=${startingValue}`}
 			/>
 		);

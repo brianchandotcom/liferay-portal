@@ -34,7 +34,11 @@ describe('DecimalInput', () => {
 		const newNumberValue = '2.34';
 
 		const {asFragment, getByTestId} = render(
-			<DecimalInput onChange={mockOnChange} value={defaultNumberValue} />
+			<DecimalInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				value={defaultNumberValue}
+			/>
 		);
 
 		expect(asFragment()).toMatchSnapshot();
@@ -52,7 +56,9 @@ describe('DecimalInput', () => {
 	it('formats the value after blur', () => {
 		const mockOnChange = jest.fn();
 
-		const {getByTestId} = render(<DecimalInput onChange={mockOnChange} />);
+		const {getByTestId} = render(
+			<DecimalInput onChange={mockOnChange} propertyLabel="Test label" />
+		);
 
 		const element = getByTestId(SIMPLE_DECIMAL_NUMBER_INPUT_TESTID);
 
@@ -83,6 +89,7 @@ describe('DecimalInput', () => {
 			<DecimalInput
 				onChange={mockOnChange}
 				options={options}
+				propertyLabel="Test label"
 				value={defaultNumberValue}
 			/>
 		);
@@ -118,6 +125,7 @@ describe('DecimalInput', () => {
 			<DecimalInput
 				onChange={mockOnChange}
 				options={options}
+				propertyLabel="Test label"
 				value={defaultNumberValue}
 			/>
 		);

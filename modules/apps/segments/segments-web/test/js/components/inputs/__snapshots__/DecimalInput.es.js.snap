@@ -3,7 +3,7 @@
 exports[`DecimalInput renders type decimal number 1`] = `
 <DocumentFragment>
   <input
-    aria-label="decimal-number"
+    aria-label="Test label: input-a-value"
     class="criterion-input form-control"
     data-testid="decimal-number"
     step="0.01"

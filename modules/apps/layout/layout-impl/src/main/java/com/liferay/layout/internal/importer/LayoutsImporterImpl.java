@@ -435,6 +435,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					pageTemplateCollection.getDescription());
 		}
 
+		if (layoutPageTemplateCollection == null) {
+			throw new PortalException(
+				"Invalid layout page template collection ID: " +
+					layoutPageTemplateCollectionId);
+		}
+
 		return layoutPageTemplateCollection;
 	}
 

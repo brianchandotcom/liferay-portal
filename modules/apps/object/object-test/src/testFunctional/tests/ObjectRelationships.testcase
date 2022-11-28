@@ -1134,6 +1134,91 @@ definition {
 		}
 	}
 
+	@description = "LPS-163658 - Verify that it's not possible to relate an entry to itself"
+	@priority = "5"
+	test CannotRelateAnEntryWithItself {
+		property portal.acceptance = "true";
+
+		task ("Given: An object related to itself, in a Many-to-Many relationship") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object LPS163658",
+				objectName = "CustomObjectLPS163658",
+				pluralLabelName = "Custom Objects LPS163658");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObjectLPS163658");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object LPS163658");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.addObjectRelationshipViaUI(
+				label = "Relationship",
+				object = "Custom Object LPS163658",
+				type = "Many to Many");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObjectLPS163658");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object LPS163658");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldLabelName = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			Button.clickSave();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectLPS163658");
+		}
+
+		task ("And: Add a custom entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObjectLPS163658",
+				value = "Entry Test");
+		}
+
+		task ("When: The user relates the entry to another entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectLPS163658");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+			ObjectPortlet.gotoRelationshipTab();
+		}
+
+		task ("Then: The entry cannot be related to itself") {
+			CreateObject.assertRelationshipNotPresent();
+		}
+	}
+
 	@description = "LPS-155537 - Verify that it's not possible to see the parameter when adding relationships that don't require it"
 	@priority = "3"
 	test CannotSeeParameterWhenNotRequiredByRelationship {

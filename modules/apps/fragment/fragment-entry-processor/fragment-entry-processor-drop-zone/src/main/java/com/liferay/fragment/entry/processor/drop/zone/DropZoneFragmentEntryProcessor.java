@@ -230,17 +230,19 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			return;
 		}
 
-		Set<String> elementIds = new LinkedHashSet<>();
+		Set<String> elementDropZoneIds = new LinkedHashSet<>();
 
 		for (Element element : elements) {
 			String dropZoneId = element.attr("data-lfr-drop-zone-id");
 
 			if (Validator.isNotNull(dropZoneId)) {
-				elementIds.add(dropZoneId);
+				elementDropZoneIds.add(dropZoneId);
 			}
 		}
 
-		if (!elementIds.isEmpty() && (elementIds.size() != elements.size())) {
+		if (!elementDropZoneIds.isEmpty() &&
+			(elementDropZoneIds.size() != elements.size())) {
+
 			throw new FragmentEntryContentException(
 				_language.get(
 					_portal.getResourceBundle(LocaleUtil.getDefault()),

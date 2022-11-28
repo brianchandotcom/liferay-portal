@@ -5,6 +5,13 @@ definition {
 
 		if (isSet(userAccountId)) {
 			var api = "user-accounts/${userAccountId}";
+
+			if (isSet(customObjectId)) {
+				var api = "user-accounts/${userAccountId}/${relationshipName}/${customObjectId}";
+			}
+			else {
+				var api = "user-accounts/${userAccountId}/${relationshipName}";
+			}
 		}
 		else {
 			var api = "user-accounts";
@@ -18,6 +25,34 @@ definition {
 		''';
 
 		return "${curl}";
+	}
+
+	macro assertResponseHasCorrectRelatedEntryName {
+		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${expectedValue}");
+
+		var response = UserAccountAPI.getRelationshipByUserAccountId(
+			relationshipName = "${relationshipName}",
+			userAccountId = "${userAccountId}");
+
+		var actual = JSONUtil.getWithJSONPath("${response}", "$.items[?(@.id==${customObjectEntryId})].name");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedValue}");
+	}
+
+	macro assertResponseNotIncludeDetailsOfDeletedObjectEntry {
+		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${expectedValue}");
+
+		var response = UserAccountAPI.getRelationshipByUserAccountId(
+			relationshipName = "${relationshipName}",
+			userAccountId = "${userAccountId}");
+
+		var actual = JSONUtil.getWithJSONPath("${response}", "$..items");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedValue}");
 	}
 
 	macro createUserAccount {
@@ -37,17 +72,21 @@ definition {
 		return "${response}";
 	}
 
-	macro deleteUserAccount {
-		var curl = UserAccountAPI._curlUserAccount(userAccountId = "${staticUserAccountId}");
+	macro getRelationshipByUserAccountId {
+		var curl = UserAccountAPI._curlUserAccount(
+			relationshipName = "${relationshipName}",
+			userAccountId = "${userAccountId}");
 
-		JSONCurlUtil.delete("${curl}");
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
 	}
 
 	macro getUpdatedFieldOfUserAccountWithPatchRequest {
 		Variables.assertDefined(parameterList = "${fieldName},${updatedFieldValue}");
 
 		if (!(isSet(userAccountId))) {
-			var userAccountId = "${staticUserAccountId}";
+			var userAccountId = "${UserAccountId}";
 		}
 
 		var curl = UserAccountAPI._curlUserAccount(userAccountId = "${userAccountId}");
@@ -64,7 +103,7 @@ definition {
 		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName},${fieldName},${updatedFieldValue}");
 
 		if (!(isSet(userAccountId))) {
-			var userAccountId = "${staticUserAccountId}";
+			var userAccountId = "${UserAccountId}";
 		}
 
 		var curl = UserAccountAPI._curlUserAccount(userAccountId = "${userAccountId}");
@@ -85,18 +124,46 @@ definition {
 		return "${valueOfField}";
 	}
 
-	macro setUpGlobalUserAccountId {
-		var response = UserAccountAPI.createUserAccount(
-			alternateName = "${alternateName}",
-			emailAddress = "${emailAddress}",
-			familyName = "${familyName}",
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}",
-			givenName = "${givenName}");
+	macro relateObjectEntries {
+		Variables.assertDefined(parameterList = "${userAccountId},${customObjectId},${relationshipName}");
 
-		static var staticUserAccountId = JSONUtil.getWithJSONPath("${response}", "$.id");
+		var curl = UserAccountAPI._curlUserAccount(
+			customObjectId = "${customObjectId}",
+			relationshipName = "${relationshipName}",
+			userAccountId = "${userAccountId}");
+
+		var response = JSONCurlUtil.put("${curl}");
 
 		return "${response}";
+	}
+
+	macro setUpGlobalUserAccountId {
+		var response1 = UserAccountAPI.createUserAccount(
+			alternateName = "${alternateName1}",
+			emailAddress = "${emailAddress1}",
+			familyName = "${familyName1}",
+			fieldName = "${fieldName1}",
+			fieldValue = "${fieldValue1}",
+			givenName = "${givenName1}");
+		var response2 = UserAccountAPI.createUserAccount(
+			alternateName = "${alternateName2}",
+			emailAddress = "${emailAddress2}",
+			familyName = "${familyName2}",
+			fieldName = "${fieldName2}",
+			fieldValue = "${fieldValue2}",
+			givenName = "${givenName2}");
+		static var staticUserAccountId1 = JSONUtil.getWithJSONPath("${response1}", "$.id");
+		static var staticUserAccountId2 = JSONUtil.getWithJSONPath("${response2}", "$.id");
+		static var staticResponse1 = "${response1}";
+		static var staticResponse2 = "${response2}";
+
+		return "${staticResponse1}";
+
+		return "${staticResponse2}";
+
+		return "${staticUserAccountId1}";
+
+		return "${staticUserAccountId2}";
 	}
 
 }

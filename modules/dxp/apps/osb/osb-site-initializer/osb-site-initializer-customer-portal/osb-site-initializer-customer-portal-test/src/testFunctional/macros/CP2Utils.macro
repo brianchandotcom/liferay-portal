@@ -139,4 +139,17 @@ definition {
 		}
 	}
 
+	macro selectPaginationNumber {
+		if (IsElementPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON")) {
+			Click(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
+
+			AssertVisible(
+				key_quantity = "${quantity}",
+				locator1 = "CP2Utils#PAGINATION_BUTTON_ITEM");
+
+			Click(
+				key_quantity = "${quantity}",
+				locator1 = "CP2Utils#PAGINATION_BUTTON_ITEM");
+		}
+	}
 }

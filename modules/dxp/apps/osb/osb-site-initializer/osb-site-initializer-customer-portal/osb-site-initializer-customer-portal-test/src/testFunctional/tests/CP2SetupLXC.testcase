@@ -189,7 +189,15 @@ definition {
 	@priority = "4"
 	test CanViewTheAdditionalFields {
 
-		// TODO LPS-169247 CanViewTheAdditionalFields pending implementation
+		 // Needs refactor since it depends on example FIFA account
+
+        task ("And I assert that by clicking the 'Add Another Admin' button three more fields are shown in the form") {
+            CustomerPortal.clickAtButton(text = "Add Another Admin");
+
+            CP2LXCSetup.assertThatTheExtraFieldsAreVisible(
+                fieldsList = "fullName,email,github",
+                position = "2");
+        }
 
 	}
 

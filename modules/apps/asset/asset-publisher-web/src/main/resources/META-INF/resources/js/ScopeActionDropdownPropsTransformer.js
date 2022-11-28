@@ -12,21 +12,44 @@
  * details.
  */
 
-import {openModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	addScope: ({url}) => {
 		submitForm(document.hrefFm, url);
 	},
-	openScopeSelector: ({url}) => {
-		openModal({
+	openScopeSelector: ({eventName, id, url}, portletNamespace) => {
+		openSelectionModal({
+			id,
+			onSelect(selectedItem) {
+				let groupId = 0;
+
+				if (selectedItem.value) {
+					const itemValue = JSON.parse(selectedItem.value);
+
+					groupId = itemValue.groupId;
+				}
+				else {
+					groupId = selectedItem.groupid;
+				}
+
+				const form = document.getElementById(`${portletNamespace}fm`);
+
+				Liferay.Util.postForm(form, {
+					data: {
+						cmd: 'add-scope',
+						groupId,
+					},
+				});
+			},
+			selectEventName: eventName,
 			title: Liferay.Language.get('scope'),
 			url,
 		});
 	},
 };
 
-export default function propsTransformer({items, ...props}) {
+export default function propsTransformer({items, portletNamespace, ...props}) {
 	const updateItem = (item) => {
 		return {
 			...item,
@@ -36,7 +59,7 @@ export default function propsTransformer({items, ...props}) {
 				if (action) {
 					event.preventDefault();
 
-					ACTIONS[action]?.(item.data);
+					ACTIONS[action]?.(item.data, portletNamespace);
 				}
 			},
 		};

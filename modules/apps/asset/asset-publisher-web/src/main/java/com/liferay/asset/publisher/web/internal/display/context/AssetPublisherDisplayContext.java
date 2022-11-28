@@ -1307,6 +1307,9 @@ public class AssetPublisherDisplayContext {
 		dropdownItemList.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "openScopeSelector");
+				dropdownItem.putData("eventName", itemSelectorEventName);
+				dropdownItem.putData(
+					"id", HtmlUtil.escapeJS(getPortletResource()));
 				dropdownItem.putData(
 					"url",
 					PortletURLBuilder.create(

@@ -63,6 +63,32 @@ public class DDLRecordServiceWrapper
 	}
 
 	/**
+	 * Adds a record referencing the record set.
+	 *
+	 * @param groupId the primary key of the record's group
+	 * @param recordSetId the primary key of the record set
+	 * @param displayIndex the index position in which the record is
+	 displayed in the spreadsheet view
+	 * @param fieldsMap the record values. The fieldsMap is a map of field
+	 names and its Serializable values.
+	 * @param serviceContext the service context to be applied. This can
+	 set the UUID, guest permissions, and group permissions for
+	 the record.
+	 * @return the record
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public DDLRecord addRecord(
+			long groupId, long recordSetId, int displayIndex,
+			java.util.Map<String, java.io.Serializable> fieldsMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddlRecordService.addRecord(
+			groupId, recordSetId, displayIndex, fieldsMap, serviceContext);
+	}
+
+	/**
 	 * Deletes the record and its resources.
 	 *
 	 * @param recordId the primary key of the record to be deleted

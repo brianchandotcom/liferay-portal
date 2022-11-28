@@ -51,6 +51,7 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -112,6 +113,28 @@ public interface DDLRecordLocalService
 	public DDLRecord addRecord(
 			long userId, long groupId, long recordSetId, int displayIndex,
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * Adds a record that's based on the fields map and that references the
+	 * record set.
+	 *
+	 * @param userId the primary key of the record's creator/owner
+	 * @param groupId the primary key of the record's group
+	 * @param recordSetId the primary key of the record set
+	 * @param displayIndex the index position in which the record is
+	 displayed in the spreadsheet view
+	 * @param fieldsMap the record values. The fieldsMap is a map of field
+	 names and their serializable values.
+	 * @param serviceContext the service context to be applied. This can
+	 set the UUID, guest permissions, and group permissions for
+	 the record.
+	 * @return the record
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public DDLRecord addRecord(
+			long userId, long groupId, long recordSetId, int displayIndex,
+			Map<String, Serializable> fieldsMap, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

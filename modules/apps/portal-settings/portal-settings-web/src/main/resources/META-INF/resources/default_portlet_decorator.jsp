@@ -23,9 +23,9 @@
 		<br />
 
 		<aui:select label="default-portlet-decorator" name='<%= "settings--" + PropsKeys.DEFAULT_PORTLET_DECORATOR_ID + "--" %>' value="<%= (String)request.getAttribute(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID) %>">
-			<aui:option label="Barebone" value="barebone" />
-			<aui:option label="Borderless" value="borderless" />
-			<aui:option label="Decorate" value="decorate" />
+			<aui:option label="barebone" value="barebone" />
+			<aui:option label="borderless" value="borderless" />
+			<aui:option label="decorate" value="decorate" />
 		</aui:select>
 	</div>
 </div>

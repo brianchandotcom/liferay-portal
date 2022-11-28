@@ -1074,13 +1074,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
-			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
-				json);
+			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
 
 			if (objectDefinition == null) {
 				_log.error(
-					"Unable to transform object definition from JSON: " +
-					json);
+					"Unable to transform object definition from JSON: " + json);
 
 				continue;
 			}
@@ -1091,7 +1089,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					"C_" + objectDefinition.getName());
 
 			if (!objectDefinitionPublish.isApproved()) {
-
 				objectDefinition =
 					objectDefinitionResource.patchObjectDefinition(
 						objectDefinitionPublish.getObjectDefinitionId(),
@@ -1178,7 +1175,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 						objectDefinition);
 
 				if (!json.contains("accountEntryRestrictedObjectFieldName")) {
-
 					objectDefinitionResource.postObjectDefinitionPublish(
 						objectDefinition.getId());
 				}
@@ -2726,7 +2722,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			json = _replace(json, objectDefinitionIdsStringUtilReplaceValues);
 
-				ObjectRelationship objectRelationship = ObjectRelationship.toDTO(
+			ObjectRelationship objectRelationship = ObjectRelationship.toDTO(
 				json);
 
 			if (objectRelationship == null) {

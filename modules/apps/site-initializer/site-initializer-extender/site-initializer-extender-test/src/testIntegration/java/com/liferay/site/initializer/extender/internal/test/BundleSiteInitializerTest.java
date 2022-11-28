@@ -88,7 +88,6 @@ import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -1054,8 +1053,7 @@ public class BundleSiteInitializerTest {
 			objectRelationshipResource.
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
-					objectRelationshipResource.toFilter(
-						"name eq 'testOR1'"),
+					objectRelationshipResource.toFilter("name eq 'testOR1'"),
 					null);
 
 		Assert.assertNotNull(page1);
@@ -1090,7 +1088,6 @@ public class BundleSiteInitializerTest {
 			existingObjectRelationship2.getType();
 
 		Assert.assertEquals("manyToMany", objectRelationshipType2.toString());
-
 	}
 
 	private void _assertOrganizations(ServiceContext serviceContext)

@@ -1,5 +1,14 @@
 # Poshi Runner Change Log
 
+## 1.0.390
+
+### WebDriver
+
+* [POSHI-36](https://issues.liferay.com/browse/POSHI-36) - Deprecate typeAlloyEditor
+* [POSHI-401](https://issues.liferay.com/browse/POSHI-401) - Add fixes for using Chrome on remote webdriver
+* [POSHI-431](https://issues.liferay.com/browse/POSHI-431) - Investigate Type function not clearing input
+* [POSHI-441](https://issues.liferay.com/browse/POSHI-441) - Add implicit wait when getting wrappedwebdriver objects
+
 ## 1.0.387
 
 ### Core

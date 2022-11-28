@@ -44,10 +44,6 @@ public class MyWorkflowTasksWorkflowUserNotificationDefinition
 				true));
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(
-				"mobile", UserNotificationDeliveryConstants.TYPE_PUSH, true,
-				true));
-		addUserNotificationDeliveryType(
-			new UserNotificationDeliveryType(
 				"website", UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
 				true));
 	}

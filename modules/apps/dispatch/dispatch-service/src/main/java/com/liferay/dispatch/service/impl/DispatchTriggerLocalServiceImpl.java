@@ -361,6 +361,18 @@ public class DispatchTriggerLocalServiceImpl
 				"Dispatch trigger name is null for company " + companyId);
 		}
 
+		DispatchTrigger dispatchTrigger = dispatchTriggerPersistence.fetchByC_N(
+			companyId, name);
+
+		if ((dispatchTrigger != null) &&
+			(dispatchTrigger.getDispatchTriggerId() != dispatchTriggerId)) {
+
+			throw new DuplicateDispatchTriggerException(
+				StringBundler.concat(
+					"Dispatch trigger name \"", name,
+					"\" already exists for company ", companyId));
+		}
+
 		DispatchTaskExecutor dispatchTaskExecutor =
 			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
 				dispatchTaskExecutorType);
@@ -371,21 +383,6 @@ public class DispatchTriggerLocalServiceImpl
 					"Unable to get dispatch task executor type for \"",
 					dispatchTaskExecutorType, "\""));
 		}
-
-		DispatchTrigger dispatchTrigger = dispatchTriggerPersistence.fetchByC_N(
-			companyId, name);
-
-		if ((dispatchTrigger == null) ||
-			((dispatchTriggerId > 0) &&
-			 (dispatchTrigger.getDispatchTriggerId() == dispatchTriggerId))) {
-
-			return;
-		}
-
-		throw new DuplicateDispatchTriggerException(
-			StringBundler.concat(
-				"Dispatch trigger name \"", name,
-				"\" already exists for company ", companyId));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

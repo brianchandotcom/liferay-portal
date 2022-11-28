@@ -19,6 +19,7 @@ import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerSchedulerException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.internal.messaging.TestDispatchTaskExecutor;
 import com.liferay.dispatch.model.DispatchLog;
@@ -51,6 +52,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 import org.junit.Assert;
@@ -79,13 +81,15 @@ public class DispatchTriggerLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		_addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, _getRandomDispatchExecutorType(), 1));
 
 		Class<?> exceptionClass = Exception.class;
 
 		try {
 			_addDispatchTrigger(
-				DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+				DispatchTriggerTestUtil.randomDispatchTrigger(
+					user, _getRandomDispatchExecutorType(), 1));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -97,7 +101,8 @@ public class DispatchTriggerLocalServiceTest {
 
 		try {
 			_addDispatchTrigger(
-				DispatchTriggerTestUtil.randomDispatchTrigger(user, -1));
+				DispatchTriggerTestUtil.randomDispatchTrigger(
+					user, _getRandomDispatchExecutorType(), -1));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -189,7 +194,8 @@ public class DispatchTriggerLocalServiceTest {
 			while (dispatchTriggersCount-- > 0) {
 				_addDispatchTrigger(
 					DispatchTriggerTestUtil.randomDispatchTrigger(
-						user, RandomTestUtil.nextInt()));
+						user, _getRandomDispatchExecutorType(),
+						RandomTestUtil.nextInt()));
 			}
 		}
 
@@ -224,7 +230,8 @@ public class DispatchTriggerLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		DispatchTrigger expectedDispatchTrigger =
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1);
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, _getRandomDispatchExecutorType(), 1);
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
 			expectedDispatchTrigger);
@@ -275,9 +282,11 @@ public class DispatchTriggerLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger1 = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, _getRandomDispatchExecutorType(), 1));
 		DispatchTrigger dispatchTrigger2 = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 2));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, _getRandomDispatchExecutorType(), 2));
 
 		Class<?> exceptionClass = Exception.class;
 
@@ -317,14 +326,16 @@ public class DispatchTriggerLocalServiceTest {
 		User user1 = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger1 = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user1, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user1, _getRandomDispatchExecutorType(), 1));
 
 		Company company = CompanyTestUtil.addCompany();
 
 		User user2 = UserTestUtil.addUser(company);
 
 		DispatchTrigger dispatchTrigger2 = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user2, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user2, _getRandomDispatchExecutorType(), 1));
 
 		Assert.assertEquals(
 			dispatchTrigger1.getName(), dispatchTrigger2.getName());
@@ -419,8 +430,29 @@ public class DispatchTriggerLocalServiceTest {
 				value));
 	}
 
+	private String _getRandomDispatchExecutorType() {
+		Set<String> dispatchTaskExecutorTypes =
+			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
+
+		int idx = 0;
+
+		int randomTypeIdx = RandomTestUtil.randomInt(
+			0, dispatchTaskExecutorTypes.size());
+
+		for (String dispatchTaskExecutorType : dispatchTaskExecutorTypes) {
+			if (idx++ == randomTypeIdx) {
+				return dispatchTaskExecutorType;
+			}
+		}
+
+		return TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST;
+	}
+
 	@Inject
 	private DispatchLogLocalService _dispatchLogLocalService;
+
+	@Inject
+	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

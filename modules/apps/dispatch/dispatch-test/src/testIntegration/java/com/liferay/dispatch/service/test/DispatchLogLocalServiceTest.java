@@ -19,6 +19,7 @@ import com.liferay.dispatch.exception.DispatchLogStartDateException;
 import com.liferay.dispatch.exception.DispatchLogStatusException;
 import com.liferay.dispatch.exception.NoSuchTriggerException;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
+import com.liferay.dispatch.internal.messaging.TestDispatchTaskExecutor;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
@@ -88,7 +89,9 @@ public class DispatchLogLocalServiceTest {
 			NoSuchTriggerException.class, exceptionClass);
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST,
+				1));
 
 		try {
 			Date startDate = dispatchLog.getStartDate();
@@ -179,7 +182,9 @@ public class DispatchLogLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST,
+				1));
 
 		DispatchLog dispatchLog =
 			_dispatchLogLocalService.fetchLatestDispatchLog(
@@ -243,7 +248,9 @@ public class DispatchLogLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST,
+				1));
 
 		_addDispatchLogs(
 			user, dispatchTrigger.getDispatchTriggerId(),
@@ -263,7 +270,9 @@ public class DispatchLogLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST,
+				1));
 
 		DispatchLog expectedDispatchLog = DispatchLogTestUtil.randomDispatchLog(
 			user, DispatchTaskStatus.FAILED);
@@ -298,7 +307,9 @@ public class DispatchLogLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
-			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST,
+				1));
 
 		DispatchLog expectedDispatchLog = DispatchLogTestUtil.randomDispatchLog(
 			user, DispatchTaskStatus.IN_PROGRESS);

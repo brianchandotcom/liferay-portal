@@ -14,7 +14,27 @@
 
 import React from 'react';
 
+import {fetchAccountsFields, updateAccountsFields} from '../../utils/api';
 import Modal, {ICommonModalProps} from './Modal';
+
+const columns = [
+	{
+		expanded: true,
+		label: Liferay.Language.get('attribute'),
+		value: 'attribute',
+	},
+
+	{
+		expanded: true,
+		label: Liferay.Language.get('data-type'),
+		value: 'dataType',
+	},
+	{
+		expanded: true,
+		label: Liferay.Language.get('sample-data'),
+		value: 'sampleData',
+	},
+];
 
 const AccountsAttributesModal: React.FC<ICommonModalProps> = ({
 	observer,
@@ -22,28 +42,15 @@ const AccountsAttributesModal: React.FC<ICommonModalProps> = ({
 	onSubmit,
 }) => (
 	<Modal
-		columns={[
-			{
-				expanded: true,
-				label: Liferay.Language.get('attribute'),
-				value: 'attribute',
-			},
-
-			{
-				expanded: true,
-				label: Liferay.Language.get('data-type'),
-				value: 'dataType',
-			},
-			{
-				expanded: true,
-				label: Liferay.Language.get('sample-data'),
-				value: 'sampleData',
-			},
-		]}
+		columns={columns}
 		observer={observer}
 		onCancel={onCancel}
-		onSubmit={onSubmit}
-		requestFn={() => Promise.resolve()}
+		onSubmit={async (items) => {
+			const {ok} = await updateAccountsFields(items);
+
+			ok && onSubmit();
+		}}
+		requestFn={fetchAccountsFields}
 		title={Liferay.Language.get('sync-account-attributes')}
 	/>
 );

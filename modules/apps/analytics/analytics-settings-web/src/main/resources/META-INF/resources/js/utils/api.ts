@@ -155,6 +155,15 @@ export function fetchPeopleFields(params: TTableRequestParams) {
 	);
 }
 
+export function fetchAccountsFields(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
+
+	return request(
+		`/fields/accounts?${queryString.replace('keywords', 'keyword')}`,
+		{method: 'GET'}
+	);
+}
+
 type TField = {
 	example: string;
 	name: string;
@@ -166,6 +175,13 @@ type TField = {
 
 export function updatePeopleFields(fields: TField[]) {
 	return request('/fields/people', {
+		body: JSON.stringify(fields),
+		method: 'PATCH',
+	});
+}
+
+export function updateAccountsFields(fields: TField[]) {
+	return request('/fields/accounts', {
 		body: JSON.stringify(fields),
 		method: 'PATCH',
 	});

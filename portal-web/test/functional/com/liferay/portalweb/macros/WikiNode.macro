@@ -54,7 +54,9 @@ definition {
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
 			value1 = "${wikiNodeName}");
 
-		Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
+		Click(
+			key_listEntry = "${wikiNodeName}",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		PortletEntry.clickMoveToRecycleBin();
 
@@ -70,7 +72,9 @@ definition {
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
 			value1 = "${wikiNodeName}");
 
-		Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
+		Click(
+			key_listEntry = "${wikiNodeName}",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 

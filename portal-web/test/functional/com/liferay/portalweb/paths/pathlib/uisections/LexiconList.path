@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>LIST_ENTRY_ELLIPSIS</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')] | //*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_ENTRY_ELLIPSIS_GENERIC</td>
-	<td>//*[@data-qa-id='row'][1]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//*[@data-qa-id='row'][1]//button[contains(@class,'dropdown-toggle')] | //*[@data-qa-id='row'][1]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

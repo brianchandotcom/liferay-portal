@@ -201,7 +201,9 @@ definition {
 
 		AssertVisible(locator1 = "Announcements#CARD_VIEW_ENTRY_VERTICAL_ELLIPSIS");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Mark as Read");
+		Click.waitForMenuToggleJSClick(locator1 = "Announcements#CARD_VIEW_ENTRY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Mark as Read");
 
 		AssertElementNotPresent(locator1 = "Announcements#CARD_VIEW_ENTRY_CONTENT");
 	}

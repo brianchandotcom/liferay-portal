@@ -29,7 +29,13 @@ definition {
 	macro renameCollection {
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click.waitForMenuToggleJSClick(
+			key_headerName = "${collectionName}",
+			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		MenuItem.click(menuItem = "Edit");
 
 		Collection.editCollection(
 			collectionDescription = "${collectionDescription}",

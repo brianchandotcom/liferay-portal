@@ -69,7 +69,9 @@ definition {
 	macro deleteCP {
 		LexiconEntry.viewEntryName(rowEntry = "${ddlListName}");
 
-		Click.waitForMenuToggleJSClick(locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS_GENERIC");
+		Click.waitForMenuToggleJSClick(
+			key_listEntry = "${ddlListName}",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
 

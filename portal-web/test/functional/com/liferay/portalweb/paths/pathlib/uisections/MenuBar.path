@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELLIPSIS</td>
+	<td>//nav[contains(@class,'menubar')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAV_LINK</td>
 	<td>//nav[contains(@class,'menubar')]//li[contains(@class,'nav-item')]//a[normalize-space()='${key_menuBar}']</td>
 	<td></td>

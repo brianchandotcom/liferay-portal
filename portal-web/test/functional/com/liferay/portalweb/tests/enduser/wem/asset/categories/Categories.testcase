@@ -968,7 +968,9 @@ definition {
 		}
 
 		task ("When the Categories creator opens the dropdown menu of new vocabulary") {
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(
+				key_headerName = "Vocabulary Name",
+				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 		}
 
 		task ("Then the Categories creator can see the new icons on the dropdown menu") {

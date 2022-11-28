@@ -502,7 +502,11 @@ definition {
 
 	macro editCP {
 		if (!(isSet(skipNavigation))) {
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+			Click(
+				key_listEntry = "${threadSubject}",
+				locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
 		}
 
 		if (isSet(threadBody)) {
@@ -1237,7 +1241,9 @@ definition {
 			siteURLKey = "${siteURLKey}",
 			threadSubject = "${threadSubject}");
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		Click(
+			key_threadSubject = "${threadSubject}",
+			locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Unlock");
 
@@ -1502,7 +1508,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "MessageBoardsThread#MESSAGE_EDIT_1");
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		Click(locator1 = "MessageBoards#CONTAINER_VERTICAL_ELLIPSIS");
 
 		AssertTextEquals(
 			key_menuItem = "Unlock",

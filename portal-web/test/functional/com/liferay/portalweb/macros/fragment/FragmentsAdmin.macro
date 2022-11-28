@@ -106,8 +106,8 @@ definition {
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
 		Click.waitForMenuToggleJSClick(
-			key_card = "${collectionName}",
-			locator1 = "Card#CARD_ELLIPSIS");
+			key_headerName = "${collectionName}",
+			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Export");
 	}
@@ -177,7 +177,11 @@ definition {
 	macro importFragmentFromTempFolder {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Import");
+		Click.waitForMenuToggleJSClick(
+			key_headerName = "${collectionName}",
+			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Import");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

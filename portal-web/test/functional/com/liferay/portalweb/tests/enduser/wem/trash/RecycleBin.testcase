@@ -291,7 +291,8 @@ definition {
 			MessageboardsThread.editCP(
 				mbAttachmentFile = "Document_1.doc",
 				threadAttachmentRemove = "true",
-				threadBodyEdit = "MB Body Edit");
+				threadBodyEdit = "MB Body Edit",
+				threadSubject = "MB Subject");
 
 			PortletEntry.publish();
 		}

@@ -148,7 +148,13 @@ definition {
 	macro deleteAssociatedAssetTypeViaVocabularyCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click.waitForMenuToggleJSClick(
+			key_headerName = "${vocabularyName}",
+			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		MenuItem.click(menuItem = "Edit");
 
 		Panel.expandPanel(panel = "Associated Asset Types");
 
@@ -319,7 +325,13 @@ definition {
 		if ("${allowMultipleCategories}" == "false") {
 			Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+			Click.waitForMenuToggleJSClick(
+				key_headerName = "${vocabularyName}",
+				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			MenuItem.click(menuItem = "Edit");
 
 			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH");
 		}
@@ -352,7 +364,11 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Permissions");
+		Click.waitForMenuToggleJSClick(
+			key_headerName = "${vocabularyName}",
+			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Permissions");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -382,7 +398,13 @@ definition {
 	macro viewWithAssociatedAssetTypeCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click.waitForMenuToggleJSClick(
+			key_headerName = "${vocabularyName}",
+			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		MenuItem.click(menuItem = "Edit");
 
 		Panel.expandPanel(panel = "Associated Asset Types");
 

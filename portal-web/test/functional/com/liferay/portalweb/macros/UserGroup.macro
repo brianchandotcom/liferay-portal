@@ -160,9 +160,13 @@ definition {
 	macro gotoAddPageCP {
 		Search.searchCP(searchTerm = "${userGroupName}");
 
-		LexiconEntry.gotoEllipsisMenuItem(
-			menuItem = "Manage Pages",
-			rowEntry = "${userGroupName}");
+		Click.waitForMenuToggleJSClick(
+			key_tableEntry = "${userGroupName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		MenuItem.click(menuItem = "Manage Pages");
 	}
 
 	macro gotoProfilePages {

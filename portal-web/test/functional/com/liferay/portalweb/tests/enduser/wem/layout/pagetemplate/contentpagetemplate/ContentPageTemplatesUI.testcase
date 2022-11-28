@@ -118,11 +118,15 @@ definition {
 		}
 
 		task ("Assert the actions order of a collection") {
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(
+				key_headerName = "Page Template Collection",
+				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 			MenuItem.viewOrder(menuItemList = "Edit,Permissions,Delete");
 
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(
+				key_headerName = "Page Template Collection",
+				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 		}
 
 		task ("Assert the actions order of a page template") {

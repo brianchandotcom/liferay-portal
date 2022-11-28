@@ -1330,7 +1330,7 @@ definition {
 		task ("Import the global fragment zip file") {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
 
-			FragmentsAdmin.importFragmentFromTempFolder();
+			FragmentsAdmin.importFragmentFromTempFolder(collectionName = "Global Collection Name");
 		}
 
 		task ("View the imported global fragment") {

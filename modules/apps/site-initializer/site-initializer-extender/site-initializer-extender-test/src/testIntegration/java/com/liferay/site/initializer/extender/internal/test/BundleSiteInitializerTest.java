@@ -974,10 +974,14 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(objectDefinition1.isSystem(), false);
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
+		Assert.assertEquals(objectDefinition1.isAccountEntryRestricted(), true);
+		Assert.assertNotEquals(
+			"accountEntryRestrictedObjectFieldName", 0,
+			objectDefinition1.getAccountEntryRestrictedObjectFieldId());
 
 		_assertObjectActions(3, objectDefinition1);
 		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
-		_assertObjectFields(objectDefinition1, 9);
+		_assertObjectFields(objectDefinition1, 10);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
 		ObjectDefinition objectDefinition2 =
@@ -987,6 +991,10 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(objectDefinition2.isSystem(), false);
 		Assert.assertEquals(
 			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
+		Assert.assertEquals(objectDefinition2.isAccountEntryRestricted(), false);
+		Assert.assertEquals(
+			"accountEntryRestrictedObjectFieldName", 0,
+			objectDefinition2.getAccountEntryRestrictedObjectFieldId());
 
 		_assertObjectActions(2, objectDefinition2);
 		_assertObjectEntries(group.getGroupId(), objectDefinition2, 0);
@@ -1002,22 +1010,14 @@ public class BundleSiteInitializerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 		Assert.assertEquals(
 			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
+		Assert.assertEquals(objectDefinition1.isAccountEntryRestricted(), false);
+		Assert.assertEquals(
+			"accountEntryRestrictedObjectFieldName", 0,
+			objectDefinition1.getAccountEntryRestrictedObjectFieldId());
 
 		_assertObjectActions(0, objectDefinition3);
 		_assertObjectEntries(0, objectDefinition3, 5);
 		_assertObjectFields(objectDefinition3, 7);
-
-		ObjectDefinition objectDefinition4 =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				group.getCompanyId(), "C_TestObjectDefinition4");
-
-		Assert.assertEquals(objectDefinition4.isSystem(), false);
-		Assert.assertEquals(
-			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(objectDefinition4.isAccountEntryRestricted(), true);
-		Assert.assertNotEquals(
-			"accountEntryRestrictedObjectFieldName", 0,
-			objectDefinition4.getAccountEntryRestrictedObjectFieldId());
 	}
 
 	private void _assertObjectEntries(

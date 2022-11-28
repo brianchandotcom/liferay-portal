@@ -5,7 +5,7 @@
 	},
 	"name": "testOR3",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
-	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestObjectDefinition4$]",
-	"objectDefinitionName2": "TestObjectDefinition4",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",
+	"objectDefinitionName2": "TestObjectDefinition1",
 	"type": "oneToMany"
 }

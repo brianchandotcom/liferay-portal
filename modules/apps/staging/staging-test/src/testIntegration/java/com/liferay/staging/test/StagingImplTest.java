@@ -40,7 +40,9 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
@@ -123,6 +125,75 @@ public class StagingImplTest {
 		_group = GroupTestUtil.addGroup();
 		_remoteLiveGroup = GroupTestUtil.addGroup();
 		_remoteStagingGroup = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testDisableRemoteStagingWithIncorrectLiveGroupHiddenError()
+		throws Exception {
+
+		enableRemoteStaging(false);
+
+		Throwable caughtThrowable;
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNEL_SERVLET_HIDE_EXCEPTION_DATA", true)) {
+
+			caughtThrowable =
+				_disableRemoteStagingWithIncorrectLiveGroupId();
+		}
+
+		Assert.assertNotNull(caughtThrowable);
+
+		Class<? extends Throwable> caughtExceptionClass =
+			caughtThrowable.getClass();
+
+		Assert.assertNotEquals(PortalException.class, caughtExceptionClass);
+		Assert.assertNotEquals(SystemException.class, caughtExceptionClass);
+		Assert.assertNotEquals(
+			NoSuchGroupException.class, caughtExceptionClass);
+
+		Assert.assertEquals(RemoteExportException.class, caughtExceptionClass);
+
+		RemoteExportException remoteExportException =
+			(RemoteExportException)caughtThrowable;
+
+		Assert.assertEquals(
+			remoteExportException.getType(), RemoteExportException.NO_GROUP);
+	}
+
+	@Test
+	public void testDisableRemoteStagingWithIncorrectLiveGroupVisibleError()
+		throws Exception {
+
+		enableRemoteStaging(false);
+
+		Throwable caughtThrowable;
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNEL_SERVLET_HIDE_EXCEPTION_DATA", false)) {
+
+			caughtThrowable =
+				_disableRemoteStagingWithIncorrectLiveGroupId();
+		}
+
+		Assert.assertNotNull(caughtThrowable);
+
+		Class<? extends Throwable> caughtExceptionClass =
+			caughtThrowable.getClass();
+
+		Assert.assertNotEquals(PortalException.class, caughtExceptionClass);
+		Assert.assertNotEquals(SystemException.class, caughtExceptionClass);
+		Assert.assertNotEquals(
+			RemoteExportException.class, caughtExceptionClass);
+
+		Assert.assertEquals(NoSuchGroupException.class, caughtExceptionClass);
+
+		Assert.assertEquals(
+			"No Group exists with the primary key " +
+				(_remoteLiveGroup.getGroupId() + 1),
+			caughtThrowable.getMessage());
 	}
 
 	@Test
@@ -648,6 +719,39 @@ public class StagingImplTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	private Throwable _disableRemoteStagingWithIncorrectLiveGroupId() {
+		Throwable caughtThrowable = null;
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET",
+					"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.servlet.TunnelServlet",
+				LoggerTestUtil.OFF)) {
+
+			_setLiveGroupUnicodePropertiesIncorrectGroupId();
+
+			try {
+				StagingLocalServiceUtil.disableStaging(
+					_remoteLiveGroup,
+					ServiceContextTestUtil.getServiceContext(
+						_remoteStagingGroup.getGroupId()));
+			}
+			catch (Throwable throwable) {
+				caughtThrowable = throwable;
+			}
+			finally {
+				GroupUtil.clearCache();
+			}
+		}
+
+		return caughtThrowable;
+	}
+
 	private Throwable _enableRemoteStagingWithError() throws PortalException {
 		Throwable caughtThrowable = null;
 
@@ -707,6 +811,22 @@ public class StagingImplTest {
 
 			return unsafeSupplier.get();
 		}
+	}
+
+	private void _setLiveGroupUnicodePropertiesIncorrectGroupId() {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_remoteLiveGroup.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"staged", Boolean.TRUE.toString());
+		typeSettingsUnicodeProperties.setProperty(
+			"stagedRemotely", Boolean.TRUE.toString());
+		typeSettingsUnicodeProperties.setProperty("remoteAddress", "localhost");
+		typeSettingsUnicodeProperties.setProperty(
+			"remotePort",
+			String.valueOf(PortalUtil.getPortalServerPort(false)));
+		typeSettingsUnicodeProperties.setProperty(
+			"remoteGroupId", String.valueOf(_remoteLiveGroup.getGroupId() + 1));
 	}
 
 	private static final Locale[] _locales = {

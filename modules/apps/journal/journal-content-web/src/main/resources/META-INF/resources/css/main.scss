@@ -52,15 +52,9 @@
 		display: block;
 		visibility: hidden;
 
-		.lfr-icon-menu {
+		.dropdown-action > button {
 			background-color: #fff;
 			color: #0b5fff;
-		}
-
-		.lfr-icon-menu > a {
-			color: inherit;
-			line-height: 23px;
-			width: auto;
 		}
 	}
 

@@ -98,9 +98,6 @@ function Table({items, itemsActions, schema, style}) {
 		)
 	);
 
-	const SelectionComponent =
-		selectionType === 'multiple' ? ClayCheckbox : ClayRadio;
-
 	const columnNames = [];
 
 	if (selectable) {
@@ -161,46 +158,18 @@ function Table({items, itemsActions, schema, style}) {
 											item={item}
 											itemId={itemId}
 											itemsActions={itemsActions}
+											itemsChanges={itemsChanges}
+											selectItems={selectItems}
+											selectable={selectable}
 											selected={selectedItemsValue.includes(
 												itemId
 											)}
-										>
-											{selectable && (
-												<DndTable.Cell
-													className="item-selector"
-													columnName="item-selector"
-												>
-													<SelectionComponent
-														checked={
-															!!selectedItemsValue.find(
-																(element) =>
-																	String(
-																		element
-																	) ===
-																	String(
-																		itemId
-																	)
-															)
-														}
-														onChange={() =>
-															selectItems(itemId)
-														}
-														title={Liferay.Language.get(
-															'select-item'
-														)}
-														value={itemId}
-													/>
-												</DndTable.Cell>
-											)}
-
-											{getItemFields(
-												item,
-												visibleFields,
-												itemId,
-												itemsActions,
-												itemsChanges[itemId]
-											)}
-										</RowWithActions>
+											selectedItemsValue={
+												selectedItemsValue
+											}
+											selectionType={selectionType}
+											visibleFields={visibleFields}
+										/>
 
 										{nestedItems &&
 											nestedItems.map((nestedItem, i) => (
@@ -259,59 +228,75 @@ function Table({items, itemsActions, schema, style}) {
 	);
 }
 
-const ActionsCell = ({
-	item,
-	itemId,
-	itemsActions,
-	menuActive,
-	onMenuActiveChange,
-}) => {
-	return (
-		<DndTable.Cell className="item-actions" columnName="item-actions">
-			{(itemsActions?.length > 0 ||
-				item.actionDropdownItems?.length > 0) && (
-				<Actions
-					actions={itemsActions || item.actionDropdownItems}
-					itemData={item}
-					itemId={itemId}
-					menuActive={menuActive}
-					onMenuActiveChange={onMenuActiveChange}
-				/>
-			)}
-		</DndTable.Cell>
-	);
-};
-
 const RowWithActions = ({
 	active,
-	children,
 	className,
 	item,
 	itemId,
 	itemsActions,
+	itemsChanges,
+	selectItems,
+	selectable,
 	selected,
+	selectedItemsValue,
+	selectionType,
+	visibleFields,
 	...props
 }) => {
 	const [menuActive, setMenuActive] = useState(false);
+
+	const SelectionComponent =
+		selectionType === 'multiple' ? ClayCheckbox : ClayRadio;
 
 	return (
 		<DndTable.Row
 			className={classNames(className, {
 				active,
-				expanded: menuActive,
+				'menu-active': menuActive,
 				selected,
 			})}
 			{...props}
 		>
-			{children}
+			{selectable && (
+				<DndTable.Cell
+					className="item-selector"
+					columnName="item-selector"
+				>
+					<SelectionComponent
+						checked={
+							!!selectedItemsValue.find(
+								(element) => String(element) === String(itemId)
+							)
+						}
+						onChange={() => selectItems(itemId)}
+						title={Liferay.Language.get(
+							'select-item'
+						)}
+						value={itemId}
+					/>
+				</DndTable.Cell>
+			)}
 
-			<ActionsCell
-				item={item}
-				itemId={itemId}
-				itemsActions={itemsActions}
-				menuActive={menuActive}
-				onMenuActiveChange={setMenuActive}
-			/>
+			{getItemFields(
+				item,
+				visibleFields,
+				itemId,
+				itemsActions,
+				itemsChanges[itemId]
+			)}
+
+			<DndTable.Cell className="item-actions" columnName="item-actions">
+				{(itemsActions?.length > 0 ||
+					item.actionDropdownItems?.length > 0) && (
+					<Actions
+						actions={itemsActions || item.actionDropdownItems}
+						itemData={item}
+						itemId={itemId}
+						menuActive={menuActive}
+						onMenuActiveChange={setMenuActive}
+					/>
+				)}{' '}
+			</DndTable.Cell>
 		</DndTable.Row>
 	);
 };

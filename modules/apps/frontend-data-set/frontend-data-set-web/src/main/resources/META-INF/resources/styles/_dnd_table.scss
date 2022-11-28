@@ -161,7 +161,7 @@
 
 	&.with-quick-actions {
 		.dnd-tr:hover:not(.nested):not(.selected),
-		.dnd-tr.expanded:not(.nested):not(.selected) {
+		.dnd-tr.menu-active:not(.nested):not(.selected) {
 			.item-actions {
 				overflow: visible;
 				position: relative;

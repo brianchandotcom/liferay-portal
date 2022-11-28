@@ -14,8 +14,12 @@ import ClayPanel from '@clayui/panel';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
-const currentPath = Liferay.currentURL.split('/');
-const mdfClaimId = +currentPath[currentPath.length - 1];
+function getSiteVariables() {
+	const currentPath = Liferay.currentURL.split('/');
+	const mdfClaimId = +currentPath.at(-1);
+
+	return mdfClaimId;
+}
 
 const getIntlNumberFormat = () =>
 	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
@@ -61,6 +65,7 @@ const getIconSpriteMap = () => {
 
 const ReimbursementInvoice = () => {
 	const [document, setDocument] = useState();
+	const mdfClaimId = getSiteVariables();
 
 	useEffect(() => {
 		const getDocuments = async () => {
@@ -88,6 +93,7 @@ const ReimbursementInvoice = () => {
 		};
 
 		getDocuments();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const currentDocument = document?.items[0];
@@ -216,6 +222,7 @@ const BudgetBreakdownTable = ({activityId}) => {
 
 export default function () {
 	const [activities, setActivities] = useState();
+	const mdfClaimId = getSiteVariables();
 
 	useEffect(() => {
 		const getActivities = async () => {
@@ -243,6 +250,7 @@ export default function () {
 		};
 
 		getActivities();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (!activities) {

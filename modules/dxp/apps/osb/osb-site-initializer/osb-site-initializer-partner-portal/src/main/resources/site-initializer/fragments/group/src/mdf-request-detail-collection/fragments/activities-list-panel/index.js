@@ -14,9 +14,6 @@ import ClayPanel from '@clayui/panel';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
-const currentPath = Liferay.currentURL.split('/');
-const mdfRequestId = +currentPath.at(-1);
-
 const getIntlNumberFormat = () =>
 	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		currency: 'USD',
@@ -287,6 +284,9 @@ export default function () {
 
 	const [loading, setLoading] = useState(true);
 
+	const currentPath = Liferay.currentURL.split('/');
+	const mdfRequestId = +currentPath.at(-1);
+
 	useEffect(() => {
 		const getActivities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -317,6 +317,7 @@ export default function () {
 		if (mdfRequestId) {
 			getActivities();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (loading) {

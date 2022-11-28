@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.GitException;
-import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
-import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.upgrade.GradleBuildFile;
 import com.liferay.source.formatter.upgrade.GradleDependency;
 import com.liferay.source.formatter.util.FileUtil;
@@ -218,12 +216,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
-		SourceProcessor sourceProcessor = getSourceProcessor();
-
-		SourceFormatterArgs sourceFormatterArgs =
-			sourceProcessor.getSourceFormatterArgs();
-
-		String githubToken = sourceFormatterArgs.getGithubToken();
+		String githubToken = null;
 
 		if (Validator.isNull(githubToken)) {
 			File file = new File(_GITHUB_TOKEN_FILE_PATH);

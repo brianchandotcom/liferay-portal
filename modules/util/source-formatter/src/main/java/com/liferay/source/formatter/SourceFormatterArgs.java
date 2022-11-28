@@ -45,8 +45,6 @@ public class SourceFormatterArgs {
 
 	public static final String GIT_WORKING_BRANCH_NAME = "master";
 
-	public static final String GITHUB_TOKEN = null;
-
 	public static final boolean INCLUDE_GENERATED_FILES = false;
 
 	public static final boolean INCLUDE_SUBREPOSITORIES = false;
@@ -105,10 +103,6 @@ public class SourceFormatterArgs {
 
 	public List<String> getFileNames() {
 		return _fileNames;
-	}
-
-	public String getGithubToken() {
-		return _githubToken;
 	}
 
 	public String getGitWorkingBranchName() {
@@ -256,10 +250,6 @@ public class SourceFormatterArgs {
 		_formatLocalChanges = formatLocalChanges;
 	}
 
-	public void setGithubToken(String githubToken) {
-		_githubToken = githubToken;
-	}
-
 	public void setGitWorkingBranchName(String gitWorkingBranchName) {
 		_gitWorkingBranchName = gitWorkingBranchName;
 	}
@@ -326,7 +316,6 @@ public class SourceFormatterArgs {
 	private boolean _formatCurrentBranch = FORMAT_CURRENT_BRANCH;
 	private boolean _formatLatestAuthor = FORMAT_LATEST_AUTHOR;
 	private boolean _formatLocalChanges = FORMAT_LOCAL_CHANGES;
-	private String _githubToken = GITHUB_TOKEN;
 	private String _gitWorkingBranchName = GIT_WORKING_BRANCH_NAME;
 	private boolean _includeGeneratedFiles = INCLUDE_GENERATED_FILES;
 	private boolean _includeSubrepositories = INCLUDE_SUBREPOSITORIES;

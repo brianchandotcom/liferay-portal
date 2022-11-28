@@ -3,8 +3,8 @@
 	"label": {
 		"en_US": "Test Object Relationship 1"
 	},
-	"name": "accountEntryToTestObjectDefinition1",
-	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"name": "testOR1",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",
 	"objectDefinitionName2": "TestObjectDefinition1",
 	"type": "oneToMany"

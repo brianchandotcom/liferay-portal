@@ -14,7 +14,7 @@
 	"objectFieldSettings": [
 		{
 			"name": "objectRelationshipName",
-			"value": "accountEntryToTestObjectDefinition1"
+			"value": "testOR1"
 		},
 		{
 			"name": "objectFieldName",

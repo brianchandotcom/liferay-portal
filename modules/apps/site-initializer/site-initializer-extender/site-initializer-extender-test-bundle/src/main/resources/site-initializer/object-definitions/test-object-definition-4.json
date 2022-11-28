@@ -1,8 +1,10 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_TestOR3_accountEntryId",
 	"label": {
-		"en_US": "Test Object Definition 1"
+		"en_US": "Test Object Definition 4"
 	},
-	"name": "TestObjectDefinition1",
+	"name": "TestObjectDefinition4",
 	"objectFields": [
 		{
 			"DBType": "String",
@@ -16,7 +18,7 @@
 		}
 	],
 	"pluralLabel": {
-		"en_US": "Test Object Definitions 1"
+		"en_US": "Test Object Definitions 4"
 	},
 	"scope": "site"
 }

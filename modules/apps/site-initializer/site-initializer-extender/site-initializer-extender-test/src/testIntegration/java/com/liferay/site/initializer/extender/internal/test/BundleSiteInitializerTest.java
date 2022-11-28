@@ -974,10 +974,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(objectDefinition1.isSystem(), false);
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(objectDefinition1.isAccountEntryRestricted(), true);
-		Assert.assertNotEquals(
-			"accountEntryRestrictedObjectFieldName", 0,
-			objectDefinition1.getAccountEntryRestrictedObjectFieldId());
 
 		_assertObjectActions(3, objectDefinition1);
 		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
@@ -1002,14 +998,24 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(objectDefinition3.isSystem(), false);
 		Assert.assertEquals(
-			objectDefinition3.getScope(),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-		Assert.assertEquals(
 			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
 		_assertObjectActions(0, objectDefinition3);
 		_assertObjectEntries(0, objectDefinition3, 5);
-		_assertObjectFields(objectDefinition3, 7);
+
+		ObjectDefinition objectDefinition4 =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				group.getCompanyId(), "C_TestObjectDefinition4");
+
+		Assert.assertEquals(objectDefinition4.isSystem(), false);
+		Assert.assertEquals(
+			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
+		Assert.assertEquals(objectDefinition4.isAccountEntryRestricted(), true);
+		Assert.assertNotEquals(
+			"accountEntryRestrictedObjectFieldName", 0,
+			objectDefinition4.getAccountEntryRestrictedObjectFieldId());
+
+		_assertObjectEntries(0, objectDefinition4, 0);
 	}
 
 	private void _assertObjectEntries(
@@ -1049,7 +1055,7 @@ public class BundleSiteInitializerTest {
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter(
-						"name eq 'accountEntryToTestObjectDefinition1'"),
+						"name eq 'testOR1'"),
 					null);
 
 		Assert.assertNotNull(page1);
@@ -1084,6 +1090,7 @@ public class BundleSiteInitializerTest {
 			existingObjectRelationship2.getType();
 
 		Assert.assertEquals("manyToMany", objectRelationshipType2.toString());
+
 	}
 
 	private void _assertOrganizations(ServiceContext serviceContext)
@@ -1829,6 +1836,15 @@ public class BundleSiteInitializerTest {
 			if (objectDefinition3 != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
 					objectDefinition3.getObjectDefinitionId());
+			}
+
+			ObjectDefinition objectDefinition4 =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "C_TestObjectDefinition4");
+
+			if (objectDefinition4 != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition4.getObjectDefinitionId());
 			}
 
 			//FileUtil.deltree(unzipFolder);

@@ -301,4 +301,12 @@ definition {
 		AssertElementPresent(locator1 = "ACEventAnalysis#VIEW_TOTAL_NUMBER_RELATED_COLUMN_INFORMATION");
 	}
 
+	macro getColumnBreakdownValue {
+		var index = "${index}";
+
+		var breakdownValue = selenium.getText("ACEventAnalysis#COLUMN_BREAKDOWN_VALUES");
+
+		return "${breakdownValue}";
+	}
+
 }

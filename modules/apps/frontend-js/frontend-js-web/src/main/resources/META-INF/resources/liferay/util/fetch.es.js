@@ -53,6 +53,20 @@ export default function defaultFetch(resource, init = {}) {
 	if (resourceURL.origin === window.location.origin) {
 		headers.set('x-csrf-token', Liferay.authToken);
 		config.credentials = 'include';
+
+		const doAsUserIdEncoded = Liferay.ThemeDisplay.getDoAsUserIdEncoded();
+
+		if (doAsUserIdEncoded) {
+			resourceURL.searchParams.set('doAsUserId', doAsUserIdEncoded);
+			resourceLocation = resourceURL.toString();
+
+			if (typeof resource === 'string') {
+				resource = resourceLocation;
+			}
+			else {
+				resource = {...resource, url: resourceLocation};
+			}
+		}
 	}
 
 	new Headers(init.headers || {}).forEach((value, key) => {

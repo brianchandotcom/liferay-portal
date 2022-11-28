@@ -207,6 +207,7 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 											<clay:link
 												aria-label='<%= LanguageUtil.format(request, "x-opens-new-window", siteVerticalCard.getTitle(), false) %>'
 												borderless="<%= true %>"
+												cssClass="lfr-portal-tooltip"
 												displayType="secondary"
 												href="<%= siteVerticalCard.getHref() %>"
 												icon="shortcut"

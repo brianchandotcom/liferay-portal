@@ -1635,6 +1635,89 @@ definition {
 		}
 	}
 
+	@description = "LPS-158478 - Verify that it's possible to see all related entries to the entry on the relationship tab"
+	@priority = "5"
+	test CanSeeRelatedEntriesOnTab {
+		property portal.acceptance = "true";
+
+		task ("Given an object related to itself, in a Many-to-Many relationship and a custom entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 163657",
+				objectName = "CustomObject163657",
+				pluralLabelName = "Custom Objects 163657");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject163657");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject163657",
+				objectName_2 = "CustomObject163657",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject163657");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 163657");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			Button.clickSave();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163657");
+		}
+
+		task ("When the user relates the entry to another entry") {
+			for (var fieldEntry : list "A,B") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField",
+					objectName = "CustomObject163657",
+					value = "Entry ${fieldEntry}");
+			}
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject163657");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+			ObjectPortlet.gotoRelationshipTab();
+
+			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry B");
+		}
+
+		task ("Then all related entries to the entry must be displayed on the relationship tab") {
+			CreateObject.assertRelatedObject(relatedObject = "Entry B");
+		}
+	}
+
 	@description = "LPS-145393 - Verify it is possible to set a Title Field for a Native Object"
 	@priority = "4"
 	test CanSetTitleFieldForNativeObject {

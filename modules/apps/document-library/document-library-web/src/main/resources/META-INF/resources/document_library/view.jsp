@@ -52,6 +52,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				HashMapBuilder.<String, Object>put(
 					"bulkPermissionsConfiguration",
 					HashMapBuilder.<String, Object>put(
+						"defaultModelClassName", Folder.class.getSimpleName()
+					).put(
 						"permissionsURLs",
 						HashMapBuilder.<String, Object>put(
 							DLFileShortcut.class.getSimpleName(), dlViewDisplayContext.getPermissionURL(DLFileShortcutConstants.getClassName())
@@ -60,8 +62,6 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 						).put(
 							Folder.class.getSimpleName(), dlViewDisplayContext.getPermissionURL(DLFolderConstants.getClassName())
 						).build()
-					).put(
-						"defaultModelClassName", Folder.class.getSimpleName()
 					).build()
 				).put(
 					"collectDigitalSignaturePortlet", DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE

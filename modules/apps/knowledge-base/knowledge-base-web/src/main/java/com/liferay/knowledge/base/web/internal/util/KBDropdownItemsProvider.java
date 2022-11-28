@@ -106,9 +106,9 @@ public class KBDropdownItemsProvider {
 					_getEditActionUnsafeConsumer(kbArticle)
 				).add(
 					this::_hasAddPermission,
-					_getAddChildActionUnsafeConsumer(kbArticle)
+					_getAddChildArticleActionUnsafeConsumer(kbArticle)
 				).add(
-					() -> _hasKBChildArticles(kbArticle),
+					() -> _hasChildArticles(kbArticle),
 					_getViewChildArticlesActionUnsafeConsumer(kbArticle)
 				).add(
 					() ->
@@ -327,7 +327,7 @@ public class KBDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getAddChildActionUnsafeConsumer(KBArticle kbArticle) {
+	_getAddChildArticleActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -1053,12 +1053,12 @@ public class KBDropdownItemsProvider {
 		return false;
 	}
 
-	private boolean _hasKBChildArticles(KBArticle kbArticle) {
-		int childKBArticlesCount = KBArticleServiceUtil.getKBArticlesCount(
+	private boolean _hasChildArticles(KBArticle kbArticle) {
+		int childArticlesCount = KBArticleServiceUtil.getKBArticlesCount(
 			_themeDisplay.getScopeGroupId(), kbArticle.getResourcePrimKey(),
 			WorkflowConstants.STATUS_ANY);
 
-		if (childKBArticlesCount > 0) {
+		if (childArticlesCount > 0) {
 			return true;
 		}
 

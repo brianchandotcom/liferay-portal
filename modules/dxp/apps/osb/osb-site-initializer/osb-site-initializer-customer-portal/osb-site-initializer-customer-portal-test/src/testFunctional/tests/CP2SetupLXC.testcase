@@ -150,7 +150,38 @@ definition {
 	@priority = "3"
 	test AssertTheSuccessMessage {
 
-		// TODO LPS-169250 AssertTheSuccessMessage pending implementation
+		 // Needs refactor since it depends on example FIFA account
+
+        task ("Given I fill in all the required fields") {
+            CP2LXCSetup.typeAllSetupLXCInfoFields(
+                email = "test@liferay.com",
+                fullName = "Test Test",
+                github = "testUser",
+                incidentManagementEmail = "test@liferay.com",
+                incidentManagementFullName = "Test User",
+                projectId = "3809080",
+                region = "South America");
+
+            Button.click(button = "Submit");
+        }
+
+        task ("I assert that the form has been submitted") {
+            CustomerPortal.viewConfirmationModal(text = "Thank you for submitting this request!");
+
+            Button.click(button = "Done");
+        }
+
+        task ("Delete the entries and objects created") {
+            CustomerPortal.showCPObject(title = "Liferay Experience Cloud Environment");
+
+            CP2Utils.deleteSpecificObjectEntry(
+                email = "test@liferay.com",
+                portlet = "Liferay Experience Cloud Environments");
+
+            CP2Utils.deleteActivationStatus(
+                position = "30",
+                status = "In Progress");
+        }
 		
 	}
 

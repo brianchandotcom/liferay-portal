@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGINATION_BUTTON_ITEM</td>
+	<td>//*[contains(@class, 'dropdown-toggle') and text()='${key_quantity} items']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SVG_DROPDOWN</td>
 	<td>//*[contains(@class, 'cp-layout-header')]/descendant::span</td>
 	<td></td>

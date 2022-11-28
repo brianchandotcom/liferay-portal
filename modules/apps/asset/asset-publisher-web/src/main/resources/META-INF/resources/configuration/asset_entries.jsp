@@ -120,7 +120,7 @@ for (long groupId : groupIds) {
 			cssClass="mr-2"
 			displayType="secondary"
 			dropdownItems="<%= assetPublisherDisplayContext.getDropdownItems(group) %>"
-			label="select"
+			label="<%= title %>"
 			propsTransformer="js/AssetEntrySelectionDropdownPropsTransformer"
 			title="<%= title %>"
 		/>

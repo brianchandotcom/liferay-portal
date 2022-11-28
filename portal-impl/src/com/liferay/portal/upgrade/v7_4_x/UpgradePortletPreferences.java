@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -54,13 +53,18 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 					"preferences from PortletPreferences where preferences ",
 					"not like '", PortletConstants.DEFAULT_PREFERENCES,
 					"%' and preferences is not null")),
+			StringBundler.concat(
+				"insert into PortletPreferenceValue (mvccVersion, ",
+				"ctCollectionId, portletPreferenceValueId, companyId, ",
+				"portletPreferencesId, index_, largeValue, name, readOnly, ",
+				"smallValue) values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?)"),
 			resultSet -> new Object[] {
 				resultSet.getLong("ctCollectionId"),
 				resultSet.getLong("portletPreferencesId"),
 				resultSet.getLong("companyId"),
 				resultSet.getString("preferences")
 			},
-			values -> {
+			(values, preparedStatement) -> {
 				long ctCollectionId = (Long)values[0];
 				long portletPreferencesId = (Long)values[1];
 				long companyId = (Long)values[2];
@@ -68,7 +72,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 				_upgradePortletPreferences(
 					ctCollectionId, portletPreferencesId, companyId,
-					preferences);
+					preferences, preparedStatement);
 			},
 			null);
 	}
@@ -83,7 +87,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 	private void _upgradePortletPreferences(
 			long ctCollectionId, long portletPreferencesId, long companyId,
-			String preferences)
+			String preferences, PreparedStatement preparedStatement)
 		throws Exception {
 
 		if (preferences.isEmpty()) {
@@ -97,50 +101,37 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 			return;
 		}
 
-		try (PreparedStatement preparedStatement =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection,
-					StringBundler.concat(
-						"insert into PortletPreferenceValue (mvccVersion, ",
-						"ctCollectionId, portletPreferenceValueId, companyId, ",
-						"portletPreferencesId, index_, largeValue, name, ",
-						"readOnly, smallValue) values (0, ?, ?, ?, ?, ?, ?, ",
-						"?, ?, ?)"))) {
+		for (Preference preference : preferenceMap.values()) {
+			String[] values = preference.getValues();
 
-			for (Preference preference : preferenceMap.values()) {
-				String[] values = preference.getValues();
+			for (int i = 0; i < values.length; i++) {
+				String value = values[i];
 
-				for (int i = 0; i < values.length; i++) {
-					String value = values[i];
+				String largeValue = null;
+				String smallValue = null;
 
-					String largeValue = null;
-					String smallValue = null;
+				if (value.length() >
+						PortletPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
 
-					if (value.length() >
-							PortletPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
-
-						largeValue = value;
-					}
-					else {
-						smallValue = value;
-					}
-
-					preparedStatement.setLong(1, ctCollectionId);
-					preparedStatement.setLong(
-						2, increment(PortletPreferenceValue.class.getName()));
-					preparedStatement.setLong(3, companyId);
-					preparedStatement.setLong(4, portletPreferencesId);
-					preparedStatement.setInt(5, i);
-					preparedStatement.setString(6, largeValue);
-					preparedStatement.setString(7, preference.getName());
-					preparedStatement.setBoolean(8, preference.isReadOnly());
-					preparedStatement.setString(9, smallValue);
-
-					preparedStatement.addBatch();
+					largeValue = value;
 				}
-			}
+				else {
+					smallValue = value;
+				}
 
-			preparedStatement.executeBatch();
+				preparedStatement.setLong(1, ctCollectionId);
+				preparedStatement.setLong(
+					2, increment(PortletPreferenceValue.class.getName()));
+				preparedStatement.setLong(3, companyId);
+				preparedStatement.setLong(4, portletPreferencesId);
+				preparedStatement.setInt(5, i);
+				preparedStatement.setString(6, largeValue);
+				preparedStatement.setString(7, preference.getName());
+				preparedStatement.setBoolean(8, preference.isReadOnly());
+				preparedStatement.setString(9, smallValue);
+
+				preparedStatement.addBatch();
+			}
 		}
 	}
 

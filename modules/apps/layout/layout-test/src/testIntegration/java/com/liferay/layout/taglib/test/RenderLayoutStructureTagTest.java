@@ -15,10 +15,6 @@
 package com.liferay.layout.taglib.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
-import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
@@ -27,11 +23,6 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.model.MockObject;
-import com.liferay.journal.constants.JournalArticleConstants;
-import com.liferay.journal.constants.JournalContentPortletKeys;
-import com.liferay.journal.constants.JournalFolderConstants;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
@@ -41,15 +32,12 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -65,13 +53,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -85,7 +69,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -384,127 +367,6 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
-	@Ignore
-	@Test
-	public void testRenderLayoutTypePortletWithComplexData() throws Exception {
-		DataDefinition dataDefinition = DataDefinition.toDTO(
-			_readFileToString("dependencies/complex_data_definition.json"));
-
-		dataDefinition.setName(
-			HashMapBuilder.<String, Object>put(
-				String.valueOf(LocaleUtil.SPAIN), "TMX_Main_Menu"
-			).build());
-
-		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
-			_dataDefinitionResourceFactory.create();
-
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourcedBuilder.user(
-				TestPropsValues.getUser()
-			).build();
-
-		dataDefinition =
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				_group.getGroupId(), "journal", dataDefinition);
-
-		String xml = _readFileToString(
-			"dependencies/complex_journal_content.xml");
-
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_jsonFactory.looseSerialize(fileEntry));
-
-		JournalArticle journalArticle =
-			JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-				StringUtil.replace(
-					xml, "[$DOCUMENT_JSON$]", jsonObject.toString()),
-				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.SPAIN);
-
-		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layout,
-			JournalContentPortletKeys.JOURNAL_CONTENT, "column-1",
-			HashMapBuilder.put(
-				"articleId", new String[] {journalArticle.getArticleId()}
-			).put(
-				"groupId",
-				new String[] {String.valueOf(journalArticle.getGroupId())}
-			).put(
-				"showAvailableLocales", new String[] {Boolean.TRUE.toString()}
-			).build());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest();
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		RenderLayoutStructureTag renderLayoutStructureTag =
-			new RenderLayoutStructureTag();
-
-		renderLayoutStructureTag.setLayoutStructure(
-			_getDefaultMasterLayoutStructure());
-		renderLayoutStructureTag.setPageContext(
-			new MockPageContext(
-				null, mockHttpServletRequest, mockHttpServletResponse));
-
-		renderLayoutStructureTag.doTag(
-			mockHttpServletRequest, mockHttpServletResponse);
-
-		String content = mockHttpServletResponse.getContentAsString();
-
-		Assert.assertTrue(content.contains("Paquetes de Internet"));
-	}
-
-	@Test
-	public void testRenderLayoutTypePortletWithSimpleData() throws Exception {
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layout,
-			JournalContentPortletKeys.JOURNAL_CONTENT, "column-1",
-			HashMapBuilder.put(
-				"articleId", new String[] {journalArticle.getArticleId()}
-			).put(
-				"groupId",
-				new String[] {String.valueOf(journalArticle.getGroupId())}
-			).put(
-				"showAvailableLocales", new String[] {Boolean.TRUE.toString()}
-			).build());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest();
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		RenderLayoutStructureTag renderLayoutStructureTag =
-			new RenderLayoutStructureTag();
-
-		renderLayoutStructureTag.setLayoutStructure(
-			_getDefaultMasterLayoutStructure());
-		renderLayoutStructureTag.setPageContext(
-			new MockPageContext(
-				null, mockHttpServletRequest, mockHttpServletResponse));
-
-		renderLayoutStructureTag.doTag(
-			mockHttpServletRequest, mockHttpServletResponse);
-
-		String content = mockHttpServletResponse.getContentAsString();
-
-		Assert.assertFalse(content.contains("Paquetes de Internet"));
-	}
-
 	private void _assertErrorMessage(
 		String content, String expectedErrorMessage) {
 
@@ -657,27 +519,14 @@ public class RenderLayoutStructureTagTest {
 		return renderLayoutStructureTag;
 	}
 
-	private String _readFileToString(String s) throws Exception {
-		return new String(FileUtil.getBytes(getClass(), s));
-	}
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
-
-	@Inject
-	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private EditPageInfoItemCapability _editPageInfoItemCapability;
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
 

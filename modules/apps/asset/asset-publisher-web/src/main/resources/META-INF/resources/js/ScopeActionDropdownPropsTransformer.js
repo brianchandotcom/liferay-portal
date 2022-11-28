@@ -20,7 +20,7 @@ const ACTIONS = {
 	},
 	openScopeSelector: ({url}) => {
 		openModal({
-			title: Liferay.language.get('scope'),
+			title: Liferay.Language.get('scope'),
 			url,
 		});
 	},

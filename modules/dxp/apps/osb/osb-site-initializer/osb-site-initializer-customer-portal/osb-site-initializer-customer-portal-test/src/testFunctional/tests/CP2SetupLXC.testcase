@@ -80,6 +80,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-169248 | Test Summary: Assert that the user will have the option to remove additional Admins from the project before submitting the form"
+	@ignore = "true"
 	@priority = "3"
 	test AssertThatTheAdditionalFieldsHaveBeenRemoved {
 
@@ -104,6 +105,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-169246 | Test Summary: Assert that the user can only submit the form after filling out all required fields (Project ID - Primary Region - Project Admin - First Name - Last Name - Email Address - GitHub Username - Incident Management Contact)"
+	@ignore = "true"
 	@priority = "4"
 	test AssertThatTheUserCanOnlySubmitTheFormAfterFillingOutAllRequiredFields {
 
@@ -129,6 +131,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-169249 | Test Summary: Assert that the user is not allowed to continue if they have entered an invalid business email address for the owner and incident management contacts"
+	@ignore = "true"
 	@priority = "3"
 	test AssertTheErrorMessageIfTheUserEntersAnInvalidBusinessEmailAddress {
 
@@ -147,6 +150,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-169250 | Test Summary: Assert the success message: Thank you for submitting this request! Your Liferay Experience Cloud project will be provisioned within 3 business days. An email will be sent once your project is ready."
+	@ignore = "true"
 	@priority = "3"
 	test AssertTheSuccessMessage {
 
@@ -186,6 +190,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-169247 | Test Summary: Assert that the user can add additional project administrators using the 'Add project administrator' button"
+	@ignore = "true"
 	@priority = "4"
 	test CanViewTheAdditionalFields {
 

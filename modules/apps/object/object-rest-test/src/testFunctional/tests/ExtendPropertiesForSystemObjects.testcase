@@ -17,10 +17,26 @@ definition {
 				name = "passportNumber",
 				objectDefinitionId = "${userObjectId}");
 		}
+
+		task ("When with post request postUserAccount to create a user with the new field") {
+			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName1 = "userln",
+				alternateName2 = "user2",
+				emailAddress1 = "userln@liferay.com",
+				emailAddress2 = "user2@liferay.com",
+				familyName1 = "userfn",
+				familyName2 = "userfn2",
+				fieldName1 = "passportNumber",
+				fieldValue1 = "passportNum2022",
+				givenName1 = "usergn",
+				givenName2 = "usergn2");
+		}
 	}
 
 	tearDown {
-		UserAccountAPI.deleteUserAccount();
+		for (var userId : list "${staticUserAccountId1},${staticUserAccountId2}") {
+			JSONUser.deleteUserByUserId(userId = "${userId}");
+		}
 
 		ObjectFieldAPI.deleteObjectField();
 	}
@@ -30,18 +46,8 @@ definition {
 	test CanCreateUserAndSetValueOfPropertyAddedtoSystemObject {
 		property portal.acceptance = "true";
 
-		task ("When with post request postUserAccount to create a user with the new field") {
-			var response = UserAccountAPI.setUpGlobalUserAccountId(
-				alternateName = "userln",
-				emailAddress = "userln@liferay.com",
-				familyName = "userfn",
-				fieldName = "passportNumber",
-				fieldValue = "passportNum2022",
-				givenName = "usergn");
-		}
-
 		task ("Then the value of the added field is set successfully in response") {
-			var actualValueOfPassportNumber = JSONUtil.getWithJSONPath("${response}", "$.passportNumber");
+			var actualValueOfPassportNumber = JSONUtil.getWithJSONPath("${staticResponse1}", "$.passportNumber");
 
 			TestUtils.assertEquals(
 				actual = "${actualValueOfPassportNumber}",
@@ -54,20 +60,11 @@ definition {
 	test CanUpdateValueOfPropertyAddedToSystemObjectWithPatchRequest {
 		property portal.acceptance = "true";
 
-		task ("And Given with post request postUserAccount to create a user with the new field") {
-			UserAccountAPI.setUpGlobalUserAccountId(
-				alternateName = "userln",
-				emailAddress = "userln@liferay.com",
-				familyName = "userfn",
-				fieldName = "passportNumber",
-				fieldValue = "passportNum2022",
-				givenName = "usergn");
-		}
-
 		task ("When with PATCH request and existingUserAccountId I update the value of the new field") {
 			var actualValueOfPassportNumber = UserAccountAPI.getUpdatedFieldOfUserAccountWithPatchRequest(
 				fieldName = "passportNumber",
-				updatedFieldValue = "updateByPatch-passportNum2022");
+				updatedFieldValue = "updateByPatch-passportNum2022",
+				userAccountId = "${staticUserAccountId1}");
 		}
 
 		task ("Then the value of the added filed is updated successfully") {
@@ -82,16 +79,6 @@ definition {
 	test CanUpdateValueOfPropertyAddedToSystemObjectWithPutRequest {
 		property portal.acceptance = "true";
 
-		task ("And Given with post request postUserAccount to create a user with the new field") {
-			UserAccountAPI.setUpGlobalUserAccountId(
-				alternateName = "userln",
-				emailAddress = "userln@liferay.com",
-				familyName = "userfn",
-				fieldName = "passportNumber",
-				fieldValue = "passportNum2022",
-				givenName = "usergn");
-		}
-
 		task ("When with PUT request and existingUserAccountId I update the value of the new field") {
 			var actualValueOfPassportNumber = UserAccountAPI.getUpdatedFieldOfUserAccountWithPutRequest(
 				alternateName = "userln",
@@ -99,7 +86,8 @@ definition {
 				familyName = "userfn",
 				fieldName = "passportNumber",
 				givenName = "usergn",
-				updatedFieldValue = "updateByPut-passportNum2022");
+				updatedFieldValue = "updateByPut-passportNum2022",
+				userAccountId = "${staticUserAccountId1}");
 		}
 
 		task ("Then the value of the added filed is replaced successfully in response") {

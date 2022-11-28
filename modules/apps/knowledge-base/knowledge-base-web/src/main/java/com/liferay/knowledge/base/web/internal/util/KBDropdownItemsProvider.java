@@ -108,7 +108,9 @@ public class KBDropdownItemsProvider {
 					this::_hasAddPermission,
 					_getAddChildArticleActionUnsafeConsumer(kbArticle)
 				).add(
-					() -> _hasChildArticles(kbArticle),
+					() ->
+						_hasChildArticles(kbArticle) &&
+						_hasViewChildArticlesPermission(),
 					_getViewChildArticlesActionUnsafeConsumer(kbArticle)
 				).add(
 					() ->
@@ -1244,6 +1246,19 @@ public class KBDropdownItemsProvider {
 		if (KBTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), kbTemplate,
 				KBActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasViewChildArticlesPermission() {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		if (Objects.equals(
+				portletDisplay.getRootPortletId(),
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 
 			return true;
 		}

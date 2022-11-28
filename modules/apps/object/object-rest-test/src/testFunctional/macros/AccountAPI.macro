@@ -1,0 +1,83 @@
+definition {
+
+	macro _curlAccount {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(accountId)) {
+			var api = "accounts/${accountId}";
+
+			if (isSet(relationshipName)) {
+				var api = "accounts/${accountId}/${relationshipName}";
+			}
+		}
+		else {
+			var api = "accounts";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/${api} \
+			-H accept: application/json \
+			-H Content-Type: application/json \
+			-u test@liferay.com:test \
+		''';
+
+		return "${curl}";
+	}
+
+	macro createAccount {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var curl = AccountAPI._curlAccount();
+		var body = '''"name": "${name}"''';
+
+		var curl = StringUtil.add("${curl}", "-d {${body}}", " ");
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		var accountId = JSONUtil.getWithJSONPath("${response}", "$..id");
+
+		return "${accountId}";
+	}
+
+	macro deleteAccount {
+		Variables.assertDefined(parameterList = "${accountId}");
+
+		var curl = AccountAPI._curlAccount(accountId = "${accountId}");
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+	macro getRelationshipByAccountId {
+		var curl = AccountAPI._curlAccount(
+			accountId = "${accountId}",
+			relationshipName = "${relationshipName}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+	macro putAccountRelationship {
+		var curl = AccountAPI._curlAccount(
+			accountId = "${accountId}",
+			relationshipName = "${relationshipName}");
+
+		var response = JSONCurlUtil.put("${curl}");
+
+		return "${response}";
+	}
+
+	macro relateObjectEntries {
+		Variables.assertDefined(parameterList = "${userAccountId},${customObjectId},${relationshipName}");
+
+		var curl = AccountAPI._curlAccount(
+			customObjectId = "${customObjectId}",
+			relationshipName = "${relationshipName}",
+			userAccountId = "${userAccountId}");
+
+		var response = JSONCurlUtil.put("${curl}");
+
+		return "${response}";
+	}
+
+}

@@ -1,0 +1,192 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-162966=true${line.separator}feature.flag.LPS-153324=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given University object definition created") {
+			ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+		}
+	}
+
+	tearDown {
+		for (var objectName : list "University,Subject") {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "${objectName}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "5"
+	test CanCreateMultipleManyToManyRelationshipsBetweenTwoObjects {
+		property portal.acceptance = "true";
+
+		task ("And Given manyToMany accountsUniversities relationship created") {
+			var accountSystemObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "AccountsUniversities",
+				name = "accountsUniversities",
+				objectDefinitionId1 = "${accountSystemObjectId}",
+				objectDefinitionId2 = "${staticObjectId1}",
+				type = "manyToMany");
+		}
+
+		task ("And Given manyToMany universitiesAccounts relationship created") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UniversitiesAccounts",
+				name = "universitiesAccounts",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${accountSystemObjectId}",
+				type = "manyToMany");
+		}
+
+		task ("And Given University entry created") {
+			var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "My University");
+		}
+
+		task ("And Given Account entry created") {
+			var accountId = AccountAPI.createAccount(name = "user1");
+		}
+
+		task ("When I request PUT to relate University entry to the Account entry with /o/c/universities/{universityId}/accountsUniversities/{accountId}") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId}",
+				objectEntry2 = "${accountId}",
+				relationshipName = "accountsUniversities");
+		}
+
+		task ("Then university is not associated to the account in GET /o/headless-admin-user/v1.0/accounts/{accountId}/universitiesAccounts") {
+			var responseToParse = AccountAPI.getRelationshipByAccountId(
+				accountId = "${accountId}",
+				relationshipName = "universitiesAccounts");
+
+			var totalCount = JSONUtil.getWithJSONPath("${responseToParse}", "$.totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${totalCount}",
+				expected = "0");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "5"
+	test CanCreateMultipleOneToManyRelationshipsBetweenTwoObjects {
+		property portal.acceptance = "true";
+
+		task ("And Given oneToMany accountsUniversities relationship created") {
+			var accountSystemObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "AccountsUniversities",
+				name = "accountsUniversities",
+				objectDefinitionId1 = "${accountSystemObjectId}",
+				objectDefinitionId2 = "${staticObjectId1}",
+				type = "oneToMany");
+		}
+
+		task ("And Given oneToMany universitiesAccounts relationship created") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UniversitiesAccounts",
+				name = "universitiesAccounts",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${accountSystemObjectId}",
+				type = "oneToMany");
+		}
+
+		task ("And Given University entry created") {
+			var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "My University");
+		}
+
+		task ("And Given Account entry created") {
+			var accountId = AccountAPI.createAccount(name = "user1");
+		}
+
+		task ("When I request PUT to relate University entry to the Account entry with /o/headless-admin-user/v1.0/accounts/{accountId}/universitiesAccounts") {
+			AccountAPI.putAccountRelationship(
+				accountId = "${accountId}",
+				relationshipName = "universitiesAccounts");
+		}
+
+		task ("Then Account entry is not associated to the University entry in GET /o/c/universities/{universityId}/universitiesAccounts") {
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+				en_US_plural_label = "universities",
+				objectId = "${universityId}",
+				relationshipName = "universitiesAccounts");
+
+			var totalCount = JSONUtil.getWithJSONPath("${responseToParse}", "$.totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${totalCount}",
+				expected = "0");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanGetEmptyPageWithNoEntriesRelated {
+		property portal.acceptance = "true";
+
+		task ("And Given manyToMany universitiesAccounts relationship created") {
+			var accountSystemObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UniversitiesAccounts",
+				name = "universitiesAccounts",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${accountSystemObjectId}",
+				type = "manyToMany");
+		}
+
+		task ("And Given University entry created") {
+			var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "My University");
+		}
+
+		task ("And Given Account entry created") {
+			var accountId = AccountAPI.createAccount(name = "user1");
+		}
+
+		task ("And Given I request PUT to relate University entry to the Account entry with /o/c/universities/{universityId}/universitiesAccounts/{accountId}") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId}",
+				objectEntry2 = "${accountId}",
+				relationshipName = "universitiesAccounts");
+		}
+
+		task ("When I delete the Account entry") {
+			AccountAPI.deleteAccount(accountId = "${accountId}");
+		}
+
+		task ("Then GET /o/c/universities/{universityId}/universitiesAccounts returns an empty Page") {
+			var responseToParse = ObjectDefinitionAPI.getObjectEntryRelation(
+				en_US_plural_label = "universities",
+				objectId = "${universityId}",
+				relationshipName = "universitiesAccounts");
+
+			var totalCount = JSONUtil.getWithJSONPath("${responseToParse}", "$.totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${totalCount}",
+				expected = "0");
+		}
+	}
+
+}

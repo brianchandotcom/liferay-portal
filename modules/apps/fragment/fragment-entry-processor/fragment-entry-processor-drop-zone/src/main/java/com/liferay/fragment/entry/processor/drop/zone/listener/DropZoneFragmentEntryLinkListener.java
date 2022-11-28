@@ -159,7 +159,7 @@ public class DropZoneFragmentEntryLinkListener
 			if (Objects.equals(
 					fragmentDropZoneLayoutStructureItem.getParentItemId(),
 					parentItemId) &&
-				(Validator.isNull(fragmentDropZoneId) ||
+				(Validator.isBlank(fragmentDropZoneId) ||
 				 Objects.equals(
 					 fragmentDropZoneId,
 					 fragmentDropZoneLayoutStructureItem.
@@ -250,7 +250,7 @@ public class DropZoneFragmentEntryLinkListener
 		for (Element element : elements) {
 			String dropZoneId = element.attr("data-lfr-drop-zone-id");
 
-			if (Validator.isNull(dropZoneId)) {
+			if (Validator.isBlank(dropZoneId)) {
 				break;
 			}
 
@@ -322,7 +322,7 @@ public class DropZoneFragmentEntryLinkListener
 			String fragmentDropZoneId =
 				fragmentDropZoneLayoutStructureItem.getFragmentDropZoneId();
 
-			if (Validator.isNull(fragmentDropZoneId)) {
+			if (Validator.isBlank(fragmentDropZoneId)) {
 				noIdFragmentDropZoneLayoutStructureItems.add(
 					fragmentDropZoneLayoutStructureItem);
 			}

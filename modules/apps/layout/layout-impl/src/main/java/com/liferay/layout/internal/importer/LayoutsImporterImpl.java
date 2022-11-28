@@ -412,11 +412,18 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					groupId, layoutPageTemplateCollectionKey);
 
 		if (layoutPageTemplateCollection == null) {
-			return _layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					groupId, pageTemplateCollection.getName(),
-					pageTemplateCollection.getDescription(),
-					ServiceContextThreadLocal.getServiceContext());
+			layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionLocalService.
+					fetchLayoutPageTemplateCollectionByName(
+						groupId, pageTemplateCollection.getName());
+
+			if (layoutPageTemplateCollection == null) {
+				return _layoutPageTemplateCollectionService.
+					addLayoutPageTemplateCollection(
+						groupId, pageTemplateCollection.getName(),
+						pageTemplateCollection.getDescription(),
+						ServiceContextThreadLocal.getServiceContext());
+			}
 		}
 
 		if (overwrite) {

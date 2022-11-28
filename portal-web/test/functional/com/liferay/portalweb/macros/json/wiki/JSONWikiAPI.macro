@@ -155,7 +155,25 @@ definition {
 			}'
 		''';
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
+	macro _deleteWikiPageById {
+		Variables.assertDefined(parameterList = "${wikiPageId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+		${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId} \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test' \
+		''';
+
+		var response = JSONCurlUtil.delete("${curl}");
+
+		return "${response}";
 	}
 
 	@summary = "Get the nodeId from any existing site by using groupName"
@@ -232,6 +250,23 @@ definition {
 		echo("## * resourcePrimKey: ${resourcePrimKey}");
 
 		return "${resourcePrimKey}";
+	}
+
+	macro _getWikiPageById {
+		Variables.assertDefined(parameterList = "${wikiPageId}");
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId} \
+				-u test@liferay.com:test
+		''';
+
+		var wikiPage = JSONCurlUtil.get("${curl}");
+
+		return "${wikiPage}";
 	}
 
 	@summary = "Helper function to move the wiki page to trash via JSON."

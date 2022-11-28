@@ -1,0 +1,105 @@
+definition {
+
+	macro _curlDeleteByErc {
+		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
+
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+		${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/wiki-pages/by-external-reference-code/${wikiPageErc}/wiki-page-attachments/by-external-reference-code/${wikiPageAttachmentErc} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-H accept: application/json \
+		''';
+
+		return "${curl}";
+	}
+
+	macro _getAttachmentById {
+		Variables.assertDefined(parameterList = "${wikiPageAttachmentId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+		${portalURL}/o/headless-delivery/v1.0/wiki-page-attachments/${wikiPageAttachmentId} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-H accept: application/json \
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro createWikiPageAttachment {
+		Variables.assertDefined(parameterList = "${filePath},${wikiPageId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+		${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId}/wiki-page-attachments \
+			-u test@liferay.com:test \
+			-H Content-Type: multipart/form-data \
+			-F file=@${filePath} 
+		''';
+
+		var curl = JSONCurlUtil.post("${curl}");
+
+		return "${curl}";
+	}
+
+	macro deleteByErc {
+		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
+
+		var curl = WikiPageAttachmentAPI._curlDeleteByErc(
+			groupName = "${groupName}",
+			wikiPageAttachmentErc = "${wikiPageAttachmentErc}",
+			wikiPageErc = "${wikiPageErc}");
+
+		var curl = JSONCurlUtil.delete("${curl}");
+
+		return "${curl}";
+	}
+
+	macro getAttachmentById {
+		Variables.assertDefined(parameterList = "${wikiPageAttachmentId}");
+
+		var response = WikiPageAttachmentAPI._getAttachmentById(wikiPageAttachmentId = "${wikiPageAttachmentId}");
+
+		return "${response}";
+	}
+
+	macro setupGlobalWikiPageWithAttachment {
+		var wikiPage = JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
+
+		var wikiPageId = JSONUtil.getWithJSONPath("${wikiPage}", "$.id");
+		var wikiPageErc = JSONUtil.getWithJSONPath("${wikiPage}", "$.externalReferenceCode");
+		var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+		var wikiPageAttachment = WikiPageAttachmentAPI.createWikiPageAttachment(
+			filePath = "${filePath}",
+			wikiPageId = "${wikiPageId}");
+
+		var wikiPageAttachmentErc = JSONUtil.getWithJSONPath("${wikiPageAttachment}", "$.externalReferenceCode");
+		var wikiPageAttachmentId = JSONUtil.getWithJSONPath("${wikiPageAttachment}", "$.id");
+		static var staticWikiPageId = "${wikiPageId}";
+		static var staticWikiPageErc = "${wikiPageErc}";
+		static var staticWikiPageAttachmentId = "${wikiPageAttachmentId}";
+		static var staticWikiPageAttachmentErc = "${wikiPageAttachmentErc}";
+
+		return "${staticWikiPageId }";
+
+		return "${staticWikiPageErc}";
+
+		return "${staticWikiPageAttachmentId}";
+
+		return "${staticWikiPageAttachmentErc}";
+	}
+
+}

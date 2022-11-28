@@ -57,7 +57,7 @@ definition {
 			name = "${wikiNodeName}",
 			site = "${site}");
 
-		JSONWikiAPI._addWikiPage(
+		var response = JSONWikiAPI._addWikiPage(
 			assetCategoryIds = "${assetCategoryIds}",
 			content = "${wikiPageContent}",
 			encodingFormat = "${encodingFormat}",
@@ -65,6 +65,26 @@ definition {
 			nodeId = "${nodeId}",
 			tagName = "${tagName}",
 			viewableBy = "${viewableBy}");
+
+		return "${response}";
+	}
+
+	macro deleteWikiPageById {
+		Variables.assertDefined(parameterList = "${wikiPageId}");
+
+		var response = JSONWikiAPI._deleteWikiPageById(wikiPageId = "${wikiPageId}");
+
+		return "${response}";
+	}
+
+	macro getWikiPageExternalReferenceCodeByWikiPageId {
+		Variables.assertDefined(parameterList = "${wikiPageId}");
+
+		var response = JSONWikiAPI._getWikiPageById(wikiPageId = "${wikiPageId}");
+
+		var wikiPageExternalReferenceCode = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+
+		return "${wikiPageExternalReferenceCode}";
 	}
 
 	@summary = "Directly calls the JSON WS API to move page to trash"

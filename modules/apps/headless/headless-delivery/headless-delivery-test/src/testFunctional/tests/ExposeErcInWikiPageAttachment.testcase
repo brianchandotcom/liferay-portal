@@ -1,0 +1,40 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given WikiPage with attachment created") {
+			WikiPageAttachmentAPI.setupGlobalWikiPageWithAttachment();
+		}
+	}
+
+	tearDown {
+		JSONWiki.deleteWikiPageById(wikiPageId = "${staticWikiPageId}");
+	}
+
+	@priority = "4"
+	test CanDeleteAttachmentByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("When deleting the attachment with deleteByExternalReferenceCode") {
+			WikiPageAttachmentAPI.deleteByErc(
+				groupName = "Guest",
+				wikiPageAttachmentErc = "${staticWikiPageAttachmentErc}",
+				wikiPageErc = "${staticWikiPageErc}");
+		}
+
+		task ("Then the attachment is deleted") {
+			var response = WikiPageAttachmentAPI.getAttachmentById(wikiPageAttachmentId = "${staticWikiPageAttachmentId}");
+
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = "${response}");
+		}
+	}
+
+}

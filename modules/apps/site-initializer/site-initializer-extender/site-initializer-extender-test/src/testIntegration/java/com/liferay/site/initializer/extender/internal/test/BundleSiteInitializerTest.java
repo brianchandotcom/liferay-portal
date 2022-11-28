@@ -88,6 +88,7 @@ import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -997,10 +998,14 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(objectDefinition3.isSystem(), false);
 		Assert.assertEquals(
+			objectDefinition3.getScope(),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+		Assert.assertEquals(
 			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
 		_assertObjectActions(0, objectDefinition3);
 		_assertObjectEntries(0, objectDefinition3, 5);
+		_assertObjectFields(objectDefinition3, 7);
 
 		ObjectDefinition objectDefinition4 =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -1013,8 +1018,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotEquals(
 			"accountEntryRestrictedObjectFieldName", 0,
 			objectDefinition4.getAccountEntryRestrictedObjectFieldId());
-
-		_assertObjectEntries(0, objectDefinition4, 0);
 	}
 
 	private void _assertObjectEntries(

@@ -138,7 +138,7 @@
 						frequencyVisible=false
 						id=vocabularyName + vocabularyName?index
 						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
-						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts(vocabularyName)
+						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)
 					/>
 				</#list>
 			</ul>

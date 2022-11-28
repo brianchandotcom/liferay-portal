@@ -245,6 +245,13 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 			groupId, layoutPageTemplateCollectionKey);
 	}
 
+	public static LayoutPageTemplateCollection
+		fetchLayoutPageTemplateCollectionByName(long groupId, String name) {
+
+		return getService().fetchLayoutPageTemplateCollectionByName(
+			groupId, name);
+	}
+
 	/**
 	 * Returns the layout page template collection matching the UUID and group.
 	 *

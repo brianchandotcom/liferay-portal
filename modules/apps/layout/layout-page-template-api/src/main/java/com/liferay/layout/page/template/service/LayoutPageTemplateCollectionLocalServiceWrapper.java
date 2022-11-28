@@ -272,6 +272,14 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 				groupId, layoutPageTemplateCollectionKey);
 	}
 
+	@Override
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByName(
+		long groupId, String name) {
+
+		return _layoutPageTemplateCollectionLocalService.
+			fetchLayoutPageTemplateCollectionByName(groupId, name);
+	}
+
 	/**
 	 * Returns the layout page template collection matching the UUID and group.
 	 *

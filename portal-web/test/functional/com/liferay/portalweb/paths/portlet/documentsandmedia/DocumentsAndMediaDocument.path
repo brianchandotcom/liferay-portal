@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_TITLE</td>
-	<td>//div[contains(@class,'tbar-section')]/h2[contains(@title,'${key_dmDocumentTitle}')] | //h3[contains(@class,'header-title')]/span[contains(.,'${key_dmDocumentTitle}')]</td>
+	<td>//div[contains(@class,'tbar-section')]/h2[contains(@title,'${key_dmDocumentTitle}')] | //ul[contains(@class,'navbar-nav')]//h3[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

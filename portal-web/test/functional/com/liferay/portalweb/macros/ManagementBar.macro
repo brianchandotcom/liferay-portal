@@ -11,7 +11,7 @@ definition {
 	}
 
 	macro clickInfo {
-		Click.clickNoMouseOver(locator1 = "Icon#INFO");
+		Click.clickNoMouseOver(locator1 = "Icon#INFO_DM");
 	}
 
 	macro clickSelectAllCheckbox {

@@ -271,6 +271,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_DM</td>
+	<td>//a[*[name()='svg'][contains(@class,'lexicon-icon-info-circle-open')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INHERITED_INDICATOR</td>
 	<td>//div[contains(@class,'form-group')][label[normalize-space()='${key_fieldLabel}']]//span[contains(@class,'inherited')] | //div[contains(@class,'form-group')][*//label[normalize-space()='${key_fieldLabel}']]//span[contains(@class,'inherited')]</td>
 	<td></td>

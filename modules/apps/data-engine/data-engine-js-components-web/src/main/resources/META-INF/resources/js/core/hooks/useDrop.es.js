@@ -123,6 +123,17 @@ const isDroppingFieldIntoFieldset = (sourceField, targetField) =>
 const isSameField = (targetField, sourceField) =>
 	targetField && targetField.fieldName === sourceField.fieldName;
 
+const isElementsSetOverTarget = (target, source) => {
+	if (target) {
+		return (
+			!!Object.keys(target).length &&
+			source?.dragType === 'elementSet:add'
+		);
+	}
+
+	return false;
+};
+
 export function useDrop({
 	columnIndex,
 	field,
@@ -147,6 +158,8 @@ export function useDrop({
 	const [{canDrop, overTarget}, drop] = useDndDrop({
 		accept: [...Object.values(DRAG_TYPES), DRAG_ELEMENT_SET_ADD],
 		canDrop: (item) =>
+			!isElementsSetOverTarget(field, item.data) &&
+			!isElementsSetOverTarget(parentField, item.data) &&
 			!isSameField(field, item.data) &&
 			!isDroppingFieldGroupIntoField(field, item.data) &&
 			!isDroppingFieldIntoFieldset(item.data, field) &&

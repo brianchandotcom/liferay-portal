@@ -279,6 +279,26 @@ definition {
 		}
 	}
 
+	@description = "Test for LPS-163801 to check that pages can be saved after Site Default locales are changed"
+	@priority = "3"
+	test CanAccessPageAfterSiteDefaultLocalesChange {
+		PagesAdmin.addPage(pageName = "Page Title");
+
+		ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "Spanish (Spain)");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Title",
+			siteName = "Test Site Name");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Page Title");
+
+		PagesAdmin.editName(pageNameEdit = "Page Title Edit");
+
+		PagesAdmin.viewPageItemPresent(pageName = "Page Title Edit");
+
+		PagesAdmin.deletePage(pageName = "Page Title Edit");
+	}
+
 	@description = "This is a test for LPS-145215. View alert message when delete a page."
 	@priority = "5"
 	@uitest

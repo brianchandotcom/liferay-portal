@@ -991,7 +991,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(objectDefinition2.isSystem(), false);
 		Assert.assertEquals(
 			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(objectDefinition2.isAccountEntryRestricted(), false);
+		Assert.assertEquals(
+			objectDefinition2.isAccountEntryRestricted(), false);
 		Assert.assertEquals(
 			"accountEntryRestrictedObjectFieldName", 0,
 			objectDefinition2.getAccountEntryRestrictedObjectFieldId());
@@ -1010,10 +1011,11 @@ public class BundleSiteInitializerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 		Assert.assertEquals(
 			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(objectDefinition1.isAccountEntryRestricted(), false);
+		Assert.assertEquals(
+			objectDefinition3.isAccountEntryRestricted(), false);
 		Assert.assertEquals(
 			"accountEntryRestrictedObjectFieldName", 0,
-			objectDefinition1.getAccountEntryRestrictedObjectFieldId());
+			objectDefinition3.getAccountEntryRestrictedObjectFieldId());
 
 		_assertObjectActions(0, objectDefinition3);
 		_assertObjectEntries(0, objectDefinition3, 5);

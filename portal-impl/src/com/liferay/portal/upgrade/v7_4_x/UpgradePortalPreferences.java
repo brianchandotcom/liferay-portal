@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.PortalPreferenceValue;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -53,15 +52,21 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 					"PortalPreferences where preferences not like '",
 					PortletConstants.DEFAULT_PREFERENCES,
 					"' and preferences is not null")),
+			StringBundler.concat(
+				"insert into PortalPreferenceValue (mvccVersion, ",
+				"portalPreferenceValueId, portalPreferencesId, index_, key_, ",
+				"largeValue, namespace, smallValue) values (0, ?, ?, ?, ?, ?, ",
+				"?, ?)"),
 			resultSet -> new Object[] {
 				resultSet.getLong("portalPreferencesId"),
 				resultSet.getString("preferences")
 			},
-			values -> {
+			(values, preparedStatement) -> {
 				long portalPreferencesId = (Long)values[0];
 				String preferences = (String)values[1];
 
-				_upgradePortalPreferences(portalPreferencesId, preferences);
+				_upgradePortalPreferences(
+					portalPreferencesId, preferences, preparedStatement);
 			},
 			null);
 	}
@@ -75,7 +80,8 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 	}
 
 	private void _upgradePortalPreferences(
-			long portalPreferencesId, String preferences)
+			long portalPreferencesId, String preferences,
+			PreparedStatement preparedStatement)
 		throws Exception {
 
 		if (preferences.isEmpty()) {
@@ -89,59 +95,47 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			return;
 		}
 
-		try (PreparedStatement preparedStatement =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection,
-					StringBundler.concat(
-						"insert into PortalPreferenceValue (mvccVersion, ",
-						"portalPreferenceValueId, portalPreferencesId, ",
-						"index_, key_, largeValue, namespace, smallValue) ",
-						"values (0, ?, ?, ?, ?, ?, ?, ?)"))) {
+		for (Preference preference : preferenceMap.values()) {
+			String namespace = null;
 
-			for (Preference preference : preferenceMap.values()) {
-				String namespace = null;
+			String key = preference.getName();
 
-				String key = preference.getName();
+			int index = key.indexOf(CharPool.POUND);
 
-				int index = key.indexOf(CharPool.POUND);
+			if (index > 0) {
+				namespace = key.substring(0, index);
 
-				if (index > 0) {
-					namespace = key.substring(0, index);
-
-					key = key.substring(index + 1);
-				}
-
-				String[] values = preference.getValues();
-
-				for (int i = 0; i < values.length; i++) {
-					String value = values[i];
-
-					String largeValue = null;
-					String smallValue = null;
-
-					if (value.length() >
-							PortalPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
-
-						largeValue = value;
-					}
-					else {
-						smallValue = value;
-					}
-
-					preparedStatement.setLong(
-						1, increment(PortalPreferenceValue.class.getName()));
-					preparedStatement.setLong(2, portalPreferencesId);
-					preparedStatement.setInt(3, i);
-					preparedStatement.setString(4, key);
-					preparedStatement.setString(5, largeValue);
-					preparedStatement.setString(6, namespace);
-					preparedStatement.setString(7, smallValue);
-
-					preparedStatement.addBatch();
-				}
+				key = key.substring(index + 1);
 			}
 
-			preparedStatement.executeBatch();
+			String[] values = preference.getValues();
+
+			for (int i = 0; i < values.length; i++) {
+				String value = values[i];
+
+				String largeValue = null;
+				String smallValue = null;
+
+				if (value.length() >
+						PortalPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {
+
+					largeValue = value;
+				}
+				else {
+					smallValue = value;
+				}
+
+				preparedStatement.setLong(
+					1, increment(PortalPreferenceValue.class.getName()));
+				preparedStatement.setLong(2, portalPreferencesId);
+				preparedStatement.setInt(3, i);
+				preparedStatement.setString(4, key);
+				preparedStatement.setString(5, largeValue);
+				preparedStatement.setString(6, namespace);
+				preparedStatement.setString(7, smallValue);
+
+				preparedStatement.addBatch();
+			}
 		}
 	}
 

@@ -1476,6 +1476,12 @@
 		},
 		"PageFragmentDropZoneDefinition": {
 			"additionalProperties": false,
+			"properties": {
+				"fragmentDropZoneId": {
+					"title": "The fragmentDropZoneId Schema",
+					"type": "string"
+				}
+			},
 			"title": "The PageFragmentDropZoneDefinition Schema",
 			"type": "object"
 		},

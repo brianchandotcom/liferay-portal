@@ -14,10 +14,13 @@
 
 package com.liferay.data.cleanup.internal.upgrade.registry;
 
+import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.store.service.CTSContentLocalService;
 import com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration;
 import com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration;
 import com.liferay.data.cleanup.internal.upgrade.ChatUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.DLPreviewCTSContentDataUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DictionaryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.DirectoryUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess;
@@ -126,6 +129,11 @@ public class DataCleanupUpgradeStepRegistrator
 					_persistenceManager, DataRemovalConfiguration.class);
 
 			_removeModuleData(
+				dataRemovalConfiguration::removeDLPreviewCTSContentData,
+				"com.liferay.change.tracking.service",
+				() -> new DLPreviewCTSContentDataUpgradeProcess(
+					_ctCollectionLocalService, _ctEntryLocalService, _portal));
+			_removeModuleData(
 				dataRemovalConfiguration::removePublishedCTSContentData,
 				"com.liferay.change.tracking.store.service",
 				() -> new PublishedCTSContentDataUpgradeProcess(
@@ -178,6 +186,12 @@ public class DataCleanupUpgradeStepRegistrator
 			}
 		}
 	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTSContentLocalService _ctsContentLocalService;

@@ -14,6 +14,7 @@
 
 package com.liferay.data.cleanup.internal.upgrade;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.store.model.CTSContent;
 import com.liferay.change.tracking.store.model.CTSContentTable;
@@ -39,7 +40,7 @@ public class PublishedCTSContentDataUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		List<Long> ctsContentIds = _ctsContentLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
+			DSLQueryFactoryUtil.selectDistinct(
 				CTSContentTable.INSTANCE.ctsContentId
 			).from(
 				CTSContentTable.INSTANCE
@@ -52,7 +53,11 @@ public class PublishedCTSContentDataUpgradeProcess extends UpgradeProcess {
 					).where(
 						CTEntryTable.INSTANCE.modelClassNameId.eq(
 							_portal.getClassNameId(CTSContent.class.getName()))
-					))
+					)
+				).or(
+					CTSContentTable.INSTANCE.ctCollectionId.eq(
+						CTConstants.CT_COLLECTION_ID_PRODUCTION)
+				)
 			));
 
 		for (long ctsContentId : ctsContentIds) {

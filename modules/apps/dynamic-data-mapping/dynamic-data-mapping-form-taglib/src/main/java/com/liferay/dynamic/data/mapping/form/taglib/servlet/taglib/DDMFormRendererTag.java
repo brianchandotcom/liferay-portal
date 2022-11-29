@@ -75,13 +75,13 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		setNamespacedAttribute(
 			httpServletRequest, "ddmFormInstance", getDDMFormInstance());
 		setNamespacedAttribute(
+			httpServletRequest, "formAvailable", isFormAvailable());
+		setNamespacedAttribute(
 			httpServletRequest, "hasAddFormInstanceRecordPermission",
 			hasAddFormInstanceRecordPermission());
 		setNamespacedAttribute(
 			httpServletRequest, "hasViewFormInstancePermission",
 			hasViewFormInstancePermission());
-		setNamespacedAttribute(
-			httpServletRequest, "isFormAvailable", isFormAvailable());
 		setNamespacedAttribute(
 			httpServletRequest, "languageId",
 			LocaleUtil.toLanguageId(

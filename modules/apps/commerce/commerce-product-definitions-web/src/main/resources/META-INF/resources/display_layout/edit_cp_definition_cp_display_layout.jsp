@@ -74,7 +74,7 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 		<aui:model-context bean="<%= cpDisplayLayout %>" model="<%= CPDisplayLayout.class %>" />
 
 		<div class="sheet">
-				<div class="panel-group panel-group-flush">
+			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
 					<liferay-ui:search-container
 						curParam="cpDefinitionCur"

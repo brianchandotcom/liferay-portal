@@ -593,7 +593,7 @@ definition {
 	test CheckBlogCommentsShowExpectedValue {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		task ("View the blog") {
+		task ("Comment on the blog") {
 			ACUtils.navigateToSitePage(
 				actionType = "Comment Blog",
 				documentTitleList = "Blogs AC Title",

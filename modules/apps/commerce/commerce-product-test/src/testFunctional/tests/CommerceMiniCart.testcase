@@ -578,6 +578,7 @@ definition {
 	@priority = "4"
 	test CanUseMiniCartWidgetToCheckoutWithBuyerOrderApprovalWorkflow {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceMiniCart#CanUseMiniCartWidgetToCheckoutWithBuyerOrderApprovalWorkflow";
 
 		var approvedCount = "0";
 

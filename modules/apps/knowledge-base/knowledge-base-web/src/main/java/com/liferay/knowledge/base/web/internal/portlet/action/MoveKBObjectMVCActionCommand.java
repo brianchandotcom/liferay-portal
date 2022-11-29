@@ -203,7 +203,7 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 
 		List<KBArticle> kbArticles = _kbArticleService.getKBArticles(
 			kbArticle.getGroupId(), parentResourcePrimKey,
-			WorkflowConstants.STATUS_ANY, 0, position + 1,
+			WorkflowConstants.STATUS_ANY, position - 1, position + 1,
 			new KBArticlePriorityComparator(true));
 
 		if (ListUtil.isEmpty(kbArticles)) {
@@ -212,17 +212,12 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 
 		KBArticle nextKBArticle = kbArticles.get(kbArticles.size() - 1);
 
-		if (((position == 0) && (nextKBArticle.getPriority() > 1)) ||
-			(kbArticles.size() < position)) {
-
+		if (position == 0) {
 			return _getNearestPriority(nextKBArticle.getPriority(), 0);
 		}
-		else if (kbArticles.size() < 2) {
+		else if (kbArticles.size() == 1) {
 			return _getNearestPriority(
-				nextKBArticle.getPriority() + 1, nextKBArticle.getPriority());
-		}
-		else if (kbArticles.size() == position) {
-			return _getNearestPriority(nextKBArticle.getPriority() + 2, 0);
+				nextKBArticle.getPriority() + 2, nextKBArticle.getPriority());
 		}
 		else {
 			KBArticle previousKBArticle = kbArticles.get(kbArticles.size() - 2);

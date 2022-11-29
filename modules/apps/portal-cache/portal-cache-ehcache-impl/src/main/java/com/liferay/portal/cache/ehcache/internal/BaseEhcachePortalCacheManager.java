@@ -75,7 +75,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Shuyang Zhou
  * @author Edward Han
  */
-public abstract class EhcachePortalCacheManager<K extends Serializable, V>
+public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	@Override
@@ -581,7 +581,7 @@ public abstract class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheManager.class);
+		BaseEhcachePortalCacheManager.class);
 
 	private final AggregatedPortalCacheManagerListener
 		_aggregatedPortalCacheManagerListener =

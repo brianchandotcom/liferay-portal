@@ -38,7 +38,7 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "partner@liferay.com",
 				userLoginFullName = "partner");
-			
+
 			PRMUtils.gotoPRM();
 		}
 
@@ -46,7 +46,6 @@ definition {
 			PRMNavigator.goToNavItem(navItem = "Marketing");
 		}
 	}
-
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");

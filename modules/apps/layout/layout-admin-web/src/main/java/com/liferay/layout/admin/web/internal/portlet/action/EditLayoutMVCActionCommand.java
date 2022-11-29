@@ -375,6 +375,13 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		_addClientExtensionEntryRel(
 			themeCSSCETExternalReferenceCode, layout,
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, userId);
+
+		String themeSpritemapCETExternalReferenceCode = ParamUtil.getString(
+			actionRequest, "themeSpritemapCETExternalReferenceCode");
+
+		_addClientExtensionEntryRel(
+			themeSpritemapCETExternalReferenceCode, layout,
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, userId);
 	}
 
 	@Reference

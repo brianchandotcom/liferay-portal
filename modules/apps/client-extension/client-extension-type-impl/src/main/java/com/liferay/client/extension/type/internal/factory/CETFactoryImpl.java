@@ -68,6 +68,9 @@ public class CETFactoryImpl implements CETFactory {
 			ClientExtensionEntryConstants.TYPE_THEME_CSS,
 			 new ThemeCSSCETImplFactoryImpl()
 		).put(
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
+			 new ThemeSpritemapCETImplFactoryImpl()
+		).put(
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			new ThemeFaviconCETImplFactoryImpl()
 

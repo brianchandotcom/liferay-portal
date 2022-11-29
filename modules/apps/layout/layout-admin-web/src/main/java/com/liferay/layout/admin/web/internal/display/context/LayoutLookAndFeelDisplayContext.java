@@ -132,6 +132,34 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
+	public Map<String, Object> getThemeSpritemapCETConfigurationProps(
+		String className, long classPK) {
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(className), classPK,
+					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
+
+		return HashMapBuilder.<String, Object>put(
+			"themeSpritemapCET",
+			_getCETJSONObject(
+				clientExtensionEntryRel, true,
+						LanguageUtil.format(
+							_themeDisplay.getLocale(), "from-x",
+							_getLayoutRootNodeName(), false))
+		).put(
+			"themeSpritemapCETSelectorURL",
+			() -> PortletURLBuilder.create(
+				_layoutsAdminDisplayContext.getCETItemSelectorURL(
+					"selectThemeSpritemapCET",
+					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP)
+			).buildString()
+		).put(
+			"selectThemeSpritemapCETEventName", "selectThemeSpritemapCET"
+		).build();
+	}
+
 	public Map<String, Object> getGlobalJSCETsConfigurationProps(
 		String className, long classPK) {
 

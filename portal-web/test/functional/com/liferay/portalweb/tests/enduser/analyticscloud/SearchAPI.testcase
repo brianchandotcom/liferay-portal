@@ -45,7 +45,7 @@ definition {
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var keyword = "all parameters";
-		var parameters = "size=10&displayLanguageId=en-US&page=0&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
+		var parameters = "size=10\&displayLanguageId=en-US\&page=0\&groupId=${groupId}\&sort=counts,desc,lastModifiedDate,desc";
 
 		task ("Go to DXP and get analytics configuration") {
 			ACApi.getAnalyticsConfiguration();
@@ -75,8 +75,8 @@ definition {
 	test RequestKeywordsUsingDisplayLanguageId {
 		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingDisplayLanguageId";
 
-		var parametersDisplay1 = "size=10&displayLanguageId=${displayLanguageId1}&page=0&sort=counts,desc,lastModifiedDate,desc";
-		var parametersDisplay2 = "size=10&displayLanguageId=${displayLanguageId2}&page=0&sort=counts,desc,lastModifiedDate,desc";
+		var parametersDisplay1 = "size=10\&displayLanguageId=${displayLanguageId1}\&page=0\&sort=counts,desc,lastModifiedDate,desc";
+		var parametersDisplay2 = "size=10\&displayLanguageId=${displayLanguageId2}\&page=0\&sort=counts,desc,lastModifiedDate,desc";
 		var displayLanguageId1 = "en-US";
 		var displayLanguageId2 = "pt-BR";
 		var keyword = "cloud";
@@ -126,8 +126,8 @@ definition {
 		var groupId1 = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var groupId2 = JSONGroupSetter.setGroupId(groupName = "Site Name");
 		var keyword = "general groupid";
-		var parametersGroup1 = "groupId=${groupId1}&sort=counts,desc,lastModifiedDate,desc";
-		var parametersGroup2 = "groupId=${groupId2}&sort=counts,desc,lastModifiedDate,desc";
+		var parametersGroup1 = "groupId=${groupId1}\&sort=counts,desc,lastModifiedDate,desc";
+		var parametersGroup2 = "groupId=${groupId2}\&sort=counts,desc,lastModifiedDate,desc";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -212,8 +212,8 @@ definition {
 	test RequestKeywordsUsingPage {
 		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingPage";
 
-		var parametersFirstPage = "size=${size}&page=${firstPage}&sort=counts,desc,lastModifiedDate,desc";
-		var parametersSecondPage = "size=${size}&page=${secondPage}&sort=counts,desc,lastModifiedDate,desc";
+		var parametersFirstPage = "size=${size}\&page=${firstPage}\&sort=counts,desc,lastModifiedDate,desc";
+		var parametersSecondPage = "size=${size}\&page=${secondPage}\&sort=counts,desc,lastModifiedDate,desc";
 		var firstKeyword = "workspace";
 		var secondKeyword = "analytics";
 		var size = "1";
@@ -285,7 +285,7 @@ definition {
 		var keyword1 = "with size parameters 1";
 		var keyword2 = "with size parameters 2";
 		var keyword3 = "with size parameters 3";
-		var parameters = "size=2&sort=lastModifiedDate,desc";
+		var parameters = "size=2\&sort=lastModifiedDate,desc";
 		var size = "2";
 
 		task ("Go to DXP and get analytics configuration") {

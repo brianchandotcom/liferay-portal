@@ -1100,8 +1100,14 @@ definition {
 		Account._goToInviteUsers(accountName = "${accountName}");
 
 		Type(
-			locator1 = "TextInput#EMAIL_ADDRESS",
+			key_text = "Emails",
+			locator1 = "TextInput#ANY",
 			value1 = "${userEmailAddress}");
+
+		KeyPress(
+			key_text = "Emails",
+			locator1 = "TextInput#ANY",
+			value1 = "\RETURN");
 
 		Button.click(button = "Invite");
 

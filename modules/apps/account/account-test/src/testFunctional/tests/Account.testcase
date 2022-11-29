@@ -2643,8 +2643,14 @@ definition {
 			Account._goToInviteUsers(accountName = "S Auto Service");
 
 			Type(
-				locator1 = "TextInput#EMAIL_ADDRESS",
+				key_text = "Emails",
+				locator1 = "TextInput#ANY",
 				value1 = "john.doe@liferay1.com");
+
+			KeyPress(
+				key_text = "Emails",
+				locator1 = "TextInput#ANY",
+				value1 = "\RETURN");
 
 			Button.click(button = "Invite");
 		}

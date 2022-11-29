@@ -28,6 +28,11 @@ import com.liferay.notification.service.NotificationTemplateService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.notification.util.LocalizedMapUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -138,7 +143,8 @@ public class NotificationTemplateResourceImpl
 		throws Exception {
 
 		NotificationContext notificationContext =
-			NotificationUtil.toNotificationContext(notificationTemplate);
+			NotificationUtil.toNotificationContext(
+				notificationTemplate, _objectFieldLocalService);
 
 		notificationContext.setNotificationRecipient(
 			NotificationUtil.toNotificationRecipient(contextUser, 0L));
@@ -150,7 +156,8 @@ public class NotificationTemplateResourceImpl
 				notificationTemplate.getRecipients(), contextUser));
 		notificationContext.setNotificationTemplate(
 			NotificationUtil.toNotificationTemplate(
-				0L, notificationTemplate, contextUser));
+				0L, notificationTemplate, _objectDefinitionLocalService,
+				contextUser));
 
 		return _toNotificationTemplate(
 			_notificationTemplateService.addNotificationTemplate(
@@ -195,7 +202,8 @@ public class NotificationTemplateResourceImpl
 		throws Exception {
 
 		NotificationContext notificationContext =
-			NotificationUtil.toNotificationContext(notificationTemplate);
+			NotificationUtil.toNotificationContext(
+				notificationTemplate, _objectFieldLocalService);
 
 		NotificationRecipient notificationRecipient =
 			NotificationUtil.toNotificationRecipient(
@@ -211,7 +219,8 @@ public class NotificationTemplateResourceImpl
 
 		notificationContext.setNotificationTemplate(
 			NotificationUtil.toNotificationTemplate(
-				notificationTemplateId, notificationTemplate, contextUser));
+				notificationTemplateId, notificationTemplate,
+				_objectDefinitionLocalService, contextUser));
 
 		return _toNotificationTemplate(
 			_notificationTemplateService.updateNotificationTemplate(
@@ -302,6 +311,20 @@ public class NotificationTemplateResourceImpl
 						serviceBuilderNotificationTemplate.
 							getNotificationTemplateId())
 				).build();
+				attachmentObjectFieldERCs = transformToArray(
+					_notificationTemplateAttachmentLocalService.
+						getNotificationTemplateAttachments(
+							serviceBuilderNotificationTemplate.
+								getNotificationTemplateId()),
+					notificationTemplateAttachment -> {
+						ObjectField objectField =
+							_objectFieldLocalService.getObjectField(
+								notificationTemplateAttachment.
+									getObjectFieldId());
+
+						return objectField.getExternalReferenceCode();
+					},
+					String.class);
 				attachmentObjectFieldIds = transformToArray(
 					_notificationTemplateAttachmentLocalService.
 						getNotificationTemplateAttachments(
@@ -339,6 +362,21 @@ public class NotificationTemplateResourceImpl
 				type = serviceBuilderNotificationTemplate.getType();
 				typeLabel = _language.get(
 					_getLocale(), notificationType.getTypeLanguageKey());
+
+				setObjectDefinitionERC(
+					() -> {
+						ObjectDefinition objectDefinition =
+							_objectDefinitionLocalService.fetchObjectDefinition(
+								GetterUtil.getLong(
+									serviceBuilderNotificationTemplate.
+										getObjectDefinitionId()));
+
+						if (objectDefinition == null) {
+							return StringPool.BLANK;
+						}
+
+						return objectDefinition.getExternalReferenceCode();
+					});
 			}
 		};
 	}
@@ -358,5 +396,11 @@ public class NotificationTemplateResourceImpl
 
 	@Reference
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

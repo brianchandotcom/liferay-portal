@@ -232,6 +232,11 @@
 			"title": "The fragment Schema",
 			"type": "object"
 		},
+		"FragmentDropZoneDefinition": {
+			"additionalProperties": false,
+			"title": "The FragmentDropZoneDefinition Schema",
+			"type": "object"
+		},
 		"FragmentField": {
 			"anyOf": [
 				{
@@ -1252,7 +1257,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/PageDropZoneDefinition"
+								"$ref": "#/definitions/FragmentDropZoneDefinition"
 							}
 						}
 					}

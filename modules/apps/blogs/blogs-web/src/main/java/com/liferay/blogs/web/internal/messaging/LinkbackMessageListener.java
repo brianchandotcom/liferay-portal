@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.blogs.configuration.BlogsConfiguration",
-	service = LinkbackMessageListener.class
+	service = {}
 )
 public class LinkbackMessageListener extends BaseMessageListener {
 

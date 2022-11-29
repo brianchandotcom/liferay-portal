@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.blogs.configuration.BlogsConfiguration",
-	service = CheckEntryMessageListener.class
+	service = {}
 )
 public class CheckEntryMessageListener extends BaseMessageListener {
 

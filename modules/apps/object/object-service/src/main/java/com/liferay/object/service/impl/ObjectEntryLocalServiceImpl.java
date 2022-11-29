@@ -3010,8 +3010,7 @@ public class ObjectEntryLocalServiceImpl
 		ListTypeEntry originalListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				listTypeDefinitionId,
-				_getValue(
-					String.valueOf(values.get(entry.getKey()))));
+				_getValue(String.valueOf(values.get(entry.getKey()))));
 
 		ObjectStateFlow objectStateFlow =
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(

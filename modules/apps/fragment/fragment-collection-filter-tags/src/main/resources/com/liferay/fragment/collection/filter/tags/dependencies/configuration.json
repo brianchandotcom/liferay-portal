@@ -1,0 +1,34 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "show-label",
+					"name": "showLabel",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "",
+					"label": "label-text",
+					"localizable": true,
+					"name": "label",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "show-help-text",
+					"name": "showHelpText",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": "type-a-comma-or-press-enter-to-input-a-tag",
+					"label": "help-text",
+					"localizable": true,
+					"name": "helpText",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

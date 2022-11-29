@@ -24,7 +24,6 @@ Group group = depotEntry.getGroup();
 UnicodeProperties typeSettingsUnicodeProperties = group.getTypeSettingsProperties();
 
 boolean groupTrashEnabled = PropertiesParamUtil.getBoolean(typeSettingsUnicodeProperties, request, "trashEnabled", true);
-
 int trashEntriesMaxAge = PropertiesParamUtil.getInteger(typeSettingsUnicodeProperties, request, "trashEntriesMaxAge", PrefsPropsUtil.getInteger(depotEntry.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE));
 %>
 

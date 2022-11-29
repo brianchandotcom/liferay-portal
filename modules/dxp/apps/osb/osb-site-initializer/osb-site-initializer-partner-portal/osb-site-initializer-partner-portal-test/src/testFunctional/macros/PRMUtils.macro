@@ -27,22 +27,10 @@ definition {
 
 	macro gotoPRM {
 		Navigator.openSiteURL(siteName = "Partner Portal");
-	}
 
-	macro signIn {
-		var password = "test";
-
-		Click(locator1 = "PRMUtils#SIGN_IN");
-
-		Type(
-			locator1 = "TextInput#EMAIL",
-			value1 = "${emailAddress}");
-
-		Type(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "${password}");
-
-		Click(locator1 = "Button#SIGN_IN");
+		if (IsElementPresent(locator1 = "PRMUtils#SIGN_IN")) {
+			Click(locator1 = "PRMUtils#SIGN_IN");
+		}
 	}
 
 }

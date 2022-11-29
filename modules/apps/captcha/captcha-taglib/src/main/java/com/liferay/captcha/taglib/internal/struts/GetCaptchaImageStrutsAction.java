@@ -26,8 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, property = "path=/portal/captcha/get_image",
-	service = StrutsAction.class
+	property = "path=/portal/captcha/get_image", service = StrutsAction.class
 )
 public class GetCaptchaImageStrutsAction implements StrutsAction {
 

@@ -61,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
-	immediate = true,
 	property = "captcha.engine.impl=com.liferay.captcha.recaptcha.ReCaptchaImpl",
 	service = Captcha.class
 )

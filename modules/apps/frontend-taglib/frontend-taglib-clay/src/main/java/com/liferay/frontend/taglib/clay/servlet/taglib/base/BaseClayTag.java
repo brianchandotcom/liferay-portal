@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTagContex
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -53,7 +53,7 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			putValue("spritemap", FrontendIconsUtil.getSpritemap(themeDisplay));
+			putValue("spritemap", themeDisplay.getPathThemeSpritemap());
 		}
 
 		String namespace = getNamespace();

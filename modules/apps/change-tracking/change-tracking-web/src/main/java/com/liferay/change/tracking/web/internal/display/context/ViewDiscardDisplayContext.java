@@ -18,7 +18,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -121,7 +121,7 @@ public class ViewDiscardDisplayContext {
 				return ctEntriesJSONArray;
 			}
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
+			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(
 			"typeNames",
 			DisplayContextUtil.getTypeNamesJSONObject(

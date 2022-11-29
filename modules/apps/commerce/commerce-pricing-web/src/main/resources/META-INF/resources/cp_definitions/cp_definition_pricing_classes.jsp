@@ -125,7 +125,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 							fieldName: ['title', 'LANG'],
 						},
 					],
-					spritemap: '<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>',
+					spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',
 					titleLabel:
 						'<%= LanguageUtil.get(request, "add-existing-product-group") %>',
 				});

@@ -48,7 +48,7 @@ page import="com.liferay.portal.kernel.dao.search.RowMover" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.LocalizedException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchLayoutException" %><%@
-page import="com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil" %><%@
+
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@

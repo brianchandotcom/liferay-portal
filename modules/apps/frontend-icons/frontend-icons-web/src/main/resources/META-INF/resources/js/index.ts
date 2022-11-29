@@ -12,25 +12,6 @@
  * details.
  */
 
-export function getSpritemap(iconPack?: string): string {
-	if (!Liferay.FeatureFlags['LPS-145112']) {
-		return Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
-	}
-
-	if (!iconPack && Liferay.ThemeDisplay.isControlPanel()) {
-		return getSystemSpritemap();
-	}
-
-	const packOrSite = iconPack ? 'pack' : 'site';
-	const iconPackOrSiteId = iconPack || Liferay.ThemeDisplay.getSiteGroupId();
-
-	return `${Liferay.Icons.basePath}/${packOrSite}/${iconPackOrSiteId}.svg`;
-}
-
-export function getSystemSpritemap(): string {
-	if (!Liferay.FeatureFlags['LPS-145112']) {
-		return Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
-	}
-
-	return Liferay.Icons.systemSpritemap;
+export function getSpritemap(): string {
+	return Liferay.ThemeDisplay.getPathThemeSpritemap()
 }

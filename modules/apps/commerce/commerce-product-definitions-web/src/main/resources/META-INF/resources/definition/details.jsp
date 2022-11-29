@@ -300,7 +300,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 								fieldName: 'key',
 							},
 						],
-						spritemap: '<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>',
+						spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',
 						titleLabel:
 							'<%= LanguageUtil.get(request, "add-existing-specification") %>',
 					});

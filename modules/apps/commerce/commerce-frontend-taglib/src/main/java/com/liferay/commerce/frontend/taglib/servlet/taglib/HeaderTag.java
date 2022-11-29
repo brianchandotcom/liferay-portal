@@ -17,7 +17,7 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -221,7 +221,7 @@ public class HeaderTag extends IncludeTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			_spritemap = FrontendIconsUtil.getSpritemap(themeDisplay);
+			_spritemap = themeDisplay.getPathThemeSpritemap();
 		}
 
 		httpServletRequest.setAttribute(

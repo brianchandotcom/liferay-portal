@@ -27,7 +27,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -241,7 +241,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				return saveDisplayPreferenceURL.toString();
 			}
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemap(themeDisplay)
+			"spritemap", themeDisplay.getPathThemeSpritemap()
 		).build();
 
 		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;

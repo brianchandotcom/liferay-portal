@@ -34,7 +34,7 @@ String alertTitle = (String)request.getAttribute("liferay-ui:error:alertTitle");
 
 			<span class="alert-indicator">
 				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-<%= alertIcon %>">
-					<use xlink:href="<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>#<%= alertIcon %>"></use>
+					<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#<%= alertIcon %>"></use>
 				</svg>
 			</span>
 

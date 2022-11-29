@@ -15,7 +15,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -89,7 +89,7 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
+			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).build();
 	}
 

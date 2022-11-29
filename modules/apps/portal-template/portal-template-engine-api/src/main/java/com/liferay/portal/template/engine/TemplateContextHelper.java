@@ -22,7 +22,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -298,7 +298,7 @@ public class TemplateContextHelper {
 			contextObjects.put(
 				"scopeGroupId", Long.valueOf(themeDisplay.getScopeGroupId()));
 			contextObjects.put(
-				"siteSpritemap", FrontendIconsUtil.getSpritemap(themeDisplay));
+				"siteSpritemap", themeDisplay.getPathThemeSpritemap());
 			contextObjects.put("themeDisplay", themeDisplay);
 			contextObjects.put("timeZone", themeDisplay.getTimeZone());
 

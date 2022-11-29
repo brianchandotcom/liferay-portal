@@ -16,7 +16,7 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.model.StepModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -75,7 +75,7 @@ public class StepTrackerTag extends IncludeTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			_spritemap = FrontendIconsUtil.getSpritemap(themeDisplay);
+			_spritemap = themeDisplay.getPathThemeSpritemap();
 		}
 
 		httpServletRequest.setAttribute(

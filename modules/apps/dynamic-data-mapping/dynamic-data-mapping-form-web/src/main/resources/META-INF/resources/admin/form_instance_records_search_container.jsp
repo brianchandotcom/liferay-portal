@@ -86,7 +86,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 
 						<div class="search-container-column-language">
 							<svg class="h4 lexicon-icon lexicon-icon-<%= w3cLanguageId %> reference-mark">
-								<use xlink:href="<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>#<%= w3cLanguageId %>" />
+								<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#<%= w3cLanguageId %>" />
 							</svg>
 						</div>
 					</liferay-ui:search-container-column-text>

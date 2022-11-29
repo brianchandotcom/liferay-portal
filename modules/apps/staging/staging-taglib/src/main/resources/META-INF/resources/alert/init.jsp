@@ -27,5 +27,5 @@ boolean dismissible = GetterUtil.getBoolean(request.getAttribute("liferay-stagin
 boolean fluid = GetterUtil.getBoolean(request.getAttribute("liferay-staging:alert:fluid"));
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:alert:type"));
 
-String spritemap = FrontendIconsUtil.getSpritemap(themeDisplay);
+String spritemap = themeDisplay.getPathThemeSpritemap();
 %>

@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.change.tracking.model.CTCollection" %><%@
 page import="com.liferay.change.tracking.taglib.internal.display.context.TimelineDisplayContext" %><%@
-page import="com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil" %><%@
+
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %>
 

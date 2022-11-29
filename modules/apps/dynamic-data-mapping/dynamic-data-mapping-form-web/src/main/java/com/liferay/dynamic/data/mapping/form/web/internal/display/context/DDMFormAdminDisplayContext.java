@@ -86,7 +86,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -911,8 +911,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getLexiconIconsPath() {
-		String spritemap = FrontendIconsUtil.getSpritemap(
-			ddmFormAdminRequestHelper.getThemeDisplay());
+		String spritemap = ddmFormAdminRequestHelper.getThemeDisplay().getPathThemeSpritemap();
 
 		return spritemap + "#";
 	}

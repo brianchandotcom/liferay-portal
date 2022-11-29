@@ -76,7 +76,7 @@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchModelException" %><%@
-page import="com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil" %><%@
+
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@

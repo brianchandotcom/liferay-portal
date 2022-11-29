@@ -11,13 +11,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 export interface IIconPack {
-	editable?: boolean;
-	icons: Array<{
-		name: string;
-	}>;
+    editable?: boolean;
+    icons: Array<{
+        name: string;
+    }>;
 }
 export interface IIconPacks {
-	[key: string]: IIconPack;
+    [key: string]: IIconPack;
 }

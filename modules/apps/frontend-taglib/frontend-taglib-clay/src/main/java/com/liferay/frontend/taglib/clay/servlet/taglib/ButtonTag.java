@@ -16,7 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
+
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -241,7 +241,7 @@ public class ButtonTag extends BaseContainerTag {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				jspWriter.write(FrontendIconsUtil.getSpritemap(themeDisplay));
+				jspWriter.write(themeDisplay.getPathThemeSpritemap());
 
 				jspWriter.write("#");
 				jspWriter.write(_icon);

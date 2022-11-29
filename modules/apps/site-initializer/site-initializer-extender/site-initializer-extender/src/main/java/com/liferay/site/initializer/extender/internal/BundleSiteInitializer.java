@@ -3533,7 +3533,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			}
 
-			if (groupIds.isEmpty()) {
+			if (ListUtil.isEmpty(groupIds)) {
 				continue;
 			}
 

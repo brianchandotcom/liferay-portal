@@ -61,13 +61,13 @@ const ObjectField = ({
 		const filteredObjectFields = objectFields.filter(
 			({
 				businessType,
-				listTypeDefinitionId,
+				listTypeDefinitionExternalReferenceCode,
 				relationshipType,
 				system,
 				type,
 			}) => {
 				if (
-					!listTypeDefinitionId &&
+					!listTypeDefinitionExternalReferenceCode &&
 					(focusedFieldType === 'radio' ||
 						focusedFieldType === 'select') &&
 					normalizedDataType.includes(type.toLowerCase())
@@ -75,7 +75,7 @@ const ObjectField = ({
 					return false;
 				}
 				else if (
-					listTypeDefinitionId &&
+					listTypeDefinitionExternalReferenceCode &&
 					(focusedFieldType === 'checkbox_multiple' ||
 						focusedFieldType === 'color' ||
 						focusedFieldType === 'grid' ||

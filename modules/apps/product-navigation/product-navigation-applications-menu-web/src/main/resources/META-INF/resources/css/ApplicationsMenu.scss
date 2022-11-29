@@ -26,8 +26,10 @@ html#{$cadmin-selector} {
 				$footerHeight: 65px;
 				$headerHeight: 60px;
 
-				max-height: calc(100vh - #{$footerHeight + $headerHeight});
-				overflow-y: auto;
+				@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+					max-height: calc(100vh - #{$footerHeight + $headerHeight});
+					overflow-y: auto;
+				}
 			}
 		}
 
@@ -67,6 +69,12 @@ html#{$cadmin-selector} {
 
 		.applications-menu-border-top {
 			border-top: 1px solid $cadmin-light;
+		}
+
+		.applications-menu-content {
+			@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+				overflow: auto;
+			}
 		}
 
 		.applications-menu-nav-columns {
@@ -134,7 +142,10 @@ html#{$cadmin-selector} {
 
 		.applications-menu-sites {
 			background-color: $cadmin-light-l1;
-			height: 100%;
+
+			@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+				height: 100%;
+			}
 		}
 
 		.applications-menu-virtual-instance {

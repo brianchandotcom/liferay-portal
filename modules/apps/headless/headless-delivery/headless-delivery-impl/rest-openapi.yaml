@@ -3500,6 +3500,7 @@ components:
                         - $ref: "#/components/schemas/PageColumnDefinition"
                         - $ref: "#/components/schemas/PageDropZoneDefinition"
                         - $ref: "#/components/schemas/PageFormDefinition"
+                        - $ref: "#/components/schemas/PageFragmentDropZoneDefinition"
                         - $ref: "#/components/schemas/PageFragmentInstanceDefinition"
                         - $ref: "#/components/schemas/PageRootDefinition"
                         - $ref: "#/components/schemas/PageRowDefinition"
@@ -3612,6 +3613,17 @@ components:
                     # @review
                     description:
                         The custom name of of a Page form.
+                    type: string
+            type: object
+        PageFragmentDropZoneDefinition:
+            # @review
+            description:
+                Represents a definition of a Page Fragment DropZone.
+            properties:
+                fragmentDropZoneId:
+                    # @review
+                    description:
+                        The id of the fragment dropzone
                     type: string
             type: object
         PageFragmentInstanceDefinition:

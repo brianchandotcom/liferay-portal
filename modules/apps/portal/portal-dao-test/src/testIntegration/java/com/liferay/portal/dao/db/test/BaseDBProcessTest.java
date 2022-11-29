@@ -35,6 +35,7 @@ import java.sql.SQLException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -404,6 +405,68 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		alterTableDropColumn(_TABLE_NAME, "nonexistedColumn");
 	}
 
+	@Test
+	public void testProcessConcurrentlyWithBatch() throws Exception {
+		_populateTable();
+
+		processConcurrently(
+			"select id from " + _TABLE_NAME,
+			"update " + _TABLE_NAME + " set typeInteger = ? where id = ?",
+			resultSet -> new Object[] {resultSet.getInt("id")},
+			(values, preparedStatement) -> {
+				int value = (int)values[0];
+
+				preparedStatement.setInt(1, value);
+				preparedStatement.setInt(2, value);
+
+				preparedStatement.addBatch();
+			},
+			null);
+
+		_verifyTableContent();
+	}
+
+	@Test
+	public void testProcessConcurrentlyWithList() throws Exception {
+		Integer[] values = IntStream.rangeClosed(
+			1, _RANGE_MAX
+		).boxed(
+		).toArray(
+			Integer[]::new
+		);
+
+		processConcurrently(
+			values,
+			value -> runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME,
+					" (id, notNilColumn, typeInteger) values (", value,
+					", '1', ", value, ")")),
+			null);
+
+		_verifyTableContent();
+	}
+
+	@Test
+	public void testProcessConcurrentlyWithSelect() throws Exception {
+		_populateTable();
+
+		processConcurrently(
+			"select id from " + _TABLE_NAME,
+			resultSet -> new Object[] {resultSet.getInt("id")},
+			values -> {
+				int value = (int)values[0];
+
+				runSQL(
+					StringBundler.concat(
+						"update ", _TABLE_NAME, " set typeInteger = ", value,
+						" where id = ", value));
+			},
+			null);
+
+		_verifyTableContent();
+	}
+
 	private void _addIndex(String[] columnNames) {
 		List<IndexMetadata> indexMetadatas = Arrays.asList(
 			new IndexMetadata(_INDEX_NAME, _TABLE_NAME, false, columnNames));
@@ -411,6 +474,47 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		ReflectionTestUtil.invoke(
 			_db, "addIndexes", new Class<?>[] {Connection.class, List.class},
 			_connection, indexMetadatas);
+	}
+
+	private boolean _checkValue(int key) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select typeInteger from ", _TABLE_NAME, " where id = ",
+					key));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				if (resultSet.getInt("typeInteger") == key) {
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		return false;
+	}
+
+	private int _getCount(String tableName) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(1) from " + tableName);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		throw new Exception("Table does not exist");
+	}
+
+	private void _populateTable() throws Exception {
+		for (int i = 1; i <= _RANGE_MAX; i++) {
+			runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME, " (id, notNilColumn) values (",
+					i, ", '1')"));
+		}
 	}
 
 	private void _validateIndex(String[] columnNames) throws Exception {
@@ -435,7 +539,18 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			ArrayUtil.sortedUnique(indexMetadata.getColumnNames()));
 	}
 
+	private void _verifyTableContent() throws Exception {
+		Assert.assertEquals(_RANGE_MAX, _getCount(_TABLE_NAME));
+
+		for (int i = 1; i <= _RANGE_MAX; i++) {
+			Assert.assertTrue(
+				"Key " + i + " does not have the right value", _checkValue(i));
+		}
+	}
+
 	private static final String _INDEX_NAME = "IX_TEMP";
+
+	private static final int _RANGE_MAX = 2000;
 
 	private static final String _TABLE_NAME = "BasedDBProcessTest";
 

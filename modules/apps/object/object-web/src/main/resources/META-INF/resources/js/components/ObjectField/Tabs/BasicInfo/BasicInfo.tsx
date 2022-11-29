@@ -245,6 +245,16 @@ export function BasicInfo({
 					},
 				];
 			}
+			else if (objectFieldBusinessType === 'Relationship') {
+				newFilterValues = [
+					...(filter.value as ObjectFieldFilterSetting[]),
+					{
+						filterBy: objectFieldName,
+						filterType,
+						json: {},
+					},
+				];
+			}
 			else {
 				newFilterValues = [
 					...(filter.value as ObjectFieldFilterSetting[]),
@@ -500,6 +510,29 @@ export function BasicInfo({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFields]);
 
+	const isValidAggregationFilterField = ({
+		businessType,
+		name,
+		objectFieldSettings,
+	}: ObjectField) => {
+		const userRelationship = !!objectFieldSettings?.find(
+			({name, value}) =>
+				name === 'objectDefinition1ShortName' && value === 'User'
+		);
+
+		if (businessType === 'Relationship' && userRelationship) {
+			return true;
+		}
+
+		return (
+			businessType === 'Date' ||
+			businessType === 'Integer' ||
+			businessType === 'LongInteger' ||
+			businessType === 'Picklist' ||
+			name === 'status'
+		);
+	};
+
 	return (
 		<>
 			<Card title={Liferay.Language.get('basic-info')}>
@@ -580,6 +613,7 @@ export function BasicInfo({
 
 			{visibleModal && (
 				<ModalAddFilter
+					aggregationFilter
 					currentFilters={[]}
 					editingFilter={editingFilter}
 					editingObjectFieldName={editingObjectFieldName}
@@ -588,13 +622,7 @@ export function BasicInfo({
 					header={Liferay.Language.get('filter')}
 					objectFields={
 						objectFields?.filter((objectField) => {
-							if (
-								objectField.businessType === 'Date' ||
-								objectField.businessType === 'Integer' ||
-								objectField.businessType === 'LongInteger' ||
-								objectField.businessType === 'Picklist' ||
-								objectField.name === 'status'
-							) {
+							if (isValidAggregationFilterField(objectField)) {
 								return objectField;
 							}
 						}) ?? []

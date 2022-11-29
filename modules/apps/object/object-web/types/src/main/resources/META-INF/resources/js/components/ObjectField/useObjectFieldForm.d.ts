@@ -36,6 +36,7 @@ export declare function useObjectFieldForm({
 			filters: unknown;
 			maxLength: unknown;
 			maximumFileSize: unknown;
+			objectDefinition1ShortName: unknown;
 			objectFieldName: unknown;
 			objectRelationshipName: unknown;
 			output: unknown;

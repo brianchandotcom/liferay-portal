@@ -220,6 +220,7 @@ type ObjectFieldSettingName =
 	| 'function'
 	| 'maxLength'
 	| 'maximumFileSize'
+	| 'objectDefinition1ShortName'
 	| 'objectFieldName'
 	| 'objectRelationshipName'
 	| 'output'

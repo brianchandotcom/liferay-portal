@@ -17,6 +17,7 @@
 import {Observer} from '@clayui/modal/lib/types';
 import './ModalAddFilter.scss';
 interface IProps {
+	aggregationFilter?: boolean;
 	currentFilters: CurrentFilter[];
 	disableDateValues?: boolean;
 	editingFilter: boolean;
@@ -81,6 +82,7 @@ declare type CurrentFilter = {
 	valueList?: LabelValueObject[];
 };
 export declare function ModalAddFilter({
+	aggregationFilter,
 	currentFilters,
 	disableDateValues,
 	editingFilter,

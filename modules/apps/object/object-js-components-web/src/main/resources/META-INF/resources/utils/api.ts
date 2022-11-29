@@ -196,15 +196,31 @@ export async function getObjectField(objectFieldId: number) {
 	);
 }
 
-export async function getObjectFields(objectDefinitionId: number) {
+export async function getObjectFieldsById(objectDefinitionId: number) {
 	return await getList<ObjectField>(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields?pageSize=-1`
 	);
 }
 
-export async function getObjectRelationships(objectDefinitionId: number) {
+export async function getObjectFieldsByExternalReferenceCode(
+	externalReferenceCode: string
+) {
+	return await getList<ObjectField>(
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}/object-fields?pageSize=-1`
+	);
+}
+
+export async function getObjectRelationshipsById(objectDefinitionId: number) {
 	return await getList<ObjectRelationship>(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships`
+	);
+}
+
+export async function getObjectRelationshipsByExternalReferenceCode(
+	externalReferenceCode: string
+) {
+	return await getList<ObjectRelationship>(
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}/object-relationships`
 	);
 }
 

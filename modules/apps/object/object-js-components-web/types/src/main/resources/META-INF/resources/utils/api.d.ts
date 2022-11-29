@@ -106,11 +106,17 @@ export declare function getObjectDefinitions(
 export declare function getObjectField(
 	objectFieldId: number
 ): Promise<ObjectField>;
-export declare function getObjectFields(
+export declare function getObjectFieldsById(
 	objectDefinitionId: number
 ): Promise<ObjectField[]>;
-export declare function getObjectRelationships(
+export declare function getObjectFieldsByExternalReferenceCode(
+	externalReferenceCode: string
+): Promise<ObjectField[]>;
+export declare function getObjectRelationshipsById(
 	objectDefinitionId: number
+): Promise<ObjectRelationship[]>;
+export declare function getObjectRelationshipsByExternalReferenceCode(
+	externalReferenceCode: string
 ): Promise<ObjectRelationship[]>;
 export declare function getPickList(pickListId: number): Promise<PickList>;
 export declare function getPickLists(): Promise<PickList[]>;

@@ -67,7 +67,7 @@ export function Attachments({setValues, values}: IProps) {
 	const getAttachmentFields = async function fetchObjectFields(
 		objectDefinitionId: number
 	) {
-		const items = await API.getObjectFields(objectDefinitionId);
+		const items = await API.getObjectFieldsById(objectDefinitionId);
 
 		const fields: ObjectField[] = items?.filter(
 			(field) => field.businessType === 'Attachment'

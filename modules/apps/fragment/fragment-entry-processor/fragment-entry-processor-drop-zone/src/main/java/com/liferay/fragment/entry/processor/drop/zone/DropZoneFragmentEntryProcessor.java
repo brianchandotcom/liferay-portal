@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -160,6 +162,8 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 				Map<String, String> fragmentDropZoneIdsMap =
 					new LinkedHashMap<>();
 
+				List<String> noFragmentDropZoneIdItemIds = new LinkedList<>();
+
 				for (String childrenItemId : dropZoneItemIds) {
 					LayoutStructureItem childLayoutStructureItem =
 						layoutStructure.getLayoutStructureItem(childrenItemId);
@@ -179,7 +183,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 						fragmentDropZoneLayoutStructureItem.
 							getFragmentDropZoneId();
 
-					if (!Validator.isBlank(fragmentDropZoneId)) {
+					if (Validator.isBlank(fragmentDropZoneId)) {
+						noFragmentDropZoneIdItemIds.add(childrenItemId);
+					}
+					else {
 						fragmentDropZoneIdsMap.put(
 							fragmentDropZoneId, childrenItemId);
 					}
@@ -193,6 +200,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 					if (fragmentDropZoneIdsMap.containsKey(dropZoneId)) {
 						element.attr(
 							"uuid", fragmentDropZoneIdsMap.get(dropZoneId));
+					}
+					else if (ListUtil.isNotEmpty(noFragmentDropZoneIdItemIds)) {
+						element.attr(
+							"uuid", noFragmentDropZoneIdItemIds.remove(0));
 					}
 				}
 			}

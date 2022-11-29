@@ -539,8 +539,8 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					journalArticle.getGroupId(),
 					_getAssetPriority(journalArticle, structuredContent),
+					journalArticle.getGroupId(),
 					structuredContent)));
 	}
 
@@ -749,17 +749,17 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					groupId,
 					Optional.ofNullable(
 						structuredContent.getPriority()
 					).orElse(
 						0.0
 					),
+					groupId,
 					structuredContent)));
 	}
 
 	private ServiceContext _createServiceContext(
-		long groupId, double assetPriority,
+		double assetPriority, long groupId,
 		StructuredContent structuredContent) {
 
 		ServiceContext serviceContext =
@@ -1210,8 +1210,8 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					journalArticle.getGroupId(),
 					_getAssetPriority(journalArticle, structuredContent),
+					journalArticle.getGroupId(),
 					structuredContent)));
 	}
 

@@ -228,11 +228,27 @@ export default function ActionBuilder({
 		setValues({conditionExpression});
 	};
 
-	const isValidField = ({businessType, system}: ObjectField) =>
-		businessType !== 'Aggregation' &&
-		businessType !== 'Formula' &&
-		businessType !== 'Relationship' &&
-		!system;
+	const isValidField = ({
+		businessType,
+		objectFieldSettings,
+		system,
+	}: ObjectField) => {
+		const userRelationship = !!objectFieldSettings?.find(
+			({name, value}) =>
+				name === 'objectDefinition1ShortName' && value === 'User'
+		);
+
+		if (businessType === 'Relationship' && userRelationship) {
+			return true;
+		}
+
+		return (
+			businessType !== 'Aggregation' &&
+			businessType !== 'Formula' &&
+			businessType !== 'Relationship' &&
+			!system
+		);
+	};
 
 	const fetchObjectDefinitionFields = async () => {
 		let validFields: ObjectField[] = [];

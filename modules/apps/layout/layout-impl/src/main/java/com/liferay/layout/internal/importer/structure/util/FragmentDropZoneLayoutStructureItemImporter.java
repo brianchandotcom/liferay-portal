@@ -19,6 +19,7 @@ import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
@@ -48,6 +49,13 @@ public class FragmentDropZoneLayoutStructureItemImporter
 					layoutStructure.addFragmentDropZoneLayoutStructureItem(
 						layoutStructureItemImporterContext.getParentItemId(),
 						layoutStructureItemImporterContext.getPosition());
+
+		fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(
+			StringPool.BLANK);
+
+		if (pageElement.getDefinition() == null) {
+			return fragmentDropZoneLayoutStructureItem;
+		}
 
 		Map<String, Object> definitionMap = getDefinitionMap(
 			pageElement.getDefinition());

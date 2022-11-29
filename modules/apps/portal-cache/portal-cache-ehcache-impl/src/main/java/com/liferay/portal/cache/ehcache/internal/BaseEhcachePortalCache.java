@@ -36,10 +36,10 @@ public abstract class BaseEhcachePortalCache<K extends Serializable, V>
 	extends BasePortalCache<K, V> implements EhcacheWrapper {
 
 	public BaseEhcachePortalCache(
-		EhcachePortalCacheManager<K, V> ehcachePortalCacheManager,
+		BaseEhcachePortalCacheManager<K, V> baseEhcachePortalCacheManager,
 		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration) {
 
-		super(ehcachePortalCacheManager);
+		super(baseEhcachePortalCacheManager);
 
 		_portalCacheName = ehcachePortalCacheConfiguration.getPortalCacheName();
 		_serializable =

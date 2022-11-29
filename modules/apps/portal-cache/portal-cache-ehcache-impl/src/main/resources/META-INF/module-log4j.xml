@@ -2,6 +2,6 @@
 
 <Configuration strict="true">
 	<Loggers>
-		<Logger level="ERROR" name="com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheManager" />
+		<Logger level="ERROR" name="com.liferay.portal.cache.ehcache.internal.BaseEhcachePortalCacheManager" />
 	</Loggers>
 </Configuration>

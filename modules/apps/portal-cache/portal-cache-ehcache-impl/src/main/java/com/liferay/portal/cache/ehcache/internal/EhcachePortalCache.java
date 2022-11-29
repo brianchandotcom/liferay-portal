@@ -32,12 +32,12 @@ public class EhcachePortalCache<K extends Serializable, V>
 	extends BaseEhcachePortalCache<K, V> {
 
 	public EhcachePortalCache(
-		EhcachePortalCacheManager<K, V> ehcachePortalCacheManager,
+		BaseEhcachePortalCacheManager<K, V> baseEhcachePortalCacheManager,
 		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration) {
 
-		super(ehcachePortalCacheManager, ehcachePortalCacheConfiguration);
+		super(baseEhcachePortalCacheManager, ehcachePortalCacheConfiguration);
 
-		_cacheManager = ehcachePortalCacheManager.getEhcacheManager();
+		_cacheManager = baseEhcachePortalCacheManager.getEhcacheManager();
 	}
 
 	@Override

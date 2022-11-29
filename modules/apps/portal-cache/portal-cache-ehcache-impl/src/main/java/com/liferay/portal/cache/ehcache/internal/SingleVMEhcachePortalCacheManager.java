@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortalCacheManager.class
 )
 public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
-	extends EhcachePortalCacheManager<K, V> {
+	extends BaseEhcachePortalCacheManager<K, V> {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

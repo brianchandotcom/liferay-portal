@@ -87,15 +87,15 @@ public class EhcachePortalCacheTest {
 
 		_ehcache = _cacheManager.getCache(_PORTAL_CACHE_NAME);
 
-		EhcachePortalCacheManager ehcachePortalCacheManager =
-			new EhcachePortalCacheManager() {
+		BaseEhcachePortalCacheManager baseEhcachePortalCacheManager =
+			new BaseEhcachePortalCacheManager() {
 			};
 
 		ReflectionTestUtil.setFieldValue(
-			ehcachePortalCacheManager, "_cacheManager", _cacheManager);
+			baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
 
 		_ehcachePortalCache = new EhcachePortalCache<>(
-			ehcachePortalCacheManager,
+			baseEhcachePortalCacheManager,
 			new EhcachePortalCacheConfiguration(
 				_PORTAL_CACHE_NAME, null, false));
 
@@ -610,16 +610,16 @@ public class EhcachePortalCacheTest {
 
 	@Test
 	public void testSerializable() {
-		EhcachePortalCacheManager ehcachePortalCacheManager =
-			new EhcachePortalCacheManager() {
+		BaseEhcachePortalCacheManager baseEhcachePortalCacheManager =
+			new BaseEhcachePortalCacheManager() {
 			};
 
 		ReflectionTestUtil.setFieldValue(
-			ehcachePortalCacheManager, "_cacheManager", _cacheManager);
+			baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
 
 		EhcachePortalCache<String, Object> ehcachePortalCache =
 			new EhcachePortalCache<>(
-				ehcachePortalCacheManager,
+				baseEhcachePortalCacheManager,
 				new EhcachePortalCacheConfiguration(
 					"SerializablePortalCache", null, true));
 

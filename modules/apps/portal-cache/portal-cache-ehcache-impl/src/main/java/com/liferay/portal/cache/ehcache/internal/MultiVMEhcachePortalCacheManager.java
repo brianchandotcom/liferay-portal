@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MultiVMEhcachePortalCacheManager
 	<K extends Serializable, V extends Serializable>
-		extends EhcachePortalCacheManager<K, V> {
+		extends BaseEhcachePortalCacheManager<K, V> {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

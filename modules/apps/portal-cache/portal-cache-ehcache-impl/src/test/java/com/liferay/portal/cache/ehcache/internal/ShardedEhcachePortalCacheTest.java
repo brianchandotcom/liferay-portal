@@ -97,17 +97,17 @@ public class ShardedEhcachePortalCacheTest {
 			}
 		);
 
-		_ehcachePortalCacheManager = new EhcachePortalCacheManager() {
+		_baseEhcachePortalCacheManager = new BaseEhcachePortalCacheManager() {
 		};
 
 		ReflectionTestUtil.setFieldValue(
-			_ehcachePortalCacheManager, "_cacheManager", _cacheManager);
+			_baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
 
 		_companyIdThreadLocal = ReflectionTestUtil.getFieldValue(
 			CompanyThreadLocal.class, "_companyId");
 
 		_shardedEhcachePortalCache = new ShardedEhcachePortalCache(
-			_ehcachePortalCacheManager,
+			_baseEhcachePortalCacheManager,
 			new EhcachePortalCacheConfiguration(
 				_TEST_CACHE_NAME, Collections.emptySet(), false));
 
@@ -143,7 +143,7 @@ public class ShardedEhcachePortalCacheTest {
 
 		ShardedEhcachePortalCache testDefaultShardedEhcachePortalCache =
 			new ShardedEhcachePortalCache(
-				_ehcachePortalCacheManager,
+				_baseEhcachePortalCacheManager,
 				new EhcachePortalCacheConfiguration(
 					"test.default.cache", Collections.emptySet(), false));
 
@@ -685,9 +685,9 @@ public class ShardedEhcachePortalCacheTest {
 
 	private static final String _TEST_VALUE_SYSTEM = "TEST_VALUE_SYSTEM";
 
+	private static BaseEhcachePortalCacheManager _baseEhcachePortalCacheManager;
 	private static CacheManager _cacheManager;
 	private static ThreadLocal<Long> _companyIdThreadLocal;
-	private static EhcachePortalCacheManager _ehcachePortalCacheManager;
 
 	private final MockedStatic<DBPartitionUtil> _dbPartitionUtilMockedStatic =
 		Mockito.mockStatic(DBPartitionUtil.class);

@@ -19,6 +19,8 @@ package com.liferay.object.constants;
  */
 public class ObjectFilterConstants {
 
+	public static final String TYPE_CURRENT_USER = "currentUser";
+
 	public static final String TYPE_DATE_RANGE = "range";
 
 	public static final String TYPE_EQUALS = "eq";

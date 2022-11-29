@@ -505,6 +505,26 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
             tags: ["DataDefinition"]
+    "/data-definitions/{dataDefinitionId}/copy":
+        post:
+            operationId: postDataDefinitionCopy
+            parameters:
+                - in: path
+                  name: dataDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinition"
+            tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-definition-field-links":
         get:
             operationId: getDataDefinitionDataDefinitionFieldLinksPage

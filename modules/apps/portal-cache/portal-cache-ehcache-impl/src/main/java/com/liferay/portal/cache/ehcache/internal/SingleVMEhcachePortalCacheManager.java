@@ -16,6 +16,7 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
+import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.ehcache.internal.configurator.SingleVMEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
@@ -63,6 +64,13 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		destroy();
 	}
 
+	@Override
+	protected BaseEhcachePortalCacheManagerConfigurator
+		getBaseEhcachePortalCacheManagerConfigurator() {
+
+		return _singleVMEhcachePortalCacheManagerConfigurator;
+	}
+
 	@Reference(unbind = "-")
 	protected void setPortalCacheListenerFactory(
 		PortalCacheListenerFactory portalCacheListenerFactory) {
@@ -98,5 +106,9 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleVMEhcachePortalCacheManager.class);
+
+	@Reference
+	private SingleVMEhcachePortalCacheManagerConfigurator
+		_singleVMEhcachePortalCacheManagerConfigurator;
 
 }

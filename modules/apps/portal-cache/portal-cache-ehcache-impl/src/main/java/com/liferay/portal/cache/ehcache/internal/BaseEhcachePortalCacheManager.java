@@ -279,6 +279,9 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 		_aggregatedPortalCacheManagerListener.clearAll();
 	}
 
+	protected abstract BaseEhcachePortalCacheManagerConfigurator
+		getBaseEhcachePortalCacheManagerConfigurator();
+
 	protected void initialize() {
 		if (_portalCacheManagerConfiguration != null) {
 			return;

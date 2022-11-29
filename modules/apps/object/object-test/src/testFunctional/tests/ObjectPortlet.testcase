@@ -82,7 +82,6 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to view and access the Custom Object portlet with the Access in Control Panel permission"
 	@priority = "4"
 	test CanAccessCustomObjectWithAccessPermission {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPortlet#CanAccessCustomObjectWithAccessPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -407,7 +406,6 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to add an Object entry with the Add Object Entry permission"
 	@priority = "4"
 	test CanAddObjectEntryWithAddPermission {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPortlet#CanAddObjectEntryWithAddPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -820,7 +818,6 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to delete an Object entry with the Delete permission"
 	@priority = "4"
 	test CanDeleteObjectEntryWithDeletePermission {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPortlet#CanDeleteObjectEntryWithDeletePermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -1363,7 +1360,6 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to update an Object entry without the Update permission"
 	@priority = "4"
 	test CannotUpdateObjectEntryWithoutUpdatePermission {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPortlet#CannotUpdateObjectEntryWithoutUpdatePermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -1529,7 +1525,6 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to view other user's Object entry without the View permission"
 	@priority = "4"
 	test CannotViewOtherUsersEntryWithoutViewPermission {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPortlet#CannotViewOtherUsersEntryWithoutViewPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -1757,7 +1752,6 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to update an Object entry with the Update permission"
 	@priority = "4"
 	test CanUpdateObjectEntryWithUpdatePermission {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPortlet#CanUpdateObjectEntryWithUpdatePermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -2052,7 +2046,6 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to view other user's Object entry with the View permission"
 	@priority = "4"
 	test CanViewOtherUsersEntryWithViewPermission {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPortlet#CanViewOtherUsersEntryWithViewPermission";
 
 		ObjectAdmin.addObjectViaAPI(

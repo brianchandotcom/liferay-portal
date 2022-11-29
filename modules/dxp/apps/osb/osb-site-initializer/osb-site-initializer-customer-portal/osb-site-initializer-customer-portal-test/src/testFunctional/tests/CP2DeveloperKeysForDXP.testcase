@@ -125,20 +125,18 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test UserAdminAndPartnerManagerRoleCanSeeAndPerformTheActionsForDXP {
-		
 	}
 
 	@description = "Automation ID: LPS-166937 | Test Summary: Assert that users with the roles Partner Members, Requesters and Users cannot see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)"
 	@ignore = "true"
 	@priority = "4"
 	test UserPartnerMemberAndRequesterRoleCannotSeeSomeAllActionsForDXP {
-		
 	}
 
 	@description = "Automation ID: LPS-166940 | Test Summary: Verify that users with the roles Partner Members, Requesters and Users cannot see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)."
 	@ignore = "true"
 	@priority = "4"
 	test UserPartnerMemberAndRequesterRoleCanSeeAndPerformAllActionsForDXP {
-		
 	}
+
 }

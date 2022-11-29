@@ -47,7 +47,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class EhcachePortalCacheTest {
+public class BaseEhcachePortalCacheTest {
 
 	@ClassRule
 	@Rule

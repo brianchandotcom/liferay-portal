@@ -230,9 +230,14 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 						<ClayInput
 							id={`${config.portletNamespace}templateName`}
 							name={`${config.portletNamespace}name`}
-							onChange={(event) =>
-								setTemplateName(event.target.value)
-							}
+							onChange={(event) => {
+								setTemplateName(event.target.value);
+
+								setFormErrors({
+									...formErrors,
+									templateName: null,
+								});
+							}}
 							ref={nameInputRef}
 							required
 							value={templateName}
@@ -246,9 +251,13 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 					>
 						<ClaySelectWithOption
 							id={`${config.portletNamespace}templateSet`}
-							onChange={(event) =>
-								setTemplateSet(event.target.value)
-							}
+							onChange={(event) => {
+								setTemplateSet(event.target.value);
+								setFormErrors({
+									...formErrors,
+									templateSet: null,
+								});
+							}}
 							options={templateSetSelectOptions}
 							required
 							value={templateSet}

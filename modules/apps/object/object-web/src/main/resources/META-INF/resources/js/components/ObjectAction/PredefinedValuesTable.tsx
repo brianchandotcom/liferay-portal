@@ -32,6 +32,8 @@ import React, {useEffect, useMemo} from 'react';
 
 import './PredefinedValuesTable.scss';
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 export default function PredefinedValuesTable({
 	currentObjectDefinitionFields,
 	disableRequiredChecked,
@@ -61,7 +63,7 @@ export default function PredefinedValuesTable({
 			});
 		}
 
-		return predefinedValues.map(({inputAsValue, name, value}) => {
+		return predefinedValues.map(({inputAsValue, label, name, value}) => {
 			return {
 				inputAsValue: (
 					<div className="lfr-object-web__predefined-values-table-input-method">
@@ -105,9 +107,9 @@ export default function PredefinedValuesTable({
 					</div>
 				),
 
-				name: (
+				label: (
 					<div className="lfr-object-web__predefined-values-table-field">
-						{name}
+						{label[defaultLanguageId]}
 
 						{objectFieldsMap.get(name)?.required === true && (
 							<span className="lfr-object-web__predefined-values-table-reference-mark">
@@ -226,6 +228,7 @@ export default function PredefinedValuesTable({
 			parentWindow.Liferay.fire('openModalAddColumns', {
 				disableRequired: true,
 				disableRequiredChecked,
+				getLabel: ({label}: ObjectField) => label[defaultLanguageId],
 				getName: ({name}: ObjectField) => name,
 				header: Liferay.Language.get('add-fields'),
 				items: currentObjectDefinitionFields,
@@ -239,13 +242,14 @@ export default function PredefinedValuesTable({
 						predefinedValuesMap.set(field.name, field);
 					});
 
-					const newPredefinedValues = items.map(({name}) => {
+					const newPredefinedValues = items.map(({label, name}) => {
 						const value = predefinedValuesMap.get(name);
 
 						return value
 							? value
 							: {
 									inputAsValue: false,
+									label,
 									name,
 									value: '',
 							  };
@@ -321,7 +325,7 @@ export default function PredefinedValuesTable({
 								schema: {
 									fields: [
 										{
-											fieldName: 'name',
+											fieldName: 'label',
 											label: Liferay.Language.get(
 												'field'
 											),
@@ -364,6 +368,7 @@ interface IProps {
 
 interface Item {
 	inputAsValue: JSX.Element;
+	label: JSX.Element;
 	name: JSX.Element;
 	newValue: JSX.Element;
 }

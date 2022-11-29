@@ -300,6 +300,7 @@ interface HTTPMethod {
 
 interface PredefinedValue {
 	inputAsValue: boolean;
+	label: LocalizedValue<string>;
 	name: string;
 	value: string;
 }

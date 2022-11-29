@@ -38,12 +38,12 @@ public class ConfigurationBeanClassSettingsDescriptor
 
 	@Override
 	public Set<String> getAllKeys() {
-		return _allKeys;
+		return new HashSet<>(_allKeys);
 	}
 
 	@Override
 	public Set<String> getMultiValuedKeys() {
-		return _multiValuedKeys;
+		return new HashSet<>(_multiValuedKeys);
 	}
 
 	private void _initAllKeys() {

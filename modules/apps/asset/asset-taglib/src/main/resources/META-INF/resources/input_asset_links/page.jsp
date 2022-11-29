@@ -16,32 +16,13 @@
 
 <%@ include file="/input_asset_links/init.jsp" %>
 
-<liferay-ui:icon-menu
-	cssClass="select-existing-selector"
-	direction="right"
-	id='<%= inputAssetLinksDisplayContext.getRandomNamespace() + "inputAssetLinks" %>'
-	message="select"
-	showArrow="<%= false %>"
-	showWhenSingleIcon="<%= true %>"
->
-
-	<%
-	for (Map<String, Object> selectorEntry : inputAssetLinksDisplayContext.getSelectorEntries()) {
-	%>
-
-		<liferay-ui:icon
-			cssClass="asset-selector"
-			data='<%= (Map<String, Object>)selectorEntry.get("data") %>'
-			id='<%= (String)selectorEntry.get("id") %>'
-			message='<%= HtmlUtil.escape((String)selectorEntry.get("message")) %>'
-			url="javascript:void(0);"
-		/>
-
-	<%
-	}
-	%>
-
-</liferay-ui:icon-menu>
+<clay:dropdown-menu
+	aria-label='<%= LanguageUtil.get(request, "select-items") %>'
+	cssClass="btn btn-secondary"
+	dropdownItems="<%= inputAssetLinksDisplayContext.getActionDropdownItems() %>"
+	label='<%= LanguageUtil.get(request, "select") %>'
+	propsTransformer="js/InputAssetLinkDropdownDefaultPropsTransformer"
+/>
 
 <liferay-util:buffer
 	var="removeLinkIcon"

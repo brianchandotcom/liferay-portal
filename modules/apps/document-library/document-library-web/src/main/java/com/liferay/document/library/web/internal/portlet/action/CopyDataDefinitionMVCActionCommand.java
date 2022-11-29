@@ -22,7 +22,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -84,17 +83,14 @@ public class CopyDataDefinitionMVCActionCommand
 			).build();
 
 		DataDefinition dataDefinition =
-			dataDefinitionResource.getDataDefinition(ddmStructureId);
+			dataDefinitionResource.postDataDefinitionCopy(ddmStructureId);
 
-		dataDefinition.setDataDefinitionKey(StringPool.BLANK);
 		dataDefinition.setDescription(
 			LocalizedValueUtil.toStringObjectMap(descriptionMap));
 		dataDefinition.setName(LocalizedValueUtil.toStringObjectMap(nameMap));
 
-		dataDefinition =
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				themeDisplay.getScopeGroupId(), "document-library",
-				dataDefinition);
+		dataDefinitionResource.putDataDefinition(
+			dataDefinition.getId(), dataDefinition);
 
 		boolean copyTemplates = ParamUtil.getBoolean(
 			actionRequest, "copyTemplates");

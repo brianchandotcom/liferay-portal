@@ -195,11 +195,13 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private double _getPriority(
-		KBArticle kbArticle, long parentResourcePrimKey, int position) {
+			KBArticle kbArticle, long parentResourcePrimKey, int position)
+		throws PortalException {
 
-		if (position < 0) {
-			return kbArticle.getPriority();
-		}
+		int kbFoldersCount = _kbFolderService.getKBFoldersCount(
+			kbArticle.getGroupId(), parentResourcePrimKey);
+
+		position = position - kbFoldersCount;
 
 		List<KBArticle> kbArticles = _kbArticleService.getKBArticles(
 			kbArticle.getGroupId(), parentResourcePrimKey,

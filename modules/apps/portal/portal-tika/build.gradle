@@ -1,5 +1,4 @@
 dependencies {
-	compileInclude group: "com.adobe.xmp", name: "xmpcore", version: "6.1.11"
 	compileInclude group: "com.drewnoakes", name: "metadata-extractor", version: "2.18.0"
 	compileInclude group: "com.googlecode.juniversalchardet", name: "juniversalchardet", version: "1.0.3"
 	compileInclude group: "com.liferay", name: "org.gagravarr.tika", version: "0.8.LIFERAY-PATCHED-1"
@@ -20,6 +19,7 @@ dependencies {
 	compileInclude group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
 	compileInclude group: "org.tallison", name: "jmatio", version: "1.2"
 
+	compileOnly group: "com.adobe.xmp", name: "xmpcore", version: "6.1.11"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.zaxxer", name: "SparseBitSet", version: "1.2"

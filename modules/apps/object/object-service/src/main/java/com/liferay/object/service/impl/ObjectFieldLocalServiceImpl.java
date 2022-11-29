@@ -308,6 +308,22 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public ObjectField fetchObjectField(
+		String externalReferenceCode, long objectDefinitionId) {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
+		return objectFieldPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, objectDefinition.getCompanyId(),
+			objectDefinitionId);
+	}
+
+	@Override
 	public List<ObjectField> getActiveObjectFields(
 			List<ObjectField> objectFields)
 		throws PortalException {

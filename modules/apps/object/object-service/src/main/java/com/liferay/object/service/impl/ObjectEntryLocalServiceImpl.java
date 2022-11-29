@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -2195,12 +2196,10 @@ public class ObjectEntryLocalServiceImpl
 							ObjectFilterConstants.TYPE_CURRENT_USER)) {
 
 						objectFilter.setJSON(
-							String.valueOf(
-								_jsonFactory.createJSONObject(
-								).put(
-									"currentUserId",
-									PrincipalThreadLocal.getUserId()
-								)));
+							JSONUtil.put(
+								"currentUserId",
+								PrincipalThreadLocal.getUserId()
+							).toString());
 					}
 
 					ObjectFilterParser objectFilterParser =

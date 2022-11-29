@@ -383,7 +383,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 						return selectedItems;
 					}
 				).put(
-					"singleSelect", !vocabulary.isMultiValued()
+					"singleSelect", _singleSelect || !vocabulary.isMultiValued()
 				).put(
 					"title",
 					vocabulary.getUnambiguousTitle(

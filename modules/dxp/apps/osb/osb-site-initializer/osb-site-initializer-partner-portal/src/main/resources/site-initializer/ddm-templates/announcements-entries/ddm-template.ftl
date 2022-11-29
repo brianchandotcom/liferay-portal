@@ -5,6 +5,11 @@
 		overflow: hidden;
 	}
 
+	.partner-portal-announcements-title:hover {
+	  text-decoration: underline;
+		cursor: pointer;
+	}
+
 	@media (min-width: 320px){
 		.partner-portal-announcements {
 			-webkit-line-clamp: 6;
@@ -31,7 +36,7 @@
 		<#list entries as curEntry>
 			<div class="border border-neutral-3 d-flex justify-content-between mb-3 p-3 rounded">
 				<div class="mr-4 pr-2 text-left text-wrap">
-					<h6 class="font-weight-bold mb-1 text-neutral-10">
+					<h6 class="font-weight-bold mb-1 partner-portal-announcements-title text-neutral-10" onclick="handleClick(this)">
 						${htmlUtil.escape(curEntry.getTitle(locale))}
 					</h6>
 
@@ -61,3 +66,24 @@
 		</#list>
 	</#if>
 </div>
+
+<script>
+	function handleClick(title){
+		const text = title.nextElementSibling.innerHTML;
+
+		Liferay.Util.openModal({
+			  headerHTML: title.innerHTML,
+				bodyHTML:
+					text,
+				size: 'lg',
+			  center: true,
+			  buttons: [
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('Cancel'),
+					type: 'cancel',
+				}
+			  ]
+			});
+	}
+</script>

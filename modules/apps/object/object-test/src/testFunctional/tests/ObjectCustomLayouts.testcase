@@ -76,6 +76,77 @@ definition {
 		ObjectAdmin.viewCategorizationInObjectEntry();
 	}
 
+	@description = "LPS-161886 - Verify that it's possible to delete a categorization section"
+	@priority = "3"
+	test CanDeleteCategorizationSection {
+		property test.name.skip.portal.instance = "ObjectCustomLayouts#CanDeleteCategorizationSection";
+
+		task ("Given: An object with the layout categorization section") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 200",
+				objectName = "CustomObject200",
+				pluralLabelName = "Custom Objects 200");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject200");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject200");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 200");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldLabelName = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addCategorizationOnLayoutTab();
+
+			Button.clickSave();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject200");
+		}
+
+		task ("When: Delete the categorization Section") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 200");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.deleteCategorizationViaUI();
+
+			Button.clickSave();
+		}
+
+		task ("Then: The object layout is updated successfully") {
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			AssertElementNotPresent(locator1 = "ObjectAdmin#CATEGORIZATION_DROPDOWN");
+		}
+	}
+
 	@description = "LPS-161885 - Verify that it's possible to edit a categorization section"
 	@priority = "3"
 	test CanEditCategorizationSection {

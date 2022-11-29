@@ -229,6 +229,8 @@ public class ObjectEntryVariablesUtil {
 		Map<String, Object> allowedVariables =
 			HashMapBuilder.<String, Object>put(
 				"creator", payloadJSONObject.get("userId")
+			).put(
+				"currentUserId", payloadJSONObject.get("userId")
 			).build();
 
 		Map<String, Object> variables = new HashMap<>();

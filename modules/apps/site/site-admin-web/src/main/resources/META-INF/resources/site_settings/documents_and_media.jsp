@@ -17,9 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group siteGroup = (Group)request.getAttribute("site.group");
-
 UnicodeProperties groupTypeSettingsUnicodeProperties = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
+Group siteGroup = (Group)request.getAttribute("site.group");
 %>
 
 <aui:field-wrapper cssClass="form-group">

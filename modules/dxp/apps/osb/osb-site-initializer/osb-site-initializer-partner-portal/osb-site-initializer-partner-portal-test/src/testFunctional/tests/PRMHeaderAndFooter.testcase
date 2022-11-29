@@ -35,11 +35,11 @@ definition {
 		}
 
 		task ("Go to Partner Portal and login with the created user") {
-			User.logoutPG();
-
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+			
 			PRMUtils.gotoPRM();
-
-			PRMUtils.signIn(emailAddress = "partner@liferay.com");
 		}
 	}
 

@@ -59,14 +59,18 @@ export default function ModalWrapper() {
 }
 
 const ConvertToPageTemplateModal = ({observer, onClose}) => {
-	const [formErrors, setFormErrors] = useState({});
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const hasMultipleSegmentsExperienceIds = useSelector(
 		(state) => Object.keys(state.availableSegmentsExperiences).length > 1
 	);
+
 	const [availableSets, setAvailableSets] = useState([]);
+	const [templateName, setTemplateName] = useState('');
+	const [templateSet, setTemplateSet] = useState('');
+	const [formErrors, setFormErrors] = useState({});
 	const [loading, setLoading] = useState(false);
+
 	const nameInputRef = useRef(null);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const templateSetSelectOptions = useMemo(
 		() => [
@@ -75,9 +79,6 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 		],
 		[availableSets]
 	);
-
-	const [templateName, setTemplateName] = useState('');
-	const [templateSet, setTemplateSet] = useState('');
 
 	useEffect(() => {
 		if (nameInputRef.current) {

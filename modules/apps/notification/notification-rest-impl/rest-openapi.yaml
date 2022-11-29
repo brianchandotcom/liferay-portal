@@ -51,6 +51,10 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                attachmentObjectFieldERCs:
+                    items:
+                        type: string
+                    type: array
                 attachmentObjectFieldIds:
                     items:
                         format: int64
@@ -85,6 +89,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                objectDefinitionERC:
+                    type: string
                 objectDefinitionId:
                     format: int64
                     type: integer

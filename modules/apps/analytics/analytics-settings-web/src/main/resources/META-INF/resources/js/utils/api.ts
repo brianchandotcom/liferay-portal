@@ -117,6 +117,25 @@ export function updateProperty({
 	});
 }
 
+export function updatecommerceSyncEnabled({
+	channelId,
+	commerceSyncEnabled,
+}: {
+	channelId: string;
+	commerceChannelIds?: number[];
+	commerceSyncEnabled?: boolean;
+	dataSourceId?: string;
+	siteIds?: number[];
+}) {
+	return request('/channels', {
+		body: JSON.stringify({
+			channelId,
+			commerceSyncEnabled,
+		}),
+		method: 'PATCH',
+	});
+}
+
 export function updateAttributesConfiguration({
 	syncAllAccounts,
 	syncAllContacts,

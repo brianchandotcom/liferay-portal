@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-import {fetchProperties, updateProperty} from '../../utils/api';
+import {fetchProperties, updatecommerceSyncEnabled} from '../../utils/api';
 import {NOT_FOUND_GIF} from '../../utils/constants';
 import {useRequest} from '../../utils/useRequest';
 import StateRenderer, {
@@ -140,7 +140,7 @@ const Properties: React.FC = () => {
 								commerceSyncEnabled,
 							} = newProperties[index];
 
-							const {ok} = await updateProperty({
+							const {ok} = await updatecommerceSyncEnabled({
 								channelId,
 								commerceSyncEnabled: !commerceSyncEnabled,
 							});

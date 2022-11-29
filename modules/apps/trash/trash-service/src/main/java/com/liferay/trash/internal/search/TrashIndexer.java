@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Julio Camarero
  * @author Zsolt Berentey
  */
-@Component(service = Indexer.class)
+@Component(immediate = true, service = Indexer.class)
 public class TrashIndexer extends BaseIndexer<TrashEntry> {
 
 	public static final String CLASS_NAME = TrashEntry.class.getName();

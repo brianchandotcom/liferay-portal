@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Hugo Huijser
  * @author Tibor Lipusz
  */
-@Component(service = Indexer.class)
+@Component(immediate = true, service = Indexer.class)
 public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 	public static final String CLASS_NAME = JournalArticle.class.getName();

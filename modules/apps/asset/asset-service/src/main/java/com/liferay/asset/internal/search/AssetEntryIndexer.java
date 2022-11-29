@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-@Component(service = Indexer.class)
+@Component(immediate = true, service = Indexer.class)
 public class AssetEntryIndexer extends BaseIndexer<AssetEntry> {
 
 	public static final String CLASS_NAME = AssetEntry.class.getName();

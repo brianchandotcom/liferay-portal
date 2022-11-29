@@ -46,7 +46,7 @@ definition {
 	}
 
 	macro removeUserFacetDisplayPG {
-		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration"); 
+		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

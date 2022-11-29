@@ -247,6 +247,27 @@ public class ObjectRelationshipResourceImpl
 			Long objectRelationshipId, ObjectRelationship objectRelationship)
 		throws Exception {
 
+		if (Validator.isNotNull(
+				objectRelationship.getParameterObjectFieldName())) {
+
+			objectRelationship.setParameterObjectFieldId(
+				() -> {
+					com.liferay.object.model.ObjectDefinition objectDefinition =
+						_objectDefinitionLocalService.
+							getObjectDefinitionByExternalReferenceCode(
+								objectRelationship.
+									getObjectDefinitionExternalReferenceCode2(),
+								contextCompany.getCompanyId());
+
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							objectDefinition.getObjectDefinitionId(),
+							objectRelationship.getParameterObjectFieldName());
+
+					return objectField.getObjectFieldId();
+				});
+		}
+
 		return _toObjectRelationship(
 			_objectRelationshipService.updateObjectRelationship(
 				objectRelationshipId,

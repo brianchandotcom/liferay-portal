@@ -19,11 +19,8 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Michael C. Han
@@ -64,20 +61,6 @@ public class SchedulerEngineHelperUtil {
 		throws SchedulerException {
 
 		_schedulerEngineHelper.delete(jobName, groupName, storageType);
-	}
-
-	public static String getCronText(
-		Calendar calendar, boolean timeZoneSensitive) {
-
-		return _schedulerEngineHelper.getCronText(calendar, timeZoneSensitive);
-	}
-
-	public static String getCronText(
-		PortletRequest portletRequest, Calendar calendar,
-		boolean timeZoneSensitive, int recurrenceType) {
-
-		return _schedulerEngineHelper.getCronText(
-			portletRequest, calendar, timeZoneSensitive, recurrenceType);
 	}
 
 	public static Date getEndTime(SchedulerResponse schedulerResponse) {

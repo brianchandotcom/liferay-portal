@@ -18,11 +18,8 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Michael C. Han
@@ -46,12 +43,6 @@ public interface SchedulerEngineHelper {
 	public void delete(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
-
-	public String getCronText(Calendar calendar, boolean timeZoneSensitive);
-
-	public String getCronText(
-		PortletRequest portletRequest, Calendar calendar,
-		boolean timeZoneSensitive, int recurrenceType);
 
 	public Date getEndTime(SchedulerResponse schedulerResponse);
 

@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
-import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.scheduler.CronTextUtil;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -53,7 +51,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashSet;
@@ -61,8 +58,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.portlet.PortletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -154,21 +149,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		throws SchedulerException {
 
 		_schedulerEngine.delete(jobName, groupName, storageType);
-	}
-
-	@Override
-	public String getCronText(Calendar calendar, boolean timeZoneSensitive) {
-		return getCronText(
-			null, calendar, timeZoneSensitive, Recurrence.NO_RECURRENCE);
-	}
-
-	@Override
-	public String getCronText(
-		PortletRequest portletRequest, Calendar calendar,
-		boolean timeZoneSensitive, int recurrenceType) {
-
-		return CronTextUtil.getCronText(
-			portletRequest, calendar, timeZoneSensitive, recurrenceType);
 	}
 
 	@Override

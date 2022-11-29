@@ -307,7 +307,10 @@ class Analytics {
 	 */
 	_disposeInternal() {
 		instance._disposed = true;
-		instance._queueFlushService.dispose();
+
+		if (instance._queueFlushService) {
+			instance._queueFlushService.dispose();
+		}
 
 		if (instance._pluginDisposers) {
 			instance._pluginDisposers

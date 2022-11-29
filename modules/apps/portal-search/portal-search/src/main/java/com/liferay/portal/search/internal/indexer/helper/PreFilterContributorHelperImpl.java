@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.indexer.helper;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -27,7 +29,6 @@ import com.liferay.portal.search.internal.indexer.IndexerProvidedClausesUtil;
 import com.liferay.portal.search.internal.indexer.ModelPreFilterContributorsRegistry;
 import com.liferay.portal.search.internal.indexer.ModelSearchSettingsImpl;
 import com.liferay.portal.search.internal.indexer.QueryPreFilterContributorsRegistry;
-import com.liferay.portal.search.internal.indexer.SearchPermissionFilterContributorsRegistry;
 import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
@@ -40,7 +41,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -86,6 +90,17 @@ public class PreFilterContributorHelperImpl
 			booleanFilter, modelSearchSettings, searchContext);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, SearchPermissionFilterContributor.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
 	protected Collection<String> getStrings(
 		String string, SearchContext searchContext) {
 
@@ -105,10 +120,6 @@ public class PreFilterContributorHelperImpl
 
 	@Reference
 	protected SearchPermissionChecker searchPermissionChecker;
-
-	@Reference
-	protected SearchPermissionFilterContributorsRegistry
-		searchPermissionFilterContributorsRegistry;
 
 	private void _addIndexerProvidedPreFilters(
 		BooleanFilter booleanFilter, Indexer<?> indexer,
@@ -226,7 +237,7 @@ public class PreFilterContributorHelperImpl
 
 		for (SearchPermissionFilterContributor
 				searchPermissionFilterContributor :
-					searchPermissionFilterContributorsRegistry.getAll()) {
+					_serviceTrackerList.toList()) {
 
 			Optional<String> parentEntryClassNameOptional =
 				searchPermissionFilterContributor.
@@ -241,5 +252,8 @@ public class PreFilterContributorHelperImpl
 
 		return Optional.empty();
 	}
+
+	private ServiceTrackerList<SearchPermissionFilterContributor>
+		_serviceTrackerList;
 
 }

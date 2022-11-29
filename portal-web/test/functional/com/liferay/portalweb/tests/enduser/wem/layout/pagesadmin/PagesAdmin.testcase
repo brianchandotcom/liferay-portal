@@ -282,7 +282,11 @@ definition {
 	@description = "Test for LPS-163801 to check that pages can be saved after Site Default locales are changed"
 	@priority = "3"
 	test CanAccessPageAfterSiteDefaultLocalesChange {
-		PagesAdmin.addPage(pageName = "Page Title");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Page Title");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "Spanish (Spain)");
 

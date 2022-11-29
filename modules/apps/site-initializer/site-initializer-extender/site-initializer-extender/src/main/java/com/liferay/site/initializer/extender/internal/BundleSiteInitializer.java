@@ -3525,7 +3525,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						continue;
 					}
 
-					Group group = _groupLocalService.fetchUserGroup(
+					Group group = _groupLocalService.getUserGroupGroup(
 						serviceContext.getCompanyId(),
 						userGroup.getUserGroupId());
 

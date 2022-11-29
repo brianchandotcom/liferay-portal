@@ -132,7 +132,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "version",
-				value = "");
+				value = "1.0");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",

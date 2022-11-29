@@ -73,7 +73,7 @@ export default function PanelKeyboardHandler({categoryKey, namespace}) {
 					activeElement.click();
 				}
 				else {
-					focusElement(getFocusableSibling(activeElement, 'down'));
+					focusElement(getFocusableChild(wrapper, activeElement));
 				}
 			}
 			else if (event.key === 'ArrowLeft') {
@@ -85,7 +85,7 @@ export default function PanelKeyboardHandler({categoryKey, namespace}) {
 					activeElement.click();
 				}
 				else {
-					focusElement(getFocusableSibling(activeElement, 'up'));
+					focusElement(getFocusableParent(wrapper, activeElement));
 				}
 			}
 		}
@@ -132,6 +132,48 @@ function isVisible(element: Element): boolean {
 
 function isFocusable(element: Element) {
 	return element.matches(FOCUSABLE_ELEMENT_SELECTOR);
+}
+
+function getFocusableChild(wrapper: HTMLElement, origin: HTMLElement) {
+	if (origin.dataset.toggle === 'liferay-collapse') {
+		const collapseElement = origin.nextElementSibling;
+
+		if (collapseElement instanceof HTMLElement) {
+			const childElement = collapseElement.querySelector(
+				FOCUSABLE_ELEMENT_SELECTOR
+			);
+
+			if (
+				childElement &&
+				isVisible(childElement) &&
+				isFocusable(childElement) &&
+				wrapper.contains(childElement)
+			) {
+				return childElement;
+			}
+		}
+	}
+
+	return origin;
+}
+
+function getFocusableParent(wrapper: HTMLElement, origin: HTMLElement) {
+	const collapseElement = origin.closest('.collapse');
+
+	if (collapseElement instanceof HTMLElement) {
+		const parentElement = getFocusableSibling(collapseElement, 'up');
+
+		if (
+			parentElement &&
+			isVisible(parentElement) &&
+			isFocusable(parentElement) &&
+			wrapper.contains(parentElement)
+		) {
+			return parentElement;
+		}
+	}
+
+	return origin;
 }
 
 function getFocusableSibling(

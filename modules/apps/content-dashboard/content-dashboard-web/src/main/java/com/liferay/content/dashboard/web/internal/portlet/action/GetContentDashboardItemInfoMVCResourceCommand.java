@@ -466,7 +466,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 		List<ContentDashboardItem.SpecificInformation<?>>
 			specificInformationList =
-				contentDashboardItem.getSpecificInformation(locale);
+				contentDashboardItem.getSpecificInformationList(locale);
 
 		for (ContentDashboardItem.SpecificInformation specificInformation :
 				specificInformationList) {

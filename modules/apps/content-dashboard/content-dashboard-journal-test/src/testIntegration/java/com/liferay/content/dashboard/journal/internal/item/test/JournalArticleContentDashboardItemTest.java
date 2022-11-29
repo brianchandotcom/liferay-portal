@@ -632,7 +632,7 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
-	public void testGetSpecificInformation() throws Exception {
+	public void testGetSpecificInformationList() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -643,7 +643,7 @@ public class JournalArticleContentDashboardItemTest {
 
 		List<ContentDashboardItem.SpecificInformation<?>>
 			specificInformationList =
-				contentDashboardItem.getSpecificInformation(LocaleUtil.US);
+				contentDashboardItem.getSpecificInformationList(LocaleUtil.US);
 
 		Assert.assertEquals(
 			specificInformationList.toString(), 3,

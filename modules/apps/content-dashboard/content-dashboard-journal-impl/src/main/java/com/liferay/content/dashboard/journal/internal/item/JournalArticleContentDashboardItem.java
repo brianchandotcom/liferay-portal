@@ -384,7 +384,9 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public List<SpecificInformation<?>> getSpecificInformation(Locale locale) {
+	public List<SpecificInformation<?>> getSpecificInformationList(
+		Locale locale) {
+
 		return Arrays.asList(
 			new SpecificInformation<>(
 				"display-date", SpecificInformation.Type.DATE,

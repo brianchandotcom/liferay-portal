@@ -72,7 +72,8 @@ public interface ContentDashboardItem<T> {
 
 	public String getScopeName(Locale locale);
 
-	public List<SpecificInformation<?>> getSpecificInformation(Locale locale);
+	public List<SpecificInformation<?>> getSpecificInformationList(
+		Locale locale);
 
 	public String getTitle(Locale locale);
 

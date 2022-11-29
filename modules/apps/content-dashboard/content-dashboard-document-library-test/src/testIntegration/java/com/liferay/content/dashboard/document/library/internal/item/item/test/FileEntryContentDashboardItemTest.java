@@ -424,7 +424,7 @@ public class FileEntryContentDashboardItemTest {
 	}
 
 	@Test
-	public void testGetSpecificInformation() throws Exception {
+	public void testGetSpecificInformationList() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -454,7 +454,7 @@ public class FileEntryContentDashboardItemTest {
 
 		List<ContentDashboardItem.SpecificInformation<?>>
 			specificInformationList =
-				versionableContentDashboardItem.getSpecificInformation(
+				versionableContentDashboardItem.getSpecificInformationList(
 					LocaleUtil.getDefault());
 
 		Stream<ContentDashboardItem.SpecificInformation<?>> stream =

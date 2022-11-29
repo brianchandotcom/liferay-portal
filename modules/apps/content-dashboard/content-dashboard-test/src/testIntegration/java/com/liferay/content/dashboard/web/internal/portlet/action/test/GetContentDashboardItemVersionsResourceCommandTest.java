@@ -364,7 +364,7 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 		}
 
 		@Override
-		public List<SpecificInformation<?>> getSpecificInformation(
+		public List<SpecificInformation<?>> getSpecificInformationList(
 			Locale locale) {
 
 			return Collections.emptyList();

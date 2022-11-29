@@ -360,7 +360,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		List<ContentDashboardItem.SpecificInformation<?>>
 			specificInformationList =
-				contentDashboardItem.getSpecificInformation(LocaleUtil.US);
+				contentDashboardItem.getSpecificInformationList(LocaleUtil.US);
 
 		Assert.assertEquals(
 			String.valueOf(specificInformationList), 2,
@@ -840,7 +840,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
-				public List<SpecificInformation<?>> getSpecificInformation(
+				public List<SpecificInformation<?>> getSpecificInformationList(
 					Locale locale) {
 
 					return Arrays.asList(

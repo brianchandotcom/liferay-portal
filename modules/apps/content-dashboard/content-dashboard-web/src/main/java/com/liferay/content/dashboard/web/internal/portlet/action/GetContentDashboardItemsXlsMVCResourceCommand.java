@@ -185,7 +185,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 		List<ContentDashboardItem.SpecificInformation<?>>
 			specificInformationList =
-				contentDashboardItem.getSpecificInformation(locale);
+				contentDashboardItem.getSpecificInformationList(locale);
 
 		workbookBuilder.cell(_toString(specificInformationList, "extension"));
 

@@ -292,7 +292,9 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
-	public List<SpecificInformation<?>> getSpecificInformation(Locale locale) {
+	public List<SpecificInformation<?>> getSpecificInformationList(
+		Locale locale) {
+
 		return Collections.singletonList(
 			new SpecificInformation<>(
 				"display-date", SpecificInformation.Type.DATE,

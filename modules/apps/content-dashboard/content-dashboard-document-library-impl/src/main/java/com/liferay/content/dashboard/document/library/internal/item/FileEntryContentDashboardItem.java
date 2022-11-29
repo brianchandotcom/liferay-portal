@@ -404,7 +404,9 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public List<SpecificInformation<?>> getSpecificInformation(Locale locale) {
+	public List<SpecificInformation<?>> getSpecificInformationList(
+		Locale locale) {
+
 		return Arrays.asList(
 			new SpecificInformation<>(
 				"extension", SpecificInformation.Type.STRING, _getExtension()),

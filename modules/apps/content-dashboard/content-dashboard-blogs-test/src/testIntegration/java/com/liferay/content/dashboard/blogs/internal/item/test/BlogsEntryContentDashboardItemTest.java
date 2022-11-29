@@ -349,7 +349,7 @@ public class BlogsEntryContentDashboardItemTest {
 	}
 
 	@Test
-	public void testGetSpecificInformation() throws Exception {
+	public void testGetSpecificInformationList() throws Exception {
 		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
 			_serviceContext);
@@ -359,7 +359,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		List<ContentDashboardItem.SpecificInformation<?>>
 			specificInformationList =
-				contentDashboardItem.getSpecificInformation(LocaleUtil.US);
+				contentDashboardItem.getSpecificInformationList(LocaleUtil.US);
 
 		Assert.assertEquals(
 			specificInformationList.toString(), 1,

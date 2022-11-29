@@ -716,6 +716,25 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testPostDataDefinitionCopy() throws Exception {
+		DataDefinition randomDataDefinition = randomDataDefinition();
+
+		DataDefinition postDataDefinition =
+			testPostDataDefinitionCopy_addDataDefinition(randomDataDefinition);
+
+		assertEquals(randomDataDefinition, postDataDefinition);
+		assertValid(postDataDefinition);
+	}
+
+	protected DataDefinition testPostDataDefinitionCopy_addDataDefinition(
+			DataDefinition dataDefinition)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetDataDefinitionPermissionsPage() throws Exception {
 		DataDefinition postDataDefinition =
 			testGetDataDefinitionPermissionsPage_addDataDefinition();

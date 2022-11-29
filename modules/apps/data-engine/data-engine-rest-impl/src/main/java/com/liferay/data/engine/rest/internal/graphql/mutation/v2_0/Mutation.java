@@ -181,6 +181,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public DataDefinition createDataDefinitionCopy(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.postDataDefinitionCopy(
+					dataDefinitionId));
+	}
+
+	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateDataDefinitionPermissionsPage(
 				@GraphQLName("dataDefinitionId") Long dataDefinitionId,

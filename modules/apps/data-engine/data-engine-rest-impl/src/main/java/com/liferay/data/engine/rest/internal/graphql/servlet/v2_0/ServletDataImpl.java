@@ -143,6 +143,11 @@ public class ServletDataImpl implements ServletData {
 							DataDefinitionResourceImpl.class,
 							"putDataDefinitionBatch"));
 					put(
+						"mutation#createDataDefinitionCopy",
+						new ObjectValuePair<>(
+							DataDefinitionResourceImpl.class,
+							"postDataDefinitionCopy"));
+					put(
 						"mutation#updateDataDefinitionPermissionsPage",
 						new ObjectValuePair<>(
 							DataDefinitionResourceImpl.class,

@@ -87,6 +87,9 @@ public interface DataDefinitionResource {
 	public Response putDataDefinitionBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public DataDefinition postDataDefinitionCopy(Long dataDefinitionId)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getDataDefinitionPermissionsPage(
 				Long dataDefinitionId, String roleNames)

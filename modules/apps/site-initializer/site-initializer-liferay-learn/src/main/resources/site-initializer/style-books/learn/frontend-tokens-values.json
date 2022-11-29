@@ -50,6 +50,22 @@
 		"cssVariableMapping": "color-brand-primary-darken-5",
 		"value": "#00256C"
 	},
+	"colorBrandPrimaryLighten1": {
+		"cssVariableMapping": "color-brand-primary-lighten-1",
+		"value": "rgba(255, 255, 255, 0.05)"
+	},
+	"colorBrandPrimaryLighten2": {
+		"cssVariableMapping": "color-brand-primary-lighten-2",
+		"value": "rgba(255, 255, 255, 0.1)"
+	},
+	"colorBrandPrimaryLighten3": {
+		"cssVariableMapping": "color-brand-primary-lighten-3",
+		"value": "rgba(255, 255, 255, 0.15)"
+	},
+	"colorBrandPrimaryLighten4": {
+		"cssVariableMapping": "color-brand-primary-lighten-4",
+		"value": "rgba(255, 255, 255, 0.4)"
+	},
 	"colorNeutral10": {
 		"cssVariableMapping": "color-neutral-10",
 		"value": "#282934"

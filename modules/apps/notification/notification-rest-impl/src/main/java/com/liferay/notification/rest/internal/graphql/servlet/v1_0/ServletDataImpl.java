@@ -116,6 +116,11 @@ public class ServletDataImpl implements ServletData {
 							NotificationTemplateResourceImpl.class,
 							"postNotificationTemplateBatch"));
 					put(
+						"mutation#updateNotificationTemplateByExternalReferenceCode",
+						new ObjectValuePair<>(
+							NotificationTemplateResourceImpl.class,
+							"putNotificationTemplateByExternalReferenceCode"));
+					put(
 						"mutation#deleteNotificationTemplate",
 						new ObjectValuePair<>(
 							NotificationTemplateResourceImpl.class,
@@ -161,6 +166,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							NotificationTemplateResourceImpl.class,
 							"getNotificationTemplatesPage"));
+					put(
+						"query#notificationTemplateByExternalReferenceCode",
+						new ObjectValuePair<>(
+							NotificationTemplateResourceImpl.class,
+							"getNotificationTemplateByExternalReferenceCode"));
 					put(
 						"query#notificationTemplate",
 						new ObjectValuePair<>(

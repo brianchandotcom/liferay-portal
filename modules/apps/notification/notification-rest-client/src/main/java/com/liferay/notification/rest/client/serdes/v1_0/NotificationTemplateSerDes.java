@@ -71,6 +71,38 @@ public class NotificationTemplateSerDes {
 			sb.append(_toJSON(notificationTemplate.getActions()));
 		}
 
+		if (notificationTemplate.getAttachmentObjectFieldERCs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attachmentObjectFieldERCs\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < notificationTemplate.getAttachmentObjectFieldERCs().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(
+					_escape(
+						notificationTemplate.getAttachmentObjectFieldERCs()
+							[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < notificationTemplate.
+						getAttachmentObjectFieldERCs().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (notificationTemplate.getAttachmentObjectFieldIds() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -168,6 +200,20 @@ public class NotificationTemplateSerDes {
 			sb.append("\"");
 		}
 
+		if (notificationTemplate.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(notificationTemplate.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (notificationTemplate.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -200,6 +246,20 @@ public class NotificationTemplateSerDes {
 			sb.append("\"name_i18n\": ");
 
 			sb.append(_toJSON(notificationTemplate.getName_i18n()));
+		}
+
+		if (notificationTemplate.getObjectDefinitionERC() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionERC\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(notificationTemplate.getObjectDefinitionERC()));
+
+			sb.append("\"");
 		}
 
 		if (notificationTemplate.getObjectDefinitionId() != null) {
@@ -322,6 +382,16 @@ public class NotificationTemplateSerDes {
 				"actions", String.valueOf(notificationTemplate.getActions()));
 		}
 
+		if (notificationTemplate.getAttachmentObjectFieldERCs() == null) {
+			map.put("attachmentObjectFieldERCs", null);
+		}
+		else {
+			map.put(
+				"attachmentObjectFieldERCs",
+				String.valueOf(
+					notificationTemplate.getAttachmentObjectFieldERCs()));
+		}
+
 		if (notificationTemplate.getAttachmentObjectFieldIds() == null) {
 			map.put("attachmentObjectFieldIds", null);
 		}
@@ -377,6 +447,16 @@ public class NotificationTemplateSerDes {
 				String.valueOf(notificationTemplate.getEditorType()));
 		}
 
+		if (notificationTemplate.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					notificationTemplate.getExternalReferenceCode()));
+		}
+
 		if (notificationTemplate.getId() == null) {
 			map.put("id", null);
 		}
@@ -398,6 +478,15 @@ public class NotificationTemplateSerDes {
 			map.put(
 				"name_i18n",
 				String.valueOf(notificationTemplate.getName_i18n()));
+		}
+
+		if (notificationTemplate.getObjectDefinitionERC() == null) {
+			map.put("objectDefinitionERC", null);
+		}
+		else {
+			map.put(
+				"objectDefinitionERC",
+				String.valueOf(notificationTemplate.getObjectDefinitionERC()));
 		}
 
 		if (notificationTemplate.getObjectDefinitionId() == null) {
@@ -480,6 +569,14 @@ public class NotificationTemplateSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "attachmentObjectFieldERCs")) {
+
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setAttachmentObjectFieldERCs(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "attachmentObjectFieldIds")) {
 
 				if (jsonParserFieldValue != null) {
@@ -519,6 +616,14 @@ public class NotificationTemplateSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setId(
@@ -535,6 +640,14 @@ public class NotificationTemplateSerDes {
 					notificationTemplate.setName_i18n(
 						(Map)NotificationTemplateSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "objectDefinitionERC")) {
+
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setObjectDefinitionERC(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

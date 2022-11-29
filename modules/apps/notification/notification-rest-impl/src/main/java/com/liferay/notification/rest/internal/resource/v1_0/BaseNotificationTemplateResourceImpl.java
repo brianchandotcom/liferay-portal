@@ -137,7 +137,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"attachmentObjectFieldERCs": ___, "attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "objectDefinitionERC": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -204,6 +204,80 @@ public abstract class BaseNotificationTemplateResourceImpl
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				NotificationTemplate.class.getName(), callbackURL, null, object)
 		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/notification/v1.0/notification-templates/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "NotificationTemplate"
+			)
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/notification-templates/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public NotificationTemplate getNotificationTemplateByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new NotificationTemplate();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/by-external-reference-code/{externalReferenceCode}' -d $'{"attachmentObjectFieldERCs": ___, "attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "objectDefinitionERC": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "NotificationTemplate"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/notification-templates/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public NotificationTemplate putNotificationTemplateByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		return new NotificationTemplate();
 	}
 
 	/**
@@ -323,7 +397,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldERCs": ___, "attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "objectDefinitionERC": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -361,6 +435,11 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate.getActions());
 		}
 
+		if (notificationTemplate.getAttachmentObjectFieldERCs() != null) {
+			existingNotificationTemplate.setAttachmentObjectFieldERCs(
+				notificationTemplate.getAttachmentObjectFieldERCs());
+		}
+
 		if (notificationTemplate.getAttachmentObjectFieldIds() != null) {
 			existingNotificationTemplate.setAttachmentObjectFieldIds(
 				notificationTemplate.getAttachmentObjectFieldIds());
@@ -391,6 +470,11 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate.getEditorType());
 		}
 
+		if (notificationTemplate.getExternalReferenceCode() != null) {
+			existingNotificationTemplate.setExternalReferenceCode(
+				notificationTemplate.getExternalReferenceCode());
+		}
+
 		if (notificationTemplate.getName() != null) {
 			existingNotificationTemplate.setName(
 				notificationTemplate.getName());
@@ -399,6 +483,11 @@ public abstract class BaseNotificationTemplateResourceImpl
 		if (notificationTemplate.getName_i18n() != null) {
 			existingNotificationTemplate.setName_i18n(
 				notificationTemplate.getName_i18n());
+		}
+
+		if (notificationTemplate.getObjectDefinitionERC() != null) {
+			existingNotificationTemplate.setObjectDefinitionERC(
+				notificationTemplate.getObjectDefinitionERC());
 		}
 
 		if (notificationTemplate.getObjectDefinitionId() != null) {
@@ -435,7 +524,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldERCs": ___, "attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "objectDefinitionERC": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -569,6 +658,13 @@ public abstract class BaseNotificationTemplateResourceImpl
 					notificationTemplate);
 		}
 
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			notificationTemplateUnsafeConsumer = notificationTemplate ->
+				putNotificationTemplateByExternalReferenceCode(
+					notificationTemplate.getExternalReferenceCode(),
+					notificationTemplate);
+		}
+
 		if (notificationTemplateUnsafeConsumer == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
@@ -602,7 +698,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("UPSERT", "INSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {

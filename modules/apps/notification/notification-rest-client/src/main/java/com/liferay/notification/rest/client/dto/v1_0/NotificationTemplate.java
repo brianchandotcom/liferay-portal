@@ -58,6 +58,31 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public String[] getAttachmentObjectFieldERCs() {
+		return attachmentObjectFieldERCs;
+	}
+
+	public void setAttachmentObjectFieldERCs(
+		String[] attachmentObjectFieldERCs) {
+
+		this.attachmentObjectFieldERCs = attachmentObjectFieldERCs;
+	}
+
+	public void setAttachmentObjectFieldERCs(
+		UnsafeSupplier<String[], Exception>
+			attachmentObjectFieldERCsUnsafeSupplier) {
+
+		try {
+			attachmentObjectFieldERCs =
+				attachmentObjectFieldERCsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] attachmentObjectFieldERCs;
+
 	public Long[] getAttachmentObjectFieldIds() {
 		return attachmentObjectFieldIds;
 	}
@@ -194,6 +219,27 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected EditorType editorType;
 
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalReferenceCode;
+
 	public Long getId() {
 		return id;
 	}
@@ -253,6 +299,27 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 	protected Map<String, String> name_i18n;
+
+	public String getObjectDefinitionERC() {
+		return objectDefinitionERC;
+	}
+
+	public void setObjectDefinitionERC(String objectDefinitionERC) {
+		this.objectDefinitionERC = objectDefinitionERC;
+	}
+
+	public void setObjectDefinitionERC(
+		UnsafeSupplier<String, Exception> objectDefinitionERCUnsafeSupplier) {
+
+		try {
+			objectDefinitionERC = objectDefinitionERCUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectDefinitionERC;
 
 	public Long getObjectDefinitionId() {
 		return objectDefinitionId;

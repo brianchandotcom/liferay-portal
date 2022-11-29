@@ -157,9 +157,12 @@ export default function SelectAssetDisplayPage({
 			{selectedDisplayPageType !== DISPLAY_PAGE_TYPE.none && (
 				<PreviewButton
 					disabled={
-						selectedDisplayPageType ===
+						(selectedDisplayPageType ===
 							DISPLAY_PAGE_TYPE.specific &&
-						!assetDisplayPageSelected
+							!assetDisplayPageSelected) ||
+						(selectedDisplayPageType ===
+							DISPLAY_PAGE_TYPE.default &&
+							!defaultDisplayPageName)
 					}
 					getPreviewURL={({previewURL}) => previewURL}
 					namespace={namespace}

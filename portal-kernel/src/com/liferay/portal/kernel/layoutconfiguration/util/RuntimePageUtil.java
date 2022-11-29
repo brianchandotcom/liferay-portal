@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.layoutconfiguration.util;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.template.TemplateResource;
 
@@ -89,24 +88,6 @@ public class RuntimePageUtil {
 		_runtimePage.processTemplate(
 			httpServletRequest, httpServletResponse, templateResource,
 			langType);
-	}
-
-	public static String processXML(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String content)
-		throws Exception {
-
-		return _runtimePage.processXML(
-			httpServletRequest, httpServletResponse, content);
-	}
-
-	public static String processXML(
-			HttpServletRequest httpServletRequest, String content,
-			RuntimeLogic runtimeLogic)
-		throws Exception {
-
-		return _runtimePage.processXML(
-			httpServletRequest, content, runtimeLogic);
 	}
 
 	public void setRuntimePage(RuntimePage runtimePage) {

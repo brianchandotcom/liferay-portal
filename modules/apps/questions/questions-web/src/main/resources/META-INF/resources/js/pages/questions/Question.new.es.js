@@ -97,6 +97,12 @@ const Question = ({
 }) => {
 	const sectionRef = useRef(null);
 
+	const runScroll = () =>
+		sectionRef.current.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start',
+		});
+
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const [allowSubscription, setAllowSubscription] = useState(false);
@@ -168,7 +174,8 @@ const Question = ({
 					setError(errorObject);
 
 					setLoading(false);
-				} else {
+				}
+				else {
 					setQuestion(messageBoardThreadByFriendlyUrlPath);
 					setLoading(false);
 				}
@@ -277,7 +284,8 @@ const Question = ({
 				siteKey: context.siteKey,
 			});
 			setIsVisibleEditor(false);
-		} catch (error) {}
+		}
+		catch (error) {}
 	};
 
 	const deleteAnswer = useCallback(
@@ -699,6 +707,18 @@ const Question = ({
 					}
 					{...flagsContainerProps.flagsModal}
 				/>
+			)}
+
+			{isPageScroll && !display?.preview && (
+				<div className="scroll-to-element">
+					<ClayButtonWithIcon
+						displayType="secondary"
+						fontSize={22}
+						onClick={runScroll}
+						symbol="angle-down"
+						title={Liferay.Language.get('go-to-answers')}
+					/>
+				</div>
 			)}
 
 			{question && (

@@ -475,6 +475,56 @@ definition {
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 	}
 
+	@description = "LPS-166588 - Verify that it's possible to delete a default filter column with the relationship field in the custom view"
+	@priority = "3"
+	test CanDeleteColumnWithRelationshipFieldFilter {
+		task ("Given: An object related to another object, in a One-to-Many relationship and the relationship field as a Default Filter") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 166588",
+				objectName = "CustomObject166588",
+				pluralLabelName = "Custom Objects 166588");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject166588",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject166588");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 166588");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+		}
+
+		task ("When: The user selects the relationship field as a Column, on View Builder") {
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Relationship");
+		}
+
+		task ("Then: The user is able to delete the Column Label and the Object entries continue to be filtered") {
+			ObjectCustomViews.assertColumnPresent(columnName = "Relationship");
+
+			ObjectCustomViews.deleteSpecificColumn(columnName = "Relationship");
+
+			ObjectCustomViews.assertColumnNotPresent(columnName = "Relationship");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.assertFilterPresent(filterBy = "Relationship");
+		}
+	}
+
 	@description = "LPS-144957 - Verify that it's possible to delete the filter"
 	@priority = "4"
 	test CanDeleteFilter {

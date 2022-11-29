@@ -792,6 +792,12 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro deleteCategorizationViaUI {
+		Click(locator1 = "ObjectAdmin#CATEGORIZATION_DROPDOWN");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+	}
+
 	macro deleteCustomObjectViaUI {
 		Click(
 			key_objectLabel = "${labelName}",

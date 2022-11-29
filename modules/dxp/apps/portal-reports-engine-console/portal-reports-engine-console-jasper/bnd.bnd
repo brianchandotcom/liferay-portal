@@ -7,7 +7,7 @@ Import-Package:\
 	\
 	!bsh,\
 	\
-	!com.adobe.internal.xmp.*,\
+	!com.adobe.xmp.*,\
 	\
 	!com.apple.mrj.*,\
 	\

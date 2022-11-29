@@ -31,7 +31,7 @@ export default function elementSetReducer(state, {payload, type}) {
 			const {activePage, pages} = state;
 			const {pageIndex, rowIndex} = indexes ?? {
 				pageIndex: activePage,
-				rowIndex: pages[activePage].rows.length,
+				rowIndex: indexes.rowIndex,
 			};
 
 			const visitor = new PagesVisitor(elementSetPages);
@@ -80,9 +80,9 @@ export default function elementSetReducer(state, {payload, type}) {
 						return {
 							...page,
 							rows: [
-								...rows.slice(0, rowIndex + 1),
+								...rows.slice(0, rowIndex),
 								...newElementSetPages[0].rows,
-								...rows.slice(rowIndex + 1),
+								...rows.slice(rowIndex),
 							],
 						};
 					}

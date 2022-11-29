@@ -503,9 +503,7 @@ definition {
 				PortletEntry.selectAll();
 			}
 
-			SelectFrameTop();
-
-			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+			SelectFrameParent();
 
 			Button.clickAdd();
 

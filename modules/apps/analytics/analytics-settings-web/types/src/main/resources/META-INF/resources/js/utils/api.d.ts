@@ -44,6 +44,16 @@ export declare function updateProperty({
 	dataSourceId?: string;
 	siteIds?: number[];
 }): Promise<any>;
+export declare function updatecommerceSyncEnabled({
+	channelId,
+	commerceSyncEnabled,
+}: {
+	channelId: string;
+	commerceChannelIds?: number[];
+	commerceSyncEnabled?: boolean;
+	dataSourceId?: string;
+	siteIds?: number[];
+}): Promise<any>;
 export declare function updateAttributesConfiguration({
 	syncAllAccounts,
 	syncAllContacts,

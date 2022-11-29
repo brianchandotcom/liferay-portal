@@ -39,20 +39,20 @@ if (expandoColumn != null) {
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), modelResource);
 
-UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 Serializable defaultValue = null;
+UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 if (expandoColumn != null) {
 	unicodeProperties = expandoBridge.getAttributeProperties(expandoColumn.getName());
 	defaultValue = expandoBridge.getAttributeDefault(expandoColumn.getName());
 }
 
-boolean propertyHidden = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_HIDDEN));
-boolean propertyLocalizeFieldName = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
-boolean propertyVisibleWithUpdatePermission = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
-int propertyIndexType = GetterUtil.getInteger(unicodeProperties.get(ExpandoColumnConstants.INDEX_TYPE));
-boolean propertySecret = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_SECRET));
 int propertyHeight = GetterUtil.getInteger(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_HEIGHT), ExpandoColumnConstants.PROPERTY_HEIGHT_DEFAULT);
+boolean propertyHidden = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_HIDDEN));
+int propertyIndexType = GetterUtil.getInteger(unicodeProperties.get(ExpandoColumnConstants.INDEX_TYPE));
+boolean propertyLocalizeFieldName = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
+boolean propertySecret = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_SECRET));
+boolean propertyVisibleWithUpdatePermission = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
 int propertyWidth = GetterUtil.getInteger(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_WIDTH));
 
 String propertyDisplayType = ParamUtil.getString(request, "displayType", ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD);

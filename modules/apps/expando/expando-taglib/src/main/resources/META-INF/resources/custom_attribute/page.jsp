@@ -32,19 +32,19 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 <c:if test="<%= expandoBridge.hasAttribute(name) %>">
 
 	<%
+	Serializable defaultValue = expandoBridge.getAttributeDefault(name);
 	int type = expandoBridge.getAttributeType(name);
 	Serializable value = expandoBridge.getAttribute(name);
-	Serializable defaultValue = expandoBridge.getAttributeDefault(name);
 
 	UnicodeProperties unicodeProperties = expandoBridge.getAttributeProperties(name);
 
+	String propertyDisplayType = GetterUtil.getString(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE), ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX);
+	int propertyHeight = GetterUtil.getInteger(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_HEIGHT));
 	boolean propertyHidden = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_HIDDEN));
 	boolean propertyLocalizeFieldName = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
-	boolean propertyVisibleWithUpdatePermission = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
 	boolean propertySecret = GetterUtil.getBoolean(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_SECRET));
-	int propertyHeight = GetterUtil.getInteger(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_HEIGHT));
+	boolean propertyVisibleWithUpdatePermission = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
 	int propertyWidth = GetterUtil.getInteger(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_WIDTH));
-	String propertyDisplayType = GetterUtil.getString(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE), ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX);
 
 	if (editable && propertyVisibleWithUpdatePermission) {
 		propertyHidden = !ExpandoColumnPermissionUtil.contains(permissionChecker, company.getCompanyId(), className, ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.UPDATE);

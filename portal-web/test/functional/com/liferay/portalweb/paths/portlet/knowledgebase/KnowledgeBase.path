@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_IMAGE_NAME</td>
+	<td>//img[contains(@src,'${key_contentImageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

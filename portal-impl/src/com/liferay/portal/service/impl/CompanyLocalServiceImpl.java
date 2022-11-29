@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -136,6 +137,7 @@ import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -1810,6 +1812,29 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	}
 
+	private User _addDefaultServiceAccountUser(Company company)
+		throws PortalException {
+
+		Role adminRole = _roleLocalService.getRole(
+			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		String userName = "default-service-account";
+
+		User defaultServiceAccountUser = _userLocalService.addUser(
+			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), true, null,
+			null, false, userName, userName + StringPool.AT + company.getMx(),
+			LocaleUtil.fromLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE),
+			userName, StringPool.BLANK, userName, 0, 0, true, Calendar.JANUARY,
+			1, 1970, StringPool.BLANK,
+			UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT, null, null,
+			new long[] {adminRole.getRoleId()}, null, false,
+			new ServiceContext());
+
+		defaultServiceAccountUser.setEmailAddressVerified(true);
+
+		return _userLocalService.updateUser(defaultServiceAccountUser);
+	}
+
 	private void _addDemoSettings(Company company) throws PortalException {
 		updateVirtualHostname(company.getCompanyId(), "demo.liferay.net");
 
@@ -1995,6 +2020,16 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					guestUser.getLocale(), PropsValues.DEFAULT_ADMIN_FIRST_NAME,
 					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
 					PropsValues.DEFAULT_ADMIN_LAST_NAME);
+			}
+
+			// Default service account
+
+			if (ListUtil.isEmpty(
+					_userPersistence.findByC_T(
+						company.getCompanyId(),
+						UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT))) {
+
+				_addDefaultServiceAccountUser(company);
 			}
 
 			// Portlets

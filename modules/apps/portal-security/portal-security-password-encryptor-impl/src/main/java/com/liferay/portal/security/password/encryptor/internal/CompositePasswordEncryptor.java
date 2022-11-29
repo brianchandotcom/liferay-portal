@@ -42,7 +42,7 @@ public class CompositePasswordEncryptor
 	@Override
 	public String encrypt(
 			String algorithm, String plainTextPassword,
-			String encryptedPassword, Boolean upgradeHashSecurity)
+			String encryptedPassword, boolean upgradeHashSecurity)
 		throws PwdEncryptorException {
 
 		if (Validator.isNull(plainTextPassword)) {

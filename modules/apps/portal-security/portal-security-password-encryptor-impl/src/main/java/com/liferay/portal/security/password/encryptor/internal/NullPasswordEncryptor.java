@@ -32,7 +32,7 @@ public class NullPasswordEncryptor
 	@Override
 	public String encrypt(
 		String algorithm, String plainTextPassword, String encryptedPassword,
-		Boolean upgradeHashSecurity) {
+		boolean upgradeHashSecurity) {
 
 		return plainTextPassword;
 	}

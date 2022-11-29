@@ -39,7 +39,7 @@ public class BCryptPasswordEncryptor
 	@Override
 	public String encrypt(
 		String algorithm, String plainTextPassword, String encryptedPassword,
-		Boolean upgradeHashSecurity) {
+		boolean upgradeHashSecurity) {
 
 		String salt = null;
 

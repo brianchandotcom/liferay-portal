@@ -23,6 +23,7 @@ const FormField = ({children, error, id, name}) => {
 	return (
 		<div
 			className={classNames({'form-group': true, 'has-error': hasError})}
+			role="alert"
 		>
 			<label htmlFor={id}>
 				{name}

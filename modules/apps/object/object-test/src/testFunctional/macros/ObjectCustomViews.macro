@@ -148,6 +148,16 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
 	}
 
+	macro assertFilterPresent {
+		Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
+
+		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+		AssertElementPresent(
+			key_picklistOption = "${filterBy}",
+			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+	}
+
 	macro assertNoColumnPresentInDefaultSort {
 		ObjectCustomViews.addNewDefaultSort();
 

@@ -88,7 +88,8 @@ public class EhcachePortalCacheTest {
 		_ehcache = _cacheManager.getCache(_PORTAL_CACHE_NAME);
 
 		EhcachePortalCacheManager ehcachePortalCacheManager =
-			new EhcachePortalCacheManager();
+			new EhcachePortalCacheManager() {
+			};
 
 		ReflectionTestUtil.setFieldValue(
 			ehcachePortalCacheManager, "_cacheManager", _cacheManager);
@@ -610,7 +611,8 @@ public class EhcachePortalCacheTest {
 	@Test
 	public void testSerializable() {
 		EhcachePortalCacheManager ehcachePortalCacheManager =
-			new EhcachePortalCacheManager();
+			new EhcachePortalCacheManager() {
+			};
 
 		ReflectionTestUtil.setFieldValue(
 			ehcachePortalCacheManager, "_cacheManager", _cacheManager);

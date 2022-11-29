@@ -75,7 +75,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Shuyang Zhou
  * @author Edward Han
  */
-public class EhcachePortalCacheManager<K extends Serializable, V>
+public abstract class EhcachePortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	@Override

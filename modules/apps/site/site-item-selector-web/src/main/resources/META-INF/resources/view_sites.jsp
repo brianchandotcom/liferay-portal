@@ -17,8 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SitesItemSelectorViewDisplayContext sitesItemSelectorViewDisplayContext = (SitesItemSelectorViewDisplayContext)request.getAttribute(SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT);
 GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteWebKeys.GROUP_URL_PROVIDER);
+
+SitesItemSelectorViewDisplayContext sitesItemSelectorViewDisplayContext = (SitesItemSelectorViewDisplayContext)request.getAttribute(SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT);
 
 String displayStyle = sitesItemSelectorViewDisplayContext.getDisplayStyle();
 

@@ -20,6 +20,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {flushSync} from 'react-dom';
 
 import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/contexts/StoreContext';
@@ -121,11 +122,24 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 		return errors;
 	}, [templateName, templateSet]);
 
+	// We are using flush here because this way we can clear errors inmediately in handleSubmit.
+	// Otherwise React will batch setStates and will do only one update
+
+	const resetErrors = useCallback(
+		() =>
+			flushSync(() => {
+				setFormErrors({});
+			}),
+		[]
+	);
+
 	const handleSubmit = useCallback(
 		(event) => {
 			event.preventDefault();
 
 			const errors = validateForm();
+
+			resetErrors();
 
 			if (Object.keys(errors).length) {
 				setFormErrors(errors);
@@ -172,7 +186,14 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 					}
 				});
 		},
-		[onClose, segmentsExperienceId, validateForm, templateName, templateSet]
+		[
+			onClose,
+			segmentsExperienceId,
+			validateForm,
+			templateName,
+			templateSet,
+			resetErrors,
+		]
 	);
 
 	return (

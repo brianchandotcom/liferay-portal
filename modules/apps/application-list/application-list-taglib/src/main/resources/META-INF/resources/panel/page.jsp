@@ -26,8 +26,8 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 %>
 
-<div class="m-1" id="<portlet:namespace /><%= panelCategory.getKey() %>_panel" tabindex="0">
-	<div class="list-group">
+<ul aria-orientation="vertical" class="m-1 p-0" id="<portlet:namespace /><%= panelCategory.getKey() %>_panel" role="menubar" tabindex="0">
+	<li class="list-group" role="none">
 
 		<%
 		for (PanelCategory childPanelCategory : childPanelCategories) {
@@ -54,7 +54,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 						int notificationsCount = PanelCategoryUtil.getNotificationsCount(request, childPanelCategory, panelCategoryHelper);
 						%>
 
-						<a aria-expanded="<%= active %>" class="<%= PanelCategoryUtil.isHeaderActive(request, childPanelCategory, panelCategoryHelper) ? "active" : "" %> collapse-icon collapse-icon-middle nav-link <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading panel-header" data-qa-id="appGroup" data-toggle="liferay-collapse" href="#<%= id %>" id="<%= id %>-link">
+						<a aria-expanded="<%= active %>" class="<%= PanelCategoryUtil.isHeaderActive(request, childPanelCategory, panelCategoryHelper) ? "active" : "" %> collapse-icon collapse-icon-middle nav-link <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading panel-header" data-qa-id="appGroup" data-toggle="liferay-collapse" href="#<%= id %>" id="<%= id %>-link" role="menuitem">
 							<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>">
 								<%= childPanelCategory.getLabel(themeDisplay.getLocale()) %>
 
@@ -180,25 +180,25 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 		}
 		%>
 
-	</div>
+	</li>
 
 	<%
 	for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory.getKey())) {
 	%>
 
 		<c:if test="<%= panelApp.isShow(permissionChecker, themeDisplay.getScopeGroup()) %>">
-			<div class="list-group">
+			<li class="list-group" role="none">
 				<div class="list-group-heading panel-app-root panel-header <%= Objects.equals(themeDisplay.getPpid(), panelApp.getPortletId()) ? "active" : StringPool.BLANK %>">
 					<%@ include file="/panel/panel_app.jspf" %>
 				</div>
-			</div>
+			</li>
 		</c:if>
 
 	<%
 	}
 	%>
 
-</div>
+</ul>
 
 <liferay-frontend:component
 	context='<%= HashMapBuilder.<String, Object>put("categoryKey", panelCategory.getKey()).build() %>'

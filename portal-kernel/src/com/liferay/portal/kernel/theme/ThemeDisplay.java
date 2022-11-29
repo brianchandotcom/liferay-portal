@@ -691,6 +691,15 @@ public class ThemeDisplay
 	}
 
 	/**
+	 * Returns the URL for the theme's spritemap.
+	 *
+	 * @return the URL for the theme's spritemap
+	 */
+	public String getPathThemeSpritemap() {
+		return _pathThemeSpritemap;
+	}
+
+	/**
 	 * Returns the URL for the theme's templates.
 	 *
 	 * @return the URL for the theme's templates
@@ -1492,6 +1501,9 @@ public class ThemeDisplay
 		setPathThemeJavaScript(
 			cdnBaseURL + themeStaticResourcePath + theme.getJavaScriptPath());
 
+		setPathThemeSpritemap(
+			cdnBaseURL + themeStaticResourcePath + theme.getImagesPath() + "/clay/icons.svg");
+
 		String rootPath = theme.getRootPath();
 
 		if (rootPath.equals(StringPool.SLASH)) {
@@ -1579,6 +1591,10 @@ public class ThemeDisplay
 
 	public void setPathThemeRoot(String pathThemeRoot) {
 		_pathThemeRoot = pathThemeRoot;
+	}
+
+	public void setPathThemeSpritemap(String pathThemeSpritemap) {
+		_pathThemeSpritemap = pathThemeSpritemap;
 	}
 
 	public void setPathThemeTemplates(String pathThemeTemplates) {
@@ -1987,6 +2003,7 @@ public class ThemeDisplay
 	private String _pathThemeImages = StringPool.BLANK;
 	private String _pathThemeJavaScript = StringPool.BLANK;
 	private String _pathThemeRoot = StringPool.BLANK;
+	private String _pathThemeSpritemap = StringPool.BLANK;
 	private String _pathThemeTemplates = StringPool.BLANK;
 	private transient PermissionChecker _permissionChecker;
 	private long _plid;

@@ -626,7 +626,7 @@ definition {
 			key_orderAuthor = "Commerce Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
-		ClickNoError(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 

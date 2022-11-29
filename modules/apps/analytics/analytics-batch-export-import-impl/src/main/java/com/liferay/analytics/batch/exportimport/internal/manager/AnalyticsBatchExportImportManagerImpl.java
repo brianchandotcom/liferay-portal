@@ -5,6 +5,8 @@
 
 package com.liferay.analytics.batch.exportimport.internal.manager;
 
+import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
@@ -22,21 +24,30 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsDescriptor;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,20 +60,36 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.net.HttpURLConnection;
+import java.net.UnknownHostException;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
+
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -339,11 +366,67 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 	}
 
+	@Override
+	public void validateConnection(long companyId) throws Exception {
+		if (!_isEnabled(companyId)) {
+			return;
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
+
+		_checkEndpoints(analyticsConfiguration, companyId);
+
+		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
+			null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
+			analyticsConfiguration.
+				liferayAnalyticsFaroBackendSecuritySignature(),
+			HttpMethods.GET, analyticsConfiguration.liferayAnalyticsProjectId(),
+			analyticsConfiguration.liferayAnalyticsFaroBackendURL() +
+				"/api/1.0/data-sources/" +
+					analyticsConfiguration.liferayAnalyticsDataSourceId());
+
+		_execute(analyticsConfiguration, companyId, httpUriRequest);
+	}
+
 	@Reference
 	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
 
 	@Reference
 	protected ZipReaderFactory zipReaderFactory;
+
+	private HttpUriRequest _buildHttpUriRequest(
+		String body, String dataSourceId, String faroBackendSecuritySignature,
+		String method, String projectId, String url) {
+
+		HttpUriRequest httpUriRequest = null;
+
+		if (method.equals(HttpMethods.GET)) {
+			httpUriRequest = new HttpGet(url);
+		}
+		else if (method.equals(HttpMethods.POST)) {
+			HttpPost httpPost = new HttpPost(url);
+
+			if (Validator.isNotNull(body)) {
+				httpPost.setEntity(
+					new StringEntity(body, StandardCharsets.UTF_8));
+			}
+
+			httpUriRequest = httpPost;
+		}
+
+		if (httpUriRequest != null) {
+			httpUriRequest.setHeader("Content-Type", "application/json");
+			httpUriRequest.setHeader("OSB-Asah-Data-Source-ID", dataSourceId);
+			httpUriRequest.setHeader(
+				"OSB-Asah-Faro-Backend-Security-Signature",
+				faroBackendSecuritySignature);
+			httpUriRequest.setHeader("OSB-Asah-Project-ID", projectId);
+		}
+
+		return httpUriRequest;
+	}
 
 	private void _checkCompany(long companyId) {
 		if (_analyticsConfigurationRegistry.isActive()) {
@@ -370,6 +453,73 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		throw new IllegalStateException(
 			"Analytics batch export/import is disabled");
+	}
+
+	private void _checkEndpoints(
+			AnalyticsConfiguration analyticsConfiguration, long companyId)
+		throws Exception {
+
+		HttpGet httpGet = new HttpGet(
+			analyticsConfiguration.liferayAnalyticsURL() + "/endpoints/" +
+				analyticsConfiguration.liferayAnalyticsProjectId());
+
+		try (CloseableHttpClient closeableHttpClient =
+				_getCloseableHttpClient()) {
+
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpGet);
+
+			JSONObject responseJSONObject = null;
+
+			try {
+				responseJSONObject = _jsonFactory.createJSONObject(
+					EntityUtils.toString(
+						closeableHttpResponse.getEntity(),
+						Charset.defaultCharset()));
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to check Analytics Cloud endpoints", exception);
+
+				return;
+			}
+
+			String liferayAnalyticsEndpointURL = responseJSONObject.getString(
+				"liferayAnalyticsEndpointURL");
+			String liferayAnalyticsFaroBackendURL =
+				responseJSONObject.getString("liferayAnalyticsFaroBackendURL");
+
+			if (liferayAnalyticsEndpointURL.equals(
+					PrefsPropsUtil.getString(
+						companyId, "liferayAnalyticsEndpointURL")) &&
+				liferayAnalyticsFaroBackendURL.equals(
+					PrefsPropsUtil.getString(
+						companyId, "liferayAnalyticsFaroBackendURL"))) {
+
+				return;
+			}
+
+			_companyLocalService.updatePreferences(
+				companyId,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL
+				).put(
+					"liferayAnalyticsFaroBackendURL",
+					liferayAnalyticsFaroBackendURL
+				).build());
+
+			Dictionary<String, Object> configurationProperties =
+				_getConfigurationProperties(companyId);
+
+			configurationProperties.put(
+				"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL);
+
+			_configurationProvider.saveCompanyConfiguration(
+				AnalyticsConfiguration.class, companyId,
+				configurationProperties);
+		}
 	}
 
 	private File _download(
@@ -403,8 +553,13 @@ public class AnalyticsBatchExportImportManagerImpl
 				JSONObject responseJSONObject = _jsonFactory.createJSONObject(
 					StringUtil.read(inputStream));
 
+				boolean disconnected = StringUtil.equals(
+					GetterUtil.getString(responseJSONObject.getString("state")),
+					"DISCONNECTED");
+
 				_processInvalidTokenMessage(
-					companyId, responseJSONObject.getString("message"));
+					companyId, disconnected,
+					responseJSONObject.getString("message"));
 			}
 			else if (response.getResponseCode() >=
 						HttpURLConnection.HTTP_BAD_REQUEST) {
@@ -422,6 +577,95 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 
 		return null;
+	}
+
+	private CloseableHttpResponse _execute(
+			AnalyticsConfiguration analyticsConfiguration, long companyId,
+			HttpUriRequest httpUriRequest)
+		throws Exception {
+
+		try (CloseableHttpClient closeableHttpClient =
+				_getCloseableHttpClient()) {
+
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpUriRequest);
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+				EntityUtils.toString(
+					closeableHttpResponse.getEntity(),
+					Charset.defaultCharset()));
+
+			boolean disconnected = StringUtil.equals(
+				GetterUtil.getString(responseJSONObject.getString("state")),
+				"DISCONNECTED");
+
+			if ((statusLine.getStatusCode() != HttpStatus.SC_FORBIDDEN) &&
+				!disconnected) {
+
+				return closeableHttpResponse;
+			}
+
+			_processInvalidTokenMessage(
+				companyId, disconnected,
+				responseJSONObject.getString("message"));
+
+			return closeableHttpResponse;
+		}
+		catch (UnknownHostException unknownHostException) {
+			_checkEndpoints(analyticsConfiguration, companyId);
+
+			throw unknownHostException;
+		}
+	}
+
+	private CloseableHttpClient _getCloseableHttpClient() {
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		httpClientBuilder.useSystemProperties();
+
+		return httpClientBuilder.build();
+	}
+
+	private Dictionary<String, Object> _getConfigurationProperties(
+			long companyId)
+		throws Exception {
+
+		Dictionary<String, Object> configurationProperties = new Hashtable<>();
+
+		Class<?> clazz = AnalyticsConfiguration.class;
+
+		Meta.OCD ocd = clazz.getAnnotation(Meta.OCD.class);
+
+		Settings settings = _settingsFactory.getSettings(
+			new CompanyServiceSettingsLocator(companyId, ocd.id()));
+
+		SettingsDescriptor settingsDescriptor =
+			_settingsFactory.getSettingsDescriptor(ocd.id());
+
+		if (settingsDescriptor == null) {
+			return configurationProperties;
+		}
+
+		Set<String> multiValuedKeys = settingsDescriptor.getMultiValuedKeys();
+
+		for (String multiValuedKey : multiValuedKeys) {
+			configurationProperties.put(
+				multiValuedKey,
+				settings.getValues(multiValuedKey, new String[0]));
+		}
+
+		Set<String> keys = settingsDescriptor.getAllKeys();
+
+		keys.removeAll(multiValuedKeys);
+
+		for (String key : keys) {
+			configurationProperties.put(
+				key, settings.getValue(key, StringPool.BLANK));
+		}
+
+		return configurationProperties;
 	}
 
 	private Http.Options _getOptions(long companyId) {
@@ -445,6 +689,30 @@ public class AnalyticsBatchExportImportManagerImpl
 		return options;
 	}
 
+	private boolean _isEnabled(long companyId) {
+		if (!_analyticsConfigurationRegistry.isActive()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Analytics configuration tracker not active");
+			}
+
+			return false;
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
+
+		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Analytics endpoint URL null");
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _notify(
 			String message,
 			UnsafeConsumer<String, Exception> notificationUnsafeConsumer)
@@ -461,8 +729,10 @@ public class AnalyticsBatchExportImportManagerImpl
 		notificationUnsafeConsumer.accept(message);
 	}
 
-	private void _processInvalidTokenMessage(long companyId, String message) {
-		if (!Objects.equals(message, "INVALID_TOKEN")) {
+	private void _processInvalidTokenMessage(
+		long companyId, boolean disconnected, String message) {
+
+		if (!Objects.equals(message, "INVALID_TOKEN") && !disconnected) {
 			return;
 		}
 
@@ -564,8 +834,13 @@ public class AnalyticsBatchExportImportManagerImpl
 				JSONObject responseJSONObject = _jsonFactory.createJSONObject(
 					StringUtil.read(inputStream));
 
+				boolean disconnected = StringUtil.equals(
+					GetterUtil.getString(responseJSONObject.getString("state")),
+					"DISCONNECTED");
+
 				_processInvalidTokenMessage(
-					companyId, responseJSONObject.getString("message"));
+					companyId, disconnected,
+					responseJSONObject.getString("message"));
 			}
 
 			if ((response.getResponseCode() < 200) ||
@@ -626,5 +901,8 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SettingsFactory _settingsFactory;
 
 }

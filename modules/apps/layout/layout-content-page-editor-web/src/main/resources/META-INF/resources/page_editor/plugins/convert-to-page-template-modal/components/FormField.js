@@ -12,39 +12,31 @@
  * details.
  */
 
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 const FormField = ({children, error, id, name}) => {
-	const hasError = error !== null && error !== undefined;
+	const hasError = Boolean(error);
 
 	return (
-		<div
-			className={classNames({'form-group': true, 'has-error': hasError})}
-			role="alert"
-		>
+		<ClayForm.Group className={classNames({'has-error': hasError})}>
 			<label htmlFor={id}>
 				{name}
 
-				<span className="reference-mark">
-					<ClayIcon symbol="asterisk" />
-				</span>
+				<ClayIcon className="reference-mark" symbol="asterisk" />
 			</label>
 
 			{children}
 
 			{hasError && (
-				<div className="form-feedback-item">
-					<span className="form-feedback-indicator mr-1">
-						<ClayIcon symbol="exclamation-full" />
-					</span>
-
-					{error}
-				</div>
+				<ClayForm.FeedbackGroup role="alert">
+					<ClayForm.FeedbackItem>{error}</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
 			)}
-		</div>
+		</ClayForm.Group>
 	);
 };
 

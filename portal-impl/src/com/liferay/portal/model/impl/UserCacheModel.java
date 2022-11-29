@@ -76,7 +76,7 @@ public class UserCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(89);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -164,6 +164,8 @@ public class UserCacheModel
 		sb.append(agreedToTermsOfUse);
 		sb.append(", emailAddressVerified=");
 		sb.append(emailAddressVerified);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -389,6 +391,7 @@ public class UserCacheModel
 
 		userImpl.setAgreedToTermsOfUse(agreedToTermsOfUse);
 		userImpl.setEmailAddressVerified(emailAddressVerified);
+		userImpl.setType(type);
 		userImpl.setStatus(status);
 
 		userImpl.resetOriginalValues();
@@ -456,6 +459,8 @@ public class UserCacheModel
 		agreedToTermsOfUse = objectInput.readBoolean();
 
 		emailAddressVerified = objectInput.readBoolean();
+
+		type = objectInput.readInt();
 
 		status = objectInput.readInt();
 	}
@@ -644,6 +649,8 @@ public class UserCacheModel
 
 		objectOutput.writeBoolean(emailAddressVerified);
 
+		objectOutput.writeInt(type);
+
 		objectOutput.writeInt(status);
 	}
 
@@ -690,6 +697,7 @@ public class UserCacheModel
 	public long lockoutDate;
 	public boolean agreedToTermsOfUse;
 	public boolean emailAddressVerified;
+	public int type;
 	public int status;
 
 }

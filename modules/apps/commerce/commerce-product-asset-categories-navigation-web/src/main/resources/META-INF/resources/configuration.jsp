@@ -130,12 +130,19 @@ if (assetVocabulary != null) {
 			var form = window.document['<portlet:namespace />fm'];
 
 			var assetCategoryIdsKey = Object.keys(form.elements).filter((input) =>
-				input.includes('assetCategoryIds')
+				input.includes('assetCategoriesSelectorCategoryId')
 			);
 
-			preferencesRootAssetCategoryId.val(
-				form.elements[assetCategoryIdsKey].value
-			);
+			for (let i = 0; i < assetCategoryIdsKey.length; i++) {
+				let assetCategoryId = assetCategoryIdsKey[i];
+
+				if (form.elements[assetCategoryId].value) {
+					preferencesRootAssetCategoryId.val(
+						form.elements[assetCategoryId].value
+					);
+					break;
+				}
+			}
 		}
 
 		submitForm(A.one('#<portlet:namespace />fm'));

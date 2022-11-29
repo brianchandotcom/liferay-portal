@@ -92,7 +92,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	</div>
 
 	<%
-	UnicodeProperties properties = editAssetListDisplayContext.getUnicodeProperties();
+	UnicodeProperties unicodeProperties = editAssetListDisplayContext.getUnicodeProperties();
 
 	List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
@@ -111,7 +111,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 		String className = editAssetListDisplayContext.getClassName(assetRendererFactory);
 
-		Long[] assetSelectedClassTypeIds = editAssetListDisplayContext.getClassTypeIds(properties, className, classTypes);
+		Long[] assetSelectedClassTypeIds = editAssetListDisplayContext.getClassTypeIds(unicodeProperties, className, classTypes);
 
 		// Left list
 
@@ -135,11 +135,11 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 		boolean noAssetSubtypeSelected = false;
 
-		if (Validator.isNull(properties.getProperty("anyClassType" + className))) {
+		if (Validator.isNull(unicodeProperties.getProperty("anyClassType" + className))) {
 			noAssetSubtypeSelected = true;
 		}
 
-		boolean anyAssetSubtype = GetterUtil.getBoolean(properties.getProperty("anyClassType" + className, Boolean.TRUE.toString()));
+		boolean anyAssetSubtype = GetterUtil.getBoolean(unicodeProperties.getProperty("anyClassType" + className, Boolean.TRUE.toString()));
 
 		if (noAssetSubtypeSelected) {
 			anyAssetSubtype = false;
@@ -233,8 +233,8 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	<%
 	}
 
-	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+	for (AssetRendererFactory<?> curAssetRendererFactory : classTypesAssetRendererFactories) {
+		ClassTypeReader classTypeReader = curAssetRendererFactory.getClassTypeReader();
 
 		List<Map<String, Object>> classSubtypes = new ArrayList<>();
 
@@ -293,9 +293,9 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 		classTypesList.add(
 			HashMapBuilder.<String, Object>put(
-				"className", editAssetListDisplayContext.getClassName(curRendererFactory)
+				"className", editAssetListDisplayContext.getClassName(curAssetRendererFactory)
 			).put(
-				"classNameId", curRendererFactory.getClassNameId()
+				"classNameId", curAssetRendererFactory.getClassNameId()
 			).put(
 				"classSubtypes", classSubtypes
 			).build());

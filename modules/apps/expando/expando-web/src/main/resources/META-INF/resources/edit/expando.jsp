@@ -39,29 +39,29 @@ if (expandoColumn != null) {
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), modelResource);
 
-UnicodeProperties properties = new UnicodeProperties(true);
+UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 Serializable defaultValue = null;
 
 if (expandoColumn != null) {
-	properties = expandoBridge.getAttributeProperties(expandoColumn.getName());
+	unicodeProperties = expandoBridge.getAttributeProperties(expandoColumn.getName());
 	defaultValue = expandoBridge.getAttributeDefault(expandoColumn.getName());
 }
 
-boolean propertyHidden = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_HIDDEN));
-boolean propertyLocalizeFieldName = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
-boolean propertyVisibleWithUpdatePermission = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
-int propertyIndexType = GetterUtil.getInteger(properties.get(ExpandoColumnConstants.INDEX_TYPE));
-boolean propertySecret = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_SECRET));
-int propertyHeight = GetterUtil.getInteger(properties.get(ExpandoColumnConstants.PROPERTY_HEIGHT), ExpandoColumnConstants.PROPERTY_HEIGHT_DEFAULT);
-int propertyWidth = GetterUtil.getInteger(properties.get(ExpandoColumnConstants.PROPERTY_WIDTH));
+boolean propertyHidden = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_HIDDEN));
+boolean propertyLocalizeFieldName = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
+boolean propertyVisibleWithUpdatePermission = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
+int propertyIndexType = GetterUtil.getInteger(unicodeProperties.get(ExpandoColumnConstants.INDEX_TYPE));
+boolean propertySecret = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_SECRET));
+int propertyHeight = GetterUtil.getInteger(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_HEIGHT), ExpandoColumnConstants.PROPERTY_HEIGHT_DEFAULT);
+int propertyWidth = GetterUtil.getInteger(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_WIDTH));
 
 String propertyDisplayType = ParamUtil.getString(request, "displayType", ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD);
 
 if (expandoColumn != null) {
-	propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE));
+	propertyDisplayType = GetterUtil.getString(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE));
 
 	if (Validator.isNull(propertyDisplayType)) {
-		propertyDisplayType = ExpandoColumnConstants.getDefaultDisplayTypeProperty(type, properties);
+		propertyDisplayType = ExpandoColumnConstants.getDefaultDisplayTypeProperty(type, unicodeProperties);
 	}
 }
 

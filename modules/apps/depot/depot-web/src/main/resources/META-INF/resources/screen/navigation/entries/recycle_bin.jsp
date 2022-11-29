@@ -21,11 +21,11 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 
 Group group = depotEntry.getGroup();
 
-UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
+UnicodeProperties typeSettingsUnicodeProperties = group.getTypeSettingsProperties();
 
-boolean groupTrashEnabled = PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "trashEnabled", true);
+boolean groupTrashEnabled = PropertiesParamUtil.getBoolean(typeSettingsUnicodeProperties, request, "trashEnabled", true);
 
-int trashEntriesMaxAge = PropertiesParamUtil.getInteger(typeSettingsProperties, request, "trashEntriesMaxAge", PrefsPropsUtil.getInteger(depotEntry.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE));
+int trashEntriesMaxAge = PropertiesParamUtil.getInteger(typeSettingsUnicodeProperties, request, "trashEntriesMaxAge", PrefsPropsUtil.getInteger(depotEntry.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE));
 %>
 
 <liferay-frontend:fieldset

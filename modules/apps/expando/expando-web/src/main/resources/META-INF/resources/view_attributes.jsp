@@ -98,7 +98,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 
 			ExpandoColumn expandoColumn = ExpandoColumnLocalServiceUtil.getDefaultTableColumn(company.getCompanyId(), modelResource, name);
 
-			UnicodeProperties typeSettings = expandoColumn.getTypeSettingsProperties();
+			UnicodeProperties typeSettingsUnicodeProperties = expandoColumn.getTypeSettingsProperties();
 			%>
 
 			<portlet:renderURL var="rowURL">

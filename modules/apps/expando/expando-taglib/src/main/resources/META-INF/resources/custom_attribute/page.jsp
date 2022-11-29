@@ -36,15 +36,15 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 	Serializable value = expandoBridge.getAttribute(name);
 	Serializable defaultValue = expandoBridge.getAttributeDefault(name);
 
-	UnicodeProperties properties = expandoBridge.getAttributeProperties(name);
+	UnicodeProperties unicodeProperties = expandoBridge.getAttributeProperties(name);
 
-	boolean propertyHidden = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_HIDDEN));
-	boolean propertyLocalizeFieldName = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
-	boolean propertyVisibleWithUpdatePermission = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
-	boolean propertySecret = GetterUtil.getBoolean(properties.getProperty(ExpandoColumnConstants.PROPERTY_SECRET));
-	int propertyHeight = GetterUtil.getInteger(properties.getProperty(ExpandoColumnConstants.PROPERTY_HEIGHT));
-	int propertyWidth = GetterUtil.getInteger(properties.getProperty(ExpandoColumnConstants.PROPERTY_WIDTH));
-	String propertyDisplayType = GetterUtil.getString(properties.getProperty(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE), ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX);
+	boolean propertyHidden = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_HIDDEN));
+	boolean propertyLocalizeFieldName = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
+	boolean propertyVisibleWithUpdatePermission = GetterUtil.getBoolean(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION));
+	boolean propertySecret = GetterUtil.getBoolean(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_SECRET));
+	int propertyHeight = GetterUtil.getInteger(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_HEIGHT));
+	int propertyWidth = GetterUtil.getInteger(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_WIDTH));
+	String propertyDisplayType = GetterUtil.getString(unicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE), ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX);
 
 	if (editable && propertyVisibleWithUpdatePermission) {
 		propertyHidden = !ExpandoColumnPermissionUtil.contains(permissionChecker, company.getCompanyId(), className, ExpandoTableConstants.DEFAULT_TABLE_NAME, name, ActionKeys.UPDATE);

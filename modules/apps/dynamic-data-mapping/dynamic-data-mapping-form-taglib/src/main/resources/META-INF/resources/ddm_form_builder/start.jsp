@@ -36,7 +36,7 @@
 			portletNamespace: '<%= HtmlUtil.escapeJS(refererPortletNamespace) %>',
 		};
 
-		Liferay.DDM.FieldSets.register(<%= fieldSets %>);
+		Liferay.DDM.FieldSets.register(<%= fieldSetsJSONArray %>);
 
 		Liferay.component(
 			'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder',

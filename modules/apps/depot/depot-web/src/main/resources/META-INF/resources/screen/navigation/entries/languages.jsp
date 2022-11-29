@@ -21,9 +21,9 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 
 Group group = depotEntry.getGroup();
 
-UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
+UnicodeProperties typeSettingsUnicodeProperties = group.getTypeSettingsProperties();
 
-boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty(GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES), true);
+boolean inheritLocales = GetterUtil.getBoolean(typeSettingsUnicodeProperties.getProperty(GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES), true);
 %>
 
 <liferay-ui:error exception="<%= LocaleException.class %>">

@@ -98,12 +98,12 @@ renderResponse.setTitle(headerTitle);
 								</dd>
 
 								<%
-								UnicodeProperties typeSettingsProperties = repository.getTypeSettingsProperties();
+								UnicodeProperties typeSettingsUnicodeProperties = repository.getTypeSettingsProperties();
 
 								RepositoryConfiguration repositoryConfiguration = repositoryClassDefinition.getRepositoryConfiguration();
 
 								for (RepositoryConfiguration.Parameter repositoryConfigurationParameter : repositoryConfiguration.getParameters()) {
-									String parameterValue = typeSettingsProperties.getProperty(repositoryConfigurationParameter.getName());
+									String parameterValue = typeSettingsUnicodeProperties.getProperty(repositoryConfigurationParameter.getName());
 								%>
 
 									<c:if test="<%= Validator.isNotNull(parameterValue) %>">

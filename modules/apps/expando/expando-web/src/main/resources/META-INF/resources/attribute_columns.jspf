@@ -22,7 +22,7 @@
 	<%
 	String localizedName = name;
 
-	boolean propertyLocalizeFieldName = GetterUtil.getBoolean(typeSettings.getProperty(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
+	boolean propertyLocalizeFieldName = GetterUtil.getBoolean(typeSettingsUnicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
 
 	if (propertyLocalizeFieldName) {
 		localizedName = LanguageUtil.get(request, name);
@@ -59,7 +59,7 @@
 >
 
 	<%
-	boolean hidden = GetterUtil.getBoolean(typeSettings.getProperty(ExpandoColumnConstants.PROPERTY_HIDDEN));
+	boolean hidden = GetterUtil.getBoolean(typeSettingsUnicodeProperties.getProperty(ExpandoColumnConstants.PROPERTY_HIDDEN));
 	%>
 
 	<liferay-ui:message key="<%= String.valueOf(hidden) %>" />
@@ -72,7 +72,7 @@
 >
 
 	<%
-	int indexType = GetterUtil.getInteger(typeSettings.getProperty(ExpandoColumnConstants.INDEX_TYPE));
+	int indexType = GetterUtil.getInteger(typeSettingsUnicodeProperties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
 	%>
 
 	<c:choose>

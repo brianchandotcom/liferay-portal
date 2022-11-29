@@ -212,8 +212,8 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	<%
 	}
 
-	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+	for (AssetRendererFactory<?> curAssetRendererFactory : classTypesAssetRendererFactories) {
+		ClassTypeReader classTypeReader = curAssetRendererFactory.getClassTypeReader();
 
 		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
 
@@ -271,9 +271,9 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 		classTypesList.add(
 			HashMapBuilder.<String, Object>put(
-				"className", assetPublisherWebHelper.getClassName(curRendererFactory)
+				"className", assetPublisherWebHelper.getClassName(curAssetRendererFactory)
 			).put(
-				"classNameId", curRendererFactory.getClassNameId()
+				"classNameId", curAssetRendererFactory.getClassNameId()
 			).put(
 				"classSubtypes", classSubtypes
 			).build());

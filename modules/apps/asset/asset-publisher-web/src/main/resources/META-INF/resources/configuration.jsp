@@ -69,8 +69,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		var form = document.<portlet:namespace />fm;
 
 		<%
-		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-			String className = assetPublisherWebHelper.getClassName(curRendererFactory);
+		for (AssetRendererFactory<?> curAssetRendererFactory : classTypesAssetRendererFactories) {
+			String className = assetPublisherWebHelper.getClassName(curAssetRendererFactory);
 		%>
 
 			Liferay.Util.setFormValues(form, {

@@ -11,15 +11,17 @@
 
 <nav class="${navClass} d-flex nav flex-column public-sites-navigation">
 	<div class="utility-nav-container">
-		<div class="align-items-center d-flex justify-content-between utility-nav w-100">
+		<div class="align-items-center d-flex justify-content-between py-1 utility-nav w-100">
 			<div class="d-flex sites-languages-container">
 				<div class="d-flex p-2 sites">
-					<span class="pr-1 sites-icon">[@clay["icon"] symbol="sites"/]</span>
+					<span class="align-self-center pr-1 opacity-50 sites-icon">[@clay["icon"] symbol="sites"/]</span>
 
-					<div class="d-flex liferay-sites position-relative">
-						${languageUtil.get(locale, "liferay-sites", "Liferay Sites")}
-						<span class="caret-bottom-icon pl-1">[@clay["icon"] symbol="caret-bottom"/]</span>
-						<span class="caret-top-icon pl-1">[@clay["icon"] symbol="caret-top"/]</span>
+					<div class="d-flex font-weight-semi-bold liferay-sites position-relative">
+						<div class="liferay-sites-text opacity-80">
+							${languageUtil.get(locale, "liferay-sites", "Liferay Sites")}
+						</div>
+
+						<span class="caret-bottom-icon opacity-30 pl-1">[@clay["icon"] symbol="caret-bottom-l"/]</span>
 
 						<div class="liferay-sites-dropdown">
 							<lfr-drop-zone>
@@ -29,32 +31,32 @@
 					</div>
 				</div>
 				[#if configuration.showLanguageMenu]
-					<div class="language p-2 pl-2">
-						<span class="pr-1">[@clay["icon"] symbol="globe-lines"/]</span>
-						<span>EN</span>
-						<span>[@clay["icon"] symbol="caret-bottom-l"/]</span>
+					<div class="align-self-center language p-2">
+						<span class="globe-icon pr-1 opacity-50">[@clay["icon"] symbol="globe-lines"/]</span>
+						<span class="font-weight-semi-bold language-text opacity-80">EN</span>
+						<span class="language-dropdown-icon opacity-30">[@clay["icon"] symbol="caret-bottom-l"/]</span>
 					</div>
 				[/#if]
 			</div>
 
 			<div class="align-items-center d-flex search-account-container">
-				<span class="pr-2"> [@clay["icon"] symbol="search"/] </span>
+				<span class="pr-2 search-icon opacity-50"> [@clay["icon"] symbol="search"/] </span>
 					[#if configuration.showAccountMenu]
 						<div class="account position-relative">
-							<div class="account-info align-items-center d-flex px-2">
+							<div class="account-info align-items-center d-flex">
 								[#if themeDisplay.isSignedIn()]
 									<div class="user-avatar">
 										<img class="h-100 mx-100" src="${user.fetchPortraitURL(themeDisplay)}" />
 									</div>
 								[#else]
-									<div class="signed-out-account">
-										<span class="user-icon pr-1">[@clay["icon"] symbol="user"/]</span>
-										<span class="account-text user-out">
+									<div class="py-2 signed-out-account">
+										<span class="user-icon opacity-50 pr-1 pl-2">[@clay["icon"] symbol="user"/]</span>
+										<span class="account-text font-weight-semi-bold opacity-80 user-out">
 											${languageUtil.get(locale, "account", "Account")}
 										</span>
 									</div>
 								[/#if]
-								<span class="pl-1">[@clay["icon"] symbol="caret-bottom-l"/]</span>
+								<span class="account-dropdown-icon opacity-30 pl-1 pr-2">[@clay["icon"] symbol="caret-bottom-l"/]</span>
 							</div>
 
 							<div class="dropdown-content position-absolute pt-3">

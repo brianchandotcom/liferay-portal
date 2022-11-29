@@ -25,11 +25,6 @@ nav.public-sites-navigation {
 		z-index: 1;
 	}
 
-	.utility-nav {
-		padding-bottom: 0.8125rem;
-		padding-top: 0.8125rem;
-	}
-
 	&.dark-nav {
 		background-color: var(--color-brand-primary-darken-5);
 
@@ -123,7 +118,7 @@ nav.public-sites-navigation {
 	}
 
 	.account {
-		&:hover {
+		&:hover, &.menu-open {
 			background: var(--color-action-primary-hover-lighten);
 			border-radius: var(--border-radius-xs);
 			color: var(--color-action-primary-active);
@@ -132,6 +127,11 @@ nav.public-sites-navigation {
 		&.menu-open {
 			.dropdown-content {
 				display: block;
+			}
+
+			.user-icon, .account-text, .account-dropdown-icon {
+				opacity: 1;
+				transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(180deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 			}
 		}
 
@@ -170,31 +170,32 @@ nav.public-sites-navigation {
 				width: 15rem;
 				z-index: 10;
 			}
-
-			.caret-bottom-icon {
-				display: block;
-			}
-
-			.caret-top-icon {
-				display: none;
-				fill: var(--color-action-primary-default);
-			}
 		}
 
 		&.show {
-			.sites-icon svg {
-				fill: var(--color-action-primary-default);
+			background-color: var(--color-action-primary-hover-lighten);
+
+			.sites-icon {
+				opacity: 1;
+
+				svg {
+					fill: var(--color-action-primary-default);
+				}
 			}
 
 			.liferay-sites {
 				color: var(--color-action-primary-active);
 
 				.caret-bottom-icon {
-					display: none;
+					fill: var(--color-action-primary-default);
+					opacity: 1;
+					transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
+					rotateX(180deg) rotateY(0deg) rotateZ(0deg)
+					skew(0deg, 0deg);
 				}
 
-				.caret-top-icon {
-					display: block;
+				.liferay-sites-text {
+					opacity: 1;
 				}
 
 				.liferay-sites-dropdown {
@@ -301,11 +302,27 @@ nav.public-sites-navigation {
 		z-index: -1;
 	}
 
+	.opacity-30 {
+		opacity: 0.3;
+	}
+
+	.opacity-50 {
+		opacity: 0.5;
+	}
+
+	.opacity-80 {
+		opacity: 0.8;
+	}
+
 	@media (max-width: 599px) {
 		.primary-nav,
 		.utility-nav {
 			padding-left: 1.5rem;
 			padding-right: 1.5rem;
+		}
+
+		.account-text {
+			display: none;
 		}
 
 		.nav-items-wrapper {

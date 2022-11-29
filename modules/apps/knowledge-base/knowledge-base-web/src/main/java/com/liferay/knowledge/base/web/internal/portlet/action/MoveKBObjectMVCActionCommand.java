@@ -210,27 +210,24 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 
 		KBArticle nextKBArticle = kbArticles.get(kbArticles.size() - 1);
 
-		double nextKBArticlePriority = nextKBArticle.getPriority();
+		if (((position == 0) && (nextKBArticle.getPriority() > 1)) ||
+			(kbArticles.size() < position)) {
 
-		double previousKBArticlePriority = 0;
-
-		if ((position == 0) && (nextKBArticlePriority > 1)) {
+			return _getNearestPriority(nextKBArticle.getPriority(), 0);
+		}
+		else if (kbArticles.size() < 2) {
 			return _getNearestPriority(
-				nextKBArticlePriority, previousKBArticlePriority);
+				nextKBArticle.getPriority() + 1, nextKBArticle.getPriority());
 		}
-
-		if (kbArticles.size() <= position) {
-			previousKBArticlePriority = nextKBArticlePriority;
-			nextKBArticlePriority = nextKBArticlePriority + 1;
+		else if (kbArticles.size() == position) {
+			return _getNearestPriority(nextKBArticle.getPriority() + 2, 0);
 		}
-		else if (kbArticles.size() >= 2) {
+		else {
 			KBArticle previousKBArticle = kbArticles.get(kbArticles.size() - 2);
 
-			previousKBArticlePriority = previousKBArticle.getPriority();
+			return _getNearestPriority(
+				nextKBArticle.getPriority(), previousKBArticle.getPriority());
 		}
-
-		return _getNearestPriority(
-			nextKBArticlePriority, previousKBArticlePriority);
 	}
 
 	private boolean _isDragAndDrop(boolean dragAndDrop) {

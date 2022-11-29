@@ -53,7 +53,6 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -473,7 +472,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	private PreparedStatement _getConcurrentPreparedStatement(
 		String updateSqlQuery,
-		HashMap<Thread, PreparedStatement> preparedStatementHashMap) {
+		Map<Thread, PreparedStatement> preparedStatementHashMap) {
 
 		return preparedStatementHashMap.computeIfAbsent(
 			Thread.currentThread(),
@@ -552,8 +551,8 @@ public abstract class BaseDBProcess implements DBProcess {
 
 		List<Future<Void>> futures = new ArrayList<>();
 
-		HashMap<Thread, PreparedStatement> preparedStatementHashMap =
-			new HashMap<>();
+		Map<Thread, PreparedStatement> preparedStatementHashMap =
+			new ConcurrentHashMap<>();
 
 		try {
 			boolean notificationEnabled = NotificationThreadLocal.isEnabled();

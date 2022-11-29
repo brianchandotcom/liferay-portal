@@ -19,10 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
-import com.liferay.portal.kernel.cal.DayAndPosition;
-import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
-import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -36,6 +33,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.scheduler.CronTextUtil;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -48,16 +46,13 @@ import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.InetAddressUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Dictionary;
@@ -172,136 +167,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		PortletRequest portletRequest, Calendar calendar,
 		boolean timeZoneSensitive, int recurrenceType) {
 
-		Calendar recurrenceCalendar = null;
-
-		if (timeZoneSensitive) {
-			recurrenceCalendar = CalendarFactoryUtil.getCalendar();
-
-			recurrenceCalendar.setTime(calendar.getTime());
-		}
-		else {
-			recurrenceCalendar = (Calendar)calendar.clone();
-		}
-
-		Recurrence recurrence = new Recurrence(
-			recurrenceCalendar, new Duration(1, 0, 0, 0), recurrenceType);
-
-		recurrence.setWeekStart(Calendar.SUNDAY);
-
-		if (recurrenceType == Recurrence.DAILY) {
-			int dailyType = ParamUtil.getInteger(portletRequest, "dailyType");
-
-			if (dailyType == 0) {
-				int dailyInterval = ParamUtil.getInteger(
-					portletRequest, "dailyInterval", 1);
-
-				recurrence.setInterval(dailyInterval);
-			}
-			else {
-				recurrence.setByDay(
-					new DayAndPosition[] {
-						new DayAndPosition(Calendar.MONDAY, 0),
-						new DayAndPosition(Calendar.TUESDAY, 0),
-						new DayAndPosition(Calendar.WEDNESDAY, 0),
-						new DayAndPosition(Calendar.THURSDAY, 0),
-						new DayAndPosition(Calendar.FRIDAY, 0)
-					});
-			}
-		}
-		else if (recurrenceType == Recurrence.WEEKLY) {
-			int weeklyInterval = ParamUtil.getInteger(
-				portletRequest, "weeklyInterval");
-
-			recurrence.setInterval(weeklyInterval);
-
-			List<DayAndPosition> dayPos = new ArrayList<>();
-
-			_addWeeklyDayPos(portletRequest, dayPos, Calendar.SUNDAY);
-			_addWeeklyDayPos(portletRequest, dayPos, Calendar.MONDAY);
-			_addWeeklyDayPos(portletRequest, dayPos, Calendar.TUESDAY);
-			_addWeeklyDayPos(portletRequest, dayPos, Calendar.WEDNESDAY);
-			_addWeeklyDayPos(portletRequest, dayPos, Calendar.THURSDAY);
-			_addWeeklyDayPos(portletRequest, dayPos, Calendar.FRIDAY);
-			_addWeeklyDayPos(portletRequest, dayPos, Calendar.SATURDAY);
-
-			if (dayPos.isEmpty()) {
-				dayPos.add(new DayAndPosition(Calendar.MONDAY, 0));
-			}
-
-			recurrence.setByDay(dayPos.toArray(new DayAndPosition[0]));
-		}
-		else if (recurrenceType == Recurrence.MONTHLY) {
-			int monthlyType = ParamUtil.getInteger(
-				portletRequest, "monthlyType");
-
-			if (monthlyType == 0) {
-				int monthlyDay = ParamUtil.getInteger(
-					portletRequest, "monthlyDay0", 1);
-
-				recurrence.setByMonthDay(new int[] {monthlyDay});
-
-				int monthlyInterval = ParamUtil.getInteger(
-					portletRequest, "monthlyInterval0", 1);
-
-				recurrence.setInterval(monthlyInterval);
-			}
-			else {
-				int monthlyPos = ParamUtil.getInteger(
-					portletRequest, "monthlyPos");
-				int monthlyDay = ParamUtil.getInteger(
-					portletRequest, "monthlyDay1");
-
-				recurrence.setByDay(
-					new DayAndPosition[] {
-						new DayAndPosition(monthlyDay, monthlyPos)
-					});
-
-				int monthlyInterval = ParamUtil.getInteger(
-					portletRequest, "monthlyInterval1", 1);
-
-				recurrence.setInterval(monthlyInterval);
-			}
-		}
-		else if (recurrenceType == Recurrence.YEARLY) {
-			int yearlyType = ParamUtil.getInteger(portletRequest, "yearlyType");
-
-			if (yearlyType == 0) {
-				int yearlyMonth = ParamUtil.getInteger(
-					portletRequest, "yearlyMonth0");
-				int yearlyDay = ParamUtil.getInteger(
-					portletRequest, "yearlyDay0", 1);
-
-				recurrence.setByMonth(new int[] {yearlyMonth});
-				recurrence.setByMonthDay(new int[] {yearlyDay});
-
-				int yearlyInterval = ParamUtil.getInteger(
-					portletRequest, "yearlyInterval0", 1);
-
-				recurrence.setInterval(yearlyInterval);
-			}
-			else {
-				int yearlyPos = ParamUtil.getInteger(
-					portletRequest, "yearlyPos");
-				int yearlyDay = ParamUtil.getInteger(
-					portletRequest, "yearlyDay1");
-				int yearlyMonth = ParamUtil.getInteger(
-					portletRequest, "yearlyMonth1");
-
-				recurrence.setByDay(
-					new DayAndPosition[] {
-						new DayAndPosition(yearlyDay, yearlyPos)
-					});
-
-				recurrence.setByMonth(new int[] {yearlyMonth});
-
-				int yearlyInterval = ParamUtil.getInteger(
-					portletRequest, "yearlyInterval1", 1);
-
-				recurrence.setInterval(yearlyInterval);
-			}
-		}
-
-		return RecurrenceSerializer.toCronText(recurrence);
+		return CronTextUtil.getCronText(
+			portletRequest, calendar, timeZoneSensitive, recurrenceType);
 	}
 
 	@Override
@@ -773,14 +640,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_schedulerEngineHelperConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SchedulerEngineHelperConfiguration.class, properties);
-	}
-
-	private void _addWeeklyDayPos(
-		PortletRequest portletRequest, List<DayAndPosition> list, int day) {
-
-		if (ParamUtil.getBoolean(portletRequest, "weeklyDayPos" + day)) {
-			list.add(new DayAndPosition(day, 0));
-		}
 	}
 
 	private Destination _registerDestination(

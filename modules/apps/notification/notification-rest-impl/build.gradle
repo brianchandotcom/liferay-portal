@@ -10,7 +10,9 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:notification:notification-api")
 	compileOnly project(":apps:notification:notification-rest-api")
+	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-string")
 }

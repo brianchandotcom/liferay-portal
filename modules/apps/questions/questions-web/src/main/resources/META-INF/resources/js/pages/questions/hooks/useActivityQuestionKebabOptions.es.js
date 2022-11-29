@@ -23,6 +23,7 @@ const FEEDBACK_DELAY = 2000;
 
 const useActiviyQuestionKebabOptions = ({
 	context,
+	onClickReport,
 	question,
 	questionId,
 	sectionTitle,
@@ -48,8 +49,7 @@ const useActiviyQuestionKebabOptions = ({
 				message: Liferay.Language.get('copied-link-to-the-clipboard'),
 				type: 'success',
 			});
-		}
-		catch (error) {
+		} catch (error) {
 			setError(error);
 
 			openToast({
@@ -57,8 +57,7 @@ const useActiviyQuestionKebabOptions = ({
 				title: Liferay.Language.get('an-error-occurred'),
 				type: 'warning',
 			});
-		}
-		finally {
+		} finally {
 			setTimeout(() => {
 				setError(null);
 			}, FEEDBACK_DELAY);
@@ -107,6 +106,11 @@ const useActiviyQuestionKebabOptions = ({
 				onClick: onClickShare,
 				symbolLeft: 'share',
 			},
+			{
+				label: Liferay.Language.get('report'),
+				onClick: () => onClickReport(),
+				symbolLeft: 'flag-empty',
+			},
 		];
 
 		if (question?.actions?.replace) {
@@ -147,7 +151,7 @@ const useActiviyQuestionKebabOptions = ({
 
 		return options;
 	}, [
-		context.historyRouterBasePath,
+		context,
 		isSubscribed,
 		onClickShare,
 		onSubscribe,

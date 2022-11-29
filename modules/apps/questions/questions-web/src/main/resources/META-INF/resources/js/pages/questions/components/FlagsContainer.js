@@ -15,6 +15,8 @@
 import Flags from '@liferay/flags-taglib';
 import React from 'react';
 
+import useFlagsContainer from '../hooks/useFlagsContainer.es';
+
 const FlagsContainer = ({
 	btnProps = {
 		className: 'btn btn-secondary',
@@ -25,31 +27,13 @@ const FlagsContainer = ({
 	onlyIcon = true,
 	showIcon,
 }) => {
-	const {context: flagsContext, props: flagsProps} =
-		context?.flagsProperties || {};
-
-	const namespace = flagsContext?.namespace;
-
-	const isFlagEnabled = flagsProps?.isFlagEnabled;
-
-	const props = {
-		...flagsProps,
-		baseData: {
-			[`${namespace}className`]: 'com.liferay.message.boards.model.MBMessage',
-			[`${namespace}classPK`]:
-				content.messageBoardRootMessageId ?? content.id,
-			[`${namespace}contentTitle`]:
-				content.headline || content.articleBody,
-			[`${namespace}contentURL`]: window.location.href,
-			[`${namespace}reportedUserId`]: content?.creator?.id,
-		},
+	const {flagsContext, isFlagEnabled, props} = useFlagsContainer({
 		btnProps,
-		companyName: context.companyName,
-		message: Liferay.Language.get('report'),
+		content,
+		context,
 		onlyIcon,
 		showIcon,
-		signedIn: Liferay.ThemeDisplay.isSignedIn(),
-	};
+	});
 
 	if (isFlagEnabled) {
 		return <Flags context={flagsContext} props={props} />;

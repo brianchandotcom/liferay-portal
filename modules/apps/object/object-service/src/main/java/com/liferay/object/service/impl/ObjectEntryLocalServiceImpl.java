@@ -32,6 +32,7 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
+import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -2189,6 +2190,19 @@ public class ObjectEntryLocalServiceImpl
 			List<String> oDataFilterStrings = TransformUtil.transform(
 				(List<ObjectFilter>)objectFieldSettingsValues.get("filters"),
 				objectFilter -> {
+					if (StringUtil.equals(
+							objectFilter.getFilterType(),
+							ObjectFilterConstants.TYPE_CURRENT_USER)) {
+
+						objectFilter.setJSON(
+							String.valueOf(
+								_jsonFactory.createJSONObject(
+								).put(
+									"currentUserId",
+									PrincipalThreadLocal.getUserId()
+								)));
+					}
+
 					ObjectFilterParser objectFilterParser =
 						_objectFilterParserServiceRegistry.
 							getObjectFilterParser(objectFilter.getFilterType());
@@ -3010,8 +3024,7 @@ public class ObjectEntryLocalServiceImpl
 		ListTypeEntry originalListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				listTypeDefinitionId,
-				_getValue(
-					String.valueOf(values.get(entry.getKey()))));
+				_getValue(String.valueOf(values.get(entry.getKey()))));
 
 		ObjectStateFlow objectStateFlow =
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(

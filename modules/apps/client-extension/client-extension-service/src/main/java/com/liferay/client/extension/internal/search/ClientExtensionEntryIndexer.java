@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bruno Basto
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(service = Indexer.class)
 public class ClientExtensionEntryIndexer
 	extends BaseIndexer<ClientExtensionEntry> {
 

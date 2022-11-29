@@ -22,10 +22,18 @@ const ARROW_KEYS = {
 const FOCUSABLE_ELEMENT_SELECTOR = 'a';
 
 export default function PanelKeyboardHandler({categoryKey, namespace}) {
+	let focusedElement: HTMLElement | null = null;
 	const wrapper = document.getElementById(`${namespace}${categoryKey}_panel`);
 
 	const focusElement = (element: HTMLElement) => {
 		if (wrapper.contains(element)) {
+			if (focusedElement) {
+				focusedElement.setAttribute('tabindex', '-1');
+			}
+
+			focusedElement = element;
+
+			element.setAttribute('tabindex', '0');
 			element.focus();
 		}
 	};
@@ -83,9 +91,18 @@ export default function PanelKeyboardHandler({categoryKey, namespace}) {
 		}
 	};
 
-	wrapper.querySelectorAll(FOCUSABLE_ELEMENT_SELECTOR).forEach((element) => {
-		element.setAttribute('tabindex', '-1');
-	});
+	wrapper
+		.querySelectorAll(FOCUSABLE_ELEMENT_SELECTOR)
+		.forEach((element, index) => {
+			if (index === 0) {
+				focusedElement = element;
+
+				element.setAttribute('tabindex', '0');
+			}
+			else {
+				element.setAttribute('tabindex', '-1');
+			}
+		});
 
 	wrapper.addEventListener('keydown', handleKeyDown, {capture: true});
 

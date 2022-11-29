@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.util.BaseUpgradeResourceBlock;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -57,7 +58,7 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 
 		_siteRole = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
-		connection = DataAccess.getConnection();
+		_connection = DataAccess.getConnection();
 
 		runSQL(
 			StringBundler.concat(
@@ -155,7 +156,7 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 
 		runSQL("drop table " + getTableName());
 
-		connection.close();
+		_connection.close();
 	}
 
 	@Test
@@ -212,7 +213,7 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 	private void _assertRowsRemoved(String tableName, String primaryKeyName)
 		throws Exception {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				StringBundler.concat(
 					"select * from ", tableName, " where ", primaryKeyName,
 					" < 0"));
@@ -249,7 +250,7 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 			upgradeProcess.upgrade();
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from ResourcePermission where name = '" +
 					UpgradeResourceBlockTest.class.getName() +
 						"' order by scope");
@@ -306,6 +307,8 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 	private static final long _RESOURCE_PRIMARY_KEY = -8;
 
 	private static final long _USER_ID = -9;
+
+	private static Connection _connection;
 
 	private boolean _hasUserId;
 

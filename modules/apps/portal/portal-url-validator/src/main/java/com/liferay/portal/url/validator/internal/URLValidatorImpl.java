@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = URLValidator.class)
+@Component(service = URLValidator.class)
 public class URLValidatorImpl implements URLValidator {
 
 	@Override

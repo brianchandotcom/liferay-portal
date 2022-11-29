@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Shuyang Zhou
  * @author Preston Crary
  */
-@Component(immediate = true, service = PortalExecutorManager.class)
+@Component(service = PortalExecutorManager.class)
 public class DefaultPortalExecutorManager implements PortalExecutorManager {
 
 	public static final String DEFAULT_CONFIG_NAME = "default";

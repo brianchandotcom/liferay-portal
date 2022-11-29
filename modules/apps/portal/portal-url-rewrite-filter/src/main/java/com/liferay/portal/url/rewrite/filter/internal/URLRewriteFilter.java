@@ -37,7 +37,6 @@ import org.tuckey.web.filters.urlrewrite.UrlRewriteFilter;
  * @author László Csontos
  */
 @Component(
-	immediate = true,
 	property = {
 		"before-filter=Session Id Filter", "dispatcher=ERROR",
 		"dispatcher=FORWARD", "dispatcher=INCLUDE", "dispatcher=REQUEST",

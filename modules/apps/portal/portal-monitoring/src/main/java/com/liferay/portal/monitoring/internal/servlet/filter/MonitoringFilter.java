@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"after-filter=Absolute Redirects Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST", "servlet-context-name=",

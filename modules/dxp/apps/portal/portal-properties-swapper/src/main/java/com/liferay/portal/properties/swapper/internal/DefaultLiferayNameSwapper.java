@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(enabled = false, immediate = true, service = {})
+@Component(enabled = false, service = {})
 public class DefaultLiferayNameSwapper {
 
 	@Activate

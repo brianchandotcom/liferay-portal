@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"jmx.objectname=com.liferay.portal.monitoring:classification=portal_statistic,name=PortalManager",
 		"jmx.objectname.cache.key=PortalManager"

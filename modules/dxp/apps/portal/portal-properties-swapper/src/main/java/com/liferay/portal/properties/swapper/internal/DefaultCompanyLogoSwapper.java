@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shuyang Zhou
  */
-@Component(enabled = false, immediate = true, service = {})
+@Component(enabled = false, service = {})
 public class DefaultCompanyLogoSwapper {
 
 	@Activate

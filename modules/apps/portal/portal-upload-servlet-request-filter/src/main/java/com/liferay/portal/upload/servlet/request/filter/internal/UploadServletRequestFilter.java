@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=Upload Servlet Request Filter", "url-pattern=/*"

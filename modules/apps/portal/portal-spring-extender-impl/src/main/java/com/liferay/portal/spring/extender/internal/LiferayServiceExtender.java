@@ -59,7 +59,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class LiferayServiceExtender
 	implements BundleTrackerCustomizer
 		<LiferayServiceExtender.LiferayServiceExtension> {

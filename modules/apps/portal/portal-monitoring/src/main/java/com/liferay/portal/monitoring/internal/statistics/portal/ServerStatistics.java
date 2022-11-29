@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	enabled = false, immediate = true,
-	property = "namespace=com.liferay.monitoring.Portal",
+	enabled = false, property = "namespace=com.liferay.monitoring.Portal",
 	service = {DataSampleProcessor.class, ServerStatistics.class}
 )
 public class ServerStatistics

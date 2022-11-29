@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
-	immediate = true, service = MonitoringMessagingConfigurator.class
+	service = MonitoringMessagingConfigurator.class
 )
 public class MonitoringMessagingConfigurator {
 

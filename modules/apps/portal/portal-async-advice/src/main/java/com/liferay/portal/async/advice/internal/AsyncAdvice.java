@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.async.advice.internal.configuration.AsyncAdviceConfiguration",
-	immediate = true, service = ChainableMethodAdvice.class
+	service = ChainableMethodAdvice.class
 )
 public class AsyncAdvice extends ChainableMethodAdvice {
 

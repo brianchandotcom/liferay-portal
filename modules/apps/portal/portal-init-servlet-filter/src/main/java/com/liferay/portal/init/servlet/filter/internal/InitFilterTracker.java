@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Matthew Tambara
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class InitFilterTracker {
 
 	@Activate

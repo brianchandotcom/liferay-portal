@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "destination.name=" + DestinationNames.MONITORING,
 	service = {MessageListener.class, MonitoringControl.class}
 )

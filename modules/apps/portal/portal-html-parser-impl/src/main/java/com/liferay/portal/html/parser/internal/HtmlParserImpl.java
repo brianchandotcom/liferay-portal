@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Connor McKay
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = HtmlParser.class)
+@Component(service = HtmlParser.class)
 public class HtmlParserImpl implements HtmlParser {
 
 	/**

@@ -40,7 +40,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class PortletConfigurationExtender
 	implements BundleTrackerCustomizer
 		<PortletConfigurationExtender.PortletConfigurationExtension> {

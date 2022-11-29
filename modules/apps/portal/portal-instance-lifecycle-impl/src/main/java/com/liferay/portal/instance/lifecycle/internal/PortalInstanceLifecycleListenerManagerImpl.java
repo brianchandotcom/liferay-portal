@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = AopService.class)
+@Component(service = AopService.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public class PortalInstanceLifecycleListenerManagerImpl
 	implements AopService, PortalInstanceLifecycleManager {

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MBeanServer.class)
+@Component(service = MBeanServer.class)
 public class RegistryAwareMBeanServer implements MBeanServer {
 
 	@Override

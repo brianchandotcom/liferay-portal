@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration",
-	enabled = false, immediate = true, service = DynamicInclude.class
+	enabled = false, service = DynamicInclude.class
 )
 public class MonitoringTopHeadDynamicInclude extends BaseDynamicInclude {
 

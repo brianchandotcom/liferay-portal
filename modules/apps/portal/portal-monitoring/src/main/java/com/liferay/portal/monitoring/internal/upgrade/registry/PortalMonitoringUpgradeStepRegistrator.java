@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tom Wang
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class PortalMonitoringUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"jmx.objectname=com.liferay.portal.monitoring:classification=portlet_statistic,name=EventRequestPortletManager",
 		"jmx.objectname.cache.key=EventRequestPortletManager"

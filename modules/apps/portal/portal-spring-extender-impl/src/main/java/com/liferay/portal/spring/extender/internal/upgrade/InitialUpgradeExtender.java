@@ -57,7 +57,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class InitialUpgradeExtender
 	implements BundleTrackerCustomizer<InitialUpgradeExtension> {
 

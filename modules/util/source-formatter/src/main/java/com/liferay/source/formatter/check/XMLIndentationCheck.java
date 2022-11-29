@@ -19,6 +19,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.XMLSourceUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -28,6 +32,59 @@ public class XMLIndentationCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
+
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf(">", x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			String s = content.substring(x + 1);
+
+			if (Validator.isNull(s) || StringUtil.startsWith(s, "\n")) {
+				continue;
+			}
+
+			s = StringUtil.trimLeading(s);
+
+			if (!s.startsWith("<") || s.startsWith("</") ||
+				s.startsWith("<![CDATA[") ||
+				XMLSourceUtil.isInsideCDATAMarkup(content, x)) {
+
+				continue;
+			}
+
+			return StringUtil.insert(content, "\n", x + 1);
+		}
+
+		Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
+
+		while (matcher.find()) {
+			String s = matcher.group(1);
+
+			if (s.equals("</code>") ||
+				XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start())) {
+
+				continue;
+			}
+
+			return StringUtil.replaceFirst(
+				content, matcher.group(2), "\n", matcher.start(2));
+		}
+
+		matcher = _incorrectLineBreakPattern2.matcher(content);
+
+		while (matcher.find()) {
+			if (XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start())) {
+				continue;
+			}
+
+			return StringUtil.replaceFirst(
+				content, matcher.group(2), "\n", matcher.start(2));
+		}
 
 		while (true) {
 			String newContent = _fixTagsIndentation(content);
@@ -280,6 +337,11 @@ public class XMLIndentationCheck extends BaseFileCheck {
 	private static final String _TAG_CLOSE = ">";
 
 	private static final String _TAG_OPEN = "<";
+
+	private static final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
+		"(</[-\\w:]+>)( *)(</[-\\w:]+>)");
+	private static final Pattern _incorrectLineBreakPattern2 = Pattern.compile(
+		"(?!\")(/>)( *)(</[-\\w:]+>)");
 
 	private class TokenOccurrence {
 

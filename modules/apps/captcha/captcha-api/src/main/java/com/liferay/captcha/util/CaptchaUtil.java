@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
-	immediate = true, service = CaptchaUtil.class
+	service = {}
 )
 public class CaptchaUtil {
 

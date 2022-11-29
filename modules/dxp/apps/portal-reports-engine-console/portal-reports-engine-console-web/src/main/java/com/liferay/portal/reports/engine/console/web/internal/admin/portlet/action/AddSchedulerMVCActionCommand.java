@@ -15,20 +15,17 @@
 package com.liferay.portal.reports.engine.console.web.internal.admin.portlet.action;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cal.DayAndPosition;
-import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
-import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.scheduler.CronTextUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -43,10 +40,8 @@ import com.liferay.portal.reports.engine.console.util.ReportsEngineConsoleUtil;
 
 import java.text.DateFormat;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -102,7 +97,7 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 		int recurrenceType = ParamUtil.getInteger(
 			actionRequest, "recurrenceType");
 
-		String cronText = getCronText(
+		String cronText = CronTextUtil.getCronText(
 			actionRequest, startCalendar, true, recurrenceType);
 
 		JSONArray entryReportParametersJSONArray =
@@ -168,158 +163,6 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 			emailNotifications, emailDelivery, portletId, generatedReportsURL,
 			reportName, entryReportParametersJSONArray.toString(),
 			serviceContext);
-	}
-
-	protected String getCronText(
-		ActionRequest actionRequest, Calendar startCalendar,
-		boolean timeZoneSensitive, int recurrenceType) {
-
-		Calendar calendar = null;
-
-		if (timeZoneSensitive) {
-			calendar = CalendarFactoryUtil.getCalendar();
-
-			calendar.setTime(startCalendar.getTime());
-		}
-		else {
-			calendar = (Calendar)startCalendar.clone();
-		}
-
-		Recurrence recurrence = new Recurrence(
-			calendar, new Duration(1, 0, 0, 0), recurrenceType);
-
-		recurrence.setWeekStart(Calendar.SUNDAY);
-
-		if (recurrenceType == Recurrence.DAILY) {
-			int dailyType = ParamUtil.getInteger(actionRequest, "dailyType");
-
-			if (dailyType == 0) {
-				int dailyInterval = ParamUtil.getInteger(
-					actionRequest, "dailyInterval", 1);
-
-				recurrence.setInterval(dailyInterval);
-			}
-			else {
-				recurrence.setByDay(
-					new DayAndPosition[] {
-						new DayAndPosition(Calendar.MONDAY, 0),
-						new DayAndPosition(Calendar.TUESDAY, 0),
-						new DayAndPosition(Calendar.WEDNESDAY, 0),
-						new DayAndPosition(Calendar.THURSDAY, 0),
-						new DayAndPosition(Calendar.FRIDAY, 0)
-					});
-			}
-		}
-		else if (recurrenceType == Recurrence.WEEKLY) {
-			int weeklyInterval = ParamUtil.getInteger(
-				actionRequest, "weeklyInterval", 1);
-
-			recurrence.setInterval(weeklyInterval);
-
-			List<DayAndPosition> dayAndPositions = new ArrayList<>();
-
-			_addWeeklyDayPos(actionRequest, dayAndPositions, Calendar.SUNDAY);
-			_addWeeklyDayPos(actionRequest, dayAndPositions, Calendar.MONDAY);
-			_addWeeklyDayPos(actionRequest, dayAndPositions, Calendar.TUESDAY);
-			_addWeeklyDayPos(
-				actionRequest, dayAndPositions, Calendar.WEDNESDAY);
-			_addWeeklyDayPos(actionRequest, dayAndPositions, Calendar.THURSDAY);
-			_addWeeklyDayPos(actionRequest, dayAndPositions, Calendar.FRIDAY);
-			_addWeeklyDayPos(actionRequest, dayAndPositions, Calendar.SATURDAY);
-
-			if (dayAndPositions.isEmpty()) {
-				dayAndPositions.add(new DayAndPosition(Calendar.MONDAY, 0));
-			}
-
-			recurrence.setByDay(dayAndPositions.toArray(new DayAndPosition[0]));
-		}
-		else if (recurrenceType == Recurrence.MONTHLY) {
-			int monthlyType = ParamUtil.getInteger(
-				actionRequest, "monthlyType");
-
-			if (monthlyType == 0) {
-				int monthlyDay = ParamUtil.getInteger(
-					actionRequest, "monthlyDay0", 1);
-
-				recurrence.setByMonthDay(new int[] {monthlyDay});
-
-				int monthlyInterval = ParamUtil.getInteger(
-					actionRequest, "monthlyInterval0", 1);
-
-				recurrence.setInterval(monthlyInterval);
-			}
-			else {
-				int monthlyDay = ParamUtil.getInteger(
-					actionRequest, "monthlyDay1");
-				int monthlyPos = ParamUtil.getInteger(
-					actionRequest, "monthlyPos");
-
-				recurrence.setByDay(
-					new DayAndPosition[] {
-						new DayAndPosition(monthlyDay, monthlyPos)
-					});
-
-				int monthlyInterval = ParamUtil.getInteger(
-					actionRequest, "monthlyInterval1", 1);
-
-				recurrence.setInterval(monthlyInterval);
-			}
-		}
-		else if (recurrenceType == Recurrence.YEARLY) {
-			int yearlyType = ParamUtil.getInteger(actionRequest, "yearlyType");
-
-			if (yearlyType == 0) {
-				int yearlyMonth = ParamUtil.getInteger(
-					actionRequest, "yearlyMonth0");
-
-				recurrence.setByMonth(new int[] {yearlyMonth});
-
-				int yearlyDay = ParamUtil.getInteger(
-					actionRequest, "yearlyDay0", 1);
-
-				recurrence.setByMonthDay(new int[] {yearlyDay});
-
-				int yearlyInterval = ParamUtil.getInteger(
-					actionRequest, "yearlyInterval0", 1);
-
-				recurrence.setInterval(yearlyInterval);
-			}
-			else {
-				int yearlyDay = ParamUtil.getInteger(
-					actionRequest, "yearlyDay1");
-				int yearlyPos = ParamUtil.getInteger(
-					actionRequest, "yearlyPos");
-
-				recurrence.setByDay(
-					new DayAndPosition[] {
-						new DayAndPosition(yearlyDay, yearlyPos)
-					});
-
-				int yearlyMonth = ParamUtil.getInteger(
-					actionRequest, "yearlyMonth1");
-
-				recurrence.setByMonth(new int[] {yearlyMonth});
-
-				int yearlyInterval = ParamUtil.getInteger(
-					actionRequest, "yearlyInterval1", 1);
-
-				recurrence.setInterval(yearlyInterval);
-			}
-		}
-
-		return RecurrenceSerializer.toCronText(recurrence);
-	}
-
-	private void _addWeeklyDayPos(
-		ActionRequest actionRequest, List<DayAndPosition> dayAndPositions,
-		int day) {
-
-		boolean weeklyDayPos = ParamUtil.getBoolean(
-			actionRequest, "weeklyDayPos" + day);
-
-		if (weeklyDayPos) {
-			dayAndPositions.add(new DayAndPosition(day, 0));
-		}
 	}
 
 	@Reference

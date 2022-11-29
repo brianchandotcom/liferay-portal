@@ -101,7 +101,7 @@ import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.CronTextUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
@@ -3900,7 +3900,7 @@ public class StagingImpl implements Staging {
 			portletRequest, "recurrenceType");
 
 		scheduleInformation.setCronText(
-			SchedulerEngineHelperUtil.getCronText(
+			CronTextUtil.getCronText(
 				portletRequest, startCalendar, false, recurrenceType));
 
 		String destinationName = DestinationNames.LAYOUTS_LOCAL_PUBLISHER;

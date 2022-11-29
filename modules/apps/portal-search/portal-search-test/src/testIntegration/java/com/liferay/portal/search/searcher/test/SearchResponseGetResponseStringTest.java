@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -125,7 +124,9 @@ public class SearchResponseGetResponseStringTest {
 
 	protected void setUpElasticsearchConfiguration() throws Exception {
 		_configuration = configurationAdmin.getConfiguration(
-			ElasticsearchConfiguration.class.getName(), StringPool.QUESTION);
+			"com.liferay.portal.search.elasticsearch7.configuration." +
+				"ElasticsearchConfiguration",
+			StringPool.QUESTION);
 
 		_properties = _configuration.getProperties();
 

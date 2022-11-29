@@ -24,7 +24,6 @@ dependencies {
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:portal-instances:portal-instances-api")
-	testIntegrationCompile project(":apps:portal-search-elasticsearch7:portal-search-elasticsearch7-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-engine-adapter-api")
 	testIntegrationCompile project(":apps:segments:segments-api")

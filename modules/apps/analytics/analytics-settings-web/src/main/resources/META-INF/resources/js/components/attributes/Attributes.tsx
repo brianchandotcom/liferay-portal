@@ -18,12 +18,15 @@ import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {fetchSelectedFields} from '../../utils/api';
+import {
+	fetchAccountsFields,
+	fetchPeopleFields,
+	fetchSelectedFields,
+	updateAccountsFields,
+	updatePeopleFields,
+} from '../../utils/api';
 import Loading from '../Loading';
-import AccountsAttributesModal from './AccountsAttributesModal';
-import OrderAttributsModal from './OrderAttributsModal';
-import PeopleAttributesModal from './PeopleAttributesModal';
-import ProductsAttributesModal from './ProductsAttributesModal';
+import Modal from './Modal';
 
 enum EFields {
 	Account = 'account',
@@ -164,7 +167,7 @@ const Attributes: React.FC = () => {
 			</ClayList>
 
 			{openAccountsAttributes && (
-				<AccountsAttributesModal
+				<Modal
 					observer={observerAccountsAttributes}
 					onCancel={() => onOpenChangeAccountsAttributes(false)}
 					onSubmit={() =>
@@ -173,11 +176,14 @@ const Attributes: React.FC = () => {
 							onOpenChangeAccountsAttributes
 						)
 					}
+					requestFn={fetchAccountsFields}
+					title={Liferay.Language.get('sync-account-attributes')}
+					updateFn={updateAccountsFields}
 				/>
 			)}
 
 			{openOrderAttributes && (
-				<OrderAttributsModal
+				<Modal
 					observer={observerOrderAttributes}
 					onCancel={() => onOpenChangeOrderAttributes(false)}
 					onSubmit={() =>
@@ -186,11 +192,14 @@ const Attributes: React.FC = () => {
 							onOpenChangeOrderAttributes
 						)
 					}
+					requestFn={() => Promise.resolve()}
+					title={Liferay.Language.get('sync-order-attributes')}
+					updateFn={() => Promise.resolve()}
 				/>
 			)}
 
 			{openPeopleAttributes && (
-				<PeopleAttributesModal
+				<Modal
 					observer={observerPeopleAttributes}
 					onCancel={() => onOpenChangePeopleAttributes(false)}
 					onSubmit={() =>
@@ -199,11 +208,14 @@ const Attributes: React.FC = () => {
 							onOpenChangePeopleAttributes
 						)
 					}
+					requestFn={fetchPeopleFields}
+					title={Liferay.Language.get('sync-people-attributes')}
+					updateFn={updatePeopleFields}
 				/>
 			)}
 
 			{openProductsAttributes && (
-				<ProductsAttributesModal
+				<Modal
 					observer={observerProductsAttributes}
 					onCancel={() => onOpenChangeProductsAttributes(false)}
 					onSubmit={() =>
@@ -212,6 +224,9 @@ const Attributes: React.FC = () => {
 							onOpenChangeProductsAttributes
 						)
 					}
+					requestFn={() => Promise.resolve()}
+					title={Liferay.Language.get('sync-product-attributes')}
+					updateFn={() => Promise.resolve()}
 				/>
 			)}
 		</>

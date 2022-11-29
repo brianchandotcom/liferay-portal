@@ -27,29 +27,48 @@ type TRawItem = {
 	source: string;
 	type: string;
 };
-
-export interface ICommonModalProps {
+interface IModalProps {
 	observer: any;
 	onCancel: () => void;
 	onSubmit: () => void;
-}
-
-interface IModalProps {
-	columns: TColumn[];
-	observer: any;
-	onCancel: () => void;
-	onSubmit: (items: TRawItem[]) => void;
 	requestFn: (params: TTableRequestParams) => Promise<any>;
 	title: string;
+	updateFn: (fields: TRawItem[]) => Promise<any>;
 }
 
+const columns: Array<TColumn> = [
+	{
+		expanded: true,
+		label: Liferay.Language.get('attribute'),
+		value: 'attribute',
+	},
+
+	{
+		expanded: true,
+		label: Liferay.Language.get('data-type'),
+		value: 'dataType',
+	},
+	{
+		expanded: true,
+		label: Liferay.Language.get('sample-data'),
+		value: 'sampleData',
+	},
+	{
+		expanded: false,
+		label: Liferay.Language.get('source'),
+		show: false,
+		sortable: false,
+		value: 'source',
+	},
+];
+
 const Modal: React.FC<IModalProps> = ({
-	columns,
 	observer,
 	onCancel,
 	onSubmit,
 	requestFn,
 	title,
+	updateFn,
 }) => {
 	const [items, setItems] = useState<TFormattedItems>({});
 
@@ -100,7 +119,14 @@ const Modal: React.FC<IModalProps> = ({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton onClick={() => onSubmit(getFields(items))}>
+						<ClayButton
+							onClick={async () => {
+								const fields: TRawItem[] = getFields(items);
+								const {ok} = await updateFn(fields);
+
+								ok && onSubmit();
+							}}
+						>
 							{Liferay.Language.get('sync')}
 						</ClayButton>
 					</ClayButton.Group>

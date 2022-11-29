@@ -750,6 +750,20 @@ public interface UserModel
 	public void setEmailAddressVerified(boolean emailAddressVerified);
 
 	/**
+	 * Returns the type of this user.
+	 *
+	 * @return the type of this user
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this user.
+	 *
+	 * @param type the type of this user
+	 */
+	public void setType(int type);
+
+	/**
 	 * Returns the status of this user.
 	 *
 	 * @return the status of this user

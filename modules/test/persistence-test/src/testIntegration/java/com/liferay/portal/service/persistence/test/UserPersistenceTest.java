@@ -208,6 +208,8 @@ public class UserPersistenceTest {
 
 		newUser.setEmailAddressVerified(RandomTestUtil.randomBoolean());
 
+		newUser.setType(RandomTestUtil.nextInt());
+
 		newUser.setStatus(RandomTestUtil.nextInt());
 
 		_users.add(_persistence.update(newUser));
@@ -303,6 +305,7 @@ public class UserPersistenceTest {
 		Assert.assertEquals(
 			existingUser.isEmailAddressVerified(),
 			newUser.isEmailAddressVerified());
+		Assert.assertEquals(existingUser.getType(), newUser.getType());
 		Assert.assertEquals(existingUser.getStatus(), newUser.getStatus());
 	}
 
@@ -532,8 +535,8 @@ public class UserPersistenceTest {
 			"loginDate", true, "loginIP", true, "lastLoginDate", true,
 			"lastLoginIP", true, "lastFailedLoginDate", true,
 			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
-			"agreedToTermsOfUse", true, "emailAddressVerified", true, "status",
-			true);
+			"agreedToTermsOfUse", true, "emailAddressVerified", true, "type",
+			true, "status", true);
 	}
 
 	@Test
@@ -972,6 +975,8 @@ public class UserPersistenceTest {
 		user.setAgreedToTermsOfUse(RandomTestUtil.randomBoolean());
 
 		user.setEmailAddressVerified(RandomTestUtil.randomBoolean());
+
+		user.setType(RandomTestUtil.nextInt());
 
 		user.setStatus(RandomTestUtil.nextInt());
 

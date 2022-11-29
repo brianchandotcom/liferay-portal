@@ -11,10 +11,13 @@ definition {
 
 		User.firstLoginPG();
 
-        task ("Given config file for client extension of type custom element created") {
-			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+		//task ("Given config file for client extension of type custom element created") {
+		//	ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+		//	ClientExtension.checkConfigFileCreatedProperly();
+		//}
 
-			ClientExtension.checkConfigFileCreatedProperly();
+		task ("Go to Remote Apps Portlet") {
+			RemoteApps.goToRemoteAppsPortlet();
 		}
 	}
 
@@ -24,23 +27,30 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			Navigator.gotoPage(pageName = "Home");
 
-			while (IsElementPresent(locator1 = "Navigation#ANY_SITE_NAV_BUT_HOME")) {
-				var layoutName = selenium.getText("Navigation#ANY_SITE_NAV_BUT_HOME");
+		//else {
+		//	Navigator.gotoPage(pageName = "Home");
+		//	while (IsElementPresent(locator1 = "Navigation#ANY_SITE_NAV_BUT_HOME")) {
+		//		var layoutName = selenium.getText("Navigation#ANY_SITE_NAV_BUT_HOME");
+		//		JSONLayout.deletePublicLayout(
+		//			groupName = "Guest",
+		//			layoutName = "${layoutName}");
+		//		Navigator.gotoPage(pageName = "Home");
+		//		PortalInstances.tearDownCP();
+		//}
+		//	ClientExtension.tearDownConfig();
+		//}
 
-				JSONLayout.deletePublicLayout(
-					groupName = "Guest",
-					layoutName = "${layoutName}");
+	}
 
-				Navigator.gotoPage(pageName = "Home");
+	@description = "LPS-169554"
+	@priority = "4"
+	test FieldsAreNotEditableWhenAccessed {
+		property custom.element.client.extension.created = "true";
+		property test.name.skip.portal.instance = "ClientExtensionOSGI#FieldsAreNotEditableWhenAccessed";
 
-				PortalInstances.tearDownCP();
-			}
+		// TODO LPS-169554 FieldsAreNotEditableWhenAccessed pending implementation
 
-			ClientExtension.tearDownConfig();
-		}
 	}
 
 	@description = "LPS-169551"
@@ -49,29 +59,34 @@ definition {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#HasViewAction";
 
-        // TODO LPS-169551 HasViewAction pending implementation
+		task ("Navigate to 'Remote Apps' portlet") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Custom Apps",
+				panel = "Applications",
+				portlet = "Remote Apps");
+		}
 
+		task ("Then View action is an available option") {
+			AssertElementPresent(
+				key_text = "View",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And Then Edit action is not an available option field information is displayed correctly") {
+			AssertElementNotPresent(
+				key_text = "Actions",
+				locator1 = "Button#ANY");
+		}
 	}
 
-    @description = "LPS-169552 "
+	@description = "LPS-169552 "
 	@priority = "3"
 	test ViewActionCanDisplayFieldsAsNotEditable {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#ViewActionCanDisplayFieldsAsNotEditable";
 
-        // TODO LPS-169552 ViewActionCanDisplayFieldsAsNotEditable pending implementation
+		// TODO LPS-169552 ViewActionCanDisplayFieldsAsNotEditable pending implementation
 
 	}
-
-    @description = "LPS-169554"
-	@priority = "4"
-	test FieldsAreNotEditableWhenAccessed {
-		property custom.element.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionOSGI#FieldsAreNotEditableWhenAccessed";
-
-        // TODO LPS-169554 FieldsAreNotEditableWhenAccessed pending implementation
-
-	}
-
 
 }

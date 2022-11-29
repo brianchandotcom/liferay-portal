@@ -27,9 +27,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Iván Zaera
+ * @author Riccardo Ferrari
  */
-public class AnnotatedSettingsDescriptorTest {
+public class ConfigurationBeanClassSettingsDescriptorTest {
 
 	@ClassRule
 	@Rule
@@ -38,19 +38,21 @@ public class AnnotatedSettingsDescriptorTest {
 
 	@Test
 	public void testGetAllKeys() {
-		Set<String> allKeys1 = _annotatedSettingsDescriptor.getAllKeys();
+		Set<String> allKeys1 =
+			_configurationBeanClassSettingsDescriptor.getAllKeys();
 
 		Collection<String> expectedAllKeys = Arrays.asList(
-			"boolean", "long", "string", "stringArray1", "stringArray2",
-			"unrenamedProperty");
+			"getBoolean", "getLong", "getString", "getStringArray1",
+			"getStringArray2", "toRemove");
 
 		Assert.assertEquals(
 			allKeys1.toString(), expectedAllKeys.size(), allKeys1.size());
 		Assert.assertTrue(allKeys1.containsAll(expectedAllKeys));
 
-		allKeys1.remove("long");
+		allKeys1.remove("toRemove");
 
-		Set<String> allKeys2 = _annotatedSettingsDescriptor.getAllKeys();
+		Set<String> allKeys2 =
+			_configurationBeanClassSettingsDescriptor.getAllKeys();
 
 		Assert.assertTrue(allKeys2.containsAll(expectedAllKeys));
 	}
@@ -58,10 +60,10 @@ public class AnnotatedSettingsDescriptorTest {
 	@Test
 	public void testGetMultiValuedKeys() {
 		Set<String> multiValuedKeys1 =
-			_annotatedSettingsDescriptor.getMultiValuedKeys();
+			_configurationBeanClassSettingsDescriptor.getMultiValuedKeys();
 
 		Collection<String> expectedMultiValuedKeys = Arrays.asList(
-			"stringArray1", "stringArray2");
+			"getStringArray1", "getStringArray2");
 
 		Assert.assertEquals(
 			multiValuedKeys1.toString(), expectedMultiValuedKeys.size(),
@@ -69,51 +71,36 @@ public class AnnotatedSettingsDescriptorTest {
 		Assert.assertTrue(
 			multiValuedKeys1.containsAll(expectedMultiValuedKeys));
 
-		multiValuedKeys1.remove("stringArray1");
+		multiValuedKeys1.remove("getStringArray1");
 
 		Set<String> multiValuedKeys2 =
-			_annotatedSettingsDescriptor.getMultiValuedKeys();
+			_configurationBeanClassSettingsDescriptor.getMultiValuedKeys();
 
 		Assert.assertTrue(
 			multiValuedKeys2.containsAll(expectedMultiValuedKeys));
 	}
 
-	@Settings.Config(settingsIds = {"settingsId.1", "settingsId.2"})
-	public class MockSettings {
+	@Settings.Config(settingsIds = "settingsId.1")
+	public interface MockSettings {
 
-		public boolean getBoolean() {
-			return false;
-		}
+		public boolean getBoolean();
 
-		@Settings.Property(ignore = true)
-		public String getIgnoredProperty() {
-			return "";
-		}
+		public long getLong();
 
-		public long getLong() {
-			return 0;
-		}
+		public String getString();
 
-		@Settings.Property(name = "unrenamedProperty")
-		public String getRenamedProperty() {
-			return "";
-		}
+		public String[] getStringArray1();
 
-		public String getString() {
-			return "";
-		}
+		public String[] getStringArray2();
 
-		public String[] getStringArray1() {
-			return new String[0];
-		}
-
-		public String[] getStringArray2() {
-			return new String[0];
-		}
+		public String toRemove();
 
 	}
 
-	private final AnnotatedSettingsDescriptor _annotatedSettingsDescriptor =
-		new AnnotatedSettingsDescriptor(MockSettings.class);
+	private final ConfigurationBeanClassSettingsDescriptor
+		_configurationBeanClassSettingsDescriptor =
+			new ConfigurationBeanClassSettingsDescriptor(
+				ConfigurationBeanClassSettingsDescriptorTest.MockSettings.
+					class);
 
 }

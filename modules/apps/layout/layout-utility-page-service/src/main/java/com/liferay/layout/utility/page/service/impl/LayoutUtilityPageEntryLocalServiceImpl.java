@@ -14,6 +14,9 @@
 
 package com.liferay.layout.utility.page.service.impl;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.layout.utility.page.exception.LayoutUtilityPageEntryNameException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryLocalServiceBaseImpl;
@@ -21,6 +24,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -29,7 +34,9 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -131,9 +138,17 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			groupId, sourceLayoutUtilityPageEntry.getName(),
 			sourceLayoutUtilityPageEntry.getType(), serviceContext.getLocale());
 
-		return addLayoutUtilityPageEntry(
-			null, userId, serviceContext.getScopeGroupId(), name,
-			sourceLayoutUtilityPageEntry.getType(), 0);
+		LayoutUtilityPageEntry copyLayoutUtilityPageEntry =
+			addLayoutUtilityPageEntry(
+				null, userId, serviceContext.getScopeGroupId(), name,
+				sourceLayoutUtilityPageEntry.getType(), 0);
+
+		copyLayoutUtilityPageEntry.setPreviewFileEntryId(
+			_copyPreviewFileEntryId(
+				userId, sourceLayoutUtilityPageEntry.getPreviewFileEntryId(),
+				name, serviceContext));
+
+		return copyLayoutUtilityPageEntry;
 	}
 
 	@Override
@@ -349,6 +364,38 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		return layout;
 	}
 
+	private long _copyPreviewFileEntryId(
+			long userId, long previewFileEntryId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (previewFileEntryId == 0) {
+			return previewFileEntryId;
+		}
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+			previewFileEntryId);
+
+		if (dlFileEntry == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get file entry" + dlFileEntry.getFileEntryId());
+			}
+
+			return 0;
+		}
+
+		Folder folder = _portletFileRepository.addPortletFolder(
+			userId, dlFileEntry.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, serviceContext);
+
+		DLFileEntry copyDLFileEntry = _dlFileEntryLocalService.copyFileEntry(
+			userId, dlFileEntry.getGroupId(), dlFileEntry.getRepositoryId(),
+			previewFileEntryId, folder.getFolderId(), serviceContext);
+
+		return copyDLFileEntry.getFileEntryId();
+	}
+
 	private String _getColorSchemeId(long companyId, String themeId) {
 		ColorScheme colorScheme = _themeLocalService.getColorScheme(
 			companyId, themeId, StringPool.BLANK);
@@ -396,6 +443,12 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutUtilityPageEntryLocalServiceImpl.class);
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
 	@Reference
 	private Language _language;
 
@@ -404,6 +457,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

@@ -798,6 +798,76 @@ definition {
 		}
 	}
 
+	test CanOrderTagFacetTerms {
+		task ("Create the tags and the Web Contents") {
+			for (var tagList : list "engineering,product,2021,2022") {
+				JSONAssettag.addTag(
+					groupName = "Guest",
+					tagName = "${tagList}");
+			}
+
+			JSONWebcontent.addWebContent(
+				assetTagNames = "engineering,product,2021,2022",
+				content = "WC Content 1",
+				groupName = "Guest",
+				title = "WC WebContent Title 1");
+
+			JSONWebcontent.addWebContent(
+				assetTagNames = "engineering,2021,2022",
+				content = "WC Content 2",
+				groupName = "Guest",
+				title = "WC WebContent Title 2");
+
+			JSONWebcontent.addWebContent(
+				assetTagNames = "2021,2022",
+				content = "WC Content 3",
+				groupName = "Guest",
+				title = "WC WebContent Title 3");
+
+			JSONWebcontent.addWebContent(
+				assetTagNames = "2022",
+				content = "WC Content 4",
+				groupName = "Guest",
+				title = "WC WebContent Title 4");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		task ("Assert the order of tag facet by term frequency descending by default") {
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2022,2021,engineering,product");
+		}
+
+		task ("Assert the order of tag facet by Frequency term ascending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Tag Facet",
+				sortOption = "Term Frequency Ascending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "product,engineering,2021,2022");
+		}
+
+		task ("Assert the order of tag facet by Term value ascending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Tag Facet",
+				sortOption = "Term Value Ascending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2021,2022,engineering,product");
+		}
+
+		task ("Assert the order of tag facet by Term value descending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Tag Facet",
+				sortOption = "Term Value Descending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "product,engineering,2022,2021");
+		}
+	}
+
 	@priority = "4"
 	test CanViewTermsOfUseWhenEnterpriseSearchIsEnabled {
 		property custom.properties = "enterprise.product.notification.enabled=true";

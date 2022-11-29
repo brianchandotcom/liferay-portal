@@ -376,6 +376,8 @@ public class ObjectActionLocalServiceTest {
 			).put(
 				"creator", String.valueOf(TestPropsValues.getUserId())
 			).put(
+				"currentUserId", String.valueOf(TestPropsValues.getUserId())
+			).put(
 				"externalReferenceCode", objectEntry.getExternalReferenceCode()
 			).put(
 				"firstName", "João"

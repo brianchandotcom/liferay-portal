@@ -71,23 +71,6 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	}
 
 	@Test
-	public void testExistingFileEntryFriendlyURLHasFilesParts2()
-		throws Exception {
-
-		String urlTitle = RandomTestUtil.randomString();
-
-		FileEntry fileEntry = _addFileEntry(urlTitle);
-
-		String path = String.format(
-			"/%s/%s", group.getGroupId(), fileEntry.getUuid());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest(path);
-
-		Assert.assertTrue(WebServerServlet.hasFiles(mockHttpServletRequest));
-	}
-
-	@Test
 	public void testExistingFileEntryFriendlyURLReturns200() throws Exception {
 		String urlTitle = RandomTestUtil.randomString();
 
@@ -103,25 +86,38 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	}
 
 	@Test
+	public void testGroupIdUUIDFriendlyURLHasFiles() throws Exception {
+		String urlTitle = RandomTestUtil.randomString();
+
+		FileEntry fileEntry = _addFileEntry(urlTitle);
+
+		String path = String.format(
+			"/%s/%s", group.getGroupId(), fileEntry.getUuid());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_createMockHttpServletRequest(path);
+
+		Assert.assertTrue(WebServerServlet.hasFiles(mockHttpServletRequest));
+	}
+
+	@Test
+	public void testGroupIdUUIDFriendlyURLHasNoFiles() throws Exception {
+		String path = String.format(
+			"/%s/%s", group.getGroupId(), RandomTestUtil.randomString());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_createMockHttpServletRequest(path);
+
+		Assert.assertFalse(WebServerServlet.hasFiles(mockHttpServletRequest));
+	}
+
+	@Test
 	public void testNonexistantFileEntryFriendlyURLHasNoFiles()
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_createMockHttpServletRequest(
 				_getFileEntryFriendlyURL(RandomTestUtil.randomString()));
-
-		Assert.assertFalse(WebServerServlet.hasFiles(mockHttpServletRequest));
-	}
-
-	@Test
-	public void testNonexistantFileEntryFriendlyURLHasNoFilesParts2()
-		throws Exception {
-
-		String path = String.format(
-			"/%s/%s", group.getGroupId(), RandomTestUtil.randomString());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest(path);
 
 		Assert.assertFalse(WebServerServlet.hasFiles(mockHttpServletRequest));
 	}

@@ -60,7 +60,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = "${actualValue}",
-				expected = "No AssetCategory exists with the key {groupId=${siteId}, externalReferenceCode=erc}");
+				expected = "No AssetCategory exists with the key {externalReferenceCode=erc, groupId=${siteId}}");
 		}
 	}
 
@@ -158,7 +158,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = "${actualValue}",
-				expected = "No AssetCategory exists with the key {groupId=${siteId}, externalReferenceCode=liferay}");
+				expected = "No AssetCategory exists with the key {externalReferenceCode=liferay, groupId=${siteId}}");
 		}
 	}
 

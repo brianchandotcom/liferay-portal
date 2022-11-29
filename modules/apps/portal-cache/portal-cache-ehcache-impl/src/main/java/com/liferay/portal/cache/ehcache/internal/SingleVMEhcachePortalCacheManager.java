@@ -92,15 +92,6 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		this.props = props;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSingleVMEhcachePortalCacheManagerConfigurator(
-		SingleVMEhcachePortalCacheManagerConfigurator
-			singleVMEhcachePortalCacheManagerConfigurator) {
-
-		baseEhcachePortalCacheManagerConfigurator =
-			singleVMEhcachePortalCacheManagerConfigurator;
-	}
-
 	private static final String _DEFAULT_CONFIG_FILE_NAME =
 		"/ehcache/liferay-single-vm.xml";
 

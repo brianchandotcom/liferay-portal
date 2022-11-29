@@ -73,15 +73,6 @@ public class MultiVMEhcachePortalCacheManager
 	}
 
 	@Reference(unbind = "-")
-	protected void setMultiVMEhcachePortalCacheManagerConfigurator(
-		MultiVMEhcachePortalCacheManagerConfigurator
-			multiVMEhcachePortalCacheManagerConfigurator) {
-
-		baseEhcachePortalCacheManagerConfigurator =
-			multiVMEhcachePortalCacheManagerConfigurator;
-	}
-
-	@Reference(unbind = "-")
 	protected void setPortalCacheListenerFactory(
 		PortalCacheListenerFactory portalCacheListenerFactory) {
 

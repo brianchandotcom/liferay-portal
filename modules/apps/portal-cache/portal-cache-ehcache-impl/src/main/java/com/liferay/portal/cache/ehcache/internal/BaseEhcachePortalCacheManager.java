@@ -200,6 +200,10 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader) {
 
+		BaseEhcachePortalCacheManagerConfigurator
+			baseEhcachePortalCacheManagerConfigurator =
+				getBaseEhcachePortalCacheManagerConfigurator();
+
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
 				baseEhcachePortalCacheManagerConfigurator.
@@ -315,6 +319,10 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 
 		_usingDefault = _configFile.equals(_defaultConfigFile);
 
+		BaseEhcachePortalCacheManagerConfigurator
+			baseEhcachePortalCacheManagerConfigurator =
+				getBaseEhcachePortalCacheManagerConfigurator();
+
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
 				baseEhcachePortalCacheManagerConfigurator.
@@ -387,8 +395,6 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected BaseEhcachePortalCacheManagerConfigurator
-		baseEhcachePortalCacheManagerConfigurator;
 	protected BundleContext bundleContext;
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>

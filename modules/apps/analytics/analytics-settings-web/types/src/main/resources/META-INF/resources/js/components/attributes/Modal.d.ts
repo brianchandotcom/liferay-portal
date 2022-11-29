@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import {TColumn, TTableRequestParams} from '../table/types';
+import {TTableRequestParams} from '../table/types';
 declare type TRawItem = {
 	example: string;
 	name: string;
@@ -22,18 +22,13 @@ declare type TRawItem = {
 	source: string;
 	type: string;
 };
-export interface ICommonModalProps {
+interface IModalProps {
 	observer: any;
 	onCancel: () => void;
 	onSubmit: () => void;
-}
-interface IModalProps {
-	columns: TColumn[];
-	observer: any;
-	onCancel: () => void;
-	onSubmit: (items: TRawItem[]) => void;
 	requestFn: (params: TTableRequestParams) => Promise<any>;
 	title: string;
+	updateFn: (fields: TRawItem[]) => Promise<any>;
 }
 declare const Modal: React.FC<IModalProps>;
 export default Modal;

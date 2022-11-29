@@ -46,11 +46,7 @@ definition {
 	}
 
 	macro removeUserFacetDisplayPG {
-		MouseOver.mouseOverNotVisible(locator1 = "Search#SEARCH_PORTLET_OPTIONS_WRENCH");
-
-		Click(locator1 = "Search#SEARCH_PORTLET_OPTIONS_WRENCH");
-
-		MenuItem.click(menuItem = "Configuration");
+		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration"); 
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

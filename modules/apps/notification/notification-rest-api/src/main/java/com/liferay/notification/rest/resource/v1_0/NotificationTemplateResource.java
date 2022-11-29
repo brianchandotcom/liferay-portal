@@ -70,6 +70,15 @@ public interface NotificationTemplateResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public NotificationTemplate getNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public NotificationTemplate putNotificationTemplateByExternalReferenceCode(
+			String externalReferenceCode,
+			NotificationTemplate notificationTemplate)
+		throws Exception;
+
 	public void deleteNotificationTemplate(Long notificationTemplateId)
 		throws Exception;
 

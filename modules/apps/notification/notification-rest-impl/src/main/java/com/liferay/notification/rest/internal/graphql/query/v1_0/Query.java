@@ -147,7 +147,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplate(notificationTemplateId: ___){actions, attachmentObjectFieldIds, body, dateCreated, dateModified, description, editorType, id, name, name_i18n, objectDefinitionId, recipientType, recipients, subject, type, typeLabel}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplateByExternalReferenceCode(externalReferenceCode: ___){actions, attachmentObjectFieldERCs, attachmentObjectFieldIds, body, dateCreated, dateModified, description, editorType, externalReferenceCode, id, name, name_i18n, objectDefinitionERC, objectDefinitionId, recipientType, recipients, subject, type, typeLabel}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public NotificationTemplate notificationTemplateByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationTemplateResource ->
+				notificationTemplateResource.
+					getNotificationTemplateByExternalReferenceCode(
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplate(notificationTemplateId: ___){actions, attachmentObjectFieldERCs, attachmentObjectFieldIds, body, dateCreated, dateModified, description, editorType, externalReferenceCode, id, name, name_i18n, objectDefinitionERC, objectDefinitionId, recipientType, recipients, subject, type, typeLabel}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public NotificationTemplate notificationTemplate(

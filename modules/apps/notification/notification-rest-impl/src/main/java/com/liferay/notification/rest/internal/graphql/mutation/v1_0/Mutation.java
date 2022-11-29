@@ -137,6 +137,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public NotificationTemplate
+			updateNotificationTemplateByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("notificationTemplate") NotificationTemplate
+					notificationTemplate)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationTemplateResource ->
+				notificationTemplateResource.
+					putNotificationTemplateByExternalReferenceCode(
+						externalReferenceCode, notificationTemplate));
+	}
+
+	@GraphQLField
 	public boolean deleteNotificationTemplate(
 			@GraphQLName("notificationTemplateId") Long notificationTemplateId)
 		throws Exception {

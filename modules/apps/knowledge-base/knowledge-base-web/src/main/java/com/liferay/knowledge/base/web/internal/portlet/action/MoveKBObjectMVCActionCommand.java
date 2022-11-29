@@ -178,19 +178,20 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 	private double _getNearestPriority(
 		double nextKBArticlePriority, double previousKBArticlePriority) {
 
+		int ceil = (int)Math.ceil(nextKBArticlePriority);
 		int floor = (int)Math.floor(nextKBArticlePriority);
-		int ceil = (int) Math.ceil(nextKBArticlePriority);
 
-		if (floor != ceil) {
-			if (floor > previousKBArticlePriority) {
-				return floor;
-			}
-		}
-		else if ((nextKBArticlePriority - 1) > previousKBArticlePriority) {
+		if ((ceil == floor) &&
+			((nextKBArticlePriority - 1) > previousKBArticlePriority)) {
+
 			return nextKBArticlePriority - 1;
 		}
-
-		return (previousKBArticlePriority + nextKBArticlePriority) / 2;
+		else if ((ceil != floor) && (floor > previousKBArticlePriority)) {
+			return floor;
+		}
+		else {
+			return (previousKBArticlePriority + nextKBArticlePriority) / 2;
+		}
 	}
 
 	private double _getPriority(

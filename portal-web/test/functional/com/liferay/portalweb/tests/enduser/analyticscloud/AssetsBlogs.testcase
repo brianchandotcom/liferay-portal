@@ -392,6 +392,52 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-12347 | Test Summary: The number of blog comments show the expected value"
+	@priority = "4"
+	test CheckBlogCommentsShowExpectedValue {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		task ("View the blog") {
+			ACUtils.navigateToSitePage(
+				actionType = "Comment Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC and go to Blogs tab") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Blogs");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Go to the blogs overview") {
+			ACNavigation.openItem(itemName = "Blogs AC Title");
+		}
+
+		task ("Check blog comment in visitor behavior") {
+			ACNavigation.openItem(itemName = "Blogs AC Title");
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Comments",
+				metricValue = "1");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8385 | Test Summary: Blogs views by technology card shows views by the expected device"
 	@priority = "5"
 	test BlogsTechnologyCardShowsViewsByExpectedDevice {

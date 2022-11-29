@@ -817,6 +817,12 @@ definition {
 				DMDocument.downloadPG(dmDocumentTitle = "${documentTitle}");
 			}
 
+			if ("${actionType}" == "Comment DM") {
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = "${documentTitle}");
+
+				Comments.addPG(entryComment = "${commentText}");
+			}
+
 			if ("${actionType}" == "View Form") {
 				FormPortlet.waitFormRenderer(text = "Submit");
 

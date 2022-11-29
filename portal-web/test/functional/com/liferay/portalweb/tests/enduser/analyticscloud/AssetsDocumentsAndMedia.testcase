@@ -438,6 +438,50 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-12352 | Test Summary: The number of documents & media comments show the expected value"
+	@priority = "4"
+	test CheckDocumentsAndMediaCommentsShowExpectedValue {
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		task ("View the blog") {
+			ACUtils.navigateToSitePage(
+				actionType = "Comment DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC and go to Blogs tab") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Go to the blogs overview") {
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Check blog comment in visitor behavior") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Comments",
+				metricValue = "1");
+		}
+	}
+
 	@description = "Bug: LRAC-11450 | Automation ID: LRAC-11509 | Test Summary: The number of documents and media rating show the expected value"
 	@priority = "4"
 	test CheckDocumentsAndMediaRatingShowExpectedValue {

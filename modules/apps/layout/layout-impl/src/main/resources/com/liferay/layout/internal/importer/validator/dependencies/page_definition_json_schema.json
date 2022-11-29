@@ -232,11 +232,6 @@
 			"title": "The fragment Schema",
 			"type": "object"
 		},
-		"FragmentDropZoneDefinition": {
-			"additionalProperties": false,
-			"title": "The FragmentDropZoneDefinition Schema",
-			"type": "object"
-		},
 		"FragmentField": {
 			"anyOf": [
 				{
@@ -1257,7 +1252,7 @@
 					"then": {
 						"properties": {
 							"definition": {
-								"$ref": "#/definitions/FragmentDropZoneDefinition"
+								"$ref": "#/definitions/PageFragmentDropZoneDefinition"
 							}
 						}
 					}
@@ -1477,6 +1472,11 @@
 				}
 			},
 			"title": "The PageFormDefinition Schema",
+			"type": "object"
+		},
+		"PageFragmentDropZoneDefinition": {
+			"additionalProperties": false,
+			"title": "The PageFragmentDropZoneDefinition Schema",
 			"type": "object"
 		},
 		"PageFragmentInstanceDefinition": {

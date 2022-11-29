@@ -1,0 +1,14 @@
+{
+  "name": "delta-remote-app",
+  "version": "1.0.0",
+  "description": "Delta Remote App",
+  "dependencies": {
+    "@liferay/dxp-7.4": "*"
+  },
+  "scripts": {
+    "build": "liferay build",
+    "clean": "liferay clean",
+    "deploy": "liferay deploy",
+    "start": "liferay start"
+  }
+}

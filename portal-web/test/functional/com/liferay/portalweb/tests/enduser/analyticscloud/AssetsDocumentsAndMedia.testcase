@@ -443,7 +443,7 @@ definition {
 	test CheckDocumentsAndMediaCommentsShowExpectedValue {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		task ("View the blog") {
+		task ("Comment on DM") {
 			ACUtils.navigateToSitePage(
 				actionType = "Comment DM",
 				documentTitleList = "DM AC Title",
@@ -455,7 +455,7 @@ definition {
 			ACUtils.closeAllSessionsAndWait();
 		}
 
-		task ("Switch to new property in AC and go to Blogs tab") {
+		task ("Switch to new property in AC and go to DM tab") {
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -471,11 +471,11 @@ definition {
 			ACTimeFilter.setLast24Hours();
 		}
 
-		task ("Go to the blogs overview") {
+		task ("Go to the DM overview") {
 			ACNavigation.openItem(itemName = "DM AC Title");
 		}
 
-		task ("Check blog comment in visitor behavior") {
+		task ("Check DM comment in visitor behavior") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Comments",
 				metricValue = "1");

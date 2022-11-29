@@ -3529,16 +3529,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 						serviceContext.getCompanyId(),
 						userGroup.getUserGroupId());
 
-					if (group == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"No group found with id " +
-									userGroup.getUserGroupId());
-						}
-
-						continue;
-					}
-
 					groupIds.add(group.getGroupId());
 				}
 			}

@@ -299,8 +299,6 @@ definition {
 		PagesAdmin.editName(pageNameEdit = "Page Title Edit");
 
 		PagesAdmin.viewPageItemPresent(pageName = "Page Title Edit");
-
-		PagesAdmin.deletePage(pageName = "Page Title Edit");
 	}
 
 	@description = "This is a test for LPS-145215. View alert message when delete a page."

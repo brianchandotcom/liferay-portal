@@ -84,10 +84,10 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 				<%
 				for (LayoutSetPrototype curLayoutSetPrototype : layoutSetPrototypes) {
-					UnicodeProperties settingsProperties = curLayoutSetPrototype.getSettingsProperties();
+					UnicodeProperties settingsUnicodeProperties = curLayoutSetPrototype.getSettingsProperties();
 				%>
 
-					<aui:option data-servletContextName='<%= settingsProperties.getProperty("customJspServletContextName", StringPool.BLANK) %>' value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(locale)) %></aui:option>
+					<aui:option data-servletContextName='<%= settingsUnicodeProperties.getProperty("customJspServletContextName", StringPool.BLANK) %>' value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(locale)) %></aui:option>
 
 				<%
 				}
@@ -174,10 +174,10 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 				<%
 				for (LayoutSetPrototype curLayoutSetPrototype : layoutSetPrototypes) {
-					UnicodeProperties settingsProperties = curLayoutSetPrototype.getSettingsProperties();
+					UnicodeProperties settingsUnicodeProperties = curLayoutSetPrototype.getSettingsProperties();
 				%>
 
-					<aui:option data-servletContextName='<%= settingsProperties.getProperty("customJspServletContextName", StringPool.BLANK) %>' value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(locale)) %></aui:option>
+					<aui:option data-servletContextName='<%= settingsUnicodeProperties.getProperty("customJspServletContextName", StringPool.BLANK) %>' value="<%= curLayoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(curLayoutSetPrototype.getName(locale)) %></aui:option>
 
 				<%
 				}

@@ -19,11 +19,11 @@
 <%
 Group siteGroup = (Group)request.getAttribute("site.group");
 
-UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
+UnicodeProperties groupTypeSettingsUnicodeProperties = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
 %>
 
 <aui:field-wrapper cssClass="form-group">
-	<aui:input inlineLabel="right" label="enable-directory-indexing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value='<%= PropertiesParamUtil.getBoolean(groupTypeSettings, request, "directoryIndexingEnabled") %>' />
+	<aui:input inlineLabel="right" label="enable-directory-indexing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value='<%= PropertiesParamUtil.getBoolean(groupTypeSettingsUnicodeProperties, request, "directoryIndexingEnabled") %>' />
 
 	<p class="small text-secondary"><liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(siteGroup.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + siteGroup.getFriendlyURL()} %>' key="can-user-with-view-permission-browse-the-site-document-library-files-and-folders" translateArguments="<%= false %>" /></p>
 </aui:field-wrapper>

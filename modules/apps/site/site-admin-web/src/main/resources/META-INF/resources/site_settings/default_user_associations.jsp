@@ -19,11 +19,11 @@
 <%
 long liveGroupId = (long)request.getAttribute("site.liveGroupId");
 
-UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
+UnicodeProperties groupTypeSettingsUnicodeProperties = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
 
 List<Role> defaultSiteRoles = new ArrayList<>();
 
-long[] defaultSiteRoleIds = StringUtil.split(groupTypeSettings.getProperty("defaultSiteRoleIds"), 0L);
+long[] defaultSiteRoleIds = StringUtil.split(groupTypeSettingsUnicodeProperties.getProperty("defaultSiteRoleIds"), 0L);
 
 for (long defaultSiteRoleId : defaultSiteRoleIds) {
 	defaultSiteRoles.add(RoleLocalServiceUtil.getRole(defaultSiteRoleId));
@@ -31,7 +31,7 @@ for (long defaultSiteRoleId : defaultSiteRoleIds) {
 
 List<Team> defaultTeams = new ArrayList<>();
 
-long[] defaultTeamIds = StringUtil.split(groupTypeSettings.getProperty("defaultTeamIds"), 0L);
+long[] defaultTeamIds = StringUtil.split(groupTypeSettingsUnicodeProperties.getProperty("defaultTeamIds"), 0L);
 
 for (long defaultTeamId : defaultTeamIds) {
 	defaultTeams.add(TeamLocalServiceUtil.getTeam(defaultTeamId));

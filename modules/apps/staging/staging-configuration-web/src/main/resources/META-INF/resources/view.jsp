@@ -22,7 +22,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 liveGroup = groupDisplayContextHelper.getLiveGroup();
 liveGroupId = groupDisplayContextHelper.getLiveGroupId();
 
-UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+UnicodeProperties liveGroupTypeSettingsUnicodeProperties = liveGroup.getTypeSettingsProperties();
 
 LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
 LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);

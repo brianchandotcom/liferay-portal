@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UnicodeProperties typeSettingsProperties = (UnicodeProperties)request.getAttribute("view.jsp-typeSettingsProperties");
+UnicodeProperties typeSettingsUnicodeProperties = (UnicodeProperties)request.getAttribute("view.jsp-typeSettingsProperties");
 
-long lastImportDate = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-date"));
+long lastImportDate = GetterUtil.getLong(typeSettingsUnicodeProperties.getProperty("last-import-date"));
 
 String lastImportLayoutSetBranchName = null;
 
-long lastImportLayoutSetBranchId = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-layout-set-branch-id"));
+long lastImportLayoutSetBranchId = GetterUtil.getLong(typeSettingsUnicodeProperties.getProperty("last-import-layout-set-branch-id"));
 
 if (lastImportLayoutSetBranchId > 0) {
 	try {
@@ -36,7 +36,7 @@ if (lastImportLayoutSetBranchId > 0) {
 }
 
 if (Validator.isNull(lastImportLayoutSetBranchName)) {
-	lastImportLayoutSetBranchName = typeSettingsProperties.getProperty("last-import-layout-set-branch-name");
+	lastImportLayoutSetBranchName = typeSettingsUnicodeProperties.getProperty("last-import-layout-set-branch-name");
 }
 
 if (Validator.isNull(lastImportLayoutSetBranchName)) {
@@ -47,7 +47,7 @@ String lastImportLayoutBranchName = null;
 
 List<LayoutRevision> layoutRevisions = new ArrayList<LayoutRevision>();
 
-long lastImportLayoutRevisionId = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-layout-revision-id"));
+long lastImportLayoutRevisionId = GetterUtil.getLong(typeSettingsUnicodeProperties.getProperty("last-import-layout-revision-id"));
 
 if (lastImportLayoutRevisionId > 0) {
 	try {
@@ -64,12 +64,12 @@ if (lastImportLayoutRevisionId > 0) {
 }
 
 if (Validator.isNull(lastImportLayoutBranchName)) {
-	lastImportLayoutBranchName = typeSettingsProperties.getProperty("last-import-layout-branch-name");
+	lastImportLayoutBranchName = typeSettingsUnicodeProperties.getProperty("last-import-layout-branch-name");
 }
 
 String publisherName = null;
 
-String lastImportUserUuid = GetterUtil.getString(typeSettingsProperties.getProperty("last-import-user-uuid"));
+String lastImportUserUuid = GetterUtil.getString(typeSettingsUnicodeProperties.getProperty("last-import-user-uuid"));
 
 if (Validator.isNotNull(lastImportUserUuid)) {
 	try {
@@ -82,7 +82,7 @@ if (Validator.isNotNull(lastImportUserUuid)) {
 }
 
 if (Validator.isNull(publisherName)) {
-	publisherName = typeSettingsProperties.getProperty("last-import-user-name");
+	publisherName = typeSettingsUnicodeProperties.getProperty("last-import-user-name");
 }
 %>
 

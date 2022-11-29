@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
+UnicodeProperties groupTypeSettingsUnicodeProperties = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
 
-GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplayContext = new GroupPortletRatingsDefinitionDisplayContext(groupTypeSettings, request);
+GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplayContext = new GroupPortletRatingsDefinitionDisplayContext(groupTypeSettingsUnicodeProperties, request);
 
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 

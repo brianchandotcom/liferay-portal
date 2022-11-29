@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
+UnicodeProperties groupTypeSettingsUnicodeProperties = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
 
 String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
 
@@ -27,19 +27,19 @@ for (String analyticsType : analyticsTypes) {
 	<c:choose>
 		<c:when test='<%= StringUtil.equalsIgnoreCase(analyticsType, "google") %>'>
 			<aui:field-wrapper cssClass="form-group">
-				<aui:input label="google-analytics-id" name="googleAnalyticsId" type="text" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsId") %>' />
+				<aui:input label="google-analytics-id" name="googleAnalyticsId" type="text" value='<%= PropertiesParamUtil.getString(groupTypeSettingsUnicodeProperties, request, "googleAnalyticsId") %>' />
 
 				<span class="small text-secondary"><liferay-ui:message key="set-the-google-analytics-id-that-is-used-for-this-set-of-pages" /></span>
 			</aui:field-wrapper>
 
 			<aui:field-wrapper cssClass="form-group">
-				<aui:input label="google-analytics-create-custom-configuration" name="googleAnalyticsCreateCustomConfiguration" type="textarea" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsCreateCustomConfiguration") %>' />
+				<aui:input label="google-analytics-create-custom-configuration" name="googleAnalyticsCreateCustomConfiguration" type="textarea" value='<%= PropertiesParamUtil.getString(groupTypeSettingsUnicodeProperties, request, "googleAnalyticsCreateCustomConfiguration") %>' />
 
 				<span class="small text-secondary"><liferay-ui:message key="set-the-google-analytics-create-custom-options-that-are-used-for-this-set-of-pages" /></span>
 			</aui:field-wrapper>
 
 			<aui:field-wrapper cssClass="form-group">
-				<aui:input label="google-analytics-custom-configuration" name="googleAnalyticsCustomConfiguration" type="textarea" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsCustomConfiguration") %>' />
+				<aui:input label="google-analytics-custom-configuration" name="googleAnalyticsCustomConfiguration" type="textarea" value='<%= PropertiesParamUtil.getString(groupTypeSettingsUnicodeProperties, request, "googleAnalyticsCustomConfiguration") %>' />
 
 				<span class="small text-secondary"><liferay-ui:message key="set-the-google-analytics-custom-options-that-are-used-for-this-set-of-pages" /></span>
 			</aui:field-wrapper>
@@ -51,7 +51,7 @@ for (String analyticsType : analyticsTypes) {
 			%>
 
 			<aui:field-wrapper cssClass="form-group">
-				<aui:input label="<%= analyticsName %>" name="<%= Sites.ANALYTICS_PREFIX + analyticsType %>" type="textarea" value="<%= PropertiesParamUtil.getString(groupTypeSettings, request, Sites.ANALYTICS_PREFIX + analyticsType) %>" wrap="soft" />
+				<aui:input label="<%= analyticsName %>" name="<%= Sites.ANALYTICS_PREFIX + analyticsType %>" type="textarea" value="<%= PropertiesParamUtil.getString(groupTypeSettingsUnicodeProperties, request, Sites.ANALYTICS_PREFIX + analyticsType) %>" wrap="soft" />
 
 				<span class="small text-secondary"><liferay-ui:message arguments="<%= analyticsName %>" key="set-the-script-for-x-that-is-used-for-this-set-of-pages" translateArguments="<%= false %>" /></span>
 			</aui:field-wrapper>

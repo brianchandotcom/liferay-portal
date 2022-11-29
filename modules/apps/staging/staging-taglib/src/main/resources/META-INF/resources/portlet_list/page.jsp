@@ -78,9 +78,9 @@
 		boolean displayCounts = (exportModelCount > 0) || (modelDeletionCount > 0);
 
 		if (!type.equals(Constants.EXPORT)) {
-			UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+			UnicodeProperties liveGroupTypeSettingsUnicodeProperties = liveGroup.getTypeSettingsProperties();
 
-			displayCounts = displayCounts && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault());
+			displayCounts = displayCounts && GetterUtil.getBoolean(liveGroupTypeSettingsUnicodeProperties.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault());
 		}
 
 		if (!displayCounts && !showAllPortlets) {

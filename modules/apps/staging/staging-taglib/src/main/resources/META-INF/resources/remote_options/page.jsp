@@ -22,18 +22,18 @@
 	</div>
 
 	<aui:fieldset>
-		<aui:input disabled="<%= disableInputs %>" label="remote-host-ip" name="remoteAddress" size="20" type="text" value='<%= MapUtil.getString(settingsMap, "remoteAddress", liveGroupTypeSettings.getProperty("remoteAddress")) %>' />
+		<aui:input disabled="<%= disableInputs %>" label="remote-host-ip" name="remoteAddress" size="20" type="text" value='<%= MapUtil.getString(settingsMap, "remoteAddress", liveGroupTypeSettingsUnicodeProperties.getProperty("remoteAddress")) %>' />
 
-		<aui:input disabled="<%= disableInputs %>" label="remote-port" name="remotePort" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "remotePort", liveGroupTypeSettings.getProperty("remotePort")) %>' />
+		<aui:input disabled="<%= disableInputs %>" label="remote-port" name="remotePort" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "remotePort", liveGroupTypeSettingsUnicodeProperties.getProperty("remotePort")) %>' />
 
-		<aui:input disabled="<%= disableInputs %>" label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "remotePathContext", liveGroupTypeSettings.getProperty("remotePathContext")) %>' />
+		<aui:input disabled="<%= disableInputs %>" label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "remotePathContext", liveGroupTypeSettingsUnicodeProperties.getProperty("remotePathContext")) %>' />
 
-		<aui:input disabled="<%= disableInputs %>" label='<%= LanguageUtil.format(request, "remote-x-id", liveGroup.getScopeSimpleName(themeDisplay), false) %>' name="remoteGroupId" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "targetGroupId", liveGroupTypeSettings.getProperty("remoteGroupId")) %>' />
+		<aui:input disabled="<%= disableInputs %>" label='<%= LanguageUtil.format(request, "remote-x-id", liveGroup.getScopeSimpleName(themeDisplay), false) %>' name="remoteGroupId" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "targetGroupId", liveGroupTypeSettingsUnicodeProperties.getProperty("remoteGroupId")) %>' />
 
 		<aui:input disabled="<%= disableInputs %>" name="remotePrivateLayout" type="hidden" value='<%= MapUtil.getBoolean(settingsMap, "remotePrivateLayout", privateLayout) %>' />
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input disabled="<%= disableInputs %>" label="use-a-secure-network-connection" name="secureConnection" type="checkbox" value='<%= MapUtil.getString(settingsMap, "secureConnection", liveGroupTypeSettings.getProperty("secureConnection")) %>' />
+		<aui:input disabled="<%= disableInputs %>" label="use-a-secure-network-connection" name="secureConnection" type="checkbox" value='<%= MapUtil.getString(settingsMap, "secureConnection", liveGroupTypeSettingsUnicodeProperties.getProperty("secureConnection")) %>' />
 	</aui:fieldset>
 </div>

@@ -29,7 +29,7 @@
 				<c:when test="<%= liveGroup.isPrivateLayoutsEnabled() %>">
 					<div class="custom-distance">
 						<liferay-staging:checkbox
-							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>'
+							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettingsUnicodeProperties.getProperty("branchingPublic")) %>'
 							label="enabled-on-public-pages"
 							name="branchingPublic"
 						/>
@@ -37,7 +37,7 @@
 
 					<div class="custom-distance">
 						<liferay-staging:checkbox
-							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>'
+							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettingsUnicodeProperties.getProperty("branchingPrivate")) %>'
 							label="enabled-on-private-pages"
 							name="branchingPrivate"
 						/>
@@ -46,7 +46,7 @@
 				<c:otherwise>
 					<div class="custom-distance">
 						<liferay-staging:checkbox
-							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>'
+							checked='<%= GetterUtil.getBoolean(liveGroupTypeSettingsUnicodeProperties.getProperty("branchingPublic")) %>'
 							label="enabled"
 							name="branchingPublic"
 						/>

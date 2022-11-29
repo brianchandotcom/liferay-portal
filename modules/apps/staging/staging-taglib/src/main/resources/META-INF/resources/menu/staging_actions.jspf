@@ -69,7 +69,7 @@
 			</liferay-portlet:renderURL>
 
 			<%
-			UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+			UnicodeProperties liveGroupTypeSettingsUnicodeProperties = liveGroup.getTypeSettingsProperties();
 			%>
 
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="simplePublishLayoutsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -82,11 +82,11 @@
 				<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
-				<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
-				<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
-				<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
-				<portlet:param name="secureConnection" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
+				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remoteAddress") %>' />
+				<portlet:param name="remotePort" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remotePort") %>' />
+				<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remotePathContext") %>' />
+				<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remoteGroupId") %>' />
+				<portlet:param name="secureConnection" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("secureConnection") %>' />
 				<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
 				<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 			</liferay-portlet:renderURL>

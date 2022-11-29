@@ -684,6 +684,14 @@ definition {
 			}
 		}
 
+		if (isSet(uploadFileName)) {
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			ItemSelector.uploadFile(
+				navTab = "${navTab}",
+				uploadFileName = "${uploadFileName}");
+		}
+
 		if (isSet(embedVideo)) {
 			Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_VIDEO_BUTTON");
 
@@ -1629,6 +1637,16 @@ definition {
 				key_fieldLabel = "Friendly URL",
 				locator1 = "FormFields#FIELD_DISABLED_TEXT");
 		}
+	}
+
+	macro viewImageIsPresent {
+		Click(
+			key_kbArticleTitle = "${kbArticleTitle}",
+			locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_TITLE");
+
+		AssertElementPresent(
+			key_contentImageName = "${contentImageName}",
+			locator1 = "KnowledgeBase#CONTENT_IMAGE_NAME");
 	}
 
 	macro viewImageViaContentCmd {

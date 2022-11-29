@@ -67,7 +67,8 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 				analyticsChannelsPage.getItems(),
 				analyticsChannel -> _channelDTOConverter.toDTO(
 					new ChannelDTOConverterContext(
-						analyticsConfiguration.commerceSyncEnabledChannelIds(),
+						analyticsConfiguration.
+							commerceSyncEnabledAnalyticsChannelIds(),
 						analyticsChannel.getId(),
 						contextAcceptLanguage.getPreferredLocale()),
 					analyticsChannel)),
@@ -80,34 +81,36 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextCompany.getCompanyId());
 
-		String[] commerceSyncEnabledChannelIds =
-			analyticsConfiguration.commerceSyncEnabledChannelIds();
+		String[] commerceSyncEnabledAnalyticsChannelIds =
+			analyticsConfiguration.commerceSyncEnabledAnalyticsChannelIds();
 
 		if (channel.getCommerceSyncEnabled() != null) {
 			boolean commerceSyncEnabled = ArrayUtil.contains(
-				commerceSyncEnabledChannelIds, channel.getChannelId());
+				commerceSyncEnabledAnalyticsChannelIds, channel.getChannelId());
 
 			if (channel.getCommerceSyncEnabled() && !commerceSyncEnabled) {
-				commerceSyncEnabledChannelIds = ArrayUtil.append(
-					commerceSyncEnabledChannelIds, channel.getChannelId());
+				commerceSyncEnabledAnalyticsChannelIds = ArrayUtil.append(
+					commerceSyncEnabledAnalyticsChannelIds,
+					channel.getChannelId());
 
 				_analyticsSettingsManager.updateCompanyConfiguration(
 					contextCompany.getCompanyId(),
 					HashMapBuilder.<String, Object>put(
-						"commerceSyncEnabledChannelIds",
-						commerceSyncEnabledChannelIds
+						"commerceSyncEnabledAnalyticsChannelIds",
+						commerceSyncEnabledAnalyticsChannelIds
 					).build());
 			}
 
 			if (!channel.getCommerceSyncEnabled() && commerceSyncEnabled) {
-				commerceSyncEnabledChannelIds = ArrayUtil.remove(
-					commerceSyncEnabledChannelIds, channel.getChannelId());
+				commerceSyncEnabledAnalyticsChannelIds = ArrayUtil.remove(
+					commerceSyncEnabledAnalyticsChannelIds,
+					channel.getChannelId());
 
 				_analyticsSettingsManager.updateCompanyConfiguration(
 					contextCompany.getCompanyId(),
 					HashMapBuilder.<String, Object>put(
-						"commerceSyncEnabledChannelIds",
-						commerceSyncEnabledChannelIds
+						"commerceSyncEnabledAnalyticsChannelIds",
+						commerceSyncEnabledAnalyticsChannelIds
 					).build());
 			}
 		}
@@ -117,7 +120,8 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		if (ArrayUtil.isEmpty(dataSources)) {
 			return _channelDTOConverter.toDTO(
 				new ChannelDTOConverterContext(
-					commerceSyncEnabledChannelIds, channel.getChannelId(),
+					commerceSyncEnabledAnalyticsChannelIds,
+					channel.getChannelId(),
 					contextAcceptLanguage.getPreferredLocale()),
 				_analyticsCloudClient.updateAnalyticsChannel(
 					channel.getChannelId(),
@@ -180,7 +184,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		return _channelDTOConverter.toDTO(
 			new ChannelDTOConverterContext(
-				commerceSyncEnabledChannelIds, channel.getChannelId(),
+				commerceSyncEnabledAnalyticsChannelIds, channel.getChannelId(),
 				contextAcceptLanguage.getPreferredLocale()),
 			analyticsChannel);
 	}
@@ -193,7 +197,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		return _channelDTOConverter.toDTO(
 			new ChannelDTOConverterContext(
-				analyticsConfiguration.commerceSyncEnabledChannelIds(),
+				analyticsConfiguration.commerceSyncEnabledAnalyticsChannelIds(),
 				channel.getChannelId(),
 				contextAcceptLanguage.getPreferredLocale()),
 			_analyticsCloudClient.addAnalyticsChannel(

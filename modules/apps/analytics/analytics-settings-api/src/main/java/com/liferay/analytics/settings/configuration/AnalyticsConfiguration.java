@@ -34,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AnalyticsConfiguration {
 
 	@Meta.AD(required = false)
-	public String[] commerceSyncEnabledChannelIds();
+	public String[] commerceSyncEnabledAnalyticsChannelIds();
 
 	@Meta.AD(required = false)
 	public String hostsAllowed();

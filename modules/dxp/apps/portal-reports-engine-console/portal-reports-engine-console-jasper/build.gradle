@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "antlr", name: "antlr", version: "2.7.5"
-	compileInclude group: "com.adobe.xmp", name: "xmpcore", version: "5.1.3"
+	compileInclude group: "com.adobe.xmp", name: "xmpcore", version: "6.1.11"
 	compileInclude group: "com.github.virtuald", name: "curvesapi", version: "1.06"
 	compileInclude group: "com.google.zxing", name: "core", version: "3.2.1"
 	compileInclude group: "com.ibm.icu", name: "icu4j", version: "57.1"

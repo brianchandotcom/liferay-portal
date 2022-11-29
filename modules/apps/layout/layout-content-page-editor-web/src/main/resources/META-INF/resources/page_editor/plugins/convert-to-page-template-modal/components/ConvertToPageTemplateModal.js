@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -60,7 +59,7 @@ export default function ModalWrapper() {
 }
 
 const ConvertToPageTemplateModal = ({observer, onClose}) => {
-	const [error, setError] = useState(null);
+	const [formErrors, setFormErrors] = useState({});
 	const hasMultipleSegmentsExperienceIds = useSelector(
 		(state) => Object.keys(state.availableSegmentsExperiences).length > 1
 	);
@@ -102,29 +101,33 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 	}, []);
 
 	const validateForm = useCallback(() => {
-		const error = {};
-
-		const errorMessage = Liferay.Language.get('this-field-is-required');
+		const errors = {};
 
 		if (!templateName) {
-			error.name = errorMessage;
+			errors.templateName = sub(
+				Liferay.Language.get('x-field-is-required'),
+				Liferay.Language.get('name')
+			);
 		}
 
 		if (!templateSet) {
-			error.layoutPageTemplateCollectionId = errorMessage;
+			errors.templateSet = sub(
+				Liferay.Language.get('x-field-is-required'),
+				Liferay.Language.get('page-template-set')
+			);
 		}
 
-		return error;
+		return errors;
 	}, [templateName, templateSet]);
 
 	const handleSubmit = useCallback(
 		(event) => {
 			event.preventDefault();
 
-			const error = validateForm();
+			const errors = validateForm();
 
-			if (Object.keys(error).length !== 0) {
-				setError(error);
+			if (Object.keys(errors).length) {
+				setFormErrors(errors);
 
 				return;
 			}
@@ -152,14 +155,20 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 				.catch((error) => {
 					setLoading(false);
 
-					setError({
-						other:
-							typeof error === 'string'
-								? error
-								: Liferay.Language.get(
-										'an-unexpected-error-occurred'
-								  ),
-					});
+					if (typeof error === 'string') {
+						setFormErrors((previousErrors) => ({
+							...previousErrors,
+							templateName: error,
+						}));
+					}
+					else {
+						openToast({
+							message: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+							type: 'danger',
+						});
+					}
 				});
 		},
 		[onClose, segmentsExperienceId, validateForm, templateName, templateSet]
@@ -176,16 +185,6 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{error && error.other && (
-					<ClayAlert
-						displayType="danger"
-						onClose={() => setError({...error, other: null})}
-						title={Liferay.Language.get('error')}
-					>
-						{error.other}
-					</ClayAlert>
-				)}
-
 				{hasMultipleSegmentsExperienceIds && (
 					<div className="form-feedback-group mb-3">
 						<div className="form-feedback-item text-info">
@@ -202,7 +201,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 
 				<ClayForm onSubmit={handleSubmit}>
 					<FormField
-						error={error && error.name}
+						error={formErrors.templateName}
 						id={`${config.portletNamespace}templateName`}
 						name={Liferay.Language.get('name')}
 					>
@@ -219,7 +218,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 					</FormField>
 
 					<FormField
-						error={error && error.layoutPageTemplateCollectionId}
+						error={formErrors.templateSet}
 						id={`${config.portletNamespace}templateSet`}
 						name={Liferay.Language.get('page-template-set')}
 					>

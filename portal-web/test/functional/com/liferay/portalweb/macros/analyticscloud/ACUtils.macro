@@ -272,7 +272,7 @@ definition {
 			pageRef = "identity",
 			property = "dataSourceId");
 
-		TestUtils.assertEquals(
+		TestUtils.assertPartialEquals(
 			actual = "${actualDataSourceId}",
 			expected = "${expectedDataSourceId}");
 

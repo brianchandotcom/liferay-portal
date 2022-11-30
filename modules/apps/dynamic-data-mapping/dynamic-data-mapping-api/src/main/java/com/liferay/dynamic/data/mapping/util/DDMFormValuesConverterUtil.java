@@ -38,34 +38,34 @@ public class DDMFormValuesConverterUtil {
 		Collection<DDMFormField> ddmFormFields,
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValues) {
 
-		List<DDMFormFieldValue> newDDMFormFieldValues = new ArrayList<>();
+		List<DDMFormFieldValue> newDDMFormFieldValuesList = new ArrayList<>();
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			List<DDMFormFieldValue> ddmFormFieldValueList =
+			List<DDMFormFieldValue> ddmFormFieldValuesList =
 				ddmFormFieldValues.get(ddmFormField.getName());
 
-			if (ddmFormFieldValueList == null) {
+			if (ddmFormFieldValuesList == null) {
 				DDMFormFieldValue ddmFormFieldValue =
 					_createDefaultDDMFormFieldValue(ddmFormField);
 
 				_populateNestedValues(
 					ddmFormField, ddmFormFieldValue, ddmFormFieldValues);
 
-				newDDMFormFieldValues.add(ddmFormFieldValue);
+				newDDMFormFieldValuesList.add(ddmFormFieldValue);
 			}
 			else {
 				for (DDMFormFieldValue ddmFormFieldValue :
-						ddmFormFieldValueList) {
+						ddmFormFieldValuesList) {
 
 					_populateNestedValues(
 						ddmFormField, ddmFormFieldValue, ddmFormFieldValues);
 
-					newDDMFormFieldValues.add(ddmFormFieldValue);
+					newDDMFormFieldValuesList.add(ddmFormFieldValue);
 				}
 			}
 		}
 
-		return newDDMFormFieldValues;
+		return newDDMFormFieldValuesList;
 	}
 
 	private static DDMFormFieldValue _createDefaultDDMFormFieldValue(

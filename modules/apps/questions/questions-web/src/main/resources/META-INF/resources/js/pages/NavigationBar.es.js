@@ -59,7 +59,7 @@ export default withRouter(({history, location}) => {
 	const historyPushParser = historyPushWithSlug(history.push);
 
 	return (
-		<section className="questions-section questions-section-nav">
+		<section className="border-bottom pb-0 questions-section questions-section-nav">
 			<div className="questions-container row">
 				<div className="align-items-center col d-flex justify-content-between">
 					<ClayNavigationBar

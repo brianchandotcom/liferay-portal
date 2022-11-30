@@ -13,14 +13,13 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
-import classNames from 'classnames';
 import {useManualQuery} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import ActivityQuestionRow from '../../components/ActivityQuestionRow.es';
 import PaginatedList from '../../components/PaginatedList.es';
+import QuestionRow from '../../components/QuestionRow.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
@@ -92,6 +91,14 @@ export default withRouter(
 			historyPushParser(buildUrl(page, pageSize));
 		}
 
+		const addSectionToQuestion = (question) => {
+			return {
+				...question,
+				messageBoardSection:
+					question?.messageBoardThread?.messageBoardSection,
+			};
+		};
+
 		useEffect(() => {
 			if (data) {
 				setCurrentQuestion(data?.messageBoardMessages?.items[0]);
@@ -103,114 +110,103 @@ export default withRouter(
 				.messageBoardSection.title;
 
 		return (
-			<section className="questions-section questions-section-list">
-				<div className="c-p-5 questions-container row">
-					<div className="c-mt-3 c-mx-auto c-px-0 w-100">
-						<div className="c-mt-5 container d-flex flex-row">
-							<h2>{Liferay.Language.get('latest-activity')}</h2>
-						</div>
-					</div>
-
-					<div
-						className={classNames(
-							'border-top container d-flex flex-row',
-							{
-								'justify-content-between': currentQuestion,
-								'justify-content-center': !currentQuestion,
-							}
-						)}
-					>
-						<div
-							className={classNames('panel-from-activity', {
-								'col-xl-7': currentQuestion,
-								'col-xl-12': !currentQuestion,
-							})}
-						>
-							<PaginatedList
-								activeDelta={pageSize}
-								activePage={page}
-								changeDelta={(pageSize) =>
-									changePage(page, pageSize)
-								}
-								changePage={(page) =>
-									changePage(page, pageSize)
-								}
-								data={data && data.messageBoardMessages}
-								emptyState={
-									<ClayEmptyState
-										description={Liferay.Language.get(
-											'there-is-are-no-new-activities'
-										)}
-										imgSrc={
-											context.includeContextPath +
-											'/assets/empty_questions_activity.png'
-										}
-										title={null}
-									/>
-								}
-								hidden
-								loading={loading}
-								totalCount={totalCount}
-							>
-								{(question) => (
-									<ActivityQuestionRow
-										context={context}
-										currentSection={
-											context.useTopicNamesInURL
-												? question.messageBoardThread
-														.messageBoardSection
-												: (question.messageBoardThread
-														.messageBoardSection &&
-														question
-															.messageBoardThread
-															.messageBoardSection
-															.id) ||
-												  context.rootTopicId
-										}
-										key={question.id}
-										linkProps={{
-											id: 'user-activity-row',
-											onClick: (event) => {
-												event.preventDefault();
-
-												setCurrentQuestion(question);
-											},
-										}}
-										question={{
-											...question,
-											messageBoardSection:
-												question?.messageBoardThread
-													?.messageBoardSection,
-										}}
-										rowSelected={
-											currentQuestion?.friendlyUrlPath
-										}
-										showSectionLabel={true}
-									/>
-								)}
-							</PaginatedList>
-						</div>
-
-						{currentQuestion && (
-							<div className="border-left c-p-4 col-xl-5 modal-body panel-from-activity">
-								<Question
-									display={{
-										actions: false,
-										addAnswer: false,
-										breadcrumb: false,
-										kebab: true,
-										rating: false,
-										styled: true,
-										tabs: true,
-									}}
-									history={history}
-									questionId={currentQuestion.friendlyUrlPath}
-									sectionTitle={sectionTitleQuestion}
-									url={url}
-								/>
+			<section className="d-flex justify-content-between p-0 questions-section questions-section-list">
+				<div className="activity-panel col-xl-8 pl-5 pr-3">
+					<div>
+						<div className="container d-flex flex-row justify-content-between pl-0 py-2">
+							<div className="questions-container row">
+								<div className="mt-3">
+									<div className="container d-flex flex-row">
+										<h2>
+											{Liferay.Language.get(
+												'latest-activity'
+											)}
+										</h2>
+									</div>
+								</div>
 							</div>
-						)}
+						</div>
 					</div>
+
+					<div>
+						<PaginatedList
+							activeDelta={pageSize}
+							activePage={page}
+							changeDelta={(pageSize) =>
+								changePage(page, pageSize)
+							}
+							changePage={(page) => changePage(page, pageSize)}
+							data={data && data.messageBoardMessages}
+							emptyState={
+								<ClayEmptyState
+									description={Liferay.Language.get(
+										'sorry,-no-results-were-found'
+									)}
+									imgSrc={
+										context.includeContextPath +
+										'/assets/empty_questions_list.png'
+									}
+									title={Liferay.Language.get(
+										'there-are-no-results'
+									)}
+								/>
+							}
+							hidden
+							loading={loading}
+							totalCount={totalCount}
+						>
+							{(question) => (
+								<QuestionRow
+									context={context}
+									currentSection={
+										context.useTopicNamesInURL
+											? question.messageBoardThread
+													.messageBoardSection
+											: (question.messageBoardThread
+													.messageBoardSection &&
+													question.messageBoardThread
+														.messageBoardSection
+														.id) ||
+											  context.rootTopicId
+									}
+									key={question.id}
+									linkProps={{
+										id: 'user-activity-row',
+										onClick: (event) => {
+											event.preventDefault();
+											setCurrentQuestion(question);
+										},
+									}}
+									question={addSectionToQuestion(question)}
+									rowSelected={
+										currentQuestion?.friendlyUrlPath
+									}
+									showSectionLabel={true}
+								/>
+							)}
+						</PaginatedList>
+					</div>
+				</div>
+
+				<div className="activity-panel border-left col-xl-4 modal-body">
+					<Question
+						display={{
+							actions: false,
+							addAnswer: false,
+							breadcrumb: false,
+							flags: false,
+							kebab: true,
+							rating: false,
+							showAnswer: false,
+							showSignature: true,
+							styled: true,
+							tabs: true,
+						}}
+						history={history}
+						questionId={currentQuestion?.friendlyUrlPath}
+						sectionTitle={sectionTitleQuestion}
+						url={url}
+					/>
 				</div>
 			</section>
 		);

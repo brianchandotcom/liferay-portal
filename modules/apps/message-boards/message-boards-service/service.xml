@@ -560,6 +560,7 @@
 		<exception>MailingListOutEmailAddress</exception>
 		<exception>MailingListOutServerName</exception>
 		<exception>MailingListOutUserName</exception>
+		<exception>MessageBoardAttachment</exception>
 		<exception>MessageBody</exception>
 		<exception>MessageSubject</exception>
 		<exception>RequiredMessage</exception>

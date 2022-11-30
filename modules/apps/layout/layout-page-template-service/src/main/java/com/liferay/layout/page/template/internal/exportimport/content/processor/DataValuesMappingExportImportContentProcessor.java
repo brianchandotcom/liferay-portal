@@ -59,7 +59,7 @@ public class DataValuesMappingExportImportContentProcessor
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(data);
 
-		_replaceAllMappedValuesExportContentReferences(
+		_replaceExportContentReferences(
 			jsonObject, portletDataContext, stagedModel);
 
 		return jsonObject.toString();
@@ -77,8 +77,7 @@ public class DataValuesMappingExportImportContentProcessor
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(data);
 
-		_replaceAllMappedValuesImportContentReferences(
-			jsonObject, portletDataContext);
+		_replaceImportContentReferences(jsonObject, portletDataContext);
 
 		return jsonObject.toString();
 	}
@@ -87,7 +86,103 @@ public class DataValuesMappingExportImportContentProcessor
 	public void validateContentReferences(long groupId, String data) {
 	}
 
-	private void _replaceAllMappedValuesExportContentReferences(
+	private void _replaceCollectionExportContentReferences(
+		JSONObject itemJSONObject, PortletDataContext portletDataContext,
+		StagedModel stagedModel) {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("collection")) {
+			return;
+		}
+
+		JSONObject collectionJSONObject = configJSONObject.getJSONObject(
+			"collection");
+
+		String type = collectionJSONObject.getString("type");
+
+		if (!Objects.equals(
+				type, InfoListItemSelectorReturnType.class.getName())) {
+
+			return;
+		}
+
+		long classPK = collectionJSONObject.getLong("classPK");
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.fetchAssetListEntry(classPK);
+
+		if (assetListEntry != null) {
+			try {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, assetListEntry, stagedModel,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			}
+			catch (PortletDataException portletDataException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portletDataException);
+				}
+			}
+		}
+	}
+
+	private void _replaceCollectionImportContentReferences(
+		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("collection")) {
+			return;
+		}
+
+		JSONObject collectionJSONObject = configJSONObject.getJSONObject(
+			"collection");
+
+		String type = collectionJSONObject.getString("type");
+
+		if (!Objects.equals(
+				type, InfoListItemSelectorReturnType.class.getName())) {
+
+			return;
+		}
+
+		long classPK = collectionJSONObject.getLong("classPK");
+
+		Map<Long, Long> assetListEntryNewPrimaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				AssetListEntry.class.getName());
+
+		long newClassPK = MapUtil.getLong(
+			assetListEntryNewPrimaryKeys, classPK, classPK);
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.fetchAssetListEntry(newClassPK);
+
+		if (assetListEntry != null) {
+			collectionJSONObject.put(
+				"classNameId",
+				_portal.getClassNameId(assetListEntry.getAssetEntryType())
+			).put(
+				"classPK", String.valueOf(newClassPK)
+			).put(
+				"itemSubtype", assetListEntry.getAssetEntrySubtype()
+			).put(
+				"itemType", assetListEntry.getAssetEntryType()
+			).put(
+				"title", assetListEntry.getTitle()
+			);
+		}
+	}
+
+	private void _replaceExportContentReferences(
 		JSONObject jsonObject, PortletDataContext portletDataContext,
 		StagedModel stagedModel) {
 
@@ -104,53 +199,17 @@ public class DataValuesMappingExportImportContentProcessor
 		for (String key : itemsJSONObject.keySet()) {
 			JSONObject itemJSONObject = itemsJSONObject.getJSONObject(key);
 
-			if (!Objects.equals(
+			if (Objects.equals(
 					itemJSONObject.get("type"),
-					LayoutDataItemTypeConstants.TYPE_COLLECTION) ||
-				!itemJSONObject.has("config")) {
+					LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
 
-				continue;
-			}
-
-			JSONObject configJSONObject = itemJSONObject.getJSONObject(
-				"config");
-
-			if (!configJSONObject.has("collection")) {
-				continue;
-			}
-
-			JSONObject collectionJSONObject = configJSONObject.getJSONObject(
-				"collection");
-
-			String type = collectionJSONObject.getString("type");
-
-			if (!Objects.equals(
-					type, InfoListItemSelectorReturnType.class.getName())) {
-
-				continue;
-			}
-
-			long classPK = collectionJSONObject.getLong("classPK");
-
-			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.fetchAssetListEntry(classPK);
-
-			if (assetListEntry != null) {
-				try {
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, assetListEntry, stagedModel,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-				}
-				catch (PortletDataException portletDataException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portletDataException);
-					}
-				}
+				_replaceCollectionExportContentReferences(
+					itemJSONObject, portletDataContext, stagedModel);
 			}
 		}
 	}
 
-	private void _replaceAllMappedValuesImportContentReferences(
+	private void _replaceImportContentReferences(
 		JSONObject jsonObject, PortletDataContext portletDataContext) {
 
 		if (!jsonObject.has("items")) {
@@ -166,57 +225,12 @@ public class DataValuesMappingExportImportContentProcessor
 		for (String key : itemsJSONObject.keySet()) {
 			JSONObject itemJSONObject = itemsJSONObject.getJSONObject(key);
 
-			if (!Objects.equals(
+			if (Objects.equals(
 					itemJSONObject.get("type"),
-					LayoutDataItemTypeConstants.TYPE_COLLECTION) ||
-				!itemJSONObject.has("config")) {
+					LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
 
-				continue;
-			}
-
-			JSONObject configJSONObject = itemJSONObject.getJSONObject(
-				"config");
-
-			if (!configJSONObject.has("collection")) {
-				continue;
-			}
-
-			JSONObject collectionJSONObject = configJSONObject.getJSONObject(
-				"collection");
-
-			String type = collectionJSONObject.getString("type");
-
-			if (!Objects.equals(
-					type, InfoListItemSelectorReturnType.class.getName())) {
-
-				continue;
-			}
-
-			long classPK = collectionJSONObject.getLong("classPK");
-
-			Map<Long, Long> assetListEntryNewPrimaryKeys =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					AssetListEntry.class.getName());
-
-			long newClassPK = MapUtil.getLong(
-				assetListEntryNewPrimaryKeys, classPK, classPK);
-
-			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.fetchAssetListEntry(newClassPK);
-
-			if (assetListEntry != null) {
-				collectionJSONObject.put(
-					"classNameId",
-					_portal.getClassNameId(assetListEntry.getAssetEntryType())
-				).put(
-					"classPK", String.valueOf(newClassPK)
-				).put(
-					"itemSubtype", assetListEntry.getAssetEntrySubtype()
-				).put(
-					"itemType", assetListEntry.getAssetEntryType()
-				).put(
-					"title", assetListEntry.getTitle()
-				);
+				_replaceCollectionImportContentReferences(
+					itemJSONObject, portletDataContext);
 			}
 		}
 	}

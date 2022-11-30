@@ -14,11 +14,10 @@
 
 package com.liferay.lang.sanitizer;
 
-import com.liferay.lang.sanitizer.util.AntiSamyUtil;
 import com.liferay.lang.sanitizer.util.EscapeUtil;
-import com.liferay.lang.sanitizer.util.PropertiesUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import java.net.URL;
@@ -30,7 +29,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.owasp.validator.html.AntiSamy;
+import org.owasp.validator.html.CleanResults;
 import org.owasp.validator.html.Policy;
 
 /**
@@ -44,9 +44,7 @@ public class LangSanitizerTest {
 
 		URL antiSamyURL = classLoader.getResource("antisamy-liferay.xml");
 
-		String antsamyPath = antiSamyURL.getFile();
-
-		_policy = Policy.getInstance(antsamyPath);
+		_policy = Policy.getInstance(antiSamyURL.getFile());
 	}
 
 	@Test
@@ -60,20 +58,32 @@ public class LangSanitizerTest {
 			throw new FileNotFoundException(_CORRECT_PROPERTIES_FILE_NAME);
 		}
 
+		Properties properties = new Properties();
+
 		File testFile = new File(testFileURL.getFile());
 
-		Properties properties = PropertiesUtil.readProperties(testFile);
+		if (testFile.exists()) {
+			try (FileInputStream fileInputStream = new FileInputStream(
+					testFile)) {
+
+				properties.load(fileInputStream);
+			}
+		}
 
 		Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
 
 		for (Map.Entry<Object, Object> entry : entrySet) {
 			String originalString = (String)entry.getValue();
 
+			AntiSamy antiSamy = new AntiSamy();
+
+			CleanResults cleanResults = antiSamy.scan(originalString, _policy);
+
 			String sanitizedString = EscapeUtil.unEscape(
-				AntiSamyUtil.sanitize(_policy, (String)entry.getValue()));
+				cleanResults.getCleanHTML());
 
 			String value = EscapeUtil.unEscape(
-				EscapeUtil.formatTagForm(originalString));
+				EscapeUtil.formatTag(originalString));
 
 			Assert.assertEquals(value, sanitizedString);
 		}
@@ -90,20 +100,32 @@ public class LangSanitizerTest {
 			throw new FileNotFoundException(_INCORRECT_PROPERTIES_FILE_NAME);
 		}
 
+		Properties properties = new Properties();
+
 		File testFile = new File(testFileURL.getFile());
 
-		Properties properties = PropertiesUtil.readProperties(testFile);
+		if (testFile.exists()) {
+			try (FileInputStream fileInputStream = new FileInputStream(
+					testFile)) {
+
+				properties.load(fileInputStream);
+			}
+		}
 
 		Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
 
 		for (Map.Entry<Object, Object> entry : entrySet) {
 			String originalString = (String)entry.getValue();
 
+			AntiSamy antiSamy = new AntiSamy();
+
+			CleanResults cleanResults = antiSamy.scan(originalString, _policy);
+
 			String sanitizedString = EscapeUtil.unEscape(
-				AntiSamyUtil.sanitize(_policy, (String)entry.getValue()));
+				cleanResults.getCleanHTML());
 
 			String value = EscapeUtil.unEscape(
-				EscapeUtil.formatTagForm(originalString));
+				EscapeUtil.formatTag(originalString));
 
 			Assert.assertNotEquals(value, sanitizedString);
 		}

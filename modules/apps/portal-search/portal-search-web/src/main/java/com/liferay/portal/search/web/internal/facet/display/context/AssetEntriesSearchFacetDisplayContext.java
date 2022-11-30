@@ -46,7 +46,7 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 	}
 
 	public List<BucketDisplayContext>
-		getTermDisplayContexts() {
+	getBucketDisplayContexts() {
 
 		return _bucketDisplayContexts;
 	}
@@ -95,7 +95,7 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 		_renderNothing = renderNothing;
 	}
 
-	public void setTermDisplayContexts(
+	public void setBucketDisplayContexts(
 		List<BucketDisplayContext>
 			bucketDisplayContexts) {
 

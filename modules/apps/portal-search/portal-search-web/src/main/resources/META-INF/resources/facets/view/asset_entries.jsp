@@ -62,15 +62,15 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = as
 				</li>
 
 				<%
-				for (BucketDisplayContext assetEntriesSearchFacetTermDisplayContext : assetEntriesSearchFacetDisplayContext.getTermDisplayContexts()) {
+				for (BucketDisplayContext bucketDisplayContext : assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts()) {
 				%>
 
 					<li class="facet-value">
-						<a class="<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetTermDisplayContext.getFilterValue()) %>" href="javascript:void(0);">
-							<%= assetEntriesSearchFacetTermDisplayContext.getBucketText() %>
+						<a class="<%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>" href="javascript:void(0);">
+							<%= bucketDisplayContext.getBucketText() %>
 
-							<c:if test="<%= assetEntriesSearchFacetTermDisplayContext.isFrequencyVisible() %>">
-								<span class="frequency">(<%= assetEntriesSearchFacetTermDisplayContext.getFrequency() %>)</span>
+							<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
+								<span class="frequency">(<%= bucketDisplayContext.getFrequency() %>)</span>
 							</c:if>
 						</a>
 					</li>

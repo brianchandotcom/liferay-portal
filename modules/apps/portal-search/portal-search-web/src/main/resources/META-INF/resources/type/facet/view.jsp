@@ -64,7 +64,7 @@ TypeFacetPortletInstanceConfiguration typeFacetPortletInstanceConfiguration = as
 				%>'
 				displayStyle="<%= typeFacetPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= assetEntriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-				entries="<%= assetEntriesSearchFacetDisplayContext.getTermDisplayContexts() %>"
+				entries="<%= assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
 				<liferay-ui:panel-container
 					extended="<%= true %>"
@@ -86,7 +86,7 @@ TypeFacetPortletInstanceConfiguration typeFacetPortletInstanceConfiguration = as
 								<%
 								int i = 0;
 
-								for (BucketDisplayContext assetEntriesSearchFacetTermDisplayContext : assetEntriesSearchFacetDisplayContext.getTermDisplayContexts()) {
+								for (BucketDisplayContext bucketDisplayContext : assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts()) {
 									i++;
 								%>
 
@@ -96,22 +96,22 @@ TypeFacetPortletInstanceConfiguration typeFacetPortletInstanceConfiguration = as
 												<input
 													autocomplete="off"
 													class="custom-control-input facet-term"
-													data-term-id="<%= assetEntriesSearchFacetTermDisplayContext.getFilterValue() %>"
+													data-term-id="<%= bucketDisplayContext.getFilterValue() %>"
 													disabled
 													id="<portlet:namespace />term_<%= i %>"
 													name="<portlet:namespace />term_<%= i %>"
 													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 													type="checkbox"
-													<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+													<%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 												/>
 
-												<span class="custom-control-label term-name <%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-													<span class="custom-control-label-text"><%= HtmlUtil.escape(assetEntriesSearchFacetTermDisplayContext.getBucketText()) %></span>
+												<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+													<span class="custom-control-label-text"><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></span>
 												</span>
 
-												<c:if test="<%= assetEntriesSearchFacetTermDisplayContext.isFrequencyVisible() %>">
+												<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
 													<small class="term-count">
-														(<%= assetEntriesSearchFacetTermDisplayContext.getFrequency() %>)
+														(<%= bucketDisplayContext.getFrequency() %>)
 													</small>
 												</c:if>
 											</label>

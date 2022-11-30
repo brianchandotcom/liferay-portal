@@ -70,8 +70,8 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	public AssetEntriesSearchFacetDisplayContext build() {
 		setTypeNames(getTypeNames());
 
-		List<BucketDisplayContext> termDisplayContexts =
-			buildTermDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			buildBucketDisplayContexts();
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext =
@@ -89,9 +89,9 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		assetEntriesSearchFacetDisplayContext.setParameterValues(
 			_parameterValues);
 		assetEntriesSearchFacetDisplayContext.setRenderNothing(
-			ListUtil.isEmpty(termDisplayContexts));
-		assetEntriesSearchFacetDisplayContext.setTermDisplayContexts(
-			termDisplayContexts);
+			ListUtil.isEmpty(bucketDisplayContexts));
+		assetEntriesSearchFacetDisplayContext.setBucketDisplayContexts(
+			bucketDisplayContexts);
 		assetEntriesSearchFacetDisplayContext.
 			setTypeFacetPortletInstanceConfiguration(
 				_typeFacetPortletInstanceConfiguration);
@@ -99,7 +99,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		return assetEntriesSearchFacetDisplayContext;
 	}
 
-	public BucketDisplayContext buildTermDisplay(
+	public BucketDisplayContext buildBucketDisplayContext(
 		String typeName, boolean selected, String assetType, int frequency) {
 
 		BucketDisplayContext
@@ -117,7 +117,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	}
 
 	public List<BucketDisplayContext>
-		buildTermDisplayContexts() {
+	buildBucketDisplayContexts() {
 
 		if (_facet == null) {
 			return Collections.emptyList();
@@ -170,7 +170,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			}
 
 			BucketDisplayContext
-				bucketDisplayContext = buildTermDisplay(
+				bucketDisplayContext = buildBucketDisplayContext(
 					typeName, selected, assetType, frequency);
 
 			bucketDisplayContexts.add(

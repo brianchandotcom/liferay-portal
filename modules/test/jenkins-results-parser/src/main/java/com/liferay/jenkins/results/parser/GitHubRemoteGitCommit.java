@@ -19,10 +19,9 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -38,6 +37,24 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 		return JenkinsResultsParserUtil.combine(
 			"https://github.com/", _gitHubUsername, "/", getGitRepositoryName(),
 			"/commit/", getSHA());
+	}
+
+	public void getJIRAIssue()
+		throws IOException{
+
+		String commitMessage = getMessage();
+
+		Matcher matcher = _issuePattern.matcher(commitMessage);
+
+		if (matcher.find()) {
+			String issueNumber = matcher.group(0);
+
+			for (String project : _allowedProjects) {
+				if (issueNumber.contains(project)) {
+					JIRAUtil.addIssue(issueNumber);
+				}
+			}
+		}
 	}
 
 	public List<String> getModifiedFilenames() {
@@ -199,6 +216,10 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 
 	protected List<String> modifiedFilenames;
 
+	private static final List<String> _allowedProjects = new ArrayList<>(Arrays.asList("LPS", "LRCI"));
 	private final String _gitHubUsername;
+
+	private static final Pattern _issuePattern = Pattern.compile(
+			"^([A-Z]+[-][\\d]+)");
 
 }

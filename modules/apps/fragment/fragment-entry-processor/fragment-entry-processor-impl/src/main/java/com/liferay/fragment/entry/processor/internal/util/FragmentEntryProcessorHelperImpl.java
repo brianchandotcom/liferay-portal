@@ -503,7 +503,7 @@ public class FragmentEntryProcessorHelperImpl
 				Optional<Boolean> htmlOptional = infoField.getAttributeOptional(
 					TextInfoFieldType.HTML);
 
-				if (htmlOptional.orElse(false)) {
+				if (!htmlOptional.orElse(false)) {
 					return _html.escape((String)value);
 				}
 			}

@@ -66,10 +66,10 @@ public class AddObjectActionMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsActionsDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
+					_portal.getHttpServletRequest(renderRequest), _jsonFactory,
 					_objectActionExecutorRegistry, _objectActionTriggerRegistry,
-					_objectDefinitionModelResourcePermission, _jsonFactory,
-					_objectDefinitionLocalService));
+					_objectDefinitionLocalService,
+					_objectDefinitionModelResourcePermission));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());

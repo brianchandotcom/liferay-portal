@@ -145,6 +145,7 @@ export default function EditNotificationTemplate({
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
 		initialExternalReferenceCode
 	);
+	const [isSubmitted, setIsSubmitted] = useState(false);
 
 	const [selectedLocale, setSelectedLocale] = useState(
 		Liferay.ThemeDisplay.getDefaultLanguageId
@@ -208,6 +209,12 @@ export default function EditNotificationTemplate({
 	};
 
 	const onSubmit = async (notification: TNotificationTemplate) => {
+		if (isSubmitted) {
+			return;
+		}
+
+		setIsSubmitted(true);
+
 		const response = await fetch(
 			notificationTemplateId !== 0
 				? `/o/notification/v1.0/notification-templates/${notificationTemplateId}`

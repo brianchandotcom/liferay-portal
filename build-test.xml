@@ -1765,7 +1765,10 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					</then>
 				</elseif>
 				<elseif>
-					<isset property="operating.system.docker.image" />
+					<and>
+						<isset property="env.JENKINS_HOME" />
+						<isset property="operating.system.docker.image" />
+					</and>
 					<then>
 						<get-operating-system-property property.name="operating.system.host" />
 
@@ -3452,7 +3455,10 @@ tell application "Safari" to quit
 			<get-browser-property property.name="browser.docker.image" />
 
 			<if>
-				<isset property="browser.docker.image" />
+				<and>
+					<isset property="browser.docker.image" />
+					<isset property="env.JENKINS_HOME" />
+				</and>
 				<then>
 					<get-browser-property property.name="browser.host" />
 
@@ -6999,14 +7005,41 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				select="\1"
 			/>
 
-			<get-host-git-dir />
+			<local name="ip.address" />
 
-			<get-ip-address />
+			<if>
+				<isset property="env.JENKINS_HOME" />
+				<then>
+					<get-ip-address />
+				</then>
+				<else>
+					<get-operating-system-property property.name="operating.system.host" />
+
+					<exec executable="/bin/bash" outputproperty="ip.address">
+						<arg value="-c" />
+						<arg value="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${operating.system.host}" />
+					</exec>
+				</else>
+			</if>
+
+			<local name="docker.add.host.hostname.arg" />
+			<local name="docker.add.host.node.name.arg" />
+			<local name="host.git.dir" />
+
+			<condition else="" property="docker.add.host.hostname.arg" value="--add-host ${env.HOSTNAME}:${ip.address}">
+				<isset property="env.HOSTNAME" />
+			</condition>
+
+			<condition else="" property="docker.add.host.node.name.arg" value="--add-host ${env.NODE_NAME}:${ip.address}">
+				<isset property="env.NODE_NAME" />
+			</condition>
+
+			<get-host-git-dir />
 
 			<start-docker-container image="${browser.docker.image}" name="${browser.host}" options="${browser.docker.browser.options}">\
 				${browser.docker.run.options} \
-				--add-host ${env.HOSTNAME}:${ip.address} \
-				--add-host ${env.NODE_NAME}:${ip.address} \
+				${docker.add.host.hostname.arg} \
+				${docker.add.host.node.name.arg} \
 				--add-host www.able.com:${ip.address} \
 				--add-host www.baker.com:${ip.address} \
 				--add-host www.charlie.com:${ip.address} \
@@ -7436,7 +7469,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 											<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
 										</then>
 										<elseif>
-											<isset property="operating.system.docker.image" />
+											<and>
+												<isset property="env.JENKINS_HOME" />
+												<isset property="operating.system.docker.image" />
+											</and>
 											<then>
 												<get-operating-system-property property.name="operating.system.host" />
 
@@ -12323,7 +12359,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<get-operating-system-property property.name="operating.system.docker.image" />
 
 		<if>
-			<isset property="operating.system.docker.image" />
+			<and>
+				<isset property="env.JENKINS_HOME" />
+				<isset property="operating.system.docker.image" />
+			</and>
 			<then>
 				<get-operating-system-property property.name="operating.system.host.alias" />
 

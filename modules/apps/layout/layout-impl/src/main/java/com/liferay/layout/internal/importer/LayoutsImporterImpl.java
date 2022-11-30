@@ -16,6 +16,8 @@ package com.liferay.layout.internal.importer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.delivery.dto.v1_0.ContentSubtype;
@@ -1502,6 +1504,19 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				layout.getPlid()),
 			jsonObject.toString(),
 			ServiceContextThreadLocal.getServiceContext());
+
+		for (FragmentEntryLink fragmentEntryLink :
+				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+					layout.getGroupId(), layout.getPlid())) {
+
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					_fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
+					fragmentEntryLink);
+			}
+		}
 	}
 
 	private void _updateLayouts(long plid) throws Exception {
@@ -1629,6 +1644,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

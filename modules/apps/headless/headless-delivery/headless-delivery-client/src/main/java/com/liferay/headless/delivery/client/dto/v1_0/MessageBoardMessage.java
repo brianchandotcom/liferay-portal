@@ -415,6 +415,27 @@ public class MessageBoardMessage implements Cloneable, Serializable {
 
 	protected Long messageBoardThreadId;
 
+	public Boolean getModified() {
+		return modified;
+	}
+
+	public void setModified(Boolean modified) {
+		this.modified = modified;
+	}
+
+	public void setModified(
+		UnsafeSupplier<Boolean, Exception> modifiedUnsafeSupplier) {
+
+		try {
+			modified = modifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean modified;
+
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
 	}

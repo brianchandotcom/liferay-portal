@@ -2545,6 +2545,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("modified", additionalAssertFieldName)) {
+				if (messageBoardMessage.getModified() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"numberOfMessageBoardAttachments",
 					additionalAssertFieldName)) {
@@ -2996,6 +3004,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardMessage1.getMessageBoardThreadId(),
 						messageBoardMessage2.getMessageBoardThreadId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("modified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getModified(),
+						messageBoardMessage2.getModified())) {
 
 					return false;
 				}
@@ -3459,6 +3478,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("modified")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("numberOfMessageBoardAttachments")) {
 			sb.append(
 				String.valueOf(
@@ -3574,6 +3598,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				messageBoardSectionId = RandomTestUtil.randomLong();
 				messageBoardThreadId = RandomTestUtil.randomLong();
+				modified = RandomTestUtil.randomBoolean();
 				numberOfMessageBoardAttachments = RandomTestUtil.randomInt();
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();
 				parentMessageBoardMessageId = RandomTestUtil.randomLong();

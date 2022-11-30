@@ -304,6 +304,16 @@ public class MessageBoardMessageSerDes {
 			sb.append(messageBoardMessage.getMessageBoardThreadId());
 		}
 
+		if (messageBoardMessage.getModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modified\": ");
+
+			sb.append(messageBoardMessage.getModified());
+		}
+
 		if (messageBoardMessage.getNumberOfMessageBoardAttachments() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -598,6 +608,14 @@ public class MessageBoardMessageSerDes {
 				String.valueOf(messageBoardMessage.getMessageBoardThreadId()));
 		}
 
+		if (messageBoardMessage.getModified() == null) {
+			map.put("modified", null);
+		}
+		else {
+			map.put(
+				"modified", String.valueOf(messageBoardMessage.getModified()));
+		}
+
 		if (messageBoardMessage.getNumberOfMessageBoardAttachments() == null) {
 			map.put("numberOfMessageBoardAttachments", null);
 		}
@@ -820,6 +838,12 @@ public class MessageBoardMessageSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setMessageBoardThreadId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "modified")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardMessage.setModified(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

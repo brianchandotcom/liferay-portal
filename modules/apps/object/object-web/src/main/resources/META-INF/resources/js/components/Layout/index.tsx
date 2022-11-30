@@ -129,7 +129,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				`/o/object-admin/v1.0/object-layouts/${objectLayoutId}`
 			);
 
-			const objectDefinition = await API.getObjectDefinition(
+			const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
 				objectDefinitionExternalReferenceCode
 			);
 

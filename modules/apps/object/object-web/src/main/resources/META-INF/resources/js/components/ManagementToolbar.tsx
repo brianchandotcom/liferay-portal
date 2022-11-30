@@ -16,11 +16,13 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {useModal} from '@clayui/modal';
+import {
+	API,
+	ModalEditExternalReferenceCode,
+} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
-
-import ModalEditExternalReferenceCode from './ModalEditExternalReferenceCode';
 
 export default function ManagementToolbar({
 	backURL,
@@ -124,7 +126,7 @@ export default function ManagementToolbar({
 					<ClayManagementToolbar.ItemList>
 						<ClayButton.Group key={1} spaced>
 							<ClayButton
-								displayType="unstyled"
+								displayType="secondary"
 								id={`${portletNamespace}cancel`}
 								name="cancel"
 								onClick={() => navigate(backURL)}
@@ -134,7 +136,7 @@ export default function ManagementToolbar({
 
 							<ClayButton
 								disabled={!hasUpdateObjectDefinitionPermission}
-								displayType="secondary"
+								displayType="primary"
 								id={`${portletNamespace}save`}
 								name="save"
 								onClick={() => submitObjectDefinition(true)}
@@ -162,8 +164,15 @@ export default function ManagementToolbar({
 			{visibleModal && (
 				<ModalEditExternalReferenceCode
 					externalReferenceCode={externalReferenceCode}
+					getEntity={() =>
+						API.getObjectDefinitionById(objectDefinitionId)
+					}
+					helpMessage={Liferay.Language.get(
+						'internal-key-to-reference-the-object-definition'
+					)}
 					observer={observer}
 					onClose={onClose}
+					saveURL={`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`}
 					setExternalReferenceCode={setExternalReferenceCode}
 				/>
 			)}

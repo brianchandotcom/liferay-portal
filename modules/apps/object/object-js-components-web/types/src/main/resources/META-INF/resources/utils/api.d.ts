@@ -84,14 +84,20 @@ export declare function fetchJSON<T>(
 	init?: RequestInit
 ): Promise<T>;
 export declare function getList<T>(url: string): Promise<T[]>;
-export declare function getNotificationTemplate(
+export declare function getNotificationTemplateByExternalReferenceCode(
+	notificationTemplateExternalReferenceCode: string
+): Promise<NotificationTemplate>;
+export declare function getNotificationTemplateById(
 	notificationTemplateId: number
 ): Promise<NotificationTemplate>;
 export declare function getNotificationTemplates(): Promise<
 	NotificationTemplate[]
 >;
-export declare function getObjectDefinition(
+export declare function getObjectDefinitionByExternalReferenceCode(
 	objectDefinitionExternalReferenceCode: string
+): Promise<ObjectDefinition>;
+export declare function getObjectDefinitionById(
+	objectDefinitionId: number
 ): Promise<ObjectDefinition>;
 export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getObjectDefinitions(

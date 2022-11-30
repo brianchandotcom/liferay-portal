@@ -8,6 +8,8 @@
 		},
 		"permissions": {
 		},
+		"publish": {
+		},
 		"update": {
 		}
 	},
@@ -56,7 +58,7 @@
 			],
 			"required": false,
 			"state": false,
-			"system": true,
+			"system": false,
 			"type": "Date"
 		},
 		{
@@ -190,7 +192,7 @@
 	],
 	"objectViews": [
 	],
-	"panelCategoryKey": "control_panel.users",
+	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {
 		"en_US": "EVP Divisions"
@@ -202,5 +204,6 @@
 		"label": "approved",
 		"label_i18n": "Approved"
 	},
-	"system": false
+	"system": false,
+	"titleObjectFieldName":"divisionName"
 }

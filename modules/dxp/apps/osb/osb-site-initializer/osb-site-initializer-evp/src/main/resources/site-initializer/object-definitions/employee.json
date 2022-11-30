@@ -13,7 +13,7 @@
 		"update": {
 		}
 	},
-	"active": false,
+	"active": true,
 	"label": {
 		"en_US": "EVP Employee"
 	},
@@ -192,7 +192,7 @@
 	],
 	"objectViews": [
 	],
-	"panelCategoryKey": "",
+	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {
 		"en_US": "EVP Employees"

@@ -34,6 +34,7 @@ function AssetTagsSelector({
 	portletURL,
 	removeCallback,
 	selectedItems = [],
+	showLabel = true,
 	showSelectButton,
 }) {
 	const selectButtonRef = useRef();
@@ -211,7 +212,12 @@ function AssetTagsSelector({
 	return (
 		<div className="lfr-tags-selector-content" id={id}>
 			<ClayForm.Group>
-				<label htmlFor={inputName + '_MultiSelect'}>{label}</label>
+				<label
+					className={showLabel ? '' : 'sr-only'}
+					htmlFor={inputName + '_MultiSelect'}
+				>
+					{label}
+				</label>
 
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
@@ -273,6 +279,7 @@ AssetTagsSelector.propTypes = {
 	portletURL: PropTypes.string,
 	removeCallback: PropTypes.string,
 	selectedItems: PropTypes.array,
+	showLabel: PropTypes.bool,
 };
 
 export default AssetTagsSelector;

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = PortalCacheManagerListenerFactory.class)
+@Component(service = PortalCacheManagerListenerFactory.class)
 public class EhcachePortalCacheManagerListenerFactory
 	implements PortalCacheManagerListenerFactory
 		<BaseEhcachePortalCacheManager<?, ?>> {

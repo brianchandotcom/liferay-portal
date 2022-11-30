@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = PortalProfile.class)
+@Component(service = PortalProfile.class)
 public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 	@Activate

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Michael Young
  */
-@Component(immediate = true, service = SingleVMPool.class)
+@Component(service = SingleVMPool.class)
 public class SingleVMPoolImpl implements SingleVMPool {
 
 	@Override

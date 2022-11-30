@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Michael Young
  */
-@Component(immediate = true, service = MultiVMPool.class)
+@Component(service = MultiVMPool.class)
 public class MultiVMPoolImpl implements MultiVMPool {
 
 	@Override

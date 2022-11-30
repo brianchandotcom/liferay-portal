@@ -76,7 +76,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true,
 	service = {
 		CacheRegistryItem.class, FinderCache.class, FinderCacheImpl.class
 	}

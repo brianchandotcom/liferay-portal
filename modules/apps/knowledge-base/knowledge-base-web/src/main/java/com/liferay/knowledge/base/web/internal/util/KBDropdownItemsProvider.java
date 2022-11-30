@@ -109,7 +109,7 @@ public class KBDropdownItemsProvider {
 					_getAddChildArticleActionUnsafeConsumer(kbArticle)
 				).add(
 					() ->
-						_hasChildArticles(kbArticle) &&
+						_hasChildKBArticles(kbArticle) &&
 						_hasViewChildArticlesPermission(),
 					_getViewChildArticlesActionUnsafeConsumer(kbArticle)
 				).add(
@@ -975,12 +975,12 @@ public class KBDropdownItemsProvider {
 		return false;
 	}
 
-	private boolean _hasChildArticles(KBArticle kbArticle) {
-		int childArticlesCount = KBArticleServiceUtil.getKBArticlesCount(
+	private boolean _hasChildKBArticles(KBArticle kbArticle) {
+		int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(
 			_themeDisplay.getScopeGroupId(), kbArticle.getResourcePrimKey(),
 			WorkflowConstants.STATUS_ANY);
 
-		if (childArticlesCount > 0) {
+		if (kbArticlesCount > 0) {
 			return true;
 		}
 

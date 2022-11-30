@@ -1,0 +1,44 @@
+Bundle-Name: Liferay Shared Dependencies Poi
+Bundle-SymbolicName: com.liferay.shared.dependencies.poi
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.github.javaparser.*,\
+	!com.github.luben.zstd.*,\
+	\
+	!com.graphbuilder.curve,\
+	!com.graphbuilder.geom,\
+	\
+	!com.microsoft.schemas.office.powerpoint,\
+	!com.microsoft.schemas.office.x2006.*,\
+	\
+	!com.sun.org.apache.xml.internal.resolver.*,\
+	\
+	!de.rototor.pdfbox.graphics2d,\
+	\
+	!net.sf.saxon.*,\
+	\
+	!org.apache.batik.*,\
+	!org.apache.commons.collections4.*,\
+	!org.apache.commons.math3.*,\
+	!org.apache.jcp.xml.dsig.internal.dom,\
+	!org.apache.maven.*,\
+	!org.apache.tools.ant.*,\
+	!org.apache.xmlbeans.*,\
+	\
+	!org.bouncycastle.*,\
+	\
+	!org.brotli.dec.*,\
+	\
+	!org.openxmlformats.schemas.schemaLibrary.x2006.main,\
+	\
+	!org.tukaani.xz.*,\
+	\
+	!org.w3c.dom.svg,\
+	\
+	*
+-exportcontents:\
+	org.apache.poi.*,\
+	org.apache.xmlbeans.*,\
+	\
+	org.openxmlformats.schemas.*
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

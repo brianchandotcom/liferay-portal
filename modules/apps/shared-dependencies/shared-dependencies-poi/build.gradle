@@ -1,0 +1,9 @@
+dependencies {
+	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.4"
+	compileInclude group: "org.apache.poi", name: "poi", version: "5.2.2"
+	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
+	compileInclude group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
+	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "5.0.3"
+
+	compileOnly group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
+}

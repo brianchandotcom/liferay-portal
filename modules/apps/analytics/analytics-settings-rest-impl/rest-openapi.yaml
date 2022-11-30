@@ -565,6 +565,60 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["Field"]
+    "/fields/products":
+        get:
+            operationId: getFieldsProductsPage
+            parameters:
+                - in: query
+                  name: keyword
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Field"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Field"
+                                type: array
+            tags: ["Field"]
+        patch:
+            operationId: patchFieldProduct
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/Field"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/Field"
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Field"]
     "/sites":
         get:
             operationId: getSitesPage

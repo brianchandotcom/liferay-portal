@@ -1092,7 +1092,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						serviceContext.getCompanyId(),
 						"C_" + objectDefinition.getName());
 
-			if (json.contains("accountEntryRestrictedObjectFieldName") &&
+			if ((objectDefinition.getAccountEntryRestrictedObjectFieldName() !=
+					null) &&
 				!serviceBuilderObjectDefinition.isAccountEntryRestricted()) {
 
 				objectDefinitionResource.patchObjectDefinition(

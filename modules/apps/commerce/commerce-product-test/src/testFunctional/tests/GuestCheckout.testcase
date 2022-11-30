@@ -792,11 +792,9 @@ definition {
 
 		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
 
-		AssertElementPresent(
-			key_productName = "U-Joint",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_DISABLED");
+		AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
 
-		CommerceAcceleratorsInitializer.viewDisabledAddToCartButton(productName = "U-Joint");
+		CommerceAcceleratorsInitializer.viewEnabledAddToCartButton(productName = "U-Joint");
 	}
 
 	test GuestCheckoutEnabled {

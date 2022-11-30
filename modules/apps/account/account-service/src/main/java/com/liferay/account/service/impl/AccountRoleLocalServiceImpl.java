@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -426,6 +427,13 @@ public class AccountRoleLocalServiceImpl
 				if (ArrayUtil.isNotEmpty(excludedRoleNames)) {
 					searchContext.setAttribute(
 						"excludedRoleNames", excludedRoleNames);
+				}
+
+				long permissionUserId = GetterUtil.getLong(
+					params.get("permissionUserId"));
+
+				if (permissionUserId != GetterUtil.DEFAULT_LONG) {
+					searchContext.setUserId(permissionUserId);
 				}
 			}
 		);

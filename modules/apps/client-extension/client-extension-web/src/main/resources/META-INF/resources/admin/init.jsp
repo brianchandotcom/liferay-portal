@@ -26,7 +26,6 @@ page import="com.liferay.client.extension.type.ThemeCSSCET" %><%@
 page import="com.liferay.client.extension.type.ThemeFaviconCET" %><%@
 page import="com.liferay.client.extension.type.ThemeJSCET" %><%@
 page import="com.liferay.client.extension.type.annotation.CETProperty" %><%@
-page import="com.liferay.client.extension.type.annotation.CETPropertyType" %><%@
 page import="com.liferay.client.extension.web.internal.constants.ClientExtensionAdminFDSNames" %><%@
 page import="com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.ClientExtensionAdminDisplayContext" %><%@

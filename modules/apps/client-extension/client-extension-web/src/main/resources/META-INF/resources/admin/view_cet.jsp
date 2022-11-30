@@ -28,13 +28,13 @@ for (Method method : propertyMethods) {
 %>
 
 	<c:choose>
-		<c:when test="<%= cetProperty.type() == CETPropertyType.Boolean %>">
+		<c:when test="<%= cetProperty.type() == CETProperty.Type.Boolean %>">
 			<aui:input disabled="<%= true %>" label="<%= label %>" name="<%= label %>" type="checkbox" value="<%= value %>" />
 		</c:when>
-		<c:when test="<%= (cetProperty.type() == CETPropertyType.String) || (cetProperty.type() == CETPropertyType.URL) %>">
+		<c:when test="<%= (cetProperty.type() == CETProperty.Type.String) || (cetProperty.type() == CETProperty.Type.URL) %>">
 			<aui:input disabled="<%= true %>" label="<%= label %>" name="<%= label %>" type="text" value="<%= value %>" />
 		</c:when>
-		<c:when test="<%= (cetProperty.type() == CETPropertyType.StringList) || (cetProperty.type() == CETPropertyType.URLList) %>">
+		<c:when test="<%= (cetProperty.type() == CETProperty.Type.StringList) || (cetProperty.type() == CETProperty.Type.URLList) %>">
 			<aui:input disabled="<%= true %>" label="<%= label %>" name="<%= label %>" type="textarea" value="<%= value %>" />
 		</c:when>
 		<c:otherwise>

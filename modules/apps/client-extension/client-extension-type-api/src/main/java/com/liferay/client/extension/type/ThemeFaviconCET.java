@@ -15,7 +15,6 @@
 package com.liferay.client.extension.type;
 
 import com.liferay.client.extension.type.annotation.CETProperty;
-import com.liferay.client.extension.type.annotation.CETPropertyType;
 import com.liferay.client.extension.type.annotation.CETType;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -27,7 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ThemeFaviconCET extends CET {
 
-	@CETProperty(defaultValue = "", name = "url", type = CETPropertyType.URL)
+	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
 	public String getURL();
 
 }

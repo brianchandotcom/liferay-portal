@@ -315,7 +315,7 @@ definition {
 				locator1 = "Form#FIELD_LABEL");
 		}
 
-		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
+		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
 
 		AssertClick(
 			locator1 = "Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD",

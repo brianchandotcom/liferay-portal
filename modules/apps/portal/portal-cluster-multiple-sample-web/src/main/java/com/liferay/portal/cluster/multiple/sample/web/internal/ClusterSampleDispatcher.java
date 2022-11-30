@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.cluster.multiple.sample.web.internal.configuration.ClusterSampleConfiguration",
-	immediate = true, service = {}
+	service = {}
 )
 public class ClusterSampleDispatcher {
 

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = ClusterSampleMessageListener.class)
+@Component(service = ClusterSampleMessageListener.class)
 public class ClusterSampleMessageListener extends BaseMessageListener {
 
 	@Activate

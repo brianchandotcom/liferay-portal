@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
-	enabled = false, immediate = true, service = ClusterChannelFactory.class
+	enabled = false, service = ClusterChannelFactory.class
 )
 public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 

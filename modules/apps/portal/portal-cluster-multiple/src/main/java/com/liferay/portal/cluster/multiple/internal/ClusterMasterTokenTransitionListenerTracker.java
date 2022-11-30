@@ -29,7 +29,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Shuyang Zhou
  */
-@Component(enabled = false, immediate = true, service = {})
+@Component(enabled = false, service = {})
 public class ClusterMasterTokenTransitionListenerTracker {
 
 	@Activate

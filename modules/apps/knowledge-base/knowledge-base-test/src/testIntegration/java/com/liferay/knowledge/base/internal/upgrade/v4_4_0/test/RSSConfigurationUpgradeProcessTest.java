@@ -15,11 +15,12 @@
 package com.liferay.knowledge.base.internal.upgrade.v4_4_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -58,34 +59,49 @@ public class RSSConfigurationUpgradeProcessTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_configuration = _getConfiguration();
+		Configuration[] configurations = _getConfigurations();
 
-		if (_configuration == null) {
-			_configuration = _configurationAdmin.getConfiguration(
-				_SERVICE_PID, StringPool.QUESTION);
+		if (ArrayUtil.isEmpty(configurations)) {
+			configurations = new Configuration[] {
+				_configurationAdmin.getConfiguration(
+					_SERVICE_PID + ".test", StringPool.QUESTION)
+			};
+
 			_originalProperties = null;
 		}
 		else {
-			_originalProperties = _configuration.getProperties();
+			_originalProperties = new HashMapDictionary<>();
 		}
 
-		_configuration.update(
-			HashMapDictionaryBuilder.putAll(
-				_originalProperties
-			).put(
-				"rssDelta", Integer.valueOf("20")
-			).put(
-				"rssFormat", "atom10"
-			).build());
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			if (_originalProperties != null) {
+				_originalProperties.put(configuration.getPid(), properties);
+			}
+
+			configuration.update(
+				HashMapDictionaryBuilder.putAll(
+					properties
+				).put(
+					"rssDelta", Integer.valueOf("20")
+				).put(
+					"rssFormat", "atom10"
+				).build());
+		}
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		if (_originalProperties == null) {
-			_configuration.delete();
-		}
-		else {
-			_configuration.update(_originalProperties);
+		for (Configuration configuration : _getConfigurations()) {
+			if (_originalProperties == null) {
+				configuration.delete();
+			}
+			else {
+				configuration.update(
+					_originalProperties.get(configuration.getPid()));
+			}
 		}
 	}
 
@@ -93,16 +109,18 @@ public class RSSConfigurationUpgradeProcessTest {
 	public void testRSSConfigurationUpgradeProcessWithExistingConfiguration()
 		throws Exception {
 
-		_checkPropertiesBefore(_configuration.getProperties());
+		for (Configuration configuration : _getConfigurations()) {
+			_assertPropertiesBefore(configuration.getProperties());
+		}
 
 		_runUpgrade();
 
-		_configuration = _getConfiguration();
-
-		_checkPropertiesAfter(_configuration.getProperties());
+		for (Configuration configuration : _getConfigurations()) {
+			_assertPropertiesAfter(configuration.getProperties());
+		}
 	}
 
-	private void _checkPropertiesAfter(Dictionary<String, Object> properties) {
+	private void _assertPropertiesAfter(Dictionary<String, Object> properties) {
 		Assert.assertTrue(
 			"The property 'rssDelta' should be of type String",
 			properties.get("rssDelta") instanceof String);
@@ -111,7 +129,9 @@ public class RSSConfigurationUpgradeProcessTest {
 			properties.get("rssFormat"));
 	}
 
-	private void _checkPropertiesBefore(Dictionary<String, Object> properties) {
+	private void _assertPropertiesBefore(
+		Dictionary<String, Object> properties) {
+
 		Assert.assertTrue(
 			"The property 'rssDelta' should be of type Integer",
 			properties.get("rssDelta") instanceof Integer);
@@ -120,18 +140,11 @@ public class RSSConfigurationUpgradeProcessTest {
 			properties.get("rssFormat"));
 	}
 
-	private Configuration _getConfiguration() throws Exception {
+	private Configuration[] _getConfigurations() throws Exception {
 		String filterString = String.format(
-			"(%s=%s)", Constants.SERVICE_PID, _SERVICE_PID);
+			"(%s=%s*)", Constants.SERVICE_PID, _SERVICE_PID);
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filterString);
-
-		if (configurations == null) {
-			return null;
-		}
-
-		return configurations[0];
+		return _configurationAdmin.listConfigurations(filterString);
 	}
 
 	private UpgradeProcess _getUpgradeProcess() {
@@ -168,18 +181,16 @@ public class RSSConfigurationUpgradeProcessTest {
 			"RSSConfigurationUpgradeProcess";
 
 	private static final String _SERVICE_PID =
-		KBGroupServiceConfiguration.class.getName();
+		"com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.knowledge.base.internal.upgrade.registry.KnowledgeBaseServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
-	private Configuration _configuration;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
-	private Dictionary<String, Object> _originalProperties;
+	private Dictionary<String, Dictionary<String, Object>> _originalProperties;
 
 }

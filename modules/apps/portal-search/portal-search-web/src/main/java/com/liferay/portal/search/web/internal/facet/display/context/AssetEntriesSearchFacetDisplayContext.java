@@ -25,6 +25,10 @@ import java.util.List;
  */
 public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
+		return _bucketDisplayContexts;
+	}
+
 	public long getDisplayStyleGroupId() {
 		return _displayStyleGroupId;
 	}
@@ -45,12 +49,6 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 		return _parameterValues;
 	}
 
-	public List<BucketDisplayContext>
-	getBucketDisplayContexts() {
-
-		return _bucketDisplayContexts;
-	}
-
 	public TypeFacetPortletInstanceConfiguration
 		getTypeFacetPortletInstanceConfiguration() {
 
@@ -63,6 +61,12 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setBucketDisplayContexts(
+		List<BucketDisplayContext> bucketDisplayContexts) {
+
+		_bucketDisplayContexts = bucketDisplayContexts;
 	}
 
 	public void setDisplayStyleGroupId(long displayStyleGroupId) {
@@ -95,14 +99,6 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 		_renderNothing = renderNothing;
 	}
 
-	public void setBucketDisplayContexts(
-		List<BucketDisplayContext>
-			bucketDisplayContexts) {
-
-		_bucketDisplayContexts =
-			bucketDisplayContexts;
-	}
-
 	public void setTypeFacetPortletInstanceConfiguration(
 		TypeFacetPortletInstanceConfiguration
 			typeFacetPortletInstanceConfiguration) {
@@ -111,8 +107,7 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 			typeFacetPortletInstanceConfiguration;
 	}
 
-	private List<BucketDisplayContext>
-		_bucketDisplayContexts;
+	private List<BucketDisplayContext> _bucketDisplayContexts;
 	private long _displayStyleGroupId;
 	private boolean _nothingSelected;
 	private String _paginationStartParameterName;

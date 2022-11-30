@@ -14,11 +14,9 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import java.io.Serializable;
-
 /**
  * @author Lino Alves
  */
-public class AssetEntriesSearchFacetTermDisplayContext extends BucketDisplayContext {
-
+public class AssetEntriesSearchFacetTermDisplayContext
+	extends BucketDisplayContext {
 }

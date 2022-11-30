@@ -1,5 +1,13 @@
 definition {
 
+	macro expandPublicationInformation {
+		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_COLLAPSED")) {
+			Click(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_COLLAPSED");
+
+			AssertElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_EXPANDED");
+		}
+	}
+
 	macro gotoPublicationTemplate {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",

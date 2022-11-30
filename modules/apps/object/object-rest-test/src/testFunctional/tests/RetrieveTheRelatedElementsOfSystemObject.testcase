@@ -1,0 +1,238 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-162964=true${line.separator}feature.flag.LPS-153324=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given a Foundation object") {
+			var objectDefinitionId2 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "foundation",
+				en_US_plural_label = "foundations",
+				name = "Foundation",
+				requiredStringFieldName = "name");
+		}
+
+		task ("Given a secondFoundation object") {
+			var objectDefinitionId3 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "secondFoundation",
+				en_US_plural_label = "secondFoundations",
+				name = "SecondFoundation",
+				requiredStringFieldName = "name");
+		}
+
+		task ("Given manyToMany relationship usersFoundations created") {
+			var objectDefinitionId1 = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "User");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UsersFoundations",
+				name = "usersFoundations",
+				objectDefinitionId1 = "${objectDefinitionId1}",
+				objectDefinitionId2 = "${objectDefinitionId2}",
+				type = "manyToMany");
+		}
+
+		task ("Given oneToMany relationship userSecondFoundations created") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UserSecondFoundations",
+				name = "userSecondFoundations",
+				objectDefinitionId1 = "${objectDefinitionId1}",
+				objectDefinitionId2 = "${objectDefinitionId3}",
+				type = "oneToMany");
+		}
+
+		task ("Given object entries created") {
+			ObjectDefinitionAPI.setUpGlobalObjectEntryId();
+		}
+
+		task ("Given two userAccount entries created") {
+			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName1 = "user1",
+				alternateName2 = "user2",
+				emailAddress1 = "user1@liferay.com",
+				emailAddress2 = "user2@liferay.com",
+				familyName1 = "userfn1",
+				familyName2 = "userfn2",
+				givenName1 = "usergn1",
+				givenName2 = "usergn2");
+		}
+	}
+
+	tearDown {
+		for (var objectName : list "Foundation,SecondFoundation") {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "${objectName}");
+		}
+
+		for (var userId : list "${staticUserAccountId1},${staticUserAccountId2}") {
+			JSONUser.deleteUserByUserId(userId = "${userId}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "3"
+	test CanGetRelationshipDetailsThroughRelationshipEndpointWithoutRelatedEntries {
+		property portal.acceptance = "true";
+
+		task ("When I call userAccount object GET endpoint with {userAccountId}/usersFoundations") {
+			UserAccountAPI.getRelationshipByUserAccountId(
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("Then I receive a correct response with GET endpoint {userAccount}/usersFoundations") {
+			UserAccountAPI.assertResponseNotIncludeDetailsOfDeletedObjectEntry(
+				customObjectEntryId = "${staticObjectEntryId1}",
+				expectedValue = "[]",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "3"
+	test CanNotGetDetailsAfterRelationshipIsDeleted {
+		property portal.acceptance = "true";
+
+		task ("And Given I relate the secondFoundation entry with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId3}",
+				relationshipName = "userSecondFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("When deleting the relationship") {
+			ObjectDefinitionAPI.deleteRelationship(
+				name = "User",
+				relationshipName = "userSecondFoundations");
+		}
+
+		task ("Then the GET endpoint {userAccountId}/userSecondFoundations is no longer available") {
+			var response = UserAccountAPI.getRelationshipByUserAccountId(
+				relationshipName = "userSecondFoundations",
+				userAccountId = "staticUserAccountId1");
+
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = "${response}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanReturnDetailsInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId1}",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("Then receiving correct information about the related objects in the userAccountGET endpoint {userAccountId}/usersFoundations") {
+			UserAccountAPI.assertResponseHasCorrectRelatedEntryName(
+				customObjectEntryId = "${staticObjectEntryId1}",
+				expectedValue = "Foundation First",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanReturnDetailsInManyToManyRelationshipAfterObjectEntryDeletion {
+		property portal.acceptance = "true";
+
+		task ("And Given I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId1}",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId2}",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId2}");
+		}
+
+		task ("When deleting one of the foundation entries") {
+			ObjectDefinitionAPI.deleteObjectEntry(
+				en_US_plural_label = "foundations",
+				objectEntryId = "${staticObjectEntryId1}");
+		}
+
+		task ("Then I receive a correct response with GET endpoint {userAccount}/usersFoundations") {
+			UserAccountAPI.assertResponseNotIncludeDetailsOfDeletedObjectEntry(
+				expectedValue = "[]",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+
+			UserAccountAPI.assertResponseHasCorrectRelatedEntryName(
+				customObjectEntryId = "${staticObjectEntryId2}",
+				expectedValue = "Foundation Second",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId2}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanReturnDetailsInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When I relate the secondFoundation entry with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId3}",
+				relationshipName = "userSecondFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("Then receiving correct information about the related objects in the userAccountGET endpoint {userAccountId}/userSecondFoundations") {
+			UserAccountAPI.assertResponseHasCorrectRelatedEntryName(
+				customObjectEntryId = "${staticObjectEntryId3}",
+				expectedValue = "Foundation First-1",
+				relationshipName = "userSecondFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanReturnDetailsInOneToManyRelationshipAfterObjectEntryDeletion {
+		property portal.acceptance = "true";
+
+		task ("And Given I relate the secondFoundation entry with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId3}",
+				relationshipName = "userSecondFoundations",
+				userAccountId = "${staticUserAccountId1}");
+
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId4}",
+				relationshipName = "userSecondFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("When deleting one of the foundation entries") {
+			ObjectDefinitionAPI.deleteObjectEntry(
+				en_US_plural_label = "secondFoundations",
+				objectEntryId = "${staticObjectEntryId3}");
+		}
+
+		task ("Then I receive a correct response with GET endpoint {userAccount}/userSecondFoundations") {
+			UserAccountAPI.assertResponseHasCorrectRelatedEntryName(
+				customObjectEntryId = "${staticObjectEntryId4}",
+				expectedValue = "Foundation Second-1",
+				relationshipName = "userSecondFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+	}
+
+}

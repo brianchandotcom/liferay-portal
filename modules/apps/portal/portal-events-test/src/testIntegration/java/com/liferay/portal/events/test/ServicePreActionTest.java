@@ -42,11 +42,14 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
 
@@ -200,13 +203,17 @@ public class ServicePreActionTest {
 	public void testInitThemeDisplayPlidDefaultUserSitesLayoutComposite()
 		throws Exception {
 
-		boolean publicLayoutsAutoCreate =
-			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE;
-		boolean privateLayoutsAutoCreate =
-			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE;
+		boolean publicLayoutsAutoCreate = PrefsPropsUtil.getBoolean(
+			CompanyThreadLocal.getCompanyId(),
+			PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE);
+		boolean privateLayoutsAutoCreate = PrefsPropsUtil.getBoolean(
+			CompanyThreadLocal.getCompanyId(),
+			PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE);
 
-		PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE = false;
-		PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE = false;
+		PropsUtil.set(
+			PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE, "false");
+		PropsUtil.set(
+			PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE, "false");
 
 		try {
 			long plid = _getThemeDisplayPlid(false, true);
@@ -219,10 +226,12 @@ public class ServicePreActionTest {
 			Assert.assertEquals(layout.getPlid(), plid);
 		}
 		finally {
-			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE =
-				publicLayoutsAutoCreate;
-			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE =
-				privateLayoutsAutoCreate;
+			PropsUtil.set(
+				PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE,
+				GetterUtil.getString(publicLayoutsAutoCreate));
+			PropsUtil.set(
+				PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE,
+				GetterUtil.getString(privateLayoutsAutoCreate));
 
 			if (_user != null) {
 				_userLocalService.deleteUser(_user);

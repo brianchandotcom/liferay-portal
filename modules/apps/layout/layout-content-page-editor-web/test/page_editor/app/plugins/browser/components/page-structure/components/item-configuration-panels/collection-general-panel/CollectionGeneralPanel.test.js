@@ -21,7 +21,12 @@ import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../../../.
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import CollectionService from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService';
 import updateItemConfig from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
+import {
+	disposeCache,
+	initializeCache,
+} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/cache';
 import CollectionSelector from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector';
 import {CollectionGeneralPanel} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/collection-general-panel/CollectionGeneralPanel';
 
@@ -52,11 +57,7 @@ jest.mock(
 				totalNumberOfItems: 32,
 			})
 		),
-		getCollectionVariations: jest.fn(() =>
-			Promise.resolve({
-				variations: [],
-			})
-		),
+		getCollectionVariations: jest.fn(() => Promise.resolve([])),
 	})
 );
 
@@ -69,6 +70,11 @@ jest.mock(
 	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
 );
+
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, arg) => langKey.replace('x-', `${arg}-`)),
+}));
 
 const DEFAULT_ITEM_CONFIG = {
 	collection: {
@@ -121,11 +127,20 @@ const renderComponent = ({
 };
 
 describe('CollectionGeneralPanel', () => {
-	it('allows changing the Gutter select', () => {
-		renderComponent({
-			itemConfig: {
-				numberOfColumns: 2,
-			},
+	beforeEach(() => {
+		CollectionService.getCollectionVariations.mockClear();
+
+		disposeCache();
+		initializeCache();
+	});
+
+	it('allows changing the Gutter select', async () => {
+		await act(async () => {
+			renderComponent({
+				itemConfig: {
+					numberOfColumns: 2,
+				},
+			});
 		});
 
 		const input = screen.getByLabelText('show-gutter');
@@ -138,8 +153,10 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
-	it('allows changing the Vertical Alignment select', () => {
-		renderComponent();
+	it('allows changing the Vertical Alignment select', async () => {
+		await act(async () => {
+			renderComponent();
+		});
 
 		const input = screen.getByLabelText('vertical-alignment');
 
@@ -154,8 +171,10 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
-	it('hides vertical alignment and layout selects when flex is selected', () => {
-		renderComponent({itemConfig: {listStyle: 'flex-column'}});
+	it('hides vertical alignment and layout selects when flex is selected', async () => {
+		await act(async () => {
+			renderComponent({itemConfig: {listStyle: 'flex-column'}});
+		});
 
 		expect(
 			screen.queryByLabelText('vertical-alignment')
@@ -163,8 +182,10 @@ describe('CollectionGeneralPanel', () => {
 		expect(screen.queryByLabelText('layout')).not.toBeInTheDocument();
 	});
 
-	it('hides flex options when flex is not selected', () => {
-		renderComponent();
+	it('hides flex options when flex is not selected', async () => {
+		await act(async () => {
+			renderComponent();
+		});
 
 		expect(screen.queryByLabelText('flex-wrap')).not.toBeInTheDocument();
 		expect(screen.queryByLabelText('align-items')).not.toBeInTheDocument();
@@ -173,8 +194,10 @@ describe('CollectionGeneralPanel', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('allows changing the Show Empty Collection Alert checkbox', () => {
-		renderComponent();
+	it('allows changing the Show Empty Collection Alert checkbox', async () => {
+		await act(async () => {
+			renderComponent();
+		});
 
 		const input = screen.getByLabelText('show-empty-collection-alert');
 
@@ -190,8 +213,10 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
-	it('allows changing the Empty Collection Alert input', () => {
-		renderComponent();
+	it('allows changing the Empty Collection Alert input', async () => {
+		await act(async () => {
+			renderComponent();
+		});
 
 		const input = screen.getByLabelText('empty-collection-alert');
 
@@ -213,8 +238,10 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
-	it('allows changing the Pagination select', () => {
-		renderComponent();
+	it('allows changing the Pagination select', async () => {
+		await act(async () => {
+			renderComponent();
+		});
 
 		const input = screen.getByLabelText('pagination');
 
@@ -230,7 +257,9 @@ describe('CollectionGeneralPanel', () => {
 	});
 
 	it('allows changing the Display All Collection Items checkbox', async () => {
-		renderComponent({itemConfig: {paginationType: 'none'}});
+		await act(async () => {
+			renderComponent({itemConfig: {paginationType: 'none'}});
+		});
 
 		const input = screen.getByLabelText('display-all-collection-items');
 
@@ -247,11 +276,13 @@ describe('CollectionGeneralPanel', () => {
 	});
 
 	it('shows a message saying that enabling Display All Collection Items could affect performance', async () => {
-		renderComponent({
-			itemConfig: {
-				displayAllItems: true,
-				paginationType: 'none',
-			},
+		await act(async () => {
+			renderComponent({
+				itemConfig: {
+					displayAllItems: true,
+					paginationType: 'none',
+				},
+			});
 		});
 
 		expect(
@@ -261,8 +292,10 @@ describe('CollectionGeneralPanel', () => {
 		).toBeInTheDocument();
 	});
 
-	it('allows changing the Display All Pages checkbox', () => {
-		renderComponent();
+	it('allows changing the Display All Pages checkbox', async () => {
+		await act(async () => {
+			renderComponent();
+		});
 
 		const input = screen.getByLabelText('display-all-pages');
 
@@ -276,9 +309,68 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
+	it('allows changing Layout for a given viewport', async () => {
+		await act(async () => {
+			renderComponent({
+				selectedViewportSize: 'tablet',
+			});
+		});
+
+		const input = screen.getByLabelText('layout');
+
+		userEvent.type(input, '1');
+		fireEvent.change(input);
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				tablet: {numberOfColumns: '1'},
+			},
+			itemId: '0',
+		});
+	});
+
+	it('shows variations popover trigger with the correct number of variations when the collection has variations', async () => {
+		CollectionService.getCollectionVariations.mockImplementation(() =>
+			Promise.resolve(['Variation 1', 'Variation 2'])
+		);
+
+		await act(async () => {
+			renderComponent();
+		});
+
+		expect(await screen.findByText('2-variations')).toBeInTheDocument();
+	});
+
+	it('shows correct variation names in variations popover', async () => {
+		CollectionService.getCollectionVariations.mockImplementation(() =>
+			Promise.resolve(['Variation 1', 'Variation 2'])
+		);
+
+		await act(async () => {
+			renderComponent();
+		});
+
+		const popoverTrigger = await screen.findByText('2-variations');
+
+		userEvent.click(popoverTrigger);
+
+		expect(screen.getByText('Variation 1')).toBeInTheDocument();
+		expect(screen.getByText('Variation 2')).toBeInTheDocument();
+	});
+
+	it('does not show variations popover when the collection does not have variations', async () => {
+		await act(async () => {
+			renderComponent();
+		});
+
+		expect(screen.queryByText('0-variations')).not.toBeInTheDocument();
+	});
+
 	describe('Number of Items Input', () => {
 		it('allows changing input value', async () => {
-			renderComponent({itemConfig: {paginationType: 'none'}});
+			await act(async () => {
+				renderComponent({itemConfig: {paginationType: 'none'}});
+			});
 
 			const input = screen.getByLabelText(
 				'maximum-number-of-items-to-display'
@@ -299,11 +391,13 @@ describe('CollectionGeneralPanel', () => {
 		});
 
 		it('shows a warning message when the number of items is bigger than the total items of the collection', async () => {
-			renderComponent({
-				itemConfig: {
-					numberOfItems: 33,
-					paginationType: 'none',
-				},
+			await act(async () => {
+				renderComponent({
+					itemConfig: {
+						numberOfItems: 33,
+						paginationType: 'none',
+					},
+				});
 			});
 
 			expect(
@@ -313,20 +407,22 @@ describe('CollectionGeneralPanel', () => {
 			).toBeInTheDocument();
 		});
 
-		it('shows a message saying that exceeding the default max value could affeect performance', async () => {
+		it('shows a message saying that exceeding the default max value could affect performance', async () => {
 			renderComponent({itemConfig: {paginationType: 'none'}});
 
 			expect(
 				await screen.findByText(
-					'setting-a-value-above-x-can-affect-page-performance-severely'
+					'setting-a-value-above-50-can-affect-page-performance-severely'
 				)
 			).toBeInTheDocument();
 		});
 	});
 
 	describe('Number of Pages Input', () => {
-		it('allows changing input value', () => {
-			renderComponent();
+		it('allows changing input value', async () => {
+			await act(async () => {
+				renderComponent();
+			});
 
 			const input = screen.getByLabelText(
 				'maximum-number-of-pages-to-display'
@@ -348,8 +444,10 @@ describe('CollectionGeneralPanel', () => {
 	});
 
 	describe('Number of Items per Page Input', () => {
-		it('allows changing the input value', () => {
-			renderComponent();
+		it('allows changing the input value', async () => {
+			await act(async () => {
+				renderComponent();
+			});
 
 			const input = screen.getByLabelText(
 				'maximum-number-of-items-per-page'
@@ -370,15 +468,17 @@ describe('CollectionGeneralPanel', () => {
 		});
 
 		it('shows a warning message when the number of items per page is bigger than searchContainerPageMaxDelta', async () => {
-			renderComponent({
-				itemConfig: {
-					numberOfItemsPerPage: 53,
-				},
+			await act(async () => {
+				renderComponent({
+					itemConfig: {
+						numberOfItemsPerPage: 53,
+					},
+				});
 			});
 
 			expect(
 				await screen.findByText(
-					'you-can-only-display-a-maximum-of-x-items-per-page'
+					'you-can-only-display-a-maximum-of-50-items-per-page'
 				)
 			).toBeInTheDocument();
 		});
@@ -418,59 +518,44 @@ describe('CollectionGeneralPanel', () => {
 				}
 			);
 
-			const {findByText} = renderComponent({
-				fragmentEntryLinks: {
-					'collection-filter-fragment-a': {
-						editableValues: {
-							[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
-								targetCollections: ['collection-display-a'],
+			await act(async () => {
+				renderComponent({
+					fragmentEntryLinks: {
+						'collection-filter-fragment-a': {
+							editableValues: {
+								[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
+									targetCollections: ['collection-display-a'],
+								},
 							},
+							fragmentEntryKey: COLLECTION_FILTER_FRAGMENT_ENTRY_KEY,
 						},
-						fragmentEntryKey: COLLECTION_FILTER_FRAGMENT_ENTRY_KEY,
 					},
-				},
 
-				itemId: 'collection-display-a',
-				layoutData: {
-					items: {
-						'collection-display-a': {
-							itemId: 'collection-display-a',
-							type: LAYOUT_DATA_ITEM_TYPES.collection,
-						},
-						'collection-filter-a': {
-							config: {
-								fragmentEntryLinkId:
-									'collection-filter-fragment-a',
+					itemId: 'collection-display-a',
+					layoutData: {
+						items: {
+							'collection-display-a': {
+								itemId: 'collection-display-a',
+								type: LAYOUT_DATA_ITEM_TYPES.collection,
 							},
-							itemId: 'collection-filter-a',
-							type: LAYOUT_DATA_ITEM_TYPES.fragment,
+							'collection-filter-a': {
+								config: {
+									fragmentEntryLinkId:
+										'collection-filter-fragment-a',
+								},
+								itemId: 'collection-filter-a',
+								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+							},
 						},
 					},
-				},
+				});
 			});
 
-			await findByText('Collection Selector');
+			await screen.findByText('Collection Selector');
 
 			expect(confirm).toHaveBeenCalledWith(
 				'if-you-change-the-collection-you-unlink-the-collection-filter\n\ndo-you-want-to-continue'
 			);
-		});
-	});
-
-	it('allows changing Layout for a given viewport', () => {
-		renderComponent({
-			selectedViewportSize: 'tablet',
-		});
-		const input = screen.getByLabelText('layout');
-
-		userEvent.type(input, '1');
-		fireEvent.change(input);
-
-		expect(updateItemConfig).toHaveBeenCalledWith({
-			itemConfig: {
-				tablet: {numberOfColumns: '1'},
-			},
-			itemId: '0',
 		});
 	});
 });

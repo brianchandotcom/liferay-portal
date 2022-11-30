@@ -69,7 +69,7 @@ const Sidebar = () => {
 			className: 'mt-3',
 			element: (
 				<div
-					className={classNames(' testray-sidebar-item ', {
+					className={classNames('testray-sidebar-item', {
 						'testray-sidebar-item-expand': expanded,
 						'testray-sidebar-item-normal': !expanded,
 					})}

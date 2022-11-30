@@ -17,15 +17,19 @@ package com.liferay.fragment.entry.processor.internal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
@@ -35,6 +39,8 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -57,6 +63,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -180,6 +187,33 @@ public class FragmentEntryProcessorHelperTest {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"fieldId", "NoExistingFieldId"
+				)));
+	}
+
+	@Test
+	public void testGetFieldValueFromStringValue() throws Exception {
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.TEXT);
+
+		String fieldValue = StringBundler.concat(
+			"<script>alert(\"", RandomTestUtil.randomString(), "\")</script>");
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			ddmFormField, _ddmFormValuesToFieldsConverter, fieldValue,
+			_group.getGroupId(), _journalConverter);
+
+		Assert.assertEquals(
+			_html.escape(fieldValue),
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "DDMStructure_" + ddmFormField.getName()
 				)));
 	}
 
@@ -397,6 +431,24 @@ public class FragmentEntryProcessorHelperTest {
 		return _addJournalArticle(ddmStructure, fieldId, fileEntry, title);
 	}
 
+	private DDMFormField _createDDMFormField(String type) {
+		DDMFormField ddmFormField = new DDMFormField(
+			RandomTestUtil.randomString(10), type);
+
+		ddmFormField.setDataType("text");
+		ddmFormField.setIndexType("text");
+		ddmFormField.setLocalizable(true);
+
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(
+			LocaleUtil.US, RandomTestUtil.randomString(10));
+
+		ddmFormField.setLabel(localizedValue);
+
+		return ddmFormField;
+	}
+
 	private Document _createDocument(
 		String availableLocales, String defaultLocale) {
 
@@ -496,10 +548,19 @@ public class FragmentEntryProcessorHelperTest {
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
+	@Inject
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Html _html;
+
+	@Inject
+	private JournalConverter _journalConverter;
 
 	@Inject
 	private Portal _portal;

@@ -45,25 +45,25 @@ public interface UserAccountResource {
 	public void
 			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public void
 			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception;
 
 	public Page<UserAccount> getAccountUserAccountsByExternalReferenceCodePage(
@@ -383,13 +383,12 @@ public interface UserAccountResource {
 		public void
 				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 					String accountExternalReferenceCode,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					accountExternalReferenceCode,
-					userAccountExternalReferenceCode);
+					accountExternalReferenceCode, externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -431,7 +430,7 @@ public interface UserAccountResource {
 		public HttpInvoker.HttpResponse
 				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -458,13 +457,11 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path(
 				"accountExternalReferenceCode", accountExternalReferenceCode);
-			httpInvoker.path(
-				"userAccountExternalReferenceCode",
-				userAccountExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -475,13 +472,12 @@ public interface UserAccountResource {
 		public void
 				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 					String accountExternalReferenceCode,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					accountExternalReferenceCode,
-					userAccountExternalReferenceCode);
+					accountExternalReferenceCode, externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -523,7 +519,7 @@ public interface UserAccountResource {
 		public HttpInvoker.HttpResponse
 				postAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					String accountExternalReferenceCode,
-					String userAccountExternalReferenceCode)
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -550,13 +546,11 @@ public interface UserAccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path(
 				"accountExternalReferenceCode", accountExternalReferenceCode);
-			httpInvoker.path(
-				"userAccountExternalReferenceCode",
-				userAccountExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

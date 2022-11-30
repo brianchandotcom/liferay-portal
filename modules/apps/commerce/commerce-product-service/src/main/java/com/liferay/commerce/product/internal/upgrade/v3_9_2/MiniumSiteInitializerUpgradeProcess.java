@@ -62,8 +62,8 @@ public class MiniumSiteInitializerUpgradeProcess extends UpgradeProcess {
 		PreparedStatement preparedStatement1 =
 			AutoBatchPreparedStatementUtil.autoBatch(
 				connection,
-				"select plid from Layout where groupId = ? and parentPlid = 0 " +
-					"and type_ = 'portlet' and friendlyURL != '/login' " +
+				"select plid from Layout where groupId = ? and parentPlid = " +
+					"0 and type_ = 'portlet' and friendlyURL != '/login' " +
 						"order by priority");
 		PreparedStatement preparedStatement2 =
 			AutoBatchPreparedStatementUtil.autoBatch(
@@ -109,8 +109,8 @@ public class MiniumSiteInitializerUpgradeProcess extends UpgradeProcess {
 		PreparedStatement preparedStatement4 =
 			AutoBatchPreparedStatementUtil.autoBatch(
 				connection,
-				"update LayoutFriendlyURL set privateLayout = ? where " +
-					"plid = ? and groupId = ? and privateLayout = ?");
+				"update LayoutFriendlyURL set privateLayout = ? where plid = " +
+					"? and groupId = ? and privateLayout = ?");
 
 		preparedStatement1.setLong(1, siteGroupId);
 		preparedStatement1.setBoolean(2, true);

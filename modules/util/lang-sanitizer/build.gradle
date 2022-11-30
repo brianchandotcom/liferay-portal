@@ -5,6 +5,17 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 }
 
+deploy {
+	doFirst {
+		delete liferay.deployDir
+
+		copy {
+			from (configurations.compile)
+			into liferay.deployDir
+		}
+	}
+}
+
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.lang.sanitizer/lib"
 }

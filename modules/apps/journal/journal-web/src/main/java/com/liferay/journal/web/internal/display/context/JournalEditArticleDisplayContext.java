@@ -314,9 +314,7 @@ public class JournalEditArticleDisplayContext {
 		return _availableLocales;
 	}
 
-	public Map<String, Object> getChangeDefaultLanguageData()
-		throws PortalException {
-
+	public Map<String, Object> getChangeDefaultLanguageData() {
 		return HashMapBuilder.<String, Object>put(
 			"defaultLanguage", getDefaultArticleLanguageId()
 		).put(
@@ -412,20 +410,18 @@ public class JournalEditArticleDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getDataEngineLayoutRendererComponentContext()
-		throws PortalException {
-
+	public Map<String, Object> getDataEngineLayoutRendererComponentContext() {
 		return HashMapBuilder.<String, Object>put(
 			"currentLanguageId", getSelectedLanguageId()
 		).build();
 	}
 
-	public DDMFormValues getDDMFormValues() throws PortalException {
+	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
+		throws PortalException {
+
 		if (_ddmFormValues != null) {
 			return _ddmFormValues;
 		}
-
-		DDMStructure ddmStructure = getDDMStructure();
 
 		if (_isDDMFormValuesEdited() || (_article == null)) {
 			DDMFormValuesFactory ddmFormValuesFactory =
@@ -578,7 +574,7 @@ public class JournalEditArticleDisplayContext {
 		return _ddmTemplateKey;
 	}
 
-	public String getDefaultArticleLanguageId() throws PortalException {
+	public String getDefaultArticleLanguageId() {
 		if (_defaultArticleLanguageId != null) {
 			return _defaultArticleLanguageId;
 		}
@@ -599,7 +595,7 @@ public class JournalEditArticleDisplayContext {
 				siteDefaultLocale);
 		}
 		else {
-			DDMFormValues ddmFormValues = getDDMFormValues();
+			DDMFormValues ddmFormValues = _article.getDDMFormValues();
 
 			_defaultArticleLanguageId = LocaleUtil.toLanguageId(
 				ddmFormValues.getDefaultLocale());
@@ -800,7 +796,7 @@ public class JournalEditArticleDisplayContext {
 		).build();
 	}
 
-	public String getSelectedLanguageId() throws PortalException {
+	public String getSelectedLanguageId() {
 		if (Validator.isNotNull(_defaultLanguageId)) {
 			return _defaultLanguageId;
 		}
@@ -927,13 +923,15 @@ public class JournalEditArticleDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getValues() throws PortalException {
+	public Map<String, Object> getValues(DDMStructure ddmStructure)
+		throws PortalException {
+
 		DDMFormValuesToMapConverter ddmFormValuesToMapConverter =
 			(DDMFormValuesToMapConverter)_httpServletRequest.getAttribute(
 				DDMFormValuesToMapConverter.class.getName());
 
 		return ddmFormValuesToMapConverter.convert(
-			getDDMFormValues(), getDDMStructure());
+			getDDMFormValues(ddmStructure), ddmStructure);
 	}
 
 	public double getVersion() {
@@ -1101,7 +1099,7 @@ public class JournalEditArticleDisplayContext {
 		return _displayPageType;
 	}
 
-	private String[] _getAvailableLanguageIds() throws PortalException {
+	private String[] _getAvailableLanguageIds() {
 		if (_article == null) {
 			return new String[] {getDefaultArticleLanguageId()};
 		}

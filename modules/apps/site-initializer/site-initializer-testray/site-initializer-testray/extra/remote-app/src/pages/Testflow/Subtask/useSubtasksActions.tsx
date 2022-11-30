@@ -34,6 +34,24 @@ const useSubtasksActions = () => {
 
 	const actionsRef = useRef([
 		{
+			action: (subtask, mutate) => {
+				testraySubTaskImpl.assignToMe(subtask).then(() => {
+					updateItemFromList(
+						mutate,
+						0,
+						{},
+						{
+							revalidate: true,
+						}
+					);
+				});
+			},
+			hidden: ({dueStatus}) =>
+				dueStatus?.key === SubTaskStatuses.IN_ANALYSIS,
+			icon: 'user',
+			name: i18n.sub('assign-to-me-and-x', 'begin-analysis'),
+		},
+		{
 			action: (subtask, mutate) =>
 				onOpenModal({
 					body: (

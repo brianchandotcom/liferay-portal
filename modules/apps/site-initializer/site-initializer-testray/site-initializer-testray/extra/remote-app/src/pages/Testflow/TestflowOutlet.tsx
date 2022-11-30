@@ -28,7 +28,7 @@ const TestflowOutlet = () => {
 	const archivedPathIsActive = pathname === '/testflow/archived';
 
 	const {data: testrayTask, mutate: mutateTask} = useFetch<TestrayTask>(
-		testrayTaskImpl.getResource(taskId as string),
+		taskId ? testrayTaskImpl.getResource(taskId) : null,
 		(response) => testrayTaskImpl.transformData(response)
 	);
 

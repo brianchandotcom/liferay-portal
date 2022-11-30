@@ -98,7 +98,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		if (userIds.length) {
 			await testrayTaskUsersImpl.createBatch(
 				userIds.map((userId) => ({
-					name: `${task.id} - ${userId}`,
+					name: `${task.id}-${userId}`,
 					taskId: task.id,
 					userId,
 				}))

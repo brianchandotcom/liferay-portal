@@ -69,7 +69,7 @@ const Sidebar = () => {
 			className: 'mt-3',
 			element: (
 				<div
-					className={classNames('pt-3', {
+					className={classNames(' testray-sidebar-item ', {
 						'testray-sidebar-item-expand': expanded,
 						'testray-sidebar-item-normal': !expanded,
 					})}
@@ -118,7 +118,7 @@ const Sidebar = () => {
 					<div className="testray-sidebar-content">
 						<div>
 							<Link
-								className="d-flex flex-center mb-5 mt-5 w-100"
+								className="d-flex flex-center mb-5 mt-2 w-100"
 								to="/"
 							>
 								<TestrayIcon className="testray-logo" />

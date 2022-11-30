@@ -1,3 +1,8 @@
+$hover-transition-width: width 0.9s ease;
+$hover-transition: opacity 1s ease;
+$normal-transition-width: width 0.9s ease;
+$normal-transition: opacity 1s ease;
+
 .task-sidebar {
 	color: #8b8db2;
 	display: flex;
@@ -30,6 +35,19 @@
 		top: 0;
 	}
 
+	.sidebar-item-hidden {
+		opacity: 0;
+		transform: $normal-transition-width;
+		visibility: hidden;
+		width: 0;
+	}
+
+	.sidebar-item-visible {
+		opacity: 1;
+		transform: $normal-transition-width;
+		visibility: visible;
+	}
+
 	.scroller {
 		overflow-y: scroll;
 		scrollbar-color: #8b8db2;
@@ -48,6 +66,18 @@
 		background-color: #8b8db2;
 		border: 3px solid #18215c;
 		border-radius: 20px;
+	}
+
+	a {
+		color: #8b8db2;
+	}
+
+	.sidebar-link {
+		box-sizing: border-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 200px;
 	}
 }
 

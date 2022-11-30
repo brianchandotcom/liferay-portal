@@ -22,7 +22,7 @@
 							disabled
 							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						>
-							${htmlUtil.escape(entry.getTypeName())}
+							${htmlUtil.escape(entry.getBucketText())}
 
 							<#if entry.isFrequencyVisible()>
 								<small class="term-count">

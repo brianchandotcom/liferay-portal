@@ -86,11 +86,11 @@ public class TypeFacetPortletDisplayTemplateHandler
 			PortletDisplayTemplateConstants.ENTRY, "getFrequency()");
 		templateVariableGroup.addVariable(
 			"term-name", String.class, PortletDisplayTemplateConstants.ENTRY,
-			"getTypeName()");
+			"getBucketText()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"term", AssetEntriesSearchFacetTermDisplayContext.class,
-			PortletDisplayTemplateConstants.ENTRY, "getTypeName()");
+			PortletDisplayTemplateConstants.ENTRY, "getBucketText()");
 		templateVariableGroup.addVariable(
 			"type-facet-display-context",
 			AssetEntriesSearchFacetDisplayContext.class,

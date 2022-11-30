@@ -111,7 +111,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		assetEntriesSearchFacetFieldDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
 		assetEntriesSearchFacetFieldDisplayContext.setSelected(selected);
-		assetEntriesSearchFacetFieldDisplayContext.setTypeName(typeName);
+		assetEntriesSearchFacetFieldDisplayContext.setBucketText(typeName);
 
 		return assetEntriesSearchFacetFieldDisplayContext;
 	}

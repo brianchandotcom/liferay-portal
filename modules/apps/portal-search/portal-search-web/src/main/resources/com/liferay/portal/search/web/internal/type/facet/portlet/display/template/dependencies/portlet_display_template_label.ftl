@@ -23,7 +23,7 @@
 						type="button"
 					>
 						<span class="label-item label-item-expand">
-							${htmlUtil.escape(entry.getTypeName())}
+							${htmlUtil.escape(entry.getBucketText())}
 
 							<#if entry.isFrequencyVisible()>
 								(${entry.getFrequency()})

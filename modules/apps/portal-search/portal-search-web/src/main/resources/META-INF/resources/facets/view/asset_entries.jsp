@@ -67,7 +67,7 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = as
 
 					<li class="facet-value">
 						<a class="<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetTermDisplayContext.getFilterValue()) %>" href="javascript:void(0);">
-							<%= assetEntriesSearchFacetTermDisplayContext.getTypeName() %>
+							<%= assetEntriesSearchFacetTermDisplayContext.getBucketText() %>
 
 							<c:if test="<%= assetEntriesSearchFacetTermDisplayContext.isFrequencyVisible() %>">
 								<span class="frequency">(<%= assetEntriesSearchFacetTermDisplayContext.getFrequency() %>)</span>

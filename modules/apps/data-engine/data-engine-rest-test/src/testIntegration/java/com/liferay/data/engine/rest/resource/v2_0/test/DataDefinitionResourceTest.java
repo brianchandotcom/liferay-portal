@@ -19,6 +19,9 @@ import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectRegist
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutColumn;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutPage;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutRow;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.permission.Permission;
@@ -45,8 +48,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -510,6 +517,25 @@ public class DataDefinitionResourceTest
 
 	@Override
 	@Test
+	public void testPostDataDefinitionCopy() throws Exception {
+		DataDefinition randomDataDefinition =
+			testGetDataDefinition_addDataDefinition();
+
+		DataDefinition copiedDataDefinition =
+			testPostDataDefinitionCopy_addDataDefinition(randomDataDefinition);
+
+		_testCopiedDataDefinitionDataLayout(
+			randomDataDefinition.getDefaultDataLayout(),
+			copiedDataDefinition.getDefaultDataLayout());
+		_testCopiedDataDefinitionFields(
+			randomDataDefinition.getDataDefinitionFields(),
+			copiedDataDefinition.getDataDefinitionFields());
+
+		assertValid(copiedDataDefinition);
+	}
+
+	@Override
+	@Test
 	public void testPostSiteDataDefinitionByContentType() throws Exception {
 		super.testPostSiteDataDefinitionByContentType();
 
@@ -718,6 +744,15 @@ public class DataDefinitionResourceTest
 	}
 
 	@Override
+	protected DataDefinition testPostDataDefinitionCopy_addDataDefinition(
+			DataDefinition dataDefinition)
+		throws Exception {
+
+		return dataDefinitionResource.postDataDefinitionCopy(
+			dataDefinition.getId());
+	}
+
+	@Override
 	protected DataDefinition
 			testPostSiteDataDefinitionByContentType_addDataDefinition(
 				DataDefinition dataDefinition)
@@ -767,6 +802,86 @@ public class DataDefinitionResourceTest
 		dataDefinition.setSiteId(testGroup.getGroupId());
 
 		return dataDefinition;
+	}
+
+	private List<String> _getDataLayoutColumnFieldNames(DataLayout dataLayout) {
+		List<String> dataLayoutColumnFieldNames = new ArrayList<>();
+
+		for (DataLayoutPage dataLayoutPage : dataLayout.getDataLayoutPages()) {
+			for (DataLayoutRow dataLayoutRow :
+					dataLayoutPage.getDataLayoutRows()) {
+
+				for (DataLayoutColumn dataLayoutColumn :
+						dataLayoutRow.getDataLayoutColumns()) {
+
+					Collections.addAll(
+						dataLayoutColumnFieldNames,
+						dataLayoutColumn.getFieldNames());
+				}
+			}
+		}
+
+		return dataLayoutColumnFieldNames;
+	}
+
+	private void _testCopiedDataDefinitionDataLayout(
+		DataLayout dataLayout1, DataLayout dataLayout2) {
+
+		List<String> dataLayoutColumnFieldNames1 =
+			_getDataLayoutColumnFieldNames(dataLayout1);
+
+		List<String> dataLayoutColumnFieldNames2 =
+			_getDataLayoutColumnFieldNames(dataLayout2);
+
+		Assert.assertEquals(
+			dataLayoutColumnFieldNames2.toString(),
+			dataLayoutColumnFieldNames1.size(),
+			dataLayoutColumnFieldNames2.size());
+
+		for (int i = 0; i < dataLayoutColumnFieldNames1.size(); i++) {
+			Assert.assertEquals(
+				"CopyOf" + dataLayoutColumnFieldNames1.get(i),
+				dataLayoutColumnFieldNames2.get(i));
+		}
+	}
+
+	private void _testCopiedDataDefinitionFields(
+		DataDefinitionField[] dataDefinitionFields1,
+		DataDefinitionField[] dataDefinitionFields2) {
+
+		Assert.assertEquals(
+			Arrays.toString(dataDefinitionFields2),
+			dataDefinitionFields1.length, dataDefinitionFields2.length);
+
+		for (int i = 0; i < dataDefinitionFields1.length; i++) {
+			Assert.assertEquals(
+				"CopyOf" + dataDefinitionFields1[i].getName(),
+				dataDefinitionFields2[i].getName());
+
+			Map<String, Object> customProperties1 =
+				dataDefinitionFields1[i].getCustomProperties();
+			Map<String, Object> customProperties2 =
+				dataDefinitionFields2[i].getCustomProperties();
+
+			Assert.assertEquals(
+				customProperties1.containsKey("fieldReference"),
+				customProperties2.containsKey("fieldReference"));
+
+			if (customProperties1.containsKey("fieldReference")) {
+				Assert.assertEquals(
+					"CopyOf" + customProperties1.get("fieldReference"),
+					customProperties2.get("fieldReference"));
+			}
+
+			if (!customProperties1.containsKey("structureId") &&
+				!Objects.equals(
+					dataDefinitionFields1[i].getFieldType(), "fieldset")) {
+
+				_testCopiedDataDefinitionFields(
+					dataDefinitionFields1[i].getNestedDataDefinitionFields(),
+					dataDefinitionFields2[i].getNestedDataDefinitionFields());
+			}
+		}
 	}
 
 	private void _testGetSiteDataDefinitionsPage(

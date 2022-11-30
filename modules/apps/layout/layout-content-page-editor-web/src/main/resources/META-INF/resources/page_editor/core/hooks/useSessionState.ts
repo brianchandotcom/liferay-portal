@@ -16,15 +16,18 @@ import {useEffect, useState} from 'react';
 
 import isNullOrUndefined from '../../app/utils/isNullOrUndefined';
 
-export function useSessionState(key, defaultValue = undefined) {
+export function useSessionState<T>(
+	key: string,
+	defaultValue: T | undefined = undefined
+) {
 	const [state, setState] = useState(() => {
-		const persistedState = window.sessionStorage.getItem(key);
+		const persistedState = window.sessionStorage.getItem(key) || '';
 
 		try {
 			const deserializedValue = JSON.parse(persistedState);
 
 			if (!isNullOrUndefined(deserializedValue)) {
-				return deserializedValue;
+				return deserializedValue as T;
 			}
 		}
 		catch (_error) {}
@@ -41,5 +44,5 @@ export function useSessionState(key, defaultValue = undefined) {
 		}
 	}, [key, state]);
 
-	return [state, setState];
+	return [state, setState] as const;
 }

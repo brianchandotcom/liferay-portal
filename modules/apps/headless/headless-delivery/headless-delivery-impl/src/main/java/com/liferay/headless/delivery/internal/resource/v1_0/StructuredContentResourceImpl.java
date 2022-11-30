@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -27,6 +28,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
@@ -947,8 +949,17 @@ public class StructuredContentResourceImpl
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
+
+		ddmFormValues.setDDMFormFieldValues(
+			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
+				ddmForm.getDDMFormFields(),
+				ddmFormValues.getDDMFormFieldValuesMap(true)));
+
 		Fields fields = _ddmFormValuesToFieldsConverter.convert(
-			ddmStructure, journalArticle.getDDMFormValues());
+			ddmStructure, ddmFormValues);
 
 		if (ArrayUtil.isEmpty(contentFields)) {
 			return fields;

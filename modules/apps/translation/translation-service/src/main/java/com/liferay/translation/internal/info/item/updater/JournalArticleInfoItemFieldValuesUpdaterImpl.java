@@ -18,11 +18,14 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.info.field.InfoField;
@@ -153,8 +156,17 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 		DDMStructure ddmStructure = latestArticle.getDDMStructure();
 
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		DDMFormValues ddmFormValues = latestArticle.getDDMFormValues();
+
+		ddmFormValues.setDDMFormFieldValues(
+			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
+				ddmForm.getDDMFormFields(),
+				ddmFormValues.getDDMFormFieldValuesMap(true)));
+
 		Fields fields = _ddmFormValuesToFieldsConverter.convert(
-			ddmStructure, latestArticle.getDDMFormValues());
+			ddmStructure, ddmFormValues);
 
 		for (Locale targetLocale : translatedLocales) {
 			titleMap.put(

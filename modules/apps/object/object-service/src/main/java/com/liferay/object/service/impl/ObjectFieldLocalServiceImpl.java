@@ -610,6 +610,27 @@ public class ObjectFieldLocalServiceImpl
 		return newObjectField;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectField updateDBTableName(long objectFieldId)
+		throws PortalException {
+
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		if (Validator.isNotNull(objectField.getDBTableName())) {
+			return objectField;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectField.getObjectDefinitionId());
+
+		objectField.setDBTableName(objectDefinition.getDBTableName());
+
+		return objectFieldPersistence.update(objectField);
+	}
+
 	@Override
 	public ObjectField updateObjectField(
 			String externalReferenceCode, long objectFieldId, long userId,

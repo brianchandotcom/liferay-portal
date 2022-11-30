@@ -48,7 +48,8 @@ const useActiviyQuestionKebabOptions = ({
 				message: Liferay.Language.get('copied-link-to-the-clipboard'),
 				type: 'success',
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			setError(error);
 
 			openToast({
@@ -56,7 +57,8 @@ const useActiviyQuestionKebabOptions = ({
 				title: Liferay.Language.get('an-error-occurred'),
 				type: 'warning',
 			});
-		} finally {
+		}
+		finally {
 			setTimeout(() => {
 				setError(null);
 			}, FEEDBACK_DELAY);

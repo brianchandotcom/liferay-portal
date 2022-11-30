@@ -130,7 +130,36 @@ definition {
 	@description = "Automation ID: LPS-166937 | Test Summary: Assert that users with the roles Partner Members, Requesters and Users cannot see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)"
 	@ignore = "true"
 	@priority = "4"
-	test UserPartnerMemberAndRequesterRoleCannotSeeSomeAllActionsForDXP {
+	test UserPartnerMemberAndRequesterRoleCannotSeeSomeActionsForDXP {
+
+			// Needs refactor since it depends on example Avangrid Portals account
+
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task("Click in the Action button and assert the user with the right role can see the option"){
+			CustomerPortal.clickAtButton(text = "Actions");
+
+			AssertElementNotPresent(
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
+				key_text = "Generate New");
+
+			CustomerPortal.clickAtButton(text = "Actions");
+
+			AssertElementNotPresent(
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
+				key_text = "Deactivate");
+		}
+	
 	}
 
 	@description = "Automation ID: LPS-166940 | Test Summary: Verify that users with the roles Partner Members, Requesters and Users cannot see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)."

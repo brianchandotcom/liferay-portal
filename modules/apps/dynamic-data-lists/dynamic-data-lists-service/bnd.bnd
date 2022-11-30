@@ -34,4 +34,3 @@ Import-Package:\
 Liferay-Require-SchemaVersion: 2.3.0
 Liferay-Service: true
 -dsannotations-options: inherit
--includeresource: @poi-[0-9.]*.jar

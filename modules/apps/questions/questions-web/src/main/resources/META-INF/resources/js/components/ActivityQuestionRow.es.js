@@ -60,7 +60,7 @@ export default function ActivityQuestionRow({
 	const messageType = useMemo(() => {
 		if (question.showAsAnswer === true) {
 			return {
-				label: Liferay.Language.get('best answer'),
+				label: Liferay.Language.get('best-answer'),
 				symbol: 'check-circle-full',
 				text: stripHTML(question.articleBody).replace(
 					MESSAGE_TYPES.answer.prefix,
@@ -102,6 +102,7 @@ export default function ActivityQuestionRow({
 				'c-mt-3 c-p-3 position-relative question-row text-secondary',
 				{
 					'question-row-selected': isRowSelected,
+					'question-row-unselected': !isRowSelected,
 				}
 			)}
 		>

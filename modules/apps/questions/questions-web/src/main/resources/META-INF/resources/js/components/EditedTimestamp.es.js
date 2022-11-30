@@ -60,7 +60,7 @@ const EditedTimestamp = ({
 			{!styledTimeStamp && !showSignature && (
 				<div>
 					<ClayTooltipProvider>
-						<span className="c-ml-1 small">{selectedText}</span>
+						<span className="c-ml-2 small">{selectedText}</span>
 					</ClayTooltipProvider>
 				</div>
 			)}

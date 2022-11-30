@@ -18,8 +18,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import ActivityQuestionRow from '../../components/ActivityQuestionRow.es';
 import PaginatedList from '../../components/PaginatedList.es';
-import QuestionRow from '../../components/QuestionRow.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
@@ -111,7 +111,7 @@ export default withRouter(
 				.messageBoardSection.title;
 
 		return (
-			<section className="d-flex justify-content-between p-0 questions-section questions-section-list">
+			<section className="d-flex justify-content-between p-0 questions-section questions-section-list user-activity-page">
 				<div className="activity-panel col-xl-8 pl-5 pr-3">
 					<h2 className="py-2">
 						{Liferay.Language.get('latest-activity')}
@@ -142,8 +142,9 @@ export default withRouter(
 						totalCount={totalCount}
 					>
 						{(question) => (
-							<QuestionRow
+							<ActivityQuestionRow
 								context={context}
+								creatorId={question.creator?.id}
 								currentSection={
 									context.useTopicNamesInURL
 										? question.messageBoardThread
@@ -164,7 +165,6 @@ export default withRouter(
 								}}
 								question={addSectionToQuestion(question)}
 								rowSelected={currentQuestion?.friendlyUrlPath}
-								showSectionLabel={true}
 							/>
 						)}
 					</PaginatedList>

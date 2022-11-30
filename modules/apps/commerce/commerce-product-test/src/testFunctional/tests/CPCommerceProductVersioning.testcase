@@ -488,7 +488,7 @@ definition {
 
 				CommerceEntry.clickNoError(menuItem = "Delete");
 
-				Alert.viewSuccessMessageText(successMessage = "Action Completed");
+				Alert.viewSuccessMessage();
 
 				if (("${status}" == "Approved") || ("${status}" == "Incomplete")) {
 					AssertElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
@@ -549,7 +549,7 @@ definition {
 
 				CommerceEntry.clickNoError(menuItem = "Delete");
 
-				Alert.viewSuccessMessageText(successMessage = "Action Completed");
+				Alert.viewSuccessMessage();
 
 				if (("${productName}" == "Simple T-Shirt") || ("${productName}" == "Copy of Simple T-Shirt")) {
 					AssertElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");

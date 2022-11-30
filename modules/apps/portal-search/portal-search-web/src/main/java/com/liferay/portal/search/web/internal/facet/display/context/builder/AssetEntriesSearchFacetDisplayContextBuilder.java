@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration;
 
 import java.io.Serializable;
@@ -70,7 +70,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	public AssetEntriesSearchFacetDisplayContext build() {
 		setTypeNames(getTypeNames());
 
-		List<AssetEntriesSearchFacetTermDisplayContext> termDisplayContexts =
+		List<BucketDisplayContext> termDisplayContexts =
 			buildTermDisplayContexts();
 
 		AssetEntriesSearchFacetDisplayContext
@@ -99,12 +99,12 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		return assetEntriesSearchFacetDisplayContext;
 	}
 
-	public AssetEntriesSearchFacetTermDisplayContext buildTermDisplay(
+	public BucketDisplayContext buildTermDisplay(
 		String typeName, boolean selected, String assetType, int frequency) {
 
-		AssetEntriesSearchFacetTermDisplayContext
+		BucketDisplayContext
 			assetEntriesSearchFacetFieldDisplayContext =
-				new AssetEntriesSearchFacetTermDisplayContext();
+				new BucketDisplayContext();
 
 		assetEntriesSearchFacetFieldDisplayContext.setBucketText(typeName);
 		assetEntriesSearchFacetFieldDisplayContext.setFilterValue(assetType);
@@ -116,7 +116,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		return assetEntriesSearchFacetFieldDisplayContext;
 	}
 
-	public List<AssetEntriesSearchFacetTermDisplayContext>
+	public List<BucketDisplayContext>
 		buildTermDisplayContexts() {
 
 		if (_facet == null) {
@@ -129,7 +129,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			return Collections.emptyList();
 		}
 
-		List<AssetEntriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetEntriesSearchFacetFieldDisplayContexts = new ArrayList<>();
 
 		List<String> assetTypes = new SortedArrayList<>(
@@ -169,7 +169,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 				typeName = assetType;
 			}
 
-			AssetEntriesSearchFacetTermDisplayContext
+			BucketDisplayContext
 				assetEntriesSearchFacetFieldDisplayContext = buildTermDisplay(
 					typeName, selected, assetType, frequency);
 

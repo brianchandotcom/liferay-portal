@@ -45,7 +45,7 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 		return _parameterValues;
 	}
 
-	public List<AssetEntriesSearchFacetTermDisplayContext>
+	public List<BucketDisplayContext>
 		getTermDisplayContexts() {
 
 		return _assetEntriesSearchFacetTermDisplayContext;
@@ -96,7 +96,7 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 	}
 
 	public void setTermDisplayContexts(
-		List<AssetEntriesSearchFacetTermDisplayContext>
+		List<BucketDisplayContext>
 			assetEntriesSearchFacetFieldDisplayContext) {
 
 		_assetEntriesSearchFacetTermDisplayContext =
@@ -111,7 +111,7 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 			typeFacetPortletInstanceConfiguration;
 	}
 
-	private List<AssetEntriesSearchFacetTermDisplayContext>
+	private List<BucketDisplayContext>
 		_assetEntriesSearchFacetTermDisplayContext;
 	private long _displayStyleGroupId;
 	private boolean _nothingSelected;

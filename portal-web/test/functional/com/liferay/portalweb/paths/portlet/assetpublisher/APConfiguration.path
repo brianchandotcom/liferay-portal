@@ -291,11 +291,6 @@
 	<td>//fieldset[./*[normalize-space()='Asset Entries']]//button[normalize-space()='Select in ${key_depotName}']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET</td>
-	<td>//button[@data-title='Select ${key_assetType}']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

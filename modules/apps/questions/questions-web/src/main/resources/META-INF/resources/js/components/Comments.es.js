@@ -39,6 +39,8 @@ export default withRouter(
 		question,
 		showNewComment,
 		showNewCommentChange,
+		showSignature,
+		styledItems = false,
 	}) => {
 		const context = useContext(AppContext);
 
@@ -102,6 +104,8 @@ export default withRouter(
 						editable={editable}
 						hasCompanyMx={comment.hasCompanyMx}
 						key={comment.id}
+						showSignature={showSignature}
+						styledItems={styledItems}
 					/>
 				))}
 

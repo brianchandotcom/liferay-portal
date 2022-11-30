@@ -325,7 +325,14 @@ public class SegmentsDisplayContextTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId()));
 
-		Assert.assertEquals("Current Site", _getScopeName(segmentsEntry));
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
+			Assert.assertEquals("Current Site", _getScopeName(segmentsEntry));
+		}
+		else {
+			Assert.assertEquals(
+				_group.getDescriptiveName(LocaleUtil.getDefault()),
+				_getScopeName(segmentsEntry));
+		}
 	}
 
 	@Test

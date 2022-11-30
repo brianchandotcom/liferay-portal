@@ -239,6 +239,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-168120. Allow users to rename a custom view"
+	@priority = "4"
+	test CanUpdateName {
+		task ("And Given created custom view") {
+			FDSCustomView.createNewView(entryName = "TEST");
+		}
+
+		task ("When edit custom view name") {
+			FDSCustomView.editCurrentViewName(entryName = "Edit View Name");
+		}
+
+		task ("Then name of custom view is updated in select custom view") {
+			AssertTextPresent(
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
+				value1 = "Edit View Name");
+		}
+	}
+
 	@description = "LPS-165672 - Simplify how actions are shown in the custom views section"
 	@priority = "3"
 	test HasActionsOnlyOnEllipsis {
@@ -270,24 +288,6 @@ definition {
 			AssertElementNotPresent(
 				key_itemName = "Delete View",
 				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
-		}
-	}
-
-	@description = "LPS-168120. Allow users to rename a custom view"
-	@priority = "4"
-	test CanUpdateName {
-		task ("And Given created custom view") {
-			FDSCustomView.createNewView(entryName = "TEST");
-		}
-
-		task ("When edit custom view name") {
-			FDSCustomView.editCurrentViewName(entryName = "Edit View Name");
-		}
-
-		task ("Then name of custom view is updated in select custom view") {
-			AssertTextPresent(
-				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
-				value1 = "Edit View Name");
 		}
 	}
 

@@ -17,3 +17,4 @@ Import-Package:\
 	org.jdom2.*,\
 	\
 	*;resolution:=optional
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

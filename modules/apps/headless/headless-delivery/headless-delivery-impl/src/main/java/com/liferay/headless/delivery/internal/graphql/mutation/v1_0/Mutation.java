@@ -2341,6 +2341,31 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Delete the message board attachment by message board message's and message board attachment's external reference codes."
+	)
+	public boolean
+			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("messageBoardMessageExternalReferenceCode") String
+					messageBoardMessageExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardAttachmentResource ->
+				messageBoardAttachmentResource.
+					deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						messageBoardMessageExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Deletes the message board message and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteMessageBoardMessage(

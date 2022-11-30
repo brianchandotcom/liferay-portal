@@ -145,6 +145,10 @@ public class MBCategoryServiceUtil {
 			end);
 	}
 
+	public static MBCategory getCategories(long groupId, String name) {
+		return getService().getCategories(groupId, name);
+	}
+
 	public static List<Object> getCategoriesAndThreads(
 		long groupId, long categoryId) {
 

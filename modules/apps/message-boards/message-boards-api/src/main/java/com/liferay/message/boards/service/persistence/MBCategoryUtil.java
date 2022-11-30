@@ -1375,6 +1375,69 @@ public class MBCategoryUtil {
 	}
 
 	/**
+	 * Returns the message boards category where groupId = &#63; and name = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching message boards category
+	 * @throws NoSuchCategoryException if a matching message boards category could not be found
+	 */
+	public static MBCategory findByG_N(long groupId, String name)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+
+		return getPersistence().findByG_N(groupId, name);
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	public static MBCategory fetchByG_N(long groupId, String name) {
+		return getPersistence().fetchByG_N(groupId, name);
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	public static MBCategory fetchByG_N(
+		long groupId, String name, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_N(groupId, name, useFinderCache);
+	}
+
+	/**
+	 * Removes the message boards category where groupId = &#63; and name = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the message boards category that was removed
+	 */
+	public static MBCategory removeByG_N(long groupId, String name)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+
+		return getPersistence().removeByG_N(groupId, name);
+	}
+
+	/**
+	 * Returns the number of message boards categories where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the number of matching message boards categories
+	 */
+	public static int countByG_N(long groupId, String name) {
+		return getPersistence().countByG_N(groupId, name);
+	}
+
+	/**
 	 * Returns all the message boards categories where groupId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID

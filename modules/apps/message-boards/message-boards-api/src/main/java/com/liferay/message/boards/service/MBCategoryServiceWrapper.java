@@ -154,6 +154,11 @@ public class MBCategoryServiceWrapper
 	}
 
 	@Override
+	public MBCategory getCategories(long groupId, String name) {
+		return _mbCategoryService.getCategories(groupId, name);
+	}
+
+	@Override
 	public java.util.List<Object> getCategoriesAndThreads(
 		long groupId, long categoryId) {
 

@@ -210,6 +210,11 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public MBCategory getCategories(long groupId, String name) {
+		return mbCategoryPersistence.fetchByG_N(groupId, name);
+	}
+
+	@Override
 	public List<Object> getCategoriesAndThreads(long groupId, long categoryId) {
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);

@@ -4357,6 +4357,284 @@ public class MBCategoryPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_PARENTCATEGORYID_7 =
 		"mbCategory.parentCategoryId IN (";
 
+	private FinderPath _finderPathFetchByG_N;
+	private FinderPath _finderPathCountByG_N;
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and name = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching message boards category
+	 * @throws NoSuchCategoryException if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory findByG_N(long groupId, String name)
+		throws NoSuchCategoryException {
+
+		MBCategory mbCategory = fetchByG_N(groupId, name);
+
+		if (mbCategory == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", name=");
+			sb.append(name);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCategoryException(sb.toString());
+		}
+
+		return mbCategory;
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory fetchByG_N(long groupId, String name) {
+		return fetchByG_N(groupId, name, true);
+	}
+
+	/**
+	 * Returns the message boards category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
+	 */
+	@Override
+	public MBCategory fetchByG_N(
+		long groupId, String name, boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBCategory.class);
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache && productionMode) {
+			finderArgs = new Object[] {groupId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache && productionMode) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_N, finderArgs, this);
+		}
+
+		if (result instanceof MBCategory) {
+			MBCategory mbCategory = (MBCategory)result;
+
+			if ((groupId != mbCategory.getGroupId()) ||
+				!Objects.equals(name, mbCategory.getName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				List<MBCategory> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						finderCache.putResult(
+							_finderPathFetchByG_N, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!productionMode || !useFinderCache) {
+								finderArgs = new Object[] {groupId, name};
+							}
+
+							_log.warn(
+								"MBCategoryPersistenceImpl.fetchByG_N(long, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					MBCategory mbCategory = list.get(0);
+
+					result = mbCategory;
+
+					cacheResult(mbCategory);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (MBCategory)result;
+		}
+	}
+
+	/**
+	 * Removes the message boards category where groupId = &#63; and name = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the message boards category that was removed
+	 */
+	@Override
+	public MBCategory removeByG_N(long groupId, String name)
+		throws NoSuchCategoryException {
+
+		MBCategory mbCategory = findByG_N(groupId, name);
+
+		return remove(mbCategory);
+	}
+
+	/**
+	 * Returns the number of message boards categories where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the number of matching message boards categories
+	 */
+	@Override
+	public int countByG_N(long groupId, String name) {
+		name = Objects.toString(name, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBCategory.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_N;
+
+			finderArgs = new Object[] {groupId, name};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_N_GROUPID_2 =
+		"mbCategory.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_N_NAME_2 =
+		"mbCategory.name = ?";
+
+	private static final String _FINDER_COLUMN_G_N_NAME_3 =
+		"(mbCategory.name IS NULL OR mbCategory.name = '')";
+
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
 	private FinderPath _finderPathCountByG_S;
@@ -11613,6 +11891,11 @@ public class MBCategoryPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {mbCategory.getUuid(), mbCategory.getGroupId()},
 			mbCategory);
+
+		finderCache.putResult(
+			_finderPathFetchByG_N,
+			new Object[] {mbCategory.getGroupId(), mbCategory.getName()},
+			mbCategory);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -11696,6 +11979,13 @@ public class MBCategoryPersistenceImpl
 		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, mbCategoryModelImpl);
+
+		args = new Object[] {
+			mbCategoryModelImpl.getGroupId(), mbCategoryModelImpl.getName()
+		};
+
+		finderCache.putResult(_finderPathCountByG_N, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathFetchByG_N, args, mbCategoryModelImpl);
 	}
 
 	/**
@@ -12494,6 +12784,16 @@ public class MBCategoryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "parentCategoryId"}, false);
+
+		_finderPathFetchByG_N = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "name"}, true);
+
+		_finderPathCountByG_N = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "name"}, false);
 
 		_finderPathWithPaginationFindByG_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",

@@ -273,6 +273,15 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_N() throws Exception {
+		_persistence.countByG_N(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_N(0L, "null");
+
+		_persistence.countByG_N(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
@@ -667,6 +676,17 @@ public class MBCategoryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				mbCategory, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			Long.valueOf(mbCategory.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				mbCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			mbCategory.getName(),
+			ReflectionTestUtil.invoke(
+				mbCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected MBCategory addMBCategory() throws Exception {

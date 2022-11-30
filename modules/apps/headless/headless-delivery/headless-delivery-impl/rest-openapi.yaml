@@ -2695,6 +2695,8 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                modified:
+                    type: boolean
                 numberOfMessageBoardAttachments:
                     description:
                         The number of the message's attachments.

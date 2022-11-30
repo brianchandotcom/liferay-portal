@@ -22,24 +22,25 @@ import java.util.Objects;
 public class ArgumentsUtil {
 
 	public static String getValue(
-			String[] args, String key, String defaultValue) {
+		String[] args, String key, String defaultValue) {
 
-			for (String arg : args) {
-				int pos = arg.indexOf('=');
+		for (String arg : args) {
+			int pos = arg.indexOf('=');
 
-				if (pos <= 0) {
-					continue;
-				}
-
-				String curKey = arg.substring(0, pos);
-				String curValue = arg.substring(pos + 1);
-
-				if (Objects.equals(key, curKey.trim())) {
-					return curValue.trim();
-				}
+			if (pos <= 0) {
+				continue;
 			}
 
-			return defaultValue;
+			String curKey = arg.substring(0, pos);
+
+			if (Objects.equals(key, curKey.trim())) {
+				String curValue = arg.substring(pos + 1);
+
+				return curValue.trim();
+			}
+		}
+
+		return defaultValue;
 	}
 
 }

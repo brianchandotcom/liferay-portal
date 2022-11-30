@@ -64,8 +64,7 @@ public class LangSanitizer {
 		long endTime = System.currentTimeMillis();
 
 		for (int i = 0; i < _messages.size(); i++) {
-			System.out.println(
-				(i + 1) + ": " + _messages.get(i));
+			System.out.println((i + 1) + ": " + _messages.get(i));
 		}
 
 		System.out.println(
@@ -189,6 +188,7 @@ public class LangSanitizer {
 
 		String sanitizedValue = EscapeUtil.unEscape(
 			cleanResults.getCleanHTML());
+
 		String value = EscapeUtil.unEscape(originalValue);
 
 		if (!sanitizedValue.equals(value)) {

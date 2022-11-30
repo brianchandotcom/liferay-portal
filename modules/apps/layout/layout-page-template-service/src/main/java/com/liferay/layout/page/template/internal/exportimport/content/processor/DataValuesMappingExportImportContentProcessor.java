@@ -14,12 +14,25 @@
 
 package com.liferay.layout.page.template.internal.exportimport.content.processor;
 
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +59,9 @@ public class DataValuesMappingExportImportContentProcessor
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(data);
 
+		_replaceAllMappedValuesExportContentReferences(
+			jsonObject, portletDataContext, stagedModel);
+
 		return jsonObject.toString();
 	}
 
@@ -61,6 +77,9 @@ public class DataValuesMappingExportImportContentProcessor
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(data);
 
+		_replaceAllMappedValuesImportContentReferences(
+			jsonObject, portletDataContext);
+
 		return jsonObject.toString();
 	}
 
@@ -68,7 +87,150 @@ public class DataValuesMappingExportImportContentProcessor
 	public void validateContentReferences(long groupId, String data) {
 	}
 
+	private void _replaceAllMappedValuesExportContentReferences(
+		JSONObject jsonObject, PortletDataContext portletDataContext,
+		StagedModel stagedModel) {
+
+		if (!jsonObject.has("items")) {
+			return;
+		}
+
+		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+
+		if (itemsJSONObject == null) {
+			return;
+		}
+
+		for (String key : itemsJSONObject.keySet()) {
+			JSONObject itemJSONObject = itemsJSONObject.getJSONObject(key);
+
+			if (!Objects.equals(
+					itemJSONObject.get("type"),
+					LayoutDataItemTypeConstants.TYPE_COLLECTION) ||
+				!itemJSONObject.has("config")) {
+
+				continue;
+			}
+
+			JSONObject configJSONObject = itemJSONObject.getJSONObject(
+				"config");
+
+			if (!configJSONObject.has("collection")) {
+				continue;
+			}
+
+			JSONObject collectionJSONObject = configJSONObject.getJSONObject(
+				"collection");
+
+			String type = collectionJSONObject.getString("type");
+
+			if (!Objects.equals(
+					type, InfoListItemSelectorReturnType.class.getName())) {
+
+				continue;
+			}
+
+			long classPK = collectionJSONObject.getLong("classPK");
+
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.fetchAssetListEntry(classPK);
+
+			if (assetListEntry != null) {
+				try {
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, assetListEntry, stagedModel,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+				}
+				catch (PortletDataException portletDataException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portletDataException);
+					}
+				}
+			}
+		}
+	}
+
+	private void _replaceAllMappedValuesImportContentReferences(
+		JSONObject jsonObject, PortletDataContext portletDataContext) {
+
+		if (!jsonObject.has("items")) {
+			return;
+		}
+
+		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+
+		if (itemsJSONObject == null) {
+			return;
+		}
+
+		for (String key : itemsJSONObject.keySet()) {
+			JSONObject itemJSONObject = itemsJSONObject.getJSONObject(key);
+
+			if (!Objects.equals(
+					itemJSONObject.get("type"),
+					LayoutDataItemTypeConstants.TYPE_COLLECTION) ||
+				!itemJSONObject.has("config")) {
+
+				continue;
+			}
+
+			JSONObject configJSONObject = itemJSONObject.getJSONObject(
+				"config");
+
+			if (!configJSONObject.has("collection")) {
+				continue;
+			}
+
+			JSONObject collectionJSONObject = configJSONObject.getJSONObject(
+				"collection");
+
+			String type = collectionJSONObject.getString("type");
+
+			if (!Objects.equals(
+					type, InfoListItemSelectorReturnType.class.getName())) {
+
+				continue;
+			}
+
+			long classPK = collectionJSONObject.getLong("classPK");
+
+			Map<Long, Long> assetListEntryNewPrimaryKeys =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					AssetListEntry.class.getName());
+
+			long newClassPK = MapUtil.getLong(
+				assetListEntryNewPrimaryKeys, classPK, classPK);
+
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.fetchAssetListEntry(newClassPK);
+
+			if (assetListEntry != null) {
+				collectionJSONObject.put(
+					"classNameId",
+					_portal.getClassNameId(assetListEntry.getAssetEntryType())
+				).put(
+					"classPK", String.valueOf(newClassPK)
+				).put(
+					"itemSubtype", assetListEntry.getAssetEntrySubtype()
+				).put(
+					"itemType", assetListEntry.getAssetEntryType()
+				).put(
+					"title", assetListEntry.getTitle()
+				);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DataValuesMappingExportImportContentProcessor.class);
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 }

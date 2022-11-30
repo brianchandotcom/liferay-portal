@@ -466,11 +466,9 @@ renderResponse.setTitle(headerTitle);
 
 											com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure1 = DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId());
 
-											if (ddmFormValues != null) {
-												DDMForm ddmForm = ddmStructure1.getDDMForm();
+											DDMForm ddmForm = ddmStructure1.getDDMForm();
 
-												ddmFormValues.setDDMFormFieldValues(DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(ddmForm.getDDMFormFieldsMap(true), ddmFormValues.getDDMFormFieldValuesMap(true)));
-											}
+											ddmFormValues.setDDMFormFieldValues(DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(ddmForm.getDDMFormFieldsMap(true), ddmFormValues.getDDMFormFieldValuesMap(true)));
 									%>
 
 											<div class="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) ? "hide" : "" %> file-entry-type-fields">

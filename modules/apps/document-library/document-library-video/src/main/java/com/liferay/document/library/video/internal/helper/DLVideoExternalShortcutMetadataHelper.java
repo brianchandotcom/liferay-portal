@@ -22,13 +22,11 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.video.internal.constants.DLVideoConstants;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -233,22 +231,11 @@ public class DLVideoExternalShortcutMetadataHelper {
 		}
 
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(
-					_ddmStructure.getStructureId());
-
-			DDMForm ddmForm = ddmStructure.getDDMForm();
-
-			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-				_dlFileEntryMetadata.getDDMStorageId());
-
-			ddmFormValues.setDDMFormFieldValues(
-				DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-					ddmForm.getDDMFormFields(),
-					ddmFormValues.getDDMFormFieldValuesMap(true)));
-
 			_fields = _ddmFormValuesToFieldsConverter.convert(
-				ddmStructure, ddmFormValues);
+				_ddmStructureLocalService.getDDMStructure(
+					_ddmStructure.getStructureId()),
+				_storageEngine.getDDMFormValues(
+					_dlFileEntryMetadata.getDDMStorageId()));
 
 			for (Field field : _fields) {
 				_fieldsMap.put(field.getName(), field);

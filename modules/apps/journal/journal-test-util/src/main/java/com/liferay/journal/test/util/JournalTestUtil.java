@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFeedConstants;
@@ -864,17 +863,12 @@ public class JournalTestUtil {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			groupId, JournalArticle.class.getName(), ddmForm, locale);
 
-		DDMFormValues ddmFormValues = _createDDMFormValues(
-			ddmForm, _getDDMFormFieldValue(ddmFormField, fieldValue, locale),
-			locale);
-
-		ddmFormValues.setDDMFormFieldValues(
-			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFields(),
-				ddmFormValues.getDDMFormFieldValuesMap(true)));
-
 		Fields fields = ddmFormValuesToFieldsConverter.convert(
-			ddmStructure, ddmFormValues);
+			ddmStructure,
+			_createDDMFormValues(
+				ddmForm,
+				_getDDMFormFieldValue(ddmFormField, fieldValue, locale),
+				locale));
 
 		String content = journalConverter.getContent(
 			ddmStructure, fields, groupId);

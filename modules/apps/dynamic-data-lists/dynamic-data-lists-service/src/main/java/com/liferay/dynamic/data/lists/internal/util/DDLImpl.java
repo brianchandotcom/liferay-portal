@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.util.DDL;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -33,7 +32,6 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.petra.string.StringPool;
@@ -94,18 +92,9 @@ public class DDLImpl implements DDL {
 			recordVersion = record.getLatestRecordVersion();
 		}
 
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-			recordVersion.getDDMStorageId());
-
-		ddmFormValues.setDDMFormFieldValues(
-			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFields(),
-				ddmFormValues.getDDMFormFieldValuesMap(true)));
-
 		Fields fields = _ddmFormValuesToFieldsConverter.convert(
-			ddmStructure, ddmFormValues);
+			ddmStructure,
+			_storageEngine.getDDMFormValues(recordVersion.getDDMStorageId()));
 
 		for (Field field : fields) {
 			Object[] fieldValues = _getFieldValues(field, locale);
@@ -257,19 +246,12 @@ public class DDLImpl implements DDL {
 				DDLRecordVersion recordVersion =
 					record.getLatestRecordVersion();
 
-				DDMForm ddmForm = ddmStructure.getDDMForm();
-
 				DDMFormValues existingDDMFormValues =
 					_storageEngine.getDDMFormValues(
 						recordVersion.getDDMStorageId());
 
-				existingDDMFormValues.setDDMFormFieldValues(
-					DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-						ddmForm.getDDMFormFields(),
-						existingDDMFormValues.getDDMFormFieldValuesMap(true)));
-
 				Fields existingFields = _ddmFormValuesToFieldsConverter.convert(
-					ddmStructure, existingDDMFormValues);
+					recordSet.getDDMStructure(), existingDDMFormValues);
 
 				fields = _ddm.mergeFields(fields, existingFields);
 			}

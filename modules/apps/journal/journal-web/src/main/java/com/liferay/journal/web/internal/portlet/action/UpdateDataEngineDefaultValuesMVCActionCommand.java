@@ -17,12 +17,10 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.ArticleContentSizeException;
@@ -123,15 +121,8 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), uploadPortletRequest);
 
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			actionRequest, ddmStructure.getDDMForm());
-
-		ddmFormValues.setDDMFormFieldValues(
-			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFields(),
-				ddmFormValues.getDDMFormFieldValuesMap(true)));
 
 		Fields fields = _ddmFormValuesToFieldsConverter.convert(
 			ddmStructure, ddmFormValues);

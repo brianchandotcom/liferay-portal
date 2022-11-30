@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -22,6 +23,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -48,6 +50,13 @@ public class DDMFormValuesToFieldsConverterImpl
 	public Fields convert(
 			DDMStructure ddmStructure, DDMFormValues ddmFormValues)
 		throws PortalException {
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		ddmFormValues.setDDMFormFieldValues(
+			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
+				ddmForm.getDDMFormFields(),
+				ddmFormValues.getDDMFormFieldValuesMap(true)));
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);

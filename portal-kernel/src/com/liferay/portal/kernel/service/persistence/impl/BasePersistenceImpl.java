@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -627,6 +628,59 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
+	public void loadFinderCache(FinderPath... finderPaths) {
+		if (ArrayUtil.isEmpty(finderPaths)) {
+			return;
+		}
+
+		FinderCache finderCache = getFinderCache();
+
+		List<T> entities = findAll();
+
+		for (FinderPath finderPath : finderPaths) {
+			Map<List<Object>, List<T>> resultMap = new HashMap<>();
+
+			for (T entity : entities) {
+				List<Object> arguments = new ArrayList<>();
+
+				for (String columnName : finderPath.getColumnNames()) {
+					arguments.add(entity.getColumnValue(columnName));
+				}
+
+				String finderCacheName = finderPath.getCacheName();
+
+				if (finderCacheName.endsWith(".List1") ||
+					finderCacheName.endsWith(".List2")) {
+
+					List<T> resultList = resultMap.computeIfAbsent(
+						arguments, key -> new ArrayList<>());
+
+					resultList.add(entity);
+				}
+				else {
+					finderCache.putResult(
+						finderPath, arguments.toArray(), entity);
+				}
+			}
+
+			for (Map.Entry<List<Object>, List<T>> resultEntry :
+					resultMap.entrySet()) {
+
+				List<Object> key = resultEntry.getKey();
+				List<T> value = resultEntry.getValue();
+
+				if (finderPath.isBaseModelResult()) {
+					finderCache.putResult(finderPath, key.toArray(), value);
+				}
+				else {
+					finderCache.putResult(
+						finderPath, key.toArray(), value.size());
+				}
+			}
+		}
+	}
+
+	@Override
 	public Session openNewSession(Connection connection) throws ORMException {
 		return _sessionFactory.openNewSession(connection);
 	}
@@ -871,6 +925,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				}
 			}
 		}
+	}
+
+	protected List<T> findAll() {
+		throw new UnsupportedOperationException();
 	}
 
 	protected ClassLoader getClassLoader() {

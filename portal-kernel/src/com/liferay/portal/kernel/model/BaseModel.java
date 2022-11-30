@@ -55,6 +55,10 @@ public interface BaseModel<T>
 		return Collections.emptyMap();
 	}
 
+	public default <T> T getColumnValue(String columnName) {
+		return null;
+	}
+
 	/**
 	 * Returns the expando bridge for this model instance.
 	 *

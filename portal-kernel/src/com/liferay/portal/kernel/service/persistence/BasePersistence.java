@@ -18,6 +18,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -227,6 +228,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	public ModelListener<T>[] getListeners();
 
 	public Class<T> getModelClass();
+
+	public void loadFinderCache(FinderPath... finderPaths);
 
 	public Session openSession() throws ORMException;
 

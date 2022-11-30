@@ -1122,7 +1122,7 @@
 </tr>
 <tr>
 	<td>UPLOAD_FIELD_GUEST_1</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(text(),'Select')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[contains(text(),'Select')] | //div[@class='ddm-field']//label[contains(text(),'Select')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -95,11 +95,11 @@ definition {
 
 		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
-		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
 
-		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
-		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
+		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 2");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

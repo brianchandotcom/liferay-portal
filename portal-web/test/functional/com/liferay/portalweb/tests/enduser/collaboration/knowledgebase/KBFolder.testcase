@@ -321,7 +321,7 @@ definition {
 
 		Refresh();
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base 2017 Article Content",
 			kbArticleTitle = "Knowledge Base 2017 Article Title");
 
@@ -329,7 +329,7 @@ definition {
 
 		Refresh();
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base 2010 Article Content",
 			kbArticleTitle = "Knowledge Base 2010 Article Title");
 

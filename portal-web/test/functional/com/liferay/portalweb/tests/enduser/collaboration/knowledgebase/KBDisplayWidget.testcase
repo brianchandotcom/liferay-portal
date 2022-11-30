@@ -51,7 +51,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.addChildPGViaKBDisplay(
+		KBDisplayWidget.addChildPGViaKBDisplay(
 			kbArticleContent = "Child Article Content",
 			kbArticleTitle = "Child Article Title");
 
@@ -110,7 +110,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.addChildPGViaKBDisplay(
+		KBDisplayWidget.addChildPGViaKBDisplay(
 			cancel = "true",
 			kbArticleContent = "Child Article Content",
 			kbArticleTitle = "Child Article Title");
@@ -136,7 +136,7 @@ definition {
 
 		KBArticle.deletePG(kbArticleTitle = "Knowledge Base Article Title");
 
-		KBArticle.viewDefaultViaKBDisplayPG();
+		KBDisplayWidget.viewDefaultViaKBDisplayPG();
 	}
 
 	@priority = "4"
@@ -175,14 +175,14 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.editPGViaKBDisplay(
+		KBDisplayWidget.editPGViaKBDisplay(
 			kbArticleContentEdit = "Knowledge Base Article Content Edit",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content Edit",
 			kbArticleTitle = "Knowledge Base Article Title Edit");
 	}
@@ -207,15 +207,15 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 1",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
-		KBArticle.editPGViaKBDisplay(
+		KBDisplayWidget.editPGViaKBDisplay(
 			kbArticleContentEdit = "Knowledge Base Child Article Content Edited 1",
 			kbArticleTitleEdit = "Knowledge Base Article Parent Title 1 Child 1");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
 
-		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
 	@priority = "4"
@@ -228,16 +228,16 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewDefaultKBDisplaySettingsPG();
+		KBDisplayWidget.viewDefaultKBDisplaySettingsPG();
 
-		KBArticle.configureKBDisplaySettingsPG(
+		KBDisplayWidget.configureKBDisplaySettingsPG(
 			history = "false",
 			print = "false",
 			subscribe = "false");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewKBDisplayPG(
+		KBDisplayWidget.viewKBDisplayPG(
 			history = "false",
 			print = "false",
 			subscribe = "false");
@@ -260,7 +260,7 @@ definition {
 
 		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Title Child");
 
-		KBArticle.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title Child");
+		KBDisplayWidget.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title Child");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -279,7 +279,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.addChildPGViaKBDisplay(
+		KBDisplayWidget.addChildPGViaKBDisplay(
 			kbArticleContent = "Knowledge Base Child Article Content",
 			kbArticleTitle = "Knowledge Base Child Article Title",
 			saveAsDraft = "true");
@@ -315,13 +315,13 @@ definition {
 
 		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
-		KBArticle.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
+		KBDisplayWidget.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
-		KBArticle.selectParentViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+		KBDisplayWidget.selectParentViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
-		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
 
-		KBArticle.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
 	@priority = "4"
@@ -346,13 +346,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content 1",
 			kbArticleTitle = "Knowledge Base Article Title 1");
 
 		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Title 2");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2");
 	}
@@ -436,7 +436,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${kbArticleFriendlyURL}");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article2 Content",
 			kbArticleTitle = "Knowledge Base Article2 Title");
 	}
@@ -461,7 +461,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content 1",
 			kbArticleTitle = "Knowledge Base Article Title 1");
 
@@ -471,7 +471,7 @@ definition {
 
 		Click(locator1 = "KnowledgeBaseArticle#NEXT");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2");
 
@@ -481,7 +481,7 @@ definition {
 
 		Click(locator1 = "KnowledgeBaseArticle#NEXT");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content 3",
 			kbArticleTitle = "Knowledge Base Article Title 3");
 
@@ -491,7 +491,7 @@ definition {
 
 		Click(locator1 = "KnowledgeBaseArticle#PREVIOUS");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2");
 
@@ -501,7 +501,7 @@ definition {
 
 		Click(locator1 = "KnowledgeBaseArticle#PREVIOUS");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content 1",
 			kbArticleTitle = "Knowledge Base Article Title 1");
 
@@ -533,7 +533,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${kbArticleFriendlyURL}");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article2 Content",
 			kbArticleTitle = "Knowledge Base Article2 Title");
 	}
@@ -554,7 +554,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
 
 		KBArticle.viewViaNextLinkPG(
 			kbArticleContent = "This is a child article. Lengthy articles are no longer summarized on the KB Display portlet, and the Read More link has been deprecated. To access a child article, one must click on the parent article and then click on the child page link found either: under the article navigation, or under the parent article entry.",
@@ -585,7 +585,7 @@ definition {
 
 		KBFolder.gotoViaKBDisplayPG(kbFolderName = "KB Folder 1");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Folder Content 1",
 			kbArticleTitle = "Knowledge Base Article Folder Title 1");
 	}
@@ -608,7 +608,7 @@ definition {
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		for (var num : list "1,2") {
-			KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
+			KBDisplayWidget.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
 
 			AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-display-page/-/knowledge_base/custom-friendly-url${num}");
 		}
@@ -629,7 +629,7 @@ definition {
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		for (var num : list "1,2") {
-			KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
+			KBDisplayWidget.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
 
 			AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-display-page/-/knowledge_base/kb-article-title${num}");
 		}
@@ -665,7 +665,7 @@ definition {
 	test CanViewEmptyState {
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.viewDefaultViaKBDisplayPG();
+		KBDisplayWidget.viewDefaultViaKBDisplayPG();
 	}
 
 	@priority = "4"
@@ -725,7 +725,7 @@ definition {
 
 		AssertAlertNotPresent();
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = '''><img onerror="alert('xss')" src="xx" /><''');
 	}

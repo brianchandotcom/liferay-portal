@@ -1022,7 +1022,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "KB Page");
 
-		KBArticle.viewKBDisplayPG(
+		KBDisplayWidget.viewKBDisplayPG(
 			history = "true",
 			print = "true",
 			sourceURL = "true",

@@ -122,7 +122,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.configureKBSocialBookmarkSites(disableSocialBookmarkSites = "Twitter");
+		KBDisplayWidget.configureKBSocialBookmarkSites(disableSocialBookmarkSites = "Twitter");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 

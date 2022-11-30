@@ -1,0 +1,428 @@
+definition {
+
+	macro _gotoWidgetConfiguration {
+		Portlet.gotoPortletOptions(
+			portletName = "Knowledge Base Display",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
+	macro addChildPGViaKBDisplay {
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Add Child Article");
+
+		AssertElementPresent(locator1 = "TextInput#TITLE");
+
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitle}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		if (isSet(kbArticleFriendlyURL)) {
+			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleFriendlyURL}");
+
+			var kbArticleTitleFormatted = StringUtil.replace("${kbArticleTitleFormatted}", " ", "-");
+
+			Type(
+				locator1 = "KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD",
+				value1 = "${kbArticleTitleFormatted}");
+		}
+		else {
+			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleTitle}");
+
+			var kbArticleTitleFormatted = StringUtil.replace("${kbArticleTitleFormatted}", " ", "-");
+
+			AssertTextEquals(
+				locator1 = "KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD",
+				value1 = "${kbArticleTitleFormatted}");
+		}
+
+		ProductMenuHelper.closeProductMenu();
+
+		if ("${cancel}" == "true") {
+			Button.clickCancel();
+		}
+		else if ("${saveAsDraft}" == "true") {
+			Button.clickSaveAsDraft();
+		}
+		else {
+			Button.click(button = "Publish");
+		}
+	}
+
+	macro configureKBArticleDisplayPG {
+		KBDisplayWidget._gotoWidgetConfiguration();
+
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+
+		if (isSet(kbFolderName)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			AssertClick(
+				key_kbFolderName = "${kbFolderName}",
+				locator1 = "KnowledgeBaseSelectParent#FOLDER_TITLE_LINK",
+				value1 = "${kbFolderName}");
+		}
+		else {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		Click(
+			key_kbArticleTitle = "${kbArticleTitle}",
+			locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON");
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.save();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro configureKBDisplaySettingsPG {
+		KBDisplayWidget._gotoWidgetConfiguration();
+
+		if ("${subscribe}" == "true") {
+			Check(locator1 = "KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_SUBSCRIPTIONS_CHECKBOX");
+		}
+		else if ("${subscribe}" == "false") {
+			Uncheck(locator1 = "KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_SUBSCRIPTIONS_CHECKBOX");
+		}
+
+		if ("${history}" == "true") {
+			Check(locator1 = "KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_HISTORY_CHECKBOX");
+		}
+		else if ("${history}" == "false") {
+			Uncheck(locator1 = "KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_HISTORY_CHECKBOX");
+		}
+
+		if ("${print}" == "true") {
+			Check(locator1 = "KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_PRINT_CHECKBOX");
+		}
+		else if ("${print}" == "false") {
+			Uncheck(locator1 = "KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_PRINT_CHECKBOX");
+		}
+
+		PortletEntry.save();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro configureKBFolderDisplay {
+		KBDisplayWidget._gotoWidgetConfiguration();
+
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		AssertClick(
+			key_kbFolderName = "${kbFolderName}",
+			locator1 = "KnowledgeBaseSelectParent#SELECT_FOLDER_BUTTON",
+			value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.save();
+	}
+
+	macro configureKBSocialBookmarkSites {
+		KBDisplayWidget._gotoWidgetConfiguration();
+
+		if (isSet(enableSocialBookmarkSites)) {
+			KBArticle.enableSocialBookmarkSites(
+				enableSocialBookmarkSites = "${enableSocialBookmarkSites}",
+				socialBookmarkSite = "${socialBookmarkSite}");
+		}
+
+		if (isSet(disableSocialBookmarkSites)) {
+			KBArticle.disableSocialBookmarkSites(
+				disableSocialBookmarkSites = "${disableSocialBookmarkSites}",
+				socialBookmarkSite = "${socialBookmarkSite}");
+		}
+
+		PortletEntry.save();
+	}
+
+	macro editPGViaKBDisplay {
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "A new version is created automatically if this content is modified.");
+
+		AssertElementPresent(locator1 = "TextInput#TITLE");
+
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitleEdit}");
+
+		var kbArticleContentEdit = "${kbArticleContentEdit}";
+
+		CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
+
+		if ("${cancel}" == "true") {
+			Button.clickCancel();
+		}
+		else if ("${saveAsDraft}" == "true") {
+			Button.clickSaveAsDraft();
+		}
+		else {
+			Button.click(button = "Publish");
+		}
+	}
+
+	macro editPGViaLocalizedKBDisplay {
+		var key_editLocalized = "Editar";
+		var key_kbArticleTitle = "${kbArticleTitle}";
+		var key_localizedText = "Editor de texto enriquecido";
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Editar");
+
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "${kbArticleTitle}");
+
+		AssertElementPresent(locator1 = "TextInput#TITLE");
+
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "${kbArticleTitleEdit}");
+
+		var kbArticleContentEdit = "${kbArticleContentEdit}";
+
+		CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
+
+		if (IsElementPresent(locator1 = "Home#PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE")) {
+			Click(locator1 = "Home#PORTAL_LOCALIZATION_IGNORE_BUTTON");
+		}
+
+		AssertClick(
+			locator1 = "Button#PUBLISH_LOCALIZED",
+			value1 = "Publicar");
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	macro gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG {
+		var key_kbArticleTitle = "${kbArticleTitle}";
+		var key_kbChildArticleTitle = "${kbChildArticleTitle}";
+
+		AssertClick(
+			locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_PARENT",
+			value1 = "${kbArticleTitle}");
+
+		AssertClick.assertTextClickNoMouseOver(
+			locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD",
+			value1 = "${kbChildArticleTitle}");
+
+		AssertClick.assertTextClickNoMouseOver(
+			key_kbGrandchildArticleTitle = "${kbGrandchildArticleTitle}",
+			locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_GRANDCHILD",
+			value1 = "${kbGrandchildArticleTitle}");
+	}
+
+	macro gotoViaKBDisplayPG {
+		AssertClick(
+			key_kbArticleTitle = "${kbArticleTitle}",
+			locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_PARENT",
+			value1 = "${kbArticleTitle}");
+
+		WaitForElementPresent.waitForLastScript();
+	}
+
+	macro moveArticleViaKBDisplayPG {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Move");
+
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "${kbArticleTitle}");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_LABEL",
+			value1 = "Current Parent");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_FIELD",
+			value1 = "Home");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_PRIORITY_LABEL",
+			value1 = "Priority");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_LABEL",
+			value1 = "New Parent");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_PRIORITY_LABEL",
+			value1 = "Priority");
+
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+	}
+
+	macro selectParentViaKBDisplayPG {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_kbArticleTitle = "${kbArticleTitle}",
+			locator1 = "KnowledgeBaseSelectParent#SELECT_BUTTON",
+			value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD",
+			value1 = "${kbArticleTitle}");
+
+		Click(locator1 = "Button#MOVE");
+
+		Alert.viewSuccessMessage();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewChildArticleHierarchyViaKBDisplayPG {
+		var key_kbArticleTitle = "${kbArticleTitle}";
+
+		AssertClick(
+			locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_PARENT",
+			value1 = "${kbArticleTitle}");
+
+		var childCount = "0";
+		var kbParentChild = "${kbArticleTitle} Child";
+
+		while (IsElementPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD_GENERIC")) {
+			var childCount = ${childCount} + 1;
+
+			var kbChildArticleTitle = "${kbParentChild} ${childCount}";
+			var key_kbArticleTitle = "${kbArticleTitle}";
+
+			if (IsElementPresent(locator1 = "xpath=//div[@class='kbarticle-navigation']/ul/li[contains(.,'${key_kbArticleTitle}')]/ul[${childCount}]")) {
+				var key_kbChildArticleTitle = "${kbChildArticleTitle}";
+
+				AssertClick.assertTextClickNoMouseOver(
+					locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD",
+					value1 = "${kbChildArticleTitle}");
+			}
+		}
+	}
+
+	macro viewDefaultKBDisplaySettingsPG {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.viewVisible(menuItem = "Subscribe");
+
+		MenuItem.viewVisible(menuItem = "History");
+
+		MenuItem.viewVisible(menuItem = "Print");
+	}
+
+	macro viewDefaultViaKBDisplayPG {
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Please configure this portlet to make it visible to all users.");
+
+		AssertElementNotPresent(locator1 = "KnowledgeBase#DISPLAY_TITLE");
+	}
+
+	macro viewKBDisplayPG {
+		if ("${sourceURL}" == "true") {
+			AssertClick(
+				locator1 = "KnowledgeBaseArticle#EDIT_ON_GITHUB",
+				value1 = "Edit On GitHub");
+
+			SelectWindow(
+				key_pageTitle = "Google",
+				locator1 = "Google#PAGE_TITLE");
+
+			var url = selenium.getLocation();
+
+			if ("${url}" != "https://www.google.com/[#]gws_rd=ssl") {
+				AssertLocation(value1 = "https://www.google.com/?gws_rd=ssl");
+			}
+			else {
+				AssertLocation(value1 = "https://www.google.com/[#]gws_rd=ssl");
+			}
+
+			Close(
+				key_pageTitle = "Google",
+				locator1 = "Google#PAGE_TITLE");
+		}
+
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		if ("${subscribe}" == "true") {
+			MenuItem.viewVisible(menuItem = "Subscribe");
+		}
+		else if ("${subscribe}" == "false") {
+			MenuItem.viewNotPresent(menuItem = "Subscribe");
+		}
+
+		if ("${history}" == "true") {
+			MenuItem.viewVisible(menuItem = "History");
+		}
+		else if ("${history}" == "false") {
+			MenuItem.viewNotPresent(menuItem = "History");
+		}
+
+		if ("${print}" == "true") {
+			MenuItem.viewVisible(menuItem = "Print");
+		}
+		else if ("${print}" == "false") {
+			MenuItem.viewNotPresent(menuItem = "Print");
+		}
+	}
+
+	macro viewParentArticleHierarchyViaKBDisplayPG {
+		var count = "0";
+
+		while (IsElementPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_GENERIC")) {
+			var count = ${count} + 1;
+
+			var kbParentTitle = "${kbArticleTitle} ${count}";
+
+			if (IsElementPresent(locator1 = "xpath=//div[@class='kbarticle-navigation']/ul[${count}]")) {
+				AssertClick(
+					key_kbArticleTitle = "${kbParentTitle}",
+					locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_PARENT",
+					value1 = "${kbParentTitle}");
+			}
+		}
+	}
+
+	macro viewViaKBDisplayPG {
+		AssertTextEquals.assertPartialText(
+			locator1 = "KnowledgeBase#DISPLAY_TITLE",
+			value1 = "${kbArticleTitle}");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#DISPLAY_CONTENT",
+			value1 = "${kbArticleContent}");
+
+		if (isSet(kbArticleRelatedAssetTitle)) {
+			AssertTextEquals(
+				locator1 = "AssetRelatedAssets#HEADER",
+				value1 = "RELATED ASSETS");
+
+			AssertTextEquals(
+				key_kbArticleRelatedAssetTitle = "${kbArticleRelatedAssetTitle}",
+				locator1 = "AssetRelatedAssets#KB_RELATED_ASSETS_LINKS",
+				value1 = "${kbArticleRelatedAssetTitle}");
+		}
+	}
+
+}

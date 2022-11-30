@@ -70,7 +70,7 @@ definition {
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
@@ -80,17 +80,17 @@ definition {
 			sitePageURL = "${portalURL}/es/web/guest/knowledge-base-display-page",
 			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBArticle.editPGViaLocalizedKBDisplay(
+		KBDisplayWidget.editPGViaLocalizedKBDisplay(
 			kbArticleContentEdit = "Knowledge Base Article Content Edited",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edited",
 			localizedSuccessMessage = "Su petición ha terminado con éxito.");
 
-		KBArticle.viewViaKBDisplayPG(
+		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article Content Edited",
 			kbArticleTitle = "Knowledge Base Article Title Edited");
 	}

@@ -1268,7 +1268,7 @@ definition {
 			ratingResult = "Rate this as bad",
 			voteCount = "0");
 
-		KBArticle.editPGViaKBDisplay(
+		KBDisplayWidget.editPGViaKBDisplay(
 			kbArticleContentEdit = "Knowledge Base Video Content Edit",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
@@ -3240,7 +3240,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base");
 
-		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title After Upgrade");
+		KBDisplayWidget.gotoViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title After Upgrade");
 
 		KBArticle.viewPG(
 			kbArticleContent = "Knowledge Base Article Content After Upgrade",

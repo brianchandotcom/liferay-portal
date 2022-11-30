@@ -88,7 +88,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.configureKBArticleDisplayPG(
+		KBDisplayWidget.configureKBArticleDisplayPG(
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbFolderName = "KB Folder");
 

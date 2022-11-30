@@ -433,10 +433,6 @@ definition {
 			pageName = "Form Page",
 			siteName = "Site Name");
 
-		// Workaround LPS-169307
-
-		Refresh();
-
 		FormPortlet.waitFormRenderer(text = "Next");
 
 		FormFields.editText(

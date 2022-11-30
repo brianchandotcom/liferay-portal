@@ -119,6 +119,26 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 	}
 
 	@Override
+	protected ObjectLayout
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
+				String objectDefinitionExternalReferenceCode,
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayoutResource.
+			postObjectDefinitionByExternalReferenceCodeObjectLayout(
+				objectDefinitionExternalReferenceCode, objectLayout);
+	}
+
+	@Override
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _objectDefinition.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Long
 			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId()
 		throws Exception {
@@ -140,6 +160,17 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 
 		return objectLayoutResource.postObjectDefinitionObjectLayout(
 			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
+	}
+
+	@Override
+	protected ObjectLayout
+			testPostObjectDefinitionByExternalReferenceCodeObjectLayout_addObjectLayout(
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		return objectLayoutResource.
+			postObjectDefinitionByExternalReferenceCodeObjectLayout(
+				_objectDefinition.getExternalReferenceCode(), objectLayout);
 	}
 
 	@Override

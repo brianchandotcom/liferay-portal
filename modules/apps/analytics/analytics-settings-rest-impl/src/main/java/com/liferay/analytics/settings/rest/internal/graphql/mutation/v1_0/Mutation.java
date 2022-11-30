@@ -165,6 +165,18 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public boolean patchFieldProduct(@GraphQLName("fields") Field[] fields)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_fieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			fieldResource -> fieldResource.patchFieldProduct(fields));
+
+		return true;
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

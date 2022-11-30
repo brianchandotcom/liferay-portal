@@ -836,31 +836,59 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 	<macrodef name="get-host-git-dir">
 		<sequential>
-			<exec executable="/bin/bash" outputproperty="docker.mounts.json">
-				<arg value="-c" />
-				<arg value="docker inspect -f '{{json .Mounts }}' ${env.NODE_NAME}" />
-			</exec>
+			<if>
+				<isset property="env.NODE_NAME" />
+				<then>
+					<exec executable="/bin/bash" outputproperty="docker.mounts.json">
+						<arg value="-c" />
+						<arg value="docker inspect -f '{{json .Mounts }}' ${env.NODE_NAME}" />
+					</exec>
 
-			<beanshell>
-				<![CDATA[
-					import org.json.JSONArray;
-					import org.json.JSONObject;
+					<beanshell>
+						<![CDATA[
+							import org.json.JSONArray;
+							import org.json.JSONObject;
 
-					JSONArray jsonArray = new JSONArray(project.getProperty("docker.mounts.json"));
+							String dockerMountsJSONString = project.getProperty("docker.mounts.json");
 
-					for (int i = 0; i < jsonArray.length(); i++) {
-						JSONObject jsonObject = jsonArray.getJSONObject(i);
+							if (dockerMountsJSONString == null) {
+								return;
+							}
 
-						String destination = jsonObject.getString("Destination");
+							JSONArray jsonArray = new JSONArray(dockerMountsJSONString);
 
-						if (destination.equals("/opt/dev/projects/github")) {
-							project.setProperty("host.git.dir", jsonObject.getString("Source"));
+							for (int i = 0; i < jsonArray.length(); i++) {
+								JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-							break;
-						}
-					}
-				]]>
-			</beanshell>
+								String destination = jsonObject.getString("Destination");
+
+								if (destination.equals("/opt/dev/projects/github")) {
+									project.setProperty("host.git.dir", jsonObject.getString("Source"));
+
+									break;
+								}
+							}
+						]]>
+					</beanshell>
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="host.git.dir" />
+				</not>
+				<then>
+					<if>
+						<isset property="env.JENKINS_HOME" />
+						<then>
+							<fail message="Unable to get the host's git directory for container ${env.NODE_NAME}" />
+						</then>
+						<else>
+							<property location="${portal.dir}/.." name="host.git.dir" />
+						</else>
+					</if>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -7224,15 +7252,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			/>
 
 			<get-host-git-dir />
-
-			<if>
-				<not>
-					<isset property="host.git.dir" />
-				</not>
-				<then>
-					<fail message="Unable to get mount 'host.git.dir' for ${operating.system.host}" />
-				</then>
-			</if>
 
 			<start-docker-container image="${operating.system.docker.image}" name="${operating.system.host}" options="${operating.system.docker.os.options}">\
 				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \

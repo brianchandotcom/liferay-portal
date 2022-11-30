@@ -610,6 +610,34 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long messageBoardThreadId;
 
+	@Schema
+	public Boolean getModified() {
+		return modified;
+	}
+
+	public void setModified(Boolean modified) {
+		this.modified = modified;
+	}
+
+	@JsonIgnore
+	public void setModified(
+		UnsafeSupplier<Boolean, Exception> modifiedUnsafeSupplier) {
+
+		try {
+			modified = modifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean modified;
+
 	@Schema(description = "The number of the message's attachments.")
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
@@ -1160,6 +1188,16 @@ public class MessageBoardMessage implements Serializable {
 			sb.append("\"messageBoardThreadId\": ");
 
 			sb.append(messageBoardThreadId);
+		}
+
+		if (modified != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modified\": ");
+
+			sb.append(modified);
 		}
 
 		if (numberOfMessageBoardAttachments != null) {

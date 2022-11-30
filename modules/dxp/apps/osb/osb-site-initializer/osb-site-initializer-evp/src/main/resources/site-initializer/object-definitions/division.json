@@ -56,7 +56,7 @@
 			],
 			"required": false,
 			"state": false,
-			"system": false,
+			"system": true,
 			"type": "Date"
 		},
 		{
@@ -202,5 +202,5 @@
 		"label": "approved",
 		"label_i18n": "Approved"
 	},
-	"system": true
+	"system": false
 }

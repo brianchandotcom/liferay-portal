@@ -13,6 +13,8 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
+
+import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 
 import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder.es';
@@ -217,5 +219,29 @@ describe('ContributorsBuilder', () => {
 		);
 
 		expect(asFragment()).toMatchSnapshot('initialRenderNotEditing');
+	});
+
+	it('renders the Scope Card', () => {
+		window.Liferay.FeatureFlags['LPS-166954'] = true;
+
+		const scopeName = 'Liferay DXP';
+
+		const editing = true;
+
+		const {getByText} = render(
+			<ContributorsBuilder
+				editing={editing}
+				emptyContributors={false}
+				initialContributors={initialContributors}
+				propertyGroups={propertyGroups}
+				scopeName={scopeName}
+				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
+				supportedOperators={SUPPORTED_OPERATORS}
+				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
+			/>
+		);
+
+		expect(getByText('scope')).toBeInTheDocument();
+		expect(getByText(scopeName)).toBeInTheDocument();
 	});
 });

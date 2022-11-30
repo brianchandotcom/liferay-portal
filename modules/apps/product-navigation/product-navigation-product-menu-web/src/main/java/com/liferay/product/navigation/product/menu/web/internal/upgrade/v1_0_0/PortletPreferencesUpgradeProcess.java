@@ -27,6 +27,7 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_deletePortletPreferences("145");
 		_deletePortletPreferences("160");
+		_deletePortletPreferences("190");
 	}
 
 	private void _deletePortletPreferences(String portletId) throws Exception {

@@ -131,7 +131,7 @@ public class DDMFormInstanceRecordModelDocumentContributor
 
 		ddmFormValues.setDDMFormFieldValues(
 			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFieldsMap(true),
+				ddmForm.getDDMFormFields(),
 				ddmFormValues.getDDMFormFieldValuesMap(true)));
 
 		return ddmFormValues;

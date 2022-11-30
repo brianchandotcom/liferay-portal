@@ -307,7 +307,7 @@ public class DDMFormInstanceRecordIndexer
 
 		ddmFormValues.setDDMFormFieldValues(
 			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFieldsMap(true),
+				ddmForm.getDDMFormFields(),
 				ddmFormValues.getDDMFormFieldValuesMap(true)));
 
 		return ddmFormValues;

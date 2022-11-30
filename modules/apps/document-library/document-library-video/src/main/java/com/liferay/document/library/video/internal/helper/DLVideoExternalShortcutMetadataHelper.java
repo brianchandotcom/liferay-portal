@@ -244,7 +244,7 @@ public class DLVideoExternalShortcutMetadataHelper {
 
 			ddmFormValues.setDDMFormFieldValues(
 				DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-					ddmForm.getDDMFormFieldsMap(true),
+					ddmForm.getDDMFormFields(),
 					ddmFormValues.getDDMFormFieldValuesMap(true)));
 
 			_fields = _ddmFormValuesToFieldsConverter.convert(

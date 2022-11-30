@@ -468,7 +468,7 @@ renderResponse.setTitle(headerTitle);
 
 											DDMForm ddmForm = ddmStructure1.getDDMForm();
 
-											ddmFormValues.setDDMFormFieldValues(DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(ddmForm.getDDMFormFieldsMap(true), ddmFormValues.getDDMFormFieldValuesMap(true)));
+											ddmFormValues.setDDMFormFieldValues(DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(ddmForm.getDDMFormFields(), ddmFormValues.getDDMFormFieldValuesMap(true)));
 									%>
 
 											<div class="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) ? "hide" : "" %> file-entry-type-fields">

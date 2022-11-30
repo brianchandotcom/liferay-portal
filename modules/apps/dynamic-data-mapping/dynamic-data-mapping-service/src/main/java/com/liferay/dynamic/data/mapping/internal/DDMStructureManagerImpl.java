@@ -69,7 +69,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		ddmFormValues1.setDDMFormFieldValues(
 			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFieldsMap(true),
+				ddmForm.getDDMFormFields(),
 				ddmFormValues1.getDDMFormFieldValuesMap(true)));
 
 		_ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues1);
@@ -127,7 +127,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		ddmFormValues1.setDDMFormFieldValues(
 			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFieldsMap(true),
+				ddmForm.getDDMFormFields(),
 				ddmFormValues1.getDDMFormFieldValuesMap(true)));
 
 		return _ddmIndexer.extractIndexableAttributes(

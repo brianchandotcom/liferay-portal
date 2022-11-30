@@ -716,6 +716,37 @@ definition {
 			value1 = "30");
 	}
 
+	@description = "This is a use case for LPS-167751 TC-1: User could login using OIDC with PKCE."
+	@priority = "5"
+	test VerifyUserCouldLoginWithPKCE {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#VerifyUserCouldLoginWithPKCE";
+
+		task ("Startup Keycloak for test") {
+			AntCommand(
+				locator1 = "build-test-keycloak.xml",
+				value1 = "prepare-selenium-keycloak-server");
+		}
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~KeycloakPKCE.config");
+		}
+
+		User.logoutPG();
+
+		task ("Verify that the User stay logged in after a new access token is generated") {
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = "user1",
+				userPassword = "test");
+
+			User.viewLoggedInPG();
+		}
+	}
+
 	@description = "This is a use case for LPS-124900 TC-2: User is still logged in after the first access token's lifetime is over and they receive a new access token in the background."
 	@priority = "5"
 	test VerifyUserIsStillLoggedInAfterAccessTokenExpiresAndRenew {

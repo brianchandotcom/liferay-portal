@@ -62,13 +62,13 @@ public class MiniumSiteInitializerUpgradeProcess extends UpgradeProcess {
 		PreparedStatement preparedStatement1 =
 			AutoBatchPreparedStatementUtil.autoBatch(
 				connection,
-				"select plid from Layout where friendlyURL != '/login' and " +
-					"groupId = ? and parentPlid = 0 and type_ = 'portlet' " +
+				"select plid from Layout where groupId = ? and parentPlid = 0 " +
+					"and type_ = 'portlet' and friendlyURL != '/login' " +
 						"order by priority");
 		PreparedStatement preparedStatement2 =
 			AutoBatchPreparedStatementUtil.autoBatch(
 				connection,
-				"update Layout set priority = ? where groupId = ? and plid = " +
+				"update Layout set priority = ? where plid = ? and groupId = " +
 					"?");
 
 		preparedStatement1.setLong(1, siteGroupId);
@@ -80,8 +80,8 @@ public class MiniumSiteInitializerUpgradeProcess extends UpgradeProcess {
 				priority++;
 
 				preparedStatement2.setLong(1, priority);
-				preparedStatement2.setLong(2, siteGroupId);
-				preparedStatement2.setLong(3, resultSet.getLong("plid"));
+				preparedStatement2.setLong(2, resultSet.getLong("plid"));
+				preparedStatement2.setLong(3, siteGroupId);
 
 				preparedStatement2.addBatch();
 			}
@@ -100,17 +100,17 @@ public class MiniumSiteInitializerUpgradeProcess extends UpgradeProcess {
 			AutoBatchPreparedStatementUtil.autoBatch(
 				connection,
 				"update Layout set layoutId = ?, privateLayout = ? where " +
-					"groupId = ? and plid = ? and privateLayout = ?");
+					"plid = ? and groupId = ? and privateLayout = ?");
 		PreparedStatement preparedStatement3 =
 			AutoBatchPreparedStatementUtil.autoBatch(
 				connection,
 				"update Layout set parentLayoutId = ? where groupId = ? and " +
-					"parentLayoutId > 0 and parentPlid = ?");
+					"parentPlid = ? and parentLayoutId > 0");
 		PreparedStatement preparedStatement4 =
 			AutoBatchPreparedStatementUtil.autoBatch(
 				connection,
 				"update LayoutFriendlyURL set privateLayout = ? where " +
-					"groupId = ? and plid = ? and privateLayout = ?");
+					"plid = ? and groupId = ? and privateLayout = ?");
 
 		preparedStatement1.setLong(1, siteGroupId);
 		preparedStatement1.setBoolean(2, true);
@@ -126,8 +126,8 @@ public class MiniumSiteInitializerUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement2.setLong(1, newLayoutId);
 				preparedStatement2.setBoolean(2, false);
-				preparedStatement2.setLong(3, siteGroupId);
-				preparedStatement2.setLong(4, plid);
+				preparedStatement2.setLong(3, plid);
+				preparedStatement2.setLong(4, siteGroupId);
 				preparedStatement2.setBoolean(5, true);
 
 				preparedStatement2.addBatch();
@@ -138,8 +138,8 @@ public class MiniumSiteInitializerUpgradeProcess extends UpgradeProcess {
 				preparedStatement3.addBatch();
 
 				preparedStatement4.setBoolean(1, false);
-				preparedStatement4.setLong(2, siteGroupId);
-				preparedStatement4.setLong(3, plid);
+				preparedStatement4.setLong(2, plid);
+				preparedStatement4.setLong(3, siteGroupId);
 				preparedStatement4.setBoolean(4, true);
 
 				preparedStatement4.addBatch();

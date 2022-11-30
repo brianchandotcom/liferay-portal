@@ -1,5 +1,65 @@
 definition {
 
+	macro addPublicationTemplate {
+		Click(locator1 = "Button#PLUS");
+
+		if (isSet(templateName)) {
+			Type(
+				locator1 = "PublicationsTemplate#TEMPLATE_NAME",
+				value1 = "${templateName}");
+		}
+
+		if (isSet(templateDescription)) {
+			Type(
+				locator1 = "PublicationsTemplate#TEMPLATE_DESCRIPTION",
+				value1 = "${templateDescription}");
+		}
+
+		if (isSet(publicationName)) {
+			PublicationsTemplate.expandPublicationInformation();
+
+			Type(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "${publicationName}");
+
+			if (isSet(publicationDescription)) {
+				Type(
+					locator1 = "Publications#PUBLICATION_DESCRIPTION",
+					value1 = "${publicationDescription}");
+			}
+		}
+
+		if (isSet(userInvite1)) {
+			PublicationsTemplate.expandPublicationCollaborators();
+
+			Click(locator1 = "PublicationsTemplate#INVITE_USERS_BUTTON");
+
+			PublicationsTemplate.inviteUser(
+				publicationRole = "${publicationRole1}",
+				titleRole = "${titleRole1}",
+				userInvite = "${userInvite1}");
+
+			if (isSet(userInvite2)) {
+				PublicationsTemplate.inviteUser(
+					publicationRole = "${publicationRole2}",
+					titleRole = "${titleRole2}",
+					userInvite = "${userInvite2}");
+			}
+
+			Button.clickNoError(button = "Send");
+
+			if ("${userMissingPublicationsRole}" == "true") {
+				AssertConfirm(value1 = "You are inviting user ${userInvite} who does not have access to Publications. This user will be assigned the Publications User role to gain access to Publications.");
+			}
+
+			Alert.viewSuccessMessage();
+		}
+
+		Button.click(button = "Create");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro expandPublicationCollaborators {
 		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED")) {
 			Click(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED");

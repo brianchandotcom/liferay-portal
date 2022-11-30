@@ -112,80 +112,61 @@ export default withRouter(
 		return (
 			<section className="d-flex justify-content-between p-0 questions-section questions-section-list">
 				<div className="activity-panel col-xl-8 pl-5 pr-3">
-					<div>
-						<div className="container d-flex flex-row justify-content-between pl-0 py-2">
-							<div className="questions-container row">
-								<div className="mt-3">
-									<div className="container d-flex flex-row">
-										<h2>
-											{Liferay.Language.get(
-												'latest-activity'
-											)}
-										</h2>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					<h2 className="py-2">
+						{Liferay.Language.get('latest-activity')}
+					</h2>
 
-					<div>
-						<PaginatedList
-							activeDelta={pageSize}
-							activePage={page}
-							changeDelta={(pageSize) =>
-								changePage(page, pageSize)
-							}
-							changePage={(page) => changePage(page, pageSize)}
-							data={data && data.messageBoardMessages}
-							emptyState={
-								<ClayEmptyState
-									description={Liferay.Language.get(
-										'sorry,-no-results-were-found'
-									)}
-									imgSrc={
-										context.includeContextPath +
-										'/assets/empty_questions_list.png'
-									}
-									title={Liferay.Language.get(
-										'there-are-no-results'
-									)}
-								/>
-							}
-							hidden
-							loading={loading}
-							totalCount={totalCount}
-						>
-							{(question) => (
-								<QuestionRow
-									context={context}
-									currentSection={
-										context.useTopicNamesInURL
-											? question.messageBoardThread
-													.messageBoardSection
-											: (question.messageBoardThread
-													.messageBoardSection &&
-													question.messageBoardThread
-														.messageBoardSection
-														.id) ||
-											  context.rootTopicId
-									}
-									key={question.id}
-									linkProps={{
-										id: 'user-activity-row',
-										onClick: (event) => {
-											event.preventDefault();
-											setCurrentQuestion(question);
-										},
-									}}
-									question={addSectionToQuestion(question)}
-									rowSelected={
-										currentQuestion?.friendlyUrlPath
-									}
-									showSectionLabel={true}
-								/>
-							)}
-						</PaginatedList>
-					</div>
+					<PaginatedList
+						activeDelta={pageSize}
+						activePage={page}
+						changeDelta={(pageSize) => changePage(page, pageSize)}
+						changePage={(page) => changePage(page, pageSize)}
+						data={data && data.messageBoardMessages}
+						emptyState={
+							<ClayEmptyState
+								description={Liferay.Language.get(
+									'sorry,-no-results-were-found'
+								)}
+								imgSrc={
+									context.includeContextPath +
+									'/assets/empty_questions_list.png'
+								}
+								title={Liferay.Language.get(
+									'there-are-no-results'
+								)}
+							/>
+						}
+						hidden
+						loading={loading}
+						totalCount={totalCount}
+					>
+						{(question) => (
+							<QuestionRow
+								context={context}
+								currentSection={
+									context.useTopicNamesInURL
+										? question.messageBoardThread
+												.messageBoardSection
+										: (question.messageBoardThread
+												.messageBoardSection &&
+												question.messageBoardThread
+													.messageBoardSection.id) ||
+										  context.rootTopicId
+								}
+								key={question.id}
+								linkProps={{
+									id: 'user-activity-row',
+									onClick: (event) => {
+										event.preventDefault();
+										setCurrentQuestion(question);
+									},
+								}}
+								question={addSectionToQuestion(question)}
+								rowSelected={currentQuestion?.friendlyUrlPath}
+								showSectionLabel={true}
+							/>
+						)}
+					</PaginatedList>
 				</div>
 
 				<div className="activity-panel border-left col-xl-4 modal-body">

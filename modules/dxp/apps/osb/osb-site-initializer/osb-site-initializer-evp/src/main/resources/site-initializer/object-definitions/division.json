@@ -8,8 +8,6 @@
 		},
 		"permissions": {
 		},
-		"publish": {
-		},
 		"update": {
 		}
 	},
@@ -204,6 +202,6 @@
 		"label": "approved",
 		"label_i18n": "Approved"
 	},
-	"system": false,
-	"titleObjectFieldName": "divisionName"
+	"system": true
+
 }

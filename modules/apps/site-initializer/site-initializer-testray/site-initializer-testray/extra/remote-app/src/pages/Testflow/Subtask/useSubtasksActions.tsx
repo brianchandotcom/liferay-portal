@@ -93,6 +93,10 @@ const useSubtasksActions = () => {
 				if (dueStatus.key === SubTaskStatuses.OPEN) {
 					return i18n.translate('assign-and-begin-analysis');
 				}
+
+				if (dueStatus.key === SubTaskStatuses.COMPLETE) {
+					return i18n.translate('assign-and-reanalyze');
+				}
 			},
 		},
 		{

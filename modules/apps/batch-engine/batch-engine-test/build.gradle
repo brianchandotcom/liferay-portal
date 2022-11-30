@@ -4,9 +4,9 @@ dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-collections4", version: "4.4"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-compress", version: "1.21"
-	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "4.1.2"
-	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml", version: "4.1.2"
-	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml-lite", version: "4.1.2"
+	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "5.2.2"
+	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
+	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
 	testIntegrationCompile group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:batch-engine:batch-engine-api")

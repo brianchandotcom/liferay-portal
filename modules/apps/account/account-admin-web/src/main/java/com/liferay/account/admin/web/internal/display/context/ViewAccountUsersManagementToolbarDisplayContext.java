@@ -106,25 +106,6 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				dropdownItem.putData("action", "inviteAccountUsers");
-				dropdownItem.putData(
-					"requestInvitationsURL",
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCPath(
-						"/account_entries_admin/invite_account_users.jsp"
-					).setRedirect(
-						currentURLObj
-					).setParameter(
-						"accountEntryId", _getAccountEntryId()
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "invite-users"));
-			}
-		).addDropdownItem(
-			dropdownItem -> {
 				dropdownItem.putData("action", "selectAccountUsers");
 				dropdownItem.putData(
 					"assignAccountUsersURL",
@@ -152,6 +133,25 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "assign-users"));
+			}
+		).addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "inviteAccountUsers");
+				dropdownItem.putData(
+					"requestInvitationsURL",
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/account_entries_admin/invite_account_users.jsp"
+					).setRedirect(
+						currentURLObj
+					).setParameter(
+						"accountEntryId", _getAccountEntryId()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "invite-users"));
 			}
 		).build();
 	}

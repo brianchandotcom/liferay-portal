@@ -311,6 +311,15 @@ public class MBMessageServiceWrapper
 	}
 
 	@Override
+	public MBMessage getMBMessageByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageService.getMBMessageByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public MBMessage getMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

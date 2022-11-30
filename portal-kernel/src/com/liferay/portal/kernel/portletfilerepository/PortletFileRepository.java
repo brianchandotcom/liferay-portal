@@ -153,7 +153,7 @@ public interface PortletFileRepository {
 		throws PortalException;
 
 	public FileEntry getPortletFileEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	public String getPortletFileEntryURL(

@@ -93,24 +93,6 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-167573 - Verify that as administrator cannot Export Cases without linked Cases"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test AdminCannotExportCasesWithoutCasesLinked {
-
-		// TODO LPS-167573 AdminCannotExportCasesWithoutCasesLinked pending implementation
-
-	}
-
-	@description = "This is a test for LPS-167574 - Verify that as administrator can deleted cases in the 'Select Cases to Export' modal"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test AdminCanDeleteCasesInModalExportCases {
-
-		// TODO LPS-167574 AdminCanDeleteCasesInModalExportCases pending implementation
-
-	}
-
 	@description = "This is a test for LPS-156790 - Verify if as an Administrator I am able to add Cases without Subcomponents"
 	@priority = "5"
 	test AdminCanAddCase {
@@ -158,6 +140,15 @@ definition {
 		task ("Then the case should no longer be found") {
 			Testray.assertItemNotPresent(itemName = "Cases_1 Case");
 		}
+	}
+
+	@description = "This is a test for LPS-167574 - Verify that as administrator can deleted cases in the 'Select Cases to Export' modal"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCanDeleteCasesInModalExportCases {
+
+		// TODO LPS-167574 AdminCanDeleteCasesInModalExportCases pending implementation
+
 	}
 
 	@description = "This is a test for LPS-156793 - Verify if as an Administrator I am able to edit Cases without Subcomponents"
@@ -314,6 +305,39 @@ definition {
 
 		task ("Then the error message should appear") {
 			Alert.viewErrorMessage(errorMessage = "The Case name already exists");
+		}
+	}
+
+	@description = "This is a test for LPS-167573 - Verify that as administrator cannot Export Cases without linked Cases"
+	@priority = "3"
+	test AdminCannotExportCasesWithoutCasesLinked {
+		task ("Given that the user add a new Case") {
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Manual Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
+
+			TestrayLayout.clickResultsOnSidebar();
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("When the user try export cases without linked cases") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Export Cases");
+
+			Button.click(button = "Export");
+		}
+
+		task ("Then an error message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "Mark at least one case to export.");
 		}
 	}
 

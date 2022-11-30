@@ -17,7 +17,6 @@ package com.liferay.client.extension.type.internal;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.annotation.CETProperty;
-import com.liferay.client.extension.type.annotation.CETPropertyType;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -175,7 +174,7 @@ public abstract class BaseCETImpl implements CET {
 		for (Method method : cetClass.getDeclaredMethods()) {
 			CETProperty cetProperty = method.getAnnotation(CETProperty.class);
 
-			CETPropertyType type = cetProperty.type();
+			CETProperty.Type type = cetProperty.type();
 
 			if (type.isURL()) {
 				urlCETPropertyNames.add(cetProperty.name());

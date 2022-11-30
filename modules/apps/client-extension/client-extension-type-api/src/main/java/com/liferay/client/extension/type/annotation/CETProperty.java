@@ -47,6 +47,43 @@ public @interface CETProperty {
 	 *
 	 * @review
 	 */
-	CETPropertyType type();
+	Type type();
+
+	/**
+	 * This enum describes property data types for CET fields.
+	 *
+	 * It can be used for multiple purposes like, for example, rendering the display
+	 * of the data in the view client extension page.
+	 *
+	 * @author Iván Zaera Avellón
+	 */
+	public enum Type {
+
+		Boolean, String, StringList, URL(true), URLList(true);
+
+		/**
+		 * Whether or not the values contained in the property are to be
+		 * interpreted as URLs.
+		 *
+		 * URLs may have interpolation tokens inside them that must be replaced by
+		 * their actual values during build or runtime.
+		 *
+		 * @review
+		 */
+		public boolean isURL() {
+			return _url;
+		}
+
+		private Type() {
+			this(false);
+		}
+
+		private Type(boolean url) {
+			_url = url;
+		}
+
+		private boolean _url;
+
+	}
 
 }

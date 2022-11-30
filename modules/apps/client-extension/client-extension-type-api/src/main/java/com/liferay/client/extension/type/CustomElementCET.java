@@ -15,7 +15,6 @@
 package com.liferay.client.extension.type;
 
 import com.liferay.client.extension.type.annotation.CETProperty;
-import com.liferay.client.extension.type.annotation.CETPropertyType;
 import com.liferay.client.extension.type.annotation.CETType;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -29,41 +28,41 @@ public interface CustomElementCET extends CET {
 
 	@CETProperty(
 		defaultValue = "", label = "css-urls", name = "cssURLs",
-		type = CETPropertyType.URLList
+		type = CETProperty.Type.URLList
 	)
 	public String getCSSURLs();
 
 	@CETProperty(
 		defaultValue = "", name = "friendlyURLMapping",
-		type = CETPropertyType.String
+		type = CETProperty.Type.String
 	)
 	public String getFriendlyURLMapping();
 
 	@CETProperty(
 		defaultValue = "", name = "htmlElementName",
-		type = CETPropertyType.String
+		type = CETProperty.Type.String
 	)
 	public String getHTMLElementName();
 
 	@CETProperty(
 		defaultValue = "", name = "portletCategoryName",
-		type = CETPropertyType.String
+		type = CETProperty.Type.String
 	)
 	public String getPortletCategoryName();
 
 	@CETProperty(
-		defaultValue = "", name = "urls", type = CETPropertyType.URLList
+		defaultValue = "", name = "urls", type = CETProperty.Type.URLList
 	)
 	public String getURLs();
 
 	@CETProperty(
 		defaultValue = "false", name = "instanceable",
-		type = CETPropertyType.Boolean
+		type = CETProperty.Type.Boolean
 	)
 	public boolean isInstanceable();
 
 	@CETProperty(
-		defaultValue = "false", name = "useESM", type = CETPropertyType.Boolean
+		defaultValue = "false", name = "useESM", type = CETProperty.Type.Boolean
 	)
 	public boolean isUseESM();
 

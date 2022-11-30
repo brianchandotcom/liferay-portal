@@ -143,12 +143,48 @@ definition {
 	}
 
 	@description = "This is a test for LPS-167574 - Verify that as administrator can deleted cases in the 'Select Cases to Export' modal"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AdminCanDeleteCasesInModalExportCases {
+		task ("Given that the user add a new Case") {
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Manual Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
 
-		// TODO LPS-167574 AdminCanDeleteCasesInModalExportCases pending implementation
+			TestrayLayout.clickResultsOnSidebar();
 
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("When the user select a cases for export") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Export Cases");
+
+			Button.click(button = "Add Cases");
+
+			Click.clickAtNotVisible(
+				key_checkboxOption = "Cases_1 Case",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+			Button.click(button = "Select Cases");
+
+			Testray.assertItemName(key_name = "Cases_1 Case");
+		}
+
+		task ("Then can delete this case and it no longer appears in the list") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			Testray.assertItemNotPresent(key_name = "Cases_1 Case");
+		}
 	}
 
 	@description = "This is a test for LPS-156793 - Verify if as an Administrator I am able to edit Cases without Subcomponents"

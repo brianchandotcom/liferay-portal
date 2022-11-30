@@ -97,6 +97,21 @@ public class MessageBoardAttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (messageBoardAttachment.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(messageBoardAttachment.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (messageBoardAttachment.getFileExtension() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -193,6 +208,16 @@ public class MessageBoardAttachmentSerDes {
 				String.valueOf(messageBoardAttachment.getEncodingFormat()));
 		}
 
+		if (messageBoardAttachment.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					messageBoardAttachment.getExternalReferenceCode()));
+		}
+
 		if (messageBoardAttachment.getFileExtension() == null) {
 			map.put("fileExtension", null);
 		}
@@ -261,6 +286,14 @@ public class MessageBoardAttachmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardAttachment.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					messageBoardAttachment.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

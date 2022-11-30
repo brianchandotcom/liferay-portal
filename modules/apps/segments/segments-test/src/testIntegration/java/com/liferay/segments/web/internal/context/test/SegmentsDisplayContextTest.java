@@ -49,10 +49,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -481,7 +483,12 @@ public class SegmentsDisplayContextTest {
 			ServiceContextTestUtil.getServiceContext(
 				_company.getGroupId(), _user.getUserId()));
 
-		Assert.assertFalse(_isShowDeleteAction(segmentsEntry));
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
+			Assert.assertFalse(_isShowDeleteAction(segmentsEntry));
+		}
+		else {
+			Assert.assertTrue(_isShowDeleteAction(segmentsEntry));
+		}
 	}
 
 	@Test

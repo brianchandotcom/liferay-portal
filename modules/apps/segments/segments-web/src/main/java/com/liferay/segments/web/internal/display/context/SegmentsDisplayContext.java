@@ -552,12 +552,23 @@ public class SegmentsDisplayContext {
 
 	public boolean isShowDeleteAction(SegmentsEntry segmentsEntry) {
 		try {
-			if ((segmentsEntry.getGroupId() ==
-					_themeDisplay.getScopeGroupId()) &&
-				SegmentsEntryPermission.contains(
-					_permissionChecker, segmentsEntry, ActionKeys.DELETE)) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-166954"))) {
 
-				return true;
+				if ((segmentsEntry.getGroupId() ==
+						_themeDisplay.getScopeGroupId()) &&
+					SegmentsEntryPermission.contains(
+						_permissionChecker, segmentsEntry, ActionKeys.DELETE)) {
+
+					return true;
+				}
+			}
+			else {
+				if (SegmentsEntryPermission.contains(
+						_permissionChecker, segmentsEntry, ActionKeys.DELETE)) {
+
+					return true;
+				}
 			}
 
 			return false;

@@ -34,8 +34,8 @@ const useSubtasksActions = () => {
 
 	const actionsRef = useRef([
 		{
-			action: (subtask, mutate) => {
-				testraySubTaskImpl.assignToMe(subtask).then(() => {
+			action: (subtask, mutate) =>
+				testraySubTaskImpl.assignToMe(subtask).then(() =>
 					updateItemFromList(
 						mutate,
 						0,
@@ -43,9 +43,8 @@ const useSubtasksActions = () => {
 						{
 							revalidate: true,
 						}
-					);
-				});
-			},
+					)
+				),
 			hidden: ({dueStatus}) =>
 				dueStatus?.key === SubTaskStatuses.IN_ANALYSIS,
 			icon: 'user',
@@ -112,6 +111,22 @@ const useSubtasksActions = () => {
 				dueStatus.key !== SubTaskStatuses.IN_ANALYSIS,
 			icon: 'polls',
 			name: i18n.sub('complete-x', ''),
+		},
+		{
+			action: (subtask, mutate) =>
+				testraySubTaskImpl.returnToOpen(subtask).then(() =>
+					updateItemFromList(
+						mutate,
+						0,
+						{},
+						{
+							revalidate: true,
+						}
+					)
+				),
+			hidden: ({dueStatus}) => dueStatus.key !== SubTaskStatuses.COMPLETE,
+			icon: 'polls',
+			name: i18n.translate('return-to-open'),
 		},
 	] as Action<TestraySubTask>[]);
 

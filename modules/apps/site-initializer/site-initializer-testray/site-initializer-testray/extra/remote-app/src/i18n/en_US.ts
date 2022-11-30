@@ -262,6 +262,7 @@ export default {
 	'project-name': 'Project Name',
 	'projects': 'Projects',
 	'promote': 'Promote',
+	'reanalyze': 'Reanalyze',
 	'remaining-estimated': 'Remaining Estimated',
 	'remove': 'Remove',
 	'reopen-test': 'Reopen Test',

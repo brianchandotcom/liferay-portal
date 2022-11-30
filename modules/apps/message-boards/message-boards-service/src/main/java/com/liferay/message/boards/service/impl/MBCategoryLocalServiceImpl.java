@@ -103,7 +103,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		parentCategoryId = _getParentCategoryId(groupId, parentCategoryId);
 
-		_validate(name);
+		_validate(groupId, name);
 
 		long categoryId = counterLocalService.increment();
 
@@ -799,7 +799,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Category
 
-		_validate(name);
+		_validate(serviceContext.getScopeGroupId(), name);
 
 		category.setParentCategoryId(parentCategoryId);
 		category.setName(name);
@@ -1141,9 +1141,15 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		}
 	}
 
-	private void _validate(String name) throws PortalException {
+	private void _validate(long groupId, String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new CategoryNameException("Name is null");
+		}
+
+		MBCategory mbCategory = mbCategoryPersistence.fetchByG_N(groupId, name);
+
+		if (mbCategory != null) {
+			throw new CategoryNameException("Name must not be duplicated");
 		}
 	}
 

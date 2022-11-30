@@ -82,8 +82,8 @@ import org.quartz.spi.OperableTrigger;
  * @author Edward C. Han
  */
 @Component(
-	enabled = false, immediate = true,
-	property = "scheduler.engine.proxy=false", service = SchedulerEngine.class
+	enabled = false, property = "scheduler.engine.proxy=false",
+	service = SchedulerEngine.class
 )
 public class QuartzSchedulerEngine implements SchedulerEngine {
 

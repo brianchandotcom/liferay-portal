@@ -38,7 +38,7 @@ import org.quartz.TriggerBuilder;
  * @author Tina Tian
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	service = {QuartzTriggerFactory.class, TriggerFactory.class}
 )
 public class QuartzTriggerFactory implements TriggerFactory {

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = ClusterInvokeAcceptor.class)
+@Component(service = ClusterInvokeAcceptor.class)
 public class SchedulerClusterInvokeAcceptor implements ClusterInvokeAcceptor {
 
 	@Override

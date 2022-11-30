@@ -1822,13 +1822,15 @@ definition {
 		var key_assetTitle = "${assetTitle}";
 		var key_portletName = "${portletName}";
 
+		WaitForElementPresent(locator1 = "AP#ASSET_ABSTRACT_EDIT");
+
 		Click(locator1 = "AP#ASSET_ABSTRACT_EDIT");
 
 		ScrollWebElementIntoView(locator1 = "Portlet#TITLE");
 
-		MouseOver.mouseOverNotVisible(locator1 = "AP#ASSET_EDIT");
+		//MouseOver.mouseOverNotVisible(locator1 = "AP#ASSET_EDIT");
 
-		Click.clickNoMouseOver(locator1 = "AP#ASSET_EDIT");
+		Click.mouseOverClick(locator1 = "AP#ASSET_EDIT");
 
 		if (isSet(dmDocumentTitleEdit)) {
 			Type(

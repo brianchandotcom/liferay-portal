@@ -20,23 +20,13 @@ import java.io.Serializable;
  * @author Lino Alves
  */
 public class AssetEntriesSearchFacetTermDisplayContext extends BucketDisplayContext {
-
-	public String getAssetType() {
-		return _assetType;
-	}
 	public String getTypeName() {
 		return _typeName;
-	}
-
-	public void setAssetType(String assetType) {
-		_assetType = assetType;
 	}
 
 	public void setTypeName(String typeName) {
 		_typeName = typeName;
 	}
-
-	private String _assetType;
 	private String _typeName;
 
 }

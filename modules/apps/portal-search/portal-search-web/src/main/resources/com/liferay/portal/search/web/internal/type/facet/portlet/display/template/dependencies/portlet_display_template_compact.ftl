@@ -18,7 +18,7 @@
 					<li class="facet-value">
 						<button
 							class="btn btn-link btn-unstyled facet-term ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')} term-name"
-							data-term-id="${entry.getAssetType()}"
+							data-term-id="${entry.getFilterValue()}"
 							disabled
 							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						>

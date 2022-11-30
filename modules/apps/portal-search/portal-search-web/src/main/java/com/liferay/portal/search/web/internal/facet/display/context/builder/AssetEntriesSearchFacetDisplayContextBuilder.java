@@ -106,7 +106,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetFieldDisplayContext =
 				new AssetEntriesSearchFacetTermDisplayContext();
 
-		assetEntriesSearchFacetFieldDisplayContext.setAssetType(assetType);
+		assetEntriesSearchFacetFieldDisplayContext.setFilterValue(assetType);
 		assetEntriesSearchFacetFieldDisplayContext.setFrequency(frequency);
 		assetEntriesSearchFacetFieldDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);

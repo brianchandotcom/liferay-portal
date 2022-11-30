@@ -17,7 +17,7 @@
 				<#list entries as entry>
 					<button
 						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
-						data-term-id="${entry.getAssetType()}"
+						data-term-id="${entry.getFilterValue()}"
 						disabled
 						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						type="button"

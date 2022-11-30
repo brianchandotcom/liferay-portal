@@ -66,7 +66,7 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = as
 				%>
 
 					<li class="facet-value">
-						<a class="<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetTermDisplayContext.getAssetType()) %>" href="javascript:void(0);">
+						<a class="<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetTermDisplayContext.getFilterValue()) %>" href="javascript:void(0);">
 							<%= assetEntriesSearchFacetTermDisplayContext.getTypeName() %>
 
 							<c:if test="<%= assetEntriesSearchFacetTermDisplayContext.isFrequencyVisible() %>">

@@ -117,11 +117,7 @@ public class DispatchTriggerDisplayContextTest {
 				SingleNodeClusterModeDispatchTaskExecutor.
 					DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE));
 
-		Group group = GroupTestUtil.addGroup();
-
-		Company company = _companyLocalService.getCompany(group.getCompanyId());
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
@@ -140,7 +136,8 @@ public class DispatchTriggerDisplayContextTest {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(
-				company, LayoutTestUtil.addTypePortletLayout(group), user,
+				_companyLocalService.getCompany(user.getCompanyId()),
+				LayoutTestUtil.addTypePortletLayout(user.getGroupId()), user,
 				"dispatchTriggerId",
 				String.valueOf(dispatchTrigger.getDispatchTriggerId()),
 				"active", "true", "cmd", "schedule", "cronExpression",
@@ -159,7 +156,7 @@ public class DispatchTriggerDisplayContextTest {
 		dispatchTrigger = _dispatchTriggerLocalService.getDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId());
 
-		Assert.assertEquals(
+		Assert.assertNotEquals(
 			dispatchTaskClusterMode.getMode(),
 			dispatchTrigger.getDispatchTaskClusterMode());
 

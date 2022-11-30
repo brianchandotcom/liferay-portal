@@ -47,7 +47,7 @@ const EditedTimestamp = ({
 
 	return (
 		<div className="mr-2 pl-2 row text-weight-bolder">
-			{styledTimeStamp ? (
+			{styledTimeStamp && (
 				<div className="d-flex flex-row mb-0 ml-1">
 					<span className="text-3 text-weight-bolder">{creator}</span>
 
@@ -55,7 +55,7 @@ const EditedTimestamp = ({
 						{elapsedTime}
 					</span>
 				</div>
-			) : null}
+			)}
 
 			{!styledTimeStamp && !showSignature && (
 				<div>

@@ -461,3 +461,11 @@ div {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.scroll-to-element {
+	bottom: 20px;
+	cursor: pointer;
+	position: fixed;
+	right: 30px;
+	z-index: 99;
+}

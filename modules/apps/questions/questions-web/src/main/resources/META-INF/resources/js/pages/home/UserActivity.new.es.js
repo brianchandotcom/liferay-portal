@@ -178,6 +178,7 @@ export default withRouter(
 							breadcrumb: false,
 							flags: false,
 							kebab: true,
+							preview: true,
 							rating: false,
 							showAnswer: false,
 							showSignature: true,

@@ -805,12 +805,11 @@ export const getUserActivityQuery = `
 					image
 					name
 				}
-				dateCreated
-				showAsAnswer
 				creatorStatistics {
 					postsNumber
 					rank
 				}
+				dateCreated
 				dateModified
 				friendlyUrlPath
 				headline
@@ -822,11 +821,12 @@ export const getUserActivityQuery = `
 						title
 					}
 				}
-				parentMessageBoardMessage {
-					headline
-					articleBody
-				}
 				numberOfMessageBoardMessages
+				parentMessageBoardMessage {
+					articleBody
+					headline
+				}
+				showAsAnswer
 			}
 			page
 			pageSize

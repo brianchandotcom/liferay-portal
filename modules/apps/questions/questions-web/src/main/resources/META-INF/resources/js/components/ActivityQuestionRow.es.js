@@ -58,7 +58,7 @@ export default function ActivityQuestionRow({
 	const isRowSelected = question.friendlyUrlPath === rowSelected;
 
 	const messageType = useMemo(() => {
-		if (question.showAsAnswer === true) {
+		if (question.showAsAnswer) {
 			return {
 				label: Liferay.Language.get('best-answer'),
 				symbol: 'check-circle-full',

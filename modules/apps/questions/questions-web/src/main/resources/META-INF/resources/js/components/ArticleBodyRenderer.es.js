@@ -52,7 +52,7 @@ export default function ArticleBodyRenderer({
 				</div>
 			)}
 
-			{signature && showSignature ? (
+			{showSignature && signature && (
 				<style
 					dangerouslySetInnerHTML={{
 						__html: `.questions-article-body-${id} ${
@@ -60,7 +60,7 @@ export default function ArticleBodyRenderer({
 						}:last-child:after {content: " - ${signature} ${_companyName} - ${elapsedTime}"; font-weight: bold;}`,
 					}}
 				/>
-			) : null}
+			)}
 		</>
 	);
 }

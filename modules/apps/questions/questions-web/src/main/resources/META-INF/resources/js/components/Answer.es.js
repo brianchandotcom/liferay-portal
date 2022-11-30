@@ -77,6 +77,7 @@ export default withRouter(
 			<>
 				<div
 					className={classnames('questions-answer c-py-2', {
+						'c-px-3': showAsAnswer && !display?.preview,
 						'questions-answer': styledItems,
 						'questions-answer-success': showAsAnswer,
 					})}
@@ -99,9 +100,24 @@ export default withRouter(
 						)}
 
 						<div className="c-mb-4 c-mb-md-0 c-ml-3 col-lg-11 col-md-10 col-sm-12 col-xl-11">
-							<div className="d-flex justify-content-between">
+							<div
+								className={classnames(
+									'd-flex justify-content-between',
+									{
+										'flex-column':
+											showAsAnswer && !display?.preview,
+										'flex-row-reverse':
+											showAsAnswer && display?.preview,
+									}
+								)}
+							>
 								{showAsAnswer && (
-									<div className="d-flex justify-content-end">
+									<div
+										className={classnames('d-flex', {
+											'justify-content-end':
+												display?.preview,
+										})}
+									>
 										<p
 											className="c-mb-0 font-weight-bold text-success"
 											data-testid="mark-as-answer-check"

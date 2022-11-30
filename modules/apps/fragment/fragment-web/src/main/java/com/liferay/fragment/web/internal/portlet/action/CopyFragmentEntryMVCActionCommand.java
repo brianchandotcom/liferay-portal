@@ -15,17 +15,40 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentComposition;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.io.InputStream;
+
+import java.net.URL;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -78,13 +101,158 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 							fragmentCollectionId, serviceContext);
 					}
 
+					String[] contributedEntryKeys = StringUtil.split(
+						ParamUtil.getString(
+							actionRequest, "contributedEntryKeys"));
+
+					for (String contributedEntryKey : contributedEntryKeys) {
+						FragmentComposition fragmentComposition =
+							_fragmentCollectionContributorRegistry.
+								getFragmentComposition(contributedEntryKey);
+
+						FragmentEntry fragmentEntry =
+							_fragmentCollectionContributorRegistry.
+								getFragmentEntry(contributedEntryKey);
+
+						if (fragmentComposition != null) {
+							_addFragmentComposition(
+								fragmentCollectionId, fragmentComposition,
+								serviceContext, themeDisplay);
+						}
+						else if (fragmentEntry != null) {
+							_addFragmentEntry(
+								fragmentCollectionId, fragmentEntry,
+								serviceContext, themeDisplay);
+						}
+					}
+
 					return fragmentCollectionId;
 				}
 			).buildString());
 	}
 
+	private void _addFragmentComposition(
+			long fragmentCollectionId, FragmentComposition fragmentComposition,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		long previewFileEntryId = 0;
+
+		String imagePreviewURL = fragmentComposition.getImagePreviewURL(
+			themeDisplay);
+
+		if (Validator.isNotNull(imagePreviewURL)) {
+			previewFileEntryId = _getPreviewFileEntryId(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				fragmentCollectionId,
+				themeDisplay.getPortalURL() + imagePreviewURL);
+		}
+
+		_fragmentCompositionService.addFragmentComposition(
+			themeDisplay.getScopeGroupId(), fragmentCollectionId,
+			StringPool.BLANK,
+			StringBundler.concat(
+				fragmentComposition.getName(), StringPool.SPACE,
+				StringPool.OPEN_PARENTHESIS,
+				_language.get(LocaleUtil.getMostRelevantLocale(), "copy"),
+				StringPool.CLOSE_PARENTHESIS),
+			null, fragmentComposition.getData(), previewFileEntryId,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	private void _addFragmentEntry(
+			long fragmentCollectionId, FragmentEntry fragmentEntry,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		long previewFileEntryId = 0;
+
+		String imagePreviewURL = fragmentEntry.getImagePreviewURL(themeDisplay);
+
+		if (Validator.isNotNull(imagePreviewURL)) {
+			previewFileEntryId = _getPreviewFileEntryId(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				fragmentCollectionId,
+				themeDisplay.getPortalURL() + imagePreviewURL);
+		}
+
+		_fragmentEntryService.addFragmentEntry(
+			themeDisplay.getScopeGroupId(), fragmentCollectionId,
+			StringPool.BLANK,
+			StringBundler.concat(
+				fragmentEntry.getName(), StringPool.SPACE,
+				StringPool.OPEN_PARENTHESIS,
+				_language.get(LocaleUtil.getMostRelevantLocale(), "copy"),
+				StringPool.CLOSE_PARENTHESIS),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
+			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
+			previewFileEntryId, fragmentEntry.getType(),
+			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+	}
+
+	private long _getPreviewFileEntryId(
+		long userId, long groupId, long fragmentCollectionId,
+		String imagePreviewURL) {
+
+		try {
+			URL url = new URL(imagePreviewURL);
+
+			byte[] bytes = null;
+
+			try (InputStream inputStream = url.openStream()) {
+				bytes = FileUtil.getBytes(inputStream);
+			}
+
+			String shortFileName = FileUtil.getShortFileName(imagePreviewURL);
+
+			Repository repository =
+				PortletFileRepositoryUtil.fetchPortletRepository(
+					groupId, FragmentPortletKeys.FRAGMENT);
+
+			if (repository == null) {
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
+
+				repository = PortletFileRepositoryUtil.addPortletRepository(
+					groupId, FragmentPortletKeys.FRAGMENT, serviceContext);
+			}
+
+			FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+				groupId, userId, FragmentCollection.class.getName(),
+				fragmentCollectionId, FragmentPortletKeys.FRAGMENT,
+				repository.getDlFolderId(), bytes, shortFileName,
+				MimeTypesUtil.getContentType(shortFileName), false);
+
+			return fileEntry.getFileEntryId();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return 0;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CopyFragmentEntryMVCActionCommand.class);
+
+	@Reference
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Reference
+	private FragmentCompositionService _fragmentCompositionService;
+
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

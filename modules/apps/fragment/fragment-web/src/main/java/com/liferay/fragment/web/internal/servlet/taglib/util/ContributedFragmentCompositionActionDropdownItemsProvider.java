@@ -76,7 +76,7 @@ public class ContributedFragmentCompositionActionDropdownItemsProvider {
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
-					"/fragment/copy_contributed_entry"
+					"/fragment/copy_fragment_entry"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).buildString());

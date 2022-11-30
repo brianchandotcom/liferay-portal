@@ -94,7 +94,7 @@ public class ContributedFragmentManagementToolbarDisplayContext
 				return PortletURLBuilder.createActionURL(
 					liferayPortletResponse
 				).setActionName(
-					"/fragment/copy_contributed_entry"
+					"/fragment/copy_fragment_entry"
 				).setRedirect(
 					themeDisplay.getURLCurrent()
 				).buildString();

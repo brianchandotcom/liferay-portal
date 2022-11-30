@@ -5,9 +5,6 @@ buildService {
 
 dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.3"
-	compileInclude group: "org.apache.poi", name: "poi", version: "5.2.2"
-	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
-	compileInclude group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
@@ -19,6 +16,9 @@ dependencies {
 	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	compileOnly group: "org.apache.commons", name: "commons-math3", version: "3.6.1"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
+	compileOnly group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
+	compileOnly group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"

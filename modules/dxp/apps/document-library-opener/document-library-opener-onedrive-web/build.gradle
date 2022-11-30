@@ -9,9 +9,6 @@ dependencies {
 	compileInclude group: "com.squareup.okhttp3", name: "okhttp", version: "3.12.1"
 	compileInclude group: "com.squareup.okio", name: "okio", version: "1.15.0"
 	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.4"
-	compileInclude group: "org.apache.poi", name: "poi", version: "5.2.2"
-	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
-	compileInclude group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 
 	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
@@ -23,6 +20,9 @@ dependencies {
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
 	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
+	compileOnly group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
+	compileOnly group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:connected-app:connected-app-api")
 	compileOnly project(":apps:document-library-opener:document-library-opener-api")

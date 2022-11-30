@@ -21,9 +21,6 @@ dependencies {
 	compileInclude group: "org.apache.lucene", name: "lucene-queries", version: "7.1.0"
 	compileInclude group: "org.apache.lucene", name: "lucene-queryparser", version: "7.1.0"
 	compileInclude group: "org.apache.lucene", name: "lucene-sandbox", version: "7.1.0"
-	compileInclude group: "org.apache.poi", name: "poi", version: "5.2.2"
-	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
-	compileInclude group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
 	compileInclude group: "org.codehaus.groovy", name: "groovy-all", version: "2.4.21"
 	compileInclude group: "org.eclipse.jdt.core.compiler", name: "ecj", version: "4.4.2"
 	compileInclude group: "org.jfree", name: "jcommon", version: "1.0.24"
@@ -33,6 +30,9 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileOnly group: "org.apache.commons", name: "commons-math3", version: "3.6.1"
+	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
+	compileOnly group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
+	compileOnly group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:commerce:commerce-report-api")
 }

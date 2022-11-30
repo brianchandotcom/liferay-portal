@@ -56,7 +56,7 @@ export default function SearchBar({
 	const alignElementRef = useRef();
 	const dropdownRef = useRef();
 
-	const _fetchSuggestions = (value) => {
+	const _fetchSuggestions = (value, currentScope) => {
 		fetch(
 			addParams(
 				{
@@ -66,7 +66,7 @@ export default function SearchBar({
 						: '/search',
 					groupId: Liferay.ThemeDisplay.getScopeGroupId(),
 					plid: Liferay.ThemeDisplay.getPlid(),
-					scope,
+					scope: currentScope,
 					search: value,
 				},
 				suggestionsURL
@@ -133,7 +133,7 @@ export default function SearchBar({
 			if (value.trim() !== autocompleteSearchValue) {
 				setLoading(true);
 
-				fetchSuggestionsDebounced(value.trim());
+				fetchSuggestionsDebounced(value.trim(), scope);
 			}
 
 			setActive(true);

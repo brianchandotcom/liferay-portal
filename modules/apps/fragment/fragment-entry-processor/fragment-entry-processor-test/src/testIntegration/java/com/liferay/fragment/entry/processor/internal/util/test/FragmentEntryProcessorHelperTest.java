@@ -218,6 +218,35 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	public void testGetFieldValueFromStringValueRichTextDDMFormFieldType()
+		throws Exception {
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.RICH_TEXT);
+
+		String fieldValue = StringBundler.concat(
+			"<p>", RandomTestUtil.randomString(), "</p>");
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			ddmFormField, _ddmFormValuesToFieldsConverter, fieldValue,
+			_group.getGroupId(), _journalConverter);
+
+		Assert.assertEquals(
+			fieldValue,
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "DDMStructure_" + ddmFormField.getName()
+				)));
+	}
+
+	@Test
 	public void testGetFieldValueFromWebImage() throws Exception {
 		String fieldId = "ImageFieldName";
 

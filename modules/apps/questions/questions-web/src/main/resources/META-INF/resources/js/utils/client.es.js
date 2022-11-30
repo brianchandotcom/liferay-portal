@@ -806,6 +806,7 @@ export const getUserActivityQuery = `
 					name
 				}
 				dateCreated
+				showAsAnswer
 				creatorStatistics {
 					postsNumber
 					rank
@@ -820,6 +821,10 @@ export const getUserActivityQuery = `
 						id
 						title
 					}
+				}
+				parentMessageBoardMessage {
+					headline
+					articleBody
 				}
 				numberOfMessageBoardMessages
 			}

@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import React, {useMemo} from 'react';
 import {Link} from 'react-router-dom';
 
+import {stripHTML} from '../utils/utils.es';
 import {
 	ActivityBody,
 	ActivityFooter,
@@ -57,6 +58,18 @@ export default function ActivityQuestionRow({
 	const isRowSelected = question.friendlyUrlPath === rowSelected;
 
 	const messageType = useMemo(() => {
+		if (question.showAsAnswer === true) {
+			return {
+				label: Liferay.Language.get('best answer'),
+				symbol: 'check-circle-full',
+				text: stripHTML(question.articleBody).replace(
+					MESSAGE_TYPES.answer.prefix,
+					''
+				),
+				type: MESSAGE_TYPES.bestAnswer.type,
+			};
+		}
+
 		if (headline.startsWith(MESSAGE_TYPES.reply.prefix)) {
 			return {
 				label: Liferay.Language.get('comment-reply'),
@@ -81,13 +94,15 @@ export default function ActivityQuestionRow({
 			text: headline,
 			type: MESSAGE_TYPES.question.type,
 		};
-	}, [headline]);
+	}, [headline, question.articleBody, question.showAsAnswer]);
 
 	return (
 		<div
 			className={classNames(
 				'c-mt-3 c-p-3 position-relative question-row text-secondary',
-				{'question-row-selected': isRowSelected}
+				{
+					'question-row-selected': isRowSelected,
+				}
 			)}
 		>
 			<ActivityHeaderBadge
@@ -107,17 +122,24 @@ export default function ActivityQuestionRow({
 				/>
 			</Link>
 
-			<div className="c-mb-1 c-mt-2 stretched-link-layer">
+			<div
+				className={classNames('c-mb-1 c-mt-2 stretched-link-layer', {
+					'questions-answer questions-answer-success':
+						messageType.type === MESSAGE_TYPES.bestAnswer.type,
+				})}
+			>
 				<ActivityBody messageType={messageType} question={question} />
 			</div>
 
-			<ActivityFooter
-				creatorId={creatorId}
-				creatorInformation={creatorInformation}
-				messageType={messageType}
-				question={question}
-				sectionTitle={sectionTitle}
-			/>
+			{messageType.type !== MESSAGE_TYPES.bestAnswer.type && (
+				<ActivityFooter
+					creatorId={creatorId}
+					creatorInformation={creatorInformation}
+					messageType={messageType}
+					question={question}
+					sectionTitle={sectionTitle}
+				/>
+			)}
 		</div>
 	);
 }

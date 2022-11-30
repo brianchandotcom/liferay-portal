@@ -59,6 +59,7 @@ export default withRouter(
 		const [fetchUserActivity, {data}] = useManualQuery(
 			getUserActivityQuery,
 			{
+				useCache: false,
 				variables: {
 					filter: `creatorId eq ${creatorId}`,
 					page,

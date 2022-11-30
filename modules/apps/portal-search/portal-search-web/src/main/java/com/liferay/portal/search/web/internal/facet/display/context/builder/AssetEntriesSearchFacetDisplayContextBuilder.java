@@ -106,12 +106,12 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetFieldDisplayContext =
 				new AssetEntriesSearchFacetTermDisplayContext();
 
+		assetEntriesSearchFacetFieldDisplayContext.setBucketText(typeName);
 		assetEntriesSearchFacetFieldDisplayContext.setFilterValue(assetType);
 		assetEntriesSearchFacetFieldDisplayContext.setFrequency(frequency);
 		assetEntriesSearchFacetFieldDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
 		assetEntriesSearchFacetFieldDisplayContext.setSelected(selected);
-		assetEntriesSearchFacetFieldDisplayContext.setBucketText(typeName);
 
 		return assetEntriesSearchFacetFieldDisplayContext;
 	}

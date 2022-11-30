@@ -11,6 +11,19 @@
 
 <tbody>
 
+<!--SCHEMA-->
+
+<tr>
+	<td>SCHEMA_TITLE</td>
+	<td>//div[@id='model-${schema}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEMA_FIELD</td>
+	<td>//div[@id='model-${schema}']//td[contains(.,'${field}')]</td>
+	<td></td>
+</tr>
+
 <!--SWAGGER-->
 
 <tr>

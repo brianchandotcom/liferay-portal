@@ -195,6 +195,167 @@ public abstract class BaseObjectLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getIrrelevantExternalReferenceCode();
+
+		Page<ObjectLayout> page =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+					externalReferenceCode, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantExternalReferenceCode != null) {
+			ObjectLayout irrelevantObjectLayout =
+				testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantObjectLayout());
+
+			page =
+				objectLayoutResource.
+					getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+						irrelevantExternalReferenceCode, null,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantObjectLayout),
+				(List<ObjectLayout>)page.getItems());
+			assertValid(page);
+		}
+
+		ObjectLayout objectLayout1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
+				externalReferenceCode, randomObjectLayout());
+
+		ObjectLayout objectLayout2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
+				externalReferenceCode, randomObjectLayout());
+
+		page =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+					externalReferenceCode, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectLayout1, objectLayout2),
+			(List<ObjectLayout>)page.getItems());
+		assertValid(page);
+
+		objectLayoutResource.deleteObjectLayout(objectLayout1.getId());
+
+		objectLayoutResource.deleteObjectLayout(objectLayout2.getId());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getExternalReferenceCode();
+
+		ObjectLayout objectLayout1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
+				externalReferenceCode, randomObjectLayout());
+
+		ObjectLayout objectLayout2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
+				externalReferenceCode, randomObjectLayout());
+
+		ObjectLayout objectLayout3 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
+				externalReferenceCode, randomObjectLayout());
+
+		Page<ObjectLayout> page1 =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+					externalReferenceCode, null, Pagination.of(1, 2));
+
+		List<ObjectLayout> objectLayouts1 =
+			(List<ObjectLayout>)page1.getItems();
+
+		Assert.assertEquals(
+			objectLayouts1.toString(), 2, objectLayouts1.size());
+
+		Page<ObjectLayout> page2 =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+					externalReferenceCode, null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ObjectLayout> objectLayouts2 =
+			(List<ObjectLayout>)page2.getItems();
+
+		Assert.assertEquals(
+			objectLayouts2.toString(), 1, objectLayouts2.size());
+
+		Page<ObjectLayout> page3 =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+					externalReferenceCode, null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectLayout1, objectLayout2, objectLayout3),
+			(List<ObjectLayout>)page3.getItems());
+	}
+
+	protected ObjectLayout
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_addObjectLayout(
+				String externalReferenceCode, ObjectLayout objectLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectLayoutsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectLayout()
+		throws Exception {
+
+		ObjectLayout randomObjectLayout = randomObjectLayout();
+
+		ObjectLayout postObjectLayout =
+			testPostObjectDefinitionByExternalReferenceCodeObjectLayout_addObjectLayout(
+				randomObjectLayout);
+
+		assertEquals(randomObjectLayout, postObjectLayout);
+		assertValid(postObjectLayout);
+	}
+
+	protected ObjectLayout
+			testPostObjectDefinitionByExternalReferenceCodeObjectLayout_addObjectLayout(
+				ObjectLayout objectLayout)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetObjectDefinitionObjectLayoutsPage() throws Exception {
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectLayoutsPage_getObjectDefinitionId();

@@ -811,7 +811,7 @@ paths:
             tags: ["ObjectField"]
     "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-layouts":
         get:
-            operationId: getObjectDefinitionObjectLayoutsPage
+            operationId: getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -849,7 +849,7 @@ paths:
                                 type: array
             tags: ["ObjectLayout"]
         post:
-            operationId: postObjectDefinitionObjectLayout
+            operationId: postObjectDefinitionByExternalReferenceCodeObjectLayout
             parameters:
                 - in: path
                   name: externalReferenceCode

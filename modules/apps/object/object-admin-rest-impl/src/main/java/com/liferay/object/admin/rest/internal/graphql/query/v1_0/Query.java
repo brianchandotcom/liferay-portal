@@ -302,6 +302,31 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCodeObjectLayouts(externalReferenceCode: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectLayoutPage
+			objectDefinitionByExternalReferenceCodeObjectLayouts(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectLayoutResource -> new ObjectLayoutPage(
+				objectLayoutResource.
+					getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+						externalReferenceCode, search,
+						Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectLayouts(objectDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -707,6 +732,37 @@ public class Query {
 						getObjectDefinitionObjectValidationRulesPage(
 							_objectDefinition.getId(), search,
 							Pagination.of(page, pageSize))));
+		}
+
+		private ObjectDefinition _objectDefinition;
+
+	}
+
+	@GraphQLTypeExtension(ObjectDefinition.class)
+	public class
+		GetObjectDefinitionByExternalReferenceCodeObjectLayoutsPageTypeExtension {
+
+		public GetObjectDefinitionByExternalReferenceCodeObjectLayoutsPageTypeExtension(
+			ObjectDefinition objectDefinition) {
+
+			_objectDefinition = objectDefinition;
+		}
+
+		@GraphQLField
+		public ObjectLayoutPage byExternalReferenceCodeObjectLayouts(
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_objectLayoutResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectLayoutResource -> new ObjectLayoutPage(
+					objectLayoutResource.
+						getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+							_objectDefinition.getExternalReferenceCode(),
+							search, Pagination.of(page, pageSize))));
 		}
 
 		private ObjectDefinition _objectDefinition;

@@ -56,6 +56,16 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectLayoutResource {
 
+	public Page<ObjectLayout>
+			getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+				String externalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception;
+
+	public ObjectLayout postObjectDefinitionByExternalReferenceCodeObjectLayout(
+			String externalReferenceCode, ObjectLayout objectLayout)
+		throws Exception;
+
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
 			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -238,7 +237,7 @@ public class CommerceOrderFDSUtil {
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
+			"backURL",
 			PortletURLBuilder.create(
 				portletURL
 			).setParameter(

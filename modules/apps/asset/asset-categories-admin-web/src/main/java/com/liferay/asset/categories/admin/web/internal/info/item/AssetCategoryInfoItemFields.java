@@ -29,6 +29,8 @@ public class AssetCategoryInfoItemFields {
 			TextInfoFieldType.INSTANCE
 		).name(
 			"description"
+		).attribute(
+			TextInfoFieldType.HTML, true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				AssetCategoryInfoItemFields.class, "description")

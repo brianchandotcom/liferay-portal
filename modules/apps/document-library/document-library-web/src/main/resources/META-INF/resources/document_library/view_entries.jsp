@@ -42,7 +42,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 						).put(
 							"draggable", dlViewEntriesDisplayContext.isDraggable(fileEntry)
 						).put(
-							"title", fileEntry.getTitle()
+							"title", HtmlUtil.unescape(fileEntry.getTitle())
 						).build());
 
 					DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
@@ -209,7 +209,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 
 												<div class="autofit-col autofit-col-expand">
 													<div class="table-title">
-														<aui:a href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"><%= latestFileVersion.getTitle() %></aui:a>
+														<aui:a href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"><%= HtmlUtil.unescape(latestFileVersion.getTitle()) %></aui:a>
 													</div>
 												</div>
 											</div>
@@ -331,7 +331,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 						).put(
 							"folder-id", curFolder.getFolderId()
 						).put(
-							"title", curFolder.getName()
+							"title", HtmlUtil.unescape(curFolder.getName())
 						).build());
 
 					row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
@@ -418,7 +418,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 																).buildString()
 															%>'
 														>
-															<%= HtmlUtil.escape(curFolder.getName()) %>
+															<%= HtmlUtil.unescape(curFolder.getName()) %>
 														</aui:a>
 													</div>
 												</div>

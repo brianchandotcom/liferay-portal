@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class FolderHorizontalCard implements HorizontalCard {
 
 	@Override
 	public String getTitle() {
-		return _folder.getName();
+		return HtmlUtil.unescape(_folder.getName());
 	}
 
 	@Override

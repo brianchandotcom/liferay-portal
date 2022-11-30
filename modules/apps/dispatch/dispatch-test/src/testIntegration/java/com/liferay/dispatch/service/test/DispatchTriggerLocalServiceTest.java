@@ -116,7 +116,7 @@ public class DispatchTriggerLocalServiceTest {
 		try {
 			_addDispatchTrigger(
 				DispatchTriggerTestUtil.randomDispatchTrigger(
-					user, "INVALID EXECUTOR TYPE", 1));
+					user, "INVALID EXECUTOR TYPE", 2));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();

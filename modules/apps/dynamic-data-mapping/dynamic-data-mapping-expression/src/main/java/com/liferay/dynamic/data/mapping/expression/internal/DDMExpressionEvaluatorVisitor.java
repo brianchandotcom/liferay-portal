@@ -587,11 +587,14 @@ public class DDMExpressionEvaluatorVisitor
 		if (comparable instanceof BigDecimal) {
 			return (BigDecimal)comparable;
 		}
-		else if (Validator.isNull((String)comparable)) {
+
+		String value = comparable.toString();
+
+		if (Validator.isNull(value)) {
 			return BigDecimal.ZERO;
 		}
 
-		return new BigDecimal(comparable.toString());
+		return new BigDecimal(value);
 	}
 
 	private Class<?>[] _getInterfaces(Class<?> clazz) {

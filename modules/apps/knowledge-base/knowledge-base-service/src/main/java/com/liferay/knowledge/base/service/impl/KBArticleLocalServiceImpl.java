@@ -1970,6 +1970,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
 		subscriptionSender.setCreatorUserId(kbArticle.getUserId());
 		subscriptionSender.setCurrentUserId(userId);
+		subscriptionSender.setEntryTitle(kbArticle.getTitle());
 		subscriptionSender.setEntryURL(_getEntryURL(kbArticle, serviceContext));
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);

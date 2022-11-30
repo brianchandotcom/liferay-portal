@@ -19,6 +19,7 @@ declare type editorTypeOptions = 'freemarker' | 'richText';
 interface IProps {
 	baseResourceURL: string;
 	editorConfig: object;
+	externalReferenceCode: string;
 	notificationTemplateId: number;
 	notificationTemplateType: string;
 }
@@ -50,6 +51,7 @@ export declare type TNotificationTemplate = {
 export default function EditNotificationTemplate({
 	baseResourceURL,
 	editorConfig,
+	externalReferenceCode: initialExternalReferenceCode,
 	notificationTemplateId,
 	notificationTemplateType,
 }: IProps): JSX.Element;

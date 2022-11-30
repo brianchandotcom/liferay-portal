@@ -15,14 +15,17 @@
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import {
 	API,
 	Card,
 	Input,
 	InputLocalized,
+	ModalEditExternalReferenceCode,
 	RichTextLocalized,
 	SingleSelect,
 	openToast,
@@ -34,9 +37,9 @@ import React, {useEffect, useState} from 'react';
 import {defaultLanguageId} from '../util/constants';
 import {Attachments} from './Attachments';
 import {DefinitionOfTerms} from './DefinitionOfTerms';
+import {FreeMarkerTemplateEditor} from './FreeMarkerTemplateEditor';
 
 import './EditNotificationTemplate.scss';
-import {FreeMarkerTemplateEditor} from './FreeMarkerTemplateEditor';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -59,6 +62,7 @@ interface Item extends Partial<LabelValueObject> {}
 interface IProps {
 	baseResourceURL: string;
 	editorConfig: object;
+	externalReferenceCode: string;
 	notificationTemplateId: number;
 	notificationTemplateType: string;
 }
@@ -132,10 +136,15 @@ const RECIPIENT_OPTIONS = [
 export default function EditNotificationTemplate({
 	baseResourceURL,
 	editorConfig,
+	externalReferenceCode: initialExternalReferenceCode,
 	notificationTemplateId = 0,
 	notificationTemplateType,
 }: IProps) {
 	notificationTemplateId = Number(notificationTemplateId);
+
+	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
+		initialExternalReferenceCode
+	);
 
 	const [selectedLocale, setSelectedLocale] = useState(
 		Liferay.ThemeDisplay.getDefaultLanguageId
@@ -156,6 +165,12 @@ export default function EditNotificationTemplate({
 	const [objectDefinitions, setObjectDefinitions] = useState<
 		ObjectDefinition[]
 	>([]);
+
+	const [visibleModal, setVisibleModal] = useState<boolean>(false);
+
+	const {observer, onClose} = useModal({
+		onClose: () => setVisibleModal(false),
+	});
 
 	const validate = (values: any) => {
 		const errors: {
@@ -358,7 +373,9 @@ export default function EditNotificationTemplate({
 					recipients,
 					subject,
 					type,
-				} = await API.getNotificationTemplate(notificationTemplateId);
+				} = await API.getNotificationTemplateById(
+					notificationTemplateId
+				);
 
 				setValues({
 					...values,
@@ -462,19 +479,64 @@ export default function EditNotificationTemplate({
 		<ClayForm onSubmit={handleSubmit}>
 			<ClayManagementToolbar className="lfr__notification-template-management-toolbar">
 				<ClayManagementToolbar.ItemList>
-					<h2>{templateTitle}</h2>
+					<div className="border-right ml-sm-2 mr-3 pr-3">
+						<h2>{templateTitle}</h2>
 
-					{Liferay.FeatureFlags['LPS-162133'] && (
-						<div className="lfr__notification-template-label">
-							{values.type === 'email' ? (
-								<ClayLabel displayType="success">
-									{Liferay.Language.get('email')}
-								</ClayLabel>
-							) : (
-								<ClayLabel displayType="info">
-									{Liferay.Language.get('user-notification')}
-								</ClayLabel>
-							)}
+						{Liferay.FeatureFlags['LPS-162133'] && (
+							<div className="lfr__notification-template-label">
+								{values.type === 'email' ? (
+									<ClayLabel displayType="success">
+										{Liferay.Language.get('email')}
+									</ClayLabel>
+								) : (
+									<ClayLabel displayType="info">
+										{Liferay.Language.get(
+											'user-notification'
+										)}
+									</ClayLabel>
+								)}
+							</div>
+						)}
+					</div>
+
+					{notificationTemplateId !== 0 && (
+						<div>
+							<div>
+								<span className="text-secondary">
+									{`${Liferay.Language.get('id')}:`}
+								</span>
+
+								<strong className="ml-2">
+									{notificationTemplateId}
+								</strong>
+							</div>
+
+							<div className="mt-1">
+								<span className="text-secondary">
+									{`${Liferay.Language.get('erc')}:`}
+								</span>
+
+								<strong className="ml-2">
+									{externalReferenceCode}
+								</strong>
+
+								<span
+									className="ml-3 text-secondary"
+									title={Liferay.Language.get(
+										'internal-key-to-reference-the-notification-template'
+									)}
+								>
+									<ClayIcon symbol="question-circle" />
+								</span>
+
+								<ClayButton
+									className="ml-3 p-0 text-secondary"
+									displayType="unstyled"
+									onClick={() => setVisibleModal(true)}
+								>
+									<ClayIcon symbol="pencil" />
+								</ClayButton>
+							</div>
 						</div>
 					)}
 				</ClayManagementToolbar.ItemList>
@@ -492,6 +554,22 @@ export default function EditNotificationTemplate({
 					</ClayButton>
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
+
+			{visibleModal && (
+				<ModalEditExternalReferenceCode
+					externalReferenceCode={externalReferenceCode}
+					getEntity={() =>
+						API.getNotificationTemplateById(notificationTemplateId)
+					}
+					helpMessage={Liferay.Language.get(
+						'internal-key-to-reference-the-notification-template'
+					)}
+					observer={observer}
+					onClose={onClose}
+					saveURL={`/o/notification/v1.0/notification-templates/${notificationTemplateId}`}
+					setExternalReferenceCode={setExternalReferenceCode}
+				/>
+			)}
 
 			<div className="lfr__notification-template-container">
 				<div className="lfr__notification-template-cards">

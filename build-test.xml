@@ -7117,21 +7117,28 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</chmod>
 
 			<local name="docker.start.error" />
+			<local name="docker.start.output" />
+			<local name="docker.start.result" />
 
-			<exec errorproperty="docker.start.error" executable="/bin/bash" os="${os.apple},${os.unix}">
+			<exec errorproperty="docker.start.error" executable="/bin/bash" os="${os.apple},${os.unix}" outputproperty="docker.start.output" resultproperty="docker.start.result">
 				<arg value="${docker.start.script}" />
 			</exec>
 
-			<exec errorproperty="docker.start.error" executable="cmd.exe" os="${os.windows}">
+			<exec errorproperty="docker.start.error" executable="cmd.exe" os="${os.windows}" outputproperty="docker.start.output" resultproperty="docker.start.result">
 				<arg value="${docker.start.script}" />
 			</exec>
 
 			<if>
-				<contains string="${docker.start.error}" substring="repository does not exist or may require 'docker login': denied: requested access to the resource is denied." />
+				<not>
+					<equals arg1="${docker.start.result}" arg2="0" />
+				</not>
 				<then>
-					<fail>Unable to start docker container: ${docker.start.error}</fail>
+					<fail>Unable to start docker container:
+${docker.start.error}</fail>
 				</then>
 			</if>
+
+			<echo>${docker.start.output}</echo>
 
 			<delete file="${docker.start.script}" />
 		</sequential>

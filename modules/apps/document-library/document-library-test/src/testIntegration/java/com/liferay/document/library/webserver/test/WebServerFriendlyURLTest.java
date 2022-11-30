@@ -86,7 +86,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	}
 
 	@Test
-	public void testGroupIdUUIDFriendlyURL() throws Exception {
+	public void testHasFilesWithGroupIdUUIDFriendlyURL() throws Exception {
 		Assert.assertFalse(
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(

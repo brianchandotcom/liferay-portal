@@ -63,6 +63,22 @@ public class ObjectLayoutResourceImpl
 		_objectLayoutService.deleteObjectLayout(objectLayoutId);
 	}
 
+	@Override
+	public Page<ObjectLayout>
+			getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+				String externalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return getObjectDefinitionObjectLayoutsPage(
+			objectDefinition.getObjectDefinitionId(), search, pagination);
+	}
+
 	@NestedField(
 		parentClass = com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition.class,
 		value = "objectLayouts"
@@ -121,6 +137,20 @@ public class ObjectLayoutResourceImpl
 	public ObjectLayout getObjectLayout(Long objectLayoutId) throws Exception {
 		return _toObjectLayout(
 			_objectLayoutService.getObjectLayout(objectLayoutId));
+	}
+
+	@Override
+	public ObjectLayout postObjectDefinitionByExternalReferenceCodeObjectLayout(
+			String externalReferenceCode, ObjectLayout objectLayout)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return postObjectDefinitionObjectLayout(
+			objectDefinition.getObjectDefinitionId(), objectLayout);
 	}
 
 	@Override

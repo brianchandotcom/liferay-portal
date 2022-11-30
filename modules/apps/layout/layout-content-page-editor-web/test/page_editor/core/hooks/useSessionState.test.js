@@ -30,6 +30,7 @@ describe('useSessionState', () => {
 		window.sessionStorage.getItem.mockImplementation(() =>
 			JSON.stringify('hey!')
 		);
+		window.sessionStorage.setItem.mockImplementation(() => {});
 
 		const {result} = renderHook(() => useSessionState('key'));
 		const [value] = result.current;
@@ -37,7 +38,7 @@ describe('useSessionState', () => {
 		expect(value).toBe('hey!');
 	});
 
-	it('uses given default value is there is nothing in sessionStorage', () => {
+	it('uses given default value if there is nothing in sessionStorage', () => {
 		const {result} = renderHook(() => useSessionState('key', 'default'));
 		const [value] = result.current;
 

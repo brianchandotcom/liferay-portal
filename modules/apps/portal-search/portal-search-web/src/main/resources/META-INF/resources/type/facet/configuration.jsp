@@ -70,7 +70,7 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 		>
 			<div class="display-template">
 				<liferay-template:template-selector
-					className="<%= AssetEntriesSearchFacetTermDisplayContext.class.getName() %>"
+					className="<%= AssetEntriesSearchFacetDisplayContext.class.getName() %>"
 					displayStyle="<%= typeFacetPortletInstanceConfiguration.displayStyle() %>"
 					displayStyleGroupId="<%= assetEntriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"

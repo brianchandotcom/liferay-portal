@@ -27,4 +27,22 @@ definition {
 		MenuItem.click(menuItem = "Templates");
 	}
 
+	macro inviteUser {
+		Click(
+			key_title = "${titleRole}",
+			locator1 = "Button#ANY_TITLE");
+
+		Click(
+			key_publicationRole = "${publicationRole}",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON");
+
+		Type(
+			locator1 = "Publications#KEYWORD_TEXTFIELD",
+			value1 = "${userInvite}");
+
+		Click(
+			key_userInvite = "${userInvite}",
+			locator1 = "PublicationsTemplate#INVITE_USERS_DROPDOWN_ITEM");
+	}
+
 }

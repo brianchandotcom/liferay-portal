@@ -124,7 +124,81 @@ definition {
 	@description = "Automation ID: LPS-166936 | Test Summary: Verify that the user with the Admin and Partner Manager roles can see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)"
 	@ignore = "true"
 	@priority = "4"
-	test UserAdminAndPartnerManagerRoleCanSeeAndPerformTheActionsForDXP {
+	test UserAdminAndPartnerManagerRoleCanSeeAndPerformAllActionsForDXP {
+
+			// Needs refactor since it depends on example Avangrid Portals account
+
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+		}
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+		
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "NASA ICE");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Going through onboarding") {
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task("Click in the Action button and assert if the user with the right role can see the options"){
+			CustomerPortal.clickAtButton(text = "Actions");
+		
+
+			AssertVisible(
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
+				key_action = "Export All Key Details (csv)");
+			
+			CustomerPortal.clickAtButton(text = "Actions");
+
+			CP2ActivationKeys.exportAllKeyDetails(fileName = "activation-keys.csv");
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "NASA ICE");
+
+			Account.unassignUserRole(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+			Account.unassignUserRole(
+			accountRoleTitle = "Partner Manager",
+			accountUserName = "Test Test");
+		}
 	}
 
 	@description = "Automation ID: LPS-166937 | Test Summary: Assert that users with the roles Partner Members, Requesters and Users cannot see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)"

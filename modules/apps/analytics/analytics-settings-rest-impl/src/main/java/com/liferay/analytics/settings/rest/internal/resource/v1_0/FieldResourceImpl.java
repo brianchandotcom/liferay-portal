@@ -173,7 +173,7 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 				_updateSelectedFields(
 					analyticsConfiguration.syncedAccountFieldNames(), fields,
 					FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES,
-					"contact", FieldAccountConstants.FIELD_ACCOUNT_NAMES)
+					"account", FieldAccountConstants.FIELD_ACCOUNT_NAMES)
 			).build());
 	}
 

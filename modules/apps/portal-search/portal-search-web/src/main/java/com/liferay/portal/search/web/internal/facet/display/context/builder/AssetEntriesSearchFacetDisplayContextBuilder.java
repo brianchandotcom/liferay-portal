@@ -103,17 +103,17 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		String typeName, boolean selected, String assetType, int frequency) {
 
 		BucketDisplayContext
-			assetEntriesSearchFacetFieldDisplayContext =
+			bucketDisplayContext =
 				new BucketDisplayContext();
 
-		assetEntriesSearchFacetFieldDisplayContext.setBucketText(typeName);
-		assetEntriesSearchFacetFieldDisplayContext.setFilterValue(assetType);
-		assetEntriesSearchFacetFieldDisplayContext.setFrequency(frequency);
-		assetEntriesSearchFacetFieldDisplayContext.setFrequencyVisible(
+		bucketDisplayContext.setBucketText(typeName);
+		bucketDisplayContext.setFilterValue(assetType);
+		bucketDisplayContext.setFrequency(frequency);
+		bucketDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
-		assetEntriesSearchFacetFieldDisplayContext.setSelected(selected);
+		bucketDisplayContext.setSelected(selected);
 
-		return assetEntriesSearchFacetFieldDisplayContext;
+		return bucketDisplayContext;
 	}
 
 	public List<BucketDisplayContext>
@@ -130,7 +130,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		}
 
 		List<BucketDisplayContext>
-			assetEntriesSearchFacetFieldDisplayContexts = new ArrayList<>();
+			bucketDisplayContexts = new ArrayList<>();
 
 		List<String> assetTypes = new SortedArrayList<>(
 			new ModelResourceComparator(_locale));
@@ -170,14 +170,14 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			}
 
 			BucketDisplayContext
-				assetEntriesSearchFacetFieldDisplayContext = buildTermDisplay(
+				bucketDisplayContext = buildTermDisplay(
 					typeName, selected, assetType, frequency);
 
-			assetEntriesSearchFacetFieldDisplayContexts.add(
-				assetEntriesSearchFacetFieldDisplayContext);
+			bucketDisplayContexts.add(
+				bucketDisplayContext);
 		}
 
-		return assetEntriesSearchFacetFieldDisplayContexts;
+		return bucketDisplayContexts;
 	}
 
 	public int getPopularity(

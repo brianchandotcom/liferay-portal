@@ -48,7 +48,7 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 	public List<BucketDisplayContext>
 		getTermDisplayContexts() {
 
-		return _assetEntriesSearchFacetTermDisplayContext;
+		return _bucketDisplayContexts;
 	}
 
 	public TypeFacetPortletInstanceConfiguration
@@ -97,10 +97,10 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 
 	public void setTermDisplayContexts(
 		List<BucketDisplayContext>
-			assetEntriesSearchFacetFieldDisplayContext) {
+			bucketDisplayContexts) {
 
-		_assetEntriesSearchFacetTermDisplayContext =
-			assetEntriesSearchFacetFieldDisplayContext;
+		_bucketDisplayContexts =
+			bucketDisplayContexts;
 	}
 
 	public void setTypeFacetPortletInstanceConfiguration(
@@ -112,7 +112,7 @@ public class AssetEntriesSearchFacetDisplayContext implements Serializable {
 	}
 
 	private List<BucketDisplayContext>
-		_assetEntriesSearchFacetTermDisplayContext;
+		_bucketDisplayContexts;
 	private long _displayStyleGroupId;
 	private boolean _nothingSelected;
 	private String _paginationStartParameterName;

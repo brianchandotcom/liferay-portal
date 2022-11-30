@@ -22,6 +22,7 @@ import createMDFClaimActivityBudgets from '../../../common/services/liferay/obje
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFClaimDocuments from '../../../common/services/liferay/object/mdf-claim-documents/createMDFClaimDocuments';
 import createMDFClaim from '../../../common/services/liferay/object/mdf-claim/createMDFClaim';
+import renameFileKeepingExtention from './RenameFile';
 import createMDFClaimProxyAPI from './createMDFClaimProxyAPI';
 
 export default async function submitForm(
@@ -85,14 +86,19 @@ export default async function submitForm(
 
 						if (activityFolder?.id) {
 							if (activity.listQualifiedLeads) {
+								const listOfQualifiedLeadsWithId = renameFileKeepingExtention(
+									activity.listQualifiedLeads,
+									`list_of_qualified_leads#${dtoActivity.id}`
+								);
+
 								const activityListQualifiedLeads = await createDocumentFolderDocument(
 									activityFolder.id,
-									activity.listQualifiedLeads
+									listOfQualifiedLeadsWithId
 								);
 
 								if (activityListQualifiedLeads?.contentUrl) {
 									createMDFClaimDocuments(
-										activity.listQualifiedLeads,
+										listOfQualifiedLeadsWithId,
 										activityListQualifiedLeads.contentUrl,
 										dtoActivity?.id
 									);

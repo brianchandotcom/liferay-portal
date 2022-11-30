@@ -23,7 +23,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {filterArrayByQuery} from '../../utils/array';
 import {Card} from '../Card';
-import {ManagementToolbarSearch} from '../ManagementToolbarSearch';
+import {ManagementToolbarSearch} from '../ManagementToolbar/ManagementToolbarSearch';
 import BuilderListItem from './BuilderListItem';
 
 import './BuilderScreen.scss';

@@ -480,6 +480,8 @@ class SegmentEdit extends Component {
 		const showDisabledSegmentationAlert =
 			!isSegmentationEnabled && !isSegmentationDisabledAlertDismissed;
 
+		const invalidSegment = true;
+
 		return (
 			<div
 				className={classNames('segment-edit-page-root', {
@@ -493,132 +495,177 @@ class SegmentEdit extends Component {
 					value={values.active}
 				/>
 
-				<div className="form-header">
-					<ClayLayout.ContainerFluid className="form-header-container">
-						<div className="form-header-section-left">
-							<FieldArray
-								name="values.name"
-								render={this._renderLocalizedInputs}
-							/>
+				{invalidSegment && Liferay.FeatureFlags['LPS-166954'] ? (
+					<div className="mt-10 taglib-empty-result-message">
+						<div className="taglib-empty-result-message-header"></div>
 
-							<LocalizedInput
-								availableLanguages={availableLocales}
-								defaultLang={defaultLanguageId}
-								initialLanguageId={defaultLanguageId}
-								initialOpen={false}
-								initialValues={values.name}
-								onChange={this._handleLocalizedInputChange}
-								placeholder={placeholder}
-								portletNamespace={portletNamespace}
-								readOnly={!editing}
-							/>
-						</div>
+						<div className="sheet-text text-center">
+							<h3 className="text-default">
+								{Liferay.Language.get('segment-not-found')}
+							</h3>
 
-						{hasUpdatePermission && (
-							<div className="form-header-section-right">
-								<div className="btn-group">
-									<div className="btn-group-item mr-2">
-										<ClayToggle
-											aria-label={
-												editing
-													? Liferay.Language.get(
-															'View'
-													  )
-													: Liferay.Language.get(
-															'Edit'
-													  )
-											}
-											checked={editing}
-											className="toggle-editing"
-											iconOff="pencil"
-											iconOn="pencil"
-											onChange={this._handleCriteriaEdit}
-											title={
-												editing
-													? Liferay.Language.get(
-															'View'
-													  )
-													: Liferay.Language.get(
-															'Edit'
-													  )
-											}
-										/>
-									</div>
-								</div>
-
-								<div className="btn-group">
-									<div className="btn-group-item">
-										<ClayButton
-											className="text-capitalize"
-											displayType="secondary"
-											onClick={this._handleCancelButton}
-											small
-										>
-											{Liferay.Language.get('cancel')}
-										</ClayButton>
-									</div>
-
-									<div className="btn-group-item">
-										<ClayButton
-											className="text-capitalize"
-											disabled={disabledSaveButton}
-											displayType="primary"
-											onClick={(event) =>
-												this._handleValidate(event)
-											}
-											small={true}
-											type="submit"
-										>
-											{Liferay.Language.get('save')}
-										</ClayButton>
-									</div>
-								</div>
-							</div>
-						)}
-					</ClayLayout.ContainerFluid>
-				</div>
-
-				<div className="form-body">
-					{showDisabledSegmentationAlert && (
-						<ClayAlert
-							className="mx-0"
-							displayType="warning"
-							onClose={() =>
-								this.setState({
-									isSegmentationDisabledAlertDismissed: true,
-								})
-							}
-							variant="stripe"
-						>
-							<strong className="lead">
+							<p className="text-default">
 								{Liferay.Language.get(
-									'segmentation-is-disabled'
+									'the-criteria-used-in-this-segment-is-no-longer-available'
 								)}
-							</strong>
+							</p>
 
-							{this.props.segmentsConfigurationURL ? (
-								<ClayLink
-									href={this.props.segmentsConfigurationURL}
+							<ClayButton
+								displayType="secondary"
+								onClick={this._redirect}
+								small
+								type="button"
+							>
+								{Liferay.Language.get('go-to-segments')}
+							</ClayButton>
+						</div>
+					</div>
+				) : (
+					<>
+						<div className="form-header">
+							<ClayLayout.ContainerFluid className="form-header-container">
+								<div className="form-header-section-left">
+									<FieldArray
+										name="values.name"
+										render={this._renderLocalizedInputs}
+									/>
+
+									<LocalizedInput
+										availableLanguages={availableLocales}
+										defaultLang={defaultLanguageId}
+										initialLanguageId={defaultLanguageId}
+										initialOpen={false}
+										initialValues={values.name}
+										onChange={
+											this._handleLocalizedInputChange
+										}
+										placeholder={placeholder}
+										portletNamespace={portletNamespace}
+										readOnly={!editing}
+									/>
+								</div>
+
+								{hasUpdatePermission && (
+									<div className="form-header-section-right">
+										<div className="btn-group">
+											<div className="btn-group-item mr-2">
+												<ClayToggle
+													aria-label={
+														editing
+															? Liferay.Language.get(
+																	'View'
+															  )
+															: Liferay.Language.get(
+																	'Edit'
+															  )
+													}
+													checked={editing}
+													className="toggle-editing"
+													iconOff="pencil"
+													iconOn="pencil"
+													onChange={
+														this._handleCriteriaEdit
+													}
+													title={
+														editing
+															? Liferay.Language.get(
+																	'View'
+															  )
+															: Liferay.Language.get(
+																	'Edit'
+															  )
+													}
+												/>
+											</div>
+										</div>
+
+										<div className="btn-group">
+											<div className="btn-group-item">
+												<ClayButton
+													className="text-capitalize"
+													displayType="secondary"
+													onClick={
+														this._handleCancelButton
+													}
+													small
+												>
+													{Liferay.Language.get(
+														'cancel'
+													)}
+												</ClayButton>
+											</div>
+
+											<div className="btn-group-item">
+												<ClayButton
+													className="text-capitalize"
+													disabled={
+														disabledSaveButton
+													}
+													displayType="primary"
+													onClick={(event) =>
+														this._handleValidate(
+															event
+														)
+													}
+													small={true}
+													type="submit"
+												>
+													{Liferay.Language.get(
+														'save'
+													)}
+												</ClayButton>
+											</div>
+										</div>
+									</div>
+								)}
+							</ClayLayout.ContainerFluid>
+						</div>
+						<div className="form-body">
+							{showDisabledSegmentationAlert && (
+								<ClayAlert
+									className="mx-0"
+									displayType="warning"
+									onClose={() =>
+										this.setState({
+											isSegmentationDisabledAlertDismissed: true,
+										})
+									}
+									variant="stripe"
 								>
-									{Liferay.Language.get(
-										'to-enable,-go-to-instance-settings'
+									<strong className="lead">
+										{Liferay.Language.get(
+											'segmentation-is-disabled'
+										)}
+									</strong>
+
+									{this.props.segmentsConfigurationURL ? (
+										<ClayLink
+											href={
+												this.props
+													.segmentsConfigurationURL
+											}
+										>
+											{Liferay.Language.get(
+												'to-enable,-go-to-instance-settings'
+											)}
+										</ClayLink>
+									) : (
+										Liferay.Language.get(
+											'contact-your-system-administrator-to-enable-it'
+										)
 									)}
-								</ClayLink>
-							) : (
-								Liferay.Language.get(
-									'contact-your-system-administrator-to-enable-it'
-								)
+								</ClayAlert>
 							)}
-						</ClayAlert>
-					)}
 
-					<FieldArray
-						name="contributors"
-						render={this._renderContributors}
-					/>
+							<FieldArray
+								name="contributors"
+								render={this._renderContributors}
+							/>
 
-					<ContributorInputs contributors={contributors} />
-				</div>
+							<ContributorInputs contributors={contributors} />
+						</div>
+					</>
+				)}
 			</div>
 		);
 	}

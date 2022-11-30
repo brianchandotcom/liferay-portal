@@ -92,23 +92,6 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureFolderFacet {
-		Portlet.gotoPortletOptions(
-			portletName = "Folder Facet",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Select(
-			key_fieldLabel = "Order Terms By",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${sortOption}");
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-	}
-
 	macro generateFacetCheckedURL {
 		if (!(isSet(searchURL))) {
 			var searchURL = SearchPortlets.getSearchTermURL(
@@ -276,6 +259,13 @@ definition {
 		SelectFrameTop();
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(sortOption)) {
+			Select(
+				key_fieldLabel = "Order Terms By",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${sortOption}");
+		}
 
 		if (isSet(displayTemplate)) {
 			Select(

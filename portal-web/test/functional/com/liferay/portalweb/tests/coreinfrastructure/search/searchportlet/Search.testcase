@@ -774,7 +774,9 @@ definition {
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term frequency ascending") {
-			SearchFacetPortlet.configureFolderFacet(sortOption = "Term Frequency Ascending");
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Folder Facet",
+				sortOption = "Term Frequency Ascending");
 
 			Refresh();
 
@@ -782,7 +784,9 @@ definition {
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term value ascending") {
-			SearchFacetPortlet.configureFolderFacet(sortOption = "Term Value Ascending");
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Folder Facet",
+				sortOption = "Term Value Ascending");
 
 			Refresh();
 
@@ -790,7 +794,9 @@ definition {
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term value descending") {
-			SearchFacetPortlet.configureFolderFacet(sortOption = "Term Value Descending");
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Folder Facet",
+				sortOption = "Term Value Descending");
 
 			Refresh();
 

@@ -195,7 +195,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		FileEntry portletFileEntryByExternalReferenceCode =
 			PortletFileRepositoryUtil.
 				getPortletFileEntryByExternalReferenceCode(
-					groupId, externalReferenceCode);
+					externalReferenceCode, groupId);
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 

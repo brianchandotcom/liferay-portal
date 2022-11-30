@@ -1092,14 +1092,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 						serviceContext.getCompanyId(),
 						"C_" + objectDefinition.getName());
 
-			if (!serviceBuilderObjectDefinition.isApproved()) {
-				objectDefinition =
-					objectDefinitionResource.patchObjectDefinition(
-						serviceBuilderObjectDefinition.getObjectDefinitionId(),
-						objectDefinition);
+			if (json.contains("accountEntryRestrictedObjectFieldName") &&
+				!serviceBuilderObjectDefinition.isAccountEntryRestricted()) {
 
-				objectDefinitionResource.postObjectDefinitionPublish(
-					objectDefinition.getId());
+				objectDefinitionResource.patchObjectDefinition(
+					serviceBuilderObjectDefinition.getObjectDefinitionId(),
+					objectDefinition);
 			}
 		}
 	}
@@ -1178,10 +1176,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionResource.postObjectDefinition(
 						objectDefinition);
 
-				if (!json.contains("accountEntryRestrictedObjectFieldName")) {
-					objectDefinitionResource.postObjectDefinitionPublish(
-						objectDefinition.getId());
-				}
+				objectDefinitionResource.postObjectDefinitionPublish(
+					objectDefinition.getId());
 			}
 			else {
 				objectDefinition =

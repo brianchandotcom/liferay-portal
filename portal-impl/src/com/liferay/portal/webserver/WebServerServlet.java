@@ -41,6 +41,9 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -1183,6 +1186,21 @@ public class WebServerServlet extends HttpServlet {
 					inputStream, contentLength, contentType);
 			}
 		}
+
+		String objectEntry = ParamUtil.getString(httpServletRequest, "objectEntry");
+		String objectDefinition = ParamUtil.getString(httpServletRequest, "objectDefinition");
+
+		if(Validator.isNotNull(objectEntry)) {
+			Message message = new Message();
+
+			message.put("objectEntry", objectEntry);
+			message.put("objectDefinition", objectDefinition);
+			message.put("userId", user.getUserId());
+			message.put("companyId", user.getCompanyId());
+
+			_messageBus.sendMessage(DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD, message);
+		}
+
 	}
 
 	protected void sendFile(
@@ -1848,6 +1866,12 @@ public class WebServerServlet extends HttpServlet {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			TrashHelper.class, WebServerServlet.class, "_trashTitleResolver",
 			false);
+
+	private static volatile MessageBus _messageBus =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			MessageBus.class, WebServerServlet.class, "_messageBus",
+			false);
+
 	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			UserFileUploadsSettings.class, WebServerServlet.class,

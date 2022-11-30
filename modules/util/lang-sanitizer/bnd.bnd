@@ -1,0 +1,27 @@
+Bundle-Name: Liferay Lang Sanitizer
+Bundle-SymbolicName: com.liferay.lang.sanitizer
+Bundle-Version: 1.0.1
+Import-Package:\
+	!org.apache.maven.plugin.*,\
+	!org.apache.tools.ant.*,\
+	\
+	*
+Main-Class: com.liferay.lang.sanitizer.LangSanitizer
+-includeresource:\
+	@antisamy-*.jar!/org/owasp/validator/html/InternalPolicy.class,\
+	@antisamy-*.jar!/org/owasp/validator/html/Policy.class,\
+	@antisamy-*.jar!/org/owasp/validator/html/PolicyException.class,\
+	@antisamy-*.jar!/org/owasp/validator/html/ScanException.class,\
+	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
+	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/*.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/OutputStreamWriter.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedWriter.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringWriter.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*

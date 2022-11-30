@@ -129,7 +129,7 @@ const InviteUserFormGroup = ({
 				errorMessages={emailAddressErrorMessages}
 				inputName={`${portletNamespace}emailAddresses${index}`}
 				items={emailAddresses}
-				label={Liferay.Language.get('emails')}
+				label={Liferay.Language.get('email-addresses')}
 				onBlurFn={() => setShowRequiredMessage(true)}
 				onItemsChangeFn={onEmailAddressItemsChange}
 				required={true}

@@ -1,5 +1,13 @@
 definition {
 
+	macro expandPublicationCollaborators {
+		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED")) {
+			Click(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED");
+
+			AssertElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_EXPANDED");
+		}
+	}
+
 	macro expandPublicationInformation {
 		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_COLLAPSED")) {
 			Click(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_COLLAPSED");

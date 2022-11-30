@@ -169,6 +169,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Date dateModified;
 
+	public String getDefaultLanguageId() {
+		return defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		this.defaultLanguageId = defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(
+		UnsafeSupplier<String, Exception> defaultLanguageIdUnsafeSupplier) {
+
+		try {
+			defaultLanguageId = defaultLanguageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String defaultLanguageId;
+
 	public Boolean getEnableCategorization() {
 		return enableCategorization;
 	}

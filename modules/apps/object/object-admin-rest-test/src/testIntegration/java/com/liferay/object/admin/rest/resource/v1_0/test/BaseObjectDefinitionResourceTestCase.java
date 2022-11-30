@@ -188,6 +188,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		ObjectDefinition objectDefinition = randomObjectDefinition();
 
 		objectDefinition.setAccountEntryRestrictedObjectFieldName(regex);
+		objectDefinition.setDefaultLanguageId(regex);
 		objectDefinition.setExternalReferenceCode(regex);
 		objectDefinition.setName(regex);
 		objectDefinition.setPanelAppOrder(regex);
@@ -205,6 +206,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		Assert.assertEquals(
 			regex, objectDefinition.getAccountEntryRestrictedObjectFieldName());
+		Assert.assertEquals(regex, objectDefinition.getDefaultLanguageId());
 		Assert.assertEquals(regex, objectDefinition.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getName());
 		Assert.assertEquals(regex, objectDefinition.getPanelAppOrder());
@@ -1132,6 +1134,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				if (objectDefinition.getDefaultLanguageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"enableCategorization", additionalAssertFieldName)) {
 
 				if (objectDefinition.getEnableCategorization() == null) {
@@ -1480,6 +1492,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getDateModified(),
 						objectDefinition2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultLanguageId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getDefaultLanguageId(),
+						objectDefinition2.getDefaultLanguageId())) {
 
 					return false;
 				}
@@ -1943,6 +1968,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("defaultLanguageId")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectDefinition.getDefaultLanguageId()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("enableCategorization")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2134,6 +2167,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				active = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				defaultLanguageId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				enableCategorization = RandomTestUtil.randomBoolean();
 				enableComments = RandomTestUtil.randomBoolean();
 				enableObjectEntryHistory = RandomTestUtil.randomBoolean();

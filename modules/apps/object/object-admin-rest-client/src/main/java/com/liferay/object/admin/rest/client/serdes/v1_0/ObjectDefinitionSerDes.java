@@ -148,6 +148,20 @@ public class ObjectDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (objectDefinition.getDefaultLanguageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultLanguageId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getDefaultLanguageId()));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinition.getEnableCategorization() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -553,6 +567,15 @@ public class ObjectDefinitionSerDes {
 					objectDefinition.getDateModified()));
 		}
 
+		if (objectDefinition.getDefaultLanguageId() == null) {
+			map.put("defaultLanguageId", null);
+		}
+		else {
+			map.put(
+				"defaultLanguageId",
+				String.valueOf(objectDefinition.getDefaultLanguageId()));
+		}
+
 		if (objectDefinition.getEnableCategorization() == null) {
 			map.put("enableCategorization", null);
 		}
@@ -804,6 +827,12 @@ public class ObjectDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "defaultLanguageId")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setDefaultLanguageId(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

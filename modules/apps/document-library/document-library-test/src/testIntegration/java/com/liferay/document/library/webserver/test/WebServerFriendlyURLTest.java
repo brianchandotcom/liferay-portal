@@ -59,18 +59,6 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testExistingFileEntryFriendlyURLHasFiles() throws Exception {
-		String urlTitle = RandomTestUtil.randomString();
-
-		_addFileEntry(urlTitle);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest(_getFileEntryFriendlyURL(urlTitle));
-
-		Assert.assertTrue(WebServerServlet.hasFiles(mockHttpServletRequest));
-	}
-
-	@Test
 	public void testExistingFileEntryFriendlyURLReturns200() throws Exception {
 		String urlTitle = RandomTestUtil.randomString();
 
@@ -83,6 +71,25 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+	}
+
+	@Test
+	public void testHasFilesWithFileEntryFriendlyURLSeparator()
+		throws Exception {
+
+		Assert.assertFalse(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					_getFileEntryFriendlyURL(RandomTestUtil.randomString()))));
+
+		String urlTitle = RandomTestUtil.randomString();
+
+		_addFileEntry(urlTitle);
+
+		Assert.assertTrue(
+			WebServerServlet.hasFiles(
+				_createMockHttpServletRequest(
+					_getFileEntryFriendlyURL(urlTitle))));
 	}
 
 	@Test
@@ -103,17 +110,6 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 				_createMockHttpServletRequest(
 					String.format(
 						"/%s/%s", group.getGroupId(), fileEntry.getUuid()))));
-	}
-
-	@Test
-	public void testNonexistantFileEntryFriendlyURLHasNoFiles()
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest(
-				_getFileEntryFriendlyURL(RandomTestUtil.randomString()));
-
-		Assert.assertFalse(WebServerServlet.hasFiles(mockHttpServletRequest));
 	}
 
 	@Test

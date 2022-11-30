@@ -12,12 +12,13 @@
  * details.
  */
 
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 import {Liferay} from '../services/liferay';
 import {
 	APIResponse,
 	TestraySubTask,
+	TestrayTask,
 	TestrayTaskUser,
 	testraySubTaskImpl,
 	testrayTaskUsersImpl,
@@ -26,42 +27,47 @@ import {searchUtil} from '../util/search';
 import {useFetch} from './useFetch';
 
 export function useSidebarTask() {
-	const [selectedTask, setSelectedTask] = useState<number>(0);
-
-	const userId = Number(Liferay.ThemeDisplay.getUserId());
-
-	const taskId = 203220;
+	const [selectedTask, setSelectedTask] = useState<TestrayTask>();
 
 	const {data: tasksUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
 		`${testrayTaskUsersImpl.resource}&filter=${searchUtil.eq(
 			'userId',
-			userId
+			Liferay.ThemeDisplay.getUserId()
 		)}`,
 		(response) => testrayTaskUsersImpl.transformDataFromList(response)
 	);
 
 	const {data: subtasksResponse} = useFetch<APIResponse<TestraySubTask>>(
-		`${testraySubTaskImpl.resource}&filter=${searchUtil.eq(
-			'taskId',
-			taskId
-		)}`
+		selectedTask
+			? `${testraySubTaskImpl.resource}&filter=${searchUtil.eq(
+					'taskId',
+					selectedTask?.id
+			  )}`
+			: null
 	);
 
-	const tasks = useMemo(() => tasksUserResponse?.items || [], [
-		tasksUserResponse?.items,
-	]);
+	const tasks = useMemo(
+		() =>
+			(tasksUserResponse?.items || []).map(
+				({task}) => task as TestrayTask
+			),
+		[tasksUserResponse?.items]
+	);
+
+	useEffect(() => setSelectedTask(tasks[0]), [tasks]);
 
 	const subTasks = useMemo(() => subtasksResponse?.items || [], [
 		subtasksResponse?.items,
 	]);
 
-	const displayTask = tasks.find(({id}) => id === selectedTask);
+	const filteredTasks = tasks.filter((task) => task !== selectedTask);
 
 	return {
-		displayTask,
+		filteredTasks,
 		selectedTask,
 		setSelectedTask,
 		subTasks,
 		tasks,
+		tasksUserResponse,
 	};
 }

@@ -7049,13 +7049,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
 			</start-docker-container>
 
-			<echo>Waiting for ${browser.host}:4444 to load</echo>
-
-			<waitfor maxwait="300" maxwaitunit="second">
-				<socket port="4444" server="${browser.host}" />
-			</waitfor>
-
-			<docker-copy dest.path="${browser.host}:/root/.ssh" src.path="/root/.ssh/." />
+			<wait-for-docker-browser shell.condition="(: &lt;/dev/tcp/127.0.0.1/4444) &amp;> /dev/null &amp;&amp; (: &lt;/dev/tcp/127.0.0.1/22) &amp;> /dev/null" />
 
 			<docker-execute container="${browser.host}">
 				ssh -fN -4 -L 8080:${ip.address}:8080 ${browser.host}
@@ -8325,6 +8319,32 @@ war.path=${app.server.portal.dir}/</echo>
 					<fail message="${timed.out.message}" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wait-for-docker-browser">
+		<attribute name="shell.condition" />
+
+		<sequential>
+			<property location="setup.sh" name="setup.sh.file" />
+
+			<get-browser-property property.name="browser.host" />
+			<get-browser-property property.name="browser.name" />
+			<get-browser-property property.name="browser.version" />
+
+			<docker-execute container="${browser.host}">
+				<![CDATA[
+					#!/bin/bash
+
+					until @{shell.condition}
+
+					do
+						echo "Waiting for ${browser.name} ${browser.version} to be ready"
+
+						sleep 10
+					done
+				]]>
+			</docker-execute>
 		</sequential>
 	</macrodef>
 

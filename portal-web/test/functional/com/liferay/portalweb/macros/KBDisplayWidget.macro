@@ -88,6 +88,20 @@ definition {
 	macro configureKBDisplaySettingsPG {
 		KBDisplayWidget._gotoWidgetConfiguration();
 
+		// Added additional assertions for LPS-159901
+
+		AssertVisible(
+			key_panel = "Content Selection",
+			locator1 = "Panel#PANEL");
+
+		AssertVisible(
+			key_panel = "Set and Enable",
+			locator1 = "Panel#PANEL");
+
+		AssertVisible(
+			key_panel = "Social Bookmarks",
+			locator1 = "Panel#PANEL");
+
 		if ("${subscribe}" == "true") {
 			Check(locator1 = "KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_SUBSCRIPTIONS_CHECKBOX");
 		}

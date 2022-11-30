@@ -88,9 +88,6 @@ public interface DestinationNames {
 	public static final String LAYOUTS_REMOTE_PUBLISHER =
 		"liferay/layouts_remote_publisher";
 
-	public static final String OBJECT_ENTRY_ATTACHMENT_DOWNLOAD =
-		"liferay/object_entry_attachment_download";
-
 	public static final String LIVE_USERS = "liferay/live_users";
 
 	public static final String MAIL = "liferay/mail";
@@ -103,6 +100,9 @@ public interface DestinationNames {
 		"liferay/message_boards_mailing_list";
 
 	public static final String MONITORING = "liferay/monitoring";
+
+	public static final String OBJECT_ENTRY_ATTACHMENT_DOWNLOAD =
+		"liferay/object_entry_attachment_download";
 
 	public static final String POLLER = "liferay/poller";
 

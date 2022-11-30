@@ -1187,20 +1187,22 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
-		String objectEntry = ParamUtil.getString(httpServletRequest, "objectEntry");
-		String objectDefinition = ParamUtil.getString(httpServletRequest, "objectDefinition");
+		String objectEntry = ParamUtil.getString(
+			httpServletRequest, "objectEntry");
 
-		if(Validator.isNotNull(objectEntry)) {
+		if (Validator.isNotNull(objectEntry)) {
 			Message message = new Message();
 
-			message.put("objectEntry", objectEntry);
-			message.put("objectDefinition", objectDefinition);
-			message.put("userId", user.getUserId());
 			message.put("companyId", user.getCompanyId());
+			message.put(
+				"objectDefinition",
+				ParamUtil.getString(httpServletRequest, "objectDefinition"));
+			message.put("objectEntry", objectEntry);
+			message.put("userId", user.getUserId());
 
-			_messageBus.sendMessage(DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD, message);
+			_messageBus.sendMessage(
+				DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD, message);
 		}
-
 	}
 
 	protected void sendFile(
@@ -1855,6 +1857,9 @@ public class WebServerServlet extends HttpServlet {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			InactiveRequestHandler.class, WebServerServlet.class,
 			"_inactiveRequestHandler", false);
+	private static volatile MessageBus _messageBus =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			MessageBus.class, WebServerServlet.class, "_messageBus", false);
 	private static final ServiceTrackerMap<String, ModelResourcePermission<?>>
 		_modelResourcePermissionServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
@@ -1866,12 +1871,6 @@ public class WebServerServlet extends HttpServlet {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			TrashHelper.class, WebServerServlet.class, "_trashTitleResolver",
 			false);
-
-	private static volatile MessageBus _messageBus =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			MessageBus.class, WebServerServlet.class, "_messageBus",
-			false);
-
 	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			UserFileUploadsSettings.class, WebServerServlet.class,

@@ -425,12 +425,15 @@ public class ObjectEntryDTOConverter
 						fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 					fileEntryLink.setHref(
-						HttpComponentsUtil.addParameter(HttpComponentsUtil.addParameter(
-						_dlURLHelper.getDownloadURL(
-							fileEntry, fileEntry.getFileVersion(), null,
-							StringPool.BLANK), "objectEntry",
-							objectEntry.getExternalReferenceCode()),
-							"objectDefinition", objectDefinition.getExternalReferenceCode()));
+						HttpComponentsUtil.addParameter(
+							HttpComponentsUtil.addParameter(
+								_dlURLHelper.getDownloadURL(
+									fileEntry, fileEntry.getFileVersion(), null,
+									StringPool.BLANK),
+								"objectEntry",
+								objectEntry.getExternalReferenceCode()),
+							"objectDefinition",
+							objectDefinition.getExternalReferenceCode()));
 				}
 				catch (PrincipalException principalException) {
 					if (_log.isWarnEnabled()) {

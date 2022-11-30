@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -141,10 +140,7 @@ public class DispatchTaskExecutorRegistryImpl
 			properties.get(_KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE),
 			DispatchTaskClusterMode.ALL_NODES.getLabel());
 
-		if (Objects.equals(
-				label,
-				DispatchTaskClusterMode.SINGLE_NODE_PERSISTED.getLabel())) {
-
+		if (label.startsWith("single-node")) {
 			_clusterModeSingleNodeDispatchTaskExecutors.add(
 				dispatchTaskExecutorType);
 		}

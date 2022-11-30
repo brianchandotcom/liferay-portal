@@ -151,7 +151,7 @@ definition {
 	@description = "Verify that a structure with the boolean field can be Required."
 	@priority = "5"
 	test CanBeRequired {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		NavItem.gotoStructures();
 

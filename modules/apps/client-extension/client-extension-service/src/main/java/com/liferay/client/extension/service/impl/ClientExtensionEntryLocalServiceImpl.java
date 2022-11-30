@@ -481,7 +481,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		ClientExtensionEntry clientExtensionEntry =
 			clientExtensionEntryLocalService.
 				fetchClientExtensionEntryByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 		if (clientExtensionEntry != null) {
 			throw new DuplicateClientExtensionEntryExternalReferenceCodeException();

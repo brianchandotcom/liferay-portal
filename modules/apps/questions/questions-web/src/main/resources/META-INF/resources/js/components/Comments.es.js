@@ -30,6 +30,7 @@ export default withRouter(
 		comments,
 		commentsChange,
 		companyName,
+		display,
 		editable = true,
 		entityId,
 		match: {
@@ -101,6 +102,7 @@ export default withRouter(
 						comment={comment}
 						commentChange={_commentChange}
 						companyName={companyName}
+						display={display}
 						editable={editable}
 						hasCompanyMx={comment.hasCompanyMx}
 						key={comment.id}

@@ -32,6 +32,7 @@ export default withRouter(
 	({
 		comment,
 		commentChange,
+		display,
 		editable = true,
 		match: {url},
 		showSignature,
@@ -110,17 +111,19 @@ export default withRouter(
 									{Liferay.Language.get('delete')}
 								</ClayButton>
 
-								<FlagsContainer
-									btnProps={{
-										className:
-											'c-mr-2 c-px-2 c-py-1 btn btn-secondary',
-										small: true,
-									}}
-									content={comment}
-									context={context}
-									onlyIcon={false}
-									showIcon={false}
-								/>
+								{display?.flags && (
+									<FlagsContainer
+										btnProps={{
+											className:
+												'c-mr-2 c-px-2 c-py-1 btn btn-secondary',
+											small: true,
+										}}
+										content={comment}
+										context={context}
+										onlyIcon={false}
+										showIcon={false}
+									/>
+								)}
 
 								<ClayButton
 									className="btn-sm c-px-2 c-py-1"

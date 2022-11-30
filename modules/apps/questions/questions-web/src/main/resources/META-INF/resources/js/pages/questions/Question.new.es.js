@@ -170,8 +170,7 @@ const Question = ({
 					setError(errorObject);
 
 					setLoading(false);
-				}
-				else {
+				} else {
 					setQuestion(messageBoardThreadByFriendlyUrlPath);
 					setLoading(false);
 				}
@@ -280,8 +279,7 @@ const Question = ({
 				siteKey: context.siteKey,
 			});
 			setIsVisibleEditor(false);
-		}
-		catch (error) {}
+		} catch (error) {}
 	};
 
 	const deleteAnswer = useCallback(
@@ -408,8 +406,8 @@ const Question = ({
 			)}
 
 			<div
-				className={classNames('', {
-					' c-mt-2 px-3': display.styled,
+				className={classNames({
+					'c-mt-2 px-3': display.styled,
 					'c-mt-5': !display.styled,
 				})}
 			>

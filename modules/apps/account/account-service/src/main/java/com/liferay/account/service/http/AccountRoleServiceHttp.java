@@ -286,6 +286,54 @@ public class AccountRoleServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
+				HttpPrincipal httpPrincipal, long companyId,
+				long[] accountEntryIds, String keywords,
+				java.util.LinkedHashMap<String, Object> params, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator<?>
+					orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountRoleServiceUtil.class, "searchAccountRoles",
+				_searchAccountRolesParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, accountEntryIds, keywords, params, start,
+				end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.search.BaseModelSearchResult
+				<com.liferay.account.model.AccountRole>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void setUserAccountRoles(
 			HttpPrincipal httpPrincipal, long accountEntryId,
 			long[] accountRoleIds, long userId)
@@ -294,7 +342,7 @@ public class AccountRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountRoleServiceUtil.class, "setUserAccountRoles",
-				_setUserAccountRolesParameterTypes6);
+				_setUserAccountRolesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, accountRoleIds, userId);
@@ -331,7 +379,7 @@ public class AccountRoleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountRoleServiceUtil.class, "unassociateUser",
-				_unassociateUserParameterTypes7);
+				_unassociateUserParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, accountRoleId, userId);
@@ -377,9 +425,15 @@ public class AccountRoleServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getAccountRoleByRoleIdParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _setUserAccountRolesParameterTypes6 =
+	private static final Class<?>[] _searchAccountRolesParameterTypes6 =
+		new Class[] {
+			long.class, long[].class, String.class,
+			java.util.LinkedHashMap.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _setUserAccountRolesParameterTypes7 =
 		new Class[] {long.class, long[].class, long.class};
-	private static final Class<?>[] _unassociateUserParameterTypes7 =
+	private static final Class<?>[] _unassociateUserParameterTypes8 =
 		new Class[] {long.class, long.class, long.class};
 
 }

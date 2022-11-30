@@ -16,6 +16,7 @@ package com.liferay.account.service;
 
 import com.liferay.account.model.AccountRole;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Map;
 
@@ -87,6 +88,18 @@ public class AccountRoleServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<AccountRole> searchAccountRoles(
+				long companyId, long[] accountEntryIds, String keywords,
+				java.util.LinkedHashMap<String, Object> params, int start,
+				int end, OrderByComparator<?> orderByComparator)
+			throws PortalException {
+
+		return getService().searchAccountRoles(
+			companyId, accountEntryIds, keywords, params, start, end,
+			orderByComparator);
 	}
 
 	public static void setUserAccountRoles(

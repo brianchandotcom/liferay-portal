@@ -18,12 +18,15 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -81,6 +84,13 @@ public interface AccountRoleService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<AccountRole> searchAccountRoles(
+			long companyId, long[] accountEntryIds, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end,
+			OrderByComparator<?> orderByComparator)
+		throws PortalException;
 
 	public void setUserAccountRoles(
 			long accountEntryId, long[] accountRoleIds, long userId)

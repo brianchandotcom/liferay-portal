@@ -98,6 +98,21 @@ public class AccountRoleServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
+				long companyId, long[] accountEntryIds, String keywords,
+				java.util.LinkedHashMap<String, Object> params, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator<?>
+					orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountRoleService.searchAccountRoles(
+			companyId, accountEntryIds, keywords, params, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public void setUserAccountRoles(
 			long accountEntryId, long[] accountRoleIds, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {

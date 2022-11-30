@@ -49,7 +49,13 @@ const useSubtasksActions = () => {
 			hidden: ({dueStatus}) =>
 				dueStatus?.key === SubTaskStatuses.IN_ANALYSIS,
 			icon: 'user',
-			name: i18n.sub('assign-to-me-and-x', 'begin-analysis'),
+			name: ({dueStatus}) =>
+				i18n.sub(
+					'assign-to-me-and-x',
+					dueStatus.key === SubTaskStatuses.OPEN
+						? 'begin-analysis'
+						: 'reanalyze'
+				),
 		},
 		{
 			action: (subtask, mutate) =>

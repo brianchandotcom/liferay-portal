@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.internal.exportimport.content.processor;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -423,6 +425,40 @@ public class DataValuesMappingExportImportContentProcessor
 		}
 	}
 
+	private void _replaceContainerImportContentReferences(
+		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (configJSONObject.has("link")) {
+			JSONObject linkJSONObject = configJSONObject.getJSONObject("link");
+
+			_replaceMappedFieldImportContentReferences(
+				portletDataContext, linkJSONObject);
+
+			if (linkJSONObject.has("layout")) {
+				_replaceImportLayoutReferences(
+					linkJSONObject.getJSONObject("layout"), portletDataContext);
+			}
+		}
+
+		if (!configJSONObject.has("styles")) {
+			return;
+		}
+
+		JSONObject stylesJSONObject = configJSONObject.getJSONObject("styles");
+
+		if (stylesJSONObject.has("backgroundImage")) {
+			_replaceMappedFieldImportContentReferences(
+				portletDataContext,
+				stylesJSONObject.getJSONObject("backgroundImage"));
+		}
+	}
+
 	private void _replaceImportContentReferences(
 		JSONObject jsonObject, PortletDataContext portletDataContext) {
 
@@ -441,11 +477,118 @@ public class DataValuesMappingExportImportContentProcessor
 
 			if (Objects.equals(
 					itemJSONObject.get("type"),
+					LayoutDataItemTypeConstants.TYPE_CONTAINER)) {
+
+				_replaceContainerImportContentReferences(
+					itemJSONObject, portletDataContext);
+			}
+
+			if (Objects.equals(
+					itemJSONObject.get("type"),
 					LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
 
 				_replaceCollectionImportContentReferences(
 					itemJSONObject, portletDataContext);
 			}
+		}
+	}
+
+	private void _replaceImportLayoutReferences(
+		JSONObject layoutJSONObject, PortletDataContext portletDataContext) {
+
+		if (layoutJSONObject.length() == 0) {
+			return;
+		}
+
+		long plid = GetterUtil.getLong(layoutJSONObject.remove("plid"));
+
+		Map<Long, Long> layoutNewPrimaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class.getName());
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutNewPrimaryKeys.getOrDefault(plid, 0L));
+
+		if (layout == null) {
+			return;
+		}
+
+		layoutJSONObject.put(
+			"groupId", layout.getGroupId()
+		).put(
+			"layoutId", layout.getLayoutId()
+		).put(
+			"layoutUuid", layout.getUuid()
+		).put(
+			"privateLayout", layout.isPrivateLayout()
+		);
+	}
+
+	private void _replaceMappedFieldImportContentReferences(
+		PortletDataContext portletDataContext, JSONObject jsonObject) {
+
+		String className = jsonObject.getString("className");
+
+		if (Validator.isNull(className)) {
+			return;
+		}
+
+		String mappedField = jsonObject.getString(
+			"mappedField", jsonObject.getString("fieldId"));
+
+		if (mappedField.startsWith(_DDM_TEMPLATE)) {
+			String ddmTemplateKey = mappedField.substring(
+				_DDM_TEMPLATE.length());
+
+			Map<String, String> ddmTemplateKeys =
+				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+					DDMTemplate.class + ".ddmTemplateKey");
+
+			String importedDDMTemplateKey = MapUtil.getString(
+				ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
+
+			if (jsonObject.has("mappedField")) {
+				jsonObject.put(
+					"mappedField", _DDM_TEMPLATE + importedDDMTemplateKey);
+			}
+			else {
+				jsonObject.put(
+					"fieldId", _DDM_TEMPLATE + importedDDMTemplateKey);
+			}
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_infoSearchClassMapperRegistry.getSearchClassName(className));
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			!stagingGroupHelper.isStagedPortlet(
+				portletDataContext.getScopeGroupId(),
+				assetRendererFactory.getPortletId())) {
+
+			return;
+		}
+
+		long classPK = jsonObject.getLong("classPK");
+
+		if (classPK == 0) {
+			return;
+		}
+
+		jsonObject.put("classNameId", _portal.getClassNameId(className));
+
+		Map<Long, Long> primaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
+
+		classPK = MapUtil.getLong(primaryKeys, classPK, classPK);
+
+		jsonObject.put("classPK", classPK);
+
+		if (jsonObject.has("fileEntryId")) {
+			jsonObject.put("fileEntryId", classPK);
 		}
 	}
 

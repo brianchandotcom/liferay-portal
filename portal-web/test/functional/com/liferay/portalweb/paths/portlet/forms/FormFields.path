@@ -927,7 +927,7 @@
 </tr>
 <tr>
 	<td>SWITCH_OPTION_IN_FIELD</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[@class='toggle-switch-bar']//..//span[text()='${key_optionValue}']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[@class='toggle-switch-bar']//..//span[text()='${key_optionValue}'] | //div[@class='ddm-field']//*[text()='${key_fieldName}']/..//span[text()='${key_optionValue}']</td>
 	<td></td>
 </tr>
 <tr>

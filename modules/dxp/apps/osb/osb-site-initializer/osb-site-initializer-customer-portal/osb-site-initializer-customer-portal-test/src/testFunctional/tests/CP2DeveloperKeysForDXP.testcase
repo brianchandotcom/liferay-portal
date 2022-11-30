@@ -126,11 +126,10 @@ definition {
 	@priority = "4"
 	test UserAdminAndPartnerManagerRoleCanSeeAndPerformAllActionsForDXP {
 
-			// Needs refactor since it depends on example Avangrid Portals account
+		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
 		}
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -140,7 +139,7 @@ definition {
 
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
-		
+
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
@@ -173,14 +172,13 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-		task("Click in the Action button and assert if the user with the right role can see the options"){
+		task ("Click in the Action button and assert if the user with the right role can see the options") {
 			CustomerPortal.clickAtButton(text = "Actions");
-		
 
 			AssertVisible(
-				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
-				key_action = "Export All Key Details (csv)");
-			
+				key_action = "Export All Key Details (csv)",
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+
 			CustomerPortal.clickAtButton(text = "Actions");
 
 			CP2ActivationKeys.exportAllKeyDetails(fileName = "activation-keys.csv");
@@ -192,12 +190,12 @@ definition {
 			CustomerPortal.accountTableProject(title = "NASA ICE");
 
 			Account.unassignUserRole(
-			accountRoleTitle = "Account Administrator",
-			accountUserName = "Test Test");
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
 
 			Account.unassignUserRole(
-			accountRoleTitle = "Partner Manager",
-			accountUserName = "Test Test");
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
 		}
 	}
 
@@ -206,7 +204,7 @@ definition {
 	@priority = "4"
 	test UserPartnerMemberAndRequesterRoleCannotSeeSomeActionsForDXP {
 
-			// Needs refactor since it depends on example Avangrid Portals account
+		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
@@ -220,20 +218,19 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-		task("Click in the Action button and assert the user with the right role can see the option"){
+		task ("Click in the Action button and assert the user with the right role can see the option") {
 			CustomerPortal.clickAtButton(text = "Actions");
 
 			AssertElementNotPresent(
-				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
-				key_text = "Generate New");
+				key_text = "Generate New",
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
 
 			CustomerPortal.clickAtButton(text = "Actions");
 
 			AssertElementNotPresent(
-				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
-				key_text = "Deactivate");
+				key_text = "Deactivate",
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
 		}
-	
 	}
 
 	@description = "Automation ID: LPS-166940 | Test Summary: Verify that users with the roles Partner Members, Requesters and Users cannot see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)."
@@ -241,7 +238,7 @@ definition {
 	@priority = "4"
 	test UserPartnerMemberAndRequesterRoleCanSeeAndPerformActionsForDXP {
 
-			// Needs refactor since it depends on example Avangrid Portals account
+		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
@@ -255,12 +252,12 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-		task("Click in the Action button and assert the user with the right role can see the option"){
+		task ("Click in the Action button and assert the user with the right role can see the option") {
 			CustomerPortal.clickAtButton(text = "Actions");
-	
+
 			AssertVisible(
-				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
-				key_action = "Export All Key Details (csv)");
+				key_action = "Export All Key Details (csv)",
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
 		}
 
 		task ("Given a user signs in on OKTA to update the Customer Portal") {
@@ -270,7 +267,7 @@ definition {
 
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
-		
+
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
@@ -297,14 +294,13 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-		task("Click in the Action button and assert if the user with the right role can see the options"){
+		task ("Click in the Action button and assert if the user with the right role can see the options") {
 			CustomerPortal.clickAtButton(text = "Actions");
-		
 
 			AssertVisible(
-				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
-				key_action = "Export All Key Details (csv)");
-			
+				key_action = "Export All Key Details (csv)",
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+
 			CustomerPortal.clickAtButton(text = "Actions");
 
 			CP2ActivationKeys.exportAllKeyDetails(fileName = "activation-keys.csv");
@@ -314,6 +310,7 @@ definition {
 			Account.openAccountsAdmin();
 
 			CustomerPortal.accountTableProject(title = "NASA ICE");
+
 			Account.unassignUserRole(
 				accountRoleTitle = "Requester",
 				accountUserName = "Test Test");

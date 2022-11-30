@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.fragment.model.FragmentComposition;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.servlet.taglib.util.ContributedFragmentCompositionActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
@@ -69,11 +68,6 @@ public class ContributedFragmentCompositionVerticalCard
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

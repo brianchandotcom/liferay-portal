@@ -38,11 +38,13 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 				<c:choose>
 					<c:when test="<%= object instanceof FragmentComposition %>">
 						<clay:vertical-card
+							propsTransformer="js/ContributedFragmentEntryDropdownPropsTransformer"
 							verticalCard="<%= new ContributedFragmentCompositionVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
+							propsTransformer="js/ContributedFragmentEntryDropdownPropsTransformer"
 							verticalCard="<%= new ContributedFragmentEntryVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</c:otherwise>
@@ -61,8 +63,3 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 	<aui:input name="contributedEntryKeys" type="hidden" />
 	<aui:input name="fragmentCollectionId" type="hidden" />
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/FragmentEntryDropdownDefaultEventHandler.es"
-/>

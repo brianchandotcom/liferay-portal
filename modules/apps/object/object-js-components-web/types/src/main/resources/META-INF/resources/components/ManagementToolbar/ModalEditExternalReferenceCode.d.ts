@@ -17,16 +17,20 @@
 import {Observer} from '@clayui/modal/lib/types';
 interface IProps {
 	externalReferenceCode: string;
-	objectDefinitionId: number;
+	getEntity: Function;
+	helpMessage: string;
 	observer: Observer;
 	onClose: () => void;
+	saveURL: string;
 	setExternalReferenceCode: (value: string) => void;
 }
 export declare function ModalEditExternalReferenceCode({
 	externalReferenceCode,
-	objectDefinitionId,
+	getEntity,
+	helpMessage,
 	observer,
 	onClose,
+	saveURL,
 	setExternalReferenceCode,
 }: IProps): JSX.Element;
-export default ModalEditExternalReferenceCode;
+export {};

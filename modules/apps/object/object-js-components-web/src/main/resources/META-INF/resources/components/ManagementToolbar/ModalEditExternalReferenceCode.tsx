@@ -17,19 +17,34 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
-import {
-	API,
-	FormError,
-	Input,
-	openToast,
-	useForm,
-} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
+
+import {FormError, useForm} from '../../hooks/useForm';
+import {save} from '../../utils/api';
+import {Input} from '../Input';
+import {openToast} from '../SidePanelContent';
+
+interface IProps {
+	externalReferenceCode: string;
+	getEntity: Function;
+	helpMessage: string;
+	observer: Observer;
+	onClose: () => void;
+	saveURL: string;
+	setExternalReferenceCode: (value: string) => void;
+}
+
+type TInitialValues = {
+	externalReferenceCode: string;
+};
 
 export function ModalEditExternalReferenceCode({
 	externalReferenceCode,
+	getEntity,
+	helpMessage,
 	observer,
 	onClose,
+	saveURL,
 	setExternalReferenceCode,
 }: IProps) {
 	const [error, setError] = useState<string>('');
@@ -39,17 +54,12 @@ export function ModalEditExternalReferenceCode({
 
 	const onSubmit = async ({externalReferenceCode}: TInitialValues) => {
 		try {
-			const objectDefinition = await API.getObjectDefinition(
-				externalReferenceCode
-			);
+			const entity = await getEntity();
 
-			await API.save(
-				`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}`,
-				{
-					...objectDefinition,
-					externalReferenceCode,
-				}
-			);
+			await save(`${saveURL}`, {
+				...entity,
+				externalReferenceCode,
+			});
 
 			setExternalReferenceCode(externalReferenceCode);
 			onClose();
@@ -97,9 +107,7 @@ export function ModalEditExternalReferenceCode({
 
 					<Input
 						error={errors.externalReferenceCode}
-						feedbackMessage={Liferay.Language.get(
-							'internal-key-to-reference-the-object-definition'
-						)}
+						feedbackMessage={helpMessage}
 						id="externalReferenceCode"
 						label={Liferay.Language.get('external-reference-code')}
 						name="externalReferenceCode"
@@ -129,16 +137,3 @@ export function ModalEditExternalReferenceCode({
 		</ClayModal>
 	);
 }
-
-interface IProps {
-	externalReferenceCode: string;
-	observer: Observer;
-	onClose: () => void;
-	setExternalReferenceCode: (value: string) => void;
-}
-
-type TInitialValues = {
-	externalReferenceCode: string;
-};
-
-export default ModalEditExternalReferenceCode;

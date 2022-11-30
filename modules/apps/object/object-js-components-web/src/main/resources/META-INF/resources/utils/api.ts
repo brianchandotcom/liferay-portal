@@ -134,7 +134,17 @@ export async function getList<T>(url: string) {
 	return items;
 }
 
-export async function getNotificationTemplate(notificationTemplateId: number) {
+export async function getNotificationTemplateByExternalReferenceCode(
+	notificationTemplateExternalReferenceCode: string
+) {
+	return await fetchJSON<NotificationTemplate>(
+		`/o/notification/v1.0/notification-templates/by-external-reference-code/${notificationTemplateExternalReferenceCode}`
+	);
+}
+
+export async function getNotificationTemplateById(
+	notificationTemplateId: number
+) {
 	return await fetchJSON<NotificationTemplate>(
 		`/o/notification/v1.0/notification-templates/${notificationTemplateId}`
 	);
@@ -146,11 +156,17 @@ export async function getNotificationTemplates() {
 	);
 }
 
-export async function getObjectDefinition(
+export async function getObjectDefinitionByExternalReferenceCode(
 	objectDefinitionExternalReferenceCode: string
 ) {
 	return await fetchJSON<ObjectDefinition>(
 		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}`
+	);
+}
+
+export async function getObjectDefinitionById(objectDefinitionId: number) {
+	return await fetchJSON<ObjectDefinition>(
+		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`
 	);
 }
 

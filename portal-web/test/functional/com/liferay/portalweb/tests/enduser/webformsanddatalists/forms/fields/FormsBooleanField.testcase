@@ -160,7 +160,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
-		FormFields.viewField(fieldName = "Boolean");
+		FormFields.viewBooleanField(fieldValue = "Test Boolean Field");
 	}
 
 	@description = "Verify that a form with the boolean field can be required"

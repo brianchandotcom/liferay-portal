@@ -62,9 +62,9 @@ public class ViewClientExtensionEntryPartDisplayContext<T extends CET> {
 	}
 
 	public Collection<Method> getPropertyMethods() {
-		Class<? extends CET> clazz = _cet.getClass();
-
 		List<Method> methods = new ArrayList<>();
+
+		Class<? extends CET> clazz = _cet.getClass();
 
 		for (Class<?> iface : clazz.getInterfaces()) {
 			if ((iface == _CET_CLASS) || !_CET_CLASS.isAssignableFrom(iface)) {

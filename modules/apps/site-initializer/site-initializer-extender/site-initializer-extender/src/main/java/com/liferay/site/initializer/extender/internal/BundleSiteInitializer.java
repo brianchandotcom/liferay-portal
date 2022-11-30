@@ -1198,7 +1198,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_invoke(
 			() -> _updateObjectDefinitionAccountEntryRestricted(
 				objectDefinitionMap, objectDefinitionResource));
-
 		_invoke(
 			() -> _addOrUpdateObjectFields(
 				listTypeDefinitionIdsStringUtilReplaceValues,

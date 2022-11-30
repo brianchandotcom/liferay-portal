@@ -12,6 +12,8 @@
  * details.
  */
 
-export default function isNullOrUndefined(value) {
-	return value === undefined || value === null;
+export default function isNullOrUndefined(
+	value: unknown
+): value is null | undefined {
+	return value === null || value === undefined;
 }

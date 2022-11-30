@@ -88,10 +88,9 @@ public class ObjectDefinitionsActionsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsActionsDisplayContext(
-				httpServletRequest, _objectActionExecutorRegistry,
-				_objectActionTriggerRegistry,
-				_objectDefinitionModelResourcePermission, _jsonFactory,
-				_objectDefinitionLocalService));
+				httpServletRequest, _jsonFactory, _objectActionExecutorRegistry,
+				_objectActionTriggerRegistry, _objectDefinitionLocalService,
+				_objectDefinitionModelResourcePermission));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}

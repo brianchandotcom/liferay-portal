@@ -51,19 +51,18 @@ public class ObjectDefinitionsActionsDisplayContext
 	extends BaseObjectDefinitionsDisplayContext {
 
 	public ObjectDefinitionsActionsDisplayContext(
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
 		ObjectActionExecutorRegistry objectActionExecutorRegistry,
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission,
-		JSONFactory jsonFactory,
-		ObjectDefinitionLocalService objectDefinitionLocalService) {
+			objectDefinitionModelResourcePermission) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
+		_jsonFactory = jsonFactory;
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
-		_jsonFactory = jsonFactory;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 	}
 

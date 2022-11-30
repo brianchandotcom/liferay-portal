@@ -105,6 +105,51 @@ definition {
 	}
 
 	@priority = "4"
+	test CanCopyPasteInputFields {
+		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		TripleClick(
+			key_suggestionContributorOrder = "1",
+			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + c");
+
+		Click.javaScriptClick(
+			key_text = "Add Contributor",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_suggestionContributorOrder = "2",
+			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
+
+		AssertTextEquals(
+			key_suggestionContributorOrder = "2",
+			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
+			value1 = "suggestions");
+
+		TripleClick(
+			key_suggestionContributorOrder = "1",
+			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + c");
+
+		Click(
+			key_suggestionContributorOrder = "2",
+			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
+
+		AssertTextEquals(
+			key_suggestionContributorOrder = "2",
+			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
+			value1 = "5");
+	}
+
+	@priority = "4"
 	test CanViewBasicAndBlueprintSuggestionsTogether {
 		property test.run.environment = "EE";
 

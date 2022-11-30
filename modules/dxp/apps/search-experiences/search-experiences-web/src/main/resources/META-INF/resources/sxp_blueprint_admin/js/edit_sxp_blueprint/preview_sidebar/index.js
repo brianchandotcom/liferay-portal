@@ -170,7 +170,6 @@ function PreviewSidebar({
 				<ManagementToolbar.Item>
 					<PreviewModalWithCopyDownload
 						fileName="raw_request.json"
-						folded
 						lineWrapping={false}
 						size="lg"
 						text={parseAndPrettifyJSON(requestString)}

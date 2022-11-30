@@ -30,7 +30,8 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ThemeSpritemapCETImpl extends BaseCETImpl implements ThemeSpritemapCET {
+public class ThemeSpritemapCETImpl
+	extends BaseCETImpl implements ThemeSpritemapCET {
 
 	public ThemeSpritemapCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);

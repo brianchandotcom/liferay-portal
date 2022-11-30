@@ -13,5 +13,5 @@
  */
 
 export function getSpritemap(): string {
-	return Liferay.ThemeDisplay.getPathThemeSpritemap()
+	return Liferay.ThemeDisplay.getPathThemeSpritemap();
 }

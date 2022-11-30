@@ -12,15 +12,15 @@
  * details.
  */
 
-import { ClayButtonWithIcon } from '@clayui/button';
-import ClayForm, { ClayInput } from '@clayui/form';
-import { openSelectionModal } from 'frontend-js-web';
-import React, { useState } from 'react';
+import {ClayButtonWithIcon} from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
+import {openSelectionModal} from 'frontend-js-web';
+import React, {useState} from 'react';
 
 export default function ThemeSpritemapCETsConfiguration({
 	portletNamespace,
 	selectThemeSpritemapCETEventName,
-	themeSpritemapCET,
+	themeSpritemapCET = {cetExternalReferenceCode: '', name: ''},
 	themeSpritemapCETSelectorURL,
 }: IProps) {
 	const [extensionName, setExtensionName] = useState(themeSpritemapCET.name);
@@ -29,7 +29,7 @@ export default function ThemeSpritemapCETsConfiguration({
 	);
 
 	const onClick = () => {
-		openSelectionModal<{ value: string }>({
+		openSelectionModal<{value: string}>({
 			onSelect: (selectedItem) => {
 				const item = JSON.parse(selectedItem.value);
 
@@ -37,7 +37,9 @@ export default function ThemeSpritemapCETsConfiguration({
 				setExtensionName(item.name);
 			},
 			selectEventName: selectThemeSpritemapCETEventName,
-			title: Liferay.Language.get('select-theme-spritemap-client-extension'),
+			title: Liferay.Language.get(
+				'select-theme-spritemap-client-extension'
+			),
 			url: themeSpritemapCETSelectorURL,
 		});
 	};

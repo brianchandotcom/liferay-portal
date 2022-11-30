@@ -34,7 +34,6 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

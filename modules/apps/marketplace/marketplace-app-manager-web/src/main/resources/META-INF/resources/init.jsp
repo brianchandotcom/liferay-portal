@@ -38,7 +38,6 @@ page import="com.liferay.marketplace.app.manager.web.internal.util.MarketplaceAp
 page import="com.liferay.marketplace.exception.FileExtensionException" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@

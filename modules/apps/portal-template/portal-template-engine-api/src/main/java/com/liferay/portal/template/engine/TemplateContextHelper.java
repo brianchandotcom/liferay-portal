@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
-
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;

@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTagContex
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;

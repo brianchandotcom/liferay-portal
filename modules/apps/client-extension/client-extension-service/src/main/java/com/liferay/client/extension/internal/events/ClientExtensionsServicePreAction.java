@@ -20,8 +20,8 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.client.extension.type.ThemeFaviconCET;
-import com.liferay.client.extension.type.ThemeSpritemapCET;
 import com.liferay.client.extension.type.ThemeJSCET;
+import com.liferay.client.extension.type.ThemeSpritemapCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -51,7 +51,7 @@ public class ClientExtensionsServicePreAction extends Action {
 	public void run(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
-		
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -181,35 +181,6 @@ public class ClientExtensionsServicePreAction extends Action {
 		return null;
 	}
 
-	private ThemeSpritemapCET _getThemeSpritemapCET(Layout layout) {
-		CET cet = _getCET(
-			_portal.getClassNameId(Layout.class), layout.getPlid(),
-			layout.getCompanyId(),
-			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
-
-		if (cet == null) {
-			cet = _getCET(
-				_portal.getClassNameId(Layout.class),
-				layout.getMasterLayoutPlid(), layout.getCompanyId(),
-				ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
-		}
-
-		if (cet == null) {
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			cet = _getCET(
-				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), layout.getCompanyId(),
-				ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
-		}
-
-		if (cet != null) {
-			return (ThemeSpritemapCET)cet;
-		}
-
-		return null;
-	}
-
 	private String _getThemeFaviconCETURL(
 		long classNameId, long classPK, long companyId) {
 
@@ -249,6 +220,35 @@ public class ClientExtensionsServicePreAction extends Action {
 
 		if (cet != null) {
 			return (ThemeJSCET)cet;
+		}
+
+		return null;
+	}
+
+	private ThemeSpritemapCET _getThemeSpritemapCET(Layout layout) {
+		CET cet = _getCET(
+			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			layout.getCompanyId(),
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
+
+		if (cet == null) {
+			cet = _getCET(
+				_portal.getClassNameId(Layout.class),
+				layout.getMasterLayoutPlid(), layout.getCompanyId(),
+				ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
+		}
+
+		if (cet == null) {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			cet = _getCET(
+				_portal.getClassNameId(LayoutSet.class),
+				layoutSet.getLayoutSetId(), layout.getCompanyId(),
+				ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
+		}
+
+		if (cet != null) {
+			return (ThemeSpritemapCET)cet;
 		}
 
 		return null;

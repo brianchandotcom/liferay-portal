@@ -132,34 +132,6 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getThemeSpritemapCETConfigurationProps(
-		String className, long classPK) {
-
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			ClientExtensionEntryRelLocalServiceUtil.
-				fetchClientExtensionEntryRel(
-					PortalUtil.getClassNameId(className), classPK,
-					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
-
-		return HashMapBuilder.<String, Object>put(
-			"themeSpritemapCET",
-			_getCETJSONObject(
-				clientExtensionEntryRel, true,
-						LanguageUtil.format(
-							_themeDisplay.getLocale(), "from-x",
-							_getLayoutRootNodeName(), false))
-		).put(
-			"themeSpritemapCETSelectorURL",
-			() -> PortletURLBuilder.create(
-				_layoutsAdminDisplayContext.getCETItemSelectorURL(
-					"selectThemeSpritemapCET",
-					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP)
-			).buildString()
-		).put(
-			"selectThemeSpritemapCETEventName", "selectThemeSpritemapCET"
-		).build();
-	}
-
 	public Map<String, Object> getGlobalJSCETsConfigurationProps(
 		String className, long classPK) {
 
@@ -331,6 +303,40 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public Map<String, Object> getThemeSpritemapCETConfigurationProps(
+		String className, long classPK) {
+
+		return HashMapBuilder.<String, Object>put(
+			"selectThemeSpritemapCETEventName", "selectThemeSpritemapCET"
+		).put(
+			"themeSpritemapCET",
+			() -> {
+				ClientExtensionEntryRel clientExtensionEntryRel =
+					ClientExtensionEntryRelLocalServiceUtil.
+						fetchClientExtensionEntryRel(
+							PortalUtil.getClassNameId(className), classPK,
+							ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP);
+
+				if (clientExtensionEntryRel == null) {
+					return null;
+				}
+
+				return _getCETJSONObject(
+					clientExtensionEntryRel, true,
+					LanguageUtil.format(
+						_themeDisplay.getLocale(), "from-x",
+						_getLayoutRootNodeName(), false));
+			}
+		).put(
+			"themeSpritemapCETSelectorURL",
+			() -> PortletURLBuilder.create(
+				_layoutsAdminDisplayContext.getCETItemSelectorURL(
+					"selectThemeSpritemapCET",
+					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP)
+			).buildString()
+		).build();
 	}
 
 	public boolean hasEditableMasterLayout() {

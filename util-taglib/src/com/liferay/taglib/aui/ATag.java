@@ -15,7 +15,6 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.petra.string.StringPool;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;

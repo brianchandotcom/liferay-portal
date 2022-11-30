@@ -1502,7 +1502,9 @@ public class ThemeDisplay
 			cdnBaseURL + themeStaticResourcePath + theme.getJavaScriptPath());
 
 		setPathThemeSpritemap(
-			cdnBaseURL + themeStaticResourcePath + theme.getImagesPath() + "/clay/icons.svg");
+			StringBundler.concat(
+				cdnBaseURL, themeStaticResourcePath, theme.getImagesPath(),
+				"/clay/icons.svg"));
 
 		String rootPath = theme.getRootPath();
 

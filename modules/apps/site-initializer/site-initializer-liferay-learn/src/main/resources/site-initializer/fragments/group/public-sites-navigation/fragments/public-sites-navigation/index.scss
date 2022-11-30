@@ -45,9 +45,7 @@ nav.public-sites-navigation {
 				@media (min-width: 1200px) {
 					.adt-nav-item:hover {
 						.adt-nav-text {
-							background-color: var(
-								--color-action-primary-inverted-hover
-							);
+							background-color: var(--color-action-primary-inverted-hover);
 						}
 
 						.adt-nav-caret-bottom-icon {
@@ -282,8 +280,7 @@ nav.public-sites-navigation {
 			.account-text,
 			.account-dropdown-icon {
 				opacity: 1;
-				transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(180deg)
-					rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+				transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(180deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 			}
 		}
 
@@ -345,9 +342,7 @@ nav.public-sites-navigation {
 				.caret-bottom-icon {
 					fill: var(--color-action-primary-default);
 					opacity: 1;
-					transform: translate3d(0, 0, 0) scale3d(1, 1, 1)
-						rotateX(180deg) rotateY(0deg) rotateZ(0deg)
-						skew(0deg, 0deg);
+					transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(180deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 				}
 
 				.liferay-sites-text {
@@ -426,6 +421,7 @@ nav.public-sites-navigation {
 	.btn-primary,
 	.menu-btn,
 	.close-btn {
+
 		&:hover,
 		&:active,
 		&:focus {
@@ -435,6 +431,7 @@ nav.public-sites-navigation {
 	}
 
 	.btn-primary {
+
 		&:hover,
 		&:active,
 		&:focus {
@@ -513,8 +510,7 @@ nav.public-sites-navigation {
 			position: absolute;
 			right: 0;
 			top: 7.2rem;
-			transform: translate3d(0, -200%, 0) scale3d(1, 1, 1) rotateX(0deg)
-				rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+			transform: translate3d(0, -200%, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 			transform-style: preserve-3d;
 
 			.adt-nav-text {
@@ -538,6 +534,7 @@ nav.public-sites-navigation {
 	}
 
 	@media (min-width: 600px) and (max-width: 1199px) {
+
 		.primary-nav,
 		.utility-nav {
 			padding-left: 4rem;
@@ -561,6 +558,7 @@ nav.public-sites-navigation {
 	}
 
 	@media (min-width: 1200px) {
+
 		.primary-nav,
 		.utility-nav {
 			padding-left: 4rem;
@@ -579,6 +577,7 @@ nav.public-sites-navigation {
 	}
 
 	@media (max-width: 599px) {
+
 		.primary-nav,
 		.utility-nav {
 			padding-left: 1.5rem;
@@ -757,6 +756,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	}
 
 	&.dropdown-open {
+
 		&:hover,
 		&:focus {
 			.adt-nav-caret-bottom-icon {
@@ -767,8 +767,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 		.adt-nav-caret-bottom-icon {
 			color: var(--color-action-primary-hover);
 			opacity: 0.5;
-			transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(180deg)
-				rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+			transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(180deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
 		}
 
 		.adt-nav-text {
@@ -1057,6 +1056,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 			padding: 2rem 4rem;
 
 			.adt-submenu-item-content {
+
 				&.grid-column-span-1,
 				&.grid-column-span-2,
 				&.grid-column-span-3,

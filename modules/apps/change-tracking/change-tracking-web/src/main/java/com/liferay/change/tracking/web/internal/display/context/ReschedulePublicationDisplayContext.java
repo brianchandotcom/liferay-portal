@@ -18,7 +18,6 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;

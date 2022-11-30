@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
-
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;

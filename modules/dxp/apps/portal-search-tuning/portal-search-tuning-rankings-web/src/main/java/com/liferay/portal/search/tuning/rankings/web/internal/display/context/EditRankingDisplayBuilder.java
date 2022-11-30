@@ -15,7 +15,6 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
-
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;

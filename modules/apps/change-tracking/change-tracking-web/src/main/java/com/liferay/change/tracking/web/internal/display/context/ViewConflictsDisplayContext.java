@@ -25,7 +25,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
-
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

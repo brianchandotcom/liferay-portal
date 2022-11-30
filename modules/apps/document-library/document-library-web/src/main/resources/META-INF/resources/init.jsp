@@ -153,7 +153,6 @@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.InvalidRepositoryException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchRepositoryException" %><%@
-
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.lock.DuplicateLockException" %><%@

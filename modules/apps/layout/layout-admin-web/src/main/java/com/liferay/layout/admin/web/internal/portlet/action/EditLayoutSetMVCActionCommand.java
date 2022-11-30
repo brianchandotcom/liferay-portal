@@ -231,7 +231,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 		_addClientExtensionEntryRel(
 			themeSpritemapCETExternalReferenceCode, layoutSet,
-			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, themeDisplay.getUserId());
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
+			themeDisplay.getUserId());
 	}
 
 	private void _updateLogo(

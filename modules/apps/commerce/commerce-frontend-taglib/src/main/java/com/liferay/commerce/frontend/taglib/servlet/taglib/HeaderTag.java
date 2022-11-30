@@ -17,7 +17,6 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;

@@ -18,7 +18,6 @@ import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;

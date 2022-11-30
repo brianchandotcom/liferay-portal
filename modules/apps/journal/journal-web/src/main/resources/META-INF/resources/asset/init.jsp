@@ -33,7 +33,6 @@ page import="com.liferay.journal.model.JournalFolder" %><%@
 page import="com.liferay.journal.service.JournalArticleServiceUtil" %><%@
 page import="com.liferay.journal.service.JournalFolderServiceUtil" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDisplayContext" %><%@
-
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

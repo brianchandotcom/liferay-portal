@@ -81,9 +81,9 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException");
 	}
 
-	@description = "This is a use case for LPS-157219. It ensures a user can only view Site portlets from applications menu of a template with permissions."
+	@description = "This is a use case for LPS-157219. It ensures a user can only view the portlets he has permissions from applications menu."
 	@priority = "3"
-	test CanOnlyViewSitePortletsWithPermissions {
+	test CanOnlyViewPortletsWithPermissionsGranted {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -109,21 +109,17 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("And: Define view control panel menu permissions for regular role") {
+		task ("And: Define permissions for Roles Regrole Name to make sure it can access the Sites and update Site Template") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
 				roleTitle = "Roles Regrole Name");
-		}
 
-		task ("And: Define access site control panel permissions for regular role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
 				roleTitle = "Roles Regrole Name");
-		}
 
-		task ("And: Define access site template control panel and update permissions for regular role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet",

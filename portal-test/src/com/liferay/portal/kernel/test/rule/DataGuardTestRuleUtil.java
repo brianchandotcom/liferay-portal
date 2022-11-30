@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.test.rule;
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
@@ -355,7 +356,8 @@ public class DataGuardTestRuleUtil {
 				ClassLoader classLoader =
 					persistedModelLocalServiceClass.getClassLoader();
 
-				Class<?> modelClass = classLoader.loadClass(className);
+				Class<?> modelClass = classLoader.loadClass(
+					_sanitizeClassName(className));
 
 				List<BaseModel<?>> currentBaseModels = entry.getValue();
 
@@ -628,6 +630,14 @@ public class DataGuardTestRuleUtil {
 
 		return () -> ReflectionTestUtil.setFieldValue(
 			basePersistence, "_sessionFactory", originalSessionFactory);
+	}
+
+	private static String _sanitizeClassName(String className) {
+		if (!className.contains(StringPool.POUND)) {
+			return className;
+		}
+
+		return className.substring(0, className.indexOf(CharPool.POUND));
 	}
 
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>

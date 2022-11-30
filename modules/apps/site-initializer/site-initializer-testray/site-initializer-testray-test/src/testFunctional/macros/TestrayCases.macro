@@ -89,4 +89,18 @@ definition {
 			locator1 = "TestrayCases#CASE_REQUIREMENT_DETAIL");
 	}
 
+	macro exportCases {
+		Button.click(button = "Add Cases");
+
+	if (isSet(caseName)) {
+			Click.clickAtNotVisible(
+				key_checkboxOption = "${caseName}",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		}
+
+		Button.click(button = "Select Cases");
+
+		Button.click(button = "Export");
+	}
+
 }

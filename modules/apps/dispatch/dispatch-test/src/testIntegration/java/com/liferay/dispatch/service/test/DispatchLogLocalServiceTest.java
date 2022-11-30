@@ -26,12 +26,10 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.service.test.util.DispatchLogTestUtil;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -67,9 +65,7 @@ public class DispatchLogLocalServiceTest {
 
 	@Test
 	public void testAddDispatchLogExceptions() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		Class<?> exceptionClass = Exception.class;
 
@@ -142,9 +138,7 @@ public class DispatchLogLocalServiceTest {
 
 	@Test
 	public void testDeleteDispatchLogWhileInProgress() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		Class<?> exceptionClass = Exception.class;
 
@@ -182,9 +176,7 @@ public class DispatchLogLocalServiceTest {
 	public void testFetchLatestDispatchLog() throws Exception {
 		int dispatchLogsCount = RandomTestUtil.randomInt(10, 40);
 
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
@@ -248,9 +240,7 @@ public class DispatchLogLocalServiceTest {
 	public void testGetDispatchLogs() throws Exception {
 		int dispatchLogsCount = RandomTestUtil.randomInt(10, 40);
 
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
@@ -270,9 +260,7 @@ public class DispatchLogLocalServiceTest {
 
 	@Test
 	public void testUpdateDispatchLog() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
@@ -307,9 +295,7 @@ public class DispatchLogLocalServiceTest {
 
 	@Test
 	public void testUpdateDispatchLogExceptions() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addUser(company);
+		User user = UserTestUtil.addUser();
 
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));

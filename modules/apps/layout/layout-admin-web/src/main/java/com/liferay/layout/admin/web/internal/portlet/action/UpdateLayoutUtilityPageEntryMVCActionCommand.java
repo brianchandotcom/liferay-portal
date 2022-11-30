@@ -134,6 +134,13 @@ public class UpdateLayoutUtilityPageEntryMVCActionCommand
 				"please-enter-a-name-with-fewer-than-x-characters",
 				nameMaxLength);
 		}
+		else if (portalException instanceof
+					LayoutUtilityPageEntryNameException.MustNotBeDuplicate) {
+
+			errorMessage = _language.get(
+				themeDisplay.getLocale(),
+				"already-exist-another-utility-page-with-this-name");
+		}
 
 		if (Validator.isNull(errorMessage)) {
 			errorMessage = _language.get(

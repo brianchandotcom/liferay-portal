@@ -78,7 +78,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			String name, String type, long masterLayoutPlid)
 		throws PortalException {
 
-		_validateName(groupId, name);
+		_validateName(groupId, 0, name, type);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.create(
@@ -288,7 +288,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			layoutUtilityPageEntryPersistence.fetchByPrimaryKey(
 				layoutUtilityPageEntryId);
 
-		_validateName(layoutUtilityPageEntry.getGroupId(), name);
+		_validateName(
+			layoutUtilityPageEntry.getGroupId(), layoutUtilityPageEntryId, name,
+			layoutUtilityPageEntry.getType());
 
 		layoutUtilityPageEntry.setName(name);
 
@@ -426,7 +428,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		return name;
 	}
 
-	private void _validateName(long groupId, String name)
+	private void _validateName(
+			long groupId, long layoutUtilityPageEntryId, String name,
+			String type)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -440,6 +444,17 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		if (name.length() > nameMaxLength) {
 			throw new LayoutUtilityPageEntryNameException.
 				MustNotExceedMaximumSize(nameMaxLength);
+		}
+
+		LayoutUtilityPageEntry duplicatedLayoutUtilityPageEntry =
+			layoutUtilityPageEntryPersistence.fetchByG_N_T(groupId, name, type);
+
+		if ((duplicatedLayoutUtilityPageEntry != null) &&
+			(duplicatedLayoutUtilityPageEntry.getLayoutUtilityPageEntryId() !=
+				layoutUtilityPageEntryId)) {
+
+			throw new LayoutUtilityPageEntryNameException.MustNotBeDuplicate(
+				groupId, name);
 		}
 	}
 

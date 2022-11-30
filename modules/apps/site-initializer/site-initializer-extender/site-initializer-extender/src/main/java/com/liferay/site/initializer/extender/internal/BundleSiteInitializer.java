@@ -1054,19 +1054,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
 	}
 
-	private void _addObjectAccountEntryRestricted(
-			Map<String, ObjectDefinition> objectDefinitionMap,
-			ObjectDefinitionResource objectDefinitionResource)
-		throws Exception {
-
-		for (Map.Entry<String, ObjectDefinition> entry :
-				objectDefinitionMap.entrySet()) {
-
-			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
-				entry.getKey(), entry.getValue());
-		}
-	}
-
 	private Map<String, String> _addObjectDefinitions(
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
@@ -1209,7 +1196,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
 		_invoke(
-			() -> _addObjectAccountEntryRestricted(
+			() -> _updateObjectDefinitionAccountEntryRestricted(
 				objectDefinitionMap, objectDefinitionResource));
 
 		_invoke(
@@ -4515,6 +4502,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues, false, serviceContext);
 		_updateLayoutSet(
 			documentsStringUtilReplaceValues, true, serviceContext);
+	}
+
+	private void _updateObjectDefinitionAccountEntryRestricted(
+			Map<String, ObjectDefinition> objectDefinitionMap,
+			ObjectDefinitionResource objectDefinitionResource)
+		throws Exception {
+
+		for (Map.Entry<String, ObjectDefinition> entry :
+				objectDefinitionMap.entrySet()) {
+
+			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
+				entry.getKey(), entry.getValue());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

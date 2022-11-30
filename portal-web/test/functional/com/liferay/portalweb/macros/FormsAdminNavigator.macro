@@ -69,7 +69,7 @@ definition {
 
 		ScrollBy(value1 = "0, 230");
 
-		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
+		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
 
 		DropdownMenuItem.click(menuItem = "Delete");
 	}

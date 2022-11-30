@@ -128,44 +128,19 @@ definition {
 			locator1 = "PRMMDFRequest#SELECT",
 			value1 = "${tactic}");
 
-		var currentDay = DateUtil.getCurrentDate();
-		var currentMonth = DateUtil.getCurrentMonth();
-		var currentYear = DateUtil.getCurrentYear();
-		var nextDayStartDate = DateUtil.getFormattedDate("+1", "dd");
-
-		if ("${nextDayStartDate}" == "01") {
-			var currentMonth = ${currentMonth} + 1;
-
-			if ("${currentMonth}" == "13") {
-				fail("The selected date will be on next year. The start date can be only on current year");
-			}
-		}
-
-		var currentDate = "${currentMonth}${nextDayStartDate}${currentYear}";
+		var startDate = PRMMDFRequest.formatDate();
 
 		Type.sendKeys(
 			key_fieldName = "activities[${activityIndex}].startDate",
 			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = "${currentDate}");
+			value1 = "${startDate}");
 
-		var nextDayEndDate = DateUtil.getFormattedDate("+2", "dd");
-
-		var endIsLessThanStart = MathUtil.isLessThan("${nextDayEndDate}", "${nextDayStartDate}");
-
-		if ("${endIsLessThanStart}" == "true") {
-			var currentMonth = ${currentMonth} + 1;
-
-			if ("${currentMonth}" == "13") {
-				fail("The end date can not be different from start date.");
-			}
-		}
-
-		var futureDate = "${currentMonth}${nextDayEndDate}${currentYear}";
+		var endDate = PRMMDFRequest.formatDate(endDate = "true");
 
 		Type.sendKeys(
 			key_fieldName = "activities[${activityIndex}].endDate",
 			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = "${futureDate}");
+			value1 = "${endDate}");
 
 		var budgetIndex = "0";
 

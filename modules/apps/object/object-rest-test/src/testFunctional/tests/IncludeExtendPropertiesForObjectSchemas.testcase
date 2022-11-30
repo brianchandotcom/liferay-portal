@@ -1,0 +1,154 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given a new field is added to the system User object with post request") {
+			ObjectDefinitionAPI.setUpGlobalObjectDefinitionIdWithName(objectName = "User");
+
+			ObjectFieldAPI.setUpGlobalObjectFieldId(
+				dbType = "String",
+				name = "passportNumber",
+				objectDefinitionId = "${staticObjectId}");
+		}
+
+		task ("Given a custom object definition is created with post request") {
+			ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+		}
+	}
+
+	tearDown {
+		for (var objectName : list "University,Subject") {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "${objectName}");
+		}
+
+		ObjectFieldAPI.deleteObjectField();
+	}
+
+	@priority = "4"
+	test CanIncludePropertiesInSchemasWithManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When with post request a manyToMany relationship is set between the two object definitions") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UsersSubjects",
+				name = "usersSubjects",
+				objectDefinitionId1 = "${staticObjectId}",
+				objectDefinitionId2 = "${staticObjectId2}",
+				type = "manyToMany");
+		}
+
+		task ("Then usersSubjects{} is added into both schema for user and subject") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "subjects");
+
+			AssertElementPresent.assertElementPresent(
+				field = "usersSubjects",
+				locator1 = "OpenAPI#SCHEMA_TITLE",
+				schema = "Subject");
+
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			AssertElementPresent.assertElementPresent(
+				field = "usersSubjects",
+				locator1 = "OpenAPI#SCHEMA_TITLE",
+				schema = "UserAccount");
+		}
+	}
+
+	@priority = "4"
+	test CanIncludePropertiesInSchemasWithOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When with post request a oneToMany relationship is set between the two object definitions") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UniversityUsers",
+				name = "universityUsers",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId}",
+				type = "oneToMany");
+		}
+
+		task ("Then a new field of universityUsers of type relationship is generated") {
+			var response = ObjectFieldAPI.getObjectFieldsByObjectId(objectDefinitionId = "${staticObjectId}");
+
+			var objectField = JSONUtil.getWithJSONPath("${response}", "$.items[?(@.businessType == 'Relationship')].label.en_US");
+
+			TestUtils.assertEquals(
+				actual = "${objectField}",
+				expected = "UniversityUsers");
+		}
+
+		task ("And Then r_universityUsers_c_universityId is added into userAccount schema") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			AssertElementPresent.assertElementPresent(
+				field = "r_universityUsers_c_universityId",
+				locator1 = "OpenAPI#SCHEMA_TITLE",
+				schema = "UserAccount");
+		}
+
+		task ("And Then universityUsers{} is added into /c/universities schema") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "universities");
+
+			AssertElementPresent.assertElementPresent(
+				field = "universityUsers",
+				locator1 = "OpenAPI#SCHEMA_TITLE",
+				schema = "University");
+		}
+	}
+
+	@priority = "4"
+	test CanIncludePropertyInSchemaForCustomObject {
+		property portal.acceptance = "true";
+
+		task ("When navigate to custom object open api") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "subjects");
+		}
+
+		task ("Then a new schema with properties is created successfully") {
+			AssertElementPresent.assertElementPresent(
+				field = "name",
+				locator1 = "OpenAPI#SCHEMA_TITLE",
+				schema = "Subject");
+		}
+	}
+
+	@priority = "4"
+	test CanIncludePropertyInSchemaForSystemObject {
+		property portal.acceptance = "true";
+
+		task ("When I expand UserAccount schema") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+		}
+
+		task ("Then the new added field is added successfully in the schema") {
+			AssertElementPresent.assertElementPresent(
+				field = "passportNumber",
+				locator1 = "OpenAPI#SCHEMA_TITLE",
+				schema = "UserAccount");
+		}
+	}
+
+}

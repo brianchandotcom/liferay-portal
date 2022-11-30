@@ -54,6 +54,16 @@ definition {
 		return "${objectFieldId}";
 	}
 
+	macro getObjectFieldsByObjectId {
+		Variables.assertDefined(parameterList = "${objectDefinitionId}");
+
+		var curl = ObjectFieldAPI._curlObjectField(objectDefinitionId = "${objectDefinitionId}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
 	macro setUpGlobalObjectFieldId {
 		var objectFieldId = ObjectFieldAPI.getIdOfCreatedObjectField(
 			dbType = "${dbType}",

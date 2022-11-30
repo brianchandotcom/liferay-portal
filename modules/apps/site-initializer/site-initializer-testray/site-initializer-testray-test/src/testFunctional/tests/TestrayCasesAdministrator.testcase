@@ -93,6 +93,24 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-167573 - Verify that as administrator cannot Export Cases without linked Cases"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCannotExportCasesWithoutCasesLinked {
+
+		// TODO LPS-167573 AdminCannotExportCasesWithoutCasesLinked pending implementation
+
+	}
+
+	@description = "This is a test for LPS-167574 - Verify that as administrator can deleted cases in the 'Select Cases to Export' modal"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCanDeleteCasesInModalExportCases {
+
+		// TODO LPS-167574 AdminCanDeleteCasesInModalExportCases pending implementation
+
+	}
+
 	@description = "This is a test for LPS-156790 - Verify if as an Administrator I am able to add Cases without Subcomponents"
 	@priority = "5"
 	test AdminCanAddCase {
@@ -184,12 +202,12 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-156916 - Verify if as an Administrator I am able to Import Cases from another Project"
+	@description = "This is a test for LPS-156916 - Verify if as an Administrator I am able to Export Cases from another Project"
 	@ignore = "Test Stub"
 	@priority = "3"
-	test AdminCanImportCase {
+	test AdminCanExportCase {
 
-		// TODO LPS-156916 AdminCanImportCase pending implementation
+		// TODO LPS-156916 AdminCanExportCase pending implementation
 
 	}
 

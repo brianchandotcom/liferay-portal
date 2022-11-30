@@ -200,6 +200,11 @@ public class ServletDataImpl implements ServletData {
 							ObjectDefinitionResourceImpl.class,
 							"postObjectDefinitionPublish"));
 					put(
+						"mutation#createObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField",
+						new ObjectValuePair<>(
+							ObjectFieldResourceImpl.class,
+							"postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField"));
+					put(
 						"mutation#createObjectDefinitionObjectField",
 						new ObjectValuePair<>(
 							ObjectFieldResourceImpl.class,
@@ -389,6 +394,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectDefinitionResourceImpl.class,
 							"getObjectDefinition"));
+					put(
+						"query#objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFields",
+						new ObjectValuePair<>(
+							ObjectFieldResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage"));
 					put(
 						"query#objectDefinitionObjectFields",
 						new ObjectValuePair<>(

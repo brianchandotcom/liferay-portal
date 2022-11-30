@@ -105,4 +105,13 @@ definition {
 			locator1 = "PublicationsTemplate#INVITE_USERS_DROPDOWN_ITEM");
 	}
 
+	macro viewPublicationTemplate {
+		PublicationsTemplate.gotoPublicationTemplate();
+
+		AssertTextEquals.assertPartialText(
+			key_templateName = "${templateName}",
+			locator1 = "PublicationsTemplate#TEMPLATE_NAME_IN_PUBLICATION_TEMPLATE",
+			value1 = "${templateName}");
+	}
+
 }

@@ -27,9 +27,7 @@ definition {
 
 		var key_assetType = "${assetType}";
 
-		AssertClick(
-			locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
-			value1 = "${assetType}");
+		MenuItem.click(menuItem = "${assetType}");
 	}
 
 	macro removeAsset {

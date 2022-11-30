@@ -1593,10 +1593,7 @@ definition {
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
 			value1 = "Select");
 
-		AssertClick(
-			key_assetType = "${assetType}",
-			locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
-			value1 = "${assetType}");
+		MenuItem.click(menuItem = "${assetType}");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

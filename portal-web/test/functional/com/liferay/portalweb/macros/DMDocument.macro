@@ -799,9 +799,7 @@ definition {
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
 			value1 = "Select");
 
-		AssertClick(
-			locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
-			value1 = "${assetType}");
+		MenuItem.click(menuItem = "${assetType}");
 
 		var key_assetTitle = "${assetTitle}";
 

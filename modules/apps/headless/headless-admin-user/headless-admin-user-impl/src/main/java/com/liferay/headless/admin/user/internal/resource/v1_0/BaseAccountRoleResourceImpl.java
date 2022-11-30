@@ -79,7 +79,7 @@ public abstract class BaseAccountRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Unassigns account users by external reference code from the account role"
@@ -96,7 +96,7 @@ public abstract class BaseAccountRoleResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userAccountExternalReferenceCode"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -105,7 +105,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}"
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -121,15 +121,15 @@ public abstract class BaseAccountRoleResourceImpl
 				Long accountRoleId,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("userAccountExternalReferenceCode")
-				String userAccountExternalReferenceCode)
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Assigns account users by external reference code to the account role"
@@ -146,7 +146,7 @@ public abstract class BaseAccountRoleResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userAccountExternalReferenceCode"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -154,7 +154,7 @@ public abstract class BaseAccountRoleResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountRole")}
 	)
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}"
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -171,15 +171,15 @@ public abstract class BaseAccountRoleResourceImpl
 				Long accountRoleId,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("userAccountExternalReferenceCode")
-				String userAccountExternalReferenceCode)
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/account-roles'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}/account-roles'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Gets a user's account roles by their external reference code from an account by external reference code"
@@ -192,7 +192,7 @@ public abstract class BaseAccountRoleResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "userAccountExternalReferenceCode"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -201,7 +201,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/account-roles"
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}/account-roles"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -213,8 +213,8 @@ public abstract class BaseAccountRoleResourceImpl
 				String accountExternalReferenceCode,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("userAccountExternalReferenceCode")
-				String userAccountExternalReferenceCode)
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

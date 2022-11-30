@@ -12773,6 +12773,7 @@ paths:
             description:
                 Delete the message board attachment by message board message's and message board attachment's external
                 reference codes.
+            operationId: deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -12801,6 +12802,7 @@ paths:
             description:
                 Retrieves the message board attachment by message board message's and message board attachment's
                 external reference codes.
+            operationId: getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

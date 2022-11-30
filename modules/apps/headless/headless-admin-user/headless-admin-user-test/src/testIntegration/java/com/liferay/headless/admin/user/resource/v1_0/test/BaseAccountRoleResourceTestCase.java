@@ -213,7 +213,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
 					testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
 					accountRole.getId(),
-					testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getUserAccountExternalReferenceCode()));
+					testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getExternalReferenceCode()));
 	}
 
 	protected String
@@ -225,7 +225,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	protected String
-			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getUserAccountExternalReferenceCode()
+			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -277,33 +277,32 @@ public abstract class BaseAccountRoleResourceTestCase {
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getAccountExternalReferenceCode();
 		String irrelevantAccountExternalReferenceCode =
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getIrrelevantAccountExternalReferenceCode();
-		String userAccountExternalReferenceCode =
-			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getUserAccountExternalReferenceCode();
-		String irrelevantUserAccountExternalReferenceCode =
-			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getIrrelevantUserAccountExternalReferenceCode();
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getIrrelevantExternalReferenceCode();
 
 		Page<AccountRole> page =
 			accountRoleResource.
 				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
-					accountExternalReferenceCode,
-					userAccountExternalReferenceCode);
+					accountExternalReferenceCode, externalReferenceCode);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantAccountExternalReferenceCode != null) &&
-			(irrelevantUserAccountExternalReferenceCode != null)) {
+			(irrelevantExternalReferenceCode != null)) {
 
 			AccountRole irrelevantAccountRole =
 				testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_addAccountRole(
 					irrelevantAccountExternalReferenceCode,
-					irrelevantUserAccountExternalReferenceCode,
+					irrelevantExternalReferenceCode,
 					randomIrrelevantAccountRole());
 
 			page =
 				accountRoleResource.
 					getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 						irrelevantAccountExternalReferenceCode,
-						irrelevantUserAccountExternalReferenceCode);
+						irrelevantExternalReferenceCode);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -315,19 +314,18 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		AccountRole accountRole1 =
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_addAccountRole(
-				accountExternalReferenceCode, userAccountExternalReferenceCode,
+				accountExternalReferenceCode, externalReferenceCode,
 				randomAccountRole());
 
 		AccountRole accountRole2 =
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_addAccountRole(
-				accountExternalReferenceCode, userAccountExternalReferenceCode,
+				accountExternalReferenceCode, externalReferenceCode,
 				randomAccountRole());
 
 		page =
 			accountRoleResource.
 				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
-					accountExternalReferenceCode,
-					userAccountExternalReferenceCode);
+					accountExternalReferenceCode, externalReferenceCode);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -340,8 +338,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 	protected AccountRole
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_addAccountRole(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode,
-				AccountRole accountRole)
+				String externalReferenceCode, AccountRole accountRole)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -364,7 +361,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	protected String
-			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getUserAccountExternalReferenceCode()
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -372,7 +369,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 	}
 
 	protected String
-			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getIrrelevantUserAccountExternalReferenceCode()
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getIrrelevantExternalReferenceCode()
 		throws Exception {
 
 		return null;

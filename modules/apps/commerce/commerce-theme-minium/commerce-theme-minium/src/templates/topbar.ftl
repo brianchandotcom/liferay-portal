@@ -1,16 +1,5 @@
 <div class="commerce-topbar minium-topbar">
 	<div class="minium-topbar__start">
-		<#if back_url?has_content>
-			<a class="commerce-topbar-button" href="${htmlUtil.escape(back_url)}">
-				<svg class="commerce-icon commerce-topbar-button__icon lexicon-icon lexicon-icon-arrow-back">
-					<use href="${siteSpritemap}#arrow-back" />
-				</svg>
-
-				<span class="commerce-topbar-button__label">
-					${languageUtil.get(locale, "back")}
-				</span>
-			</a>
-		</#if>
 		<#if show_search_bar>
 			<label class="commerce-topbar-button js-toggle-search" for="commerce-search-input">
 				<svg class="commerce-icon commerce-topbar-button__icon commerce-topbar-button__icon--not-active lexicon-icon lexicon-icon-search">

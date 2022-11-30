@@ -1,5 +1,4 @@
 <#assign
-	back_url = paramUtil.getString(request, "p_r_p_backURL")
 	is_login_page = getterUtil.getBoolean(themeDisplay.getThemeSetting("is-login-page"))
 	mini_cart_display_total_items_count = getterUtil.getBoolean(themeDisplay.getThemeSetting("mini-cart-display-total-items-count"))
 	mini_cart_keep_open = getterUtil.getBoolean(themeDisplay.getThemeSetting("mini-cart-keep-open"))

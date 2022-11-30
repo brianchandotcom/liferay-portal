@@ -17,7 +17,7 @@ import {useMutation} from 'graphql-hooks';
 import {useCallback, useMemo, useState} from 'react';
 
 import {subscribeQuery, unsubscribeQuery} from '../../../utils/client.es';
-import {getFullPath} from '../../../utils/utils.es';
+import {deleteCache, getFullPath} from '../../../utils/utils.es';
 
 const FEEDBACK_DELAY = 2000;
 
@@ -48,8 +48,7 @@ const useActiviyQuestionKebabOptions = ({
 				message: Liferay.Language.get('copied-link-to-the-clipboard'),
 				type: 'success',
 			});
-		}
-		catch (error) {
+		} catch (error) {
 			setError(error);
 
 			openToast({
@@ -57,8 +56,7 @@ const useActiviyQuestionKebabOptions = ({
 				title: Liferay.Language.get('an-error-occurred'),
 				type: 'warning',
 			});
-		}
-		finally {
+		} finally {
 			setTimeout(() => {
 				setError(null);
 			}, FEEDBACK_DELAY);
@@ -76,6 +74,8 @@ const useActiviyQuestionKebabOptions = ({
 			});
 
 			setIsSubscribe(!isSubscribed);
+
+			deleteCache();
 
 			openToast({
 				message: isSubscribed

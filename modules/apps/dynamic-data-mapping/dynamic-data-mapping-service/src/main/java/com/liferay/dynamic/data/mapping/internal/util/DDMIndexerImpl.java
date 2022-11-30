@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
@@ -26,6 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
@@ -836,6 +838,13 @@ public class DDMIndexerImpl implements DDMIndexer {
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues) {
 
 		try {
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			ddmFormValues.setDDMFormFieldValues(
+				DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
+					ddmForm.getDDMFormFields(),
+					ddmFormValues.getDDMFormFieldValuesMap(true)));
+
 			return _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 		}

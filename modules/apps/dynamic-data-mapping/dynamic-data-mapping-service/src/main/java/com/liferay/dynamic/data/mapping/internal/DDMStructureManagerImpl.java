@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
@@ -61,18 +60,9 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.getStructure(structureId);
 
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			ddmStructure.getDDMForm();
-
-		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues1 =
-			_ddmBeanTranslator.translate(ddmFormValues);
-
-		ddmFormValues1.setDDMFormFieldValues(
-			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFields(),
-				ddmFormValues1.getDDMFormFieldValuesMap(true)));
-
-		_ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues1);
+		_ddmIndexer.addAttributes(
+			document, ddmStructure,
+			_ddmBeanTranslator.translate(ddmFormValues));
 	}
 
 	@Override
@@ -119,19 +109,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.getStructure(structureId);
 
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			ddmStructure.getDDMForm();
-
-		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues1 =
-			_ddmBeanTranslator.translate(ddmFormValues);
-
-		ddmFormValues1.setDDMFormFieldValues(
-			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFields(),
-				ddmFormValues1.getDDMFormFieldValuesMap(true)));
-
 		return _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues1, locale);
+			ddmStructure, _ddmBeanTranslator.translate(ddmFormValues), locale);
 	}
 
 	@Override

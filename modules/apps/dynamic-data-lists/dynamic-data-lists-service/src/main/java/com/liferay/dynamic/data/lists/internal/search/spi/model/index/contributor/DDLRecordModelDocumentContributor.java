@@ -17,10 +17,8 @@ package com.liferay.dynamic.data.lists.internal.search.spi.model.index.contribut
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -68,10 +66,9 @@ public class DDLRecordModelDocumentContributor
 
 			DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-			DDMFormValues ddmFormValues = _getDDMFormValues(
-				ddlRecordVersion.getDDMFormValues(), ddmStructure);
+			DDMFormValues ddmFormValues = ddlRecordVersion.getDDMFormValues();
 
-			_addContent(ddmFormValues, ddmStructure, document);
+			_addContent(ddlRecordVersion, ddmFormValues, document);
 
 			ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 		}
@@ -89,44 +86,33 @@ public class DDLRecordModelDocumentContributor
 	protected DDMIndexer ddmIndexer;
 
 	private void _addContent(
-		DDMFormValues ddmFormValues, DDMStructure ddmStructure,
-		Document document) {
+			DDLRecordVersion ddlRecordVersion, DDMFormValues ddmFormValues,
+			Document document)
+		throws Exception {
 
 		Set<Locale> locales = ddmFormValues.getAvailableLocales();
 
 		for (Locale locale : locales) {
 			document.addText(
 				"ddmContent_" + LocaleUtil.toLanguageId(locale),
-				_extractContent(ddmFormValues, ddmStructure, locale));
+				_extractContent(ddlRecordVersion, locale));
 		}
 	}
 
 	private String _extractContent(
-		DDMFormValues ddmFormValues, DDMStructure ddmStructure, Locale locale) {
+			DDLRecordVersion ddlRecordVersion, Locale locale)
+		throws Exception {
+
+		DDMFormValues ddmFormValues = ddlRecordVersion.getDDMFormValues();
 
 		if (ddmFormValues == null) {
 			return StringPool.BLANK;
 		}
 
+		DDLRecordSet ddlRecordSet = ddlRecordVersion.getRecordSet();
+
 		return ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues, locale);
-	}
-
-	private DDMFormValues _getDDMFormValues(
-		DDMFormValues ddmFormValues, DDMStructure ddmStructure) {
-
-		if (ddmFormValues == null) {
-			return null;
-		}
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		ddmFormValues.setDDMFormFieldValues(
-			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFields(),
-				ddmFormValues.getDDMFormFieldValuesMap(true)));
-
-		return ddmFormValues;
+			ddlRecordSet.getDDMStructure(), ddmFormValues, locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

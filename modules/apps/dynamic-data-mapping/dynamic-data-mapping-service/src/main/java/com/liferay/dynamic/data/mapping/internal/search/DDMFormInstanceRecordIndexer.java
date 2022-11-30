@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.search;
 
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
@@ -23,7 +22,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -198,10 +196,10 @@ public class DDMFormInstanceRecordIndexer
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-		DDMFormValues ddmFormValues = _getDDMFormValues(
-			ddmFormInstanceRecordVersion.getDDMFormValues(), ddmStructure);
+		DDMFormValues ddmFormValues =
+			ddmFormInstanceRecordVersion.getDDMFormValues();
 
-		_addContent(ddmFormValues, ddmStructure, document);
+		_addContent(ddmFormInstanceRecordVersion, ddmFormValues, document);
 
 		ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 
@@ -262,15 +260,16 @@ public class DDMFormInstanceRecordIndexer
 	protected SearchPermissionChecker searchPermissionChecker;
 
 	private void _addContent(
-		DDMFormValues ddmFormValues, DDMStructure ddmStructure,
-		Document document) {
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
+			DDMFormValues ddmFormValues, Document document)
+		throws Exception {
 
 		Set<Locale> locales = ddmFormValues.getAvailableLocales();
 
 		for (Locale locale : locales) {
 			document.addText(
 				"ddmContent_" + LocaleUtil.toLanguageId(locale),
-				_extractContent(ddmFormValues, ddmStructure, locale));
+				_extractContent(ddmFormInstanceRecordVersion, locale));
 		}
 	}
 
@@ -286,31 +285,22 @@ public class DDMFormInstanceRecordIndexer
 	}
 
 	private String _extractContent(
-		DDMFormValues ddmFormValues, DDMStructure ddmStructure, Locale locale) {
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
+			Locale locale)
+		throws Exception {
+
+		DDMFormValues ddmFormValues =
+			ddmFormInstanceRecordVersion.getDDMFormValues();
 
 		if (ddmFormValues == null) {
 			return StringPool.BLANK;
 		}
 
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceRecordVersion.getFormInstance();
+
 		return ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues, locale);
-	}
-
-	private DDMFormValues _getDDMFormValues(
-		DDMFormValues ddmFormValues, DDMStructure ddmStructure) {
-
-		if (ddmFormValues == null) {
-			return null;
-		}
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		ddmFormValues.setDDMFormFieldValues(
-			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFields(),
-				ddmFormValues.getDDMFormFieldValuesMap(true)));
-
-		return ddmFormValues;
+			ddmFormInstance.getStructure(), ddmFormValues, locale);
 	}
 
 	private ResourceBundle _getResourceBundle(Locale defaultLocale) {

@@ -74,7 +74,7 @@ public class LangSanitizer {
 	public LangSanitizer() throws Exception {
 		ClassLoader classLoader = LangSanitizer.class.getClassLoader();
 
-		URL antiSamyURL = classLoader.getResource("antisamy-liferay.xml");
+		URL antiSamyURL = classLoader.getResource("anti-samy.xml");
 
 		String antsamyPath = antiSamyURL.getFile();
 

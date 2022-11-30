@@ -661,6 +661,7 @@ const CodeMirrorEditor = React.forwardRef(
 		{
 			autocompleteSchema,
 			folded = false,
+			foldInitializationDelay = 0,
 			lineWrapping = true,
 			onChange = () => {},
 			mode = 'json',
@@ -686,7 +687,7 @@ const CodeMirrorEditor = React.forwardRef(
 					}
 				});
 			}
-		}, 200);
+		}, foldInitializationDelay);
 
 		useEffect(() => {
 			if (editorWrapperRef.current) {

@@ -47,6 +47,7 @@ const PreviewModal = ({body, children, size = 'md', title}) => {
 export function PreviewModalWithCopyDownload({
 	children,
 	fileName,
+	foldInitializationDelay,
 	folded = false,
 	lineWrapping,
 	readOnly = true,
@@ -97,6 +98,7 @@ export function PreviewModalWithCopyDownload({
 					</ClayButton.Group>
 
 					<CodeMirrorEditor
+						foldInitializationDelay={foldInitializationDelay}
 						folded={folded}
 						lineWrapping={lineWrapping}
 						readOnly={readOnly}

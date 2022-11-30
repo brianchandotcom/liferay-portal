@@ -190,6 +190,7 @@ function PreviewSidebar({
 				<ManagementToolbar.Item>
 					<PreviewModalWithCopyDownload
 						fileName="raw_response.json"
+						foldInitializationDelay={200}
 						folded
 						lineWrapping={false}
 						size="lg"

@@ -14,9 +14,8 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v4_4_0;
 
-import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Dictionary;
 
@@ -42,32 +41,37 @@ public class RSSConfigurationUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeRSSConfiguration() throws Exception {
 		String filterString = String.format(
-			"(%s=%s)", Constants.SERVICE_PID,
-			KBGroupServiceConfiguration.class.getName());
+			"(%s=%s*)", Constants.SERVICE_PID, _SERVICE_PID);
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filterString);
 
-		if (configurations == null) {
+		if (ArrayUtil.isEmpty(configurations)) {
 			return;
 		}
 
-		Configuration configuration = configurations[0];
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
 
-		Dictionary<String, Object> properties = configuration.getProperties();
+			if (properties == null) {
+				continue;
+			}
 
-		if (properties == null) {
-			return;
+			Integer rssDelta = (Integer)properties.get("rssDelta");
+
+			if (rssDelta != null) {
+				properties.put("rssDelta", String.valueOf(rssDelta));
+			}
+
+			properties.remove("rssFormat");
+
+			configuration.update(properties);
 		}
-
-		int rssDelta = GetterUtil.getInteger(properties.get("rssDelta"));
-
-		properties.put("rssDelta", String.valueOf(rssDelta));
-
-		properties.remove("rssFormat");
-
-		configuration.update(properties);
 	}
+
+	private static final String _SERVICE_PID =
+		"com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration";
 
 	private final ConfigurationAdmin _configurationAdmin;
 

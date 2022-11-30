@@ -56,6 +56,7 @@ else {
 			</li>
 			<li class="tbar-item">
 				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "actions") %>'
 					dropdownItems="<%= viewSharingEntryAssetEntryDisplayContext.getSharingEntryDropdownItems() %>"
 				/>
 			</li>

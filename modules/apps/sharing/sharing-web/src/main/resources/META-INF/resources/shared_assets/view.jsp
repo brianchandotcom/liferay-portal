@@ -76,6 +76,7 @@ ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext = (ViewSharedAsset
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "actions") %>'
 					dropdownItems="<%= viewSharedAssetsDisplayContext.getSharingEntryDropdownItems(sharingEntry) %>"
 				/>
 			</liferay-ui:search-container-column-text>

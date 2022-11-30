@@ -12,6 +12,8 @@
  * details.
  */
 
+import moment from 'moment/min/moment-with-locales';
+
 const getLanguage = () => {
 	const language = Liferay.ThemeDisplay.getBCP47LanguageId();
 
@@ -34,4 +36,6 @@ const getDateFormatted = (date, language = getLanguage()) => {
 	}
 };
 
-export {getDateFormatted};
+const fromNow = (date) => moment(date).locale(getLanguage()).fromNow();
+
+export {fromNow, getDateFormatted};

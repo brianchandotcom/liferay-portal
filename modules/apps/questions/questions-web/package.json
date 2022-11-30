@@ -5,6 +5,7 @@
 		"graphql-hooks": "4.4.0",
 		"graphql-hooks-memcache": "^2.1.1",
 		"highlight.js": "10.4.1",
+		"moment": "2.29.4",
 		"react": "16.12.0",
 		"react-helmet": "^6.1.0",
 		"react-router-dom": "^5.0.1"

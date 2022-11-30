@@ -174,8 +174,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 			_serviceTrackerCustomizer.removedService(serviceReference, service);
 
 			_update(serviceReference, service, true);
-
-			_bundleContext.ungetService(serviceReference);
 		}
 
 		private void _update(

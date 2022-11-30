@@ -57,6 +57,25 @@ public class MessageBoardAttachmentResourceImpl
 	}
 
 	@Override
+	public void
+			deleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageService.getMBMessageByExternalReferenceCode(
+				messageBoardMessageExternalReferenceCode, siteId);
+
+		FileEntry fileEntry =
+			mbMessage.getAttachmentsFileEntryByExternalReferenceCode(
+				externalReferenceCode, siteId);
+
+		_portletFileRepository.deletePortletFileEntry(
+			fileEntry.getFileEntryId());
+	}
+
+	@Override
 	public MessageBoardAttachment getMessageBoardAttachment(
 			Long messageBoardAttachmentId)
 		throws Exception {
@@ -85,6 +104,24 @@ public class MessageBoardAttachmentResourceImpl
 			messageBoardThreadId);
 
 		return _getMessageBoardAttachmentsPage(mbThread.getRootMessageId());
+	}
+
+	@Override
+	public MessageBoardAttachment
+			getSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode(
+				Long siteId, String messageBoardMessageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageService.getMBMessageByExternalReferenceCode(
+				messageBoardMessageExternalReferenceCode, siteId);
+
+		FileEntry fileEntry =
+			mbMessage.getAttachmentsFileEntryByExternalReferenceCode(
+				externalReferenceCode, siteId);
+
+		return _toMessageBoardAttachment(fileEntry);
 	}
 
 	@Override
@@ -157,6 +194,7 @@ public class MessageBoardAttachmentResourceImpl
 					"contentValue", fileEntry::getContentStream,
 					Optional.of(contextUriInfo));
 				encodingFormat = fileEntry.getMimeType();
+				externalReferenceCode = fileEntry.getExternalReferenceCode();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();
 				sizeInBytes = fileEntry.getSize();

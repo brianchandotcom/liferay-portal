@@ -14,21 +14,25 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -45,8 +49,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -104,6 +106,18 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 				if (groupId > 0) {
 					serviceContext.setScopeGroupId(groupId);
 				}
+				else {
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LPS-166954"))) {
+
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)actionRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						serviceContext.setScopeGroupId(
+							themeDisplay.getCompanyGroupId());
+					}
+				}
 
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
 					segmentsEntryKey, nameMap, descriptionMap, active,
@@ -160,29 +174,28 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSaveAndContinueRedirect(
-			ActionRequest actionRequest, SegmentsEntry segmentsEntry,
-			String redirect)
-		throws Exception {
+		ActionRequest actionRequest, SegmentsEntry segmentsEntry,
+		String redirect) {
 
-		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(actionRequest);
 
-		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, portletConfig.getPortletName(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/segments/edit_segments_entry");
-		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
-		portletURL.setParameter("redirect", redirect, false);
-		portletURL.setParameter(
-			"groupId", String.valueOf(segmentsEntry.getGroupId()), false);
-		portletURL.setParameter(
-			"segmentsEntryId",
-			String.valueOf(segmentsEntry.getSegmentsEntryId()), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				SegmentsPortletKeys.SEGMENTS)
+		).setMVCRenderCommandName(
+			"/segments/edit_segments_entry"
+		).setCMD(
+			Constants.UPDATE
+		).setRedirect(
+			redirect
+		).setParameter(
+			"groupId", segmentsEntry.getGroupId()
+		).setParameter(
+			"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
+		).setWindowState(
+			actionRequest.getWindowState()
+		).buildString();
 	}
 
 	private void _validateCriteria(Criteria criteria, boolean dynamic)

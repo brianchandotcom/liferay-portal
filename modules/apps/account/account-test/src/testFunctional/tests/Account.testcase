@@ -4163,7 +4163,7 @@ definition {
 			accountTaxId = "Z9870654786390342199899Y");
 	}
 
-	@description = "This test asserts that no tab displays on account creation. These tabs will display after saving."
+	@description = "This is a use case for LPS-169033. This test asserts that no tab displays on account creation. These tabs will display after saving."
 	@priority = "4"
 	test TabsDisplayAfterAccountIsSaved {
 		property portal.acceptance = "true";

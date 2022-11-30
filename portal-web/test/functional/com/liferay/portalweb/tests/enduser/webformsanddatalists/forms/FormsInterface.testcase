@@ -536,7 +536,7 @@ definition {
 			sourceFieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		FormFields.viewField(fieldName = "FieldsGroup");
+		FormFields.viewField(fieldName = "Fields Group");
 
 		Form.gotoFieldContainer(fieldName = "Fields Group");
 
@@ -592,7 +592,7 @@ definition {
 			sourceFieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		FormFields.viewField(fieldName = "FieldsGroup");
+		FormFields.viewField(fieldName = "Fields Group");
 
 		Form.gotoFieldContainer(fieldName = "Fields Group");
 
@@ -615,7 +615,7 @@ definition {
 			fieldLabel = "Copy of Fields Group");
 
 		FormFields.viewFieldSize(
-			fieldName = "FieldsGroup",
+			fieldName = "Fields Group",
 			size = "6");
 
 		FormFields.viewFieldSize(
@@ -635,7 +635,7 @@ definition {
 			moveForce = "50");
 
 		FormFields.viewFieldSize(
-			fieldName = "FieldsGroup",
+			fieldName = "Fields Group",
 			size = "7");
 
 		FormFields.viewFieldSize(

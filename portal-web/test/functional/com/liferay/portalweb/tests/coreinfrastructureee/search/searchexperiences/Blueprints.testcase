@@ -1103,6 +1103,25 @@ definition {
 		SearchPortlets.viewCopiedContent(text = "queryConfiguration");
 	}
 
+	@description = "This is a use case for LPS-165923."
+	test CopyRawRequestViaBlueprintsPreview {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		Click(
+			key_text = "View Raw Request",
+			locator1 = "Button#ANY");
+
+		SelectFrameTop();
+
+		Click.javaScriptClick(locator1 = "Button#COPY");
+
+		SearchPortlets.viewCopiedContent(text = "hits");
+	}
+
 	test CopyRawResponseViaBlueprintsPreview {
 		Blueprints.openBlueprintsAdmin();
 

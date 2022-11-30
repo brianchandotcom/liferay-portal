@@ -4,7 +4,7 @@ dependencies {
 	testIntegrationCompile group: "org.apache.commons", name: "commons-compress", version: "1.21"
 	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "4.1.2"
 	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml", version: "4.1.2"
-	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml-schemas", version: "4.1.2"
+	testIntegrationCompile group: "org.apache.poi", name: "poi-ooxml-lite", version: "4.1.2"
 	testIntegrationCompile project(":apps:application-list:application-list-api")
 	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-api")
 	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-web")

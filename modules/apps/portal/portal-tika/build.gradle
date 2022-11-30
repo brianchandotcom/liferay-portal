@@ -15,7 +15,7 @@ dependencies {
 	compileInclude group: "org.apache.james", name: "apache-mime4j-dom", version: "0.8.3"
 	compileInclude group: "org.apache.poi", name: "poi", version: "4.1.2"
 	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "4.1.2"
-	compileInclude group: "org.apache.poi", name: "poi-ooxml-schemas", version: "4.1.2"
+	compileInclude group: "org.apache.poi", name: "poi-ooxml-lite", version: "4.1.2"
 	compileInclude group: "org.apache.poi", name: "poi-scratchpad", version: "4.1.2"
 	compileInclude group: "org.apache.tika", name: "tika-core", version: "1.26"
 	compileInclude group: "org.apache.tika", name: "tika-parsers", version: "1.26"

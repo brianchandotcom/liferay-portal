@@ -557,7 +557,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public FileEntry getPortletFileEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		LocalRepository localRepository =

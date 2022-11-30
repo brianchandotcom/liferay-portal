@@ -267,12 +267,12 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static FileEntry getPortletFileEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		return _portletFileRepository.
 			getPortletFileEntryByExternalReferenceCode(
-				groupId, externalReferenceCode);
+				externalReferenceCode, groupId);
 	}
 
 	public static String getPortletFileEntryURL(

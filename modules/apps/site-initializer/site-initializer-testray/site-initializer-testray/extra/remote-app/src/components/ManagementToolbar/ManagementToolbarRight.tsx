@@ -74,6 +74,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 				<>
 					<ClayManagementToolbar.Item>
 						<ClayButtonWithIcon
+							aria-label={i18n.translate('add-pin')}
 							className="nav-btn nav-btn-monospaced"
 							displayType="unstyled"
 							onClick={() => setPinned(!pinned)}

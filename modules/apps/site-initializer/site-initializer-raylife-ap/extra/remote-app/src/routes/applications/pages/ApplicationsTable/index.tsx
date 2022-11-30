@@ -609,6 +609,7 @@ const ApplicationsTable = () => {
 						</ClayInput.GroupItem>
 
 						<ClayButtonWithIcon
+							aria-label="Search"
 							displayType="secondary"
 							onClick={filterClick}
 							symbol="filter"

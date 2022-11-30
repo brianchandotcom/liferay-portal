@@ -68,6 +68,7 @@ export function ExpressionBuilder({
 
 				<ClayInput.GroupItem append shrink>
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('expand-input-area')}
 						disabled={buttonDisabled}
 						displayType="secondary"
 						onClick={onOpenModal}

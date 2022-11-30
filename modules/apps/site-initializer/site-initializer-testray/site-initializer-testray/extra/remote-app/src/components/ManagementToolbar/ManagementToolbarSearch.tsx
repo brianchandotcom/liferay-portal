@@ -64,6 +64,7 @@ const ManagementToolbarSearch: React.FC<ManagementToolbarSearchProps> = ({
 
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButtonWithIcon
+							aria-label={i18n.translate('close')}
 							className="navbar-breakpoint-d-none"
 							disabled={disabled}
 							displayType="unstyled"
@@ -72,6 +73,7 @@ const ManagementToolbarSearch: React.FC<ManagementToolbarSearchProps> = ({
 						/>
 
 						<ClayButtonWithIcon
+							aria-label={i18n.translate('search')}
 							disabled={disabled}
 							displayType="unstyled"
 							symbol="search"

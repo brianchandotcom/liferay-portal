@@ -45,6 +45,7 @@ const FieldsSidebarSettingsHeader: React.FC<IProps> = ({field}) => {
 	return (
 		<div className="de__sidebar-field-settings-title">
 			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('back')}
 				className="mr-3"
 				displayType="secondary"
 				monospaced={false}

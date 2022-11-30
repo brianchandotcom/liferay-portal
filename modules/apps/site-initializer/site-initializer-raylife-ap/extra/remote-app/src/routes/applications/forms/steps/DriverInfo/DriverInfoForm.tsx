@@ -968,6 +968,7 @@ const DriverInfoForm = ({
 										{index === 0 ? (
 											<div className="col-1 form-group p-0">
 												<ClayButtonWithIcon
+													aria-label="Add"
 													className="outline-primary"
 													onClick={() =>
 														handleAddCitationClick()
@@ -979,6 +980,7 @@ const DriverInfoForm = ({
 										) : (
 											<div className="col-1 form-group p-0">
 												<ClayButtonWithIcon
+													aria-label="Delete"
 													className="bg-neutral-0 border-neutral-0 text-neutral-9"
 													onClick={() => {
 														handleRemoveAccidentCitationClick(

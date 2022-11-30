@@ -139,7 +139,14 @@ const BuilderListItem: React.FC<IProps> = ({
 		>
 			{hasDragAndDrop && (
 				<ClayList.ItemField>
-					<ClayButtonWithIcon displayType={null} symbol="drag" />
+					<ClayButtonWithIcon
+						aria-label={Liferay.Util.sub(
+							Liferay.Language.get('drag-x'),
+							label!
+						)}
+						displayType={null}
+						symbol="drag"
+					/>
 				</ClayList.ItemField>
 			)}
 
@@ -192,6 +199,7 @@ const BuilderListItem: React.FC<IProps> = ({
 				onActiveChange={setActive}
 				trigger={
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('more')}
 						displayType="unstyled"
 						symbol="ellipsis-v"
 					/>

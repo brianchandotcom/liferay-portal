@@ -120,11 +120,13 @@ function File({attachment, loading, onDelete, readOnly}: IFileProps) {
 							</a>
 
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('delete')}
 								borderless
 								displayType="secondary"
 								monospaced
 								onClick={() => onDelete()}
 								symbol="times-circle-full"
+								title={Liferay.Language.get('delete')}
 							/>
 						</>
 					)}

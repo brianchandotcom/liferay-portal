@@ -144,17 +144,21 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 
 							<ClayInput.GroupInsetItem after tag="span">
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('close')}
 									className="navbar-breakpoint-d-none"
 									disabled={disabled}
 									displayType="unstyled"
 									onClick={() => setSearchMobile(false)}
 									symbol="times"
+									title={Liferay.Language.get('close')}
 								/>
 
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('search')}
 									disabled={disabled}
 									displayType="unstyled"
 									symbol="search"
+									title={Liferay.Language.get('search-for')}
 									type="submit"
 								/>
 							</ClayInput.GroupInsetItem>

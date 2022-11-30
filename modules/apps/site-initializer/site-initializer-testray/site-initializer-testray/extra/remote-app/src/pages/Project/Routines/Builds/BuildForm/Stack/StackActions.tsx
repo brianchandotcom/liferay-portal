@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 
+import i18n from '../../../../../../i18n';
 import {Fields} from './StackList';
 
 import type {UseFieldArrayAppend} from 'react-hook-form';
@@ -42,6 +43,7 @@ const StackActions: React.FC<StackActionsProps> = ({
 	<ClayLayout.Col className="d-flex justify-content-end">
 		{!field.disabled && (
 			<ClayButtonWithIcon
+				aria-label={i18n.translate('add')}
 				displayType="secondary"
 				onClick={() => append(defaultItem as any)}
 				symbol="plus"
@@ -49,6 +51,7 @@ const StackActions: React.FC<StackActionsProps> = ({
 		)}
 
 		<ClayButtonWithIcon
+			aria-label={i18n.translate('delete')}
 			className="ml-1"
 			displayType="secondary"
 			onClick={() => remove(index)}

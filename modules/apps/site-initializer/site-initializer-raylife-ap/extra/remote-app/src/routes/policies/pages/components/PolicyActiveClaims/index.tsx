@@ -142,6 +142,7 @@ const PolicyActiveClaims = () => {
 												</a>
 
 												<ClayButtonWithIcon
+													aria-label="Delete"
 													displayType={null}
 													symbol="times"
 												></ClayButtonWithIcon>

@@ -67,6 +67,7 @@ export function BuilderScreen({
 
 					<ManagementToolbar.Item>
 						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('add')}
 							className="nav-btn nav-btn-monospaced"
 							onClick={openModal}
 							symbol="plus"

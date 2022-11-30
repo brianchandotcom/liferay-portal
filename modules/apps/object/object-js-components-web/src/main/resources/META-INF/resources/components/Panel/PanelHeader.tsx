@@ -55,7 +55,14 @@ export function PanelHeader({
 				)}
 			>
 				{type === 'regular' && (
-					<ClayButtonWithIcon displayType="unstyled" symbol="drag" />
+					<ClayButtonWithIcon
+						aria-label={Liferay.Util.sub(
+							Liferay.Language.get('drag-x'),
+							title
+						)}
+						displayType="unstyled"
+						symbol="drag"
+					/>
 				)}
 
 				<h3
@@ -98,6 +105,7 @@ export function PanelHeader({
 
 				{type === 'regular' && (
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('collapse')}
 						displayType="unstyled"
 						onClick={() =>
 							dispatch({

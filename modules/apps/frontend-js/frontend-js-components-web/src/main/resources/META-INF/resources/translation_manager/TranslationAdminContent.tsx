@@ -136,6 +136,7 @@ export default function TranslationAdminContent({
 							onActiveChange={setCreationMenuActive}
 							trigger={
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('add')}
 									className="lfr-portal-tooltip"
 									disabled={!availableLocales.length}
 									small
@@ -230,6 +231,9 @@ export default function TranslationAdminContent({
 									<ClayTable.Cell>
 										{!isDefaultLocale && (
 											<ClayButtonWithIcon
+												aria-label={Liferay.Language.get(
+													'delete'
+												)}
 												className="lfr-portal-tooltip"
 												displayType="unstyled"
 												monospaced={false}

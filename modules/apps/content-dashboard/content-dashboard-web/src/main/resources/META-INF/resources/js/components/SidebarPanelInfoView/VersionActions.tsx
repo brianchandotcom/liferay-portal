@@ -58,12 +58,13 @@ const VersionActions = ({actions}: IProps) => {
 			className="align-self-start pt-2"
 			closeOnClick
 			data-tooltip-align="left"
-			title={Liferay.Language.get('actions')}
 			trigger={
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('actions')}
 					borderless
 					displayType="secondary"
 					symbol="ellipsis-v"
+					title={Liferay.Language.get('actions')}
 				/>
 			}
 		>

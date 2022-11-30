@@ -623,6 +623,7 @@ const PoliciesTable = () => {
 						</ClayInput.GroupItem>
 
 						<ClayButtonWithIcon
+							aria-label="Filter"
 							displayType="secondary"
 							onClick={filterClick}
 							symbol="filter"

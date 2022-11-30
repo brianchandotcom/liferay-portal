@@ -235,6 +235,7 @@ const BuildForm = () => {
 						</div>
 
 						<ClayButtonWithIcon
+							aria-label={i18n.sub('add-x', 'product-version')}
 							className="mt-5"
 							displayType="primary"
 							onClick={() => newProductVersionModal.open()}

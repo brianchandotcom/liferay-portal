@@ -56,6 +56,7 @@ const Subscribe = ({disabled, icon, label, url}: IProps) => {
 
 	return (
 		<ClayButtonWithIcon
+			aria-label={label}
 			className="component-action mr-2"
 			data-tooltip-align="bottom"
 			disabled={disabled}

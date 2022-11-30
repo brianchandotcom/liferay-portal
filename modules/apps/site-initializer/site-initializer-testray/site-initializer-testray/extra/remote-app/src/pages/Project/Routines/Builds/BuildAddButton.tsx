@@ -91,6 +91,7 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 					<Tooltip position="down" title={i18n.translate('manage')}>
 						<div className="testray-sidebar-item">
 							<ClayButtonWithIcon
+								aria-label={i18n.translate('manage')}
 								className="nav-btn nav-btn-monospaced"
 								symbol="plus"
 							/>

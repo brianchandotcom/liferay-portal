@@ -17,6 +17,7 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 import {KeyedMutator} from 'swr';
 
+import i18n from '../../i18n';
 import DropDownAction from './DropDownAction';
 
 const {ItemList} = ClayDropDown;
@@ -48,6 +49,7 @@ const DropDown: React.FC<DropDownProps> = ({
 			onActiveChange={setActive}
 			trigger={
 				<ClayButtonWithIcon
+					aria-label={i18n.translate('more-actions')}
 					className="page-link"
 					displayType="unstyled"
 					symbol="ellipsis-v"

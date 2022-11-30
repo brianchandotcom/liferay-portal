@@ -259,6 +259,13 @@ export default function InstanceIconConfiguration({
 						</ClayPanel>
 
 						<ClayButtonWithIcon
+							aria-label={
+								!filteredIcons[iconPackName].editable
+									? Liferay.Language.get(
+											'system-icons-not-removable'
+									  )
+									: ''
+							}
 							borderless
 							className="ml-2 mt-1"
 							disabled={!filteredIcons[iconPackName].editable}

@@ -65,6 +65,7 @@ const SettingsButton: React.FC<SettingsButtonProps> = ({
 				onActiveChange={(newVal: boolean) => setActive(newVal)}
 				trigger={
 					<ClayButtonWithIcon
+						aria-label="More actions"
 						className="btn btn-monospaced btn-sm dropdown-toggle"
 						displayType={null}
 						id="settingsDropdownMenuToggle"

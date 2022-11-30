@@ -75,6 +75,7 @@ export function SidePanelContent({
 				</div>
 
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('cancel')}
 					displayType="unstyled"
 					monospaced={false}
 					onClick={closeSidePanel}

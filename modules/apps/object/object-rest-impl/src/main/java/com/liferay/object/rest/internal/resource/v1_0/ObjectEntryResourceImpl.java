@@ -538,6 +538,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 			Map<String, String> map = entry.getValue();
 
+			if (map == null) {
+				continue;
+			}
+
 			String href = map.get("href");
 
 			map.put(

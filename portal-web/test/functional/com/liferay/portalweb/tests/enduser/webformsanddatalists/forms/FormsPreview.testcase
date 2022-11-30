@@ -1321,15 +1321,13 @@ definition {
 			key_optionLabel = "Option 2",
 			key_position = "2");
 
-		FormFields.editRepeatableSingleSelection(
-			fieldName = "SingleSelection",
-			optionValue = "Option 1",
-			rowNumber = "1");
+		ClickNoError(
+			key_optionValue = "Option 1",
+			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_OPTION");
 
 		AssertChecked.assertCheckedNotVisible(
-			key_fieldName = "SingleSelection",
-			key_optionNumber = "",
-			locator1 = "FormFields#GRID_RADIO_OPTIONS");
+			key_radioOption = "1",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
 	}
 
 	@description = "Verify that a Text Field can be previewed"

@@ -79,8 +79,8 @@ public class DataValuesMappingExportImportContentProcessor
 		JSONObject jsonObject = _jsonFactory.createJSONObject(data);
 
 		_exportContentReferences(
-			jsonObject, portletDataContext, stagedModel,
-			exportReferencedContent);
+			exportReferencedContent, jsonObject, portletDataContext,
+			stagedModel);
 
 		return jsonObject.toString();
 	}
@@ -151,8 +151,8 @@ public class DataValuesMappingExportImportContentProcessor
 	}
 
 	private void _exportContainerContentReferences(
-			JSONObject itemJSONObject, PortletDataContext portletDataContext,
-			StagedModel stagedModel, boolean exportReferencedContent)
+			boolean exportReferencedContent, JSONObject itemJSONObject,
+			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 
 		if (!itemJSONObject.has("config")) {
@@ -165,14 +165,14 @@ public class DataValuesMappingExportImportContentProcessor
 			JSONObject linkJSONObject = configJSONObject.getJSONObject("link");
 
 			_exportMappedFieldContentReference(
-				linkJSONObject, portletDataContext, stagedModel,
-				exportReferencedContent);
+				exportReferencedContent, linkJSONObject, portletDataContext,
+				stagedModel);
 
 			if (linkJSONObject.has("layout")) {
 				_exportLayoutContentReference(
-					portletDataContext, stagedModel,
-					linkJSONObject.getJSONObject("layout"),
-					exportReferencedContent);
+					exportReferencedContent,
+					linkJSONObject.getJSONObject("layout"), portletDataContext,
+					stagedModel);
 			}
 		}
 
@@ -184,14 +184,15 @@ public class DataValuesMappingExportImportContentProcessor
 
 		if (stylesJSONObject.has("backgroundImage")) {
 			_exportMappedFieldContentReference(
+				exportReferencedContent,
 				stylesJSONObject.getJSONObject("backgroundImage"),
-				portletDataContext, stagedModel, exportReferencedContent);
+				portletDataContext, stagedModel);
 		}
 	}
 
 	private void _exportContentReferences(
-			JSONObject jsonObject, PortletDataContext portletDataContext,
-			StagedModel stagedModel, boolean exportReferencedContent)
+			boolean exportReferencedContent, JSONObject jsonObject,
+			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 
 		if (!jsonObject.has("items")) {
@@ -212,8 +213,8 @@ public class DataValuesMappingExportImportContentProcessor
 					LayoutDataItemTypeConstants.TYPE_CONTAINER)) {
 
 				_exportContainerContentReferences(
-					itemJSONObject, portletDataContext, stagedModel,
-					exportReferencedContent);
+					exportReferencedContent, itemJSONObject, portletDataContext,
+					stagedModel);
 			}
 			else if (Objects.equals(
 						itemJSONObject.get("type"),
@@ -226,8 +227,8 @@ public class DataValuesMappingExportImportContentProcessor
 	}
 
 	private void _exportDDMTemplateReference(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableJSONObject)
+			JSONObject editableJSONObject,
+			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 
 		String mappedField = editableJSONObject.getString(
@@ -251,9 +252,9 @@ public class DataValuesMappingExportImportContentProcessor
 	}
 
 	private void _exportLayoutContentReference(
+			boolean exportReferencedContent, JSONObject layoutJSONObject,
 			PortletDataContext portletDataContext,
-			StagedModel referrerStagedModel, JSONObject layoutJSONObject,
-			boolean exportReferencedContent)
+			StagedModel referrerStagedModel)
 		throws Exception {
 
 		if (layoutJSONObject.length() == 0) {
@@ -287,8 +288,8 @@ public class DataValuesMappingExportImportContentProcessor
 	}
 
 	private void _exportMappedFieldContentReference(
-			JSONObject jsonObject, PortletDataContext portletDataContext,
-			StagedModel stagedModel, boolean exportReferencedContent)
+			boolean exportReferencedContent, JSONObject jsonObject,
+			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 
 		long classNameId = jsonObject.getLong("classNameId");
@@ -299,7 +300,7 @@ public class DataValuesMappingExportImportContentProcessor
 		}
 
 		_exportDDMTemplateReference(
-			portletDataContext, stagedModel, jsonObject);
+			jsonObject, portletDataContext, stagedModel);
 
 		String className = _portal.getClassName(classNameId);
 
@@ -438,7 +439,7 @@ public class DataValuesMappingExportImportContentProcessor
 			JSONObject linkJSONObject = configJSONObject.getJSONObject("link");
 
 			_replaceMappedFieldImportContentReferences(
-				portletDataContext, linkJSONObject);
+				linkJSONObject, portletDataContext);
 
 			if (linkJSONObject.has("layout")) {
 				_replaceImportLayoutReferences(
@@ -454,8 +455,8 @@ public class DataValuesMappingExportImportContentProcessor
 
 		if (stylesJSONObject.has("backgroundImage")) {
 			_replaceMappedFieldImportContentReferences(
-				portletDataContext,
-				stylesJSONObject.getJSONObject("backgroundImage"));
+				stylesJSONObject.getJSONObject("backgroundImage"),
+				portletDataContext);
 		}
 	}
 
@@ -525,7 +526,7 @@ public class DataValuesMappingExportImportContentProcessor
 	}
 
 	private void _replaceMappedFieldImportContentReferences(
-		PortletDataContext portletDataContext, JSONObject jsonObject) {
+		JSONObject jsonObject, PortletDataContext portletDataContext) {
 
 		String className = jsonObject.getString("className");
 

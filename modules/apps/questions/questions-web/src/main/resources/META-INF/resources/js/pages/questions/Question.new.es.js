@@ -170,7 +170,8 @@ const Question = ({
 					setError(errorObject);
 
 					setLoading(false);
-				} else {
+				}
+				else {
 					setQuestion(messageBoardThreadByFriendlyUrlPath);
 					setLoading(false);
 				}
@@ -279,7 +280,8 @@ const Question = ({
 				siteKey: context.siteKey,
 			});
 			setIsVisibleEditor(false);
-		} catch (error) {}
+		}
+		catch (error) {}
 	};
 
 	const deleteAnswer = useCallback(

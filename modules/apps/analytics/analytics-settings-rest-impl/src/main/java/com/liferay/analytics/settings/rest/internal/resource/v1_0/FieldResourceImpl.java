@@ -18,6 +18,7 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.Field;
 import com.liferay.analytics.settings.rest.internal.constants.FieldAccountConstants;
 import com.liferay.analytics.settings.rest.internal.constants.FieldPeopleConstants;
+import com.liferay.analytics.settings.rest.internal.constants.FieldProductConstants;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.FieldResource;
 import com.liferay.portal.kernel.log.Log;
@@ -116,6 +117,50 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 	}
 
 	@Override
+	public Page<Field> getFieldsProductsPage(
+			String keyword, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		List<Field> fields = _getFields(
+			FieldProductConstants.FIELD_CATEGORY_EXAMPLES,
+			FieldProductConstants.FIELD_CATEGORY_NAMES,
+			FieldProductConstants.FIELD_CATEGORY_REQUIRED_NAMES, "category",
+			analyticsConfiguration.syncedCategoryFieldNames(),
+			FieldProductConstants.FIELD_CATEGORY_TYPES);
+
+		fields.addAll(
+			_getFields(
+				FieldProductConstants.FIELD_PRODUCT_EXAMPLES,
+				FieldProductConstants.FIELD_PRODUCT_NAMES,
+				FieldProductConstants.FIELD_PRODUCT_REQUIRED_NAMES, "product",
+				analyticsConfiguration.syncedProductFieldNames(),
+				FieldProductConstants.FIELD_PRODUCT_TYPES));
+
+		fields.addAll(
+			_getFields(
+				FieldProductConstants.FIELD_PRODUCT_CHANNEL_EXAMPLES,
+				FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES,
+				FieldProductConstants.FIELD_PRODUCT_CHANNEL_REQUIRED_NAMES,
+				"product-channel",
+				analyticsConfiguration.syncedProductChannelFieldNames(),
+				FieldProductConstants.FIELD_PRODUCT_CHANNEL_TYPES));
+
+		fields = _filter(fields, keyword);
+
+		fields = _sort(fields, sorts);
+
+		return Page.of(
+			ListUtil.subList(
+				fields, pagination.getStartPosition(),
+				pagination.getEndPosition()),
+			pagination, fields.size());
+	}
+
+	@Override
 	public void patchFieldAccount(Field[] fields) throws Exception {
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(
@@ -152,6 +197,37 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 					analyticsConfiguration.syncedUserFieldNames(), fields,
 					FieldPeopleConstants.FIELD_USER_REQUIRED_NAMES, "user",
 					FieldPeopleConstants.FIELD_USER_NAMES)
+			).build());
+	}
+
+	@Override
+	public void patchFieldProduct(Field[] fields) throws Exception {
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		_analyticsSettingsManager.updateCompanyConfiguration(
+			contextCompany.getCompanyId(),
+			HashMapBuilder.<String, Object>put(
+				"syncedCategoryFieldNames",
+				_updateSelectedFields(
+					analyticsConfiguration.syncedCategoryFieldNames(), fields,
+					FieldProductConstants.FIELD_CATEGORY_REQUIRED_NAMES,
+					"category", FieldProductConstants.FIELD_CATEGORY_NAMES)
+			).put(
+				"syncedProductChannelFieldNames",
+				_updateSelectedFields(
+					analyticsConfiguration.syncedProductChannelFieldNames(),
+					fields,
+					FieldProductConstants.FIELD_PRODUCT_CHANNEL_REQUIRED_NAMES,
+					"product-channel",
+					FieldProductConstants.FIELD_PRODUCT_CHANNEL_NAMES)
+			).put(
+				"syncedProductFieldNames",
+				_updateSelectedFields(
+					analyticsConfiguration.syncedProductFieldNames(), fields,
+					FieldProductConstants.FIELD_PRODUCT_REQUIRED_NAMES,
+					"product", FieldProductConstants.FIELD_PRODUCT_NAMES)
 			).build());
 	}
 

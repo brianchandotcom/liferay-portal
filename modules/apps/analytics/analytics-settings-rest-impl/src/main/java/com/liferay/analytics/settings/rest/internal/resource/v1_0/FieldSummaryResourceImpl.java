@@ -40,12 +40,16 @@ public class FieldSummaryResourceImpl extends BaseFieldSummaryResourceImpl {
 
 		String[] syncedAccountFieldNames =
 			analyticsConfiguration.syncedAccountFieldNames();
+		String[] syncedCategoryFieldNames =
+			analyticsConfiguration.syncedCategoryFieldNames();
 		String[] syncedContactFieldNames =
 			analyticsConfiguration.syncedContactFieldNames();
 		String[] syncedOrderFieldNames =
 			analyticsConfiguration.syncedOrderFieldNames();
 		String[] syncedProductFieldNames =
 			analyticsConfiguration.syncedProductFieldNames();
+		String[] syncedProductChannelFieldNames =
+			analyticsConfiguration.syncedProductChannelFieldNames();
 		String[] syncedUserFieldNames =
 			analyticsConfiguration.syncedUserFieldNames();
 
@@ -56,7 +60,10 @@ public class FieldSummaryResourceImpl extends BaseFieldSummaryResourceImpl {
 				people =
 					syncedContactFieldNames.length +
 						syncedUserFieldNames.length;
-				product = syncedProductFieldNames.length;
+				product =
+					syncedCategoryFieldNames.length +
+						syncedProductFieldNames.length +
+							syncedProductChannelFieldNames.length;
 			}
 		};
 	}

@@ -64,6 +64,21 @@ definition {
 		Smoke.viewWelcomeContentPage();
 	}
 
+	@description = "This is a test for LPS-162714. Checks that Web Content FriendlyURL special characters like éöő are not escaped"
+	@priority = "4"
+	test SpecialCharactersAreNotEscapedFromWebContentURL {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "éöő");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "éöő");
+
+		WebContent.viewFriendlyURLCP(friendlyURL = "eoo");
+	}
+
 	@description = "This is a use case for LPS-161024. Verify uppercase virtual host names added to a site's url are converted to lowercase."
 	@priority = "3"
 	test UppercaseVirtualHostNamesConvertedToLowercase {

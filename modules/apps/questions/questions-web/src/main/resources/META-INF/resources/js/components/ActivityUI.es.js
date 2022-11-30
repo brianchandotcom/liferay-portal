@@ -26,9 +26,6 @@ import QuestionBadge from './QuestionsBadge.es';
 import TagList from './TagList.es';
 import UserIcon from './UserIcon.es';
 
-const DAYS_UNTIL_SHOW_LABEL = 3;
-const TIME_IN_DAYS = 1000 * 60 * 60 * 24;
-
 const MESSAGE_TYPES = {
 	answer: {
 		prefix: 'RE:',
@@ -39,79 +36,59 @@ const MESSAGE_TYPES = {
 	reply: {prefix: 'RE: RE:', type: 3},
 };
 
-const getQuestionCreatedInDays = (dateCreated) => {
-	const givenDate = new Date(dateCreated);
-	const now = new Date();
-	const timeDifference = now.getTime() - givenDate.getTime();
-	const diffDays = (timeDifference / TIME_IN_DAYS).toFixed(0);
-
-	return diffDays;
-};
-
 const ActivityHeaderBadge = ({
 	messageType: {label, symbol, type},
 	question,
-}) => {
-	const DAYS_SINCE_CREATED = getQuestionCreatedInDays(question.dateCreated);
-
-	return (
-		<div className="align-items-center d-flex flex-wrap justify-content-between">
-			<ul className="align-items-center c-mb-2 d-flex flex-nowrap list-badges list-unstyled stretched-link-layer">
-				{DAYS_SINCE_CREATED <= DAYS_UNTIL_SHOW_LABEL &&
-					type !== MESSAGE_TYPES.reply.type &&
-					type !== MESSAGE_TYPES.bestAnswer.type && (
-						<li>
-							<span className="new-question-badge text-uppercase">
-								{Liferay.Language.get('new')}
-							</span>
-						</li>
+}) => (
+	<div className="align-items-center d-flex flex-wrap justify-content-between">
+		<ul className="align-items-center c-mb-2 d-flex flex-nowrap list-badges list-unstyled stretched-link-layer">
+			<li>
+				<QuestionBadge
+					className={classNames(
+						'badge-activity bg-light label-secondary text-uppercase',
+						{
+							'question-best-answer':
+								type === MESSAGE_TYPES.bestAnswer.type,
+							'questions-reply':
+								type === MESSAGE_TYPES.reply.type,
+						}
 					)}
+					isActivityBadge
+					symbol={symbol}
+					symbolClassName={classNames({
+						'questions-reply-icon':
+							MESSAGE_TYPES.reply.type === type,
+					})}
+					value={label}
+				/>
+			</li>
 
-				<li>
-					<QuestionBadge
-						className={classNames(
-							'bg-light label-secondary text-uppercase',
-							{
-								'questions-reply':
-									type === MESSAGE_TYPES.reply.type,
-								'text-success border border-success':
-									type === MESSAGE_TYPES.bestAnswer.type,
-							}
-						)}
-						isActivityBadge
-						symbol={symbol}
-						symbolClassName={classNames({
-							'questions-reply-icon': symbol === 'reply',
-						})}
-						value={label}
-					/>
-				</li>
-
-				<li>
-					<QuestionBadge
-						className="bg-light label-secondary text-uppercase"
-						isActivityBadge
-						value={question.messageBoardSection.title}
-					/>
-				</li>
-			</ul>
-		</div>
-	);
-};
+			<li>
+				<QuestionBadge
+					className="badge-activity bg-light label-secondary text-uppercase"
+					isActivityBadge
+					value={question.messageBoardSection.title}
+				/>
+			</li>
+		</ul>
+	</div>
+);
 
 const ActivityHeader = ({
 	context,
 	messageType: {text, type},
 	question: {id, locked, parentMessageBoardMessage, seen, status},
 }) => (
-	<h5
+	<span
 		className={classNames(
+			'activity-question-name',
 			'questions-labels-limit',
 			'stretched-link',
 			'c-mb-0',
 			'stretched-link-layer',
 			'text-dark',
 			{
+				'large-text': MESSAGE_TYPES.question.type === type,
 				'question-seen': seen || context?.Visited?.includes(id),
 			}
 		)}
@@ -137,7 +114,7 @@ const ActivityHeader = ({
 				/>
 			</span>
 		)}
-	</h5>
+	</span>
 );
 
 const ActivityBody = ({messageType: {symbol, type}, question}) => {
@@ -168,7 +145,7 @@ const ActivityBody = ({messageType: {symbol, type}, question}) => {
 						className="questions-reply"
 						isActivityBadge
 						symbol={symbol}
-						symbolClassName="questions-comment-reply-icon"
+						symbolClassName="mr-2 questions-comment-reply-icon"
 						value={stripHTML(question.articleBody)}
 					/>
 				)}
@@ -195,59 +172,57 @@ const ActivityFooter = ({
 	messageType: {type},
 	question,
 	sectionTitle,
-}) => {
-	return (
-		<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
-			<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
-				<Link
-					className={classNames({
-						'disabled-link': !!creatorId,
+}) => (
+	<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
+		<div className="c-mt-sm-0 d-flex mt-2 stretched-link-layer">
+			<Link
+				className={classNames({
+					'disabled-link': !!creatorId,
+				})}
+				to={creatorInformation.link}
+			>
+				{creatorInformation.portraitURL && (
+					<UserIcon
+						fullName={creatorInformation.name}
+						portraitURL={creatorInformation.portraitURL}
+						size="sm"
+						userId={creatorInformation.userId}
+					/>
+				)}
+
+				<strong
+					className={classNames('text-dark', {
+						'c-ml-2': creatorInformation.portraitURL,
 					})}
-					to={creatorInformation.link}
 				>
-					{creatorInformation.portraitURL && (
-						<UserIcon
-							fullName={creatorInformation.name}
-							portraitURL={creatorInformation.portraitURL}
-							size="sm"
-							userId={creatorInformation.userId}
-						/>
-					)}
+					{creatorInformation.name ||
+						Liferay.Language.get(
+							'anonymous-user-configuration-name'
+						)}
+				</strong>
+			</Link>
 
-					<strong
-						className={classNames('text-dark', {
-							'c-ml-2': creatorInformation.portraitURL,
-						})}
-					>
-						{creatorInformation.name ||
-							Liferay.Language.get(
-								'anonymous-user-configuration-name'
-							)}
-					</strong>
-				</Link>
-
-				<EditedTimestamp
-					dateCreated={question.dateCreated}
-					dateModified={question.dateModified}
-					operationText={
-						type === MESSAGE_TYPES.question.type
-							? Liferay.Language.get('asked')
-							: ''
-					}
-				/>
-			</div>
-
-			{question.keywords && (
-				<TagList
-					sectionTitle={
-						sectionTitle?.title ? sectionTitle.title : sectionTitle
-					}
-					tags={question.keywords}
-				/>
-			)}
+			<EditedTimestamp
+				dateCreated={question.dateCreated}
+				dateModified={question.dateModified}
+				operationText={
+					type === MESSAGE_TYPES.question.type
+						? Liferay.Language.get('asked')
+						: ''
+				}
+			/>
 		</div>
-	);
-};
+
+		{question.keywords && (
+			<TagList
+				sectionTitle={
+					sectionTitle?.title ? sectionTitle.title : sectionTitle
+				}
+				tags={question.keywords}
+			/>
+		)}
+	</div>
+);
 
 export {
 	MESSAGE_TYPES,

@@ -1,6 +1,27 @@
 @import 'atlas-variables';
 @import 'pages';
 
+.user-activity-page {
+	.activity-question-name {
+		font-size: 14px;
+		font-weight: 600;
+
+		&.large-text {
+			font-size: 20px;
+		}
+	}
+
+	.bg-light {
+		background-color: #f1f2f5 !important;
+	}
+
+	.question-best-answer {
+		color: #287d3c;
+		background-color: #edf9f0 !important;
+		border-color: #5aca75;
+	}
+}
+
 .alert-inline.alert .close {
 	top: 20% !important;
 }
@@ -379,23 +400,15 @@ div {
 	}
 }
 
+.question-row-unselected {
+	border: 1px solid #fff;
+	border-radius: 0.25rem;
+}
+
 .question-row-selected {
 	background-color: $primary-l3;
 	border: 1px solid $primary-l1;
 	border-radius: 0.25rem;
-}
-
-.new-question-badge {
-	align-items: center;
-	background: #0b5fff;
-	border-radius: 4px;
-	color: #fff;
-	display: flex;
-	flex-direction: row;
-	font-size: 12px;
-	font-weight: bold;
-	height: 24px;
-	padding: 3px 8px;
 }
 
 .list-badges {

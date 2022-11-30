@@ -27,18 +27,23 @@ export default function QuestionsBadge({
 	return (
 		<div
 			className={classNames(
-				` c-py-2 c-px-3 rounded stretched-link-layer`,
-				className,
-				{'badge-activity': isActivityBadge}
+				'c-py-2 c-px-3 rounded stretched-link-layer',
+				className
 			)}
 			data-tooltip-align="top"
 			title={tooltip}
 		>
-			{symbol && <ClayIcon className={symbolClassName} symbol={symbol} />}
+			{symbol && (
+				<ClayIcon
+					className={classNames(symbolClassName, 'mr-2 mt-0')}
+					fontSize={16}
+					symbol={symbol}
+				/>
+			)}
 
 			<span
 				className={classNames(
-					` c-ml-2 label-badge-activity questions-labels-limit`,
+					'label-badge-activity questions-labels-limit',
 					{
 						'label-badge-activity': isActivityBadge,
 					}

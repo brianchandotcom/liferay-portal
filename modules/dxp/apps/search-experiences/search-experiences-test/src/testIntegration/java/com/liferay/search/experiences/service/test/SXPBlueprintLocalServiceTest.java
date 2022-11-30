@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -37,8 +35,6 @@ import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.persistence.PersistenceException;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -127,6 +123,36 @@ public class SXPBlueprintLocalServiceTest {
 
 	@Test
 	public void testUpdateSXPBlueprint() throws Exception {
+		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
+			RandomTestUtil.randomString());
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
+
+		sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
+			sxpBlueprint);
+
+		Assert.assertEquals(
+			externalReferenceCode, sxpBlueprint.getExternalReferenceCode());
+
+		sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
+			sxpBlueprint.getUserId(), sxpBlueprint.getSXPBlueprintId(),
+			sxpBlueprint.getConfigurationJSON(),
+			sxpBlueprint.getDescriptionMap(),
+			sxpBlueprint.getElementInstancesJSON(),
+			sxpBlueprint.getSchemaVersion(), sxpBlueprint.getTitleMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			externalReferenceCode, sxpBlueprint.getExternalReferenceCode());
+		Assert.assertEquals("1.1", sxpBlueprint.getVersion());
+	}
+
+	@Test(expected = DuplicateSXPBlueprintExternalReferenceCodeException.class)
+	public void testUpdateSXPBlueprintWithSameExternalReferenceCode()
+		throws Exception {
+
 		SXPBlueprint sxpBlueprint1 = _addSXPBlueprint(
 			RandomTestUtil.randomString());
 		SXPBlueprint sxpBlueprint2 = _addSXPBlueprint(
@@ -135,56 +161,7 @@ public class SXPBlueprintLocalServiceTest {
 		sxpBlueprint2.setExternalReferenceCode(
 			sxpBlueprint1.getExternalReferenceCode());
 
-		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
-				"org.hibernate.engine.jdbc.batch.internal.BatchingBatch",
-				LoggerTestUtil.ERROR);
-			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
-				"org.hibernate.engine.jdbc.spi.SqlExceptionHelper",
-				LoggerTestUtil.ERROR)) {
-
-			try {
-				_sxpBlueprintLocalService.updateSXPBlueprint(sxpBlueprint2);
-
-				Assert.fail();
-			}
-			catch (PersistenceException persistenceException) {
-				Assert.assertNotNull(persistenceException);
-			}
-		}
-
-		String externalReferenceCode = RandomTestUtil.randomString();
-
-		sxpBlueprint1.setExternalReferenceCode(externalReferenceCode);
-
-		sxpBlueprint1 = _sxpBlueprintLocalService.updateSXPBlueprint(
-			sxpBlueprint1);
-
-		Assert.assertEquals(
-			externalReferenceCode, sxpBlueprint1.getExternalReferenceCode());
-
-		sxpBlueprint1 = _sxpBlueprintLocalService.updateSXPBlueprint(
-			sxpBlueprint1.getUserId(), sxpBlueprint1.getSXPBlueprintId(),
-			sxpBlueprint1.getConfigurationJSON(),
-			sxpBlueprint1.getDescriptionMap(),
-			sxpBlueprint1.getElementInstancesJSON(),
-			sxpBlueprint1.getSchemaVersion(), sxpBlueprint1.getTitleMap(),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			externalReferenceCode, sxpBlueprint1.getExternalReferenceCode());
-		Assert.assertEquals("1.1", sxpBlueprint1.getVersion());
-
-		sxpBlueprint1 = _sxpBlueprintLocalService.updateSXPBlueprint(
-			sxpBlueprint1.getUserId(), sxpBlueprint1.getSXPBlueprintId(),
-			sxpBlueprint1.getConfigurationJSON(),
-			sxpBlueprint1.getDescriptionMap(),
-			sxpBlueprint1.getElementInstancesJSON(),
-			sxpBlueprint1.getSchemaVersion(), sxpBlueprint1.getTitleMap(),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			externalReferenceCode, sxpBlueprint1.getExternalReferenceCode());
-		Assert.assertEquals("1.2", sxpBlueprint1.getVersion());
+		_sxpBlueprintLocalService.updateSXPBlueprint(sxpBlueprint2);
 	}
 
 	private SXPBlueprint _addSXPBlueprint(String externalReferenceCode)

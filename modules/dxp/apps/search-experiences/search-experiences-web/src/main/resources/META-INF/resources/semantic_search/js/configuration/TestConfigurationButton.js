@@ -275,6 +275,10 @@ function TestConfigurationButton({
 			);
 		}
 
+		if (sentenceTransformer === SENTENCE_TRANSFORMER_TYPES.TXTAI) {
+			return errors.txtaiHostAddress;
+		}
+
 		return false;
 	};
 

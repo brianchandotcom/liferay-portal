@@ -190,6 +190,14 @@ export default function ({
 			}
 		}
 
+		// Validate "txtai Host Address" field.
+
+		if (values.txtaiHostAddress === '') {
+			errors.txtaiHostAddress = Liferay.Language.get(
+				'this-field-is-required'
+			);
+		}
+
 		return errors;
 	};
 
@@ -292,6 +300,8 @@ export default function ({
 							name={`${namespace}txtaiHostAddress`}
 							onBlur={_handleInputBlur('txtaiHostAddress')}
 							onChange={_handleInputChange('txtaiHostAddress')}
+							required
+							touched={formik.touched.txtaiHostAddress}
 							value={formik.values.txtaiHostAddress}
 						/>
 

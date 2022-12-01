@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>PRMMDFListing</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRMMDFListing</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>LISTING_TABLE_NAME</td>
+	<td>//*[@route='mdf-request-list']//thead//th/p[contains(text(),'Name')]//ancestor::table//tbody//th[3][normalize-space(text())='${key_campaignName}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

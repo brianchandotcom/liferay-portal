@@ -57,6 +57,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Method;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -961,12 +964,27 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 	}
 
-	private Collection<Permission> _getPermissions(long companyId, List<ResourceAction> resourceActions, long resourceId, String resourceName, String[] roleNames) throws PortalException {
+	private Collection<Permission> _getPermissions(long companyId, List<ResourceAction> resourceActions, long resourceId, String resourceName, String[] roleNames) throws Exception {
 		_checkResources(companyId, resourceId, resourceName);
 
 		Map<String, Permission> permissions = new LinkedHashMap<>();
 
-		for (ResourcePermission resourcePermission : resourcePermissionLocalService.getResourcePermissions(resourceName)) {
+		List<ResourcePermission> resourcePermissionList = new ArrayList<>();
+
+		Class<? extends ResourcePermissionLocalService> clazz = ResourcePermissionLocalService.class;
+
+		try {
+			Method method = clazz.getMethod("getResourcePermissions", String.class);
+
+			resourcePermissionList = (List<ResourcePermission>)method.invoke(resourcePermissionLocalService, resourceName);
+
+		} catch (NoSuchMethodException noSuchMethodException) {
+
+			resourcePermissionList = resourcePermissionLocalService.getResourcePermissions(
+				companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(resourceId));
+		}
+		for (ResourcePermission resourcePermission : resourcePermissionList) {
 			if ((resourcePermission.getPrimKeyId() == 0) || (resourcePermission.getPrimKeyId() == resourceId)) {
 				com.liferay.portal.kernel.model.Role role = roleLocalService.getRole(resourcePermission.getRoleId());
 

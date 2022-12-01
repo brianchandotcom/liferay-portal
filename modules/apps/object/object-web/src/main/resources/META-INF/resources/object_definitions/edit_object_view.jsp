@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 ObjectDefinitionsViewsDisplayContext objectDefinitionsViewsDisplayContext = (ObjectDefinitionsViewsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 ObjectView objectView = (ObjectView)request.getAttribute(ObjectWebKeys.OBJECT_VIEW);
 %>
@@ -28,6 +29,8 @@ ObjectView objectView = (ObjectView)request.getAttribute(ObjectWebKeys.OBJECT_VI
 			"filterOperators", LocalizedJSONArrayUtil.getFilterOperatorsJSONObject(locale)
 		).put(
 			"isViewOnly", !objectDefinitionsViewsDisplayContext.hasUpdateObjectDefinitionPermission()
+		).put(
+			"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 		).put(
 			"objectViewId", objectView.getObjectViewId()
 		).put(

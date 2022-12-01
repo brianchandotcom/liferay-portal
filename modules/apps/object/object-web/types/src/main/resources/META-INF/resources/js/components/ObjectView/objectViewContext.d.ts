@@ -148,6 +148,7 @@ interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
 		filterOperators: TFilterOperators;
 		isViewOnly: boolean;
+		objectDefinitionExternalReferenceCode: string;
 		objectViewId: string;
 		workflowStatusJSONArray: TWorkflowStatus[];
 	};

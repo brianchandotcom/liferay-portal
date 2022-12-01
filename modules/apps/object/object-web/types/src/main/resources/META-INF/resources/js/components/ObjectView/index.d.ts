@@ -17,6 +17,7 @@ import {TWorkflowStatus} from './types';
 interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	filterOperators: TFilterOperators;
 	isViewOnly: boolean;
+	objectDefinitionExternalReferenceCode: string;
 	objectViewId: string;
 	workflowStatusJSONArray: TWorkflowStatus[];
 }

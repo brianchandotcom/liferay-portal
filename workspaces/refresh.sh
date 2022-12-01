@@ -55,13 +55,16 @@ function refresh_sample_default_workspace {
 
 	cd sample-default-workspace
 
-	${BLADE_PATH} init --liferay-version dxp-7.4-u40
+	${BLADE_PATH} init --liferay-version dxp-7.4-u52
+
+	sed -i'.bak' "s/\"com.liferay.gradle.plugins.workspace\", version: \".*\"/\"com.liferay.gradle.plugins.workspace\", version: \"4.0.30\"/" settings.gradle
 
 	echo -e "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
 
 	echo -e "\n\nfeature.flag.LPS-153457=true" >> configs/local/portal-ext.properties
 
-	echo -e "\nliferay.workspace.docker.image.liferay=liferay/7.4.13.nightly-d4.1.4-20220707214146" >> gradle.properties
+	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13-u52-d5.0.3-20221124061349" >> gradle.properties
+	echo -e "\nliferay.workspace.node.package.manager=yarn" >> gradle.properties
 
 	sort -o gradle.properties gradle.properties
 
@@ -83,9 +86,21 @@ function refresh_sample_minimal_workspace {
 	copy_template theme-css sample-minimal-workspace/client-extensions/able-theme-css "Able Theme CSS"
 	copy_template theme-favicon sample-minimal-workspace/client-extensions/able-theme-favicon "Able Theme Favicon"
 
+	../tools/create_remote_app.sh able-remote-app react
+
+	rm -fr sample-minimal-workspace/client-extensions/able-remote-app
+
+	mv able-remote-app sample-minimal-workspace/client-extensions
+
+	cp -R refresh-files/sample-minimal-workspace/* sample-minimal-workspace/
+
 	rm -fr sample-default-workspace/client-extensions
 
 	cp -R sample-minimal-workspace/client-extensions sample-default-workspace
+}
+
+function remove_bak_files {
+	find . -name '*.bak' -exec rm {} +
 }
 
 function main {
@@ -96,6 +111,8 @@ function main {
 	refresh_sample_minimal_workspace
 
 	refresh_liferay_learn_workspace
+
+	remove_bak_files
 }
 
 main "${@}"

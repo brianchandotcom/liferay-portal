@@ -1616,7 +1616,6 @@ definition {
 	@description = "Verify that the user can edit the Action fields"
 	@priority = "4"
 	test CanEditActionFields {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditActionFields";
 
 		Workflow.openWorkflowListView();
@@ -1628,12 +1627,16 @@ definition {
 			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
-			actionsTemplateValue = "Action Template",
 			description = "Liferay Actions Description",
 			executionTypeOption = "On Entry",
 			name = "Liferay Actions",
 			priorityValue = "2",
-			singleAction = "true");
+			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
+                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+
+                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);''',
+			singleAction = "true",
+			type = "Groovy");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1642,12 +1645,16 @@ definition {
 			propertyValue = "Liferay Actions");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
-			actionsTemplateValue = "Action Template Edited",
 			description = "Liferay Actions Description Edited",
 			executionTypeOption = "On Exit",
 			name = "Liferay Actions Edited",
 			priorityValue = "10",
-			singleAction = "true");
+			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
+                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+
+                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("repproved"), workflowContext);''',
+			singleAction = "true",
+			type = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1656,33 +1663,15 @@ definition {
 			propertyValue = "Liferay Actions Edited");
 
 		ProcessBuilderKaleoDesignerReact.viewActionsInfo(
-			actionsTemplateValue = "Action Template Edited",
 			description = "Liferay Actions Description Edited",
 			executionTypeOption = "On Exit",
 			name = "Liferay Actions Edited",
-			priorityValue = "10");
-	}
+			priorityValue = "10",
+			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
+                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
-	@description = "LPS-139388 - Verify that the user can edit the node description"
-	@priority = "3"
-	test CanEditNodeDescription {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNodeDescription";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-40");
-
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Description",
-			infoValue = "Liferay LATAM");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			descriptionValue = "Liferay LATAM",
-			nodeType = "task");
+                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("repproved"), workflowContext);''',
+			type = "Java");
 	}
 
 	@description = "Verify that the user can edit the Description of the Notification"

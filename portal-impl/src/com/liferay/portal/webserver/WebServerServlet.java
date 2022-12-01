@@ -41,6 +41,9 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -1183,6 +1186,27 @@ public class WebServerServlet extends HttpServlet {
 					inputStream, contentLength, contentType);
 			}
 		}
+
+		String objectDefinitionExternalReferenceCode = ParamUtil.getString(
+			httpServletRequest, "objectDefinitionExternalReferenceCode");
+
+		if (Validator.isNotNull(objectDefinitionExternalReferenceCode)) {
+			Message message = new Message();
+
+			message.put("companyId", user.getCompanyId());
+			message.put(
+				"objectDefinitionExternalReferenceCode",
+				objectDefinitionExternalReferenceCode);
+			message.put(
+				"objectEntryExternalReferenceCode",
+				ParamUtil.getString(
+					httpServletRequest, "objectEntryExternalReferenceCode"));
+			message.put("userId", user.getUserId());
+
+			_messageBus.sendMessage(
+				DestinationNames.OBJECT_ENTRY_BUSINESS_TYPE_ATTACHMENT_DOWNLOAD,
+				message);
+		}
 	}
 
 	protected void sendFile(
@@ -1837,6 +1861,9 @@ public class WebServerServlet extends HttpServlet {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			InactiveRequestHandler.class, WebServerServlet.class,
 			"_inactiveRequestHandler", false);
+	private static volatile MessageBus _messageBus =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			MessageBus.class, WebServerServlet.class, "_messageBus", false);
 	private static final ServiceTrackerMap<String, ModelResourcePermission<?>>
 		_modelResourcePermissionServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(

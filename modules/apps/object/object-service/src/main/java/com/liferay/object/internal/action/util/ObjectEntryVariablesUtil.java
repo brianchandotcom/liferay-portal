@@ -32,12 +32,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.io.Serializable;
 
@@ -238,18 +240,39 @@ public class ObjectEntryVariablesUtil {
 				"model" + objectDefinition.getName());
 
 			if (object == null) {
+				object = payloadJSONObject.get(
+					StringUtil.lowerCaseFirstLetter(
+						objectDefinition.getName()));
+			}
+
+			if (object == null) {
 				return payloadJSONObject.toMap();
 			}
 
-			variables.putAll((Map<String, Object>)object);
+			if (object instanceof Map) {
+				variables.putAll((Map<String, Object>)object);
+			}
+			else if (object instanceof JSONObject) {
+				Map<String, Object> map = ObjectMapperUtil.readValue(
+					Map.class, object);
+
+				Map<String, Object> jsonObjectMap =
+					(Map<String, Object>)map.get("_jsonObject");
+
+				variables.putAll((Map<String, Object>)jsonObjectMap.get("map"));
+			}
 
 			String contentType = _getContentType(
 				dtoConverterRegistry, objectDefinition,
 				systemObjectDefinitionMetadataRegistry);
 
-			variables.putAll(
+			Map<String, Object> map =
 				(Map<String, Object>)payloadJSONObject.get(
-					"modelDTO" + contentType));
+					"modelDTO" + contentType);
+
+			if (map != null) {
+				variables.putAll(map);
+			}
 		}
 		else {
 			variables.putAll(

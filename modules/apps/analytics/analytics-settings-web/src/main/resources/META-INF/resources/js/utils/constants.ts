@@ -23,3 +23,7 @@ export const EMPTY_STATE_GIF = `${IMAGES_PATH}/states/empty_state.gif`;
 export const ERROR_MESSAGE = Liferay.Language.get(
 	'an-unexpected-system-error-occurred'
 );
+
+export const MIN_LENGTH = 3;
+
+export const MAX_LENGTH = 65;

@@ -41,7 +41,7 @@ public class CommerceProductDefinitionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"thumbnail", "",
+			"thumbnail", "image",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"image")
 		).add(

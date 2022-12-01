@@ -123,13 +123,12 @@ definition {
 	test RequestKeywordsUsingGroupID {
 		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingGroupID";
 
+		JSONGroup.addGroup(groupName = "Site Name");
 		var groupId1 = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var groupId2 = JSONGroupSetter.setGroupId(groupName = "Site Name");
 		var keyword = "general groupid";
 		var parametersGroup1 = "groupId=${groupId1}\&sort=counts,desc,lastModifiedDate,desc";
 		var parametersGroup2 = "groupId=${groupId2}\&sort=counts,desc,lastModifiedDate,desc";
-
-		JSONGroup.addGroup(groupName = "Site Name");
 
 		task ("Go to DXP and get analytics configuration") {
 			ACApi.getAnalyticsConfiguration();

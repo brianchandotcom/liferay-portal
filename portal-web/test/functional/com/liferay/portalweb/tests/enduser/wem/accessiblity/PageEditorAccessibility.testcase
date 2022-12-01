@@ -363,7 +363,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-165264. The Name and Page Template Set fields on create page template modal should have aria-requried attribute."
+	@description = "This is a test for LPS-165264. The Name and Page Template Set fields on create page template modal should have requried attribute."
 	@priority = "3"
 	test ViewAccessibilityOfCreatePageTemplateModal {
 		task ("Given a page creator has a content page") {
@@ -381,14 +381,14 @@ definition {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
 		}
 
-		task ("Then the page creator sees the Name and Page Template Set fields with aria-required attribute on modal") {
+		task ("Then the page creator sees the Name and Page Template Set fields with required attribute on modal") {
 			AssertAttributeValue(
-				attribute1 = "aria-required",
+				attribute1 = "required",
 				locator1 = "TextInput#NAME",
 				value1 = "true");
 
 			AssertAttributeValue(
-				attribute1 = "aria-required",
+				attribute1 = "required",
 				key_fieldLabel = "Page Template Set",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "true");

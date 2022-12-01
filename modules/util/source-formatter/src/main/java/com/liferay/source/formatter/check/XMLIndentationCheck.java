@@ -71,7 +71,7 @@ public class XMLIndentationCheck extends BaseFileCheck {
 		int x = -1;
 
 		while (true) {
-			x = content.indexOf(">", x + 1);
+			x = content.indexOf(">", x + 2);
 
 			if (x == -1) {
 				break;
@@ -92,7 +92,7 @@ public class XMLIndentationCheck extends BaseFileCheck {
 				continue;
 			}
 
-			return StringUtil.insert(content, "\n", x + 1);
+			content = StringUtil.insert(content, "\n", x + 1);
 		}
 
 		Matcher matcher = _incorrectLineBreakPattern1.matcher(content);

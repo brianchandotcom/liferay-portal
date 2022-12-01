@@ -21,8 +21,8 @@ public class ObjectActionTriggerConstants {
 
 	public static final String KEY_ON_AFTER_ADD = "onAfterAdd";
 
-	public static final String KEY_ON_AFTER_ATTACHMENT_DOWNLOAD =
-		"onAfterAttachmentDownload";
+	public static final String KEY_ON_AFTER_BUSINESS_TYPE_ATTACHMENT_DOWNLOAD =
+		"onAfterBusinessTypeAttachmentDownload";
 
 	public static final String KEY_ON_AFTER_DELETE = "onAfterDelete";
 

@@ -82,10 +82,12 @@ public class ObjectActionDownloadTriggerMessageListener
 
 		_objectActionEngine.executeObjectActions(
 			objectDefinition.getClassName(), message.getLong("companyId"),
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
+			ObjectActionTriggerConstants.
+				KEY_ON_AFTER_BUSINESS_TYPE_ATTACHMENT_DOWNLOAD,
 			ObjectEntryUtil.getActionPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
+				ObjectActionTriggerConstants.
+					KEY_ON_AFTER_BUSINESS_TYPE_ATTACHMENT_DOWNLOAD,
 				objectDefinition,
 				_objectEntryLocalService.fetchObjectEntry(
 					message.getString("objectEntryExternalReferenceCode"),

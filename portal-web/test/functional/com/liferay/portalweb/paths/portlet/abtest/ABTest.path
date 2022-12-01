@@ -26,11 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AB_TEST_TITLE_FIELD</td>
-	<td>//input[@class='form-control mt-1']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>AB_TEST_DETAILS_FIELD</td>
 	<td>//*[@class= 'd-inline inline-item-after text-secondary' and contains(text(),'${key_name}')]</td>
 	<td></td>
@@ -41,43 +36,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE_SELECT_GOAL</td>
-	<td>//select[contains(@class,'form-control mt-1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_EXPERIENCE</td>
-	<td>//select[contains(@class,'form-control')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONNECTED_NOT_SYNC_BUTTON</td>
 	<td>//div[div[h1[contains(.,'A/B Test')]]] //h4[contains(.,'Sync to Liferay Analytics Cloud')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTROL_VARIANT</td>
-	<td>//*[contains(@class,'lfr-portal-tooltip text-truncate btn btn-unstyled') and @data-title='Control']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CREATE_TEST_BUTTON</td>
-	<td>//*[contains(@class, 'btn-secondary') and contains(text(),'Create Test')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CANCEL_VARIANT_NAME_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-secondary') and contains(text(),'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLOSE_BUTTON</td>
-	<td>//div[contains(@class,'modal-dialog')]//*//button[contains (@class,'close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CREATE_VARIANT_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-secondary') and contains(text(),'Create Variant')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,53 +46,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HIDE_AB_TEST_BUTTON</td>
-	<td>//div[contains(@class,'sidebar') and descendant::*[contains(.,'A/B Test')]] //a[contains(.,'Do not show me this again')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_VARIANT_BUTTON</td>
-	<td>//div[@class='dropdown-menu show']//button[contains(@class, 'dropdown-item') and contains(text(), 'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_VARIANT_BUTTON</td>
-	<td>//div[@class='dropdown-menu show']//button[contains(@class, 'dropdown-item') and contains(text(), 'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_AB_TEST_MODAL</td>
-	<td>//div[@class ="modal-content" and contains(.,'Edit Test')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ELEMENT_ID_INPUT</td>
 	<td>//input[@id='clickableElement']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ELEMENT_ID_VALUE_ID_BOX</td>
-	<td>//div[@class ="input-group-item input-group-append"]//input[@value='${key_id}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ID_BOX</td>
-	<td>//div[@class ="input-group-item input-group-append"]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ELEMENT_ID_VALUE_ID_BOX_READONLY</td>
+	<td>ELEMENT_ID_INPUT_READONLY</td>
 	<td>//div[@class ="input-group-item input-group-append"]//input[@readonly='']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ELEMENT_NEEDS_TO_BE_SELECTED_MESSAGE</td>
 	<td>//div[contains(@class,"c-mb-2 c-mt-2 font-weight-semi-bold text-danger") and contains(text(),"An element needs to be selected.")]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EYE_BUTTON_SHOW_ELEMENT</td>
-	<td>//button[contains(@class,"btn btn-monospaced btn-secondary")]</td>
 	<td></td>
 </tr>
 <tr>
@@ -146,48 +71,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INVALID_ID_MESSAGE</td>
-	<td>//*[contains(@class,'form-feedback-item')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>KEBAB_AB_TEST</td>
 	<td>//button[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>KEBAB_OPTIONS_AB_TEST</td>
-	<td>//*[contains(@class,'dropdown-item') and contains(text(),'${value}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LABEL_ITEM_STATUS</td>
-	<td>//div[contains(@class, 'card-header d-flex justify-content-between')]//h3[contains(text(), '${status}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OK_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-primary') and text()='OK']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REVIEW_AND_RUN_TEST_BUTTON</td>
-	<td>//button[contains(@class,'btn-primary') and contains(text(),'Review and Run Test')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PADLOCK_ICON</td>
-	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-lock text-secondary')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HISTORY_AB_TEST_BUTTON</td>
 	<td>//button[@class="nav-link btn btn-unstyled"]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_HISTORY_AB_TEST_BUTTON</td>
-	<td>//button[contains(@class,'component-action quick-action-item')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -198,11 +88,6 @@
 <tr>
 	<td>PENCIL_BUTTON</td>
 	<td>//button[contains(@class,'btn-outline-secondary') and *[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BUTTON_PAGE</td>
-	<td>//*[contains(@class,'component-button text-break')]//*[contains(@id,'${key_id}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -221,38 +106,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RUN_TEST_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-primary') and text()='Run']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_AB_TEST_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Save')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_VARIANT_NAME_BUTTON</td>
-	<td>//*[contains(@class,'btn-primary') and contains(text(),'Save')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_CLICKABLE_ELEMENT</td>
 	<td>xpath=(//div[contains(@class,'lfr-segments-experiment-click-goal-target-overlay')])[${key_index}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SECONDARY_BUTTON</td>
-	<td>//button[contains(@class,'btn-secondary')and contains(text(),'${key_value}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_GOAL</td>
-	<td>//select[contains(@class,'form-control')]/option[.='${goal}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SET_ELEMENT_AS_CLICK_TARGET_BUTTON</td>
-	<td>//button[contains(@class,'btn-primary')and contains(text(),'Set Element as Click Target')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -281,23 +136,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TERMINATE_TEST_BUTTON</td>
-	<td>//*[contains(@class,'btn-secondary') and contains(text(),'Terminate Test')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TITLE</td>
-	<td>//div[contains(@class,'align-items-center autofit-row')]//*[contains(text(),'${key_page_title}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VARIANT_DROPDOWN</td>
 	<td>xpath=(//div[@class='autofit-col']//*[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')])[${key_index}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VARIANT_NAME_FIELD</td>
-	<td>//input[@class='form-control mt-1']</td>
 	<td></td>
 </tr>
 <tr>
@@ -308,11 +148,6 @@
 <tr>
 	<td>VARIANT_TITLE</td>
 	<td>//*[@data-title='${key_variantName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_DATA_ANALYTICS_CLOUD_BUTTON</td>
-	<td>//*[contains(@class,'btn-secondary') and contains(text(),'View Data in Analytics Cloud')]</td>
 	<td></td>
 </tr>
 <tr>

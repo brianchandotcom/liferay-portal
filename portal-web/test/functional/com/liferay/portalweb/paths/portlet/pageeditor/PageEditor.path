@@ -414,6 +414,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_LOCKED_ICON</td>
+	<td>//div[contains(@class,'toolbar-experience')]//li//*[name()='svg'][contains(@class,'lexicon-icon-lock')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_MENU</td>
 	<td>//div[contains(@class,'page-editor__toolbar-experience__dropdown-menu')]</td>
 	<td></td>

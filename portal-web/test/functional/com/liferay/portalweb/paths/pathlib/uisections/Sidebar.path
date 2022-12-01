@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ACTIVE_TAB</td>
+	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}'][contains(@aria-pressed,'true')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_FIELD_TARGET</td>
 	<td>//div[contains(@class,'col-empty')]/div[contains(@class,'target')]</td>
 	<td></td>
@@ -46,13 +51,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DDM_LABEL</td>
-	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Label')]//following-sibling::input</td>
+	<td>DDM_FIELD_REFERENCE</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input[contains(@class,'form-control') and (@type='text')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_HELP_TEXT</td>
 	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Help Text')]//following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_LABEL</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Label')]//following-sibling::input</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,18 +76,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVE_TAB</td>
-	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}'][contains(@aria-pressed,'true')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_INPUT</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBTITLE</td>
-	<td>//div[contains(@class,'sheet-subtitle')][normalize-space(text())='${key_text}']</td>
+	<td>LINK</td>
+	<td>//div[contains(@class,'sidenav-menu-slider') and not(contains(@class,'closed'))] //a[not(contains(@class,'btn')) and contains(text(),'${key_textValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,8 +106,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBTITLE</td>
+	<td>//div[contains(@class,'sheet-subtitle')][normalize-space(text())='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAB</td>
 	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_INPUT</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,16 +133,6 @@
 <tr>
 	<td>TITLE_2</td>
 	<td>//div[contains(@class,'sidebar-header')] //span[contains(@class,'font-weight-bold')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_FIELD_REFERENCE</td>
-	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input[contains(@class,'form-control') and (@type='text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR</td>
-	<td>//div[contains(@class,'sidebar')]</td>
 	<td></td>
 </tr>
 

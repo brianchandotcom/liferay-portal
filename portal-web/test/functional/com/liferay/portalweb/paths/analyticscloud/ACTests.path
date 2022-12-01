@@ -26,6 +26,11 @@
 	<td>//*[contains(@class,'label-item')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUMMARY_CARD_TEXT</td>
+	<td>//div[contains(@class, 'analytics-summary-card')] //div[contains(@class,'card-header')] //h3</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

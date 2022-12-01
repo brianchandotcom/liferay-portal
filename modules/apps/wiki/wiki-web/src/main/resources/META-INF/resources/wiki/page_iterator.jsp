@@ -117,7 +117,7 @@ if (navigation.equals("all-pages") || navigation.equals("categorized-pages") || 
 	headerNames.add(StringPool.BLANK);
 }
 
-DefaultWikiListPagesDisplayContext wikiListPagesDisplayContext = new DefaultWikiListPagesDisplayContext(request, node, (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER));
+WikiListPagesDisplayContext wikiListPagesDisplayContext = new WikiListPagesDisplayContext(request, node, (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER));
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");

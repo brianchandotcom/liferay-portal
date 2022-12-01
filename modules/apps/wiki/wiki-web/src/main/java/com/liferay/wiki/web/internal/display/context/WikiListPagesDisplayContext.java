@@ -80,9 +80,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera
  */
-public class DefaultWikiListPagesDisplayContext {
+public class WikiListPagesDisplayContext {
 
-	public DefaultWikiListPagesDisplayContext(
+	public WikiListPagesDisplayContext(
 		HttpServletRequest httpServletRequest, WikiNode wikiNode,
 		TrashHelper trashHelper) {
 
@@ -748,7 +748,7 @@ public class DefaultWikiListPagesDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultWikiListPagesDisplayContext.class);
+		WikiListPagesDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final TrashHelper _trashHelper;

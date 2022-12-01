@@ -29,6 +29,14 @@ export default function ({namespace}) {
 		content.classList.remove('d-block');
 		loading.classList.add('d-flex');
 
+		const alertContainer = document.querySelector(
+			'.add-instance-alert-container'
+		);
+
+		if (alertContainer.hasChildNodes()) {
+			alertContainer.firstChild.remove();
+		}
+
 		fetch(form.action, {
 			body: formData,
 			method: 'POST',
@@ -36,14 +44,6 @@ export default function ({namespace}) {
 			.then((response) => response.json())
 			.then((response) => {
 				const opener = getOpener();
-
-				const alertContainer = document.querySelector(
-					'.add-instance-alert-container'
-				);
-
-				if (alertContainer.hasChildNodes()) {
-					alertContainer.firstChild.remove();
-				}
 
 				if (!response.error) {
 					opener.Liferay.fire('closeModal', {
@@ -58,9 +58,7 @@ export default function ({namespace}) {
 
 					openToast({
 						autoClose: false,
-						container: document.querySelector(
-							'.add-instance-alert-container'
-						),
+						container: alertContainer,
 						message: response.error,
 						toastProps: {
 							onClose: null,

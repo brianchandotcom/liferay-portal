@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Roberto Díaz
  */
-public class DefaultWikiNodeInfoPanelDisplayContext {
+public class WikiNodeInfoPanelDisplayContext {
 
-	public DefaultWikiNodeInfoPanelDisplayContext(
+	public WikiNodeInfoPanelDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
 		_wikiNodeInfoPanelRequestHelper = new WikiNodeInfoPanelRequestHelper(

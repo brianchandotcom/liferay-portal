@@ -88,6 +88,9 @@ function refresh_sample_minimal_workspace {
 
 	../tools/create_remote_app.sh able-remote-app react
 
+	# remove the "react-scripts test" script
+	sed -i'.bak' "14d" able-remote-app/package.json
+
 	rm -fr sample-minimal-workspace/client-extensions/able-remote-app
 
 	mv able-remote-app sample-minimal-workspace/client-extensions

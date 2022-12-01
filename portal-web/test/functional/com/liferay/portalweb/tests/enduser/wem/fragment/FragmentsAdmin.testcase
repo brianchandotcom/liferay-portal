@@ -717,4 +717,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-168163. The fragment developer could see the usages of basic fragment."
+	@priority = "5"
+	test ViewUsagesOfBasicFragment {
+		task ("Given a fragment developer has a fragment set") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+		}
+
+		task ("When the fragment developer adds a new basic fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+    Fragment Example
+</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 0") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "0 Usages");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Fragment Name",
+				locator1 = "Card#CARD_ELLIPSIS");
+
+			MenuItem.viewDisabled(menuItem = "View Usages");
+		}
+
+		task ("When the fragment developer adds a new fragment into page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Fragment Set Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 1") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "1 Usages");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "View Usages");
+
+			AssertElementPresent(
+				locator1 = "AssetLists#ASSET_LIST_USAGES",
+				usageAmount = "1",
+				usageType = "All");
+		}
+
+		task ("When the fragment developer publishes the page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 2") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "2 Usages");
+		}
+	}
+
 }

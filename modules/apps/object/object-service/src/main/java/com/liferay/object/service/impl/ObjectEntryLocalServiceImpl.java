@@ -805,6 +805,24 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public Map<String, Serializable> getSystemValues(ObjectEntry objectEntry)
+		throws PortalException {
+
+		List<Object[]> rows = _list(
+			DSLQueryFactoryUtil.select(
+				_EXPRESSIONS
+			).from(
+				ObjectEntryTable.INSTANCE
+			).where(
+				ObjectEntryTable.INSTANCE.objectEntryId.eq(
+					objectEntry.getObjectEntryId())
+			),
+			_EXPRESSIONS);
+
+		return _getValues(rows.get(0), _EXPRESSIONS);
+	}
+
+	@Override
 	public String getTitleValue(long objectDefinitionId, long primaryKey)
 		throws PortalException {
 
@@ -846,31 +864,7 @@ public class ObjectEntryLocalServiceImpl
 
 		return getValues(objectEntry);
 	}
-	@Override
-	public Map<String, Serializable> getSystemValues(ObjectEntry objectEntry)
-		throws PortalException {
 
-		List<Object[]> rows = _list(
-			DSLQueryFactoryUtil.select(
-				_EXPRESSIONS
-			).from(
-				ObjectEntryTable.INSTANCE
-			).where(
-				ObjectEntryTable.INSTANCE.objectEntryId.eq(
-					objectEntry.getObjectEntryId()
-				)
-			),
-			_EXPRESSIONS);
-
-		Map<String, Serializable> values = _getValues(
-			rows.get(0), _EXPRESSIONS);
-
-		_addObjectRelationshipERCFieldValue(
-			objectEntry.getObjectDefinitionId(), values);
-
-		return _putFormulaObjectFieldValues(
-			objectEntry.getObjectDefinitionId(), values);
-	}
 	@Override
 	public Map<String, Serializable> getValues(ObjectEntry objectEntry)
 		throws PortalException {

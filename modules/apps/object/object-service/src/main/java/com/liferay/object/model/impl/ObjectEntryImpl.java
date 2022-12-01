@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
 
@@ -85,7 +86,12 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 			if (objectField != null) {
 				return ObjectEntryValuesUtil.getValueString(
-					objectField, getValues());
+					objectField,
+					HashMapBuilder.create(
+						getValues()
+					).putAll(
+						ObjectEntryLocalServiceUtil.getSystemValues(this)
+					).build());
 			}
 		}
 

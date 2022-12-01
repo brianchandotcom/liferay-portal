@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -50,6 +51,19 @@ public class ObjectEntryValuesUtil {
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 			return HtmlParserUtil.extractText(GetterUtil.getString(value));
+		}
+
+		if (Validator.isNull(value)) {
+			String objectFieldName = objectField.getName();
+
+			if (objectFieldName.equals("creator")) {
+				objectFieldName = "userName";
+			}
+			else if (objectFieldName.equals("id")) {
+				objectFieldName = "objectEntryId";
+			}
+
+			value = values.get(objectFieldName);
 		}
 
 		return String.valueOf(value);

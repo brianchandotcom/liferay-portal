@@ -16,7 +16,6 @@ package com.liferay.wiki.display.context;
 
 import com.liferay.portal.kernel.display.context.DisplayContextFactory;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,19 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface WikiDisplayContextFactory extends DisplayContextFactory {
 
-	public WikiEditPageDisplayContext getWikiEditPageDisplayContext(
-		WikiEditPageDisplayContext parentWikiEditPageDisplayContext,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, WikiPage wikiPage);
-
 	public WikiListPagesDisplayContext getWikiListPagesDisplayContext(
 		WikiListPagesDisplayContext parentWikiListPagesDisplayContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, WikiNode wikiNode);
-
-	public WikiViewPageDisplayContext getWikiViewPageDisplayContext(
-		WikiViewPageDisplayContext parentWikiViewPageDisplayContext,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, WikiPage wikiPage);
 
 }

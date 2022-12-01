@@ -18,11 +18,8 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.display.context.WikiDisplayContextFactory;
-import com.liferay.wiki.display.context.WikiEditPageDisplayContext;
 import com.liferay.wiki.display.context.WikiListPagesDisplayContext;
-import com.liferay.wiki.display.context.WikiViewPageDisplayContext;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,26 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WikiDisplayContextProvider.class)
 public class WikiDisplayContextProvider {
-
-	public WikiEditPageDisplayContext getWikiEditPageDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, WikiPage wikiPage) {
-
-		WikiEditPageDisplayContext wikiEditPageDisplayContext =
-			new DefaultWikiEditPageDisplayContext(
-				httpServletRequest, httpServletResponse, wikiPage);
-
-		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				_serviceTrackerList) {
-
-			wikiEditPageDisplayContext =
-				wikiDisplayContextFactory.getWikiEditPageDisplayContext(
-					wikiEditPageDisplayContext, httpServletRequest,
-					httpServletResponse, wikiPage);
-		}
-
-		return wikiEditPageDisplayContext;
-	}
 
 	public WikiListPagesDisplayContext getWikiListPagesDisplayContext(
 		HttpServletRequest httpServletRequest,
@@ -79,26 +56,6 @@ public class WikiDisplayContextProvider {
 		}
 
 		return wikiListPagesDisplayContext;
-	}
-
-	public WikiViewPageDisplayContext getWikiViewPageDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, WikiPage wikiPage) {
-
-		WikiViewPageDisplayContext wikiViewPageDisplayContext =
-			new DefaultWikiViewPageDisplayContext(
-				httpServletRequest, httpServletResponse, wikiPage);
-
-		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				_serviceTrackerList) {
-
-			wikiViewPageDisplayContext =
-				wikiDisplayContextFactory.getWikiViewPageDisplayContext(
-					wikiViewPageDisplayContext, httpServletRequest,
-					httpServletResponse, wikiPage);
-		}
-
-		return wikiViewPageDisplayContext;
 	}
 
 	@Activate

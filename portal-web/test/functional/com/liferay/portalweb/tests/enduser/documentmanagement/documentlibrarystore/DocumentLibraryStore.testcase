@@ -10,6 +10,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -19,21 +21,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.firstLoginPG();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-			DMDocument.tearDownCP();
-
-			DMFolder.tearDownCP();
-
-			DMDocumentType.tearDownCP();
-
-			DMMetadataSet.tearDownCP();
-
-			PagesAdmin.tearDownCP();
-
-			JSONUser.tearDownNonAdminUsers();
-
-			Site.tearDownCP();
+			User.logoutPG();
 		}
 	}
 
@@ -47,94 +37,9 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
-
-		RecycleBin.emptyCP();
-	}
-
-	@description = "This is a use case for LPS-129271."
-	@priority = "4"
-	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
-		property aws.store.enabled = "true";
-		property test.name.skip.portal.instance = "DocumentLibraryStore#AssertNoErrorMessageAfterExportAndImportSiteLAR";
-
-		JSONGroup.addGroup(groupName = "Site A");
-
-		var bucketID = PropsUtil.get("aws.bucket.id");
-		var companyId = JSONCompany.getCompanyId();
-		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Site A",
-			site = "true");
-
-		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site A",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
-
-		LAR.exportSiteCP(siteScopeName = "Site A");
-
-		var larFileName = LAR.getLarFileName();
-
-		LAR.downloadLar();
-
-		JSONGroup.addGroup(groupName = "Site B");
-
-		LAR.importSiteCP(
-			larFileName = "${larFileName}",
-			siteName = "Site B");
-
-		AssertConsoleTextNotPresent(value1 = "java.io.IOException");
-	}
-
-	@priority = "5"
-	test AWSS3StoreSmoke {
-		property aws.store.enabled = "true";
-		property test.name.skip.portal.instance = "DocumentLibraryStore#AWSS3StoreSmoke";
-
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		var bucketId = PropsUtil.get("aws.bucket.id");
-		var companyId = JSONCompany.getCompanyId();
-		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Test Site Name",
-			site = "true");
-
-		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Site Name",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -142,60 +47,7 @@ definition {
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
-
 		RecycleBin.emptyCP();
-
-		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
-	}
-
-	@priority = "5"
-	test AzureStoreSmoke {
-		property azure.store.enabled = "true";
-		property test.name.skip.portal.instance = "DocumentLibraryStore#AzureStoreSmoke";
-
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		var containerId = PropsUtil.get("azure.container.id");
-		var companyId = JSONCompany.getCompanyId();
-		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Test Site Name",
-			site = "true");
-
-		AntCommand(
-			locator1 = "build-test-azure.xml",
-			value1 = "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Site Name",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		AntCommand(
-			locator1 = "build-test-azure.xml",
-			value1 = "assert-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
-
-		RecycleBin.emptyCP();
-
-		AntCommand(
-			locator1 = "build-test-azure.xml",
-			value1 = "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 	}
 
 	@priority = "5"
@@ -210,19 +62,15 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.emptyCP();
 	}
@@ -237,19 +85,15 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			portlet = "Recycle Bin");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
 
 		RecycleBin.emptyCP();
 	}
@@ -260,129 +104,30 @@ definition {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
 		property test.assert.warning.exceptions = "false";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		JSONGroup.addGroup(groupName = "Test Site Name 1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		LAR.exportPortlet(larFileName = "DM_Test_DB_Store.lar");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name-1");
 
 		LAR.importPortlet(larFileName = "DM_Test_DB_Store.lar");
 
 		Navigator.openURL();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name-1");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-	}
-
-	@description = "This is a use case for LPS-122233."
-	@priority = "3"
-	test ReIndexingDoesNotAddNewS3StoreCacheFiles {
-		property aws.store.enabled = "true";
-		property test.name.skip.portal.instance = "DocumentLibraryStore#ReIndexingDoesNotAddNewS3StoreCacheFiles";
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		for (var fileNum : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title ${fileNum}",
-				groupName = "Site Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${fileNum}.jpg");
-		}
-
-		var tempDir = PropsUtil.get("app.server.temp.dir");
-		var displayDateHour = DateUtil.getFormattedCurrentDate("HH", "UTC");
-		var displayDateDay = DateUtil.getFormattedCurrentDate("dd", "UTC");
-		var displayDateMonth = DateUtil.getFormattedCurrentDate("MM", "UTC");
-		var displayDateYear = DateUtil.getFormattedCurrentDate("yyyy", "UTC");
-
-		var s3TempDir = "${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}";
-
-		var filesBeforeReIndex = FileUtil.listFiles("${s3TempDir}");
-
-		echo("S3 temp directory files before reindex: ${filesBeforeReIndex}.");
-
-		if ("${filesBeforeReIndex}" == "") {
-			fail("The S3 directory is empty at ${s3TempDir}.");
-		}
-
-		SearchAdministration.executeReindex();
-
-		var filesAfterReIndex = FileUtil.listFiles("${s3TempDir}");
-
-		echo("S3 temp directory files after reindex: ${filesAfterReIndex}.");
-
-		if ("${filesBeforeReIndex}" == "${filesAfterReIndex}") {
-			echo("The S3 temp directory remains unchanged after re-indexing.");
-		}
-		else {
-			fail("The S3 temp directory modified after re-indexing.");
-		}
-	}
-
-	@description = "This is a use case for LPS-127589."
-	@priority = "3"
-	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
-		property aws.store.enabled = "true";
-		property test.name.skip.portal.instance = "DocumentLibraryStore#S3ConnectionDoesNotLeakWhenServingFileAsStream";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		ServerAdministration.openServerAdmin();
-
-		var script = '''
-			import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-			import com.liferay.document.library.kernel.store.DLStoreUtil;
- 
-			List fileEntries = DLFileEntryLocalServiceUtil.getFileEntries(0,1);
- 
-			fileEntries.each { fileEntry ->
-				(1..60).each {
-					try {
-						InputStream is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName())
-					} 
-					catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		''';
-
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}");
-
-		AssertConsoleTextNotPresent(value1 = "ConnectionPoolTimeoutException");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentDescriptionEdit = "DM Document Description Edit",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
-
-		DMDocument.viewEditCP(
-			dmDocumentTitleEdit = "DM Document Title Edit",
-			dmDocumentVersionNumber = "1.1");
 	}
 
 }

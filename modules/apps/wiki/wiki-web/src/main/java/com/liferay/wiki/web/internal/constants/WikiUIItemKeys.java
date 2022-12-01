@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.display.context;
+package com.liferay.wiki.web.internal.constants;
 
 /**
  * @author Iván Zaera

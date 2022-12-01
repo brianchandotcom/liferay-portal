@@ -30,16 +30,16 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Stream;
 
 import org.owasp.validator.html.AntiSamy;
 import org.owasp.validator.html.CleanResults;
@@ -52,13 +52,12 @@ import org.owasp.validator.html.ScanException;
 public class LangSanitizer {
 
 	public static void main(String[] args) throws Exception {
-		String baseDir = ArgumentsUtil.getValue(args, "source.base.dir", "./");
+		long startTime = System.currentTimeMillis();
 
 		LangSanitizer langSanitizer = new LangSanitizer();
 
-		long startTime = System.currentTimeMillis();
-
-		langSanitizer.sanitize(baseDir);
+		langSanitizer.sanitize(
+			ArgumentsUtil.getValue(args, "source.base.dir", "./"));
 
 		long endTime = System.currentTimeMillis();
 
@@ -67,7 +66,7 @@ public class LangSanitizer {
 		}
 
 		System.out.println(
-			"Total time： " + ((endTime - startTime) / 1000) + "s");
+			"Total time: " + ((endTime - startTime) / 1000) + "s");
 	}
 
 	public LangSanitizer() throws Exception {
@@ -78,13 +77,11 @@ public class LangSanitizer {
 	}
 
 	public void sanitize(String baseDirName) throws Exception {
-		List<File> fileList = _getAllLanguageProperties(baseDirName);
-
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
 		List<Future<List<String>>> futures = new CopyOnWriteArrayList<>();
 
-		for (File file : fileList) {
+		for (File file : _getPropertiesFiles(baseDirName)) {
 			Future<List<String>> future = executorService.submit(
 				new Callable<List<String>>() {
 
@@ -109,24 +106,10 @@ public class LangSanitizer {
 		}
 	}
 
-	private boolean _contains(Object[] array, Object value) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		for (Object object : array) {
-			if (Objects.equals(value, object)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private List<File> _getAllLanguageProperties(String baseDirName)
+	private List<File> _getPropertiesFiles(String baseDirName)
 		throws Exception {
 
-		List<File> fileList = new ArrayList<>();
+		List<File> files = new ArrayList<>();
 
 		Files.walkFileTree(
 			Paths.get(baseDirName),
@@ -139,8 +122,10 @@ public class LangSanitizer {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
+					Stream<String> stream = Arrays.stream(_SKIP_DIR_NAMES);
+
 					if (dirName.startsWith(".") ||
-						_contains(_SKIP_DIR_NAMES, dirName)) {
+						stream.anyMatch(dirName::equals)) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -160,7 +145,7 @@ public class LangSanitizer {
 						(fileName.endsWith(".properties") &&
 						 fileName.startsWith("bundle"))) {
 
-						fileList.add(file.toFile());
+						files.add(file.toFile());
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -168,7 +153,7 @@ public class LangSanitizer {
 
 			});
 
-		return fileList;
+		return files;
 	}
 
 	private String _sanitizeContent(File file, String key, String originalValue)
@@ -176,12 +161,12 @@ public class LangSanitizer {
 
 		AntiSamy antiSamy = new AntiSamy();
 
-		String sanitizedValue = EscapeUtil.unEscape(originalValue);
+		String sanitizedValue = null;
 
 		try {
 			CleanResults cleanResults = antiSamy.scan(originalValue, _policy);
 
-			sanitizedValue = EscapeUtil.unEscape(cleanResults.getCleanHTML());
+			sanitizedValue = EscapeUtil.unescape(cleanResults.getCleanHTML());
 		}
 		catch (ScanException scanException) {
 			return StringBundler.concat(
@@ -191,19 +176,14 @@ public class LangSanitizer {
 				EscapeUtil.escapeTag(originalValue));
 		}
 
-		String value = EscapeUtil.unEscape(originalValue);
+		if (!sanitizedValue.equals(
+				EscapeUtil.formatTag(EscapeUtil.unescape(originalValue)))) {
 
-		if (!sanitizedValue.equals(value)) {
-			value = EscapeUtil.formatTag(value);
-
-			if (!sanitizedValue.equals(value)) {
-				return StringBundler.concat(
-					"File: ", file.getAbsolutePath(), System.lineSeparator(),
-					"\tKey: ", key, System.lineSeparator(),
-					"\tOriginal Content: ", originalValue,
-					System.lineSeparator(), "\tSantized Content: ",
-					EscapeUtil.unEscapeTag(sanitizedValue));
-			}
+			return StringBundler.concat(
+				"File: ", file.getAbsolutePath(), System.lineSeparator(),
+				"\tKey: ", key, System.lineSeparator(), "\tOriginal Content: ",
+				originalValue, System.lineSeparator(), "\tSantized Content: ",
+				EscapeUtil.unescapeTag(sanitizedValue));
 		}
 
 		return null;
@@ -220,9 +200,7 @@ public class LangSanitizer {
 			}
 		}
 
-		Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
-
-		for (Map.Entry<Object, Object> entry : entrySet) {
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			String message = _sanitizeContent(
 				file, (String)entry.getKey(), (String)entry.getValue());
 

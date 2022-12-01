@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
+import com.liferay.document.library.kernel.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileEntryVerticalCard;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileShortcutVerticalCard;
@@ -606,6 +607,10 @@ public class RepositoryBrowserTagDisplayContext {
 
 		if (Objects.equals(searchContainer.getOrderByCol(), "modified-date")) {
 			return new RepositoryModelModifiedDateComparator<>(ascending);
+		}
+
+		if (Objects.equals(searchContainer.getOrderByCol(), "size")) {
+			return new RepositoryModelSizeComparator<>(ascending);
 		}
 
 		if (Objects.equals(searchContainer.getOrderByCol(), "title")) {

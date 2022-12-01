@@ -180,7 +180,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 			return null;
 		}
 
-		return new String[] {"modified-date", "title"};
+		return new String[] {"modified-date", "size", "title"};
 	}
 
 	private final Set<String> _actions;

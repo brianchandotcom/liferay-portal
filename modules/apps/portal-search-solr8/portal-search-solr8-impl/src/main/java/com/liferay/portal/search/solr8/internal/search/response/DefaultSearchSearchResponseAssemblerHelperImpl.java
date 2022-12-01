@@ -45,6 +45,7 @@ import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
 import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
+import com.liferay.portal.search.searcher.SearchTimeValue;
 import com.liferay.portal.search.solr8.internal.facet.SolrFacetFieldCollector;
 import com.liferay.portal.search.solr8.internal.facet.SolrFacetQueryCollector;
 import com.liferay.portal.search.solr8.internal.stats.StatsTranslator;
@@ -57,6 +58,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -97,6 +99,8 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 		processSearchHits(
 			queryResponse, queryResponse.getResults(),
 			searchSearchRequest.getQuery71(), hits, searchSearchResponse);
+
+		_setSearchTimeValue(queryResponse, searchSearchResponse);
 	}
 
 	protected void addSnippets(
@@ -390,6 +394,21 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 		if (statsResponseMap != null) {
 			updateStatsResults(hits, statsResponseMap, searchSearchRequest);
 		}
+	}
+
+	private void _setSearchTimeValue(
+		QueryResponse queryResponse,
+		SearchSearchResponse searchSearchResponse) {
+
+		SearchTimeValue.Builder builder = SearchTimeValue.Builder.newBuilder();
+
+		builder.duration(
+			queryResponse.getQTime()
+		).timeUnit(
+			TimeUnit.MILLISECONDS
+		);
+
+		searchSearchResponse.setSearchTimeValue(builder.build());
 	}
 
 	private static final String[] _EXCLUDED_FIELDS = {"_root_", "_version_"};

@@ -435,14 +435,14 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Map<String, Serializable>> getValuesList(
-			long objectDefinitionId, long groupId, long[] accountEntryIds,
+			long groupId, long companyId, long userId, long objectDefinitionId,
 			Predicate predicate, String search, int start, int end,
 			OrderByExpression[] orderByExpressions)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getValuesListCount(
-			long objectDefinitionId, long groupId, long[] accountEntryIds,
+			long groupId, long companyId, long userId, long objectDefinitionId,
 			Predicate predicate, String search)
 		throws PortalException;
 

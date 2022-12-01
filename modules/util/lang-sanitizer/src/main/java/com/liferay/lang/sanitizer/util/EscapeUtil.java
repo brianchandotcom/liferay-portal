@@ -55,7 +55,7 @@ public class EscapeUtil {
 		return content;
 	}
 
-	public static String unEscape(String content) {
+	public static String unescape(String content) {
 		Set<String> keys = _escapedCharacterMap.keySet();
 
 		for (String key : keys) {
@@ -68,7 +68,7 @@ public class EscapeUtil {
 		return content;
 	}
 
-	public static String unEscapeTag(String content) {
+	public static String unescapeTag(String content) {
 		content = content.replaceAll("&gt;", ">");
 		content = content.replaceAll("&lt;", "<");
 

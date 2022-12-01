@@ -364,7 +364,7 @@ public class TaskNodeExecutorTest {
 	@Inject
 	private KaleoTimerLocalService _kaleoTimerLocalService;
 
-	@Inject(filter = "node.type=TASK")
+	@Inject(filter = "component.name=*.TaskNodeExecutor")
 	private NodeExecutor _nodeExecutor;
 
 	private ServiceContext _serviceContext;

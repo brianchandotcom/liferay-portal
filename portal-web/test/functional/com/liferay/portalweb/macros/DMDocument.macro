@@ -2852,6 +2852,16 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#FRIENDLY_URL_ACTIVE_URL");
 	}
 
+	macro viewAllDocumentsChecked {
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
+
+		Click(locator1 = "DocumentsAndMedia#TOOLBAR_INFO_PANEL");
+
+		AssertElementPresent(
+			key_detailsMessage = "${detailsMessage}",
+			locator1 = "DocumentsAndMedia#TOOLBAR_INFO_PANEL_DETAILS_MESSAGE");
+	}
+
 	macro viewAllPG {
 		DMDocument.viewPG(
 			categoryName = "${categoryName}",

@@ -4358,7 +4358,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		WebDriverWait webDriverWait = new WebDriverWait(this, 5);
 
 		webDriverWait.until(
-			ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
+			ExpectedConditions.presenceOfElementLocated(getBy(locator)));
 
 		return getWrappedWebDriver(getWebElement(locator));
 	}

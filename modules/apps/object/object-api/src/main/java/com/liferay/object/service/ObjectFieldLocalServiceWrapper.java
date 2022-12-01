@@ -557,6 +557,14 @@ public class ObjectFieldLocalServiceWrapper
 			objectFieldSettings);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectField updateDBTableName(
+			long objectFieldId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.updateDBTableName(objectFieldId);
+	}
+
 	/**
 	 * Updates the object field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

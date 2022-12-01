@@ -392,6 +392,10 @@ public interface ObjectFieldLocalService
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectField updateDBTableName(long objectFieldId)
+		throws PortalException;
+
 	/**
 	 * Updates the object field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

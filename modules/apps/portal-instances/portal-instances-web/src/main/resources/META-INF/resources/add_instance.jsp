@@ -69,12 +69,6 @@
 
 					</aui:select>
 				</c:if>
-
-				<liferay-frontend:edit-form-footer>
-					<liferay-frontend:edit-form-buttons
-						submitLabel="add"
-					/>
-				</liferay-frontend:edit-form-footer>
 			</div>
 		</div>
 

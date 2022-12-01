@@ -108,6 +108,61 @@ definition {
 		}
 	}
 
+	@description = "Set custom text for all fields at Site level"
+	macro setCustomTextForAllFieldsAtSiteLevel {
+		Variables.assertDefined(parameterList = "${text},${webSiteText}");
+
+		CookieNavigator.gotoSiteSettings(
+			baseURL = "${baseURL}",
+			portlet = "Consent Panel",
+			siteURLKey = "${siteURLKey}");
+
+		Type(
+			locator1 = "CookieConsentAdmin#TITLE",
+			value1 = "${text}_1");
+
+		Type(
+			locator1 = "CookieConsentAdmin#DESCRIPTION",
+			value1 = "${text}_2");
+
+		Type(
+			locator1 = "CookieConsentAdmin#COOKIE_POLICY_LINK",
+			value1 = "${webSiteText}_3");
+
+		Type(
+			locator1 = "CookieConsentAdmin#LINK_DISPLAY_TEXT",
+			value1 = "${text}_4");
+
+		Type(
+			locator1 = "CookieConsentAdmin#STRICTLY_NECESSARY_COOKIES_DESCRIPTION",
+			value1 = "${text}_5");
+
+		Type(
+			locator1 = "CookieConsentAdmin#FUNCTIONAL_COOKIES_DESCRIPTION",
+			value1 = "${text}_6");
+
+		Type(
+			locator1 = "CookieConsentAdmin#PERFORMANCE_COOKIES_DESCRIPTION",
+			value1 = "${text}_7");
+
+		Type(
+			locator1 = "CookieConsentAdmin#PERSONALIZATION_COOKIES_DESCRIPTION",
+			value1 = "${text}_8");
+
+		if (isSet(cancel)) {
+			AssertClick(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+		else {
+			CookieBannerAdmin.saveConfiguration();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+		}
+	}
+
 	@description = "Verify all elements are present and configured"
 	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieConsentAdmin#MENU_TITLE");

@@ -139,18 +139,24 @@ definition {
 
 	@description = "Adding site with Cookie Banner Configuration portlet"
 	macro createSitePageWithCookieBannerConfigurationPortlet {
+		var groupName = "${groupName}";
+
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
+		}
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "${groupName}",
 			layoutName = "Cookie Consent Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
+			groupName = "${groupName}",
 			layoutName = "Cookie Consent Test Page",
 			widgetName = "Cookies Banner Configuration");
 
 		Navigator.gotoSitePage(
 			pageName = "Cookie Consent Test Page",
-			siteName = "Guest");
+			siteName = "${groupName}");
 	}
 
 	@description = "Delete all cookies and Refresh page"

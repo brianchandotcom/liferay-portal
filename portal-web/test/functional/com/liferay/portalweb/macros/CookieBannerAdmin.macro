@@ -96,6 +96,41 @@ definition {
 		}
 	}
 
+	@description = "Set custom texts for Cookie Banner at Site Level"
+	macro setCustomTextForAllFieldsAtSiteLevel {
+		Variables.assertDefined(parameterList = "${text}");
+
+		CookieNavigator.gotoSiteSettings(
+			baseURL = "${baseURL}",
+			portlet = "Banner",
+			siteURLKey = "${siteURLKey}");
+
+		Type(
+			locator1 = "CookieBannerAdmin#CONTENT",
+			value1 = "${text}_1");
+
+		Type(
+			locator1 = "CookieBannerAdmin#PRIVACY_POLICY_LINK",
+			value1 = "${text}_2");
+
+		Type(
+			locator1 = "CookieBannerAdmin#LINK_DISPLAY_TEXT",
+			value1 = "${text}_3");
+
+		if (isSet(cancel)) {
+			AssertClick(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+		else {
+			CookieBannerAdmin.saveConfiguration();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+		}
+	}
+
 	@description = "Verify all elements are present and configured at Cookie Banner"
 	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");

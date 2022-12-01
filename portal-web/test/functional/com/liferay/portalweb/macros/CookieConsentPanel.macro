@@ -173,4 +173,38 @@ definition {
 		Click(locator1 = "CookieConsentPanel#CLOSE_BUTTON");
 	}
 
+	@description = "Verify that customized texts are present in portlet"
+	macro verifyCustomTextsArePresentInPortlet {
+		Variables.assertDefined(parameterList = "${key_text}");
+
+		var siteNameURL = StringUtil.replace("${siteName}", " ", "-");
+
+		var siteNameURL = StringUtil.lowerCase("${siteNameURL}");
+		var baseURL = "${baseURL}";
+		var actualLink = selenium.getAttribute("CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK_VALUE");
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Navigator.gotoSitePage(
+			baseURL = "${baseURL}",
+			pageName = "${pageName}",
+			siteName = "${siteName}");
+
+		TestUtils.assertEquals(
+			actual = "${actualLink}",
+			expected = "${baseURL}/web/${siteNameURL}#${key_text}_3");
+
+		AssertElementPresent(
+			key_text = "${key_text}_4",
+			locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_TITLE");
+
+		for (var id : list "2,5,6,7,8") {
+			AssertElementPresent(
+				key_text = "${id}",
+				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_LOCALIZED_TEXT");
+		}
+	}
+
 }

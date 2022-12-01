@@ -29,6 +29,20 @@ definition {
 		CookiePreferenceHandlingAdmin.saveConfiguration();
 	}
 
+	@description = "Enable Cookie Preference handling with Explicit cookie setting Enabled on site level"
+	macro enablePreferenceHandlingWithCookieConsentInSiteSettings {
+		CookieNavigator.gotoSiteSettings(
+			baseURL = "${baseURL}",
+			portlet = "Preference Handling",
+			siteURLKey = "${siteURLKey}");
+
+		FormFields.enableCheckbox(fieldName = "Enabled");
+
+		FormFields.enableCheckbox(fieldName = "Explicit Cookie Consent Mode");
+
+		CookiePreferenceHandlingAdmin.saveConfiguration();
+	}
+
 	@description = "Disable Cookie Preference handling with Explicit cookie setting Disabled"
 	macro enablePreferenceHandlingWithoutCookieConsent {
 		CookieNavigator.gotoInstanceSettings(portlet = "Preference Handling");

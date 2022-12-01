@@ -35,9 +35,14 @@ definition {
 		takeScreenshot();
 
 		var baseURL = "${baseURL}";
+		var siteURLKey = "${siteURLKey}";
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(siteURLKey))) {
+			var siteURLKey = "guest";
 		}
 
 		if ("${portlet}" == "Banner") {
@@ -52,7 +57,7 @@ definition {
 			var portletId = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration";
 		}
 
-		Open(locator1 = "${baseURL}/group/guest/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_factoryPid=${portletId}&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_factoryPid=${portletId}&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 
 		takeScreenshot();
 	}

@@ -51,7 +51,7 @@ definition {
 
 			PRMUtils.definePermission(
 				itemName = "Name",
-				objectName = "MDF Listing Column",
+				objectName = "MDF Listings Columns",
 				permissionName = "View",
 				roleName = "User");
 		}

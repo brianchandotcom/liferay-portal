@@ -23,10 +23,10 @@ definition {
 
 		ObjectCustomViews.gotoPermissions(entryName = "${itemName}");
 
-		var roleName = StringUtil.loweCase("${roleName}");
+		var roleName = StringUtil.lowerCase("${roleName}");
 		var permissionName = StringUtil.upperCase("${permissionName}");
 
-		Click(
+		Click.javaScriptClick(
 			key_permissionName = "${permissionName}",
 			key_roleName = "${roleName}",
 			locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");

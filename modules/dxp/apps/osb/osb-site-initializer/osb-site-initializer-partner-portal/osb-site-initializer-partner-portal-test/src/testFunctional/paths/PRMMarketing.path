@@ -10,7 +10,7 @@
 </thead>
 
 <tbody>
-tr>
+<tr>
 	<td>APPLY_FOR_FUNDS</td>
 	<td>//a[contains(@href,'mdf-requests/new')][contains(.,'Apply for Funds')]</td>
 	<td></td>

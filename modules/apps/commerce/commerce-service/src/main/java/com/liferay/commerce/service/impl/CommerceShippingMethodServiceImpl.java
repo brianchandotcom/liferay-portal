@@ -155,22 +155,6 @@ public class CommerceShippingMethodServiceImpl
 
 	@Override
 	public CommerceShippingMethod fetchCommerceShippingMethod(
-			long commerceShippingMethodId)
-		throws PortalException {
-
-		CommerceShippingMethod commerceShippingMethod =
-			commerceShippingMethodLocalService.fetchCommerceShippingMethod(
-				commerceShippingMethodId);
-
-		if (commerceShippingMethod != null) {
-			_checkCommerceChannel(commerceShippingMethod.getGroupId());
-		}
-
-		return commerceShippingMethod;
-	}
-
-	@Override
-	public CommerceShippingMethod fetchCommerceShippingMethod(
 			long groupId, String engineKey)
 		throws PortalException {
 

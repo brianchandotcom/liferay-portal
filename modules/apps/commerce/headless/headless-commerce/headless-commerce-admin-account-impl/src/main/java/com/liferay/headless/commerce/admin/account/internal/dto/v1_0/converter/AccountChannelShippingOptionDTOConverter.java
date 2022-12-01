@@ -15,15 +15,15 @@
 package com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryService;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
-import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountChannelShippingOption;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -52,21 +52,17 @@ public class AccountChannelShippingOptionDTOConverter
 
 	@Override
 	public AccountChannelShippingOption toDTO(
-			DTOConverterContext dtoConverterContext)
+			DTOConverterContext dtoConverterContext,
+			CommerceShippingOptionAccountEntryRel
+				commerceShippingOptionAccountEntryRel)
 		throws Exception {
-
-		CommerceShippingOptionAccountEntryRel
-			commerceShippingOptionAccountEntryRel =
-				_commerceShippingOptionAccountEntryRelService.
-					getCommerceShippingOptionAccountEntryRel(
-						(Long)dtoConverterContext.getId());
 
 		return new AccountChannelShippingOption() {
 			{
 				setAccountExternalReferenceCode(
 					() -> {
 						AccountEntry accountEntry =
-							_accountEntryService.fetchAccountEntry(
+							_accountEntryLocalService.fetchAccountEntry(
 								commerceShippingOptionAccountEntryRel.
 									getAccountEntryId());
 
@@ -81,6 +77,7 @@ public class AccountChannelShippingOptionDTOConverter
 					});
 				accountId =
 					commerceShippingOptionAccountEntryRel.getAccountEntryId();
+				actions = dtoConverterContext.getActions();
 				channelId =
 					commerceShippingOptionAccountEntryRel.
 						getCommerceChannelId();
@@ -91,12 +88,12 @@ public class AccountChannelShippingOptionDTOConverter
 				setShippingMethodId(
 					() -> {
 						CommerceChannel commerceChannel =
-							_commerceChannelService.getCommerceChannel(
+							_commerceChannelLocalService.getCommerceChannel(
 								commerceShippingOptionAccountEntryRel.
 									getCommerceChannelId());
 
 						CommerceShippingMethod commerceShippingMethod =
-							_commerceShippingMethodService.
+							_commerceShippingMethodLocalService.
 								fetchCommerceShippingMethod(
 									commerceChannel.getGroupId(),
 									commerceShippingOptionAccountEntryRel.
@@ -117,7 +114,7 @@ public class AccountChannelShippingOptionDTOConverter
 					() -> {
 						CommerceShippingFixedOption
 							commerceShippingFixedOption =
-								_commerceShippingFixedOptionService.
+								_commerceShippingFixedOptionLocalService.
 									fetchCommerceShippingFixedOption(
 										commerceShippingOptionAccountEntryRel.
 											getCompanyId(),
@@ -139,17 +136,18 @@ public class AccountChannelShippingOptionDTOConverter
 	}
 
 	@Reference
-	private AccountEntryService _accountEntryService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private CommerceChannelService _commerceChannelService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceShippingFixedOptionService
-		_commerceShippingFixedOptionService;
+	private CommerceShippingFixedOptionLocalService
+		_commerceShippingFixedOptionLocalService;
 
 	@Reference
-	private CommerceShippingMethodService _commerceShippingMethodService;
+	private CommerceShippingMethodLocalService
+		_commerceShippingMethodLocalService;
 
 	@Reference
 	private CommerceShippingOptionAccountEntryRelService

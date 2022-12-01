@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -85,6 +87,47 @@ public class CommerceShippingOptionAccountEntryRelServiceImpl
 		return commerceShippingOptionAccountEntryRelLocalService.
 			fetchCommerceShippingOptionAccountEntryRel(
 				accountEntryId, commerceChannelId);
+	}
+
+	@Override
+	public CommerceShippingOptionAccountEntryRel
+			getCommerceShippingOptionAccountEntryRel(
+				long commerceShippingOptionAccountEntryRelId)
+		throws PortalException {
+
+		CommerceShippingOptionAccountEntryRel
+			commerceShippingOptionAccountEntryRel =
+				commerceShippingOptionAccountEntryRelLocalService.
+					getCommerceShippingOptionAccountEntryRel(
+						commerceShippingOptionAccountEntryRelId);
+
+		_checkAccountEntry(
+			commerceShippingOptionAccountEntryRel.getAccountEntryId(),
+			ActionKeys.VIEW);
+
+		return commerceShippingOptionAccountEntryRel;
+	}
+
+	@Override
+	public List<CommerceShippingOptionAccountEntryRel>
+			getCommerceShippingOptionAccountEntryRels(long accountEntryId)
+		throws Exception {
+
+		_checkAccountEntry(accountEntryId, ActionKeys.VIEW);
+
+		return commerceShippingOptionAccountEntryRelLocalService.
+			getCommerceShippingOptionAccountEntryRels(accountEntryId);
+	}
+
+	@Override
+	public int getCommerceShippingOptionAccountEntryRelsCount(
+			long accountEntryId)
+		throws Exception {
+
+		_checkAccountEntry(accountEntryId, ActionKeys.VIEW);
+
+		return commerceShippingOptionAccountEntryRelLocalService.
+			getCommerceShippingOptionAccountEntryRelsCount(accountEntryId);
 	}
 
 	@Override

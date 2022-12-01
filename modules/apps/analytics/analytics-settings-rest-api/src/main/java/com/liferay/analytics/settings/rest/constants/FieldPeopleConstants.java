@@ -54,7 +54,7 @@ public class FieldPeopleConstants {
 		"expando", "externalReferenceCode", "facebookId", "firstName",
 		"googleUserId", "greeting", "jobTitle", "languageId", "lastName",
 		"ldapServerId", "membership", "middleName", "modifiedDate", "openId",
-		"portraitId", "screenName", "status", "timeZoneId", "uuid"
+		"portraitId", "screenName", "status", "timeZoneId", "userId", "uuid"
 	};
 
 	public static final String[] FIELD_USER_REQUIRED_NAMES = {

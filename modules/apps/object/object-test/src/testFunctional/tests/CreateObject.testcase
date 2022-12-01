@@ -636,6 +636,10 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
 		CreateObject.assertEntrySelectedOnRelationshipField(entry = "Entry A");
+
+		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "CustomObject10");
+
+		ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = "${objectDefinitionId}");
 	}
 
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Custom Object"

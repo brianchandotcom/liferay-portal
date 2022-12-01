@@ -25,7 +25,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
-DefaultWikiListPagesDisplayContext wikiListPagesDisplayContext = new DefaultWikiListPagesDisplayContext(request, response, node, (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER));
+DefaultWikiListPagesDisplayContext wikiListPagesDisplayContext = new DefaultWikiListPagesDisplayContext(request, node, (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER));
 
 SearchContainer<WikiPage> wikiPagesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, wikiListPagesDisplayContext.getEmptyResultsMessage());
 

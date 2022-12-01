@@ -58,7 +58,6 @@ import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiWebKeys;
-import com.liferay.wiki.display.context.WikiListPagesDisplayContext;
 import com.liferay.wiki.display.context.WikiUIItemKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -75,20 +74,16 @@ import com.liferay.wiki.web.internal.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
  */
-public class DefaultWikiListPagesDisplayContext
-	implements WikiListPagesDisplayContext {
+public class DefaultWikiListPagesDisplayContext {
 
 	public DefaultWikiListPagesDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, WikiNode wikiNode,
+		HttpServletRequest httpServletRequest, WikiNode wikiNode,
 		TrashHelper trashHelper) {
 
 		_httpServletRequest = httpServletRequest;
@@ -98,7 +93,6 @@ public class DefaultWikiListPagesDisplayContext
 		_wikiRequestHelper = new WikiRequestHelper(httpServletRequest);
 	}
 
-	@Override
 	public String getEmptyResultsMessage() {
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
@@ -152,7 +146,6 @@ public class DefaultWikiListPagesDisplayContext
 		return "there-are-no-pages";
 	}
 
-	@Override
 	public Menu getMenu(WikiPage wikiPage) throws PortalException {
 		Menu menu = new Menu();
 
@@ -183,12 +176,6 @@ public class DefaultWikiListPagesDisplayContext
 		return menu;
 	}
 
-	@Override
-	public UUID getUuid() {
-		return _UUID;
-	}
-
-	@Override
 	public void populateResultsAndTotal(
 			SearchContainer<WikiPage> searchContainer)
 		throws PortalException {
@@ -759,9 +746,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		return true;
 	}
-
-	private static final UUID _UUID = UUID.fromString(
-		"628C435B-DB39-4E46-91DF-CEA763CF79F5");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultWikiListPagesDisplayContext.class);

@@ -43,9 +43,8 @@ public class LangSanitizerTest {
 	public void setUpScanner() throws Exception {
 		ClassLoader classLoader = LangSanitizer.class.getClassLoader();
 
-		URL antiSamyURL = classLoader.getResource("anti-samy.xml");
-
-		_policy = Policy.getInstance(antiSamyURL.getFile());
+		_policy = Policy.getInstance(
+			classLoader.getResourceAsStream("anti-samy.xml"));
 	}
 
 	@Test

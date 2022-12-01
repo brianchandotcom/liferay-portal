@@ -22,8 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -75,11 +73,8 @@ public class LangSanitizer {
 	public LangSanitizer() throws Exception {
 		ClassLoader classLoader = LangSanitizer.class.getClassLoader();
 
-		URL antiSamyURL = classLoader.getResource("anti-samy.xml");
-
-		String antsamyPath = antiSamyURL.getFile();
-
-		_policy = Policy.getInstance(antsamyPath);
+		_policy = Policy.getInstance(
+			classLoader.getResourceAsStream("anti-samy.xml"));
 	}
 
 	public void sanitize(String baseDirName) throws Exception {

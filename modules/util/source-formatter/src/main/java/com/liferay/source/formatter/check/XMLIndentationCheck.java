@@ -33,6 +33,41 @@ public class XMLIndentationCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		content = _fixLineBreak(content);
+
+		while (true) {
+			String newContent = _fixTagsIndentation(content);
+
+			if (newContent.equals(content)) {
+				return newContent;
+			}
+
+			content = newContent;
+		}
+	}
+
+	private String _fixIndentation(
+		String content, String line, int expectedTabCount, int lineNumber) {
+
+		StringBundler sb = new StringBundler(expectedTabCount + 1);
+
+		for (int i = 0; i < expectedTabCount; i++) {
+			sb.append(CharPool.TAB);
+		}
+
+		sb.append(StringUtil.trim(line));
+
+		String newLine = sb.toString();
+
+		if (line.equals(newLine)) {
+			return content;
+		}
+
+		return StringUtil.replaceFirst(
+			content, line, newLine, getLineStartPos(content, lineNumber));
+	}
+
+	private String _fixLineBreak(String content) {
 		int x = -1;
 
 		while (true) {
@@ -86,36 +121,7 @@ public class XMLIndentationCheck extends BaseFileCheck {
 				content, matcher.group(2), "\n", matcher.start(2));
 		}
 
-		while (true) {
-			String newContent = _fixTagsIndentation(content);
-
-			if (newContent.equals(content)) {
-				return newContent;
-			}
-
-			content = newContent;
-		}
-	}
-
-	private String _fixIndentation(
-		String content, String line, int expectedTabCount, int lineNumber) {
-
-		StringBundler sb = new StringBundler(expectedTabCount + 1);
-
-		for (int i = 0; i < expectedTabCount; i++) {
-			sb.append(CharPool.TAB);
-		}
-
-		sb.append(StringUtil.trim(line));
-
-		String newLine = sb.toString();
-
-		if (line.equals(newLine)) {
-			return content;
-		}
-
-		return StringUtil.replaceFirst(
-			content, line, newLine, getLineStartPos(content, lineNumber));
+		return content;
 	}
 
 	private String _fixMultiLineTagAttributesIndentation(

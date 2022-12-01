@@ -430,10 +430,10 @@ public class ObjectEntryDTOConverter
 								_dlURLHelper.getDownloadURL(
 									fileEntry, fileEntry.getFileVersion(), null,
 									StringPool.BLANK),
-								"objectEntry",
-								objectEntry.getExternalReferenceCode()),
-							"objectDefinition",
-							objectDefinition.getExternalReferenceCode()));
+								"objectDefinitionExternalReferenceCode",
+								objectDefinition.getExternalReferenceCode()),
+							"objectEntryExternalReferenceCode",
+							objectEntry.getExternalReferenceCode()));
 				}
 				catch (PrincipalException principalException) {
 					if (_log.isWarnEnabled()) {

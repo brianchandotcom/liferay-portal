@@ -76,7 +76,7 @@ public class ObjectActionDownloadTriggerMessageListener
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					message.getString("objectDefinition"),
+					message.getString("objectDefinitionExternalReferenceCode"),
 					message.getLong("companyId"));
 
 		_objectActionEngine.executeObjectActions(
@@ -87,7 +87,7 @@ public class ObjectActionDownloadTriggerMessageListener
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
 				objectDefinition,
 				_objectEntryLocalService.fetchObjectEntry(
-					message.getString("objectEntry"),
+					message.getString("objectEntryExternalReferenceCode"),
 					objectDefinition.getObjectDefinitionId()),
 				null, _userLocalService.getUser(message.getLong("userId"))),
 			message.getLong("userId"));

@@ -1187,17 +1187,20 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
-		String objectEntry = ParamUtil.getString(
-			httpServletRequest, "objectEntry");
+		String objectDefinitionExternalReferenceCode = ParamUtil.getString(
+			httpServletRequest, "objectDefinitionExternalReferenceCode");
 
-		if (Validator.isNotNull(objectEntry)) {
+		if (Validator.isNotNull(objectDefinitionExternalReferenceCode)) {
 			Message message = new Message();
 
 			message.put("companyId", user.getCompanyId());
 			message.put(
-				"objectDefinition",
-				ParamUtil.getString(httpServletRequest, "objectDefinition"));
-			message.put("objectEntry", objectEntry);
+				"objectDefinitionExternalReferenceCode",
+				objectDefinitionExternalReferenceCode);
+			message.put(
+				"objectEntryExternalReferenceCode",
+				ParamUtil.getString(
+					httpServletRequest, "objectEntryExternalReferenceCode"));
 			message.put("userId", user.getUserId());
 
 			_messageBus.sendMessage(

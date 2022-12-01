@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchLogException;
@@ -41,6 +42,13 @@ public interface KaleoLogPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoLogUtil} to access the kaleo log persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo logs where companyId = &#63;.
@@ -184,6 +192,11 @@ public interface KaleoLogPersistence
 	 * @return the number of matching kaleo logs
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId();
 
 	/**
 	 * Returns all the kaleo logs where kaleoDefinitionVersionId = &#63;.
@@ -329,6 +342,10 @@ public interface KaleoLogPersistence
 	 */
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoInstanceId();
+
+	public FinderPath getFinderPathCountByKaleoInstanceId();
+
 	/**
 	 * Returns all the kaleo logs where kaleoInstanceId = &#63;.
 	 *
@@ -471,6 +488,11 @@ public interface KaleoLogPersistence
 	 * @return the number of matching kaleo logs
 	 */
 	public int countByKaleoInstanceId(long kaleoInstanceId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoTaskInstanceTokenId();
+
+	public FinderPath getFinderPathCountByKaleoTaskInstanceTokenId();
 
 	/**
 	 * Returns all the kaleo logs where kaleoTaskInstanceTokenId = &#63;.
@@ -615,6 +637,10 @@ public interface KaleoLogPersistence
 	 * @return the number of matching kaleo logs
 	 */
 	public int countByKaleoTaskInstanceTokenId(long kaleoTaskInstanceTokenId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKITI_T();
+
+	public FinderPath getFinderPathCountByKITI_T();
 
 	/**
 	 * Returns all the kaleo logs where kaleoInstanceTokenId = &#63; and type = &#63;.
@@ -770,6 +796,10 @@ public interface KaleoLogPersistence
 	 * @return the number of matching kaleo logs
 	 */
 	public int countByKITI_T(long kaleoInstanceTokenId, String type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK_KITI_T();
+
+	public FinderPath getFinderPathCountByKCN_KCPK_KITI_T();
 
 	/**
 	 * Returns all the kaleo logs where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63;.

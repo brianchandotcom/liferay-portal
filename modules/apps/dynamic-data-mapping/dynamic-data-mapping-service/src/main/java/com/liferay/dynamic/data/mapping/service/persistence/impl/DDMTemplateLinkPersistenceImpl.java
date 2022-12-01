@@ -98,9 +98,31 @@ public class DDMTemplateLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByTemplateId;
 	private FinderPath _finderPathWithoutPaginationFindByTemplateId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByTemplateId() {
+		return _finderPathWithoutPaginationFindByTemplateId;
+	}
+
 	private FinderPath _finderPathCountByTemplateId;
+
+	@Override
+	public FinderPath getFinderPathCountByTemplateId() {
+		return _finderPathCountByTemplateId;
+	}
 
 	/**
 	 * Returns all the ddm template links where templateId = &#63;.
@@ -615,7 +637,18 @@ public class DDMTemplateLinkPersistenceImpl
 		"ddmTemplateLink.templateId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the ddm template link where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchTemplateLinkException</code> if it could not be found.

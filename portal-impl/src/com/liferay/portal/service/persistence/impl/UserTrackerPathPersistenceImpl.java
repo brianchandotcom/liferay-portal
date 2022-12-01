@@ -83,9 +83,31 @@ public class UserTrackerPathPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserTrackerId;
 	private FinderPath _finderPathWithoutPaginationFindByUserTrackerId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserTrackerId() {
+		return _finderPathWithoutPaginationFindByUserTrackerId;
+	}
+
 	private FinderPath _finderPathCountByUserTrackerId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserTrackerId() {
+		return _finderPathCountByUserTrackerId;
+	}
 
 	/**
 	 * Returns all the user tracker paths where userTrackerId = &#63;.

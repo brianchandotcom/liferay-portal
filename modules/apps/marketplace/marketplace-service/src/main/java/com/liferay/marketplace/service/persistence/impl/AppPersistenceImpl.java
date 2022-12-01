@@ -99,9 +99,31 @@ public class AppPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the apps where uuid = &#63;.
@@ -626,7 +648,18 @@ public class AppPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the apps where uuid = &#63; and companyId = &#63;.
@@ -1198,7 +1231,18 @@ public class AppPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the apps where companyId = &#63;.
@@ -1687,7 +1731,18 @@ public class AppPersistenceImpl
 		"app.companyId = ?";
 
 	private FinderPath _finderPathFetchByRemoteAppId;
+
+	@Override
+	public FinderPath getFinderPathFetchByRemoteAppId() {
+		return _finderPathFetchByRemoteAppId;
+	}
+
 	private FinderPath _finderPathCountByRemoteAppId;
+
+	@Override
+	public FinderPath getFinderPathCountByRemoteAppId() {
+		return _finderPathCountByRemoteAppId;
+	}
 
 	/**
 	 * Returns the app where remoteAppId = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.
@@ -1895,7 +1950,18 @@ public class AppPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCategory;
 	private FinderPath _finderPathWithoutPaginationFindByCategory;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCategory() {
+		return _finderPathWithoutPaginationFindByCategory;
+	}
+
 	private FinderPath _finderPathCountByCategory;
+
+	@Override
+	public FinderPath getFinderPathCountByCategory() {
+		return _finderPathCountByCategory;
+	}
 
 	/**
 	 * Returns all the apps where category = &#63;.

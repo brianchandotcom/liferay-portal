@@ -124,6 +124,31 @@ public class FinderWhereClauseEntryUtil {
 		return getPersistence().update(finderWhereClauseEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByName_Nickname() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByName_Nickname();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByName_Nickname() {
+
+		return getPersistence().getFinderPathCountByName_Nickname();
+	}
+
 	/**
 	 * Returns all the finder where clause entries where name = &#63;.
 	 *

@@ -103,9 +103,31 @@ public class SubscriptionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the subscriptions where groupId = &#63;.
@@ -612,7 +634,18 @@ public class SubscriptionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the subscriptions where userId = &#63;.
@@ -1117,7 +1150,18 @@ public class SubscriptionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U() {
+		return _finderPathWithoutPaginationFindByG_U;
+	}
+
 	private FinderPath _finderPathCountByG_U;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U() {
+		return _finderPathCountByG_U;
+	}
 
 	/**
 	 * Returns all the subscriptions where groupId = &#63; and userId = &#63;.
@@ -1669,7 +1713,18 @@ public class SubscriptionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_C;
 	private FinderPath _finderPathWithoutPaginationFindByU_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_C() {
+		return _finderPathWithoutPaginationFindByU_C;
+	}
+
 	private FinderPath _finderPathCountByU_C;
+
+	@Override
+	public FinderPath getFinderPathCountByU_C() {
+		return _finderPathCountByU_C;
+	}
 
 	/**
 	 * Returns all the subscriptions where userId = &#63; and classNameId = &#63;.
@@ -2223,7 +2278,18 @@ public class SubscriptionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C() {
+		return _finderPathWithoutPaginationFindByC_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C() {
+		return _finderPathCountByC_C_C;
+	}
 
 	/**
 	 * Returns all the subscriptions where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -2815,8 +2881,26 @@ public class SubscriptionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_U_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_U_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_U_C_C() {
+		return _finderPathWithoutPaginationFindByC_U_C_C;
+	}
+
 	private FinderPath _finderPathFetchByC_U_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_U_C_C() {
+		return _finderPathFetchByC_U_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_U_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_U_C_C() {
+		return _finderPathCountByC_U_C_C;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByC_U_C_C;
 
 	/**

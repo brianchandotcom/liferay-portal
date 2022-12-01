@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionSpecificationOptionValueUtil} to access the cp definition specification option value persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp definition specification option values where uuid = &#63;.
@@ -187,6 +195,10 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the cp definition specification option value where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionSpecificationOptionValueException</code> if it could not be found.
 	 *
@@ -239,6 +251,10 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 * @return the number of matching cp definition specification option values
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp definition specification option values where uuid = &#63; and companyId = &#63;.
@@ -396,6 +412,10 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the cp definition specification option values where groupId = &#63;.
 	 *
@@ -539,6 +559,10 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 * @return the number of matching cp definition specification option values
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId();
+
+	public FinderPath getFinderPathCountByCPDefinitionId();
 
 	/**
 	 * Returns all the cp definition specification option values where CPDefinitionId = &#63;.
@@ -687,6 +711,11 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 * @return the number of matching cp definition specification option values
 	 */
 	public int countByCPDefinitionId(long CPDefinitionId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCPSpecificationOptionId();
+
+	public FinderPath getFinderPathCountByCPSpecificationOptionId();
 
 	/**
 	 * Returns all the cp definition specification option values where CPSpecificationOptionId = &#63;.
@@ -841,6 +870,10 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 */
 	public int countByCPSpecificationOptionId(long CPSpecificationOptionId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPOptionCategoryId();
+
+	public FinderPath getFinderPathCountByCPOptionCategoryId();
+
 	/**
 	 * Returns all the cp definition specification option values where CPOptionCategoryId = &#63;.
 	 *
@@ -989,6 +1022,10 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 */
 	public int countByCPOptionCategoryId(long CPOptionCategoryId);
 
+	public FinderPath getFinderPathFetchByC_CSOVI();
+
+	public FinderPath getFinderPathCountByC_CSOVI();
+
 	/**
 	 * Returns the cp definition specification option value where CPDefinitionSpecificationOptionValueId = &#63; and CPDefinitionId = &#63; or throws a <code>NoSuchCPDefinitionSpecificationOptionValueException</code> if it could not be found.
 	 *
@@ -1043,6 +1080,10 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 */
 	public int countByC_CSOVI(
 		long CPDefinitionSpecificationOptionValueId, long CPDefinitionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_CSO();
+
+	public FinderPath getFinderPathCountByC_CSO();
 
 	/**
 	 * Returns all the cp definition specification option values where CPDefinitionId = &#63; and CPSpecificationOptionId = &#63;.
@@ -1200,6 +1241,10 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	 * @return the number of matching cp definition specification option values
 	 */
 	public int countByC_CSO(long CPDefinitionId, long CPSpecificationOptionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_COC();
+
+	public FinderPath getFinderPathCountByC_COC();
 
 	/**
 	 * Returns all the cp definition specification option values where CPDefinitionId = &#63; and CPOptionCategoryId = &#63;.

@@ -16,6 +16,7 @@ package com.liferay.announcements.kernel.service.persistence;
 
 import com.liferay.announcements.kernel.exception.NoSuchEntryException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface AnnouncementsEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsEntryUtil} to access the announcements entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the announcements entries where uuid = &#63;.
@@ -247,6 +255,10 @@ public interface AnnouncementsEntryPersistence
 	 * @return the number of matching announcements entries that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -473,6 +485,10 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the announcements entries where companyId = &#63;.
 	 *
@@ -681,6 +697,10 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public int filterCountByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the announcements entries where userId = &#63;.
 	 *
@@ -887,6 +907,10 @@ public interface AnnouncementsEntryPersistence
 	 * @return the number of matching announcements entries that the user has permission to view
 	 */
 	public int filterCountByUserId(long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the announcements entries where classNameId = &#63; and classPK = &#63;.
@@ -1112,6 +1136,10 @@ public interface AnnouncementsEntryPersistence
 	 * @return the number of matching announcements entries that the user has permission to view
 	 */
 	public int filterCountByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1355,6 +1383,10 @@ public interface AnnouncementsEntryPersistence
 	public int filterCountByC_C_C(
 		long companyId, long classNameId, long classPK);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_A();
+
+	public FinderPath getFinderPathCountByC_C_A();
+
 	/**
 	 * Returns all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	 *
@@ -1596,6 +1628,10 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public int filterCountByC_C_A(
 		long classNameId, long classPK, boolean alert);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_A();
+
+	public FinderPath getFinderPathCountByC_C_C_A();
 
 	/**
 	 * Returns all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.

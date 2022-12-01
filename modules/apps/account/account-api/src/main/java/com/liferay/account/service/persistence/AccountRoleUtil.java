@@ -119,6 +119,30 @@ public class AccountRoleUtil {
 		return getPersistence().update(accountRole, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the account roles where companyId = &#63;.
 	 *
@@ -363,6 +387,19 @@ public class AccountRoleUtil {
 	 */
 	public static int filterCountByCompanyId(long companyId) {
 		return getPersistence().filterCountByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAccountEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAccountEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAccountEntryId() {
+
+		return getPersistence().getFinderPathCountByAccountEntryId();
 	}
 
 	/**
@@ -768,6 +805,18 @@ public class AccountRoleUtil {
 		return getPersistence().filterCountByAccountEntryId(accountEntryIds);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByRoleId() {
+
+		return getPersistence().getFinderPathFetchByRoleId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRoleId() {
+
+		return getPersistence().getFinderPathCountByRoleId();
+	}
+
 	/**
 	 * Returns the account role where roleId = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
 	 *
@@ -824,6 +873,18 @@ public class AccountRoleUtil {
 	 */
 	public static int countByRoleId(long roleId) {
 		return getPersistence().countByRoleId(roleId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A() {
+
+		return getPersistence().getFinderPathCountByC_A();
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchRenameFinderColumnEntryException;
 import com.liferay.portal.tools.service.builder.test.model.RenameFinderColumnEntry;
@@ -40,6 +41,13 @@ public interface RenameFinderColumnEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RenameFinderColumnEntryUtil} to access the rename finder column entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByColumnToRename();
+
+	public FinderPath getFinderPathCountByColumnToRename();
 
 	/**
 	 * Returns the rename finder column entry where columnToRename = &#63; or throws a <code>NoSuchRenameFinderColumnEntryException</code> if it could not be found.

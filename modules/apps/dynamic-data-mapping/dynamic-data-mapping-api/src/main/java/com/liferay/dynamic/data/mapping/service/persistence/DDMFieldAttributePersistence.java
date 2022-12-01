@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchFieldAttributeException;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface DDMFieldAttributePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFieldAttributeUtil} to access the ddm field attribute persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByStorageId();
+
+	public FinderPath getFinderPathCountByStorageId();
 
 	/**
 	 * Returns all the ddm field attributes where storageId = &#63;.
@@ -185,6 +193,10 @@ public interface DDMFieldAttributePersistence
 	 * @return the number of matching ddm field attributes
 	 */
 	public int countByStorageId(long storageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByS_L();
+
+	public FinderPath getFinderPathCountByS_L();
 
 	/**
 	 * Returns all the ddm field attributes where storageId = &#63; and languageId = &#63;.
@@ -340,6 +352,10 @@ public interface DDMFieldAttributePersistence
 	 * @return the number of matching ddm field attributes
 	 */
 	public int countByS_L(long storageId, String languageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByAN_SAV();
+
+	public FinderPath getFinderPathCountByAN_SAV();
 
 	/**
 	 * Returns all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
@@ -497,6 +513,10 @@ public interface DDMFieldAttributePersistence
 	 * @return the number of matching ddm field attributes
 	 */
 	public int countByAN_SAV(String attributeName, String smallAttributeValue);
+
+	public FinderPath getFinderPathFetchByF_AN_L();
+
+	public FinderPath getFinderPathCountByF_AN_L();
 
 	/**
 	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or throws a <code>NoSuchFieldAttributeException</code> if it could not be found.

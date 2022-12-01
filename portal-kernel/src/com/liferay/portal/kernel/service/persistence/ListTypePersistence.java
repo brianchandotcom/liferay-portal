@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.model.ListType;
 
@@ -38,6 +39,13 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ListTypeUtil} to access the list type persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByType();
+
+	public FinderPath getFinderPathCountByType();
 
 	/**
 	 * Returns all the list types where type = &#63;.
@@ -180,6 +188,10 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	 * @return the number of matching list types
 	 */
 	public int countByType(String type);
+
+	public FinderPath getFinderPathFetchByN_T();
+
+	public FinderPath getFinderPathCountByN_T();
 
 	/**
 	 * Returns the list type where name = &#63; and type = &#63; or throws a <code>NoSuchListTypeException</code> if it could not be found.

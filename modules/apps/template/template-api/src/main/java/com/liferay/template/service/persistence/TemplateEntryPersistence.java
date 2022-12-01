@@ -14,6 +14,7 @@
 
 package com.liferay.template.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.template.exception.NoSuchTemplateEntryException;
@@ -41,6 +42,13 @@ public interface TemplateEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TemplateEntryUtil} to access the template entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the template entries where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface TemplateEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the template entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTemplateEntryException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface TemplateEntryPersistence
 	 * @return the number of matching template entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the template entries where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface TemplateEntryPersistence
 	 * @return the number of matching template entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the template entries where groupId = &#63;.
@@ -606,6 +626,10 @@ public interface TemplateEntryPersistence
 	 */
 	public int countByGroupId(long[] groupIds);
 
+	public FinderPath getFinderPathFetchByDDMTemplateId();
+
+	public FinderPath getFinderPathCountByDDMTemplateId();
+
 	/**
 	 * Returns the template entry where ddmTemplateId = &#63; or throws a <code>NoSuchTemplateEntryException</code> if it could not be found.
 	 *
@@ -650,6 +674,10 @@ public interface TemplateEntryPersistence
 	 * @return the number of matching template entries
 	 */
 	public int countByDDMTemplateId(long ddmTemplateId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_IICN();
+
+	public FinderPath getFinderPathCountByG_IICN();
 
 	/**
 	 * Returns all the template entries where groupId = &#63; and infoItemClassName = &#63;.
@@ -805,6 +833,10 @@ public interface TemplateEntryPersistence
 	 * @return the number of matching template entries
 	 */
 	public int countByG_IICN(long groupId, String infoItemClassName);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_IICN_IIFVK();
+
+	public FinderPath getFinderPathCountByG_IICN_IIFVK();
 
 	/**
 	 * Returns all the template entries where groupId = &#63; and infoItemClassName = &#63; and infoItemFormVariationKey = &#63;.

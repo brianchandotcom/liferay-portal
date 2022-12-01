@@ -119,6 +119,30 @@ public class KBFolderUtil {
 		return getPersistence().update(kbFolder, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the kb folders where uuid = &#63;.
 	 *
@@ -280,6 +304,18 @@ public class KBFolderUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
 	 *
@@ -341,6 +377,18 @@ public class KBFolderUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -526,6 +574,18 @@ public class KBFolderUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the kb folders where companyId = &#63;.
 	 *
@@ -692,6 +752,18 @@ public class KBFolderUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_P() {
+
+		return getPersistence().getFinderPathCountByG_P();
 	}
 
 	/**
@@ -966,6 +1038,18 @@ public class KBFolderUtil {
 		return getPersistence().filterCountByG_P(groupId, parentKBFolderId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_P_N() {
+
+		return getPersistence().getFinderPathFetchByG_P_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_P_N() {
+
+		return getPersistence().getFinderPathCountByG_P_N();
+	}
+
 	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
 	 *
@@ -1040,6 +1124,18 @@ public class KBFolderUtil {
 		long groupId, long parentKBFolderId, String name) {
 
 		return getPersistence().countByG_P_N(groupId, parentKBFolderId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_P_UT() {
+
+		return getPersistence().getFinderPathFetchByG_P_UT();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_P_UT() {
+
+		return getPersistence().getFinderPathCountByG_P_UT();
 	}
 
 	/**
@@ -1120,6 +1216,18 @@ public class KBFolderUtil {
 
 		return getPersistence().countByG_P_UT(
 			groupId, parentKBFolderId, urlTitle);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByERC_G() {
+
+		return getPersistence().getFinderPathFetchByERC_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByERC_G() {
+
+		return getPersistence().getFinderPathCountByERC_G();
 	}
 
 	/**

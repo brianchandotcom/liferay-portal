@@ -81,8 +81,30 @@ public class RedundantIndexEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByC_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_N() {
+		return _finderPathFetchByC_N;
+	}
+
 	private FinderPath _finderPathCountByC_N;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N() {
+		return _finderPathCountByC_N;
+	}
 
 	/**
 	 * Returns the redundant index entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchRedundantIndexEntryException</code> if it could not be found.

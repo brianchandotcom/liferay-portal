@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.model.Ticket;
 
@@ -38,6 +39,13 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TicketUtil} to access the ticket persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByKey();
+
+	public FinderPath getFinderPathCountByKey();
 
 	/**
 	 * Returns the ticket where key = &#63; or throws a <code>NoSuchTicketException</code> if it could not be found.
@@ -80,6 +88,10 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	 * @return the number of matching tickets
 	 */
 	public int countByKey(String key);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -247,6 +259,10 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	 */
 	public int countByC_C_C(long companyId, long classNameId, long classPK);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_T();
+
+	public FinderPath getFinderPathCountByC_C_T();
+
 	/**
 	 * Returns all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
@@ -412,6 +428,10 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	 * @return the number of matching tickets
 	 */
 	public int countByC_C_T(long classNameId, long classPK, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_T();
+
+	public FinderPath getFinderPathCountByC_C_C_T();
 
 	/**
 	 * Returns all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.

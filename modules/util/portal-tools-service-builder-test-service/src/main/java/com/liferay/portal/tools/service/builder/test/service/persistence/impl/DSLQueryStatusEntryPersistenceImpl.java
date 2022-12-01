@@ -77,6 +77,16 @@ public class DSLQueryStatusEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	public DSLQueryStatusEntryPersistenceImpl() {
 		setModelClass(DSLQueryStatusEntry.class);
 

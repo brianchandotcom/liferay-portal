@@ -95,8 +95,30 @@ public class HtmlPreviewEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByG_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_C() {
+		return _finderPathFetchByG_C_C;
+	}
+
 	private FinderPath _finderPathCountByG_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C() {
+		return _finderPathCountByG_C_C;
+	}
 
 	/**
 	 * Returns the html preview entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchHtmlPreviewEntryException</code> if it could not be found.

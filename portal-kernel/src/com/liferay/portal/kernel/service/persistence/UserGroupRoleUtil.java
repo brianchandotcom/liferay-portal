@@ -119,6 +119,30 @@ public class UserGroupRoleUtil {
 		return getPersistence().update(userGroupRole, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the user group roles where userId = &#63;.
 	 *
@@ -285,6 +309,18 @@ public class UserGroupRoleUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
 	}
 
 	/**
@@ -456,6 +492,18 @@ public class UserGroupRoleUtil {
 		return getPersistence().countByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRoleId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByRoleId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRoleId() {
+
+		return getPersistence().getFinderPathCountByRoleId();
+	}
+
 	/**
 	 * Returns all the user group roles where roleId = &#63;.
 	 *
@@ -622,6 +670,18 @@ public class UserGroupRoleUtil {
 	 */
 	public static int countByRoleId(long roleId) {
 		return getPersistence().countByRoleId(roleId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU_G() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_G() {
+
+		return getPersistence().getFinderPathCountByU_G();
 	}
 
 	/**
@@ -811,6 +871,18 @@ public class UserGroupRoleUtil {
 		return getPersistence().countByU_G(userId, groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_R() {
+
+		return getPersistence().getFinderPathCountByG_R();
+	}
+
 	/**
 	 * Returns all the user group roles where groupId = &#63; and roleId = &#63;.
 	 *
@@ -996,6 +1068,18 @@ public class UserGroupRoleUtil {
 	 */
 	public static int countByG_R(long groupId, long roleId) {
 		return getPersistence().countByG_R(groupId, roleId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_G_R() {
+
+		return getPersistence().getFinderPathFetchByU_G_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_G_R() {
+
+		return getPersistence().getFinderPathCountByU_G_R();
 	}
 
 	/**

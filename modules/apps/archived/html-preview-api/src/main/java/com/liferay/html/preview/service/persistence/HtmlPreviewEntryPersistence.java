@@ -16,6 +16,7 @@ package com.liferay.html.preview.service.persistence;
 
 import com.liferay.html.preview.exception.NoSuchHtmlPreviewEntryException;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface HtmlPreviewEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link HtmlPreviewEntryUtil} to access the html preview entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByG_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C();
 
 	/**
 	 * Returns the html preview entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchHtmlPreviewEntryException</code> if it could not be found.

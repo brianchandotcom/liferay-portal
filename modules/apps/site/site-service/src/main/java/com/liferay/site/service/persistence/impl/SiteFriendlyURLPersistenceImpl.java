@@ -98,9 +98,31 @@ public class SiteFriendlyURLPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the site friendly urls where uuid = &#63;.
@@ -632,7 +654,18 @@ public class SiteFriendlyURLPersistenceImpl
 		"(siteFriendlyURL.uuid IS NULL OR siteFriendlyURL.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the site friendly url where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.
@@ -881,7 +914,18 @@ public class SiteFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the site friendly urls where uuid = &#63; and companyId = &#63;.
@@ -1463,7 +1507,18 @@ public class SiteFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C() {
+		return _finderPathWithoutPaginationFindByG_C;
+	}
+
 	private FinderPath _finderPathCountByG_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C() {
+		return _finderPathCountByG_C;
+	}
 
 	/**
 	 * Returns all the site friendly urls where groupId = &#63; and companyId = &#63;.
@@ -2002,7 +2057,18 @@ public class SiteFriendlyURLPersistenceImpl
 		"siteFriendlyURL.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_F;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_F() {
+		return _finderPathFetchByC_F;
+	}
+
 	private FinderPath _finderPathCountByC_F;
+
+	@Override
+	public FinderPath getFinderPathCountByC_F() {
+		return _finderPathCountByC_F;
+	}
 
 	/**
 	 * Returns the site friendly url where companyId = &#63; and friendlyURL = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.
@@ -2251,7 +2317,18 @@ public class SiteFriendlyURLPersistenceImpl
 		"(siteFriendlyURL.friendlyURL IS NULL OR siteFriendlyURL.friendlyURL = '')";
 
 	private FinderPath _finderPathFetchByG_C_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_L() {
+		return _finderPathFetchByG_C_L;
+	}
+
 	private FinderPath _finderPathCountByG_C_L;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_L() {
+		return _finderPathCountByG_C_L;
+	}
 
 	/**
 	 * Returns the site friendly url where groupId = &#63; and companyId = &#63; and languageId = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.
@@ -2526,7 +2603,18 @@ public class SiteFriendlyURLPersistenceImpl
 		"(siteFriendlyURL.languageId IS NULL OR siteFriendlyURL.languageId = '')";
 
 	private FinderPath _finderPathFetchByC_F_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_F_L() {
+		return _finderPathFetchByC_F_L;
+	}
+
 	private FinderPath _finderPathCountByC_F_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_F_L() {
+		return _finderPathCountByC_F_L;
+	}
 
 	/**
 	 * Returns the site friendly url where companyId = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.

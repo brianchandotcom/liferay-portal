@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.exception.NoSuchRelationException;
@@ -41,6 +42,13 @@ public interface SocialRelationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialRelationUtil} to access the social relation persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the social relations where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface SocialRelationPersistence
 	 * @return the number of matching social relations
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the social relations where uuid = &#63; and companyId = &#63;.
@@ -340,6 +352,10 @@ public interface SocialRelationPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the social relations where companyId = &#63;.
 	 *
@@ -482,6 +498,10 @@ public interface SocialRelationPersistence
 	 * @return the number of matching social relations
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId1();
+
+	public FinderPath getFinderPathCountByUserId1();
 
 	/**
 	 * Returns all the social relations where userId1 = &#63;.
@@ -626,6 +646,10 @@ public interface SocialRelationPersistence
 	 */
 	public int countByUserId1(long userId1);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId2();
+
+	public FinderPath getFinderPathCountByUserId2();
+
 	/**
 	 * Returns all the social relations where userId2 = &#63;.
 	 *
@@ -769,6 +793,10 @@ public interface SocialRelationPersistence
 	 */
 	public int countByUserId2(long userId2);
 
+	public FinderPath getFinderPathWithoutPaginationFindByType();
+
+	public FinderPath getFinderPathCountByType();
+
 	/**
 	 * Returns all the social relations where type = &#63;.
 	 *
@@ -911,6 +939,10 @@ public interface SocialRelationPersistence
 	 * @return the number of matching social relations
 	 */
 	public int countByType(int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_T();
+
+	public FinderPath getFinderPathCountByC_T();
 
 	/**
 	 * Returns all the social relations where companyId = &#63; and type = &#63;.
@@ -1065,6 +1097,10 @@ public interface SocialRelationPersistence
 	 * @return the number of matching social relations
 	 */
 	public int countByC_T(long companyId, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU1_U2();
+
+	public FinderPath getFinderPathCountByU1_U2();
 
 	/**
 	 * Returns all the social relations where userId1 = &#63; and userId2 = &#63;.
@@ -1221,6 +1257,10 @@ public interface SocialRelationPersistence
 	 */
 	public int countByU1_U2(long userId1, long userId2);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU1_T();
+
+	public FinderPath getFinderPathCountByU1_T();
+
 	/**
 	 * Returns all the social relations where userId1 = &#63; and type = &#63;.
 	 *
@@ -1375,6 +1415,10 @@ public interface SocialRelationPersistence
 	 */
 	public int countByU1_T(long userId1, int type);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU2_T();
+
+	public FinderPath getFinderPathCountByU2_T();
+
 	/**
 	 * Returns all the social relations where userId2 = &#63; and type = &#63;.
 	 *
@@ -1528,6 +1572,10 @@ public interface SocialRelationPersistence
 	 * @return the number of matching social relations
 	 */
 	public int countByU2_T(long userId2, int type);
+
+	public FinderPath getFinderPathFetchByU1_U2_T();
+
+	public FinderPath getFinderPathCountByU1_U2_T();
 
 	/**
 	 * Returns the social relation where userId1 = &#63; and userId2 = &#63; and type = &#63; or throws a <code>NoSuchRelationException</code> if it could not be found.

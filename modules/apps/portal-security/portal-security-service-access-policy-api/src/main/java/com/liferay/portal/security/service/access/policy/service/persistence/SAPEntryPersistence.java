@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.service.access.policy.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -39,6 +40,13 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SAPEntryUtil} to access the sap entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the sap entries where uuid = &#63;.
@@ -245,6 +253,10 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the number of matching sap entries that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the sap entries where uuid = &#63; and companyId = &#63;.
@@ -470,6 +482,10 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the sap entries where companyId = &#63;.
 	 *
@@ -676,6 +692,10 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the number of matching sap entries that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_D();
+
+	public FinderPath getFinderPathCountByC_D();
 
 	/**
 	 * Returns all the sap entries where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -901,6 +921,10 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the number of matching sap entries that the user has permission to view
 	 */
 	public int filterCountByC_D(long companyId, boolean defaultSAPEntry);
+
+	public FinderPath getFinderPathFetchByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
 
 	/**
 	 * Returns the sap entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

@@ -119,6 +119,31 @@ public class OrgLaborUtil {
 		return getPersistence().update(orgLabor, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByOrganizationId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByOrganizationId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByOrganizationId() {
+
+		return getPersistence().getFinderPathCountByOrganizationId();
+	}
+
 	/**
 	 * Returns all the org labors where organizationId = &#63;.
 	 *

@@ -119,6 +119,30 @@ public class ObjectViewUtil {
 		return getPersistence().update(objectView, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the object views where uuid = &#63;.
 	 *
@@ -279,6 +303,18 @@ public class ObjectViewUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -465,6 +501,19 @@ public class ObjectViewUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectDefinitionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectDefinitionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectDefinitionId() {
+
+		return getPersistence().getFinderPathCountByObjectDefinitionId();
+	}
+
 	/**
 	 * Returns all the object views where objectDefinitionId = &#63;.
 	 *
@@ -639,6 +688,18 @@ public class ObjectViewUtil {
 	 */
 	public static int countByObjectDefinitionId(long objectDefinitionId) {
 		return getPersistence().countByObjectDefinitionId(objectDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI_DOV() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI_DOV();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI_DOV() {
+
+		return getPersistence().getFinderPathCountByODI_DOV();
 	}
 
 	/**

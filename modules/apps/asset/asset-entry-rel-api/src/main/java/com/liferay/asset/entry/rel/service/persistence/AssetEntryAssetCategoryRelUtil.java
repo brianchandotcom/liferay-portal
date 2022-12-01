@@ -125,6 +125,31 @@ public class AssetEntryAssetCategoryRelUtil {
 			assetEntryAssetCategoryRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAssetEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAssetEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAssetEntryId() {
+
+		return getPersistence().getFinderPathCountByAssetEntryId();
+	}
+
 	/**
 	 * Returns all the asset entry asset category rels where assetEntryId = &#63;.
 	 *
@@ -301,6 +326,19 @@ public class AssetEntryAssetCategoryRelUtil {
 	 */
 	public static int countByAssetEntryId(long assetEntryId) {
 		return getPersistence().countByAssetEntryId(assetEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAssetCategoryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAssetCategoryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAssetCategoryId() {
+
+		return getPersistence().getFinderPathCountByAssetCategoryId();
 	}
 
 	/**
@@ -481,6 +519,18 @@ public class AssetEntryAssetCategoryRelUtil {
 	 */
 	public static int countByAssetCategoryId(long assetCategoryId) {
 		return getPersistence().countByAssetCategoryId(assetCategoryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByA_A() {
+
+		return getPersistence().getFinderPathFetchByA_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_A() {
+
+		return getPersistence().getFinderPathCountByA_A();
 	}
 
 	/**

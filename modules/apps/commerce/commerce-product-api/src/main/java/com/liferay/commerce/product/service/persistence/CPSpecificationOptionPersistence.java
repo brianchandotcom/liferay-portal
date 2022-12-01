@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException;
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CPSpecificationOptionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPSpecificationOptionUtil} to access the cp specification option persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp specification options where uuid = &#63;.
@@ -249,6 +257,10 @@ public interface CPSpecificationOptionPersistence
 	 * @return the number of matching cp specification options that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp specification options where uuid = &#63; and companyId = &#63;.
@@ -475,6 +487,10 @@ public interface CPSpecificationOptionPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the cp specification options where companyId = &#63;.
 	 *
@@ -684,6 +700,10 @@ public interface CPSpecificationOptionPersistence
 	 */
 	public int filterCountByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPOptionCategoryId();
+
+	public FinderPath getFinderPathCountByCPOptionCategoryId();
+
 	/**
 	 * Returns all the cp specification options where CPOptionCategoryId = &#63;.
 	 *
@@ -892,6 +912,10 @@ public interface CPSpecificationOptionPersistence
 	 * @return the number of matching cp specification options that the user has permission to view
 	 */
 	public int filterCountByCPOptionCategoryId(long CPOptionCategoryId);
+
+	public FinderPath getFinderPathFetchByC_K();
+
+	public FinderPath getFinderPathCountByC_K();
 
 	/**
 	 * Returns the cp specification option where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPSpecificationOptionException</code> if it could not be found.

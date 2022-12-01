@@ -124,6 +124,30 @@ public class CommerceQualifierEntryUtil {
 		return getPersistence().update(commerceQualifierEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_S() {
+
+		return getPersistence().getFinderPathCountByS_S();
+	}
+
 	/**
 	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
 	 *
@@ -317,6 +341,18 @@ public class CommerceQualifierEntryUtil {
 		return getPersistence().countByS_S(sourceClassNameId, sourceClassPK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_T() {
+
+		return getPersistence().getFinderPathCountByT_T();
+	}
+
 	/**
 	 * Returns all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
 	 *
@@ -508,6 +544,18 @@ public class CommerceQualifierEntryUtil {
 	 */
 	public static int countByT_T(long targetClassNameId, long targetClassPK) {
 		return getPersistence().countByT_T(targetClassNameId, targetClassPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_S_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_S_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_S_T() {
+
+		return getPersistence().getFinderPathCountByS_S_T();
 	}
 
 	/**
@@ -729,6 +777,18 @@ public class CommerceQualifierEntryUtil {
 			sourceClassNameId, sourceClassPK, targetClassNameId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_T_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_T_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_T_T() {
+
+		return getPersistence().getFinderPathCountByS_T_T();
+	}
+
 	/**
 	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
 	 *
@@ -946,6 +1006,18 @@ public class CommerceQualifierEntryUtil {
 
 		return getPersistence().countByS_T_T(
 			sourceClassNameId, targetClassNameId, targetClassPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByS_S_T_T() {
+
+		return getPersistence().getFinderPathFetchByS_S_T_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_S_T_T() {
+
+		return getPersistence().getFinderPathCountByS_S_T_T();
 	}
 
 	/**

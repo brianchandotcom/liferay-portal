@@ -95,9 +95,31 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryId() {
+		return _finderPathWithoutPaginationFindByFileEntryId;
+	}
+
 	private FinderPath _finderPathCountByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByFileEntryId() {
+		return _finderPathCountByFileEntryId;
+	}
 
 	/**
 	 * Returns all the sync dl file version diffs where fileEntryId = &#63;.
@@ -1144,7 +1166,18 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			"syncDLFileVersionDiff.expirationDate < ?";
 
 	private FinderPath _finderPathFetchByF_S_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByF_S_T() {
+		return _finderPathFetchByF_S_T;
+	}
+
 	private FinderPath _finderPathCountByF_S_T;
+
+	@Override
+	public FinderPath getFinderPathCountByF_S_T() {
+		return _finderPathCountByF_S_T;
+	}
 
 	/**
 	 * Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or throws a <code>NoSuchDLFileVersionDiffException</code> if it could not be found.

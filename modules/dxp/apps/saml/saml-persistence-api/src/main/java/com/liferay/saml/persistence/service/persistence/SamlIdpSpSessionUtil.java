@@ -120,6 +120,18 @@ public class SamlIdpSpSessionUtil {
 		return getPersistence().update(samlIdpSpSession, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
 	/**
 	 * Returns all the saml idp sp sessions where createDate &lt; &#63;.
 	 *
@@ -294,6 +306,19 @@ public class SamlIdpSpSessionUtil {
 	 */
 	public static int countByLtCreateDate(Date createDate) {
 		return getPersistence().countByLtCreateDate(createDate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySamlIdpSsoSessionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindBySamlIdpSsoSessionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySamlIdpSsoSessionId() {
+
+		return getPersistence().getFinderPathCountBySamlIdpSsoSessionId();
 	}
 
 	/**

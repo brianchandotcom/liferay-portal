@@ -14,6 +14,7 @@
 
 package com.liferay.revert.schema.version.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.revert.schema.version.exception.NoSuchEntryException;
 import com.liferay.revert.schema.version.model.RSVEntry;
@@ -39,6 +40,9 @@ public interface RSVEntryPersistence extends BasePersistence<RSVEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RSVEntryUtil} to access the rsv entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Caches the rsv entry in the entity cache if it is enabled.

@@ -16,6 +16,7 @@ package com.liferay.chat.service.persistence;
 
 import com.liferay.chat.exception.NoSuchEntryException;
 import com.liferay.chat.model.Entry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EntryUtil} to access the entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCreateDate();
+
+	public FinderPath getFinderPathCountByCreateDate();
 
 	/**
 	 * Returns all the entries where createDate = &#63;.
@@ -183,6 +191,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public int countByCreateDate(long createDate);
 
+	public FinderPath getFinderPathWithoutPaginationFindByFromUserId();
+
+	public FinderPath getFinderPathCountByFromUserId();
+
 	/**
 	 * Returns all the entries where fromUserId = &#63;.
 	 *
@@ -326,6 +338,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public int countByFromUserId(long fromUserId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByToUserId();
+
+	public FinderPath getFinderPathCountByToUserId();
+
 	/**
 	 * Returns all the entries where toUserId = &#63;.
 	 *
@@ -468,6 +484,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the number of matching entries
 	 */
 	public int countByToUserId(long toUserId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_F();
+
+	public FinderPath getFinderPathCountByC_F();
 
 	/**
 	 * Returns all the entries where createDate = &#63; and fromUserId = &#63;.
@@ -623,6 +643,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public int countByC_F(long createDate, long fromUserId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_T();
+
+	public FinderPath getFinderPathCountByC_T();
+
 	/**
 	 * Returns all the entries where createDate = &#63; and toUserId = &#63;.
 	 *
@@ -777,6 +801,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public int countByC_T(long createDate, long toUserId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByF_T();
+
+	public FinderPath getFinderPathCountByF_T();
+
 	/**
 	 * Returns all the entries where fromUserId = &#63; and toUserId = &#63;.
 	 *
@@ -930,6 +958,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the number of matching entries
 	 */
 	public int countByF_T(long fromUserId, long toUserId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_F_T();
+
+	public FinderPath getFinderPathCountByC_F_T();
 
 	/**
 	 * Returns all the entries where createDate = &#63; and fromUserId = &#63; and toUserId = &#63;.
@@ -1096,6 +1128,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the number of matching entries
 	 */
 	public int countByC_F_T(long createDate, long fromUserId, long toUserId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByF_T_C();
+
+	public FinderPath getFinderPathCountByF_T_C();
 
 	/**
 	 * Returns all the entries where fromUserId = &#63; and toUserId = &#63; and content = &#63;.

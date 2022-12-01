@@ -122,6 +122,31 @@ public class BatchPlannerMappingUtil {
 		return getPersistence().update(batchPlannerMapping, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByBatchPlannerPlanId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByBatchPlannerPlanId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByBatchPlannerPlanId() {
+
+		return getPersistence().getFinderPathCountByBatchPlannerPlanId();
+	}
+
 	/**
 	 * Returns all the batch planner mappings where batchPlannerPlanId = &#63;.
 	 *
@@ -296,6 +321,18 @@ public class BatchPlannerMappingUtil {
 	 */
 	public static int countByBatchPlannerPlanId(long batchPlannerPlanId) {
 		return getPersistence().countByBatchPlannerPlanId(batchPlannerPlanId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByBPPI_EFN_IFN() {
+
+		return getPersistence().getFinderPathFetchByBPPI_EFN_IFN();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByBPPI_EFN_IFN() {
+
+		return getPersistence().getFinderPathCountByBPPI_EFN_IFN();
 	}
 
 	/**

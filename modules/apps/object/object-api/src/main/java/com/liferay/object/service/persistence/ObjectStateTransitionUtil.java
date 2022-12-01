@@ -122,6 +122,30 @@ public class ObjectStateTransitionUtil {
 		return getPersistence().update(objectStateTransition, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the object state transitions where uuid = &#63;.
 	 *
@@ -291,6 +315,18 @@ public class ObjectStateTransitionUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -482,6 +518,19 @@ public class ObjectStateTransitionUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectStateFlowId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectStateFlowId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectStateFlowId() {
+
+		return getPersistence().getFinderPathCountByObjectStateFlowId();
+	}
+
 	/**
 	 * Returns all the object state transitions where objectStateFlowId = &#63;.
 	 *
@@ -661,6 +710,19 @@ public class ObjectStateTransitionUtil {
 		return getPersistence().countByObjectStateFlowId(objectStateFlowId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySourceObjectStateId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindBySourceObjectStateId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySourceObjectStateId() {
+
+		return getPersistence().getFinderPathCountBySourceObjectStateId();
+	}
+
 	/**
 	 * Returns all the object state transitions where sourceObjectStateId = &#63;.
 	 *
@@ -838,6 +900,19 @@ public class ObjectStateTransitionUtil {
 	 */
 	public static int countBySourceObjectStateId(long sourceObjectStateId) {
 		return getPersistence().countBySourceObjectStateId(sourceObjectStateId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByTargetObjectStateId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByTargetObjectStateId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByTargetObjectStateId() {
+
+		return getPersistence().getFinderPathCountByTargetObjectStateId();
 	}
 
 	/**

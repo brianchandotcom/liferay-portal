@@ -97,9 +97,31 @@ public class AnnouncementsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the announcements entries where uuid = &#63;.
@@ -1064,7 +1086,18 @@ public class AnnouncementsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -2095,7 +2128,18 @@ public class AnnouncementsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the announcements entries where companyId = &#63;.
@@ -2984,7 +3028,18 @@ public class AnnouncementsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the announcements entries where userId = &#63;.
@@ -3863,7 +3918,18 @@ public class AnnouncementsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the announcements entries where classNameId = &#63; and classPK = &#63;.
@@ -4810,7 +4876,18 @@ public class AnnouncementsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C() {
+		return _finderPathWithoutPaginationFindByC_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C() {
+		return _finderPathCountByC_C_C;
+	}
 
 	/**
 	 * Returns all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -5816,7 +5893,18 @@ public class AnnouncementsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_A() {
+		return _finderPathWithoutPaginationFindByC_C_A;
+	}
+
 	private FinderPath _finderPathCountByC_C_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_A() {
+		return _finderPathCountByC_C_A;
+	}
 
 	/**
 	 * Returns all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -6819,7 +6907,18 @@ public class AnnouncementsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_A() {
+		return _finderPathWithoutPaginationFindByC_C_C_A;
+	}
+
 	private FinderPath _finderPathCountByC_C_C_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C_A() {
+		return _finderPathCountByC_C_C_A;
+	}
 
 	/**
 	 * Returns all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.

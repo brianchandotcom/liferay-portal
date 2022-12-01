@@ -106,9 +106,31 @@ public class StyleBookEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the style book entries where uuid = &#63;.
@@ -655,7 +677,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_Head;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_Head() {
+		return _finderPathWithoutPaginationFindByUuid_Head;
+	}
+
 	private FinderPath _finderPathCountByUuid_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_Head() {
+		return _finderPathCountByUuid_Head;
+	}
 
 	/**
 	 * Returns all the style book entries where uuid = &#63; and head = &#63;.
@@ -1248,7 +1281,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUUID_G;
 	private FinderPath _finderPathWithoutPaginationFindByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUUID_G() {
+		return _finderPathWithoutPaginationFindByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns all the style book entries where uuid = &#63; and groupId = &#63;.
@@ -1843,7 +1887,18 @@ public class StyleBookEntryPersistenceImpl
 		"styleBookEntry.groupId = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_Head;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G_Head() {
+		return _finderPathFetchByUUID_G_Head;
+	}
+
 	private FinderPath _finderPathCountByUUID_G_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G_Head() {
+		return _finderPathCountByUUID_G_Head;
+	}
 
 	/**
 	 * Returns the style book entry where uuid = &#63; and groupId = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -2131,7 +2186,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the style book entries where uuid = &#63; and companyId = &#63;.
@@ -2728,7 +2794,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C_Head;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C_Head() {
+		return _finderPathWithoutPaginationFindByUuid_C_Head;
+	}
+
 	private FinderPath _finderPathCountByUuid_C_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C_Head() {
+		return _finderPathCountByUuid_C_Head;
+	}
 
 	/**
 	 * Returns all the style book entries where uuid = &#63; and companyId = &#63; and head = &#63;.
@@ -3360,7 +3437,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the style book entries where groupId = &#63;.
@@ -3870,7 +3958,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId_Head;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Head() {
+		return _finderPathWithoutPaginationFindByGroupId_Head;
+	}
+
 	private FinderPath _finderPathCountByGroupId_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId_Head() {
+		return _finderPathCountByGroupId_Head;
+	}
 
 	/**
 	 * Returns all the style book entries where groupId = &#63; and head = &#63;.
@@ -4425,7 +4524,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_D;
 	private FinderPath _finderPathWithoutPaginationFindByG_D;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_D() {
+		return _finderPathWithoutPaginationFindByG_D;
+	}
+
 	private FinderPath _finderPathCountByG_D;
+
+	@Override
+	public FinderPath getFinderPathCountByG_D() {
+		return _finderPathCountByG_D;
+	}
 
 	/**
 	 * Returns all the style book entries where groupId = &#63; and defaultStyleBookEntry = &#63;.
@@ -4986,7 +5096,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_D_Head;
 	private FinderPath _finderPathWithoutPaginationFindByG_D_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_D_Head() {
+		return _finderPathWithoutPaginationFindByG_D_Head;
+	}
+
 	private FinderPath _finderPathCountByG_D_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByG_D_Head() {
+		return _finderPathCountByG_D_Head;
+	}
 
 	/**
 	 * Returns all the style book entries where groupId = &#63; and defaultStyleBookEntry = &#63; and head = &#63;.
@@ -6801,7 +6922,18 @@ public class StyleBookEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_SBEK;
 	private FinderPath _finderPathWithoutPaginationFindByG_SBEK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_SBEK() {
+		return _finderPathWithoutPaginationFindByG_SBEK;
+	}
+
 	private FinderPath _finderPathCountByG_SBEK;
+
+	@Override
+	public FinderPath getFinderPathCountByG_SBEK() {
+		return _finderPathCountByG_SBEK;
+	}
 
 	/**
 	 * Returns all the style book entries where groupId = &#63; and styleBookEntryKey = &#63;.
@@ -7401,7 +7533,18 @@ public class StyleBookEntryPersistenceImpl
 		"(styleBookEntry.styleBookEntryKey IS NULL OR styleBookEntry.styleBookEntryKey = '')";
 
 	private FinderPath _finderPathFetchByG_SBEK_Head;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_SBEK_Head() {
+		return _finderPathFetchByG_SBEK_Head;
+	}
+
 	private FinderPath _finderPathCountByG_SBEK_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByG_SBEK_Head() {
+		return _finderPathCountByG_SBEK_Head;
+	}
 
 	/**
 	 * Returns the style book entry where groupId = &#63; and styleBookEntryKey = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -7694,7 +7837,18 @@ public class StyleBookEntryPersistenceImpl
 		"styleBookEntry.head = ?";
 
 	private FinderPath _finderPathFetchByHeadId;
+
+	@Override
+	public FinderPath getFinderPathFetchByHeadId() {
+		return _finderPathFetchByHeadId;
+	}
+
 	private FinderPath _finderPathCountByHeadId;
+
+	@Override
+	public FinderPath getFinderPathCountByHeadId() {
+		return _finderPathCountByHeadId;
+	}
 
 	/**
 	 * Returns the style book entry where headId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

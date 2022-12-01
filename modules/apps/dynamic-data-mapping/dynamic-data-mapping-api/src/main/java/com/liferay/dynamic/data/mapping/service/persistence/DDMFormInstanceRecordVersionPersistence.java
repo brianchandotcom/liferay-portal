@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordVersionException;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,14 @@ public interface DDMFormInstanceRecordVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceRecordVersionUtil} to access the ddm form instance record version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFormInstanceRecordId();
+
+	public FinderPath getFinderPathCountByFormInstanceRecordId();
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceRecordId = &#63;.
@@ -190,6 +199,10 @@ public interface DDMFormInstanceRecordVersionPersistence
 	 * @return the number of matching ddm form instance record versions
 	 */
 	public int countByFormInstanceRecordId(long formInstanceRecordId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_F();
+
+	public FinderPath getFinderPathCountByU_F();
 
 	/**
 	 * Returns all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
@@ -345,6 +358,10 @@ public interface DDMFormInstanceRecordVersionPersistence
 	 * @return the number of matching ddm form instance record versions
 	 */
 	public int countByU_F(long userId, long formInstanceId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByF_F();
+
+	public FinderPath getFinderPathCountByF_F();
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
@@ -502,6 +519,10 @@ public interface DDMFormInstanceRecordVersionPersistence
 	 */
 	public int countByF_F(long formInstanceId, String formInstanceVersion);
 
+	public FinderPath getFinderPathFetchByF_V();
+
+	public FinderPath getFinderPathCountByF_V();
+
 	/**
 	 * Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or throws a <code>NoSuchFormInstanceRecordVersionException</code> if it could not be found.
 	 *
@@ -554,6 +575,10 @@ public interface DDMFormInstanceRecordVersionPersistence
 	 * @return the number of matching ddm form instance record versions
 	 */
 	public int countByF_V(long formInstanceRecordId, String version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByF_S();
+
+	public FinderPath getFinderPathCountByF_S();
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
@@ -710,6 +735,10 @@ public interface DDMFormInstanceRecordVersionPersistence
 	 * @return the number of matching ddm form instance record versions
 	 */
 	public int countByF_S(long formInstanceRecordId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_F_F_S();
+
+	public FinderPath getFinderPathCountByU_F_F_S();
 
 	/**
 	 * Returns all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.

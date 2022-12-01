@@ -81,9 +81,31 @@ public class PasswordPolicyRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByPasswordPolicyId;
 	private FinderPath _finderPathWithoutPaginationFindByPasswordPolicyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByPasswordPolicyId() {
+		return _finderPathWithoutPaginationFindByPasswordPolicyId;
+	}
+
 	private FinderPath _finderPathCountByPasswordPolicyId;
+
+	@Override
+	public FinderPath getFinderPathCountByPasswordPolicyId() {
+		return _finderPathCountByPasswordPolicyId;
+	}
 
 	/**
 	 * Returns all the password policy rels where passwordPolicyId = &#63;.
@@ -596,7 +618,18 @@ public class PasswordPolicyRelPersistenceImpl
 			"passwordPolicyRel.passwordPolicyId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the password policy rel where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPasswordPolicyRelException</code> if it could not be found.

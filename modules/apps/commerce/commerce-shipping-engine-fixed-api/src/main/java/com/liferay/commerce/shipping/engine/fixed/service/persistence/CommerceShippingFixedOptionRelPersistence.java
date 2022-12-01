@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.service.persistence;
 
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionRelException;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,14 @@ public interface CommerceShippingFixedOptionRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionRelUtil} to access the commerce shipping fixed option rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingMethodId();
+
+	public FinderPath getFinderPathCountByCommerceShippingMethodId();
 
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
@@ -189,6 +198,11 @@ public interface CommerceShippingFixedOptionRelPersistence
 	 * @return the number of matching commerce shipping fixed option rels
 	 */
 	public int countByCommerceShippingMethodId(long commerceShippingMethodId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingFixedOptionId();
+
+	public FinderPath getFinderPathCountByCommerceShippingFixedOptionId();
 
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.

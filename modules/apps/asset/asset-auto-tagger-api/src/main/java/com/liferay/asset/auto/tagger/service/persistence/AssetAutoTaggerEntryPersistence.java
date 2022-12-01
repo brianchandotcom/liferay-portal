@@ -16,6 +16,7 @@ package com.liferay.asset.auto.tagger.service.persistence;
 
 import com.liferay.asset.auto.tagger.exception.NoSuchEntryException;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface AssetAutoTaggerEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetAutoTaggerEntryUtil} to access the asset auto tagger entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByAssetEntryId();
+
+	public FinderPath getFinderPathCountByAssetEntryId();
 
 	/**
 	 * Returns all the asset auto tagger entries where assetEntryId = &#63;.
@@ -187,6 +195,10 @@ public interface AssetAutoTaggerEntryPersistence
 	 */
 	public int countByAssetEntryId(long assetEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByAssetTagId();
+
+	public FinderPath getFinderPathCountByAssetTagId();
+
 	/**
 	 * Returns all the asset auto tagger entries where assetTagId = &#63;.
 	 *
@@ -330,6 +342,10 @@ public interface AssetAutoTaggerEntryPersistence
 	 * @return the number of matching asset auto tagger entries
 	 */
 	public int countByAssetTagId(long assetTagId);
+
+	public FinderPath getFinderPathFetchByA_A();
+
+	public FinderPath getFinderPathCountByA_A();
 
 	/**
 	 * Returns the asset auto tagger entry where assetEntryId = &#63; and assetTagId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.model.ResourceAction;
 
@@ -39,6 +40,13 @@ public interface ResourceActionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceActionUtil} to access the resource action persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByName();
+
+	public FinderPath getFinderPathCountByName();
 
 	/**
 	 * Returns all the resource actions where name = &#63;.
@@ -182,6 +190,10 @@ public interface ResourceActionPersistence
 	 * @return the number of matching resource actions
 	 */
 	public int countByName(String name);
+
+	public FinderPath getFinderPathFetchByN_A();
+
+	public FinderPath getFinderPathCountByN_A();
 
 	/**
 	 * Returns the resource action where name = &#63; and actionId = &#63; or throws a <code>NoSuchResourceActionException</code> if it could not be found.

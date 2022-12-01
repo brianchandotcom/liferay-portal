@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchCountryLocalizationException;
 import com.liferay.portal.kernel.model.CountryLocalization;
 
@@ -39,6 +40,13 @@ public interface CountryLocalizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CountryLocalizationUtil} to access the country localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId();
+
+	public FinderPath getFinderPathCountByCountryId();
 
 	/**
 	 * Returns all the country localizations where countryId = &#63;.
@@ -182,6 +190,10 @@ public interface CountryLocalizationPersistence
 	 * @return the number of matching country localizations
 	 */
 	public int countByCountryId(long countryId);
+
+	public FinderPath getFinderPathFetchByCountryId_LanguageId();
+
+	public FinderPath getFinderPathCountByCountryId_LanguageId();
 
 	/**
 	 * Returns the country localization where countryId = &#63; and languageId = &#63; or throws a <code>NoSuchCountryLocalizationException</code> if it could not be found.

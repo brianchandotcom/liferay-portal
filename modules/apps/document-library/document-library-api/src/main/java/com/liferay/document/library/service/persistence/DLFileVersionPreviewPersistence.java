@@ -16,6 +16,7 @@ package com.liferay.document.library.service.persistence;
 
 import com.liferay.document.library.exception.NoSuchFileVersionPreviewException;
 import com.liferay.document.library.model.DLFileVersionPreview;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface DLFileVersionPreviewPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileVersionPreviewUtil} to access the dl file version preview persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryId();
+
+	public FinderPath getFinderPathCountByFileEntryId();
 
 	/**
 	 * Returns all the dl file version previews where fileEntryId = &#63;.
@@ -187,6 +195,10 @@ public interface DLFileVersionPreviewPersistence
 	 */
 	public int countByFileEntryId(long fileEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByFileVersionId();
+
+	public FinderPath getFinderPathCountByFileVersionId();
+
 	/**
 	 * Returns all the dl file version previews where fileVersionId = &#63;.
 	 *
@@ -331,6 +343,10 @@ public interface DLFileVersionPreviewPersistence
 	 */
 	public int countByFileVersionId(long fileVersionId);
 
+	public FinderPath getFinderPathFetchByF_F();
+
+	public FinderPath getFinderPathCountByF_F();
+
 	/**
 	 * Returns the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; or throws a <code>NoSuchFileVersionPreviewException</code> if it could not be found.
 	 *
@@ -382,6 +398,10 @@ public interface DLFileVersionPreviewPersistence
 	 * @return the number of matching dl file version previews
 	 */
 	public int countByF_F(long fileEntryId, long fileVersionId);
+
+	public FinderPath getFinderPathFetchByF_F_P();
+
+	public FinderPath getFinderPathCountByF_F_P();
 
 	/**
 	 * Returns the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; and previewStatus = &#63; or throws a <code>NoSuchFileVersionPreviewException</code> if it could not be found.

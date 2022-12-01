@@ -94,9 +94,33 @@ public class SamlPeerBindingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByC_U_D_SNIF_SNINQ_SPEI;
 	private FinderPath _finderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI() {
+
+		return _finderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI;
+	}
+
 	private FinderPath _finderPathCountByC_U_D_SNIF_SNINQ_SPEI;
+
+	@Override
+	public FinderPath getFinderPathCountByC_U_D_SNIF_SNINQ_SPEI() {
+		return _finderPathCountByC_U_D_SNIF_SNINQ_SPEI;
+	}
 
 	/**
 	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
@@ -961,7 +985,20 @@ public class SamlPeerBindingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
 	private FinderPath
 		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI() {
+
+		return _finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
+	}
+
 	private FinderPath _finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI;
+
+	@Override
+	public FinderPath getFinderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI() {
+		return _finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI;
+	}
 
 	/**
 	 * Returns all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
@@ -41,6 +42,13 @@ public interface KaleoTaskPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskUtil} to access the kaleo task persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo tasks where companyId = &#63;.
@@ -185,6 +193,11 @@ public interface KaleoTaskPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId();
+
 	/**
 	 * Returns all the kaleo tasks where kaleoDefinitionVersionId = &#63;.
 	 *
@@ -328,6 +341,10 @@ public interface KaleoTaskPersistence
 	 * @return the number of matching kaleo tasks
 	 */
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId);
+
+	public FinderPath getFinderPathFetchByKaleoNodeId();
+
+	public FinderPath getFinderPathCountByKaleoNodeId();
 
 	/**
 	 * Returns the kaleo task where kaleoNodeId = &#63; or throws a <code>NoSuchTaskException</code> if it could not be found.

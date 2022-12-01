@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceException;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface DDMDataProviderInstancePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMDataProviderInstanceUtil} to access the ddm data provider instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the ddm data provider instances where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface DDMDataProviderInstancePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the ddm data provider instance where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDataProviderInstanceException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface DDMDataProviderInstancePersistence
 	 * @return the number of matching ddm data provider instances
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the ddm data provider instances where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface DDMDataProviderInstancePersistence
 	 * @return the number of matching ddm data provider instances
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the ddm data provider instances where groupId = &#63;.
@@ -722,6 +742,10 @@ public interface DDMDataProviderInstancePersistence
 	 * @return the number of matching ddm data provider instances that the user has permission to view
 	 */
 	public int filterCountByGroupId(long[] groupIds);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the ddm data provider instances where companyId = &#63;.

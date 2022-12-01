@@ -100,9 +100,31 @@ public class ObjectActionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the object actions where uuid = &#63;.
@@ -631,7 +653,18 @@ public class ObjectActionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the object actions where uuid = &#63; and companyId = &#63;.
@@ -1211,7 +1244,18 @@ public class ObjectActionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByObjectDefinitionId() {
+		return _finderPathWithoutPaginationFindByObjectDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByObjectDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectDefinitionId() {
+		return _finderPathCountByObjectDefinitionId;
+	}
 
 	/**
 	 * Returns all the object actions where objectDefinitionId = &#63;.
@@ -1720,7 +1764,18 @@ public class ObjectActionPersistenceImpl
 			"objectAction.objectDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByODI_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByODI_N() {
+		return _finderPathFetchByODI_N;
+	}
+
 	private FinderPath _finderPathCountByODI_N;
+
+	@Override
+	public FinderPath getFinderPathCountByODI_N() {
+		return _finderPathCountByODI_N;
+	}
 
 	/**
 	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
@@ -1986,7 +2041,18 @@ public class ObjectActionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByO_A_OATK;
 	private FinderPath _finderPathWithoutPaginationFindByO_A_OATK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByO_A_OATK() {
+		return _finderPathWithoutPaginationFindByO_A_OATK;
+	}
+
 	private FinderPath _finderPathCountByO_A_OATK;
+
+	@Override
+	public FinderPath getFinderPathCountByO_A_OATK() {
+		return _finderPathCountByO_A_OATK;
+	}
 
 	/**
 	 * Returns all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
@@ -2630,7 +2696,18 @@ public class ObjectActionPersistenceImpl
 			"(objectAction.objectActionTriggerKey IS NULL OR objectAction.objectActionTriggerKey = '')";
 
 	private FinderPath _finderPathFetchByODI_A_N_OATK;
+
+	@Override
+	public FinderPath getFinderPathFetchByODI_A_N_OATK() {
+		return _finderPathFetchByODI_A_N_OATK;
+	}
+
 	private FinderPath _finderPathCountByODI_A_N_OATK;
+
+	@Override
+	public FinderPath getFinderPathCountByODI_A_N_OATK() {
+		return _finderPathCountByODI_A_N_OATK;
+	}
 
 	/**
 	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.

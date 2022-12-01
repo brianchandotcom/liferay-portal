@@ -16,6 +16,7 @@ package com.liferay.batch.planner.service.persistence;
 
 import com.liferay.batch.planner.exception.NoSuchPolicyException;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface BatchPlannerPolicyPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BatchPlannerPolicyUtil} to access the batch planner policy persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByBatchPlannerPlanId();
+
+	public FinderPath getFinderPathCountByBatchPlannerPlanId();
 
 	/**
 	 * Returns all the batch planner policies where batchPlannerPlanId = &#63;.
@@ -184,6 +192,10 @@ public interface BatchPlannerPolicyPersistence
 	 * @return the number of matching batch planner policies
 	 */
 	public int countByBatchPlannerPlanId(long batchPlannerPlanId);
+
+	public FinderPath getFinderPathFetchByBPPI_N();
+
+	public FinderPath getFinderPathCountByBPPI_N();
 
 	/**
 	 * Returns the batch planner policy where batchPlannerPlanId = &#63; and name = &#63; or throws a <code>NoSuchPolicyException</code> if it could not be found.

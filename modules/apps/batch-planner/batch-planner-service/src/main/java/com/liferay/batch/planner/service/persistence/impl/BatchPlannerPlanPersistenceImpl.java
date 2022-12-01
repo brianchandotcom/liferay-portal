@@ -98,9 +98,31 @@ public class BatchPlannerPlanPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63;.
@@ -984,7 +1006,18 @@ public class BatchPlannerPlanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_U;
 	private FinderPath _finderPathWithoutPaginationFindByC_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_U() {
+		return _finderPathWithoutPaginationFindByC_U;
+	}
+
 	private FinderPath _finderPathCountByC_U;
+
+	@Override
+	public FinderPath getFinderPathCountByC_U() {
+		return _finderPathCountByC_U;
+	}
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and userId = &#63;.
@@ -1927,7 +1960,18 @@ public class BatchPlannerPlanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_E;
 	private FinderPath _finderPathWithoutPaginationFindByC_E;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_E() {
+		return _finderPathWithoutPaginationFindByC_E;
+	}
+
 	private FinderPath _finderPathCountByC_E;
+
+	@Override
+	public FinderPath getFinderPathCountByC_E() {
+		return _finderPathCountByC_E;
+	}
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and export = &#63;.
@@ -2872,7 +2916,18 @@ public class BatchPlannerPlanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_N;
 	private FinderPath _finderPathWithoutPaginationFindByC_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_N() {
+		return _finderPathWithoutPaginationFindByC_N;
+	}
+
 	private FinderPath _finderPathCountByC_N;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N() {
+		return _finderPathCountByC_N;
+	}
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and name = &#63;.
@@ -3895,7 +3950,18 @@ public class BatchPlannerPlanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T() {
+		return _finderPathWithoutPaginationFindByC_T;
+	}
+
 	private FinderPath _finderPathCountByC_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T() {
+		return _finderPathCountByC_T;
+	}
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and template = &#63;.
@@ -4841,7 +4907,18 @@ public class BatchPlannerPlanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_E_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_E_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_E_T() {
+		return _finderPathWithoutPaginationFindByC_E_T;
+	}
+
 	private FinderPath _finderPathCountByC_E_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_E_T() {
+		return _finderPathCountByC_E_T;
+	}
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and export = &#63; and template = &#63;.

@@ -125,6 +125,30 @@ public class CPInstanceOptionValueRelUtil {
 			cpInstanceOptionValueRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the cp instance option value rels where uuid = &#63;.
 	 *
@@ -296,6 +320,18 @@ public class CPInstanceOptionValueRelUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the cp instance option value rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
 	 *
@@ -363,6 +399,18 @@ public class CPInstanceOptionValueRelUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -554,6 +602,19 @@ public class CPInstanceOptionValueRelUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCPDefinitionOptionRelId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCPDefinitionOptionRelId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPDefinitionOptionRelId() {
+
+		return getPersistence().getFinderPathCountByCPDefinitionOptionRelId();
+	}
+
 	/**
 	 * Returns all the cp instance option value rels where CPDefinitionOptionRelId = &#63;.
 	 *
@@ -743,6 +804,19 @@ public class CPInstanceOptionValueRelUtil {
 			CPDefinitionOptionRelId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCPInstanceId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCPInstanceId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPInstanceId() {
+
+		return getPersistence().getFinderPathCountByCPInstanceId();
+	}
+
 	/**
 	 * Returns all the cp instance option value rels where CPInstanceId = &#63;.
 	 *
@@ -919,6 +993,18 @@ public class CPInstanceOptionValueRelUtil {
 	 */
 	public static int countByCPInstanceId(long CPInstanceId) {
 		return getPersistence().countByCPInstanceId(CPInstanceId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCDORI_CII() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCDORI_CII();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCDORI_CII() {
+
+		return getPersistence().getFinderPathCountByCDORI_CII();
 	}
 
 	/**
@@ -1122,6 +1208,18 @@ public class CPInstanceOptionValueRelUtil {
 			CPDefinitionOptionRelId, CPInstanceId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCDOVRI_CII() {
+
+		return getPersistence().getFinderPathFetchByCDOVRI_CII();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCDOVRI_CII() {
+
+		return getPersistence().getFinderPathCountByCDOVRI_CII();
+	}
+
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
 	 *
@@ -1197,6 +1295,18 @@ public class CPInstanceOptionValueRelUtil {
 
 		return getPersistence().countByCDOVRI_CII(
 			CPDefinitionOptionValueRelId, CPInstanceId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCDORI_CDOVRI_CII() {
+
+		return getPersistence().getFinderPathFetchByCDORI_CDOVRI_CII();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCDORI_CDOVRI_CII() {
+
+		return getPersistence().getFinderPathCountByCDORI_CDOVRI_CII();
 	}
 
 	/**

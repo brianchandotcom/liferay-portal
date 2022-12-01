@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence;
 
 import com.liferay.change.tracking.exception.NoSuchMessageException;
 import com.liferay.change.tracking.model.CTMessage;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTMessageUtil} to access the ct message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId();
+
+	public FinderPath getFinderPathCountByCtCollectionId();
 
 	/**
 	 * Returns all the ct messages where ctCollectionId = &#63;.

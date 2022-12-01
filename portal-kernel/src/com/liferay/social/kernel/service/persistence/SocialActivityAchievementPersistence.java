@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.exception.NoSuchActivityAchievementException;
@@ -42,6 +43,13 @@ public interface SocialActivityAchievementPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityAchievementUtil} to access the social activity achievement persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63;.
@@ -186,6 +194,10 @@ public interface SocialActivityAchievementPersistence
 	 * @return the number of matching social activity achievements
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U();
+
+	public FinderPath getFinderPathCountByG_U();
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and userId = &#63;.
@@ -342,6 +354,10 @@ public interface SocialActivityAchievementPersistence
 	 */
 	public int countByG_U(long groupId, long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_N();
+
+	public FinderPath getFinderPathCountByG_N();
+
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and name = &#63;.
 	 *
@@ -496,6 +512,10 @@ public interface SocialActivityAchievementPersistence
 	 * @return the number of matching social activity achievements
 	 */
 	public int countByG_N(long groupId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F();
+
+	public FinderPath getFinderPathCountByG_F();
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and firstInGroup = &#63;.
@@ -652,6 +672,10 @@ public interface SocialActivityAchievementPersistence
 	 */
 	public int countByG_F(long groupId, boolean firstInGroup);
 
+	public FinderPath getFinderPathFetchByG_U_N();
+
+	public FinderPath getFinderPathCountByG_U_N();
+
 	/**
 	 * Returns the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; or throws a <code>NoSuchActivityAchievementException</code> if it could not be found.
 	 *
@@ -709,6 +733,10 @@ public interface SocialActivityAchievementPersistence
 	 * @return the number of matching social activity achievements
 	 */
 	public int countByG_U_N(long groupId, long userId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_F();
+
+	public FinderPath getFinderPathCountByG_U_F();
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.

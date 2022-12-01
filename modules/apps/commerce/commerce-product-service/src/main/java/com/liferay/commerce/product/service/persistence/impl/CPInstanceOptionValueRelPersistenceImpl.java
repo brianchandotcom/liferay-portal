@@ -106,9 +106,31 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the cp instance option value rels where uuid = &#63;.
@@ -667,7 +689,18 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		"(cpInstanceOptionValueRel.uuid IS NULL OR cpInstanceOptionValueRel.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the cp instance option value rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
@@ -935,7 +968,18 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the cp instance option value rels where uuid = &#63; and companyId = &#63;.
@@ -1539,7 +1583,20 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionOptionRelId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCPDefinitionOptionRelId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCPDefinitionOptionRelId() {
+
+		return _finderPathWithoutPaginationFindByCPDefinitionOptionRelId;
+	}
+
 	private FinderPath _finderPathCountByCPDefinitionOptionRelId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDefinitionOptionRelId() {
+		return _finderPathCountByCPDefinitionOptionRelId;
+	}
 
 	/**
 	 * Returns all the cp instance option value rels where CPDefinitionOptionRelId = &#63;.
@@ -2077,7 +2134,18 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPInstanceId;
 	private FinderPath _finderPathWithoutPaginationFindByCPInstanceId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPInstanceId() {
+		return _finderPathWithoutPaginationFindByCPInstanceId;
+	}
+
 	private FinderPath _finderPathCountByCPInstanceId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPInstanceId() {
+		return _finderPathCountByCPInstanceId;
+	}
 
 	/**
 	 * Returns all the cp instance option value rels where CPInstanceId = &#63;.
@@ -2604,7 +2672,18 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCDORI_CII;
 	private FinderPath _finderPathWithoutPaginationFindByCDORI_CII;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCDORI_CII() {
+		return _finderPathWithoutPaginationFindByCDORI_CII;
+	}
+
 	private FinderPath _finderPathCountByCDORI_CII;
+
+	@Override
+	public FinderPath getFinderPathCountByCDORI_CII() {
+		return _finderPathCountByCDORI_CII;
+	}
 
 	/**
 	 * Returns all the cp instance option value rels where CPDefinitionOptionRelId = &#63; and CPInstanceId = &#63;.
@@ -3181,7 +3260,18 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		"cpInstanceOptionValueRel.CPInstanceId = ?";
 
 	private FinderPath _finderPathFetchByCDOVRI_CII;
+
+	@Override
+	public FinderPath getFinderPathFetchByCDOVRI_CII() {
+		return _finderPathFetchByCDOVRI_CII;
+	}
+
 	private FinderPath _finderPathCountByCDOVRI_CII;
+
+	@Override
+	public FinderPath getFinderPathCountByCDOVRI_CII() {
+		return _finderPathCountByCDOVRI_CII;
+	}
 
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
@@ -3451,7 +3541,18 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		"cpInstanceOptionValueRel.CPInstanceId = ?";
 
 	private FinderPath _finderPathFetchByCDORI_CDOVRI_CII;
+
+	@Override
+	public FinderPath getFinderPathFetchByCDORI_CDOVRI_CII() {
+		return _finderPathFetchByCDORI_CDOVRI_CII;
+	}
+
 	private FinderPath _finderPathCountByCDORI_CDOVRI_CII;
+
+	@Override
+	public FinderPath getFinderPathCountByCDORI_CDOVRI_CII() {
+		return _finderPathCountByCDORI_CDOVRI_CII;
+	}
 
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionRelId = &#63; and CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.

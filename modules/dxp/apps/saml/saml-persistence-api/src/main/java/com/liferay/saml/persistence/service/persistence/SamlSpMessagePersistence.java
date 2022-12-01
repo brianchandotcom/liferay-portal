@@ -14,6 +14,7 @@
 
 package com.liferay.saml.persistence.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchSpMessageException;
 import com.liferay.saml.persistence.model.SamlSpMessage;
@@ -42,6 +43,9 @@ public interface SamlSpMessagePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlSpMessageUtil} to access the saml sp message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Returns all the saml sp messages where expirationDate &lt; &#63;.
@@ -186,6 +190,10 @@ public interface SamlSpMessagePersistence
 	 * @return the number of matching saml sp messages
 	 */
 	public int countByLtExpirationDate(Date expirationDate);
+
+	public FinderPath getFinderPathFetchBySIEI_SIRK();
+
+	public FinderPath getFinderPathCountBySIEI_SIRK();
 
 	/**
 	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or throws a <code>NoSuchSpMessageException</code> if it could not be found.

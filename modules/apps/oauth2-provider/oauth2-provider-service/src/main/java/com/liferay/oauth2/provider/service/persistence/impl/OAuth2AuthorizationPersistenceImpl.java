@@ -102,9 +102,31 @@ public class OAuth2AuthorizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the o auth2 authorizations where userId = &#63;.
@@ -602,7 +624,20 @@ public class OAuth2AuthorizationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByOAuth2ApplicationId;
 	private FinderPath _finderPathWithoutPaginationFindByOAuth2ApplicationId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByOAuth2ApplicationId() {
+
+		return _finderPathWithoutPaginationFindByOAuth2ApplicationId;
+	}
+
 	private FinderPath _finderPathCountByOAuth2ApplicationId;
+
+	@Override
+	public FinderPath getFinderPathCountByOAuth2ApplicationId() {
+		return _finderPathCountByOAuth2ApplicationId;
+	}
 
 	/**
 	 * Returns all the o auth2 authorizations where oAuth2ApplicationId = &#63;.
@@ -1118,7 +1153,18 @@ public class OAuth2AuthorizationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_ATCH;
 	private FinderPath _finderPathWithoutPaginationFindByC_ATCH;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_ATCH() {
+		return _finderPathWithoutPaginationFindByC_ATCH;
+	}
+
 	private FinderPath _finderPathCountByC_ATCH;
+
+	@Override
+	public FinderPath getFinderPathCountByC_ATCH() {
+		return _finderPathCountByC_ATCH;
+	}
 
 	/**
 	 * Returns all the o auth2 authorizations where companyId = &#63; and accessTokenContentHash = &#63;.
@@ -1668,7 +1714,18 @@ public class OAuth2AuthorizationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_RTCH;
 	private FinderPath _finderPathWithoutPaginationFindByC_RTCH;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_RTCH() {
+		return _finderPathWithoutPaginationFindByC_RTCH;
+	}
+
 	private FinderPath _finderPathCountByC_RTCH;
+
+	@Override
+	public FinderPath getFinderPathCountByC_RTCH() {
+		return _finderPathCountByC_RTCH;
+	}
 
 	/**
 	 * Returns all the o auth2 authorizations where companyId = &#63; and refreshTokenContentHash = &#63;.
@@ -2220,7 +2277,18 @@ public class OAuth2AuthorizationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_O_R;
 	private FinderPath _finderPathWithoutPaginationFindByU_O_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_O_R() {
+		return _finderPathWithoutPaginationFindByU_O_R;
+	}
+
 	private FinderPath _finderPathCountByU_O_R;
+
+	@Override
+	public FinderPath getFinderPathCountByU_O_R() {
+		return _finderPathCountByU_O_R;
+	}
 
 	/**
 	 * Returns all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.

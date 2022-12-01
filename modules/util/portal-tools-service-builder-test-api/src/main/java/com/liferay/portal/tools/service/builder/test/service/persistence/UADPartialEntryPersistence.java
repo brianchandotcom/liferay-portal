@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchUADPartialEntryException;
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
@@ -40,6 +41,9 @@ public interface UADPartialEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UADPartialEntryUtil} to access the uad partial entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Caches the uad partial entry in the entity cache if it is enabled.

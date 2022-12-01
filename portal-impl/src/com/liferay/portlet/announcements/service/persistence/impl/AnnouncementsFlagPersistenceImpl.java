@@ -84,9 +84,31 @@ public class AnnouncementsFlagPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the announcements flags where companyId = &#63;.
@@ -590,7 +612,18 @@ public class AnnouncementsFlagPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByEntryId() {
+		return _finderPathWithoutPaginationFindByEntryId;
+	}
+
 	private FinderPath _finderPathCountByEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByEntryId() {
+		return _finderPathCountByEntryId;
+	}
 
 	/**
 	 * Returns all the announcements flags where entryId = &#63;.
@@ -1088,7 +1121,18 @@ public class AnnouncementsFlagPersistenceImpl
 		"announcementsFlag.entryId = ?";
 
 	private FinderPath _finderPathFetchByU_E_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_E_V() {
+		return _finderPathFetchByU_E_V;
+	}
+
 	private FinderPath _finderPathCountByU_E_V;
+
+	@Override
+	public FinderPath getFinderPathCountByU_E_V() {
+		return _finderPathCountByU_E_V;
+	}
 
 	/**
 	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a <code>NoSuchFlagException</code> if it could not be found.

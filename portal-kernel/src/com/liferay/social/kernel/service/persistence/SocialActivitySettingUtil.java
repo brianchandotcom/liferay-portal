@@ -122,6 +122,30 @@ public class SocialActivitySettingUtil {
 		return getPersistence().update(socialActivitySetting, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the social activity settings where groupId = &#63;.
 	 *
@@ -293,6 +317,18 @@ public class SocialActivitySettingUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C() {
+
+		return getPersistence().getFinderPathCountByG_C();
 	}
 
 	/**
@@ -485,6 +521,18 @@ public class SocialActivitySettingUtil {
 		return getPersistence().countByG_C(groupId, classNameId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_A() {
+
+		return getPersistence().getFinderPathCountByG_A();
+	}
+
 	/**
 	 * Returns all the social activity settings where groupId = &#63; and activityType = &#63;.
 	 *
@@ -673,6 +721,18 @@ public class SocialActivitySettingUtil {
 	 */
 	public static int countByG_A(long groupId, int activityType) {
 		return getPersistence().countByG_A(groupId, activityType);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_A() {
+
+		return getPersistence().getFinderPathCountByG_C_A();
 	}
 
 	/**
@@ -882,6 +942,18 @@ public class SocialActivitySettingUtil {
 
 		return getPersistence().countByG_C_A(
 			groupId, classNameId, activityType);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_C_A_N() {
+
+		return getPersistence().getFinderPathFetchByG_C_A_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_A_N() {
+
+		return getPersistence().getFinderPathCountByG_C_A_N();
 	}
 
 	/**

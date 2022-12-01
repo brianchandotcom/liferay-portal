@@ -115,6 +115,30 @@ public class ModuleUtil {
 		return getPersistence().update(module, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the modules where uuid = &#63;.
 	 *
@@ -274,6 +298,18 @@ public class ModuleUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -459,6 +495,18 @@ public class ModuleUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAppId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByAppId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAppId() {
+
+		return getPersistence().getFinderPathCountByAppId();
+	}
+
 	/**
 	 * Returns all the modules where appId = &#63;.
 	 *
@@ -619,6 +667,19 @@ public class ModuleUtil {
 	 */
 	public static int countByAppId(long appId) {
 		return getPersistence().countByAppId(appId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByBundleSymbolicName() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByBundleSymbolicName();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByBundleSymbolicName() {
+
+		return getPersistence().getFinderPathCountByBundleSymbolicName();
 	}
 
 	/**
@@ -796,6 +857,19 @@ public class ModuleUtil {
 		return getPersistence().countByBundleSymbolicName(bundleSymbolicName);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByContextName() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByContextName();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByContextName() {
+
+		return getPersistence().getFinderPathCountByContextName();
+	}
+
 	/**
 	 * Returns all the modules where contextName = &#63;.
 	 *
@@ -964,6 +1038,18 @@ public class ModuleUtil {
 		return getPersistence().countByContextName(contextName);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByA_CN() {
+
+		return getPersistence().getFinderPathFetchByA_CN();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_CN() {
+
+		return getPersistence().getFinderPathCountByA_CN();
+	}
+
 	/**
 	 * Returns the module where appId = &#63; and contextName = &#63; or throws a <code>NoSuchModuleException</code> if it could not be found.
 	 *
@@ -1025,6 +1111,18 @@ public class ModuleUtil {
 	 */
 	public static int countByA_CN(long appId, String contextName) {
 		return getPersistence().countByA_CN(appId, contextName);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByA_BSN_BV() {
+
+		return getPersistence().getFinderPathFetchByA_BSN_BV();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_BSN_BV() {
+
+		return getPersistence().getFinderPathCountByA_BSN_BV();
 	}
 
 	/**

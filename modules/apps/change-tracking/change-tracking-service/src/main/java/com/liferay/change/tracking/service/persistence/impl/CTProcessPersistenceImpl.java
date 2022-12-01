@@ -92,9 +92,31 @@ public class CTProcessPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the ct processes where companyId = &#63;.
@@ -588,7 +610,18 @@ public class CTProcessPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId() {
+		return _finderPathWithoutPaginationFindByCtCollectionId;
+	}
+
 	private FinderPath _finderPathCountByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCtCollectionId() {
+		return _finderPathCountByCtCollectionId;
+	}
 
 	/**
 	 * Returns all the ct processes where ctCollectionId = &#63;.

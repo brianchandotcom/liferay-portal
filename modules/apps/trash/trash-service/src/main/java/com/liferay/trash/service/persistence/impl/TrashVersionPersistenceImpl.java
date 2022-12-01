@@ -98,9 +98,31 @@ public class TrashVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByEntryId() {
+		return _finderPathWithoutPaginationFindByEntryId;
+	}
+
 	private FinderPath _finderPathCountByEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByEntryId() {
+		return _finderPathCountByEntryId;
+	}
 
 	/**
 	 * Returns all the trash versions where entryId = &#63;.
@@ -607,7 +629,18 @@ public class TrashVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByE_C;
 	private FinderPath _finderPathWithoutPaginationFindByE_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByE_C() {
+		return _finderPathWithoutPaginationFindByE_C;
+	}
+
 	private FinderPath _finderPathCountByE_C;
+
+	@Override
+	public FinderPath getFinderPathCountByE_C() {
+		return _finderPathCountByE_C;
+	}
 
 	/**
 	 * Returns all the trash versions where entryId = &#63; and classNameId = &#63;.
@@ -1160,7 +1193,18 @@ public class TrashVersionPersistenceImpl
 		"trashVersion.classNameId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the trash version where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchVersionException</code> if it could not be found.

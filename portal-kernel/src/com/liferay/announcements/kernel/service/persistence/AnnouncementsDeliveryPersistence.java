@@ -16,6 +16,7 @@ package com.liferay.announcements.kernel.service.persistence;
 
 import com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface AnnouncementsDeliveryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsDeliveryUtil} to access the announcements delivery persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the announcements deliveries where companyId = &#63;.
@@ -185,6 +193,10 @@ public interface AnnouncementsDeliveryPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the announcements deliveries where userId = &#63;.
 	 *
@@ -327,6 +339,10 @@ public interface AnnouncementsDeliveryPersistence
 	 * @return the number of matching announcements deliveries
 	 */
 	public int countByUserId(long userId);
+
+	public FinderPath getFinderPathFetchByU_T();
+
+	public FinderPath getFinderPathCountByU_T();
 
 	/**
 	 * Returns the announcements delivery where userId = &#63; and type = &#63; or throws a <code>NoSuchDeliveryException</code> if it could not be found.

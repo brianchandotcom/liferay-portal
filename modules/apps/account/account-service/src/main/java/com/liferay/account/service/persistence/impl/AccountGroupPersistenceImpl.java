@@ -103,9 +103,31 @@ public class AccountGroupPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the account groups where uuid = &#63;.
@@ -1057,7 +1079,18 @@ public class AccountGroupPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the account groups where uuid = &#63; and companyId = &#63;.
@@ -2079,7 +2112,19 @@ public class AccountGroupPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByAccountGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAccountGroupId() {
+		return _finderPathWithoutPaginationFindByAccountGroupId;
+	}
+
 	private FinderPath _finderPathCountByAccountGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByAccountGroupId() {
+		return _finderPathCountByAccountGroupId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByAccountGroupId;
 
 	/**
@@ -3073,7 +3118,18 @@ public class AccountGroupPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the account groups where companyId = &#63;.
@@ -3947,7 +4003,18 @@ public class AccountGroupPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_D;
 	private FinderPath _finderPathWithoutPaginationFindByC_D;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_D() {
+		return _finderPathWithoutPaginationFindByC_D;
+	}
+
 	private FinderPath _finderPathCountByC_D;
+
+	@Override
+	public FinderPath getFinderPathCountByC_D() {
+		return _finderPathCountByC_D;
+	}
 
 	/**
 	 * Returns all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
@@ -4896,7 +4963,18 @@ public class AccountGroupPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T() {
+		return _finderPathWithoutPaginationFindByC_T;
+	}
+
 	private FinderPath _finderPathCountByC_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T() {
+		return _finderPathCountByC_T;
+	}
 
 	/**
 	 * Returns all the account groups where companyId = &#63; and type = &#63;.
@@ -5916,7 +5994,18 @@ public class AccountGroupPersistenceImpl
 		"(accountGroup.type_ IS NULL OR accountGroup.type_ = '')";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.

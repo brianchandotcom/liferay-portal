@@ -93,9 +93,31 @@ public class CommerceOrderPaymentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceOrderId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceOrderId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceOrderId() {
+		return _finderPathWithoutPaginationFindByCommerceOrderId;
+	}
+
 	private FinderPath _finderPathCountByCommerceOrderId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceOrderId() {
+		return _finderPathCountByCommerceOrderId;
+	}
 
 	/**
 	 * Returns all the commerce order payments where commerceOrderId = &#63;.

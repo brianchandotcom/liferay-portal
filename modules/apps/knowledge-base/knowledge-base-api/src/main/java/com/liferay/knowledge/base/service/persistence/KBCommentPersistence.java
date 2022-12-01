@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.service.persistence;
 
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBComment;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBCommentUtil} to access the kb comment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the kb comments where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the kb comment where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCommentException</code> if it could not be found.
 	 *
@@ -232,6 +244,10 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 * @return the number of matching kb comments
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the kb comments where uuid = &#63; and companyId = &#63;.
@@ -387,6 +403,10 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the kb comments where groupId = &#63;.
 	 *
@@ -529,6 +549,10 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 * @return the number of matching kb comments
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the kb comments where groupId = &#63; and classNameId = &#63;.
@@ -684,6 +708,10 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 */
 	public int countByG_C(long groupId, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
+
 	/**
 	 * Returns all the kb comments where groupId = &#63; and status = &#63;.
 	 *
@@ -838,6 +866,10 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 */
 	public int countByG_S(long groupId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the kb comments where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -991,6 +1023,10 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 * @return the number of matching kb comments
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_C_C();
+
+	public FinderPath getFinderPathCountByU_C_C();
 
 	/**
 	 * Returns all the kb comments where userId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1157,6 +1193,10 @@ public interface KBCommentPersistence extends BasePersistence<KBComment> {
 	 * @return the number of matching kb comments
 	 */
 	public int countByU_C_C(long userId, long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_S();
+
+	public FinderPath getFinderPathCountByC_C_S();
 
 	/**
 	 * Returns all the kb comments where classNameId = &#63; and classPK = &#63; and status = &#63;.

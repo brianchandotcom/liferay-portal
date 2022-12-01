@@ -101,9 +101,31 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByAssetEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAssetEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAssetEntryId() {
+		return _finderPathWithoutPaginationFindByAssetEntryId;
+	}
+
 	private FinderPath _finderPathCountByAssetEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAssetEntryId() {
+		return _finderPathCountByAssetEntryId;
+	}
 
 	/**
 	 * Returns all the asset auto tagger entries where assetEntryId = &#63;.
@@ -627,7 +649,18 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByAssetTagId;
 	private FinderPath _finderPathWithoutPaginationFindByAssetTagId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAssetTagId() {
+		return _finderPathWithoutPaginationFindByAssetTagId;
+	}
+
 	private FinderPath _finderPathCountByAssetTagId;
+
+	@Override
+	public FinderPath getFinderPathCountByAssetTagId() {
+		return _finderPathCountByAssetTagId;
+	}
 
 	/**
 	 * Returns all the asset auto tagger entries where assetTagId = &#63;.
@@ -1148,7 +1181,18 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		"assetAutoTaggerEntry.assetTagId = ?";
 
 	private FinderPath _finderPathFetchByA_A;
+
+	@Override
+	public FinderPath getFinderPathFetchByA_A() {
+		return _finderPathFetchByA_A;
+	}
+
 	private FinderPath _finderPathCountByA_A;
+
+	@Override
+	public FinderPath getFinderPathCountByA_A() {
+		return _finderPathCountByA_A;
+	}
 
 	/**
 	 * Returns the asset auto tagger entry where assetEntryId = &#63; and assetTagId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

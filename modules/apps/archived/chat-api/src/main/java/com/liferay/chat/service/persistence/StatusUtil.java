@@ -115,6 +115,30 @@ public class StatusUtil {
 		return getPersistence().update(status, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUserId() {
+
+		return getPersistence().getFinderPathFetchByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns the status where userId = &#63; or throws a <code>NoSuchStatusException</code> if it could not be found.
 	 *
@@ -169,6 +193,19 @@ public class StatusUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByModifiedDate() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByModifiedDate();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByModifiedDate() {
+
+		return getPersistence().getFinderPathCountByModifiedDate();
 	}
 
 	/**
@@ -339,6 +376,18 @@ public class StatusUtil {
 		return getPersistence().countByModifiedDate(modifiedDate);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByOnline() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByOnline();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByOnline() {
+
+		return getPersistence().getFinderPathCountByOnline();
+	}
+
 	/**
 	 * Returns all the statuses where online = &#63;.
 	 *
@@ -501,6 +550,18 @@ public class StatusUtil {
 	 */
 	public static int countByOnline(boolean online) {
 		return getPersistence().countByOnline(online);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByM_O() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByM_O();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByM_O() {
+
+		return getPersistence().getFinderPathCountByM_O();
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
@@ -41,6 +42,13 @@ public interface KaleoTransitionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTransitionUtil} to access the kaleo transition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo transitions where companyId = &#63;.
@@ -184,6 +192,11 @@ public interface KaleoTransitionPersistence
 	 * @return the number of matching kaleo transitions
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId();
 
 	/**
 	 * Returns all the kaleo transitions where kaleoDefinitionVersionId = &#63;.
@@ -329,6 +342,10 @@ public interface KaleoTransitionPersistence
 	 */
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoNodeId();
+
+	public FinderPath getFinderPathCountByKaleoNodeId();
+
 	/**
 	 * Returns all the kaleo transitions where kaleoNodeId = &#63;.
 	 *
@@ -472,6 +489,10 @@ public interface KaleoTransitionPersistence
 	 */
 	public int countByKaleoNodeId(long kaleoNodeId);
 
+	public FinderPath getFinderPathFetchByKNI_N();
+
+	public FinderPath getFinderPathCountByKNI_N();
+
 	/**
 	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or throws a <code>NoSuchTransitionException</code> if it could not be found.
 	 *
@@ -521,6 +542,10 @@ public interface KaleoTransitionPersistence
 	 * @return the number of matching kaleo transitions
 	 */
 	public int countByKNI_N(long kaleoNodeId, String name);
+
+	public FinderPath getFinderPathFetchByKNI_DT();
+
+	public FinderPath getFinderPathCountByKNI_DT();
 
 	/**
 	 * Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or throws a <code>NoSuchTransitionException</code> if it could not be found.

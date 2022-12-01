@@ -105,9 +105,31 @@ public class CommerceTermEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce term entries where uuid = &#63;.
@@ -1070,7 +1092,18 @@ public class CommerceTermEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce term entries where uuid = &#63; and companyId = &#63;.
@@ -2102,7 +2135,18 @@ public class CommerceTermEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A() {
+		return _finderPathWithoutPaginationFindByC_A;
+	}
+
 	private FinderPath _finderPathCountByC_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A() {
+		return _finderPathCountByC_A;
+	}
 
 	/**
 	 * Returns all the commerce term entries where companyId = &#63; and active = &#63;.
@@ -3049,7 +3093,18 @@ public class CommerceTermEntryPersistenceImpl
 		"commerceTermEntry.active_ = ?";
 
 	private FinderPath _finderPathFetchByC_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_N() {
+		return _finderPathFetchByC_N;
+	}
+
 	private FinderPath _finderPathCountByC_N;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N() {
+		return _finderPathCountByC_N;
+	}
 
 	/**
 	 * Returns the commerce term entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchTermEntryException</code> if it could not be found.
@@ -7430,7 +7485,18 @@ public class CommerceTermEntryPersistenceImpl
 		"(commerceTermEntry.type_ IS NULL OR commerceTermEntry.type_ LIKE '')";
 
 	private FinderPath _finderPathFetchByC_P_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_P_T() {
+		return _finderPathFetchByC_P_T;
+	}
+
 	private FinderPath _finderPathCountByC_P_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_P_T() {
+		return _finderPathCountByC_P_T;
+	}
 
 	/**
 	 * Returns the commerce term entry where companyId = &#63; and priority = &#63; and type = &#63; or throws a <code>NoSuchTermEntryException</code> if it could not be found.
@@ -7704,7 +7770,18 @@ public class CommerceTermEntryPersistenceImpl
 		"(commerceTermEntry.type IS NULL OR commerceTermEntry.type = '')";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the commerce term entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchTermEntryException</code> if it could not be found.

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.model.Contact;
 
@@ -38,6 +39,13 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ContactUtil} to access the contact persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the contacts where companyId = &#63;.
@@ -181,6 +189,10 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	 * @return the number of matching contacts
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the contacts where classNameId = &#63; and classPK = &#63;.

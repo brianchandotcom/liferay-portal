@@ -123,6 +123,30 @@ public class OpenIdConnectSessionUtil {
 		return getPersistence().update(openIdConnectSession, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the open ID connect sessions where userId = &#63;.
 	 *
@@ -484,6 +508,18 @@ public class OpenIdConnectSessionUtil {
 			accessTokenExpirationDate);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A_C() {
+
+		return getPersistence().getFinderPathCountByC_A_C();
+	}
+
 	/**
 	 * Returns all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
 	 *
@@ -697,6 +733,18 @@ public class OpenIdConnectSessionUtil {
 
 		return getPersistence().countByC_A_C(
 			companyId, authServerWellKnownURI, clientId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_A_C() {
+
+		return getPersistence().getFinderPathFetchByU_A_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_A_C() {
+
+		return getPersistence().getFinderPathCountByU_A_C();
 	}
 
 	/**

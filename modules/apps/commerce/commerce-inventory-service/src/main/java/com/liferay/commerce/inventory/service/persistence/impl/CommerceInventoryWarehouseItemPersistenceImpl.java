@@ -99,9 +99,31 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce inventory warehouse items where uuid = &#63;.
@@ -652,7 +674,18 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce inventory warehouse items where uuid = &#63; and companyId = &#63;.
@@ -1245,7 +1278,18 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the commerce inventory warehouse items where companyId = &#63;.
@@ -1762,7 +1806,20 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		_finderPathWithPaginationFindByCommerceInventoryWarehouseId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceInventoryWarehouseId() {
+
+		return _finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
+	}
+
 	private FinderPath _finderPathCountByCommerceInventoryWarehouseId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceInventoryWarehouseId() {
+		return _finderPathCountByCommerceInventoryWarehouseId;
+	}
 
 	/**
 	 * Returns all the commerce inventory warehouse items where commerceInventoryWarehouseId = &#63;.
@@ -2314,7 +2371,18 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId_Sku;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId_Sku;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId_Sku() {
+		return _finderPathWithoutPaginationFindByCompanyId_Sku;
+	}
+
 	private FinderPath _finderPathCountByCompanyId_Sku;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId_Sku() {
+		return _finderPathCountByCompanyId_Sku;
+	}
 
 	/**
 	 * Returns all the commerce inventory warehouse items where companyId = &#63; and sku = &#63;.
@@ -2905,7 +2973,18 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		"(commerceInventoryWarehouseItem.sku IS NULL OR commerceInventoryWarehouseItem.sku = '')";
 
 	private FinderPath _finderPathFetchByC_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_S() {
+		return _finderPathFetchByC_S;
+	}
+
 	private FinderPath _finderPathCountByC_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S() {
+		return _finderPathCountByC_S;
+	}
 
 	/**
 	 * Returns the commerce inventory warehouse item where commerceInventoryWarehouseId = &#63; and sku = &#63; or throws a <code>NoSuchInventoryWarehouseItemException</code> if it could not be found.
@@ -3164,7 +3243,18 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		"(commerceInventoryWarehouseItem.sku IS NULL OR commerceInventoryWarehouseItem.sku = '')";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the commerce inventory warehouse item where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchInventoryWarehouseItemException</code> if it could not be found.

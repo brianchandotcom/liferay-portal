@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.persistence;
 
 import com.liferay.message.boards.exception.NoSuchMailingListException;
 import com.liferay.message.boards.model.MBMailingList;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface MBMailingListPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMailingListUtil} to access the message boards mailing list persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the message boards mailing lists where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface MBMailingListPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMailingListException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface MBMailingListPersistence
 	 * @return the number of matching message boards mailing lists
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the message boards mailing lists where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface MBMailingListPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByActive();
+
+	public FinderPath getFinderPathCountByActive();
+
 	/**
 	 * Returns all the message boards mailing lists where active = &#63;.
 	 *
@@ -532,6 +552,10 @@ public interface MBMailingListPersistence
 	 * @return the number of matching message boards mailing lists
 	 */
 	public int countByActive(boolean active);
+
+	public FinderPath getFinderPathFetchByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns the message boards mailing list where groupId = &#63; and categoryId = &#63; or throws a <code>NoSuchMailingListException</code> if it could not be found.

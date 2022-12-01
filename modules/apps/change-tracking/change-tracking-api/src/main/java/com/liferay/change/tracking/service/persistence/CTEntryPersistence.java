@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence;
 
 import com.liferay.change.tracking.exception.NoSuchEntryException;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTEntryUtil} to access the ct entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId();
+
+	public FinderPath getFinderPathCountByCtCollectionId();
 
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63;.
@@ -182,6 +190,10 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the number of matching ct entries
 	 */
 	public int countByCtCollectionId(long ctCollectionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_MCNI();
+
+	public FinderPath getFinderPathCountByC_MCNI();
 
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63; and modelClassNameId = &#63;.
@@ -337,6 +349,10 @@ public interface CTEntryPersistence extends BasePersistence<CTEntry> {
 	 * @return the number of matching ct entries
 	 */
 	public int countByC_MCNI(long ctCollectionId, long modelClassNameId);
+
+	public FinderPath getFinderPathFetchByC_MCNI_MCPK();
+
+	public FinderPath getFinderPathCountByC_MCNI_MCPK();
 
 	/**
 	 * Returns the ct entry where ctCollectionId = &#63; and modelClassNameId = &#63; and modelClassPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

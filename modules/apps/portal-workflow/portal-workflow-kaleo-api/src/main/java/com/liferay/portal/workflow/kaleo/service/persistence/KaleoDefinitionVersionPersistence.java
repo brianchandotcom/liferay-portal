@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
@@ -42,6 +43,13 @@ public interface KaleoDefinitionVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoDefinitionVersionUtil} to access the kaleo definition version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo definition versions where companyId = &#63;.
@@ -186,6 +194,10 @@ public interface KaleoDefinitionVersionPersistence
 	 * @return the number of matching kaleo definition versions
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
 
 	/**
 	 * Returns all the kaleo definition versions where companyId = &#63; and name = &#63;.
@@ -341,6 +353,10 @@ public interface KaleoDefinitionVersionPersistence
 	 * @return the number of matching kaleo definition versions
 	 */
 	public int countByC_N(long companyId, String name);
+
+	public FinderPath getFinderPathFetchByC_N_V();
+
+	public FinderPath getFinderPathCountByC_N_V();
 
 	/**
 	 * Returns the kaleo definition version where companyId = &#63; and name = &#63; and version = &#63; or throws a <code>NoSuchDefinitionVersionException</code> if it could not be found.

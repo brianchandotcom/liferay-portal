@@ -16,6 +16,7 @@ package com.liferay.commerce.pricing.service.persistence;
 
 import com.liferay.commerce.pricing.exception.NoSuchPricingClassException;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CommercePricingClassPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePricingClassUtil} to access the commerce pricing class persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce pricing classes where uuid = &#63;.
@@ -249,6 +257,10 @@ public interface CommercePricingClassPersistence
 	 * @return the number of matching commerce pricing classes that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce pricing classes where uuid = &#63; and companyId = &#63;.
@@ -475,6 +487,10 @@ public interface CommercePricingClassPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the commerce pricing classes where companyId = &#63;.
 	 *
@@ -682,6 +698,10 @@ public interface CommercePricingClassPersistence
 	 * @return the number of matching commerce pricing classes that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce pricing class where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPricingClassException</code> if it could not be found.

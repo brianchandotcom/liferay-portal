@@ -80,8 +80,30 @@ public class ClassNamePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByValue;
+
+	@Override
+	public FinderPath getFinderPathFetchByValue() {
+		return _finderPathFetchByValue;
+	}
+
 	private FinderPath _finderPathCountByValue;
+
+	@Override
+	public FinderPath getFinderPathCountByValue() {
+		return _finderPathCountByValue;
+	}
 
 	/**
 	 * Returns the class name where value = &#63; or throws a <code>NoSuchClassNameException</code> if it could not be found.

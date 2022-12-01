@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 
@@ -39,6 +40,13 @@ public interface PasswordPolicyPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyUtil} to access the password policy persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the password policies where uuid = &#63;.
@@ -246,6 +254,10 @@ public interface PasswordPolicyPersistence
 	 * @return the number of matching password policies that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the password policies where uuid = &#63; and companyId = &#63;.
@@ -472,6 +484,10 @@ public interface PasswordPolicyPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the password policies where companyId = &#63;.
 	 *
@@ -679,6 +695,10 @@ public interface PasswordPolicyPersistence
 	 */
 	public int filterCountByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchByC_DP();
+
+	public FinderPath getFinderPathCountByC_DP();
+
 	/**
 	 * Returns the password policy where companyId = &#63; and defaultPolicy = &#63; or throws a <code>NoSuchPasswordPolicyException</code> if it could not be found.
 	 *
@@ -728,6 +748,10 @@ public interface PasswordPolicyPersistence
 	 * @return the number of matching password policies
 	 */
 	public int countByC_DP(long companyId, boolean defaultPolicy);
+
+	public FinderPath getFinderPathFetchByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
 
 	/**
 	 * Returns the password policy where companyId = &#63; and name = &#63; or throws a <code>NoSuchPasswordPolicyException</code> if it could not be found.

@@ -102,9 +102,31 @@ public class DDMTemplateVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByTemplateId;
 	private FinderPath _finderPathWithoutPaginationFindByTemplateId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByTemplateId() {
+		return _finderPathWithoutPaginationFindByTemplateId;
+	}
+
 	private FinderPath _finderPathCountByTemplateId;
+
+	@Override
+	public FinderPath getFinderPathCountByTemplateId() {
+		return _finderPathCountByTemplateId;
+	}
 
 	/**
 	 * Returns all the ddm template versions where templateId = &#63;.
@@ -624,7 +646,18 @@ public class DDMTemplateVersionPersistenceImpl
 		"ddmTemplateVersion.templateId = ?";
 
 	private FinderPath _finderPathFetchByT_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByT_V() {
+		return _finderPathFetchByT_V;
+	}
+
 	private FinderPath _finderPathCountByT_V;
+
+	@Override
+	public FinderPath getFinderPathCountByT_V() {
+		return _finderPathCountByT_V;
+	}
 
 	/**
 	 * Returns the ddm template version where templateId = &#63; and version = &#63; or throws a <code>NoSuchTemplateVersionException</code> if it could not be found.
@@ -888,7 +921,18 @@ public class DDMTemplateVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByT_S;
 	private FinderPath _finderPathWithoutPaginationFindByT_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByT_S() {
+		return _finderPathWithoutPaginationFindByT_S;
+	}
+
 	private FinderPath _finderPathCountByT_S;
+
+	@Override
+	public FinderPath getFinderPathCountByT_S() {
+		return _finderPathCountByT_S;
+	}
 
 	/**
 	 * Returns all the ddm template versions where templateId = &#63; and status = &#63;.

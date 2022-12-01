@@ -106,9 +106,31 @@ public class SiteNavigationMenuItemPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the site navigation menu items where uuid = &#63;.
@@ -665,7 +687,18 @@ public class SiteNavigationMenuItemPersistenceImpl
 		"(siteNavigationMenuItem.uuid IS NULL OR siteNavigationMenuItem.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the site navigation menu item where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMenuItemException</code> if it could not be found.
@@ -932,7 +965,18 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the site navigation menu items where uuid = &#63; and companyId = &#63;.
@@ -1533,7 +1577,18 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the site navigation menu items where companyId = &#63;.
@@ -2054,7 +2109,20 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySiteNavigationMenuId;
 	private FinderPath _finderPathWithoutPaginationFindBySiteNavigationMenuId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySiteNavigationMenuId() {
+
+		return _finderPathWithoutPaginationFindBySiteNavigationMenuId;
+	}
+
 	private FinderPath _finderPathCountBySiteNavigationMenuId;
+
+	@Override
+	public FinderPath getFinderPathCountBySiteNavigationMenuId() {
+		return _finderPathCountBySiteNavigationMenuId;
+	}
 
 	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63;.
@@ -2590,7 +2658,20 @@ public class SiteNavigationMenuItemPersistenceImpl
 		_finderPathWithPaginationFindByParentSiteNavigationMenuItemId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByParentSiteNavigationMenuItemId() {
+
+		return _finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId;
+	}
+
 	private FinderPath _finderPathCountByParentSiteNavigationMenuItemId;
+
+	@Override
+	public FinderPath getFinderPathCountByParentSiteNavigationMenuItemId() {
+		return _finderPathCountByParentSiteNavigationMenuItemId;
+	}
 
 	/**
 	 * Returns all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
@@ -3140,7 +3221,18 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByS_P;
 	private FinderPath _finderPathWithoutPaginationFindByS_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByS_P() {
+		return _finderPathWithoutPaginationFindByS_P;
+	}
+
 	private FinderPath _finderPathCountByS_P;
+
+	@Override
+	public FinderPath getFinderPathCountByS_P() {
+		return _finderPathCountByS_P;
+	}
 
 	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.

@@ -93,9 +93,33 @@ public class CommerceTermEntryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceTermEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceTermEntryId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceTermEntryId() {
+
+		return _finderPathWithoutPaginationFindByCommerceTermEntryId;
+	}
+
 	private FinderPath _finderPathCountByCommerceTermEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceTermEntryId() {
+		return _finderPathCountByCommerceTermEntryId;
+	}
 
 	/**
 	 * Returns all the commerce term entry rels where commerceTermEntryId = &#63;.
@@ -611,7 +635,18 @@ public class CommerceTermEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the commerce term entry rels where classNameId = &#63; and commerceTermEntryId = &#63;.
@@ -1160,7 +1195,18 @@ public class CommerceTermEntryRelPersistenceImpl
 		"commerceTermEntryRel.commerceTermEntryId = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C_C() {
+		return _finderPathFetchByC_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C() {
+		return _finderPathCountByC_C_C;
+	}
 
 	/**
 	 * Returns the commerce term entry rel where classNameId = &#63; and classPK = &#63; and commerceTermEntryId = &#63; or throws a <code>NoSuchTermEntryRelException</code> if it could not be found.

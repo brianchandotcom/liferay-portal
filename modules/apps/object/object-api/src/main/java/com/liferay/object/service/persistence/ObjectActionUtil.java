@@ -119,6 +119,30 @@ public class ObjectActionUtil {
 		return getPersistence().update(objectAction, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the object actions where uuid = &#63;.
 	 *
@@ -281,6 +305,18 @@ public class ObjectActionUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -467,6 +503,19 @@ public class ObjectActionUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectDefinitionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectDefinitionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectDefinitionId() {
+
+		return getPersistence().getFinderPathCountByObjectDefinitionId();
+	}
+
 	/**
 	 * Returns all the object actions where objectDefinitionId = &#63;.
 	 *
@@ -643,6 +692,18 @@ public class ObjectActionUtil {
 		return getPersistence().countByObjectDefinitionId(objectDefinitionId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByODI_N() {
+
+		return getPersistence().getFinderPathFetchByODI_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI_N() {
+
+		return getPersistence().getFinderPathCountByODI_N();
+	}
+
 	/**
 	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
 	 *
@@ -708,6 +769,18 @@ public class ObjectActionUtil {
 	 */
 	public static int countByODI_N(long objectDefinitionId, String name) {
 		return getPersistence().countByODI_N(objectDefinitionId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByO_A_OATK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByO_A_OATK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByO_A_OATK() {
+
+		return getPersistence().getFinderPathCountByO_A_OATK();
 	}
 
 	/**
@@ -927,6 +1000,18 @@ public class ObjectActionUtil {
 
 		return getPersistence().countByO_A_OATK(
 			objectDefinitionId, active, objectActionTriggerKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByODI_A_N_OATK() {
+
+		return getPersistence().getFinderPathFetchByODI_A_N_OATK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI_A_N_OATK() {
+
+		return getPersistence().getFinderPathCountByODI_A_N_OATK();
 	}
 
 	/**

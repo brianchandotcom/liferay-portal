@@ -130,6 +130,31 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 			commerceShippingOptionAccountEntryRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAccountEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAccountEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAccountEntryId() {
+
+		return getPersistence().getFinderPathCountByAccountEntryId();
+	}
+
 	/**
 	 * Returns all the commerce shipping option account entry rels where accountEntryId = &#63;.
 	 *
@@ -325,6 +350,19 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 		return getPersistence().countByAccountEntryId(accountEntryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceChannelId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceChannelId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceChannelId() {
+
+		return getPersistence().getFinderPathCountByCommerceChannelId();
+	}
+
 	/**
 	 * Returns all the commerce shipping option account entry rels where commerceChannelId = &#63;.
 	 *
@@ -518,6 +556,19 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 	 */
 	public static int countByCommerceChannelId(long commerceChannelId) {
 		return getPersistence().countByCommerceChannelId(commerceChannelId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingOptionKey() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceShippingOptionKey();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceShippingOptionKey() {
+
+		return getPersistence().getFinderPathCountByCommerceShippingOptionKey();
 	}
 
 	/**
@@ -722,6 +773,18 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 
 		return getPersistence().countByCommerceShippingOptionKey(
 			commerceShippingOptionKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByA_C() {
+
+		return getPersistence().getFinderPathFetchByA_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_C() {
+
+		return getPersistence().getFinderPathCountByA_C();
 	}
 
 	/**

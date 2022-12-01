@@ -16,6 +16,7 @@ package com.liferay.commerce.qualifier.service.persistence;
 
 import com.liferay.commerce.qualifier.exception.NoSuchCommerceQualifierEntryException;
 import com.liferay.commerce.qualifier.model.CommerceQualifierEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceQualifierEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceQualifierEntryUtil} to access the commerce qualifier entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByS_S();
+
+	public FinderPath getFinderPathCountByS_S();
 
 	/**
 	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
@@ -197,6 +205,10 @@ public interface CommerceQualifierEntryPersistence
 	 */
 	public int countByS_S(long sourceClassNameId, long sourceClassPK);
 
+	public FinderPath getFinderPathWithoutPaginationFindByT_T();
+
+	public FinderPath getFinderPathCountByT_T();
+
 	/**
 	 * Returns all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
 	 *
@@ -352,6 +364,10 @@ public interface CommerceQualifierEntryPersistence
 	 * @return the number of matching commerce qualifier entries
 	 */
 	public int countByT_T(long targetClassNameId, long targetClassPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByS_S_T();
+
+	public FinderPath getFinderPathCountByS_S_T();
 
 	/**
 	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
@@ -525,6 +541,10 @@ public interface CommerceQualifierEntryPersistence
 	public int countByS_S_T(
 		long sourceClassNameId, long sourceClassPK, long targetClassNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByS_T_T();
+
+	public FinderPath getFinderPathCountByS_T_T();
+
 	/**
 	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
 	 *
@@ -696,6 +716,10 @@ public interface CommerceQualifierEntryPersistence
 	 */
 	public int countByS_T_T(
 		long sourceClassNameId, long targetClassNameId, long targetClassPK);
+
+	public FinderPath getFinderPathFetchByS_S_T_T();
+
+	public FinderPath getFinderPathCountByS_S_T_T();
 
 	/**
 	 * Returns the commerce qualifier entry where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63; and targetClassPK = &#63; or throws a <code>NoSuchCommerceQualifierEntryException</code> if it could not be found.

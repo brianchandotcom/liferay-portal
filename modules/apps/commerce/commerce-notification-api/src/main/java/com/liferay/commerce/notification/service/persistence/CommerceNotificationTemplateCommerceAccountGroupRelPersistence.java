@@ -16,6 +16,7 @@ package com.liferay.commerce.notification.service.persistence;
 
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateCommerceAccountGroupRelException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -41,6 +42,14 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationTemplateCommerceAccountGroupRelUtil} to access the commerce notification template commerce account group rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceNotificationTemplateId();
+
+	public FinderPath getFinderPathCountByCommerceNotificationTemplateId();
 
 	/**
 	 * Returns all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
@@ -205,6 +214,11 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	public int countByCommerceNotificationTemplateId(
 		long commerceNotificationTemplateId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceAccountGroupId();
+
+	public FinderPath getFinderPathCountByCommerceAccountGroupId();
+
 	/**
 	 * Returns all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63;.
 	 *
@@ -364,6 +378,10 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 	 * @return the number of matching commerce notification template commerce account group rels
 	 */
 	public int countByCommerceAccountGroupId(long commerceAccountGroupId);
+
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns the commerce notification template commerce account group rel where commerceNotificationTemplateId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchNotificationTemplateCommerceAccountGroupRelException</code> if it could not be found.

@@ -124,6 +124,31 @@ public class CTermEntryLocalizationUtil {
 		return getPersistence().update(cTermEntryLocalization, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceTermEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceTermEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceTermEntryId() {
+
+		return getPersistence().getFinderPathCountByCommerceTermEntryId();
+	}
+
 	/**
 	 * Returns all the c term entry localizations where commerceTermEntryId = &#63;.
 	 *
@@ -302,6 +327,20 @@ public class CTermEntryLocalizationUtil {
 	 */
 	public static int countByCommerceTermEntryId(long commerceTermEntryId) {
 		return getPersistence().countByCommerceTermEntryId(commerceTermEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCommerceTermEntryId_LanguageId() {
+
+		return getPersistence().
+			getFinderPathFetchByCommerceTermEntryId_LanguageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceTermEntryId_LanguageId() {
+
+		return getPersistence().
+			getFinderPathCountByCommerceTermEntryId_LanguageId();
 	}
 
 	/**

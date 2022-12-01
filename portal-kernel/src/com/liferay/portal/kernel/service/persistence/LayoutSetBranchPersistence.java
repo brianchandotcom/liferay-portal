@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 
@@ -39,6 +40,13 @@ public interface LayoutSetBranchPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetBranchUtil} to access the layout set branch persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the layout set branches where groupId = &#63;.
@@ -246,6 +254,10 @@ public interface LayoutSetBranchPersistence
 	 * @return the number of matching layout set branches that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P();
+
+	public FinderPath getFinderPathCountByG_P();
 
 	/**
 	 * Returns all the layout set branches where groupId = &#63; and privateLayout = &#63;.
@@ -472,6 +484,10 @@ public interface LayoutSetBranchPersistence
 	 */
 	public int filterCountByG_P(long groupId, boolean privateLayout);
 
+	public FinderPath getFinderPathFetchByG_P_N();
+
+	public FinderPath getFinderPathCountByG_P_N();
+
 	/**
 	 * Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or throws a <code>NoSuchLayoutSetBranchException</code> if it could not be found.
 	 *
@@ -530,6 +546,10 @@ public interface LayoutSetBranchPersistence
 	 * @return the number of matching layout set branches
 	 */
 	public int countByG_P_N(long groupId, boolean privateLayout, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_M();
+
+	public FinderPath getFinderPathCountByG_P_M();
 
 	/**
 	 * Returns all the layout set branches where groupId = &#63; and privateLayout = &#63; and master = &#63;.

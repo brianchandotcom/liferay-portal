@@ -100,9 +100,31 @@ public class DLContentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByC_R;
 	private FinderPath _finderPathWithoutPaginationFindByC_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_R() {
+		return _finderPathWithoutPaginationFindByC_R;
+	}
+
 	private FinderPath _finderPathCountByC_R;
+
+	@Override
+	public FinderPath getFinderPathCountByC_R() {
+		return _finderPathCountByC_R;
+	}
 
 	/**
 	 * Returns all the document library contents where companyId = &#63; and repositoryId = &#63;.
@@ -656,7 +678,18 @@ public class DLContentPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_R_P;
 	private FinderPath _finderPathWithoutPaginationFindByC_R_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_R_P() {
+		return _finderPathWithoutPaginationFindByC_R_P;
+	}
+
 	private FinderPath _finderPathCountByC_R_P;
+
+	@Override
+	public FinderPath getFinderPathCountByC_R_P() {
+		return _finderPathCountByC_R_P;
+	}
 
 	/**
 	 * Returns all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -1913,7 +1946,18 @@ public class DLContentPersistenceImpl
 		"(dlContent.path IS NULL OR dlContent.path LIKE '')";
 
 	private FinderPath _finderPathFetchByC_R_P_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_R_P_V() {
+		return _finderPathFetchByC_R_P_V;
+	}
+
 	private FinderPath _finderPathCountByC_R_P_V;
+
+	@Override
+	public FinderPath getFinderPathCountByC_R_P_V() {
+		return _finderPathCountByC_R_P_V;
+	}
 
 	/**
 	 * Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or throws a <code>NoSuchContentException</code> if it could not be found.

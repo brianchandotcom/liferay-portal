@@ -86,8 +86,30 @@ public class ReleasePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByServletContextName;
+
+	@Override
+	public FinderPath getFinderPathFetchByServletContextName() {
+		return _finderPathFetchByServletContextName;
+	}
+
 	private FinderPath _finderPathCountByServletContextName;
+
+	@Override
+	public FinderPath getFinderPathCountByServletContextName() {
+		return _finderPathCountByServletContextName;
+	}
 
 	/**
 	 * Returns the release where servletContextName = &#63; or throws a <code>NoSuchReleaseException</code> if it could not be found.

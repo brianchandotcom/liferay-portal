@@ -99,9 +99,31 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByAssetEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAssetEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAssetEntryId() {
+		return _finderPathWithoutPaginationFindByAssetEntryId;
+	}
+
 	private FinderPath _finderPathCountByAssetEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAssetEntryId() {
+		return _finderPathCountByAssetEntryId;
+	}
 
 	/**
 	 * Returns all the asset entry asset category rels where assetEntryId = &#63;.
@@ -630,7 +652,18 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByAssetCategoryId;
 	private FinderPath _finderPathWithoutPaginationFindByAssetCategoryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAssetCategoryId() {
+		return _finderPathWithoutPaginationFindByAssetCategoryId;
+	}
+
 	private FinderPath _finderPathCountByAssetCategoryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAssetCategoryId() {
+		return _finderPathCountByAssetCategoryId;
+	}
 
 	/**
 	 * Returns all the asset entry asset category rels where assetCategoryId = &#63;.
@@ -1160,7 +1193,18 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			"assetEntryAssetCategoryRel.assetCategoryId = ?";
 
 	private FinderPath _finderPathFetchByA_A;
+
+	@Override
+	public FinderPath getFinderPathFetchByA_A() {
+		return _finderPathFetchByA_A;
+	}
+
 	private FinderPath _finderPathCountByA_A;
+
+	@Override
+	public FinderPath getFinderPathCountByA_A() {
+		return _finderPathCountByA_A;
+	}
 
 	/**
 	 * Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or throws a <code>NoSuchEntryAssetCategoryRelException</code> if it could not be found.

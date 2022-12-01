@@ -120,6 +120,30 @@ public class CommerceDiscountUtil {
 		return getPersistence().update(commerceDiscount, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the commerce discounts where uuid = &#63;.
 	 *
@@ -359,6 +383,18 @@ public class CommerceDiscountUtil {
 	 */
 	public static int filterCountByUuid(String uuid) {
 		return getPersistence().filterCountByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -631,6 +667,18 @@ public class CommerceDiscountUtil {
 		return getPersistence().filterCountByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the commerce discounts where companyId = &#63;.
 	 *
@@ -877,6 +925,18 @@ public class CommerceDiscountUtil {
 	 */
 	public static int filterCountByCompanyId(long companyId) {
 		return getPersistence().filterCountByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**
@@ -1694,6 +1754,18 @@ public class CommerceDiscountUtil {
 		return getPersistence().filterCountByLtE_S(expirationDate, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_C_A() {
+
+		return getPersistence().getFinderPathFetchByC_C_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_A() {
+
+		return getPersistence().getFinderPathCountByC_C_A();
+	}
+
 	/**
 	 * Returns the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; or throws a <code>NoSuchDiscountException</code> if it could not be found.
 	 *
@@ -1768,6 +1840,18 @@ public class CommerceDiscountUtil {
 		long companyId, String couponCode, boolean active) {
 
 		return getPersistence().countByC_C_A(companyId, couponCode, active);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_L_A_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_L_A_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_L_A_S() {
+
+		return getPersistence().getFinderPathCountByC_L_A_S();
 	}
 
 	/**
@@ -2088,6 +2172,18 @@ public class CommerceDiscountUtil {
 
 		return getPersistence().filterCountByC_L_A_S(
 			companyId, level, active, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByERC_C() {
+
+		return getPersistence().getFinderPathFetchByERC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByERC_C() {
+
+		return getPersistence().getFinderPathCountByERC_C();
 	}
 
 	/**

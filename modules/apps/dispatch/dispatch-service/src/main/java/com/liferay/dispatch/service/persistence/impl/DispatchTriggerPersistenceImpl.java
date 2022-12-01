@@ -103,9 +103,31 @@ public class DispatchTriggerPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the dispatch triggers where uuid = &#63;.
@@ -1063,7 +1085,18 @@ public class DispatchTriggerPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the dispatch triggers where uuid = &#63; and companyId = &#63;.
@@ -2091,7 +2124,18 @@ public class DispatchTriggerPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the dispatch triggers where companyId = &#63;.
@@ -2971,7 +3015,18 @@ public class DispatchTriggerPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_U;
 	private FinderPath _finderPathWithoutPaginationFindByC_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_U() {
+		return _finderPathWithoutPaginationFindByC_U;
+	}
+
 	private FinderPath _finderPathCountByC_U;
+
+	@Override
+	public FinderPath getFinderPathCountByC_U() {
+		return _finderPathCountByC_U;
+	}
 
 	/**
 	 * Returns all the dispatch triggers where companyId = &#63; and userId = &#63;.
@@ -3910,7 +3965,18 @@ public class DispatchTriggerPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_DTET;
 	private FinderPath _finderPathWithoutPaginationFindByC_DTET;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_DTET() {
+		return _finderPathWithoutPaginationFindByC_DTET;
+	}
+
 	private FinderPath _finderPathCountByC_DTET;
+
+	@Override
+	public FinderPath getFinderPathCountByC_DTET() {
+		return _finderPathCountByC_DTET;
+	}
 
 	/**
 	 * Returns all the dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63;.
@@ -4962,7 +5028,18 @@ public class DispatchTriggerPersistenceImpl
 			"(dispatchTrigger.dispatchTaskExecutorType IS NULL OR dispatchTrigger.dispatchTaskExecutorType = '')";
 
 	private FinderPath _finderPathFetchByC_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_N() {
+		return _finderPathFetchByC_N;
+	}
+
 	private FinderPath _finderPathCountByC_N;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N() {
+		return _finderPathCountByC_N;
+	}
 
 	/**
 	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
@@ -5211,7 +5288,19 @@ public class DispatchTriggerPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByA_DTCM;
 	private FinderPath _finderPathWithoutPaginationFindByA_DTCM;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByA_DTCM() {
+		return _finderPathWithoutPaginationFindByA_DTCM;
+	}
+
 	private FinderPath _finderPathCountByA_DTCM;
+
+	@Override
+	public FinderPath getFinderPathCountByA_DTCM() {
+		return _finderPathCountByA_DTCM;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByA_DTCM;
 
 	/**
@@ -6682,7 +6771,18 @@ public class DispatchTriggerPersistenceImpl
 			"dispatchTrigger.dispatchTaskClusterMode IN (";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.

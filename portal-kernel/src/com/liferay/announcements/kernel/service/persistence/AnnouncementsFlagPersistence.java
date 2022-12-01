@@ -16,6 +16,7 @@ package com.liferay.announcements.kernel.service.persistence;
 
 import com.liferay.announcements.kernel.exception.NoSuchFlagException;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface AnnouncementsFlagPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsFlagUtil} to access the announcements flag persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the announcements flags where companyId = &#63;.
@@ -184,6 +192,10 @@ public interface AnnouncementsFlagPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByEntryId();
+
+	public FinderPath getFinderPathCountByEntryId();
+
 	/**
 	 * Returns all the announcements flags where entryId = &#63;.
 	 *
@@ -326,6 +338,10 @@ public interface AnnouncementsFlagPersistence
 	 * @return the number of matching announcements flags
 	 */
 	public int countByEntryId(long entryId);
+
+	public FinderPath getFinderPathFetchByU_E_V();
+
+	public FinderPath getFinderPathCountByU_E_V();
 
 	/**
 	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a <code>NoSuchFlagException</code> if it could not be found.

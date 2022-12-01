@@ -100,9 +100,31 @@ public class JSONStorageEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCN_CPK;
 	private FinderPath _finderPathWithoutPaginationFindByCN_CPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK() {
+		return _finderPathWithoutPaginationFindByCN_CPK;
+	}
+
 	private FinderPath _finderPathCountByCN_CPK;
+
+	@Override
+	public FinderPath getFinderPathCountByCN_CPK() {
+		return _finderPathCountByCN_CPK;
+	}
 
 	/**
 	 * Returns all the json storage entries where classNameId = &#63; and classPK = &#63;.
@@ -658,7 +680,18 @@ public class JSONStorageEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_CN_I_T_VL;
 	private FinderPath _finderPathWithoutPaginationFindByC_CN_I_T_VL;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_CN_I_T_VL() {
+		return _finderPathWithoutPaginationFindByC_CN_I_T_VL;
+	}
+
 	private FinderPath _finderPathCountByC_CN_I_T_VL;
+
+	@Override
+	public FinderPath getFinderPathCountByC_CN_I_T_VL() {
+		return _finderPathCountByC_CN_I_T_VL;
+	}
 
 	/**
 	 * Returns all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
@@ -1337,7 +1370,18 @@ public class JSONStorageEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_CN_K_T_VL;
 	private FinderPath _finderPathWithoutPaginationFindByC_CN_K_T_VL;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_CN_K_T_VL() {
+		return _finderPathWithoutPaginationFindByC_CN_K_T_VL;
+	}
+
 	private FinderPath _finderPathCountByC_CN_K_T_VL;
+
+	@Override
+	public FinderPath getFinderPathCountByC_CN_K_T_VL() {
+		return _finderPathCountByC_CN_K_T_VL;
+	}
 
 	/**
 	 * Returns all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
@@ -2060,7 +2104,18 @@ public class JSONStorageEntryPersistenceImpl
 		"jsonStorageEntry.valueLong = ?";
 
 	private FinderPath _finderPathFetchByCN_CPK_P_I_K;
+
+	@Override
+	public FinderPath getFinderPathFetchByCN_CPK_P_I_K() {
+		return _finderPathFetchByCN_CPK_P_I_K;
+	}
+
 	private FinderPath _finderPathCountByCN_CPK_P_I_K;
+
+	@Override
+	public FinderPath getFinderPathCountByCN_CPK_P_I_K() {
+		return _finderPathCountByCN_CPK_P_I_K;
+	}
 
 	/**
 	 * Returns the json storage entry where classNameId = &#63; and classPK = &#63; and parentJSONStorageEntryId = &#63; and index = &#63; and key = &#63; or throws a <code>NoSuchJSONStorageEntryException</code> if it could not be found.

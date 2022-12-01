@@ -80,9 +80,31 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLocalizedEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByLocalizedEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByLocalizedEntryId() {
+		return _finderPathWithoutPaginationFindByLocalizedEntryId;
+	}
+
 	private FinderPath _finderPathCountByLocalizedEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByLocalizedEntryId() {
+		return _finderPathCountByLocalizedEntryId;
+	}
 
 	/**
 	 * Returns all the localized entry localizations where localizedEntryId = &#63;.
@@ -597,7 +619,18 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			"localizedEntryLocalization.localizedEntryId = ?";
 
 	private FinderPath _finderPathFetchByLocalizedEntryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathFetchByLocalizedEntryId_LanguageId() {
+		return _finderPathFetchByLocalizedEntryId_LanguageId;
+	}
+
 	private FinderPath _finderPathCountByLocalizedEntryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathCountByLocalizedEntryId_LanguageId() {
+		return _finderPathCountByLocalizedEntryId_LanguageId;
+	}
 
 	/**
 	 * Returns the localized entry localization where localizedEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchLocalizedEntryLocalizationException</code> if it could not be found.

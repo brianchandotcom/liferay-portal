@@ -102,9 +102,31 @@ public class KaleoDefinitionVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo definition versions where companyId = &#63;.
@@ -625,7 +647,18 @@ public class KaleoDefinitionVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_N;
 	private FinderPath _finderPathWithoutPaginationFindByC_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_N() {
+		return _finderPathWithoutPaginationFindByC_N;
+	}
+
 	private FinderPath _finderPathCountByC_N;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N() {
+		return _finderPathCountByC_N;
+	}
 
 	/**
 	 * Returns all the kaleo definition versions where companyId = &#63; and name = &#63;.
@@ -1222,7 +1255,18 @@ public class KaleoDefinitionVersionPersistenceImpl
 		"(kaleoDefinitionVersion.name IS NULL OR kaleoDefinitionVersion.name = '')";
 
 	private FinderPath _finderPathFetchByC_N_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_N_V() {
+		return _finderPathFetchByC_N_V;
+	}
+
 	private FinderPath _finderPathCountByC_N_V;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N_V() {
+		return _finderPathCountByC_N_V;
+	}
 
 	/**
 	 * Returns the kaleo definition version where companyId = &#63; and name = &#63; and version = &#63; or throws a <code>NoSuchDefinitionVersionException</code> if it could not be found.

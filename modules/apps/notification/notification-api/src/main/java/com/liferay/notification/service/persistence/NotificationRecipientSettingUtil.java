@@ -125,6 +125,30 @@ public class NotificationRecipientSettingUtil {
 			notificationRecipientSetting, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the notification recipient settings where uuid = &#63;.
 	 *
@@ -294,6 +318,18 @@ public class NotificationRecipientSettingUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -483,6 +519,19 @@ public class NotificationRecipientSettingUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByNotificationRecipientId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByNotificationRecipientId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByNotificationRecipientId() {
+
+		return getPersistence().getFinderPathCountByNotificationRecipientId();
 	}
 
 	/**
@@ -683,6 +732,18 @@ public class NotificationRecipientSettingUtil {
 
 		return getPersistence().countByNotificationRecipientId(
 			notificationRecipientId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByNRI_N() {
+
+		return getPersistence().getFinderPathFetchByNRI_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByNRI_N() {
+
+		return getPersistence().getFinderPathCountByNRI_N();
 	}
 
 	/**

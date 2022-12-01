@@ -97,9 +97,31 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the commerce notification queue entries where groupId = &#63;.
@@ -612,7 +634,20 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		_finderPathWithPaginationFindByCommerceNotificationTemplateId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceNotificationTemplateId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceNotificationTemplateId() {
+
+		return _finderPathWithoutPaginationFindByCommerceNotificationTemplateId;
+	}
+
 	private FinderPath _finderPathCountByCommerceNotificationTemplateId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceNotificationTemplateId() {
+		return _finderPathCountByCommerceNotificationTemplateId;
+	}
 
 	/**
 	 * Returns all the commerce notification queue entries where commerceNotificationTemplateId = &#63;.
@@ -1167,7 +1202,18 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySent;
 	private FinderPath _finderPathWithoutPaginationFindBySent;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySent() {
+		return _finderPathWithoutPaginationFindBySent;
+	}
+
 	private FinderPath _finderPathCountBySent;
+
+	@Override
+	public FinderPath getFinderPathCountBySent() {
+		return _finderPathCountBySent;
+	}
 
 	/**
 	 * Returns all the commerce notification queue entries where sent = &#63;.
@@ -2215,7 +2261,18 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_S() {
+		return _finderPathWithoutPaginationFindByG_C_C_S;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_S() {
+		return _finderPathCountByG_C_C_S;
+	}
 
 	/**
 	 * Returns all the commerce notification queue entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.

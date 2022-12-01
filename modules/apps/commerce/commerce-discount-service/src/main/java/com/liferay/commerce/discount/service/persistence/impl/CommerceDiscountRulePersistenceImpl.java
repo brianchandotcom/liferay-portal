@@ -95,9 +95,31 @@ public class CommerceDiscountRulePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceDiscountId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId() {
+		return _finderPathWithoutPaginationFindByCommerceDiscountId;
+	}
+
 	private FinderPath _finderPathCountByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceDiscountId() {
+		return _finderPathCountByCommerceDiscountId;
+	}
 
 	/**
 	 * Returns all the commerce discount rules where commerceDiscountId = &#63;.

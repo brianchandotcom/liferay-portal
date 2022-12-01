@@ -115,6 +115,30 @@ public class TicketUtil {
 		return getPersistence().update(ticket, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByKey() {
+
+		return getPersistence().getFinderPathFetchByKey();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKey() {
+
+		return getPersistence().getFinderPathCountByKey();
+	}
+
 	/**
 	 * Returns the ticket where key = &#63; or throws a <code>NoSuchTicketException</code> if it could not be found.
 	 *
@@ -169,6 +193,18 @@ public class TicketUtil {
 	 */
 	public static int countByKey(String key) {
 		return getPersistence().countByKey(key);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C() {
+
+		return getPersistence().getFinderPathCountByC_C_C();
 	}
 
 	/**
@@ -373,6 +409,18 @@ public class TicketUtil {
 		return getPersistence().countByC_C_C(companyId, classNameId, classPK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_T() {
+
+		return getPersistence().getFinderPathCountByC_C_T();
+	}
+
 	/**
 	 * Returns all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
@@ -569,6 +617,18 @@ public class TicketUtil {
 	 */
 	public static int countByC_C_T(long classNameId, long classPK, int type) {
 		return getPersistence().countByC_C_T(classNameId, classPK, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_C_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_C_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C_T() {
+
+		return getPersistence().getFinderPathCountByC_C_C_T();
 	}
 
 	/**

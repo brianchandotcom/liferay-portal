@@ -16,6 +16,7 @@ package com.liferay.fragment.service.persistence;
 
 import com.liferay.fragment.exception.NoSuchEntryVersionException;
 import com.liferay.fragment.model.FragmentEntryVersion;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface FragmentEntryVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentEntryVersionUtil} to access the fragment entry version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByFragmentEntryId();
+
+	public FinderPath getFinderPathCountByFragmentEntryId();
 
 	/**
 	 * Returns all the fragment entry versions where fragmentEntryId = &#63;.
@@ -187,6 +195,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByFragmentEntryId(long fragmentEntryId);
 
+	public FinderPath getFinderPathFetchByFragmentEntryId_Version();
+
+	public FinderPath getFinderPathCountByFragmentEntryId_Version();
+
 	/**
 	 * Returns the fragment entry version where fragmentEntryId = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
 	 *
@@ -240,6 +252,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByFragmentEntryId_Version(
 		long fragmentEntryId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the fragment entry versions where uuid = &#63;.
@@ -383,6 +399,10 @@ public interface FragmentEntryVersionPersistence
 	 * @return the number of matching fragment entry versions
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_Version();
+
+	public FinderPath getFinderPathCountByUuid_Version();
 
 	/**
 	 * Returns all the fragment entry versions where uuid = &#63; and version = &#63;.
@@ -539,6 +559,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByUuid_Version(String uuid, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns all the fragment entry versions where uuid = &#63; and groupId = &#63;.
 	 *
@@ -694,6 +718,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByUUID_G(String uuid, long groupId);
 
+	public FinderPath getFinderPathFetchByUUID_G_Version();
+
+	public FinderPath getFinderPathCountByUUID_G_Version();
+
 	/**
 	 * Returns the fragment entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
 	 *
@@ -751,6 +779,10 @@ public interface FragmentEntryVersionPersistence
 	 * @return the number of matching fragment entry versions
 	 */
 	public int countByUUID_G_Version(String uuid, long groupId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the fragment entry versions where uuid = &#63; and companyId = &#63;.
@@ -906,6 +938,10 @@ public interface FragmentEntryVersionPersistence
 	 * @return the number of matching fragment entry versions
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C_Version();
+
+	public FinderPath getFinderPathCountByUuid_C_Version();
 
 	/**
 	 * Returns all the fragment entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -1075,6 +1111,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByUuid_C_Version(String uuid, long companyId, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63;.
 	 *
@@ -1217,6 +1257,10 @@ public interface FragmentEntryVersionPersistence
 	 * @return the number of matching fragment entry versions
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Version();
+
+	public FinderPath getFinderPathCountByGroupId_Version();
 
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and version = &#63;.
@@ -1373,6 +1417,11 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByGroupId_Version(long groupId, int version);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFragmentCollectionId();
+
+	public FinderPath getFinderPathCountByFragmentCollectionId();
+
 	/**
 	 * Returns all the fragment entry versions where fragmentCollectionId = &#63;.
 	 *
@@ -1516,6 +1565,11 @@ public interface FragmentEntryVersionPersistence
 	 * @return the number of matching fragment entry versions
 	 */
 	public int countByFragmentCollectionId(long fragmentCollectionId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFragmentCollectionId_Version();
+
+	public FinderPath getFinderPathCountByFragmentCollectionId_Version();
 
 	/**
 	 * Returns all the fragment entry versions where fragmentCollectionId = &#63; and version = &#63;.
@@ -1680,6 +1734,10 @@ public interface FragmentEntryVersionPersistence
 	public int countByFragmentCollectionId_Version(
 		long fragmentCollectionId, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByType();
+
+	public FinderPath getFinderPathCountByType();
+
 	/**
 	 * Returns all the fragment entry versions where type = &#63;.
 	 *
@@ -1822,6 +1880,10 @@ public interface FragmentEntryVersionPersistence
 	 * @return the number of matching fragment entry versions
 	 */
 	public int countByType(int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByType_Version();
+
+	public FinderPath getFinderPathCountByType_Version();
 
 	/**
 	 * Returns all the fragment entry versions where type = &#63; and version = &#63;.
@@ -1978,6 +2040,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByType_Version(int type, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI();
+
+	public FinderPath getFinderPathCountByG_FCI();
+
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63;.
 	 *
@@ -2133,6 +2199,10 @@ public interface FragmentEntryVersionPersistence
 	 * @return the number of matching fragment entry versions
 	 */
 	public int countByG_FCI(long groupId, long fragmentCollectionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_Version();
+
+	public FinderPath getFinderPathCountByG_FCI_Version();
 
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and version = &#63;.
@@ -2306,6 +2376,10 @@ public interface FragmentEntryVersionPersistence
 	public int countByG_FCI_Version(
 		long groupId, long fragmentCollectionId, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FEK();
+
+	public FinderPath getFinderPathCountByG_FEK();
+
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentEntryKey = &#63;.
 	 *
@@ -2461,6 +2535,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByG_FEK(long groupId, String fragmentEntryKey);
 
+	public FinderPath getFinderPathFetchByG_FEK_Version();
+
+	public FinderPath getFinderPathCountByG_FEK_Version();
+
 	/**
 	 * Returns the fragment entry version where groupId = &#63; and fragmentEntryKey = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
 	 *
@@ -2520,6 +2598,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByG_FEK_Version(
 		long groupId, String fragmentEntryKey, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_LikeN();
+
+	public FinderPath getFinderPathCountByG_FCI_LikeN();
 
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63;.
@@ -2692,6 +2774,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByG_FCI_LikeN(
 		long groupId, long fragmentCollectionId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_LikeN_Version();
+
+	public FinderPath getFinderPathCountByG_FCI_LikeN_Version();
 
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; and version = &#63;.
@@ -2876,6 +2962,10 @@ public interface FragmentEntryVersionPersistence
 	public int countByG_FCI_LikeN_Version(
 		long groupId, long fragmentCollectionId, String name, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T();
+
+	public FinderPath getFinderPathCountByG_FCI_T();
+
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
 	 *
@@ -3044,6 +3134,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByG_FCI_T(
 		long groupId, long fragmentCollectionId, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_Version();
+
+	public FinderPath getFinderPathCountByG_FCI_T_Version();
 
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and version = &#63;.
@@ -3228,6 +3322,10 @@ public interface FragmentEntryVersionPersistence
 	public int countByG_FCI_T_Version(
 		long groupId, long fragmentCollectionId, int type, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_S();
+
+	public FinderPath getFinderPathCountByG_FCI_S();
+
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
 	 *
@@ -3397,6 +3495,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByG_FCI_S(
 		long groupId, long fragmentCollectionId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_S_Version();
+
+	public FinderPath getFinderPathCountByG_FCI_S_Version();
 
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; and version = &#63;.
@@ -3581,6 +3683,10 @@ public interface FragmentEntryVersionPersistence
 	public int countByG_FCI_S_Version(
 		long groupId, long fragmentCollectionId, int status, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_LikeN_S();
+
+	public FinderPath getFinderPathCountByG_FCI_LikeN_S();
+
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; and status = &#63;.
 	 *
@@ -3763,6 +3869,11 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByG_FCI_LikeN_S(
 		long groupId, long fragmentCollectionId, String name, int status);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByG_FCI_LikeN_S_Version();
+
+	public FinderPath getFinderPathCountByG_FCI_LikeN_S_Version();
 
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; and status = &#63; and version = &#63;.
@@ -3965,6 +4076,10 @@ public interface FragmentEntryVersionPersistence
 		long groupId, long fragmentCollectionId, String name, int status,
 		int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_S();
+
+	public FinderPath getFinderPathCountByG_FCI_T_S();
+
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
 	 *
@@ -4147,6 +4262,10 @@ public interface FragmentEntryVersionPersistence
 	 */
 	public int countByG_FCI_T_S(
 		long groupId, long fragmentCollectionId, int type, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_S_Version();
+
+	public FinderPath getFinderPathCountByG_FCI_T_S_Version();
 
 	/**
 	 * Returns all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63; and version = &#63;.

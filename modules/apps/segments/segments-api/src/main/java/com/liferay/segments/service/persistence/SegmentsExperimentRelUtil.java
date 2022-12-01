@@ -122,6 +122,31 @@ public class SegmentsExperimentRelUtil {
 		return getPersistence().update(segmentsExperimentRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperimentId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindBySegmentsExperimentId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySegmentsExperimentId() {
+
+		return getPersistence().getFinderPathCountBySegmentsExperimentId();
+	}
+
 	/**
 	 * Returns all the segments experiment rels where segmentsExperimentId = &#63;.
 	 *
@@ -302,6 +327,19 @@ public class SegmentsExperimentRelUtil {
 			segmentsExperimentId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperienceId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindBySegmentsExperienceId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySegmentsExperienceId() {
+
+		return getPersistence().getFinderPathCountBySegmentsExperienceId();
+	}
+
 	/**
 	 * Returns all the segments experiment rels where segmentsExperienceId = &#63;.
 	 *
@@ -480,6 +518,18 @@ public class SegmentsExperimentRelUtil {
 	public static int countBySegmentsExperienceId(long segmentsExperienceId) {
 		return getPersistence().countBySegmentsExperienceId(
 			segmentsExperienceId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByS_S() {
+
+		return getPersistence().getFinderPathFetchByS_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_S() {
+
+		return getPersistence().getFinderPathCountByS_S();
 	}
 
 	/**

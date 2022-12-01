@@ -16,6 +16,7 @@ package com.liferay.json.storage.service.persistence;
 
 import com.liferay.json.storage.exception.NoSuchJSONStorageEntryException;
 import com.liferay.json.storage.model.JSONStorageEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface JSONStorageEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JSONStorageEntryUtil} to access the json storage entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK();
+
+	public FinderPath getFinderPathCountByCN_CPK();
 
 	/**
 	 * Returns all the json storage entries where classNameId = &#63; and classPK = &#63;.
@@ -196,6 +204,10 @@ public interface JSONStorageEntryPersistence
 	 * @return the number of matching json storage entries
 	 */
 	public int countByCN_CPK(long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_CN_I_T_VL();
+
+	public FinderPath getFinderPathCountByC_CN_I_T_VL();
 
 	/**
 	 * Returns all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
@@ -393,6 +405,10 @@ public interface JSONStorageEntryPersistence
 	public int countByC_CN_I_T_VL(
 		long companyId, long classNameId, int index, int type, long valueLong);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_CN_K_T_VL();
+
+	public FinderPath getFinderPathCountByC_CN_K_T_VL();
+
 	/**
 	 * Returns all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
 	 *
@@ -588,6 +604,10 @@ public interface JSONStorageEntryPersistence
 	 */
 	public int countByC_CN_K_T_VL(
 		long companyId, long classNameId, String key, int type, long valueLong);
+
+	public FinderPath getFinderPathFetchByCN_CPK_P_I_K();
+
+	public FinderPath getFinderPathCountByCN_CPK_P_I_K();
 
 	/**
 	 * Returns the json storage entry where classNameId = &#63; and classPK = &#63; and parentJSONStorageEntryId = &#63; and index = &#63; and key = &#63; or throws a <code>NoSuchJSONStorageEntryException</code> if it could not be found.

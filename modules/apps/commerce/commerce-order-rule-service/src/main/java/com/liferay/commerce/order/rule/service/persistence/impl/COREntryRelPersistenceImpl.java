@@ -92,9 +92,31 @@ public class COREntryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCOREntryId;
 	private FinderPath _finderPathWithoutPaginationFindByCOREntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCOREntryId() {
+		return _finderPathWithoutPaginationFindByCOREntryId;
+	}
+
 	private FinderPath _finderPathCountByCOREntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCOREntryId() {
+		return _finderPathCountByCOREntryId;
+	}
 
 	/**
 	 * Returns all the cor entry rels where COREntryId = &#63;.
@@ -591,7 +613,18 @@ public class COREntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
@@ -1130,7 +1163,18 @@ public class COREntryRelPersistenceImpl
 		"corEntryRel.COREntryId = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C_C() {
+		return _finderPathFetchByC_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C() {
+		return _finderPathCountByC_C_C;
+	}
 
 	/**
 	 * Returns the cor entry rel where classNameId = &#63; and classPK = &#63; and COREntryId = &#63; or throws a <code>NoSuchCOREntryRelException</code> if it could not be found.

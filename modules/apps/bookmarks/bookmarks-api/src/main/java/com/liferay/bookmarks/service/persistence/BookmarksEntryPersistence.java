@@ -16,6 +16,7 @@ package com.liferay.bookmarks.service.persistence;
 
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface BookmarksEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BookmarksEntryUtil} to access the bookmarks entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the bookmarks entries where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface BookmarksEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the bookmarks entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface BookmarksEntryPersistence
 	 * @return the number of matching bookmarks entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the bookmarks entries where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface BookmarksEntryPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the bookmarks entries where companyId = &#63;.
 	 *
@@ -531,6 +551,10 @@ public interface BookmarksEntryPersistence
 	 * @return the number of matching bookmarks entries
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F();
+
+	public FinderPath getFinderPathCountByG_F();
 
 	/**
 	 * Returns all the bookmarks entries where groupId = &#63; and folderId = &#63;.
@@ -889,6 +913,10 @@ public interface BookmarksEntryPersistence
 	 * @return the number of matching bookmarks entries that the user has permission to view
 	 */
 	public int filterCountByG_F(long groupId, long[] folderIds);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
 
 	/**
 	 * Returns all the bookmarks entries where groupId = &#63; and status = &#63;.
@@ -1494,6 +1522,10 @@ public interface BookmarksEntryPersistence
 	 */
 	public int countByC_NotS(long companyId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_S();
+
+	public FinderPath getFinderPathCountByG_U_S();
+
 	/**
 	 * Returns all the bookmarks entries where groupId = &#63; and userId = &#63; and status = &#63;.
 	 *
@@ -1975,6 +2007,10 @@ public interface BookmarksEntryPersistence
 	 * @return the number of matching bookmarks entries that the user has permission to view
 	 */
 	public int filterCountByG_U_NotS(long groupId, long userId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_S();
+
+	public FinderPath getFinderPathCountByG_F_S();
 
 	/**
 	 * Returns all the bookmarks entries where groupId = &#63; and folderId = &#63; and status = &#63;.
@@ -2742,6 +2778,10 @@ public interface BookmarksEntryPersistence
 	 */
 	public int filterCountByG_F_NotS(
 		long groupId, long[] folderIds, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_F_S();
+
+	public FinderPath getFinderPathCountByG_U_F_S();
 
 	/**
 	 * Returns all the bookmarks entries where groupId = &#63; and userId = &#63; and folderId = &#63; and status = &#63;.

@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.search.experiences.exception.NoSuchSXPElementException;
 import com.liferay.search.experiences.model.SXPElement;
@@ -39,6 +40,13 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SXPElementUtil} to access the sxp element persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the sxp elements where uuid = &#63;.
@@ -246,6 +254,10 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the number of matching sxp elements that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the sxp elements where uuid = &#63; and companyId = &#63;.
@@ -471,6 +483,10 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the sxp elements where companyId = &#63;.
 	 *
@@ -677,6 +693,10 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the number of matching sxp elements that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_R();
+
+	public FinderPath getFinderPathCountByC_R();
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and readOnly = &#63;.
@@ -903,6 +923,10 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 */
 	public int filterCountByC_R(long companyId, boolean readOnly);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_T();
+
+	public FinderPath getFinderPathCountByC_T();
+
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and type = &#63;.
 	 *
@@ -1125,6 +1149,10 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the number of matching sxp elements that the user has permission to view
 	 */
 	public int filterCountByC_T(long companyId, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_T_S();
+
+	public FinderPath getFinderPathCountByC_T_S();
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and type = &#63; and status = &#63;.
@@ -1366,6 +1394,10 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the number of matching sxp elements that the user has permission to view
 	 */
 	public int filterCountByC_T_S(long companyId, int type, int status);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the sxp element where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchSXPElementException</code> if it could not be found.

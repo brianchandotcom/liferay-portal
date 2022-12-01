@@ -16,6 +16,7 @@ package com.liferay.asset.list.service.persistence;
 
 import com.liferay.asset.list.exception.NoSuchEntryAssetEntryRelException;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetListEntryAssetEntryRelUtil} to access the asset list entry asset entry rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the asset list entry asset entry rels where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the asset list entry asset entry rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @return the number of matching asset list entry asset entry rels
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the asset list entry asset entry rels where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByAssetListEntryId();
+
+	public FinderPath getFinderPathCountByAssetListEntryId();
+
 	/**
 	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63;.
 	 *
@@ -534,6 +554,10 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @return the number of matching asset list entry asset entry rels
 	 */
 	public int countByAssetListEntryId(long assetListEntryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByA_S();
+
+	public FinderPath getFinderPathCountByA_S();
 
 	/**
 	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
@@ -769,6 +793,10 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @return the number of matching asset list entry asset entry rels
 	 */
 	public int countByA_S(long assetListEntryId, long[] segmentsEntryIds);
+
+	public FinderPath getFinderPathFetchByA_S_P();
+
+	public FinderPath getFinderPathCountByA_S_P();
 
 	/**
 	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.

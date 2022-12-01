@@ -119,6 +119,30 @@ public class MessageUtil {
 		return getPersistence().update(message, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the messages where companyId = &#63;.
 	 *
@@ -287,6 +311,18 @@ public class MessageUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFolderId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByFolderId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFolderId() {
+
+		return getPersistence().getFinderPathCountByFolderId();
+	}
+
 	/**
 	 * Returns all the messages where folderId = &#63;.
 	 *
@@ -453,6 +489,18 @@ public class MessageUtil {
 	 */
 	public static int countByFolderId(long folderId) {
 		return getPersistence().countByFolderId(folderId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByF_R() {
+
+		return getPersistence().getFinderPathFetchByF_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_R() {
+
+		return getPersistence().getFinderPathCountByF_R();
 	}
 
 	/**

@@ -110,9 +110,31 @@ public class CommercePriceModifierPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce price modifiers where uuid = &#63;.
@@ -667,7 +689,18 @@ public class CommercePriceModifierPersistenceImpl
 		"(commercePriceModifier.uuid IS NULL OR commercePriceModifier.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the commerce price modifier where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPriceModifierException</code> if it could not be found.
@@ -934,7 +967,18 @@ public class CommercePriceModifierPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce price modifiers where uuid = &#63; and companyId = &#63;.
@@ -1535,7 +1579,18 @@ public class CommercePriceModifierPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the commerce price modifiers where companyId = &#63;.
@@ -2056,7 +2111,20 @@ public class CommercePriceModifierPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommercePriceListId;
 	private FinderPath _finderPathWithoutPaginationFindByCommercePriceListId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommercePriceListId() {
+
+		return _finderPathWithoutPaginationFindByCommercePriceListId;
+	}
+
 	private FinderPath _finderPathCountByCommercePriceListId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommercePriceListId() {
+		return _finderPathCountByCommercePriceListId;
+	}
 
 	/**
 	 * Returns all the commerce price modifiers where commercePriceListId = &#63;.
@@ -2587,7 +2655,18 @@ public class CommercePriceModifierPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T() {
+		return _finderPathWithoutPaginationFindByC_T;
+	}
+
 	private FinderPath _finderPathCountByC_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T() {
+		return _finderPathCountByC_T;
+	}
 
 	/**
 	 * Returns all the commerce price modifiers where companyId = &#63; and target = &#63;.
@@ -4360,7 +4439,19 @@ public class CommercePriceModifierPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_S() {
+		return _finderPathWithoutPaginationFindByG_C_S;
+	}
+
 	private FinderPath _finderPathCountByG_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_S() {
+		return _finderPathCountByG_C_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_C_S;
 
 	/**
@@ -6154,7 +6245,18 @@ public class CommercePriceModifierPersistenceImpl
 		"commercePriceModifier.status != ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the commerce price modifier where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPriceModifierException</code> if it could not be found.

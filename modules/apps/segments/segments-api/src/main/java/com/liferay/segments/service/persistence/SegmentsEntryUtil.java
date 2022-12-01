@@ -119,6 +119,30 @@ public class SegmentsEntryUtil {
 		return getPersistence().update(segmentsEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the segments entries where uuid = &#63;.
 	 *
@@ -283,6 +307,18 @@ public class SegmentsEntryUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the segments entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -344,6 +380,18 @@ public class SegmentsEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -530,6 +578,18 @@ public class SegmentsEntryUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
 	}
 
 	/**
@@ -920,6 +980,18 @@ public class SegmentsEntryUtil {
 		return getPersistence().filterCountByGroupId(groupIds);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the segments entries where companyId = &#63;.
 	 *
@@ -1175,6 +1247,18 @@ public class SegmentsEntryUtil {
 		return getPersistence().countByCompanyId(companyIds);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySource() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindBySource();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySource() {
+
+		return getPersistence().getFinderPathCountBySource();
+	}
+
 	/**
 	 * Returns all the segments entries where source = &#63;.
 	 *
@@ -1338,6 +1422,18 @@ public class SegmentsEntryUtil {
 	 */
 	public static int countBySource(String source) {
 		return getPersistence().countBySource(source);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByType() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByType();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByType() {
+
+		return getPersistence().getFinderPathCountByType();
 	}
 
 	/**
@@ -1504,6 +1600,18 @@ public class SegmentsEntryUtil {
 		return getPersistence().countByType(type);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_S() {
+
+		return getPersistence().getFinderPathFetchByG_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_S() {
+
+		return getPersistence().getFinderPathCountByG_S();
+	}
+
 	/**
 	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -1569,6 +1677,18 @@ public class SegmentsEntryUtil {
 	 */
 	public static int countByG_S(long groupId, String segmentsEntryKey) {
 		return getPersistence().countByG_S(groupId, segmentsEntryKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_A() {
+
+		return getPersistence().getFinderPathCountByG_A();
 	}
 
 	/**
@@ -1997,6 +2117,18 @@ public class SegmentsEntryUtil {
 		return getPersistence().filterCountByG_A(groupIds, active);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByA_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByA_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_T() {
+
+		return getPersistence().getFinderPathCountByA_T();
+	}
+
 	/**
 	 * Returns all the segments entries where active = &#63; and type = &#63;.
 	 *
@@ -2178,6 +2310,18 @@ public class SegmentsEntryUtil {
 	 */
 	public static int countByA_T(boolean active, String type) {
 		return getPersistence().countByA_T(active, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_A_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_A_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_A_T() {
+
+		return getPersistence().getFinderPathCountByG_A_T();
 	}
 
 	/**
@@ -2643,6 +2787,18 @@ public class SegmentsEntryUtil {
 		long[] groupIds, boolean active, String type) {
 
 		return getPersistence().filterCountByG_A_T(groupIds, active, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_A_S_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_A_S_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_A_S_T() {
+
+		return getPersistence().getFinderPathCountByG_A_S_T();
 	}
 
 	/**

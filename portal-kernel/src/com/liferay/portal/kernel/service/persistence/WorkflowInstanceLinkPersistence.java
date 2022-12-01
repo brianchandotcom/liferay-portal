@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowInstanceLinkException;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -41,6 +42,13 @@ public interface WorkflowInstanceLinkPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowInstanceLinkUtil} to access the workflow instance link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C();
 
 	/**
 	 * Returns all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -208,6 +216,10 @@ public interface WorkflowInstanceLinkPersistence
 	 * @return the number of matching workflow instance links
 	 */
 	public int countByG_C_C(long groupId, long companyId, long classNameId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C_C();
 
 	/**
 	 * Returns all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.

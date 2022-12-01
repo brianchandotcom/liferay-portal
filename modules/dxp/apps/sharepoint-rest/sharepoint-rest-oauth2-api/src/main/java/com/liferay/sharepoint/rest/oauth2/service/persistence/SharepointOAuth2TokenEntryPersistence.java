@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.rest.oauth2.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
@@ -40,6 +41,13 @@ public interface SharepointOAuth2TokenEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SharepointOAuth2TokenEntryUtil} to access the sharepoint o auth2 token entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the sharepoint o auth2 token entries where userId = &#63;.
@@ -183,6 +191,10 @@ public interface SharepointOAuth2TokenEntryPersistence
 	 * @return the number of matching sharepoint o auth2 token entries
 	 */
 	public int countByUserId(long userId);
+
+	public FinderPath getFinderPathFetchByU_C();
+
+	public FinderPath getFinderPathCountByU_C();
 
 	/**
 	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a <code>NoSuch2TokenEntryException</code> if it could not be found.

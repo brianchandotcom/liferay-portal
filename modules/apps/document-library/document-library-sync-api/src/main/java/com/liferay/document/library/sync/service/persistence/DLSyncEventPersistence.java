@@ -16,6 +16,7 @@ package com.liferay.document.library.sync.service.persistence;
 
 import com.liferay.document.library.sync.exception.NoSuchEventException;
 import com.liferay.document.library.sync.model.DLSyncEvent;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,9 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLSyncEventUtil} to access the dl sync event persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Returns all the dl sync events where modifiedTime &gt; &#63;.
@@ -182,6 +186,10 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	 * @return the number of matching dl sync events
 	 */
 	public int countByGtModifiedTime(long modifiedTime);
+
+	public FinderPath getFinderPathFetchByTypePK();
+
+	public FinderPath getFinderPathCountByTypePK();
 
 	/**
 	 * Returns the dl sync event where typePK = &#63; or throws a <code>NoSuchEventException</code> if it could not be found.

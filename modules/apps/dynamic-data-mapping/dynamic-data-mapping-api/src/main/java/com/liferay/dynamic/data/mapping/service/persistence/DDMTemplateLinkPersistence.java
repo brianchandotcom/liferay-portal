@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DDMTemplateLinkPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLinkUtil} to access the ddm template link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByTemplateId();
+
+	public FinderPath getFinderPathCountByTemplateId();
 
 	/**
 	 * Returns all the ddm template links where templateId = &#63;.
@@ -184,6 +192,10 @@ public interface DDMTemplateLinkPersistence
 	 * @return the number of matching ddm template links
 	 */
 	public int countByTemplateId(long templateId);
+
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns the ddm template link where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchTemplateLinkException</code> if it could not be found.

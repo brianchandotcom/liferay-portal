@@ -16,6 +16,7 @@ package com.liferay.document.library.file.rank.service.persistence;
 
 import com.liferay.document.library.file.rank.exception.NoSuchFileRankException;
 import com.liferay.document.library.file.rank.model.DLFileRank;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileRankUtil} to access the document library file rank persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the document library file ranks where userId = &#63;.
@@ -183,6 +191,10 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	 */
 	public int countByUserId(long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryId();
+
+	public FinderPath getFinderPathCountByFileEntryId();
+
 	/**
 	 * Returns all the document library file ranks where fileEntryId = &#63;.
 	 *
@@ -325,6 +337,10 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	 * @return the number of matching document library file ranks
 	 */
 	public int countByFileEntryId(long fileEntryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U();
+
+	public FinderPath getFinderPathCountByG_U();
 
 	/**
 	 * Returns all the document library file ranks where groupId = &#63; and userId = &#63;.
@@ -479,6 +495,10 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	 * @return the number of matching document library file ranks
 	 */
 	public int countByG_U(long groupId, long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_A();
+
+	public FinderPath getFinderPathCountByG_U_A();
 
 	/**
 	 * Returns all the document library file ranks where groupId = &#63; and userId = &#63; and active = &#63;.
@@ -645,6 +665,10 @@ public interface DLFileRankPersistence extends BasePersistence<DLFileRank> {
 	 * @return the number of matching document library file ranks
 	 */
 	public int countByG_U_A(long groupId, long userId, boolean active);
+
+	public FinderPath getFinderPathFetchByC_U_F();
+
+	public FinderPath getFinderPathCountByC_U_F();
 
 	/**
 	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a <code>NoSuchFileRankException</code> if it could not be found.

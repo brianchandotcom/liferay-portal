@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lock.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.lock.exception.NoSuchLockException;
 import com.liferay.portal.lock.model.Lock;
@@ -41,6 +42,13 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LockUtil} to access the lock persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the locks where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 * @return the number of matching locks
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the locks where uuid = &#63; and companyId = &#63;.
@@ -337,6 +349,10 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 * @return the number of matching locks
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByClassName();
+
+	public FinderPath getFinderPathCountByClassName();
 
 	/**
 	 * Returns all the locks where className = &#63;.
@@ -623,6 +639,10 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	 * @return the number of matching locks
 	 */
 	public int countByLtExpirationDate(Date expirationDate);
+
+	public FinderPath getFinderPathFetchByC_K();
+
+	public FinderPath getFinderPathCountByC_K();
 
 	/**
 	 * Returns the lock where className = &#63; and key = &#63; or throws a <code>NoSuchLockException</code> if it could not be found.

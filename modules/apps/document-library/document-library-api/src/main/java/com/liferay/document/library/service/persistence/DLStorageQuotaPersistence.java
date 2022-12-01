@@ -16,6 +16,7 @@ package com.liferay.document.library.service.persistence;
 
 import com.liferay.document.library.exception.NoSuchStorageQuotaException;
 import com.liferay.document.library.model.DLStorageQuota;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface DLStorageQuotaPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLStorageQuotaUtil} to access the dl storage quota persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns the dl storage quota where companyId = &#63; or throws a <code>NoSuchStorageQuotaException</code> if it could not be found.

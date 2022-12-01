@@ -121,6 +121,30 @@ public class DDMFieldAttributeUtil {
 		return getPersistence().update(ddmFieldAttribute, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByStorageId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByStorageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByStorageId() {
+
+		return getPersistence().getFinderPathCountByStorageId();
+	}
+
 	/**
 	 * Returns all the ddm field attributes where storageId = &#63;.
 	 *
@@ -295,6 +319,18 @@ public class DDMFieldAttributeUtil {
 	 */
 	public static int countByStorageId(long storageId) {
 		return getPersistence().countByStorageId(storageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_L() {
+
+		return getPersistence().getFinderPathCountByS_L();
 	}
 
 	/**
@@ -485,6 +521,18 @@ public class DDMFieldAttributeUtil {
 	 */
 	public static int countByS_L(long storageId, String languageId) {
 		return getPersistence().countByS_L(storageId, languageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAN_SAV() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByAN_SAV();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAN_SAV() {
+
+		return getPersistence().getFinderPathCountByAN_SAV();
 	}
 
 	/**
@@ -684,6 +732,18 @@ public class DDMFieldAttributeUtil {
 
 		return getPersistence().countByAN_SAV(
 			attributeName, smallAttributeValue);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByF_AN_L() {
+
+		return getPersistence().getFinderPathFetchByF_AN_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_AN_L() {
+
+		return getPersistence().getFinderPathCountByF_AN_L();
 	}
 
 	/**

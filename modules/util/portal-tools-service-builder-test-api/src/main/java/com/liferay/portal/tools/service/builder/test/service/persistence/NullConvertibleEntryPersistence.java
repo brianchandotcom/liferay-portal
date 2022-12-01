@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchNullConvertibleEntryException;
 import com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry;
@@ -40,6 +41,13 @@ public interface NullConvertibleEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NullConvertibleEntryUtil} to access the null convertible entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByName();
+
+	public FinderPath getFinderPathCountByName();
 
 	/**
 	 * Returns the null convertible entry where name = &#63; or throws a <code>NoSuchNullConvertibleEntryException</code> if it could not be found.

@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.segments.exception.NoSuchExperimentException;
@@ -42,6 +43,13 @@ public interface SegmentsExperimentPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsExperimentUtil} to access the segments experiment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the segments experiments where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface SegmentsExperimentPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the segments experiment where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchExperimentException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface SegmentsExperimentPersistence
 	 * @return the number of matching segments experiments
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the segments experiments where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface SegmentsExperimentPersistence
 	 * @return the number of matching segments experiments
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the segments experiments where groupId = &#63;.
@@ -598,6 +618,11 @@ public interface SegmentsExperimentPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperimentKey();
+
+	public FinderPath getFinderPathCountBySegmentsExperimentKey();
+
 	/**
 	 * Returns all the segments experiments where segmentsExperimentKey = &#63;.
 	 *
@@ -742,6 +767,10 @@ public interface SegmentsExperimentPersistence
 	 */
 	public int countBySegmentsExperimentKey(String segmentsExperimentKey);
 
+	public FinderPath getFinderPathFetchByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
+
 	/**
 	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or throws a <code>NoSuchExperimentException</code> if it could not be found.
 	 *
@@ -794,6 +823,10 @@ public interface SegmentsExperimentPersistence
 	 * @return the number of matching segments experiments
 	 */
 	public int countByG_S(long groupId, String segmentsExperimentKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C();
 
 	/**
 	 * Returns all the segments experiments where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1038,6 +1071,10 @@ public interface SegmentsExperimentPersistence
 	 */
 	public int filterCountByG_C_C(long groupId, long classNameId, long classPK);
 
+	public FinderPath getFinderPathWithoutPaginationFindByS_C_C();
+
+	public FinderPath getFinderPathCountByS_C_C();
+
 	/**
 	 * Returns all the segments experiments where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
@@ -1209,6 +1246,10 @@ public interface SegmentsExperimentPersistence
 	 */
 	public int countByS_C_C(
 		long segmentsExperienceId, long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByS_C_C_S();
+
+	public FinderPath getFinderPathCountByS_C_C_S();
 
 	/**
 	 * Returns all the segments experiments where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.

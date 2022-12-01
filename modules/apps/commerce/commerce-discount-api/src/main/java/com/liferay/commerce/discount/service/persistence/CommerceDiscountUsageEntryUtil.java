@@ -125,6 +125,31 @@ public class CommerceDiscountUsageEntryUtil {
 			commerceDiscountUsageEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceDiscountId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceDiscountId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceDiscountId() {
+
+		return getPersistence().getFinderPathCountByCommerceDiscountId();
+	}
+
 	/**
 	 * Returns all the commerce discount usage entries where commerceDiscountId = &#63;.
 	 *
@@ -304,6 +329,18 @@ public class CommerceDiscountUsageEntryUtil {
 	 */
 	public static int countByCommerceDiscountId(long commerceDiscountId) {
 		return getPersistence().countByCommerceDiscountId(commerceDiscountId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCAI_CDI() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCAI_CDI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCAI_CDI() {
+
+		return getPersistence().getFinderPathCountByCAI_CDI();
 	}
 
 	/**
@@ -506,6 +543,18 @@ public class CommerceDiscountUsageEntryUtil {
 			commerceAccountId, commerceDiscountId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCOI_CDI() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCOI_CDI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCOI_CDI() {
+
+		return getPersistence().getFinderPathCountByCOI_CDI();
+	}
+
 	/**
 	 * Returns all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
 	 *
@@ -703,6 +752,19 @@ public class CommerceDiscountUsageEntryUtil {
 
 		return getPersistence().countByCOI_CDI(
 			commerceOrderId, commerceDiscountId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCAI_COI_CDI() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCAI_COI_CDI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCAI_COI_CDI() {
+
+		return getPersistence().getFinderPathCountByCAI_COI_CDI();
 	}
 
 	/**

@@ -87,8 +87,30 @@ public class CompanyPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByWebId;
+
+	@Override
+	public FinderPath getFinderPathFetchByWebId() {
+		return _finderPathFetchByWebId;
+	}
+
 	private FinderPath _finderPathCountByWebId;
+
+	@Override
+	public FinderPath getFinderPathCountByWebId() {
+		return _finderPathCountByWebId;
+	}
 
 	/**
 	 * Returns the company where webId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
@@ -310,7 +332,18 @@ public class CompanyPersistenceImpl
 		"(company.webId IS NULL OR company.webId = '')";
 
 	private FinderPath _finderPathFetchByMx;
+
+	@Override
+	public FinderPath getFinderPathFetchByMx() {
+		return _finderPathFetchByMx;
+	}
+
 	private FinderPath _finderPathCountByMx;
+
+	@Override
+	public FinderPath getFinderPathCountByMx() {
+		return _finderPathCountByMx;
+	}
 
 	/**
 	 * Returns the company where mx = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
@@ -546,7 +579,18 @@ public class CompanyPersistenceImpl
 		"(company.mx IS NULL OR company.mx = '')";
 
 	private FinderPath _finderPathFetchByLogoId;
+
+	@Override
+	public FinderPath getFinderPathFetchByLogoId() {
+		return _finderPathFetchByLogoId;
+	}
+
 	private FinderPath _finderPathCountByLogoId;
+
+	@Override
+	public FinderPath getFinderPathCountByLogoId() {
+		return _finderPathCountByLogoId;
+	}
 
 	/**
 	 * Returns the company where logoId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.

@@ -109,9 +109,31 @@ public class DDMStructurePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the ddm structures where uuid = &#63;.
@@ -654,7 +676,18 @@ public class DDMStructurePersistenceImpl
 		"(ddmStructure.uuid IS NULL OR ddmStructure.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the ddm structure where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchStructureException</code> if it could not be found.
@@ -918,7 +951,18 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the ddm structures where uuid = &#63; and companyId = &#63;.
@@ -1513,7 +1557,19 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
@@ -2866,7 +2922,18 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByParentStructureId;
 	private FinderPath _finderPathWithoutPaginationFindByParentStructureId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByParentStructureId() {
+		return _finderPathWithoutPaginationFindByParentStructureId;
+	}
+
 	private FinderPath _finderPathCountByParentStructureId;
+
+	@Override
+	public FinderPath getFinderPathCountByParentStructureId() {
+		return _finderPathCountByParentStructureId;
+	}
 
 	/**
 	 * Returns all the ddm structures where parentStructureId = &#63;.
@@ -3389,7 +3456,18 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByStructureKey;
 	private FinderPath _finderPathWithoutPaginationFindByStructureKey;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStructureKey() {
+		return _finderPathWithoutPaginationFindByStructureKey;
+	}
+
 	private FinderPath _finderPathCountByStructureKey;
+
+	@Override
+	public FinderPath getFinderPathCountByStructureKey() {
+		return _finderPathCountByStructureKey;
+	}
 
 	/**
 	 * Returns all the ddm structures where structureKey = &#63;.
@@ -3947,7 +4025,18 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P() {
+		return _finderPathWithoutPaginationFindByG_P;
+	}
+
 	private FinderPath _finderPathCountByG_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P() {
+		return _finderPathCountByG_P;
+	}
 
 	/**
 	 * Returns all the ddm structures where groupId = &#63; and parentStructureId = &#63;.
@@ -4905,7 +4994,19 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C() {
+		return _finderPathWithoutPaginationFindByG_C;
+	}
+
 	private FinderPath _finderPathCountByG_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C() {
+		return _finderPathCountByG_C;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_C;
 
 	/**
@@ -6374,7 +6475,18 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the ddm structures where companyId = &#63; and classNameId = &#63;.
@@ -6927,7 +7039,18 @@ public class DDMStructurePersistenceImpl
 		"ddmStructure.classNameId = ?";
 
 	private FinderPath _finderPathFetchByG_C_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_S() {
+		return _finderPathFetchByG_C_S;
+	}
+
 	private FinderPath _finderPathCountByG_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_S() {
+		return _finderPathCountByG_C_S;
+	}
 
 	/**
 	 * Returns the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or throws a <code>NoSuchStructureException</code> if it could not be found.
@@ -7220,7 +7343,18 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N_D;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_D;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_D() {
+		return _finderPathWithoutPaginationFindByG_N_D;
+	}
+
 	private FinderPath _finderPathCountByG_N_D;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_D() {
+		return _finderPathCountByG_N_D;
+	}
 
 	/**
 	 * Returns all the ddm structures where groupId = &#63; and name = &#63; and description = &#63;.
@@ -8387,7 +8521,19 @@ public class DDMStructurePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_N_D;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_N_D;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_N_D() {
+		return _finderPathWithoutPaginationFindByG_C_N_D;
+	}
+
 	private FinderPath _finderPathCountByG_C_N_D;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_N_D() {
+		return _finderPathCountByG_C_N_D;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_C_N_D;
 
 	/**

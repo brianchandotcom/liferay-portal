@@ -95,9 +95,31 @@ public class CommerceQualifierEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByS_S;
 	private FinderPath _finderPathWithoutPaginationFindByS_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByS_S() {
+		return _finderPathWithoutPaginationFindByS_S;
+	}
+
 	private FinderPath _finderPathCountByS_S;
+
+	@Override
+	public FinderPath getFinderPathCountByS_S() {
+		return _finderPathCountByS_S;
+	}
 
 	/**
 	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
@@ -647,7 +669,18 @@ public class CommerceQualifierEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByT_T;
 	private FinderPath _finderPathWithoutPaginationFindByT_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByT_T() {
+		return _finderPathWithoutPaginationFindByT_T;
+	}
+
 	private FinderPath _finderPathCountByT_T;
+
+	@Override
+	public FinderPath getFinderPathCountByT_T() {
+		return _finderPathCountByT_T;
+	}
 
 	/**
 	 * Returns all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
@@ -1197,7 +1230,18 @@ public class CommerceQualifierEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByS_S_T;
 	private FinderPath _finderPathWithoutPaginationFindByS_S_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByS_S_T() {
+		return _finderPathWithoutPaginationFindByS_S_T;
+	}
+
 	private FinderPath _finderPathCountByS_S_T;
+
+	@Override
+	public FinderPath getFinderPathCountByS_S_T() {
+		return _finderPathCountByS_S_T;
+	}
 
 	/**
 	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
@@ -1799,7 +1843,18 @@ public class CommerceQualifierEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByS_T_T;
 	private FinderPath _finderPathWithoutPaginationFindByS_T_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByS_T_T() {
+		return _finderPathWithoutPaginationFindByS_T_T;
+	}
+
 	private FinderPath _finderPathCountByS_T_T;
+
+	@Override
+	public FinderPath getFinderPathCountByS_T_T() {
+		return _finderPathCountByS_T_T;
+	}
 
 	/**
 	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
@@ -2400,7 +2455,18 @@ public class CommerceQualifierEntryPersistenceImpl
 		"commerceQualifierEntry.targetClassPK = ?";
 
 	private FinderPath _finderPathFetchByS_S_T_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByS_S_T_T() {
+		return _finderPathFetchByS_S_T_T;
+	}
+
 	private FinderPath _finderPathCountByS_S_T_T;
+
+	@Override
+	public FinderPath getFinderPathCountByS_S_T_T() {
+		return _finderPathCountByS_S_T_T;
+	}
 
 	/**
 	 * Returns the commerce qualifier entry where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63; and targetClassPK = &#63; or throws a <code>NoSuchCommerceQualifierEntryException</code> if it could not be found.

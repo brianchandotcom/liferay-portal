@@ -84,9 +84,31 @@ public class UserIdMapperPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the user ID mappers where userId = &#63;.
@@ -576,7 +598,18 @@ public class UserIdMapperPersistenceImpl
 		"userIdMapper.userId = ?";
 
 	private FinderPath _finderPathFetchByU_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_T() {
+		return _finderPathFetchByU_T;
+	}
+
 	private FinderPath _finderPathCountByU_T;
+
+	@Override
+	public FinderPath getFinderPathCountByU_T() {
+		return _finderPathCountByU_T;
+	}
 
 	/**
 	 * Returns the user ID mapper where userId = &#63; and type = &#63; or throws a <code>NoSuchUserIdMapperException</code> if it could not be found.
@@ -825,7 +858,18 @@ public class UserIdMapperPersistenceImpl
 		"(userIdMapper.type IS NULL OR userIdMapper.type = '')";
 
 	private FinderPath _finderPathFetchByT_E;
+
+	@Override
+	public FinderPath getFinderPathFetchByT_E() {
+		return _finderPathFetchByT_E;
+	}
+
 	private FinderPath _finderPathCountByT_E;
+
+	@Override
+	public FinderPath getFinderPathCountByT_E() {
+		return _finderPathCountByT_E;
+	}
 
 	/**
 	 * Returns the user ID mapper where type = &#63; and externalUserId = &#63; or throws a <code>NoSuchUserIdMapperException</code> if it could not be found.

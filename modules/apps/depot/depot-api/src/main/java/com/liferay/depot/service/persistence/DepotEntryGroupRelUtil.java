@@ -121,6 +121,30 @@ public class DepotEntryGroupRelUtil {
 		return getPersistence().update(depotEntryGroupRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the depot entry group rels where uuid = &#63;.
 	 *
@@ -287,6 +311,18 @@ public class DepotEntryGroupRelUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the depot entry group rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryGroupRelException</code> if it could not be found.
 	 *
@@ -348,6 +384,18 @@ public class DepotEntryGroupRelUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -536,6 +584,19 @@ public class DepotEntryGroupRelUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByDepotEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByDepotEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByDepotEntryId() {
+
+		return getPersistence().getFinderPathCountByDepotEntryId();
+	}
+
 	/**
 	 * Returns all the depot entry group rels where depotEntryId = &#63;.
 	 *
@@ -711,6 +772,18 @@ public class DepotEntryGroupRelUtil {
 		return getPersistence().countByDepotEntryId(depotEntryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByToGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByToGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByToGroupId() {
+
+		return getPersistence().getFinderPathCountByToGroupId();
+	}
+
 	/**
 	 * Returns all the depot entry group rels where toGroupId = &#63;.
 	 *
@@ -882,6 +955,18 @@ public class DepotEntryGroupRelUtil {
 	 */
 	public static int countByToGroupId(long toGroupId) {
 		return getPersistence().countByToGroupId(toGroupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByDDMSA_TGI() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByDDMSA_TGI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByDDMSA_TGI() {
+
+		return getPersistence().getFinderPathCountByDDMSA_TGI();
 	}
 
 	/**
@@ -1080,6 +1165,18 @@ public class DepotEntryGroupRelUtil {
 			ddmStructuresAvailable, toGroupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByD_TGI() {
+
+		return getPersistence().getFinderPathFetchByD_TGI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByD_TGI() {
+
+		return getPersistence().getFinderPathCountByD_TGI();
+	}
+
 	/**
 	 * Returns the depot entry group rel where depotEntryId = &#63; and toGroupId = &#63; or throws a <code>NoSuchEntryGroupRelException</code> if it could not be found.
 	 *
@@ -1146,6 +1243,18 @@ public class DepotEntryGroupRelUtil {
 	 */
 	public static int countByD_TGI(long depotEntryId, long toGroupId) {
 		return getPersistence().countByD_TGI(depotEntryId, toGroupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_TGI() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_TGI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_TGI() {
+
+		return getPersistence().getFinderPathCountByS_TGI();
 	}
 
 	/**

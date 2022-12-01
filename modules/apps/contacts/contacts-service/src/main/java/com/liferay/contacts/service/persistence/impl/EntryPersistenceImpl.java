@@ -95,9 +95,31 @@ public class EntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the entries where userId = &#63;.
@@ -583,7 +605,18 @@ public class EntryPersistenceImpl
 		"entry.userId = ?";
 
 	private FinderPath _finderPathFetchByU_EA;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_EA() {
+		return _finderPathFetchByU_EA;
+	}
+
 	private FinderPath _finderPathCountByU_EA;
+
+	@Override
+	public FinderPath getFinderPathCountByU_EA() {
+		return _finderPathCountByU_EA;
+	}
 
 	/**
 	 * Returns the entry where userId = &#63; and emailAddress = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

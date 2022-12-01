@@ -16,6 +16,7 @@ package com.liferay.object.service.persistence;
 
 import com.liferay.object.exception.NoSuchObjectFieldSettingException;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ObjectFieldSettingPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ObjectFieldSettingUtil} to access the object field setting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the object field settings where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ObjectFieldSettingPersistence
 	 * @return the number of matching object field settings
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the object field settings where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface ObjectFieldSettingPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByObjectFieldId();
+
+	public FinderPath getFinderPathCountByObjectFieldId();
+
 	/**
 	 * Returns all the object field settings where objectFieldId = &#63;.
 	 *
@@ -482,6 +498,10 @@ public interface ObjectFieldSettingPersistence
 	 * @return the number of matching object field settings
 	 */
 	public int countByObjectFieldId(long objectFieldId);
+
+	public FinderPath getFinderPathFetchByOFI_N();
+
+	public FinderPath getFinderPathCountByOFI_N();
 
 	/**
 	 * Returns the object field setting where objectFieldId = &#63; and name = &#63; or throws a <code>NoSuchObjectFieldSettingException</code> if it could not be found.

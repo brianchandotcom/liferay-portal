@@ -96,9 +96,31 @@ public class AnalyticsAssociationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A() {
+		return _finderPathWithoutPaginationFindByC_A;
+	}
+
 	private FinderPath _finderPathCountByC_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A() {
+		return _finderPathCountByC_A;
+	}
 
 	/**
 	 * Returns all the analytics associations where companyId = &#63; and associationClassName = &#63;.
@@ -1353,7 +1375,18 @@ public class AnalyticsAssociationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_A() {
+		return _finderPathWithoutPaginationFindByC_A_A;
+	}
+
 	private FinderPath _finderPathCountByC_A_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_A() {
+		return _finderPathCountByC_A_A;
+	}
 
 	/**
 	 * Returns all the analytics associations where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.

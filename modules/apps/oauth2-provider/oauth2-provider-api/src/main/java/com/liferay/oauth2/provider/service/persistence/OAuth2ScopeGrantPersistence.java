@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.service.persistence;
 
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,14 @@ public interface OAuth2ScopeGrantPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ScopeGrantUtil} to access the o auth2 scope grant persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId();
+
+	public FinderPath getFinderPathCountByOAuth2ApplicationScopeAliasesId();
 
 	/**
 	 * Returns all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
@@ -190,6 +199,10 @@ public interface OAuth2ScopeGrantPersistence
 	 */
 	public int countByOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId);
+
+	public FinderPath getFinderPathFetchByC_O_A_B_S();
+
+	public FinderPath getFinderPathCountByC_O_A_B_S();
 
 	/**
 	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or throws a <code>NoSuchOAuth2ScopeGrantException</code> if it could not be found.

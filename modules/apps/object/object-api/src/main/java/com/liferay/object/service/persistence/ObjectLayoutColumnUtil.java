@@ -121,6 +121,30 @@ public class ObjectLayoutColumnUtil {
 		return getPersistence().update(objectLayoutColumn, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the object layout columns where uuid = &#63;.
 	 *
@@ -285,6 +309,18 @@ public class ObjectLayoutColumnUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -473,6 +509,19 @@ public class ObjectLayoutColumnUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectFieldId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectFieldId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectFieldId() {
+
+		return getPersistence().getFinderPathCountByObjectFieldId();
+	}
+
 	/**
 	 * Returns all the object layout columns where objectFieldId = &#63;.
 	 *
@@ -646,6 +695,19 @@ public class ObjectLayoutColumnUtil {
 	 */
 	public static int countByObjectFieldId(long objectFieldId) {
 		return getPersistence().countByObjectFieldId(objectFieldId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectLayoutRowId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectLayoutRowId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectLayoutRowId() {
+
+		return getPersistence().getFinderPathCountByObjectLayoutRowId();
 	}
 
 	/**

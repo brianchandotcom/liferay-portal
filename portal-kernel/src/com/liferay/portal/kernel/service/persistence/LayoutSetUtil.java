@@ -119,6 +119,30 @@ public class LayoutSetUtil {
 		return getPersistence().update(layoutSet, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the layout sets where groupId = &#63;.
 	 *
@@ -283,6 +307,19 @@ public class LayoutSetUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLayoutSetPrototypeUuid() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLayoutSetPrototypeUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLayoutSetPrototypeUuid() {
+
+		return getPersistence().getFinderPathCountByLayoutSetPrototypeUuid();
 	}
 
 	/**
@@ -468,6 +505,18 @@ public class LayoutSetUtil {
 			layoutSetPrototypeUuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_P() {
+
+		return getPersistence().getFinderPathFetchByG_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_P() {
+
+		return getPersistence().getFinderPathCountByG_P();
+	}
+
 	/**
 	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
 	 *
@@ -530,6 +579,18 @@ public class LayoutSetUtil {
 	 */
 	public static int countByG_P(long groupId, boolean privateLayout) {
 		return getPersistence().countByG_P(groupId, privateLayout);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_L() {
+
+		return getPersistence().getFinderPathCountByC_L();
 	}
 
 	/**
@@ -722,6 +783,18 @@ public class LayoutSetUtil {
 		long companyId, String layoutSetPrototypeUuid) {
 
 		return getPersistence().countByC_L(companyId, layoutSetPrototypeUuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByP_L() {
+
+		return getPersistence().getFinderPathFetchByP_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByP_L() {
+
+		return getPersistence().getFinderPathCountByP_L();
 	}
 
 	/**

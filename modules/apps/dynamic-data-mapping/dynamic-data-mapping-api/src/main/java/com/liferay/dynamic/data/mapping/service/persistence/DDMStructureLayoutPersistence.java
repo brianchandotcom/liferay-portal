@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface DDMStructureLayoutPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureLayoutUtil} to access the ddm structure layout persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the ddm structure layouts where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface DDMStructureLayoutPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the ddm structure layout where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface DDMStructureLayoutPersistence
 	 * @return the number of matching ddm structure layouts
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface DDMStructureLayoutPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the ddm structure layouts where groupId = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface DDMStructureLayoutPersistence
 	 * @return the number of matching ddm structure layouts
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByStructureLayoutKey();
+
+	public FinderPath getFinderPathCountByStructureLayoutKey();
 
 	/**
 	 * Returns all the ddm structure layouts where structureLayoutKey = &#63;.
@@ -678,6 +702,10 @@ public interface DDMStructureLayoutPersistence
 	 */
 	public int countByStructureLayoutKey(String structureLayoutKey);
 
+	public FinderPath getFinderPathFetchByStructureVersionId();
+
+	public FinderPath getFinderPathCountByStructureVersionId();
+
 	/**
 	 * Returns the ddm structure layout where structureVersionId = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
 	 *
@@ -724,6 +752,10 @@ public interface DDMStructureLayoutPersistence
 	 * @return the number of matching ddm structure layouts
 	 */
 	public int countByStructureVersionId(long structureVersionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the ddm structure layouts where groupId = &#63; and classNameId = &#63;.
@@ -880,6 +912,10 @@ public interface DDMStructureLayoutPersistence
 	 */
 	public int countByG_C(long groupId, long classNameId);
 
+	public FinderPath getFinderPathFetchByG_C_S();
+
+	public FinderPath getFinderPathCountByG_C_S();
+
 	/**
 	 * Returns the ddm structure layout where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
 	 *
@@ -939,6 +975,10 @@ public interface DDMStructureLayoutPersistence
 	 */
 	public int countByG_C_S(
 		long groupId, long classNameId, String structureLayoutKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_SV();
+
+	public FinderPath getFinderPathCountByG_C_SV();
 
 	/**
 	 * Returns all the ddm structure layouts where groupId = &#63; and classNameId = &#63; and structureVersionId = &#63;.

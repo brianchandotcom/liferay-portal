@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.service.persistence;
 
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBArticleUtil} to access the kb article persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByResourcePrimKey();
+
+	public FinderPath getFinderPathCountByResourcePrimKey();
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63;.
@@ -184,6 +192,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int countByResourcePrimKey(long resourcePrimKey);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
+
 	/**
 	 * Returns all the kb articles where uuid = &#63;.
 	 *
@@ -327,6 +339,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the kb article where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -376,6 +392,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the kb articles where uuid = &#63; and companyId = &#63;.
@@ -530,6 +550,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_G();
+
+	public FinderPath getFinderPathCountByR_G();
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63;.
@@ -756,6 +780,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int filterCountByR_G(long resourcePrimKey, long groupId);
 
+	public FinderPath getFinderPathFetchByR_V();
+
+	public FinderPath getFinderPathCountByR_V();
+
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -805,6 +833,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles
 	 */
 	public int countByR_V(long resourcePrimKey, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_L();
+
+	public FinderPath getFinderPathCountByR_L();
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and latest = &#63;.
@@ -1040,6 +1072,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int countByR_L(long[] resourcePrimKeys, boolean latest);
 
+	public FinderPath getFinderPathWithoutPaginationFindByR_M();
+
+	public FinderPath getFinderPathCountByR_M();
+
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and main = &#63;.
 	 *
@@ -1273,6 +1309,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles
 	 */
 	public int countByR_M(long[] resourcePrimKeys, boolean main);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_S();
+
+	public FinderPath getFinderPathCountByR_S();
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and status = &#63;.
@@ -1508,6 +1548,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int countByR_S(long[] resourcePrimKeys, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_ERC();
+
+	public FinderPath getFinderPathCountByG_ERC();
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
 	 *
@@ -1733,6 +1777,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int filterCountByG_ERC(long groupId, String externalReferenceCode);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_L();
+
+	public FinderPath getFinderPathCountByG_L();
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and latest = &#63;.
 	 *
@@ -1956,6 +2004,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	public int filterCountByG_L(long groupId, boolean latest);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_M();
+
+	public FinderPath getFinderPathCountByG_M();
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and main = &#63;.
@@ -2181,6 +2233,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int filterCountByG_M(long groupId, boolean main);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and status = &#63;.
 	 *
@@ -2404,6 +2460,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int filterCountByG_S(long groupId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_L();
+
+	public FinderPath getFinderPathCountByC_L();
+
 	/**
 	 * Returns all the kb articles where companyId = &#63; and latest = &#63;.
 	 *
@@ -2557,6 +2617,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles
 	 */
 	public int countByC_L(long companyId, boolean latest);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_M();
+
+	public FinderPath getFinderPathCountByC_M();
 
 	/**
 	 * Returns all the kb articles where companyId = &#63; and main = &#63;.
@@ -2712,6 +2776,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int countByC_M(long companyId, boolean main);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
+
 	/**
 	 * Returns all the kb articles where companyId = &#63; and status = &#63;.
 	 *
@@ -2865,6 +2933,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles
 	 */
 	public int countByC_S(long companyId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_L();
+
+	public FinderPath getFinderPathCountByP_L();
 
 	/**
 	 * Returns all the kb articles where parentResourcePrimKey = &#63; and latest = &#63;.
@@ -3100,6 +3172,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int countByP_L(long[] parentResourcePrimKeys, boolean latest);
 
+	public FinderPath getFinderPathWithoutPaginationFindByP_M();
+
+	public FinderPath getFinderPathCountByP_M();
+
 	/**
 	 * Returns all the kb articles where parentResourcePrimKey = &#63; and main = &#63;.
 	 *
@@ -3333,6 +3409,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles
 	 */
 	public int countByP_M(long[] parentResourcePrimKeys, boolean main);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_S();
+
+	public FinderPath getFinderPathCountByP_S();
 
 	/**
 	 * Returns all the kb articles where parentResourcePrimKey = &#63; and status = &#63;.
@@ -3568,6 +3648,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int countByP_S(long[] parentResourcePrimKeys, int status);
 
+	public FinderPath getFinderPathFetchByR_G_V();
+
+	public FinderPath getFinderPathCountByR_G_V();
+
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -3626,6 +3710,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the number of matching kb articles
 	 */
 	public int countByR_G_V(long resourcePrimKey, long groupId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_G_L();
+
+	public FinderPath getFinderPathCountByR_G_L();
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
@@ -4021,6 +4109,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int filterCountByR_G_L(
 		long[] resourcePrimKeys, long groupId, boolean latest);
 
+	public FinderPath getFinderPathWithoutPaginationFindByR_G_M();
+
+	public FinderPath getFinderPathCountByR_G_M();
+
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
 	 *
@@ -4409,6 +4501,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int filterCountByR_G_M(
 		long[] resourcePrimKeys, long groupId, boolean main);
 
+	public FinderPath getFinderPathWithoutPaginationFindByR_G_S();
+
+	public FinderPath getFinderPathCountByR_G_S();
+
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
 	 *
@@ -4794,6 +4890,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int filterCountByR_G_S(
 		long[] resourcePrimKeys, long groupId, int status);
 
+	public FinderPath getFinderPathFetchByG_ERC_V();
+
+	public FinderPath getFinderPathCountByG_ERC_V();
+
 	/**
 	 * Returns the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -4853,6 +4953,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int countByG_ERC_V(
 		long groupId, String externalReferenceCode, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_L();
+
+	public FinderPath getFinderPathCountByG_P_L();
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
@@ -5254,6 +5358,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int filterCountByG_P_L(
 		long groupId, long[] parentResourcePrimKeys, boolean latest);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_M();
+
+	public FinderPath getFinderPathCountByG_P_M();
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
 	 *
@@ -5653,6 +5761,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int filterCountByG_P_M(
 		long groupId, long[] parentResourcePrimKeys, boolean main);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_S();
+
+	public FinderPath getFinderPathCountByG_P_S();
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
@@ -6054,6 +6166,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int filterCountByG_P_S(
 		long groupId, long[] parentResourcePrimKeys, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_KBFI_UT();
+
+	public FinderPath getFinderPathCountByG_KBFI_UT();
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
 	 *
@@ -6297,6 +6413,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int filterCountByG_KBFI_UT(
 		long groupId, long kbFolderId, String urlTitle);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_KBFI_L();
+
+	public FinderPath getFinderPathCountByG_KBFI_L();
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
 	 *
@@ -6538,6 +6658,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 */
 	public int filterCountByG_KBFI_L(
 		long groupId, long kbFolderId, boolean latest);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_KBFI_S();
+
+	public FinderPath getFinderPathCountByG_KBFI_S();
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
@@ -7938,6 +8062,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int filterCountByG_LikeS_S(
 		long groupId, String[] sectionses, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_L_S();
+
+	public FinderPath getFinderPathCountByG_P_L_S();
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
 	 *
@@ -8368,6 +8496,10 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	public int filterCountByG_P_L_S(
 		long groupId, long[] parentResourcePrimKeys, boolean latest,
 		int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_KBFI_UT_ST();
+
+	public FinderPath getFinderPathCountByG_KBFI_UT_ST();
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.

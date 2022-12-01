@@ -109,9 +109,31 @@ public class AssetListEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the asset list entries where uuid = &#63;.
@@ -657,7 +679,18 @@ public class AssetListEntryPersistenceImpl
 		"(assetListEntry.uuid IS NULL OR assetListEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the asset list entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -921,7 +954,18 @@ public class AssetListEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the asset list entries where uuid = &#63; and companyId = &#63;.
@@ -1518,7 +1562,19 @@ public class AssetListEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
@@ -2874,7 +2930,18 @@ public class AssetListEntryPersistenceImpl
 		"assetListEntry.groupId IN (";
 
 	private FinderPath _finderPathFetchByG_ALEK;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_ALEK() {
+		return _finderPathFetchByG_ALEK;
+	}
+
 	private FinderPath _finderPathCountByG_ALEK;
+
+	@Override
+	public FinderPath getFinderPathCountByG_ALEK() {
+		return _finderPathCountByG_ALEK;
+	}
 
 	/**
 	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -3142,7 +3209,18 @@ public class AssetListEntryPersistenceImpl
 		"(assetListEntry.assetListEntryKey IS NULL OR assetListEntry.assetListEntryKey = '')";
 
 	private FinderPath _finderPathFetchByG_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_T() {
+		return _finderPathFetchByG_T;
+	}
+
 	private FinderPath _finderPathCountByG_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_T() {
+		return _finderPathCountByG_T;
+	}
 
 	/**
 	 * Returns the asset list entry where groupId = &#63; and title = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -5002,7 +5080,18 @@ public class AssetListEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_TY;
 	private FinderPath _finderPathWithoutPaginationFindByG_TY;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_TY() {
+		return _finderPathWithoutPaginationFindByG_TY;
+	}
+
 	private FinderPath _finderPathCountByG_TY;
+
+	@Override
+	public FinderPath getFinderPathCountByG_TY() {
+		return _finderPathCountByG_TY;
+	}
 
 	/**
 	 * Returns all the asset list entries where groupId = &#63; and type = &#63;.
@@ -5956,7 +6045,19 @@ public class AssetListEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_AET;
 	private FinderPath _finderPathWithoutPaginationFindByG_AET;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_AET() {
+		return _finderPathWithoutPaginationFindByG_AET;
+	}
+
 	private FinderPath _finderPathCountByG_AET;
+
+	@Override
+	public FinderPath getFinderPathCountByG_AET() {
+		return _finderPathCountByG_AET;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_AET;
 
 	/**
@@ -9587,7 +9688,19 @@ public class AssetListEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_AES_AET;
 	private FinderPath _finderPathWithoutPaginationFindByG_AES_AET;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_AES_AET() {
+		return _finderPathWithoutPaginationFindByG_AES_AET;
+	}
+
 	private FinderPath _finderPathCountByG_AES_AET;
+
+	@Override
+	public FinderPath getFinderPathCountByG_AES_AET() {
+		return _finderPathCountByG_AES_AET;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_AES_AET;
 
 	/**

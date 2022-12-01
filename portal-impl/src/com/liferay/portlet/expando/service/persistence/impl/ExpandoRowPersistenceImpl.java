@@ -92,9 +92,31 @@ public class ExpandoRowPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByTableId;
 	private FinderPath _finderPathWithoutPaginationFindByTableId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByTableId() {
+		return _finderPathWithoutPaginationFindByTableId;
+	}
+
 	private FinderPath _finderPathCountByTableId;
+
+	@Override
+	public FinderPath getFinderPathCountByTableId() {
+		return _finderPathCountByTableId;
+	}
 
 	/**
 	 * Returns all the expando rows where tableId = &#63;.
@@ -600,7 +622,18 @@ public class ExpandoRowPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByClassPK;
 	private FinderPath _finderPathWithoutPaginationFindByClassPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByClassPK() {
+		return _finderPathWithoutPaginationFindByClassPK;
+	}
+
 	private FinderPath _finderPathCountByClassPK;
+
+	@Override
+	public FinderPath getFinderPathCountByClassPK() {
+		return _finderPathCountByClassPK;
+	}
 
 	/**
 	 * Returns all the expando rows where classPK = &#63;.
@@ -1105,7 +1138,18 @@ public class ExpandoRowPersistenceImpl
 		"expandoRow.classPK = ?";
 
 	private FinderPath _finderPathFetchByT_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByT_C() {
+		return _finderPathFetchByT_C;
+	}
+
 	private FinderPath _finderPathCountByT_C;
+
+	@Override
+	public FinderPath getFinderPathCountByT_C() {
+		return _finderPathCountByT_C;
+	}
 
 	/**
 	 * Returns the expando row where tableId = &#63; and classPK = &#63; or throws a <code>NoSuchRowException</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.commerce.pricing.service.persistence;
 
 import com.liferay.commerce.pricing.exception.NoSuchPricingClassCPDefinitionRelException;
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,14 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePricingClassCPDefinitionRelUtil} to access the commerce pricing class cp definition rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommercePricingClassId();
+
+	public FinderPath getFinderPathCountByCommercePricingClassId();
 
 	/**
 	 * Returns all the commerce pricing class cp definition rels where commercePricingClassId = &#63;.
@@ -196,6 +205,10 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	 */
 	public int countByCommercePricingClassId(long commercePricingClassId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId();
+
+	public FinderPath getFinderPathCountByCPDefinitionId();
+
 	/**
 	 * Returns all the commerce pricing class cp definition rels where CPDefinitionId = &#63;.
 	 *
@@ -342,6 +355,10 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	 * @return the number of matching commerce pricing class cp definition rels
 	 */
 	public int countByCPDefinitionId(long CPDefinitionId);
+
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; or throws a <code>NoSuchPricingClassCPDefinitionRelException</code> if it could not be found.

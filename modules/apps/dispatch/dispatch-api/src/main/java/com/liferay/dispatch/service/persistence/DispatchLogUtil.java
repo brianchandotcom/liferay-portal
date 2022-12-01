@@ -119,6 +119,31 @@ public class DispatchLogUtil {
 		return getPersistence().update(dispatchLog, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByDispatchTriggerId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByDispatchTriggerId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByDispatchTriggerId() {
+
+		return getPersistence().getFinderPathCountByDispatchTriggerId();
+	}
+
 	/**
 	 * Returns all the dispatch logs where dispatchTriggerId = &#63;.
 	 *
@@ -293,6 +318,18 @@ public class DispatchLogUtil {
 	 */
 	public static int countByDispatchTriggerId(long dispatchTriggerId) {
 		return getPersistence().countByDispatchTriggerId(dispatchTriggerId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByDTI_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByDTI_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByDTI_S() {
+
+		return getPersistence().getFinderPathCountByDTI_S();
 	}
 
 	/**

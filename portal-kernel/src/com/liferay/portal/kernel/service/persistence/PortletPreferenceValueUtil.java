@@ -124,6 +124,31 @@ public class PortletPreferenceValueUtil {
 		return getPersistence().update(portletPreferenceValue, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByPortletPreferencesId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByPortletPreferencesId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByPortletPreferencesId() {
+
+		return getPersistence().getFinderPathCountByPortletPreferencesId();
+	}
+
 	/**
 	 * Returns all the portlet preference values where portletPreferencesId = &#63;.
 	 *
@@ -305,6 +330,18 @@ public class PortletPreferenceValueUtil {
 	public static int countByPortletPreferencesId(long portletPreferencesId) {
 		return getPersistence().countByPortletPreferencesId(
 			portletPreferencesId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByP_N() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByP_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByP_N() {
+
+		return getPersistence().getFinderPathCountByP_N();
 	}
 
 	/**
@@ -500,6 +537,18 @@ public class PortletPreferenceValueUtil {
 		return getPersistence().countByP_N(portletPreferencesId, name);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByP_I_N() {
+
+		return getPersistence().getFinderPathFetchByP_I_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByP_I_N() {
+
+		return getPersistence().getFinderPathCountByP_I_N();
+	}
+
 	/**
 	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
 	 *
@@ -577,6 +626,18 @@ public class PortletPreferenceValueUtil {
 		long portletPreferencesId, int index, String name) {
 
 		return getPersistence().countByP_I_N(portletPreferencesId, index, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByP_N_SV() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByP_N_SV();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByP_N_SV() {
+
+		return getPersistence().getFinderPathCountByP_N_SV();
 	}
 
 	/**

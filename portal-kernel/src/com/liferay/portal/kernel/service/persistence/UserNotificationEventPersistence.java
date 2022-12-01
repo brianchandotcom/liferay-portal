@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationEventException;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 
@@ -39,6 +40,13 @@ public interface UserNotificationEventPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserNotificationEventUtil} to access the user notification event persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the user notification events where uuid = &#63;.
@@ -182,6 +190,10 @@ public interface UserNotificationEventPersistence
 	 * @return the number of matching user notification events
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the user notification events where uuid = &#63; and companyId = &#63;.
@@ -338,6 +350,10 @@ public interface UserNotificationEventPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the user notification events where userId = &#63;.
 	 *
@@ -481,6 +497,10 @@ public interface UserNotificationEventPersistence
 	 */
 	public int countByUserId(long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByType();
+
+	public FinderPath getFinderPathCountByType();
+
 	/**
 	 * Returns all the user notification events where type = &#63;.
 	 *
@@ -623,6 +643,10 @@ public interface UserNotificationEventPersistence
 	 * @return the number of matching user notification events
 	 */
 	public int countByType(String type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT();
+
+	public FinderPath getFinderPathCountByU_DT();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63;.
@@ -779,6 +803,10 @@ public interface UserNotificationEventPersistence
 	 */
 	public int countByU_DT(long userId, int deliveryType);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_D();
+
+	public FinderPath getFinderPathCountByU_D();
+
 	/**
 	 * Returns all the user notification events where userId = &#63; and delivered = &#63;.
 	 *
@@ -934,6 +962,10 @@ public interface UserNotificationEventPersistence
 	 */
 	public int countByU_D(long userId, boolean delivered);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_A();
+
+	public FinderPath getFinderPathCountByU_A();
+
 	/**
 	 * Returns all the user notification events where userId = &#63; and archived = &#63;.
 	 *
@@ -1088,6 +1120,10 @@ public interface UserNotificationEventPersistence
 	 * @return the number of matching user notification events
 	 */
 	public int countByU_A(long userId, boolean archived);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_D();
+
+	public FinderPath getFinderPathCountByU_DT_D();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -1257,6 +1293,10 @@ public interface UserNotificationEventPersistence
 	 */
 	public int countByU_DT_D(long userId, int deliveryType, boolean delivered);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_A();
+
+	public FinderPath getFinderPathCountByU_DT_A();
+
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
 	 *
@@ -1423,6 +1463,10 @@ public interface UserNotificationEventPersistence
 	 * @return the number of matching user notification events
 	 */
 	public int countByU_DT_A(long userId, int deliveryType, boolean archived);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_D_AR();
+
+	public FinderPath getFinderPathCountByU_D_AR();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1596,6 +1640,10 @@ public interface UserNotificationEventPersistence
 	public int countByU_D_AR(
 		long userId, boolean delivered, boolean actionRequired);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_D_A();
+
+	public FinderPath getFinderPathCountByU_D_A();
+
 	/**
 	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
 	 *
@@ -1762,6 +1810,10 @@ public interface UserNotificationEventPersistence
 	 * @return the number of matching user notification events
 	 */
 	public int countByU_D_A(long userId, boolean delivered, boolean archived);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_AR_A();
+
+	public FinderPath getFinderPathCountByU_AR_A();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -1934,6 +1986,10 @@ public interface UserNotificationEventPersistence
 	 */
 	public int countByU_AR_A(
 		long userId, boolean actionRequired, boolean archived);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_T_DT_D();
+
+	public FinderPath getFinderPathCountByU_T_DT_D();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -2117,6 +2173,10 @@ public interface UserNotificationEventPersistence
 	 */
 	public int countByU_T_DT_D(
 		long userId, String type, int deliveryType, boolean delivered);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_D_AR();
+
+	public FinderPath getFinderPathCountByU_DT_D_AR();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -2308,6 +2368,10 @@ public interface UserNotificationEventPersistence
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_D_A();
+
+	public FinderPath getFinderPathCountByU_DT_D_A();
+
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
 	 *
@@ -2490,6 +2554,10 @@ public interface UserNotificationEventPersistence
 	 */
 	public int countByU_DT_D_A(
 		long userId, int deliveryType, boolean delivered, boolean archived);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_AR_A();
+
+	public FinderPath getFinderPathCountByU_DT_AR_A();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2678,6 +2746,10 @@ public interface UserNotificationEventPersistence
 	public int countByU_DT_AR_A(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_D_AR_A();
+
+	public FinderPath getFinderPathCountByU_D_AR_A();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2868,6 +2940,10 @@ public interface UserNotificationEventPersistence
 	public int countByU_D_AR_A(
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_T_DT_D_A();
+
+	public FinderPath getFinderPathCountByU_T_DT_D_A();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
@@ -3069,6 +3145,10 @@ public interface UserNotificationEventPersistence
 	public int countByU_T_DT_D_A(
 		long userId, String type, int deliveryType, boolean delivered,
 		boolean archived);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_D_AR_A();
+
+	public FinderPath getFinderPathCountByU_DT_D_AR_A();
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.

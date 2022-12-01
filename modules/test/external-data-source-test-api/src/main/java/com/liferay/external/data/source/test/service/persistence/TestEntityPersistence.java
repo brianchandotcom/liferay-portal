@@ -16,6 +16,7 @@ package com.liferay.external.data.source.test.service.persistence;
 
 import com.liferay.external.data.source.test.exception.NoSuchTestEntityException;
 import com.liferay.external.data.source.test.model.TestEntity;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,9 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TestEntityUtil} to access the test entity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Caches the test entity in the entity cache if it is enabled.

@@ -98,9 +98,31 @@ public class ObjectStateTransitionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the object state transitions where uuid = &#63;.
@@ -641,7 +663,18 @@ public class ObjectStateTransitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the object state transitions where uuid = &#63; and companyId = &#63;.
@@ -1227,7 +1260,18 @@ public class ObjectStateTransitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByObjectStateFlowId;
 	private FinderPath _finderPathWithoutPaginationFindByObjectStateFlowId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByObjectStateFlowId() {
+		return _finderPathWithoutPaginationFindByObjectStateFlowId;
+	}
+
 	private FinderPath _finderPathCountByObjectStateFlowId;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectStateFlowId() {
+		return _finderPathCountByObjectStateFlowId;
+	}
 
 	/**
 	 * Returns all the object state transitions where objectStateFlowId = &#63;.
@@ -1742,7 +1786,20 @@ public class ObjectStateTransitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySourceObjectStateId;
 	private FinderPath _finderPathWithoutPaginationFindBySourceObjectStateId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySourceObjectStateId() {
+
+		return _finderPathWithoutPaginationFindBySourceObjectStateId;
+	}
+
 	private FinderPath _finderPathCountBySourceObjectStateId;
+
+	@Override
+	public FinderPath getFinderPathCountBySourceObjectStateId() {
+		return _finderPathCountBySourceObjectStateId;
+	}
 
 	/**
 	 * Returns all the object state transitions where sourceObjectStateId = &#63;.
@@ -2258,7 +2315,20 @@ public class ObjectStateTransitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByTargetObjectStateId;
 	private FinderPath _finderPathWithoutPaginationFindByTargetObjectStateId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByTargetObjectStateId() {
+
+		return _finderPathWithoutPaginationFindByTargetObjectStateId;
+	}
+
 	private FinderPath _finderPathCountByTargetObjectStateId;
+
+	@Override
+	public FinderPath getFinderPathCountByTargetObjectStateId() {
+		return _finderPathCountByTargetObjectStateId;
+	}
 
 	/**
 	 * Returns all the object state transitions where targetObjectStateId = &#63;.

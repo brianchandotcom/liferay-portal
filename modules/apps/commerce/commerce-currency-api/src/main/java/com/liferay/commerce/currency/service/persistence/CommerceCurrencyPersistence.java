@@ -16,6 +16,7 @@ package com.liferay.commerce.currency.service.persistence;
 
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceCurrencyPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceCurrencyUtil} to access the commerce currency persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce currencies where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface CommerceCurrencyPersistence
 	 * @return the number of matching commerce currencies
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce currencies where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface CommerceCurrencyPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the commerce currencies where companyId = &#63;.
 	 *
@@ -482,6 +498,10 @@ public interface CommerceCurrencyPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns the commerce currency where companyId = &#63; and code = &#63; or throws a <code>NoSuchCurrencyException</code> if it could not be found.
 	 *
@@ -531,6 +551,10 @@ public interface CommerceCurrencyPersistence
 	 * @return the number of matching commerce currencies
 	 */
 	public int countByC_C(long companyId, String code);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_P();
+
+	public FinderPath getFinderPathCountByC_P();
 
 	/**
 	 * Returns all the commerce currencies where companyId = &#63; and primary = &#63;.
@@ -687,6 +711,10 @@ public interface CommerceCurrencyPersistence
 	 */
 	public int countByC_P(long companyId, boolean primary);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
+
 	/**
 	 * Returns all the commerce currencies where companyId = &#63; and active = &#63;.
 	 *
@@ -841,6 +869,10 @@ public interface CommerceCurrencyPersistence
 	 * @return the number of matching commerce currencies
 	 */
 	public int countByC_A(long companyId, boolean active);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_P_A();
+
+	public FinderPath getFinderPathCountByC_P_A();
 
 	/**
 	 * Returns all the commerce currencies where companyId = &#63; and primary = &#63; and active = &#63;.

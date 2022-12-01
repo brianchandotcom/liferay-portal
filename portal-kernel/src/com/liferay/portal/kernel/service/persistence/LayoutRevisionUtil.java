@@ -119,6 +119,31 @@ public class LayoutRevisionUtil {
 		return getPersistence().update(layoutRevision, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLayoutSetBranchId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLayoutSetBranchId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLayoutSetBranchId() {
+
+		return getPersistence().getFinderPathCountByLayoutSetBranchId();
+	}
+
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63;.
 	 *
@@ -298,6 +323,18 @@ public class LayoutRevisionUtil {
 		return getPersistence().countByLayoutSetBranchId(layoutSetBranchId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByPlid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByPlid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByPlid() {
+
+		return getPersistence().getFinderPathCountByPlid();
+	}
+
 	/**
 	 * Returns all the layout revisions where plid = &#63;.
 	 *
@@ -463,6 +500,18 @@ public class LayoutRevisionUtil {
 	 */
 	public static int countByPlid(long plid) {
 		return getPersistence().countByPlid(plid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByStatus() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByStatus();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByStatus() {
+
+		return getPersistence().getFinderPathCountByStatus();
 	}
 
 	/**
@@ -631,6 +680,18 @@ public class LayoutRevisionUtil {
 	 */
 	public static int countByStatus(int status) {
 		return getPersistence().countByStatus(status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_H() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByL_H();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_H() {
+
+		return getPersistence().getFinderPathCountByL_H();
 	}
 
 	/**
@@ -823,6 +884,18 @@ public class LayoutRevisionUtil {
 		return getPersistence().countByL_H(layoutSetBranchId, head);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByL_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_P() {
+
+		return getPersistence().getFinderPathCountByL_P();
+	}
+
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
@@ -1011,6 +1084,18 @@ public class LayoutRevisionUtil {
 	 */
 	public static int countByL_P(long layoutSetBranchId, long plid) {
 		return getPersistence().countByL_P(layoutSetBranchId, plid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByL_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_S() {
+
+		return getPersistence().getFinderPathCountByL_S();
 	}
 
 	/**
@@ -1202,6 +1287,18 @@ public class LayoutRevisionUtil {
 	 */
 	public static int countByL_S(long layoutSetBranchId, int status) {
 		return getPersistence().countByL_S(layoutSetBranchId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByH_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByH_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByH_P() {
+
+		return getPersistence().getFinderPathCountByH_P();
 	}
 
 	/**
@@ -1574,6 +1671,18 @@ public class LayoutRevisionUtil {
 		return getPersistence().countByP_NotS(plid, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_L_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByL_L_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_L_P() {
+
+		return getPersistence().getFinderPathCountByL_L_P();
+	}
+
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
 	 *
@@ -1783,6 +1892,18 @@ public class LayoutRevisionUtil {
 
 		return getPersistence().countByL_L_P(
 			layoutSetBranchId, layoutBranchId, plid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_P_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByL_P_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_P_P() {
+
+		return getPersistence().getFinderPathCountByL_P_P();
 	}
 
 	/**
@@ -1999,6 +2120,18 @@ public class LayoutRevisionUtil {
 			layoutSetBranchId, parentLayoutRevisionId, plid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByL_H_P() {
+
+		return getPersistence().getFinderPathFetchByL_H_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_H_P() {
+
+		return getPersistence().getFinderPathCountByL_H_P();
+	}
+
 	/**
 	 * Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or throws a <code>NoSuchLayoutRevisionException</code> if it could not be found.
 	 *
@@ -2075,6 +2208,19 @@ public class LayoutRevisionUtil {
 		long layoutSetBranchId, boolean head, long plid) {
 
 		return getPersistence().countByL_H_P(layoutSetBranchId, head, plid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_H_P_Collection() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByL_H_P_Collection();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_H_P_Collection() {
+
+		return getPersistence().getFinderPathCountByL_H_P_Collection();
 	}
 
 	/**
@@ -2286,6 +2432,18 @@ public class LayoutRevisionUtil {
 			layoutSetBranchId, head, plid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_H_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByL_H_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_H_S() {
+
+		return getPersistence().getFinderPathCountByL_H_S();
+	}
+
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
 	 *
@@ -2493,6 +2651,18 @@ public class LayoutRevisionUtil {
 		return getPersistence().countByL_H_S(layoutSetBranchId, head, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_P_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByL_P_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_P_S() {
+
+		return getPersistence().getFinderPathCountByL_P_S();
+	}
+
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
 	 *
@@ -2698,6 +2868,18 @@ public class LayoutRevisionUtil {
 		long layoutSetBranchId, long plid, int status) {
 
 		return getPersistence().countByL_P_S(layoutSetBranchId, plid, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByL_L_H_P() {
+
+		return getPersistence().getFinderPathFetchByL_L_H_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_L_H_P() {
+
+		return getPersistence().getFinderPathCountByL_L_H_P();
 	}
 
 	/**

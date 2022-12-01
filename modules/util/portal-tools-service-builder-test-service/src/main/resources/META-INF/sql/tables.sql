@@ -139,6 +139,13 @@ create table LazyBlobEntry (
 	blob2 BLOB
 );
 
+create table LoadFinderCacheEntry (
+	loadFinderCacheEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	uniqueName VARCHAR(75) null
+);
+
 create table LocalizedEntry (
 	defaultLanguageId VARCHAR(75) null,
 	localizedEntryId LONG not null primary key

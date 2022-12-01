@@ -125,6 +125,31 @@ public class CommerceShippingFixedOptionRelUtil {
 			commerceShippingFixedOptionRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingMethodId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceShippingMethodId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceShippingMethodId() {
+
+		return getPersistence().getFinderPathCountByCommerceShippingMethodId();
+	}
+
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
 	 *
@@ -326,6 +351,20 @@ public class CommerceShippingFixedOptionRelUtil {
 
 		return getPersistence().countByCommerceShippingMethodId(
 			commerceShippingMethodId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingFixedOptionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceShippingFixedOptionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceShippingFixedOptionId() {
+
+		return getPersistence().
+			getFinderPathCountByCommerceShippingFixedOptionId();
 	}
 
 	/**

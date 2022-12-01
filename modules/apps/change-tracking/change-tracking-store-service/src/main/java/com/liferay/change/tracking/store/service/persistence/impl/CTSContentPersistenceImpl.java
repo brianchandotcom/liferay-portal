@@ -100,9 +100,31 @@ public class CTSContentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByC_R_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_R_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_R_S() {
+		return _finderPathWithoutPaginationFindByC_R_S;
+	}
+
 	private FinderPath _finderPathCountByC_R_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_R_S() {
+		return _finderPathCountByC_R_S;
+	}
 
 	/**
 	 * Returns all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
@@ -743,7 +765,18 @@ public class CTSContentPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_R_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_R_P_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_R_P_S() {
+		return _finderPathWithoutPaginationFindByC_R_P_S;
+	}
+
 	private FinderPath _finderPathCountByC_R_P_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_R_P_S() {
+		return _finderPathCountByC_R_P_S;
+	}
 
 	/**
 	 * Returns all the cts contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
@@ -2165,7 +2198,18 @@ public class CTSContentPersistenceImpl
 		"(ctsContent.storeType IS NULL OR ctsContent.storeType = '')";
 
 	private FinderPath _finderPathFetchByC_R_P_V_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_R_P_V_S() {
+		return _finderPathFetchByC_R_P_V_S;
+	}
+
 	private FinderPath _finderPathCountByC_R_P_V_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_R_P_V_S() {
+		return _finderPathCountByC_R_P_V_S;
+	}
 
 	/**
 	 * Returns the cts content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; and storeType = &#63; or throws a <code>NoSuchContentException</code> if it could not be found.

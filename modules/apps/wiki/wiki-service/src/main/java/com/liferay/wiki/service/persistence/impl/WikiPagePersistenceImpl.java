@@ -106,9 +106,31 @@ public class WikiPagePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
 	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByResourcePrimKey() {
+		return _finderPathWithoutPaginationFindByResourcePrimKey;
+	}
+
 	private FinderPath _finderPathCountByResourcePrimKey;
+
+	@Override
+	public FinderPath getFinderPathCountByResourcePrimKey() {
+		return _finderPathCountByResourcePrimKey;
+	}
 
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63;.
@@ -606,7 +628,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the wiki pages where uuid = &#63;.
@@ -1133,7 +1166,18 @@ public class WikiPagePersistenceImpl
 		"(wikiPage.uuid IS NULL OR wikiPage.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the wiki page where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -1382,7 +1426,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the wiki pages where uuid = &#63; and companyId = &#63;.
@@ -1959,7 +2014,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the wiki pages where companyId = &#63;.
@@ -2451,7 +2517,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByNodeId;
 	private FinderPath _finderPathWithoutPaginationFindByNodeId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByNodeId() {
+		return _finderPathWithoutPaginationFindByNodeId;
+	}
+
 	private FinderPath _finderPathCountByNodeId;
+
+	@Override
+	public FinderPath getFinderPathCountByNodeId() {
+		return _finderPathCountByNodeId;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63;.
@@ -2938,7 +3015,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFormat;
 	private FinderPath _finderPathWithoutPaginationFindByFormat;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFormat() {
+		return _finderPathWithoutPaginationFindByFormat;
+	}
+
 	private FinderPath _finderPathCountByFormat;
+
+	@Override
+	public FinderPath getFinderPathCountByFormat() {
+		return _finderPathCountByFormat;
+	}
 
 	/**
 	 * Returns all the wiki pages where format = &#63;.
@@ -3467,7 +3555,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_N;
 	private FinderPath _finderPathWithoutPaginationFindByR_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_N() {
+		return _finderPathWithoutPaginationFindByR_N;
+	}
+
 	private FinderPath _finderPathCountByR_N;
+
+	@Override
+	public FinderPath getFinderPathCountByR_N() {
+		return _finderPathCountByR_N;
+	}
 
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -4005,7 +4104,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_S;
 	private FinderPath _finderPathWithoutPaginationFindByR_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_S() {
+		return _finderPathWithoutPaginationFindByR_S;
+	}
+
 	private FinderPath _finderPathCountByR_S;
+
+	@Override
+	public FinderPath getFinderPathCountByR_S() {
+		return _finderPathCountByR_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and status = &#63;.
@@ -4543,7 +4653,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_ERC;
 	private FinderPath _finderPathWithoutPaginationFindByG_ERC;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_ERC() {
+		return _finderPathWithoutPaginationFindByG_ERC;
+	}
+
 	private FinderPath _finderPathCountByG_ERC;
+
+	@Override
+	public FinderPath getFinderPathCountByG_ERC() {
+		return _finderPathCountByG_ERC;
+	}
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
@@ -5565,7 +5686,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_T;
 	private FinderPath _finderPathWithoutPaginationFindByN_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_T() {
+		return _finderPathWithoutPaginationFindByN_T;
+	}
+
 	private FinderPath _finderPathCountByN_T;
+
+	@Override
+	public FinderPath getFinderPathCountByN_T() {
+		return _finderPathCountByN_T;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63;.
@@ -6138,7 +6270,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_H;
 	private FinderPath _finderPathWithoutPaginationFindByN_H;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_H() {
+		return _finderPathWithoutPaginationFindByN_H;
+	}
+
 	private FinderPath _finderPathCountByN_H;
+
+	@Override
+	public FinderPath getFinderPathCountByN_H() {
+		return _finderPathCountByN_H;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63;.
@@ -6667,7 +6810,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_P;
 	private FinderPath _finderPathWithoutPaginationFindByN_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_P() {
+		return _finderPathWithoutPaginationFindByN_P;
+	}
+
 	private FinderPath _finderPathCountByN_P;
+
+	@Override
+	public FinderPath getFinderPathCountByN_P() {
+		return _finderPathCountByN_P;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and parentTitle = &#63;.
@@ -7246,7 +7400,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_R;
 	private FinderPath _finderPathWithoutPaginationFindByN_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_R() {
+		return _finderPathWithoutPaginationFindByN_R;
+	}
+
 	private FinderPath _finderPathCountByN_R;
+
+	@Override
+	public FinderPath getFinderPathCountByN_R() {
+		return _finderPathCountByN_R;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and redirectTitle = &#63;.
@@ -7825,7 +7990,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_S;
 	private FinderPath _finderPathWithoutPaginationFindByN_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_S() {
+		return _finderPathWithoutPaginationFindByN_S;
+	}
+
 	private FinderPath _finderPathCountByN_S;
+
+	@Override
+	public FinderPath getFinderPathCountByN_S() {
+		return _finderPathCountByN_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and status = &#63;.
@@ -8356,7 +8532,18 @@ public class WikiPagePersistenceImpl
 		"wikiPage.status = ?";
 
 	private FinderPath _finderPathFetchByR_N_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByR_N_V() {
+		return _finderPathFetchByR_N_V;
+	}
+
 	private FinderPath _finderPathCountByR_N_V;
+
+	@Override
+	public FinderPath getFinderPathCountByR_N_V() {
+		return _finderPathCountByR_N_V;
+	}
 
 	/**
 	 * Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -8601,7 +8788,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_N_H;
 	private FinderPath _finderPathWithoutPaginationFindByR_N_H;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_N_H() {
+		return _finderPathWithoutPaginationFindByR_N_H;
+	}
+
 	private FinderPath _finderPathCountByR_N_H;
+
+	@Override
+	public FinderPath getFinderPathCountByR_N_H() {
+		return _finderPathCountByR_N_H;
+	}
 
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -9175,7 +9373,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_N_S;
 	private FinderPath _finderPathWithoutPaginationFindByR_N_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_N_S() {
+		return _finderPathWithoutPaginationFindByR_N_S;
+	}
+
 	private FinderPath _finderPathCountByR_N_S;
+
+	@Override
+	public FinderPath getFinderPathCountByR_N_S() {
+		return _finderPathCountByR_N_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -9750,7 +9959,18 @@ public class WikiPagePersistenceImpl
 		"wikiPage.status = ?";
 
 	private FinderPath _finderPathFetchByG_ERC_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_ERC_V() {
+		return _finderPathFetchByG_ERC_V;
+	}
+
 	private FinderPath _finderPathCountByG_ERC_V;
+
+	@Override
+	public FinderPath getFinderPathCountByG_ERC_V() {
+		return _finderPathCountByG_ERC_V;
+	}
 
 	/**
 	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -10032,7 +10252,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N_H;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_H;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_H() {
+		return _finderPathWithoutPaginationFindByG_N_H;
+	}
+
 	private FinderPath _finderPathCountByG_N_H;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_H() {
+		return _finderPathCountByG_N_H;
+	}
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -11015,7 +11246,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_S() {
+		return _finderPathWithoutPaginationFindByG_N_S;
+	}
+
 	private FinderPath _finderPathCountByG_N_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_S() {
+		return _finderPathCountByG_N_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -12000,7 +12242,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_N_S;
 	private FinderPath _finderPathWithoutPaginationFindByU_N_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_N_S() {
+		return _finderPathWithoutPaginationFindByU_N_S;
+	}
+
 	private FinderPath _finderPathCountByU_N_S;
+
+	@Override
+	public FinderPath getFinderPathCountByU_N_S() {
+		return _finderPathCountByU_N_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -12570,7 +12823,18 @@ public class WikiPagePersistenceImpl
 		"wikiPage.status = ?";
 
 	private FinderPath _finderPathFetchByN_T_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByN_T_V() {
+		return _finderPathFetchByN_T_V;
+	}
+
 	private FinderPath _finderPathCountByN_T_V;
+
+	@Override
+	public FinderPath getFinderPathCountByN_T_V() {
+		return _finderPathCountByN_T_V;
+	}
 
 	/**
 	 * Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -12839,7 +13103,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_T_H;
 	private FinderPath _finderPathWithoutPaginationFindByN_T_H;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_T_H() {
+		return _finderPathWithoutPaginationFindByN_T_H;
+	}
+
 	private FinderPath _finderPathCountByN_T_H;
+
+	@Override
+	public FinderPath getFinderPathCountByN_T_H() {
+		return _finderPathCountByN_T_H;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -13452,7 +13727,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByN_T_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_T_S() {
+		return _finderPathWithoutPaginationFindByN_T_S;
+	}
+
 	private FinderPath _finderPathCountByN_T_S;
+
+	@Override
+	public FinderPath getFinderPathCountByN_T_S() {
+		return _finderPathCountByN_T_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -14065,7 +14351,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_H_P;
 	private FinderPath _finderPathWithoutPaginationFindByN_H_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_P() {
+		return _finderPathWithoutPaginationFindByN_H_P;
+	}
+
 	private FinderPath _finderPathCountByN_H_P;
+
+	@Override
+	public FinderPath getFinderPathCountByN_H_P() {
+		return _finderPathCountByN_H_P;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -14681,7 +14978,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_H_R;
 	private FinderPath _finderPathWithoutPaginationFindByN_H_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_R() {
+		return _finderPathWithoutPaginationFindByN_H_R;
+	}
+
 	private FinderPath _finderPathCountByN_H_R;
+
+	@Override
+	public FinderPath getFinderPathCountByN_H_R() {
+		return _finderPathCountByN_H_R;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -15297,7 +15605,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_H_S;
 	private FinderPath _finderPathWithoutPaginationFindByN_H_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_S() {
+		return _finderPathWithoutPaginationFindByN_H_S;
+	}
+
 	private FinderPath _finderPathCountByN_H_S;
+
+	@Override
+	public FinderPath getFinderPathCountByN_H_S() {
+		return _finderPathCountByN_H_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -16430,7 +16749,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U_N_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_U_N_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_N_S() {
+		return _finderPathWithoutPaginationFindByG_U_N_S;
+	}
+
 	private FinderPath _finderPathCountByG_U_N_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U_N_S() {
+		return _finderPathCountByG_U_N_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -17478,7 +17808,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N_T_H;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_T_H;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_T_H() {
+		return _finderPathWithoutPaginationFindByG_N_T_H;
+	}
+
 	private FinderPath _finderPathCountByG_N_T_H;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_T_H() {
+		return _finderPathCountByG_N_T_H;
+	}
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -18606,7 +18947,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N_H_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_H_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_H_S() {
+		return _finderPathWithoutPaginationFindByG_N_H_S;
+	}
+
 	private FinderPath _finderPathCountByG_N_H_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_H_S() {
+		return _finderPathCountByG_N_H_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -19652,7 +20004,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_H_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByN_H_P_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_P_S() {
+		return _finderPathWithoutPaginationFindByN_H_P_S;
+	}
+
 	private FinderPath _finderPathCountByN_H_P_S;
+
+	@Override
+	public FinderPath getFinderPathCountByN_H_P_S() {
+		return _finderPathCountByN_H_P_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -20957,7 +21320,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_H_R_S;
 	private FinderPath _finderPathWithoutPaginationFindByN_H_R_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_R_S() {
+		return _finderPathWithoutPaginationFindByN_H_R_S;
+	}
+
 	private FinderPath _finderPathCountByN_H_R_S;
+
+	@Override
+	public FinderPath getFinderPathCountByN_H_R_S() {
+		return _finderPathCountByN_H_R_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -22267,7 +22641,18 @@ public class WikiPagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N_H_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_H_P_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_H_P_S() {
+		return _finderPathWithoutPaginationFindByG_N_H_P_S;
+	}
+
 	private FinderPath _finderPathCountByG_N_H_P_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_H_P_S() {
+		return _finderPathCountByG_N_H_P_S;
+	}
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.

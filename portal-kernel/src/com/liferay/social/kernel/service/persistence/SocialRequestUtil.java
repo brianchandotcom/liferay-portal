@@ -119,6 +119,30 @@ public class SocialRequestUtil {
 		return getPersistence().update(socialRequest, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the social requests where uuid = &#63;.
 	 *
@@ -283,6 +307,18 @@ public class SocialRequestUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the social request where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchRequestException</code> if it could not be found.
 	 *
@@ -344,6 +380,18 @@ public class SocialRequestUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -532,6 +580,18 @@ public class SocialRequestUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the social requests where companyId = &#63;.
 	 *
@@ -701,6 +761,18 @@ public class SocialRequestUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the social requests where userId = &#63;.
 	 *
@@ -864,6 +936,19 @@ public class SocialRequestUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByReceiverUserId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByReceiverUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByReceiverUserId() {
+
+		return getPersistence().getFinderPathCountByReceiverUserId();
 	}
 
 	/**
@@ -1040,6 +1125,18 @@ public class SocialRequestUtil {
 	 */
 	public static int countByReceiverUserId(long receiverUserId) {
 		return getPersistence().countByReceiverUserId(receiverUserId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_S() {
+
+		return getPersistence().getFinderPathCountByU_S();
 	}
 
 	/**
@@ -1224,6 +1321,18 @@ public class SocialRequestUtil {
 	 */
 	public static int countByU_S(long userId, int status) {
 		return getPersistence().countByU_S(userId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**
@@ -1413,6 +1522,18 @@ public class SocialRequestUtil {
 		return getPersistence().countByC_C(classNameId, classPK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_S() {
+
+		return getPersistence().getFinderPathCountByR_S();
+	}
+
 	/**
 	 * Returns all the social requests where receiverUserId = &#63; and status = &#63;.
 	 *
@@ -1600,6 +1721,18 @@ public class SocialRequestUtil {
 		return getPersistence().countByR_S(receiverUserId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_C_C_T_R() {
+
+		return getPersistence().getFinderPathFetchByU_C_C_T_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_C_C_T_R() {
+
+		return getPersistence().getFinderPathCountByU_C_C_T_R();
+	}
+
 	/**
 	 * Returns the social request where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or throws a <code>NoSuchRequestException</code> if it could not be found.
 	 *
@@ -1692,6 +1825,18 @@ public class SocialRequestUtil {
 
 		return getPersistence().countByU_C_C_T_R(
 			userId, classNameId, classPK, type, receiverUserId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU_C_C_T_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU_C_C_T_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_C_C_T_S() {
+
+		return getPersistence().getFinderPathCountByU_C_C_T_S();
 	}
 
 	/**
@@ -1925,6 +2070,18 @@ public class SocialRequestUtil {
 
 		return getPersistence().countByU_C_C_T_S(
 			userId, classNameId, classPK, type, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_T_R_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_T_R_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_T_R_S() {
+
+		return getPersistence().getFinderPathCountByC_C_T_R_S();
 	}
 
 	/**

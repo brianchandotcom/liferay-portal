@@ -124,6 +124,30 @@ public class ObjectViewFilterColumnUtil {
 		return getPersistence().update(objectViewFilterColumn, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the object view filter columns where uuid = &#63;.
 	 *
@@ -293,6 +317,18 @@ public class ObjectViewFilterColumnUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -484,6 +520,19 @@ public class ObjectViewFilterColumnUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectViewId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectViewId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectViewId() {
+
+		return getPersistence().getFinderPathCountByObjectViewId();
+	}
+
 	/**
 	 * Returns all the object view filter columns where objectViewId = &#63;.
 	 *
@@ -660,6 +709,18 @@ public class ObjectViewFilterColumnUtil {
 	 */
 	public static int countByObjectViewId(long objectViewId) {
 		return getPersistence().countByObjectViewId(objectViewId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByOVI_OFN() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByOVI_OFN();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByOVI_OFN() {
+
+		return getPersistence().getFinderPathCountByOVI_OFN();
 	}
 
 	/**

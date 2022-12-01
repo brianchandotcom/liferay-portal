@@ -14,6 +14,7 @@
 
 package com.liferay.saml.persistence.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchSpSessionException;
 import com.liferay.saml.persistence.model.SamlSpSession;
@@ -40,6 +41,13 @@ public interface SamlSpSessionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlSpSessionUtil} to access the saml sp session persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindBySamlPeerBindingId();
+
+	public FinderPath getFinderPathCountBySamlPeerBindingId();
 
 	/**
 	 * Returns all the saml sp sessions where samlPeerBindingId = &#63;.
@@ -185,6 +193,10 @@ public interface SamlSpSessionPersistence
 	 */
 	public int countBySamlPeerBindingId(long samlPeerBindingId);
 
+	public FinderPath getFinderPathFetchByJSessionId();
+
+	public FinderPath getFinderPathCountByJSessionId();
+
 	/**
 	 * Returns the saml sp session where jSessionId = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
 	 *
@@ -230,6 +242,10 @@ public interface SamlSpSessionPersistence
 	 */
 	public int countByJSessionId(String jSessionId);
 
+	public FinderPath getFinderPathFetchBySamlSpSessionKey();
+
+	public FinderPath getFinderPathCountBySamlSpSessionKey();
+
 	/**
 	 * Returns the saml sp session where samlSpSessionKey = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
 	 *
@@ -274,6 +290,10 @@ public interface SamlSpSessionPersistence
 	 * @return the number of matching saml sp sessions
 	 */
 	public int countBySamlSpSessionKey(String samlSpSessionKey);
+
+	public FinderPath getFinderPathFetchByC_SI();
+
+	public FinderPath getFinderPathCountByC_SI();
 
 	/**
 	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.

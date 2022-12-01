@@ -105,9 +105,31 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the layout page template structure rels where uuid = &#63;.
@@ -672,7 +694,18 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		"(layoutPageTemplateStructureRel.uuid IS NULL OR layoutPageTemplateStructureRel.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the layout page template structure rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateStructureRelException</code> if it could not be found.
@@ -945,7 +978,18 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the layout page template structure rels where uuid = &#63; and companyId = &#63;.
@@ -1555,7 +1599,20 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		_finderPathWithPaginationFindByLayoutPageTemplateStructureId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByLayoutPageTemplateStructureId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByLayoutPageTemplateStructureId() {
+
+		return _finderPathWithoutPaginationFindByLayoutPageTemplateStructureId;
+	}
+
 	private FinderPath _finderPathCountByLayoutPageTemplateStructureId;
+
+	@Override
+	public FinderPath getFinderPathCountByLayoutPageTemplateStructureId() {
+		return _finderPathCountByLayoutPageTemplateStructureId;
+	}
 
 	/**
 	 * Returns all the layout page template structure rels where layoutPageTemplateStructureId = &#63;.
@@ -2123,7 +2180,20 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySegmentsExperienceId;
 	private FinderPath _finderPathWithoutPaginationFindBySegmentsExperienceId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperienceId() {
+
+		return _finderPathWithoutPaginationFindBySegmentsExperienceId;
+	}
+
 	private FinderPath _finderPathCountBySegmentsExperienceId;
+
+	@Override
+	public FinderPath getFinderPathCountBySegmentsExperienceId() {
+		return _finderPathCountBySegmentsExperienceId;
+	}
 
 	/**
 	 * Returns all the layout page template structure rels where segmentsExperienceId = &#63;.
@@ -2666,7 +2736,18 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			"layoutPageTemplateStructureRel.segmentsExperienceId = ?";
 
 	private FinderPath _finderPathFetchByL_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByL_S() {
+		return _finderPathFetchByL_S;
+	}
+
 	private FinderPath _finderPathCountByL_S;
+
+	@Override
+	public FinderPath getFinderPathCountByL_S() {
+		return _finderPathCountByL_S;
+	}
 
 	/**
 	 * Returns the layout page template structure rel where layoutPageTemplateStructureId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchPageTemplateStructureRelException</code> if it could not be found.

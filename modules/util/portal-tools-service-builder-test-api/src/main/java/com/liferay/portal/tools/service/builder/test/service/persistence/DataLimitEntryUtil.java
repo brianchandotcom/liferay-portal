@@ -119,6 +119,18 @@ public class DataLimitEntryUtil {
 		return getPersistence().update(dataLimitEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
 	/**
 	 * Caches the data limit entry in the entity cache if it is enabled.
 	 *

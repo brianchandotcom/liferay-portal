@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.service.persistence;
 
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
@@ -42,6 +43,13 @@ public interface CommerceInventoryBookedQuantityPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryBookedQuantityUtil} to access the commerce inventory booked quantity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindBySku();
+
+	public FinderPath getFinderPathCountBySku();
 
 	/**
 	 * Returns all the commerce inventory booked quantities where sku = &#63;.
@@ -332,6 +340,10 @@ public interface CommerceInventoryBookedQuantityPersistence
 	 * @return the number of matching commerce inventory booked quantities
 	 */
 	public int countByLtExpirationDate(Date expirationDate);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
 
 	/**
 	 * Returns all the commerce inventory booked quantities where companyId = &#63; and sku = &#63;.

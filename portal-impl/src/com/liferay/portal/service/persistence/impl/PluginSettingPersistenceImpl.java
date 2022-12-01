@@ -84,9 +84,31 @@ public class PluginSettingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the plugin settings where companyId = &#63;.
@@ -583,7 +605,18 @@ public class PluginSettingPersistenceImpl
 		"pluginSetting.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_P_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_P_P() {
+		return _finderPathFetchByC_P_P;
+	}
+
 	private FinderPath _finderPathCountByC_P_P;
+
+	@Override
+	public FinderPath getFinderPathCountByC_P_P() {
+		return _finderPathCountByC_P_P;
+	}
 
 	/**
 	 * Returns the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; or throws a <code>NoSuchPluginSettingException</code> if it could not be found.

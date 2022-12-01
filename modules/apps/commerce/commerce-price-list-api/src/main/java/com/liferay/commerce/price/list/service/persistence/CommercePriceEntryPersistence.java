@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.service.persistence;
 
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -44,6 +45,13 @@ public interface CommercePriceEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceEntryUtil} to access the commerce price entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce price entries where uuid = &#63;.
@@ -187,6 +195,10 @@ public interface CommercePriceEntryPersistence
 	 * @return the number of matching commerce price entries
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce price entries where uuid = &#63; and companyId = &#63;.
@@ -343,6 +355,10 @@ public interface CommercePriceEntryPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the commerce price entries where companyId = &#63;.
 	 *
@@ -485,6 +501,10 @@ public interface CommercePriceEntryPersistence
 	 * @return the number of matching commerce price entries
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommercePriceListId();
+
+	public FinderPath getFinderPathCountByCommercePriceListId();
 
 	/**
 	 * Returns all the commerce price entries where commercePriceListId = &#63;.
@@ -630,6 +650,10 @@ public interface CommercePriceEntryPersistence
 	 */
 	public int countByCommercePriceListId(long commercePriceListId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPInstanceUuid();
+
+	public FinderPath getFinderPathCountByCPInstanceUuid();
+
 	/**
 	 * Returns all the commerce price entries where CPInstanceUuid = &#63;.
 	 *
@@ -773,6 +797,10 @@ public interface CommercePriceEntryPersistence
 	 * @return the number of matching commerce price entries
 	 */
 	public int countByCPInstanceUuid(String CPInstanceUuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63;.
@@ -1240,6 +1268,10 @@ public interface CommercePriceEntryPersistence
 	 */
 	public int countByLtE_S(Date expirationDate, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_S();
+
+	public FinderPath getFinderPathCountByC_C_S();
+
 	/**
 	 * Returns all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63; and status = &#63;.
 	 *
@@ -1411,6 +1443,10 @@ public interface CommercePriceEntryPersistence
 	 */
 	public int countByC_C_S(
 		long commercePriceListId, String CPInstanceUuid, int status);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce price entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPriceEntryException</code> if it could not be found.

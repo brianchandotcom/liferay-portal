@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.exception.NoSuchActivitySettingException;
@@ -42,6 +43,13 @@ public interface SocialActivitySettingPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivitySettingUtil} to access the social activity setting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the social activity settings where groupId = &#63;.
@@ -185,6 +193,10 @@ public interface SocialActivitySettingPersistence
 	 * @return the number of matching social activity settings
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the social activity settings where groupId = &#63; and classNameId = &#63;.
@@ -341,6 +353,10 @@ public interface SocialActivitySettingPersistence
 	 */
 	public int countByG_C(long groupId, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_A();
+
+	public FinderPath getFinderPathCountByG_A();
+
 	/**
 	 * Returns all the social activity settings where groupId = &#63; and activityType = &#63;.
 	 *
@@ -495,6 +511,10 @@ public interface SocialActivitySettingPersistence
 	 * @return the number of matching social activity settings
 	 */
 	public int countByG_A(long groupId, int activityType);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_A();
+
+	public FinderPath getFinderPathCountByG_C_A();
 
 	/**
 	 * Returns all the social activity settings where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
@@ -662,6 +682,10 @@ public interface SocialActivitySettingPersistence
 	 * @return the number of matching social activity settings
 	 */
 	public int countByG_C_A(long groupId, long classNameId, int activityType);
+
+	public FinderPath getFinderPathFetchByG_C_A_N();
+
+	public FinderPath getFinderPathCountByG_C_A_N();
 
 	/**
 	 * Returns the social activity setting where groupId = &#63; and classNameId = &#63; and activityType = &#63; and name = &#63; or throws a <code>NoSuchActivitySettingException</code> if it could not be found.

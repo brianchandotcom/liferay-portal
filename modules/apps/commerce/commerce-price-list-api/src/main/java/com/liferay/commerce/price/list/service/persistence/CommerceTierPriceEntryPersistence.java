@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.service.persistence;
 
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -44,6 +45,13 @@ public interface CommerceTierPriceEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTierPriceEntryUtil} to access the commerce tier price entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce tier price entries where uuid = &#63;.
@@ -187,6 +195,10 @@ public interface CommerceTierPriceEntryPersistence
 	 * @return the number of matching commerce tier price entries
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce tier price entries where uuid = &#63; and companyId = &#63;.
@@ -343,6 +355,10 @@ public interface CommerceTierPriceEntryPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the commerce tier price entries where companyId = &#63;.
 	 *
@@ -487,6 +503,11 @@ public interface CommerceTierPriceEntryPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommercePriceEntryId();
+
+	public FinderPath getFinderPathCountByCommercePriceEntryId();
+
 	/**
 	 * Returns all the commerce tier price entries where commercePriceEntryId = &#63;.
 	 *
@@ -630,6 +651,10 @@ public interface CommerceTierPriceEntryPersistence
 	 * @return the number of matching commerce tier price entries
 	 */
 	public int countByCommercePriceEntryId(long commercePriceEntryId);
+
+	public FinderPath getFinderPathFetchByC_M();
+
+	public FinderPath getFinderPathCountByC_M();
 
 	/**
 	 * Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or throws a <code>NoSuchTierPriceEntryException</code> if it could not be found.
@@ -1321,6 +1346,10 @@ public interface CommerceTierPriceEntryPersistence
 	 */
 	public int countByC_LteM_S(
 		long commercePriceEntryId, int minQuantity, int status);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce tier price entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchTierPriceEntryException</code> if it could not be found.

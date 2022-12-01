@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence;
 
 import com.liferay.journal.exception.NoSuchArticleLocalizationException;
 import com.liferay.journal.model.JournalArticleLocalization;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface JournalArticleLocalizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleLocalizationUtil} to access the journal article localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByArticlePK();
+
+	public FinderPath getFinderPathCountByArticlePK();
 
 	/**
 	 * Returns all the journal article localizations where articlePK = &#63;.
@@ -187,6 +195,10 @@ public interface JournalArticleLocalizationPersistence
 	 */
 	public int countByArticlePK(long articlePK);
 
+	public FinderPath getFinderPathFetchByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
+
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
 	 *
@@ -238,6 +250,10 @@ public interface JournalArticleLocalizationPersistence
 	 * @return the number of matching journal article localizations
 	 */
 	public int countByC_A(long companyId, long articlePK);
+
+	public FinderPath getFinderPathFetchByA_L();
+
+	public FinderPath getFinderPathCountByA_L();
 
 	/**
 	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -291,6 +307,10 @@ public interface JournalArticleLocalizationPersistence
 	 * @return the number of matching journal article localizations
 	 */
 	public int countByA_L(long articlePK, String languageId);
+
+	public FinderPath getFinderPathFetchByC_A_L();
+
+	public FinderPath getFinderPathCountByC_A_L();
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -350,6 +370,10 @@ public interface JournalArticleLocalizationPersistence
 	 * @return the number of matching journal article localizations
 	 */
 	public int countByC_A_L(long companyId, long articlePK, String languageId);
+
+	public FinderPath getFinderPathFetchByC_A_T_L();
+
+	public FinderPath getFinderPathCountByC_A_T_L();
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; and title = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.

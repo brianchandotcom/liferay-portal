@@ -119,6 +119,30 @@ public class ListTypeUtil {
 		return getPersistence().update(listType, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByType() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByType();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByType() {
+
+		return getPersistence().getFinderPathCountByType();
+	}
+
 	/**
 	 * Returns all the list types where type = &#63;.
 	 *
@@ -278,6 +302,18 @@ public class ListTypeUtil {
 	 */
 	public static int countByType(String type) {
 		return getPersistence().countByType(type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByN_T() {
+
+		return getPersistence().getFinderPathFetchByN_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_T() {
+
+		return getPersistence().getFinderPathCountByN_T();
 	}
 
 	/**

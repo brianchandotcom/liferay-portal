@@ -119,6 +119,30 @@ public class ResourceActionUtil {
 		return getPersistence().update(resourceAction, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByName() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByName();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByName() {
+
+		return getPersistence().getFinderPathCountByName();
+	}
+
 	/**
 	 * Returns all the resource actions where name = &#63;.
 	 *
@@ -284,6 +308,18 @@ public class ResourceActionUtil {
 	 */
 	public static int countByName(String name) {
 		return getPersistence().countByName(name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByN_A() {
+
+		return getPersistence().getFinderPathFetchByN_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_A() {
+
+		return getPersistence().getFinderPathCountByN_A();
 	}
 
 	/**

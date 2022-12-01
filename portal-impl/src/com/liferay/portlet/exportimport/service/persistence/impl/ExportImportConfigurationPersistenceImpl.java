@@ -86,9 +86,31 @@ public class ExportImportConfigurationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the export import configurations where groupId = &#63;.
@@ -596,7 +618,18 @@ public class ExportImportConfigurationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the export import configurations where companyId = &#63;.
@@ -1106,7 +1139,18 @@ public class ExportImportConfigurationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_T() {
+		return _finderPathWithoutPaginationFindByG_T;
+	}
+
 	private FinderPath _finderPathCountByG_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_T() {
+		return _finderPathCountByG_T;
+	}
 
 	/**
 	 * Returns all the export import configurations where groupId = &#63; and type = &#63;.
@@ -1651,7 +1695,18 @@ public class ExportImportConfigurationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_S() {
+		return _finderPathWithoutPaginationFindByG_S;
+	}
+
 	private FinderPath _finderPathCountByG_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S() {
+		return _finderPathCountByG_S;
+	}
 
 	/**
 	 * Returns all the export import configurations where groupId = &#63; and status = &#63;.
@@ -2196,7 +2251,18 @@ public class ExportImportConfigurationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_T_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_T_S() {
+		return _finderPathWithoutPaginationFindByG_T_S;
+	}
+
 	private FinderPath _finderPathCountByG_T_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_T_S() {
+		return _finderPathCountByG_T_S;
+	}
 
 	/**
 	 * Returns all the export import configurations where groupId = &#63; and type = &#63; and status = &#63;.

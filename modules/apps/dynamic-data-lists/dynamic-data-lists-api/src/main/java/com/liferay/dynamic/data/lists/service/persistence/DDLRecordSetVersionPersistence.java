@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.persistence;
 
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface DDLRecordSetVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDLRecordSetVersionUtil} to access the ddl record set version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByRecordSetId();
+
+	public FinderPath getFinderPathCountByRecordSetId();
 
 	/**
 	 * Returns all the ddl record set versions where recordSetId = &#63;.
@@ -187,6 +195,10 @@ public interface DDLRecordSetVersionPersistence
 	 */
 	public int countByRecordSetId(long recordSetId);
 
+	public FinderPath getFinderPathFetchByRS_V();
+
+	public FinderPath getFinderPathCountByRS_V();
+
 	/**
 	 * Returns the ddl record set version where recordSetId = &#63; and version = &#63; or throws a <code>NoSuchRecordSetVersionException</code> if it could not be found.
 	 *
@@ -236,6 +248,10 @@ public interface DDLRecordSetVersionPersistence
 	 * @return the number of matching ddl record set versions
 	 */
 	public int countByRS_V(long recordSetId, String version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByRS_S();
+
+	public FinderPath getFinderPathCountByRS_S();
 
 	/**
 	 * Returns all the ddl record set versions where recordSetId = &#63; and status = &#63;.

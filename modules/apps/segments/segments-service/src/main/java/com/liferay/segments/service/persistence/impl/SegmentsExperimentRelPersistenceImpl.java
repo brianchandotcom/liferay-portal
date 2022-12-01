@@ -101,9 +101,33 @@ public class SegmentsExperimentRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindBySegmentsExperimentId;
 	private FinderPath _finderPathWithoutPaginationFindBySegmentsExperimentId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperimentId() {
+
+		return _finderPathWithoutPaginationFindBySegmentsExperimentId;
+	}
+
 	private FinderPath _finderPathCountBySegmentsExperimentId;
+
+	@Override
+	public FinderPath getFinderPathCountBySegmentsExperimentId() {
+		return _finderPathCountBySegmentsExperimentId;
+	}
 
 	/**
 	 * Returns all the segments experiment rels where segmentsExperimentId = &#63;.
@@ -637,7 +661,20 @@ public class SegmentsExperimentRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySegmentsExperienceId;
 	private FinderPath _finderPathWithoutPaginationFindBySegmentsExperienceId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperienceId() {
+
+		return _finderPathWithoutPaginationFindBySegmentsExperienceId;
+	}
+
 	private FinderPath _finderPathCountBySegmentsExperienceId;
+
+	@Override
+	public FinderPath getFinderPathCountBySegmentsExperienceId() {
+		return _finderPathCountBySegmentsExperienceId;
+	}
 
 	/**
 	 * Returns all the segments experiment rels where segmentsExperienceId = &#63;.
@@ -1170,7 +1207,18 @@ public class SegmentsExperimentRelPersistenceImpl
 			"segmentsExperimentRel.segmentsExperienceId = ?";
 
 	private FinderPath _finderPathFetchByS_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByS_S() {
+		return _finderPathFetchByS_S;
+	}
+
 	private FinderPath _finderPathCountByS_S;
+
+	@Override
+	public FinderPath getFinderPathCountByS_S() {
+		return _finderPathCountByS_S;
+	}
 
 	/**
 	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchExperimentRelException</code> if it could not be found.

@@ -119,6 +119,31 @@ public class UserTrackerPathUtil {
 		return getPersistence().update(userTrackerPath, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserTrackerId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByUserTrackerId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserTrackerId() {
+
+		return getPersistence().getFinderPathCountByUserTrackerId();
+	}
+
 	/**
 	 * Returns all the user tracker paths where userTrackerId = &#63;.
 	 *

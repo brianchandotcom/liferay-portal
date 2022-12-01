@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.service.persistence;
 
 import com.liferay.commerce.inventory.exception.NoSuchInventoryAuditException;
 import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
@@ -42,6 +43,9 @@ public interface CommerceInventoryAuditPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryAuditUtil} to access the commerce inventory audit persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Returns all the commerce inventory audits where createDate &lt; &#63;.
@@ -186,6 +190,10 @@ public interface CommerceInventoryAuditPersistence
 	 * @return the number of matching commerce inventory audits
 	 */
 	public int countByLtCreateDate(Date createDate);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
 
 	/**
 	 * Returns all the commerce inventory audits where companyId = &#63; and sku = &#63;.

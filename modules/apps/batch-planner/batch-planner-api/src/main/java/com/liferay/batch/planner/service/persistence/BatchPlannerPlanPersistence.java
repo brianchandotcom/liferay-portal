@@ -16,6 +16,7 @@ package com.liferay.batch.planner.service.persistence;
 
 import com.liferay.batch.planner.exception.NoSuchPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface BatchPlannerPlanPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BatchPlannerPlanUtil} to access the batch planner plan persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63;.
@@ -248,6 +256,10 @@ public interface BatchPlannerPlanPersistence
 	 * @return the number of matching batch planner plans that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_U();
+
+	public FinderPath getFinderPathCountByC_U();
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and userId = &#63;.
@@ -474,6 +486,10 @@ public interface BatchPlannerPlanPersistence
 	 */
 	public int filterCountByC_U(long companyId, long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_E();
+
+	public FinderPath getFinderPathCountByC_E();
+
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and export = &#63;.
 	 *
@@ -698,6 +714,10 @@ public interface BatchPlannerPlanPersistence
 	 * @return the number of matching batch planner plans that the user has permission to view
 	 */
 	public int filterCountByC_E(long companyId, boolean export);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and name = &#63;.
@@ -924,6 +944,10 @@ public interface BatchPlannerPlanPersistence
 	 */
 	public int filterCountByC_N(long companyId, String name);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_T();
+
+	public FinderPath getFinderPathCountByC_T();
+
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and template = &#63;.
 	 *
@@ -1148,6 +1172,10 @@ public interface BatchPlannerPlanPersistence
 	 * @return the number of matching batch planner plans that the user has permission to view
 	 */
 	public int filterCountByC_T(long companyId, boolean template);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_E_T();
+
+	public FinderPath getFinderPathCountByC_E_T();
 
 	/**
 	 * Returns all the batch planner plans where companyId = &#63; and export = &#63; and template = &#63;.

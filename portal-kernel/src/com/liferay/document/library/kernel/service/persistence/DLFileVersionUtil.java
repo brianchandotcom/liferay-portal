@@ -119,6 +119,30 @@ public class DLFileVersionUtil {
 		return getPersistence().update(dlFileVersion, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the document library file versions where uuid = &#63;.
 	 *
@@ -286,6 +310,18 @@ public class DLFileVersionUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the document library file version where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFileVersionException</code> if it could not be found.
 	 *
@@ -349,6 +385,18 @@ public class DLFileVersionUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -540,6 +588,18 @@ public class DLFileVersionUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the document library file versions where companyId = &#63;.
 	 *
@@ -710,6 +770,19 @@ public class DLFileVersionUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFileEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByFileEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFileEntryId() {
+
+		return getPersistence().getFinderPathCountByFileEntryId();
 	}
 
 	/**
@@ -884,6 +957,18 @@ public class DLFileVersionUtil {
 	 */
 	public static int countByFileEntryId(long fileEntryId) {
 		return getPersistence().countByFileEntryId(fileEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByMimeType() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByMimeType();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByMimeType() {
+
+		return getPersistence().getFinderPathCountByMimeType();
 	}
 
 	/**
@@ -1245,6 +1330,18 @@ public class DLFileVersionUtil {
 		return getPersistence().countByC_NotS(companyId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByF_V() {
+
+		return getPersistence().getFinderPathFetchByF_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_V() {
+
+		return getPersistence().getFinderPathCountByF_V();
+	}
+
 	/**
 	 * Returns the document library file version where fileEntryId = &#63; and version = &#63; or throws a <code>NoSuchFileVersionException</code> if it could not be found.
 	 *
@@ -1309,6 +1406,18 @@ public class DLFileVersionUtil {
 	 */
 	public static int countByF_V(long fileEntryId, String version) {
 		return getPersistence().countByF_V(fileEntryId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByF_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByF_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_S() {
+
+		return getPersistence().getFinderPathCountByF_S();
 	}
 
 	/**
@@ -1496,6 +1605,18 @@ public class DLFileVersionUtil {
 	 */
 	public static int countByF_S(long fileEntryId, int status) {
 		return getPersistence().countByF_S(fileEntryId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_F_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_F_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_F_S() {
+
+		return getPersistence().getFinderPathCountByG_F_S();
 	}
 
 	/**
@@ -1698,6 +1819,18 @@ public class DLFileVersionUtil {
 	 */
 	public static int countByG_F_S(long groupId, long folderId, int status) {
 		return getPersistence().countByG_F_S(groupId, folderId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_F_T_V() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_F_T_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_F_T_V() {
+
+		return getPersistence().getFinderPathCountByG_F_T_V();
 	}
 
 	/**

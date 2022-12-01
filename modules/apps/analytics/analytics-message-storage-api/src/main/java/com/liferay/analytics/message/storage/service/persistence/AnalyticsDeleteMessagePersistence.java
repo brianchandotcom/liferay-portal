@@ -16,6 +16,7 @@ package com.liferay.analytics.message.storage.service.persistence;
 
 import com.liferay.analytics.message.storage.exception.NoSuchDeleteMessageException;
 import com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
@@ -42,6 +43,13 @@ public interface AnalyticsDeleteMessagePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnalyticsDeleteMessageUtil} to access the analytics delete message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the analytics delete messages where companyId = &#63;.

@@ -121,6 +121,30 @@ public class ObjectRelationshipUtil {
 		return getPersistence().update(objectRelationship, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the object relationships where uuid = &#63;.
 	 *
@@ -285,6 +309,18 @@ public class ObjectRelationshipUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -473,6 +509,19 @@ public class ObjectRelationshipUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectDefinitionId1() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectDefinitionId1();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectDefinitionId1() {
+
+		return getPersistence().getFinderPathCountByObjectDefinitionId1();
+	}
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63;.
 	 *
@@ -647,6 +696,19 @@ public class ObjectRelationshipUtil {
 	 */
 	public static int countByObjectDefinitionId1(long objectDefinitionId1) {
 		return getPersistence().countByObjectDefinitionId1(objectDefinitionId1);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectDefinitionId2() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectDefinitionId2();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectDefinitionId2() {
+
+		return getPersistence().getFinderPathCountByObjectDefinitionId2();
 	}
 
 	/**
@@ -825,6 +887,18 @@ public class ObjectRelationshipUtil {
 		return getPersistence().countByObjectDefinitionId2(objectDefinitionId2);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByObjectFieldId2() {
+
+		return getPersistence().getFinderPathFetchByObjectFieldId2();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectFieldId2() {
+
+		return getPersistence().getFinderPathCountByObjectFieldId2();
+	}
+
 	/**
 	 * Returns the object relationship where objectFieldId2 = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
 	 *
@@ -884,6 +958,18 @@ public class ObjectRelationshipUtil {
 	 */
 	public static int countByObjectFieldId2(long objectFieldId2) {
 		return getPersistence().countByObjectFieldId2(objectFieldId2);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI1_N() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI1_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI1_N() {
+
+		return getPersistence().getFinderPathCountByODI1_N();
 	}
 
 	/**
@@ -1072,6 +1158,18 @@ public class ObjectRelationshipUtil {
 	 */
 	public static int countByODI1_N(long objectDefinitionId1, String name) {
 		return getPersistence().countByODI1_N(objectDefinitionId1, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI1_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI1_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI1_R() {
+
+		return getPersistence().getFinderPathCountByODI1_R();
 	}
 
 	/**
@@ -1266,6 +1364,18 @@ public class ObjectRelationshipUtil {
 		return getPersistence().countByODI1_R(objectDefinitionId1, reverse);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI2_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI2_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI2_R() {
+
+		return getPersistence().getFinderPathCountByODI2_R();
+	}
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
 	 *
@@ -1456,6 +1566,19 @@ public class ObjectRelationshipUtil {
 	 */
 	public static int countByODI2_R(long objectDefinitionId2, boolean reverse) {
 		return getPersistence().countByODI2_R(objectDefinitionId2, reverse);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI1_ODI2_T() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByODI1_ODI2_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI1_ODI2_T() {
+
+		return getPersistence().getFinderPathCountByODI1_ODI2_T();
 	}
 
 	/**
@@ -1670,6 +1793,18 @@ public class ObjectRelationshipUtil {
 			objectDefinitionId1, objectDefinitionId2, type);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI1_DT_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI1_DT_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI1_DT_R() {
+
+		return getPersistence().getFinderPathCountByODI1_DT_R();
+	}
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
 	 *
@@ -1882,6 +2017,18 @@ public class ObjectRelationshipUtil {
 			objectDefinitionId1, deletionType, reverse);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI1_R_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI1_R_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI1_R_T() {
+
+		return getPersistence().getFinderPathCountByODI1_R_T();
+	}
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
 	 *
@@ -2090,6 +2237,18 @@ public class ObjectRelationshipUtil {
 			objectDefinitionId1, reverse, type);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI2_R_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI2_R_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI2_R_T() {
+
+		return getPersistence().getFinderPathCountByODI2_R_T();
+	}
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
 	 *
@@ -2296,6 +2455,19 @@ public class ObjectRelationshipUtil {
 
 		return getPersistence().countByODI2_R_T(
 			objectDefinitionId2, reverse, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI1_ODI2_N_T() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByODI1_ODI2_N_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI1_ODI2_N_T() {
+
+		return getPersistence().getFinderPathCountByODI1_ODI2_N_T();
 	}
 
 	/**
@@ -2528,6 +2700,18 @@ public class ObjectRelationshipUtil {
 
 		return getPersistence().countByODI1_ODI2_N_T(
 			objectDefinitionId1, objectDefinitionId2, name, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByODI1_ODI2_N_R_T() {
+
+		return getPersistence().getFinderPathFetchByODI1_ODI2_N_R_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI1_ODI2_N_R_T() {
+
+		return getPersistence().getFinderPathCountByODI1_ODI2_N_R_T();
 	}
 
 	/**

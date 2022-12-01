@@ -14,6 +14,7 @@
 
 package com.liferay.sync.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sync.exception.NoSuchDLFileVersionDiffException;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
@@ -42,6 +43,13 @@ public interface SyncDLFileVersionDiffPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDLFileVersionDiffUtil} to access the sync dl file version diff persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryId();
+
+	public FinderPath getFinderPathCountByFileEntryId();
 
 	/**
 	 * Returns all the sync dl file version diffs where fileEntryId = &#63;.
@@ -330,6 +338,10 @@ public interface SyncDLFileVersionDiffPersistence
 	 * @return the number of matching sync dl file version diffs
 	 */
 	public int countByLtExpirationDate(Date expirationDate);
+
+	public FinderPath getFinderPathFetchByF_S_T();
+
+	public FinderPath getFinderPathCountByF_S_T();
 
 	/**
 	 * Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or throws a <code>NoSuchDLFileVersionDiffException</code> if it could not be found.

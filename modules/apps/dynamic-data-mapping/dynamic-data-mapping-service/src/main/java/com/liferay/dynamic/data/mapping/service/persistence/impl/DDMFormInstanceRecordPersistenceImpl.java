@@ -105,9 +105,31 @@ public class DDMFormInstanceRecordPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the ddm form instance records where uuid = &#63;.
@@ -662,7 +684,18 @@ public class DDMFormInstanceRecordPersistenceImpl
 		"(ddmFormInstanceRecord.uuid IS NULL OR ddmFormInstanceRecord.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the ddm form instance record where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFormInstanceRecordException</code> if it could not be found.
@@ -929,7 +962,18 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the ddm form instance records where uuid = &#63; and companyId = &#63;.
@@ -1530,7 +1574,18 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the ddm form instance records where companyId = &#63;.
@@ -2051,7 +2106,18 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFormInstanceId;
 	private FinderPath _finderPathWithoutPaginationFindByFormInstanceId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFormInstanceId() {
+		return _finderPathWithoutPaginationFindByFormInstanceId;
+	}
+
 	private FinderPath _finderPathCountByFormInstanceId;
+
+	@Override
+	public FinderPath getFinderPathCountByFormInstanceId() {
+		return _finderPathCountByFormInstanceId;
+	}
 
 	/**
 	 * Returns all the ddm form instance records where formInstanceId = &#63;.
@@ -2578,7 +2644,18 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_F;
 	private FinderPath _finderPathWithoutPaginationFindByU_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_F() {
+		return _finderPathWithoutPaginationFindByU_F;
+	}
+
 	private FinderPath _finderPathCountByU_F;
+
+	@Override
+	public FinderPath getFinderPathCountByU_F() {
+		return _finderPathCountByU_F;
+	}
 
 	/**
 	 * Returns all the ddm form instance records where userId = &#63; and formInstanceId = &#63;.
@@ -3138,7 +3215,18 @@ public class DDMFormInstanceRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByF_F;
 	private FinderPath _finderPathWithoutPaginationFindByF_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByF_F() {
+		return _finderPathWithoutPaginationFindByF_F;
+	}
+
 	private FinderPath _finderPathCountByF_F;
+
+	@Override
+	public FinderPath getFinderPathCountByF_F() {
+		return _finderPathCountByF_F;
+	}
 
 	/**
 	 * Returns all the ddm form instance records where formInstanceId = &#63; and formInstanceVersion = &#63;.

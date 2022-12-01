@@ -101,9 +101,31 @@ public class CSDiagramPinPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId() {
+		return _finderPathWithoutPaginationFindByCPDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDefinitionId() {
+		return _finderPathCountByCPDefinitionId;
+	}
 
 	/**
 	 * Returns all the cs diagram pins where CPDefinitionId = &#63;.

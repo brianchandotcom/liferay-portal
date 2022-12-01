@@ -16,6 +16,7 @@ package com.liferay.batch.engine.service.persistence;
 
 import com.liferay.batch.engine.exception.NoSuchExportTaskException;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface BatchEngineExportTaskPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BatchEngineExportTaskUtil} to access the batch engine export task persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the batch engine export tasks where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface BatchEngineExportTaskPersistence
 	 * @return the number of matching batch engine export tasks
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the batch engine export tasks where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface BatchEngineExportTaskPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the batch engine export tasks where companyId = &#63;.
 	 *
@@ -483,6 +499,10 @@ public interface BatchEngineExportTaskPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByExecuteStatus();
+
+	public FinderPath getFinderPathCountByExecuteStatus();
+
 	/**
 	 * Returns all the batch engine export tasks where executeStatus = &#63;.
 	 *
@@ -626,6 +646,10 @@ public interface BatchEngineExportTaskPersistence
 	 * @return the number of matching batch engine export tasks
 	 */
 	public int countByExecuteStatus(String executeStatus);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the batch engine export task where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchExportTaskException</code> if it could not be found.

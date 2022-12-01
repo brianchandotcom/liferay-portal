@@ -16,6 +16,7 @@ package com.liferay.account.service.persistence;
 
 import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountGroup;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AccountGroupUtil} to access the account group persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the account groups where uuid = &#63;.
@@ -246,6 +254,10 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 * @return the number of matching account groups that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the account groups where uuid = &#63; and companyId = &#63;.
@@ -471,6 +483,10 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 * @return the number of matching account groups that the user has permission to view
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByAccountGroupId();
+
+	public FinderPath getFinderPathCountByAccountGroupId();
 
 	/**
 	 * Returns all the account groups where accountGroupId = &#63;.
@@ -775,6 +791,10 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 */
 	public int filterCountByAccountGroupId(long[] accountGroupIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the account groups where companyId = &#63;.
 	 *
@@ -981,6 +1001,10 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 * @return the number of matching account groups that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_D();
+
+	public FinderPath getFinderPathCountByC_D();
 
 	/**
 	 * Returns all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
@@ -1207,6 +1231,10 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 */
 	public int filterCountByC_D(long companyId, boolean defaultAccountGroup);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_T();
+
+	public FinderPath getFinderPathCountByC_T();
+
 	/**
 	 * Returns all the account groups where companyId = &#63; and type = &#63;.
 	 *
@@ -1430,6 +1458,10 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	 * @return the number of matching account groups that the user has permission to view
 	 */
 	public int filterCountByC_T(long companyId, String type);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.

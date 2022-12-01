@@ -125,6 +125,30 @@ public class CommercePriceListDiscountRelUtil {
 			commercePriceListDiscountRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the commerce price list discount rels where uuid = &#63;.
 	 *
@@ -294,6 +318,18 @@ public class CommercePriceListDiscountRelUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -485,6 +521,19 @@ public class CommercePriceListDiscountRelUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommercePriceListId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommercePriceListId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommercePriceListId() {
+
+		return getPersistence().getFinderPathCountByCommercePriceListId();
+	}
+
 	/**
 	 * Returns all the commerce price list discount rels where commercePriceListId = &#63;.
 	 *
@@ -665,6 +714,18 @@ public class CommercePriceListDiscountRelUtil {
 	 */
 	public static int countByCommercePriceListId(long commercePriceListId) {
 		return getPersistence().countByCommercePriceListId(commercePriceListId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCDI_CPI() {
+
+		return getPersistence().getFinderPathFetchByCDI_CPI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCDI_CPI() {
+
+		return getPersistence().getFinderPathCountByCDI_CPI();
 	}
 
 	/**

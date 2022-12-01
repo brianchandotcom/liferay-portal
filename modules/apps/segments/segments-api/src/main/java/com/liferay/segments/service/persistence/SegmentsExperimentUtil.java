@@ -121,6 +121,30 @@ public class SegmentsExperimentUtil {
 		return getPersistence().update(segmentsExperiment, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the segments experiments where uuid = &#63;.
 	 *
@@ -287,6 +311,18 @@ public class SegmentsExperimentUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the segments experiment where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchExperimentException</code> if it could not be found.
 	 *
@@ -348,6 +384,18 @@ public class SegmentsExperimentUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -534,6 +582,18 @@ public class SegmentsExperimentUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
 	}
 
 	/**
@@ -781,6 +841,19 @@ public class SegmentsExperimentUtil {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperimentKey() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindBySegmentsExperimentKey();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySegmentsExperimentKey() {
+
+		return getPersistence().getFinderPathCountBySegmentsExperimentKey();
+	}
+
 	/**
 	 * Returns all the segments experiments where segmentsExperimentKey = &#63;.
 	 *
@@ -964,6 +1037,18 @@ public class SegmentsExperimentUtil {
 			segmentsExperimentKey);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_S() {
+
+		return getPersistence().getFinderPathFetchByG_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_S() {
+
+		return getPersistence().getFinderPathCountByG_S();
+	}
+
 	/**
 	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or throws a <code>NoSuchExperimentException</code> if it could not be found.
 	 *
@@ -1030,6 +1115,18 @@ public class SegmentsExperimentUtil {
 	 */
 	public static int countByG_S(long groupId, String segmentsExperimentKey) {
 		return getPersistence().countByG_S(groupId, segmentsExperimentKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_C() {
+
+		return getPersistence().getFinderPathCountByG_C_C();
 	}
 
 	/**
@@ -1333,6 +1430,18 @@ public class SegmentsExperimentUtil {
 			groupId, classNameId, classPK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_C_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_C_C() {
+
+		return getPersistence().getFinderPathCountByS_C_C();
+	}
+
 	/**
 	 * Returns all the segments experiments where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
@@ -1541,6 +1650,18 @@ public class SegmentsExperimentUtil {
 
 		return getPersistence().countByS_C_C(
 			segmentsExperienceId, classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_C_C_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_C_C_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_C_C_S() {
+
+		return getPersistence().getFinderPathCountByS_C_C_S();
 	}
 
 	/**

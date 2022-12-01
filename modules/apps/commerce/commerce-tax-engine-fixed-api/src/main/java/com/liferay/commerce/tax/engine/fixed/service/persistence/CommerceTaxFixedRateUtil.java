@@ -122,6 +122,31 @@ public class CommerceTaxFixedRateUtil {
 		return getPersistence().update(commerceTaxFixedRate, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCPTaxCategoryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCPTaxCategoryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPTaxCategoryId() {
+
+		return getPersistence().getFinderPathCountByCPTaxCategoryId();
+	}
+
 	/**
 	 * Returns all the commerce tax fixed rates where CPTaxCategoryId = &#63;.
 	 *
@@ -301,6 +326,19 @@ public class CommerceTaxFixedRateUtil {
 		return getPersistence().countByCPTaxCategoryId(CPTaxCategoryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceTaxMethodId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceTaxMethodId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceTaxMethodId() {
+
+		return getPersistence().getFinderPathCountByCommerceTaxMethodId();
+	}
+
 	/**
 	 * Returns all the commerce tax fixed rates where commerceTaxMethodId = &#63;.
 	 *
@@ -478,6 +516,18 @@ public class CommerceTaxFixedRateUtil {
 	 */
 	public static int countByCommerceTaxMethodId(long commerceTaxMethodId) {
 		return getPersistence().countByCommerceTaxMethodId(commerceTaxMethodId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_C() {
+
+		return getPersistence().getFinderPathFetchByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**

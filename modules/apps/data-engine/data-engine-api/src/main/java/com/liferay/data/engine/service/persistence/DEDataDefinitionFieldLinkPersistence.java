@@ -16,6 +16,7 @@ package com.liferay.data.engine.service.persistence;
 
 import com.liferay.data.engine.exception.NoSuchDataDefinitionFieldLinkException;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DEDataDefinitionFieldLinkUtil} to access the de data definition field link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the de data definition field links where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the de data definition field link where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDataDefinitionFieldLinkException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @return the number of matching de data definition field links
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the de data definition field links where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByDDMStructureId();
+
+	public FinderPath getFinderPathCountByDDMStructureId();
+
 	/**
 	 * Returns all the de data definition field links where ddmStructureId = &#63;.
 	 *
@@ -534,6 +554,10 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @return the number of matching de data definition field links
 	 */
 	public int countByDDMStructureId(long ddmStructureId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the de data definition field links where classNameId = &#63; and classPK = &#63;.
@@ -690,6 +714,10 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 */
 	public int countByC_C(long classNameId, long classPK);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_DDMSI();
+
+	public FinderPath getFinderPathCountByC_DDMSI();
+
 	/**
 	 * Returns all the de data definition field links where classNameId = &#63; and ddmStructureId = &#63;.
 	 *
@@ -845,6 +873,10 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @return the number of matching de data definition field links
 	 */
 	public int countByC_DDMSI(long classNameId, long ddmStructureId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByDDMSI_F();
+
+	public FinderPath getFinderPathCountByDDMSI_F();
 
 	/**
 	 * Returns all the de data definition field links where ddmStructureId = &#63; and fieldName = &#63;.
@@ -1080,6 +1112,10 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 * @return the number of matching de data definition field links
 	 */
 	public int countByDDMSI_F(long ddmStructureId, String[] fieldNames);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_DDMSI_F();
+
+	public FinderPath getFinderPathCountByC_DDMSI_F();
 
 	/**
 	 * Returns all the de data definition field links where classNameId = &#63; and ddmStructureId = &#63; and fieldName = &#63;.
@@ -1340,6 +1376,10 @@ public interface DEDataDefinitionFieldLinkPersistence
 	 */
 	public int countByC_DDMSI_F(
 		long classNameId, long ddmStructureId, String[] fieldNames);
+
+	public FinderPath getFinderPathFetchByC_C_DDMSI_F();
+
+	public FinderPath getFinderPathCountByC_C_DDMSI_F();
 
 	/**
 	 * Returns the de data definition field link where classNameId = &#63; and classPK = &#63; and ddmStructureId = &#63; and fieldName = &#63; or throws a <code>NoSuchDataDefinitionFieldLinkException</code> if it could not be found.

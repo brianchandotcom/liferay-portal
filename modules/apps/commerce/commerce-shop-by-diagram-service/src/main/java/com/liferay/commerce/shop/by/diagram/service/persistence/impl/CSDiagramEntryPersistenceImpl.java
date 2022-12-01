@@ -102,9 +102,31 @@ public class CSDiagramEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId() {
+		return _finderPathWithoutPaginationFindByCPDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDefinitionId() {
+		return _finderPathCountByCPDefinitionId;
+	}
 
 	/**
 	 * Returns all the cs diagram entries where CPDefinitionId = &#63;.
@@ -624,7 +646,18 @@ public class CSDiagramEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPInstanceId;
 	private FinderPath _finderPathWithoutPaginationFindByCPInstanceId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPInstanceId() {
+		return _finderPathWithoutPaginationFindByCPInstanceId;
+	}
+
 	private FinderPath _finderPathCountByCPInstanceId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPInstanceId() {
+		return _finderPathCountByCPInstanceId;
+	}
 
 	/**
 	 * Returns all the cs diagram entries where CPInstanceId = &#63;.
@@ -1141,7 +1174,18 @@ public class CSDiagramEntryPersistenceImpl
 		"csDiagramEntry.CPInstanceId = ?";
 
 	private FinderPath _finderPathFetchByCPDI_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByCPDI_S() {
+		return _finderPathFetchByCPDI_S;
+	}
+
 	private FinderPath _finderPathCountByCPDI_S;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDI_S() {
+		return _finderPathCountByCPDI_S;
+	}
 
 	/**
 	 * Returns the cs diagram entry where CPDefinitionId = &#63; and sequence = &#63; or throws a <code>NoSuchCSDiagramEntryException</code> if it could not be found.

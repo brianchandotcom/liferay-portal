@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.model.RepositoryEntry;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -40,6 +41,13 @@ public interface RepositoryEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryEntryUtil} to access the repository entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the repository entries where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface RepositoryEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the repository entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchRepositoryEntryException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface RepositoryEntryPersistence
 	 * @return the number of matching repository entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the repository entries where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface RepositoryEntryPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByRepositoryId();
+
+	public FinderPath getFinderPathCountByRepositoryId();
+
 	/**
 	 * Returns all the repository entries where repositoryId = &#63;.
 	 *
@@ -532,6 +552,10 @@ public interface RepositoryEntryPersistence
 	 * @return the number of matching repository entries
 	 */
 	public int countByRepositoryId(long repositoryId);
+
+	public FinderPath getFinderPathFetchByR_M();
+
+	public FinderPath getFinderPathCountByR_M();
 
 	/**
 	 * Returns the repository entry where repositoryId = &#63; and mappedId = &#63; or throws a <code>NoSuchRepositoryEntryException</code> if it could not be found.

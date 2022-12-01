@@ -119,6 +119,30 @@ public class DDMFieldUtil {
 		return getPersistence().update(ddmField, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByStorageId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByStorageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByStorageId() {
+
+		return getPersistence().getFinderPathCountByStorageId();
+	}
+
 	/**
 	 * Returns all the ddm fields where storageId = &#63;.
 	 *
@@ -285,6 +309,19 @@ public class DDMFieldUtil {
 	 */
 	public static int countByStorageId(long storageId) {
 		return getPersistence().countByStorageId(storageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByStructureVersionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByStructureVersionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByStructureVersionId() {
+
+		return getPersistence().getFinderPathCountByStructureVersionId();
 	}
 
 	/**
@@ -460,6 +497,18 @@ public class DDMFieldUtil {
 	 */
 	public static int countByStructureVersionId(long structureVersionId) {
 		return getPersistence().countByStructureVersionId(structureVersionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_F() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_F() {
+
+		return getPersistence().getFinderPathCountByC_F();
 	}
 
 	/**
@@ -644,6 +693,18 @@ public class DDMFieldUtil {
 	 */
 	public static int countByC_F(long companyId, String fieldType) {
 		return getPersistence().countByC_F(companyId, fieldType);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByS_I() {
+
+		return getPersistence().getFinderPathFetchByS_I();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_I() {
+
+		return getPersistence().getFinderPathCountByS_I();
 	}
 
 	/**

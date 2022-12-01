@@ -16,6 +16,7 @@ package com.liferay.batch.planner.service.persistence;
 
 import com.liferay.batch.planner.exception.NoSuchMappingException;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface BatchPlannerMappingPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BatchPlannerMappingUtil} to access the batch planner mapping persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByBatchPlannerPlanId();
+
+	public FinderPath getFinderPathCountByBatchPlannerPlanId();
 
 	/**
 	 * Returns all the batch planner mappings where batchPlannerPlanId = &#63;.
@@ -184,6 +192,10 @@ public interface BatchPlannerMappingPersistence
 	 * @return the number of matching batch planner mappings
 	 */
 	public int countByBatchPlannerPlanId(long batchPlannerPlanId);
+
+	public FinderPath getFinderPathFetchByBPPI_EFN_IFN();
+
+	public FinderPath getFinderPathCountByBPPI_EFN_IFN();
 
 	/**
 	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and externalFieldName = &#63; and internalFieldName = &#63; or throws a <code>NoSuchMappingException</code> if it could not be found.

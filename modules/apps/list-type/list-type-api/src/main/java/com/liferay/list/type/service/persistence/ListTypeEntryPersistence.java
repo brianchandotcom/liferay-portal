@@ -16,6 +16,7 @@ package com.liferay.list.type.service.persistence;
 
 import com.liferay.list.type.exception.NoSuchListTypeEntryException;
 import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ListTypeEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ListTypeEntryUtil} to access the list type entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the list type entries where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ListTypeEntryPersistence
 	 * @return the number of matching list type entries
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the list type entries where uuid = &#63; and companyId = &#63;.
@@ -338,6 +350,10 @@ public interface ListTypeEntryPersistence
 	 * @return the number of matching list type entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByListTypeEntryId();
+
+	public FinderPath getFinderPathCountByListTypeEntryId();
 
 	/**
 	 * Returns all the list type entries where listTypeEntryId = &#63;.
@@ -542,6 +558,11 @@ public interface ListTypeEntryPersistence
 	 */
 	public int countByListTypeEntryId(long[] listTypeEntryIds);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByListTypeDefinitionId();
+
+	public FinderPath getFinderPathCountByListTypeDefinitionId();
+
 	/**
 	 * Returns all the list type entries where listTypeDefinitionId = &#63;.
 	 *
@@ -685,6 +706,10 @@ public interface ListTypeEntryPersistence
 	 * @return the number of matching list type entries
 	 */
 	public int countByListTypeDefinitionId(long listTypeDefinitionId);
+
+	public FinderPath getFinderPathFetchByLTDI_K();
+
+	public FinderPath getFinderPathCountByLTDI_K();
 
 	/**
 	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.

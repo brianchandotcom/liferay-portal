@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.audit.storage.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.audit.storage.exception.NoSuchEventException;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
@@ -39,6 +40,13 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AuditEventUtil} to access the audit event persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the audit events where companyId = &#63;.

@@ -93,9 +93,31 @@ public class CommerceAddressRestrictionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCountryId;
 	private FinderPath _finderPathWithoutPaginationFindByCountryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId() {
+		return _finderPathWithoutPaginationFindByCountryId;
+	}
+
 	private FinderPath _finderPathCountByCountryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCountryId() {
+		return _finderPathCountByCountryId;
+	}
 
 	/**
 	 * Returns all the commerce address restrictions where countryId = &#63;.
@@ -606,7 +628,18 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the commerce address restrictions where classNameId = &#63; and classPK = &#63;.
@@ -1153,7 +1186,18 @@ public class CommerceAddressRestrictionPersistenceImpl
 		"commerceAddressRestriction.classPK = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C_C() {
+		return _finderPathFetchByC_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C() {
+		return _finderPathCountByC_C_C;
+	}
 
 	/**
 	 * Returns the commerce address restriction where classNameId = &#63; and classPK = &#63; and countryId = &#63; or throws a <code>NoSuchAddressRestrictionException</code> if it could not be found.

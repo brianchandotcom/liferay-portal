@@ -120,6 +120,30 @@ public class AssetEntryUtil {
 		return getPersistence().update(assetEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the asset entries where groupId = &#63;.
 	 *
@@ -284,6 +308,18 @@ public class AssetEntryUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
 	}
 
 	/**
@@ -455,6 +491,18 @@ public class AssetEntryUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByVisible() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByVisible();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByVisible() {
+
+		return getPersistence().getFinderPathCountByVisible();
+	}
+
 	/**
 	 * Returns all the asset entries where visible = &#63;.
 	 *
@@ -619,6 +667,19 @@ public class AssetEntryUtil {
 	 */
 	public static int countByVisible(boolean visible) {
 		return getPersistence().countByVisible(visible);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByPublishDate() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByPublishDate();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByPublishDate() {
+
+		return getPersistence().getFinderPathCountByPublishDate();
 	}
 
 	/**
@@ -788,6 +849,19 @@ public class AssetEntryUtil {
 	 */
 	public static int countByPublishDate(Date publishDate) {
 		return getPersistence().countByPublishDate(publishDate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByExpirationDate() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByExpirationDate();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByExpirationDate() {
+
+		return getPersistence().getFinderPathCountByExpirationDate();
 	}
 
 	/**
@@ -962,6 +1036,19 @@ public class AssetEntryUtil {
 		return getPersistence().countByExpirationDate(expirationDate);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLayoutUuid() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLayoutUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLayoutUuid() {
+
+		return getPersistence().getFinderPathCountByLayoutUuid();
+	}
+
 	/**
 	 * Returns all the asset entries where layoutUuid = &#63;.
 	 *
@@ -1131,6 +1218,18 @@ public class AssetEntryUtil {
 		return getPersistence().countByLayoutUuid(layoutUuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_CU() {
+
+		return getPersistence().getFinderPathFetchByG_CU();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_CU() {
+
+		return getPersistence().getFinderPathCountByG_CU();
+	}
+
 	/**
 	 * Returns the asset entry where groupId = &#63; and classUuid = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -1192,6 +1291,18 @@ public class AssetEntryUtil {
 	 */
 	public static int countByG_CU(long groupId, String classUuid) {
 		return getPersistence().countByG_CU(groupId, classUuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_C() {
+
+		return getPersistence().getFinderPathFetchByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**
@@ -1256,6 +1367,18 @@ public class AssetEntryUtil {
 	 */
 	public static int countByC_C(long classNameId, long classPK) {
 		return getPersistence().countByC_C(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_V() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_V() {
+
+		return getPersistence().getFinderPathCountByG_C_V();
 	}
 
 	/**
@@ -1459,6 +1582,18 @@ public class AssetEntryUtil {
 		long groupId, long classNameId, boolean visible) {
 
 		return getPersistence().countByG_C_V(groupId, classNameId, visible);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_P_E() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_P_E();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_P_E() {
+
+		return getPersistence().getFinderPathCountByG_C_P_E();
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.document.library.opener.service.persistence;
 
 import com.liferay.document.library.opener.exception.NoSuchFileEntryReferenceException;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface DLOpenerFileEntryReferencePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLOpenerFileEntryReferenceUtil} to access the dl opener file entry reference persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByFileEntryId();
+
+	public FinderPath getFinderPathCountByFileEntryId();
 
 	/**
 	 * Returns the dl opener file entry reference where fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
@@ -85,6 +93,10 @@ public interface DLOpenerFileEntryReferencePersistence
 	 * @return the number of matching dl opener file entry references
 	 */
 	public int countByFileEntryId(long fileEntryId);
+
+	public FinderPath getFinderPathFetchByR_F();
+
+	public FinderPath getFinderPathCountByR_F();
 
 	/**
 	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.

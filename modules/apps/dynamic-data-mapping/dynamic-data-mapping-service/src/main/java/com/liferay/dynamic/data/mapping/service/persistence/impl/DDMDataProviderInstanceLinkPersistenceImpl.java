@@ -98,9 +98,33 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByDataProviderInstanceId;
 	private FinderPath _finderPathWithoutPaginationFindByDataProviderInstanceId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByDataProviderInstanceId() {
+
+		return _finderPathWithoutPaginationFindByDataProviderInstanceId;
+	}
+
 	private FinderPath _finderPathCountByDataProviderInstanceId;
+
+	@Override
+	public FinderPath getFinderPathCountByDataProviderInstanceId() {
+		return _finderPathCountByDataProviderInstanceId;
+	}
 
 	/**
 	 * Returns all the ddm data provider instance links where dataProviderInstanceId = &#63;.
@@ -643,7 +667,18 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByStructureId;
 	private FinderPath _finderPathWithoutPaginationFindByStructureId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStructureId() {
+		return _finderPathWithoutPaginationFindByStructureId;
+	}
+
 	private FinderPath _finderPathCountByStructureId;
+
+	@Override
+	public FinderPath getFinderPathCountByStructureId() {
+		return _finderPathCountByStructureId;
+	}
 
 	/**
 	 * Returns all the ddm data provider instance links where structureId = &#63;.
@@ -1172,7 +1207,18 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		"ddmDataProviderInstanceLink.structureId = ?";
 
 	private FinderPath _finderPathFetchByD_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByD_S() {
+		return _finderPathFetchByD_S;
+	}
+
 	private FinderPath _finderPathCountByD_S;
+
+	@Override
+	public FinderPath getFinderPathCountByD_S() {
+		return _finderPathCountByD_S;
+	}
 
 	/**
 	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or throws a <code>NoSuchDataProviderInstanceLinkException</code> if it could not be found.

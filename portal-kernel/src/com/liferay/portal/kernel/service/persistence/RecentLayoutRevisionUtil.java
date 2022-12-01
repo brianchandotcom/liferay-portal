@@ -122,6 +122,30 @@ public class RecentLayoutRevisionUtil {
 		return getPersistence().update(recentLayoutRevision, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the recent layout revisions where groupId = &#63;.
 	 *
@@ -295,6 +319,18 @@ public class RecentLayoutRevisionUtil {
 		return getPersistence().countByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the recent layout revisions where userId = &#63;.
 	 *
@@ -465,6 +501,19 @@ public class RecentLayoutRevisionUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLayoutRevisionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLayoutRevisionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLayoutRevisionId() {
+
+		return getPersistence().getFinderPathCountByLayoutRevisionId();
 	}
 
 	/**
@@ -644,6 +693,18 @@ public class RecentLayoutRevisionUtil {
 	 */
 	public static int countByLayoutRevisionId(long layoutRevisionId) {
 		return getPersistence().countByLayoutRevisionId(layoutRevisionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_L_P() {
+
+		return getPersistence().getFinderPathFetchByU_L_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_L_P() {
+
+		return getPersistence().getFinderPathCountByU_L_P();
 	}
 
 	/**

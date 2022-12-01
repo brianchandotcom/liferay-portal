@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.exception.NoSuchRequestException;
@@ -41,6 +42,13 @@ public interface SocialRequestPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialRequestUtil} to access the social request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the social requests where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface SocialRequestPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the social request where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchRequestException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface SocialRequestPersistence
 	 * @return the number of matching social requests
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the social requests where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface SocialRequestPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the social requests where companyId = &#63;.
 	 *
@@ -532,6 +552,10 @@ public interface SocialRequestPersistence
 	 * @return the number of matching social requests
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the social requests where userId = &#63;.
@@ -676,6 +700,10 @@ public interface SocialRequestPersistence
 	 */
 	public int countByUserId(long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByReceiverUserId();
+
+	public FinderPath getFinderPathCountByReceiverUserId();
+
 	/**
 	 * Returns all the social requests where receiverUserId = &#63;.
 	 *
@@ -819,6 +847,10 @@ public interface SocialRequestPersistence
 	 * @return the number of matching social requests
 	 */
 	public int countByReceiverUserId(long receiverUserId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_S();
+
+	public FinderPath getFinderPathCountByU_S();
 
 	/**
 	 * Returns all the social requests where userId = &#63; and status = &#63;.
@@ -973,6 +1005,10 @@ public interface SocialRequestPersistence
 	 * @return the number of matching social requests
 	 */
 	public int countByU_S(long userId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the social requests where classNameId = &#63; and classPK = &#63;.
@@ -1129,6 +1165,10 @@ public interface SocialRequestPersistence
 	 */
 	public int countByC_C(long classNameId, long classPK);
 
+	public FinderPath getFinderPathWithoutPaginationFindByR_S();
+
+	public FinderPath getFinderPathCountByR_S();
+
 	/**
 	 * Returns all the social requests where receiverUserId = &#63; and status = &#63;.
 	 *
@@ -1284,6 +1324,10 @@ public interface SocialRequestPersistence
 	 */
 	public int countByR_S(long receiverUserId, int status);
 
+	public FinderPath getFinderPathFetchByU_C_C_T_R();
+
+	public FinderPath getFinderPathCountByU_C_C_T_R();
+
 	/**
 	 * Returns the social request where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or throws a <code>NoSuchRequestException</code> if it could not be found.
 	 *
@@ -1357,6 +1401,10 @@ public interface SocialRequestPersistence
 	public int countByU_C_C_T_R(
 		long userId, long classNameId, long classPK, int type,
 		long receiverUserId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_C_C_T_S();
+
+	public FinderPath getFinderPathCountByU_C_C_T_S();
 
 	/**
 	 * Returns all the social requests where userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
@@ -1551,6 +1599,10 @@ public interface SocialRequestPersistence
 	 */
 	public int countByU_C_C_T_S(
 		long userId, long classNameId, long classPK, int type, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_T_R_S();
+
+	public FinderPath getFinderPathCountByC_C_T_R_S();
 
 	/**
 	 * Returns all the social requests where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.

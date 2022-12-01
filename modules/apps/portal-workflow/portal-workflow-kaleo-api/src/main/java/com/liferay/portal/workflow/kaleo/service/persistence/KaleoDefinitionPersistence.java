@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
@@ -41,6 +42,13 @@ public interface KaleoDefinitionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoDefinitionUtil} to access the kaleo definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63;.
@@ -185,6 +193,10 @@ public interface KaleoDefinitionPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
+
 	/**
 	 * Returns the kaleo definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface KaleoDefinitionPersistence
 	 * @return the number of matching kaleo definitions
 	 */
 	public int countByC_N(long companyId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
 
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63; and scope = &#63;.
@@ -390,6 +406,10 @@ public interface KaleoDefinitionPersistence
 	 */
 	public int countByC_S(long companyId, String scope);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
+
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63; and active = &#63;.
 	 *
@@ -545,6 +565,10 @@ public interface KaleoDefinitionPersistence
 	 */
 	public int countByC_A(long companyId, boolean active);
 
+	public FinderPath getFinderPathFetchByC_N_V();
+
+	public FinderPath getFinderPathCountByC_N_V();
+
 	/**
 	 * Returns the kaleo definition where companyId = &#63; and name = &#63; and version = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
 	 *
@@ -601,6 +625,10 @@ public interface KaleoDefinitionPersistence
 	 * @return the number of matching kaleo definitions
 	 */
 	public int countByC_N_V(long companyId, String name, int version);
+
+	public FinderPath getFinderPathFetchByC_N_A();
+
+	public FinderPath getFinderPathCountByC_N_A();
 
 	/**
 	 * Returns the kaleo definition where companyId = &#63; and name = &#63; and active = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
@@ -659,6 +687,10 @@ public interface KaleoDefinitionPersistence
 	 * @return the number of matching kaleo definitions
 	 */
 	public int countByC_N_A(long companyId, String name, boolean active);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_S_A();
+
+	public FinderPath getFinderPathCountByC_S_A();
 
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63; and scope = &#63; and active = &#63;.

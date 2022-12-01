@@ -94,9 +94,31 @@ public class BatchPlannerPolicyPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByBatchPlannerPlanId;
 	private FinderPath _finderPathWithoutPaginationFindByBatchPlannerPlanId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByBatchPlannerPlanId() {
+		return _finderPathWithoutPaginationFindByBatchPlannerPlanId;
+	}
+
 	private FinderPath _finderPathCountByBatchPlannerPlanId;
+
+	@Override
+	public FinderPath getFinderPathCountByBatchPlannerPlanId() {
+		return _finderPathCountByBatchPlannerPlanId;
+	}
 
 	/**
 	 * Returns all the batch planner policies where batchPlannerPlanId = &#63;.
@@ -609,7 +631,18 @@ public class BatchPlannerPolicyPersistenceImpl
 			"batchPlannerPolicy.batchPlannerPlanId = ?";
 
 	private FinderPath _finderPathFetchByBPPI_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByBPPI_N() {
+		return _finderPathFetchByBPPI_N;
+	}
+
 	private FinderPath _finderPathCountByBPPI_N;
+
+	@Override
+	public FinderPath getFinderPathCountByBPPI_N() {
+		return _finderPathCountByBPPI_N;
+	}
 
 	/**
 	 * Returns the batch planner policy where batchPlannerPlanId = &#63; and name = &#63; or throws a <code>NoSuchPolicyException</code> if it could not be found.

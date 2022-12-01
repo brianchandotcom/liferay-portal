@@ -102,9 +102,31 @@ public class AssetTagPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the asset tags where uuid = &#63;.
@@ -647,7 +669,18 @@ public class AssetTagPersistenceImpl
 		"(assetTag.uuid IS NULL OR assetTag.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the asset tag where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTagException</code> if it could not be found.
@@ -912,7 +945,18 @@ public class AssetTagPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the asset tags where uuid = &#63; and companyId = &#63;.
@@ -1505,7 +1549,19 @@ public class AssetTagPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
@@ -2268,7 +2324,19 @@ public class AssetTagPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByName;
 	private FinderPath _finderPathWithoutPaginationFindByName;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByName() {
+		return _finderPathWithoutPaginationFindByName;
+	}
+
 	private FinderPath _finderPathCountByName;
+
+	@Override
+	public FinderPath getFinderPathCountByName() {
+		return _finderPathCountByName;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByName;
 
 	/**
@@ -3107,7 +3175,18 @@ public class AssetTagPersistenceImpl
 		"(assetTag.name IS NULL OR assetTag.name = '')";
 
 	private FinderPath _finderPathFetchByG_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_N() {
+		return _finderPathFetchByG_N;
+	}
+
 	private FinderPath _finderPathCountByG_N;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N() {
+		return _finderPathCountByG_N;
+	}
 
 	/**
 	 * Returns the asset tag where groupId = &#63; and name = &#63; or throws a <code>NoSuchTagException</code> if it could not be found.

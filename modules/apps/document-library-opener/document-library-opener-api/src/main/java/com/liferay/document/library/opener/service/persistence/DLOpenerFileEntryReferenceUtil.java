@@ -125,6 +125,30 @@ public class DLOpenerFileEntryReferenceUtil {
 			dlOpenerFileEntryReference, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByFileEntryId() {
+
+		return getPersistence().getFinderPathFetchByFileEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFileEntryId() {
+
+		return getPersistence().getFinderPathCountByFileEntryId();
+	}
+
 	/**
 	 * Returns the dl opener file entry reference where fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
 	 *
@@ -186,6 +210,18 @@ public class DLOpenerFileEntryReferenceUtil {
 	 */
 	public static int countByFileEntryId(long fileEntryId) {
 		return getPersistence().countByFileEntryId(fileEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByR_F() {
+
+		return getPersistence().getFinderPathFetchByR_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_F() {
+
+		return getPersistence().getFinderPathCountByR_F();
 	}
 
 	/**

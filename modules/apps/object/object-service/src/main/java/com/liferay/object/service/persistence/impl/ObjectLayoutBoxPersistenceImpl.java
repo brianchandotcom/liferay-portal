@@ -98,9 +98,31 @@ public class ObjectLayoutBoxPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the object layout boxes where uuid = &#63;.
@@ -633,7 +655,18 @@ public class ObjectLayoutBoxPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the object layout boxes where uuid = &#63; and companyId = &#63;.
@@ -1215,7 +1248,18 @@ public class ObjectLayoutBoxPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByObjectLayoutTabId;
 	private FinderPath _finderPathWithoutPaginationFindByObjectLayoutTabId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByObjectLayoutTabId() {
+		return _finderPathWithoutPaginationFindByObjectLayoutTabId;
+	}
+
 	private FinderPath _finderPathCountByObjectLayoutTabId;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectLayoutTabId() {
+		return _finderPathCountByObjectLayoutTabId;
+	}
 
 	/**
 	 * Returns all the object layout boxes where objectLayoutTabId = &#63;.

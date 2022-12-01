@@ -16,6 +16,7 @@ package com.liferay.commerce.order.rule.service.persistence;
 
 import com.liferay.commerce.order.rule.exception.NoSuchCOREntryRelException;
 import com.liferay.commerce.order.rule.model.COREntryRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface COREntryRelPersistence extends BasePersistence<COREntryRel> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link COREntryRelUtil} to access the cor entry rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCOREntryId();
+
+	public FinderPath getFinderPathCountByCOREntryId();
 
 	/**
 	 * Returns all the cor entry rels where COREntryId = &#63;.
@@ -182,6 +190,10 @@ public interface COREntryRelPersistence extends BasePersistence<COREntryRel> {
 	 * @return the number of matching cor entry rels
 	 */
 	public int countByCOREntryId(long COREntryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
@@ -337,6 +349,10 @@ public interface COREntryRelPersistence extends BasePersistence<COREntryRel> {
 	 * @return the number of matching cor entry rels
 	 */
 	public int countByC_C(long classNameId, long COREntryId);
+
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns the cor entry rel where classNameId = &#63; and classPK = &#63; and COREntryId = &#63; or throws a <code>NoSuchCOREntryRelException</code> if it could not be found.

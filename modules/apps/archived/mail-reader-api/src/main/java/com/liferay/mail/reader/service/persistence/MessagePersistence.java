@@ -16,6 +16,7 @@ package com.liferay.mail.reader.service.persistence;
 
 import com.liferay.mail.reader.exception.NoSuchMessageException;
 import com.liferay.mail.reader.model.Message;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MessageUtil} to access the message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the messages where companyId = &#63;.
@@ -183,6 +191,10 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByFolderId();
+
+	public FinderPath getFinderPathCountByFolderId();
+
 	/**
 	 * Returns all the messages where folderId = &#63;.
 	 *
@@ -325,6 +337,10 @@ public interface MessagePersistence extends BasePersistence<Message> {
 	 * @return the number of matching messages
 	 */
 	public int countByFolderId(long folderId);
+
+	public FinderPath getFinderPathFetchByF_R();
+
+	public FinderPath getFinderPathCountByF_R();
 
 	/**
 	 * Returns the message where folderId = &#63; and remoteMessageId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.

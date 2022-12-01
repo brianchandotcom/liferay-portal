@@ -121,6 +121,30 @@ public class WeDeployAuthTokenUtil {
 		return getPersistence().update(weDeployAuthToken, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByT_T() {
+
+		return getPersistence().getFinderPathFetchByT_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_T() {
+
+		return getPersistence().getFinderPathCountByT_T();
+	}
+
 	/**
 	 * Returns the we deploy auth token where token = &#63; and type = &#63; or throws a <code>NoSuchTokenException</code> if it could not be found.
 	 *
@@ -184,6 +208,18 @@ public class WeDeployAuthTokenUtil {
 	 */
 	public static int countByT_T(String token, int type) {
 		return getPersistence().countByT_T(token, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCI_T_T() {
+
+		return getPersistence().getFinderPathFetchByCI_T_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCI_T_T() {
+
+		return getPersistence().getFinderPathCountByCI_T_T();
 	}
 
 	/**

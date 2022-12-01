@@ -95,6 +95,17 @@ public class SyncDLObjectPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLikeTreePath;
 	private FinderPath _finderPathWithPaginationCountByLikeTreePath;
 
@@ -1157,7 +1168,18 @@ public class SyncDLObjectPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_P;
 	private FinderPath _finderPathWithoutPaginationFindByR_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_P() {
+		return _finderPathWithoutPaginationFindByR_P;
+	}
+
 	private FinderPath _finderPathCountByR_P;
+
+	@Override
+	public FinderPath getFinderPathCountByR_P() {
+		return _finderPathCountByR_P;
+	}
 
 	/**
 	 * Returns all the sync dl objects where repositoryId = &#63; and parentFolderId = &#63;.
@@ -2269,7 +2291,18 @@ public class SyncDLObjectPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_T;
 	private FinderPath _finderPathWithoutPaginationFindByR_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_T() {
+		return _finderPathWithoutPaginationFindByR_T;
+	}
+
 	private FinderPath _finderPathCountByR_T;
+
+	@Override
+	public FinderPath getFinderPathCountByR_T() {
+		return _finderPathCountByR_T;
+	}
 
 	/**
 	 * Returns all the sync dl objects where repositoryId = &#63; and type = &#63;.
@@ -3461,7 +3494,18 @@ public class SyncDLObjectPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByV_T;
 	private FinderPath _finderPathWithoutPaginationFindByV_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByV_T() {
+		return _finderPathWithoutPaginationFindByV_T;
+	}
+
 	private FinderPath _finderPathCountByV_T;
+
+	@Override
+	public FinderPath getFinderPathCountByV_T() {
+		return _finderPathCountByV_T;
+	}
 
 	/**
 	 * Returns all the sync dl objects where version = &#63; and type = &#63;.
@@ -4076,7 +4120,18 @@ public class SyncDLObjectPersistenceImpl
 		"(syncDLObject.type IS NULL OR syncDLObject.type = '')";
 
 	private FinderPath _finderPathFetchByT_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByT_T() {
+		return _finderPathFetchByT_T;
+	}
+
 	private FinderPath _finderPathCountByT_T;
+
+	@Override
+	public FinderPath getFinderPathCountByT_T() {
+		return _finderPathCountByT_T;
+	}
 
 	/**
 	 * Returns the sync dl object where type = &#63; and typePK = &#63; or throws a <code>NoSuchDLObjectException</code> if it could not be found.
@@ -5270,7 +5325,19 @@ public class SyncDLObjectPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_P_T;
 	private FinderPath _finderPathWithoutPaginationFindByR_P_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_P_T() {
+		return _finderPathWithoutPaginationFindByR_P_T;
+	}
+
 	private FinderPath _finderPathCountByR_P_T;
+
+	@Override
+	public FinderPath getFinderPathCountByR_P_T() {
+		return _finderPathCountByR_P_T;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByR_P_T;
 
 	/**

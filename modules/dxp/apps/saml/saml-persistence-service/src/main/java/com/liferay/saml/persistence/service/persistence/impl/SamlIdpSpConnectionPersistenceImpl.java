@@ -96,9 +96,31 @@ public class SamlIdpSpConnectionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the saml idp sp connections where companyId = &#63;.
@@ -603,7 +625,18 @@ public class SamlIdpSpConnectionPersistenceImpl
 		"samlIdpSpConnection.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_SSEI;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_SSEI() {
+		return _finderPathFetchByC_SSEI;
+	}
+
 	private FinderPath _finderPathCountByC_SSEI;
+
+	@Override
+	public FinderPath getFinderPathCountByC_SSEI() {
+		return _finderPathCountByC_SSEI;
+	}
 
 	/**
 	 * Returns the saml idp sp connection where companyId = &#63; and samlSpEntityId = &#63; or throws a <code>NoSuchIdpSpConnectionException</code> if it could not be found.

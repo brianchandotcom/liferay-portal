@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.model.Company;
 
@@ -38,6 +39,13 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CompanyUtil} to access the company persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByWebId();
+
+	public FinderPath getFinderPathCountByWebId();
 
 	/**
 	 * Returns the company where webId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
@@ -81,6 +89,10 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 */
 	public int countByWebId(String webId);
 
+	public FinderPath getFinderPathFetchByMx();
+
+	public FinderPath getFinderPathCountByMx();
+
 	/**
 	 * Returns the company where mx = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
 	 *
@@ -122,6 +134,10 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @return the number of matching companies
 	 */
 	public int countByMx(String mx);
+
+	public FinderPath getFinderPathFetchByLogoId();
+
+	public FinderPath getFinderPathCountByLogoId();
 
 	/**
 	 * Returns the company where logoId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.

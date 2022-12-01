@@ -95,10 +95,34 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceShippingMethodId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceShippingMethodId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingMethodId() {
+
+		return _finderPathWithoutPaginationFindByCommerceShippingMethodId;
+	}
+
 	private FinderPath _finderPathCountByCommerceShippingMethodId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceShippingMethodId() {
+		return _finderPathCountByCommerceShippingMethodId;
+	}
 
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
@@ -636,7 +660,20 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		_finderPathWithPaginationFindByCommerceShippingFixedOptionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceShippingFixedOptionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingFixedOptionId() {
+
+		return _finderPathWithoutPaginationFindByCommerceShippingFixedOptionId;
+	}
+
 	private FinderPath _finderPathCountByCommerceShippingFixedOptionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceShippingFixedOptionId() {
+		return _finderPathCountByCommerceShippingFixedOptionId;
+	}
 
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.

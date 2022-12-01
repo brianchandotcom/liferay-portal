@@ -121,6 +121,30 @@ public class RegionLocalizationUtil {
 		return getPersistence().update(regionLocalization, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRegionId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByRegionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRegionId() {
+
+		return getPersistence().getFinderPathCountByRegionId();
+	}
+
 	/**
 	 * Returns all the region localizations where regionId = &#63;.
 	 *
@@ -295,6 +319,18 @@ public class RegionLocalizationUtil {
 	 */
 	public static int countByRegionId(long regionId) {
 		return getPersistence().countByRegionId(regionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByRegionId_LanguageId() {
+
+		return getPersistence().getFinderPathFetchByRegionId_LanguageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRegionId_LanguageId() {
+
+		return getPersistence().getFinderPathCountByRegionId_LanguageId();
 	}
 
 	/**

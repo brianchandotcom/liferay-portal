@@ -94,9 +94,31 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the sharepoint o auth2 token entries where userId = &#63;.
@@ -601,7 +623,18 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		"sharepointOAuth2TokenEntry.userId = ?";
 
 	private FinderPath _finderPathFetchByU_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_C() {
+		return _finderPathFetchByU_C;
+	}
+
 	private FinderPath _finderPathCountByU_C;
+
+	@Override
+	public FinderPath getFinderPathCountByU_C() {
+		return _finderPathCountByU_C;
+	}
 
 	/**
 	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a <code>NoSuch2TokenEntryException</code> if it could not be found.

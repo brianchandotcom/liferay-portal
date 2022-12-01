@@ -97,9 +97,31 @@ public class AccountPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the accounts where userId = &#63;.
@@ -585,7 +607,18 @@ public class AccountPersistenceImpl
 		"account.userId = ?";
 
 	private FinderPath _finderPathFetchByU_A;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_A() {
+		return _finderPathFetchByU_A;
+	}
+
 	private FinderPath _finderPathCountByU_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_A() {
+		return _finderPathCountByU_A;
+	}
 
 	/**
 	 * Returns the account where userId = &#63; and address = &#63; or throws a <code>NoSuchAccountException</code> if it could not be found.

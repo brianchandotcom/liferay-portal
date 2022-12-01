@@ -119,6 +119,31 @@ public class CSDiagramPinUtil {
 		return getPersistence().update(csDiagramPin, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCPDefinitionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCPDefinitionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPDefinitionId() {
+
+		return getPersistence().getFinderPathCountByCPDefinitionId();
+	}
+
 	/**
 	 * Returns all the cs diagram pins where CPDefinitionId = &#63;.
 	 *

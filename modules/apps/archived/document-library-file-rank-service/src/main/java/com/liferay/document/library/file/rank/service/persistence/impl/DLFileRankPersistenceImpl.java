@@ -96,9 +96,31 @@ public class DLFileRankPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the document library file ranks where userId = &#63;.
@@ -586,7 +608,18 @@ public class DLFileRankPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryId() {
+		return _finderPathWithoutPaginationFindByFileEntryId;
+	}
+
 	private FinderPath _finderPathCountByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByFileEntryId() {
+		return _finderPathCountByFileEntryId;
+	}
 
 	/**
 	 * Returns all the document library file ranks where fileEntryId = &#63;.
@@ -1083,7 +1116,18 @@ public class DLFileRankPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U() {
+		return _finderPathWithoutPaginationFindByG_U;
+	}
+
 	private FinderPath _finderPathCountByG_U;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U() {
+		return _finderPathCountByG_U;
+	}
 
 	/**
 	 * Returns all the document library file ranks where groupId = &#63; and userId = &#63;.
@@ -1618,7 +1662,18 @@ public class DLFileRankPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_U_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_A() {
+		return _finderPathWithoutPaginationFindByG_U_A;
+	}
+
 	private FinderPath _finderPathCountByG_U_A;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U_A() {
+		return _finderPathCountByG_U_A;
+	}
 
 	/**
 	 * Returns all the document library file ranks where groupId = &#63; and userId = &#63; and active = &#63;.
@@ -2192,7 +2247,18 @@ public class DLFileRankPersistenceImpl
 		"dlFileRank.active = ?";
 
 	private FinderPath _finderPathFetchByC_U_F;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_U_F() {
+		return _finderPathFetchByC_U_F;
+	}
+
 	private FinderPath _finderPathCountByC_U_F;
+
+	@Override
+	public FinderPath getFinderPathCountByC_U_F() {
+		return _finderPathCountByC_U_F;
+	}
 
 	/**
 	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a <code>NoSuchFileRankException</code> if it could not be found.

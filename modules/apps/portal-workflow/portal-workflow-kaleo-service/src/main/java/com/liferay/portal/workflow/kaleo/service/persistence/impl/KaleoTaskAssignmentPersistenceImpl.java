@@ -102,9 +102,31 @@ public class KaleoTaskAssignmentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo task assignments where companyId = &#63;.
@@ -626,7 +648,20 @@ public class KaleoTaskAssignmentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	}
+
 	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId() {
+		return _finderPathCountByKaleoDefinitionVersionId;
+	}
 
 	/**
 	 * Returns all the kaleo task assignments where kaleoDefinitionVersionId = &#63;.
@@ -1165,7 +1200,18 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK;
 	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK() {
+		return _finderPathWithoutPaginationFindByKCN_KCPK;
+	}
+
 	private FinderPath _finderPathCountByKCN_KCPK;
+
+	@Override
+	public FinderPath getFinderPathCountByKCN_KCPK() {
+		return _finderPathCountByKCN_KCPK;
+	}
 
 	/**
 	 * Returns all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -1770,7 +1816,18 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK_ACN;
 	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK_ACN;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK_ACN() {
+		return _finderPathWithoutPaginationFindByKCN_KCPK_ACN;
+	}
+
 	private FinderPath _finderPathCountByKCN_KCPK_ACN;
+
+	@Override
+	public FinderPath getFinderPathCountByKCN_KCPK_ACN() {
+		return _finderPathCountByKCN_KCPK_ACN;
+	}
 
 	/**
 	 * Returns all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.

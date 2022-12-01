@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException;
 import com.liferay.commerce.product.model.CPOptionCategory;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface CPOptionCategoryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPOptionCategoryUtil} to access the cp option category persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp option categories where uuid = &#63;.
@@ -248,6 +256,10 @@ public interface CPOptionCategoryPersistence
 	 * @return the number of matching cp option categories that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp option categories where uuid = &#63; and companyId = &#63;.
@@ -474,6 +486,10 @@ public interface CPOptionCategoryPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the cp option categories where companyId = &#63;.
 	 *
@@ -681,6 +697,10 @@ public interface CPOptionCategoryPersistence
 	 * @return the number of matching cp option categories that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathFetchByC_K();
+
+	public FinderPath getFinderPathCountByC_K();
 
 	/**
 	 * Returns the cp option category where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPOptionCategoryException</code> if it could not be found.

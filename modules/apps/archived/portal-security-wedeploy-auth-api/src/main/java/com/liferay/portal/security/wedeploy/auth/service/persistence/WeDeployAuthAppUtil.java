@@ -119,6 +119,30 @@ public class WeDeployAuthAppUtil {
 		return getPersistence().update(weDeployAuthApp, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByRU_CI() {
+
+		return getPersistence().getFinderPathFetchByRU_CI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRU_CI() {
+
+		return getPersistence().getFinderPathCountByRU_CI();
+	}
+
 	/**
 	 * Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.
 	 *
@@ -187,6 +211,18 @@ public class WeDeployAuthAppUtil {
 	 */
 	public static int countByRU_CI(String redirectURI, String clientId) {
 		return getPersistence().countByRU_CI(redirectURI, clientId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCI_CS() {
+
+		return getPersistence().getFinderPathFetchByCI_CS();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCI_CS() {
+
+		return getPersistence().getFinderPathCountByCI_CS();
 	}
 
 	/**

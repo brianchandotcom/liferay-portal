@@ -104,9 +104,31 @@ public class KaleoDefinitionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63;.
@@ -620,7 +642,18 @@ public class KaleoDefinitionPersistenceImpl
 		"kaleoDefinition.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_N() {
+		return _finderPathFetchByC_N;
+	}
+
 	private FinderPath _finderPathCountByC_N;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N() {
+		return _finderPathCountByC_N;
+	}
 
 	/**
 	 * Returns the kaleo definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
@@ -899,7 +932,18 @@ public class KaleoDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_S() {
+		return _finderPathWithoutPaginationFindByC_S;
+	}
+
 	private FinderPath _finderPathCountByC_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S() {
+		return _finderPathCountByC_S;
+	}
 
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63; and scope = &#63;.
@@ -1495,7 +1539,18 @@ public class KaleoDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A() {
+		return _finderPathWithoutPaginationFindByC_A;
+	}
+
 	private FinderPath _finderPathCountByC_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A() {
+		return _finderPathCountByC_A;
+	}
 
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63; and active = &#63;.
@@ -2049,7 +2104,18 @@ public class KaleoDefinitionPersistenceImpl
 		"kaleoDefinition.active = ?";
 
 	private FinderPath _finderPathFetchByC_N_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_N_V() {
+		return _finderPathFetchByC_N_V;
+	}
+
 	private FinderPath _finderPathCountByC_N_V;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N_V() {
+		return _finderPathCountByC_N_V;
+	}
 
 	/**
 	 * Returns the kaleo definition where companyId = &#63; and name = &#63; and version = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
@@ -2353,7 +2419,18 @@ public class KaleoDefinitionPersistenceImpl
 		"kaleoDefinition.version = ?";
 
 	private FinderPath _finderPathFetchByC_N_A;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_N_A() {
+		return _finderPathFetchByC_N_A;
+	}
+
 	private FinderPath _finderPathCountByC_N_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N_A() {
+		return _finderPathCountByC_N_A;
+	}
 
 	/**
 	 * Returns the kaleo definition where companyId = &#63; and name = &#63; and active = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
@@ -2658,7 +2735,18 @@ public class KaleoDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_S_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_S_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_S_A() {
+		return _finderPathWithoutPaginationFindByC_S_A;
+	}
+
 	private FinderPath _finderPathCountByC_S_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S_A() {
+		return _finderPathCountByC_S_A;
+	}
 
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63; and scope = &#63; and active = &#63;.

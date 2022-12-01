@@ -109,9 +109,31 @@ public class CPDefinitionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the cp definitions where uuid = &#63;.
@@ -654,7 +676,18 @@ public class CPDefinitionPersistenceImpl
 		"(cpDefinition.uuid IS NULL OR cpDefinition.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the cp definition where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
@@ -918,7 +951,18 @@ public class CPDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the cp definitions where uuid = &#63; and companyId = &#63;.
@@ -1513,7 +1557,18 @@ public class CPDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the cp definitions where groupId = &#63;.
@@ -2020,7 +2075,18 @@ public class CPDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the cp definitions where companyId = &#63;.
@@ -2531,7 +2597,18 @@ public class CPDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCProductId;
 	private FinderPath _finderPathWithoutPaginationFindByCProductId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCProductId() {
+		return _finderPathWithoutPaginationFindByCProductId;
+	}
+
 	private FinderPath _finderPathCountByCProductId;
+
+	@Override
+	public FinderPath getFinderPathCountByCProductId() {
+		return _finderPathCountByCProductId;
+	}
 
 	/**
 	 * Returns all the cp definitions where CProductId = &#63;.
@@ -3043,7 +3120,18 @@ public class CPDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPTaxCategoryId;
 	private FinderPath _finderPathWithoutPaginationFindByCPTaxCategoryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPTaxCategoryId() {
+		return _finderPathWithoutPaginationFindByCPTaxCategoryId;
+	}
+
 	private FinderPath _finderPathCountByCPTaxCategoryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPTaxCategoryId() {
+		return _finderPathCountByCPTaxCategoryId;
+	}
 
 	/**
 	 * Returns all the cp definitions where CPTaxCategoryId = &#63;.
@@ -3563,7 +3651,18 @@ public class CPDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_SE;
 	private FinderPath _finderPathWithoutPaginationFindByG_SE;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_SE() {
+		return _finderPathWithoutPaginationFindByG_SE;
+	}
+
 	private FinderPath _finderPathCountByG_SE;
+
+	@Override
+	public FinderPath getFinderPathCountByG_SE() {
+		return _finderPathCountByG_SE;
+	}
 
 	/**
 	 * Returns all the cp definitions where groupId = &#63; and subscriptionEnabled = &#63;.
@@ -4121,7 +4220,18 @@ public class CPDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_S() {
+		return _finderPathWithoutPaginationFindByG_S;
+	}
+
 	private FinderPath _finderPathCountByG_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S() {
+		return _finderPathCountByG_S;
+	}
 
 	/**
 	 * Returns all the cp definitions where groupId = &#63; and status = &#63;.
@@ -4672,7 +4782,18 @@ public class CPDefinitionPersistenceImpl
 		"cpDefinition.status = ?";
 
 	private FinderPath _finderPathFetchByC_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_V() {
+		return _finderPathFetchByC_V;
+	}
+
 	private FinderPath _finderPathCountByC_V;
+
+	@Override
+	public FinderPath getFinderPathCountByC_V() {
+		return _finderPathCountByC_V;
+	}
 
 	/**
 	 * Returns the cp definition where CProductId = &#63; and version = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
@@ -4922,7 +5043,18 @@ public class CPDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_S() {
+		return _finderPathWithoutPaginationFindByC_S;
+	}
+
 	private FinderPath _finderPathCountByC_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S() {
+		return _finderPathCountByC_S;
+	}
 
 	/**
 	 * Returns all the cp definitions where CProductId = &#63; and status = &#63;.

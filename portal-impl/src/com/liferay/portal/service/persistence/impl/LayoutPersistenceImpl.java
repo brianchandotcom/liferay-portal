@@ -99,9 +99,31 @@ public class LayoutPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the layouts where uuid = &#63;.
@@ -642,7 +664,18 @@ public class LayoutPersistenceImpl
 		"(layout.uuid IS NULL OR layout.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G_P() {
+		return _finderPathFetchByUUID_G_P;
+	}
+
 	private FinderPath _finderPathCountByUUID_G_P;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G_P() {
+		return _finderPathCountByUUID_G_P;
+	}
 
 	/**
 	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -934,7 +967,18 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the layouts where uuid = &#63; and companyId = &#63;.
@@ -1525,7 +1569,18 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the layouts where groupId = &#63;.
@@ -2401,7 +2456,18 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the layouts where companyId = &#63;.
@@ -2907,7 +2973,18 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByParentPlid;
 	private FinderPath _finderPathWithoutPaginationFindByParentPlid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByParentPlid() {
+		return _finderPathWithoutPaginationFindByParentPlid;
+	}
+
 	private FinderPath _finderPathCountByParentPlid;
+
+	@Override
+	public FinderPath getFinderPathCountByParentPlid() {
+		return _finderPathCountByParentPlid;
+	}
 
 	/**
 	 * Returns all the layouts where parentPlid = &#63;.
@@ -3414,7 +3491,18 @@ public class LayoutPersistenceImpl
 		"layout.parentPlid = ? AND layout.system = [$FALSE$]";
 
 	private FinderPath _finderPathFetchByIconImageId;
+
+	@Override
+	public FinderPath getFinderPathFetchByIconImageId() {
+		return _finderPathFetchByIconImageId;
+	}
+
 	private FinderPath _finderPathCountByIconImageId;
+
+	@Override
+	public FinderPath getFinderPathCountByIconImageId() {
+		return _finderPathCountByIconImageId;
+	}
 
 	/**
 	 * Returns the layout where iconImageId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -3642,7 +3730,20 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByLayoutPrototypeUuid;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutPrototypeUuid;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByLayoutPrototypeUuid() {
+
+		return _finderPathWithoutPaginationFindByLayoutPrototypeUuid;
+	}
+
 	private FinderPath _finderPathCountByLayoutPrototypeUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByLayoutPrototypeUuid() {
+		return _finderPathCountByLayoutPrototypeUuid;
+	}
 
 	/**
 	 * Returns all the layouts where layoutPrototypeUuid = &#63;.
@@ -4211,7 +4312,20 @@ public class LayoutPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindBySourcePrototypeLayoutUuid;
 	private FinderPath
 		_finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySourcePrototypeLayoutUuid() {
+
+		return _finderPathWithoutPaginationFindBySourcePrototypeLayoutUuid;
+	}
+
 	private FinderPath _finderPathCountBySourcePrototypeLayoutUuid;
+
+	@Override
+	public FinderPath getFinderPathCountBySourcePrototypeLayoutUuid() {
+		return _finderPathCountBySourcePrototypeLayoutUuid;
+	}
 
 	/**
 	 * Returns all the layouts where sourcePrototypeLayoutUuid = &#63;.
@@ -4795,7 +4909,18 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P() {
+		return _finderPathWithoutPaginationFindByG_P;
+	}
+
 	private FinderPath _finderPathCountByG_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P() {
+		return _finderPathCountByG_P;
+	}
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63;.
@@ -5746,7 +5871,18 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_T() {
+		return _finderPathWithoutPaginationFindByG_T;
+	}
+
 	private FinderPath _finderPathCountByG_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_T() {
+		return _finderPathCountByG_T;
+	}
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and type = &#63;.
@@ -6772,7 +6908,18 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_MLP;
 	private FinderPath _finderPathWithoutPaginationFindByG_MLP;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_MLP() {
+		return _finderPathWithoutPaginationFindByG_MLP;
+	}
+
 	private FinderPath _finderPathCountByG_MLP;
+
+	@Override
+	public FinderPath getFinderPathCountByG_MLP() {
+		return _finderPathCountByG_MLP;
+	}
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and masterLayoutPlid = &#63;.
@@ -7719,7 +7866,18 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_L() {
+		return _finderPathWithoutPaginationFindByC_L;
+	}
+
 	private FinderPath _finderPathCountByC_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_L() {
+		return _finderPathCountByC_L;
+	}
 
 	/**
 	 * Returns all the layouts where companyId = &#63; and layoutPrototypeUuid = &#63;.
@@ -8318,7 +8476,18 @@ public class LayoutPersistenceImpl
 		"(layout.layoutPrototypeUuid IS NULL OR layout.layoutPrototypeUuid = '') AND layout.system = [$FALSE$]";
 
 	private FinderPath _finderPathFetchByP_I;
+
+	@Override
+	public FinderPath getFinderPathFetchByP_I() {
+		return _finderPathFetchByP_I;
+	}
+
 	private FinderPath _finderPathCountByP_I;
+
+	@Override
+	public FinderPath getFinderPathCountByP_I() {
+		return _finderPathCountByP_I;
+	}
 
 	/**
 	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -8570,7 +8739,18 @@ public class LayoutPersistenceImpl
 		"layout.iconImageId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the layout where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -8822,7 +9002,18 @@ public class LayoutPersistenceImpl
 		"layout.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_P_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_P_L() {
+		return _finderPathFetchByG_P_L;
+	}
+
 	private FinderPath _finderPathCountByG_P_L;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_L() {
+		return _finderPathCountByG_P_L;
+	}
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -9085,7 +9276,19 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_P() {
+		return _finderPathWithoutPaginationFindByG_P_P;
+	}
+
 	private FinderPath _finderPathCountByG_P_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_P() {
+		return _finderPathCountByG_P_P;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_P;
 
 	/**
@@ -10747,7 +10950,19 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_T() {
+		return _finderPathWithoutPaginationFindByG_P_T;
+	}
+
 	private FinderPath _finderPathCountByG_P_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_T() {
+		return _finderPathCountByG_P_T;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_T;
 
 	/**
@@ -12483,7 +12698,18 @@ public class LayoutPersistenceImpl
 		"(" + removeConjunction(_FINDER_COLUMN_G_P_T_TYPE_3) + ")";
 
 	private FinderPath _finderPathFetchByG_P_F;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_P_F() {
+		return _finderPathFetchByG_P_F;
+	}
+
 	private FinderPath _finderPathCountByG_P_F;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_F() {
+		return _finderPathCountByG_P_F;
+	}
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -12774,7 +13000,18 @@ public class LayoutPersistenceImpl
 		"(layout.friendlyURL IS NULL OR layout.friendlyURL = '')";
 
 	private FinderPath _finderPathFetchByG_P_SPLU;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_P_SPLU() {
+		return _finderPathFetchByG_P_SPLU;
+	}
+
 	private FinderPath _finderPathCountByG_P_SPLU;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_SPLU() {
+		return _finderPathCountByG_P_SPLU;
+	}
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -13099,7 +13336,19 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_ST;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_ST;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_ST() {
+		return _finderPathWithoutPaginationFindByG_P_ST;
+	}
+
 	private FinderPath _finderPathCountByG_P_ST;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_ST() {
+		return _finderPathCountByG_P_ST;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_ST;
 
 	/**
@@ -14675,7 +14924,19 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_P_H;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_P_H;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_P_H() {
+		return _finderPathWithoutPaginationFindByG_P_P_H;
+	}
+
 	private FinderPath _finderPathCountByG_P_P_H;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_P_H() {
+		return _finderPathCountByG_P_P_H;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_P_H;
 
 	/**
@@ -16450,7 +16711,19 @@ public class LayoutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_P_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_P_S() {
+		return _finderPathWithoutPaginationFindByG_P_P_S;
+	}
+
 	private FinderPath _finderPathCountByG_P_P_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_P_S() {
+		return _finderPathCountByG_P_P_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_P_S;
 
 	/**

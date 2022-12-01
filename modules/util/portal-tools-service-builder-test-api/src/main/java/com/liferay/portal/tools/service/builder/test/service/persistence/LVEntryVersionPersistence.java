@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryVersionException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
@@ -40,6 +41,13 @@ public interface LVEntryVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LVEntryVersionUtil} to access the lv entry version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByLvEntryId();
+
+	public FinderPath getFinderPathCountByLvEntryId();
 
 	/**
 	 * Returns all the lv entry versions where lvEntryId = &#63;.
@@ -184,6 +192,10 @@ public interface LVEntryVersionPersistence
 	 */
 	public int countByLvEntryId(long lvEntryId);
 
+	public FinderPath getFinderPathFetchByLvEntryId_Version();
+
+	public FinderPath getFinderPathCountByLvEntryId_Version();
+
 	/**
 	 * Returns the lv entry version where lvEntryId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface LVEntryVersionPersistence
 	 * @return the number of matching lv entry versions
 	 */
 	public int countByLvEntryId_Version(long lvEntryId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63;.
@@ -376,6 +392,10 @@ public interface LVEntryVersionPersistence
 	 * @return the number of matching lv entry versions
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_Version();
+
+	public FinderPath getFinderPathCountByUuid_Version();
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63; and version = &#63;.
@@ -532,6 +552,10 @@ public interface LVEntryVersionPersistence
 	 */
 	public int countByUuid_Version(String uuid, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns all the lv entry versions where uuid = &#63; and groupId = &#63;.
 	 *
@@ -687,6 +711,10 @@ public interface LVEntryVersionPersistence
 	 */
 	public int countByUUID_G(String uuid, long groupId);
 
+	public FinderPath getFinderPathFetchByUUID_G_Version();
+
+	public FinderPath getFinderPathCountByUUID_G_Version();
+
 	/**
 	 * Returns the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.
 	 *
@@ -744,6 +772,10 @@ public interface LVEntryVersionPersistence
 	 * @return the number of matching lv entry versions
 	 */
 	public int countByUUID_G_Version(String uuid, long groupId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63; and companyId = &#63;.
@@ -899,6 +931,10 @@ public interface LVEntryVersionPersistence
 	 * @return the number of matching lv entry versions
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C_Version();
+
+	public FinderPath getFinderPathCountByUuid_C_Version();
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -1067,6 +1103,10 @@ public interface LVEntryVersionPersistence
 	 */
 	public int countByUuid_C_Version(String uuid, long companyId, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the lv entry versions where groupId = &#63;.
 	 *
@@ -1209,6 +1249,10 @@ public interface LVEntryVersionPersistence
 	 * @return the number of matching lv entry versions
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Version();
+
+	public FinderPath getFinderPathCountByGroupId_Version();
 
 	/**
 	 * Returns all the lv entry versions where groupId = &#63; and version = &#63;.
@@ -1365,6 +1409,10 @@ public interface LVEntryVersionPersistence
 	 */
 	public int countByGroupId_Version(long groupId, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_UGK();
+
+	public FinderPath getFinderPathCountByG_UGK();
+
 	/**
 	 * Returns all the lv entry versions where groupId = &#63; and uniqueGroupKey = &#63;.
 	 *
@@ -1519,6 +1567,10 @@ public interface LVEntryVersionPersistence
 	 * @return the number of matching lv entry versions
 	 */
 	public int countByG_UGK(long groupId, String uniqueGroupKey);
+
+	public FinderPath getFinderPathFetchByG_UGK_Version();
+
+	public FinderPath getFinderPathCountByG_UGK_Version();
 
 	/**
 	 * Returns the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.

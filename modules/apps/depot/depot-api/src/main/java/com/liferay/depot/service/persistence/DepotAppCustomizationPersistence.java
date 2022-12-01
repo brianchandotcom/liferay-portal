@@ -16,6 +16,7 @@ package com.liferay.depot.service.persistence;
 
 import com.liferay.depot.exception.NoSuchAppCustomizationException;
 import com.liferay.depot.model.DepotAppCustomization;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface DepotAppCustomizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DepotAppCustomizationUtil} to access the depot app customization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByDepotEntryId();
+
+	public FinderPath getFinderPathCountByDepotEntryId();
 
 	/**
 	 * Returns all the depot app customizations where depotEntryId = &#63;.
@@ -185,6 +193,10 @@ public interface DepotAppCustomizationPersistence
 	 */
 	public int countByDepotEntryId(long depotEntryId);
 
+	public FinderPath getFinderPathFetchByD_E();
+
+	public FinderPath getFinderPathCountByD_E();
+
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface DepotAppCustomizationPersistence
 	 * @return the number of matching depot app customizations
 	 */
 	public int countByD_E(long depotEntryId, boolean enabled);
+
+	public FinderPath getFinderPathFetchByD_P();
+
+	public FinderPath getFinderPathCountByD_P();
 
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and portletId = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.

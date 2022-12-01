@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
@@ -42,6 +43,13 @@ public interface KaleoNotificationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNotificationUtil} to access the kaleo notification persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo notifications where companyId = &#63;.
@@ -186,6 +194,11 @@ public interface KaleoNotificationPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId();
+
 	/**
 	 * Returns all the kaleo notifications where kaleoDefinitionVersionId = &#63;.
 	 *
@@ -329,6 +342,10 @@ public interface KaleoNotificationPersistence
 	 * @return the number of matching kaleo notifications
 	 */
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK();
+
+	public FinderPath getFinderPathCountByKCN_KCPK();
 
 	/**
 	 * Returns all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -484,6 +501,10 @@ public interface KaleoNotificationPersistence
 	 * @return the number of matching kaleo notifications
 	 */
 	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK_ET();
+
+	public FinderPath getFinderPathCountByKCN_KCPK_ET();
 
 	/**
 	 * Returns all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.

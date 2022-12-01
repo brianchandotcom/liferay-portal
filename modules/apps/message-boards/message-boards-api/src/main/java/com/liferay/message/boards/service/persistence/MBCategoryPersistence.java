@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.persistence;
 
 import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.model.MBCategory;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface MBCategoryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBCategoryUtil} to access the message boards category persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the message boards categories where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface MBCategoryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the message boards category where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface MBCategoryPersistence
 	 * @return the number of matching message boards categories
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the message boards categories where uuid = &#63; and companyId = &#63;.
@@ -388,6 +404,10 @@ public interface MBCategoryPersistence
 	 * @return the number of matching message boards categories
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the message boards categories where groupId = &#63;.
@@ -596,6 +616,10 @@ public interface MBCategoryPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the message boards categories where companyId = &#63;.
 	 *
@@ -738,6 +762,10 @@ public interface MBCategoryPersistence
 	 * @return the number of matching message boards categories
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P();
+
+	public FinderPath getFinderPathCountByG_P();
 
 	/**
 	 * Returns all the message boards categories where groupId = &#63; and parentCategoryId = &#63;.
@@ -1097,6 +1125,10 @@ public interface MBCategoryPersistence
 	 */
 	public int filterCountByG_P(long groupId, long[] parentCategoryIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
+
 	/**
 	 * Returns all the message boards categories where groupId = &#63; and status = &#63;.
 	 *
@@ -1319,6 +1351,10 @@ public interface MBCategoryPersistence
 	 * @return the number of matching message boards categories that the user has permission to view
 	 */
 	public int filterCountByG_S(long groupId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
 
 	/**
 	 * Returns all the message boards categories where companyId = &#63; and status = &#63;.
@@ -1837,6 +1873,10 @@ public interface MBCategoryPersistence
 	 */
 	public int filterCountByNotC_G_P(
 		long[] categoryIds, long groupId, long[] parentCategoryIds);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_S();
+
+	public FinderPath getFinderPathCountByG_P_S();
 
 	/**
 	 * Returns all the message boards categories where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.

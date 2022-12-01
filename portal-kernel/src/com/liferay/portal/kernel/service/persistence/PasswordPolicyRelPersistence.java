@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.kernel.model.PasswordPolicyRel;
 
@@ -39,6 +40,13 @@ public interface PasswordPolicyRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyRelUtil} to access the password policy rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByPasswordPolicyId();
+
+	public FinderPath getFinderPathCountByPasswordPolicyId();
 
 	/**
 	 * Returns all the password policy rels where passwordPolicyId = &#63;.
@@ -183,6 +191,10 @@ public interface PasswordPolicyRelPersistence
 	 * @return the number of matching password policy rels
 	 */
 	public int countByPasswordPolicyId(long passwordPolicyId);
+
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns the password policy rel where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPasswordPolicyRelException</code> if it could not be found.

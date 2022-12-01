@@ -16,6 +16,7 @@ package com.liferay.fragment.service.persistence;
 
 import com.liferay.fragment.exception.NoSuchCompositionException;
 import com.liferay.fragment.model.FragmentComposition;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface FragmentCompositionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentCompositionUtil} to access the fragment composition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the fragment compositions where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface FragmentCompositionPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the fragment composition where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCompositionException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface FragmentCompositionPersistence
 	 * @return the number of matching fragment compositions
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the fragment compositions where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface FragmentCompositionPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the fragment compositions where groupId = &#63;.
 	 *
@@ -533,6 +553,11 @@ public interface FragmentCompositionPersistence
 	 * @return the number of matching fragment compositions
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFragmentCollectionId();
+
+	public FinderPath getFinderPathCountByFragmentCollectionId();
 
 	/**
 	 * Returns all the fragment compositions where fragmentCollectionId = &#63;.
@@ -677,6 +702,10 @@ public interface FragmentCompositionPersistence
 	 * @return the number of matching fragment compositions
 	 */
 	public int countByFragmentCollectionId(long fragmentCollectionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI();
+
+	public FinderPath getFinderPathCountByG_FCI();
 
 	/**
 	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63;.
@@ -832,6 +861,10 @@ public interface FragmentCompositionPersistence
 	 * @return the number of matching fragment compositions
 	 */
 	public int countByG_FCI(long groupId, long fragmentCollectionId);
+
+	public FinderPath getFinderPathFetchByG_FCK();
+
+	public FinderPath getFinderPathCountByG_FCK();
 
 	/**
 	 * Returns the fragment composition where groupId = &#63; and fragmentCompositionKey = &#63; or throws a <code>NoSuchCompositionException</code> if it could not be found.
@@ -1057,6 +1090,10 @@ public interface FragmentCompositionPersistence
 	 */
 	public int countByG_FCI_LikeN(
 		long groupId, long fragmentCollectionId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_S();
+
+	public FinderPath getFinderPathCountByG_FCI_S();
 
 	/**
 	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.

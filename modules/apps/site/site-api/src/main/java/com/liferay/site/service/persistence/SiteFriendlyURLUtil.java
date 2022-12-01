@@ -119,6 +119,30 @@ public class SiteFriendlyURLUtil {
 		return getPersistence().update(siteFriendlyURL, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the site friendly urls where uuid = &#63;.
 	 *
@@ -283,6 +307,18 @@ public class SiteFriendlyURLUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the site friendly url where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.
 	 *
@@ -344,6 +380,18 @@ public class SiteFriendlyURLUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -532,6 +580,18 @@ public class SiteFriendlyURLUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C() {
+
+		return getPersistence().getFinderPathCountByG_C();
+	}
+
 	/**
 	 * Returns all the site friendly urls where groupId = &#63; and companyId = &#63;.
 	 *
@@ -718,6 +778,18 @@ public class SiteFriendlyURLUtil {
 		return getPersistence().countByG_C(groupId, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_F() {
+
+		return getPersistence().getFinderPathFetchByC_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_F() {
+
+		return getPersistence().getFinderPathCountByC_F();
+	}
+
 	/**
 	 * Returns the site friendly url where companyId = &#63; and friendlyURL = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.
 	 *
@@ -783,6 +855,18 @@ public class SiteFriendlyURLUtil {
 	 */
 	public static int countByC_F(long companyId, String friendlyURL) {
 		return getPersistence().countByC_F(companyId, friendlyURL);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_C_L() {
+
+		return getPersistence().getFinderPathFetchByG_C_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_L() {
+
+		return getPersistence().getFinderPathCountByG_C_L();
 	}
 
 	/**
@@ -859,6 +943,18 @@ public class SiteFriendlyURLUtil {
 		long groupId, long companyId, String languageId) {
 
 		return getPersistence().countByG_C_L(groupId, companyId, languageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_F_L() {
+
+		return getPersistence().getFinderPathFetchByC_F_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_F_L() {
+
+		return getPersistence().getFinderPathCountByC_F_L();
 	}
 
 	/**

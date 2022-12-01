@@ -120,6 +120,18 @@ public class SamlSpMessageUtil {
 		return getPersistence().update(samlSpMessage, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
 	/**
 	 * Returns all the saml sp messages where expirationDate &lt; &#63;.
 	 *
@@ -294,6 +306,18 @@ public class SamlSpMessageUtil {
 	 */
 	public static int countByLtExpirationDate(Date expirationDate) {
 		return getPersistence().countByLtExpirationDate(expirationDate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchBySIEI_SIRK() {
+
+		return getPersistence().getFinderPathFetchBySIEI_SIRK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySIEI_SIRK() {
+
+		return getPersistence().getFinderPathCountBySIEI_SIRK();
 	}
 
 	/**

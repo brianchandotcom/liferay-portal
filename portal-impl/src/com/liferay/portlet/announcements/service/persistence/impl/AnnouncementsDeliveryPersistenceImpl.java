@@ -84,9 +84,31 @@ public class AnnouncementsDeliveryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the announcements deliveries where companyId = &#63;.
@@ -593,7 +615,18 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the announcements deliveries where userId = &#63;.
@@ -1095,7 +1128,18 @@ public class AnnouncementsDeliveryPersistenceImpl
 		"announcementsDelivery.userId = ?";
 
 	private FinderPath _finderPathFetchByU_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_T() {
+		return _finderPathFetchByU_T;
+	}
+
 	private FinderPath _finderPathCountByU_T;
+
+	@Override
+	public FinderPath getFinderPathCountByU_T() {
+		return _finderPathCountByU_T;
+	}
 
 	/**
 	 * Returns the announcements delivery where userId = &#63; and type = &#63; or throws a <code>NoSuchDeliveryException</code> if it could not be found.

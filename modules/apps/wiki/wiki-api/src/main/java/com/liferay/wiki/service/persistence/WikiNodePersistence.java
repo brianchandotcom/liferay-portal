@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
@@ -39,6 +40,13 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiNodeUtil} to access the wiki node persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the wiki nodes where uuid = &#63;.
@@ -182,6 +190,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the wiki node where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchNodeException</code> if it could not be found.
 	 *
@@ -231,6 +243,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the number of matching wiki nodes
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the wiki nodes where uuid = &#63; and companyId = &#63;.
@@ -385,6 +401,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the number of matching wiki nodes
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the wiki nodes where groupId = &#63;.
@@ -593,6 +613,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the wiki nodes where companyId = &#63;.
 	 *
@@ -736,6 +760,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchByG_N();
+
+	public FinderPath getFinderPathCountByG_N();
+
 	/**
 	 * Returns the wiki node where groupId = &#63; and name = &#63; or throws a <code>NoSuchNodeException</code> if it could not be found.
 	 *
@@ -785,6 +813,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the number of matching wiki nodes
 	 */
 	public int countByG_N(long groupId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
 
 	/**
 	 * Returns all the wiki nodes where groupId = &#63; and status = &#63;.
@@ -1009,6 +1041,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public int filterCountByG_S(long groupId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
+
 	/**
 	 * Returns all the wiki nodes where companyId = &#63; and status = &#63;.
 	 *
@@ -1162,6 +1198,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the number of matching wiki nodes
 	 */
 	public int countByC_S(long companyId, int status);
+
+	public FinderPath getFinderPathFetchByERC_G();
+
+	public FinderPath getFinderPathCountByERC_G();
 
 	/**
 	 * Returns the wiki node where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchNodeException</code> if it could not be found.

@@ -122,6 +122,31 @@ public class VersionedEntryVersionUtil {
 		return getPersistence().update(versionedEntryVersion, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByVersionedEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByVersionedEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByVersionedEntryId() {
+
+		return getPersistence().getFinderPathCountByVersionedEntryId();
+	}
+
 	/**
 	 * Returns all the versioned entry versions where versionedEntryId = &#63;.
 	 *
@@ -301,6 +326,18 @@ public class VersionedEntryVersionUtil {
 		return getPersistence().countByVersionedEntryId(versionedEntryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByVersionedEntryId_Version() {
+
+		return getPersistence().getFinderPathFetchByVersionedEntryId_Version();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByVersionedEntryId_Version() {
+
+		return getPersistence().getFinderPathCountByVersionedEntryId_Version();
+	}
+
 	/**
 	 * Returns the versioned entry version where versionedEntryId = &#63; and version = &#63; or throws a <code>NoSuchVersionedEntryVersionException</code> if it could not be found.
 	 *
@@ -375,6 +412,18 @@ public class VersionedEntryVersionUtil {
 
 		return getPersistence().countByVersionedEntryId_Version(
 			versionedEntryId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
 	}
 
 	/**
@@ -548,6 +597,19 @@ public class VersionedEntryVersionUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId_Version() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByGroupId_Version();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId_Version() {
+
+		return getPersistence().getFinderPathCountByGroupId_Version();
 	}
 
 	/**

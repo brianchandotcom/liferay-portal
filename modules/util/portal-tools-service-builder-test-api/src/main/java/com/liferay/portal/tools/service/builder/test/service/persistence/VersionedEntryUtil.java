@@ -119,6 +119,30 @@ public class VersionedEntryUtil {
 		return getPersistence().update(versionedEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the versioned entries where groupId = &#63;.
 	 *
@@ -286,6 +310,19 @@ public class VersionedEntryUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId_Head() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByGroupId_Head();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId_Head() {
+
+		return getPersistence().getFinderPathCountByGroupId_Head();
 	}
 
 	/**
@@ -475,6 +512,18 @@ public class VersionedEntryUtil {
 	 */
 	public static int countByGroupId_Head(long groupId, boolean head) {
 		return getPersistence().countByGroupId_Head(groupId, head);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByHeadId() {
+
+		return getPersistence().getFinderPathFetchByHeadId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByHeadId() {
+
+		return getPersistence().getFinderPathCountByHeadId();
 	}
 
 	/**

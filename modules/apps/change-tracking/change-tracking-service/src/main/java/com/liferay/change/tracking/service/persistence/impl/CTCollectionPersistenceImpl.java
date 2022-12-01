@@ -97,9 +97,31 @@ public class CTCollectionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the ct collections where companyId = &#63;.
@@ -973,7 +995,18 @@ public class CTCollectionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySchemaVersionId;
 	private FinderPath _finderPathWithoutPaginationFindBySchemaVersionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySchemaVersionId() {
+		return _finderPathWithoutPaginationFindBySchemaVersionId;
+	}
+
 	private FinderPath _finderPathCountBySchemaVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountBySchemaVersionId() {
+		return _finderPathCountBySchemaVersionId;
+	}
 
 	/**
 	 * Returns all the ct collections where schemaVersionId = &#63;.
@@ -1861,7 +1894,19 @@ public class CTCollectionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_S() {
+		return _finderPathWithoutPaginationFindByC_S;
+	}
+
 	private FinderPath _finderPathCountByC_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S() {
+		return _finderPathCountByC_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByC_S;
 
 	/**

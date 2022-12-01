@@ -16,6 +16,7 @@ package com.liferay.commerce.service.persistence;
 
 import com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CPDefinitionInventoryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionInventoryUtil} to access the cp definition inventory persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp definition inventories where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface CPDefinitionInventoryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the cp definition inventory where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionInventoryException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface CPDefinitionInventoryPersistence
 	 * @return the number of matching cp definition inventories
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp definition inventories where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface CPDefinitionInventoryPersistence
 	 * @return the number of matching cp definition inventories
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathFetchByCPDefinitionId();
+
+	public FinderPath getFinderPathCountByCPDefinitionId();
 
 	/**
 	 * Returns the cp definition inventory where CPDefinitionId = &#63; or throws a <code>NoSuchCPDefinitionInventoryException</code> if it could not be found.

@@ -129,6 +129,30 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 			workflowMetricsSLADefinitionVersion, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the workflow metrics sla definition versions where uuid = &#63;.
 	 *
@@ -309,6 +333,18 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSLADefinitionVersionException</code> if it could not be found.
 	 *
@@ -376,6 +412,18 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -575,6 +623,20 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByWorkflowMetricsSLADefinitionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByWorkflowMetricsSLADefinitionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByWorkflowMetricsSLADefinitionId() {
+
+		return getPersistence().
+			getFinderPathCountByWorkflowMetricsSLADefinitionId();
 	}
 
 	/**
@@ -781,6 +843,18 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 
 		return getPersistence().countByWorkflowMetricsSLADefinitionId(
 			workflowMetricsSLADefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByV_WMSLAD() {
+
+		return getPersistence().getFinderPathFetchByV_WMSLAD();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByV_WMSLAD() {
+
+		return getPersistence().getFinderPathCountByV_WMSLAD();
 	}
 
 	/**

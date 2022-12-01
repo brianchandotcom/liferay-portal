@@ -16,6 +16,7 @@ package com.liferay.expando.kernel.service.persistence;
 
 import com.liferay.expando.kernel.exception.NoSuchValueException;
 import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface ExpandoValuePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoValueUtil} to access the expando value persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByTableId();
+
+	public FinderPath getFinderPathCountByTableId();
 
 	/**
 	 * Returns all the expando values where tableId = &#63;.
@@ -185,6 +193,10 @@ public interface ExpandoValuePersistence
 	 */
 	public int countByTableId(long tableId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByColumnId();
+
+	public FinderPath getFinderPathCountByColumnId();
+
 	/**
 	 * Returns all the expando values where columnId = &#63;.
 	 *
@@ -328,6 +340,10 @@ public interface ExpandoValuePersistence
 	 */
 	public int countByColumnId(long columnId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByRowId();
+
+	public FinderPath getFinderPathCountByRowId();
+
 	/**
 	 * Returns all the expando values where rowId = &#63;.
 	 *
@@ -470,6 +486,10 @@ public interface ExpandoValuePersistence
 	 * @return the number of matching expando values
 	 */
 	public int countByRowId(long rowId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByT_C();
+
+	public FinderPath getFinderPathCountByT_C();
 
 	/**
 	 * Returns all the expando values where tableId = &#63; and columnId = &#63;.
@@ -625,6 +645,10 @@ public interface ExpandoValuePersistence
 	 */
 	public int countByT_C(long tableId, long columnId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByT_R();
+
+	public FinderPath getFinderPathCountByT_R();
+
 	/**
 	 * Returns all the expando values where tableId = &#63; and rowId = &#63;.
 	 *
@@ -778,6 +802,10 @@ public interface ExpandoValuePersistence
 	 * @return the number of matching expando values
 	 */
 	public int countByT_R(long tableId, long rowId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByT_CPK();
+
+	public FinderPath getFinderPathCountByT_CPK();
 
 	/**
 	 * Returns all the expando values where tableId = &#63; and classPK = &#63;.
@@ -933,6 +961,10 @@ public interface ExpandoValuePersistence
 	 */
 	public int countByT_CPK(long tableId, long classPK);
 
+	public FinderPath getFinderPathFetchByC_R();
+
+	public FinderPath getFinderPathCountByC_R();
+
 	/**
 	 * Returns the expando value where columnId = &#63; and rowId = &#63; or throws a <code>NoSuchValueException</code> if it could not be found.
 	 *
@@ -982,6 +1014,10 @@ public interface ExpandoValuePersistence
 	 * @return the number of matching expando values
 	 */
 	public int countByC_R(long columnId, long rowId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the expando values where classNameId = &#63; and classPK = &#63;.
@@ -1138,6 +1174,10 @@ public interface ExpandoValuePersistence
 	 */
 	public int countByC_C(long classNameId, long classPK);
 
+	public FinderPath getFinderPathFetchByT_C_C();
+
+	public FinderPath getFinderPathCountByT_C_C();
+
 	/**
 	 * Returns the expando value where tableId = &#63; and columnId = &#63; and classPK = &#63; or throws a <code>NoSuchValueException</code> if it could not be found.
 	 *
@@ -1192,6 +1232,10 @@ public interface ExpandoValuePersistence
 	 * @return the number of matching expando values
 	 */
 	public int countByT_C_C(long tableId, long columnId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByT_C_D();
+
+	public FinderPath getFinderPathCountByT_C_D();
 
 	/**
 	 * Returns all the expando values where tableId = &#63; and columnId = &#63; and data = &#63;.

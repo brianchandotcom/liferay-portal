@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence;
 
 import com.liferay.change.tracking.exception.NoSuchAutoResolutionInfoException;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CTAutoResolutionInfoPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTAutoResolutionInfoUtil} to access the ct auto resolution info persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId();
+
+	public FinderPath getFinderPathCountByCtCollectionId();
 
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63;.
@@ -184,6 +192,10 @@ public interface CTAutoResolutionInfoPersistence
 	 * @return the number of matching ct auto resolution infos
 	 */
 	public int countByCtCollectionId(long ctCollectionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_MCNI_SMCPK();
+
+	public FinderPath getFinderPathCountByC_MCNI_SMCPK();
 
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.

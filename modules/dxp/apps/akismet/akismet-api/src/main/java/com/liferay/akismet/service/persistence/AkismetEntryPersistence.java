@@ -16,6 +16,7 @@ package com.liferay.akismet.service.persistence;
 
 import com.liferay.akismet.exception.NoSuchAkismetEntryException;
 import com.liferay.akismet.model.AkismetEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
@@ -41,6 +42,9 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AkismetEntryUtil} to access the akismet entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Returns all the akismet entries where modifiedDate &lt; &#63;.
@@ -184,6 +188,10 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 	 * @return the number of matching akismet entries
 	 */
 	public int countByLtModifiedDate(Date modifiedDate);
+
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchAkismetEntryException</code> if it could not be found.

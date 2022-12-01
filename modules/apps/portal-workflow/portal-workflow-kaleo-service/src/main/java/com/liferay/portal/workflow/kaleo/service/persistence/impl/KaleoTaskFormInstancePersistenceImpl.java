@@ -102,9 +102,31 @@ public class KaleoTaskFormInstancePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo task form instances where companyId = &#63;.
@@ -626,7 +648,20 @@ public class KaleoTaskFormInstancePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	}
+
 	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId() {
+		return _finderPathCountByKaleoDefinitionVersionId;
+	}
 
 	/**
 	 * Returns all the kaleo task form instances where kaleoDefinitionVersionId = &#63;.
@@ -1166,7 +1201,18 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKaleoInstanceId;
 	private FinderPath _finderPathWithoutPaginationFindByKaleoInstanceId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoInstanceId() {
+		return _finderPathWithoutPaginationFindByKaleoInstanceId;
+	}
+
 	private FinderPath _finderPathCountByKaleoInstanceId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoInstanceId() {
+		return _finderPathCountByKaleoInstanceId;
+	}
 
 	/**
 	 * Returns all the kaleo task form instances where kaleoInstanceId = &#63;.
@@ -1694,7 +1740,18 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKaleoTaskId;
 	private FinderPath _finderPathWithoutPaginationFindByKaleoTaskId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoTaskId() {
+		return _finderPathWithoutPaginationFindByKaleoTaskId;
+	}
+
 	private FinderPath _finderPathCountByKaleoTaskId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoTaskId() {
+		return _finderPathCountByKaleoTaskId;
+	}
 
 	/**
 	 * Returns all the kaleo task form instances where kaleoTaskId = &#63;.
@@ -2217,7 +2274,20 @@ public class KaleoTaskFormInstancePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoTaskInstanceTokenId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoTaskInstanceTokenId() {
+
+		return _finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId;
+	}
+
 	private FinderPath _finderPathCountByKaleoTaskInstanceTokenId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoTaskInstanceTokenId() {
+		return _finderPathCountByKaleoTaskInstanceTokenId;
+	}
 
 	/**
 	 * Returns all the kaleo task form instances where kaleoTaskInstanceTokenId = &#63;.
@@ -2756,7 +2826,18 @@ public class KaleoTaskFormInstancePersistenceImpl
 			"kaleoTaskFormInstance.kaleoTaskInstanceTokenId = ?";
 
 	private FinderPath _finderPathFetchByKaleoTaskFormId;
+
+	@Override
+	public FinderPath getFinderPathFetchByKaleoTaskFormId() {
+		return _finderPathFetchByKaleoTaskFormId;
+	}
+
 	private FinderPath _finderPathCountByKaleoTaskFormId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoTaskFormId() {
+		return _finderPathCountByKaleoTaskFormId;
+	}
 
 	/**
 	 * Returns the kaleo task form instance where kaleoTaskFormId = &#63; or throws a <code>NoSuchTaskFormInstanceException</code> if it could not be found.

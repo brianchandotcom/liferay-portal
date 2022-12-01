@@ -119,6 +119,30 @@ public class KaleoDefinitionUtil {
 		return getPersistence().update(kaleoDefinition, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63;.
 	 *
@@ -293,6 +317,18 @@ public class KaleoDefinitionUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_N() {
+
+		return getPersistence().getFinderPathFetchByC_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_N() {
+
+		return getPersistence().getFinderPathCountByC_N();
+	}
+
 	/**
 	 * Returns the kaleo definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
 	 *
@@ -356,6 +392,18 @@ public class KaleoDefinitionUtil {
 	 */
 	public static int countByC_N(long companyId, String name) {
 		return getPersistence().countByC_N(companyId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_S() {
+
+		return getPersistence().getFinderPathCountByC_S();
 	}
 
 	/**
@@ -547,6 +595,18 @@ public class KaleoDefinitionUtil {
 		return getPersistence().countByC_S(companyId, scope);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A() {
+
+		return getPersistence().getFinderPathCountByC_A();
+	}
+
 	/**
 	 * Returns all the kaleo definitions where companyId = &#63; and active = &#63;.
 	 *
@@ -736,6 +796,18 @@ public class KaleoDefinitionUtil {
 		return getPersistence().countByC_A(companyId, active);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_N_V() {
+
+		return getPersistence().getFinderPathFetchByC_N_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_N_V() {
+
+		return getPersistence().getFinderPathCountByC_N_V();
+	}
+
 	/**
 	 * Returns the kaleo definition where companyId = &#63; and name = &#63; and version = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
 	 *
@@ -809,6 +881,18 @@ public class KaleoDefinitionUtil {
 	 */
 	public static int countByC_N_V(long companyId, String name, int version) {
 		return getPersistence().countByC_N_V(companyId, name, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_N_A() {
+
+		return getPersistence().getFinderPathFetchByC_N_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_N_A() {
+
+		return getPersistence().getFinderPathCountByC_N_A();
 	}
 
 	/**
@@ -886,6 +970,18 @@ public class KaleoDefinitionUtil {
 		long companyId, String name, boolean active) {
 
 		return getPersistence().countByC_N_A(companyId, name, active);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_S_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_S_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_S_A() {
+
+		return getPersistence().getFinderPathCountByC_S_A();
 	}
 
 	/**

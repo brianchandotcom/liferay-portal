@@ -91,9 +91,31 @@ public class KaleoProcessLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByKaleoProcessId;
 	private FinderPath _finderPathWithoutPaginationFindByKaleoProcessId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoProcessId() {
+		return _finderPathWithoutPaginationFindByKaleoProcessId;
+	}
+
 	private FinderPath _finderPathCountByKaleoProcessId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoProcessId() {
+		return _finderPathCountByKaleoProcessId;
+	}
 
 	/**
 	 * Returns all the kaleo process links where kaleoProcessId = &#63;.
@@ -601,7 +623,18 @@ public class KaleoProcessLinkPersistenceImpl
 		"kaleoProcessLink.kaleoProcessId = ?";
 
 	private FinderPath _finderPathFetchByKPI_WTN;
+
+	@Override
+	public FinderPath getFinderPathFetchByKPI_WTN() {
+		return _finderPathFetchByKPI_WTN;
+	}
+
 	private FinderPath _finderPathCountByKPI_WTN;
+
+	@Override
+	public FinderPath getFinderPathCountByKPI_WTN() {
+		return _finderPathCountByKPI_WTN;
+	}
 
 	/**
 	 * Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or throws a <code>NoSuchKaleoProcessLinkException</code> if it could not be found.

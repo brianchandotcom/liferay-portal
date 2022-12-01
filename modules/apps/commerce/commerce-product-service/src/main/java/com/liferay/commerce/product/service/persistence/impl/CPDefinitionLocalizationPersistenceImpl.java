@@ -105,9 +105,31 @@ public class CPDefinitionLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId() {
+		return _finderPathWithoutPaginationFindByCPDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDefinitionId() {
+		return _finderPathCountByCPDefinitionId;
+	}
 
 	/**
 	 * Returns all the cp definition localizations where CPDefinitionId = &#63;.
@@ -634,7 +656,18 @@ public class CPDefinitionLocalizationPersistenceImpl
 		"cpDefinitionLocalization.CPDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByCPDefinitionId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathFetchByCPDefinitionId_LanguageId() {
+		return _finderPathFetchByCPDefinitionId_LanguageId;
+	}
+
 	private FinderPath _finderPathCountByCPDefinitionId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDefinitionId_LanguageId() {
+		return _finderPathCountByCPDefinitionId_LanguageId;
+	}
 
 	/**
 	 * Returns the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; or throws a <code>NoSuchCPDefinitionLocalizationException</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.layout.service.persistence;
 
 import com.liferay.layout.exception.NoSuchLayoutClassedModelUsageException;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface LayoutClassedModelUsagePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutClassedModelUsageUtil} to access the layout classed model usage persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout classed model usages where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface LayoutClassedModelUsagePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the layout classed model usage where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the number of matching layout classed model usages
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout classed model usages where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface LayoutClassedModelUsagePersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByPlid();
+
+	public FinderPath getFinderPathCountByPlid();
+
 	/**
 	 * Returns all the layout classed model usages where plid = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the number of matching layout classed model usages
 	 */
 	public int countByPlid(long plid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK();
+
+	public FinderPath getFinderPathCountByCN_CPK();
 
 	/**
 	 * Returns all the layout classed model usages where classNameId = &#63; and classPK = &#63;.
@@ -688,6 +712,10 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the number of matching layout classed model usages
 	 */
 	public int countByCN_CPK(long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_CN_CT();
+
+	public FinderPath getFinderPathCountByC_CN_CT();
 
 	/**
 	 * Returns all the layout classed model usages where companyId = &#63; and classNameId = &#63; and containerType = &#63;.
@@ -861,6 +889,10 @@ public interface LayoutClassedModelUsagePersistence
 	public int countByC_CN_CT(
 		long companyId, long classNameId, long containerType);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK_T();
+
+	public FinderPath getFinderPathCountByCN_CPK_T();
+
 	/**
 	 * Returns all the layout classed model usages where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
@@ -1027,6 +1059,10 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the number of matching layout classed model usages
 	 */
 	public int countByCN_CPK_T(long classNameId, long classPK, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCK_CT_P();
+
+	public FinderPath getFinderPathCountByCK_CT_P();
 
 	/**
 	 * Returns all the layout classed model usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
@@ -1196,6 +1232,10 @@ public interface LayoutClassedModelUsagePersistence
 	 */
 	public int countByCK_CT_P(
 		String containerKey, long containerType, long plid);
+
+	public FinderPath getFinderPathFetchByCN_CPK_CK_CT_P();
+
+	public FinderPath getFinderPathCountByCN_CPK_CK_CT_P();
 
 	/**
 	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.

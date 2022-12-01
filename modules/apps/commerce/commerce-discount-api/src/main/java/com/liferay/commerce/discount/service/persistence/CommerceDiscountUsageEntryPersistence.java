@@ -16,6 +16,7 @@ package com.liferay.commerce.discount.service.persistence;
 
 import com.liferay.commerce.discount.exception.NoSuchDiscountUsageEntryException;
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceDiscountUsageEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountUsageEntryUtil} to access the commerce discount usage entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId();
+
+	public FinderPath getFinderPathCountByCommerceDiscountId();
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceDiscountId = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the number of matching commerce discount usage entries
 	 */
 	public int countByCommerceDiscountId(long commerceDiscountId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCAI_CDI();
+
+	public FinderPath getFinderPathCountByCAI_CDI();
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
@@ -342,6 +354,10 @@ public interface CommerceDiscountUsageEntryPersistence
 	 */
 	public int countByCAI_CDI(long commerceAccountId, long commerceDiscountId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCOI_CDI();
+
+	public FinderPath getFinderPathCountByCOI_CDI();
+
 	/**
 	 * Returns all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
 	 *
@@ -497,6 +513,10 @@ public interface CommerceDiscountUsageEntryPersistence
 	 * @return the number of matching commerce discount usage entries
 	 */
 	public int countByCOI_CDI(long commerceOrderId, long commerceDiscountId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCAI_COI_CDI();
+
+	public FinderPath getFinderPathCountByCAI_COI_CDI();
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.

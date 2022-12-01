@@ -106,9 +106,31 @@ public class MBSuspiciousActivityPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the message boards suspicious activities where uuid = &#63;.
@@ -663,7 +685,18 @@ public class MBSuspiciousActivityPersistenceImpl
 		"(mbSuspiciousActivity.uuid IS NULL OR mbSuspiciousActivity.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the message boards suspicious activity where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
@@ -929,7 +962,18 @@ public class MBSuspiciousActivityPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
@@ -1530,7 +1574,18 @@ public class MBSuspiciousActivityPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByMessageId;
 	private FinderPath _finderPathWithoutPaginationFindByMessageId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByMessageId() {
+		return _finderPathWithoutPaginationFindByMessageId;
+	}
+
 	private FinderPath _finderPathCountByMessageId;
+
+	@Override
+	public FinderPath getFinderPathCountByMessageId() {
+		return _finderPathCountByMessageId;
+	}
 
 	/**
 	 * Returns all the message boards suspicious activities where messageId = &#63;.
@@ -2051,7 +2106,18 @@ public class MBSuspiciousActivityPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByThreadId;
 	private FinderPath _finderPathWithoutPaginationFindByThreadId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByThreadId() {
+		return _finderPathWithoutPaginationFindByThreadId;
+	}
+
 	private FinderPath _finderPathCountByThreadId;
+
+	@Override
+	public FinderPath getFinderPathCountByThreadId() {
+		return _finderPathCountByThreadId;
+	}
 
 	/**
 	 * Returns all the message boards suspicious activities where threadId = &#63;.
@@ -2569,7 +2635,18 @@ public class MBSuspiciousActivityPersistenceImpl
 		"mbSuspiciousActivity.threadId = ?";
 
 	private FinderPath _finderPathFetchByU_M;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_M() {
+		return _finderPathFetchByU_M;
+	}
+
 	private FinderPath _finderPathCountByU_M;
+
+	@Override
+	public FinderPath getFinderPathCountByU_M() {
+		return _finderPathCountByU_M;
+	}
 
 	/**
 	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
@@ -2821,7 +2898,18 @@ public class MBSuspiciousActivityPersistenceImpl
 		"mbSuspiciousActivity.messageId = ?";
 
 	private FinderPath _finderPathFetchByU_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_T() {
+		return _finderPathFetchByU_T;
+	}
+
 	private FinderPath _finderPathCountByU_T;
+
+	@Override
+	public FinderPath getFinderPathCountByU_T() {
+		return _finderPathCountByU_T;
+	}
 
 	/**
 	 * Returns the message boards suspicious activity where userId = &#63; and threadId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.

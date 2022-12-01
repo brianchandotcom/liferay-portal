@@ -106,9 +106,31 @@ public class SXPElementPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the sxp elements where uuid = &#63;.
@@ -1052,7 +1074,18 @@ public class SXPElementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the sxp elements where uuid = &#63; and companyId = &#63;.
@@ -2064,7 +2097,18 @@ public class SXPElementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63;.
@@ -2932,7 +2976,18 @@ public class SXPElementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_R;
 	private FinderPath _finderPathWithoutPaginationFindByC_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_R() {
+		return _finderPathWithoutPaginationFindByC_R;
+	}
+
 	private FinderPath _finderPathCountByC_R;
+
+	@Override
+	public FinderPath getFinderPathCountByC_R() {
+		return _finderPathCountByC_R;
+	}
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and readOnly = &#63;.
@@ -3864,7 +3919,18 @@ public class SXPElementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T() {
+		return _finderPathWithoutPaginationFindByC_T;
+	}
+
 	private FinderPath _finderPathCountByC_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T() {
+		return _finderPathCountByC_T;
+	}
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and type = &#63;.
@@ -4791,7 +4857,18 @@ public class SXPElementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_T_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T_S() {
+		return _finderPathWithoutPaginationFindByC_T_S;
+	}
+
 	private FinderPath _finderPathCountByC_T_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T_S() {
+		return _finderPathCountByC_T_S;
+	}
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and type = &#63; and status = &#63;.
@@ -5779,7 +5856,18 @@ public class SXPElementPersistenceImpl
 		"sxpElement.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the sxp element where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchSXPElementException</code> if it could not be found.

@@ -95,9 +95,31 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceDiscountId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId() {
+		return _finderPathWithoutPaginationFindByCommerceDiscountId;
+	}
+
 	private FinderPath _finderPathCountByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceDiscountId() {
+		return _finderPathCountByCommerceDiscountId;
+	}
 
 	/**
 	 * Returns all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
@@ -648,7 +670,20 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceAccountGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceAccountGroupId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceAccountGroupId() {
+
+		return _finderPathWithoutPaginationFindByCommerceAccountGroupId;
+	}
+
 	private FinderPath _finderPathCountByCommerceAccountGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceAccountGroupId() {
+		return _finderPathCountByCommerceAccountGroupId;
+	}
 
 	/**
 	 * Returns all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
@@ -1203,7 +1238,18 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 			"commerceDiscountCommerceAccountGroupRel.commerceAccountGroupId = ?";
 
 	private FinderPath _finderPathFetchByCDI_CAGI;
+
+	@Override
+	public FinderPath getFinderPathFetchByCDI_CAGI() {
+		return _finderPathFetchByCDI_CAGI;
+	}
+
 	private FinderPath _finderPathCountByCDI_CAGI;
+
+	@Override
+	public FinderPath getFinderPathCountByCDI_CAGI() {
+		return _finderPathCountByCDI_CAGI;
+	}
 
 	/**
 	 * Returns the commerce discount commerce account group rel where commerceDiscountId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchDiscountCommerceAccountGroupRelException</code> if it could not be found.

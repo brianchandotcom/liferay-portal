@@ -98,6 +98,17 @@ public class SamlIdpSsoSessionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
 	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
 
@@ -632,7 +643,18 @@ public class SamlIdpSsoSessionPersistenceImpl
 		"samlIdpSsoSession.createDate < ?";
 
 	private FinderPath _finderPathFetchBySamlIdpSsoSessionKey;
+
+	@Override
+	public FinderPath getFinderPathFetchBySamlIdpSsoSessionKey() {
+		return _finderPathFetchBySamlIdpSsoSessionKey;
+	}
+
 	private FinderPath _finderPathCountBySamlIdpSsoSessionKey;
+
+	@Override
+	public FinderPath getFinderPathCountBySamlIdpSsoSessionKey() {
+		return _finderPathCountBySamlIdpSsoSessionKey;
+	}
 
 	/**
 	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or throws a <code>NoSuchIdpSsoSessionException</code> if it could not be found.

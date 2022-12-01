@@ -95,6 +95,17 @@ public class SamlIdpSpSessionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
 	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
 
@@ -629,7 +640,20 @@ public class SamlIdpSpSessionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySamlIdpSsoSessionId;
 	private FinderPath _finderPathWithoutPaginationFindBySamlIdpSsoSessionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySamlIdpSsoSessionId() {
+
+		return _finderPathWithoutPaginationFindBySamlIdpSsoSessionId;
+	}
+
 	private FinderPath _finderPathCountBySamlIdpSsoSessionId;
+
+	@Override
+	public FinderPath getFinderPathCountBySamlIdpSsoSessionId() {
+		return _finderPathCountBySamlIdpSsoSessionId;
+	}
 
 	/**
 	 * Returns all the saml idp sp sessions where samlIdpSsoSessionId = &#63;.

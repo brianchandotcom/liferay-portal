@@ -106,9 +106,31 @@ public class FragmentEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63;.
@@ -654,7 +676,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_Head;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_Head() {
+		return _finderPathWithoutPaginationFindByUuid_Head;
+	}
+
 	private FinderPath _finderPathCountByUuid_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_Head() {
+		return _finderPathCountByUuid_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63; and head = &#63;.
@@ -1246,7 +1279,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUUID_G;
 	private FinderPath _finderPathWithoutPaginationFindByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUUID_G() {
+		return _finderPathWithoutPaginationFindByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63; and groupId = &#63;.
@@ -1839,7 +1883,18 @@ public class FragmentEntryPersistenceImpl
 		"fragmentEntry.groupId = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_Head;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G_Head() {
+		return _finderPathFetchByUUID_G_Head;
+	}
+
 	private FinderPath _finderPathCountByUUID_G_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G_Head() {
+		return _finderPathCountByUUID_G_Head;
+	}
 
 	/**
 	 * Returns the fragment entry where uuid = &#63; and groupId = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -2127,7 +2182,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63; and companyId = &#63;.
@@ -2724,7 +2790,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C_Head;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C_Head() {
+		return _finderPathWithoutPaginationFindByUuid_C_Head;
+	}
+
 	private FinderPath _finderPathCountByUuid_C_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C_Head() {
+		return _finderPathCountByUuid_C_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63; and companyId = &#63; and head = &#63;.
@@ -3356,7 +3433,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63;.
@@ -3864,7 +3952,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId_Head;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Head() {
+		return _finderPathWithoutPaginationFindByGroupId_Head;
+	}
+
 	private FinderPath _finderPathCountByGroupId_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId_Head() {
+		return _finderPathCountByGroupId_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and head = &#63;.
@@ -4418,7 +4517,20 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFragmentCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByFragmentCollectionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFragmentCollectionId() {
+
+		return _finderPathWithoutPaginationFindByFragmentCollectionId;
+	}
+
 	private FinderPath _finderPathCountByFragmentCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByFragmentCollectionId() {
+		return _finderPathCountByFragmentCollectionId;
+	}
 
 	/**
 	 * Returns all the fragment entries where fragmentCollectionId = &#63;.
@@ -4948,7 +5060,20 @@ public class FragmentEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByFragmentCollectionId_Head;
 	private FinderPath
 		_finderPathWithoutPaginationFindByFragmentCollectionId_Head;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFragmentCollectionId_Head() {
+
+		return _finderPathWithoutPaginationFindByFragmentCollectionId_Head;
+	}
+
 	private FinderPath _finderPathCountByFragmentCollectionId_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByFragmentCollectionId_Head() {
+		return _finderPathCountByFragmentCollectionId_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where fragmentCollectionId = &#63; and head = &#63;.
@@ -5520,7 +5645,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByType;
 	private FinderPath _finderPathWithoutPaginationFindByType;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByType() {
+		return _finderPathWithoutPaginationFindByType;
+	}
+
 	private FinderPath _finderPathCountByType;
+
+	@Override
+	public FinderPath getFinderPathCountByType() {
+		return _finderPathCountByType;
+	}
 
 	/**
 	 * Returns all the fragment entries where type = &#63;.
@@ -6024,7 +6160,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByType_Head;
 	private FinderPath _finderPathWithoutPaginationFindByType_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByType_Head() {
+		return _finderPathWithoutPaginationFindByType_Head;
+	}
+
 	private FinderPath _finderPathCountByType_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByType_Head() {
+		return _finderPathCountByType_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where type = &#63; and head = &#63;.
@@ -6574,7 +6721,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI() {
+		return _finderPathWithoutPaginationFindByG_FCI;
+	}
+
 	private FinderPath _finderPathCountByG_FCI;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI() {
+		return _finderPathCountByG_FCI;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63;.
@@ -7133,7 +7291,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_Head;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_Head() {
+		return _finderPathWithoutPaginationFindByG_FCI_Head;
+	}
+
 	private FinderPath _finderPathCountByG_FCI_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI_Head() {
+		return _finderPathCountByG_FCI_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and head = &#63;.
@@ -7735,7 +7904,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FEK;
 	private FinderPath _finderPathWithoutPaginationFindByG_FEK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FEK() {
+		return _finderPathWithoutPaginationFindByG_FEK;
+	}
+
 	private FinderPath _finderPathCountByG_FEK;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FEK() {
+		return _finderPathCountByG_FEK;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentEntryKey = &#63;.
@@ -8335,7 +8515,18 @@ public class FragmentEntryPersistenceImpl
 		"(fragmentEntry.fragmentEntryKey IS NULL OR fragmentEntry.fragmentEntryKey = '')";
 
 	private FinderPath _finderPathFetchByG_FEK_Head;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_FEK_Head() {
+		return _finderPathFetchByG_FEK_Head;
+	}
+
 	private FinderPath _finderPathCountByG_FEK_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FEK_Head() {
+		return _finderPathCountByG_FEK_Head;
+	}
 
 	/**
 	 * Returns the fragment entry where groupId = &#63; and fragmentEntryKey = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -9936,7 +10127,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T() {
+		return _finderPathWithoutPaginationFindByG_FCI_T;
+	}
+
 	private FinderPath _finderPathCountByG_FCI_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI_T() {
+		return _finderPathCountByG_FCI_T;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
@@ -10536,7 +10738,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_T_Head;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI_T_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_Head() {
+		return _finderPathWithoutPaginationFindByG_FCI_T_Head;
+	}
+
 	private FinderPath _finderPathCountByG_FCI_T_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI_T_Head() {
+		return _finderPathCountByG_FCI_T_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and head = &#63;.
@@ -11178,7 +11391,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_S() {
+		return _finderPathWithoutPaginationFindByG_FCI_S;
+	}
+
 	private FinderPath _finderPathCountByG_FCI_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI_S() {
+		return _finderPathCountByG_FCI_S;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
@@ -11781,7 +12005,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_S_Head;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI_S_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_S_Head() {
+		return _finderPathWithoutPaginationFindByG_FCI_S_Head;
+	}
+
 	private FinderPath _finderPathCountByG_FCI_S_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI_S_Head() {
+		return _finderPathCountByG_FCI_S_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; and head = &#63;.
@@ -13812,7 +14047,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI_T_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_S() {
+		return _finderPathWithoutPaginationFindByG_FCI_T_S;
+	}
+
 	private FinderPath _finderPathCountByG_FCI_T_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI_T_S() {
+		return _finderPathCountByG_FCI_T_S;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
@@ -14455,7 +14701,18 @@ public class FragmentEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_T_S_Head;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI_T_S_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_S_Head() {
+		return _finderPathWithoutPaginationFindByG_FCI_T_S_Head;
+	}
+
 	private FinderPath _finderPathCountByG_FCI_T_S_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI_T_S_Head() {
+		return _finderPathCountByG_FCI_T_S_Head;
+	}
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63; and head = &#63;.
@@ -15137,7 +15394,18 @@ public class FragmentEntryPersistenceImpl
 		"fragmentEntry.head = ?";
 
 	private FinderPath _finderPathFetchByHeadId;
+
+	@Override
+	public FinderPath getFinderPathFetchByHeadId() {
+		return _finderPathFetchByHeadId;
+	}
+
 	private FinderPath _finderPathCountByHeadId;
+
+	@Override
+	public FinderPath getFinderPathCountByHeadId() {
+		return _finderPathCountByHeadId;
+	}
 
 	/**
 	 * Returns the fragment entry where headId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

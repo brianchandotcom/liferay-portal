@@ -92,9 +92,33 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByNotificationTemplateId;
 	private FinderPath _finderPathWithoutPaginationFindByNotificationTemplateId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByNotificationTemplateId() {
+
+		return _finderPathWithoutPaginationFindByNotificationTemplateId;
+	}
+
 	private FinderPath _finderPathCountByNotificationTemplateId;
+
+	@Override
+	public FinderPath getFinderPathCountByNotificationTemplateId() {
+		return _finderPathCountByNotificationTemplateId;
+	}
 
 	/**
 	 * Returns all the notification template attachments where notificationTemplateId = &#63;.
@@ -625,7 +649,18 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			"notificationTemplateAttachment.notificationTemplateId = ?";
 
 	private FinderPath _finderPathFetchByNTI_OFI;
+
+	@Override
+	public FinderPath getFinderPathFetchByNTI_OFI() {
+		return _finderPathFetchByNTI_OFI;
+	}
+
 	private FinderPath _finderPathCountByNTI_OFI;
+
+	@Override
+	public FinderPath getFinderPathCountByNTI_OFI() {
+		return _finderPathCountByNTI_OFI;
+	}
 
 	/**
 	 * Returns the notification template attachment where notificationTemplateId = &#63; and objectFieldId = &#63; or throws a <code>NoSuchNotificationTemplateAttachmentException</code> if it could not be found.

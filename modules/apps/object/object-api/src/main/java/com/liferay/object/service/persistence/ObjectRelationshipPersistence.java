@@ -16,6 +16,7 @@ package com.liferay.object.service.persistence;
 
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ObjectRelationshipPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ObjectRelationshipUtil} to access the object relationship persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the object relationships where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ObjectRelationshipPersistence
 	 * @return the number of matching object relationships
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the object relationships where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface ObjectRelationshipPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByObjectDefinitionId1();
+
+	public FinderPath getFinderPathCountByObjectDefinitionId1();
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63;.
 	 *
@@ -482,6 +498,10 @@ public interface ObjectRelationshipPersistence
 	 * @return the number of matching object relationships
 	 */
 	public int countByObjectDefinitionId1(long objectDefinitionId1);
+
+	public FinderPath getFinderPathWithoutPaginationFindByObjectDefinitionId2();
+
+	public FinderPath getFinderPathCountByObjectDefinitionId2();
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63;.
@@ -627,6 +647,10 @@ public interface ObjectRelationshipPersistence
 	 */
 	public int countByObjectDefinitionId2(long objectDefinitionId2);
 
+	public FinderPath getFinderPathFetchByObjectFieldId2();
+
+	public FinderPath getFinderPathCountByObjectFieldId2();
+
 	/**
 	 * Returns the object relationship where objectFieldId2 = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
 	 *
@@ -671,6 +695,10 @@ public interface ObjectRelationshipPersistence
 	 * @return the number of matching object relationships
 	 */
 	public int countByObjectFieldId2(long objectFieldId2);
+
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_N();
+
+	public FinderPath getFinderPathCountByODI1_N();
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and name = &#63;.
@@ -826,6 +854,10 @@ public interface ObjectRelationshipPersistence
 	 * @return the number of matching object relationships
 	 */
 	public int countByODI1_N(long objectDefinitionId1, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_R();
+
+	public FinderPath getFinderPathCountByODI1_R();
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63;.
@@ -983,6 +1015,10 @@ public interface ObjectRelationshipPersistence
 	 */
 	public int countByODI1_R(long objectDefinitionId1, boolean reverse);
 
+	public FinderPath getFinderPathWithoutPaginationFindByODI2_R();
+
+	public FinderPath getFinderPathCountByODI2_R();
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
 	 *
@@ -1138,6 +1174,10 @@ public interface ObjectRelationshipPersistence
 	 * @return the number of matching object relationships
 	 */
 	public int countByODI2_R(long objectDefinitionId2, boolean reverse);
+
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_ODI2_T();
+
+	public FinderPath getFinderPathCountByODI1_ODI2_T();
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
@@ -1311,6 +1351,10 @@ public interface ObjectRelationshipPersistence
 	public int countByODI1_ODI2_T(
 		long objectDefinitionId1, long objectDefinitionId2, String type);
 
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_DT_R();
+
+	public FinderPath getFinderPathCountByODI1_DT_R();
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
 	 *
@@ -1482,6 +1526,10 @@ public interface ObjectRelationshipPersistence
 	 */
 	public int countByODI1_DT_R(
 		long objectDefinitionId1, String deletionType, boolean reverse);
+
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_R_T();
+
+	public FinderPath getFinderPathCountByODI1_R_T();
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
@@ -1655,6 +1703,10 @@ public interface ObjectRelationshipPersistence
 	public int countByODI1_R_T(
 		long objectDefinitionId1, boolean reverse, String type);
 
+	public FinderPath getFinderPathWithoutPaginationFindByODI2_R_T();
+
+	public FinderPath getFinderPathCountByODI2_R_T();
+
 	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
 	 *
@@ -1826,6 +1878,10 @@ public interface ObjectRelationshipPersistence
 	 */
 	public int countByODI2_R_T(
 		long objectDefinitionId2, boolean reverse, String type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_ODI2_N_T();
+
+	public FinderPath getFinderPathCountByODI1_ODI2_N_T();
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
@@ -2016,6 +2072,10 @@ public interface ObjectRelationshipPersistence
 	public int countByODI1_ODI2_N_T(
 		long objectDefinitionId1, long objectDefinitionId2, String name,
 		String type);
+
+	public FinderPath getFinderPathFetchByODI1_ODI2_N_R_T();
+
+	public FinderPath getFinderPathCountByODI1_ODI2_N_R_T();
 
 	/**
 	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and reverse = &#63; and type = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.

@@ -102,9 +102,33 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommercePricingClassId;
 	private FinderPath _finderPathWithoutPaginationFindByCommercePricingClassId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommercePricingClassId() {
+
+		return _finderPathWithoutPaginationFindByCommercePricingClassId;
+	}
+
 	private FinderPath _finderPathCountByCommercePricingClassId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommercePricingClassId() {
+		return _finderPathCountByCommercePricingClassId;
+	}
 
 	/**
 	 * Returns all the commerce pricing class cp definition rels where commercePricingClassId = &#63;.
@@ -673,7 +697,18 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId() {
+		return _finderPathWithoutPaginationFindByCPDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDefinitionId() {
+		return _finderPathCountByCPDefinitionId;
+	}
 
 	/**
 	 * Returns all the commerce pricing class cp definition rels where CPDefinitionId = &#63;.
@@ -1223,7 +1258,18 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		"commercePricingClassCPDefinitionRel.CPDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; or throws a <code>NoSuchPricingClassCPDefinitionRelException</code> if it could not be found.

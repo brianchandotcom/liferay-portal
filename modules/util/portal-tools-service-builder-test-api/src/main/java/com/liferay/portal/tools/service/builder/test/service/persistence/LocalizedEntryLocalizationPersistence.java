@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLocalizedEntryLocalizationException;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization;
@@ -40,6 +41,13 @@ public interface LocalizedEntryLocalizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LocalizedEntryLocalizationUtil} to access the localized entry localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByLocalizedEntryId();
+
+	public FinderPath getFinderPathCountByLocalizedEntryId();
 
 	/**
 	 * Returns all the localized entry localizations where localizedEntryId = &#63;.
@@ -184,6 +192,10 @@ public interface LocalizedEntryLocalizationPersistence
 	 * @return the number of matching localized entry localizations
 	 */
 	public int countByLocalizedEntryId(long localizedEntryId);
+
+	public FinderPath getFinderPathFetchByLocalizedEntryId_LanguageId();
+
+	public FinderPath getFinderPathCountByLocalizedEntryId_LanguageId();
 
 	/**
 	 * Returns the localized entry localization where localizedEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchLocalizedEntryLocalizationException</code> if it could not be found.

@@ -91,6 +91,17 @@ public class DLSyncEventPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGtModifiedTime;
 	private FinderPath _finderPathWithPaginationCountByGtModifiedTime;
 
@@ -576,7 +587,18 @@ public class DLSyncEventPersistenceImpl
 		"dlSyncEvent.modifiedTime > ?";
 
 	private FinderPath _finderPathFetchByTypePK;
+
+	@Override
+	public FinderPath getFinderPathFetchByTypePK() {
+		return _finderPathFetchByTypePK;
+	}
+
 	private FinderPath _finderPathCountByTypePK;
+
+	@Override
+	public FinderPath getFinderPathCountByTypePK() {
+		return _finderPathCountByTypePK;
+	}
 
 	/**
 	 * Returns the dl sync event where typePK = &#63; or throws a <code>NoSuchEventException</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.service.persistence;
 
 import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseRelException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,14 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryWarehouseRelUtil} to access the commerce inventory warehouse rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceInventoryWarehouseId();
+
+	public FinderPath getFinderPathCountByCommerceInventoryWarehouseId();
 
 	/**
 	 * Returns all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
@@ -195,6 +204,10 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 */
 	public int countByCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
@@ -353,6 +366,10 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 * @return the number of matching commerce inventory warehouse rels
 	 */
 	public int countByC_C(long classNameId, long commerceInventoryWarehouseId);
+
+	public FinderPath getFinderPathFetchByC_C_CIWI();
+
+	public FinderPath getFinderPathCountByC_C_CIWI();
 
 	/**
 	 * Returns the commerce inventory warehouse rel where classNameId = &#63; and classPK = &#63; and commerceInventoryWarehouseId = &#63; or throws a <code>NoSuchInventoryWarehouseRelException</code> if it could not be found.

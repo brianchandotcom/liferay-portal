@@ -80,9 +80,31 @@ public class OrgLaborPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByOrganizationId;
 	private FinderPath _finderPathWithoutPaginationFindByOrganizationId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByOrganizationId() {
+		return _finderPathWithoutPaginationFindByOrganizationId;
+	}
+
 	private FinderPath _finderPathCountByOrganizationId;
+
+	@Override
+	public FinderPath getFinderPathCountByOrganizationId() {
+		return _finderPathCountByOrganizationId;
+	}
 
 	/**
 	 * Returns all the org labors where organizationId = &#63;.

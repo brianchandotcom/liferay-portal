@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException;
@@ -41,6 +42,13 @@ public interface KaleoNodePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNodeUtil} to access the kaleo node persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo nodes where companyId = &#63;.
@@ -185,6 +193,11 @@ public interface KaleoNodePersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId();
+
 	/**
 	 * Returns all the kaleo nodes where kaleoDefinitionVersionId = &#63;.
 	 *
@@ -328,6 +341,10 @@ public interface KaleoNodePersistence
 	 * @return the number of matching kaleo nodes
 	 */
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_KDVI();
+
+	public FinderPath getFinderPathCountByC_KDVI();
 
 	/**
 	 * Returns all the kaleo nodes where companyId = &#63; and kaleoDefinitionVersionId = &#63;.

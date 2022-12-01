@@ -120,6 +120,30 @@ public class CPInstanceUtil {
 		return getPersistence().update(cpInstance, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the cp instances where uuid = &#63;.
 	 *
@@ -285,6 +309,18 @@ public class CPInstanceUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the cp instance where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
 	 *
@@ -348,6 +384,18 @@ public class CPInstanceUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -537,6 +585,18 @@ public class CPInstanceUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the cp instances where groupId = &#63;.
 	 *
@@ -704,6 +764,18 @@ public class CPInstanceUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
 	}
 
 	/**
@@ -876,6 +948,19 @@ public class CPInstanceUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCPDefinitionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCPDefinitionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPDefinitionId() {
+
+		return getPersistence().getFinderPathCountByCPDefinitionId();
 	}
 
 	/**
@@ -1053,6 +1138,19 @@ public class CPInstanceUtil {
 		return getPersistence().countByCPDefinitionId(CPDefinitionId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCPInstanceUuid() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCPInstanceUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPInstanceUuid() {
+
+		return getPersistence().getFinderPathCountByCPInstanceUuid();
+	}
+
 	/**
 	 * Returns all the cp instances where CPInstanceUuid = &#63;.
 	 *
@@ -1228,6 +1326,18 @@ public class CPInstanceUtil {
 	 */
 	public static int countByCPInstanceUuid(String CPInstanceUuid) {
 		return getPersistence().countByCPInstanceUuid(CPInstanceUuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_ST() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_ST();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_ST() {
+
+		return getPersistence().getFinderPathCountByG_ST();
 	}
 
 	/**
@@ -1417,6 +1527,18 @@ public class CPInstanceUtil {
 		return getPersistence().countByG_ST(groupId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_SKU() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_SKU();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_SKU() {
+
+		return getPersistence().getFinderPathCountByC_SKU();
+	}
+
 	/**
 	 * Returns all the cp instances where companyId = &#63; and sku = &#63;.
 	 *
@@ -1604,6 +1726,18 @@ public class CPInstanceUtil {
 		return getPersistence().countByC_SKU(companyId, sku);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_C() {
+
+		return getPersistence().getFinderPathFetchByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
+	}
+
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and CPInstanceUuid = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
 	 *
@@ -1674,6 +1808,18 @@ public class CPInstanceUtil {
 		return getPersistence().countByC_C(CPDefinitionId, CPInstanceUuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCPDI_SKU() {
+
+		return getPersistence().getFinderPathFetchByCPDI_SKU();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPDI_SKU() {
+
+		return getPersistence().getFinderPathCountByCPDI_SKU();
+	}
+
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and sku = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
 	 *
@@ -1738,6 +1884,18 @@ public class CPInstanceUtil {
 	 */
 	public static int countByCPDI_SKU(long CPDefinitionId, String sku) {
 		return getPersistence().countByCPDI_SKU(CPDefinitionId, sku);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_ST() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_ST();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_ST() {
+
+		return getPersistence().getFinderPathCountByC_ST();
 	}
 
 	/**
@@ -2322,6 +2480,18 @@ public class CPInstanceUtil {
 
 		return getPersistence().countByC_LtD_S(
 			CPDefinitionId, displayDate, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByERC_C() {
+
+		return getPersistence().getFinderPathFetchByERC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByERC_C() {
+
+		return getPersistence().getFinderPathCountByERC_C();
 	}
 
 	/**

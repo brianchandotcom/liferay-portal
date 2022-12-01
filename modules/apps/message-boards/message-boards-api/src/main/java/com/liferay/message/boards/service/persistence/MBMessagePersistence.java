@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.persistence;
 
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface MBMessagePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMessageUtil} to access the message-boards message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the message-boards messages where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface MBMessagePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the message-boards message where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the message-boards messages where uuid = &#63; and companyId = &#63;.
@@ -388,6 +404,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63;.
@@ -596,6 +616,10 @@ public interface MBMessagePersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the message-boards messages where companyId = &#63;.
 	 *
@@ -738,6 +762,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the message-boards messages where userId = &#63;.
@@ -882,6 +910,10 @@ public interface MBMessagePersistence
 	 */
 	public int countByUserId(long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByThreadId();
+
+	public FinderPath getFinderPathCountByThreadId();
+
 	/**
 	 * Returns all the message-boards messages where threadId = &#63;.
 	 *
@@ -1024,6 +1056,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByThreadId(long threadId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByThreadIdReplies();
+
+	public FinderPath getFinderPathCountByThreadIdReplies();
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63;.
@@ -1168,6 +1204,10 @@ public interface MBMessagePersistence
 	 */
 	public int countByThreadIdReplies(long threadId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByParentMessageId();
+
+	public FinderPath getFinderPathCountByParentMessageId();
+
 	/**
 	 * Returns all the message-boards messages where parentMessageId = &#63;.
 	 *
@@ -1311,6 +1351,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByParentMessageId(long parentMessageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U();
+
+	public FinderPath getFinderPathCountByG_U();
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and userId = &#63;.
@@ -1534,6 +1578,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages that the user has permission to view
 	 */
 	public int filterCountByG_U(long groupId, long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63;.
@@ -1759,6 +1807,10 @@ public interface MBMessagePersistence
 	 */
 	public int filterCountByG_C(long groupId, long categoryId);
 
+	public FinderPath getFinderPathFetchByG_US();
+
+	public FinderPath getFinderPathCountByG_US();
+
 	/**
 	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
 	 *
@@ -1808,6 +1860,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByG_US(long groupId, String urlSubject);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and status = &#63;.
@@ -2032,6 +2088,10 @@ public interface MBMessagePersistence
 	 */
 	public int filterCountByG_S(long groupId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
+
 	/**
 	 * Returns all the message-boards messages where companyId = &#63; and status = &#63;.
 	 *
@@ -2185,6 +2245,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByC_S(long companyId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_C();
+
+	public FinderPath getFinderPathCountByU_C();
 
 	/**
 	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63;.
@@ -2419,6 +2483,10 @@ public interface MBMessagePersistence
 	 */
 	public int countByU_C(long userId, long[] classNameIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the message-boards messages where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -2572,6 +2640,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByT_P();
+
+	public FinderPath getFinderPathCountByT_P();
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and parentMessageId = &#63;.
@@ -2728,6 +2800,10 @@ public interface MBMessagePersistence
 	 */
 	public int countByT_P(long threadId, long parentMessageId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByT_A();
+
+	public FinderPath getFinderPathCountByT_A();
+
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and answer = &#63;.
 	 *
@@ -2881,6 +2957,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByT_A(long threadId, boolean answer);
+
+	public FinderPath getFinderPathWithoutPaginationFindByT_S();
+
+	public FinderPath getFinderPathCountByT_S();
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and status = &#63;.
@@ -3190,6 +3270,10 @@ public interface MBMessagePersistence
 	 */
 	public int countByT_NotS(long threadId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByTR_S();
+
+	public FinderPath getFinderPathCountByTR_S();
+
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and status = &#63;.
 	 *
@@ -3343,6 +3427,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByTR_S(long threadId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_S();
+
+	public FinderPath getFinderPathCountByP_S();
 
 	/**
 	 * Returns all the message-boards messages where parentMessageId = &#63; and status = &#63;.
@@ -3498,6 +3586,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByP_S(long parentMessageId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_S();
+
+	public FinderPath getFinderPathCountByG_U_S();
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -3740,6 +3832,10 @@ public interface MBMessagePersistence
 	 */
 	public int filterCountByG_U_S(long groupId, long userId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_T();
+
+	public FinderPath getFinderPathCountByG_C_T();
+
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
 	 *
@@ -3980,6 +4076,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages that the user has permission to view
 	 */
 	public int filterCountByG_C_T(long groupId, long categoryId, long threadId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_S();
+
+	public FinderPath getFinderPathCountByG_C_S();
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -4222,6 +4322,10 @@ public interface MBMessagePersistence
 	 */
 	public int filterCountByG_C_S(long groupId, long categoryId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_C_C();
+
+	public FinderPath getFinderPathCountByU_C_C();
+
 	/**
 	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
@@ -4387,6 +4491,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByU_C_C(long userId, long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_C_S();
+
+	public FinderPath getFinderPathCountByU_C_S();
 
 	/**
 	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63; and status = &#63;.
@@ -4638,6 +4746,10 @@ public interface MBMessagePersistence
 	 */
 	public int countByU_C_S(long userId, long[] classNameIds, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_S();
+
+	public FinderPath getFinderPathCountByC_C_S();
+
 	/**
 	 * Returns all the message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	 *
@@ -4803,6 +4915,10 @@ public interface MBMessagePersistence
 	 * @return the number of matching message-boards messages
 	 */
 	public int countByC_C_S(long classNameId, long classPK, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_T_A();
+
+	public FinderPath getFinderPathCountByG_C_T_A();
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -5071,6 +5187,10 @@ public interface MBMessagePersistence
 	public int filterCountByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_T_S();
+
+	public FinderPath getFinderPathCountByG_C_T_S();
+
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
 	 *
@@ -5338,6 +5458,10 @@ public interface MBMessagePersistence
 	public int filterCountByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_C_C_S();
+
+	public FinderPath getFinderPathCountByU_C_C_S();
+
 	/**
 	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
 	 *
@@ -5520,6 +5644,10 @@ public interface MBMessagePersistence
 	 */
 	public int countByU_C_C_S(
 		long userId, long classNameId, long classPK, int status);
+
+	public FinderPath getFinderPathFetchByERC_G();
+
+	public FinderPath getFinderPathCountByERC_G();
 
 	/**
 	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.

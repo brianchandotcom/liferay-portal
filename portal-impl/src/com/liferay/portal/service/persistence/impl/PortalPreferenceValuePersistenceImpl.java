@@ -84,9 +84,33 @@ public class PortalPreferenceValuePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByPortalPreferencesId;
 	private FinderPath _finderPathWithoutPaginationFindByPortalPreferencesId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByPortalPreferencesId() {
+
+		return _finderPathWithoutPaginationFindByPortalPreferencesId;
+	}
+
 	private FinderPath _finderPathCountByPortalPreferencesId;
+
+	@Override
+	public FinderPath getFinderPathCountByPortalPreferencesId() {
+		return _finderPathCountByPortalPreferencesId;
+	}
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63;.
@@ -603,7 +627,18 @@ public class PortalPreferenceValuePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_N;
 	private FinderPath _finderPathWithoutPaginationFindByP_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_N() {
+		return _finderPathWithoutPaginationFindByP_N;
+	}
+
 	private FinderPath _finderPathCountByP_N;
+
+	@Override
+	public FinderPath getFinderPathCountByP_N() {
+		return _finderPathCountByP_N;
+	}
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
@@ -1196,7 +1231,18 @@ public class PortalPreferenceValuePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_K_N;
 	private FinderPath _finderPathWithoutPaginationFindByP_K_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_K_N() {
+		return _finderPathWithoutPaginationFindByP_K_N;
+	}
+
 	private FinderPath _finderPathCountByP_K_N;
+
+	@Override
+	public FinderPath getFinderPathCountByP_K_N() {
+		return _finderPathCountByP_K_N;
+	}
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
@@ -1869,7 +1915,18 @@ public class PortalPreferenceValuePersistenceImpl
 		"(portalPreferenceValue.namespace IS NULL OR portalPreferenceValue.namespace = '')";
 
 	private FinderPath _finderPathFetchByP_I_K_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByP_I_K_N() {
+		return _finderPathFetchByP_I_K_N;
+	}
+
 	private FinderPath _finderPathCountByP_I_K_N;
+
+	@Override
+	public FinderPath getFinderPathCountByP_I_K_N() {
+		return _finderPathCountByP_I_K_N;
+	}
 
 	/**
 	 * Returns the portal preference value where portalPreferencesId = &#63; and index = &#63; and key = &#63; and namespace = &#63; or throws a <code>NoSuchPreferenceValueException</code> if it could not be found.
@@ -2202,7 +2259,18 @@ public class PortalPreferenceValuePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_K_N_SV;
 	private FinderPath _finderPathWithoutPaginationFindByP_K_N_SV;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_K_N_SV() {
+		return _finderPathWithoutPaginationFindByP_K_N_SV;
+	}
+
 	private FinderPath _finderPathCountByP_K_N_SV;
+
+	@Override
+	public FinderPath getFinderPathCountByP_K_N_SV() {
+		return _finderPathCountByP_K_N_SV;
+	}
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.

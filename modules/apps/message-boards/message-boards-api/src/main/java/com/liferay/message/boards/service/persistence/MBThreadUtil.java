@@ -120,6 +120,30 @@ public class MBThreadUtil {
 		return getPersistence().update(mbThread, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the message boards threads where uuid = &#63;.
 	 *
@@ -281,6 +305,18 @@ public class MBThreadUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the message boards thread where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchThreadException</code> if it could not be found.
 	 *
@@ -342,6 +378,18 @@ public class MBThreadUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -525,6 +573,18 @@ public class MBThreadUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
 	}
 
 	/**
@@ -769,6 +829,18 @@ public class MBThreadUtil {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByRootMessageId() {
+
+		return getPersistence().getFinderPathFetchByRootMessageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRootMessageId() {
+
+		return getPersistence().getFinderPathCountByRootMessageId();
+	}
+
 	/**
 	 * Returns the message boards thread where rootMessageId = &#63; or throws a <code>NoSuchThreadException</code> if it could not be found.
 	 *
@@ -826,6 +898,18 @@ public class MBThreadUtil {
 	 */
 	public static int countByRootMessageId(long rootMessageId) {
 		return getPersistence().countByRootMessageId(rootMessageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C() {
+
+		return getPersistence().getFinderPathCountByG_C();
 	}
 
 	/**
@@ -1521,6 +1605,18 @@ public class MBThreadUtil {
 		return getPersistence().filterCountByG_NotC(groupId, categoryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_S() {
+
+		return getPersistence().getFinderPathCountByG_S();
+	}
+
 	/**
 	 * Returns all the message boards threads where groupId = &#63; and status = &#63;.
 	 *
@@ -1786,6 +1882,18 @@ public class MBThreadUtil {
 		return getPersistence().filterCountByG_S(groupId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_P() {
+
+		return getPersistence().getFinderPathCountByC_P();
+	}
+
 	/**
 	 * Returns all the message boards threads where categoryId = &#63; and priority = &#63;.
 	 *
@@ -1970,6 +2078,18 @@ public class MBThreadUtil {
 		return getPersistence().countByC_P(categoryId, priority);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByL_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByL_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_P() {
+
+		return getPersistence().getFinderPathCountByL_P();
+	}
+
 	/**
 	 * Returns all the message boards threads where lastPostDate = &#63; and priority = &#63;.
 	 *
@@ -2152,6 +2272,18 @@ public class MBThreadUtil {
 	 */
 	public static int countByL_P(Date lastPostDate, double priority) {
 		return getPersistence().countByL_P(lastPostDate, priority);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_L() {
+
+		return getPersistence().getFinderPathCountByG_C_L();
 	}
 
 	/**
@@ -2448,6 +2580,18 @@ public class MBThreadUtil {
 
 		return getPersistence().filterCountByG_C_L(
 			groupId, categoryId, lastPostDate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_S() {
+
+		return getPersistence().getFinderPathCountByG_C_S();
 	}
 
 	/**

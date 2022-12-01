@@ -125,6 +125,31 @@ public class CommerceTaxFixedRateAddressRelUtil {
 			commerceTaxFixedRateAddressRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceTaxMethodId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceTaxMethodId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceTaxMethodId() {
+
+		return getPersistence().getFinderPathCountByCommerceTaxMethodId();
+	}
+
 	/**
 	 * Returns all the commerce tax fixed rate address rels where commerceTaxMethodId = &#63;.
 	 *
@@ -317,6 +342,19 @@ public class CommerceTaxFixedRateAddressRelUtil {
 		return getPersistence().countByCommerceTaxMethodId(commerceTaxMethodId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCPTaxCategoryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCPTaxCategoryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPTaxCategoryId() {
+
+		return getPersistence().getFinderPathCountByCPTaxCategoryId();
+	}
+
 	/**
 	 * Returns all the commerce tax fixed rate address rels where CPTaxCategoryId = &#63;.
 	 *
@@ -497,6 +535,18 @@ public class CommerceTaxFixedRateAddressRelUtil {
 	 */
 	public static int countByCPTaxCategoryId(long CPTaxCategoryId) {
 		return getPersistence().countByCPTaxCategoryId(CPTaxCategoryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCountryId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCountryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCountryId() {
+
+		return getPersistence().getFinderPathCountByCountryId();
 	}
 
 	/**

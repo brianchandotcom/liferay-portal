@@ -121,6 +121,31 @@ public class PasswordPolicyRelUtil {
 		return getPersistence().update(passwordPolicyRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByPasswordPolicyId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByPasswordPolicyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByPasswordPolicyId() {
+
+		return getPersistence().getFinderPathCountByPasswordPolicyId();
+	}
+
 	/**
 	 * Returns all the password policy rels where passwordPolicyId = &#63;.
 	 *
@@ -298,6 +323,18 @@ public class PasswordPolicyRelUtil {
 	 */
 	public static int countByPasswordPolicyId(long passwordPolicyId) {
 		return getPersistence().countByPasswordPolicyId(passwordPolicyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_C() {
+
+		return getPersistence().getFinderPathFetchByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**

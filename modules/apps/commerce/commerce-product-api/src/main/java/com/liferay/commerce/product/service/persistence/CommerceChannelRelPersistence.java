@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchChannelRelException;
 import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CommerceChannelRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceChannelRelUtil} to access the commerce channel rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceChannelId();
+
+	public FinderPath getFinderPathCountByCommerceChannelId();
 
 	/**
 	 * Returns all the commerce channel rels where commerceChannelId = &#63;.
@@ -186,6 +194,10 @@ public interface CommerceChannelRelPersistence
 	 * @return the number of matching commerce channel rels
 	 */
 	public int countByCommerceChannelId(long commerceChannelId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the commerce channel rels where classNameId = &#63; and classPK = &#63;.
@@ -341,6 +353,10 @@ public interface CommerceChannelRelPersistence
 	 * @return the number of matching commerce channel rels
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns the commerce channel rel where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; or throws a <code>NoSuchChannelRelException</code> if it could not be found.

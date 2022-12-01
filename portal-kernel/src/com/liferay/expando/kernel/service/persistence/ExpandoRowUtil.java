@@ -119,6 +119,30 @@ public class ExpandoRowUtil {
 		return getPersistence().update(expandoRow, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByTableId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByTableId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByTableId() {
+
+		return getPersistence().getFinderPathCountByTableId();
+	}
+
 	/**
 	 * Returns all the expando rows where tableId = &#63;.
 	 *
@@ -285,6 +309,18 @@ public class ExpandoRowUtil {
 		return getPersistence().countByTableId(tableId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByClassPK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByClassPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByClassPK() {
+
+		return getPersistence().getFinderPathCountByClassPK();
+	}
+
 	/**
 	 * Returns all the expando rows where classPK = &#63;.
 	 *
@@ -449,6 +485,18 @@ public class ExpandoRowUtil {
 	 */
 	public static int countByClassPK(long classPK) {
 		return getPersistence().countByClassPK(classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByT_C() {
+
+		return getPersistence().getFinderPathFetchByT_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_C() {
+
+		return getPersistence().getFinderPathCountByT_C();
 	}
 
 	/**

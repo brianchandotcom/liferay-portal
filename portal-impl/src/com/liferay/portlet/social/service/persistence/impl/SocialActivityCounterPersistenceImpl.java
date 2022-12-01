@@ -91,9 +91,31 @@ public class SocialActivityCounterPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the social activity counters where groupId = &#63;.
@@ -613,7 +635,18 @@ public class SocialActivityCounterPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the social activity counters where classNameId = &#63; and classPK = &#63;.
@@ -1174,7 +1207,18 @@ public class SocialActivityCounterPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_O;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_O;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_O() {
+		return _finderPathWithoutPaginationFindByG_C_C_O;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_O;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_O() {
+		return _finderPathCountByG_C_C_O;
+	}
 
 	/**
 	 * Returns all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
@@ -1815,7 +1859,18 @@ public class SocialActivityCounterPersistenceImpl
 		"socialActivityCounter.ownerType = ? AND socialActivityCounter.endPeriod = -1";
 
 	private FinderPath _finderPathFetchByG_C_C_N_O_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_C_N_O_S() {
+		return _finderPathFetchByG_C_C_N_O_S;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_N_O_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_N_O_S() {
+		return _finderPathCountByG_C_C_N_O_S;
+	}
 
 	/**
 	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or throws a <code>NoSuchActivityCounterException</code> if it could not be found.
@@ -2178,7 +2233,18 @@ public class SocialActivityCounterPersistenceImpl
 		"socialActivityCounter.startPeriod = ?";
 
 	private FinderPath _finderPathFetchByG_C_C_N_O_E;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_C_N_O_E() {
+		return _finderPathFetchByG_C_C_N_O_E;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_N_O_E;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_N_O_E() {
+		return _finderPathCountByG_C_C_N_O_E;
+	}
 
 	/**
 	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or throws a <code>NoSuchActivityCounterException</code> if it could not be found.

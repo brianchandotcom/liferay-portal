@@ -105,9 +105,31 @@ public class DEDataListViewPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the de data list views where uuid = &#63;.
@@ -653,7 +675,18 @@ public class DEDataListViewPersistenceImpl
 		"(deDataListView.uuid IS NULL OR deDataListView.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the de data list view where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDataListViewException</code> if it could not be found.
@@ -917,7 +950,18 @@ public class DEDataListViewPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the de data list views where uuid = &#63; and companyId = &#63;.
@@ -1514,7 +1558,18 @@ public class DEDataListViewPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
 	private FinderPath _finderPathWithoutPaginationFindByDDMStructureId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByDDMStructureId() {
+		return _finderPathWithoutPaginationFindByDDMStructureId;
+	}
+
 	private FinderPath _finderPathCountByDDMStructureId;
+
+	@Override
+	public FinderPath getFinderPathCountByDDMStructureId() {
+		return _finderPathCountByDDMStructureId;
+	}
 
 	/**
 	 * Returns all the de data list views where ddmStructureId = &#63;.
@@ -2034,7 +2089,18 @@ public class DEDataListViewPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_DDMSI;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_DDMSI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_DDMSI() {
+		return _finderPathWithoutPaginationFindByG_C_DDMSI;
+	}
+
 	private FinderPath _finderPathCountByG_C_DDMSI;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_DDMSI() {
+		return _finderPathCountByG_C_DDMSI;
+	}
 
 	/**
 	 * Returns all the de data list views where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.

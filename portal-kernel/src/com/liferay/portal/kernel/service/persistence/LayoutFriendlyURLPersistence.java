@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -41,6 +42,13 @@ public interface LayoutFriendlyURLPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutFriendlyURLUtil} to access the layout friendly url persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout friendly urls where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface LayoutFriendlyURLPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the layout friendly url where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutFriendlyURLException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface LayoutFriendlyURLPersistence
 	 * @return the number of matching layout friendly urls
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout friendly urls where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface LayoutFriendlyURLPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the layout friendly urls where groupId = &#63;.
 	 *
@@ -532,6 +552,10 @@ public interface LayoutFriendlyURLPersistence
 	 * @return the number of matching layout friendly urls
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the layout friendly urls where companyId = &#63;.
@@ -676,6 +700,10 @@ public interface LayoutFriendlyURLPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByPlid();
+
+	public FinderPath getFinderPathCountByPlid();
+
 	/**
 	 * Returns all the layout friendly urls where plid = &#63;.
 	 *
@@ -818,6 +846,10 @@ public interface LayoutFriendlyURLPersistence
 	 * @return the number of matching layout friendly urls
 	 */
 	public int countByPlid(long plid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_F();
+
+	public FinderPath getFinderPathCountByP_F();
 
 	/**
 	 * Returns all the layout friendly urls where plid = &#63; and friendlyURL = &#63;.
@@ -974,6 +1006,12 @@ public interface LayoutFriendlyURLPersistence
 	 */
 	public int countByP_F(long plid, String friendlyURL);
 
+	public FinderPath getFinderPathWithoutPaginationFindByP_L();
+
+	public FinderPath getFinderPathFetchByP_L();
+
+	public FinderPath getFinderPathCountByP_L();
+
 	/**
 	 * Returns all the layout friendly urls where plid = any &#63; and languageId = &#63;.
 	 *
@@ -1102,6 +1140,10 @@ public interface LayoutFriendlyURLPersistence
 	 * @return the number of matching layout friendly urls
 	 */
 	public int countByP_L(long[] plids, String languageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_F();
+
+	public FinderPath getFinderPathCountByG_P_F();
 
 	/**
 	 * Returns all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
@@ -1274,6 +1316,10 @@ public interface LayoutFriendlyURLPersistence
 	 */
 	public int countByG_P_F(
 		long groupId, boolean privateLayout, String friendlyURL);
+
+	public FinderPath getFinderPathFetchByG_P_F_L();
+
+	public FinderPath getFinderPathCountByG_P_F_L();
 
 	/**
 	 * Returns the layout friendly url where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a <code>NoSuchLayoutFriendlyURLException</code> if it could not be found.

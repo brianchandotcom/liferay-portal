@@ -101,9 +101,31 @@ public class KaleoNodePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo nodes where companyId = &#63;.
@@ -613,7 +635,20 @@ public class KaleoNodePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	}
+
 	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId() {
+		return _finderPathCountByKaleoDefinitionVersionId;
+	}
 
 	/**
 	 * Returns all the kaleo nodes where kaleoDefinitionVersionId = &#63;.
@@ -1146,7 +1181,18 @@ public class KaleoNodePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_KDVI;
 	private FinderPath _finderPathWithoutPaginationFindByC_KDVI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_KDVI() {
+		return _finderPathWithoutPaginationFindByC_KDVI;
+	}
+
 	private FinderPath _finderPathCountByC_KDVI;
+
+	@Override
+	public FinderPath getFinderPathCountByC_KDVI() {
+		return _finderPathCountByC_KDVI;
+	}
 
 	/**
 	 * Returns all the kaleo nodes where companyId = &#63; and kaleoDefinitionVersionId = &#63;.

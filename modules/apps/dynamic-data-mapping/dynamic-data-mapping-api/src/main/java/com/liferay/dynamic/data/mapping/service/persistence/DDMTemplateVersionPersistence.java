@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface DDMTemplateVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateVersionUtil} to access the ddm template version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByTemplateId();
+
+	public FinderPath getFinderPathCountByTemplateId();
 
 	/**
 	 * Returns all the ddm template versions where templateId = &#63;.
@@ -186,6 +194,10 @@ public interface DDMTemplateVersionPersistence
 	 */
 	public int countByTemplateId(long templateId);
 
+	public FinderPath getFinderPathFetchByT_V();
+
+	public FinderPath getFinderPathCountByT_V();
+
 	/**
 	 * Returns the ddm template version where templateId = &#63; and version = &#63; or throws a <code>NoSuchTemplateVersionException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface DDMTemplateVersionPersistence
 	 * @return the number of matching ddm template versions
 	 */
 	public int countByT_V(long templateId, String version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByT_S();
+
+	public FinderPath getFinderPathCountByT_S();
 
 	/**
 	 * Returns all the ddm template versions where templateId = &#63; and status = &#63;.

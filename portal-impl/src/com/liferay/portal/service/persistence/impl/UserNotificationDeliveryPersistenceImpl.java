@@ -82,9 +82,31 @@ public class UserNotificationDeliveryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the user notification deliveries where userId = &#63;.
@@ -588,7 +610,18 @@ public class UserNotificationDeliveryPersistenceImpl
 		"userNotificationDelivery.userId = ?";
 
 	private FinderPath _finderPathFetchByU_P_C_N_D;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_P_C_N_D() {
+		return _finderPathFetchByU_P_C_N_D;
+	}
+
 	private FinderPath _finderPathCountByU_P_C_N_D;
+
+	@Override
+	public FinderPath getFinderPathCountByU_P_C_N_D() {
+		return _finderPathCountByU_P_C_N_D;
+	}
 
 	/**
 	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a <code>NoSuchUserNotificationDeliveryException</code> if it could not be found.

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
@@ -43,6 +44,13 @@ public interface KaleoInstancePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoInstanceUtil} to access the kaleo instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo instances where companyId = &#63;.
@@ -187,6 +195,11 @@ public interface KaleoInstancePersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId();
+
 	/**
 	 * Returns all the kaleo instances where kaleoDefinitionVersionId = &#63;.
 	 *
@@ -330,6 +343,10 @@ public interface KaleoInstancePersistence
 	 * @return the number of matching kaleo instances
 	 */
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_U();
+
+	public FinderPath getFinderPathCountByC_U();
 
 	/**
 	 * Returns all the kaleo instances where companyId = &#63; and userId = &#63;.
@@ -485,6 +502,10 @@ public interface KaleoInstancePersistence
 	 */
 	public int countByC_U(long companyId, long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByKDI_C();
+
+	public FinderPath getFinderPathCountByKDI_C();
+
 	/**
 	 * Returns all the kaleo instances where kaleoDefinitionId = &#63; and completed = &#63;.
 	 *
@@ -639,6 +660,10 @@ public interface KaleoInstancePersistence
 	 * @return the number of matching kaleo instances
 	 */
 	public int countByKDI_C(long kaleoDefinitionId, boolean completed);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKDVI_C();
+
+	public FinderPath getFinderPathCountByKDVI_C();
 
 	/**
 	 * Returns all the kaleo instances where kaleoDefinitionVersionId = &#63; and completed = &#63;.
@@ -797,6 +822,10 @@ public interface KaleoInstancePersistence
 	 */
 	public int countByKDVI_C(long kaleoDefinitionVersionId, boolean completed);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK();
+
+	public FinderPath getFinderPathCountByCN_CPK();
+
 	/**
 	 * Returns all the kaleo instances where className = &#63; and classPK = &#63;.
 	 *
@@ -952,6 +981,10 @@ public interface KaleoInstancePersistence
 	 */
 	public int countByCN_CPK(String className, long classPK);
 
+	public FinderPath getFinderPathFetchByKII_C_U();
+
+	public FinderPath getFinderPathCountByKII_C_U();
+
 	/**
 	 * Returns the kaleo instance where kaleoInstanceId = &#63; and companyId = &#63; and userId = &#63; or throws a <code>NoSuchInstanceException</code> if it could not be found.
 	 *
@@ -1011,6 +1044,10 @@ public interface KaleoInstancePersistence
 	 */
 	public int countByKII_C_U(
 		long kaleoInstanceId, long companyId, long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_KDN_KDV_CD();
+
+	public FinderPath getFinderPathCountByC_KDN_KDV_CD();
 
 	/**
 	 * Returns all the kaleo instances where companyId = &#63; and kaleoDefinitionName = &#63; and kaleoDefinitionVersion = &#63; and completionDate = &#63;.

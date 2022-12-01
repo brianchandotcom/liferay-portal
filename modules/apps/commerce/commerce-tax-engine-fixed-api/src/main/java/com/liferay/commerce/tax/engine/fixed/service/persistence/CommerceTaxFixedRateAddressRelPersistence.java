@@ -16,6 +16,7 @@ package com.liferay.commerce.tax.engine.fixed.service.persistence;
 
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateAddressRelException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateAddressRelUtil} to access the commerce tax fixed rate address rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceTaxMethodId();
+
+	public FinderPath getFinderPathCountByCommerceTaxMethodId();
 
 	/**
 	 * Returns all the commerce tax fixed rate address rels where commerceTaxMethodId = &#63;.
@@ -188,6 +196,10 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	 */
 	public int countByCommerceTaxMethodId(long commerceTaxMethodId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPTaxCategoryId();
+
+	public FinderPath getFinderPathCountByCPTaxCategoryId();
+
 	/**
 	 * Returns all the commerce tax fixed rate address rels where CPTaxCategoryId = &#63;.
 	 *
@@ -331,6 +343,10 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	 * @return the number of matching commerce tax fixed rate address rels
 	 */
 	public int countByCPTaxCategoryId(long CPTaxCategoryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId();
+
+	public FinderPath getFinderPathCountByCountryId();
 
 	/**
 	 * Returns all the commerce tax fixed rate address rels where countryId = &#63;.

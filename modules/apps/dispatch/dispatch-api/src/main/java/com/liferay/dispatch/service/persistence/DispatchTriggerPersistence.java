@@ -16,6 +16,7 @@ package com.liferay.dispatch.service.persistence;
 
 import com.liferay.dispatch.exception.NoSuchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface DispatchTriggerPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DispatchTriggerUtil} to access the dispatch trigger persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the dispatch triggers where uuid = &#63;.
@@ -247,6 +255,10 @@ public interface DispatchTriggerPersistence
 	 * @return the number of matching dispatch triggers that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the dispatch triggers where uuid = &#63; and companyId = &#63;.
@@ -473,6 +485,10 @@ public interface DispatchTriggerPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the dispatch triggers where companyId = &#63;.
 	 *
@@ -680,6 +696,10 @@ public interface DispatchTriggerPersistence
 	 * @return the number of matching dispatch triggers that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_U();
+
+	public FinderPath getFinderPathCountByC_U();
 
 	/**
 	 * Returns all the dispatch triggers where companyId = &#63; and userId = &#63;.
@@ -905,6 +925,10 @@ public interface DispatchTriggerPersistence
 	 * @return the number of matching dispatch triggers that the user has permission to view
 	 */
 	public int filterCountByC_U(long companyId, long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_DTET();
+
+	public FinderPath getFinderPathCountByC_DTET();
 
 	/**
 	 * Returns all the dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63;.
@@ -1134,6 +1158,10 @@ public interface DispatchTriggerPersistence
 	public int filterCountByC_DTET(
 		long companyId, String dispatchTaskExecutorType);
 
+	public FinderPath getFinderPathFetchByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
+
 	/**
 	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
 	 *
@@ -1183,6 +1211,10 @@ public interface DispatchTriggerPersistence
 	 * @return the number of matching dispatch triggers
 	 */
 	public int countByC_N(long companyId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByA_DTCM();
+
+	public FinderPath getFinderPathCountByA_DTCM();
 
 	/**
 	 * Returns all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
@@ -1542,6 +1574,10 @@ public interface DispatchTriggerPersistence
 	 */
 	public int filterCountByA_DTCM(
 		boolean active, int[] dispatchTaskClusterModes);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.

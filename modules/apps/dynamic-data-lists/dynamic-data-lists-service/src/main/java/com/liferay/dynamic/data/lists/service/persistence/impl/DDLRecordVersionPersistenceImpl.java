@@ -102,9 +102,31 @@ public class DDLRecordVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByRecordId;
 	private FinderPath _finderPathWithoutPaginationFindByRecordId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByRecordId() {
+		return _finderPathWithoutPaginationFindByRecordId;
+	}
+
 	private FinderPath _finderPathCountByRecordId;
+
+	@Override
+	public FinderPath getFinderPathCountByRecordId() {
+		return _finderPathCountByRecordId;
+	}
 
 	/**
 	 * Returns all the ddl record versions where recordId = &#63;.
@@ -617,7 +639,18 @@ public class DDLRecordVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_R;
 	private FinderPath _finderPathWithoutPaginationFindByR_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_R() {
+		return _finderPathWithoutPaginationFindByR_R;
+	}
+
 	private FinderPath _finderPathCountByR_R;
+
+	@Override
+	public FinderPath getFinderPathCountByR_R() {
+		return _finderPathCountByR_R;
+	}
 
 	/**
 	 * Returns all the ddl record versions where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -1218,7 +1251,18 @@ public class DDLRecordVersionPersistenceImpl
 		"(ddlRecordVersion.recordSetVersion IS NULL OR ddlRecordVersion.recordSetVersion = '')";
 
 	private FinderPath _finderPathFetchByR_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByR_V() {
+		return _finderPathFetchByR_V;
+	}
+
 	private FinderPath _finderPathCountByR_V;
+
+	@Override
+	public FinderPath getFinderPathCountByR_V() {
+		return _finderPathCountByR_V;
+	}
 
 	/**
 	 * Returns the ddl record version where recordId = &#63; and version = &#63; or throws a <code>NoSuchRecordVersionException</code> if it could not be found.
@@ -1482,7 +1526,18 @@ public class DDLRecordVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_S;
 	private FinderPath _finderPathWithoutPaginationFindByR_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_S() {
+		return _finderPathWithoutPaginationFindByR_S;
+	}
+
 	private FinderPath _finderPathCountByR_S;
+
+	@Override
+	public FinderPath getFinderPathCountByR_S() {
+		return _finderPathCountByR_S;
+	}
 
 	/**
 	 * Returns all the ddl record versions where recordId = &#63; and status = &#63;.
@@ -2036,7 +2091,18 @@ public class DDLRecordVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_R_R_S;
 	private FinderPath _finderPathWithoutPaginationFindByU_R_R_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_R_R_S() {
+		return _finderPathWithoutPaginationFindByU_R_R_S;
+	}
+
 	private FinderPath _finderPathCountByU_R_R_S;
+
+	@Override
+	public FinderPath getFinderPathCountByU_R_R_S() {
+		return _finderPathCountByU_R_R_S;
+	}
 
 	/**
 	 * Returns all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.

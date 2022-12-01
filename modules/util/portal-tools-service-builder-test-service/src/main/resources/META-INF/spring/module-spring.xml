@@ -45,6 +45,9 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryModelArgumentsResolver" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LoadFinderCacheEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LoadFinderCacheEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LoadFinderCacheEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LoadFinderCacheEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LoadFinderCacheEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LoadFinderCacheEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LocalizedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryModelArgumentsResolver" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryPersistence" />

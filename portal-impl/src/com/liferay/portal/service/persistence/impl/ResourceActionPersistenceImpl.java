@@ -81,9 +81,31 @@ public class ResourceActionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByName;
 	private FinderPath _finderPathWithoutPaginationFindByName;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByName() {
+		return _finderPathWithoutPaginationFindByName;
+	}
+
 	private FinderPath _finderPathCountByName;
+
+	@Override
+	public FinderPath getFinderPathCountByName() {
+		return _finderPathCountByName;
+	}
 
 	/**
 	 * Returns all the resource actions where name = &#63;.
@@ -615,7 +637,18 @@ public class ResourceActionPersistenceImpl
 		"(resourceAction.name IS NULL OR resourceAction.name = '')";
 
 	private FinderPath _finderPathFetchByN_A;
+
+	@Override
+	public FinderPath getFinderPathFetchByN_A() {
+		return _finderPathFetchByN_A;
+	}
+
 	private FinderPath _finderPathCountByN_A;
+
+	@Override
+	public FinderPath getFinderPathCountByN_A() {
+		return _finderPathCountByN_A;
+	}
 
 	/**
 	 * Returns the resource action where name = &#63; and actionId = &#63; or throws a <code>NoSuchResourceActionException</code> if it could not be found.

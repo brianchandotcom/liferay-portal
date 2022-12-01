@@ -14,6 +14,7 @@
 
 package com.liferay.push.notifications.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.push.notifications.exception.NoSuchDeviceException;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
@@ -40,6 +41,13 @@ public interface PushNotificationsDevicePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PushNotificationsDeviceUtil} to access the push notifications device persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByToken();
+
+	public FinderPath getFinderPathCountByToken();
 
 	/**
 	 * Returns the push notifications device where token = &#63; or throws a <code>NoSuchDeviceException</code> if it could not be found.
@@ -85,6 +93,10 @@ public interface PushNotificationsDevicePersistence
 	 * @return the number of matching push notifications devices
 	 */
 	public int countByToken(String token);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_P();
+
+	public FinderPath getFinderPathCountByU_P();
 
 	/**
 	 * Returns all the push notifications devices where userId = &#63; and platform = &#63;.

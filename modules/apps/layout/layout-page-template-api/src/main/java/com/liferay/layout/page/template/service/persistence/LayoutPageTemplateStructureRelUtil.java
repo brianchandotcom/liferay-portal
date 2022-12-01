@@ -125,6 +125,30 @@ public class LayoutPageTemplateStructureRelUtil {
 			layoutPageTemplateStructureRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the layout page template structure rels where uuid = &#63;.
 	 *
@@ -296,6 +320,18 @@ public class LayoutPageTemplateStructureRelUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the layout page template structure rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateStructureRelException</code> if it could not be found.
 	 *
@@ -363,6 +399,18 @@ public class LayoutPageTemplateStructureRelUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -553,6 +601,20 @@ public class LayoutPageTemplateStructureRelUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLayoutPageTemplateStructureId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLayoutPageTemplateStructureId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLayoutPageTemplateStructureId() {
+
+		return getPersistence().
+			getFinderPathCountByLayoutPageTemplateStructureId();
 	}
 
 	/**
@@ -759,6 +821,19 @@ public class LayoutPageTemplateStructureRelUtil {
 			layoutPageTemplateStructureId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperienceId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindBySegmentsExperienceId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySegmentsExperienceId() {
+
+		return getPersistence().getFinderPathCountBySegmentsExperienceId();
+	}
+
 	/**
 	 * Returns all the layout page template structure rels where segmentsExperienceId = &#63;.
 	 *
@@ -955,6 +1030,18 @@ public class LayoutPageTemplateStructureRelUtil {
 	public static int countBySegmentsExperienceId(long segmentsExperienceId) {
 		return getPersistence().countBySegmentsExperienceId(
 			segmentsExperienceId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByL_S() {
+
+		return getPersistence().getFinderPathFetchByL_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByL_S() {
+
+		return getPersistence().getFinderPathCountByL_S();
 	}
 
 	/**

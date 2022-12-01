@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchLayoutBranchException;
 import com.liferay.portal.kernel.model.LayoutBranch;
 
@@ -38,6 +39,13 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutBranchUtil} to access the layout branch persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutSetBranchId();
+
+	public FinderPath getFinderPathCountByLayoutSetBranchId();
 
 	/**
 	 * Returns all the layout branches where layoutSetBranchId = &#63;.
@@ -182,6 +190,10 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @return the number of matching layout branches
 	 */
 	public int countByLayoutSetBranchId(long layoutSetBranchId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByL_P();
+
+	public FinderPath getFinderPathCountByL_P();
 
 	/**
 	 * Returns all the layout branches where layoutSetBranchId = &#63; and plid = &#63;.
@@ -338,6 +350,10 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 */
 	public int countByL_P(long layoutSetBranchId, long plid);
 
+	public FinderPath getFinderPathFetchByL_P_N();
+
+	public FinderPath getFinderPathCountByL_P_N();
+
 	/**
 	 * Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or throws a <code>NoSuchLayoutBranchException</code> if it could not be found.
 	 *
@@ -395,6 +411,10 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	 * @return the number of matching layout branches
 	 */
 	public int countByL_P_N(long layoutSetBranchId, long plid, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByL_P_M();
+
+	public FinderPath getFinderPathCountByL_P_M();
 
 	/**
 	 * Returns all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.

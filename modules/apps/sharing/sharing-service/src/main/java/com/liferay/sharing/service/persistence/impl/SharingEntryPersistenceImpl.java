@@ -100,9 +100,31 @@ public class SharingEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the sharing entries where uuid = &#63;.
@@ -630,7 +652,18 @@ public class SharingEntryPersistenceImpl
 		"(sharingEntry.uuid IS NULL OR sharingEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the sharing entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -879,7 +912,18 @@ public class SharingEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the sharing entries where uuid = &#63; and companyId = &#63;.
@@ -1459,7 +1503,18 @@ public class SharingEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the sharing entries where groupId = &#63;.
@@ -1951,7 +2006,18 @@ public class SharingEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the sharing entries where userId = &#63;.
@@ -2441,7 +2507,18 @@ public class SharingEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByToUserId;
 	private FinderPath _finderPathWithoutPaginationFindByToUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByToUserId() {
+		return _finderPathWithoutPaginationFindByToUserId;
+	}
+
 	private FinderPath _finderPathCountByToUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByToUserId() {
+		return _finderPathCountByToUserId;
+	}
 
 	/**
 	 * Returns all the sharing entries where toUserId = &#63;.
@@ -3469,7 +3546,18 @@ public class SharingEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_C;
 	private FinderPath _finderPathWithoutPaginationFindByU_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_C() {
+		return _finderPathWithoutPaginationFindByU_C;
+	}
+
 	private FinderPath _finderPathCountByU_C;
+
+	@Override
+	public FinderPath getFinderPathCountByU_C() {
+		return _finderPathCountByU_C;
+	}
 
 	/**
 	 * Returns all the sharing entries where userId = &#63; and classNameId = &#63;.
@@ -4008,7 +4096,18 @@ public class SharingEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByTU_C;
 	private FinderPath _finderPathWithoutPaginationFindByTU_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByTU_C() {
+		return _finderPathWithoutPaginationFindByTU_C;
+	}
+
 	private FinderPath _finderPathCountByTU_C;
+
+	@Override
+	public FinderPath getFinderPathCountByTU_C() {
+		return _finderPathCountByTU_C;
+	}
 
 	/**
 	 * Returns all the sharing entries where toUserId = &#63; and classNameId = &#63;.
@@ -4547,7 +4646,18 @@ public class SharingEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the sharing entries where classNameId = &#63; and classPK = &#63;.
@@ -5085,7 +5195,18 @@ public class SharingEntryPersistenceImpl
 		"sharingEntry.classPK = ?";
 
 	private FinderPath _finderPathFetchByTU_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByTU_C_C() {
+		return _finderPathFetchByTU_C_C;
+	}
+
 	private FinderPath _finderPathCountByTU_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByTU_C_C() {
+		return _finderPathCountByTU_C_C;
+	}
 
 	/**
 	 * Returns the sharing entry where toUserId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

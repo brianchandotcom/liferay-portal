@@ -103,9 +103,31 @@ public class AssetCategoryPropertyPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the asset category properties where companyId = &#63;.
@@ -626,7 +648,18 @@ public class AssetCategoryPropertyPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCategoryId;
 	private FinderPath _finderPathWithoutPaginationFindByCategoryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCategoryId() {
+		return _finderPathWithoutPaginationFindByCategoryId;
+	}
+
 	private FinderPath _finderPathCountByCategoryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCategoryId() {
+		return _finderPathCountByCategoryId;
+	}
 
 	/**
 	 * Returns all the asset category properties where categoryId = &#63;.
@@ -1148,7 +1181,18 @@ public class AssetCategoryPropertyPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_K;
 	private FinderPath _finderPathWithoutPaginationFindByC_K;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_K() {
+		return _finderPathWithoutPaginationFindByC_K;
+	}
+
 	private FinderPath _finderPathCountByC_K;
+
+	@Override
+	public FinderPath getFinderPathCountByC_K() {
+		return _finderPathCountByC_K;
+	}
 
 	/**
 	 * Returns all the asset category properties where companyId = &#63; and key = &#63;.
@@ -1745,7 +1789,18 @@ public class AssetCategoryPropertyPersistenceImpl
 		"(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
 
 	private FinderPath _finderPathFetchByCA_K;
+
+	@Override
+	public FinderPath getFinderPathFetchByCA_K() {
+		return _finderPathFetchByCA_K;
+	}
+
 	private FinderPath _finderPathCountByCA_K;
+
+	@Override
+	public FinderPath getFinderPathCountByCA_K() {
+		return _finderPathCountByCA_K;
+	}
 
 	/**
 	 * Returns the asset category property where categoryId = &#63; and key = &#63; or throws a <code>NoSuchCategoryPropertyException</code> if it could not be found.

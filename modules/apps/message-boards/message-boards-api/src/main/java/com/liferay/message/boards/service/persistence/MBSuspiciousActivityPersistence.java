@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.persistence;
 
 import com.liferay.message.boards.exception.NoSuchSuspiciousActivityException;
 import com.liferay.message.boards.model.MBSuspiciousActivity;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface MBSuspiciousActivityPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBSuspiciousActivityUtil} to access the message boards suspicious activity persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the message boards suspicious activities where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface MBSuspiciousActivityPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the message boards suspicious activity where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface MBSuspiciousActivityPersistence
 	 * @return the number of matching message boards suspicious activities
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface MBSuspiciousActivityPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByMessageId();
+
+	public FinderPath getFinderPathCountByMessageId();
+
 	/**
 	 * Returns all the message boards suspicious activities where messageId = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface MBSuspiciousActivityPersistence
 	 * @return the number of matching message boards suspicious activities
 	 */
 	public int countByMessageId(long messageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByThreadId();
+
+	public FinderPath getFinderPathCountByThreadId();
 
 	/**
 	 * Returns all the message boards suspicious activities where threadId = &#63;.
@@ -677,6 +701,10 @@ public interface MBSuspiciousActivityPersistence
 	 */
 	public int countByThreadId(long threadId);
 
+	public FinderPath getFinderPathFetchByU_M();
+
+	public FinderPath getFinderPathCountByU_M();
+
 	/**
 	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
 	 *
@@ -726,6 +754,10 @@ public interface MBSuspiciousActivityPersistence
 	 * @return the number of matching message boards suspicious activities
 	 */
 	public int countByU_M(long userId, long messageId);
+
+	public FinderPath getFinderPathFetchByU_T();
+
+	public FinderPath getFinderPathCountByU_T();
 
 	/**
 	 * Returns the message boards suspicious activity where userId = &#63; and threadId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.

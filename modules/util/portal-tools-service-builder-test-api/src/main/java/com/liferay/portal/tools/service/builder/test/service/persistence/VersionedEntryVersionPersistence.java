@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchVersionedEntryVersionException;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion;
@@ -40,6 +41,13 @@ public interface VersionedEntryVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link VersionedEntryVersionUtil} to access the versioned entry version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByVersionedEntryId();
+
+	public FinderPath getFinderPathCountByVersionedEntryId();
 
 	/**
 	 * Returns all the versioned entry versions where versionedEntryId = &#63;.
@@ -185,6 +193,10 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public int countByVersionedEntryId(long versionedEntryId);
 
+	public FinderPath getFinderPathFetchByVersionedEntryId_Version();
+
+	public FinderPath getFinderPathCountByVersionedEntryId_Version();
+
 	/**
 	 * Returns the versioned entry version where versionedEntryId = &#63; and version = &#63; or throws a <code>NoSuchVersionedEntryVersionException</code> if it could not be found.
 	 *
@@ -238,6 +250,10 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public int countByVersionedEntryId_Version(
 		long versionedEntryId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the versioned entry versions where groupId = &#63;.
@@ -381,6 +397,10 @@ public interface VersionedEntryVersionPersistence
 	 * @return the number of matching versioned entry versions
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Version();
+
+	public FinderPath getFinderPathCountByGroupId_Version();
 
 	/**
 	 * Returns all the versioned entry versions where groupId = &#63; and version = &#63;.

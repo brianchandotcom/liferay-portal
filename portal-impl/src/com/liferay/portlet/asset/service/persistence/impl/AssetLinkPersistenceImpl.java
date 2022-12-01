@@ -92,9 +92,31 @@ public class AssetLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByEntryId1;
 	private FinderPath _finderPathWithoutPaginationFindByEntryId1;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByEntryId1() {
+		return _finderPathWithoutPaginationFindByEntryId1;
+	}
+
 	private FinderPath _finderPathCountByEntryId1;
+
+	@Override
+	public FinderPath getFinderPathCountByEntryId1() {
+		return _finderPathCountByEntryId1;
+	}
 
 	/**
 	 * Returns all the asset links where entryId1 = &#63;.
@@ -601,7 +623,18 @@ public class AssetLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByEntryId2;
 	private FinderPath _finderPathWithoutPaginationFindByEntryId2;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByEntryId2() {
+		return _finderPathWithoutPaginationFindByEntryId2;
+	}
+
 	private FinderPath _finderPathCountByEntryId2;
+
+	@Override
+	public FinderPath getFinderPathCountByEntryId2() {
+		return _finderPathCountByEntryId2;
+	}
 
 	/**
 	 * Returns all the asset links where entryId2 = &#63;.
@@ -1108,7 +1141,18 @@ public class AssetLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByE_E;
 	private FinderPath _finderPathWithoutPaginationFindByE_E;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByE_E() {
+		return _finderPathWithoutPaginationFindByE_E;
+	}
+
 	private FinderPath _finderPathCountByE_E;
+
+	@Override
+	public FinderPath getFinderPathCountByE_E() {
+		return _finderPathCountByE_E;
+	}
 
 	/**
 	 * Returns all the asset links where entryId1 = &#63; and entryId2 = &#63;.
@@ -1662,7 +1706,18 @@ public class AssetLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByE1_T;
 	private FinderPath _finderPathWithoutPaginationFindByE1_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByE1_T() {
+		return _finderPathWithoutPaginationFindByE1_T;
+	}
+
 	private FinderPath _finderPathCountByE1_T;
+
+	@Override
+	public FinderPath getFinderPathCountByE1_T() {
+		return _finderPathCountByE1_T;
+	}
 
 	/**
 	 * Returns all the asset links where entryId1 = &#63; and type = &#63;.
@@ -2213,7 +2268,18 @@ public class AssetLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByE2_T;
 	private FinderPath _finderPathWithoutPaginationFindByE2_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByE2_T() {
+		return _finderPathWithoutPaginationFindByE2_T;
+	}
+
 	private FinderPath _finderPathCountByE2_T;
+
+	@Override
+	public FinderPath getFinderPathCountByE2_T() {
+		return _finderPathCountByE2_T;
+	}
 
 	/**
 	 * Returns all the asset links where entryId2 = &#63; and type = &#63;.
@@ -2763,7 +2829,18 @@ public class AssetLinkPersistenceImpl
 		"assetLink.type = ?";
 
 	private FinderPath _finderPathFetchByE_E_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByE_E_T() {
+		return _finderPathFetchByE_E_T;
+	}
+
 	private FinderPath _finderPathCountByE_E_T;
+
+	@Override
+	public FinderPath getFinderPathCountByE_E_T() {
+		return _finderPathCountByE_E_T;
+	}
 
 	/**
 	 * Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or throws a <code>NoSuchLinkException</code> if it could not be found.

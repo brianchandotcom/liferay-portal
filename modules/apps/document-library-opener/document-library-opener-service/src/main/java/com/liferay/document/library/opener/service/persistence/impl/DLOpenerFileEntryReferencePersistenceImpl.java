@@ -96,8 +96,30 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathFetchByFileEntryId() {
+		return _finderPathFetchByFileEntryId;
+	}
+
 	private FinderPath _finderPathCountByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByFileEntryId() {
+		return _finderPathCountByFileEntryId;
+	}
 
 	/**
 	 * Returns the dl opener file entry reference where fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
@@ -299,7 +321,18 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		"dlOpenerFileEntryReference.fileEntryId = ?";
 
 	private FinderPath _finderPathFetchByR_F;
+
+	@Override
+	public FinderPath getFinderPathFetchByR_F() {
+		return _finderPathFetchByR_F;
+	}
+
 	private FinderPath _finderPathCountByR_F;
+
+	@Override
+	public FinderPath getFinderPathCountByR_F() {
+		return _finderPathCountByR_F;
+	}
 
 	/**
 	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.

@@ -80,9 +80,31 @@ public class FinderWhereClauseEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByName_Nickname;
 	private FinderPath _finderPathWithoutPaginationFindByName_Nickname;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByName_Nickname() {
+		return _finderPathWithoutPaginationFindByName_Nickname;
+	}
+
 	private FinderPath _finderPathCountByName_Nickname;
+
+	@Override
+	public FinderPath getFinderPathCountByName_Nickname() {
+		return _finderPathCountByName_Nickname;
+	}
 
 	/**
 	 * Returns all the finder where clause entries where name = &#63;.

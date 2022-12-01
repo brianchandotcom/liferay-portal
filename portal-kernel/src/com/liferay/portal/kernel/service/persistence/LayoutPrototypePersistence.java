@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 
@@ -39,6 +40,13 @@ public interface LayoutPrototypePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPrototypeUtil} to access the layout prototype persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout prototypes where uuid = &#63;.
@@ -246,6 +254,10 @@ public interface LayoutPrototypePersistence
 	 * @return the number of matching layout prototypes that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout prototypes where uuid = &#63; and companyId = &#63;.
@@ -472,6 +484,10 @@ public interface LayoutPrototypePersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the layout prototypes where companyId = &#63;.
 	 *
@@ -679,6 +695,10 @@ public interface LayoutPrototypePersistence
 	 * @return the number of matching layout prototypes that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
 
 	/**
 	 * Returns all the layout prototypes where companyId = &#63; and active = &#63;.

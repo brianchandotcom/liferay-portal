@@ -94,9 +94,31 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the workflow definition links where companyId = &#63;.
@@ -618,7 +640,18 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C() {
+		return _finderPathWithoutPaginationFindByG_C_C;
+	}
+
 	private FinderPath _finderPathCountByG_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C() {
+		return _finderPathCountByG_C_C;
+	}
 
 	/**
 	 * Returns all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -1216,7 +1249,18 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_CPK;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_CPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_CPK() {
+		return _finderPathWithoutPaginationFindByG_C_CPK;
+	}
+
 	private FinderPath _finderPathCountByG_C_CPK;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_CPK() {
+		return _finderPathCountByG_C_CPK;
+	}
 
 	/**
 	 * Returns all the workflow definition links where groupId = &#63; and companyId = &#63; and classPK = &#63;.
@@ -1811,7 +1855,18 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_W_W;
 	private FinderPath _finderPathWithoutPaginationFindByC_W_W;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_W_W() {
+		return _finderPathWithoutPaginationFindByC_W_W;
+	}
+
 	private FinderPath _finderPathCountByC_W_W;
+
+	@Override
+	public FinderPath getFinderPathCountByC_W_W() {
+		return _finderPathCountByC_W_W;
+	}
 
 	/**
 	 * Returns all the workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -2484,7 +2539,18 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_C() {
+		return _finderPathWithoutPaginationFindByG_C_C_C;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_C() {
+		return _finderPathCountByG_C_C_C;
+	}
 
 	/**
 	 * Returns all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -3125,7 +3191,18 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		"workflowDefinitionLink.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_C_C_C_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_C_C_T() {
+		return _finderPathFetchByG_C_C_C_T;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_C_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_C_T() {
+		return _finderPathCountByG_C_C_C_T;
+	}
 
 	/**
 	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or throws a <code>NoSuchWorkflowDefinitionLinkException</code> if it could not be found.

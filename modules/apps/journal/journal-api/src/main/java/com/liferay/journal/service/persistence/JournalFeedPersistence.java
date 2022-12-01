@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence;
 
 import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.model.JournalFeed;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface JournalFeedPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFeedUtil} to access the journal feed persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the journal feeds where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface JournalFeedPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the journal feed where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFeedException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface JournalFeedPersistence
 	 * @return the number of matching journal feeds
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the journal feeds where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface JournalFeedPersistence
 	 * @return the number of matching journal feeds
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the journal feeds where groupId = &#63;.
@@ -596,6 +616,10 @@ public interface JournalFeedPersistence
 	 * @return the number of matching journal feeds that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
+
+	public FinderPath getFinderPathFetchByG_F();
+
+	public FinderPath getFinderPathCountByG_F();
 
 	/**
 	 * Returns the journal feed where groupId = &#63; and feedId = &#63; or throws a <code>NoSuchFeedException</code> if it could not be found.

@@ -81,9 +81,31 @@ public class RecentLayoutRevisionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the recent layout revisions where groupId = &#63;.
@@ -587,7 +609,18 @@ public class RecentLayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the recent layout revisions where userId = &#63;.
@@ -1089,7 +1122,18 @@ public class RecentLayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByLayoutRevisionId;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutRevisionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutRevisionId() {
+		return _finderPathWithoutPaginationFindByLayoutRevisionId;
+	}
+
 	private FinderPath _finderPathCountByLayoutRevisionId;
+
+	@Override
+	public FinderPath getFinderPathCountByLayoutRevisionId() {
+		return _finderPathCountByLayoutRevisionId;
+	}
 
 	/**
 	 * Returns all the recent layout revisions where layoutRevisionId = &#63;.
@@ -1602,7 +1646,18 @@ public class RecentLayoutRevisionPersistenceImpl
 			"recentLayoutRevision.layoutRevisionId = ?";
 
 	private FinderPath _finderPathFetchByU_L_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_L_P() {
+		return _finderPathFetchByU_L_P;
+	}
+
 	private FinderPath _finderPathCountByU_L_P;
+
+	@Override
+	public FinderPath getFinderPathCountByU_L_P() {
+		return _finderPathCountByU_L_P;
+	}
 
 	/**
 	 * Returns the recent layout revision where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; or throws a <code>NoSuchRecentLayoutRevisionException</code> if it could not be found.

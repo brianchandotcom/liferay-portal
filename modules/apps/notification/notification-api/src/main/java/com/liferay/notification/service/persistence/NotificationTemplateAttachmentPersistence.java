@@ -16,6 +16,7 @@ package com.liferay.notification.service.persistence;
 
 import com.liferay.notification.exception.NoSuchNotificationTemplateAttachmentException;
 import com.liferay.notification.model.NotificationTemplateAttachment;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,14 @@ public interface NotificationTemplateAttachmentPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NotificationTemplateAttachmentUtil} to access the notification template attachment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByNotificationTemplateId();
+
+	public FinderPath getFinderPathCountByNotificationTemplateId();
 
 	/**
 	 * Returns all the notification template attachments where notificationTemplateId = &#63;.
@@ -189,6 +198,10 @@ public interface NotificationTemplateAttachmentPersistence
 	 * @return the number of matching notification template attachments
 	 */
 	public int countByNotificationTemplateId(long notificationTemplateId);
+
+	public FinderPath getFinderPathFetchByNTI_OFI();
+
+	public FinderPath getFinderPathCountByNTI_OFI();
 
 	/**
 	 * Returns the notification template attachment where notificationTemplateId = &#63; and objectFieldId = &#63; or throws a <code>NoSuchNotificationTemplateAttachmentException</code> if it could not be found.

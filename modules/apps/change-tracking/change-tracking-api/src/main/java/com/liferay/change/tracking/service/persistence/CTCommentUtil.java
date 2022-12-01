@@ -119,6 +119,31 @@ public class CTCommentUtil {
 		return getPersistence().update(ctComment, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCtCollectionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCtCollectionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCtCollectionId() {
+
+		return getPersistence().getFinderPathCountByCtCollectionId();
+	}
+
 	/**
 	 * Returns all the ct comments where ctCollectionId = &#63;.
 	 *
@@ -287,6 +312,18 @@ public class CTCommentUtil {
 	 */
 	public static int countByCtCollectionId(long ctCollectionId) {
 		return getPersistence().countByCtCollectionId(ctCollectionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCtEntryId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCtEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCtEntryId() {
+
+		return getPersistence().getFinderPathCountByCtEntryId();
 	}
 
 	/**

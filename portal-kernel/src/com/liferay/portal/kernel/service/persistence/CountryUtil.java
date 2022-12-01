@@ -119,6 +119,30 @@ public class CountryUtil {
 		return getPersistence().update(country, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the countries where uuid = &#63;.
 	 *
@@ -278,6 +302,18 @@ public class CountryUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -463,6 +499,18 @@ public class CountryUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the countries where companyId = &#63;.
 	 *
@@ -631,6 +679,18 @@ public class CountryUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByActive() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByActive();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByActive() {
+
+		return getPersistence().getFinderPathCountByActive();
+	}
+
 	/**
 	 * Returns all the countries where active = &#63;.
 	 *
@@ -795,6 +855,18 @@ public class CountryUtil {
 		return getPersistence().countByActive(active);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_A2() {
+
+		return getPersistence().getFinderPathFetchByC_A2();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A2() {
+
+		return getPersistence().getFinderPathCountByC_A2();
+	}
+
 	/**
 	 * Returns the country where companyId = &#63; and a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
 	 *
@@ -858,6 +930,18 @@ public class CountryUtil {
 		return getPersistence().countByC_A2(companyId, a2);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_A3() {
+
+		return getPersistence().getFinderPathFetchByC_A3();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A3() {
+
+		return getPersistence().getFinderPathCountByC_A3();
+	}
+
 	/**
 	 * Returns the country where companyId = &#63; and a3 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
 	 *
@@ -919,6 +1003,18 @@ public class CountryUtil {
 	 */
 	public static int countByC_A3(long companyId, String a3) {
 		return getPersistence().countByC_A3(companyId, a3);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_Active() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_Active();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_Active() {
+
+		return getPersistence().getFinderPathCountByC_Active();
 	}
 
 	/**
@@ -1104,6 +1200,18 @@ public class CountryUtil {
 		return getPersistence().countByC_Active(companyId, active);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_Name() {
+
+		return getPersistence().getFinderPathFetchByC_Name();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_Name() {
+
+		return getPersistence().getFinderPathCountByC_Name();
+	}
+
 	/**
 	 * Returns the country where companyId = &#63; and name = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
 	 *
@@ -1165,6 +1273,18 @@ public class CountryUtil {
 	 */
 	public static int countByC_Name(long companyId, String name) {
 		return getPersistence().countByC_Name(companyId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_Number() {
+
+		return getPersistence().getFinderPathFetchByC_Number();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_Number() {
+
+		return getPersistence().getFinderPathCountByC_Number();
 	}
 
 	/**
@@ -1229,6 +1349,18 @@ public class CountryUtil {
 	 */
 	public static int countByC_Number(long companyId, String number) {
 		return getPersistence().countByC_Number(companyId, number);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A_B() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A_B();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A_B() {
+
+		return getPersistence().getFinderPathCountByC_A_B();
 	}
 
 	/**
@@ -1434,6 +1566,18 @@ public class CountryUtil {
 		long companyId, boolean active, boolean billingAllowed) {
 
 		return getPersistence().countByC_A_B(companyId, active, billingAllowed);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A_S() {
+
+		return getPersistence().getFinderPathCountByC_A_S();
 	}
 
 	/**

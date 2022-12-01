@@ -94,9 +94,31 @@ public class ChangesetCollectionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the changeset collections where groupId = &#63;.
@@ -598,7 +620,18 @@ public class ChangesetCollectionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the changeset collections where companyId = &#63;.
@@ -1104,7 +1137,18 @@ public class ChangesetCollectionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U() {
+		return _finderPathWithoutPaginationFindByG_U;
+	}
+
 	private FinderPath _finderPathCountByG_U;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U() {
+		return _finderPathCountByG_U;
+	}
 
 	/**
 	 * Returns all the changeset collections where groupId = &#63; and userId = &#63;.
@@ -1643,7 +1687,18 @@ public class ChangesetCollectionPersistenceImpl
 		"changesetCollection.userId = ?";
 
 	private FinderPath _finderPathFetchByG_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_N() {
+		return _finderPathFetchByG_N;
+	}
+
 	private FinderPath _finderPathCountByG_N;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N() {
+		return _finderPathCountByG_N;
+	}
 
 	/**
 	 * Returns the changeset collection where groupId = &#63; and name = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
@@ -1893,7 +1948,18 @@ public class ChangesetCollectionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_N;
 	private FinderPath _finderPathWithoutPaginationFindByC_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_N() {
+		return _finderPathWithoutPaginationFindByC_N;
+	}
+
 	private FinderPath _finderPathCountByC_N;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N() {
+		return _finderPathCountByC_N;
+	}
 
 	/**
 	 * Returns all the changeset collections where companyId = &#63; and name = &#63;.

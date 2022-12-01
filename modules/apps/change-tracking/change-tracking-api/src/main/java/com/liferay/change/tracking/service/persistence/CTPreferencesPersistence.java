@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence;
 
 import com.liferay.change.tracking.exception.NoSuchPreferencesException;
 import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CTPreferencesPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTPreferencesUtil} to access the ct preferences persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId();
+
+	public FinderPath getFinderPathCountByCtCollectionId();
 
 	/**
 	 * Returns all the ct preferenceses where ctCollectionId = &#63;.
@@ -185,6 +193,11 @@ public interface CTPreferencesPersistence
 	 */
 	public int countByCtCollectionId(long ctCollectionId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByPreviousCtCollectionId();
+
+	public FinderPath getFinderPathCountByPreviousCtCollectionId();
+
 	/**
 	 * Returns all the ct preferenceses where previousCtCollectionId = &#63;.
 	 *
@@ -328,6 +341,10 @@ public interface CTPreferencesPersistence
 	 * @return the number of matching ct preferenceses
 	 */
 	public int countByPreviousCtCollectionId(long previousCtCollectionId);
+
+	public FinderPath getFinderPathFetchByC_U();
+
+	public FinderPath getFinderPathCountByC_U();
 
 	/**
 	 * Returns the ct preferences where companyId = &#63; and userId = &#63; or throws a <code>NoSuchPreferencesException</code> if it could not be found.

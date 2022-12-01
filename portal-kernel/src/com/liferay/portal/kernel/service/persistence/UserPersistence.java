@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -42,6 +43,13 @@ public interface UserPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserUtil} to access the user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the users where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the users where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface UserPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the users where companyId = &#63;.
 	 *
@@ -482,6 +498,10 @@ public interface UserPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchByContactId();
+
+	public FinderPath getFinderPathCountByContactId();
+
 	/**
 	 * Returns the user where contactId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
 	 *
@@ -523,6 +543,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByContactId(long contactId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByEmailAddress();
+
+	public FinderPath getFinderPathCountByEmailAddress();
 
 	/**
 	 * Returns all the users where emailAddress = &#63;.
@@ -666,6 +690,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByEmailAddress(String emailAddress);
+
+	public FinderPath getFinderPathFetchByPortraitId();
+
+	public FinderPath getFinderPathCountByPortraitId();
 
 	/**
 	 * Returns the user where portraitId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -847,6 +875,10 @@ public interface UserPersistence
 	 */
 	public int countByGtU_C(long userId, long companyId);
 
+	public FinderPath getFinderPathFetchByC_U();
+
+	public FinderPath getFinderPathCountByC_U();
+
 	/**
 	 * Returns the user where companyId = &#63; and userId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
 	 *
@@ -895,6 +927,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByC_U(long companyId, long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_CD();
+
+	public FinderPath getFinderPathCountByC_CD();
 
 	/**
 	 * Returns all the users where companyId = &#63; and createDate = &#63;.
@@ -1050,6 +1086,10 @@ public interface UserPersistence
 	 */
 	public int countByC_CD(long companyId, Date createDate);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_MD();
+
+	public FinderPath getFinderPathCountByC_MD();
+
 	/**
 	 * Returns all the users where companyId = &#63; and modifiedDate = &#63;.
 	 *
@@ -1204,6 +1244,10 @@ public interface UserPersistence
 	 */
 	public int countByC_MD(long companyId, Date modifiedDate);
 
+	public FinderPath getFinderPathFetchByC_DU();
+
+	public FinderPath getFinderPathCountByC_DU();
+
 	/**
 	 * Returns the user where companyId = &#63; and defaultUser = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
 	 *
@@ -1253,6 +1297,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByC_DU(long companyId, boolean defaultUser);
+
+	public FinderPath getFinderPathFetchByC_SN();
+
+	public FinderPath getFinderPathCountByC_SN();
 
 	/**
 	 * Returns the user where companyId = &#63; and screenName = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -1304,6 +1352,10 @@ public interface UserPersistence
 	 */
 	public int countByC_SN(long companyId, String screenName);
 
+	public FinderPath getFinderPathFetchByC_EA();
+
+	public FinderPath getFinderPathCountByC_EA();
+
 	/**
 	 * Returns the user where companyId = &#63; and emailAddress = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
 	 *
@@ -1353,6 +1405,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByC_EA(long companyId, String emailAddress);
+
+	public FinderPath getFinderPathFetchByC_FID();
+
+	public FinderPath getFinderPathCountByC_FID();
 
 	/**
 	 * Returns the user where companyId = &#63; and facebookId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -1404,6 +1460,10 @@ public interface UserPersistence
 	 */
 	public int countByC_FID(long companyId, long facebookId);
 
+	public FinderPath getFinderPathFetchByC_GUID();
+
+	public FinderPath getFinderPathCountByC_GUID();
+
 	/**
 	 * Returns the user where companyId = &#63; and googleUserId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
 	 *
@@ -1454,6 +1514,10 @@ public interface UserPersistence
 	 */
 	public int countByC_GUID(long companyId, String googleUserId);
 
+	public FinderPath getFinderPathFetchByC_O();
+
+	public FinderPath getFinderPathCountByC_O();
+
 	/**
 	 * Returns the user where companyId = &#63; and openId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
 	 *
@@ -1503,6 +1567,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByC_O(long companyId, String openId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
 
 	/**
 	 * Returns all the users where companyId = &#63; and status = &#63;.
@@ -1657,6 +1725,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByC_S(long companyId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_CD_MD();
+
+	public FinderPath getFinderPathCountByC_CD_MD();
 
 	/**
 	 * Returns all the users where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
@@ -1826,6 +1898,10 @@ public interface UserPersistence
 	public int countByC_CD_MD(
 		long companyId, Date createDate, Date modifiedDate);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_DU_S();
+
+	public FinderPath getFinderPathCountByC_DU_S();
+
 	/**
 	 * Returns all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
 	 *
@@ -1991,6 +2067,10 @@ public interface UserPersistence
 	 * @return the number of matching users
 	 */
 	public int countByC_DU_S(long companyId, boolean defaultUser, int status);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the user where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.

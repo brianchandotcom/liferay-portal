@@ -14,6 +14,7 @@
 
 package com.liferay.portal.language.override.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.language.override.exception.NoSuchPLOEntryException;
 import com.liferay.portal.language.override.model.PLOEntry;
@@ -39,6 +40,13 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PLOEntryUtil} to access the plo entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the plo entries where companyId = &#63;.
@@ -182,6 +190,10 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	 * @return the number of matching plo entries
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_K();
+
+	public FinderPath getFinderPathCountByC_K();
 
 	/**
 	 * Returns all the plo entries where companyId = &#63; and key = &#63;.
@@ -337,6 +349,10 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	 */
 	public int countByC_K(long companyId, String key);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_L();
+
+	public FinderPath getFinderPathCountByC_L();
+
 	/**
 	 * Returns all the plo entries where companyId = &#63; and languageId = &#63;.
 	 *
@@ -491,6 +507,10 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	 * @return the number of matching plo entries
 	 */
 	public int countByC_L(long companyId, String languageId);
+
+	public FinderPath getFinderPathFetchByC_K_L();
+
+	public FinderPath getFinderPathCountByC_K_L();
 
 	/**
 	 * Returns the plo entry where companyId = &#63; and key = &#63; and languageId = &#63; or throws a <code>NoSuchPLOEntryException</code> if it could not be found.

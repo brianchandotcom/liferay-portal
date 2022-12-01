@@ -126,6 +126,30 @@ public class CommerceNotificationQueueEntryUtil {
 			commerceNotificationQueueEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the commerce notification queue entries where groupId = &#63;.
 	 *
@@ -299,6 +323,20 @@ public class CommerceNotificationQueueEntryUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceNotificationTemplateId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceNotificationTemplateId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceNotificationTemplateId() {
+
+		return getPersistence().
+			getFinderPathCountByCommerceNotificationTemplateId();
 	}
 
 	/**
@@ -504,6 +542,18 @@ public class CommerceNotificationQueueEntryUtil {
 
 		return getPersistence().countByCommerceNotificationTemplateId(
 			commerceNotificationTemplateId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySent() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindBySent();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySent() {
+
+		return getPersistence().getFinderPathCountBySent();
 	}
 
 	/**
@@ -855,6 +905,18 @@ public class CommerceNotificationQueueEntryUtil {
 	 */
 	public static int countByLtSentDate(Date sentDate) {
 		return getPersistence().countByLtSentDate(sentDate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_C_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_C_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_C_S() {
+
+		return getPersistence().getFinderPathCountByG_C_C_S();
 	}
 
 	/**

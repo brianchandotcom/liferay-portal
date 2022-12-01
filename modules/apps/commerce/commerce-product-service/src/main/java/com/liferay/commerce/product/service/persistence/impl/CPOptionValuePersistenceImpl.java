@@ -106,9 +106,31 @@ public class CPOptionValuePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the cp option values where uuid = &#63;.
@@ -654,7 +676,18 @@ public class CPOptionValuePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the cp option values where uuid = &#63; and companyId = &#63;.
@@ -1251,7 +1284,18 @@ public class CPOptionValuePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the cp option values where companyId = &#63;.
@@ -1763,7 +1807,18 @@ public class CPOptionValuePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPOptionId;
 	private FinderPath _finderPathWithoutPaginationFindByCPOptionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPOptionId() {
+		return _finderPathWithoutPaginationFindByCPOptionId;
+	}
+
 	private FinderPath _finderPathCountByCPOptionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPOptionId() {
+		return _finderPathCountByCPOptionId;
+	}
 
 	/**
 	 * Returns all the cp option values where CPOptionId = &#63;.
@@ -2275,7 +2330,18 @@ public class CPOptionValuePersistenceImpl
 		"cpOptionValue.CPOptionId = ?";
 
 	private FinderPath _finderPathFetchByC_K;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_K() {
+		return _finderPathFetchByC_K;
+	}
+
 	private FinderPath _finderPathCountByC_K;
+
+	@Override
+	public FinderPath getFinderPathCountByC_K() {
+		return _finderPathCountByC_K;
+	}
 
 	/**
 	 * Returns the cp option value where CPOptionId = &#63; and key = &#63; or throws a <code>NoSuchCPOptionValueException</code> if it could not be found.
@@ -2538,7 +2604,18 @@ public class CPOptionValuePersistenceImpl
 		"(cpOptionValue.key IS NULL OR cpOptionValue.key = '')";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the cp option value where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPOptionValueException</code> if it could not be found.

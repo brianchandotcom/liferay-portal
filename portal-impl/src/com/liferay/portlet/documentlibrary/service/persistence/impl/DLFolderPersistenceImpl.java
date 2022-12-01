@@ -105,9 +105,31 @@ public class DLFolderPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the document library folders where uuid = &#63;.
@@ -650,7 +672,18 @@ public class DLFolderPersistenceImpl
 		"(dlFolder.uuid IS NULL OR dlFolder.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -915,7 +948,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the document library folders where uuid = &#63; and companyId = &#63;.
@@ -1508,7 +1552,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the document library folders where groupId = &#63;.
@@ -2384,7 +2439,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the document library folders where companyId = &#63;.
@@ -2892,7 +2958,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByRepositoryId;
 	private FinderPath _finderPathWithoutPaginationFindByRepositoryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByRepositoryId() {
+		return _finderPathWithoutPaginationFindByRepositoryId;
+	}
+
 	private FinderPath _finderPathCountByRepositoryId;
+
+	@Override
+	public FinderPath getFinderPathCountByRepositoryId() {
+		return _finderPathCountByRepositoryId;
+	}
 
 	/**
 	 * Returns all the document library folders where repositoryId = &#63;.
@@ -3404,7 +3481,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P() {
+		return _finderPathWithoutPaginationFindByG_P;
+	}
+
 	private FinderPath _finderPathCountByG_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P() {
+		return _finderPathCountByG_P;
+	}
 
 	/**
 	 * Returns all the document library folders where groupId = &#63; and parentFolderId = &#63;.
@@ -4890,7 +4978,18 @@ public class DLFolderPersistenceImpl
 		"dlFolder.status != ?";
 
 	private FinderPath _finderPathFetchByR_M;
+
+	@Override
+	public FinderPath getFinderPathFetchByR_M() {
+		return _finderPathFetchByR_M;
+	}
+
 	private FinderPath _finderPathCountByR_M;
+
+	@Override
+	public FinderPath getFinderPathCountByR_M() {
+		return _finderPathCountByR_M;
+	}
 
 	/**
 	 * Returns the document library folder where repositoryId = &#63; and mountPoint = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -5143,7 +5242,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_P;
 	private FinderPath _finderPathWithoutPaginationFindByR_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_P() {
+		return _finderPathWithoutPaginationFindByR_P;
+	}
+
 	private FinderPath _finderPathCountByR_P;
+
+	@Override
+	public FinderPath getFinderPathCountByR_P() {
+		return _finderPathCountByR_P;
+	}
 
 	/**
 	 * Returns all the document library folders where repositoryId = &#63; and parentFolderId = &#63;.
@@ -5698,7 +5808,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_N;
 	private FinderPath _finderPathWithoutPaginationFindByP_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_N() {
+		return _finderPathWithoutPaginationFindByP_N;
+	}
+
 	private FinderPath _finderPathCountByP_N;
+
+	@Override
+	public FinderPath getFinderPathCountByP_N() {
+		return _finderPathCountByP_N;
+	}
 
 	/**
 	 * Returns all the document library folders where parentFolderId = &#63; and name = &#63;.
@@ -6716,7 +6837,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_M_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_M_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_M_P() {
+		return _finderPathWithoutPaginationFindByG_M_P;
+	}
+
 	private FinderPath _finderPathCountByG_M_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_M_P() {
+		return _finderPathCountByG_M_P;
+	}
 
 	/**
 	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
@@ -7734,7 +7866,18 @@ public class DLFolderPersistenceImpl
 		"dlFolder.parentFolderId = ?";
 
 	private FinderPath _finderPathFetchByG_P_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_P_N() {
+		return _finderPathFetchByG_P_N;
+	}
+
 	private FinderPath _finderPathCountByG_P_N;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_N() {
+		return _finderPathCountByG_P_N;
+	}
 
 	/**
 	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -8481,7 +8624,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_M_P_H;
 	private FinderPath _finderPathWithoutPaginationFindByG_M_P_H;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_M_P_H() {
+		return _finderPathWithoutPaginationFindByG_M_P_H;
+	}
+
 	private FinderPath _finderPathCountByG_M_P_H;
+
+	@Override
+	public FinderPath getFinderPathCountByG_M_P_H() {
+		return _finderPathCountByG_M_P_H;
+	}
 
 	/**
 	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
@@ -10703,7 +10857,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_H_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_H_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_H_S() {
+		return _finderPathWithoutPaginationFindByG_P_H_S;
+	}
+
 	private FinderPath _finderPathCountByG_P_H_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_H_S() {
+		return _finderPathCountByG_P_H_S;
+	}
 
 	/**
 	 * Returns all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
@@ -11777,7 +11942,18 @@ public class DLFolderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_M_P_H_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_M_P_H_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_M_P_H_S() {
+		return _finderPathWithoutPaginationFindByG_M_P_H_S;
+	}
+
 	private FinderPath _finderPathCountByG_M_P_H_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_M_P_H_S() {
+		return _finderPathCountByG_M_P_H_S;
+	}
 
 	/**
 	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
@@ -14128,7 +14304,18 @@ public class DLFolderPersistenceImpl
 		"dlFolder.status != ?";
 
 	private FinderPath _finderPathFetchByERC_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_G() {
+		return _finderPathFetchByERC_G;
+	}
+
 	private FinderPath _finderPathCountByERC_G;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_G() {
+		return _finderPathCountByERC_G;
+	}
 
 	/**
 	 * Returns the document library folder where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.

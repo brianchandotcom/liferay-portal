@@ -16,6 +16,7 @@ package com.liferay.account.service.persistence;
 
 import com.liferay.account.exception.NoSuchEntryUserRelException;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface AccountEntryUserRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AccountEntryUserRelUtil} to access the account entry user rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId();
+
+	public FinderPath getFinderPathCountByAccountEntryId();
 
 	/**
 	 * Returns all the account entry user rels where accountEntryId = &#63;.
@@ -185,6 +193,10 @@ public interface AccountEntryUserRelPersistence
 	 */
 	public int countByAccountEntryId(long accountEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByAccountUserId();
+
+	public FinderPath getFinderPathCountByAccountUserId();
+
 	/**
 	 * Returns all the account entry user rels where accountUserId = &#63;.
 	 *
@@ -328,6 +340,10 @@ public interface AccountEntryUserRelPersistence
 	 * @return the number of matching account entry user rels
 	 */
 	public int countByAccountUserId(long accountUserId);
+
+	public FinderPath getFinderPathFetchByAEI_AUI();
+
+	public FinderPath getFinderPathCountByAEI_AUI();
 
 	/**
 	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.

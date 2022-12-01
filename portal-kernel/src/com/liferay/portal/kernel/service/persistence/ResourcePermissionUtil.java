@@ -121,6 +121,30 @@ public class ResourcePermissionUtil {
 		return getPersistence().update(resourcePermission, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByName() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByName();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByName() {
+
+		return getPersistence().getFinderPathCountByName();
+	}
+
 	/**
 	 * Returns all the resource permissions where name = &#63;.
 	 *
@@ -288,6 +312,18 @@ public class ResourcePermissionUtil {
 	 */
 	public static int countByName(String name) {
 		return getPersistence().countByName(name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByScope() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByScope();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByScope() {
+
+		return getPersistence().getFinderPathCountByScope();
 	}
 
 	/**
@@ -542,6 +578,18 @@ public class ResourcePermissionUtil {
 	 */
 	public static int countByScope(int[] scopes) {
 		return getPersistence().countByScope(scopes);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRoleId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByRoleId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRoleId() {
+
+		return getPersistence().getFinderPathCountByRoleId();
 	}
 
 	/**
@@ -903,6 +951,18 @@ public class ResourcePermissionUtil {
 		return getPersistence().countByC_LikeP(companyId, primKey);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_S_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_S_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_S_P() {
+
+		return getPersistence().getFinderPathCountByC_S_P();
+	}
+
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
 	 *
@@ -1106,6 +1166,18 @@ public class ResourcePermissionUtil {
 	 */
 	public static int countByC_S_P(long companyId, int scope, String primKey) {
 		return getPersistence().countByC_S_P(companyId, scope, primKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_N_S_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_N_S_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_N_S_P() {
+
+		return getPersistence().getFinderPathCountByC_N_S_P();
 	}
 
 	/**
@@ -1328,6 +1400,18 @@ public class ResourcePermissionUtil {
 		return getPersistence().countByC_N_S_P(companyId, name, scope, primKey);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_N_S_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_N_S_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_N_S_R() {
+
+		return getPersistence().getFinderPathCountByC_N_S_R();
+	}
+
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
 	 *
@@ -1548,6 +1632,24 @@ public class ResourcePermissionUtil {
 		return getPersistence().countByC_N_S_R(companyId, name, scope, roleId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_N_S_P_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_N_S_P_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_N_S_P_R() {
+
+		return getPersistence().getFinderPathFetchByC_N_S_P_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_N_S_P_R() {
+
+		return getPersistence().getFinderPathCountByC_N_S_P_R();
+	}
+
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
 	 *
@@ -1758,6 +1860,19 @@ public class ResourcePermissionUtil {
 
 		return getPersistence().countByC_N_S_P_R(
 			companyId, name, scope, primKey, roleIds);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_N_S_P_R_V() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_N_S_P_R_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_N_S_P_R_V() {
+
+		return getPersistence().getFinderPathCountByC_N_S_P_R_V();
 	}
 
 	/**

@@ -125,6 +125,30 @@ public class SocialActivityAchievementUtil {
 			socialActivityAchievement, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the social activity achievements where groupId = &#63;.
 	 *
@@ -296,6 +320,18 @@ public class SocialActivityAchievementUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U() {
+
+		return getPersistence().getFinderPathCountByG_U();
 	}
 
 	/**
@@ -487,6 +523,18 @@ public class SocialActivityAchievementUtil {
 		return getPersistence().countByG_U(groupId, userId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_N() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_N() {
+
+		return getPersistence().getFinderPathCountByG_N();
+	}
+
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and name = &#63;.
 	 *
@@ -674,6 +722,18 @@ public class SocialActivityAchievementUtil {
 	 */
 	public static int countByG_N(long groupId, String name) {
 		return getPersistence().countByG_N(groupId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_F() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_F() {
+
+		return getPersistence().getFinderPathCountByG_F();
 	}
 
 	/**
@@ -866,6 +926,18 @@ public class SocialActivityAchievementUtil {
 		return getPersistence().countByG_F(groupId, firstInGroup);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_U_N() {
+
+		return getPersistence().getFinderPathFetchByG_U_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U_N() {
+
+		return getPersistence().getFinderPathCountByG_U_N();
+	}
+
 	/**
 	 * Returns the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; or throws a <code>NoSuchActivityAchievementException</code> if it could not be found.
 	 *
@@ -939,6 +1011,18 @@ public class SocialActivityAchievementUtil {
 	 */
 	public static int countByG_U_N(long groupId, long userId, String name) {
 		return getPersistence().countByG_U_N(groupId, userId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U_F() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U_F() {
+
+		return getPersistence().getFinderPathCountByG_U_F();
 	}
 
 	/**

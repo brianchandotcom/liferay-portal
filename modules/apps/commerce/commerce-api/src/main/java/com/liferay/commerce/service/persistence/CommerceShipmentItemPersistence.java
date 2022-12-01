@@ -16,6 +16,7 @@ package com.liferay.commerce.service.persistence;
 
 import com.liferay.commerce.exception.NoSuchShipmentItemException;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceShipmentItemPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShipmentItemUtil} to access the commerce shipment item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce shipment items where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceShipmentItemPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the commerce shipment item where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchShipmentItemException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface CommerceShipmentItemPersistence
 	 * @return the number of matching commerce shipment items
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce shipment items where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface CommerceShipmentItemPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the commerce shipment items where groupId = &#63;.
 	 *
@@ -531,6 +551,10 @@ public interface CommerceShipmentItemPersistence
 	 * @return the number of matching commerce shipment items
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceShipmentId();
+
+	public FinderPath getFinderPathCountByCommerceShipmentId();
 
 	/**
 	 * Returns all the commerce shipment items where commerceShipmentId = &#63;.
@@ -676,6 +700,10 @@ public interface CommerceShipmentItemPersistence
 	 */
 	public int countByCommerceShipmentId(long commerceShipmentId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceOrderItemId();
+
+	public FinderPath getFinderPathCountByCommerceOrderItemId();
+
 	/**
 	 * Returns all the commerce shipment items where commerceOrderItemId = &#63;.
 	 *
@@ -819,6 +847,10 @@ public interface CommerceShipmentItemPersistence
 	 * @return the number of matching commerce shipment items
 	 */
 	public int countByCommerceOrderItemId(long commerceOrderItemId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the commerce shipment items where commerceShipmentId = &#63; and commerceOrderItemId = &#63;.
@@ -976,6 +1008,10 @@ public interface CommerceShipmentItemPersistence
 	 */
 	public int countByC_C(long commerceShipmentId, long commerceOrderItemId);
 
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
+
 	/**
 	 * Returns the commerce shipment item where commerceShipmentId = &#63; and commerceOrderItemId = &#63; and commerceInventoryWarehouseId = &#63; or throws a <code>NoSuchShipmentItemException</code> if it could not be found.
 	 *
@@ -1039,6 +1075,10 @@ public interface CommerceShipmentItemPersistence
 	public int countByC_C_C(
 		long commerceShipmentId, long commerceOrderItemId,
 		long commerceInventoryWarehouseId);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce shipment item where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchShipmentItemException</code> if it could not be found.

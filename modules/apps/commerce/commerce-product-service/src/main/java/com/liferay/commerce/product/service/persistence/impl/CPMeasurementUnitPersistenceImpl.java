@@ -107,9 +107,31 @@ public class CPMeasurementUnitPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the cp measurement units where uuid = &#63;.
@@ -658,7 +680,18 @@ public class CPMeasurementUnitPersistenceImpl
 		"(cpMeasurementUnit.uuid IS NULL OR cpMeasurementUnit.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the cp measurement unit where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
@@ -922,7 +955,18 @@ public class CPMeasurementUnitPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the cp measurement units where uuid = &#63; and companyId = &#63;.
@@ -1520,7 +1564,18 @@ public class CPMeasurementUnitPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the cp measurement units where companyId = &#63;.
@@ -2038,7 +2093,18 @@ public class CPMeasurementUnitPersistenceImpl
 		"cpMeasurementUnit.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_K;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_K() {
+		return _finderPathFetchByC_K;
+	}
+
 	private FinderPath _finderPathCountByC_K;
+
+	@Override
+	public FinderPath getFinderPathCountByC_K() {
+		return _finderPathCountByC_K;
+	}
 
 	/**
 	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
@@ -2302,7 +2368,18 @@ public class CPMeasurementUnitPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T() {
+		return _finderPathWithoutPaginationFindByC_T;
+	}
+
 	private FinderPath _finderPathCountByC_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T() {
+		return _finderPathCountByC_T;
+	}
 
 	/**
 	 * Returns all the cp measurement units where companyId = &#63; and type = &#63;.
@@ -2857,7 +2934,18 @@ public class CPMeasurementUnitPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_P_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_P_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_P_T() {
+		return _finderPathWithoutPaginationFindByC_P_T;
+	}
+
 	private FinderPath _finderPathCountByC_P_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_P_T() {
+		return _finderPathCountByC_P_T;
+	}
 
 	/**
 	 * Returns all the cp measurement units where companyId = &#63; and primary = &#63; and type = &#63;.
@@ -3449,7 +3537,18 @@ public class CPMeasurementUnitPersistenceImpl
 		"cpMeasurementUnit.type = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the cp measurement unit where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.

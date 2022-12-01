@@ -83,9 +83,31 @@ public class PortletPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the portlets where companyId = &#63;.
@@ -576,7 +598,18 @@ public class PortletPersistenceImpl
 		"portlet.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_P() {
+		return _finderPathFetchByC_P;
+	}
+
 	private FinderPath _finderPathCountByC_P;
+
+	@Override
+	public FinderPath getFinderPathCountByC_P() {
+		return _finderPathCountByC_P;
+	}
 
 	/**
 	 * Returns the portlet where companyId = &#63; and portletId = &#63; or throws a <code>NoSuchPortletException</code> if it could not be found.

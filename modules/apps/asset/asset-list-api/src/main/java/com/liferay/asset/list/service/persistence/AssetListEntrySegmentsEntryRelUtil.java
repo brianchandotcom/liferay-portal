@@ -125,6 +125,30 @@ public class AssetListEntrySegmentsEntryRelUtil {
 			assetListEntrySegmentsEntryRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the asset list entry segments entry rels where uuid = &#63;.
 	 *
@@ -296,6 +320,18 @@ public class AssetListEntrySegmentsEntryRelUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the asset list entry segments entry rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntrySegmentsEntryRelException</code> if it could not be found.
 	 *
@@ -363,6 +399,18 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -555,6 +603,19 @@ public class AssetListEntrySegmentsEntryRelUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAssetListEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAssetListEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAssetListEntryId() {
+
+		return getPersistence().getFinderPathCountByAssetListEntryId();
+	}
+
 	/**
 	 * Returns all the asset list entry segments entry rels where assetListEntryId = &#63;.
 	 *
@@ -735,6 +796,19 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 */
 	public static int countByAssetListEntryId(long assetListEntryId) {
 		return getPersistence().countByAssetListEntryId(assetListEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindBySegmentsEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySegmentsEntryId() {
+
+		return getPersistence().getFinderPathCountBySegmentsEntryId();
 	}
 
 	/**
@@ -919,6 +993,18 @@ public class AssetListEntrySegmentsEntryRelUtil {
 		return getPersistence().countBySegmentsEntryId(segmentsEntryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByA_S() {
+
+		return getPersistence().getFinderPathFetchByA_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_S() {
+
+		return getPersistence().getFinderPathCountByA_S();
+	}
+
 	/**
 	 * Returns the asset list entry segments entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; or throws a <code>NoSuchEntrySegmentsEntryRelException</code> if it could not be found.
 	 *
@@ -987,6 +1073,18 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 */
 	public static int countByA_S(long assetListEntryId, long segmentsEntryId) {
 		return getPersistence().countByA_S(assetListEntryId, segmentsEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByA_S_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByA_S_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_S_C() {
+
+		return getPersistence().getFinderPathCountByA_S_C();
 	}
 
 	/**

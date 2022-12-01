@@ -106,9 +106,31 @@ public class ClientExtensionEntryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the client extension entry rels where uuid = &#63;.
@@ -667,7 +689,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 		"(clientExtensionEntryRel.uuid IS NULL OR clientExtensionEntryRel.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the client extension entry rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchClientExtensionEntryRelException</code> if it could not be found.
@@ -935,7 +968,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the client extension entry rels where uuid = &#63; and companyId = &#63;.
@@ -1537,7 +1581,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_CETERC;
 	private FinderPath _finderPathWithoutPaginationFindByC_CETERC;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_CETERC() {
+		return _finderPathWithoutPaginationFindByC_CETERC;
+	}
+
 	private FinderPath _finderPathCountByC_CETERC;
+
+	@Override
+	public FinderPath getFinderPathCountByC_CETERC() {
+		return _finderPathCountByC_CETERC;
+	}
 
 	/**
 	 * Returns all the client extension entry rels where companyId = &#63; and cetExternalReferenceCode = &#63;.
@@ -2156,7 +2211,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the client extension entry rels where classNameId = &#63; and classPK = &#63;.
@@ -2717,7 +2783,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_T() {
+		return _finderPathWithoutPaginationFindByC_C_T;
+	}
+
 	private FinderPath _finderPathCountByC_C_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_T() {
+		return _finderPathCountByC_C_T;
+	}
 
 	/**
 	 * Returns all the client extension entry rels where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -3354,7 +3431,18 @@ public class ClientExtensionEntryRelPersistenceImpl
 		"(clientExtensionEntryRel.type IS NULL OR clientExtensionEntryRel.type = '')";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchClientExtensionEntryRelException</code> if it could not be found.

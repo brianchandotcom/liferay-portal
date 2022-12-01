@@ -93,9 +93,31 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceDiscountId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId() {
+		return _finderPathWithoutPaginationFindByCommerceDiscountId;
+	}
+
 	private FinderPath _finderPathCountByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceDiscountId() {
+		return _finderPathCountByCommerceDiscountId;
+	}
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceDiscountId = &#63;.
@@ -615,7 +637,18 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCAI_CDI;
 	private FinderPath _finderPathWithoutPaginationFindByCAI_CDI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCAI_CDI() {
+		return _finderPathWithoutPaginationFindByCAI_CDI;
+	}
+
 	private FinderPath _finderPathCountByCAI_CDI;
+
+	@Override
+	public FinderPath getFinderPathCountByCAI_CDI() {
+		return _finderPathCountByCAI_CDI;
+	}
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
@@ -1180,7 +1213,18 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCOI_CDI;
 	private FinderPath _finderPathWithoutPaginationFindByCOI_CDI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCOI_CDI() {
+		return _finderPathWithoutPaginationFindByCOI_CDI;
+	}
+
 	private FinderPath _finderPathCountByCOI_CDI;
+
+	@Override
+	public FinderPath getFinderPathCountByCOI_CDI() {
+		return _finderPathCountByCOI_CDI;
+	}
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
@@ -1740,7 +1784,18 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCAI_COI_CDI;
 	private FinderPath _finderPathWithoutPaginationFindByCAI_COI_CDI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCAI_COI_CDI() {
+		return _finderPathWithoutPaginationFindByCAI_COI_CDI;
+	}
+
 	private FinderPath _finderPathCountByCAI_COI_CDI;
+
+	@Override
+	public FinderPath getFinderPathCountByCAI_COI_CDI() {
+		return _finderPathCountByCAI_COI_CDI;
+	}
 
 	/**
 	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.

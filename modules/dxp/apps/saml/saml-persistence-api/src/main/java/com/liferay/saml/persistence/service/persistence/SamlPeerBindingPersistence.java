@@ -14,6 +14,7 @@
 
 package com.liferay.saml.persistence.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchPeerBindingException;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
@@ -40,6 +41,14 @@ public interface SamlPeerBindingPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlPeerBindingUtil} to access the saml peer binding persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI();
+
+	public FinderPath getFinderPathCountByC_U_D_SNIF_SNINQ_SPEI();
 
 	/**
 	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
@@ -258,6 +267,11 @@ public interface SamlPeerBindingPersistence
 	public int countByC_U_D_SNIF_SNINQ_SPEI(
 		long companyId, long userId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlPeerEntityId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI();
+
+	public FinderPath getFinderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI();
 
 	/**
 	 * Returns all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.

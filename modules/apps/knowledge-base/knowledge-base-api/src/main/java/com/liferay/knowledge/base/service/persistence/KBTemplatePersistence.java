@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.service.persistence;
 
 import com.liferay.knowledge.base.exception.NoSuchTemplateException;
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KBTemplateUtil} to access the kb template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the kb templates where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the kb template where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTemplateException</code> if it could not be found.
 	 *
@@ -232,6 +244,10 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	 * @return the number of matching kb templates
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the kb templates where uuid = &#63; and companyId = &#63;.
@@ -386,6 +402,10 @@ public interface KBTemplatePersistence extends BasePersistence<KBTemplate> {
 	 * @return the number of matching kb templates
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the kb templates where groupId = &#63;.

@@ -16,6 +16,7 @@ package com.liferay.account.service.persistence;
 
 import com.liferay.account.exception.NoSuchRoleException;
 import com.liferay.account.model.AccountRole;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AccountRoleUtil} to access the account role persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the account roles where companyId = &#63;.
@@ -246,6 +254,10 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	 * @return the number of matching account roles that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId();
+
+	public FinderPath getFinderPathCountByAccountEntryId();
 
 	/**
 	 * Returns all the account roles where accountEntryId = &#63;.
@@ -580,6 +592,10 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	 */
 	public int filterCountByAccountEntryId(long[] accountEntryIds);
 
+	public FinderPath getFinderPathFetchByRoleId();
+
+	public FinderPath getFinderPathCountByRoleId();
+
 	/**
 	 * Returns the account role where roleId = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
 	 *
@@ -621,6 +637,10 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	 * @return the number of matching account roles
 	 */
 	public int countByRoleId(long roleId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
 
 	/**
 	 * Returns all the account roles where companyId = &#63; and accountEntryId = &#63;.

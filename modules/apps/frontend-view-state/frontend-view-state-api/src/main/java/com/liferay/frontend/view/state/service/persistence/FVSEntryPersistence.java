@@ -16,6 +16,7 @@ package com.liferay.frontend.view.state.service.persistence;
 
 import com.liferay.frontend.view.state.exception.NoSuchEntryException;
 import com.liferay.frontend.view.state.model.FVSEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface FVSEntryPersistence extends BasePersistence<FVSEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FVSEntryUtil} to access the fvs entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the fvs entries where uuid = &#63;.
@@ -181,6 +189,10 @@ public interface FVSEntryPersistence extends BasePersistence<FVSEntry> {
 	 * @return the number of matching fvs entries
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the fvs entries where uuid = &#63; and companyId = &#63;.

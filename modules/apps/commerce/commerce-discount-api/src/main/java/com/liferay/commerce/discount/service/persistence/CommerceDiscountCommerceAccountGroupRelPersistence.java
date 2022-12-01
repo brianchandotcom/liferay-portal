@@ -16,6 +16,7 @@ package com.liferay.commerce.discount.service.persistence;
 
 import com.liferay.commerce.discount.exception.NoSuchDiscountCommerceAccountGroupRelException;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountCommerceAccountGroupRelUtil} to access the commerce discount commerce account group rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId();
+
+	public FinderPath getFinderPathCountByCommerceDiscountId();
 
 	/**
 	 * Returns all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
@@ -193,6 +201,11 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 */
 	public int countByCommerceDiscountId(long commerceDiscountId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceAccountGroupId();
+
+	public FinderPath getFinderPathCountByCommerceAccountGroupId();
+
 	/**
 	 * Returns all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
 	 *
@@ -345,6 +358,10 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 * @return the number of matching commerce discount commerce account group rels
 	 */
 	public int countByCommerceAccountGroupId(long commerceAccountGroupId);
+
+	public FinderPath getFinderPathFetchByCDI_CAGI();
+
+	public FinderPath getFinderPathCountByCDI_CAGI();
 
 	/**
 	 * Returns the commerce discount commerce account group rel where commerceDiscountId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchDiscountCommerceAccountGroupRelException</code> if it could not be found.

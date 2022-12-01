@@ -119,6 +119,30 @@ public class OAuthClientEntryUtil {
 		return getPersistence().update(oAuthClientEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the o auth client entries where companyId = &#63;.
 	 *
@@ -371,6 +395,18 @@ public class OAuthClientEntryUtil {
 		return getPersistence().filterCountByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the o auth client entries where userId = &#63;.
 	 *
@@ -615,6 +651,18 @@ public class OAuthClientEntryUtil {
 	 */
 	public static int filterCountByUserId(long userId) {
 		return getPersistence().filterCountByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A() {
+
+		return getPersistence().getFinderPathCountByC_A();
 	}
 
 	/**
@@ -904,6 +952,18 @@ public class OAuthClientEntryUtil {
 
 		return getPersistence().filterCountByC_A(
 			companyId, authServerWellKnownURI);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_A_C() {
+
+		return getPersistence().getFinderPathFetchByC_A_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A_C() {
+
+		return getPersistence().getFinderPathCountByC_A_C();
 	}
 
 	/**

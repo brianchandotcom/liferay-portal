@@ -103,9 +103,31 @@ public class DDLRecordSetVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByRecordSetId;
 	private FinderPath _finderPathWithoutPaginationFindByRecordSetId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByRecordSetId() {
+		return _finderPathWithoutPaginationFindByRecordSetId;
+	}
+
 	private FinderPath _finderPathCountByRecordSetId;
+
+	@Override
+	public FinderPath getFinderPathCountByRecordSetId() {
+		return _finderPathCountByRecordSetId;
+	}
 
 	/**
 	 * Returns all the ddl record set versions where recordSetId = &#63;.
@@ -626,7 +648,18 @@ public class DDLRecordSetVersionPersistenceImpl
 		"ddlRecordSetVersion.recordSetId = ?";
 
 	private FinderPath _finderPathFetchByRS_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByRS_V() {
+		return _finderPathFetchByRS_V;
+	}
+
 	private FinderPath _finderPathCountByRS_V;
+
+	@Override
+	public FinderPath getFinderPathCountByRS_V() {
+		return _finderPathCountByRS_V;
+	}
 
 	/**
 	 * Returns the ddl record set version where recordSetId = &#63; and version = &#63; or throws a <code>NoSuchRecordSetVersionException</code> if it could not be found.
@@ -893,7 +926,18 @@ public class DDLRecordSetVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByRS_S;
 	private FinderPath _finderPathWithoutPaginationFindByRS_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByRS_S() {
+		return _finderPathWithoutPaginationFindByRS_S;
+	}
+
 	private FinderPath _finderPathCountByRS_S;
+
+	@Override
+	public FinderPath getFinderPathCountByRS_S() {
+		return _finderPathCountByRS_S;
+	}
 
 	/**
 	 * Returns all the ddl record set versions where recordSetId = &#63; and status = &#63;.

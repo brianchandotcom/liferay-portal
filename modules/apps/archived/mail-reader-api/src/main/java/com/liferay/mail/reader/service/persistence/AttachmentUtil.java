@@ -119,6 +119,30 @@ public class AttachmentUtil {
 		return getPersistence().update(attachment, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByMessageId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByMessageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByMessageId() {
+
+		return getPersistence().getFinderPathCountByMessageId();
+	}
+
 	/**
 	 * Returns all the attachments where messageId = &#63;.
 	 *

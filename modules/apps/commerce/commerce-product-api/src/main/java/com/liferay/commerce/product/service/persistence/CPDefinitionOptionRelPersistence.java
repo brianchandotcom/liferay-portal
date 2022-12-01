@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CPDefinitionOptionRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionOptionRelUtil} to access the cp definition option rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp definition option rels where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface CPDefinitionOptionRelPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the cp definition option rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionOptionRelException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface CPDefinitionOptionRelPersistence
 	 * @return the number of matching cp definition option rels
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp definition option rels where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface CPDefinitionOptionRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the cp definition option rels where groupId = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface CPDefinitionOptionRelPersistence
 	 * @return the number of matching cp definition option rels
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the cp definition option rels where companyId = &#63;.
@@ -678,6 +702,10 @@ public interface CPDefinitionOptionRelPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId();
+
+	public FinderPath getFinderPathCountByCPDefinitionId();
+
 	/**
 	 * Returns all the cp definition option rels where CPDefinitionId = &#63;.
 	 *
@@ -822,6 +850,10 @@ public interface CPDefinitionOptionRelPersistence
 	 */
 	public int countByCPDefinitionId(long CPDefinitionId);
 
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns the cp definition option rel where CPDefinitionId = &#63; and CPOptionId = &#63; or throws a <code>NoSuchCPDefinitionOptionRelException</code> if it could not be found.
 	 *
@@ -873,6 +905,10 @@ public interface CPDefinitionOptionRelPersistence
 	 * @return the number of matching cp definition option rels
 	 */
 	public int countByC_C(long CPDefinitionId, long CPOptionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCPDI_R();
+
+	public FinderPath getFinderPathCountByCPDI_R();
 
 	/**
 	 * Returns all the cp definition option rels where CPDefinitionId = &#63; and required = &#63;.
@@ -1029,6 +1065,10 @@ public interface CPDefinitionOptionRelPersistence
 	 */
 	public int countByCPDI_R(long CPDefinitionId, boolean required);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_SC();
+
+	public FinderPath getFinderPathCountByC_SC();
+
 	/**
 	 * Returns all the cp definition option rels where CPDefinitionId = &#63; and skuContributor = &#63;.
 	 *
@@ -1184,6 +1224,10 @@ public interface CPDefinitionOptionRelPersistence
 	 * @return the number of matching cp definition option rels
 	 */
 	public int countByC_SC(long CPDefinitionId, boolean skuContributor);
+
+	public FinderPath getFinderPathFetchByC_K();
+
+	public FinderPath getFinderPathCountByC_K();
 
 	/**
 	 * Returns the cp definition option rel where CPDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchCPDefinitionOptionRelException</code> if it could not be found.

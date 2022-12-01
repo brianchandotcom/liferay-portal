@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchCPInstanceOptionValueRelException;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CPInstanceOptionValueRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPInstanceOptionValueRelUtil} to access the cp instance option value rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp instance option value rels where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface CPInstanceOptionValueRelPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the cp instance option value rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface CPInstanceOptionValueRelPersistence
 	 * @return the number of matching cp instance option value rels
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp instance option value rels where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,11 @@ public interface CPInstanceOptionValueRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCPDefinitionOptionRelId();
+
+	public FinderPath getFinderPathCountByCPDefinitionOptionRelId();
+
 	/**
 	 * Returns all the cp instance option value rels where CPDefinitionOptionRelId = &#63;.
 	 *
@@ -538,6 +559,10 @@ public interface CPInstanceOptionValueRelPersistence
 	 */
 	public int countByCPDefinitionOptionRelId(long CPDefinitionOptionRelId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPInstanceId();
+
+	public FinderPath getFinderPathCountByCPInstanceId();
+
 	/**
 	 * Returns all the cp instance option value rels where CPInstanceId = &#63;.
 	 *
@@ -681,6 +706,10 @@ public interface CPInstanceOptionValueRelPersistence
 	 * @return the number of matching cp instance option value rels
 	 */
 	public int countByCPInstanceId(long CPInstanceId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCDORI_CII();
+
+	public FinderPath getFinderPathCountByCDORI_CII();
 
 	/**
 	 * Returns all the cp instance option value rels where CPDefinitionOptionRelId = &#63; and CPInstanceId = &#63;.
@@ -840,6 +869,10 @@ public interface CPInstanceOptionValueRelPersistence
 	public int countByCDORI_CII(
 		long CPDefinitionOptionRelId, long CPInstanceId);
 
+	public FinderPath getFinderPathFetchByCDOVRI_CII();
+
+	public FinderPath getFinderPathCountByCDOVRI_CII();
+
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
 	 *
@@ -894,6 +927,10 @@ public interface CPInstanceOptionValueRelPersistence
 	 */
 	public int countByCDOVRI_CII(
 		long CPDefinitionOptionValueRelId, long CPInstanceId);
+
+	public FinderPath getFinderPathFetchByCDORI_CDOVRI_CII();
+
+	public FinderPath getFinderPathCountByCDORI_CDOVRI_CII();
 
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionRelId = &#63; and CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.

@@ -98,9 +98,31 @@ public class LayoutFriendlyURLPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the layout friendly urls where uuid = &#63;.
@@ -650,7 +672,18 @@ public class LayoutFriendlyURLPersistenceImpl
 		"(layoutFriendlyURL.uuid IS NULL OR layoutFriendlyURL.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the layout friendly url where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutFriendlyURLException</code> if it could not be found.
@@ -915,7 +948,18 @@ public class LayoutFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the layout friendly urls where uuid = &#63; and companyId = &#63;.
@@ -1514,7 +1558,18 @@ public class LayoutFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the layout friendly urls where groupId = &#63;.
@@ -2029,7 +2084,18 @@ public class LayoutFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the layout friendly urls where companyId = &#63;.
@@ -2549,7 +2615,18 @@ public class LayoutFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByPlid;
 	private FinderPath _finderPathWithoutPaginationFindByPlid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByPlid() {
+		return _finderPathWithoutPaginationFindByPlid;
+	}
+
 	private FinderPath _finderPathCountByPlid;
+
+	@Override
+	public FinderPath getFinderPathCountByPlid() {
+		return _finderPathCountByPlid;
+	}
 
 	/**
 	 * Returns all the layout friendly urls where plid = &#63;.
@@ -3058,7 +3135,18 @@ public class LayoutFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_F;
 	private FinderPath _finderPathWithoutPaginationFindByP_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_F() {
+		return _finderPathWithoutPaginationFindByP_F;
+	}
+
 	private FinderPath _finderPathCountByP_F;
+
+	@Override
+	public FinderPath getFinderPathCountByP_F() {
+		return _finderPathCountByP_F;
+	}
 
 	/**
 	 * Returns all the layout friendly urls where plid = &#63; and friendlyURL = &#63;.
@@ -3659,8 +3747,26 @@ public class LayoutFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_L;
 	private FinderPath _finderPathWithoutPaginationFindByP_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_L() {
+		return _finderPathWithoutPaginationFindByP_L;
+	}
+
 	private FinderPath _finderPathFetchByP_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByP_L() {
+		return _finderPathFetchByP_L;
+	}
+
 	private FinderPath _finderPathCountByP_L;
+
+	@Override
+	public FinderPath getFinderPathCountByP_L() {
+		return _finderPathCountByP_L;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByP_L;
 
 	/**
@@ -4314,7 +4420,18 @@ public class LayoutFriendlyURLPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_F;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_F() {
+		return _finderPathWithoutPaginationFindByG_P_F;
+	}
+
 	private FinderPath _finderPathCountByG_P_F;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_F() {
+		return _finderPathCountByG_P_F;
+	}
 
 	/**
 	 * Returns all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
@@ -4961,7 +5078,18 @@ public class LayoutFriendlyURLPersistenceImpl
 		"(layoutFriendlyURL.friendlyURL IS NULL OR layoutFriendlyURL.friendlyURL = '')";
 
 	private FinderPath _finderPathFetchByG_P_F_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_P_F_L() {
+		return _finderPathFetchByG_P_F_L;
+	}
+
 	private FinderPath _finderPathCountByG_P_F_L;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_F_L() {
+		return _finderPathCountByG_P_F_L;
+	}
 
 	/**
 	 * Returns the layout friendly url where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a <code>NoSuchLayoutFriendlyURLException</code> if it could not be found.

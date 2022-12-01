@@ -82,9 +82,31 @@ public class CountryLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCountryId;
 	private FinderPath _finderPathWithoutPaginationFindByCountryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId() {
+		return _finderPathWithoutPaginationFindByCountryId;
+	}
+
 	private FinderPath _finderPathCountByCountryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCountryId() {
+		return _finderPathCountByCountryId;
+	}
 
 	/**
 	 * Returns all the country localizations where countryId = &#63;.
@@ -590,7 +612,18 @@ public class CountryLocalizationPersistenceImpl
 		"countryLocalization.countryId = ?";
 
 	private FinderPath _finderPathFetchByCountryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathFetchByCountryId_LanguageId() {
+		return _finderPathFetchByCountryId_LanguageId;
+	}
+
 	private FinderPath _finderPathCountByCountryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathCountByCountryId_LanguageId() {
+		return _finderPathCountByCountryId_LanguageId;
+	}
 
 	/**
 	 * Returns the country localization where countryId = &#63; and languageId = &#63; or throws a <code>NoSuchCountryLocalizationException</code> if it could not be found.

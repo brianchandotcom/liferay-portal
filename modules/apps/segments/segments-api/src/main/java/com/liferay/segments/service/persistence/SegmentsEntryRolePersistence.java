@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.segments.exception.NoSuchEntryRoleException;
@@ -42,6 +43,13 @@ public interface SegmentsEntryRolePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryRoleUtil} to access the segments entry role persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindBySegmentsEntryId();
+
+	public FinderPath getFinderPathCountBySegmentsEntryId();
 
 	/**
 	 * Returns all the segments entry roles where segmentsEntryId = &#63;.
@@ -187,6 +195,10 @@ public interface SegmentsEntryRolePersistence
 	 */
 	public int countBySegmentsEntryId(long segmentsEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByRoleId();
+
+	public FinderPath getFinderPathCountByRoleId();
+
 	/**
 	 * Returns all the segments entry roles where roleId = &#63;.
 	 *
@@ -329,6 +341,10 @@ public interface SegmentsEntryRolePersistence
 	 * @return the number of matching segments entry roles
 	 */
 	public int countByRoleId(long roleId);
+
+	public FinderPath getFinderPathFetchByS_R();
+
+	public FinderPath getFinderPathCountByS_R();
 
 	/**
 	 * Returns the segments entry role where segmentsEntryId = &#63; and roleId = &#63; or throws a <code>NoSuchEntryRoleException</code> if it could not be found.

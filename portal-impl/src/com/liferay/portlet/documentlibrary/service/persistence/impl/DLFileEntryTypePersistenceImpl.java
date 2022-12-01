@@ -105,9 +105,31 @@ public class DLFileEntryTypePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the document library file entry types where uuid = &#63;.
@@ -655,7 +677,18 @@ public class DLFileEntryTypePersistenceImpl
 		"(dlFileEntryType.uuid IS NULL OR dlFileEntryType.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the document library file entry type where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFileEntryTypeException</code> if it could not be found.
@@ -920,7 +953,18 @@ public class DLFileEntryTypePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the document library file entry types where uuid = &#63; and companyId = &#63;.
@@ -1518,7 +1562,19 @@ public class DLFileEntryTypePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
@@ -2877,7 +2933,18 @@ public class DLFileEntryTypePersistenceImpl
 		"dlFileEntryType.groupId IN (";
 
 	private FinderPath _finderPathFetchByG_DDI;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_DDI() {
+		return _finderPathFetchByG_DDI;
+	}
+
 	private FinderPath _finderPathCountByG_DDI;
+
+	@Override
+	public FinderPath getFinderPathCountByG_DDI() {
+		return _finderPathCountByG_DDI;
+	}
 
 	/**
 	 * Returns the document library file entry type where groupId = &#63; and dataDefinitionId = &#63; or throws a <code>NoSuchFileEntryTypeException</code> if it could not be found.
@@ -3114,7 +3181,18 @@ public class DLFileEntryTypePersistenceImpl
 		"dlFileEntryType.dataDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByG_F;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_F() {
+		return _finderPathFetchByG_F;
+	}
+
 	private FinderPath _finderPathCountByG_F;
+
+	@Override
+	public FinderPath getFinderPathCountByG_F() {
+		return _finderPathCountByG_F;
+	}
 
 	/**
 	 * Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or throws a <code>NoSuchFileEntryTypeException</code> if it could not be found.

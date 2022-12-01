@@ -124,6 +124,30 @@ public class CPDAvailabilityEstimateUtil {
 		return getPersistence().update(cpdAvailabilityEstimate, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the cpd availability estimates where uuid = &#63;.
 	 *
@@ -293,6 +317,18 @@ public class CPDAvailabilityEstimateUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -482,6 +518,20 @@ public class CPDAvailabilityEstimateUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceAvailabilityEstimateId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceAvailabilityEstimateId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceAvailabilityEstimateId() {
+
+		return getPersistence().
+			getFinderPathCountByCommerceAvailabilityEstimateId();
 	}
 
 	/**
@@ -681,6 +731,18 @@ public class CPDAvailabilityEstimateUtil {
 
 		return getPersistence().countByCommerceAvailabilityEstimateId(
 			commerceAvailabilityEstimateId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCProductId() {
+
+		return getPersistence().getFinderPathFetchByCProductId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCProductId() {
+
+		return getPersistence().getFinderPathCountByCProductId();
 	}
 
 	/**

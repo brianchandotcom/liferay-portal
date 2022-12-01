@@ -102,9 +102,31 @@ public class KaleoConditionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo conditions where companyId = &#63;.
@@ -617,7 +639,20 @@ public class KaleoConditionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	}
+
 	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId() {
+		return _finderPathCountByKaleoDefinitionVersionId;
+	}
 
 	/**
 	 * Returns all the kaleo conditions where kaleoDefinitionVersionId = &#63;.
@@ -1151,7 +1186,18 @@ public class KaleoConditionPersistenceImpl
 			"kaleoCondition.kaleoDefinitionVersionId = ?";
 
 	private FinderPath _finderPathFetchByKaleoNodeId;
+
+	@Override
+	public FinderPath getFinderPathFetchByKaleoNodeId() {
+		return _finderPathFetchByKaleoNodeId;
+	}
+
 	private FinderPath _finderPathCountByKaleoNodeId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoNodeId() {
+		return _finderPathCountByKaleoNodeId;
+	}
 
 	/**
 	 * Returns the kaleo condition where kaleoNodeId = &#63; or throws a <code>NoSuchConditionException</code> if it could not be found.

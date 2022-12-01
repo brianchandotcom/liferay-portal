@@ -102,9 +102,31 @@ public class KaleoLogPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo logs where companyId = &#63;.
@@ -612,7 +634,20 @@ public class KaleoLogPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	}
+
 	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId() {
+		return _finderPathCountByKaleoDefinitionVersionId;
+	}
 
 	/**
 	 * Returns all the kaleo logs where kaleoDefinitionVersionId = &#63;.
@@ -1144,7 +1179,18 @@ public class KaleoLogPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKaleoInstanceId;
 	private FinderPath _finderPathWithoutPaginationFindByKaleoInstanceId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoInstanceId() {
+		return _finderPathWithoutPaginationFindByKaleoInstanceId;
+	}
+
 	private FinderPath _finderPathCountByKaleoInstanceId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoInstanceId() {
+		return _finderPathCountByKaleoInstanceId;
+	}
 
 	/**
 	 * Returns all the kaleo logs where kaleoInstanceId = &#63;.
@@ -1658,7 +1704,20 @@ public class KaleoLogPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoTaskInstanceTokenId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoTaskInstanceTokenId() {
+
+		return _finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId;
+	}
+
 	private FinderPath _finderPathCountByKaleoTaskInstanceTokenId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoTaskInstanceTokenId() {
+		return _finderPathCountByKaleoTaskInstanceTokenId;
+	}
 
 	/**
 	 * Returns all the kaleo logs where kaleoTaskInstanceTokenId = &#63;.
@@ -2190,7 +2249,18 @@ public class KaleoLogPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKITI_T;
 	private FinderPath _finderPathWithoutPaginationFindByKITI_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKITI_T() {
+		return _finderPathWithoutPaginationFindByKITI_T;
+	}
+
 	private FinderPath _finderPathCountByKITI_T;
+
+	@Override
+	public FinderPath getFinderPathCountByKITI_T() {
+		return _finderPathCountByKITI_T;
+	}
 
 	/**
 	 * Returns all the kaleo logs where kaleoInstanceTokenId = &#63; and type = &#63;.
@@ -2787,7 +2857,18 @@ public class KaleoLogPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK_KITI_T;
 	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK_KITI_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK_KITI_T() {
+		return _finderPathWithoutPaginationFindByKCN_KCPK_KITI_T;
+	}
+
 	private FinderPath _finderPathCountByKCN_KCPK_KITI_T;
+
+	@Override
+	public FinderPath getFinderPathCountByKCN_KCPK_KITI_T() {
+		return _finderPathCountByKCN_KCPK_KITI_T;
+	}
 
 	/**
 	 * Returns all the kaleo logs where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63;.

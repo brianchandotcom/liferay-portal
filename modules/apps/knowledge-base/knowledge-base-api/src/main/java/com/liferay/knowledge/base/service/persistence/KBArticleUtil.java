@@ -119,6 +119,31 @@ public class KBArticleUtil {
 		return getPersistence().update(kbArticle, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByResourcePrimKey() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByResourcePrimKey();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByResourcePrimKey() {
+
+		return getPersistence().getFinderPathCountByResourcePrimKey();
+	}
+
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63;.
 	 *
@@ -291,6 +316,18 @@ public class KBArticleUtil {
 		return getPersistence().countByResourcePrimKey(resourcePrimKey);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the kb articles where uuid = &#63;.
 	 *
@@ -453,6 +490,18 @@ public class KBArticleUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the kb article where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -514,6 +563,18 @@ public class KBArticleUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -698,6 +759,18 @@ public class KBArticleUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_G() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_G() {
+
+		return getPersistence().getFinderPathCountByR_G();
 	}
 
 	/**
@@ -972,6 +1045,18 @@ public class KBArticleUtil {
 		return getPersistence().filterCountByR_G(resourcePrimKey, groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByR_V() {
+
+		return getPersistence().getFinderPathFetchByR_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_V() {
+
+		return getPersistence().getFinderPathCountByR_V();
+	}
+
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -1034,6 +1119,18 @@ public class KBArticleUtil {
 	 */
 	public static int countByR_V(long resourcePrimKey, int version) {
 		return getPersistence().countByR_V(resourcePrimKey, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_L() {
+
+		return getPersistence().getFinderPathCountByR_L();
 	}
 
 	/**
@@ -1317,6 +1414,18 @@ public class KBArticleUtil {
 		return getPersistence().countByR_L(resourcePrimKeys, latest);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_M() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_M();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_M() {
+
+		return getPersistence().getFinderPathCountByR_M();
+	}
+
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and main = &#63;.
 	 *
@@ -1598,6 +1707,18 @@ public class KBArticleUtil {
 		return getPersistence().countByR_M(resourcePrimKeys, main);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_S() {
+
+		return getPersistence().getFinderPathCountByR_S();
+	}
+
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and status = &#63;.
 	 *
@@ -1875,6 +1996,18 @@ public class KBArticleUtil {
 	 */
 	public static int countByR_S(long[] resourcePrimKeys, int status) {
 		return getPersistence().countByR_S(resourcePrimKeys, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_ERC() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_ERC();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_ERC() {
+
+		return getPersistence().getFinderPathCountByG_ERC();
 	}
 
 	/**
@@ -2156,6 +2289,18 @@ public class KBArticleUtil {
 			groupId, externalReferenceCode);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_L() {
+
+		return getPersistence().getFinderPathCountByG_L();
+	}
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and latest = &#63;.
 	 *
@@ -2424,6 +2569,18 @@ public class KBArticleUtil {
 		return getPersistence().filterCountByG_L(groupId, latest);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_M() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_M();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_M() {
+
+		return getPersistence().getFinderPathCountByG_M();
+	}
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and main = &#63;.
 	 *
@@ -2688,6 +2845,18 @@ public class KBArticleUtil {
 	 */
 	public static int filterCountByG_M(long groupId, boolean main) {
 		return getPersistence().filterCountByG_M(groupId, main);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_S() {
+
+		return getPersistence().getFinderPathCountByG_S();
 	}
 
 	/**
@@ -2956,6 +3125,18 @@ public class KBArticleUtil {
 		return getPersistence().filterCountByG_S(groupId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_L() {
+
+		return getPersistence().getFinderPathCountByC_L();
+	}
+
 	/**
 	 * Returns all the kb articles where companyId = &#63; and latest = &#63;.
 	 *
@@ -3138,6 +3319,18 @@ public class KBArticleUtil {
 	 */
 	public static int countByC_L(long companyId, boolean latest) {
 		return getPersistence().countByC_L(companyId, latest);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_M() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_M();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_M() {
+
+		return getPersistence().getFinderPathCountByC_M();
 	}
 
 	/**
@@ -3324,6 +3517,18 @@ public class KBArticleUtil {
 		return getPersistence().countByC_M(companyId, main);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_S() {
+
+		return getPersistence().getFinderPathCountByC_S();
+	}
+
 	/**
 	 * Returns all the kb articles where companyId = &#63; and status = &#63;.
 	 *
@@ -3506,6 +3711,18 @@ public class KBArticleUtil {
 	 */
 	public static int countByC_S(long companyId, int status) {
 		return getPersistence().countByC_S(companyId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByP_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByP_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByP_L() {
+
+		return getPersistence().getFinderPathCountByP_L();
 	}
 
 	/**
@@ -3793,6 +4010,18 @@ public class KBArticleUtil {
 		return getPersistence().countByP_L(parentResourcePrimKeys, latest);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByP_M() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByP_M();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByP_M() {
+
+		return getPersistence().getFinderPathCountByP_M();
+	}
+
 	/**
 	 * Returns all the kb articles where parentResourcePrimKey = &#63; and main = &#63;.
 	 *
@@ -4074,6 +4303,18 @@ public class KBArticleUtil {
 	 */
 	public static int countByP_M(long[] parentResourcePrimKeys, boolean main) {
 		return getPersistence().countByP_M(parentResourcePrimKeys, main);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByP_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByP_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByP_S() {
+
+		return getPersistence().getFinderPathCountByP_S();
 	}
 
 	/**
@@ -4359,6 +4600,18 @@ public class KBArticleUtil {
 		return getPersistence().countByP_S(parentResourcePrimKeys, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByR_G_V() {
+
+		return getPersistence().getFinderPathFetchByR_G_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_G_V() {
+
+		return getPersistence().getFinderPathCountByR_G_V();
+	}
+
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -4434,6 +4687,18 @@ public class KBArticleUtil {
 		long resourcePrimKey, long groupId, int version) {
 
 		return getPersistence().countByR_G_V(resourcePrimKey, groupId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_G_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_G_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_G_L() {
+
+		return getPersistence().getFinderPathCountByR_G_L();
 	}
 
 	/**
@@ -4913,6 +5178,18 @@ public class KBArticleUtil {
 			resourcePrimKeys, groupId, latest);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_G_M() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_G_M();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_G_M() {
+
+		return getPersistence().getFinderPathCountByR_G_M();
+	}
+
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
 	 *
@@ -5388,6 +5665,18 @@ public class KBArticleUtil {
 			resourcePrimKeys, groupId, main);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_G_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_G_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_G_S() {
+
+		return getPersistence().getFinderPathCountByR_G_S();
+	}
+
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
 	 *
@@ -5861,6 +6150,18 @@ public class KBArticleUtil {
 			resourcePrimKeys, groupId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_ERC_V() {
+
+		return getPersistence().getFinderPathFetchByG_ERC_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_ERC_V() {
+
+		return getPersistence().getFinderPathCountByG_ERC_V();
+	}
+
 	/**
 	 * Returns the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -5939,6 +6240,18 @@ public class KBArticleUtil {
 
 		return getPersistence().countByG_ERC_V(
 			groupId, externalReferenceCode, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_P_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_P_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_P_L() {
+
+		return getPersistence().getFinderPathCountByG_P_L();
 	}
 
 	/**
@@ -6428,6 +6741,18 @@ public class KBArticleUtil {
 			groupId, parentResourcePrimKeys, latest);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_P_M() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_P_M();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_P_M() {
+
+		return getPersistence().getFinderPathCountByG_P_M();
+	}
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
 	 *
@@ -6913,6 +7238,18 @@ public class KBArticleUtil {
 
 		return getPersistence().filterCountByG_P_M(
 			groupId, parentResourcePrimKeys, main);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_P_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_P_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_P_S() {
+
+		return getPersistence().getFinderPathCountByG_P_S();
 	}
 
 	/**
@@ -7402,6 +7739,18 @@ public class KBArticleUtil {
 			groupId, parentResourcePrimKeys, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_KBFI_UT() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_KBFI_UT();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_KBFI_UT() {
+
+		return getPersistence().getFinderPathCountByG_KBFI_UT();
+	}
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
 	 *
@@ -7699,6 +8048,18 @@ public class KBArticleUtil {
 			groupId, kbFolderId, urlTitle);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_KBFI_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_KBFI_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_KBFI_L() {
+
+		return getPersistence().getFinderPathCountByG_KBFI_L();
+	}
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
 	 *
@@ -7994,6 +8355,18 @@ public class KBArticleUtil {
 
 		return getPersistence().filterCountByG_KBFI_L(
 			groupId, kbFolderId, latest);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_KBFI_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_KBFI_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_KBFI_S() {
+
+		return getPersistence().getFinderPathCountByG_KBFI_S();
 	}
 
 	/**
@@ -9710,6 +10083,18 @@ public class KBArticleUtil {
 			groupId, sectionses, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_P_L_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_P_L_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_P_L_S() {
+
+		return getPersistence().getFinderPathCountByG_P_L_S();
+	}
+
 	/**
 	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
 	 *
@@ -10227,6 +10612,19 @@ public class KBArticleUtil {
 
 		return getPersistence().filterCountByG_P_L_S(
 			groupId, parentResourcePrimKeys, latest, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_KBFI_UT_ST() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByG_KBFI_UT_ST();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_KBFI_UT_ST() {
+
+		return getPersistence().getFinderPathCountByG_KBFI_UT_ST();
 	}
 
 	/**

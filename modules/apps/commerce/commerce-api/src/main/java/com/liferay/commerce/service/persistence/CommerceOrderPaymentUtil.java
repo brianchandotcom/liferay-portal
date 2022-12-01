@@ -122,6 +122,31 @@ public class CommerceOrderPaymentUtil {
 		return getPersistence().update(commerceOrderPayment, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceOrderId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceOrderId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceOrderId() {
+
+		return getPersistence().getFinderPathCountByCommerceOrderId();
+	}
+
 	/**
 	 * Returns all the commerce order payments where commerceOrderId = &#63;.
 	 *

@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.search.experiences.exception.NoSuchSXPBlueprintException;
 import com.liferay.search.experiences.model.SXPBlueprint;
@@ -39,6 +40,13 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SXPBlueprintUtil} to access the sxp blueprint persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the sxp blueprints where uuid = &#63;.
@@ -246,6 +254,10 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	 * @return the number of matching sxp blueprints that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the sxp blueprints where uuid = &#63; and companyId = &#63;.
@@ -472,6 +484,10 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the sxp blueprints where companyId = &#63;.
 	 *
@@ -678,6 +694,10 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	 * @return the number of matching sxp blueprints that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the sxp blueprint where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchSXPBlueprintException</code> if it could not be found.

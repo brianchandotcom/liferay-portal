@@ -16,6 +16,7 @@ package com.liferay.commerce.shop.by.diagram.service.persistence;
 
 import com.liferay.commerce.shop.by.diagram.exception.NoSuchCSDiagramPinException;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface CSDiagramPinPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CSDiagramPinUtil} to access the cs diagram pin persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId();
+
+	public FinderPath getFinderPathCountByCPDefinitionId();
 
 	/**
 	 * Returns all the cs diagram pins where CPDefinitionId = &#63;.

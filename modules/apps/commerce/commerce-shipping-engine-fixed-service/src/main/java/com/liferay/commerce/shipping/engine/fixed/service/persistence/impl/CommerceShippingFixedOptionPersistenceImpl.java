@@ -96,10 +96,34 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceShippingMethodId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceShippingMethodId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingMethodId() {
+
+		return _finderPathWithoutPaginationFindByCommerceShippingMethodId;
+	}
+
 	private FinderPath _finderPathCountByCommerceShippingMethodId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceShippingMethodId() {
+		return _finderPathCountByCommerceShippingMethodId;
+	}
 
 	/**
 	 * Returns all the commerce shipping fixed options where commerceShippingMethodId = &#63;.
@@ -631,7 +655,18 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			"commerceShippingFixedOption.commerceShippingMethodId = ?";
 
 	private FinderPath _finderPathFetchByC_K;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_K() {
+		return _finderPathFetchByC_K;
+	}
+
 	private FinderPath _finderPathCountByC_K;
+
+	@Override
+	public FinderPath getFinderPathCountByC_K() {
+		return _finderPathCountByC_K;
+	}
 
 	/**
 	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or throws a <code>NoSuchShippingFixedOptionException</code> if it could not be found.

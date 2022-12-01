@@ -16,6 +16,7 @@ package com.liferay.commerce.order.rule.service.persistence;
 
 import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
 import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
@@ -41,6 +42,13 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link COREntryUtil} to access the cor entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cor entries where uuid = &#63;.
@@ -247,6 +255,10 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 	 * @return the number of matching cor entries that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cor entries where uuid = &#63; and companyId = &#63;.
@@ -471,6 +483,10 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 	 * @return the number of matching cor entries that the user has permission to view
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
 
 	/**
 	 * Returns all the cor entries where companyId = &#63; and active = &#63;.
@@ -1612,6 +1628,10 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 	 */
 	public int filterCountByC_A_LikeType(
 		long companyId, boolean active, String type);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the cor entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCOREntryException</code> if it could not be found.

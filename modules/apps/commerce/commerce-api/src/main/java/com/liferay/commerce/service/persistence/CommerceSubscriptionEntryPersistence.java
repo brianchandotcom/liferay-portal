@@ -16,6 +16,7 @@ package com.liferay.commerce.service.persistence;
 
 import com.liferay.commerce.exception.NoSuchSubscriptionEntryException;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceSubscriptionEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceSubscriptionEntryUtil} to access the commerce subscription entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce subscription entries where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the commerce subscription entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the number of matching commerce subscription entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the commerce subscription entries where groupId = &#63;.
 	 *
@@ -532,6 +552,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the number of matching commerce subscription entries
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the commerce subscription entries where companyId = &#63;.
@@ -677,6 +701,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchByCommerceOrderItemId();
+
+	public FinderPath getFinderPathCountByCommerceOrderItemId();
+
 	/**
 	 * Returns the commerce subscription entry where commerceOrderItemId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
 	 *
@@ -724,6 +752,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the number of matching commerce subscription entries
 	 */
 	public int countByCommerceOrderItemId(long commerceOrderItemId);
+
+	public FinderPath getFinderPathWithoutPaginationFindBySubscriptionStatus();
+
+	public FinderPath getFinderPathCountBySubscriptionStatus();
 
 	/**
 	 * Returns all the commerce subscription entries where subscriptionStatus = &#63;.
@@ -868,6 +900,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the number of matching commerce subscription entries
 	 */
 	public int countBySubscriptionStatus(int subscriptionStatus);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_U();
+
+	public FinderPath getFinderPathCountByC_U();
 
 	/**
 	 * Returns all the commerce subscription entries where companyId = &#63; and userId = &#63;.
@@ -1023,6 +1059,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the number of matching commerce subscription entries
 	 */
 	public int countByC_U(long companyId, long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_U();
+
+	public FinderPath getFinderPathCountByG_C_U();
 
 	/**
 	 * Returns all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
@@ -1190,6 +1230,10 @@ public interface CommerceSubscriptionEntryPersistence
 	 * @return the number of matching commerce subscription entries
 	 */
 	public int countByG_C_U(long groupId, long companyId, long userId);
+
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns the commerce subscription entry where CPInstanceUuid = &#63; and CProductId = &#63; and commerceOrderItemId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.

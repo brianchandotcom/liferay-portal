@@ -16,6 +16,7 @@ package com.liferay.commerce.notification.service.persistence;
 
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceNotificationTemplatePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceNotificationTemplateUtil} to access the commerce notification template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce notification templates where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceNotificationTemplatePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the commerce notification template where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchNotificationTemplateException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface CommerceNotificationTemplatePersistence
 	 * @return the number of matching commerce notification templates
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce notification templates where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface CommerceNotificationTemplatePersistence
 	 * @return the number of matching commerce notification templates
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the commerce notification templates where groupId = &#63;.
@@ -599,6 +619,10 @@ public interface CommerceNotificationTemplatePersistence
 	 * @return the number of matching commerce notification templates that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_E();
+
+	public FinderPath getFinderPathCountByG_E();
 
 	/**
 	 * Returns all the commerce notification templates where groupId = &#63; and enabled = &#63;.
@@ -824,6 +848,10 @@ public interface CommerceNotificationTemplatePersistence
 	 * @return the number of matching commerce notification templates that the user has permission to view
 	 */
 	public int filterCountByG_E(long groupId, boolean enabled);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_T_E();
+
+	public FinderPath getFinderPathCountByG_T_E();
 
 	/**
 	 * Returns all the commerce notification templates where groupId = &#63; and type = &#63; and enabled = &#63;.

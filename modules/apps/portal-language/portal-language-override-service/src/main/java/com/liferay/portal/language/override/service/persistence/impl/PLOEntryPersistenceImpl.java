@@ -101,9 +101,31 @@ public class PLOEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the plo entries where companyId = &#63;.
@@ -595,7 +617,18 @@ public class PLOEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_K;
 	private FinderPath _finderPathWithoutPaginationFindByC_K;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_K() {
+		return _finderPathWithoutPaginationFindByC_K;
+	}
+
 	private FinderPath _finderPathCountByC_K;
+
+	@Override
+	public FinderPath getFinderPathCountByC_K() {
+		return _finderPathCountByC_K;
+	}
 
 	/**
 	 * Returns all the plo entries where companyId = &#63; and key = &#63;.
@@ -1168,7 +1201,18 @@ public class PLOEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_L() {
+		return _finderPathWithoutPaginationFindByC_L;
+	}
+
 	private FinderPath _finderPathCountByC_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_L() {
+		return _finderPathCountByC_L;
+	}
 
 	/**
 	 * Returns all the plo entries where companyId = &#63; and languageId = &#63;.
@@ -1746,7 +1790,18 @@ public class PLOEntryPersistenceImpl
 		"(ploEntry.languageId IS NULL OR ploEntry.languageId = '')";
 
 	private FinderPath _finderPathFetchByC_K_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_K_L() {
+		return _finderPathFetchByC_K_L;
+	}
+
 	private FinderPath _finderPathCountByC_K_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_K_L() {
+		return _finderPathCountByC_K_L;
+	}
 
 	/**
 	 * Returns the plo entry where companyId = &#63; and key = &#63; and languageId = &#63; or throws a <code>NoSuchPLOEntryException</code> if it could not be found.

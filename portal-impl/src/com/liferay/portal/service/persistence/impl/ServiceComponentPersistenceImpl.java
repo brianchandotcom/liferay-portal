@@ -83,9 +83,31 @@ public class ServiceComponentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByBuildNamespace;
 	private FinderPath _finderPathWithoutPaginationFindByBuildNamespace;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByBuildNamespace() {
+		return _finderPathWithoutPaginationFindByBuildNamespace;
+	}
+
 	private FinderPath _finderPathCountByBuildNamespace;
+
+	@Override
+	public FinderPath getFinderPathCountByBuildNamespace() {
+		return _finderPathCountByBuildNamespace;
+	}
 
 	/**
 	 * Returns all the service components where buildNamespace = &#63;.
@@ -637,7 +659,18 @@ public class ServiceComponentPersistenceImpl
 		"(serviceComponent.buildNamespace IS NULL OR serviceComponent.buildNamespace = '')";
 
 	private FinderPath _finderPathFetchByBNS_BNU;
+
+	@Override
+	public FinderPath getFinderPathFetchByBNS_BNU() {
+		return _finderPathFetchByBNS_BNU;
+	}
+
 	private FinderPath _finderPathCountByBNS_BNU;
+
+	@Override
+	public FinderPath getFinderPathCountByBNS_BNU() {
+		return _finderPathCountByBNS_BNU;
+	}
 
 	/**
 	 * Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a <code>NoSuchServiceComponentException</code> if it could not be found.

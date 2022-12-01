@@ -16,6 +16,7 @@ package com.liferay.oauth.service.persistence;
 
 import com.liferay.oauth.exception.NoSuchUserException;
 import com.liferay.oauth.model.OAuthUser;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthUserUtil} to access the o auth user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the o auth users where userId = &#63;.
@@ -246,6 +254,10 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @return the number of matching o auth users that the user has permission to view
 	 */
 	public int filterCountByUserId(long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByOAuthApplicationId();
+
+	public FinderPath getFinderPathCountByOAuthApplicationId();
 
 	/**
 	 * Returns all the o auth users where oAuthApplicationId = &#63;.
@@ -456,6 +468,10 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 */
 	public int filterCountByOAuthApplicationId(long oAuthApplicationId);
 
+	public FinderPath getFinderPathFetchByAccessToken();
+
+	public FinderPath getFinderPathCountByAccessToken();
+
 	/**
 	 * Returns the o auth user where accessToken = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
 	 *
@@ -500,6 +516,10 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @return the number of matching o auth users
 	 */
 	public int countByAccessToken(String accessToken);
+
+	public FinderPath getFinderPathFetchByU_OAI();
+
+	public FinderPath getFinderPathCountByU_OAI();
 
 	/**
 	 * Returns the o auth user where userId = &#63; and oAuthApplicationId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.

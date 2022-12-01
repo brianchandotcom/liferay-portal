@@ -122,6 +122,30 @@ public class LVEntryLocalizationUtil {
 		return getPersistence().update(lvEntryLocalization, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLvEntryId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByLvEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLvEntryId() {
+
+		return getPersistence().getFinderPathCountByLvEntryId();
+	}
+
 	/**
 	 * Returns all the lv entry localizations where lvEntryId = &#63;.
 	 *
@@ -298,6 +322,18 @@ public class LVEntryLocalizationUtil {
 		return getPersistence().countByLvEntryId(lvEntryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByLvEntryId_LanguageId() {
+
+		return getPersistence().getFinderPathFetchByLvEntryId_LanguageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLvEntryId_LanguageId() {
+
+		return getPersistence().getFinderPathCountByLvEntryId_LanguageId();
+	}
+
 	/**
 	 * Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.
 	 *
@@ -372,6 +408,18 @@ public class LVEntryLocalizationUtil {
 
 		return getPersistence().countByLvEntryId_LanguageId(
 			lvEntryId, languageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByHeadId() {
+
+		return getPersistence().getFinderPathFetchByHeadId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByHeadId() {
+
+		return getPersistence().getFinderPathCountByHeadId();
 	}
 
 	/**

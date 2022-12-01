@@ -16,6 +16,7 @@ package com.liferay.change.tracking.store.service.persistence;
 
 import com.liferay.change.tracking.store.exception.NoSuchContentException;
 import com.liferay.change.tracking.store.model.CTSContent;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface CTSContentPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTSContentUtil} to access the cts content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_R_S();
+
+	public FinderPath getFinderPathCountByC_R_S();
 
 	/**
 	 * Returns all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
@@ -211,6 +219,10 @@ public interface CTSContentPersistence
 	 */
 	public int countByC_R_S(
 		long companyId, long repositoryId, String storeType);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_R_P_S();
+
+	public FinderPath getFinderPathCountByC_R_P_S();
 
 	/**
 	 * Returns all the cts contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
@@ -577,6 +589,10 @@ public interface CTSContentPersistence
 	 */
 	public int countByC_R_LikeP_S(
 		long companyId, long repositoryId, String path, String storeType);
+
+	public FinderPath getFinderPathFetchByC_R_P_V_S();
+
+	public FinderPath getFinderPathCountByC_R_P_V_S();
 
 	/**
 	 * Returns the cts content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; and storeType = &#63; or throws a <code>NoSuchContentException</code> if it could not be found.

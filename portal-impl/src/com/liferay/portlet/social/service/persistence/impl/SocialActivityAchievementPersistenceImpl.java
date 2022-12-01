@@ -90,9 +90,31 @@ public class SocialActivityAchievementPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63;.
@@ -615,7 +637,18 @@ public class SocialActivityAchievementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U() {
+		return _finderPathWithoutPaginationFindByG_U;
+	}
+
 	private FinderPath _finderPathCountByG_U;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U() {
+		return _finderPathCountByG_U;
+	}
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and userId = &#63;.
@@ -1177,7 +1210,18 @@ public class SocialActivityAchievementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N;
 	private FinderPath _finderPathWithoutPaginationFindByG_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N() {
+		return _finderPathWithoutPaginationFindByG_N;
+	}
+
 	private FinderPath _finderPathCountByG_N;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N() {
+		return _finderPathCountByG_N;
+	}
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and name = &#63;.
@@ -1781,7 +1825,18 @@ public class SocialActivityAchievementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_F;
 	private FinderPath _finderPathWithoutPaginationFindByG_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_F() {
+		return _finderPathWithoutPaginationFindByG_F;
+	}
+
 	private FinderPath _finderPathCountByG_F;
+
+	@Override
+	public FinderPath getFinderPathCountByG_F() {
+		return _finderPathCountByG_F;
+	}
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and firstInGroup = &#63;.
@@ -2344,7 +2399,18 @@ public class SocialActivityAchievementPersistenceImpl
 		"socialActivityAchievement.firstInGroup = ?";
 
 	private FinderPath _finderPathFetchByG_U_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_U_N() {
+		return _finderPathFetchByG_U_N;
+	}
+
 	private FinderPath _finderPathCountByG_U_N;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U_N() {
+		return _finderPathCountByG_U_N;
+	}
 
 	/**
 	 * Returns the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; or throws a <code>NoSuchActivityAchievementException</code> if it could not be found.
@@ -2637,7 +2703,18 @@ public class SocialActivityAchievementPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U_F;
 	private FinderPath _finderPathWithoutPaginationFindByG_U_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_F() {
+		return _finderPathWithoutPaginationFindByG_U_F;
+	}
+
 	private FinderPath _finderPathCountByG_U_F;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U_F() {
+		return _finderPathCountByG_U_F;
+	}
 
 	/**
 	 * Returns all the social activity achievements where groupId = &#63; and userId = &#63; and firstInGroup = &#63;.

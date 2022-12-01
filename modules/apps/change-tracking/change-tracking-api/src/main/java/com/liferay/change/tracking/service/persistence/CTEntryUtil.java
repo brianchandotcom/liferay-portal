@@ -119,6 +119,31 @@ public class CTEntryUtil {
 		return getPersistence().update(ctEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCtCollectionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCtCollectionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCtCollectionId() {
+
+		return getPersistence().getFinderPathCountByCtCollectionId();
+	}
+
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63;.
 	 *
@@ -286,6 +311,18 @@ public class CTEntryUtil {
 	 */
 	public static int countByCtCollectionId(long ctCollectionId) {
 		return getPersistence().countByCtCollectionId(ctCollectionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_MCNI() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_MCNI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_MCNI() {
+
+		return getPersistence().getFinderPathCountByC_MCNI();
 	}
 
 	/**
@@ -477,6 +514,18 @@ public class CTEntryUtil {
 		long ctCollectionId, long modelClassNameId) {
 
 		return getPersistence().countByC_MCNI(ctCollectionId, modelClassNameId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_MCNI_MCPK() {
+
+		return getPersistence().getFinderPathFetchByC_MCNI_MCPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_MCNI_MCPK() {
+
+		return getPersistence().getFinderPathCountByC_MCNI_MCPK();
 	}
 
 	/**

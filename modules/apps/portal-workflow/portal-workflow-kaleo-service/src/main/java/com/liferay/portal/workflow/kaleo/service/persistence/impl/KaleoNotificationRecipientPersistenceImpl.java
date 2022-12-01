@@ -101,9 +101,31 @@ public class KaleoNotificationRecipientPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo notification recipients where companyId = &#63;.
@@ -630,7 +652,20 @@ public class KaleoNotificationRecipientPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	}
+
 	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId() {
+		return _finderPathCountByKaleoDefinitionVersionId;
+	}
 
 	/**
 	 * Returns all the kaleo notification recipients where kaleoDefinitionVersionId = &#63;.
@@ -1177,7 +1212,20 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKaleoNotificationId;
 	private FinderPath _finderPathWithoutPaginationFindByKaleoNotificationId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoNotificationId() {
+
+		return _finderPathWithoutPaginationFindByKaleoNotificationId;
+	}
+
 	private FinderPath _finderPathCountByKaleoNotificationId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoNotificationId() {
+		return _finderPathCountByKaleoNotificationId;
+	}
 
 	/**
 	 * Returns all the kaleo notification recipients where kaleoNotificationId = &#63;.

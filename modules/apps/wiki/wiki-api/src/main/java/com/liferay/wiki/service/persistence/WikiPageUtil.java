@@ -119,6 +119,31 @@ public class WikiPageUtil {
 		return getPersistence().update(wikiPage, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByResourcePrimKey() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByResourcePrimKey();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByResourcePrimKey() {
+
+		return getPersistence().getFinderPathCountByResourcePrimKey();
+	}
+
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63;.
 	 *
@@ -288,6 +313,18 @@ public class WikiPageUtil {
 		return getPersistence().countByResourcePrimKey(resourcePrimKey);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the wiki pages where uuid = &#63;.
 	 *
@@ -449,6 +486,18 @@ public class WikiPageUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the wiki page where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
 	 *
@@ -510,6 +559,18 @@ public class WikiPageUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -695,6 +756,18 @@ public class WikiPageUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the wiki pages where companyId = &#63;.
 	 *
@@ -863,6 +936,18 @@ public class WikiPageUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByNodeId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByNodeId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByNodeId() {
+
+		return getPersistence().getFinderPathCountByNodeId();
+	}
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63;.
 	 *
@@ -1023,6 +1108,18 @@ public class WikiPageUtil {
 	 */
 	public static int countByNodeId(long nodeId) {
 		return getPersistence().countByNodeId(nodeId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFormat() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByFormat();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFormat() {
+
+		return getPersistence().getFinderPathCountByFormat();
 	}
 
 	/**
@@ -1187,6 +1284,18 @@ public class WikiPageUtil {
 	 */
 	public static int countByFormat(String format) {
 		return getPersistence().countByFormat(format);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_N() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_N() {
+
+		return getPersistence().getFinderPathCountByR_N();
 	}
 
 	/**
@@ -1373,6 +1482,18 @@ public class WikiPageUtil {
 		return getPersistence().countByR_N(resourcePrimKey, nodeId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_S() {
+
+		return getPersistence().getFinderPathCountByR_S();
+	}
+
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and status = &#63;.
 	 *
@@ -1555,6 +1676,18 @@ public class WikiPageUtil {
 	 */
 	public static int countByR_S(long resourcePrimKey, int status) {
 		return getPersistence().countByR_S(resourcePrimKey, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_ERC() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_ERC();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_ERC() {
+
+		return getPersistence().getFinderPathCountByG_ERC();
 	}
 
 	/**
@@ -1835,6 +1968,18 @@ public class WikiPageUtil {
 			groupId, externalReferenceCode);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_T() {
+
+		return getPersistence().getFinderPathCountByN_T();
+	}
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63;.
 	 *
@@ -2016,6 +2161,18 @@ public class WikiPageUtil {
 	 */
 	public static int countByN_T(long nodeId, String title) {
 		return getPersistence().countByN_T(nodeId, title);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_H() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_H();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_H() {
+
+		return getPersistence().getFinderPathCountByN_H();
 	}
 
 	/**
@@ -2200,6 +2357,18 @@ public class WikiPageUtil {
 		return getPersistence().countByN_H(nodeId, head);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_P() {
+
+		return getPersistence().getFinderPathCountByN_P();
+	}
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and parentTitle = &#63;.
 	 *
@@ -2381,6 +2550,18 @@ public class WikiPageUtil {
 	 */
 	public static int countByN_P(long nodeId, String parentTitle) {
 		return getPersistence().countByN_P(nodeId, parentTitle);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_R() {
+
+		return getPersistence().getFinderPathCountByN_R();
 	}
 
 	/**
@@ -2567,6 +2748,18 @@ public class WikiPageUtil {
 		return getPersistence().countByN_R(nodeId, redirectTitle);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_S() {
+
+		return getPersistence().getFinderPathCountByN_S();
+	}
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and status = &#63;.
 	 *
@@ -2750,6 +2943,18 @@ public class WikiPageUtil {
 		return getPersistence().countByN_S(nodeId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByR_N_V() {
+
+		return getPersistence().getFinderPathFetchByR_N_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_N_V() {
+
+		return getPersistence().getFinderPathCountByR_N_V();
+	}
+
 	/**
 	 * Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
 	 *
@@ -2824,6 +3029,18 @@ public class WikiPageUtil {
 		long resourcePrimKey, long nodeId, double version) {
 
 		return getPersistence().countByR_N_V(resourcePrimKey, nodeId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_N_H() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_N_H();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_N_H() {
+
+		return getPersistence().getFinderPathCountByR_N_H();
 	}
 
 	/**
@@ -3028,6 +3245,18 @@ public class WikiPageUtil {
 		return getPersistence().countByR_N_H(resourcePrimKey, nodeId, head);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_N_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_N_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_N_S() {
+
+		return getPersistence().getFinderPathCountByR_N_S();
+	}
+
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
 	 *
@@ -3230,6 +3459,18 @@ public class WikiPageUtil {
 		return getPersistence().countByR_N_S(resourcePrimKey, nodeId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_ERC_V() {
+
+		return getPersistence().getFinderPathFetchByG_ERC_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_ERC_V() {
+
+		return getPersistence().getFinderPathCountByG_ERC_V();
+	}
+
 	/**
 	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
 	 *
@@ -3308,6 +3549,18 @@ public class WikiPageUtil {
 
 		return getPersistence().countByG_ERC_V(
 			groupId, externalReferenceCode, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_N_H() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_N_H();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_N_H() {
+
+		return getPersistence().getFinderPathCountByG_N_H();
 	}
 
 	/**
@@ -3597,6 +3850,18 @@ public class WikiPageUtil {
 		long groupId, long nodeId, boolean head) {
 
 		return getPersistence().filterCountByG_N_H(groupId, nodeId, head);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_N_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_N_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_N_S() {
+
+		return getPersistence().getFinderPathCountByG_N_S();
 	}
 
 	/**
@@ -3889,6 +4154,18 @@ public class WikiPageUtil {
 		return getPersistence().filterCountByG_N_S(groupId, nodeId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU_N_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU_N_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_N_S() {
+
+		return getPersistence().getFinderPathCountByU_N_S();
+	}
+
 	/**
 	 * Returns all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
 	 *
@@ -4086,6 +4363,18 @@ public class WikiPageUtil {
 		return getPersistence().countByU_N_S(userId, nodeId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByN_T_V() {
+
+		return getPersistence().getFinderPathFetchByN_T_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_T_V() {
+
+		return getPersistence().getFinderPathCountByN_T_V();
+	}
+
 	/**
 	 * Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
 	 *
@@ -4157,6 +4446,18 @@ public class WikiPageUtil {
 	 */
 	public static int countByN_T_V(long nodeId, String title, double version) {
 		return getPersistence().countByN_T_V(nodeId, title, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_T_H() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_T_H();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_T_H() {
+
+		return getPersistence().getFinderPathCountByN_T_H();
 	}
 
 	/**
@@ -4355,6 +4656,18 @@ public class WikiPageUtil {
 		return getPersistence().countByN_T_H(nodeId, title, head);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_T_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_T_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_T_S() {
+
+		return getPersistence().getFinderPathCountByN_T_S();
+	}
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
 	 *
@@ -4550,6 +4863,18 @@ public class WikiPageUtil {
 	 */
 	public static int countByN_T_S(long nodeId, String title, int status) {
 		return getPersistence().countByN_T_S(nodeId, title, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_H_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_H_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_H_P() {
+
+		return getPersistence().getFinderPathCountByN_H_P();
 	}
 
 	/**
@@ -4754,6 +5079,18 @@ public class WikiPageUtil {
 		return getPersistence().countByN_H_P(nodeId, head, parentTitle);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_H_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_H_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_H_R() {
+
+		return getPersistence().getFinderPathCountByN_H_R();
+	}
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
 	 *
@@ -4954,6 +5291,18 @@ public class WikiPageUtil {
 		long nodeId, boolean head, String redirectTitle) {
 
 		return getPersistence().countByN_H_R(nodeId, head, redirectTitle);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_H_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_H_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_H_S() {
+
+		return getPersistence().getFinderPathCountByN_H_S();
 	}
 
 	/**
@@ -5351,6 +5700,18 @@ public class WikiPageUtil {
 		return getPersistence().countByN_H_NotS(nodeId, head, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U_N_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U_N_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U_N_S() {
+
+		return getPersistence().getFinderPathCountByG_U_N_S();
+	}
+
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
 	 *
@@ -5663,6 +6024,18 @@ public class WikiPageUtil {
 
 		return getPersistence().filterCountByG_U_N_S(
 			groupId, userId, nodeId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_N_T_H() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_N_T_H();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_N_T_H() {
+
+		return getPersistence().getFinderPathCountByG_N_T_H();
 	}
 
 	/**
@@ -5980,6 +6353,18 @@ public class WikiPageUtil {
 			groupId, nodeId, title, head);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_N_H_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_N_H_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_N_H_S() {
+
+		return getPersistence().getFinderPathCountByG_N_H_S();
+	}
+
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
 	 *
@@ -6292,6 +6677,18 @@ public class WikiPageUtil {
 
 		return getPersistence().filterCountByG_N_H_S(
 			groupId, nodeId, head, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_H_P_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_H_P_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_H_P_S() {
+
+		return getPersistence().getFinderPathCountByN_H_P_S();
 	}
 
 	/**
@@ -6728,6 +7125,18 @@ public class WikiPageUtil {
 			nodeId, head, parentTitle, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByN_H_R_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByN_H_R_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByN_H_R_S() {
+
+		return getPersistence().getFinderPathCountByN_H_R_S();
+	}
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
 	 *
@@ -7161,6 +7570,18 @@ public class WikiPageUtil {
 
 		return getPersistence().countByN_H_R_NotS(
 			nodeId, head, redirectTitle, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_N_H_P_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_N_H_P_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_N_H_P_S() {
+
+		return getPersistence().getFinderPathCountByG_N_H_P_S();
 	}
 
 	/**

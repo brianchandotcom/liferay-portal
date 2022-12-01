@@ -86,9 +86,31 @@ public class PortletItemPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByG_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C() {
+		return _finderPathWithoutPaginationFindByG_C;
+	}
+
 	private FinderPath _finderPathCountByG_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C() {
+		return _finderPathCountByG_C;
+	}
 
 	/**
 	 * Returns all the portlet items where groupId = &#63; and classNameId = &#63;.
@@ -628,7 +650,18 @@ public class PortletItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_C() {
+		return _finderPathWithoutPaginationFindByG_P_C;
+	}
+
 	private FinderPath _finderPathCountByG_P_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_C() {
+		return _finderPathCountByG_P_C;
+	}
 
 	/**
 	 * Returns all the portlet items where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -1249,7 +1282,18 @@ public class PortletItemPersistenceImpl
 		"portletItem.classNameId = ?";
 
 	private FinderPath _finderPathFetchByG_N_P_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_N_P_C() {
+		return _finderPathFetchByG_N_P_C;
+	}
+
 	private FinderPath _finderPathCountByG_N_P_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_P_C() {
+		return _finderPathCountByG_N_P_C;
+	}
 
 	/**
 	 * Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or throws a <code>NoSuchPortletItemException</code> if it could not be found.

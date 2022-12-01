@@ -101,9 +101,31 @@ public class SegmentsEntryRolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindBySegmentsEntryId;
 	private FinderPath _finderPathWithoutPaginationFindBySegmentsEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySegmentsEntryId() {
+		return _finderPathWithoutPaginationFindBySegmentsEntryId;
+	}
+
 	private FinderPath _finderPathCountBySegmentsEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountBySegmentsEntryId() {
+		return _finderPathCountBySegmentsEntryId;
+	}
 
 	/**
 	 * Returns all the segments entry roles where segmentsEntryId = &#63;.
@@ -629,7 +651,18 @@ public class SegmentsEntryRolePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByRoleId;
 	private FinderPath _finderPathWithoutPaginationFindByRoleId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByRoleId() {
+		return _finderPathWithoutPaginationFindByRoleId;
+	}
+
 	private FinderPath _finderPathCountByRoleId;
+
+	@Override
+	public FinderPath getFinderPathCountByRoleId() {
+		return _finderPathCountByRoleId;
+	}
 
 	/**
 	 * Returns all the segments entry roles where roleId = &#63;.
@@ -1139,7 +1172,18 @@ public class SegmentsEntryRolePersistenceImpl
 		"segmentsEntryRole.roleId = ?";
 
 	private FinderPath _finderPathFetchByS_R;
+
+	@Override
+	public FinderPath getFinderPathFetchByS_R() {
+		return _finderPathFetchByS_R;
+	}
+
 	private FinderPath _finderPathCountByS_R;
+
+	@Override
+	public FinderPath getFinderPathCountByS_R() {
+		return _finderPathCountByS_R;
+	}
 
 	/**
 	 * Returns the segments entry role where segmentsEntryId = &#63; and roleId = &#63; or throws a <code>NoSuchEntryRoleException</code> if it could not be found.

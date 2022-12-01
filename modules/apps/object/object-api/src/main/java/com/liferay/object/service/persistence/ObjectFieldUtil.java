@@ -119,6 +119,30 @@ public class ObjectFieldUtil {
 		return getPersistence().update(objectField, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the object fields where uuid = &#63;.
 	 *
@@ -281,6 +305,18 @@ public class ObjectFieldUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -467,6 +503,19 @@ public class ObjectFieldUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByListTypeDefinitionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByListTypeDefinitionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByListTypeDefinitionId() {
+
+		return getPersistence().getFinderPathCountByListTypeDefinitionId();
+	}
+
 	/**
 	 * Returns all the object fields where listTypeDefinitionId = &#63;.
 	 *
@@ -646,6 +695,19 @@ public class ObjectFieldUtil {
 			listTypeDefinitionId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByObjectDefinitionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByObjectDefinitionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByObjectDefinitionId() {
+
+		return getPersistence().getFinderPathCountByObjectDefinitionId();
+	}
+
 	/**
 	 * Returns all the object fields where objectDefinitionId = &#63;.
 	 *
@@ -820,6 +882,18 @@ public class ObjectFieldUtil {
 	 */
 	public static int countByObjectDefinitionId(long objectDefinitionId) {
 		return getPersistence().countByObjectDefinitionId(objectDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLTDI_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByLTDI_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLTDI_S() {
+
+		return getPersistence().getFinderPathCountByLTDI_S();
 	}
 
 	/**
@@ -1010,6 +1084,18 @@ public class ObjectFieldUtil {
 	 */
 	public static int countByLTDI_S(long listTypeDefinitionId, boolean state) {
 		return getPersistence().countByLTDI_S(listTypeDefinitionId, state);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI_DTN() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI_DTN();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI_DTN() {
+
+		return getPersistence().getFinderPathCountByODI_DTN();
 	}
 
 	/**
@@ -1204,6 +1290,18 @@ public class ObjectFieldUtil {
 		return getPersistence().countByODI_DTN(objectDefinitionId, dbTableName);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByODI_N() {
+
+		return getPersistence().getFinderPathFetchByODI_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI_N() {
+
+		return getPersistence().getFinderPathCountByODI_N();
+	}
+
 	/**
 	 * Returns the object field where objectDefinitionId = &#63; and name = &#63; or throws a <code>NoSuchObjectFieldException</code> if it could not be found.
 	 *
@@ -1269,6 +1367,18 @@ public class ObjectFieldUtil {
 	 */
 	public static int countByODI_N(long objectDefinitionId, String name) {
 		return getPersistence().countByODI_N(objectDefinitionId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI_S() {
+
+		return getPersistence().getFinderPathCountByODI_S();
 	}
 
 	/**
@@ -1459,6 +1569,18 @@ public class ObjectFieldUtil {
 		return getPersistence().countByODI_S(objectDefinitionId, system);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByERC_C_ODI() {
+
+		return getPersistence().getFinderPathFetchByERC_C_ODI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByERC_C_ODI() {
+
+		return getPersistence().getFinderPathCountByERC_C_ODI();
+	}
+
 	/**
 	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectFieldException</code> if it could not be found.
 	 *
@@ -1540,6 +1662,18 @@ public class ObjectFieldUtil {
 
 		return getPersistence().countByERC_C_ODI(
 			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByODI_DBT_I() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByODI_DBT_I();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByODI_DBT_I() {
+
+		return getPersistence().getFinderPathCountByODI_DBT_I();
 	}
 
 	/**

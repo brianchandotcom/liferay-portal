@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
@@ -39,6 +40,13 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiPageUtil} to access the wiki page persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByResourcePrimKey();
+
+	public FinderPath getFinderPathCountByResourcePrimKey();
 
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63;.
@@ -183,6 +191,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByResourcePrimKey(long resourcePrimKey);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
+
 	/**
 	 * Returns all the wiki pages where uuid = &#63;.
 	 *
@@ -325,6 +337,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the wiki page where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
 	 *
@@ -374,6 +390,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the wiki pages where uuid = &#63; and companyId = &#63;.
@@ -529,6 +549,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the wiki pages where companyId = &#63;.
 	 *
@@ -671,6 +695,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByNodeId();
+
+	public FinderPath getFinderPathCountByNodeId();
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63;.
@@ -815,6 +843,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByNodeId(long nodeId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByFormat();
+
+	public FinderPath getFinderPathCountByFormat();
+
 	/**
 	 * Returns all the wiki pages where format = &#63;.
 	 *
@@ -957,6 +989,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByFormat(String format);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_N();
+
+	public FinderPath getFinderPathCountByR_N();
 
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -1113,6 +1149,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByR_N(long resourcePrimKey, long nodeId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByR_S();
+
+	public FinderPath getFinderPathCountByR_S();
+
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and status = &#63;.
 	 *
@@ -1266,6 +1306,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByR_S(long resourcePrimKey, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_ERC();
+
+	public FinderPath getFinderPathCountByG_ERC();
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
@@ -1492,6 +1536,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int filterCountByG_ERC(long groupId, String externalReferenceCode);
 
+	public FinderPath getFinderPathWithoutPaginationFindByN_T();
+
+	public FinderPath getFinderPathCountByN_T();
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63;.
 	 *
@@ -1645,6 +1693,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByN_T(long nodeId, String title);
+
+	public FinderPath getFinderPathWithoutPaginationFindByN_H();
+
+	public FinderPath getFinderPathCountByN_H();
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63;.
@@ -1800,6 +1852,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByN_H(long nodeId, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByN_P();
+
+	public FinderPath getFinderPathCountByN_P();
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and parentTitle = &#63;.
 	 *
@@ -1953,6 +2009,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByN_P(long nodeId, String parentTitle);
+
+	public FinderPath getFinderPathWithoutPaginationFindByN_R();
+
+	public FinderPath getFinderPathCountByN_R();
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and redirectTitle = &#63;.
@@ -2109,6 +2169,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByN_R(long nodeId, String redirectTitle);
 
+	public FinderPath getFinderPathWithoutPaginationFindByN_S();
+
+	public FinderPath getFinderPathCountByN_S();
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and status = &#63;.
 	 *
@@ -2263,6 +2327,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByN_S(long nodeId, int status);
 
+	public FinderPath getFinderPathFetchByR_N_V();
+
+	public FinderPath getFinderPathCountByR_N_V();
+
 	/**
 	 * Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
 	 *
@@ -2321,6 +2389,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByR_N_V(long resourcePrimKey, long nodeId, double version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_N_H();
+
+	public FinderPath getFinderPathCountByR_N_H();
 
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -2488,6 +2560,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByR_N_H(long resourcePrimKey, long nodeId, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByR_N_S();
+
+	public FinderPath getFinderPathCountByR_N_S();
+
 	/**
 	 * Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
 	 *
@@ -2654,6 +2730,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByR_N_S(long resourcePrimKey, long nodeId, int status);
 
+	public FinderPath getFinderPathFetchByG_ERC_V();
+
+	public FinderPath getFinderPathCountByG_ERC_V();
+
 	/**
 	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
 	 *
@@ -2713,6 +2793,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByG_ERC_V(
 		long groupId, String externalReferenceCode, double version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_H();
+
+	public FinderPath getFinderPathCountByG_N_H();
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2955,6 +3039,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int filterCountByG_N_H(long groupId, long nodeId, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_S();
+
+	public FinderPath getFinderPathCountByG_N_S();
+
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63;.
 	 *
@@ -3196,6 +3284,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int filterCountByG_N_S(long groupId, long nodeId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_N_S();
+
+	public FinderPath getFinderPathCountByU_N_S();
+
 	/**
 	 * Returns all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
 	 *
@@ -3362,6 +3454,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByU_N_S(long userId, long nodeId, int status);
 
+	public FinderPath getFinderPathFetchByN_T_V();
+
+	public FinderPath getFinderPathCountByN_T_V();
+
 	/**
 	 * Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
 	 *
@@ -3416,6 +3512,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByN_T_V(long nodeId, String title, double version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByN_T_H();
+
+	public FinderPath getFinderPathCountByN_T_H();
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3583,6 +3683,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByN_T_H(long nodeId, String title, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByN_T_S();
+
+	public FinderPath getFinderPathCountByN_T_S();
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
 	 *
@@ -3748,6 +3852,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByN_T_S(long nodeId, String title, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_P();
+
+	public FinderPath getFinderPathCountByN_H_P();
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3915,6 +4023,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByN_H_P(long nodeId, boolean head, String parentTitle);
 
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_R();
+
+	public FinderPath getFinderPathCountByN_H_R();
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
 	 *
@@ -4080,6 +4192,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 * @return the number of matching wiki pages
 	 */
 	public int countByN_H_R(long nodeId, boolean head, String redirectTitle);
+
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_S();
+
+	public FinderPath getFinderPathCountByN_H_S();
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4413,6 +4529,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByN_H_NotS(long nodeId, boolean head, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_N_S();
+
+	public FinderPath getFinderPathCountByG_U_N_S();
+
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
 	 *
@@ -4672,6 +4792,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int filterCountByG_U_N_S(
 		long groupId, long userId, long nodeId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_T_H();
+
+	public FinderPath getFinderPathCountByG_N_T_H();
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4938,6 +5062,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	public int filterCountByG_N_T_H(
 		long groupId, long nodeId, String title, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_H_S();
+
+	public FinderPath getFinderPathCountByG_N_H_S();
+
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
 	 *
@@ -5199,6 +5327,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int filterCountByG_N_H_S(
 		long groupId, long nodeId, boolean head, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_P_S();
+
+	public FinderPath getFinderPathCountByN_H_P_S();
 
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5566,6 +5698,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	public int countByN_H_P_NotS(
 		long nodeId, boolean head, String parentTitle, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByN_H_R_S();
+
+	public FinderPath getFinderPathCountByN_H_R_S();
+
 	/**
 	 * Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
 	 *
@@ -5931,6 +6067,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	 */
 	public int countByN_H_R_NotS(
 		long nodeId, boolean head, String redirectTitle, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_H_P_S();
+
+	public FinderPath getFinderPathCountByG_N_H_P_S();
 
 	/**
 	 * Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.

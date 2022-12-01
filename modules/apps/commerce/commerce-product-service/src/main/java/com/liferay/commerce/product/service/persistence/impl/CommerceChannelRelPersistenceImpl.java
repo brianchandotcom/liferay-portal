@@ -101,9 +101,31 @@ public class CommerceChannelRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceChannelId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceChannelId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceChannelId() {
+		return _finderPathWithoutPaginationFindByCommerceChannelId;
+	}
+
 	private FinderPath _finderPathCountByCommerceChannelId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceChannelId() {
+		return _finderPathCountByCommerceChannelId;
+	}
 
 	/**
 	 * Returns all the commerce channel rels where commerceChannelId = &#63;.
@@ -632,7 +654,18 @@ public class CommerceChannelRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the commerce channel rels where classNameId = &#63; and classPK = &#63;.
@@ -1188,7 +1221,18 @@ public class CommerceChannelRelPersistenceImpl
 		"commerceChannelRel.classPK = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C_C() {
+		return _finderPathFetchByC_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C() {
+		return _finderPathCountByC_C_C;
+	}
 
 	/**
 	 * Returns the commerce channel rel where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; or throws a <code>NoSuchChannelRelException</code> if it could not be found.

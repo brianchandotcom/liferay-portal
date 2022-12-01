@@ -90,8 +90,30 @@ public class StatusPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByUserId;
+
+	@Override
+	public FinderPath getFinderPathFetchByUserId() {
+		return _finderPathFetchByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns the status where userId = &#63; or throws a <code>NoSuchStatusException</code> if it could not be found.
@@ -284,7 +306,18 @@ public class StatusPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByModifiedDate;
 	private FinderPath _finderPathWithoutPaginationFindByModifiedDate;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByModifiedDate() {
+		return _finderPathWithoutPaginationFindByModifiedDate;
+	}
+
 	private FinderPath _finderPathCountByModifiedDate;
+
+	@Override
+	public FinderPath getFinderPathCountByModifiedDate() {
+		return _finderPathCountByModifiedDate;
+	}
 
 	/**
 	 * Returns all the statuses where modifiedDate = &#63;.
@@ -780,7 +813,18 @@ public class StatusPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByOnline;
 	private FinderPath _finderPathWithoutPaginationFindByOnline;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByOnline() {
+		return _finderPathWithoutPaginationFindByOnline;
+	}
+
 	private FinderPath _finderPathCountByOnline;
+
+	@Override
+	public FinderPath getFinderPathCountByOnline() {
+		return _finderPathCountByOnline;
+	}
 
 	/**
 	 * Returns all the statuses where online = &#63;.
@@ -1267,7 +1311,18 @@ public class StatusPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByM_O;
 	private FinderPath _finderPathWithoutPaginationFindByM_O;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByM_O() {
+		return _finderPathWithoutPaginationFindByM_O;
+	}
+
 	private FinderPath _finderPathCountByM_O;
+
+	@Override
+	public FinderPath getFinderPathCountByM_O() {
+		return _finderPathCountByM_O;
+	}
 
 	/**
 	 * Returns all the statuses where modifiedDate = &#63; and online = &#63;.

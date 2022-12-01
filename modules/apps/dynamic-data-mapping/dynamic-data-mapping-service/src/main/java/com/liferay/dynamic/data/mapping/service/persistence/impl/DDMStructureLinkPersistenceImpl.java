@@ -98,9 +98,31 @@ public class DDMStructureLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByStructureId;
 	private FinderPath _finderPathWithoutPaginationFindByStructureId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStructureId() {
+		return _finderPathWithoutPaginationFindByStructureId;
+	}
+
 	private FinderPath _finderPathCountByStructureId;
+
+	@Override
+	public FinderPath getFinderPathCountByStructureId() {
+		return _finderPathCountByStructureId;
+	}
 
 	/**
 	 * Returns all the ddm structure links where structureId = &#63;.
@@ -620,7 +642,18 @@ public class DDMStructureLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the ddm structure links where classNameId = &#63; and classPK = &#63;.
@@ -1174,7 +1207,18 @@ public class DDMStructureLinkPersistenceImpl
 		"ddmStructureLink.classPK = ?";
 
 	private FinderPath _finderPathFetchByC_C_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C_S() {
+		return _finderPathFetchByC_C_S;
+	}
+
 	private FinderPath _finderPathCountByC_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_S() {
+		return _finderPathCountByC_C_S;
+	}
 
 	/**
 	 * Returns the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or throws a <code>NoSuchStructureLinkException</code> if it could not be found.

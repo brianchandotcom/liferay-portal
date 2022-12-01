@@ -95,9 +95,31 @@ public class OAuthUserPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the o auth users where userId = &#63;.
@@ -955,7 +977,18 @@ public class OAuthUserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByOAuthApplicationId;
 	private FinderPath _finderPathWithoutPaginationFindByOAuthApplicationId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByOAuthApplicationId() {
+		return _finderPathWithoutPaginationFindByOAuthApplicationId;
+	}
+
 	private FinderPath _finderPathCountByOAuthApplicationId;
+
+	@Override
+	public FinderPath getFinderPathCountByOAuthApplicationId() {
+		return _finderPathCountByOAuthApplicationId;
+	}
 
 	/**
 	 * Returns all the o auth users where oAuthApplicationId = &#63;.
@@ -1840,7 +1873,18 @@ public class OAuthUserPersistenceImpl
 			"oAuthUser.oAuthApplicationId = ?";
 
 	private FinderPath _finderPathFetchByAccessToken;
+
+	@Override
+	public FinderPath getFinderPathFetchByAccessToken() {
+		return _finderPathFetchByAccessToken;
+	}
+
 	private FinderPath _finderPathCountByAccessToken;
+
+	@Override
+	public FinderPath getFinderPathCountByAccessToken() {
+		return _finderPathCountByAccessToken;
+	}
 
 	/**
 	 * Returns the o auth user where accessToken = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -2067,7 +2111,18 @@ public class OAuthUserPersistenceImpl
 		"(oAuthUser.accessToken IS NULL OR oAuthUser.accessToken = '')";
 
 	private FinderPath _finderPathFetchByU_OAI;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_OAI() {
+		return _finderPathFetchByU_OAI;
+	}
+
 	private FinderPath _finderPathCountByU_OAI;
+
+	@Override
+	public FinderPath getFinderPathCountByU_OAI() {
+		return _finderPathCountByU_OAI;
+	}
 
 	/**
 	 * Returns the o auth user where userId = &#63; and oAuthApplicationId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.

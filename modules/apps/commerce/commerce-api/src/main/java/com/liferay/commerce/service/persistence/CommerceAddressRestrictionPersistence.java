@@ -16,6 +16,7 @@ package com.liferay.commerce.service.persistence;
 
 import com.liferay.commerce.exception.NoSuchAddressRestrictionException;
 import com.liferay.commerce.model.CommerceAddressRestriction;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceAddressRestrictionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressRestrictionUtil} to access the commerce address restriction persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId();
+
+	public FinderPath getFinderPathCountByCountryId();
 
 	/**
 	 * Returns all the commerce address restrictions where countryId = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceAddressRestrictionPersistence
 	 * @return the number of matching commerce address restrictions
 	 */
 	public int countByCountryId(long countryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the commerce address restrictions where classNameId = &#63; and classPK = &#63;.
@@ -339,6 +351,10 @@ public interface CommerceAddressRestrictionPersistence
 	 * @return the number of matching commerce address restrictions
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns the commerce address restriction where classNameId = &#63; and classPK = &#63; and countryId = &#63; or throws a <code>NoSuchAddressRestrictionException</code> if it could not be found.

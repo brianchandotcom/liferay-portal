@@ -105,9 +105,31 @@ public class CommercePriceListChannelRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce price list channel rels where uuid = &#63;.
@@ -669,7 +691,18 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce price list channel rels where uuid = &#63; and companyId = &#63;.
@@ -1275,7 +1308,20 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommercePriceListId;
 	private FinderPath _finderPathWithoutPaginationFindByCommercePriceListId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommercePriceListId() {
+
+		return _finderPathWithoutPaginationFindByCommercePriceListId;
+	}
+
 	private FinderPath _finderPathCountByCommercePriceListId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommercePriceListId() {
+		return _finderPathCountByCommercePriceListId;
+	}
 
 	/**
 	 * Returns all the commerce price list channel rels where commercePriceListId = &#63;.
@@ -1810,7 +1856,18 @@ public class CommercePriceListChannelRelPersistenceImpl
 			"commercePriceListChannelRel.commercePriceListId = ?";
 
 	private FinderPath _finderPathFetchByCCI_CPI;
+
+	@Override
+	public FinderPath getFinderPathFetchByCCI_CPI() {
+		return _finderPathFetchByCCI_CPI;
+	}
+
 	private FinderPath _finderPathCountByCCI_CPI;
+
+	@Override
+	public FinderPath getFinderPathCountByCCI_CPI() {
+		return _finderPathCountByCCI_CPI;
+	}
 
 	/**
 	 * Returns the commerce price list channel rel where commerceChannelId = &#63; and commercePriceListId = &#63; or throws a <code>NoSuchPriceListChannelRelException</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.persistence;
 
 import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -43,6 +44,13 @@ public interface MBThreadPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBThreadUtil} to access the message boards thread persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the message boards threads where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface MBThreadPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the message boards thread where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchThreadException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface MBThreadPersistence
 	 * @return the number of matching message boards threads
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the message boards threads where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface MBThreadPersistence
 	 * @return the number of matching message boards threads
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the message boards threads where groupId = &#63;.
@@ -597,6 +617,10 @@ public interface MBThreadPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathFetchByRootMessageId();
+
+	public FinderPath getFinderPathCountByRootMessageId();
+
 	/**
 	 * Returns the message boards thread where rootMessageId = &#63; or throws a <code>NoSuchThreadException</code> if it could not be found.
 	 *
@@ -641,6 +665,10 @@ public interface MBThreadPersistence
 	 * @return the number of matching message boards threads
 	 */
 	public int countByRootMessageId(long rootMessageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63;.
@@ -1222,6 +1250,10 @@ public interface MBThreadPersistence
 	 */
 	public int filterCountByG_NotC(long groupId, long categoryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
+
 	/**
 	 * Returns all the message boards threads where groupId = &#63; and status = &#63;.
 	 *
@@ -1445,6 +1477,10 @@ public interface MBThreadPersistence
 	 */
 	public int filterCountByG_S(long groupId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_P();
+
+	public FinderPath getFinderPathCountByC_P();
+
 	/**
 	 * Returns all the message boards threads where categoryId = &#63; and priority = &#63;.
 	 *
@@ -1598,6 +1634,10 @@ public interface MBThreadPersistence
 	 * @return the number of matching message boards threads
 	 */
 	public int countByC_P(long categoryId, double priority);
+
+	public FinderPath getFinderPathWithoutPaginationFindByL_P();
+
+	public FinderPath getFinderPathCountByL_P();
 
 	/**
 	 * Returns all the message boards threads where lastPostDate = &#63; and priority = &#63;.
@@ -1753,6 +1793,10 @@ public interface MBThreadPersistence
 	 * @return the number of matching message boards threads
 	 */
 	public int countByL_P(Date lastPostDate, double priority);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_L();
+
+	public FinderPath getFinderPathCountByG_C_L();
 
 	/**
 	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
@@ -1995,6 +2039,10 @@ public interface MBThreadPersistence
 	 */
 	public int filterCountByG_C_L(
 		long groupId, long categoryId, Date lastPostDate);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_S();
+
+	public FinderPath getFinderPathCountByG_C_S();
 
 	/**
 	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.

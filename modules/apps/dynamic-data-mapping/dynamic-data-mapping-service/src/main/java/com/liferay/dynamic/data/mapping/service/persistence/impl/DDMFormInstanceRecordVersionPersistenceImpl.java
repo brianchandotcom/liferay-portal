@@ -102,9 +102,33 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByFormInstanceRecordId;
 	private FinderPath _finderPathWithoutPaginationFindByFormInstanceRecordId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFormInstanceRecordId() {
+
+		return _finderPathWithoutPaginationFindByFormInstanceRecordId;
+	}
+
 	private FinderPath _finderPathCountByFormInstanceRecordId;
+
+	@Override
+	public FinderPath getFinderPathCountByFormInstanceRecordId() {
+		return _finderPathCountByFormInstanceRecordId;
+	}
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceRecordId = &#63;.
@@ -646,7 +670,18 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_F;
 	private FinderPath _finderPathWithoutPaginationFindByU_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_F() {
+		return _finderPathWithoutPaginationFindByU_F;
+	}
+
 	private FinderPath _finderPathCountByU_F;
+
+	@Override
+	public FinderPath getFinderPathCountByU_F() {
+		return _finderPathCountByU_F;
+	}
 
 	/**
 	 * Returns all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
@@ -1210,7 +1245,18 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByF_F;
 	private FinderPath _finderPathWithoutPaginationFindByF_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByF_F() {
+		return _finderPathWithoutPaginationFindByF_F;
+	}
+
 	private FinderPath _finderPathCountByF_F;
+
+	@Override
+	public FinderPath getFinderPathCountByF_F() {
+		return _finderPathCountByF_F;
+	}
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
@@ -1824,7 +1870,18 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		"(ddmFormInstanceRecordVersion.formInstanceVersion IS NULL OR ddmFormInstanceRecordVersion.formInstanceVersion = '')";
 
 	private FinderPath _finderPathFetchByF_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByF_V() {
+		return _finderPathFetchByF_V;
+	}
+
 	private FinderPath _finderPathCountByF_V;
+
+	@Override
+	public FinderPath getFinderPathCountByF_V() {
+		return _finderPathCountByF_V;
+	}
 
 	/**
 	 * Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or throws a <code>NoSuchFormInstanceRecordVersionException</code> if it could not be found.
@@ -2098,7 +2155,18 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByF_S;
 	private FinderPath _finderPathWithoutPaginationFindByF_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByF_S() {
+		return _finderPathWithoutPaginationFindByF_S;
+	}
+
 	private FinderPath _finderPathCountByF_S;
+
+	@Override
+	public FinderPath getFinderPathCountByF_S() {
+		return _finderPathCountByF_S;
+	}
 
 	/**
 	 * Returns all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
@@ -2665,7 +2733,18 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_F_F_S;
 	private FinderPath _finderPathWithoutPaginationFindByU_F_F_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_F_F_S() {
+		return _finderPathWithoutPaginationFindByU_F_F_S;
+	}
+
 	private FinderPath _finderPathCountByU_F_F_S;
+
+	@Override
+	public FinderPath getFinderPathCountByU_F_F_S() {
+		return _finderPathCountByU_F_F_S;
+	}
 
 	/**
 	 * Returns all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.

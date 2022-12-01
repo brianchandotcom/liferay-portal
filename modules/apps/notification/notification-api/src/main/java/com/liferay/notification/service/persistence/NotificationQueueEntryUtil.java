@@ -125,6 +125,31 @@ public class NotificationQueueEntryUtil {
 		return getPersistence().update(notificationQueueEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByNotificationTemplateId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByNotificationTemplateId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByNotificationTemplateId() {
+
+		return getPersistence().getFinderPathCountByNotificationTemplateId();
+	}
+
 	/**
 	 * Returns all the notification queue entries where notificationTemplateId = &#63;.
 	 *
@@ -656,6 +681,18 @@ public class NotificationQueueEntryUtil {
 	 */
 	public static int filterCountByLtSentDate(Date sentDate) {
 		return getPersistence().filterCountByLtSentDate(sentDate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_S() {
+
+		return getPersistence().getFinderPathCountByT_S();
 	}
 
 	/**

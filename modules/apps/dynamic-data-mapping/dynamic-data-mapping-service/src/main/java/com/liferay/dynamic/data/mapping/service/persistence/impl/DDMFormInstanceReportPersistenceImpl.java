@@ -103,8 +103,30 @@ public class DDMFormInstanceReportPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByFormInstanceId;
+
+	@Override
+	public FinderPath getFinderPathFetchByFormInstanceId() {
+		return _finderPathFetchByFormInstanceId;
+	}
+
 	private FinderPath _finderPathCountByFormInstanceId;
+
+	@Override
+	public FinderPath getFinderPathCountByFormInstanceId() {
+		return _finderPathCountByFormInstanceId;
+	}
 
 	/**
 	 * Returns the ddm form instance report where formInstanceId = &#63; or throws a <code>NoSuchFormInstanceReportException</code> if it could not be found.

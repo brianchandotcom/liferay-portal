@@ -95,9 +95,33 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceTaxMethodId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceTaxMethodId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceTaxMethodId() {
+
+		return _finderPathWithoutPaginationFindByCommerceTaxMethodId;
+	}
+
 	private FinderPath _finderPathCountByCommerceTaxMethodId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceTaxMethodId() {
+		return _finderPathCountByCommerceTaxMethodId;
+	}
 
 	/**
 	 * Returns all the commerce tax fixed rate address rels where commerceTaxMethodId = &#63;.
@@ -622,7 +646,18 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPTaxCategoryId;
 	private FinderPath _finderPathWithoutPaginationFindByCPTaxCategoryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPTaxCategoryId() {
+		return _finderPathWithoutPaginationFindByCPTaxCategoryId;
+	}
+
 	private FinderPath _finderPathCountByCPTaxCategoryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPTaxCategoryId() {
+		return _finderPathCountByCPTaxCategoryId;
+	}
 
 	/**
 	 * Returns all the commerce tax fixed rate address rels where CPTaxCategoryId = &#63;.
@@ -1141,7 +1176,18 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCountryId;
 	private FinderPath _finderPathWithoutPaginationFindByCountryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId() {
+		return _finderPathWithoutPaginationFindByCountryId;
+	}
+
 	private FinderPath _finderPathCountByCountryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCountryId() {
+		return _finderPathCountByCountryId;
+	}
 
 	/**
 	 * Returns all the commerce tax fixed rate address rels where countryId = &#63;.

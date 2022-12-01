@@ -125,6 +125,31 @@ public class DDMDataProviderInstanceLinkUtil {
 			ddmDataProviderInstanceLink, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByDataProviderInstanceId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByDataProviderInstanceId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByDataProviderInstanceId() {
+
+		return getPersistence().getFinderPathCountByDataProviderInstanceId();
+	}
+
 	/**
 	 * Returns all the ddm data provider instance links where dataProviderInstanceId = &#63;.
 	 *
@@ -321,6 +346,19 @@ public class DDMDataProviderInstanceLinkUtil {
 			dataProviderInstanceId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByStructureId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByStructureId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByStructureId() {
+
+		return getPersistence().getFinderPathCountByStructureId();
+	}
+
 	/**
 	 * Returns all the ddm data provider instance links where structureId = &#63;.
 	 *
@@ -497,6 +535,18 @@ public class DDMDataProviderInstanceLinkUtil {
 	 */
 	public static int countByStructureId(long structureId) {
 		return getPersistence().countByStructureId(structureId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByD_S() {
+
+		return getPersistence().getFinderPathFetchByD_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByD_S() {
+
+		return getPersistence().getFinderPathCountByD_S();
 	}
 
 	/**

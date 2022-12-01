@@ -119,6 +119,30 @@ public class DLFileRankUtil {
 		return getPersistence().update(dlFileRank, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the document library file ranks where userId = &#63;.
 	 *
@@ -285,6 +309,19 @@ public class DLFileRankUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFileEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByFileEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFileEntryId() {
+
+		return getPersistence().getFinderPathCountByFileEntryId();
 	}
 
 	/**
@@ -457,6 +494,18 @@ public class DLFileRankUtil {
 	 */
 	public static int countByFileEntryId(long fileEntryId) {
 		return getPersistence().countByFileEntryId(fileEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U() {
+
+		return getPersistence().getFinderPathCountByG_U();
 	}
 
 	/**
@@ -644,6 +693,18 @@ public class DLFileRankUtil {
 	 */
 	public static int countByG_U(long groupId, long userId) {
 		return getPersistence().countByG_U(groupId, userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U_A() {
+
+		return getPersistence().getFinderPathCountByG_U_A();
 	}
 
 	/**
@@ -848,6 +909,18 @@ public class DLFileRankUtil {
 	 */
 	public static int countByG_U_A(long groupId, long userId, boolean active) {
 		return getPersistence().countByG_U_A(groupId, userId, active);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_U_F() {
+
+		return getPersistence().getFinderPathFetchByC_U_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_U_F() {
+
+		return getPersistence().getFinderPathCountByC_U_F();
 	}
 
 	/**

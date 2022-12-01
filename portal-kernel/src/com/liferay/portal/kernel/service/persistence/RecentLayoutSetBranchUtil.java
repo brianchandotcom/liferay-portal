@@ -122,6 +122,30 @@ public class RecentLayoutSetBranchUtil {
 		return getPersistence().update(recentLayoutSetBranch, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the recent layout set branches where groupId = &#63;.
 	 *
@@ -295,6 +319,18 @@ public class RecentLayoutSetBranchUtil {
 		return getPersistence().countByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the recent layout set branches where userId = &#63;.
 	 *
@@ -465,6 +501,19 @@ public class RecentLayoutSetBranchUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLayoutSetBranchId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLayoutSetBranchId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLayoutSetBranchId() {
+
+		return getPersistence().getFinderPathCountByLayoutSetBranchId();
 	}
 
 	/**
@@ -644,6 +693,18 @@ public class RecentLayoutSetBranchUtil {
 	 */
 	public static int countByLayoutSetBranchId(long layoutSetBranchId) {
 		return getPersistence().countByLayoutSetBranchId(layoutSetBranchId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_L() {
+
+		return getPersistence().getFinderPathFetchByU_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_L() {
+
+		return getPersistence().getFinderPathCountByU_L();
 	}
 
 	/**

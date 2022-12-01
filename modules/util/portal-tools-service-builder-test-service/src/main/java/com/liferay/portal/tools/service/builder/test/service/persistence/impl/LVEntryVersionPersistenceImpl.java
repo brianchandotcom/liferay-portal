@@ -91,9 +91,31 @@ public class LVEntryVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLvEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByLvEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByLvEntryId() {
+		return _finderPathWithoutPaginationFindByLvEntryId;
+	}
+
 	private FinderPath _finderPathCountByLvEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByLvEntryId() {
+		return _finderPathCountByLvEntryId;
+	}
 
 	/**
 	 * Returns all the lv entry versions where lvEntryId = &#63;.
@@ -589,7 +611,18 @@ public class LVEntryVersionPersistenceImpl
 		"lvEntryVersion.lvEntryId = ?";
 
 	private FinderPath _finderPathFetchByLvEntryId_Version;
+
+	@Override
+	public FinderPath getFinderPathFetchByLvEntryId_Version() {
+		return _finderPathFetchByLvEntryId_Version;
+	}
+
 	private FinderPath _finderPathCountByLvEntryId_Version;
+
+	@Override
+	public FinderPath getFinderPathCountByLvEntryId_Version() {
+		return _finderPathCountByLvEntryId_Version;
+	}
 
 	/**
 	 * Returns the lv entry version where lvEntryId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.
@@ -814,7 +847,18 @@ public class LVEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63;.
@@ -1346,7 +1390,18 @@ public class LVEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_Version;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_Version;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_Version() {
+		return _finderPathWithoutPaginationFindByUuid_Version;
+	}
+
 	private FinderPath _finderPathCountByUuid_Version;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_Version() {
+		return _finderPathCountByUuid_Version;
+	}
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63; and version = &#63;.
@@ -1928,7 +1983,18 @@ public class LVEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUUID_G;
 	private FinderPath _finderPathWithoutPaginationFindByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUUID_G() {
+		return _finderPathWithoutPaginationFindByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63; and groupId = &#63;.
@@ -2508,7 +2574,18 @@ public class LVEntryVersionPersistenceImpl
 		"lvEntryVersion.groupId = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_Version;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G_Version() {
+		return _finderPathFetchByUUID_G_Version;
+	}
+
 	private FinderPath _finderPathCountByUUID_G_Version;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G_Version() {
+		return _finderPathCountByUUID_G_Version;
+	}
 
 	/**
 	 * Returns the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.
@@ -2783,7 +2860,18 @@ public class LVEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63; and companyId = &#63;.
@@ -3365,7 +3453,18 @@ public class LVEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C_Version;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Version;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C_Version() {
+		return _finderPathWithoutPaginationFindByUuid_C_Version;
+	}
+
 	private FinderPath _finderPathCountByUuid_C_Version;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C_Version() {
+		return _finderPathCountByUuid_C_Version;
+	}
 
 	/**
 	 * Returns all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -3985,7 +4084,18 @@ public class LVEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the lv entry versions where groupId = &#63;.
@@ -4480,7 +4590,18 @@ public class LVEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId_Version;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId_Version;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Version() {
+		return _finderPathWithoutPaginationFindByGroupId_Version;
+	}
+
 	private FinderPath _finderPathCountByGroupId_Version;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId_Version() {
+		return _finderPathCountByGroupId_Version;
+	}
 
 	/**
 	 * Returns all the lv entry versions where groupId = &#63; and version = &#63;.
@@ -5022,7 +5143,18 @@ public class LVEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_UGK;
 	private FinderPath _finderPathWithoutPaginationFindByG_UGK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_UGK() {
+		return _finderPathWithoutPaginationFindByG_UGK;
+	}
+
 	private FinderPath _finderPathCountByG_UGK;
+
+	@Override
+	public FinderPath getFinderPathCountByG_UGK() {
+		return _finderPathCountByG_UGK;
+	}
 
 	/**
 	 * Returns all the lv entry versions where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -5607,7 +5739,18 @@ public class LVEntryVersionPersistenceImpl
 		"(lvEntryVersion.uniqueGroupKey IS NULL OR lvEntryVersion.uniqueGroupKey = '')";
 
 	private FinderPath _finderPathFetchByG_UGK_Version;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_UGK_Version() {
+		return _finderPathFetchByG_UGK_Version;
+	}
+
 	private FinderPath _finderPathCountByG_UGK_Version;
+
+	@Override
+	public FinderPath getFinderPathCountByG_UGK_Version() {
+		return _finderPathCountByG_UGK_Version;
+	}
 
 	/**
 	 * Returns the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.

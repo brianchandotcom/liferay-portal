@@ -101,9 +101,31 @@ public class ListTypeEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the list type entries where uuid = &#63;.
@@ -634,7 +656,18 @@ public class ListTypeEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the list type entries where uuid = &#63; and companyId = &#63;.
@@ -1216,7 +1249,19 @@ public class ListTypeEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByListTypeEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByListTypeEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByListTypeEntryId() {
+		return _finderPathWithoutPaginationFindByListTypeEntryId;
+	}
+
 	private FinderPath _finderPathCountByListTypeEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByListTypeEntryId() {
+		return _finderPathCountByListTypeEntryId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByListTypeEntryId;
 
 	/**
@@ -1825,7 +1870,20 @@ public class ListTypeEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByListTypeDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByListTypeDefinitionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByListTypeDefinitionId() {
+
+		return _finderPathWithoutPaginationFindByListTypeDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByListTypeDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByListTypeDefinitionId() {
+		return _finderPathCountByListTypeDefinitionId;
+	}
 
 	/**
 	 * Returns all the list type entries where listTypeDefinitionId = &#63;.
@@ -2338,7 +2396,18 @@ public class ListTypeEntryPersistenceImpl
 			"listTypeEntry.listTypeDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByLTDI_K;
+
+	@Override
+	public FinderPath getFinderPathFetchByLTDI_K() {
+		return _finderPathFetchByLTDI_K;
+	}
+
 	private FinderPath _finderPathCountByLTDI_K;
+
+	@Override
+	public FinderPath getFinderPathCountByLTDI_K() {
+		return _finderPathCountByLTDI_K;
+	}
 
 	/**
 	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.

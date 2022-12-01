@@ -100,9 +100,31 @@ public class NotificationRecipientSettingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the notification recipient settings where uuid = &#63;.
@@ -649,7 +671,18 @@ public class NotificationRecipientSettingPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the notification recipient settings where uuid = &#63; and companyId = &#63;.
@@ -1241,7 +1274,20 @@ public class NotificationRecipientSettingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByNotificationRecipientId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByNotificationRecipientId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByNotificationRecipientId() {
+
+		return _finderPathWithoutPaginationFindByNotificationRecipientId;
+	}
+
 	private FinderPath _finderPathCountByNotificationRecipientId;
+
+	@Override
+	public FinderPath getFinderPathCountByNotificationRecipientId() {
+		return _finderPathCountByNotificationRecipientId;
+	}
 
 	/**
 	 * Returns all the notification recipient settings where notificationRecipientId = &#63;.
@@ -1770,7 +1816,18 @@ public class NotificationRecipientSettingPersistenceImpl
 			"notificationRecipientSetting.notificationRecipientId = ?";
 
 	private FinderPath _finderPathFetchByNRI_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByNRI_N() {
+		return _finderPathFetchByNRI_N;
+	}
+
 	private FinderPath _finderPathCountByNRI_N;
+
+	@Override
+	public FinderPath getFinderPathCountByNRI_N() {
+		return _finderPathCountByNRI_N;
+	}
 
 	/**
 	 * Returns the notification recipient setting where notificationRecipientId = &#63; and name = &#63; or throws a <code>NoSuchNotificationRecipientSettingException</code> if it could not be found.

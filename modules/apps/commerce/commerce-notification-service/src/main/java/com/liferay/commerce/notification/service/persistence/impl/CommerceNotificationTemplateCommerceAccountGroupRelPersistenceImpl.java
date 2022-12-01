@@ -98,11 +98,35 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath
 		_finderPathWithPaginationFindByCommerceNotificationTemplateId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceNotificationTemplateId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceNotificationTemplateId() {
+
+		return _finderPathWithoutPaginationFindByCommerceNotificationTemplateId;
+	}
+
 	private FinderPath _finderPathCountByCommerceNotificationTemplateId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceNotificationTemplateId() {
+		return _finderPathCountByCommerceNotificationTemplateId;
+	}
 
 	/**
 	 * Returns all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
@@ -684,7 +708,20 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceAccountGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceAccountGroupId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceAccountGroupId() {
+
+		return _finderPathWithoutPaginationFindByCommerceAccountGroupId;
+	}
+
 	private FinderPath _finderPathCountByCommerceAccountGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceAccountGroupId() {
+		return _finderPathCountByCommerceAccountGroupId;
+	}
 
 	/**
 	 * Returns all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63;.
@@ -1254,7 +1291,18 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			"commerceNotificationTemplateCommerceAccountGroupRel.commerceAccountGroupId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the commerce notification template commerce account group rel where commerceNotificationTemplateId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchNotificationTemplateCommerceAccountGroupRelException</code> if it could not be found.

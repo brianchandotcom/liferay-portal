@@ -99,9 +99,31 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByFriendlyURLEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByFriendlyURLEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFriendlyURLEntryId() {
+		return _finderPathWithoutPaginationFindByFriendlyURLEntryId;
+	}
+
 	private FinderPath _finderPathCountByFriendlyURLEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByFriendlyURLEntryId() {
+		return _finderPathCountByFriendlyURLEntryId;
+	}
 
 	/**
 	 * Returns all the friendly url entry localizations where friendlyURLEntryId = &#63;.
@@ -636,7 +658,18 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			"friendlyURLEntryLocalization.friendlyURLEntryId = ?";
 
 	private FinderPath _finderPathFetchByFriendlyURLEntryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathFetchByFriendlyURLEntryId_LanguageId() {
+		return _finderPathFetchByFriendlyURLEntryId_LanguageId;
+	}
+
 	private FinderPath _finderPathCountByFriendlyURLEntryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathCountByFriendlyURLEntryId_LanguageId() {
+		return _finderPathCountByFriendlyURLEntryId_LanguageId;
+	}
 
 	/**
 	 * Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchFriendlyURLEntryLocalizationException</code> if it could not be found.
@@ -926,7 +959,18 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_U() {
+		return _finderPathWithoutPaginationFindByG_C_U;
+	}
+
 	private FinderPath _finderPathCountByG_C_U;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_U() {
+		return _finderPathCountByG_C_U;
+	}
 
 	/**
 	 * Returns all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
@@ -1573,7 +1617,18 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_L;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_L() {
+		return _finderPathWithoutPaginationFindByG_C_C_L;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_L;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_L() {
+		return _finderPathCountByG_C_C_L;
+	}
 
 	/**
 	 * Returns all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
@@ -2266,7 +2321,18 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		"(friendlyURLEntryLocalization.languageId IS NULL OR friendlyURLEntryLocalization.languageId = '')";
 
 	private FinderPath _finderPathFetchByG_C_L_U;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_L_U() {
+		return _finderPathFetchByG_C_L_U;
+	}
+
 	private FinderPath _finderPathCountByG_C_L_U;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_L_U() {
+		return _finderPathCountByG_C_L_U;
+	}
 
 	/**
 	 * Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a <code>NoSuchFriendlyURLEntryLocalizationException</code> if it could not be found.

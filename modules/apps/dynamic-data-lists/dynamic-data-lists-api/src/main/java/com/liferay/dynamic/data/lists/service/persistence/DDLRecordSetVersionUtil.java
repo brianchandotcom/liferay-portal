@@ -122,6 +122,31 @@ public class DDLRecordSetVersionUtil {
 		return getPersistence().update(ddlRecordSetVersion, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRecordSetId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByRecordSetId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRecordSetId() {
+
+		return getPersistence().getFinderPathCountByRecordSetId();
+	}
+
 	/**
 	 * Returns all the ddl record set versions where recordSetId = &#63;.
 	 *
@@ -300,6 +325,18 @@ public class DDLRecordSetVersionUtil {
 		return getPersistence().countByRecordSetId(recordSetId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByRS_V() {
+
+		return getPersistence().getFinderPathFetchByRS_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRS_V() {
+
+		return getPersistence().getFinderPathCountByRS_V();
+	}
+
 	/**
 	 * Returns the ddl record set version where recordSetId = &#63; and version = &#63; or throws a <code>NoSuchRecordSetVersionException</code> if it could not be found.
 	 *
@@ -368,6 +405,18 @@ public class DDLRecordSetVersionUtil {
 	 */
 	public static int countByRS_V(long recordSetId, String version) {
 		return getPersistence().countByRS_V(recordSetId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRS_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByRS_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRS_S() {
+
+		return getPersistence().getFinderPathCountByRS_S();
 	}
 
 	/**

@@ -84,9 +84,31 @@ public class MembershipRequestPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the membership requests where groupId = &#63;.
@@ -586,7 +608,18 @@ public class MembershipRequestPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the membership requests where userId = &#63;.
@@ -1083,7 +1116,18 @@ public class MembershipRequestPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_S() {
+		return _finderPathWithoutPaginationFindByG_S;
+	}
+
 	private FinderPath _finderPathCountByG_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S() {
+		return _finderPathCountByG_S;
+	}
 
 	/**
 	 * Returns all the membership requests where groupId = &#63; and statusId = &#63;.
@@ -1625,7 +1669,18 @@ public class MembershipRequestPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_U_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_S() {
+		return _finderPathWithoutPaginationFindByG_U_S;
+	}
+
 	private FinderPath _finderPathCountByG_U_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U_S() {
+		return _finderPathCountByG_U_S;
+	}
 
 	/**
 	 * Returns all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63;.

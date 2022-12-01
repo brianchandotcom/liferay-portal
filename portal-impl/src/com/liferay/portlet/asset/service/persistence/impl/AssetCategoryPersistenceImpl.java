@@ -101,9 +101,31 @@ public class AssetCategoryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the asset categories where uuid = &#63;.
@@ -649,7 +671,18 @@ public class AssetCategoryPersistenceImpl
 		"(assetCategory.uuid IS NULL OR assetCategory.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the asset category where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
@@ -914,7 +947,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the asset categories where uuid = &#63; and companyId = &#63;.
@@ -1512,7 +1556,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the asset categories where groupId = &#63;.
@@ -2400,7 +2455,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByParentCategoryId;
 	private FinderPath _finderPathWithoutPaginationFindByParentCategoryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByParentCategoryId() {
+		return _finderPathWithoutPaginationFindByParentCategoryId;
+	}
+
 	private FinderPath _finderPathCountByParentCategoryId;
+
+	@Override
+	public FinderPath getFinderPathCountByParentCategoryId() {
+		return _finderPathCountByParentCategoryId;
+	}
 
 	/**
 	 * Returns all the asset categories where parentCategoryId = &#63;.
@@ -2924,7 +2990,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByVocabularyId;
 	private FinderPath _finderPathWithoutPaginationFindByVocabularyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByVocabularyId() {
+		return _finderPathWithoutPaginationFindByVocabularyId;
+	}
+
 	private FinderPath _finderPathCountByVocabularyId;
+
+	@Override
+	public FinderPath getFinderPathCountByVocabularyId() {
+		return _finderPathCountByVocabularyId;
+	}
 
 	/**
 	 * Returns all the asset categories where vocabularyId = &#63;.
@@ -3440,7 +3517,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P() {
+		return _finderPathWithoutPaginationFindByG_P;
+	}
+
 	private FinderPath _finderPathCountByG_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P() {
+		return _finderPathCountByG_P;
+	}
 
 	/**
 	 * Returns all the asset categories where groupId = &#63; and parentCategoryId = &#63;.
@@ -4401,7 +4489,19 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_V;
 	private FinderPath _finderPathWithoutPaginationFindByG_V;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_V() {
+		return _finderPathWithoutPaginationFindByG_V;
+	}
+
 	private FinderPath _finderPathCountByG_V;
+
+	@Override
+	public FinderPath getFinderPathCountByG_V() {
+		return _finderPathCountByG_V;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_V;
 
 	/**
@@ -5937,7 +6037,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_N;
 	private FinderPath _finderPathWithoutPaginationFindByP_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_N() {
+		return _finderPathWithoutPaginationFindByP_N;
+	}
+
 	private FinderPath _finderPathCountByP_N;
+
+	@Override
+	public FinderPath getFinderPathCountByP_N() {
+		return _finderPathCountByP_N;
+	}
 
 	/**
 	 * Returns all the asset categories where parentCategoryId = &#63; and name = &#63;.
@@ -6536,7 +6647,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_V;
 	private FinderPath _finderPathWithoutPaginationFindByP_V;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_V() {
+		return _finderPathWithoutPaginationFindByP_V;
+	}
+
 	private FinderPath _finderPathCountByP_V;
+
+	@Override
+	public FinderPath getFinderPathCountByP_V() {
+		return _finderPathCountByP_V;
+	}
 
 	/**
 	 * Returns all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
@@ -7098,7 +7220,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByN_V;
 	private FinderPath _finderPathWithoutPaginationFindByN_V;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByN_V() {
+		return _finderPathWithoutPaginationFindByN_V;
+	}
+
 	private FinderPath _finderPathCountByN_V;
+
+	@Override
+	public FinderPath getFinderPathCountByN_V() {
+		return _finderPathCountByN_V;
+	}
 
 	/**
 	 * Returns all the asset categories where name = &#63; and vocabularyId = &#63;.
@@ -7696,7 +7829,18 @@ public class AssetCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_V;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_V;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_V() {
+		return _finderPathWithoutPaginationFindByG_P_V;
+	}
+
 	private FinderPath _finderPathCountByG_P_V;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_V() {
+		return _finderPathCountByG_P_V;
+	}
 
 	/**
 	 * Returns all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
@@ -11587,7 +11731,18 @@ public class AssetCategoryPersistenceImpl
 		"assetCategory.vocabularyId IN (";
 
 	private FinderPath _finderPathFetchByP_N_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByP_N_V() {
+		return _finderPathFetchByP_N_V;
+	}
+
 	private FinderPath _finderPathCountByP_N_V;
+
+	@Override
+	public FinderPath getFinderPathCountByP_N_V() {
+		return _finderPathCountByP_N_V;
+	}
 
 	/**
 	 * Returns the asset category where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
@@ -11880,7 +12035,18 @@ public class AssetCategoryPersistenceImpl
 		"assetCategory.vocabularyId = ?";
 
 	private FinderPath _finderPathFetchByERC_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_G() {
+		return _finderPathFetchByERC_G;
+	}
+
 	private FinderPath _finderPathCountByERC_G;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_G() {
+		return _finderPathCountByERC_G;
+	}
 
 	/**
 	 * Returns the asset category where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.

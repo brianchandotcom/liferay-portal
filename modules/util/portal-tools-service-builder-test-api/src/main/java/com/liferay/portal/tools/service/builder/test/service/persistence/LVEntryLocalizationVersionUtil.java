@@ -125,6 +125,31 @@ public class LVEntryLocalizationVersionUtil {
 			lvEntryLocalizationVersion, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLvEntryLocalizationId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLvEntryLocalizationId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLvEntryLocalizationId() {
+
+		return getPersistence().getFinderPathCountByLvEntryLocalizationId();
+	}
+
 	/**
 	 * Returns all the lv entry localization versions where lvEntryLocalizationId = &#63;.
 	 *
@@ -311,6 +336,20 @@ public class LVEntryLocalizationVersionUtil {
 			lvEntryLocalizationId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByLvEntryLocalizationId_Version() {
+
+		return getPersistence().
+			getFinderPathFetchByLvEntryLocalizationId_Version();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLvEntryLocalizationId_Version() {
+
+		return getPersistence().
+			getFinderPathCountByLvEntryLocalizationId_Version();
+	}
+
 	/**
 	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryLocalizationVersionException</code> if it could not be found.
 	 *
@@ -389,6 +428,18 @@ public class LVEntryLocalizationVersionUtil {
 
 		return getPersistence().countByLvEntryLocalizationId_Version(
 			lvEntryLocalizationId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLvEntryId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByLvEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLvEntryId() {
+
+		return getPersistence().getFinderPathCountByLvEntryId();
 	}
 
 	/**
@@ -567,6 +618,19 @@ public class LVEntryLocalizationVersionUtil {
 	 */
 	public static int countByLvEntryId(long lvEntryId) {
 		return getPersistence().countByLvEntryId(lvEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLvEntryId_Version() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLvEntryId_Version();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLvEntryId_Version() {
+
+		return getPersistence().getFinderPathCountByLvEntryId_Version();
 	}
 
 	/**
@@ -759,6 +823,19 @@ public class LVEntryLocalizationVersionUtil {
 	 */
 	public static int countByLvEntryId_Version(long lvEntryId, int version) {
 		return getPersistence().countByLvEntryId_Version(lvEntryId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLvEntryId_LanguageId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLvEntryId_LanguageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLvEntryId_LanguageId() {
+
+		return getPersistence().getFinderPathCountByLvEntryId_LanguageId();
 	}
 
 	/**
@@ -959,6 +1036,20 @@ public class LVEntryLocalizationVersionUtil {
 
 		return getPersistence().countByLvEntryId_LanguageId(
 			lvEntryId, languageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByLvEntryId_LanguageId_Version() {
+
+		return getPersistence().
+			getFinderPathFetchByLvEntryId_LanguageId_Version();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLvEntryId_LanguageId_Version() {
+
+		return getPersistence().
+			getFinderPathCountByLvEntryId_LanguageId_Version();
 	}
 
 	/**

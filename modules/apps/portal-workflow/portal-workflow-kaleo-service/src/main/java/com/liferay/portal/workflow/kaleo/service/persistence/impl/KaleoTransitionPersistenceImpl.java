@@ -103,9 +103,31 @@ public class KaleoTransitionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo transitions where companyId = &#63;.
@@ -621,7 +643,20 @@ public class KaleoTransitionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	}
+
 	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId() {
+		return _finderPathCountByKaleoDefinitionVersionId;
+	}
 
 	/**
 	 * Returns all the kaleo transitions where kaleoDefinitionVersionId = &#63;.
@@ -1157,7 +1192,18 @@ public class KaleoTransitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKaleoNodeId;
 	private FinderPath _finderPathWithoutPaginationFindByKaleoNodeId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoNodeId() {
+		return _finderPathWithoutPaginationFindByKaleoNodeId;
+	}
+
 	private FinderPath _finderPathCountByKaleoNodeId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoNodeId() {
+		return _finderPathCountByKaleoNodeId;
+	}
 
 	/**
 	 * Returns all the kaleo transitions where kaleoNodeId = &#63;.
@@ -1675,7 +1721,18 @@ public class KaleoTransitionPersistenceImpl
 		"kaleoTransition.kaleoNodeId = ?";
 
 	private FinderPath _finderPathFetchByKNI_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByKNI_N() {
+		return _finderPathFetchByKNI_N;
+	}
+
 	private FinderPath _finderPathCountByKNI_N;
+
+	@Override
+	public FinderPath getFinderPathCountByKNI_N() {
+		return _finderPathCountByKNI_N;
+	}
 
 	/**
 	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or throws a <code>NoSuchTransitionException</code> if it could not be found.
@@ -1953,7 +2010,18 @@ public class KaleoTransitionPersistenceImpl
 		"(kaleoTransition.name IS NULL OR kaleoTransition.name = '')";
 
 	private FinderPath _finderPathFetchByKNI_DT;
+
+	@Override
+	public FinderPath getFinderPathFetchByKNI_DT() {
+		return _finderPathFetchByKNI_DT;
+	}
+
 	private FinderPath _finderPathCountByKNI_DT;
+
+	@Override
+	public FinderPath getFinderPathCountByKNI_DT() {
+		return _finderPathCountByKNI_DT;
+	}
 
 	/**
 	 * Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or throws a <code>NoSuchTransitionException</code> if it could not be found.

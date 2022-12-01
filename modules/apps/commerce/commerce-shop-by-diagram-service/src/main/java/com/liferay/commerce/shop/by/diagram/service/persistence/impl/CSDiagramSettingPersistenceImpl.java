@@ -105,9 +105,31 @@ public class CSDiagramSettingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the cs diagram settings where uuid = &#63;.
@@ -656,7 +678,18 @@ public class CSDiagramSettingPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the cs diagram settings where uuid = &#63; and companyId = &#63;.
@@ -1253,7 +1286,18 @@ public class CSDiagramSettingPersistenceImpl
 		"csDiagramSetting.companyId = ?";
 
 	private FinderPath _finderPathFetchByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathFetchByCPDefinitionId() {
+		return _finderPathFetchByCPDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDefinitionId() {
+		return _finderPathCountByCPDefinitionId;
+	}
 
 	/**
 	 * Returns the cs diagram setting where CPDefinitionId = &#63; or throws a <code>NoSuchCSDiagramSettingException</code> if it could not be found.

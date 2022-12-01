@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.persistence;
 
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DDLRecordVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDLRecordVersionUtil} to access the ddl record version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByRecordId();
+
+	public FinderPath getFinderPathCountByRecordId();
 
 	/**
 	 * Returns all the ddl record versions where recordId = &#63;.
@@ -184,6 +192,10 @@ public interface DDLRecordVersionPersistence
 	 * @return the number of matching ddl record versions
 	 */
 	public int countByRecordId(long recordId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_R();
+
+	public FinderPath getFinderPathCountByR_R();
 
 	/**
 	 * Returns all the ddl record versions where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -340,6 +352,10 @@ public interface DDLRecordVersionPersistence
 	 */
 	public int countByR_R(long recordSetId, String recordSetVersion);
 
+	public FinderPath getFinderPathFetchByR_V();
+
+	public FinderPath getFinderPathCountByR_V();
+
 	/**
 	 * Returns the ddl record version where recordId = &#63; and version = &#63; or throws a <code>NoSuchRecordVersionException</code> if it could not be found.
 	 *
@@ -389,6 +405,10 @@ public interface DDLRecordVersionPersistence
 	 * @return the number of matching ddl record versions
 	 */
 	public int countByR_V(long recordId, String version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_S();
+
+	public FinderPath getFinderPathCountByR_S();
 
 	/**
 	 * Returns all the ddl record versions where recordId = &#63; and status = &#63;.
@@ -544,6 +564,10 @@ public interface DDLRecordVersionPersistence
 	 * @return the number of matching ddl record versions
 	 */
 	public int countByR_S(long recordId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_R_R_S();
+
+	public FinderPath getFinderPathCountByU_R_R_S();
 
 	/**
 	 * Returns all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.

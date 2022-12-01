@@ -14,6 +14,7 @@
 
 package com.liferay.style.book.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.style.book.exception.NoSuchEntryVersionException;
@@ -42,6 +43,13 @@ public interface StyleBookEntryVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link StyleBookEntryVersionUtil} to access the style book entry version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByStyleBookEntryId();
+
+	public FinderPath getFinderPathCountByStyleBookEntryId();
 
 	/**
 	 * Returns all the style book entry versions where styleBookEntryId = &#63;.
@@ -187,6 +195,10 @@ public interface StyleBookEntryVersionPersistence
 	 */
 	public int countByStyleBookEntryId(long styleBookEntryId);
 
+	public FinderPath getFinderPathFetchByStyleBookEntryId_Version();
+
+	public FinderPath getFinderPathCountByStyleBookEntryId_Version();
+
 	/**
 	 * Returns the style book entry version where styleBookEntryId = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
 	 *
@@ -240,6 +252,10 @@ public interface StyleBookEntryVersionPersistence
 	 */
 	public int countByStyleBookEntryId_Version(
 		long styleBookEntryId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the style book entry versions where uuid = &#63;.
@@ -383,6 +399,10 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the number of matching style book entry versions
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_Version();
+
+	public FinderPath getFinderPathCountByUuid_Version();
 
 	/**
 	 * Returns all the style book entry versions where uuid = &#63; and version = &#63;.
@@ -539,6 +559,10 @@ public interface StyleBookEntryVersionPersistence
 	 */
 	public int countByUuid_Version(String uuid, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns all the style book entry versions where uuid = &#63; and groupId = &#63;.
 	 *
@@ -694,6 +718,10 @@ public interface StyleBookEntryVersionPersistence
 	 */
 	public int countByUUID_G(String uuid, long groupId);
 
+	public FinderPath getFinderPathFetchByUUID_G_Version();
+
+	public FinderPath getFinderPathCountByUUID_G_Version();
+
 	/**
 	 * Returns the style book entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
 	 *
@@ -751,6 +779,10 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the number of matching style book entry versions
 	 */
 	public int countByUUID_G_Version(String uuid, long groupId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the style book entry versions where uuid = &#63; and companyId = &#63;.
@@ -906,6 +938,10 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the number of matching style book entry versions
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C_Version();
+
+	public FinderPath getFinderPathCountByUuid_C_Version();
 
 	/**
 	 * Returns all the style book entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -1075,6 +1111,10 @@ public interface StyleBookEntryVersionPersistence
 	 */
 	public int countByUuid_C_Version(String uuid, long companyId, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the style book entry versions where groupId = &#63;.
 	 *
@@ -1217,6 +1257,10 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the number of matching style book entry versions
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Version();
+
+	public FinderPath getFinderPathCountByGroupId_Version();
 
 	/**
 	 * Returns all the style book entry versions where groupId = &#63; and version = &#63;.
@@ -1373,6 +1417,10 @@ public interface StyleBookEntryVersionPersistence
 	 */
 	public int countByGroupId_Version(long groupId, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_D();
+
+	public FinderPath getFinderPathCountByG_D();
+
 	/**
 	 * Returns all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63;.
 	 *
@@ -1528,6 +1576,10 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the number of matching style book entry versions
 	 */
 	public int countByG_D(long groupId, boolean defaultStyleBookEntry);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_D_Version();
+
+	public FinderPath getFinderPathCountByG_D_Version();
 
 	/**
 	 * Returns all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and version = &#63;.
@@ -1701,6 +1753,10 @@ public interface StyleBookEntryVersionPersistence
 	public int countByG_D_Version(
 		long groupId, boolean defaultStyleBookEntry, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_LikeN();
+
+	public FinderPath getFinderPathCountByG_LikeN();
+
 	/**
 	 * Returns all the style book entry versions where groupId = &#63; and name = &#63;.
 	 *
@@ -1855,6 +1911,10 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the number of matching style book entry versions
 	 */
 	public int countByG_LikeN(long groupId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_LikeN_Version();
+
+	public FinderPath getFinderPathCountByG_LikeN_Version();
 
 	/**
 	 * Returns all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
@@ -2023,6 +2083,10 @@ public interface StyleBookEntryVersionPersistence
 	 */
 	public int countByG_LikeN_Version(long groupId, String name, int version);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_SBEK();
+
+	public FinderPath getFinderPathCountByG_SBEK();
+
 	/**
 	 * Returns all the style book entry versions where groupId = &#63; and styleBookEntryKey = &#63;.
 	 *
@@ -2178,6 +2242,10 @@ public interface StyleBookEntryVersionPersistence
 	 * @return the number of matching style book entry versions
 	 */
 	public int countByG_SBEK(long groupId, String styleBookEntryKey);
+
+	public FinderPath getFinderPathFetchByG_SBEK_Version();
+
+	public FinderPath getFinderPathCountByG_SBEK_Version();
 
 	/**
 	 * Returns the style book entry version where groupId = &#63; and styleBookEntryKey = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.object.service.persistence;
 
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ObjectDefinitionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ObjectDefinitionUtil} to access the object definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the object definitions where uuid = &#63;.
@@ -247,6 +255,10 @@ public interface ObjectDefinitionPersistence
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the object definitions where uuid = &#63; and companyId = &#63;.
@@ -473,6 +485,10 @@ public interface ObjectDefinitionPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the object definitions where companyId = &#63;.
 	 *
@@ -681,6 +697,10 @@ public interface ObjectDefinitionPersistence
 	 */
 	public int filterCountByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindBySystem();
+
+	public FinderPath getFinderPathCountBySystem();
+
 	/**
 	 * Returns all the object definitions where system = &#63;.
 	 *
@@ -888,6 +908,10 @@ public interface ObjectDefinitionPersistence
 	 */
 	public int filterCountBySystem(boolean system);
 
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns the object definition where companyId = &#63; and className = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
@@ -938,6 +962,10 @@ public interface ObjectDefinitionPersistence
 	 */
 	public int countByC_C(long companyId, String className);
 
+	public FinderPath getFinderPathFetchByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
+
 	/**
 	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
@@ -987,6 +1015,10 @@ public interface ObjectDefinitionPersistence
 	 * @return the number of matching object definitions
 	 */
 	public int countByC_N(long companyId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByS_S();
+
+	public FinderPath getFinderPathCountByS_S();
 
 	/**
 	 * Returns all the object definitions where system = &#63; and status = &#63;.
@@ -1212,6 +1244,10 @@ public interface ObjectDefinitionPersistence
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
 	public int filterCountByS_S(boolean system, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_S();
+
+	public FinderPath getFinderPathCountByC_A_S();
 
 	/**
 	 * Returns all the object definitions where companyId = &#63; and active = &#63; and status = &#63;.
@@ -1453,6 +1489,10 @@ public interface ObjectDefinitionPersistence
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
 	public int filterCountByC_A_S(long companyId, boolean active, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_S_S();
+
+	public FinderPath getFinderPathCountByC_A_S_S();
 
 	/**
 	 * Returns all the object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
@@ -1720,6 +1760,10 @@ public interface ObjectDefinitionPersistence
 	 */
 	public int filterCountByC_A_S_S(
 		long companyId, boolean active, boolean system, int status);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the object definition where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.

@@ -120,6 +120,30 @@ public class CommerceOrderUtil {
 		return getPersistence().update(commerceOrder, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the commerce orders where uuid = &#63;.
 	 *
@@ -284,6 +308,18 @@ public class CommerceOrderUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the commerce order where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchOrderException</code> if it could not be found.
 	 *
@@ -345,6 +381,18 @@ public class CommerceOrderUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -533,6 +581,18 @@ public class CommerceOrderUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the commerce orders where groupId = &#63;.
 	 *
@@ -699,6 +759,18 @@ public class CommerceOrderUtil {
 		return getPersistence().countByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the commerce orders where userId = &#63;.
 	 *
@@ -862,6 +934,19 @@ public class CommerceOrderUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByBillingAddressId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByBillingAddressId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByBillingAddressId() {
+
+		return getPersistence().getFinderPathCountByBillingAddressId();
 	}
 
 	/**
@@ -1040,6 +1125,19 @@ public class CommerceOrderUtil {
 		return getPersistence().countByBillingAddressId(billingAddressId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceAccountId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceAccountId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceAccountId() {
+
+		return getPersistence().getFinderPathCountByCommerceAccountId();
+	}
+
 	/**
 	 * Returns all the commerce orders where commerceAccountId = &#63;.
 	 *
@@ -1216,6 +1314,19 @@ public class CommerceOrderUtil {
 		return getPersistence().countByCommerceAccountId(commerceAccountId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByShippingAddressId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByShippingAddressId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByShippingAddressId() {
+
+		return getPersistence().getFinderPathCountByShippingAddressId();
+	}
+
 	/**
 	 * Returns all the commerce orders where shippingAddressId = &#63;.
 	 *
@@ -1390,6 +1501,18 @@ public class CommerceOrderUtil {
 	 */
 	public static int countByShippingAddressId(long shippingAddressId) {
 		return getPersistence().countByShippingAddressId(shippingAddressId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C() {
+
+		return getPersistence().getFinderPathCountByG_C();
 	}
 
 	/**
@@ -1578,6 +1701,18 @@ public class CommerceOrderUtil {
 	 */
 	public static int countByG_C(long groupId, long commerceAccountId) {
 		return getPersistence().countByG_C(groupId, commerceAccountId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_CP() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_CP();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_CP() {
+
+		return getPersistence().getFinderPathCountByG_CP();
 	}
 
 	/**
@@ -1771,6 +1906,18 @@ public class CommerceOrderUtil {
 		long groupId, String commercePaymentMethodKey) {
 
 		return getPersistence().countByG_CP(groupId, commercePaymentMethodKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U_O() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U_O();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U_O() {
+
+		return getPersistence().getFinderPathCountByG_U_O();
 	}
 
 	/**
@@ -1972,6 +2119,18 @@ public class CommerceOrderUtil {
 	 */
 	public static int countByG_U_O(long groupId, long userId, int orderStatus) {
 		return getPersistence().countByG_U_O(groupId, userId, orderStatus);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_O() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_O();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_O() {
+
+		return getPersistence().getFinderPathCountByG_C_O();
 	}
 
 	/**
@@ -2593,6 +2752,18 @@ public class CommerceOrderUtil {
 
 		return getPersistence().countByC_LtC_O(
 			createDate, commerceAccountId, orderStatus);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByERC_C() {
+
+		return getPersistence().getFinderPathFetchByERC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByERC_C() {
+
+		return getPersistence().getFinderPathCountByERC_C();
 	}
 
 	/**

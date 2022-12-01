@@ -16,6 +16,7 @@ package com.liferay.calendar.service.persistence;
 
 import com.liferay.calendar.exception.NoSuchResourceException;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface CalendarResourcePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarResourceUtil} to access the calendar resource persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the calendar resources where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface CalendarResourcePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the calendar resource where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchResourceException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface CalendarResourcePersistence
 	 * @return the number of matching calendar resources
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the calendar resources where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface CalendarResourcePersistence
 	 * @return the number of matching calendar resources
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the calendar resources where groupId = &#63;.
@@ -597,6 +617,10 @@ public interface CalendarResourcePersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByActive();
+
+	public FinderPath getFinderPathCountByActive();
+
 	/**
 	 * Returns all the calendar resources where active = &#63;.
 	 *
@@ -739,6 +763,10 @@ public interface CalendarResourcePersistence
 	 * @return the number of matching calendar resources
 	 */
 	public int countByActive(boolean active);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the calendar resources where groupId = &#63; and code = &#63;.
@@ -1098,6 +1126,10 @@ public interface CalendarResourcePersistence
 	 */
 	public int filterCountByG_C(long[] groupIds, String code);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_A();
+
+	public FinderPath getFinderPathCountByG_A();
+
 	/**
 	 * Returns all the calendar resources where groupId = &#63; and active = &#63;.
 	 *
@@ -1322,6 +1354,10 @@ public interface CalendarResourcePersistence
 	 * @return the number of matching calendar resources that the user has permission to view
 	 */
 	public int filterCountByG_A(long groupId, boolean active);
+
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns the calendar resource where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchResourceException</code> if it could not be found.

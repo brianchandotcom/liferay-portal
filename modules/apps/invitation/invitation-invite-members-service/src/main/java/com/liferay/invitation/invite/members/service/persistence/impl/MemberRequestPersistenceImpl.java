@@ -98,8 +98,30 @@ public class MemberRequestPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByKey;
+
+	@Override
+	public FinderPath getFinderPathFetchByKey() {
+		return _finderPathFetchByKey;
+	}
+
 	private FinderPath _finderPathCountByKey;
+
+	@Override
+	public FinderPath getFinderPathCountByKey() {
+		return _finderPathCountByKey;
+	}
 
 	/**
 	 * Returns the member request where key = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.
@@ -340,7 +362,18 @@ public class MemberRequestPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByReceiverUserId;
 	private FinderPath _finderPathWithoutPaginationFindByReceiverUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByReceiverUserId() {
+		return _finderPathWithoutPaginationFindByReceiverUserId;
+	}
+
 	private FinderPath _finderPathCountByReceiverUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByReceiverUserId() {
+		return _finderPathCountByReceiverUserId;
+	}
 
 	/**
 	 * Returns all the member requests where receiverUserId = &#63;.
@@ -845,7 +878,18 @@ public class MemberRequestPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_S;
 	private FinderPath _finderPathWithoutPaginationFindByR_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_S() {
+		return _finderPathWithoutPaginationFindByR_S;
+	}
+
 	private FinderPath _finderPathCountByR_S;
+
+	@Override
+	public FinderPath getFinderPathCountByR_S() {
+		return _finderPathCountByR_S;
+	}
 
 	/**
 	 * Returns all the member requests where receiverUserId = &#63; and status = &#63;.
@@ -1384,7 +1428,18 @@ public class MemberRequestPersistenceImpl
 		"memberRequest.status = ?";
 
 	private FinderPath _finderPathFetchByG_R_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_R_S() {
+		return _finderPathFetchByG_R_S;
+	}
+
 	private FinderPath _finderPathCountByG_R_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_R_S() {
+		return _finderPathCountByG_R_S;
+	}
 
 	/**
 	 * Returns the member request where groupId = &#63; and receiverUserId = &#63; and status = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.contacts.service.persistence;
 
 import com.liferay.contacts.exception.NoSuchEntryException;
 import com.liferay.contacts.model.Entry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EntryUtil} to access the entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the entries where userId = &#63;.
@@ -181,6 +189,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the number of matching entries
 	 */
 	public int countByUserId(long userId);
+
+	public FinderPath getFinderPathFetchByU_EA();
+
+	public FinderPath getFinderPathCountByU_EA();
 
 	/**
 	 * Returns the entry where userId = &#63; and emailAddress = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

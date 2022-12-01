@@ -96,9 +96,31 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId() {
+		return _finderPathWithoutPaginationFindByAccountEntryId;
+	}
+
 	private FinderPath _finderPathCountByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAccountEntryId() {
+		return _finderPathCountByAccountEntryId;
+	}
 
 	/**
 	 * Returns all the commerce shipping option account entry rels where accountEntryId = &#63;.
@@ -636,7 +658,18 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceChannelId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceChannelId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceChannelId() {
+		return _finderPathWithoutPaginationFindByCommerceChannelId;
+	}
+
 	private FinderPath _finderPathCountByCommerceChannelId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceChannelId() {
+		return _finderPathCountByCommerceChannelId;
+	}
 
 	/**
 	 * Returns all the commerce shipping option account entry rels where commerceChannelId = &#63;.
@@ -1180,7 +1213,20 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCommerceShippingOptionKey;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceShippingOptionKey;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingOptionKey() {
+
+		return _finderPathWithoutPaginationFindByCommerceShippingOptionKey;
+	}
+
 	private FinderPath _finderPathCountByCommerceShippingOptionKey;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceShippingOptionKey() {
+		return _finderPathCountByCommerceShippingOptionKey;
+	}
 
 	/**
 	 * Returns all the commerce shipping option account entry rels where commerceShippingOptionKey = &#63;.
@@ -1789,7 +1835,18 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			"(commerceShippingOptionAccountEntryRel.commerceShippingOptionKey IS NULL OR commerceShippingOptionAccountEntryRel.commerceShippingOptionKey = '')";
 
 	private FinderPath _finderPathFetchByA_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByA_C() {
+		return _finderPathFetchByA_C;
+	}
+
 	private FinderPath _finderPathCountByA_C;
+
+	@Override
+	public FinderPath getFinderPathCountByA_C() {
+		return _finderPathCountByA_C;
+	}
 
 	/**
 	 * Returns the commerce shipping option account entry rel where accountEntryId = &#63; and commerceChannelId = &#63; or throws a <code>NoSuchShippingOptionAccountEntryRelException</code> if it could not be found.

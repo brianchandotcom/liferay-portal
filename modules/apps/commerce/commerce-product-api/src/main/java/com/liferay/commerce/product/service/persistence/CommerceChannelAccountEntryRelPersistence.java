@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchChannelAccountEntryRelException;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CommerceChannelAccountEntryRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceChannelAccountEntryRelUtil} to access the commerce channel account entry rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId();
+
+	public FinderPath getFinderPathCountByAccountEntryId();
 
 	/**
 	 * Returns all the commerce channel account entry rels where accountEntryId = &#63;.
@@ -186,6 +194,10 @@ public interface CommerceChannelAccountEntryRelPersistence
 	 * @return the number of matching commerce channel account entry rels
 	 */
 	public int countByAccountEntryId(long accountEntryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceChannelId();
+
+	public FinderPath getFinderPathCountByCommerceChannelId();
 
 	/**
 	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63;.
@@ -332,6 +344,10 @@ public interface CommerceChannelAccountEntryRelPersistence
 	 * @return the number of matching commerce channel account entry rels
 	 */
 	public int countByCommerceChannelId(long commerceChannelId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByA_T();
+
+	public FinderPath getFinderPathCountByA_T();
 
 	/**
 	 * Returns all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
@@ -489,6 +505,10 @@ public interface CommerceChannelAccountEntryRelPersistence
 	 */
 	public int countByA_T(long accountEntryId, int type);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -645,6 +665,10 @@ public interface CommerceChannelAccountEntryRelPersistence
 	 */
 	public int countByC_C(long classNameId, long classPK);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_T();
+
+	public FinderPath getFinderPathCountByC_T();
+
 	/**
 	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
 	 *
@@ -800,6 +824,10 @@ public interface CommerceChannelAccountEntryRelPersistence
 	 * @return the number of matching commerce channel account entry rels
 	 */
 	public int countByC_T(long commerceChannelId, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByA_C_T();
+
+	public FinderPath getFinderPathCountByA_C_T();
 
 	/**
 	 * Returns all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
@@ -972,6 +1000,10 @@ public interface CommerceChannelAccountEntryRelPersistence
 	 */
 	public int countByA_C_T(
 		long accountEntryId, long commerceChannelId, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_T();
+
+	public FinderPath getFinderPathCountByC_C_C_T();
 
 	/**
 	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
@@ -1155,6 +1187,10 @@ public interface CommerceChannelAccountEntryRelPersistence
 	 */
 	public int countByC_C_C_T(
 		long classNameId, long classPK, long commerceChannelId, int type);
+
+	public FinderPath getFinderPathFetchByA_C_C_C_T();
+
+	public FinderPath getFinderPathCountByA_C_C_C_T();
 
 	/**
 	 * Returns the commerce channel account entry rel where accountEntryId = &#63; and classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63; or throws a <code>NoSuchChannelAccountEntryRelException</code> if it could not be found.

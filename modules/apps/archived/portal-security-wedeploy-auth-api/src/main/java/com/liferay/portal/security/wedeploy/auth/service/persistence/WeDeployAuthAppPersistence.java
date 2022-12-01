@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.wedeploy.auth.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.wedeploy.auth.exception.NoSuchAppException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
@@ -40,6 +41,13 @@ public interface WeDeployAuthAppPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthAppUtil} to access the we deploy auth app persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByRU_CI();
+
+	public FinderPath getFinderPathCountByRU_CI();
 
 	/**
 	 * Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.
@@ -90,6 +98,10 @@ public interface WeDeployAuthAppPersistence
 	 * @return the number of matching we deploy auth apps
 	 */
 	public int countByRU_CI(String redirectURI, String clientId);
+
+	public FinderPath getFinderPathFetchByCI_CS();
+
+	public FinderPath getFinderPathCountByCI_CS();
 
 	/**
 	 * Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.

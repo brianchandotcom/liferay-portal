@@ -16,6 +16,7 @@ package com.liferay.marketplace.service.persistence;
 
 import com.liferay.marketplace.exception.NoSuchAppException;
 import com.liferay.marketplace.model.App;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface AppPersistence extends BasePersistence<App> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AppUtil} to access the app persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the apps where uuid = &#63;.
@@ -180,6 +188,10 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * @return the number of matching apps
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the apps where uuid = &#63; and companyId = &#63;.
@@ -334,6 +346,10 @@ public interface AppPersistence extends BasePersistence<App> {
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the apps where companyId = &#63;.
 	 *
@@ -476,6 +492,10 @@ public interface AppPersistence extends BasePersistence<App> {
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchByRemoteAppId();
+
+	public FinderPath getFinderPathCountByRemoteAppId();
+
 	/**
 	 * Returns the app where remoteAppId = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.
 	 *
@@ -517,6 +537,10 @@ public interface AppPersistence extends BasePersistence<App> {
 	 * @return the number of matching apps
 	 */
 	public int countByRemoteAppId(long remoteAppId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCategory();
+
+	public FinderPath getFinderPathCountByCategory();
 
 	/**
 	 * Returns all the apps where category = &#63;.

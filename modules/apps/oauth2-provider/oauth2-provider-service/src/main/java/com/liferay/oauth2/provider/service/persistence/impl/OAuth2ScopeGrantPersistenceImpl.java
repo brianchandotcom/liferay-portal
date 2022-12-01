@@ -101,11 +101,35 @@ public class OAuth2ScopeGrantPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath
 		_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId() {
+
+		return _finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId;
+	}
+
 	private FinderPath _finderPathCountByOAuth2ApplicationScopeAliasesId;
+
+	@Override
+	public FinderPath getFinderPathCountByOAuth2ApplicationScopeAliasesId() {
+		return _finderPathCountByOAuth2ApplicationScopeAliasesId;
+	}
 
 	/**
 	 * Returns all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
@@ -635,7 +659,18 @@ public class OAuth2ScopeGrantPersistenceImpl
 			"oAuth2ScopeGrant.oAuth2ApplicationScopeAliasesId = ?";
 
 	private FinderPath _finderPathFetchByC_O_A_B_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_O_A_B_S() {
+		return _finderPathFetchByC_O_A_B_S;
+	}
+
 	private FinderPath _finderPathCountByC_O_A_B_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_O_A_B_S() {
+		return _finderPathCountByC_O_A_B_S;
+	}
 
 	/**
 	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or throws a <code>NoSuchOAuth2ScopeGrantException</code> if it could not be found.

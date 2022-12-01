@@ -95,11 +95,35 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath
 		_finderPathWithPaginationFindByCommerceInventoryWarehouseId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceInventoryWarehouseId() {
+
+		return _finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
+	}
+
 	private FinderPath _finderPathCountByCommerceInventoryWarehouseId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceInventoryWarehouseId() {
+		return _finderPathCountByCommerceInventoryWarehouseId;
+	}
 
 	/**
 	 * Returns all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
@@ -650,7 +674,18 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
@@ -1216,7 +1251,18 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			"commerceInventoryWarehouseRel.commerceInventoryWarehouseId = ?";
 
 	private FinderPath _finderPathFetchByC_C_CIWI;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C_CIWI() {
+		return _finderPathFetchByC_C_CIWI;
+	}
+
 	private FinderPath _finderPathCountByC_C_CIWI;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_CIWI() {
+		return _finderPathCountByC_C_CIWI;
+	}
 
 	/**
 	 * Returns the commerce inventory warehouse rel where classNameId = &#63; and classPK = &#63; and commerceInventoryWarehouseId = &#63; or throws a <code>NoSuchInventoryWarehouseRelException</code> if it could not be found.

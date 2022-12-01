@@ -109,9 +109,31 @@ public class SegmentsExperiencePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the segments experiences where uuid = &#63;.
@@ -664,7 +686,18 @@ public class SegmentsExperiencePersistenceImpl
 		"(segmentsExperience.uuid IS NULL OR segmentsExperience.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the segments experience where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
@@ -928,7 +961,18 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the segments experiences where uuid = &#63; and companyId = &#63;.
@@ -1526,7 +1570,18 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the segments experiences where groupId = &#63;.
@@ -2423,7 +2478,18 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySegmentsEntryId;
 	private FinderPath _finderPathWithoutPaginationFindBySegmentsEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySegmentsEntryId() {
+		return _finderPathWithoutPaginationFindBySegmentsEntryId;
+	}
+
 	private FinderPath _finderPathCountBySegmentsEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountBySegmentsEntryId() {
+		return _finderPathCountBySegmentsEntryId;
+	}
 
 	/**
 	 * Returns all the segments experiences where segmentsEntryId = &#63;.
@@ -2951,7 +3017,18 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C() {
+		return _finderPathWithoutPaginationFindByG_C_C;
+	}
+
 	private FinderPath _finderPathCountByG_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C() {
+		return _finderPathCountByG_C_C;
+	}
 
 	/**
 	 * Returns all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -3974,7 +4051,18 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_S_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_S_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_S_C_C() {
+		return _finderPathWithoutPaginationFindByG_S_C_C;
+	}
+
 	private FinderPath _finderPathCountByG_S_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S_C_C() {
+		return _finderPathCountByG_S_C_C;
+	}
 
 	/**
 	 * Returns all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -5068,7 +5156,18 @@ public class SegmentsExperiencePersistenceImpl
 		"segmentsExperience.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_SEK_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_SEK_C_C() {
+		return _finderPathFetchByG_SEK_C_C;
+	}
+
 	private FinderPath _finderPathCountByG_SEK_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_SEK_C_C() {
+		return _finderPathCountByG_SEK_C_C;
+	}
 
 	/**
 	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
@@ -5393,7 +5492,18 @@ public class SegmentsExperiencePersistenceImpl
 		"segmentsExperience.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_C_C_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_C_P() {
+		return _finderPathFetchByG_C_C_P;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_P() {
+		return _finderPathCountByG_C_C_P;
+	}
 
 	/**
 	 * Returns the segments experience where groupId = &#63; and classNameId = &#63; and classPK = &#63; and priority = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
@@ -7823,7 +7933,18 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_A() {
+		return _finderPathWithoutPaginationFindByG_C_C_A;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_A;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_A() {
+		return _finderPathCountByG_C_C_A;
+	}
 
 	/**
 	 * Returns all the segments experiences where groupId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
@@ -8912,7 +9033,19 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_S_C_C_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_S_C_C_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_S_C_C_A() {
+		return _finderPathWithoutPaginationFindByG_S_C_C_A;
+	}
+
 	private FinderPath _finderPathCountByG_S_C_C_A;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S_C_C_A() {
+		return _finderPathCountByG_S_C_C_A;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_S_C_C_A;
 
 	/**

@@ -93,9 +93,31 @@ public class CommerceDiscountRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceDiscountId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId() {
+		return _finderPathWithoutPaginationFindByCommerceDiscountId;
+	}
+
 	private FinderPath _finderPathCountByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceDiscountId() {
+		return _finderPathCountByCommerceDiscountId;
+	}
 
 	/**
 	 * Returns all the commerce discount rels where commerceDiscountId = &#63;.
@@ -611,7 +633,18 @@ public class CommerceDiscountRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCD_CN;
 	private FinderPath _finderPathWithoutPaginationFindByCD_CN;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCD_CN() {
+		return _finderPathWithoutPaginationFindByCD_CN;
+	}
+
 	private FinderPath _finderPathCountByCD_CN;
+
+	@Override
+	public FinderPath getFinderPathCountByCD_CN() {
+		return _finderPathCountByCD_CN;
+	}
 
 	/**
 	 * Returns all the commerce discount rels where commerceDiscountId = &#63; and classNameId = &#63;.
@@ -1160,7 +1193,18 @@ public class CommerceDiscountRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCN_CPK;
 	private FinderPath _finderPathWithoutPaginationFindByCN_CPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK() {
+		return _finderPathWithoutPaginationFindByCN_CPK;
+	}
+
 	private FinderPath _finderPathCountByCN_CPK;
+
+	@Override
+	public FinderPath getFinderPathCountByCN_CPK() {
+		return _finderPathCountByCN_CPK;
+	}
 
 	/**
 	 * Returns all the commerce discount rels where classNameId = &#63; and classPK = &#63;.

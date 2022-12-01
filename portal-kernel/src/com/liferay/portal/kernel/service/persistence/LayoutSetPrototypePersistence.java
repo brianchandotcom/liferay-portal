@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 
@@ -39,6 +40,13 @@ public interface LayoutSetPrototypePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetPrototypeUtil} to access the layout set prototype persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout set prototypes where uuid = &#63;.
@@ -246,6 +254,10 @@ public interface LayoutSetPrototypePersistence
 	 * @return the number of matching layout set prototypes that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout set prototypes where uuid = &#63; and companyId = &#63;.
@@ -472,6 +484,10 @@ public interface LayoutSetPrototypePersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the layout set prototypes where companyId = &#63;.
 	 *
@@ -679,6 +695,10 @@ public interface LayoutSetPrototypePersistence
 	 * @return the number of matching layout set prototypes that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
 
 	/**
 	 * Returns all the layout set prototypes where companyId = &#63; and active = &#63;.

@@ -16,6 +16,7 @@ package com.liferay.commerce.discount.service.persistence;
 
 import com.liferay.commerce.discount.exception.NoSuchDiscountRelException;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceDiscountRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountRelUtil} to access the commerce discount rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId();
+
+	public FinderPath getFinderPathCountByCommerceDiscountId();
 
 	/**
 	 * Returns all the commerce discount rels where commerceDiscountId = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceDiscountRelPersistence
 	 * @return the number of matching commerce discount rels
 	 */
 	public int countByCommerceDiscountId(long commerceDiscountId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCD_CN();
+
+	public FinderPath getFinderPathCountByCD_CN();
 
 	/**
 	 * Returns all the commerce discount rels where commerceDiscountId = &#63; and classNameId = &#63;.
@@ -340,6 +352,10 @@ public interface CommerceDiscountRelPersistence
 	 * @return the number of matching commerce discount rels
 	 */
 	public int countByCD_CN(long commerceDiscountId, long classNameId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK();
+
+	public FinderPath getFinderPathCountByCN_CPK();
 
 	/**
 	 * Returns all the commerce discount rels where classNameId = &#63; and classPK = &#63;.

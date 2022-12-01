@@ -91,9 +91,31 @@ public class AttachmentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByMessageId;
 	private FinderPath _finderPathWithoutPaginationFindByMessageId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByMessageId() {
+		return _finderPathWithoutPaginationFindByMessageId;
+	}
+
 	private FinderPath _finderPathCountByMessageId;
+
+	@Override
+	public FinderPath getFinderPathCountByMessageId() {
+		return _finderPathCountByMessageId;
+	}
 
 	/**
 	 * Returns all the attachments where messageId = &#63;.

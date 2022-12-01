@@ -107,9 +107,31 @@ public class KBArticlePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
 	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByResourcePrimKey() {
+		return _finderPathWithoutPaginationFindByResourcePrimKey;
+	}
+
 	private FinderPath _finderPathCountByResourcePrimKey;
+
+	@Override
+	public FinderPath getFinderPathCountByResourcePrimKey() {
+		return _finderPathCountByResourcePrimKey;
+	}
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63;.
@@ -610,7 +632,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the kb articles where uuid = &#63;.
@@ -1138,7 +1171,18 @@ public class KBArticlePersistenceImpl
 		"(kbArticle.uuid IS NULL OR kbArticle.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the kb article where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -1387,7 +1431,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the kb articles where uuid = &#63; and companyId = &#63;.
@@ -1965,7 +2020,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_G;
 	private FinderPath _finderPathWithoutPaginationFindByR_G;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_G() {
+		return _finderPathWithoutPaginationFindByR_G;
+	}
+
 	private FinderPath _finderPathCountByR_G;
+
+	@Override
+	public FinderPath getFinderPathCountByR_G() {
+		return _finderPathCountByR_G;
+	}
 
 	/**
 	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63;.
@@ -2898,7 +2964,18 @@ public class KBArticlePersistenceImpl
 		"kbArticle.groupId = ?";
 
 	private FinderPath _finderPathFetchByR_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByR_V() {
+		return _finderPathFetchByR_V;
+	}
+
 	private FinderPath _finderPathCountByR_V;
+
+	@Override
+	public FinderPath getFinderPathCountByR_V() {
+		return _finderPathCountByR_V;
+	}
 
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -3118,7 +3195,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_L;
 	private FinderPath _finderPathWithoutPaginationFindByR_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_L() {
+		return _finderPathWithoutPaginationFindByR_L;
+	}
+
 	private FinderPath _finderPathCountByR_L;
+
+	@Override
+	public FinderPath getFinderPathCountByR_L() {
+		return _finderPathCountByR_L;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByR_L;
 
 	/**
@@ -3936,7 +4025,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_M;
 	private FinderPath _finderPathWithoutPaginationFindByR_M;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_M() {
+		return _finderPathWithoutPaginationFindByR_M;
+	}
+
 	private FinderPath _finderPathCountByR_M;
+
+	@Override
+	public FinderPath getFinderPathCountByR_M() {
+		return _finderPathCountByR_M;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByR_M;
 
 	/**
@@ -4752,7 +4853,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_S;
 	private FinderPath _finderPathWithoutPaginationFindByR_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_S() {
+		return _finderPathWithoutPaginationFindByR_S;
+	}
+
 	private FinderPath _finderPathCountByR_S;
+
+	@Override
+	public FinderPath getFinderPathCountByR_S() {
+		return _finderPathCountByR_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByR_S;
 
 	/**
@@ -5569,7 +5682,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_ERC;
 	private FinderPath _finderPathWithoutPaginationFindByG_ERC;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_ERC() {
+		return _finderPathWithoutPaginationFindByG_ERC;
+	}
+
 	private FinderPath _finderPathCountByG_ERC;
+
+	@Override
+	public FinderPath getFinderPathCountByG_ERC() {
+		return _finderPathCountByG_ERC;
+	}
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
@@ -6592,7 +6716,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_L;
 	private FinderPath _finderPathWithoutPaginationFindByG_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_L() {
+		return _finderPathWithoutPaginationFindByG_L;
+	}
+
 	private FinderPath _finderPathCountByG_L;
+
+	@Override
+	public FinderPath getFinderPathCountByG_L() {
+		return _finderPathCountByG_L;
+	}
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and latest = &#63;.
@@ -7516,7 +7651,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_M;
 	private FinderPath _finderPathWithoutPaginationFindByG_M;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_M() {
+		return _finderPathWithoutPaginationFindByG_M;
+	}
+
 	private FinderPath _finderPathCountByG_M;
+
+	@Override
+	public FinderPath getFinderPathCountByG_M() {
+		return _finderPathCountByG_M;
+	}
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and main = &#63;.
@@ -8439,7 +8585,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_S() {
+		return _finderPathWithoutPaginationFindByG_S;
+	}
+
 	private FinderPath _finderPathCountByG_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S() {
+		return _finderPathCountByG_S;
+	}
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and status = &#63;.
@@ -9363,7 +9520,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_L() {
+		return _finderPathWithoutPaginationFindByC_L;
+	}
+
 	private FinderPath _finderPathCountByC_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_L() {
+		return _finderPathCountByC_L;
+	}
 
 	/**
 	 * Returns all the kb articles where companyId = &#63; and latest = &#63;.
@@ -9900,7 +10068,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_M;
 	private FinderPath _finderPathWithoutPaginationFindByC_M;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_M() {
+		return _finderPathWithoutPaginationFindByC_M;
+	}
+
 	private FinderPath _finderPathCountByC_M;
+
+	@Override
+	public FinderPath getFinderPathCountByC_M() {
+		return _finderPathCountByC_M;
+	}
 
 	/**
 	 * Returns all the kb articles where companyId = &#63; and main = &#63;.
@@ -10435,7 +10614,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_S() {
+		return _finderPathWithoutPaginationFindByC_S;
+	}
+
 	private FinderPath _finderPathCountByC_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S() {
+		return _finderPathCountByC_S;
+	}
 
 	/**
 	 * Returns all the kb articles where companyId = &#63; and status = &#63;.
@@ -10972,7 +11162,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_L;
 	private FinderPath _finderPathWithoutPaginationFindByP_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_L() {
+		return _finderPathWithoutPaginationFindByP_L;
+	}
+
 	private FinderPath _finderPathCountByP_L;
+
+	@Override
+	public FinderPath getFinderPathCountByP_L() {
+		return _finderPathCountByP_L;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByP_L;
 
 	/**
@@ -11800,7 +12002,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_M;
 	private FinderPath _finderPathWithoutPaginationFindByP_M;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_M() {
+		return _finderPathWithoutPaginationFindByP_M;
+	}
+
 	private FinderPath _finderPathCountByP_M;
+
+	@Override
+	public FinderPath getFinderPathCountByP_M() {
+		return _finderPathCountByP_M;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByP_M;
 
 	/**
@@ -12624,7 +12838,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_S;
 	private FinderPath _finderPathWithoutPaginationFindByP_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_S() {
+		return _finderPathWithoutPaginationFindByP_S;
+	}
+
 	private FinderPath _finderPathCountByP_S;
+
+	@Override
+	public FinderPath getFinderPathCountByP_S() {
+		return _finderPathCountByP_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByP_S;
 
 	/**
@@ -13449,7 +13675,18 @@ public class KBArticlePersistenceImpl
 		"kbArticle.status = ?";
 
 	private FinderPath _finderPathFetchByR_G_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByR_G_V() {
+		return _finderPathFetchByR_G_V;
+	}
+
 	private FinderPath _finderPathCountByR_G_V;
+
+	@Override
+	public FinderPath getFinderPathCountByR_G_V() {
+		return _finderPathCountByR_G_V;
+	}
 
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -13694,7 +13931,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_G_L;
 	private FinderPath _finderPathWithoutPaginationFindByR_G_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_G_L() {
+		return _finderPathWithoutPaginationFindByR_G_L;
+	}
+
 	private FinderPath _finderPathCountByR_G_L;
+
+	@Override
+	public FinderPath getFinderPathCountByR_G_L() {
+		return _finderPathCountByR_G_L;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByR_G_L;
 
 	/**
@@ -15235,7 +15484,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_G_M;
 	private FinderPath _finderPathWithoutPaginationFindByR_G_M;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_G_M() {
+		return _finderPathWithoutPaginationFindByR_G_M;
+	}
+
 	private FinderPath _finderPathCountByR_G_M;
+
+	@Override
+	public FinderPath getFinderPathCountByR_G_M() {
+		return _finderPathCountByR_G_M;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByR_G_M;
 
 	/**
@@ -16769,7 +17030,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_G_S;
 	private FinderPath _finderPathWithoutPaginationFindByR_G_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_G_S() {
+		return _finderPathWithoutPaginationFindByR_G_S;
+	}
+
 	private FinderPath _finderPathCountByR_G_S;
+
+	@Override
+	public FinderPath getFinderPathCountByR_G_S() {
+		return _finderPathCountByR_G_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByR_G_S;
 
 	/**
@@ -18299,7 +18572,18 @@ public class KBArticlePersistenceImpl
 		"kbArticle.status = ?";
 
 	private FinderPath _finderPathFetchByG_ERC_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_ERC_V() {
+		return _finderPathFetchByG_ERC_V;
+	}
+
 	private FinderPath _finderPathCountByG_ERC_V;
+
+	@Override
+	public FinderPath getFinderPathCountByG_ERC_V() {
+		return _finderPathCountByG_ERC_V;
+	}
 
 	/**
 	 * Returns the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -18581,7 +18865,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_L;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_L() {
+		return _finderPathWithoutPaginationFindByG_P_L;
+	}
+
 	private FinderPath _finderPathCountByG_P_L;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_L() {
+		return _finderPathCountByG_P_L;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_L;
 
 	/**
@@ -20135,7 +20431,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_M;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_M;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_M() {
+		return _finderPathWithoutPaginationFindByG_P_M;
+	}
+
 	private FinderPath _finderPathCountByG_P_M;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_M() {
+		return _finderPathCountByG_P_M;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_M;
 
 	/**
@@ -21689,7 +21997,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_S() {
+		return _finderPathWithoutPaginationFindByG_P_S;
+	}
+
 	private FinderPath _finderPathCountByG_P_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_S() {
+		return _finderPathCountByG_P_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_S;
 
 	/**
@@ -23243,7 +23563,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_KBFI_UT;
 	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_UT;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_KBFI_UT() {
+		return _finderPathWithoutPaginationFindByG_KBFI_UT;
+	}
+
 	private FinderPath _finderPathCountByG_KBFI_UT;
+
+	@Override
+	public FinderPath getFinderPathCountByG_KBFI_UT() {
+		return _finderPathCountByG_KBFI_UT;
+	}
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
@@ -24319,7 +24650,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_KBFI_L;
 	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_KBFI_L() {
+		return _finderPathWithoutPaginationFindByG_KBFI_L;
+	}
+
 	private FinderPath _finderPathCountByG_KBFI_L;
+
+	@Override
+	public FinderPath getFinderPathCountByG_KBFI_L() {
+		return _finderPathCountByG_KBFI_L;
+	}
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
@@ -25312,7 +25654,18 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_KBFI_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_KBFI_S() {
+		return _finderPathWithoutPaginationFindByG_KBFI_S;
+	}
+
 	private FinderPath _finderPathCountByG_KBFI_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_KBFI_S() {
+		return _finderPathCountByG_KBFI_S;
+	}
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
@@ -31336,7 +31689,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_L_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_L_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_L_S() {
+		return _finderPathWithoutPaginationFindByG_P_L_S;
+	}
+
 	private FinderPath _finderPathCountByG_P_L_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_L_S() {
+		return _finderPathCountByG_P_L_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_P_L_S;
 
 	/**
@@ -32978,7 +33343,19 @@ public class KBArticlePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_KBFI_UT_ST;
 	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_UT_ST;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_KBFI_UT_ST() {
+		return _finderPathWithoutPaginationFindByG_KBFI_UT_ST;
+	}
+
 	private FinderPath _finderPathCountByG_KBFI_UT_ST;
+
+	@Override
+	public FinderPath getFinderPathCountByG_KBFI_UT_ST() {
+		return _finderPathCountByG_KBFI_UT_ST;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_KBFI_UT_ST;
 
 	/**

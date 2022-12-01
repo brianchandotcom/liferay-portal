@@ -14,6 +14,7 @@
 
 package com.liferay.saml.persistence.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchIdpSsoSessionException;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
@@ -42,6 +43,9 @@ public interface SamlIdpSsoSessionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlIdpSsoSessionUtil} to access the saml idp sso session persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Returns all the saml idp sso sessions where createDate &lt; &#63;.
@@ -186,6 +190,10 @@ public interface SamlIdpSsoSessionPersistence
 	 * @return the number of matching saml idp sso sessions
 	 */
 	public int countByLtCreateDate(Date createDate);
+
+	public FinderPath getFinderPathFetchBySamlIdpSsoSessionKey();
+
+	public FinderPath getFinderPathCountBySamlIdpSsoSessionKey();
 
 	/**
 	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or throws a <code>NoSuchIdpSsoSessionException</code> if it could not be found.

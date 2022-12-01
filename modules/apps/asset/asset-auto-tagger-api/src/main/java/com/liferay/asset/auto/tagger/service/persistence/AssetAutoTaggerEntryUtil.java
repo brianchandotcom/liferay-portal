@@ -122,6 +122,31 @@ public class AssetAutoTaggerEntryUtil {
 		return getPersistence().update(assetAutoTaggerEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAssetEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAssetEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAssetEntryId() {
+
+		return getPersistence().getFinderPathCountByAssetEntryId();
+	}
+
 	/**
 	 * Returns all the asset auto tagger entries where assetEntryId = &#63;.
 	 *
@@ -297,6 +322,19 @@ public class AssetAutoTaggerEntryUtil {
 		return getPersistence().countByAssetEntryId(assetEntryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAssetTagId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAssetTagId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAssetTagId() {
+
+		return getPersistence().getFinderPathCountByAssetTagId();
+	}
+
 	/**
 	 * Returns all the asset auto tagger entries where assetTagId = &#63;.
 	 *
@@ -468,6 +506,18 @@ public class AssetAutoTaggerEntryUtil {
 	 */
 	public static int countByAssetTagId(long assetTagId) {
 		return getPersistence().countByAssetTagId(assetTagId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByA_A() {
+
+		return getPersistence().getFinderPathFetchByA_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_A() {
+
+		return getPersistence().getFinderPathCountByA_A();
 	}
 
 	/**

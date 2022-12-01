@@ -95,9 +95,31 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the o auth2 application scope aliaseses where companyId = &#63;.
@@ -609,7 +631,20 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByOAuth2ApplicationId;
 	private FinderPath _finderPathWithoutPaginationFindByOAuth2ApplicationId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByOAuth2ApplicationId() {
+
+		return _finderPathWithoutPaginationFindByOAuth2ApplicationId;
+	}
+
 	private FinderPath _finderPathCountByOAuth2ApplicationId;
+
+	@Override
+	public FinderPath getFinderPathCountByOAuth2ApplicationId() {
+		return _finderPathCountByOAuth2ApplicationId;
+	}
 
 	/**
 	 * Returns all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63;.

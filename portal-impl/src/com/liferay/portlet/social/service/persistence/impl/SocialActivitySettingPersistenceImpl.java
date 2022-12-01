@@ -91,9 +91,31 @@ public class SocialActivitySettingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the social activity settings where groupId = &#63;.
@@ -613,7 +635,18 @@ public class SocialActivitySettingPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C() {
+		return _finderPathWithoutPaginationFindByG_C;
+	}
+
 	private FinderPath _finderPathCountByG_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C() {
+		return _finderPathCountByG_C;
+	}
 
 	/**
 	 * Returns all the social activity settings where groupId = &#63; and classNameId = &#63;.
@@ -1174,7 +1207,18 @@ public class SocialActivitySettingPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_A() {
+		return _finderPathWithoutPaginationFindByG_A;
+	}
+
 	private FinderPath _finderPathCountByG_A;
+
+	@Override
+	public FinderPath getFinderPathCountByG_A() {
+		return _finderPathCountByG_A;
+	}
 
 	/**
 	 * Returns all the social activity settings where groupId = &#63; and activityType = &#63;.
@@ -1735,7 +1779,18 @@ public class SocialActivitySettingPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_A() {
+		return _finderPathWithoutPaginationFindByG_C_A;
+	}
+
 	private FinderPath _finderPathCountByG_C_A;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_A() {
+		return _finderPathCountByG_C_A;
+	}
 
 	/**
 	 * Returns all the social activity settings where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
@@ -2337,7 +2392,18 @@ public class SocialActivitySettingPersistenceImpl
 		"socialActivitySetting.activityType = ?";
 
 	private FinderPath _finderPathFetchByG_C_A_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_C_A_N() {
+		return _finderPathFetchByG_C_A_N;
+	}
+
 	private FinderPath _finderPathCountByG_C_A_N;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_A_N() {
+		return _finderPathCountByG_C_A_N;
+	}
 
 	/**
 	 * Returns the social activity setting where groupId = &#63; and classNameId = &#63; and activityType = &#63; and name = &#63; or throws a <code>NoSuchActivitySettingException</code> if it could not be found.

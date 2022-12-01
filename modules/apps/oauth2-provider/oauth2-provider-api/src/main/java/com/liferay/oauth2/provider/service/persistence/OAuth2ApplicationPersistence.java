@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.service.persistence;
 
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface OAuth2ApplicationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationUtil} to access the o auth2 application persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the o auth2 applications where uuid = &#63;.
@@ -247,6 +255,10 @@ public interface OAuth2ApplicationPersistence
 	 * @return the number of matching o auth2 applications that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the o auth2 applications where uuid = &#63; and companyId = &#63;.
@@ -473,6 +485,10 @@ public interface OAuth2ApplicationPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the o auth2 applications where companyId = &#63;.
 	 *
@@ -681,6 +697,10 @@ public interface OAuth2ApplicationPersistence
 	 */
 	public int filterCountByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns the o auth2 application where companyId = &#63; and clientId = &#63; or throws a <code>NoSuchOAuth2ApplicationException</code> if it could not be found.
 	 *
@@ -730,6 +750,10 @@ public interface OAuth2ApplicationPersistence
 	 * @return the number of matching o auth2 applications
 	 */
 	public int countByC_C(long companyId, String clientId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_CP();
+
+	public FinderPath getFinderPathCountByC_CP();
 
 	/**
 	 * Returns all the o auth2 applications where companyId = &#63; and clientProfile = &#63;.
@@ -955,6 +979,10 @@ public interface OAuth2ApplicationPersistence
 	 * @return the number of matching o auth2 applications that the user has permission to view
 	 */
 	public int filterCountByC_CP(long companyId, int clientProfile);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the o auth2 application where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOAuth2ApplicationException</code> if it could not be found.

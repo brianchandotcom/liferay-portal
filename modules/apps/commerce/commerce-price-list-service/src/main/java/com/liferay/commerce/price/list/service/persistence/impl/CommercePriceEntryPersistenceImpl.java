@@ -108,9 +108,31 @@ public class CommercePriceEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce price entries where uuid = &#63;.
@@ -664,7 +686,18 @@ public class CommercePriceEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce price entries where uuid = &#63; and companyId = &#63;.
@@ -1262,7 +1295,18 @@ public class CommercePriceEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the commerce price entries where companyId = &#63;.
@@ -1782,7 +1826,20 @@ public class CommercePriceEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommercePriceListId;
 	private FinderPath _finderPathWithoutPaginationFindByCommercePriceListId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommercePriceListId() {
+
+		return _finderPathWithoutPaginationFindByCommercePriceListId;
+	}
+
 	private FinderPath _finderPathCountByCommercePriceListId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommercePriceListId() {
+		return _finderPathCountByCommercePriceListId;
+	}
 
 	/**
 	 * Returns all the commerce price entries where commercePriceListId = &#63;.
@@ -2312,7 +2369,18 @@ public class CommercePriceEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPInstanceUuid;
 	private FinderPath _finderPathWithoutPaginationFindByCPInstanceUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPInstanceUuid() {
+		return _finderPathWithoutPaginationFindByCPInstanceUuid;
+	}
+
 	private FinderPath _finderPathCountByCPInstanceUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByCPInstanceUuid() {
+		return _finderPathCountByCPInstanceUuid;
+	}
 
 	/**
 	 * Returns all the commerce price entries where CPInstanceUuid = &#63;.
@@ -2881,7 +2949,18 @@ public class CommercePriceEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63;.
@@ -4659,7 +4738,18 @@ public class CommercePriceEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_S() {
+		return _finderPathWithoutPaginationFindByC_C_S;
+	}
+
 	private FinderPath _finderPathCountByC_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_S() {
+		return _finderPathCountByC_C_S;
+	}
 
 	/**
 	 * Returns all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63; and status = &#63;.
@@ -5310,7 +5400,18 @@ public class CommercePriceEntryPersistenceImpl
 		"commercePriceEntry.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the commerce price entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPriceEntryException</code> if it could not be found.

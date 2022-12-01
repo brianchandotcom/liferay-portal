@@ -102,9 +102,31 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId() {
+		return _finderPathWithoutPaginationFindByAccountEntryId;
+	}
+
 	private FinderPath _finderPathCountByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAccountEntryId() {
+		return _finderPathCountByAccountEntryId;
+	}
 
 	/**
 	 * Returns all the commerce channel account entry rels where accountEntryId = &#63;.
@@ -637,7 +659,18 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceChannelId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceChannelId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceChannelId() {
+		return _finderPathWithoutPaginationFindByCommerceChannelId;
+	}
+
 	private FinderPath _finderPathCountByCommerceChannelId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceChannelId() {
+		return _finderPathCountByCommerceChannelId;
+	}
 
 	/**
 	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63;.
@@ -1173,7 +1206,18 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByA_T;
 	private FinderPath _finderPathWithoutPaginationFindByA_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByA_T() {
+		return _finderPathWithoutPaginationFindByA_T;
+	}
+
 	private FinderPath _finderPathCountByA_T;
+
+	@Override
+	public FinderPath getFinderPathCountByA_T() {
+		return _finderPathCountByA_T;
+	}
 
 	/**
 	 * Returns all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
@@ -1740,7 +1784,18 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
@@ -2307,7 +2362,18 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T() {
+		return _finderPathWithoutPaginationFindByC_T;
+	}
+
 	private FinderPath _finderPathCountByC_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T() {
+		return _finderPathCountByC_T;
+	}
 
 	/**
 	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
@@ -2875,7 +2941,18 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByA_C_T;
 	private FinderPath _finderPathWithoutPaginationFindByA_C_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByA_C_T() {
+		return _finderPathWithoutPaginationFindByA_C_T;
+	}
+
 	private FinderPath _finderPathCountByA_C_T;
+
+	@Override
+	public FinderPath getFinderPathCountByA_C_T() {
+		return _finderPathCountByA_C_T;
+	}
 
 	/**
 	 * Returns all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
@@ -3493,7 +3570,18 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_T() {
+		return _finderPathWithoutPaginationFindByC_C_C_T;
+	}
+
 	private FinderPath _finderPathCountByC_C_C_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C_T() {
+		return _finderPathCountByC_C_C_T;
+	}
 
 	/**
 	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
@@ -4149,7 +4237,18 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		"commerceChannelAccountEntryRel.type = ?";
 
 	private FinderPath _finderPathFetchByA_C_C_C_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByA_C_C_C_T() {
+		return _finderPathFetchByA_C_C_C_T;
+	}
+
 	private FinderPath _finderPathCountByA_C_C_C_T;
+
+	@Override
+	public FinderPath getFinderPathCountByA_C_C_C_T() {
+		return _finderPathCountByA_C_C_C_T;
+	}
 
 	/**
 	 * Returns the commerce channel account entry rel where accountEntryId = &#63; and classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63; or throws a <code>NoSuchChannelAccountEntryRelException</code> if it could not be found.

@@ -94,9 +94,31 @@ public class DispatchLogPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByDispatchTriggerId;
 	private FinderPath _finderPathWithoutPaginationFindByDispatchTriggerId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByDispatchTriggerId() {
+		return _finderPathWithoutPaginationFindByDispatchTriggerId;
+	}
+
 	private FinderPath _finderPathCountByDispatchTriggerId;
+
+	@Override
+	public FinderPath getFinderPathCountByDispatchTriggerId() {
+		return _finderPathCountByDispatchTriggerId;
+	}
 
 	/**
 	 * Returns all the dispatch logs where dispatchTriggerId = &#63;.
@@ -604,7 +626,18 @@ public class DispatchLogPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByDTI_S;
 	private FinderPath _finderPathWithoutPaginationFindByDTI_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByDTI_S() {
+		return _finderPathWithoutPaginationFindByDTI_S;
+	}
+
 	private FinderPath _finderPathCountByDTI_S;
+
+	@Override
+	public FinderPath getFinderPathCountByDTI_S() {
+		return _finderPathCountByDTI_S;
+	}
 
 	/**
 	 * Returns all the dispatch logs where dispatchTriggerId = &#63; and status = &#63;.

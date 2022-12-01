@@ -125,6 +125,30 @@ public class ExportImportConfigurationUtil {
 			exportImportConfiguration, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the export import configurations where groupId = &#63;.
 	 *
@@ -296,6 +320,18 @@ public class ExportImportConfigurationUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
 	}
 
 	/**
@@ -474,6 +510,18 @@ public class ExportImportConfigurationUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_T() {
+
+		return getPersistence().getFinderPathCountByG_T();
 	}
 
 	/**
@@ -665,6 +713,18 @@ public class ExportImportConfigurationUtil {
 		return getPersistence().countByG_T(groupId, type);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_S() {
+
+		return getPersistence().getFinderPathCountByG_S();
+	}
+
 	/**
 	 * Returns all the export import configurations where groupId = &#63; and status = &#63;.
 	 *
@@ -852,6 +912,18 @@ public class ExportImportConfigurationUtil {
 	 */
 	public static int countByG_S(long groupId, int status) {
 		return getPersistence().countByG_S(groupId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_T_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_T_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_T_S() {
+
+		return getPersistence().getFinderPathCountByG_T_S();
 	}
 
 	/**

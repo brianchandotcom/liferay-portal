@@ -96,8 +96,30 @@ public class WeDeployAuthAppPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByRU_CI;
+
+	@Override
+	public FinderPath getFinderPathFetchByRU_CI() {
+		return _finderPathFetchByRU_CI;
+	}
+
 	private FinderPath _finderPathCountByRU_CI;
+
+	@Override
+	public FinderPath getFinderPathCountByRU_CI() {
+		return _finderPathCountByRU_CI;
+	}
 
 	/**
 	 * Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.
@@ -390,7 +412,18 @@ public class WeDeployAuthAppPersistenceImpl
 		"(weDeployAuthApp.clientId IS NULL OR weDeployAuthApp.clientId = '')";
 
 	private FinderPath _finderPathFetchByCI_CS;
+
+	@Override
+	public FinderPath getFinderPathFetchByCI_CS() {
+		return _finderPathFetchByCI_CS;
+	}
+
 	private FinderPath _finderPathCountByCI_CS;
+
+	@Override
+	public FinderPath getFinderPathCountByCI_CS() {
+		return _finderPathCountByCI_CS;
+	}
 
 	/**
 	 * Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.

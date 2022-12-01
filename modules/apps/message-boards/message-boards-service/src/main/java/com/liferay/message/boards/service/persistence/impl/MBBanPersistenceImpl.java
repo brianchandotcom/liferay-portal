@@ -104,9 +104,31 @@ public class MBBanPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the message boards bans where uuid = &#63;.
@@ -646,7 +668,18 @@ public class MBBanPersistenceImpl
 		"(mbBan.uuid IS NULL OR mbBan.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the message boards ban where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchBanException</code> if it could not be found.
@@ -910,7 +943,18 @@ public class MBBanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the message boards bans where uuid = &#63; and companyId = &#63;.
@@ -1500,7 +1544,18 @@ public class MBBanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the message boards bans where groupId = &#63;.
@@ -2003,7 +2058,18 @@ public class MBBanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the message boards bans where userId = &#63;.
@@ -2504,7 +2570,18 @@ public class MBBanPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByBanUserId;
 	private FinderPath _finderPathWithoutPaginationFindByBanUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByBanUserId() {
+		return _finderPathWithoutPaginationFindByBanUserId;
+	}
+
 	private FinderPath _finderPathCountByBanUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByBanUserId() {
+		return _finderPathCountByBanUserId;
+	}
 
 	/**
 	 * Returns all the message boards bans where banUserId = &#63;.
@@ -3008,7 +3085,18 @@ public class MBBanPersistenceImpl
 		"mbBan.banUserId = ?";
 
 	private FinderPath _finderPathFetchByG_B;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_B() {
+		return _finderPathFetchByG_B;
+	}
+
 	private FinderPath _finderPathCountByG_B;
+
+	@Override
+	public FinderPath getFinderPathCountByG_B() {
+		return _finderPathCountByG_B;
+	}
 
 	/**
 	 * Returns the message boards ban where groupId = &#63; and banUserId = &#63; or throws a <code>NoSuchBanException</code> if it could not be found.

@@ -97,9 +97,33 @@ public class CTermEntryLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceTermEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceTermEntryId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceTermEntryId() {
+
+		return _finderPathWithoutPaginationFindByCommerceTermEntryId;
+	}
+
 	private FinderPath _finderPathCountByCommerceTermEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceTermEntryId() {
+		return _finderPathCountByCommerceTermEntryId;
+	}
 
 	/**
 	 * Returns all the c term entry localizations where commerceTermEntryId = &#63;.
@@ -614,7 +638,18 @@ public class CTermEntryLocalizationPersistenceImpl
 			"cTermEntryLocalization.commerceTermEntryId = ?";
 
 	private FinderPath _finderPathFetchByCommerceTermEntryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathFetchByCommerceTermEntryId_LanguageId() {
+		return _finderPathFetchByCommerceTermEntryId_LanguageId;
+	}
+
 	private FinderPath _finderPathCountByCommerceTermEntryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceTermEntryId_LanguageId() {
+		return _finderPathCountByCommerceTermEntryId_LanguageId;
+	}
 
 	/**
 	 * Returns the c term entry localization where commerceTermEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchCTermEntryLocalizationException</code> if it could not be found.

@@ -125,6 +125,30 @@ public class CommerceAddressRestrictionUtil {
 			commerceAddressRestriction, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCountryId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCountryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCountryId() {
+
+		return getPersistence().getFinderPathCountByCountryId();
+	}
+
 	/**
 	 * Returns all the commerce address restrictions where countryId = &#63;.
 	 *
@@ -301,6 +325,18 @@ public class CommerceAddressRestrictionUtil {
 	 */
 	public static int countByCountryId(long countryId) {
 		return getPersistence().countByCountryId(countryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**
@@ -492,6 +528,18 @@ public class CommerceAddressRestrictionUtil {
 	 */
 	public static int countByC_C(long classNameId, long classPK) {
 		return getPersistence().countByC_C(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_C_C() {
+
+		return getPersistence().getFinderPathFetchByC_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C() {
+
+		return getPersistence().getFinderPathCountByC_C_C();
 	}
 
 	/**

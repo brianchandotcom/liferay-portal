@@ -121,6 +121,31 @@ public class BigDecimalEntryUtil {
 		return getPersistence().update(bigDecimalEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByBigDecimalValue() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByBigDecimalValue();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByBigDecimalValue() {
+
+		return getPersistence().getFinderPathCountByBigDecimalValue();
+	}
+
 	/**
 	 * Returns all the big decimal entries where bigDecimalValue = &#63;.
 	 *

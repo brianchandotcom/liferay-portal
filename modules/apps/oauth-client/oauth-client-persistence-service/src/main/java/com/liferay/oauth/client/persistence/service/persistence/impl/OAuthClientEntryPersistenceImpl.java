@@ -96,9 +96,31 @@ public class OAuthClientEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the o auth client entries where companyId = &#63;.
@@ -982,7 +1004,18 @@ public class OAuthClientEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the o auth client entries where userId = &#63;.
@@ -1861,7 +1894,18 @@ public class OAuthClientEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A() {
+		return _finderPathWithoutPaginationFindByC_A;
+	}
+
 	private FinderPath _finderPathCountByC_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A() {
+		return _finderPathCountByC_A;
+	}
 
 	/**
 	 * Returns all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
@@ -2901,7 +2945,18 @@ public class OAuthClientEntryPersistenceImpl
 		"(oAuthClientEntry.authServerWellKnownURI IS NULL OR oAuthClientEntry.authServerWellKnownURI = '')";
 
 	private FinderPath _finderPathFetchByC_A_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_A_C() {
+		return _finderPathFetchByC_A_C;
+	}
+
 	private FinderPath _finderPathCountByC_A_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_C() {
+		return _finderPathCountByC_A_C;
+	}
 
 	/**
 	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.

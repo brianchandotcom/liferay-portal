@@ -103,9 +103,31 @@ public class ObjectDefinitionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the object definitions where uuid = &#63;.
@@ -1067,7 +1089,18 @@ public class ObjectDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the object definitions where uuid = &#63; and companyId = &#63;.
@@ -2099,7 +2132,18 @@ public class ObjectDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the object definitions where companyId = &#63;.
@@ -2983,7 +3027,18 @@ public class ObjectDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySystem;
 	private FinderPath _finderPathWithoutPaginationFindBySystem;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySystem() {
+		return _finderPathWithoutPaginationFindBySystem;
+	}
+
 	private FinderPath _finderPathCountBySystem;
+
+	@Override
+	public FinderPath getFinderPathCountBySystem() {
+		return _finderPathCountBySystem;
+	}
 
 	/**
 	 * Returns all the object definitions where system = &#63;.
@@ -3866,7 +3921,18 @@ public class ObjectDefinitionPersistenceImpl
 		"objectDefinition.system_ = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the object definition where companyId = &#63; and className = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
@@ -4131,7 +4197,18 @@ public class ObjectDefinitionPersistenceImpl
 		"(objectDefinition.className IS NULL OR objectDefinition.className = '')";
 
 	private FinderPath _finderPathFetchByC_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_N() {
+		return _finderPathFetchByC_N;
+	}
+
 	private FinderPath _finderPathCountByC_N;
+
+	@Override
+	public FinderPath getFinderPathCountByC_N() {
+		return _finderPathCountByC_N;
+	}
 
 	/**
 	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
@@ -4395,7 +4472,18 @@ public class ObjectDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByS_S;
 	private FinderPath _finderPathWithoutPaginationFindByS_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByS_S() {
+		return _finderPathWithoutPaginationFindByS_S;
+	}
+
 	private FinderPath _finderPathCountByS_S;
+
+	@Override
+	public FinderPath getFinderPathCountByS_S() {
+		return _finderPathCountByS_S;
+	}
 
 	/**
 	 * Returns all the object definitions where system = &#63; and status = &#63;.
@@ -5340,7 +5428,18 @@ public class ObjectDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_S() {
+		return _finderPathWithoutPaginationFindByC_A_S;
+	}
+
 	private FinderPath _finderPathCountByC_A_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_S() {
+		return _finderPathCountByC_A_S;
+	}
 
 	/**
 	 * Returns all the object definitions where companyId = &#63; and active = &#63; and status = &#63;.
@@ -6346,7 +6445,18 @@ public class ObjectDefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A_S_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_S_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_S_S() {
+		return _finderPathWithoutPaginationFindByC_A_S_S;
+	}
+
 	private FinderPath _finderPathCountByC_A_S_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_S_S() {
+		return _finderPathCountByC_A_S_S;
+	}
 
 	/**
 	 * Returns all the object definitions where companyId = &#63; and active = &#63; and system = &#63; and status = &#63;.
@@ -7419,7 +7529,18 @@ public class ObjectDefinitionPersistenceImpl
 		"objectDefinition.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the object definition where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.

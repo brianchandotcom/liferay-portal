@@ -16,6 +16,7 @@ package com.liferay.notification.service.persistence;
 
 import com.liferay.notification.exception.NoSuchNotificationQueueEntryException;
 import com.liferay.notification.model.NotificationQueueEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
@@ -42,6 +43,14 @@ public interface NotificationQueueEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NotificationQueueEntryUtil} to access the notification queue entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByNotificationTemplateId();
+
+	public FinderPath getFinderPathCountByNotificationTemplateId();
 
 	/**
 	 * Returns all the notification queue entries where notificationTemplateId = &#63;.
@@ -463,6 +472,10 @@ public interface NotificationQueueEntryPersistence
 	 * @return the number of matching notification queue entries that the user has permission to view
 	 */
 	public int filterCountByLtSentDate(Date sentDate);
+
+	public FinderPath getFinderPathWithoutPaginationFindByT_S();
+
+	public FinderPath getFinderPathCountByT_S();
 
 	/**
 	 * Returns all the notification queue entries where type = &#63; and status = &#63;.

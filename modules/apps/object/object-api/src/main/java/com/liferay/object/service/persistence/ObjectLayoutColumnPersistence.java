@@ -16,6 +16,7 @@ package com.liferay.object.service.persistence;
 
 import com.liferay.object.exception.NoSuchObjectLayoutColumnException;
 import com.liferay.object.model.ObjectLayoutColumn;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ObjectLayoutColumnPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ObjectLayoutColumnUtil} to access the object layout column persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the object layout columns where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ObjectLayoutColumnPersistence
 	 * @return the number of matching object layout columns
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the object layout columns where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface ObjectLayoutColumnPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByObjectFieldId();
+
+	public FinderPath getFinderPathCountByObjectFieldId();
+
 	/**
 	 * Returns all the object layout columns where objectFieldId = &#63;.
 	 *
@@ -482,6 +498,10 @@ public interface ObjectLayoutColumnPersistence
 	 * @return the number of matching object layout columns
 	 */
 	public int countByObjectFieldId(long objectFieldId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByObjectLayoutRowId();
+
+	public FinderPath getFinderPathCountByObjectLayoutRowId();
 
 	/**
 	 * Returns all the object layout columns where objectLayoutRowId = &#63;.

@@ -16,6 +16,7 @@ package com.liferay.invitation.invite.members.service.persistence;
 
 import com.liferay.invitation.invite.members.exception.NoSuchMemberRequestException;
 import com.liferay.invitation.invite.members.model.MemberRequest;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface MemberRequestPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MemberRequestUtil} to access the member request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByKey();
+
+	public FinderPath getFinderPathCountByKey();
 
 	/**
 	 * Returns the member request where key = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.
@@ -84,6 +92,10 @@ public interface MemberRequestPersistence
 	 * @return the number of matching member requests
 	 */
 	public int countByKey(String key);
+
+	public FinderPath getFinderPathWithoutPaginationFindByReceiverUserId();
+
+	public FinderPath getFinderPathCountByReceiverUserId();
 
 	/**
 	 * Returns all the member requests where receiverUserId = &#63;.
@@ -228,6 +240,10 @@ public interface MemberRequestPersistence
 	 * @return the number of matching member requests
 	 */
 	public int countByReceiverUserId(long receiverUserId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_S();
+
+	public FinderPath getFinderPathCountByR_S();
 
 	/**
 	 * Returns all the member requests where receiverUserId = &#63; and status = &#63;.
@@ -383,6 +399,10 @@ public interface MemberRequestPersistence
 	 * @return the number of matching member requests
 	 */
 	public int countByR_S(long receiverUserId, int status);
+
+	public FinderPath getFinderPathFetchByG_R_S();
+
+	public FinderPath getFinderPathCountByG_R_S();
 
 	/**
 	 * Returns the member request where groupId = &#63; and receiverUserId = &#63; and status = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.

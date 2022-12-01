@@ -100,9 +100,31 @@ public class ObjectStateFlowPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the object state flows where uuid = &#63;.
@@ -635,7 +657,18 @@ public class ObjectStateFlowPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the object state flows where uuid = &#63; and companyId = &#63;.
@@ -1216,7 +1249,18 @@ public class ObjectStateFlowPersistenceImpl
 		"objectStateFlow.companyId = ?";
 
 	private FinderPath _finderPathFetchByObjectFieldId;
+
+	@Override
+	public FinderPath getFinderPathFetchByObjectFieldId() {
+		return _finderPathFetchByObjectFieldId;
+	}
+
 	private FinderPath _finderPathCountByObjectFieldId;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectFieldId() {
+		return _finderPathCountByObjectFieldId;
+	}
 
 	/**
 	 * Returns the object state flow where objectFieldId = &#63; or throws a <code>NoSuchObjectStateFlowException</code> if it could not be found.

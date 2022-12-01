@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -40,6 +41,13 @@ public interface LayoutSetPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetUtil} to access the layout set persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the layout sets where groupId = &#63;.
@@ -183,6 +191,11 @@ public interface LayoutSetPersistence
 	 * @return the number of matching layout sets
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByLayoutSetPrototypeUuid();
+
+	public FinderPath getFinderPathCountByLayoutSetPrototypeUuid();
 
 	/**
 	 * Returns all the layout sets where layoutSetPrototypeUuid = &#63;.
@@ -328,6 +341,10 @@ public interface LayoutSetPersistence
 	 */
 	public int countByLayoutSetPrototypeUuid(String layoutSetPrototypeUuid);
 
+	public FinderPath getFinderPathFetchByG_P();
+
+	public FinderPath getFinderPathCountByG_P();
+
 	/**
 	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
 	 *
@@ -377,6 +394,10 @@ public interface LayoutSetPersistence
 	 * @return the number of matching layout sets
 	 */
 	public int countByG_P(long groupId, boolean privateLayout);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_L();
+
+	public FinderPath getFinderPathCountByC_L();
 
 	/**
 	 * Returns all the layout sets where companyId = &#63; and layoutSetPrototypeUuid = &#63;.
@@ -532,6 +553,10 @@ public interface LayoutSetPersistence
 	 * @return the number of matching layout sets
 	 */
 	public int countByC_L(long companyId, String layoutSetPrototypeUuid);
+
+	public FinderPath getFinderPathFetchByP_L();
+
+	public FinderPath getFinderPathCountByP_L();
 
 	/**
 	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.

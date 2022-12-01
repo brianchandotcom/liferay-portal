@@ -107,9 +107,31 @@ public class TemplateEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the template entries where uuid = &#63;.
@@ -654,7 +676,18 @@ public class TemplateEntryPersistenceImpl
 		"(templateEntry.uuid IS NULL OR templateEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the template entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTemplateEntryException</code> if it could not be found.
@@ -918,7 +951,18 @@ public class TemplateEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the template entries where uuid = &#63; and companyId = &#63;.
@@ -1515,7 +1559,19 @@ public class TemplateEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
@@ -2286,7 +2342,18 @@ public class TemplateEntryPersistenceImpl
 		"templateEntry.groupId IN (";
 
 	private FinderPath _finderPathFetchByDDMTemplateId;
+
+	@Override
+	public FinderPath getFinderPathFetchByDDMTemplateId() {
+		return _finderPathFetchByDDMTemplateId;
+	}
+
 	private FinderPath _finderPathCountByDDMTemplateId;
+
+	@Override
+	public FinderPath getFinderPathCountByDDMTemplateId() {
+		return _finderPathCountByDDMTemplateId;
+	}
 
 	/**
 	 * Returns the template entry where ddmTemplateId = &#63; or throws a <code>NoSuchTemplateEntryException</code> if it could not be found.
@@ -2515,7 +2582,18 @@ public class TemplateEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_IICN;
 	private FinderPath _finderPathWithoutPaginationFindByG_IICN;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_IICN() {
+		return _finderPathWithoutPaginationFindByG_IICN;
+	}
+
 	private FinderPath _finderPathCountByG_IICN;
+
+	@Override
+	public FinderPath getFinderPathCountByG_IICN() {
+		return _finderPathCountByG_IICN;
+	}
 
 	/**
 	 * Returns all the template entries where groupId = &#63; and infoItemClassName = &#63;.
@@ -3116,7 +3194,19 @@ public class TemplateEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_IICN_IIFVK;
 	private FinderPath _finderPathWithoutPaginationFindByG_IICN_IIFVK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_IICN_IIFVK() {
+		return _finderPathWithoutPaginationFindByG_IICN_IIFVK;
+	}
+
 	private FinderPath _finderPathCountByG_IICN_IIFVK;
+
+	@Override
+	public FinderPath getFinderPathCountByG_IICN_IIFVK() {
+		return _finderPathCountByG_IICN_IIFVK;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_IICN_IIFVK;
 
 	/**

@@ -119,6 +119,30 @@ public class SocialRelationUtil {
 		return getPersistence().update(socialRelation, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the social relations where uuid = &#63;.
 	 *
@@ -281,6 +305,18 @@ public class SocialRelationUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -469,6 +505,18 @@ public class SocialRelationUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the social relations where companyId = &#63;.
 	 *
@@ -638,6 +686,18 @@ public class SocialRelationUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId1() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId1();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId1() {
+
+		return getPersistence().getFinderPathCountByUserId1();
+	}
+
 	/**
 	 * Returns all the social relations where userId1 = &#63;.
 	 *
@@ -802,6 +862,18 @@ public class SocialRelationUtil {
 	 */
 	public static int countByUserId1(long userId1) {
 		return getPersistence().countByUserId1(userId1);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId2() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId2();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId2() {
+
+		return getPersistence().getFinderPathCountByUserId2();
 	}
 
 	/**
@@ -970,6 +1042,18 @@ public class SocialRelationUtil {
 		return getPersistence().countByUserId2(userId2);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByType() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByType();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByType() {
+
+		return getPersistence().getFinderPathCountByType();
+	}
+
 	/**
 	 * Returns all the social relations where type = &#63;.
 	 *
@@ -1132,6 +1216,18 @@ public class SocialRelationUtil {
 	 */
 	public static int countByType(int type) {
 		return getPersistence().countByType(type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_T() {
+
+		return getPersistence().getFinderPathCountByC_T();
 	}
 
 	/**
@@ -1318,6 +1414,18 @@ public class SocialRelationUtil {
 		return getPersistence().countByC_T(companyId, type);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU1_U2() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU1_U2();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU1_U2() {
+
+		return getPersistence().getFinderPathCountByU1_U2();
+	}
+
 	/**
 	 * Returns all the social relations where userId1 = &#63; and userId2 = &#63;.
 	 *
@@ -1500,6 +1608,18 @@ public class SocialRelationUtil {
 	 */
 	public static int countByU1_U2(long userId1, long userId2) {
 		return getPersistence().countByU1_U2(userId1, userId2);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU1_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU1_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU1_T() {
+
+		return getPersistence().getFinderPathCountByU1_T();
 	}
 
 	/**
@@ -1686,6 +1806,18 @@ public class SocialRelationUtil {
 		return getPersistence().countByU1_T(userId1, type);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU2_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU2_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU2_T() {
+
+		return getPersistence().getFinderPathCountByU2_T();
+	}
+
 	/**
 	 * Returns all the social relations where userId2 = &#63; and type = &#63;.
 	 *
@@ -1868,6 +2000,18 @@ public class SocialRelationUtil {
 	 */
 	public static int countByU2_T(long userId2, int type) {
 		return getPersistence().countByU2_T(userId2, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU1_U2_T() {
+
+		return getPersistence().getFinderPathFetchByU1_U2_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU1_U2_T() {
+
+		return getPersistence().getFinderPathCountByU1_U2_T();
 	}
 
 	/**

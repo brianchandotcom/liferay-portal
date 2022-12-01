@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -40,6 +41,13 @@ public interface TeamPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TeamUtil} to access the team persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the teams where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface TeamPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the team where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
 	 *
@@ -232,6 +244,10 @@ public interface TeamPersistence
 	 * @return the number of matching teams
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the teams where uuid = &#63; and companyId = &#63;.
@@ -387,6 +403,10 @@ public interface TeamPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the teams where companyId = &#63;.
 	 *
@@ -529,6 +549,10 @@ public interface TeamPersistence
 	 * @return the number of matching teams
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the teams where groupId = &#63;.
@@ -735,6 +759,10 @@ public interface TeamPersistence
 	 * @return the number of matching teams that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
+
+	public FinderPath getFinderPathFetchByG_N();
+
+	public FinderPath getFinderPathCountByG_N();
 
 	/**
 	 * Returns the team where groupId = &#63; and name = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.

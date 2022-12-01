@@ -107,9 +107,31 @@ public class CommerceOrderPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce orders where uuid = &#63;.
@@ -639,7 +661,18 @@ public class CommerceOrderPersistenceImpl
 		"(commerceOrder.uuid IS NULL OR commerceOrder.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the commerce order where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchOrderException</code> if it could not be found.
@@ -888,7 +921,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce orders where uuid = &#63; and companyId = &#63;.
@@ -1470,7 +1514,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the commerce orders where groupId = &#63;.
@@ -1963,7 +2018,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the commerce orders where userId = &#63;.
@@ -2455,7 +2521,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByBillingAddressId;
 	private FinderPath _finderPathWithoutPaginationFindByBillingAddressId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByBillingAddressId() {
+		return _finderPathWithoutPaginationFindByBillingAddressId;
+	}
+
 	private FinderPath _finderPathCountByBillingAddressId;
+
+	@Override
+	public FinderPath getFinderPathCountByBillingAddressId() {
+		return _finderPathCountByBillingAddressId;
+	}
 
 	/**
 	 * Returns all the commerce orders where billingAddressId = &#63;.
@@ -2963,7 +3040,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceAccountId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceAccountId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceAccountId() {
+		return _finderPathWithoutPaginationFindByCommerceAccountId;
+	}
+
 	private FinderPath _finderPathCountByCommerceAccountId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceAccountId() {
+		return _finderPathCountByCommerceAccountId;
+	}
 
 	/**
 	 * Returns all the commerce orders where commerceAccountId = &#63;.
@@ -3472,7 +3560,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByShippingAddressId;
 	private FinderPath _finderPathWithoutPaginationFindByShippingAddressId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByShippingAddressId() {
+		return _finderPathWithoutPaginationFindByShippingAddressId;
+	}
+
 	private FinderPath _finderPathCountByShippingAddressId;
+
+	@Override
+	public FinderPath getFinderPathCountByShippingAddressId() {
+		return _finderPathCountByShippingAddressId;
+	}
 
 	/**
 	 * Returns all the commerce orders where shippingAddressId = &#63;.
@@ -3981,7 +4080,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C() {
+		return _finderPathWithoutPaginationFindByG_C;
+	}
+
 	private FinderPath _finderPathCountByG_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C() {
+		return _finderPathCountByG_C;
+	}
 
 	/**
 	 * Returns all the commerce orders where groupId = &#63; and commerceAccountId = &#63;.
@@ -4523,7 +4633,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_CP;
 	private FinderPath _finderPathWithoutPaginationFindByG_CP;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_CP() {
+		return _finderPathWithoutPaginationFindByG_CP;
+	}
+
 	private FinderPath _finderPathCountByG_CP;
+
+	@Override
+	public FinderPath getFinderPathCountByG_CP() {
+		return _finderPathCountByG_CP;
+	}
 
 	/**
 	 * Returns all the commerce orders where groupId = &#63; and commercePaymentMethodKey = &#63;.
@@ -5114,7 +5235,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U_O;
 	private FinderPath _finderPathWithoutPaginationFindByG_U_O;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_O() {
+		return _finderPathWithoutPaginationFindByG_U_O;
+	}
+
 	private FinderPath _finderPathCountByG_U_O;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U_O() {
+		return _finderPathCountByG_U_O;
+	}
 
 	/**
 	 * Returns all the commerce orders where groupId = &#63; and userId = &#63; and orderStatus = &#63;.
@@ -5690,7 +5822,18 @@ public class CommerceOrderPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_O;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_O;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_O() {
+		return _finderPathWithoutPaginationFindByG_C_O;
+	}
+
 	private FinderPath _finderPathCountByG_C_O;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_O() {
+		return _finderPathCountByG_C_O;
+	}
 
 	/**
 	 * Returns all the commerce orders where groupId = &#63; and commerceAccountId = &#63; and orderStatus = &#63;.
@@ -7501,7 +7644,18 @@ public class CommerceOrderPersistenceImpl
 		"commerceOrder.orderStatus = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the commerce order where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderException</code> if it could not be found.

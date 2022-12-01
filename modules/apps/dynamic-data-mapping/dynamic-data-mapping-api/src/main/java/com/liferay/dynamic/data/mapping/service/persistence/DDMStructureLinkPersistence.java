@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DDMStructureLinkPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureLinkUtil} to access the ddm structure link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByStructureId();
+
+	public FinderPath getFinderPathCountByStructureId();
 
 	/**
 	 * Returns all the ddm structure links where structureId = &#63;.
@@ -184,6 +192,10 @@ public interface DDMStructureLinkPersistence
 	 * @return the number of matching ddm structure links
 	 */
 	public int countByStructureId(long structureId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the ddm structure links where classNameId = &#63; and classPK = &#63;.
@@ -339,6 +351,10 @@ public interface DDMStructureLinkPersistence
 	 * @return the number of matching ddm structure links
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByC_C_S();
+
+	public FinderPath getFinderPathCountByC_C_S();
 
 	/**
 	 * Returns the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or throws a <code>NoSuchStructureLinkException</code> if it could not be found.

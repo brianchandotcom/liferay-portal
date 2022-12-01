@@ -96,9 +96,31 @@ public class BackgroundTaskPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the background tasks where groupId = &#63;.
@@ -593,7 +615,18 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the background tasks where companyId = &#63;.
@@ -1090,7 +1123,18 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompleted;
 	private FinderPath _finderPathWithoutPaginationFindByCompleted;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompleted() {
+		return _finderPathWithoutPaginationFindByCompleted;
+	}
+
 	private FinderPath _finderPathCountByCompleted;
+
+	@Override
+	public FinderPath getFinderPathCountByCompleted() {
+		return _finderPathCountByCompleted;
+	}
 
 	/**
 	 * Returns all the background tasks where completed = &#63;.
@@ -1591,7 +1635,18 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByStatus;
 	private FinderPath _finderPathWithoutPaginationFindByStatus;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStatus() {
+		return _finderPathWithoutPaginationFindByStatus;
+	}
+
 	private FinderPath _finderPathCountByStatus;
+
+	@Override
+	public FinderPath getFinderPathCountByStatus() {
+		return _finderPathCountByStatus;
+	}
 
 	/**
 	 * Returns all the background tasks where status = &#63;.
@@ -2083,7 +2138,19 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_T() {
+		return _finderPathWithoutPaginationFindByG_T;
+	}
+
 	private FinderPath _finderPathCountByG_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_T() {
+		return _finderPathCountByG_T;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_T;
 
 	/**
@@ -3033,7 +3100,18 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_S() {
+		return _finderPathWithoutPaginationFindByG_S;
+	}
+
 	private FinderPath _finderPathCountByG_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S() {
+		return _finderPathCountByG_S;
+	}
 
 	/**
 	 * Returns all the background tasks where groupId = &#63; and status = &#63;.
@@ -3572,7 +3650,19 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByT_S;
 	private FinderPath _finderPathWithoutPaginationFindByT_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByT_S() {
+		return _finderPathWithoutPaginationFindByT_S;
+	}
+
 	private FinderPath _finderPathCountByT_S;
+
+	@Override
+	public FinderPath getFinderPathCountByT_S() {
+		return _finderPathCountByT_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByT_S;
 
 	/**
@@ -4492,7 +4582,19 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_T() {
+		return _finderPathWithoutPaginationFindByG_N_T;
+	}
+
 	private FinderPath _finderPathCountByG_N_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_T() {
+		return _finderPathCountByG_N_T;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_N_T;
 
 	/**
@@ -5572,7 +5674,19 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_T_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_T_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_T_C() {
+		return _finderPathWithoutPaginationFindByG_T_C;
+	}
+
 	private FinderPath _finderPathCountByG_T_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_T_C() {
+		return _finderPathCountByG_T_C;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_T_C;
 
 	/**
@@ -6600,7 +6714,19 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_T_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_T_S() {
+		return _finderPathWithoutPaginationFindByG_T_S;
+	}
+
 	private FinderPath _finderPathCountByG_T_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_T_S() {
+		return _finderPathCountByG_T_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_T_S;
 
 	/**
@@ -7584,7 +7710,19 @@ public class BackgroundTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_N_T_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_T_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_T_C() {
+		return _finderPathWithoutPaginationFindByG_N_T_C;
+	}
+
 	private FinderPath _finderPathCountByG_N_T_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_N_T_C() {
+		return _finderPathCountByG_N_T_C;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_N_T_C;
 
 	/**

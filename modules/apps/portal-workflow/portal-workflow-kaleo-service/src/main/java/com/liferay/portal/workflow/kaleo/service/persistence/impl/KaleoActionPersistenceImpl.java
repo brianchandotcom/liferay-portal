@@ -101,9 +101,31 @@ public class KaleoActionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the kaleo actions where companyId = &#63;.
@@ -615,7 +637,20 @@ public class KaleoActionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return _finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+	}
+
 	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId() {
+		return _finderPathCountByKaleoDefinitionVersionId;
+	}
 
 	/**
 	 * Returns all the kaleo actions where kaleoDefinitionVersionId = &#63;.
@@ -1148,7 +1183,18 @@ public class KaleoActionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK;
 	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK() {
+		return _finderPathWithoutPaginationFindByKCN_KCPK;
+	}
+
 	private FinderPath _finderPathCountByKCN_KCPK;
+
+	@Override
+	public FinderPath getFinderPathCountByKCN_KCPK() {
+		return _finderPathCountByKCN_KCPK;
+	}
 
 	/**
 	 * Returns all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -1748,7 +1794,18 @@ public class KaleoActionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_KCN_KCPK;
 	private FinderPath _finderPathWithoutPaginationFindByC_KCN_KCPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_KCN_KCPK() {
+		return _finderPathWithoutPaginationFindByC_KCN_KCPK;
+	}
+
 	private FinderPath _finderPathCountByC_KCN_KCPK;
+
+	@Override
+	public FinderPath getFinderPathCountByC_KCN_KCPK() {
+		return _finderPathCountByC_KCN_KCPK;
+	}
 
 	/**
 	 * Returns all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -2392,7 +2449,18 @@ public class KaleoActionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK_ET;
 	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK_ET;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK_ET() {
+		return _finderPathWithoutPaginationFindByKCN_KCPK_ET;
+	}
+
 	private FinderPath _finderPathCountByKCN_KCPK_ET;
+
+	@Override
+	public FinderPath getFinderPathCountByKCN_KCPK_ET() {
+		return _finderPathCountByKCN_KCPK_ET;
+	}
 
 	/**
 	 * Returns all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -3080,7 +3148,18 @@ public class KaleoActionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_KCN_KCPK_ET;
 	private FinderPath _finderPathWithoutPaginationFindByC_KCN_KCPK_ET;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_KCN_KCPK_ET() {
+		return _finderPathWithoutPaginationFindByC_KCN_KCPK_ET;
+	}
+
 	private FinderPath _finderPathCountByC_KCN_KCPK_ET;
+
+	@Override
+	public FinderPath getFinderPathCountByC_KCN_KCPK_ET() {
+		return _finderPathCountByC_KCN_KCPK_ET;
+	}
 
 	/**
 	 * Returns all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.

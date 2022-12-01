@@ -16,6 +16,7 @@ package com.liferay.object.service.persistence;
 
 import com.liferay.object.exception.NoSuchObjectLayoutBoxException;
 import com.liferay.object.model.ObjectLayoutBox;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ObjectLayoutBoxPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ObjectLayoutBoxUtil} to access the object layout box persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the object layout boxes where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ObjectLayoutBoxPersistence
 	 * @return the number of matching object layout boxes
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the object layout boxes where uuid = &#63; and companyId = &#63;.
@@ -338,6 +350,10 @@ public interface ObjectLayoutBoxPersistence
 	 * @return the number of matching object layout boxes
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByObjectLayoutTabId();
+
+	public FinderPath getFinderPathCountByObjectLayoutTabId();
 
 	/**
 	 * Returns all the object layout boxes where objectLayoutTabId = &#63;.

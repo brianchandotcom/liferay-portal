@@ -96,8 +96,30 @@ public class PushNotificationsDevicePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByToken;
+
+	@Override
+	public FinderPath getFinderPathFetchByToken() {
+		return _finderPathFetchByToken;
+	}
+
 	private FinderPath _finderPathCountByToken;
+
+	@Override
+	public FinderPath getFinderPathCountByToken() {
+		return _finderPathCountByToken;
+	}
 
 	/**
 	 * Returns the push notifications device where token = &#63; or throws a <code>NoSuchDeviceException</code> if it could not be found.
@@ -327,7 +349,19 @@ public class PushNotificationsDevicePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_P;
 	private FinderPath _finderPathWithoutPaginationFindByU_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_P() {
+		return _finderPathWithoutPaginationFindByU_P;
+	}
+
 	private FinderPath _finderPathCountByU_P;
+
+	@Override
+	public FinderPath getFinderPathCountByU_P() {
+		return _finderPathCountByU_P;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByU_P;
 
 	/**

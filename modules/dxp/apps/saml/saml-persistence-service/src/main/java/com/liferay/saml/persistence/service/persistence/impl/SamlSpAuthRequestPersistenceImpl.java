@@ -98,6 +98,17 @@ public class SamlSpAuthRequestPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
 	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
 
@@ -632,7 +643,18 @@ public class SamlSpAuthRequestPersistenceImpl
 		"samlSpAuthRequest.createDate < ?";
 
 	private FinderPath _finderPathFetchBySIEI_SSARK;
+
+	@Override
+	public FinderPath getFinderPathFetchBySIEI_SSARK() {
+		return _finderPathFetchBySIEI_SSARK;
+	}
+
 	private FinderPath _finderPathCountBySIEI_SSARK;
+
+	@Override
+	public FinderPath getFinderPathCountBySIEI_SSARK() {
+		return _finderPathCountBySIEI_SSARK;
+	}
 
 	/**
 	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or throws a <code>NoSuchSpAuthRequestException</code> if it could not be found.

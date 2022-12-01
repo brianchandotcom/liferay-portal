@@ -122,6 +122,30 @@ public class MBSuspiciousActivityUtil {
 		return getPersistence().update(mbSuspiciousActivity, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the message boards suspicious activities where uuid = &#63;.
 	 *
@@ -293,6 +317,18 @@ public class MBSuspiciousActivityUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the message boards suspicious activity where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
 	 *
@@ -358,6 +394,18 @@ public class MBSuspiciousActivityUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -549,6 +597,18 @@ public class MBSuspiciousActivityUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByMessageId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByMessageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByMessageId() {
+
+		return getPersistence().getFinderPathCountByMessageId();
+	}
+
 	/**
 	 * Returns all the message boards suspicious activities where messageId = &#63;.
 	 *
@@ -723,6 +783,18 @@ public class MBSuspiciousActivityUtil {
 	 */
 	public static int countByMessageId(long messageId) {
 		return getPersistence().countByMessageId(messageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByThreadId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByThreadId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByThreadId() {
+
+		return getPersistence().getFinderPathCountByThreadId();
 	}
 
 	/**
@@ -901,6 +973,18 @@ public class MBSuspiciousActivityUtil {
 		return getPersistence().countByThreadId(threadId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_M() {
+
+		return getPersistence().getFinderPathFetchByU_M();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_M() {
+
+		return getPersistence().getFinderPathCountByU_M();
+	}
+
 	/**
 	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
 	 *
@@ -964,6 +1048,18 @@ public class MBSuspiciousActivityUtil {
 	 */
 	public static int countByU_M(long userId, long messageId) {
 		return getPersistence().countByU_M(userId, messageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_T() {
+
+		return getPersistence().getFinderPathFetchByU_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_T() {
+
+		return getPersistence().getFinderPathCountByU_T();
 	}
 
 	/**

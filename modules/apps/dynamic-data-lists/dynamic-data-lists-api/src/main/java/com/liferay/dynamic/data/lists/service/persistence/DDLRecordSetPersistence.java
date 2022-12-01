@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.persistence;
 
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DDLRecordSetPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDLRecordSetUtil} to access the ddl record set persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the ddl record sets where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface DDLRecordSetPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the ddl record set where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchRecordSetException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface DDLRecordSetPersistence
 	 * @return the number of matching ddl record sets
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the ddl record sets where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface DDLRecordSetPersistence
 	 * @return the number of matching ddl record sets
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the ddl record sets where groupId = &#63;.
@@ -719,6 +739,10 @@ public interface DDLRecordSetPersistence
 	 */
 	public int filterCountByGroupId(long[] groupIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByDDMStructureId();
+
+	public FinderPath getFinderPathCountByDDMStructureId();
+
 	/**
 	 * Returns all the ddl record sets where DDMStructureId = &#63;.
 	 *
@@ -936,6 +960,10 @@ public interface DDLRecordSetPersistence
 	 * @return the number of matching ddl record sets
 	 */
 	public int countByDDMStructureId(long[] DDMStructureIds);
+
+	public FinderPath getFinderPathFetchByG_R();
+
+	public FinderPath getFinderPathCountByG_R();
 
 	/**
 	 * Returns the ddl record set where groupId = &#63; and recordSetKey = &#63; or throws a <code>NoSuchRecordSetException</code> if it could not be found.

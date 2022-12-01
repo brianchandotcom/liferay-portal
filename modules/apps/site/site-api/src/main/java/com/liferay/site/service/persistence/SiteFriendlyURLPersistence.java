@@ -14,6 +14,7 @@
 
 package com.liferay.site.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.site.exception.NoSuchFriendlyURLException;
 import com.liferay.site.model.SiteFriendlyURL;
@@ -40,6 +41,13 @@ public interface SiteFriendlyURLPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteFriendlyURLUtil} to access the site friendly url persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the site friendly urls where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface SiteFriendlyURLPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the site friendly url where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface SiteFriendlyURLPersistence
 	 * @return the number of matching site friendly urls
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the site friendly urls where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface SiteFriendlyURLPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
+
 	/**
 	 * Returns all the site friendly urls where groupId = &#63; and companyId = &#63;.
 	 *
@@ -544,6 +564,10 @@ public interface SiteFriendlyURLPersistence
 	 */
 	public int countByG_C(long groupId, long companyId);
 
+	public FinderPath getFinderPathFetchByC_F();
+
+	public FinderPath getFinderPathCountByC_F();
+
 	/**
 	 * Returns the site friendly url where companyId = &#63; and friendlyURL = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.
 	 *
@@ -593,6 +617,10 @@ public interface SiteFriendlyURLPersistence
 	 * @return the number of matching site friendly urls
 	 */
 	public int countByC_F(long companyId, String friendlyURL);
+
+	public FinderPath getFinderPathFetchByG_C_L();
+
+	public FinderPath getFinderPathCountByG_C_L();
 
 	/**
 	 * Returns the site friendly url where groupId = &#63; and companyId = &#63; and languageId = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.
@@ -652,6 +680,10 @@ public interface SiteFriendlyURLPersistence
 	 * @return the number of matching site friendly urls
 	 */
 	public int countByG_C_L(long groupId, long companyId, String languageId);
+
+	public FinderPath getFinderPathFetchByC_F_L();
+
+	public FinderPath getFinderPathCountByC_F_L();
 
 	/**
 	 * Returns the site friendly url where companyId = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a <code>NoSuchFriendlyURLException</code> if it could not be found.

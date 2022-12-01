@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchPluginSettingException;
 import com.liferay.portal.kernel.model.PluginSetting;
 
@@ -39,6 +40,13 @@ public interface PluginSettingPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PluginSettingUtil} to access the plugin setting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the plugin settings where companyId = &#63;.
@@ -182,6 +190,10 @@ public interface PluginSettingPersistence
 	 * @return the number of matching plugin settings
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathFetchByC_P_P();
+
+	public FinderPath getFinderPathCountByC_P_P();
 
 	/**
 	 * Returns the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; or throws a <code>NoSuchPluginSettingException</code> if it could not be found.

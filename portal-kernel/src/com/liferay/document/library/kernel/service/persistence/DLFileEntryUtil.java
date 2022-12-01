@@ -119,6 +119,30 @@ public class DLFileEntryUtil {
 		return getPersistence().update(dlFileEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the document library file entries where uuid = &#63;.
 	 *
@@ -286,6 +310,18 @@ public class DLFileEntryUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the document library file entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFileEntryException</code> if it could not be found.
 	 *
@@ -349,6 +385,18 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -536,6 +584,18 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
 	}
 
 	/**
@@ -785,6 +845,18 @@ public class DLFileEntryUtil {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the document library file entries where companyId = &#63;.
 	 *
@@ -955,6 +1027,19 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRepositoryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByRepositoryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRepositoryId() {
+
+		return getPersistence().getFinderPathCountByRepositoryId();
 	}
 
 	/**
@@ -1129,6 +1214,18 @@ public class DLFileEntryUtil {
 		return getPersistence().countByRepositoryId(repositoryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByMimeType() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByMimeType();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByMimeType() {
+
+		return getPersistence().getFinderPathCountByMimeType();
+	}
+
 	/**
 	 * Returns all the document library file entries where mimeType = &#63;.
 	 *
@@ -1299,6 +1396,19 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByMimeType(String mimeType) {
 		return getPersistence().countByMimeType(mimeType);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFileEntryTypeId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByFileEntryTypeId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFileEntryTypeId() {
+
+		return getPersistence().getFinderPathCountByFileEntryTypeId();
 	}
 
 	/**
@@ -1480,6 +1590,19 @@ public class DLFileEntryUtil {
 		return getPersistence().countByFileEntryTypeId(fileEntryTypeId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySmallImageId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindBySmallImageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySmallImageId() {
+
+		return getPersistence().getFinderPathCountBySmallImageId();
+	}
+
 	/**
 	 * Returns all the document library file entries where smallImageId = &#63;.
 	 *
@@ -1652,6 +1775,19 @@ public class DLFileEntryUtil {
 		return getPersistence().countBySmallImageId(smallImageId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLargeImageId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLargeImageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLargeImageId() {
+
+		return getPersistence().getFinderPathCountByLargeImageId();
+	}
+
 	/**
 	 * Returns all the document library file entries where largeImageId = &#63;.
 	 *
@@ -1822,6 +1958,19 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByLargeImageId(long largeImageId) {
 		return getPersistence().countByLargeImageId(largeImageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCustom1ImageId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCustom1ImageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCustom1ImageId() {
+
+		return getPersistence().getFinderPathCountByCustom1ImageId();
 	}
 
 	/**
@@ -1999,6 +2148,19 @@ public class DLFileEntryUtil {
 		return getPersistence().countByCustom1ImageId(custom1ImageId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCustom2ImageId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCustom2ImageId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCustom2ImageId() {
+
+		return getPersistence().getFinderPathCountByCustom2ImageId();
+	}
+
 	/**
 	 * Returns all the document library file entries where custom2ImageId = &#63;.
 	 *
@@ -2172,6 +2334,18 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByCustom2ImageId(long custom2ImageId) {
 		return getPersistence().countByCustom2ImageId(custom2ImageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U() {
+
+		return getPersistence().getFinderPathCountByG_U();
 	}
 
 	/**
@@ -2442,6 +2616,18 @@ public class DLFileEntryUtil {
 	 */
 	public static int filterCountByG_U(long groupId, long userId) {
 		return getPersistence().filterCountByG_U(groupId, userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_F() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_F() {
+
+		return getPersistence().getFinderPathCountByG_F();
 	}
 
 	/**
@@ -2872,6 +3058,18 @@ public class DLFileEntryUtil {
 		return getPersistence().filterCountByG_F(groupId, folderIds);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByR_F() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByR_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByR_F() {
+
+		return getPersistence().getFinderPathCountByR_F();
+	}
+
 	/**
 	 * Returns all the document library file entries where repositoryId = &#63; and folderId = &#63;.
 	 *
@@ -3062,6 +3260,18 @@ public class DLFileEntryUtil {
 		return getPersistence().countByR_F(repositoryId, folderId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByF_N() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByF_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_N() {
+
+		return getPersistence().getFinderPathCountByF_N();
+	}
+
 	/**
 	 * Returns all the document library file entries where folderId = &#63; and name = &#63;.
 	 *
@@ -3247,6 +3457,18 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByF_N(long folderId, String name) {
 		return getPersistence().countByF_N(folderId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U_F() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U_F() {
+
+		return getPersistence().getFinderPathCountByG_U_F();
 	}
 
 	/**
@@ -3718,6 +3940,18 @@ public class DLFileEntryUtil {
 		return getPersistence().filterCountByG_U_F(groupId, userId, folderIds);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_F_N() {
+
+		return getPersistence().getFinderPathFetchByG_F_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_F_N() {
+
+		return getPersistence().getFinderPathCountByG_F_N();
+	}
+
 	/**
 	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and name = &#63; or throws a <code>NoSuchFileEntryException</code> if it could not be found.
 	 *
@@ -3791,6 +4025,18 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByG_F_N(long groupId, long folderId, String name) {
 		return getPersistence().countByG_F_N(groupId, folderId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_F_FN() {
+
+		return getPersistence().getFinderPathFetchByG_F_FN();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_F_FN() {
+
+		return getPersistence().getFinderPathCountByG_F_FN();
 	}
 
 	/**
@@ -3870,6 +4116,18 @@ public class DLFileEntryUtil {
 		return getPersistence().countByG_F_FN(groupId, folderId, fileName);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_F_T() {
+
+		return getPersistence().getFinderPathFetchByG_F_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_F_T() {
+
+		return getPersistence().getFinderPathCountByG_F_T();
+	}
+
 	/**
 	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and title = &#63; or throws a <code>NoSuchFileEntryException</code> if it could not be found.
 	 *
@@ -3943,6 +4201,18 @@ public class DLFileEntryUtil {
 	 */
 	public static int countByG_F_T(long groupId, long folderId, String title) {
 		return getPersistence().countByG_F_T(groupId, folderId, title);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_F_F() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_F_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_F_F() {
+
+		return getPersistence().getFinderPathCountByG_F_F();
 	}
 
 	/**
@@ -4427,6 +4697,18 @@ public class DLFileEntryUtil {
 			groupId, folderIds, fileEntryTypeId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_L_C1_C2() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_L_C1_C2();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_L_C1_C2() {
+
+		return getPersistence().getFinderPathCountByS_L_C1_C2();
+	}
+
 	/**
 	 * Returns all the document library file entries where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
 	 *
@@ -4661,6 +4943,18 @@ public class DLFileEntryUtil {
 
 		return getPersistence().countByS_L_C1_C2(
 			smallImageId, largeImageId, custom1ImageId, custom2ImageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByERC_G() {
+
+		return getPersistence().getFinderPathFetchByERC_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByERC_G() {
+
+		return getPersistence().getFinderPathCountByERC_G();
 	}
 
 	/**

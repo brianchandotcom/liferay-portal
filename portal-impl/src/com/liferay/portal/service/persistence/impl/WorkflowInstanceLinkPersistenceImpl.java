@@ -92,9 +92,31 @@ public class WorkflowInstanceLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByG_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C() {
+		return _finderPathWithoutPaginationFindByG_C_C;
+	}
+
 	private FinderPath _finderPathCountByG_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C() {
+		return _finderPathCountByG_C_C;
+	}
 
 	/**
 	 * Returns all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -692,7 +714,18 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_C() {
+		return _finderPathWithoutPaginationFindByG_C_C_C;
+	}
+
 	private FinderPath _finderPathCountByG_C_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_C_C() {
+		return _finderPathCountByG_C_C_C;
+	}
 
 	/**
 	 * Returns all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.

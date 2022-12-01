@@ -124,6 +124,31 @@ public class KaleoTimerInstanceTokenUtil {
 		return getPersistence().update(kaleoTimerInstanceToken, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByKaleoInstanceId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByKaleoInstanceId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKaleoInstanceId() {
+
+		return getPersistence().getFinderPathCountByKaleoInstanceId();
+	}
+
 	/**
 	 * Returns all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
 	 *
@@ -303,6 +328,18 @@ public class KaleoTimerInstanceTokenUtil {
 		return getPersistence().countByKaleoInstanceId(kaleoInstanceId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByKITI_KTI() {
+
+		return getPersistence().getFinderPathFetchByKITI_KTI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKITI_KTI() {
+
+		return getPersistence().getFinderPathCountByKITI_KTI();
+	}
+
 	/**
 	 * Returns the kaleo timer instance token where kaleoInstanceTokenId = &#63; and kaleoTimerId = &#63; or throws a <code>NoSuchTimerInstanceTokenException</code> if it could not be found.
 	 *
@@ -377,6 +414,18 @@ public class KaleoTimerInstanceTokenUtil {
 
 		return getPersistence().countByKITI_KTI(
 			kaleoInstanceTokenId, kaleoTimerId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByKITI_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByKITI_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKITI_C() {
+
+		return getPersistence().getFinderPathCountByKITI_C();
 	}
 
 	/**
@@ -574,6 +623,18 @@ public class KaleoTimerInstanceTokenUtil {
 		long kaleoInstanceTokenId, boolean completed) {
 
 		return getPersistence().countByKITI_C(kaleoInstanceTokenId, completed);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByKITI_B_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByKITI_B_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKITI_B_C() {
+
+		return getPersistence().getFinderPathCountByKITI_B_C();
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchMembershipRequestException;
 import com.liferay.portal.kernel.model.MembershipRequest;
 
@@ -39,6 +40,13 @@ public interface MembershipRequestPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MembershipRequestUtil} to access the membership request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the membership requests where groupId = &#63;.
@@ -183,6 +191,10 @@ public interface MembershipRequestPersistence
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the membership requests where userId = &#63;.
 	 *
@@ -325,6 +337,10 @@ public interface MembershipRequestPersistence
 	 * @return the number of matching membership requests
 	 */
 	public int countByUserId(long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
 
 	/**
 	 * Returns all the membership requests where groupId = &#63; and statusId = &#63;.
@@ -480,6 +496,10 @@ public interface MembershipRequestPersistence
 	 * @return the number of matching membership requests
 	 */
 	public int countByG_S(long groupId, long statusId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_S();
+
+	public FinderPath getFinderPathCountByG_U_S();
 
 	/**
 	 * Returns all the membership requests where groupId = &#63; and userId = &#63; and statusId = &#63;.

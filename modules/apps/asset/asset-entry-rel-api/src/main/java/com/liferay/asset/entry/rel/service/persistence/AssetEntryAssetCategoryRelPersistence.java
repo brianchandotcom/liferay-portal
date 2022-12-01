@@ -16,6 +16,7 @@ package com.liferay.asset.entry.rel.service.persistence;
 
 import com.liferay.asset.entry.rel.exception.NoSuchEntryAssetCategoryRelException;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface AssetEntryAssetCategoryRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetEntryAssetCategoryRelUtil} to access the asset entry asset category rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByAssetEntryId();
+
+	public FinderPath getFinderPathCountByAssetEntryId();
 
 	/**
 	 * Returns all the asset entry asset category rels where assetEntryId = &#63;.
@@ -187,6 +195,10 @@ public interface AssetEntryAssetCategoryRelPersistence
 	 */
 	public int countByAssetEntryId(long assetEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByAssetCategoryId();
+
+	public FinderPath getFinderPathCountByAssetCategoryId();
+
 	/**
 	 * Returns all the asset entry asset category rels where assetCategoryId = &#63;.
 	 *
@@ -330,6 +342,10 @@ public interface AssetEntryAssetCategoryRelPersistence
 	 * @return the number of matching asset entry asset category rels
 	 */
 	public int countByAssetCategoryId(long assetCategoryId);
+
+	public FinderPath getFinderPathFetchByA_A();
+
+	public FinderPath getFinderPathCountByA_A();
 
 	/**
 	 * Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or throws a <code>NoSuchEntryAssetCategoryRelException</code> if it could not be found.

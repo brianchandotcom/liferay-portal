@@ -106,9 +106,31 @@ public class FragmentCompositionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the fragment compositions where uuid = &#63;.
@@ -661,7 +683,18 @@ public class FragmentCompositionPersistenceImpl
 		"(fragmentComposition.uuid IS NULL OR fragmentComposition.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the fragment composition where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCompositionException</code> if it could not be found.
@@ -926,7 +959,18 @@ public class FragmentCompositionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the fragment compositions where uuid = &#63; and companyId = &#63;.
@@ -1525,7 +1569,18 @@ public class FragmentCompositionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the fragment compositions where groupId = &#63;.
@@ -2042,7 +2097,20 @@ public class FragmentCompositionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFragmentCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByFragmentCollectionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFragmentCollectionId() {
+
+		return _finderPathWithoutPaginationFindByFragmentCollectionId;
+	}
+
 	private FinderPath _finderPathCountByFragmentCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByFragmentCollectionId() {
+		return _finderPathCountByFragmentCollectionId;
+	}
 
 	/**
 	 * Returns all the fragment compositions where fragmentCollectionId = &#63;.
@@ -2576,7 +2644,18 @@ public class FragmentCompositionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI() {
+		return _finderPathWithoutPaginationFindByG_FCI;
+	}
+
 	private FinderPath _finderPathCountByG_FCI;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI() {
+		return _finderPathCountByG_FCI;
+	}
 
 	/**
 	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63;.
@@ -3136,7 +3215,18 @@ public class FragmentCompositionPersistenceImpl
 		"fragmentComposition.fragmentCollectionId = ?";
 
 	private FinderPath _finderPathFetchByG_FCK;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_FCK() {
+		return _finderPathFetchByG_FCK;
+	}
+
 	private FinderPath _finderPathCountByG_FCK;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCK() {
+		return _finderPathCountByG_FCK;
+	}
 
 	/**
 	 * Returns the fragment composition where groupId = &#63; and fragmentCompositionKey = &#63; or throws a <code>NoSuchCompositionException</code> if it could not be found.
@@ -4046,7 +4136,18 @@ public class FragmentCompositionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_FCI_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_S() {
+		return _finderPathWithoutPaginationFindByG_FCI_S;
+	}
+
 	private FinderPath _finderPathCountByG_FCI_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_FCI_S() {
+		return _finderPathCountByG_FCI_S;
+	}
 
 	/**
 	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.

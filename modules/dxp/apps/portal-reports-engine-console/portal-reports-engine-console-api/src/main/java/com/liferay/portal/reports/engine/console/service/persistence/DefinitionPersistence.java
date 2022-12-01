@@ -14,6 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException;
 import com.liferay.portal.reports.engine.console.model.Definition;
@@ -39,6 +40,13 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DefinitionUtil} to access the definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the definitions where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the definition where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
 	 *
@@ -232,6 +244,10 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 * @return the number of matching definitions
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the definitions where uuid = &#63; and companyId = &#63;.
@@ -386,6 +402,10 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 * @return the number of matching definitions
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the definitions where groupId = &#63;.
@@ -593,6 +613,10 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 * @return the number of matching definitions that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the definitions where companyId = &#63;.

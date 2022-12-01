@@ -100,9 +100,31 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the workflow metrics sla definitions where uuid = &#63;.
@@ -648,7 +670,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		"(workflowMetricsSLADefinition.uuid IS NULL OR workflowMetricsSLADefinition.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the workflow metrics sla definition where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSLADefinitionException</code> if it could not be found.
@@ -904,7 +937,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the workflow metrics sla definitions where uuid = &#63; and companyId = &#63;.
@@ -1494,7 +1538,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		"workflowMetricsSLADefinition.companyId = ?";
 
 	private FinderPath _finderPathFetchByWMSLAD_A;
+
+	@Override
+	public FinderPath getFinderPathFetchByWMSLAD_A() {
+		return _finderPathFetchByWMSLAD_A;
+	}
+
 	private FinderPath _finderPathCountByWMSLAD_A;
+
+	@Override
+	public FinderPath getFinderPathCountByWMSLAD_A() {
+		return _finderPathCountByWMSLAD_A;
+	}
 
 	/**
 	 * Returns the workflow metrics sla definition where workflowMetricsSLADefinitionId = &#63; and active = &#63; or throws a <code>NoSuchSLADefinitionException</code> if it could not be found.
@@ -1747,7 +1802,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_S() {
+		return _finderPathWithoutPaginationFindByC_S;
+	}
+
 	private FinderPath _finderPathCountByC_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S() {
+		return _finderPathCountByC_S;
+	}
 
 	/**
 	 * Returns all the workflow metrics sla definitions where companyId = &#63; and status = &#63;.
@@ -2296,7 +2362,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A_P;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_P() {
+		return _finderPathWithoutPaginationFindByC_A_P;
+	}
+
 	private FinderPath _finderPathCountByC_A_P;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_P() {
+		return _finderPathCountByC_A_P;
+	}
 
 	/**
 	 * Returns all the workflow metrics sla definitions where companyId = &#63; and active = &#63; and processId = &#63;.
@@ -2881,7 +2958,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A_N_P;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_N_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_N_P() {
+		return _finderPathWithoutPaginationFindByC_A_N_P;
+	}
+
 	private FinderPath _finderPathCountByC_A_N_P;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_N_P() {
+		return _finderPathCountByC_A_N_P;
+	}
 
 	/**
 	 * Returns all the workflow metrics sla definitions where companyId = &#63; and active = &#63; and name = &#63; and processId = &#63;.
@@ -3554,7 +3642,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_P_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_P_S() {
+		return _finderPathWithoutPaginationFindByC_A_P_S;
+	}
+
 	private FinderPath _finderPathCountByC_A_P_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_P_S() {
+		return _finderPathCountByC_A_P_S;
+	}
 
 	/**
 	 * Returns all the workflow metrics sla definitions where companyId = &#63; and active = &#63; and processId = &#63; and status = &#63;.

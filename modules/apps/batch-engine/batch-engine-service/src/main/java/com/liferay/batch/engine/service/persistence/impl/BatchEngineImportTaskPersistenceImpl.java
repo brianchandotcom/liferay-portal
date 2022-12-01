@@ -99,9 +99,31 @@ public class BatchEngineImportTaskPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the batch engine import tasks where uuid = &#63;.
@@ -642,7 +664,18 @@ public class BatchEngineImportTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the batch engine import tasks where uuid = &#63; and companyId = &#63;.
@@ -1228,7 +1261,18 @@ public class BatchEngineImportTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the batch engine import tasks where companyId = &#63;.
@@ -1734,7 +1778,18 @@ public class BatchEngineImportTaskPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByExecuteStatus;
 	private FinderPath _finderPathWithoutPaginationFindByExecuteStatus;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByExecuteStatus() {
+		return _finderPathWithoutPaginationFindByExecuteStatus;
+	}
+
 	private FinderPath _finderPathCountByExecuteStatus;
+
+	@Override
+	public FinderPath getFinderPathCountByExecuteStatus() {
+		return _finderPathCountByExecuteStatus;
+	}
 
 	/**
 	 * Returns all the batch engine import tasks where executeStatus = &#63;.
@@ -2287,7 +2342,18 @@ public class BatchEngineImportTaskPersistenceImpl
 		"(batchEngineImportTask.executeStatus IS NULL OR batchEngineImportTask.executeStatus = '')";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the batch engine import task where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchImportTaskException</code> if it could not be found.

@@ -79,8 +79,30 @@ public class CacheDisabledEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByName;
+
+	@Override
+	public FinderPath getFinderPathFetchByName() {
+		return _finderPathFetchByName;
+	}
+
 	private FinderPath _finderPathCountByName;
+
+	@Override
+	public FinderPath getFinderPathCountByName() {
+		return _finderPathCountByName;
+	}
 
 	/**
 	 * Returns the cache disabled entry where name = &#63; or throws a <code>NoSuchCacheDisabledEntryException</code> if it could not be found.

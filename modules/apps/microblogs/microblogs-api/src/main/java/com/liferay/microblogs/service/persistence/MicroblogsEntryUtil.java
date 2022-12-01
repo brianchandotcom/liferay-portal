@@ -120,6 +120,30 @@ public class MicroblogsEntryUtil {
 		return getPersistence().update(microblogsEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the microblogs entries where companyId = &#63;.
 	 *
@@ -368,6 +392,18 @@ public class MicroblogsEntryUtil {
 		return getPersistence().filterCountByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the microblogs entries where userId = &#63;.
 	 *
@@ -608,6 +644,18 @@ public class MicroblogsEntryUtil {
 	 */
 	public static int filterCountByUserId(long userId) {
 		return getPersistence().filterCountByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_T() {
+
+		return getPersistence().getFinderPathCountByU_T();
 	}
 
 	/**
@@ -873,6 +921,18 @@ public class MicroblogsEntryUtil {
 	 */
 	public static int filterCountByU_T(long userId, int type) {
 		return getPersistence().filterCountByU_T(userId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCCNI_CCPK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCCNI_CCPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCCNI_CCPK() {
+
+		return getPersistence().getFinderPathCountByCCNI_CCPK();
 	}
 
 	/**
@@ -1331,6 +1391,18 @@ public class MicroblogsEntryUtil {
 			creatorClassNameId, creatorClassPKs);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCCNI_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCCNI_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCCNI_T() {
+
+		return getPersistence().getFinderPathCountByCCNI_T();
+	}
+
 	/**
 	 * Returns all the microblogs entries where creatorClassNameId = &#63; and type = &#63;.
 	 *
@@ -1602,6 +1674,18 @@ public class MicroblogsEntryUtil {
 	 */
 	public static int filterCountByCCNI_T(long creatorClassNameId, int type) {
 		return getPersistence().filterCountByCCNI_T(creatorClassNameId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_P() {
+
+		return getPersistence().getFinderPathCountByT_P();
 	}
 
 	/**
@@ -1877,6 +1961,19 @@ public class MicroblogsEntryUtil {
 	 */
 	public static int filterCountByT_P(int type, long parentMicroblogsEntryId) {
 		return getPersistence().filterCountByT_P(type, parentMicroblogsEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_CCNI_CCPK() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_CCNI_CCPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_CCNI_CCPK() {
+
+		return getPersistence().getFinderPathCountByC_CCNI_CCPK();
 	}
 
 	/**
@@ -2372,6 +2469,18 @@ public class MicroblogsEntryUtil {
 			companyId, creatorClassNameId, creatorClassPKs);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_CCNI_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_CCNI_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_CCNI_T() {
+
+		return getPersistence().getFinderPathCountByC_CCNI_T();
+	}
+
 	/**
 	 * Returns all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and type = &#63;.
 	 *
@@ -2671,6 +2780,19 @@ public class MicroblogsEntryUtil {
 
 		return getPersistence().filterCountByC_CCNI_T(
 			companyId, creatorClassNameId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCCNI_CCPK_T() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCCNI_CCPK_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCCNI_CCPK_T() {
+
+		return getPersistence().getFinderPathCountByCCNI_CCPK_T();
 	}
 
 	/**
@@ -3161,6 +3283,19 @@ public class MicroblogsEntryUtil {
 
 		return getPersistence().filterCountByCCNI_CCPK_T(
 			creatorClassNameId, creatorClassPKs, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_CCNI_CCPK_T() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_CCNI_CCPK_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_CCNI_CCPK_T() {
+
+		return getPersistence().getFinderPathCountByC_CCNI_CCPK_T();
 	}
 
 	/**
@@ -3695,6 +3830,18 @@ public class MicroblogsEntryUtil {
 
 		return getPersistence().filterCountByC_CCNI_CCPK_T(
 			companyId, creatorClassNameId, creatorClassPKs, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU_C_T_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU_C_T_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_C_T_S() {
+
+		return getPersistence().getFinderPathCountByU_C_T_S();
 	}
 
 	/**

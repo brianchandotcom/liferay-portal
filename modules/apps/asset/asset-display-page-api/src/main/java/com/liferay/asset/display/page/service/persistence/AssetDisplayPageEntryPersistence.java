@@ -16,6 +16,7 @@ package com.liferay.asset.display.page.service.persistence;
 
 import com.liferay.asset.display.page.exception.NoSuchDisplayPageEntryException;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface AssetDisplayPageEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetDisplayPageEntryUtil} to access the asset display page entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the asset display page entries where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the asset display page entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDisplayPageEntryException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface AssetDisplayPageEntryPersistence
 	 * @return the number of matching asset display page entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the asset display page entries where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the asset display page entries where groupId = &#63;.
 	 *
@@ -533,6 +553,11 @@ public interface AssetDisplayPageEntryPersistence
 	 * @return the number of matching asset display page entries
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByLayoutPageTemplateEntryId();
+
+	public FinderPath getFinderPathCountByLayoutPageTemplateEntryId();
 
 	/**
 	 * Returns all the asset display page entries where layoutPageTemplateEntryId = &#63;.
@@ -681,6 +706,10 @@ public interface AssetDisplayPageEntryPersistence
 	 * @return the number of matching asset display page entries
 	 */
 	public int countByLayoutPageTemplateEntryId(long layoutPageTemplateEntryId);
+
+	public FinderPath getFinderPathFetchByG_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C();
 
 	/**
 	 * Returns the asset display page entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchDisplayPageEntryException</code> if it could not be found.

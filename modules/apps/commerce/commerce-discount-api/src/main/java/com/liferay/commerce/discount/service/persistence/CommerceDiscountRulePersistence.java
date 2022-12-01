@@ -16,6 +16,7 @@ package com.liferay.commerce.discount.service.persistence;
 
 import com.liferay.commerce.discount.exception.NoSuchDiscountRuleException;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceDiscountRulePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountRuleUtil} to access the commerce discount rule persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId();
+
+	public FinderPath getFinderPathCountByCommerceDiscountId();
 
 	/**
 	 * Returns all the commerce discount rules where commerceDiscountId = &#63;.

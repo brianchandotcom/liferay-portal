@@ -84,9 +84,31 @@ public class UserTrackerPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the user trackers where companyId = &#63;.
@@ -583,7 +605,18 @@ public class UserTrackerPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the user trackers where userId = &#63;.
@@ -1073,7 +1106,18 @@ public class UserTrackerPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySessionId;
 	private FinderPath _finderPathWithoutPaginationFindBySessionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySessionId() {
+		return _finderPathWithoutPaginationFindBySessionId;
+	}
+
 	private FinderPath _finderPathCountBySessionId;
+
+	@Override
+	public FinderPath getFinderPathCountBySessionId() {
+		return _finderPathCountBySessionId;
+	}
 
 	/**
 	 * Returns all the user trackers where sessionId = &#63;.

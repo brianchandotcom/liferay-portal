@@ -16,6 +16,7 @@ package com.liferay.changeset.service.persistence;
 
 import com.liferay.changeset.exception.NoSuchCollectionException;
 import com.liferay.changeset.model.ChangesetCollection;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ChangesetCollectionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ChangesetCollectionUtil} to access the changeset collection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the changeset collections where groupId = &#63;.
@@ -184,6 +192,10 @@ public interface ChangesetCollectionPersistence
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the changeset collections where companyId = &#63;.
 	 *
@@ -326,6 +338,10 @@ public interface ChangesetCollectionPersistence
 	 * @return the number of matching changeset collections
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U();
+
+	public FinderPath getFinderPathCountByG_U();
 
 	/**
 	 * Returns all the changeset collections where groupId = &#63; and userId = &#63;.
@@ -482,6 +498,10 @@ public interface ChangesetCollectionPersistence
 	 */
 	public int countByG_U(long groupId, long userId);
 
+	public FinderPath getFinderPathFetchByG_N();
+
+	public FinderPath getFinderPathCountByG_N();
+
 	/**
 	 * Returns the changeset collection where groupId = &#63; and name = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
 	 *
@@ -531,6 +551,10 @@ public interface ChangesetCollectionPersistence
 	 * @return the number of matching changeset collections
 	 */
 	public int countByG_N(long groupId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
 
 	/**
 	 * Returns all the changeset collections where companyId = &#63; and name = &#63;.

@@ -101,9 +101,31 @@ public class KaleoTimerPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK;
 	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK() {
+		return _finderPathWithoutPaginationFindByKCN_KCPK;
+	}
+
 	private FinderPath _finderPathCountByKCN_KCPK;
+
+	@Override
+	public FinderPath getFinderPathCountByKCN_KCPK() {
+		return _finderPathCountByKCN_KCPK;
+	}
 
 	/**
 	 * Returns all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -703,7 +725,18 @@ public class KaleoTimerPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK_Blocking;
 	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK_Blocking;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK_Blocking() {
+		return _finderPathWithoutPaginationFindByKCN_KCPK_Blocking;
+	}
+
 	private FinderPath _finderPathCountByKCN_KCPK_Blocking;
+
+	@Override
+	public FinderPath getFinderPathCountByKCN_KCPK_Blocking() {
+		return _finderPathCountByKCN_KCPK_Blocking;
+	}
 
 	/**
 	 * Returns all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.

@@ -16,6 +16,7 @@ package com.liferay.depot.service.persistence;
 
 import com.liferay.depot.exception.NoSuchEntryGroupRelException;
 import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface DepotEntryGroupRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DepotEntryGroupRelUtil} to access the depot entry group rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the depot entry group rels where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface DepotEntryGroupRelPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the depot entry group rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryGroupRelException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the number of matching depot entry group rels
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the depot entry group rels where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface DepotEntryGroupRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByDepotEntryId();
+
+	public FinderPath getFinderPathCountByDepotEntryId();
+
 	/**
 	 * Returns all the depot entry group rels where depotEntryId = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface DepotEntryGroupRelPersistence
 	 */
 	public int countByDepotEntryId(long depotEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByToGroupId();
+
+	public FinderPath getFinderPathCountByToGroupId();
+
 	/**
 	 * Returns all the depot entry group rels where toGroupId = &#63;.
 	 *
@@ -675,6 +699,10 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the number of matching depot entry group rels
 	 */
 	public int countByToGroupId(long toGroupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByDDMSA_TGI();
+
+	public FinderPath getFinderPathCountByDDMSA_TGI();
 
 	/**
 	 * Returns all the depot entry group rels where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
@@ -833,6 +861,10 @@ public interface DepotEntryGroupRelPersistence
 	 */
 	public int countByDDMSA_TGI(boolean ddmStructuresAvailable, long toGroupId);
 
+	public FinderPath getFinderPathFetchByD_TGI();
+
+	public FinderPath getFinderPathCountByD_TGI();
+
 	/**
 	 * Returns the depot entry group rel where depotEntryId = &#63; and toGroupId = &#63; or throws a <code>NoSuchEntryGroupRelException</code> if it could not be found.
 	 *
@@ -882,6 +914,10 @@ public interface DepotEntryGroupRelPersistence
 	 * @return the number of matching depot entry group rels
 	 */
 	public int countByD_TGI(long depotEntryId, long toGroupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByS_TGI();
+
+	public FinderPath getFinderPathCountByS_TGI();
 
 	/**
 	 * Returns all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.

@@ -93,9 +93,31 @@ public class CommerceTaxFixedRatePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCPTaxCategoryId;
 	private FinderPath _finderPathWithoutPaginationFindByCPTaxCategoryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPTaxCategoryId() {
+		return _finderPathWithoutPaginationFindByCPTaxCategoryId;
+	}
+
 	private FinderPath _finderPathCountByCPTaxCategoryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPTaxCategoryId() {
+		return _finderPathCountByCPTaxCategoryId;
+	}
 
 	/**
 	 * Returns all the commerce tax fixed rates where CPTaxCategoryId = &#63;.
@@ -608,7 +630,20 @@ public class CommerceTaxFixedRatePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceTaxMethodId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceTaxMethodId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceTaxMethodId() {
+
+		return _finderPathWithoutPaginationFindByCommerceTaxMethodId;
+	}
+
 	private FinderPath _finderPathCountByCommerceTaxMethodId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceTaxMethodId() {
+		return _finderPathCountByCommerceTaxMethodId;
+	}
 
 	/**
 	 * Returns all the commerce tax fixed rates where commerceTaxMethodId = &#63;.
@@ -1123,7 +1158,18 @@ public class CommerceTaxFixedRatePersistenceImpl
 			"commerceTaxFixedRate.commerceTaxMethodId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the commerce tax fixed rate where CPTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or throws a <code>NoSuchTaxFixedRateException</code> if it could not be found.

@@ -90,9 +90,31 @@ public class CTPreferencesPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId() {
+		return _finderPathWithoutPaginationFindByCtCollectionId;
+	}
+
 	private FinderPath _finderPathCountByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCtCollectionId() {
+		return _finderPathCountByCtCollectionId;
+	}
 
 	/**
 	 * Returns all the ct preferenceses where ctCollectionId = &#63;.
@@ -597,7 +619,20 @@ public class CTPreferencesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByPreviousCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByPreviousCtCollectionId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByPreviousCtCollectionId() {
+
+		return _finderPathWithoutPaginationFindByPreviousCtCollectionId;
+	}
+
 	private FinderPath _finderPathCountByPreviousCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByPreviousCtCollectionId() {
+		return _finderPathCountByPreviousCtCollectionId;
+	}
 
 	/**
 	 * Returns all the ct preferenceses where previousCtCollectionId = &#63;.
@@ -1112,7 +1147,18 @@ public class CTPreferencesPersistenceImpl
 			"ctPreferences.previousCtCollectionId = ?";
 
 	private FinderPath _finderPathFetchByC_U;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_U() {
+		return _finderPathFetchByC_U;
+	}
+
 	private FinderPath _finderPathCountByC_U;
+
+	@Override
+	public FinderPath getFinderPathCountByC_U() {
+		return _finderPathCountByC_U;
+	}
 
 	/**
 	 * Returns the ct preferences where companyId = &#63; and userId = &#63; or throws a <code>NoSuchPreferencesException</code> if it could not be found.

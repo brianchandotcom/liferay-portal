@@ -93,9 +93,31 @@ public class SocialRelationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the social relations where uuid = &#63;.
@@ -643,7 +665,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the social relations where uuid = &#63; and companyId = &#63;.
@@ -1241,7 +1274,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the social relations where companyId = &#63;.
@@ -1754,7 +1798,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId1;
 	private FinderPath _finderPathWithoutPaginationFindByUserId1;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId1() {
+		return _finderPathWithoutPaginationFindByUserId1;
+	}
+
 	private FinderPath _finderPathCountByUserId1;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId1() {
+		return _finderPathCountByUserId1;
+	}
 
 	/**
 	 * Returns all the social relations where userId1 = &#63;.
@@ -2265,7 +2320,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId2;
 	private FinderPath _finderPathWithoutPaginationFindByUserId2;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId2() {
+		return _finderPathWithoutPaginationFindByUserId2;
+	}
+
 	private FinderPath _finderPathCountByUserId2;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId2() {
+		return _finderPathCountByUserId2;
+	}
 
 	/**
 	 * Returns all the social relations where userId2 = &#63;.
@@ -2776,7 +2842,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByType;
 	private FinderPath _finderPathWithoutPaginationFindByType;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByType() {
+		return _finderPathWithoutPaginationFindByType;
+	}
+
 	private FinderPath _finderPathCountByType;
+
+	@Override
+	public FinderPath getFinderPathCountByType() {
+		return _finderPathCountByType;
+	}
 
 	/**
 	 * Returns all the social relations where type = &#63;.
@@ -3282,7 +3359,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T() {
+		return _finderPathWithoutPaginationFindByC_T;
+	}
+
 	private FinderPath _finderPathCountByC_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T() {
+		return _finderPathCountByC_T;
+	}
 
 	/**
 	 * Returns all the social relations where companyId = &#63; and type = &#63;.
@@ -3837,7 +3925,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU1_U2;
 	private FinderPath _finderPathWithoutPaginationFindByU1_U2;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU1_U2() {
+		return _finderPathWithoutPaginationFindByU1_U2;
+	}
+
 	private FinderPath _finderPathCountByU1_U2;
+
+	@Override
+	public FinderPath getFinderPathCountByU1_U2() {
+		return _finderPathCountByU1_U2;
+	}
 
 	/**
 	 * Returns all the social relations where userId1 = &#63; and userId2 = &#63;.
@@ -4393,7 +4492,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU1_T;
 	private FinderPath _finderPathWithoutPaginationFindByU1_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU1_T() {
+		return _finderPathWithoutPaginationFindByU1_T;
+	}
+
 	private FinderPath _finderPathCountByU1_T;
+
+	@Override
+	public FinderPath getFinderPathCountByU1_T() {
+		return _finderPathCountByU1_T;
+	}
 
 	/**
 	 * Returns all the social relations where userId1 = &#63; and type = &#63;.
@@ -4947,7 +5057,18 @@ public class SocialRelationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU2_T;
 	private FinderPath _finderPathWithoutPaginationFindByU2_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU2_T() {
+		return _finderPathWithoutPaginationFindByU2_T;
+	}
+
 	private FinderPath _finderPathCountByU2_T;
+
+	@Override
+	public FinderPath getFinderPathCountByU2_T() {
+		return _finderPathCountByU2_T;
+	}
 
 	/**
 	 * Returns all the social relations where userId2 = &#63; and type = &#63;.
@@ -5500,7 +5621,18 @@ public class SocialRelationPersistenceImpl
 		"socialRelation.type = ?";
 
 	private FinderPath _finderPathFetchByU1_U2_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByU1_U2_T() {
+		return _finderPathFetchByU1_U2_T;
+	}
+
 	private FinderPath _finderPathCountByU1_U2_T;
+
+	@Override
+	public FinderPath getFinderPathCountByU1_U2_T() {
+		return _finderPathCountByU1_U2_T;
+	}
 
 	/**
 	 * Returns the social relation where userId1 = &#63; and userId2 = &#63; and type = &#63; or throws a <code>NoSuchRelationException</code> if it could not be found.

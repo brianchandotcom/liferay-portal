@@ -103,9 +103,31 @@ public class DDMFormInstanceVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByFormInstanceId;
 	private FinderPath _finderPathWithoutPaginationFindByFormInstanceId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFormInstanceId() {
+		return _finderPathWithoutPaginationFindByFormInstanceId;
+	}
+
 	private FinderPath _finderPathCountByFormInstanceId;
+
+	@Override
+	public FinderPath getFinderPathCountByFormInstanceId() {
+		return _finderPathCountByFormInstanceId;
+	}
 
 	/**
 	 * Returns all the ddm form instance versions where formInstanceId = &#63;.
@@ -631,7 +653,18 @@ public class DDMFormInstanceVersionPersistenceImpl
 		"ddmFormInstanceVersion.formInstanceId = ?";
 
 	private FinderPath _finderPathFetchByF_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByF_V() {
+		return _finderPathFetchByF_V;
+	}
+
 	private FinderPath _finderPathCountByF_V;
+
+	@Override
+	public FinderPath getFinderPathCountByF_V() {
+		return _finderPathCountByF_V;
+	}
 
 	/**
 	 * Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or throws a <code>NoSuchFormInstanceVersionException</code> if it could not be found.
@@ -902,7 +935,18 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByF_S;
 	private FinderPath _finderPathWithoutPaginationFindByF_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByF_S() {
+		return _finderPathWithoutPaginationFindByF_S;
+	}
+
 	private FinderPath _finderPathCountByF_S;
+
+	@Override
+	public FinderPath getFinderPathCountByF_S() {
+		return _finderPathCountByF_S;
+	}
 
 	/**
 	 * Returns all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.

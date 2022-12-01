@@ -16,6 +16,7 @@ package com.liferay.notification.service.persistence;
 
 import com.liferay.notification.exception.NoSuchNotificationRecipientSettingException;
 import com.liferay.notification.model.NotificationRecipientSetting;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface NotificationRecipientSettingPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NotificationRecipientSettingUtil} to access the notification recipient setting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the notification recipient settings where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface NotificationRecipientSettingPersistence
 	 * @return the number of matching notification recipient settings
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the notification recipient settings where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,11 @@ public interface NotificationRecipientSettingPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByNotificationRecipientId();
+
+	public FinderPath getFinderPathCountByNotificationRecipientId();
+
 	/**
 	 * Returns all the notification recipient settings where notificationRecipientId = &#63;.
 	 *
@@ -487,6 +504,10 @@ public interface NotificationRecipientSettingPersistence
 	 * @return the number of matching notification recipient settings
 	 */
 	public int countByNotificationRecipientId(long notificationRecipientId);
+
+	public FinderPath getFinderPathFetchByNRI_N();
+
+	public FinderPath getFinderPathCountByNRI_N();
 
 	/**
 	 * Returns the notification recipient setting where notificationRecipientId = &#63; and name = &#63; or throws a <code>NoSuchNotificationRecipientSettingException</code> if it could not be found.

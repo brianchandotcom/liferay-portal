@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
@@ -42,6 +43,13 @@ public interface KaleoTaskAssignmentPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskAssignmentUtil} to access the kaleo task assignment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo task assignments where companyId = &#63;.
@@ -186,6 +194,11 @@ public interface KaleoTaskAssignmentPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId();
+
 	/**
 	 * Returns all the kaleo task assignments where kaleoDefinitionVersionId = &#63;.
 	 *
@@ -329,6 +342,10 @@ public interface KaleoTaskAssignmentPersistence
 	 * @return the number of matching kaleo task assignments
 	 */
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK();
+
+	public FinderPath getFinderPathCountByKCN_KCPK();
 
 	/**
 	 * Returns all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -485,6 +502,10 @@ public interface KaleoTaskAssignmentPersistence
 	 * @return the number of matching kaleo task assignments
 	 */
 	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK_ACN();
+
+	public FinderPath getFinderPathCountByKCN_KCPK_ACN();
 
 	/**
 	 * Returns all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.

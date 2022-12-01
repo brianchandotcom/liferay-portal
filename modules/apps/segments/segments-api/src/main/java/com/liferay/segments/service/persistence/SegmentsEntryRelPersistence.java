@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.segments.exception.NoSuchEntryRelException;
@@ -41,6 +42,13 @@ public interface SegmentsEntryRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryRelUtil} to access the segments entry rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindBySegmentsEntryId();
+
+	public FinderPath getFinderPathCountBySegmentsEntryId();
 
 	/**
 	 * Returns all the segments entry rels where segmentsEntryId = &#63;.
@@ -185,6 +193,10 @@ public interface SegmentsEntryRelPersistence
 	 * @return the number of matching segments entry rels
 	 */
 	public int countBySegmentsEntryId(long segmentsEntryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK();
+
+	public FinderPath getFinderPathCountByCN_CPK();
 
 	/**
 	 * Returns all the segments entry rels where classNameId = &#63; and classPK = &#63;.
@@ -340,6 +352,10 @@ public interface SegmentsEntryRelPersistence
 	 * @return the number of matching segments entry rels
 	 */
 	public int countByCN_CPK(long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_CN_CPK();
+
+	public FinderPath getFinderPathCountByG_CN_CPK();
 
 	/**
 	 * Returns all the segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -507,6 +523,10 @@ public interface SegmentsEntryRelPersistence
 	 * @return the number of matching segments entry rels
 	 */
 	public int countByG_CN_CPK(long groupId, long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByS_CN_CPK();
+
+	public FinderPath getFinderPathCountByS_CN_CPK();
 
 	/**
 	 * Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryRelException</code> if it could not be found.

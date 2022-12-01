@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -41,6 +42,13 @@ public interface WorkflowDefinitionLinkPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowDefinitionLinkUtil} to access the workflow definition link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the workflow definition links where companyId = &#63;.
@@ -185,6 +193,10 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @return the number of matching workflow definition links
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C();
 
 	/**
 	 * Returns all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -353,6 +365,10 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public int countByG_C_C(long groupId, long companyId, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_CPK();
+
+	public FinderPath getFinderPathCountByG_C_CPK();
+
 	/**
 	 * Returns all the workflow definition links where groupId = &#63; and companyId = &#63; and classPK = &#63;.
 	 *
@@ -519,6 +535,10 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @return the number of matching workflow definition links
 	 */
 	public int countByG_C_CPK(long groupId, long companyId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_W_W();
+
+	public FinderPath getFinderPathCountByC_W_W();
 
 	/**
 	 * Returns all the workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -698,6 +718,10 @@ public interface WorkflowDefinitionLinkPersistence
 	public int countByC_W_W(
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C_C();
 
 	/**
 	 * Returns all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -881,6 +905,10 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public int countByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByG_C_C_C_T();
+
+	public FinderPath getFinderPathCountByG_C_C_C_T();
 
 	/**
 	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or throws a <code>NoSuchWorkflowDefinitionLinkException</code> if it could not be found.

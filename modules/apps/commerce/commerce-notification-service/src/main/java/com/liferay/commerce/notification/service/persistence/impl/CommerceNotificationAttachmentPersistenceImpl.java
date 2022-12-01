@@ -98,9 +98,31 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce notification attachments where uuid = &#63;.
@@ -650,7 +672,18 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		"(commerceNotificationAttachment.uuid IS NULL OR commerceNotificationAttachment.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the commerce notification attachment where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchNotificationAttachmentException</code> if it could not be found.
@@ -908,7 +941,18 @@ public class CommerceNotificationAttachmentPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
@@ -1503,7 +1547,20 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		_finderPathWithPaginationFindByCommerceNotificationQueueEntryId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceNotificationQueueEntryId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceNotificationQueueEntryId() {
+
+		return _finderPathWithoutPaginationFindByCommerceNotificationQueueEntryId;
+	}
+
 	private FinderPath _finderPathCountByCommerceNotificationQueueEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceNotificationQueueEntryId() {
+		return _finderPathCountByCommerceNotificationQueueEntryId;
+	}
 
 	/**
 	 * Returns all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.

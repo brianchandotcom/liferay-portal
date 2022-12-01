@@ -94,9 +94,31 @@ public class BatchPlannerMappingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByBatchPlannerPlanId;
 	private FinderPath _finderPathWithoutPaginationFindByBatchPlannerPlanId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByBatchPlannerPlanId() {
+		return _finderPathWithoutPaginationFindByBatchPlannerPlanId;
+	}
+
 	private FinderPath _finderPathCountByBatchPlannerPlanId;
+
+	@Override
+	public FinderPath getFinderPathCountByBatchPlannerPlanId() {
+		return _finderPathCountByBatchPlannerPlanId;
+	}
 
 	/**
 	 * Returns all the batch planner mappings where batchPlannerPlanId = &#63;.
@@ -611,7 +633,18 @@ public class BatchPlannerMappingPersistenceImpl
 			"batchPlannerMapping.batchPlannerPlanId = ?";
 
 	private FinderPath _finderPathFetchByBPPI_EFN_IFN;
+
+	@Override
+	public FinderPath getFinderPathFetchByBPPI_EFN_IFN() {
+		return _finderPathFetchByBPPI_EFN_IFN;
+	}
+
 	private FinderPath _finderPathCountByBPPI_EFN_IFN;
+
+	@Override
+	public FinderPath getFinderPathCountByBPPI_EFN_IFN() {
+		return _finderPathCountByBPPI_EFN_IFN;
+	}
 
 	/**
 	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and externalFieldName = &#63; and internalFieldName = &#63; or throws a <code>NoSuchMappingException</code> if it could not be found.

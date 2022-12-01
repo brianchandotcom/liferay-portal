@@ -16,6 +16,7 @@ package com.liferay.document.library.kernel.service.persistence;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DLFileEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileEntryUtil} to access the document library file entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the document library file entries where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the document library file entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFileEntryException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the document library file entries where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the document library file entries where groupId = &#63;.
@@ -597,6 +617,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the document library file entries where companyId = &#63;.
 	 *
@@ -739,6 +763,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByRepositoryId();
+
+	public FinderPath getFinderPathCountByRepositoryId();
 
 	/**
 	 * Returns all the document library file entries where repositoryId = &#63;.
@@ -883,6 +911,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int countByRepositoryId(long repositoryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByMimeType();
+
+	public FinderPath getFinderPathCountByMimeType();
+
 	/**
 	 * Returns all the document library file entries where mimeType = &#63;.
 	 *
@@ -1025,6 +1057,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByMimeType(String mimeType);
+
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryTypeId();
+
+	public FinderPath getFinderPathCountByFileEntryTypeId();
 
 	/**
 	 * Returns all the document library file entries where fileEntryTypeId = &#63;.
@@ -1170,6 +1206,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int countByFileEntryTypeId(long fileEntryTypeId);
 
+	public FinderPath getFinderPathWithoutPaginationFindBySmallImageId();
+
+	public FinderPath getFinderPathCountBySmallImageId();
+
 	/**
 	 * Returns all the document library file entries where smallImageId = &#63;.
 	 *
@@ -1313,6 +1353,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int countBySmallImageId(long smallImageId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByLargeImageId();
+
+	public FinderPath getFinderPathCountByLargeImageId();
+
 	/**
 	 * Returns all the document library file entries where largeImageId = &#63;.
 	 *
@@ -1455,6 +1499,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByLargeImageId(long largeImageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCustom1ImageId();
+
+	public FinderPath getFinderPathCountByCustom1ImageId();
 
 	/**
 	 * Returns all the document library file entries where custom1ImageId = &#63;.
@@ -1600,6 +1648,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int countByCustom1ImageId(long custom1ImageId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCustom2ImageId();
+
+	public FinderPath getFinderPathCountByCustom2ImageId();
+
 	/**
 	 * Returns all the document library file entries where custom2ImageId = &#63;.
 	 *
@@ -1743,6 +1795,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByCustom2ImageId(long custom2ImageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U();
+
+	public FinderPath getFinderPathCountByG_U();
 
 	/**
 	 * Returns all the document library file entries where groupId = &#63; and userId = &#63;.
@@ -1967,6 +2023,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries that the user has permission to view
 	 */
 	public int filterCountByG_U(long groupId, long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F();
+
+	public FinderPath getFinderPathCountByG_F();
 
 	/**
 	 * Returns all the document library file entries where groupId = &#63; and folderId = &#63;.
@@ -2325,6 +2385,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int filterCountByG_F(long groupId, long[] folderIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByR_F();
+
+	public FinderPath getFinderPathCountByR_F();
+
 	/**
 	 * Returns all the document library file entries where repositoryId = &#63; and folderId = &#63;.
 	 *
@@ -2480,6 +2544,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int countByR_F(long repositoryId, long folderId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByF_N();
+
+	public FinderPath getFinderPathCountByF_N();
+
 	/**
 	 * Returns all the document library file entries where folderId = &#63; and name = &#63;.
 	 *
@@ -2633,6 +2701,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByF_N(long folderId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_F();
+
+	public FinderPath getFinderPathCountByG_U_F();
 
 	/**
 	 * Returns all the document library file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
@@ -3017,6 +3089,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int filterCountByG_U_F(long groupId, long userId, long[] folderIds);
 
+	public FinderPath getFinderPathFetchByG_F_N();
+
+	public FinderPath getFinderPathCountByG_F_N();
+
 	/**
 	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and name = &#63; or throws a <code>NoSuchFileEntryException</code> if it could not be found.
 	 *
@@ -3071,6 +3147,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByG_F_N(long groupId, long folderId, String name);
+
+	public FinderPath getFinderPathFetchByG_F_FN();
+
+	public FinderPath getFinderPathCountByG_F_FN();
 
 	/**
 	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and fileName = &#63; or throws a <code>NoSuchFileEntryException</code> if it could not be found.
@@ -3130,6 +3210,10 @@ public interface DLFileEntryPersistence
 	 */
 	public int countByG_F_FN(long groupId, long folderId, String fileName);
 
+	public FinderPath getFinderPathFetchByG_F_T();
+
+	public FinderPath getFinderPathCountByG_F_T();
+
 	/**
 	 * Returns the document library file entry where groupId = &#63; and folderId = &#63; and title = &#63; or throws a <code>NoSuchFileEntryException</code> if it could not be found.
 	 *
@@ -3184,6 +3268,10 @@ public interface DLFileEntryPersistence
 	 * @return the number of matching document library file entries
 	 */
 	public int countByG_F_T(long groupId, long folderId, String title);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_F();
+
+	public FinderPath getFinderPathCountByG_F_F();
 
 	/**
 	 * Returns all the document library file entries where groupId = &#63; and folderId = &#63; and fileEntryTypeId = &#63;.
@@ -3577,6 +3665,10 @@ public interface DLFileEntryPersistence
 	public int filterCountByG_F_F(
 		long groupId, long[] folderIds, long fileEntryTypeId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByS_L_C1_C2();
+
+	public FinderPath getFinderPathCountByS_L_C1_C2();
+
 	/**
 	 * Returns all the document library file entries where smallImageId = &#63; and largeImageId = &#63; and custom1ImageId = &#63; and custom2ImageId = &#63;.
 	 *
@@ -3766,6 +3858,10 @@ public interface DLFileEntryPersistence
 	public int countByS_L_C1_C2(
 		long smallImageId, long largeImageId, long custom1ImageId,
 		long custom2ImageId);
+
+	public FinderPath getFinderPathFetchByERC_G();
+
+	public FinderPath getFinderPathCountByERC_G();
 
 	/**
 	 * Returns the document library file entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchFileEntryException</code> if it could not be found.

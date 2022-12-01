@@ -89,9 +89,31 @@ public class EntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCreateDate;
 	private FinderPath _finderPathWithoutPaginationFindByCreateDate;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCreateDate() {
+		return _finderPathWithoutPaginationFindByCreateDate;
+	}
+
 	private FinderPath _finderPathCountByCreateDate;
+
+	@Override
+	public FinderPath getFinderPathCountByCreateDate() {
+		return _finderPathCountByCreateDate;
+	}
 
 	/**
 	 * Returns all the entries where createDate = &#63;.
@@ -583,7 +605,18 @@ public class EntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFromUserId;
 	private FinderPath _finderPathWithoutPaginationFindByFromUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFromUserId() {
+		return _finderPathWithoutPaginationFindByFromUserId;
+	}
+
 	private FinderPath _finderPathCountByFromUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByFromUserId() {
+		return _finderPathCountByFromUserId;
+	}
 
 	/**
 	 * Returns all the entries where fromUserId = &#63;.
@@ -1075,7 +1108,18 @@ public class EntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByToUserId;
 	private FinderPath _finderPathWithoutPaginationFindByToUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByToUserId() {
+		return _finderPathWithoutPaginationFindByToUserId;
+	}
+
 	private FinderPath _finderPathCountByToUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByToUserId() {
+		return _finderPathCountByToUserId;
+	}
 
 	/**
 	 * Returns all the entries where toUserId = &#63;.
@@ -1563,7 +1607,18 @@ public class EntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_F;
 	private FinderPath _finderPathWithoutPaginationFindByC_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_F() {
+		return _finderPathWithoutPaginationFindByC_F;
+	}
+
 	private FinderPath _finderPathCountByC_F;
+
+	@Override
+	public FinderPath getFinderPathCountByC_F() {
+		return _finderPathCountByC_F;
+	}
 
 	/**
 	 * Returns all the entries where createDate = &#63; and fromUserId = &#63;.
@@ -2100,7 +2155,18 @@ public class EntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_T() {
+		return _finderPathWithoutPaginationFindByC_T;
+	}
+
 	private FinderPath _finderPathCountByC_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_T() {
+		return _finderPathCountByC_T;
+	}
 
 	/**
 	 * Returns all the entries where createDate = &#63; and toUserId = &#63;.
@@ -2633,7 +2699,18 @@ public class EntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByF_T;
 	private FinderPath _finderPathWithoutPaginationFindByF_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByF_T() {
+		return _finderPathWithoutPaginationFindByF_T;
+	}
+
 	private FinderPath _finderPathCountByF_T;
+
+	@Override
+	public FinderPath getFinderPathCountByF_T() {
+		return _finderPathCountByF_T;
+	}
 
 	/**
 	 * Returns all the entries where fromUserId = &#63; and toUserId = &#63;.
@@ -3166,7 +3243,18 @@ public class EntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_F_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_F_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_F_T() {
+		return _finderPathWithoutPaginationFindByC_F_T;
+	}
+
 	private FinderPath _finderPathCountByC_F_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_F_T() {
+		return _finderPathCountByC_F_T;
+	}
 
 	/**
 	 * Returns all the entries where createDate = &#63; and fromUserId = &#63; and toUserId = &#63;.
@@ -3742,7 +3830,18 @@ public class EntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByF_T_C;
 	private FinderPath _finderPathWithoutPaginationFindByF_T_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByF_T_C() {
+		return _finderPathWithoutPaginationFindByF_T_C;
+	}
+
 	private FinderPath _finderPathCountByF_T_C;
+
+	@Override
+	public FinderPath getFinderPathCountByF_T_C() {
+		return _finderPathCountByF_T_C;
+	}
 
 	/**
 	 * Returns all the entries where fromUserId = &#63; and toUserId = &#63; and content = &#63;.

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchPortletException;
 import com.liferay.portal.kernel.model.Portlet;
 
@@ -38,6 +39,13 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletUtil} to access the portlet persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the portlets where companyId = &#63;.
@@ -181,6 +189,10 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	 * @return the number of matching portlets
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathFetchByC_P();
+
+	public FinderPath getFinderPathCountByC_P();
 
 	/**
 	 * Returns the portlet where companyId = &#63; and portletId = &#63; or throws a <code>NoSuchPortletException</code> if it could not be found.

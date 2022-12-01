@@ -16,6 +16,7 @@ package com.liferay.oauth.client.persistence.service.persistence;
 
 import com.liferay.oauth.client.persistence.exception.NoSuchOAuthClientEntryException;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface OAuthClientEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthClientEntryUtil} to access the o auth client entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the o auth client entries where companyId = &#63;.
@@ -249,6 +257,10 @@ public interface OAuthClientEntryPersistence
 	 */
 	public int filterCountByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the o auth client entries where userId = &#63;.
 	 *
@@ -455,6 +467,10 @@ public interface OAuthClientEntryPersistence
 	 * @return the number of matching o auth client entries that the user has permission to view
 	 */
 	public int filterCountByUserId(long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
 
 	/**
 	 * Returns all the o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63;.
@@ -682,6 +698,10 @@ public interface OAuthClientEntryPersistence
 	 * @return the number of matching o auth client entries that the user has permission to view
 	 */
 	public int filterCountByC_A(long companyId, String authServerWellKnownURI);
+
+	public FinderPath getFinderPathFetchByC_A_C();
+
+	public FinderPath getFinderPathCountByC_A_C();
 
 	/**
 	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.

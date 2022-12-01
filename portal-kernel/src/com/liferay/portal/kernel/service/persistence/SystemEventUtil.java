@@ -119,6 +119,30 @@ public class SystemEventUtil {
 		return getPersistence().update(systemEvent, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the system events where groupId = &#63;.
 	 *
@@ -283,6 +307,18 @@ public class SystemEventUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_S() {
+
+		return getPersistence().getFinderPathCountByG_S();
 	}
 
 	/**
@@ -471,6 +507,18 @@ public class SystemEventUtil {
 	 */
 	public static int countByG_S(long groupId, long systemEventSetKey) {
 		return getPersistence().countByG_S(groupId, systemEventSetKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_C() {
+
+		return getPersistence().getFinderPathCountByG_C_C();
 	}
 
 	/**
@@ -674,6 +722,18 @@ public class SystemEventUtil {
 		long groupId, long classNameId, long classPK) {
 
 		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_C_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_C_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_C_T() {
+
+		return getPersistence().getFinderPathCountByG_C_C_T();
 	}
 
 	/**

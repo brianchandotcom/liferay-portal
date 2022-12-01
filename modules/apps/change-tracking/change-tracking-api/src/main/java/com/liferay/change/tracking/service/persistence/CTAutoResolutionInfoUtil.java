@@ -122,6 +122,31 @@ public class CTAutoResolutionInfoUtil {
 		return getPersistence().update(ctAutoResolutionInfo, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCtCollectionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCtCollectionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCtCollectionId() {
+
+		return getPersistence().getFinderPathCountByCtCollectionId();
+	}
+
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63;.
 	 *
@@ -299,6 +324,19 @@ public class CTAutoResolutionInfoUtil {
 	 */
 	public static int countByCtCollectionId(long ctCollectionId) {
 		return getPersistence().countByCtCollectionId(ctCollectionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_MCNI_SMCPK() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_MCNI_SMCPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_MCNI_SMCPK() {
+
+		return getPersistence().getFinderPathCountByC_MCNI_SMCPK();
 	}
 
 	/**

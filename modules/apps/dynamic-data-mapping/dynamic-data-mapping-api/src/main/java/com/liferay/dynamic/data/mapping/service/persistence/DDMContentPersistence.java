@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchContentException;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -43,6 +44,13 @@ public interface DDMContentPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMContentUtil} to access the ddm content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the ddm contents where uuid = &#63;.
@@ -187,6 +195,10 @@ public interface DDMContentPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the ddm content where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchContentException</code> if it could not be found.
 	 *
@@ -236,6 +248,10 @@ public interface DDMContentPersistence
 	 * @return the number of matching ddm contents
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the ddm contents where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface DDMContentPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the ddm contents where groupId = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface DDMContentPersistence
 	 * @return the number of matching ddm contents
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the ddm contents where companyId = &#63;.

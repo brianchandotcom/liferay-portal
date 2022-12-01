@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.model.Region;
 
@@ -38,6 +39,13 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RegionUtil} to access the region persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the regions where uuid = &#63;.
@@ -180,6 +188,10 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	 * @return the number of matching regions
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the regions where uuid = &#63; and companyId = &#63;.
@@ -335,6 +347,10 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId();
+
+	public FinderPath getFinderPathCountByCountryId();
+
 	/**
 	 * Returns all the regions where countryId = &#63;.
 	 *
@@ -478,6 +494,10 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	 */
 	public int countByCountryId(long countryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByActive();
+
+	public FinderPath getFinderPathCountByActive();
+
 	/**
 	 * Returns all the regions where active = &#63;.
 	 *
@@ -620,6 +640,10 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	 * @return the number of matching regions
 	 */
 	public int countByActive(boolean active);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_A();
+
+	public FinderPath getFinderPathCountByC_A();
 
 	/**
 	 * Returns all the regions where countryId = &#63; and active = &#63;.
@@ -774,6 +798,10 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	 * @return the number of matching regions
 	 */
 	public int countByC_A(long countryId, boolean active);
+
+	public FinderPath getFinderPathFetchByC_R();
+
+	public FinderPath getFinderPathCountByC_R();
 
 	/**
 	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.

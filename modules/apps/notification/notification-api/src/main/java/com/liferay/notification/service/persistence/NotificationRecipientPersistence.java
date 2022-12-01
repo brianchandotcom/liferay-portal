@@ -16,6 +16,7 @@ package com.liferay.notification.service.persistence;
 
 import com.liferay.notification.exception.NoSuchNotificationRecipientException;
 import com.liferay.notification.model.NotificationRecipient;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface NotificationRecipientPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link NotificationRecipientUtil} to access the notification recipient persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the notification recipients where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface NotificationRecipientPersistence
 	 * @return the number of matching notification recipients
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the notification recipients where uuid = &#63; and companyId = &#63;.
@@ -338,6 +350,10 @@ public interface NotificationRecipientPersistence
 	 * @return the number of matching notification recipients
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathFetchByClassPK();
+
+	public FinderPath getFinderPathCountByClassPK();
 
 	/**
 	 * Returns the notification recipient where classPK = &#63; or throws a <code>NoSuchNotificationRecipientException</code> if it could not be found.

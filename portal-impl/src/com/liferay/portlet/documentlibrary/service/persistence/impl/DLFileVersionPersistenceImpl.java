@@ -96,9 +96,31 @@ public class DLFileVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the document library file versions where uuid = &#63;.
@@ -644,7 +666,18 @@ public class DLFileVersionPersistenceImpl
 		"(dlFileVersion.uuid IS NULL OR dlFileVersion.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the document library file version where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFileVersionException</code> if it could not be found.
@@ -909,7 +942,18 @@ public class DLFileVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the document library file versions where uuid = &#63; and companyId = &#63;.
@@ -1507,7 +1551,18 @@ public class DLFileVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the document library file versions where companyId = &#63;.
@@ -2020,7 +2075,18 @@ public class DLFileVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryId() {
+		return _finderPathWithoutPaginationFindByFileEntryId;
+	}
+
 	private FinderPath _finderPathCountByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByFileEntryId() {
+		return _finderPathCountByFileEntryId;
+	}
 
 	/**
 	 * Returns all the document library file versions where fileEntryId = &#63;.
@@ -2536,7 +2602,18 @@ public class DLFileVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByMimeType;
 	private FinderPath _finderPathWithoutPaginationFindByMimeType;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByMimeType() {
+		return _finderPathWithoutPaginationFindByMimeType;
+	}
+
 	private FinderPath _finderPathCountByMimeType;
+
+	@Override
+	public FinderPath getFinderPathCountByMimeType() {
+		return _finderPathCountByMimeType;
+	}
 
 	/**
 	 * Returns all the document library file versions where mimeType = &#63;.
@@ -3633,7 +3710,18 @@ public class DLFileVersionPersistenceImpl
 		"dlFileVersion.status != ?";
 
 	private FinderPath _finderPathFetchByF_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByF_V() {
+		return _finderPathFetchByF_V;
+	}
+
 	private FinderPath _finderPathCountByF_V;
+
+	@Override
+	public FinderPath getFinderPathCountByF_V() {
+		return _finderPathCountByF_V;
+	}
 
 	/**
 	 * Returns the document library file version where fileEntryId = &#63; and version = &#63; or throws a <code>NoSuchFileVersionException</code> if it could not be found.
@@ -3898,7 +3986,18 @@ public class DLFileVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByF_S;
 	private FinderPath _finderPathWithoutPaginationFindByF_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByF_S() {
+		return _finderPathWithoutPaginationFindByF_S;
+	}
+
 	private FinderPath _finderPathCountByF_S;
+
+	@Override
+	public FinderPath getFinderPathCountByF_S() {
+		return _finderPathCountByF_S;
+	}
 
 	/**
 	 * Returns all the document library file versions where fileEntryId = &#63; and status = &#63;.
@@ -4454,7 +4553,18 @@ public class DLFileVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_F_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_F_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_S() {
+		return _finderPathWithoutPaginationFindByG_F_S;
+	}
+
 	private FinderPath _finderPathCountByG_F_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_F_S() {
+		return _finderPathCountByG_F_S;
+	}
 
 	/**
 	 * Returns all the document library file versions where groupId = &#63; and folderId = &#63; and status = &#63;.
@@ -5046,7 +5156,18 @@ public class DLFileVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_F_T_V;
 	private FinderPath _finderPathWithoutPaginationFindByG_F_T_V;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_T_V() {
+		return _finderPathWithoutPaginationFindByG_F_T_V;
+	}
+
 	private FinderPath _finderPathCountByG_F_T_V;
+
+	@Override
+	public FinderPath getFinderPathCountByG_F_T_V() {
+		return _finderPathCountByG_F_T_V;
+	}
 
 	/**
 	 * Returns all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.

@@ -16,6 +16,7 @@ package com.liferay.document.library.kernel.service.persistence;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DLFileShortcutPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileShortcutUtil} to access the document library file shortcut persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the document library file shortcuts where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface DLFileShortcutPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFileShortcutException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface DLFileShortcutPersistence
 	 * @return the number of matching document library file shortcuts
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the document library file shortcuts where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface DLFileShortcutPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the document library file shortcuts where companyId = &#63;.
 	 *
@@ -532,6 +552,10 @@ public interface DLFileShortcutPersistence
 	 * @return the number of matching document library file shortcuts
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByToFileEntryId();
+
+	public FinderPath getFinderPathCountByToFileEntryId();
 
 	/**
 	 * Returns all the document library file shortcuts where toFileEntryId = &#63;.
@@ -676,6 +700,10 @@ public interface DLFileShortcutPersistence
 	 * @return the number of matching document library file shortcuts
 	 */
 	public int countByToFileEntryId(long toFileEntryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F();
+
+	public FinderPath getFinderPathCountByG_F();
 
 	/**
 	 * Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63;.
@@ -1057,6 +1085,10 @@ public interface DLFileShortcutPersistence
 	 */
 	public int countByC_NotS(long companyId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_A();
+
+	public FinderPath getFinderPathCountByG_F_A();
+
 	/**
 	 * Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63;.
 	 *
@@ -1297,6 +1329,10 @@ public interface DLFileShortcutPersistence
 	 * @return the number of matching document library file shortcuts that the user has permission to view
 	 */
 	public int filterCountByG_F_A(long groupId, long folderId, boolean active);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_A_S();
+
+	public FinderPath getFinderPathCountByG_F_A_S();
 
 	/**
 	 * Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.

@@ -81,9 +81,31 @@ public class RecentLayoutBranchPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the recent layout branches where groupId = &#63;.
@@ -583,7 +605,18 @@ public class RecentLayoutBranchPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the recent layout branches where userId = &#63;.
@@ -1082,7 +1115,18 @@ public class RecentLayoutBranchPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByLayoutBranchId;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutBranchId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutBranchId() {
+		return _finderPathWithoutPaginationFindByLayoutBranchId;
+	}
+
 	private FinderPath _finderPathCountByLayoutBranchId;
+
+	@Override
+	public FinderPath getFinderPathCountByLayoutBranchId() {
+		return _finderPathCountByLayoutBranchId;
+	}
 
 	/**
 	 * Returns all the recent layout branches where layoutBranchId = &#63;.
@@ -1592,7 +1636,18 @@ public class RecentLayoutBranchPersistenceImpl
 		"recentLayoutBranch.layoutBranchId = ?";
 
 	private FinderPath _finderPathFetchByU_L_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_L_P() {
+		return _finderPathFetchByU_L_P;
+	}
+
 	private FinderPath _finderPathCountByU_L_P;
+
+	@Override
+	public FinderPath getFinderPathCountByU_L_P() {
+		return _finderPathCountByU_L_P;
+	}
 
 	/**
 	 * Returns the recent layout branch where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; or throws a <code>NoSuchRecentLayoutBranchException</code> if it could not be found.

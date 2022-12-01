@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.service.persistence;
 
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface LayoutPageTemplateCollectionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateCollectionUtil} to access the layout page template collection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout page template collections where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface LayoutPageTemplateCollectionPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the layout page template collection where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateCollectionException</code> if it could not be found.
 	 *
@@ -237,6 +249,10 @@ public interface LayoutPageTemplateCollectionPersistence
 	 * @return the number of matching layout page template collections
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout page template collections where uuid = &#63; and companyId = &#63;.
@@ -392,6 +408,10 @@ public interface LayoutPageTemplateCollectionPersistence
 	 * @return the number of matching layout page template collections
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the layout page template collections where groupId = &#63;.
@@ -602,6 +622,10 @@ public interface LayoutPageTemplateCollectionPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathFetchByG_LPTCK();
+
+	public FinderPath getFinderPathCountByG_LPTCK();
+
 	/**
 	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; or throws a <code>NoSuchPageTemplateCollectionException</code> if it could not be found.
 	 *
@@ -656,6 +680,10 @@ public interface LayoutPageTemplateCollectionPersistence
 	 */
 	public int countByG_LPTCK(
 		long groupId, String layoutPageTemplateCollectionKey);
+
+	public FinderPath getFinderPathFetchByG_N();
+
+	public FinderPath getFinderPathCountByG_N();
 
 	/**
 	 * Returns the layout page template collection where groupId = &#63; and name = &#63; or throws a <code>NoSuchPageTemplateCollectionException</code> if it could not be found.

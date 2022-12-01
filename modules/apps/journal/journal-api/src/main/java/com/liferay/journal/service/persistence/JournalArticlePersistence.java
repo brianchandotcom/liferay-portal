@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence;
 
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -43,6 +44,13 @@ public interface JournalArticlePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleUtil} to access the journal article persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByResourcePrimKey();
+
+	public FinderPath getFinderPathCountByResourcePrimKey();
 
 	/**
 	 * Returns all the journal articles where resourcePrimKey = &#63;.
@@ -188,6 +196,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByResourcePrimKey(long resourcePrimKey);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
+
 	/**
 	 * Returns all the journal articles where uuid = &#63;.
 	 *
@@ -331,6 +343,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the journal article where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -380,6 +396,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the journal articles where uuid = &#63; and companyId = &#63;.
@@ -535,6 +555,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the journal articles where groupId = &#63;.
@@ -743,6 +767,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the journal articles where companyId = &#63;.
 	 *
@@ -885,6 +913,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByDDMStructureKey();
+
+	public FinderPath getFinderPathCountByDDMStructureKey();
 
 	/**
 	 * Returns all the journal articles where DDMStructureKey = &#63;.
@@ -1104,6 +1136,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByDDMStructureKey(String[] DDMStructureKeys);
 
+	public FinderPath getFinderPathWithoutPaginationFindByDDMTemplateKey();
+
+	public FinderPath getFinderPathCountByDDMTemplateKey();
+
 	/**
 	 * Returns all the journal articles where DDMTemplateKey = &#63;.
 	 *
@@ -1248,6 +1284,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByDDMTemplateKey(String DDMTemplateKey);
 
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutUuid();
+
+	public FinderPath getFinderPathCountByLayoutUuid();
+
 	/**
 	 * Returns all the journal articles where layoutUuid = &#63;.
 	 *
@@ -1391,6 +1431,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByLayoutUuid(String layoutUuid);
 
+	public FinderPath getFinderPathWithoutPaginationFindBySmallImageId();
+
+	public FinderPath getFinderPathCountBySmallImageId();
+
 	/**
 	 * Returns all the journal articles where smallImageId = &#63;.
 	 *
@@ -1533,6 +1577,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles
 	 */
 	public int countBySmallImageId(long smallImageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_I();
+
+	public FinderPath getFinderPathCountByR_I();
 
 	/**
 	 * Returns all the journal articles where resourcePrimKey = &#63; and indexable = &#63;.
@@ -1688,6 +1736,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles
 	 */
 	public int countByR_I(long resourcePrimKey, boolean indexable);
+
+	public FinderPath getFinderPathWithoutPaginationFindByR_ST();
+
+	public FinderPath getFinderPathCountByR_ST();
 
 	/**
 	 * Returns all the journal articles where resourcePrimKey = &#63; and status = &#63;.
@@ -1923,6 +1975,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByR_ST(long resourcePrimKey, int[] statuses);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_U();
+
+	public FinderPath getFinderPathCountByG_U();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and userId = &#63;.
 	 *
@@ -2146,6 +2202,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles that the user has permission to view
 	 */
 	public int filterCountByG_U(long groupId, long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_ERC();
+
+	public FinderPath getFinderPathCountByG_ERC();
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and externalReferenceCode = &#63;.
@@ -2371,6 +2431,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles that the user has permission to view
 	 */
 	public int filterCountByG_ERC(long groupId, String externalReferenceCode);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F();
+
+	public FinderPath getFinderPathCountByG_F();
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and folderId = &#63;.
@@ -2730,6 +2794,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByG_F(long groupId, long[] folderIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_A();
+
+	public FinderPath getFinderPathCountByG_A();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and articleId = &#63;.
 	 *
@@ -2954,6 +3022,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles that the user has permission to view
 	 */
 	public int filterCountByG_A(long groupId, String articleId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_UT();
+
+	public FinderPath getFinderPathCountByG_UT();
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and urlTitle = &#63;.
@@ -3180,6 +3252,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByG_UT(long groupId, String urlTitle);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_DDMSK();
+
+	public FinderPath getFinderPathCountByG_DDMSK();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and DDMStructureKey = &#63;.
 	 *
@@ -3405,6 +3481,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByG_DDMSK(long groupId, String DDMStructureKey);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_DDMTK();
+
+	public FinderPath getFinderPathCountByG_DDMTK();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and DDMTemplateKey = &#63;.
 	 *
@@ -3629,6 +3709,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles that the user has permission to view
 	 */
 	public int filterCountByG_DDMTK(long groupId, String DDMTemplateKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_L();
+
+	public FinderPath getFinderPathCountByG_L();
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and layoutUuid = &#63;.
@@ -4213,6 +4297,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByG_NotL(long groupId, String[] layoutUuids);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_ST();
+
+	public FinderPath getFinderPathCountByG_ST();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and status = &#63;.
 	 *
@@ -4437,6 +4525,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByG_ST(long groupId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_V();
+
+	public FinderPath getFinderPathCountByC_V();
+
 	/**
 	 * Returns all the journal articles where companyId = &#63; and version = &#63;.
 	 *
@@ -4591,6 +4683,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles
 	 */
 	public int countByC_V(long companyId, double version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_ST();
+
+	public FinderPath getFinderPathCountByC_ST();
 
 	/**
 	 * Returns all the journal articles where companyId = &#63; and status = &#63;.
@@ -5057,6 +5153,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByLtD_S(Date displayDate, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByR_I_S();
+
+	public FinderPath getFinderPathCountByR_I_S();
+
 	/**
 	 * Returns all the journal articles where resourcePrimKey = &#63; and indexable = &#63; and status = &#63;.
 	 *
@@ -5314,6 +5414,10 @@ public interface JournalArticlePersistence
 	public int countByR_I_S(
 		long resourcePrimKey, boolean indexable, int[] statuses);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_C();
+
+	public FinderPath getFinderPathCountByG_U_C();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and userId = &#63; and classNameId = &#63;.
 	 *
@@ -5555,6 +5659,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByG_U_C(long groupId, long userId, long classNameId);
 
+	public FinderPath getFinderPathFetchByG_ERC_V();
+
+	public FinderPath getFinderPathCountByG_ERC_V();
+
 	/**
 	 * Returns the journal article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -5614,6 +5722,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByG_ERC_V(
 		long groupId, String externalReferenceCode, double version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_ST();
+
+	public FinderPath getFinderPathCountByG_F_ST();
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and folderId = &#63; and status = &#63;.
@@ -5998,6 +6110,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByG_F_ST(long groupId, long folderId, int[] statuses);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
@@ -6239,6 +6355,10 @@ public interface JournalArticlePersistence
 	 */
 	public int filterCountByG_C_C(long groupId, long classNameId, long classPK);
 
+	public FinderPath getFinderPathFetchByG_C_DDMSK();
+
+	public FinderPath getFinderPathCountByG_C_DDMSK();
+
 	/**
 	 * Returns the journal article where groupId = &#63; and classNameId = &#63; and DDMStructureKey = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -6298,6 +6418,10 @@ public interface JournalArticlePersistence
 	 */
 	public int countByG_C_DDMSK(
 		long groupId, long classNameId, String DDMStructureKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_DDMTK();
+
+	public FinderPath getFinderPathCountByG_C_DDMTK();
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and classNameId = &#63; and DDMTemplateKey = &#63;.
@@ -6548,6 +6672,10 @@ public interface JournalArticlePersistence
 	public int filterCountByG_C_DDMTK(
 		long groupId, long classNameId, String DDMTemplateKey);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_L();
+
+	public FinderPath getFinderPathCountByG_C_L();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and classNameId = &#63; and layoutUuid = &#63;.
 	 *
@@ -6791,6 +6919,10 @@ public interface JournalArticlePersistence
 	public int filterCountByG_C_L(
 		long groupId, long classNameId, String layoutUuid);
 
+	public FinderPath getFinderPathFetchByG_A_V();
+
+	public FinderPath getFinderPathCountByG_A_V();
+
 	/**
 	 * Returns the journal article where groupId = &#63; and articleId = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
 	 *
@@ -6848,6 +6980,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles
 	 */
 	public int countByG_A_V(long groupId, String articleId, double version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_A_ST();
+
+	public FinderPath getFinderPathCountByG_A_ST();
 
 	/**
 	 * Returns all the journal articles where groupId = &#63; and articleId = &#63; and status = &#63;.
@@ -7475,6 +7611,10 @@ public interface JournalArticlePersistence
 	public int filterCountByG_A_NotST(
 		long groupId, String articleId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_UT_ST();
+
+	public FinderPath getFinderPathCountByG_UT_ST();
+
 	/**
 	 * Returns all the journal articles where groupId = &#63; and urlTitle = &#63; and status = &#63;.
 	 *
@@ -7715,6 +7855,10 @@ public interface JournalArticlePersistence
 	 * @return the number of matching journal articles that the user has permission to view
 	 */
 	public int filterCountByG_UT_ST(long groupId, String urlTitle, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_V_ST();
+
+	public FinderPath getFinderPathCountByC_V_ST();
 
 	/**
 	 * Returns all the journal articles where companyId = &#63; and version = &#63; and status = &#63;.

@@ -92,9 +92,31 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId() {
+		return _finderPathWithoutPaginationFindByAccountEntryId;
+	}
+
 	private FinderPath _finderPathCountByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAccountEntryId() {
+		return _finderPathCountByAccountEntryId;
+	}
 
 	/**
 	 * Returns all the account entry organization rels where accountEntryId = &#63;.
@@ -610,7 +632,18 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByOrganizationId;
 	private FinderPath _finderPathWithoutPaginationFindByOrganizationId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByOrganizationId() {
+		return _finderPathWithoutPaginationFindByOrganizationId;
+	}
+
 	private FinderPath _finderPathCountByOrganizationId;
+
+	@Override
+	public FinderPath getFinderPathCountByOrganizationId() {
+		return _finderPathCountByOrganizationId;
+	}
 
 	/**
 	 * Returns all the account entry organization rels where organizationId = &#63;.
@@ -1125,7 +1158,18 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		"accountEntryOrganizationRel.organizationId = ?";
 
 	private FinderPath _finderPathFetchByA_O;
+
+	@Override
+	public FinderPath getFinderPathFetchByA_O() {
+		return _finderPathFetchByA_O;
+	}
+
 	private FinderPath _finderPathCountByA_O;
+
+	@Override
+	public FinderPath getFinderPathCountByA_O() {
+		return _finderPathCountByA_O;
+	}
 
 	/**
 	 * Returns the account entry organization rel where accountEntryId = &#63; and organizationId = &#63; or throws a <code>NoSuchEntryOrganizationRelException</code> if it could not be found.

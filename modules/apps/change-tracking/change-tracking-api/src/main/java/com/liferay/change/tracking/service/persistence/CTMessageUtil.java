@@ -119,6 +119,31 @@ public class CTMessageUtil {
 		return getPersistence().update(ctMessage, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCtCollectionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCtCollectionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCtCollectionId() {
+
+		return getPersistence().getFinderPathCountByCtCollectionId();
+	}
+
 	/**
 	 * Returns all the ct messages where ctCollectionId = &#63;.
 	 *

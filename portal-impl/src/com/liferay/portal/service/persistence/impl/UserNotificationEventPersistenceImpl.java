@@ -86,9 +86,31 @@ public class UserNotificationEventPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the user notification events where uuid = &#63;.
@@ -630,7 +652,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the user notification events where uuid = &#63; and companyId = &#63;.
@@ -1217,7 +1250,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63;.
@@ -1720,7 +1764,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByType;
 	private FinderPath _finderPathWithoutPaginationFindByType;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByType() {
+		return _finderPathWithoutPaginationFindByType;
+	}
+
 	private FinderPath _finderPathCountByType;
+
+	@Override
+	public FinderPath getFinderPathCountByType() {
+		return _finderPathCountByType;
+	}
 
 	/**
 	 * Returns all the user notification events where type = &#63;.
@@ -2262,7 +2317,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_DT;
 	private FinderPath _finderPathWithoutPaginationFindByU_DT;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT() {
+		return _finderPathWithoutPaginationFindByU_DT;
+	}
+
 	private FinderPath _finderPathCountByU_DT;
+
+	@Override
+	public FinderPath getFinderPathCountByU_DT() {
+		return _finderPathCountByU_DT;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63;.
@@ -2808,7 +2874,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_D;
 	private FinderPath _finderPathWithoutPaginationFindByU_D;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_D() {
+		return _finderPathWithoutPaginationFindByU_D;
+	}
+
 	private FinderPath _finderPathCountByU_D;
+
+	@Override
+	public FinderPath getFinderPathCountByU_D() {
+		return _finderPathCountByU_D;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and delivered = &#63;.
@@ -3353,7 +3430,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_A() {
+		return _finderPathWithoutPaginationFindByU_A;
+	}
+
 	private FinderPath _finderPathCountByU_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_A() {
+		return _finderPathCountByU_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and archived = &#63;.
@@ -3897,7 +3985,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_DT_D;
 	private FinderPath _finderPathWithoutPaginationFindByU_DT_D;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_D() {
+		return _finderPathWithoutPaginationFindByU_DT_D;
+	}
+
 	private FinderPath _finderPathCountByU_DT_D;
+
+	@Override
+	public FinderPath getFinderPathCountByU_DT_D() {
+		return _finderPathCountByU_DT_D;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -4482,7 +4581,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_DT_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_DT_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_A() {
+		return _finderPathWithoutPaginationFindByU_DT_A;
+	}
+
 	private FinderPath _finderPathCountByU_DT_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_DT_A() {
+		return _finderPathCountByU_DT_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
@@ -5067,7 +5177,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_D_AR;
 	private FinderPath _finderPathWithoutPaginationFindByU_D_AR;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_D_AR() {
+		return _finderPathWithoutPaginationFindByU_D_AR;
+	}
+
 	private FinderPath _finderPathCountByU_D_AR;
+
+	@Override
+	public FinderPath getFinderPathCountByU_D_AR() {
+		return _finderPathCountByU_D_AR;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -5656,7 +5777,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_D_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_D_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_D_A() {
+		return _finderPathWithoutPaginationFindByU_D_A;
+	}
+
 	private FinderPath _finderPathCountByU_D_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_D_A() {
+		return _finderPathCountByU_D_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
@@ -6238,7 +6370,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_AR_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_AR_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_AR_A() {
+		return _finderPathWithoutPaginationFindByU_AR_A;
+	}
+
 	private FinderPath _finderPathCountByU_AR_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_AR_A() {
+		return _finderPathCountByU_AR_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -6826,7 +6969,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_T_DT_D;
 	private FinderPath _finderPathWithoutPaginationFindByU_T_DT_D;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_T_DT_D() {
+		return _finderPathWithoutPaginationFindByU_T_DT_D;
+	}
+
 	private FinderPath _finderPathCountByU_T_DT_D;
+
+	@Override
+	public FinderPath getFinderPathCountByU_T_DT_D() {
+		return _finderPathCountByU_T_DT_D;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -7497,7 +7651,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_DT_D_AR;
 	private FinderPath _finderPathWithoutPaginationFindByU_DT_D_AR;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_D_AR() {
+		return _finderPathWithoutPaginationFindByU_DT_D_AR;
+	}
+
 	private FinderPath _finderPathCountByU_DT_D_AR;
+
+	@Override
+	public FinderPath getFinderPathCountByU_DT_D_AR() {
+		return _finderPathCountByU_DT_D_AR;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -8137,7 +8302,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_DT_D_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_DT_D_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_D_A() {
+		return _finderPathWithoutPaginationFindByU_DT_D_A;
+	}
+
 	private FinderPath _finderPathCountByU_DT_D_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_DT_D_A() {
+		return _finderPathCountByU_DT_D_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
@@ -8766,7 +8942,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_DT_AR_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_DT_AR_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_AR_A() {
+		return _finderPathWithoutPaginationFindByU_DT_AR_A;
+	}
+
 	private FinderPath _finderPathCountByU_DT_AR_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_DT_AR_A() {
+		return _finderPathCountByU_DT_AR_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -9403,7 +9590,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_D_AR_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_D_AR_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_D_AR_A() {
+		return _finderPathWithoutPaginationFindByU_D_AR_A;
+	}
+
 	private FinderPath _finderPathCountByU_D_AR_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_D_AR_A() {
+		return _finderPathCountByU_D_AR_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -10042,7 +10240,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_T_DT_D_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_T_DT_D_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_T_DT_D_A() {
+		return _finderPathWithoutPaginationFindByU_T_DT_D_A;
+	}
+
 	private FinderPath _finderPathCountByU_T_DT_D_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_T_DT_D_A() {
+		return _finderPathCountByU_T_DT_D_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
@@ -10756,7 +10965,18 @@ public class UserNotificationEventPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_DT_D_AR_A;
 	private FinderPath _finderPathWithoutPaginationFindByU_DT_D_AR_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_DT_D_AR_A() {
+		return _finderPathWithoutPaginationFindByU_DT_D_AR_A;
+	}
+
 	private FinderPath _finderPathCountByU_DT_D_AR_A;
+
+	@Override
+	public FinderPath getFinderPathCountByU_DT_D_AR_A() {
+		return _finderPathCountByU_DT_D_AR_A;
+	}
 
 	/**
 	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.

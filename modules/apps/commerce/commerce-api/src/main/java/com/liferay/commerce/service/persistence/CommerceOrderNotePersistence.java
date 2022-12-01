@@ -16,6 +16,7 @@ package com.liferay.commerce.service.persistence;
 
 import com.liferay.commerce.exception.NoSuchOrderNoteException;
 import com.liferay.commerce.model.CommerceOrderNote;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceOrderNotePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderNoteUtil} to access the commerce order note persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce order notes where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceOrderNotePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the commerce order note where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchOrderNoteException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface CommerceOrderNotePersistence
 	 * @return the number of matching commerce order notes
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce order notes where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface CommerceOrderNotePersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceOrderId();
+
+	public FinderPath getFinderPathCountByCommerceOrderId();
+
 	/**
 	 * Returns all the commerce order notes where commerceOrderId = &#63;.
 	 *
@@ -532,6 +552,10 @@ public interface CommerceOrderNotePersistence
 	 * @return the number of matching commerce order notes
 	 */
 	public int countByCommerceOrderId(long commerceOrderId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_R();
+
+	public FinderPath getFinderPathCountByC_R();
 
 	/**
 	 * Returns all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
@@ -687,6 +711,10 @@ public interface CommerceOrderNotePersistence
 	 * @return the number of matching commerce order notes
 	 */
 	public int countByC_R(long commerceOrderId, boolean restricted);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce order note where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderNoteException</code> if it could not be found.

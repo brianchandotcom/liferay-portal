@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -40,6 +41,13 @@ public interface UserGroupPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupUtil} to access the user group persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the user groups where uuid = &#63;.
@@ -247,6 +255,10 @@ public interface UserGroupPersistence
 	 * @return the number of matching user groups that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the user groups where uuid = &#63; and companyId = &#63;.
@@ -472,6 +484,10 @@ public interface UserGroupPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the user groups where companyId = &#63;.
 	 *
@@ -678,6 +694,10 @@ public interface UserGroupPersistence
 	 * @return the number of matching user groups that the user has permission to view
 	 */
 	public int filterCountByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_P();
+
+	public FinderPath getFinderPathCountByC_P();
 
 	/**
 	 * Returns all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
@@ -903,6 +923,10 @@ public interface UserGroupPersistence
 	 * @return the number of matching user groups that the user has permission to view
 	 */
 	public int filterCountByC_P(long companyId, long parentUserGroupId);
+
+	public FinderPath getFinderPathFetchByC_N();
+
+	public FinderPath getFinderPathCountByC_N();
 
 	/**
 	 * Returns the user group where companyId = &#63; and name = &#63; or throws a <code>NoSuchUserGroupException</code> if it could not be found.
@@ -1392,6 +1416,10 @@ public interface UserGroupPersistence
 	 */
 	public int filterCountByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the user group where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchUserGroupException</code> if it could not be found.

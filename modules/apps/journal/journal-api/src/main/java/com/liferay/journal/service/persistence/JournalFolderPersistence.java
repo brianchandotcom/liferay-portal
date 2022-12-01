@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence;
 
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface JournalFolderPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFolderUtil} to access the journal folder persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the journal folders where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface JournalFolderPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the journal folder where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface JournalFolderPersistence
 	 * @return the number of matching journal folders
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the journal folders where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface JournalFolderPersistence
 	 * @return the number of matching journal folders
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the journal folders where groupId = &#63;.
@@ -597,6 +617,10 @@ public interface JournalFolderPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the journal folders where companyId = &#63;.
 	 *
@@ -739,6 +763,10 @@ public interface JournalFolderPersistence
 	 * @return the number of matching journal folders
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P();
+
+	public FinderPath getFinderPathCountByG_P();
 
 	/**
 	 * Returns all the journal folders where groupId = &#63; and parentFolderId = &#63;.
@@ -965,6 +993,10 @@ public interface JournalFolderPersistence
 	 */
 	public int filterCountByG_P(long groupId, long parentFolderId);
 
+	public FinderPath getFinderPathFetchByG_N();
+
+	public FinderPath getFinderPathCountByG_N();
+
 	/**
 	 * Returns the journal folder where groupId = &#63; and name = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
 	 *
@@ -1170,6 +1202,10 @@ public interface JournalFolderPersistence
 	 */
 	public int countByC_NotS(long companyId, int status);
 
+	public FinderPath getFinderPathFetchByG_P_N();
+
+	public FinderPath getFinderPathCountByG_P_N();
+
 	/**
 	 * Returns the journal folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
 	 *
@@ -1227,6 +1263,10 @@ public interface JournalFolderPersistence
 	 * @return the number of matching journal folders
 	 */
 	public int countByG_P_N(long groupId, long parentFolderId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_S();
+
+	public FinderPath getFinderPathCountByG_P_S();
 
 	/**
 	 * Returns all the journal folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1875,6 +1915,10 @@ public interface JournalFolderPersistence
 	 */
 	public int countByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status);
+
+	public FinderPath getFinderPathFetchByERC_G();
+
+	public FinderPath getFinderPathCountByERC_G();
 
 	/**
 	 * Returns the journal folder where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.

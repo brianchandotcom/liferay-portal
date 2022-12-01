@@ -98,9 +98,31 @@ public class ExpandoColumnPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByTableId;
 	private FinderPath _finderPathWithoutPaginationFindByTableId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByTableId() {
+		return _finderPathWithoutPaginationFindByTableId;
+	}
+
 	private FinderPath _finderPathCountByTableId;
+
+	@Override
+	public FinderPath getFinderPathCountByTableId() {
+		return _finderPathCountByTableId;
+	}
 
 	/**
 	 * Returns all the expando columns where tableId = &#63;.
@@ -988,8 +1010,26 @@ public class ExpandoColumnPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByT_N;
 	private FinderPath _finderPathWithoutPaginationFindByT_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByT_N() {
+		return _finderPathWithoutPaginationFindByT_N;
+	}
+
 	private FinderPath _finderPathFetchByT_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByT_N() {
+		return _finderPathFetchByT_N;
+	}
+
 	private FinderPath _finderPathCountByT_N;
+
+	@Override
+	public FinderPath getFinderPathCountByT_N() {
+		return _finderPathCountByT_N;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByT_N;
 
 	/**

@@ -100,9 +100,33 @@ public class NotificationQueueEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByNotificationTemplateId;
 	private FinderPath _finderPathWithoutPaginationFindByNotificationTemplateId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByNotificationTemplateId() {
+
+		return _finderPathWithoutPaginationFindByNotificationTemplateId;
+	}
+
 	private FinderPath _finderPathCountByNotificationTemplateId;
+
+	@Override
+	public FinderPath getFinderPathCountByNotificationTemplateId() {
+		return _finderPathCountByNotificationTemplateId;
+	}
 
 	/**
 	 * Returns all the notification queue entries where notificationTemplateId = &#63;.
@@ -1974,7 +1998,18 @@ public class NotificationQueueEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByT_S;
 	private FinderPath _finderPathWithoutPaginationFindByT_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByT_S() {
+		return _finderPathWithoutPaginationFindByT_S;
+	}
+
 	private FinderPath _finderPathCountByT_S;
+
+	@Override
+	public FinderPath getFinderPathCountByT_S() {
+		return _finderPathCountByT_S;
+	}
 
 	/**
 	 * Returns all the notification queue entries where type = &#63; and status = &#63;.

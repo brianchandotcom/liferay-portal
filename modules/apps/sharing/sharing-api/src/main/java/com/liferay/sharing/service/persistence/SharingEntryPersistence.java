@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
@@ -41,6 +42,13 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SharingEntryUtil} to access the sharing entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the sharing entries where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the sharing entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @return the number of matching sharing entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the sharing entries where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the sharing entries where groupId = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the sharing entries where userId = &#63;.
 	 *
@@ -675,6 +699,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @return the number of matching sharing entries
 	 */
 	public int countByUserId(long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByToUserId();
+
+	public FinderPath getFinderPathCountByToUserId();
 
 	/**
 	 * Returns all the sharing entries where toUserId = &#63;.
@@ -963,6 +991,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 */
 	public int countByLtExpirationDate(Date expirationDate);
 
+	public FinderPath getFinderPathWithoutPaginationFindByU_C();
+
+	public FinderPath getFinderPathCountByU_C();
+
 	/**
 	 * Returns all the sharing entries where userId = &#63; and classNameId = &#63;.
 	 *
@@ -1117,6 +1149,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @return the number of matching sharing entries
 	 */
 	public int countByU_C(long userId, long classNameId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByTU_C();
+
+	public FinderPath getFinderPathCountByTU_C();
 
 	/**
 	 * Returns all the sharing entries where toUserId = &#63; and classNameId = &#63;.
@@ -1273,6 +1309,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 */
 	public int countByTU_C(long toUserId, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the sharing entries where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -1427,6 +1467,10 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	 * @return the number of matching sharing entries
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByTU_C_C();
+
+	public FinderPath getFinderPathCountByTU_C_C();
 
 	/**
 	 * Returns the sharing entry where toUserId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

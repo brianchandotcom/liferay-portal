@@ -119,6 +119,30 @@ public class PLOEntryUtil {
 		return getPersistence().update(ploEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the plo entries where companyId = &#63;.
 	 *
@@ -288,6 +312,18 @@ public class PLOEntryUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_K() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_K();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_K() {
+
+		return getPersistence().getFinderPathCountByC_K();
 	}
 
 	/**
@@ -476,6 +512,18 @@ public class PLOEntryUtil {
 		return getPersistence().countByC_K(companyId, key);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_L() {
+
+		return getPersistence().getFinderPathCountByC_L();
+	}
+
 	/**
 	 * Returns all the plo entries where companyId = &#63; and languageId = &#63;.
 	 *
@@ -661,6 +709,18 @@ public class PLOEntryUtil {
 	 */
 	public static int countByC_L(long companyId, String languageId) {
 		return getPersistence().countByC_L(companyId, languageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_K_L() {
+
+		return getPersistence().getFinderPathFetchByC_K_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_K_L() {
+
+		return getPersistence().getFinderPathCountByC_K_L();
 	}
 
 	/**

@@ -93,10 +93,34 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByBatchEngineImportTaskId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByBatchEngineImportTaskId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByBatchEngineImportTaskId() {
+
+		return _finderPathWithoutPaginationFindByBatchEngineImportTaskId;
+	}
+
 	private FinderPath _finderPathCountByBatchEngineImportTaskId;
+
+	@Override
+	public FinderPath getFinderPathCountByBatchEngineImportTaskId() {
+		return _finderPathCountByBatchEngineImportTaskId;
+	}
 
 	/**
 	 * Returns all the batch engine import task errors where batchEngineImportTaskId = &#63;.

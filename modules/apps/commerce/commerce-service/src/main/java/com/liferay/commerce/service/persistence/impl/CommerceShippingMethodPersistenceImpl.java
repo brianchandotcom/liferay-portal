@@ -96,9 +96,31 @@ public class CommerceShippingMethodPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the commerce shipping methods where groupId = &#63;.
@@ -602,7 +624,18 @@ public class CommerceShippingMethodPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_A() {
+		return _finderPathWithoutPaginationFindByG_A;
+	}
+
 	private FinderPath _finderPathCountByG_A;
+
+	@Override
+	public FinderPath getFinderPathCountByG_A() {
+		return _finderPathCountByG_A;
+	}
 
 	/**
 	 * Returns all the commerce shipping methods where groupId = &#63; and active = &#63;.
@@ -1144,7 +1177,18 @@ public class CommerceShippingMethodPersistenceImpl
 		"commerceShippingMethod.active = ?";
 
 	private FinderPath _finderPathFetchByG_E;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_E() {
+		return _finderPathFetchByG_E;
+	}
+
 	private FinderPath _finderPathCountByG_E;
+
+	@Override
+	public FinderPath getFinderPathCountByG_E() {
+		return _finderPathCountByG_E;
+	}
 
 	/**
 	 * Returns the commerce shipping method where groupId = &#63; and engineKey = &#63; or throws a <code>NoSuchShippingMethodException</code> if it could not be found.

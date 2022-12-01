@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchBigDecimalEntryException;
 import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry;
@@ -42,6 +43,13 @@ public interface BigDecimalEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BigDecimalEntryUtil} to access the big decimal entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByBigDecimalValue();
+
+	public FinderPath getFinderPathCountByBigDecimalValue();
 
 	/**
 	 * Returns all the big decimal entries where bigDecimalValue = &#63;.

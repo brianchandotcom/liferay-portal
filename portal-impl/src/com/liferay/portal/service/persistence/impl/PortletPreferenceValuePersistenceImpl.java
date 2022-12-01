@@ -91,9 +91,33 @@ public class PortletPreferenceValuePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByPortletPreferencesId;
 	private FinderPath _finderPathWithoutPaginationFindByPortletPreferencesId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByPortletPreferencesId() {
+
+		return _finderPathWithoutPaginationFindByPortletPreferencesId;
+	}
+
 	private FinderPath _finderPathCountByPortletPreferencesId;
+
+	@Override
+	public FinderPath getFinderPathCountByPortletPreferencesId() {
+		return _finderPathCountByPortletPreferencesId;
+	}
 
 	/**
 	 * Returns all the portlet preference values where portletPreferencesId = &#63;.
@@ -628,7 +652,18 @@ public class PortletPreferenceValuePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_N;
 	private FinderPath _finderPathWithoutPaginationFindByP_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_N() {
+		return _finderPathWithoutPaginationFindByP_N;
+	}
+
 	private FinderPath _finderPathCountByP_N;
+
+	@Override
+	public FinderPath getFinderPathCountByP_N() {
+		return _finderPathCountByP_N;
+	}
 
 	/**
 	 * Returns all the portlet preference values where portletPreferencesId = &#63; and name = &#63;.
@@ -1232,7 +1267,18 @@ public class PortletPreferenceValuePersistenceImpl
 		"(portletPreferenceValue.name IS NULL OR portletPreferenceValue.name = '')";
 
 	private FinderPath _finderPathFetchByP_I_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByP_I_N() {
+		return _finderPathFetchByP_I_N;
+	}
+
 	private FinderPath _finderPathCountByP_I_N;
+
+	@Override
+	public FinderPath getFinderPathCountByP_I_N() {
+		return _finderPathCountByP_I_N;
+	}
 
 	/**
 	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
@@ -1526,7 +1572,18 @@ public class PortletPreferenceValuePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_N_SV;
 	private FinderPath _finderPathWithoutPaginationFindByP_N_SV;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_N_SV() {
+		return _finderPathWithoutPaginationFindByP_N_SV;
+	}
+
 	private FinderPath _finderPathCountByP_N_SV;
+
+	@Override
+	public FinderPath getFinderPathCountByP_N_SV() {
+		return _finderPathCountByP_N_SV;
+	}
 
 	/**
 	 * Returns all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.

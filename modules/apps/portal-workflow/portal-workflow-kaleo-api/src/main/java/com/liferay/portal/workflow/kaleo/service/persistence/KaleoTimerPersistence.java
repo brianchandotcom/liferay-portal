@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException;
@@ -41,6 +42,13 @@ public interface KaleoTimerPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTimerUtil} to access the kaleo timer persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK();
+
+	public FinderPath getFinderPathCountByKCN_KCPK();
 
 	/**
 	 * Returns all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -196,6 +204,10 @@ public interface KaleoTimerPersistence
 	 * @return the number of matching kaleo timers
 	 */
 	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKCN_KCPK_Blocking();
+
+	public FinderPath getFinderPathCountByKCN_KCPK_Blocking();
 
 	/**
 	 * Returns all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.

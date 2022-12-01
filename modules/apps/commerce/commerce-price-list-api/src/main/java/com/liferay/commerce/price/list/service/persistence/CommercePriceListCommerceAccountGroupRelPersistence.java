@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.service.persistence;
 
 import com.liferay.commerce.price.list.exception.NoSuchPriceListCommerceAccountGroupRelException;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceListCommerceAccountGroupRelUtil} to access the commerce price list commerce account group rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce price list commerce account group rels where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 * @return the number of matching commerce price list commerce account group rels
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce price list commerce account group rels where uuid = &#63; and companyId = &#63;.
@@ -345,6 +357,10 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommercePriceListId();
+
+	public FinderPath getFinderPathCountByCommercePriceListId();
+
 	/**
 	 * Returns all the commerce price list commerce account group rels where commercePriceListId = &#63;.
 	 *
@@ -499,6 +515,10 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 	 * @return the number of matching commerce price list commerce account group rels
 	 */
 	public int countByCommercePriceListId(long commercePriceListId);
+
+	public FinderPath getFinderPathFetchByCAGI_CPI();
+
+	public FinderPath getFinderPathCountByCAGI_CPI();
 
 	/**
 	 * Returns the commerce price list commerce account group rel where commercePriceListId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchPriceListCommerceAccountGroupRelException</code> if it could not be found.

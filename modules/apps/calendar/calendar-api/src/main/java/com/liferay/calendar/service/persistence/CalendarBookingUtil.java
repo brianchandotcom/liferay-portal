@@ -119,6 +119,30 @@ public class CalendarBookingUtil {
 		return getPersistence().update(calendarBooking, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the calendar bookings where uuid = &#63;.
 	 *
@@ -283,6 +307,18 @@ public class CalendarBookingUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the calendar booking where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchBookingException</code> if it could not be found.
 	 *
@@ -344,6 +380,18 @@ public class CalendarBookingUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -532,6 +580,19 @@ public class CalendarBookingUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCalendarId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCalendarId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCalendarId() {
+
+		return getPersistence().getFinderPathCountByCalendarId();
+	}
+
 	/**
 	 * Returns all the calendar bookings where calendarId = &#63;.
 	 *
@@ -701,6 +762,19 @@ public class CalendarBookingUtil {
 	 */
 	public static int countByCalendarId(long calendarId) {
 		return getPersistence().countByCalendarId(calendarId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCalendarResourceId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCalendarResourceId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCalendarResourceId() {
+
+		return getPersistence().getFinderPathCountByCalendarResourceId();
 	}
 
 	/**
@@ -877,6 +951,19 @@ public class CalendarBookingUtil {
 	 */
 	public static int countByCalendarResourceId(long calendarResourceId) {
 		return getPersistence().countByCalendarResourceId(calendarResourceId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByParentCalendarBookingId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByParentCalendarBookingId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByParentCalendarBookingId() {
+
+		return getPersistence().getFinderPathCountByParentCalendarBookingId();
 	}
 
 	/**
@@ -1061,6 +1148,20 @@ public class CalendarBookingUtil {
 
 		return getPersistence().countByParentCalendarBookingId(
 			parentCalendarBookingId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRecurringCalendarBookingId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByRecurringCalendarBookingId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRecurringCalendarBookingId() {
+
+		return getPersistence().
+			getFinderPathCountByRecurringCalendarBookingId();
 	}
 
 	/**
@@ -1248,6 +1349,18 @@ public class CalendarBookingUtil {
 			recurringCalendarBookingId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_P() {
+
+		return getPersistence().getFinderPathFetchByC_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_P() {
+
+		return getPersistence().getFinderPathCountByC_P();
+	}
+
 	/**
 	 * Returns the calendar booking where calendarId = &#63; and parentCalendarBookingId = &#63; or throws a <code>NoSuchBookingException</code> if it could not be found.
 	 *
@@ -1319,6 +1432,18 @@ public class CalendarBookingUtil {
 		return getPersistence().countByC_P(calendarId, parentCalendarBookingId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_V() {
+
+		return getPersistence().getFinderPathFetchByC_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_V() {
+
+		return getPersistence().getFinderPathCountByC_V();
+	}
+
 	/**
 	 * Returns the calendar booking where calendarId = &#63; and vEventUid = &#63; or throws a <code>NoSuchBookingException</code> if it could not be found.
 	 *
@@ -1383,6 +1508,18 @@ public class CalendarBookingUtil {
 	 */
 	public static int countByC_V(long calendarId, String vEventUid) {
 		return getPersistence().countByC_V(calendarId, vEventUid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_S() {
+
+		return getPersistence().getFinderPathCountByC_S();
 	}
 
 	/**
@@ -1661,6 +1798,18 @@ public class CalendarBookingUtil {
 	 */
 	public static int countByC_S(long calendarId, int[] statuses) {
 		return getPersistence().countByC_S(calendarId, statuses);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByP_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByP_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByP_S() {
+
+		return getPersistence().getFinderPathCountByP_S();
 	}
 
 	/**

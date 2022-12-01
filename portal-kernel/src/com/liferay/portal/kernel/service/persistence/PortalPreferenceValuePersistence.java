@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchPreferenceValueException;
 import com.liferay.portal.kernel.model.PortalPreferenceValue;
 
@@ -39,6 +40,13 @@ public interface PortalPreferenceValuePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalPreferenceValueUtil} to access the portal preference value persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByPortalPreferencesId();
+
+	public FinderPath getFinderPathCountByPortalPreferencesId();
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63;.
@@ -183,6 +191,10 @@ public interface PortalPreferenceValuePersistence
 	 * @return the number of matching portal preference values
 	 */
 	public int countByPortalPreferencesId(long portalPreferencesId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_N();
+
+	public FinderPath getFinderPathCountByP_N();
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
@@ -339,6 +351,10 @@ public interface PortalPreferenceValuePersistence
 	 * @return the number of matching portal preference values
 	 */
 	public int countByP_N(long portalPreferencesId, String namespace);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_K_N();
+
+	public FinderPath getFinderPathCountByP_K_N();
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
@@ -512,6 +528,10 @@ public interface PortalPreferenceValuePersistence
 	public int countByP_K_N(
 		long portalPreferencesId, String key, String namespace);
 
+	public FinderPath getFinderPathFetchByP_I_K_N();
+
+	public FinderPath getFinderPathCountByP_I_K_N();
+
 	/**
 	 * Returns the portal preference value where portalPreferencesId = &#63; and index = &#63; and key = &#63; and namespace = &#63; or throws a <code>NoSuchPreferenceValueException</code> if it could not be found.
 	 *
@@ -576,6 +596,10 @@ public interface PortalPreferenceValuePersistence
 	 */
 	public int countByP_I_K_N(
 		long portalPreferencesId, int index, String key, String namespace);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_K_N_SV();
+
+	public FinderPath getFinderPathCountByP_K_N_SV();
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.

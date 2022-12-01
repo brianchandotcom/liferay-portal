@@ -107,9 +107,31 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the asset list entry segments entry rels where uuid = &#63;.
@@ -674,7 +696,18 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		"(assetListEntrySegmentsEntryRel.uuid IS NULL OR assetListEntrySegmentsEntryRel.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the asset list entry segments entry rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntrySegmentsEntryRelException</code> if it could not be found.
@@ -947,7 +980,18 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the asset list entry segments entry rels where uuid = &#63; and companyId = &#63;.
@@ -1555,7 +1599,18 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByAssetListEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAssetListEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAssetListEntryId() {
+		return _finderPathWithoutPaginationFindByAssetListEntryId;
+	}
+
 	private FinderPath _finderPathCountByAssetListEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAssetListEntryId() {
+		return _finderPathCountByAssetListEntryId;
+	}
 
 	/**
 	 * Returns all the asset list entry segments entry rels where assetListEntryId = &#63;.
@@ -2089,7 +2144,18 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySegmentsEntryId;
 	private FinderPath _finderPathWithoutPaginationFindBySegmentsEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySegmentsEntryId() {
+		return _finderPathWithoutPaginationFindBySegmentsEntryId;
+	}
+
 	private FinderPath _finderPathCountBySegmentsEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountBySegmentsEntryId() {
+		return _finderPathCountBySegmentsEntryId;
+	}
 
 	/**
 	 * Returns all the asset list entry segments entry rels where segmentsEntryId = &#63;.
@@ -2622,7 +2688,18 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			"assetListEntrySegmentsEntryRel.segmentsEntryId = ?";
 
 	private FinderPath _finderPathFetchByA_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByA_S() {
+		return _finderPathFetchByA_S;
+	}
+
 	private FinderPath _finderPathCountByA_S;
+
+	@Override
+	public FinderPath getFinderPathCountByA_S() {
+		return _finderPathCountByA_S;
+	}
 
 	/**
 	 * Returns the asset list entry segments entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; or throws a <code>NoSuchEntrySegmentsEntryRelException</code> if it could not be found.
@@ -2867,7 +2944,19 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByA_S_C;
 	private FinderPath _finderPathWithoutPaginationFindByA_S_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByA_S_C() {
+		return _finderPathWithoutPaginationFindByA_S_C;
+	}
+
 	private FinderPath _finderPathCountByA_S_C;
+
+	@Override
+	public FinderPath getFinderPathCountByA_S_C() {
+		return _finderPathCountByA_S_C;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByA_S_C;
 
 	/**

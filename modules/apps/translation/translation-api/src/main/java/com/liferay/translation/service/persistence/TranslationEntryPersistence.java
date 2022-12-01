@@ -14,6 +14,7 @@
 
 package com.liferay.translation.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.translation.exception.NoSuchEntryException;
@@ -41,6 +42,13 @@ public interface TranslationEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TranslationEntryUtil} to access the translation entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the translation entries where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface TranslationEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the translation entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface TranslationEntryPersistence
 	 * @return the number of matching translation entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the translation entries where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface TranslationEntryPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the translation entries where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -544,6 +564,10 @@ public interface TranslationEntryPersistence
 	 * @return the number of matching translation entries
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByC_C_L();
+
+	public FinderPath getFinderPathCountByC_C_L();
 
 	/**
 	 * Returns the translation entry where classNameId = &#63; and classPK = &#63; and languageId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

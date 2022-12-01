@@ -98,8 +98,30 @@ public class WeDeployAuthTokenPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByT_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByT_T() {
+		return _finderPathFetchByT_T;
+	}
+
 	private FinderPath _finderPathCountByT_T;
+
+	@Override
+	public FinderPath getFinderPathCountByT_T() {
+		return _finderPathCountByT_T;
+	}
 
 	/**
 	 * Returns the we deploy auth token where token = &#63; and type = &#63; or throws a <code>NoSuchTokenException</code> if it could not be found.
@@ -362,7 +384,18 @@ public class WeDeployAuthTokenPersistenceImpl
 		"weDeployAuthToken.type = ?";
 
 	private FinderPath _finderPathFetchByCI_T_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByCI_T_T() {
+		return _finderPathFetchByCI_T_T;
+	}
+
 	private FinderPath _finderPathCountByCI_T_T;
+
+	@Override
+	public FinderPath getFinderPathCountByCI_T_T() {
+		return _finderPathCountByCI_T_T;
+	}
 
 	/**
 	 * Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or throws a <code>NoSuchTokenException</code> if it could not be found.

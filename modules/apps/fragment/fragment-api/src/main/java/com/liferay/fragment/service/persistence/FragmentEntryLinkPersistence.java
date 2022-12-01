@@ -16,6 +16,7 @@ package com.liferay.fragment.service.persistence;
 
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface FragmentEntryLinkPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentEntryLinkUtil} to access the fragment entry link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the fragment entry links where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface FragmentEntryLinkPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the fragment entry link where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryLinkException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface FragmentEntryLinkPersistence
 	 * @return the number of matching fragment entry links
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the fragment entry links where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface FragmentEntryLinkPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the fragment entry links where groupId = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface FragmentEntryLinkPersistence
 	 * @return the number of matching fragment entry links
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByFragmentEntryId();
+
+	public FinderPath getFinderPathCountByFragmentEntryId();
 
 	/**
 	 * Returns all the fragment entry links where fragmentEntryId = &#63;.
@@ -752,6 +776,10 @@ public interface FragmentEntryLinkPersistence
 	 */
 	public int countByFragmentEntryId(long[] fragmentEntryIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByRendererKey();
+
+	public FinderPath getFinderPathCountByRendererKey();
+
 	/**
 	 * Returns all the fragment entry links where rendererKey = &#63;.
 	 *
@@ -895,6 +923,10 @@ public interface FragmentEntryLinkPersistence
 	 * @return the number of matching fragment entry links
 	 */
 	public int countByRendererKey(String rendererKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F();
+
+	public FinderPath getFinderPathCountByG_F();
 
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63;.
@@ -1051,6 +1083,10 @@ public interface FragmentEntryLinkPersistence
 	 */
 	public int countByG_F(long groupId, long fragmentEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_P();
+
+	public FinderPath getFinderPathCountByG_P();
+
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and plid = &#63;.
 	 *
@@ -1204,6 +1240,10 @@ public interface FragmentEntryLinkPersistence
 	 * @return the number of matching fragment entry links
 	 */
 	public int countByG_P(long groupId, long plid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_OFELI_P();
+
+	public FinderPath getFinderPathCountByG_OFELI_P();
 
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and originalFragmentEntryLinkId = &#63; and plid = &#63;.
@@ -1377,6 +1417,10 @@ public interface FragmentEntryLinkPersistence
 	public int countByG_OFELI_P(
 		long groupId, long originalFragmentEntryLinkId, long plid);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_C();
+
+	public FinderPath getFinderPathCountByG_F_C();
+
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63;.
 	 *
@@ -1549,6 +1593,10 @@ public interface FragmentEntryLinkPersistence
 	public int countByG_F_C(
 		long groupId, long fragmentEntryId, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_P();
+
+	public FinderPath getFinderPathCountByG_F_P();
+
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and plid = &#63;.
 	 *
@@ -1715,6 +1763,10 @@ public interface FragmentEntryLinkPersistence
 	 * @return the number of matching fragment entry links
 	 */
 	public int countByG_F_P(long groupId, long fragmentEntryId, long plid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_S_P();
+
+	public FinderPath getFinderPathCountByG_S_P();
 
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63;.
@@ -1972,6 +2024,10 @@ public interface FragmentEntryLinkPersistence
 	public int countByG_S_P(
 		long groupId, long[] segmentsExperienceIds, long plid);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C();
+
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
@@ -2139,6 +2195,10 @@ public interface FragmentEntryLinkPersistence
 	 */
 	public int countByG_C_C(long groupId, long classNameId, long classPK);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_D();
+
+	public FinderPath getFinderPathCountByG_P_D();
+
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and plid = &#63; and deleted = &#63;.
 	 *
@@ -2304,6 +2364,10 @@ public interface FragmentEntryLinkPersistence
 	 * @return the number of matching fragment entry links
 	 */
 	public int countByG_P_D(long groupId, long plid, boolean deleted);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_F_C_C();
+
+	public FinderPath getFinderPathCountByG_F_C_C();
 
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -2487,6 +2551,10 @@ public interface FragmentEntryLinkPersistence
 	 */
 	public int countByG_F_C_C(
 		long groupId, long fragmentEntryId, long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_S_C_C();
+
+	public FinderPath getFinderPathCountByG_S_C_C();
 
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -2675,6 +2743,10 @@ public interface FragmentEntryLinkPersistence
 	public int countByG_S_C_C(
 		long groupId, long segmentsExperienceId, long classNameId,
 		long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_S_P_R();
+
+	public FinderPath getFinderPathCountByG_S_P_R();
 
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and rendererKey = &#63;.

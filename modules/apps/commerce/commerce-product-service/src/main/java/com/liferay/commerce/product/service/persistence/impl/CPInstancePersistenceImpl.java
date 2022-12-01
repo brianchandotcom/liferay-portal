@@ -107,9 +107,31 @@ public class CPInstancePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the cp instances where uuid = &#63;.
@@ -652,7 +674,18 @@ public class CPInstancePersistenceImpl
 		"(cpInstance.uuid IS NULL OR cpInstance.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the cp instance where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -916,7 +949,18 @@ public class CPInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the cp instances where uuid = &#63; and companyId = &#63;.
@@ -1509,7 +1553,18 @@ public class CPInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the cp instances where groupId = &#63;.
@@ -2014,7 +2069,18 @@ public class CPInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the cp instances where companyId = &#63;.
@@ -2525,7 +2591,18 @@ public class CPInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId() {
+		return _finderPathWithoutPaginationFindByCPDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByCPDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDefinitionId() {
+		return _finderPathCountByCPDefinitionId;
+	}
 
 	/**
 	 * Returns all the cp instances where CPDefinitionId = &#63;.
@@ -3040,7 +3117,18 @@ public class CPInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPInstanceUuid;
 	private FinderPath _finderPathWithoutPaginationFindByCPInstanceUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPInstanceUuid() {
+		return _finderPathWithoutPaginationFindByCPInstanceUuid;
+	}
+
 	private FinderPath _finderPathCountByCPInstanceUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByCPInstanceUuid() {
+		return _finderPathCountByCPInstanceUuid;
+	}
 
 	/**
 	 * Returns all the cp instances where CPInstanceUuid = &#63;.
@@ -3601,7 +3689,18 @@ public class CPInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_ST;
 	private FinderPath _finderPathWithoutPaginationFindByG_ST;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_ST() {
+		return _finderPathWithoutPaginationFindByG_ST;
+	}
+
 	private FinderPath _finderPathCountByG_ST;
+
+	@Override
+	public FinderPath getFinderPathCountByG_ST() {
+		return _finderPathCountByG_ST;
+	}
 
 	/**
 	 * Returns all the cp instances where groupId = &#63; and status = &#63;.
@@ -4151,7 +4250,18 @@ public class CPInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_SKU;
 	private FinderPath _finderPathWithoutPaginationFindByC_SKU;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_SKU() {
+		return _finderPathWithoutPaginationFindByC_SKU;
+	}
+
 	private FinderPath _finderPathCountByC_SKU;
+
+	@Override
+	public FinderPath getFinderPathCountByC_SKU() {
+		return _finderPathCountByC_SKU;
+	}
 
 	/**
 	 * Returns all the cp instances where companyId = &#63; and sku = &#63;.
@@ -4742,7 +4852,18 @@ public class CPInstancePersistenceImpl
 		"(cpInstance.sku IS NULL OR cpInstance.sku = '')";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and CPInstanceUuid = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -5006,7 +5127,18 @@ public class CPInstancePersistenceImpl
 		"(cpInstance.CPInstanceUuid IS NULL OR cpInstance.CPInstanceUuid = '')";
 
 	private FinderPath _finderPathFetchByCPDI_SKU;
+
+	@Override
+	public FinderPath getFinderPathFetchByCPDI_SKU() {
+		return _finderPathFetchByCPDI_SKU;
+	}
+
 	private FinderPath _finderPathCountByCPDI_SKU;
+
+	@Override
+	public FinderPath getFinderPathCountByCPDI_SKU() {
+		return _finderPathCountByCPDI_SKU;
+	}
 
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and sku = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -5270,7 +5402,18 @@ public class CPInstancePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_ST;
 	private FinderPath _finderPathWithoutPaginationFindByC_ST;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_ST() {
+		return _finderPathWithoutPaginationFindByC_ST;
+	}
+
 	private FinderPath _finderPathCountByC_ST;
+
+	@Override
+	public FinderPath getFinderPathCountByC_ST() {
+		return _finderPathCountByC_ST;
+	}
 
 	/**
 	 * Returns all the cp instances where CPDefinitionId = &#63; and status = &#63;.
@@ -7025,7 +7168,18 @@ public class CPInstancePersistenceImpl
 		"cpInstance.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the cp instance where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.

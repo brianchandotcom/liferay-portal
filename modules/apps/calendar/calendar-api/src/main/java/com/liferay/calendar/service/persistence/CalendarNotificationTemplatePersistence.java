@@ -16,6 +16,7 @@ package com.liferay.calendar.service.persistence;
 
 import com.liferay.calendar.exception.NoSuchNotificationTemplateException;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CalendarNotificationTemplatePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarNotificationTemplateUtil} to access the calendar notification template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the calendar notification templates where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface CalendarNotificationTemplatePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the calendar notification template where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchNotificationTemplateException</code> if it could not be found.
 	 *
@@ -237,6 +249,10 @@ public interface CalendarNotificationTemplatePersistence
 	 * @return the number of matching calendar notification templates
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the calendar notification templates where uuid = &#63; and companyId = &#63;.
@@ -393,6 +409,10 @@ public interface CalendarNotificationTemplatePersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCalendarId();
+
+	public FinderPath getFinderPathCountByCalendarId();
+
 	/**
 	 * Returns all the calendar notification templates where calendarId = &#63;.
 	 *
@@ -536,6 +556,10 @@ public interface CalendarNotificationTemplatePersistence
 	 * @return the number of matching calendar notification templates
 	 */
 	public int countByCalendarId(long calendarId);
+
+	public FinderPath getFinderPathFetchByC_NT_NTT();
+
+	public FinderPath getFinderPathCountByC_NT_NTT();
 
 	/**
 	 * Returns the calendar notification template where calendarId = &#63; and notificationType = &#63; and notificationTemplateType = &#63; or throws a <code>NoSuchNotificationTemplateException</code> if it could not be found.

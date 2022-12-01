@@ -109,9 +109,31 @@ public class UserPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the users where uuid = &#63;.
@@ -652,7 +674,18 @@ public class UserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the users where uuid = &#63; and companyId = &#63;.
@@ -1243,7 +1276,18 @@ public class UserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the users where companyId = &#63;.
@@ -1748,7 +1792,18 @@ public class UserPersistenceImpl
 		"user.companyId = ? AND user.defaultUser = [$FALSE$]";
 
 	private FinderPath _finderPathFetchByContactId;
+
+	@Override
+	public FinderPath getFinderPathFetchByContactId() {
+		return _finderPathFetchByContactId;
+	}
+
 	private FinderPath _finderPathCountByContactId;
+
+	@Override
+	public FinderPath getFinderPathCountByContactId() {
+		return _finderPathCountByContactId;
+	}
 
 	/**
 	 * Returns the user where contactId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -1957,7 +2012,18 @@ public class UserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByEmailAddress;
 	private FinderPath _finderPathWithoutPaginationFindByEmailAddress;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByEmailAddress() {
+		return _finderPathWithoutPaginationFindByEmailAddress;
+	}
+
 	private FinderPath _finderPathCountByEmailAddress;
+
+	@Override
+	public FinderPath getFinderPathCountByEmailAddress() {
+		return _finderPathCountByEmailAddress;
+	}
 
 	/**
 	 * Returns all the users where emailAddress = &#63;.
@@ -2508,7 +2574,18 @@ public class UserPersistenceImpl
 		"(user.emailAddress IS NULL OR user.emailAddress = '')";
 
 	private FinderPath _finderPathFetchByPortraitId;
+
+	@Override
+	public FinderPath getFinderPathFetchByPortraitId() {
+		return _finderPathFetchByPortraitId;
+	}
+
 	private FinderPath _finderPathCountByPortraitId;
+
+	@Override
+	public FinderPath getFinderPathCountByPortraitId() {
+		return _finderPathCountByPortraitId;
+	}
 
 	/**
 	 * Returns the user where portraitId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -3114,7 +3191,18 @@ public class UserPersistenceImpl
 		"user.companyId = ? AND user.defaultUser = [$FALSE$]";
 
 	private FinderPath _finderPathFetchByC_U;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_U() {
+		return _finderPathFetchByC_U;
+	}
+
 	private FinderPath _finderPathCountByC_U;
+
+	@Override
+	public FinderPath getFinderPathCountByC_U() {
+		return _finderPathCountByC_U;
+	}
 
 	/**
 	 * Returns the user where companyId = &#63; and userId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -3349,7 +3437,18 @@ public class UserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_CD;
 	private FinderPath _finderPathWithoutPaginationFindByC_CD;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_CD() {
+		return _finderPathWithoutPaginationFindByC_CD;
+	}
+
 	private FinderPath _finderPathCountByC_CD;
+
+	@Override
+	public FinderPath getFinderPathCountByC_CD() {
+		return _finderPathCountByC_CD;
+	}
 
 	/**
 	 * Returns all the users where companyId = &#63; and createDate = &#63;.
@@ -3934,7 +4033,18 @@ public class UserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_MD;
 	private FinderPath _finderPathWithoutPaginationFindByC_MD;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_MD() {
+		return _finderPathWithoutPaginationFindByC_MD;
+	}
+
 	private FinderPath _finderPathCountByC_MD;
+
+	@Override
+	public FinderPath getFinderPathCountByC_MD() {
+		return _finderPathCountByC_MD;
+	}
 
 	/**
 	 * Returns all the users where companyId = &#63; and modifiedDate = &#63;.
@@ -4523,7 +4633,18 @@ public class UserPersistenceImpl
 		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
 
 	private FinderPath _finderPathFetchByC_DU;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_DU() {
+		return _finderPathFetchByC_DU;
+	}
+
 	private FinderPath _finderPathCountByC_DU;
+
+	@Override
+	public FinderPath getFinderPathCountByC_DU() {
+		return _finderPathCountByC_DU;
+	}
 
 	/**
 	 * Returns the user where companyId = &#63; and defaultUser = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -4775,7 +4896,18 @@ public class UserPersistenceImpl
 		"user.defaultUser = ?";
 
 	private FinderPath _finderPathFetchByC_SN;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_SN() {
+		return _finderPathFetchByC_SN;
+	}
+
 	private FinderPath _finderPathCountByC_SN;
+
+	@Override
+	public FinderPath getFinderPathCountByC_SN() {
+		return _finderPathCountByC_SN;
+	}
 
 	/**
 	 * Returns the user where companyId = &#63; and screenName = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -5039,7 +5171,18 @@ public class UserPersistenceImpl
 		"(user.screenName IS NULL OR user.screenName = '')";
 
 	private FinderPath _finderPathFetchByC_EA;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_EA() {
+		return _finderPathFetchByC_EA;
+	}
+
 	private FinderPath _finderPathCountByC_EA;
+
+	@Override
+	public FinderPath getFinderPathCountByC_EA() {
+		return _finderPathCountByC_EA;
+	}
 
 	/**
 	 * Returns the user where companyId = &#63; and emailAddress = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -5303,7 +5446,18 @@ public class UserPersistenceImpl
 		"(user.emailAddress IS NULL OR user.emailAddress = '')";
 
 	private FinderPath _finderPathFetchByC_FID;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_FID() {
+		return _finderPathFetchByC_FID;
+	}
+
 	private FinderPath _finderPathCountByC_FID;
+
+	@Override
+	public FinderPath getFinderPathCountByC_FID() {
+		return _finderPathCountByC_FID;
+	}
 
 	/**
 	 * Returns the user where companyId = &#63; and facebookId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -5555,7 +5709,18 @@ public class UserPersistenceImpl
 		"user.facebookId = ?";
 
 	private FinderPath _finderPathFetchByC_GUID;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_GUID() {
+		return _finderPathFetchByC_GUID;
+	}
+
 	private FinderPath _finderPathCountByC_GUID;
+
+	@Override
+	public FinderPath getFinderPathCountByC_GUID() {
+		return _finderPathCountByC_GUID;
+	}
 
 	/**
 	 * Returns the user where companyId = &#63; and googleUserId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -5836,7 +6001,18 @@ public class UserPersistenceImpl
 		"(user.googleUserId IS NULL OR user.googleUserId = '')";
 
 	private FinderPath _finderPathFetchByC_O;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_O() {
+		return _finderPathFetchByC_O;
+	}
+
 	private FinderPath _finderPathCountByC_O;
+
+	@Override
+	public FinderPath getFinderPathCountByC_O() {
+		return _finderPathCountByC_O;
+	}
 
 	/**
 	 * Returns the user where companyId = &#63; and openId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -6115,7 +6291,18 @@ public class UserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_S() {
+		return _finderPathWithoutPaginationFindByC_S;
+	}
+
 	private FinderPath _finderPathCountByC_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S() {
+		return _finderPathCountByC_S;
+	}
 
 	/**
 	 * Returns all the users where companyId = &#63; and status = &#63;.
@@ -6661,7 +6848,18 @@ public class UserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_CD_MD;
 	private FinderPath _finderPathWithoutPaginationFindByC_CD_MD;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_CD_MD() {
+		return _finderPathWithoutPaginationFindByC_CD_MD;
+	}
+
 	private FinderPath _finderPathCountByC_CD_MD;
+
+	@Override
+	public FinderPath getFinderPathCountByC_CD_MD() {
+		return _finderPathCountByC_CD_MD;
+	}
 
 	/**
 	 * Returns all the users where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
@@ -7336,7 +7534,18 @@ public class UserPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_DU_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_DU_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_DU_S() {
+		return _finderPathWithoutPaginationFindByC_DU_S;
+	}
+
 	private FinderPath _finderPathCountByC_DU_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_DU_S() {
+		return _finderPathCountByC_DU_S;
+	}
 
 	/**
 	 * Returns all the users where companyId = &#63; and defaultUser = &#63; and status = &#63;.
@@ -7929,7 +8138,18 @@ public class UserPersistenceImpl
 		"user.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the user where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.

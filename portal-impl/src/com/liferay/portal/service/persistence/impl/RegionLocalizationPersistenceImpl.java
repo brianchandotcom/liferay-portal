@@ -82,9 +82,31 @@ public class RegionLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByRegionId;
 	private FinderPath _finderPathWithoutPaginationFindByRegionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByRegionId() {
+		return _finderPathWithoutPaginationFindByRegionId;
+	}
+
 	private FinderPath _finderPathCountByRegionId;
+
+	@Override
+	public FinderPath getFinderPathCountByRegionId() {
+		return _finderPathCountByRegionId;
+	}
 
 	/**
 	 * Returns all the region localizations where regionId = &#63;.
@@ -586,7 +608,18 @@ public class RegionLocalizationPersistenceImpl
 		"regionLocalization.regionId = ?";
 
 	private FinderPath _finderPathFetchByRegionId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathFetchByRegionId_LanguageId() {
+		return _finderPathFetchByRegionId_LanguageId;
+	}
+
 	private FinderPath _finderPathCountByRegionId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathCountByRegionId_LanguageId() {
+		return _finderPathCountByRegionId_LanguageId;
+	}
 
 	/**
 	 * Returns the region localization where regionId = &#63; and languageId = &#63; or throws a <code>NoSuchRegionLocalizationException</code> if it could not be found.

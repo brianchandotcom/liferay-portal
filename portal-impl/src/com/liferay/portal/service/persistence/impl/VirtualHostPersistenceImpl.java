@@ -90,9 +90,31 @@ public class VirtualHostPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the virtual hosts where companyId = &#63;.
@@ -603,7 +625,18 @@ public class VirtualHostPersistenceImpl
 		"virtualHost.companyId = ?";
 
 	private FinderPath _finderPathFetchByHostname;
+
+	@Override
+	public FinderPath getFinderPathFetchByHostname() {
+		return _finderPathFetchByHostname;
+	}
+
 	private FinderPath _finderPathCountByHostname;
+
+	@Override
+	public FinderPath getFinderPathCountByHostname() {
+		return _finderPathCountByHostname;
+	}
 
 	/**
 	 * Returns the virtual host where hostname = &#63; or throws a <code>NoSuchVirtualHostException</code> if it could not be found.
@@ -847,7 +880,18 @@ public class VirtualHostPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_L() {
+		return _finderPathWithoutPaginationFindByC_L;
+	}
+
 	private FinderPath _finderPathCountByC_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_L() {
+		return _finderPathCountByC_L;
+	}
 
 	/**
 	 * Returns all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
@@ -2312,7 +2356,18 @@ public class VirtualHostPersistenceImpl
 		"(virtualHost.hostname IS NULL OR virtualHost.hostname = '')";
 
 	private FinderPath _finderPathFetchByC_L_D;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_L_D() {
+		return _finderPathFetchByC_L_D;
+	}
+
 	private FinderPath _finderPathCountByC_L_D;
+
+	@Override
+	public FinderPath getFinderPathCountByC_L_D() {
+		return _finderPathCountByC_L_D;
+	}
 
 	/**
 	 * Returns the virtual host where companyId = &#63; and layoutSetId = &#63; and defaultVirtualHost = &#63; or throws a <code>NoSuchVirtualHostException</code> if it could not be found.

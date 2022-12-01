@@ -125,6 +125,31 @@ public class CommerceChannelAccountEntryRelUtil {
 			commerceChannelAccountEntryRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAccountEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAccountEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAccountEntryId() {
+
+		return getPersistence().getFinderPathCountByAccountEntryId();
+	}
+
 	/**
 	 * Returns all the commerce channel account entry rels where accountEntryId = &#63;.
 	 *
@@ -307,6 +332,19 @@ public class CommerceChannelAccountEntryRelUtil {
 		return getPersistence().countByAccountEntryId(accountEntryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceChannelId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceChannelId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceChannelId() {
+
+		return getPersistence().getFinderPathCountByCommerceChannelId();
+	}
+
 	/**
 	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63;.
 	 *
@@ -487,6 +525,18 @@ public class CommerceChannelAccountEntryRelUtil {
 	 */
 	public static int countByCommerceChannelId(long commerceChannelId) {
 		return getPersistence().countByCommerceChannelId(commerceChannelId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByA_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByA_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_T() {
+
+		return getPersistence().getFinderPathCountByA_T();
 	}
 
 	/**
@@ -681,6 +731,18 @@ public class CommerceChannelAccountEntryRelUtil {
 		return getPersistence().countByA_T(accountEntryId, type);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
+	}
+
 	/**
 	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -873,6 +935,18 @@ public class CommerceChannelAccountEntryRelUtil {
 		return getPersistence().countByC_C(classNameId, classPK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_T() {
+
+		return getPersistence().getFinderPathCountByC_T();
+	}
+
 	/**
 	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
 	 *
@@ -1063,6 +1137,18 @@ public class CommerceChannelAccountEntryRelUtil {
 	 */
 	public static int countByC_T(long commerceChannelId, int type) {
 		return getPersistence().countByC_T(commerceChannelId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByA_C_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByA_C_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_C_T() {
+
+		return getPersistence().getFinderPathCountByA_C_T();
 	}
 
 	/**
@@ -1277,6 +1363,18 @@ public class CommerceChannelAccountEntryRelUtil {
 
 		return getPersistence().countByA_C_T(
 			accountEntryId, commerceChannelId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_C_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_C_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C_T() {
+
+		return getPersistence().getFinderPathCountByC_C_C_T();
 	}
 
 	/**
@@ -1503,6 +1601,18 @@ public class CommerceChannelAccountEntryRelUtil {
 
 		return getPersistence().countByC_C_C_T(
 			classNameId, classPK, commerceChannelId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByA_C_C_C_T() {
+
+		return getPersistence().getFinderPathFetchByA_C_C_C_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_C_C_C_T() {
+
+		return getPersistence().getFinderPathCountByA_C_C_C_T();
 	}
 
 	/**

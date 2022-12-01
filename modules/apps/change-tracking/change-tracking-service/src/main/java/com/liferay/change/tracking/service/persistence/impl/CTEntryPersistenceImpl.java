@@ -94,9 +94,31 @@ public class CTEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId() {
+		return _finderPathWithoutPaginationFindByCtCollectionId;
+	}
+
 	private FinderPath _finderPathCountByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCtCollectionId() {
+		return _finderPathCountByCtCollectionId;
+	}
 
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63;.
@@ -593,7 +615,18 @@ public class CTEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_MCNI;
 	private FinderPath _finderPathWithoutPaginationFindByC_MCNI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_MCNI() {
+		return _finderPathWithoutPaginationFindByC_MCNI;
+	}
+
 	private FinderPath _finderPathCountByC_MCNI;
+
+	@Override
+	public FinderPath getFinderPathCountByC_MCNI() {
+		return _finderPathCountByC_MCNI;
+	}
 
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63; and modelClassNameId = &#63;.
@@ -1135,7 +1168,18 @@ public class CTEntryPersistenceImpl
 		"ctEntry.modelClassNameId = ?";
 
 	private FinderPath _finderPathFetchByC_MCNI_MCPK;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_MCNI_MCPK() {
+		return _finderPathFetchByC_MCNI_MCPK;
+	}
+
 	private FinderPath _finderPathCountByC_MCNI_MCPK;
+
+	@Override
+	public FinderPath getFinderPathCountByC_MCNI_MCPK() {
+		return _finderPathCountByC_MCNI_MCPK;
+	}
 
 	/**
 	 * Returns the ct entry where ctCollectionId = &#63; and modelClassNameId = &#63; and modelClassPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

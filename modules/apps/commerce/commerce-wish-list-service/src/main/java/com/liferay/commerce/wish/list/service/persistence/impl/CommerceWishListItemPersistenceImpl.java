@@ -96,9 +96,31 @@ public class CommerceWishListItemPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommerceWishListId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceWishListId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceWishListId() {
+		return _finderPathWithoutPaginationFindByCommerceWishListId;
+	}
+
 	private FinderPath _finderPathCountByCommerceWishListId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceWishListId() {
+		return _finderPathCountByCommerceWishListId;
+	}
 
 	/**
 	 * Returns all the commerce wish list items where commerceWishListId = &#63;.
@@ -614,7 +636,18 @@ public class CommerceWishListItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPInstanceUuid;
 	private FinderPath _finderPathWithoutPaginationFindByCPInstanceUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPInstanceUuid() {
+		return _finderPathWithoutPaginationFindByCPInstanceUuid;
+	}
+
 	private FinderPath _finderPathCountByCPInstanceUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByCPInstanceUuid() {
+		return _finderPathCountByCPInstanceUuid;
+	}
 
 	/**
 	 * Returns all the commerce wish list items where CPInstanceUuid = &#63;.
@@ -1168,7 +1201,18 @@ public class CommerceWishListItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCProductId;
 	private FinderPath _finderPathWithoutPaginationFindByCProductId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCProductId() {
+		return _finderPathWithoutPaginationFindByCProductId;
+	}
+
 	private FinderPath _finderPathCountByCProductId;
+
+	@Override
+	public FinderPath getFinderPathCountByCProductId() {
+		return _finderPathCountByCProductId;
+	}
 
 	/**
 	 * Returns all the commerce wish list items where CProductId = &#63;.
@@ -1675,7 +1719,18 @@ public class CommerceWishListItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCW_CPI;
 	private FinderPath _finderPathWithoutPaginationFindByCW_CPI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCW_CPI() {
+		return _finderPathWithoutPaginationFindByCW_CPI;
+	}
+
 	private FinderPath _finderPathCountByCW_CPI;
+
+	@Override
+	public FinderPath getFinderPathCountByCW_CPI() {
+		return _finderPathCountByCW_CPI;
+	}
 
 	/**
 	 * Returns all the commerce wish list items where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
@@ -2269,7 +2324,18 @@ public class CommerceWishListItemPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCW_CP;
 	private FinderPath _finderPathWithoutPaginationFindByCW_CP;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCW_CP() {
+		return _finderPathWithoutPaginationFindByCW_CP;
+	}
+
 	private FinderPath _finderPathCountByCW_CP;
+
+	@Override
+	public FinderPath getFinderPathCountByCW_CP() {
+		return _finderPathCountByCW_CP;
+	}
 
 	/**
 	 * Returns all the commerce wish list items where commerceWishListId = &#63; and CProductId = &#63;.
@@ -2817,7 +2883,18 @@ public class CommerceWishListItemPersistenceImpl
 		"commerceWishListItem.CProductId = ?";
 
 	private FinderPath _finderPathFetchByCW_CPI_CP;
+
+	@Override
+	public FinderPath getFinderPathFetchByCW_CPI_CP() {
+		return _finderPathFetchByCW_CPI_CP;
+	}
+
 	private FinderPath _finderPathCountByCW_CPI_CP;
+
+	@Override
+	public FinderPath getFinderPathCountByCW_CPI_CP() {
+		return _finderPathCountByCW_CPI_CP;
+	}
 
 	/**
 	 * Returns the commerce wish list item where commerceWishListId = &#63; and CPInstanceUuid = &#63; and CProductId = &#63; or throws a <code>NoSuchWishListItemException</code> if it could not be found.

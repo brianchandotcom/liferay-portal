@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.service.persistence;
 
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionQualifierException;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifier;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,14 @@ public interface CommerceShippingFixedOptionQualifierPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionQualifierUtil} to access the commerce shipping fixed option qualifier persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingFixedOptionId();
+
+	public FinderPath getFinderPathCountByCommerceShippingFixedOptionId();
 
 	/**
 	 * Returns all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63;.
@@ -195,6 +204,10 @@ public interface CommerceShippingFixedOptionQualifierPersistence
 	 */
 	public int countByCommerceShippingFixedOptionId(
 		long commerceShippingFixedOptionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the commerce shipping fixed option qualifiers where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
@@ -355,6 +368,10 @@ public interface CommerceShippingFixedOptionQualifierPersistence
 	 * @return the number of matching commerce shipping fixed option qualifiers
 	 */
 	public int countByC_C(long classNameId, long commerceShippingFixedOptionId);
+
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns the commerce shipping fixed option qualifier where classNameId = &#63; and classPK = &#63; and commerceShippingFixedOptionId = &#63; or throws a <code>NoSuchShippingFixedOptionQualifierException</code> if it could not be found.

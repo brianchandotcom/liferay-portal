@@ -88,8 +88,30 @@ public class TicketPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByKey;
+
+	@Override
+	public FinderPath getFinderPathFetchByKey() {
+		return _finderPathFetchByKey;
+	}
+
 	private FinderPath _finderPathCountByKey;
+
+	@Override
+	public FinderPath getFinderPathCountByKey() {
+		return _finderPathCountByKey;
+	}
 
 	/**
 	 * Returns the ticket where key = &#63; or throws a <code>NoSuchTicketException</code> if it could not be found.
@@ -326,7 +348,18 @@ public class TicketPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C() {
+		return _finderPathWithoutPaginationFindByC_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C() {
+		return _finderPathCountByC_C_C;
+	}
 
 	/**
 	 * Returns all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -903,7 +936,18 @@ public class TicketPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_T() {
+		return _finderPathWithoutPaginationFindByC_C_T;
+	}
+
 	private FinderPath _finderPathCountByC_C_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_T() {
+		return _finderPathCountByC_C_T;
+	}
 
 	/**
 	 * Returns all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -1475,7 +1519,18 @@ public class TicketPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_T() {
+		return _finderPathWithoutPaginationFindByC_C_C_T;
+	}
+
 	private FinderPath _finderPathCountByC_C_C_T;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C_T() {
+		return _finderPathCountByC_C_C_T;
+	}
 
 	/**
 	 * Returns all the tickets where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.

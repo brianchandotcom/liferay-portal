@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -40,6 +41,13 @@ public interface LayoutPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutUtil} to access the layout persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layouts where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface LayoutPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G_P();
+
+	public FinderPath getFinderPathCountByUUID_G_P();
+
 	/**
 	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
@@ -242,6 +254,10 @@ public interface LayoutPersistence
 	 */
 	public int countByUUID_G_P(
 		String uuid, long groupId, boolean privateLayout);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layouts where uuid = &#63; and companyId = &#63;.
@@ -396,6 +412,10 @@ public interface LayoutPersistence
 	 * @return the number of matching layouts
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the layouts where groupId = &#63;.
@@ -604,6 +624,10 @@ public interface LayoutPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the layouts where companyId = &#63;.
 	 *
@@ -746,6 +770,10 @@ public interface LayoutPersistence
 	 * @return the number of matching layouts
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByParentPlid();
+
+	public FinderPath getFinderPathCountByParentPlid();
 
 	/**
 	 * Returns all the layouts where parentPlid = &#63;.
@@ -890,6 +918,10 @@ public interface LayoutPersistence
 	 */
 	public int countByParentPlid(long parentPlid);
 
+	public FinderPath getFinderPathFetchByIconImageId();
+
+	public FinderPath getFinderPathCountByIconImageId();
+
 	/**
 	 * Returns the layout where iconImageId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
@@ -933,6 +965,10 @@ public interface LayoutPersistence
 	 * @return the number of matching layouts
 	 */
 	public int countByIconImageId(long iconImageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutPrototypeUuid();
+
+	public FinderPath getFinderPathCountByLayoutPrototypeUuid();
 
 	/**
 	 * Returns all the layouts where layoutPrototypeUuid = &#63;.
@@ -1077,6 +1113,11 @@ public interface LayoutPersistence
 	 * @return the number of matching layouts
 	 */
 	public int countByLayoutPrototypeUuid(String layoutPrototypeUuid);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySourcePrototypeLayoutUuid();
+
+	public FinderPath getFinderPathCountBySourcePrototypeLayoutUuid();
 
 	/**
 	 * Returns all the layouts where sourcePrototypeLayoutUuid = &#63;.
@@ -1223,6 +1264,10 @@ public interface LayoutPersistence
 	 */
 	public int countBySourcePrototypeLayoutUuid(
 		String sourcePrototypeLayoutUuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P();
+
+	public FinderPath getFinderPathCountByG_P();
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63;.
@@ -1449,6 +1494,10 @@ public interface LayoutPersistence
 	 */
 	public int filterCountByG_P(long groupId, boolean privateLayout);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_T();
+
+	public FinderPath getFinderPathCountByG_T();
+
 	/**
 	 * Returns all the layouts where groupId = &#63; and type = &#63;.
 	 *
@@ -1671,6 +1720,10 @@ public interface LayoutPersistence
 	 * @return the number of matching layouts that the user has permission to view
 	 */
 	public int filterCountByG_T(long groupId, String type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_MLP();
+
+	public FinderPath getFinderPathCountByG_MLP();
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and masterLayoutPlid = &#63;.
@@ -1897,6 +1950,10 @@ public interface LayoutPersistence
 	 */
 	public int filterCountByG_MLP(long groupId, long masterLayoutPlid);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_L();
+
+	public FinderPath getFinderPathCountByC_L();
+
 	/**
 	 * Returns all the layouts where companyId = &#63; and layoutPrototypeUuid = &#63;.
 	 *
@@ -2052,6 +2109,10 @@ public interface LayoutPersistence
 	 */
 	public int countByC_L(long companyId, String layoutPrototypeUuid);
 
+	public FinderPath getFinderPathFetchByP_I();
+
+	public FinderPath getFinderPathCountByP_I();
+
 	/**
 	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
@@ -2102,6 +2163,10 @@ public interface LayoutPersistence
 	 */
 	public int countByP_I(boolean privateLayout, long iconImageId);
 
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns the layout where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
@@ -2151,6 +2216,10 @@ public interface LayoutPersistence
 	 * @return the number of matching layouts
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByG_P_L();
+
+	public FinderPath getFinderPathCountByG_P_L();
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -2210,6 +2279,10 @@ public interface LayoutPersistence
 	 * @return the number of matching layouts
 	 */
 	public int countByG_P_L(long groupId, boolean privateLayout, long layoutId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_P();
+
+	public FinderPath getFinderPathCountByG_P_P();
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
@@ -2609,6 +2682,10 @@ public interface LayoutPersistence
 	public int filterCountByG_P_P(
 		long groupId, boolean privateLayout, long[] parentLayoutIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_T();
+
+	public FinderPath getFinderPathCountByG_P_T();
+
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
 	 *
@@ -2997,6 +3074,10 @@ public interface LayoutPersistence
 	public int filterCountByG_P_T(
 		long groupId, boolean privateLayout, String[] types);
 
+	public FinderPath getFinderPathFetchByG_P_F();
+
+	public FinderPath getFinderPathCountByG_P_F();
+
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
 	 *
@@ -3056,6 +3137,10 @@ public interface LayoutPersistence
 	 */
 	public int countByG_P_F(
 		long groupId, boolean privateLayout, String friendlyURL);
+
+	public FinderPath getFinderPathFetchByG_P_SPLU();
+
+	public FinderPath getFinderPathCountByG_P_SPLU();
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a <code>NoSuchLayoutException</code> if it could not be found.
@@ -3118,6 +3203,10 @@ public interface LayoutPersistence
 	 */
 	public int countByG_P_SPLU(
 		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_ST();
+
+	public FinderPath getFinderPathCountByG_P_ST();
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and status = &#63;.
@@ -3506,6 +3595,10 @@ public interface LayoutPersistence
 	 */
 	public int filterCountByG_P_ST(
 		long groupId, boolean privateLayout, int[] statuses);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_P_H();
+
+	public FinderPath getFinderPathCountByG_P_P_H();
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
@@ -3944,6 +4037,10 @@ public interface LayoutPersistence
 	public int filterCountByG_P_P_H(
 		long groupId, boolean privateLayout, long[] parentLayoutIds,
 		boolean hidden);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_P_S();
+
+	public FinderPath getFinderPathCountByG_P_P_S();
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.

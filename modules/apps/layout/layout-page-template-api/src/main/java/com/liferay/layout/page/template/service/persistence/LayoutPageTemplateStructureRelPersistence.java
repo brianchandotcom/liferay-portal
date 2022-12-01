@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.service.persistence;
 
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateStructureRelException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateStructureRelUtil} to access the layout page template structure rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout page template structure rels where uuid = &#63;.
@@ -187,6 +195,10 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the layout page template structure rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateStructureRelException</code> if it could not be found.
 	 *
@@ -239,6 +251,10 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @return the number of matching layout page template structure rels
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout page template structure rels where uuid = &#63; and companyId = &#63;.
@@ -395,6 +411,11 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByLayoutPageTemplateStructureId();
+
+	public FinderPath getFinderPathCountByLayoutPageTemplateStructureId();
+
 	/**
 	 * Returns all the layout page template structure rels where layoutPageTemplateStructureId = &#63;.
 	 *
@@ -550,6 +571,11 @@ public interface LayoutPageTemplateStructureRelPersistence
 	public int countByLayoutPageTemplateStructureId(
 		long layoutPageTemplateStructureId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperienceId();
+
+	public FinderPath getFinderPathCountBySegmentsExperienceId();
+
 	/**
 	 * Returns all the layout page template structure rels where segmentsExperienceId = &#63;.
 	 *
@@ -698,6 +724,10 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @return the number of matching layout page template structure rels
 	 */
 	public int countBySegmentsExperienceId(long segmentsExperienceId);
+
+	public FinderPath getFinderPathFetchByL_S();
+
+	public FinderPath getFinderPathCountByL_S();
 
 	/**
 	 * Returns the layout page template structure rel where layoutPageTemplateStructureId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchPageTemplateStructureRelException</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.model.CPDisplayLayout;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface CPDisplayLayoutPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutUtil} to access the cp display layout persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp display layouts where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface CPDisplayLayoutPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the cp display layout where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDisplayLayoutException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface CPDisplayLayoutPersistence
 	 * @return the number of matching cp display layouts
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp display layouts where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface CPDisplayLayoutPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the cp display layouts where groupId = &#63;.
 	 *
@@ -532,6 +552,10 @@ public interface CPDisplayLayoutPersistence
 	 * @return the number of matching cp display layouts
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the cp display layouts where groupId = &#63; and classNameId = &#63;.
@@ -688,6 +712,10 @@ public interface CPDisplayLayoutPersistence
 	 */
 	public int countByG_C(long groupId, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_L();
+
+	public FinderPath getFinderPathCountByG_L();
+
 	/**
 	 * Returns all the cp display layouts where groupId = &#63; and layoutUuid = &#63;.
 	 *
@@ -843,6 +871,10 @@ public interface CPDisplayLayoutPersistence
 	 */
 	public int countByG_L(long groupId, String layoutUuid);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the cp display layouts where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -997,6 +1029,10 @@ public interface CPDisplayLayoutPersistence
 	 * @return the number of matching cp display layouts
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByG_C_C();
+
+	public FinderPath getFinderPathCountByG_C_C();
 
 	/**
 	 * Returns the cp display layout where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchCPDisplayLayoutException</code> if it could not be found.

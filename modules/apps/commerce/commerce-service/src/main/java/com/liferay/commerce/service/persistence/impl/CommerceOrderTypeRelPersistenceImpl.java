@@ -99,9 +99,31 @@ public class CommerceOrderTypeRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce order type rels where uuid = &#63;.
@@ -642,7 +664,18 @@ public class CommerceOrderTypeRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce order type rels where uuid = &#63; and companyId = &#63;.
@@ -1228,7 +1261,20 @@ public class CommerceOrderTypeRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceOrderTypeId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceOrderTypeId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceOrderTypeId() {
+
+		return _finderPathWithoutPaginationFindByCommerceOrderTypeId;
+	}
+
 	private FinderPath _finderPathCountByCommerceOrderTypeId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceOrderTypeId() {
+		return _finderPathCountByCommerceOrderTypeId;
+	}
 
 	/**
 	 * Returns all the commerce order type rels where commerceOrderTypeId = &#63;.
@@ -1744,7 +1790,18 @@ public class CommerceOrderTypeRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the commerce order type rels where classNameId = &#63; and commerceOrderTypeId = &#63;.
@@ -2293,7 +2350,18 @@ public class CommerceOrderTypeRelPersistenceImpl
 		"commerceOrderTypeRel.commerceOrderTypeId = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C_C() {
+		return _finderPathFetchByC_C_C;
+	}
+
 	private FinderPath _finderPathCountByC_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_C() {
+		return _finderPathCountByC_C_C;
+	}
 
 	/**
 	 * Returns the commerce order type rel where classNameId = &#63; and classPK = &#63; and commerceOrderTypeId = &#63; or throws a <code>NoSuchOrderTypeRelException</code> if it could not be found.
@@ -2547,7 +2615,18 @@ public class CommerceOrderTypeRelPersistenceImpl
 		"commerceOrderTypeRel.commerceOrderTypeId = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_C() {
+		return _finderPathFetchByERC_C;
+	}
+
 	private FinderPath _finderPathCountByERC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_C() {
+		return _finderPathCountByERC_C;
+	}
 
 	/**
 	 * Returns the commerce order type rel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderTypeRelException</code> if it could not be found.

@@ -125,6 +125,31 @@ public class NotificationQueueEntryAttachmentUtil {
 			notificationQueueEntryAttachment, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByNotificationQueueEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByNotificationQueueEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByNotificationQueueEntryId() {
+
+		return getPersistence().getFinderPathCountByNotificationQueueEntryId();
+	}
+
 	/**
 	 * Returns all the notification queue entry attachments where notificationQueueEntryId = &#63;.
 	 *

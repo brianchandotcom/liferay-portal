@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.service.persistence;
 
 import com.liferay.commerce.price.list.exception.NoSuchPriceListChannelRelException;
 import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface CommercePriceListChannelRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceListChannelRelUtil} to access the commerce price list channel rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce price list channel rels where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface CommercePriceListChannelRelPersistence
 	 * @return the number of matching commerce price list channel rels
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce price list channel rels where uuid = &#63; and companyId = &#63;.
@@ -341,6 +353,10 @@ public interface CommercePriceListChannelRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommercePriceListId();
+
+	public FinderPath getFinderPathCountByCommercePriceListId();
+
 	/**
 	 * Returns all the commerce price list channel rels where commercePriceListId = &#63;.
 	 *
@@ -486,6 +502,10 @@ public interface CommercePriceListChannelRelPersistence
 	 * @return the number of matching commerce price list channel rels
 	 */
 	public int countByCommercePriceListId(long commercePriceListId);
+
+	public FinderPath getFinderPathFetchByCCI_CPI();
+
+	public FinderPath getFinderPathCountByCCI_CPI();
 
 	/**
 	 * Returns the commerce price list channel rel where commerceChannelId = &#63; and commercePriceListId = &#63; or throws a <code>NoSuchPriceListChannelRelException</code> if it could not be found.

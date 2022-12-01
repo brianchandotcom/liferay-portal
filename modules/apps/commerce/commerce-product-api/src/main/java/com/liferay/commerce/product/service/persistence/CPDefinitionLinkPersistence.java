@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException;
 import com.liferay.commerce.product.model.CPDefinitionLink;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface CPDefinitionLinkPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionLinkUtil} to access the cp definition link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp definition links where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface CPDefinitionLinkPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the cp definition link where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionLinkException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface CPDefinitionLinkPersistence
 	 * @return the number of matching cp definition links
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp definition links where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface CPDefinitionLinkPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPDefinitionId();
+
+	public FinderPath getFinderPathCountByCPDefinitionId();
+
 	/**
 	 * Returns all the cp definition links where CPDefinitionId = &#63;.
 	 *
@@ -534,6 +554,10 @@ public interface CPDefinitionLinkPersistence
 	 */
 	public int countByCPDefinitionId(long CPDefinitionId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCProductId();
+
+	public FinderPath getFinderPathCountByCProductId();
+
 	/**
 	 * Returns all the cp definition links where CProductId = &#63;.
 	 *
@@ -676,6 +700,10 @@ public interface CPDefinitionLinkPersistence
 	 * @return the number of matching cp definition links
 	 */
 	public int countByCProductId(long CProductId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCPD_T();
+
+	public FinderPath getFinderPathCountByCPD_T();
 
 	/**
 	 * Returns all the cp definition links where CPDefinitionId = &#63; and type = &#63;.
@@ -832,6 +860,10 @@ public interface CPDefinitionLinkPersistence
 	 */
 	public int countByCPD_T(long CPDefinitionId, String type);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCP_T();
+
+	public FinderPath getFinderPathCountByCP_T();
+
 	/**
 	 * Returns all the cp definition links where CProductId = &#63; and type = &#63;.
 	 *
@@ -986,6 +1018,10 @@ public interface CPDefinitionLinkPersistence
 	 * @return the number of matching cp definition links
 	 */
 	public int countByCP_T(long CProductId, String type);
+
+	public FinderPath getFinderPathFetchByC_C_T();
+
+	public FinderPath getFinderPathCountByC_C_T();
 
 	/**
 	 * Returns the cp definition link where CPDefinitionId = &#63; and CProductId = &#63; and type = &#63; or throws a <code>NoSuchCPDefinitionLinkException</code> if it could not be found.

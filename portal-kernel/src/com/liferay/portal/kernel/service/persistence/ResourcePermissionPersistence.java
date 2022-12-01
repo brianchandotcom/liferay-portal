@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -41,6 +42,13 @@ public interface ResourcePermissionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourcePermissionUtil} to access the resource permission persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByName();
+
+	public FinderPath getFinderPathCountByName();
 
 	/**
 	 * Returns all the resource permissions where name = &#63;.
@@ -184,6 +192,10 @@ public interface ResourcePermissionPersistence
 	 * @return the number of matching resource permissions
 	 */
 	public int countByName(String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByScope();
+
+	public FinderPath getFinderPathCountByScope();
 
 	/**
 	 * Returns all the resource permissions where scope = &#63;.
@@ -400,6 +412,10 @@ public interface ResourcePermissionPersistence
 	 * @return the number of matching resource permissions
 	 */
 	public int countByScope(int[] scopes);
+
+	public FinderPath getFinderPathWithoutPaginationFindByRoleId();
+
+	public FinderPath getFinderPathCountByRoleId();
 
 	/**
 	 * Returns all the resource permissions where roleId = &#63;.
@@ -699,6 +715,10 @@ public interface ResourcePermissionPersistence
 	 */
 	public int countByC_LikeP(long companyId, String primKey);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_S_P();
+
+	public FinderPath getFinderPathCountByC_S_P();
+
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
 	 *
@@ -865,6 +885,10 @@ public interface ResourcePermissionPersistence
 	 * @return the number of matching resource permissions
 	 */
 	public int countByC_S_P(long companyId, int scope, String primKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_N_S_P();
+
+	public FinderPath getFinderPathCountByC_N_S_P();
 
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
@@ -1049,6 +1073,10 @@ public interface ResourcePermissionPersistence
 	public int countByC_N_S_P(
 		long companyId, String name, int scope, String primKey);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_N_S_R();
+
+	public FinderPath getFinderPathCountByC_N_S_R();
+
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
 	 *
@@ -1230,6 +1258,12 @@ public interface ResourcePermissionPersistence
 	public int countByC_N_S_R(
 		long companyId, String name, int scope, long roleId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_N_S_P_R();
+
+	public FinderPath getFinderPathFetchByC_N_S_P_R();
+
+	public FinderPath getFinderPathCountByC_N_S_P_R();
+
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
 	 *
@@ -1397,6 +1431,10 @@ public interface ResourcePermissionPersistence
 	 */
 	public int countByC_N_S_P_R(
 		long companyId, String name, int scope, String primKey, long[] roleIds);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_N_S_P_R_V();
+
+	public FinderPath getFinderPathCountByC_N_S_P_R_V();
 
 	/**
 	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = &#63; and viewActionId = &#63;.

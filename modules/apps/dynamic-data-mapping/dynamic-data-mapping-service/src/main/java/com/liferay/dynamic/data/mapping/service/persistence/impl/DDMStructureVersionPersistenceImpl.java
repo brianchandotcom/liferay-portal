@@ -103,9 +103,31 @@ public class DDMStructureVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByStructureId;
 	private FinderPath _finderPathWithoutPaginationFindByStructureId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStructureId() {
+		return _finderPathWithoutPaginationFindByStructureId;
+	}
+
 	private FinderPath _finderPathCountByStructureId;
+
+	@Override
+	public FinderPath getFinderPathCountByStructureId() {
+		return _finderPathCountByStructureId;
+	}
 
 	/**
 	 * Returns all the ddm structure versions where structureId = &#63;.
@@ -626,7 +648,18 @@ public class DDMStructureVersionPersistenceImpl
 		"ddmStructureVersion.structureId = ?";
 
 	private FinderPath _finderPathFetchByS_V;
+
+	@Override
+	public FinderPath getFinderPathFetchByS_V() {
+		return _finderPathFetchByS_V;
+	}
+
 	private FinderPath _finderPathCountByS_V;
+
+	@Override
+	public FinderPath getFinderPathCountByS_V() {
+		return _finderPathCountByS_V;
+	}
 
 	/**
 	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or throws a <code>NoSuchStructureVersionException</code> if it could not be found.
@@ -893,7 +926,18 @@ public class DDMStructureVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByS_S;
 	private FinderPath _finderPathWithoutPaginationFindByS_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByS_S() {
+		return _finderPathWithoutPaginationFindByS_S;
+	}
+
 	private FinderPath _finderPathCountByS_S;
+
+	@Override
+	public FinderPath getFinderPathCountByS_S() {
+		return _finderPathCountByS_S;
+	}
 
 	/**
 	 * Returns all the ddm structure versions where structureId = &#63; and status = &#63;.

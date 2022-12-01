@@ -115,6 +115,31 @@ public class EntryUtil {
 		return getPersistence().update(entry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCreateDate() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCreateDate();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCreateDate() {
+
+		return getPersistence().getFinderPathCountByCreateDate();
+	}
+
 	/**
 	 * Returns all the entries where createDate = &#63;.
 	 *
@@ -281,6 +306,19 @@ public class EntryUtil {
 	 */
 	public static int countByCreateDate(long createDate) {
 		return getPersistence().countByCreateDate(createDate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFromUserId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByFromUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFromUserId() {
+
+		return getPersistence().getFinderPathCountByFromUserId();
 	}
 
 	/**
@@ -451,6 +489,18 @@ public class EntryUtil {
 		return getPersistence().countByFromUserId(fromUserId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByToUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByToUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByToUserId() {
+
+		return getPersistence().getFinderPathCountByToUserId();
+	}
+
 	/**
 	 * Returns all the entries where toUserId = &#63;.
 	 *
@@ -617,6 +667,18 @@ public class EntryUtil {
 	 */
 	public static int countByToUserId(long toUserId) {
 		return getPersistence().countByToUserId(toUserId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_F() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_F() {
+
+		return getPersistence().getFinderPathCountByC_F();
 	}
 
 	/**
@@ -803,6 +865,18 @@ public class EntryUtil {
 		return getPersistence().countByC_F(createDate, fromUserId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_T() {
+
+		return getPersistence().getFinderPathCountByC_T();
+	}
+
 	/**
 	 * Returns all the entries where createDate = &#63; and toUserId = &#63;.
 	 *
@@ -987,6 +1061,18 @@ public class EntryUtil {
 		return getPersistence().countByC_T(createDate, toUserId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByF_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByF_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_T() {
+
+		return getPersistence().getFinderPathCountByF_T();
+	}
+
 	/**
 	 * Returns all the entries where fromUserId = &#63; and toUserId = &#63;.
 	 *
@@ -1169,6 +1255,18 @@ public class EntryUtil {
 	 */
 	public static int countByF_T(long fromUserId, long toUserId) {
 		return getPersistence().countByF_T(fromUserId, toUserId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_F_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_F_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_F_T() {
+
+		return getPersistence().getFinderPathCountByC_F_T();
 	}
 
 	/**
@@ -1371,6 +1469,18 @@ public class EntryUtil {
 		long createDate, long fromUserId, long toUserId) {
 
 		return getPersistence().countByC_F_T(createDate, fromUserId, toUserId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByF_T_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByF_T_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_T_C() {
+
+		return getPersistence().getFinderPathCountByF_T_C();
 	}
 
 	/**

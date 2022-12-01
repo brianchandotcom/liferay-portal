@@ -125,6 +125,30 @@ public class JournalArticleLocalizationUtil {
 			journalArticleLocalization, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByArticlePK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByArticlePK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByArticlePK() {
+
+		return getPersistence().getFinderPathCountByArticlePK();
+	}
+
 	/**
 	 * Returns all the journal article localizations where articlePK = &#63;.
 	 *
@@ -303,6 +327,18 @@ public class JournalArticleLocalizationUtil {
 		return getPersistence().countByArticlePK(articlePK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_A() {
+
+		return getPersistence().getFinderPathFetchByC_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A() {
+
+		return getPersistence().getFinderPathCountByC_A();
+	}
+
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
 	 *
@@ -373,6 +409,18 @@ public class JournalArticleLocalizationUtil {
 		return getPersistence().countByC_A(companyId, articlePK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByA_L() {
+
+		return getPersistence().getFinderPathFetchByA_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_L() {
+
+		return getPersistence().getFinderPathCountByA_L();
+	}
+
 	/**
 	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
 	 *
@@ -441,6 +489,18 @@ public class JournalArticleLocalizationUtil {
 	 */
 	public static int countByA_L(long articlePK, String languageId) {
 		return getPersistence().countByA_L(articlePK, languageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_A_L() {
+
+		return getPersistence().getFinderPathFetchByC_A_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A_L() {
+
+		return getPersistence().getFinderPathCountByC_A_L();
 	}
 
 	/**
@@ -519,6 +579,18 @@ public class JournalArticleLocalizationUtil {
 		long companyId, long articlePK, String languageId) {
 
 		return getPersistence().countByC_A_L(companyId, articlePK, languageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_A_T_L() {
+
+		return getPersistence().getFinderPathFetchByC_A_T_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A_T_L() {
+
+		return getPersistence().getFinderPathCountByC_A_T_L();
 	}
 
 	/**

@@ -89,9 +89,31 @@ public class LayoutSetBranchPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the layout set branches where groupId = &#63;.
@@ -968,7 +990,18 @@ public class LayoutSetBranchPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P() {
+		return _finderPathWithoutPaginationFindByG_P;
+	}
+
 	private FinderPath _finderPathCountByG_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P() {
+		return _finderPathCountByG_P;
+	}
 
 	/**
 	 * Returns all the layout set branches where groupId = &#63; and privateLayout = &#63;.
@@ -1914,7 +1947,18 @@ public class LayoutSetBranchPersistenceImpl
 		"layoutSetBranch.privateLayout = ?";
 
 	private FinderPath _finderPathFetchByG_P_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_P_N() {
+		return _finderPathFetchByG_P_N;
+	}
+
 	private FinderPath _finderPathCountByG_P_N;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_N() {
+		return _finderPathCountByG_P_N;
+	}
 
 	/**
 	 * Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or throws a <code>NoSuchLayoutSetBranchException</code> if it could not be found.
@@ -2191,7 +2235,18 @@ public class LayoutSetBranchPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_M;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_M;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_M() {
+		return _finderPathWithoutPaginationFindByG_P_M;
+	}
+
 	private FinderPath _finderPathCountByG_P_M;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P_M() {
+		return _finderPathCountByG_P_M;
+	}
 
 	/**
 	 * Returns all the layout set branches where groupId = &#63; and privateLayout = &#63; and master = &#63;.

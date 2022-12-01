@@ -93,9 +93,31 @@ public class DepotAppCustomizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByDepotEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByDepotEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByDepotEntryId() {
+		return _finderPathWithoutPaginationFindByDepotEntryId;
+	}
+
 	private FinderPath _finderPathCountByDepotEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByDepotEntryId() {
+		return _finderPathCountByDepotEntryId;
+	}
 
 	/**
 	 * Returns all the depot app customizations where depotEntryId = &#63;.
@@ -603,7 +625,18 @@ public class DepotAppCustomizationPersistenceImpl
 		"depotAppCustomization.depotEntryId = ?";
 
 	private FinderPath _finderPathFetchByD_E;
+
+	@Override
+	public FinderPath getFinderPathFetchByD_E() {
+		return _finderPathFetchByD_E;
+	}
+
 	private FinderPath _finderPathCountByD_E;
+
+	@Override
+	public FinderPath getFinderPathCountByD_E() {
+		return _finderPathCountByD_E;
+	}
 
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
@@ -844,7 +877,18 @@ public class DepotAppCustomizationPersistenceImpl
 		"depotAppCustomization.enabled = ?";
 
 	private FinderPath _finderPathFetchByD_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByD_P() {
+		return _finderPathFetchByD_P;
+	}
+
 	private FinderPath _finderPathCountByD_P;
+
+	@Override
+	public FinderPath getFinderPathCountByD_P() {
+		return _finderPathCountByD_P;
+	}
 
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and portletId = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.

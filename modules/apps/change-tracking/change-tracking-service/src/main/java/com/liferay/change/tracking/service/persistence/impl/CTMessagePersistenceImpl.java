@@ -89,9 +89,31 @@ public class CTMessagePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId() {
+		return _finderPathWithoutPaginationFindByCtCollectionId;
+	}
+
 	private FinderPath _finderPathCountByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCtCollectionId() {
+		return _finderPathCountByCtCollectionId;
+	}
 
 	/**
 	 * Returns all the ct messages where ctCollectionId = &#63;.

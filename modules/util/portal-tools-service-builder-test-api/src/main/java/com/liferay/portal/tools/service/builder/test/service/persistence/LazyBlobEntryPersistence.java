@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLazyBlobEntryException;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
@@ -40,6 +41,13 @@ public interface LazyBlobEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LazyBlobEntryUtil} to access the lazy blob entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the lazy blob entries where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface LazyBlobEntryPersistence
 	 * @return the number of matching lazy blob entries
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
 
 	/**
 	 * Returns the lazy blob entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLazyBlobEntryException</code> if it could not be found.

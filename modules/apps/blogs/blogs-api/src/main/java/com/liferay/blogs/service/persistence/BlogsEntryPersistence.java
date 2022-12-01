@@ -16,6 +16,7 @@ package com.liferay.blogs.service.persistence;
 
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -43,6 +44,13 @@ public interface BlogsEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BlogsEntryUtil} to access the blogs entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the blogs entries where uuid = &#63;.
@@ -187,6 +195,10 @@ public interface BlogsEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the blogs entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -236,6 +248,10 @@ public interface BlogsEntryPersistence
 	 * @return the number of matching blogs entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the blogs entries where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface BlogsEntryPersistence
 	 * @return the number of matching blogs entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the blogs entries where groupId = &#63;.
@@ -598,6 +618,10 @@ public interface BlogsEntryPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the blogs entries where companyId = &#63;.
 	 *
@@ -740,6 +764,10 @@ public interface BlogsEntryPersistence
 	 * @return the number of matching blogs entries
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathFetchByG_UT();
+
+	public FinderPath getFinderPathCountByG_UT();
 
 	/**
 	 * Returns the blogs entry where groupId = &#63; and urlTitle = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -1015,6 +1043,10 @@ public interface BlogsEntryPersistence
 	 * @return the number of matching blogs entries that the user has permission to view
 	 */
 	public int filterCountByG_LtD(long groupId, Date displayDate);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
 
 	/**
 	 * Returns all the blogs entries where groupId = &#63; and status = &#63;.
@@ -1463,6 +1495,10 @@ public interface BlogsEntryPersistence
 	 */
 	public int filterCountByG_NotS(long groupId, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_U();
+
+	public FinderPath getFinderPathCountByC_U();
+
 	/**
 	 * Returns all the blogs entries where companyId = &#63; and userId = &#63;.
 	 *
@@ -1771,6 +1807,10 @@ public interface BlogsEntryPersistence
 	 * @return the number of matching blogs entries
 	 */
 	public int countByC_LtD(long companyId, Date displayDate);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
 
 	/**
 	 * Returns all the blogs entries where companyId = &#63; and status = &#63;.
@@ -2476,6 +2516,10 @@ public interface BlogsEntryPersistence
 	public int filterCountByG_U_LtD(
 		long groupId, long userId, Date displayDate);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_S();
+
+	public FinderPath getFinderPathCountByG_U_S();
+
 	/**
 	 * Returns all the blogs entries where groupId = &#63; and userId = &#63; and status = &#63;.
 	 *
@@ -3099,6 +3143,10 @@ public interface BlogsEntryPersistence
 	 * @return the number of matching blogs entries that the user has permission to view
 	 */
 	public int filterCountByG_U_NotS(long groupId, long userId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_D_S();
+
+	public FinderPath getFinderPathCountByG_D_S();
 
 	/**
 	 * Returns all the blogs entries where groupId = &#63; and displayDate = &#63; and status = &#63;.
@@ -4064,6 +4112,10 @@ public interface BlogsEntryPersistence
 	 */
 	public int filterCountByG_LtD_NotS(
 		long groupId, Date displayDate, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_U_S();
+
+	public FinderPath getFinderPathCountByC_U_S();
 
 	/**
 	 * Returns all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
@@ -5263,6 +5315,10 @@ public interface BlogsEntryPersistence
 	 */
 	public int filterCountByG_U_LtD_NotS(
 		long groupId, long userId, Date displayDate, int status);
+
+	public FinderPath getFinderPathFetchByERC_G();
+
+	public FinderPath getFinderPathCountByERC_G();
 
 	/**
 	 * Returns the blogs entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

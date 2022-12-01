@@ -98,9 +98,31 @@ public class FVSActiveEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the fvs active entries where uuid = &#63;.
@@ -632,7 +654,18 @@ public class FVSActiveEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the fvs active entries where uuid = &#63; and companyId = &#63;.
@@ -1213,7 +1246,18 @@ public class FVSActiveEntryPersistenceImpl
 		"fvsActiveEntry.companyId = ?";
 
 	private FinderPath _finderPathFetchByU_CDSDI_P_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_CDSDI_P_P() {
+		return _finderPathFetchByU_CDSDI_P_P;
+	}
+
 	private FinderPath _finderPathCountByU_CDSDI_P_P;
+
+	@Override
+	public FinderPath getFinderPathCountByU_CDSDI_P_P() {
+		return _finderPathCountByU_CDSDI_P_P;
+	}
 
 	/**
 	 * Returns the fvs active entry where userId = &#63; and clayDataSetDisplayId = &#63; and plid = &#63; and portletId = &#63; or throws a <code>NoSuchActiveEntryException</code> if it could not be found.

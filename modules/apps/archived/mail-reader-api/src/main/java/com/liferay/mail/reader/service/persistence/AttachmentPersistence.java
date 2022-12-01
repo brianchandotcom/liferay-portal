@@ -16,6 +16,7 @@ package com.liferay.mail.reader.service.persistence;
 
 import com.liferay.mail.reader.exception.NoSuchAttachmentException;
 import com.liferay.mail.reader.model.Attachment;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface AttachmentPersistence extends BasePersistence<Attachment> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AttachmentUtil} to access the attachment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByMessageId();
+
+	public FinderPath getFinderPathCountByMessageId();
 
 	/**
 	 * Returns all the attachments where messageId = &#63;.

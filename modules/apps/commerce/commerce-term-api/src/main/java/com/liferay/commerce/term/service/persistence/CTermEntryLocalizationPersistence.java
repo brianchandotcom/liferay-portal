@@ -16,6 +16,7 @@ package com.liferay.commerce.term.service.persistence;
 
 import com.liferay.commerce.term.exception.NoSuchCTermEntryLocalizationException;
 import com.liferay.commerce.term.model.CTermEntryLocalization;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CTermEntryLocalizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CTermEntryLocalizationUtil} to access the c term entry localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceTermEntryId();
+
+	public FinderPath getFinderPathCountByCommerceTermEntryId();
 
 	/**
 	 * Returns all the c term entry localizations where commerceTermEntryId = &#63;.
@@ -184,6 +192,10 @@ public interface CTermEntryLocalizationPersistence
 	 * @return the number of matching c term entry localizations
 	 */
 	public int countByCommerceTermEntryId(long commerceTermEntryId);
+
+	public FinderPath getFinderPathFetchByCommerceTermEntryId_LanguageId();
+
+	public FinderPath getFinderPathCountByCommerceTermEntryId_LanguageId();
 
 	/**
 	 * Returns the c term entry localization where commerceTermEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchCTermEntryLocalizationException</code> if it could not be found.

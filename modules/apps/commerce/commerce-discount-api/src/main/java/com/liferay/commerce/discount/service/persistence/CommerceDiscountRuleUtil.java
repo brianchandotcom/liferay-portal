@@ -122,6 +122,31 @@ public class CommerceDiscountRuleUtil {
 		return getPersistence().update(commerceDiscountRule, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceDiscountId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceDiscountId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceDiscountId() {
+
+		return getPersistence().getFinderPathCountByCommerceDiscountId();
+	}
+
 	/**
 	 * Returns all the commerce discount rules where commerceDiscountId = &#63;.
 	 *

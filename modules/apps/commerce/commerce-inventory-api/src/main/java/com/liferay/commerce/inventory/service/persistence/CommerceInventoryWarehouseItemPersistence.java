@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.service.persistence;
 
 import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceInventoryWarehouseItemPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryWarehouseItemUtil} to access the commerce inventory warehouse item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce inventory warehouse items where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceInventoryWarehouseItemPersistence
 	 * @return the number of matching commerce inventory warehouse items
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce inventory warehouse items where uuid = &#63; and companyId = &#63;.
@@ -340,6 +352,10 @@ public interface CommerceInventoryWarehouseItemPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the commerce inventory warehouse items where companyId = &#63;.
 	 *
@@ -483,6 +499,11 @@ public interface CommerceInventoryWarehouseItemPersistence
 	 * @return the number of matching commerce inventory warehouse items
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceInventoryWarehouseId();
+
+	public FinderPath getFinderPathCountByCommerceInventoryWarehouseId();
 
 	/**
 	 * Returns all the commerce inventory warehouse items where commerceInventoryWarehouseId = &#63;.
@@ -639,6 +660,10 @@ public interface CommerceInventoryWarehouseItemPersistence
 	public int countByCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId_Sku();
+
+	public FinderPath getFinderPathCountByCompanyId_Sku();
+
 	/**
 	 * Returns all the commerce inventory warehouse items where companyId = &#63; and sku = &#63;.
 	 *
@@ -794,6 +819,10 @@ public interface CommerceInventoryWarehouseItemPersistence
 	 */
 	public int countByCompanyId_Sku(long companyId, String sku);
 
+	public FinderPath getFinderPathFetchByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
+
 	/**
 	 * Returns the commerce inventory warehouse item where commerceInventoryWarehouseId = &#63; and sku = &#63; or throws a <code>NoSuchInventoryWarehouseItemException</code> if it could not be found.
 	 *
@@ -846,6 +875,10 @@ public interface CommerceInventoryWarehouseItemPersistence
 	 * @return the number of matching commerce inventory warehouse items
 	 */
 	public int countByC_S(long commerceInventoryWarehouseId, String sku);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce inventory warehouse item where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchInventoryWarehouseItemException</code> if it could not be found.

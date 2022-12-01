@@ -16,6 +16,7 @@ package com.liferay.asset.list.service.persistence;
 
 import com.liferay.asset.list.exception.NoSuchEntryUsageException;
 import com.liferay.asset.list.model.AssetListEntryUsage;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface AssetListEntryUsagePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetListEntryUsageUtil} to access the asset list entry usage persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the asset list entry usages where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface AssetListEntryUsagePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the asset list entry usage where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryUsageException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface AssetListEntryUsagePersistence
 	 * @return the number of matching asset list entry usages
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the asset list entry usages where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface AssetListEntryUsagePersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByAssetListEntryId();
+
+	public FinderPath getFinderPathCountByAssetListEntryId();
+
 	/**
 	 * Returns all the asset list entry usages where assetListEntryId = &#63;.
 	 *
@@ -535,6 +555,10 @@ public interface AssetListEntryUsagePersistence
 	 */
 	public int countByAssetListEntryId(long assetListEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByPlid();
+
+	public FinderPath getFinderPathCountByPlid();
+
 	/**
 	 * Returns all the asset list entry usages where plid = &#63;.
 	 *
@@ -677,6 +701,10 @@ public interface AssetListEntryUsagePersistence
 	 * @return the number of matching asset list entry usages
 	 */
 	public int countByPlid(long plid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByA_C();
+
+	public FinderPath getFinderPathCountByA_C();
 
 	/**
 	 * Returns all the asset list entry usages where assetListEntryId = &#63; and classNameId = &#63;.
@@ -832,6 +860,10 @@ public interface AssetListEntryUsagePersistence
 	 * @return the number of matching asset list entry usages
 	 */
 	public int countByA_C(long assetListEntryId, long classNameId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_K();
+
+	public FinderPath getFinderPathCountByG_C_K();
 
 	/**
 	 * Returns all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63;.
@@ -1000,6 +1032,10 @@ public interface AssetListEntryUsagePersistence
 	 */
 	public int countByG_C_K(long groupId, long classNameId, String key);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_K();
+
+	public FinderPath getFinderPathCountByC_C_K();
+
 	/**
 	 * Returns all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
 	 *
@@ -1166,6 +1202,10 @@ public interface AssetListEntryUsagePersistence
 	 * @return the number of matching asset list entry usages
 	 */
 	public int countByC_C_K(long companyId, long classNameId, String key);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCK_CT_P();
+
+	public FinderPath getFinderPathCountByCK_CT_P();
 
 	/**
 	 * Returns all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
@@ -1335,6 +1375,10 @@ public interface AssetListEntryUsagePersistence
 	 */
 	public int countByCK_CT_P(
 		String containerKey, long containerType, long plid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_K_T();
+
+	public FinderPath getFinderPathCountByG_C_K_T();
 
 	/**
 	 * Returns all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
@@ -1518,6 +1562,10 @@ public interface AssetListEntryUsagePersistence
 	 */
 	public int countByG_C_K_T(
 		long groupId, long classNameId, String key, int type);
+
+	public FinderPath getFinderPathFetchByG_C_CK_CT_K_P();
+
+	public FinderPath getFinderPathCountByG_C_CK_CT_K_P();
 
 	/**
 	 * Returns the asset list entry usage where groupId = &#63; and classNameId = &#63; and containerKey = &#63; and containerType = &#63; and key = &#63; and plid = &#63; or throws a <code>NoSuchEntryUsageException</code> if it could not be found.

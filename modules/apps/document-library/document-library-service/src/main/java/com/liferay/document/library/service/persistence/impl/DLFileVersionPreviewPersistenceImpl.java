@@ -98,9 +98,31 @@ public class DLFileVersionPreviewPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryId() {
+		return _finderPathWithoutPaginationFindByFileEntryId;
+	}
+
 	private FinderPath _finderPathCountByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByFileEntryId() {
+		return _finderPathCountByFileEntryId;
+	}
 
 	/**
 	 * Returns all the dl file version previews where fileEntryId = &#63;.
@@ -622,7 +644,18 @@ public class DLFileVersionPreviewPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFileVersionId;
 	private FinderPath _finderPathWithoutPaginationFindByFileVersionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFileVersionId() {
+		return _finderPathWithoutPaginationFindByFileVersionId;
+	}
+
 	private FinderPath _finderPathCountByFileVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByFileVersionId() {
+		return _finderPathCountByFileVersionId;
+	}
 
 	/**
 	 * Returns all the dl file version previews where fileVersionId = &#63;.
@@ -1146,7 +1179,18 @@ public class DLFileVersionPreviewPersistenceImpl
 		"dlFileVersionPreview.fileVersionId = ?";
 
 	private FinderPath _finderPathFetchByF_F;
+
+	@Override
+	public FinderPath getFinderPathFetchByF_F() {
+		return _finderPathFetchByF_F;
+	}
+
 	private FinderPath _finderPathCountByF_F;
+
+	@Override
+	public FinderPath getFinderPathCountByF_F() {
+		return _finderPathCountByF_F;
+	}
 
 	/**
 	 * Returns the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; or throws a <code>NoSuchFileVersionPreviewException</code> if it could not be found.
@@ -1386,7 +1430,18 @@ public class DLFileVersionPreviewPersistenceImpl
 		"dlFileVersionPreview.fileVersionId = ?";
 
 	private FinderPath _finderPathFetchByF_F_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByF_F_P() {
+		return _finderPathFetchByF_F_P;
+	}
+
 	private FinderPath _finderPathCountByF_F_P;
+
+	@Override
+	public FinderPath getFinderPathCountByF_F_P() {
+		return _finderPathCountByF_F_P;
+	}
 
 	/**
 	 * Returns the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; and previewStatus = &#63; or throws a <code>NoSuchFileVersionPreviewException</code> if it could not be found.

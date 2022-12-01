@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DDMStructurePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMStructureUtil} to access the ddm structure persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the ddm structures where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface DDMStructurePersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the ddm structure where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchStructureException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface DDMStructurePersistence
 	 * @return the number of matching ddm structures
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the ddm structures where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface DDMStructurePersistence
 	 * @return the number of matching ddm structures
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the ddm structures where groupId = &#63;.
@@ -719,6 +739,10 @@ public interface DDMStructurePersistence
 	 */
 	public int filterCountByGroupId(long[] groupIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByParentStructureId();
+
+	public FinderPath getFinderPathCountByParentStructureId();
+
 	/**
 	 * Returns all the ddm structures where parentStructureId = &#63;.
 	 *
@@ -863,6 +887,10 @@ public interface DDMStructurePersistence
 	 */
 	public int countByParentStructureId(long parentStructureId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByStructureKey();
+
+	public FinderPath getFinderPathCountByStructureKey();
+
 	/**
 	 * Returns all the ddm structures where structureKey = &#63;.
 	 *
@@ -1005,6 +1033,10 @@ public interface DDMStructurePersistence
 	 * @return the number of matching ddm structures
 	 */
 	public int countByStructureKey(String structureKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P();
+
+	public FinderPath getFinderPathCountByG_P();
 
 	/**
 	 * Returns all the ddm structures where groupId = &#63; and parentStructureId = &#63;.
@@ -1230,6 +1262,10 @@ public interface DDMStructurePersistence
 	 * @return the number of matching ddm structures that the user has permission to view
 	 */
 	public int filterCountByG_P(long groupId, long parentStructureId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the ddm structures where groupId = &#63; and classNameId = &#63;.
@@ -1589,6 +1625,10 @@ public interface DDMStructurePersistence
 	 */
 	public int filterCountByG_C(long[] groupIds, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the ddm structures where companyId = &#63; and classNameId = &#63;.
 	 *
@@ -1744,6 +1784,10 @@ public interface DDMStructurePersistence
 	 */
 	public int countByC_C(long companyId, long classNameId);
 
+	public FinderPath getFinderPathFetchByG_C_S();
+
+	public FinderPath getFinderPathCountByG_C_S();
+
 	/**
 	 * Returns the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or throws a <code>NoSuchStructureException</code> if it could not be found.
 	 *
@@ -1803,6 +1847,10 @@ public interface DDMStructurePersistence
 	 */
 	public int countByG_C_S(
 		long groupId, long classNameId, String structureKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_D();
+
+	public FinderPath getFinderPathCountByG_N_D();
 
 	/**
 	 * Returns all the ddm structures where groupId = &#63; and name = &#63; and description = &#63;.
@@ -2045,6 +2093,10 @@ public interface DDMStructurePersistence
 	 */
 	public int filterCountByG_N_D(
 		long groupId, String name, String description);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_N_D();
+
+	public FinderPath getFinderPathCountByG_C_N_D();
 
 	/**
 	 * Returns all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;.

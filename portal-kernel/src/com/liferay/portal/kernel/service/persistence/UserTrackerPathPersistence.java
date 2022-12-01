@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchUserTrackerPathException;
 import com.liferay.portal.kernel.model.UserTrackerPath;
 
@@ -39,6 +40,13 @@ public interface UserTrackerPathPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserTrackerPathUtil} to access the user tracker path persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserTrackerId();
+
+	public FinderPath getFinderPathCountByUserTrackerId();
 
 	/**
 	 * Returns all the user tracker paths where userTrackerId = &#63;.

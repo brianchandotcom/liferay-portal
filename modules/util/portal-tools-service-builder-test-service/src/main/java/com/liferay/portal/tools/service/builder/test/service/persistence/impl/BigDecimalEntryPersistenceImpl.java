@@ -91,9 +91,31 @@ public class BigDecimalEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByBigDecimalValue;
 	private FinderPath _finderPathWithoutPaginationFindByBigDecimalValue;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByBigDecimalValue() {
+		return _finderPathWithoutPaginationFindByBigDecimalValue;
+	}
+
 	private FinderPath _finderPathCountByBigDecimalValue;
+
+	@Override
+	public FinderPath getFinderPathCountByBigDecimalValue() {
+		return _finderPathCountByBigDecimalValue;
+	}
 
 	/**
 	 * Returns all the big decimal entries where bigDecimalValue = &#63;.

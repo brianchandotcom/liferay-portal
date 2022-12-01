@@ -16,6 +16,7 @@ package com.liferay.list.type.service.persistence;
 
 import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ListTypeDefinitionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ListTypeDefinitionUtil} to access the list type definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the list type definitions where uuid = &#63;.
@@ -247,6 +255,10 @@ public interface ListTypeDefinitionPersistence
 	 * @return the number of matching list type definitions that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the list type definitions where uuid = &#63; and companyId = &#63;.
@@ -472,6 +484,10 @@ public interface ListTypeDefinitionPersistence
 	 * @return the number of matching list type definitions that the user has permission to view
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the list type definition where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchListTypeDefinitionException</code> if it could not be found.

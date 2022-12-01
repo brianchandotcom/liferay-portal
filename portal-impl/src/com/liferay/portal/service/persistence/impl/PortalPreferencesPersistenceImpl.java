@@ -83,8 +83,30 @@ public class PortalPreferencesPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByO_O;
+
+	@Override
+	public FinderPath getFinderPathFetchByO_O() {
+		return _finderPathFetchByO_O;
+	}
+
 	private FinderPath _finderPathCountByO_O;
+
+	@Override
+	public FinderPath getFinderPathCountByO_O() {
+		return _finderPathCountByO_O;
+	}
 
 	/**
 	 * Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or throws a <code>NoSuchPreferencesException</code> if it could not be found.

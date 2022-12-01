@@ -16,6 +16,7 @@ package com.liferay.changeset.service.persistence;
 
 import com.liferay.changeset.exception.NoSuchEntryException;
 import com.liferay.changeset.model.ChangesetEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ChangesetEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ChangesetEntryUtil} to access the changeset entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the changeset entries where groupId = &#63;.
@@ -184,6 +192,10 @@ public interface ChangesetEntryPersistence
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the changeset entries where companyId = &#63;.
 	 *
@@ -326,6 +338,11 @@ public interface ChangesetEntryPersistence
 	 * @return the number of matching changeset entries
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByChangesetCollectionId();
+
+	public FinderPath getFinderPathCountByChangesetCollectionId();
 
 	/**
 	 * Returns all the changeset entries where changesetCollectionId = &#63;.
@@ -470,6 +487,10 @@ public interface ChangesetEntryPersistence
 	 * @return the number of matching changeset entries
 	 */
 	public int countByChangesetCollectionId(long changesetCollectionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the changeset entries where groupId = &#63; and classNameId = &#63;.
@@ -626,6 +647,10 @@ public interface ChangesetEntryPersistence
 	 */
 	public int countByG_C(long groupId, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the changeset entries where changesetCollectionId = &#63; and classNameId = &#63;.
 	 *
@@ -780,6 +805,10 @@ public interface ChangesetEntryPersistence
 	 * @return the number of matching changeset entries
 	 */
 	public int countByC_C(long changesetCollectionId, long classNameId);
+
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns the changeset entry where changesetCollectionId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

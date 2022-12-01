@@ -104,9 +104,31 @@ public class DDLRecordPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the ddl records where uuid = &#63;.
@@ -649,7 +671,18 @@ public class DDLRecordPersistenceImpl
 		"(ddlRecord.uuid IS NULL OR ddlRecord.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the ddl record where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchRecordException</code> if it could not be found.
@@ -913,7 +946,18 @@ public class DDLRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the ddl records where uuid = &#63; and companyId = &#63;.
@@ -1506,7 +1550,18 @@ public class DDLRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the ddl records where companyId = &#63;.
@@ -2015,7 +2070,18 @@ public class DDLRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByRecordSetId;
 	private FinderPath _finderPathWithoutPaginationFindByRecordSetId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByRecordSetId() {
+		return _finderPathWithoutPaginationFindByRecordSetId;
+	}
+
 	private FinderPath _finderPathCountByRecordSetId;
+
+	@Override
+	public FinderPath getFinderPathCountByRecordSetId() {
+		return _finderPathCountByRecordSetId;
+	}
 
 	/**
 	 * Returns all the ddl records where recordSetId = &#63;.
@@ -2527,7 +2593,18 @@ public class DDLRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_U;
 	private FinderPath _finderPathWithoutPaginationFindByR_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_U() {
+		return _finderPathWithoutPaginationFindByR_U;
+	}
+
 	private FinderPath _finderPathCountByR_U;
+
+	@Override
+	public FinderPath getFinderPathCountByR_U() {
+		return _finderPathCountByR_U;
+	}
 
 	/**
 	 * Returns all the ddl records where recordSetId = &#63; and userId = &#63;.
@@ -3080,7 +3157,18 @@ public class DDLRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByR_R;
 	private FinderPath _finderPathWithoutPaginationFindByR_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByR_R() {
+		return _finderPathWithoutPaginationFindByR_R;
+	}
+
 	private FinderPath _finderPathCountByR_R;
+
+	@Override
+	public FinderPath getFinderPathCountByR_R() {
+		return _finderPathCountByR_R;
+	}
 
 	/**
 	 * Returns all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -3680,7 +3768,18 @@ public class DDLRecordPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the ddl records where className = &#63; and classPK = &#63;.

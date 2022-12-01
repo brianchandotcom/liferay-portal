@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.service.persistence;
 
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationScopeAliasesException;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationScopeAliasesUtil} to access the o auth2 application scope aliases persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the o auth2 application scope aliaseses where companyId = &#63;.
@@ -184,6 +192,10 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	 * @return the number of matching o auth2 application scope aliaseses
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByOAuth2ApplicationId();
+
+	public FinderPath getFinderPathCountByOAuth2ApplicationId();
 
 	/**
 	 * Returns all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63;.

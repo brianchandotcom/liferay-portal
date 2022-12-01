@@ -119,6 +119,31 @@ public class CTPreferencesUtil {
 		return getPersistence().update(ctPreferences, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCtCollectionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCtCollectionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCtCollectionId() {
+
+		return getPersistence().getFinderPathCountByCtCollectionId();
+	}
+
 	/**
 	 * Returns all the ct preferenceses where ctCollectionId = &#63;.
 	 *
@@ -296,6 +321,19 @@ public class CTPreferencesUtil {
 	 */
 	public static int countByCtCollectionId(long ctCollectionId) {
 		return getPersistence().countByCtCollectionId(ctCollectionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByPreviousCtCollectionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByPreviousCtCollectionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByPreviousCtCollectionId() {
+
+		return getPersistence().getFinderPathCountByPreviousCtCollectionId();
 	}
 
 	/**
@@ -482,6 +520,18 @@ public class CTPreferencesUtil {
 
 		return getPersistence().countByPreviousCtCollectionId(
 			previousCtCollectionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_U() {
+
+		return getPersistence().getFinderPathFetchByC_U();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_U() {
+
+		return getPersistence().getFinderPathCountByC_U();
 	}
 
 	/**

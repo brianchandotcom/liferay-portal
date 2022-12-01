@@ -14,6 +14,7 @@
 
 package com.liferay.saml.persistence.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchSpAuthRequestException;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
@@ -42,6 +43,9 @@ public interface SamlSpAuthRequestPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlSpAuthRequestUtil} to access the saml sp auth request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
 
 	/**
 	 * Returns all the saml sp auth requests where createDate &lt; &#63;.
@@ -186,6 +190,10 @@ public interface SamlSpAuthRequestPersistence
 	 * @return the number of matching saml sp auth requests
 	 */
 	public int countByLtCreateDate(Date createDate);
+
+	public FinderPath getFinderPathFetchBySIEI_SSARK();
+
+	public FinderPath getFinderPathCountBySIEI_SSARK();
 
 	/**
 	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or throws a <code>NoSuchSpAuthRequestException</code> if it could not be found.

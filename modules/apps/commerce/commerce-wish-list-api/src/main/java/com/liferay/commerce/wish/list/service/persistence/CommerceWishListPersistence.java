@@ -16,6 +16,7 @@ package com.liferay.commerce.wish.list.service.persistence;
 
 import com.liferay.commerce.wish.list.exception.NoSuchWishListException;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
@@ -42,6 +43,13 @@ public interface CommerceWishListPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceWishListUtil} to access the commerce wish list persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce wish lists where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface CommerceWishListPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the commerce wish list where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchWishListException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface CommerceWishListPersistence
 	 * @return the number of matching commerce wish lists
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce wish lists where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface CommerceWishListPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the commerce wish lists where groupId = &#63;.
 	 *
@@ -534,6 +554,10 @@ public interface CommerceWishListPersistence
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the commerce wish lists where userId = &#63;.
 	 *
@@ -676,6 +700,10 @@ public interface CommerceWishListPersistence
 	 * @return the number of matching commerce wish lists
 	 */
 	public int countByUserId(long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U();
+
+	public FinderPath getFinderPathCountByG_U();
 
 	/**
 	 * Returns all the commerce wish lists where groupId = &#63; and userId = &#63;.
@@ -986,6 +1014,10 @@ public interface CommerceWishListPersistence
 	 * @return the number of matching commerce wish lists
 	 */
 	public int countByU_LtC(long userId, Date createDate);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_D();
+
+	public FinderPath getFinderPathCountByG_U_D();
 
 	/**
 	 * Returns all the commerce wish lists where groupId = &#63; and userId = &#63; and defaultWishList = &#63;.

@@ -119,6 +119,30 @@ public class SubscriptionUtil {
 		return getPersistence().update(subscription, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
+	}
+
 	/**
 	 * Returns all the subscriptions where groupId = &#63;.
 	 *
@@ -285,6 +309,18 @@ public class SubscriptionUtil {
 		return getPersistence().countByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the subscriptions where userId = &#63;.
 	 *
@@ -448,6 +484,18 @@ public class SubscriptionUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_U() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_U();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_U() {
+
+		return getPersistence().getFinderPathCountByG_U();
 	}
 
 	/**
@@ -634,6 +682,18 @@ public class SubscriptionUtil {
 		return getPersistence().countByG_U(groupId, userId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_C() {
+
+		return getPersistence().getFinderPathCountByU_C();
+	}
+
 	/**
 	 * Returns all the subscriptions where userId = &#63; and classNameId = &#63;.
 	 *
@@ -816,6 +876,18 @@ public class SubscriptionUtil {
 	 */
 	public static int countByU_C(long userId, long classNameId) {
 		return getPersistence().countByU_C(userId, classNameId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C() {
+
+		return getPersistence().getFinderPathCountByC_C_C();
 	}
 
 	/**
@@ -1019,6 +1091,24 @@ public class SubscriptionUtil {
 		long companyId, long classNameId, long classPK) {
 
 		return getPersistence().countByC_C_C(companyId, classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_U_C_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_U_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_U_C_C() {
+
+		return getPersistence().getFinderPathFetchByC_U_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_U_C_C() {
+
+		return getPersistence().getFinderPathCountByC_U_C_C();
 	}
 
 	/**

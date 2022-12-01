@@ -122,6 +122,30 @@ public class KaleoInstanceTokenUtil {
 		return getPersistence().update(kaleoInstanceToken, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the kaleo instance tokens where companyId = &#63;.
 	 *
@@ -296,6 +320,19 @@ public class KaleoInstanceTokenUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKaleoDefinitionVersionId() {
+
+		return getPersistence().getFinderPathCountByKaleoDefinitionVersionId();
 	}
 
 	/**
@@ -486,6 +523,19 @@ public class KaleoInstanceTokenUtil {
 			kaleoDefinitionVersionId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByKaleoInstanceId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByKaleoInstanceId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKaleoInstanceId() {
+
+		return getPersistence().getFinderPathCountByKaleoInstanceId();
+	}
+
 	/**
 	 * Returns all the kaleo instance tokens where kaleoInstanceId = &#63;.
 	 *
@@ -663,6 +713,18 @@ public class KaleoInstanceTokenUtil {
 	 */
 	public static int countByKaleoInstanceId(long kaleoInstanceId) {
 		return getPersistence().countByKaleoInstanceId(kaleoInstanceId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_PKITI() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_PKITI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_PKITI() {
+
+		return getPersistence().getFinderPathCountByC_PKITI();
 	}
 
 	/**
@@ -863,6 +925,19 @@ public class KaleoInstanceTokenUtil {
 
 		return getPersistence().countByC_PKITI(
 			companyId, parentKaleoInstanceTokenId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_PKITI_CD() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_PKITI_CD();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_PKITI_CD() {
+
+		return getPersistence().getFinderPathCountByC_PKITI_CD();
 	}
 
 	/**

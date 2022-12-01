@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchAddressException;
 import com.liferay.portal.kernel.model.Address;
 
@@ -38,6 +39,13 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AddressUtil} to access the address persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the addresses where uuid = &#63;.
@@ -180,6 +188,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the number of matching addresses
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the addresses where uuid = &#63; and companyId = &#63;.
@@ -335,6 +347,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the addresses where companyId = &#63;.
 	 *
@@ -477,6 +493,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the number of matching addresses
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the addresses where userId = &#63;.
@@ -621,6 +641,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public int countByUserId(long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId();
+
+	public FinderPath getFinderPathCountByCountryId();
+
 	/**
 	 * Returns all the addresses where countryId = &#63;.
 	 *
@@ -764,6 +788,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public int countByCountryId(long countryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByRegionId();
+
+	public FinderPath getFinderPathCountByRegionId();
+
 	/**
 	 * Returns all the addresses where regionId = &#63;.
 	 *
@@ -906,6 +934,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the number of matching addresses
 	 */
 	public int countByRegionId(long regionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63;.
@@ -1060,6 +1092,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the number of matching addresses
 	 */
 	public int countByC_C(long companyId, long classNameId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1226,6 +1262,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the number of matching addresses
 	 */
 	public int countByC_C_C(long companyId, long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_L();
+
+	public FinderPath getFinderPathCountByC_C_C_L();
 
 	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
@@ -1503,6 +1543,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public int countByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_M();
+
+	public FinderPath getFinderPathCountByC_C_C_M();
+
 	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
 	 *
@@ -1686,6 +1730,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public int countByC_C_C_M(
 		long companyId, long classNameId, long classPK, boolean mailing);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_C_P();
+
+	public FinderPath getFinderPathCountByC_C_C_P();
+
 	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
 	 *
@@ -1868,6 +1916,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public int countByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the address where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchAddressException</code> if it could not be found.

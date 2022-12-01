@@ -115,9 +115,31 @@ public class MBMessagePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the message-boards messages where uuid = &#63;.
@@ -660,7 +682,18 @@ public class MBMessagePersistenceImpl
 		"(mbMessage.uuid IS NULL OR mbMessage.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the message-boards message where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
@@ -924,7 +957,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the message-boards messages where uuid = &#63; and companyId = &#63;.
@@ -1517,7 +1561,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63;.
@@ -2393,7 +2448,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the message-boards messages where companyId = &#63;.
@@ -2902,7 +2968,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the message-boards messages where userId = &#63;.
@@ -3405,7 +3482,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByThreadId;
 	private FinderPath _finderPathWithoutPaginationFindByThreadId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByThreadId() {
+		return _finderPathWithoutPaginationFindByThreadId;
+	}
+
 	private FinderPath _finderPathCountByThreadId;
+
+	@Override
+	public FinderPath getFinderPathCountByThreadId() {
+		return _finderPathCountByThreadId;
+	}
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63;.
@@ -3911,7 +3999,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByThreadIdReplies;
 	private FinderPath _finderPathWithoutPaginationFindByThreadIdReplies;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByThreadIdReplies() {
+		return _finderPathWithoutPaginationFindByThreadIdReplies;
+	}
+
 	private FinderPath _finderPathCountByThreadIdReplies;
+
+	@Override
+	public FinderPath getFinderPathCountByThreadIdReplies() {
+		return _finderPathCountByThreadIdReplies;
+	}
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63;.
@@ -4421,7 +4520,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByParentMessageId;
 	private FinderPath _finderPathWithoutPaginationFindByParentMessageId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByParentMessageId() {
+		return _finderPathWithoutPaginationFindByParentMessageId;
+	}
+
 	private FinderPath _finderPathCountByParentMessageId;
+
+	@Override
+	public FinderPath getFinderPathCountByParentMessageId() {
+		return _finderPathCountByParentMessageId;
+	}
 
 	/**
 	 * Returns all the message-boards messages where parentMessageId = &#63;.
@@ -4937,7 +5047,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_U;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U() {
+		return _finderPathWithoutPaginationFindByG_U;
+	}
+
 	private FinderPath _finderPathCountByG_U;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U() {
+		return _finderPathCountByG_U;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and userId = &#63;.
@@ -5876,7 +5997,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C() {
+		return _finderPathWithoutPaginationFindByG_C;
+	}
+
 	private FinderPath _finderPathCountByG_C;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C() {
+		return _finderPathCountByG_C;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63;.
@@ -6820,7 +6952,18 @@ public class MBMessagePersistenceImpl
 		"mbMessage.categoryId = ?";
 
 	private FinderPath _finderPathFetchByG_US;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_US() {
+		return _finderPathFetchByG_US;
+	}
+
 	private FinderPath _finderPathCountByG_US;
+
+	@Override
+	public FinderPath getFinderPathCountByG_US() {
+		return _finderPathCountByG_US;
+	}
 
 	/**
 	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
@@ -7084,7 +7227,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_S() {
+		return _finderPathWithoutPaginationFindByG_S;
+	}
+
 	private FinderPath _finderPathCountByG_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S() {
+		return _finderPathCountByG_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and status = &#63;.
@@ -8023,7 +8177,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_S() {
+		return _finderPathWithoutPaginationFindByC_S;
+	}
+
 	private FinderPath _finderPathCountByC_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_S() {
+		return _finderPathCountByC_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where companyId = &#63; and status = &#63;.
@@ -8575,7 +8740,19 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_C;
 	private FinderPath _finderPathWithoutPaginationFindByU_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_C() {
+		return _finderPathWithoutPaginationFindByU_C;
+	}
+
 	private FinderPath _finderPathCountByU_C;
+
+	@Override
+	public FinderPath getFinderPathCountByU_C() {
+		return _finderPathCountByU_C;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByU_C;
 
 	/**
@@ -9413,7 +9590,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the message-boards messages where classNameId = &#63; and classPK = &#63;.
@@ -9966,7 +10154,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByT_P;
 	private FinderPath _finderPathWithoutPaginationFindByT_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByT_P() {
+		return _finderPathWithoutPaginationFindByT_P;
+	}
+
 	private FinderPath _finderPathCountByT_P;
+
+	@Override
+	public FinderPath getFinderPathCountByT_P() {
+		return _finderPathCountByT_P;
+	}
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and parentMessageId = &#63;.
@@ -10521,7 +10720,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByT_A;
 	private FinderPath _finderPathWithoutPaginationFindByT_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByT_A() {
+		return _finderPathWithoutPaginationFindByT_A;
+	}
+
 	private FinderPath _finderPathCountByT_A;
+
+	@Override
+	public FinderPath getFinderPathCountByT_A() {
+		return _finderPathCountByT_A;
+	}
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and answer = &#63;.
@@ -11071,7 +11281,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByT_S;
 	private FinderPath _finderPathWithoutPaginationFindByT_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByT_S() {
+		return _finderPathWithoutPaginationFindByT_S;
+	}
+
 	private FinderPath _finderPathCountByT_S;
+
+	@Override
+	public FinderPath getFinderPathCountByT_S() {
+		return _finderPathCountByT_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and status = &#63;.
@@ -12161,7 +12382,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByTR_S;
 	private FinderPath _finderPathWithoutPaginationFindByTR_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByTR_S() {
+		return _finderPathWithoutPaginationFindByTR_S;
+	}
+
 	private FinderPath _finderPathCountByTR_S;
+
+	@Override
+	public FinderPath getFinderPathCountByTR_S() {
+		return _finderPathCountByTR_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where threadId = &#63; and status = &#63;.
@@ -12712,7 +12944,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_S;
 	private FinderPath _finderPathWithoutPaginationFindByP_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_S() {
+		return _finderPathWithoutPaginationFindByP_S;
+	}
+
 	private FinderPath _finderPathCountByP_S;
+
+	@Override
+	public FinderPath getFinderPathCountByP_S() {
+		return _finderPathCountByP_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where parentMessageId = &#63; and status = &#63;.
@@ -13266,7 +13509,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_U_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_U_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_U_S() {
+		return _finderPathWithoutPaginationFindByG_U_S;
+	}
+
 	private FinderPath _finderPathCountByG_U_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_U_S() {
+		return _finderPathCountByG_U_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -14267,7 +14521,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_T() {
+		return _finderPathWithoutPaginationFindByG_C_T;
+	}
+
 	private FinderPath _finderPathCountByG_C_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_T() {
+		return _finderPathCountByG_C_T;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
@@ -15273,7 +15538,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_S() {
+		return _finderPathWithoutPaginationFindByG_C_S;
+	}
+
 	private FinderPath _finderPathCountByG_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_S() {
+		return _finderPathCountByG_C_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -16276,7 +16552,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByU_C_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_C_C() {
+		return _finderPathWithoutPaginationFindByU_C_C;
+	}
+
 	private FinderPath _finderPathCountByU_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByU_C_C() {
+		return _finderPathCountByU_C_C;
+	}
 
 	/**
 	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -16866,7 +17153,19 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_C_S;
 	private FinderPath _finderPathWithoutPaginationFindByU_C_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_C_S() {
+		return _finderPathWithoutPaginationFindByU_C_S;
+	}
+
 	private FinderPath _finderPathCountByU_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByU_C_S() {
+		return _finderPathCountByU_C_S;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByU_C_S;
 
 	/**
@@ -17765,7 +18064,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_S() {
+		return _finderPathWithoutPaginationFindByC_C_S;
+	}
+
 	private FinderPath _finderPathCountByC_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C_S() {
+		return _finderPathCountByC_C_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -18355,7 +18665,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_T_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_T_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_T_A() {
+		return _finderPathWithoutPaginationFindByG_C_T_A;
+	}
+
 	private FinderPath _finderPathCountByG_C_T_A;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_T_A() {
+		return _finderPathCountByG_C_T_A;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -19425,7 +19746,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_T_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_T_S() {
+		return _finderPathWithoutPaginationFindByG_C_T_S;
+	}
+
 	private FinderPath _finderPathCountByG_C_T_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_T_S() {
+		return _finderPathCountByG_C_T_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
@@ -20495,7 +20827,18 @@ public class MBMessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_C_C_S;
 	private FinderPath _finderPathWithoutPaginationFindByU_C_C_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_C_C_S() {
+		return _finderPathWithoutPaginationFindByU_C_C_S;
+	}
+
 	private FinderPath _finderPathCountByU_C_C_S;
+
+	@Override
+	public FinderPath getFinderPathCountByU_C_C_S() {
+		return _finderPathCountByU_C_C_S;
+	}
 
 	/**
 	 * Returns all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -21128,7 +21471,18 @@ public class MBMessagePersistenceImpl
 		"mbMessage.status = ?";
 
 	private FinderPath _finderPathFetchByERC_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByERC_G() {
+		return _finderPathFetchByERC_G;
+	}
+
 	private FinderPath _finderPathCountByERC_G;
+
+	@Override
+	public FinderPath getFinderPathCountByERC_G() {
+		return _finderPathCountByERC_G;
+	}
 
 	/**
 	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.

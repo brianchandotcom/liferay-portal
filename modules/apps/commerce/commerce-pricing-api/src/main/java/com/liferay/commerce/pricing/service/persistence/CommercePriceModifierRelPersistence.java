@@ -16,6 +16,7 @@ package com.liferay.commerce.pricing.service.persistence;
 
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierRelException;
 import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,14 @@ public interface CommercePriceModifierRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceModifierRelUtil} to access the commerce price modifier rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommercePriceModifierId();
+
+	public FinderPath getFinderPathCountByCommercePriceModifierId();
 
 	/**
 	 * Returns all the commerce price modifier rels where commercePriceModifierId = &#63;.
@@ -189,6 +198,10 @@ public interface CommercePriceModifierRelPersistence
 	 * @return the number of matching commerce price modifier rels
 	 */
 	public int countByCommercePriceModifierId(long commercePriceModifierId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCPM_CN();
+
+	public FinderPath getFinderPathCountByCPM_CN();
 
 	/**
 	 * Returns all the commerce price modifier rels where commercePriceModifierId = &#63; and classNameId = &#63;.
@@ -346,6 +359,10 @@ public interface CommercePriceModifierRelPersistence
 	 */
 	public int countByCPM_CN(long commercePriceModifierId, long classNameId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK();
+
+	public FinderPath getFinderPathCountByCN_CPK();
+
 	/**
 	 * Returns all the commerce price modifier rels where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -500,6 +517,10 @@ public interface CommercePriceModifierRelPersistence
 	 * @return the number of matching commerce price modifier rels
 	 */
 	public int countByCN_CPK(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByCPM_CN_CPK();
+
+	public FinderPath getFinderPathCountByCPM_CN_CPK();
 
 	/**
 	 * Returns the commerce price modifier rel where commercePriceModifierId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPriceModifierRelException</code> if it could not be found.

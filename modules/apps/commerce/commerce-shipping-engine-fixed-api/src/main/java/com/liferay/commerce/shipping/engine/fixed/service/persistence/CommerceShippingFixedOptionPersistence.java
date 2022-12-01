@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.service.persistence;
 
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionException;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,14 @@ public interface CommerceShippingFixedOptionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionUtil} to access the commerce shipping fixed option persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingMethodId();
+
+	public FinderPath getFinderPathCountByCommerceShippingMethodId();
 
 	/**
 	 * Returns all the commerce shipping fixed options where commerceShippingMethodId = &#63;.
@@ -189,6 +198,10 @@ public interface CommerceShippingFixedOptionPersistence
 	 * @return the number of matching commerce shipping fixed options
 	 */
 	public int countByCommerceShippingMethodId(long commerceShippingMethodId);
+
+	public FinderPath getFinderPathFetchByC_K();
+
+	public FinderPath getFinderPathCountByC_K();
 
 	/**
 	 * Returns the commerce shipping fixed option where companyId = &#63; and key = &#63; or throws a <code>NoSuchShippingFixedOptionException</code> if it could not be found.

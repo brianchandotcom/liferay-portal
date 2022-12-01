@@ -16,6 +16,7 @@ package com.liferay.layout.service.persistence;
 
 import com.liferay.layout.exception.NoSuchLayoutLocalizationException;
 import com.liferay.layout.model.LayoutLocalization;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface LayoutLocalizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutLocalizationUtil} to access the layout localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout localizations where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface LayoutLocalizationPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the layout localization where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutLocalizationException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface LayoutLocalizationPersistence
 	 * @return the number of matching layout localizations
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout localizations where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface LayoutLocalizationPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByPlid();
+
+	public FinderPath getFinderPathCountByPlid();
+
 	/**
 	 * Returns all the layout localizations where plid = &#63;.
 	 *
@@ -534,6 +554,10 @@ public interface LayoutLocalizationPersistence
 	 */
 	public int countByPlid(long plid);
 
+	public FinderPath getFinderPathFetchByL_P();
+
+	public FinderPath getFinderPathCountByL_P();
+
 	/**
 	 * Returns the layout localization where languageId = &#63; and plid = &#63; or throws a <code>NoSuchLayoutLocalizationException</code> if it could not be found.
 	 *
@@ -583,6 +607,10 @@ public interface LayoutLocalizationPersistence
 	 * @return the number of matching layout localizations
 	 */
 	public int countByL_P(String languageId, long plid);
+
+	public FinderPath getFinderPathFetchByG_L_P();
+
+	public FinderPath getFinderPathCountByG_L_P();
 
 	/**
 	 * Returns the layout localization where groupId = &#63; and languageId = &#63; and plid = &#63; or throws a <code>NoSuchLayoutLocalizationException</code> if it could not be found.

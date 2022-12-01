@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.service.persistence;
 
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -44,6 +45,13 @@ public interface CommercePriceListPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceListUtil} to access the commerce price list persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce price lists where uuid = &#63;.
@@ -188,6 +196,10 @@ public interface CommercePriceListPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the commerce price list where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
 	 *
@@ -237,6 +249,10 @@ public interface CommercePriceListPersistence
 	 * @return the number of matching commerce price lists
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce price lists where uuid = &#63; and companyId = &#63;.
@@ -393,6 +409,10 @@ public interface CommercePriceListPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the commerce price lists where companyId = &#63;.
 	 *
@@ -535,6 +555,10 @@ public interface CommercePriceListPersistence
 	 * @return the number of matching commerce price lists
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceCurrencyId();
+
+	public FinderPath getFinderPathCountByCommerceCurrencyId();
 
 	/**
 	 * Returns all the commerce price lists where commerceCurrencyId = &#63;.
@@ -680,6 +704,10 @@ public interface CommercePriceListPersistence
 	 */
 	public int countByCommerceCurrencyId(long commerceCurrencyId);
 
+	public FinderPath getFinderPathFetchByParentCommercePriceListId();
+
+	public FinderPath getFinderPathCountByParentCommercePriceListId();
+
 	/**
 	 * Returns the commerce price list where parentCommercePriceListId = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
 	 *
@@ -727,6 +755,10 @@ public interface CommercePriceListPersistence
 	 * @return the number of matching commerce price lists
 	 */
 	public int countByParentCommercePriceListId(long parentCommercePriceListId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the commerce price lists where groupId = &#63; and companyId = &#63;.
@@ -1086,6 +1118,10 @@ public interface CommercePriceListPersistence
 	 */
 	public int filterCountByG_C(long[] groupIds, long companyId);
 
+	public FinderPath getFinderPathFetchByG_CatalogBasePriceList();
+
+	public FinderPath getFinderPathCountByG_CatalogBasePriceList();
+
 	/**
 	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
 	 *
@@ -1294,6 +1330,10 @@ public interface CommercePriceListPersistence
 	 * @return the number of matching commerce price lists
 	 */
 	public int countByLtD_S(Date displayDate, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_S();
+
+	public FinderPath getFinderPathCountByG_C_S();
 
 	/**
 	 * Returns all the commerce price lists where groupId = &#63; and companyId = &#63; and status = &#63;.
@@ -2062,6 +2102,10 @@ public interface CommercePriceListPersistence
 	public int filterCountByG_C_NotS(
 		long[] groupIds, long companyId, int status);
 
+	public FinderPath getFinderPathFetchByG_C_T();
+
+	public FinderPath getFinderPathCountByG_C_T();
+
 	/**
 	 * Returns the commerce price list where groupId = &#63; and catalogBasePriceList = &#63; and type = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.
 	 *
@@ -2121,6 +2165,10 @@ public interface CommercePriceListPersistence
 	 */
 	public int countByG_C_T(
 		long groupId, boolean catalogBasePriceList, String type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_T_S();
+
+	public FinderPath getFinderPathCountByG_C_T_S();
 
 	/**
 	 * Returns all the commerce price lists where groupId = &#63; and companyId = &#63; and type = &#63; and status = &#63;.
@@ -2971,6 +3019,10 @@ public interface CommercePriceListPersistence
 	 */
 	public int filterCountByG_C_T_NotS(
 		long[] groupIds, long companyId, String type, int status);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce price list where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPriceListException</code> if it could not be found.

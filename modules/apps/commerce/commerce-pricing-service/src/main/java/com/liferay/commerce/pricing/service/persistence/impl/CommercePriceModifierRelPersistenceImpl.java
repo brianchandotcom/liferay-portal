@@ -101,10 +101,34 @@ public class CommercePriceModifierRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCommercePriceModifierId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommercePriceModifierId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommercePriceModifierId() {
+
+		return _finderPathWithoutPaginationFindByCommercePriceModifierId;
+	}
+
 	private FinderPath _finderPathCountByCommercePriceModifierId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommercePriceModifierId() {
+		return _finderPathCountByCommercePriceModifierId;
+	}
 
 	/**
 	 * Returns all the commerce price modifier rels where commercePriceModifierId = &#63;.
@@ -642,7 +666,18 @@ public class CommercePriceModifierRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCPM_CN;
 	private FinderPath _finderPathWithoutPaginationFindByCPM_CN;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCPM_CN() {
+		return _finderPathWithoutPaginationFindByCPM_CN;
+	}
+
 	private FinderPath _finderPathCountByCPM_CN;
+
+	@Override
+	public FinderPath getFinderPathCountByCPM_CN() {
+		return _finderPathCountByCPM_CN;
+	}
 
 	/**
 	 * Returns all the commerce price modifier rels where commercePriceModifierId = &#63; and classNameId = &#63;.
@@ -1214,7 +1249,18 @@ public class CommercePriceModifierRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCN_CPK;
 	private FinderPath _finderPathWithoutPaginationFindByCN_CPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCN_CPK() {
+		return _finderPathWithoutPaginationFindByCN_CPK;
+	}
+
 	private FinderPath _finderPathCountByCN_CPK;
+
+	@Override
+	public FinderPath getFinderPathCountByCN_CPK() {
+		return _finderPathCountByCN_CPK;
+	}
 
 	/**
 	 * Returns all the commerce price modifier rels where classNameId = &#63; and classPK = &#63;.
@@ -1774,7 +1820,18 @@ public class CommercePriceModifierRelPersistenceImpl
 		"commercePriceModifierRel.classPK = ?";
 
 	private FinderPath _finderPathFetchByCPM_CN_CPK;
+
+	@Override
+	public FinderPath getFinderPathFetchByCPM_CN_CPK() {
+		return _finderPathFetchByCPM_CN_CPK;
+	}
+
 	private FinderPath _finderPathCountByCPM_CN_CPK;
+
+	@Override
+	public FinderPath getFinderPathCountByCPM_CN_CPK() {
+		return _finderPathCountByCPM_CN_CPK;
+	}
 
 	/**
 	 * Returns the commerce price modifier rel where commercePriceModifierId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPriceModifierRelException</code> if it could not be found.

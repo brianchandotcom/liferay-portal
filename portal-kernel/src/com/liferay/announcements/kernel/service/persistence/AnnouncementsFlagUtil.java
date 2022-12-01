@@ -121,6 +121,30 @@ public class AnnouncementsFlagUtil {
 		return getPersistence().update(announcementsFlag, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the announcements flags where companyId = &#63;.
 	 *
@@ -294,6 +318,18 @@ public class AnnouncementsFlagUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByEntryId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByEntryId() {
+
+		return getPersistence().getFinderPathCountByEntryId();
+	}
+
 	/**
 	 * Returns all the announcements flags where entryId = &#63;.
 	 *
@@ -460,6 +496,18 @@ public class AnnouncementsFlagUtil {
 	 */
 	public static int countByEntryId(long entryId) {
 		return getPersistence().countByEntryId(entryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_E_V() {
+
+		return getPersistence().getFinderPathFetchByU_E_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_E_V() {
+
+		return getPersistence().getFinderPathCountByU_E_V();
 	}
 
 	/**

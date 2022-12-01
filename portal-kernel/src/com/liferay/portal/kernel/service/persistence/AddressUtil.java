@@ -119,6 +119,30 @@ public class AddressUtil {
 		return getPersistence().update(address, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the addresses where uuid = &#63;.
 	 *
@@ -278,6 +302,18 @@ public class AddressUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -463,6 +499,18 @@ public class AddressUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the addresses where companyId = &#63;.
 	 *
@@ -631,6 +679,18 @@ public class AddressUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the addresses where userId = &#63;.
 	 *
@@ -791,6 +851,18 @@ public class AddressUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCountryId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCountryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCountryId() {
+
+		return getPersistence().getFinderPathCountByCountryId();
 	}
 
 	/**
@@ -961,6 +1033,18 @@ public class AddressUtil {
 		return getPersistence().countByCountryId(countryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRegionId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByRegionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRegionId() {
+
+		return getPersistence().getFinderPathCountByRegionId();
+	}
+
 	/**
 	 * Returns all the addresses where regionId = &#63;.
 	 *
@@ -1127,6 +1211,18 @@ public class AddressUtil {
 	 */
 	public static int countByRegionId(long regionId) {
 		return getPersistence().countByRegionId(regionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**
@@ -1311,6 +1407,18 @@ public class AddressUtil {
 	 */
 	public static int countByC_C(long companyId, long classNameId) {
 		return getPersistence().countByC_C(companyId, classNameId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C() {
+
+		return getPersistence().getFinderPathCountByC_C_C();
 	}
 
 	/**
@@ -1513,6 +1621,18 @@ public class AddressUtil {
 		long companyId, long classNameId, long classPK) {
 
 		return getPersistence().countByC_C_C(companyId, classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_C_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_C_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C_L() {
+
+		return getPersistence().getFinderPathCountByC_C_C_L();
 	}
 
 	/**
@@ -1846,6 +1966,18 @@ public class AddressUtil {
 			companyId, classNameId, classPK, listTypeIds);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_C_M() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_C_M();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C_M() {
+
+		return getPersistence().getFinderPathCountByC_C_C_M();
+	}
+
 	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
 	 *
@@ -2066,6 +2198,18 @@ public class AddressUtil {
 			companyId, classNameId, classPK, mailing);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_C_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_C_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C_P() {
+
+		return getPersistence().getFinderPathCountByC_C_C_P();
+	}
+
 	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
 	 *
@@ -2284,6 +2428,18 @@ public class AddressUtil {
 
 		return getPersistence().countByC_C_C_P(
 			companyId, classNameId, classPK, primary);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByERC_C() {
+
+		return getPersistence().getFinderPathFetchByERC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByERC_C() {
+
+		return getPersistence().getFinderPathCountByERC_C();
 	}
 
 	/**

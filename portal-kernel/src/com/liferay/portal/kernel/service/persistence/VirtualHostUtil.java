@@ -119,6 +119,30 @@ public class VirtualHostUtil {
 		return getPersistence().update(virtualHost, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the virtual hosts where companyId = &#63;.
 	 *
@@ -288,6 +312,18 @@ public class VirtualHostUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByHostname() {
+
+		return getPersistence().getFinderPathFetchByHostname();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByHostname() {
+
+		return getPersistence().getFinderPathCountByHostname();
+	}
+
 	/**
 	 * Returns the virtual host where hostname = &#63; or throws a <code>NoSuchVirtualHostException</code> if it could not be found.
 	 *
@@ -344,6 +380,18 @@ public class VirtualHostUtil {
 	 */
 	public static int countByHostname(String hostname) {
 		return getPersistence().countByHostname(hostname);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_L() {
+
+		return getPersistence().getFinderPathCountByC_L();
 	}
 
 	/**
@@ -813,6 +861,18 @@ public class VirtualHostUtil {
 	 */
 	public static int countByNotL_H(long layoutSetId, String[] hostnames) {
 		return getPersistence().countByNotL_H(layoutSetId, hostnames);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_L_D() {
+
+		return getPersistence().getFinderPathFetchByC_L_D();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_L_D() {
+
+		return getPersistence().getFinderPathCountByC_L_D();
 	}
 
 	/**

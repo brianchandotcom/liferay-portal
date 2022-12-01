@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchRegionLocalizationException;
 import com.liferay.portal.kernel.model.RegionLocalization;
 
@@ -39,6 +40,13 @@ public interface RegionLocalizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RegionLocalizationUtil} to access the region localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByRegionId();
+
+	public FinderPath getFinderPathCountByRegionId();
 
 	/**
 	 * Returns all the region localizations where regionId = &#63;.
@@ -182,6 +190,10 @@ public interface RegionLocalizationPersistence
 	 * @return the number of matching region localizations
 	 */
 	public int countByRegionId(long regionId);
+
+	public FinderPath getFinderPathFetchByRegionId_LanguageId();
+
+	public FinderPath getFinderPathCountByRegionId_LanguageId();
 
 	/**
 	 * Returns the region localization where regionId = &#63; and languageId = &#63; or throws a <code>NoSuchRegionLocalizationException</code> if it could not be found.

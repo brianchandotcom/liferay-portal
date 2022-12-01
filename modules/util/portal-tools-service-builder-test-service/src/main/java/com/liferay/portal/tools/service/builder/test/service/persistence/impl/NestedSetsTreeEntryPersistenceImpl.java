@@ -89,6 +89,16 @@ public class NestedSetsTreeEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationGetAncestors;
 	private FinderPath _finderPathWithPaginationGetDescendants;
 
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	public NestedSetsTreeEntryPersistenceImpl() {
 		setModelClass(NestedSetsTreeEntry.class);
 

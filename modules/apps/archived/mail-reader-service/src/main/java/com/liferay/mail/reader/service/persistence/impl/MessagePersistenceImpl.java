@@ -96,9 +96,31 @@ public class MessagePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the messages where companyId = &#63;.
@@ -589,7 +611,18 @@ public class MessagePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFolderId;
 	private FinderPath _finderPathWithoutPaginationFindByFolderId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFolderId() {
+		return _finderPathWithoutPaginationFindByFolderId;
+	}
+
 	private FinderPath _finderPathCountByFolderId;
+
+	@Override
+	public FinderPath getFinderPathCountByFolderId() {
+		return _finderPathCountByFolderId;
+	}
 
 	/**
 	 * Returns all the messages where folderId = &#63;.
@@ -1076,7 +1109,18 @@ public class MessagePersistenceImpl
 		"message.folderId = ?";
 
 	private FinderPath _finderPathFetchByF_R;
+
+	@Override
+	public FinderPath getFinderPathFetchByF_R() {
+		return _finderPathFetchByF_R;
+	}
+
 	private FinderPath _finderPathCountByF_R;
+
+	@Override
+	public FinderPath getFinderPathCountByF_R() {
+		return _finderPathCountByF_R;
+	}
 
 	/**
 	 * Returns the message where folderId = &#63; and remoteMessageId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.

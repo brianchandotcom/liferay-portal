@@ -119,6 +119,30 @@ public class ExpandoColumnUtil {
 		return getPersistence().update(expandoColumn, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByTableId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByTableId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByTableId() {
+
+		return getPersistence().getFinderPathCountByTableId();
+	}
+
 	/**
 	 * Returns all the expando columns where tableId = &#63;.
 	 *
@@ -360,6 +384,24 @@ public class ExpandoColumnUtil {
 	 */
 	public static int filterCountByTableId(long tableId) {
 		return getPersistence().filterCountByTableId(tableId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_N() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByT_N() {
+
+		return getPersistence().getFinderPathFetchByT_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_N() {
+
+		return getPersistence().getFinderPathCountByT_N();
 	}
 
 	/**

@@ -99,9 +99,31 @@ public class DDMFieldAttributePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByStorageId;
 	private FinderPath _finderPathWithoutPaginationFindByStorageId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStorageId() {
+		return _finderPathWithoutPaginationFindByStorageId;
+	}
+
 	private FinderPath _finderPathCountByStorageId;
+
+	@Override
+	public FinderPath getFinderPathCountByStorageId() {
+		return _finderPathCountByStorageId;
+	}
 
 	/**
 	 * Returns all the ddm field attributes where storageId = &#63;.
@@ -620,7 +642,18 @@ public class DDMFieldAttributePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByS_L;
 	private FinderPath _finderPathWithoutPaginationFindByS_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByS_L() {
+		return _finderPathWithoutPaginationFindByS_L;
+	}
+
 	private FinderPath _finderPathCountByS_L;
+
+	@Override
+	public FinderPath getFinderPathCountByS_L() {
+		return _finderPathCountByS_L;
+	}
 
 	/**
 	 * Returns all the ddm field attributes where storageId = &#63; and languageId = &#63;.
@@ -1221,7 +1254,18 @@ public class DDMFieldAttributePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByAN_SAV;
 	private FinderPath _finderPathWithoutPaginationFindByAN_SAV;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAN_SAV() {
+		return _finderPathWithoutPaginationFindByAN_SAV;
+	}
+
 	private FinderPath _finderPathCountByAN_SAV;
+
+	@Override
+	public FinderPath getFinderPathCountByAN_SAV() {
+		return _finderPathCountByAN_SAV;
+	}
 
 	/**
 	 * Returns all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
@@ -1870,7 +1914,18 @@ public class DDMFieldAttributePersistenceImpl
 		"(ddmFieldAttribute.smallAttributeValue IS NULL OR ddmFieldAttribute.smallAttributeValue = '')";
 
 	private FinderPath _finderPathFetchByF_AN_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByF_AN_L() {
+		return _finderPathFetchByF_AN_L;
+	}
+
 	private FinderPath _finderPathCountByF_AN_L;
+
+	@Override
+	public FinderPath getFinderPathCountByF_AN_L() {
+		return _finderPathCountByF_AN_L;
+	}
 
 	/**
 	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or throws a <code>NoSuchFieldAttributeException</code> if it could not be found.

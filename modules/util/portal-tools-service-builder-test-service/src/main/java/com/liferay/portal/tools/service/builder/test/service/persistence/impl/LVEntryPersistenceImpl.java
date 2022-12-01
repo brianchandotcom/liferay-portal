@@ -95,9 +95,31 @@ public class LVEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the lv entries where uuid = &#63;.
@@ -624,7 +646,18 @@ public class LVEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_Head;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_Head() {
+		return _finderPathWithoutPaginationFindByUuid_Head;
+	}
+
 	private FinderPath _finderPathCountByUuid_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_Head() {
+		return _finderPathCountByUuid_Head;
+	}
 
 	/**
 	 * Returns all the lv entries where uuid = &#63; and head = &#63;.
@@ -1197,7 +1230,18 @@ public class LVEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUUID_G;
 	private FinderPath _finderPathWithoutPaginationFindByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUUID_G() {
+		return _finderPathWithoutPaginationFindByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns all the lv entries where uuid = &#63; and groupId = &#63;.
@@ -1770,7 +1814,18 @@ public class LVEntryPersistenceImpl
 		"lvEntry.groupId = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_Head;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G_Head() {
+		return _finderPathFetchByUUID_G_Head;
+	}
+
 	private FinderPath _finderPathCountByUUID_G_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G_Head() {
+		return _finderPathCountByUUID_G_Head;
+	}
 
 	/**
 	 * Returns the lv entry where uuid = &#63; and groupId = &#63; and head = &#63; or throws a <code>NoSuchLVEntryException</code> if it could not be found.
@@ -2039,7 +2094,18 @@ public class LVEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the lv entries where uuid = &#63; and companyId = &#63;.
@@ -2616,7 +2682,18 @@ public class LVEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C_Head;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C_Head() {
+		return _finderPathWithoutPaginationFindByUuid_C_Head;
+	}
+
 	private FinderPath _finderPathCountByUuid_C_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C_Head() {
+		return _finderPathCountByUuid_C_Head;
+	}
 
 	/**
 	 * Returns all the lv entries where uuid = &#63; and companyId = &#63; and head = &#63;.
@@ -3231,7 +3308,19 @@ public class LVEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
@@ -4033,7 +4122,19 @@ public class LVEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId_Head;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Head() {
+		return _finderPathWithoutPaginationFindByGroupId_Head;
+	}
+
 	private FinderPath _finderPathCountByGroupId_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId_Head() {
+		return _finderPathCountByGroupId_Head;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByGroupId_Head;
 
 	/**
@@ -4912,7 +5013,18 @@ public class LVEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_UGK;
 	private FinderPath _finderPathWithoutPaginationFindByG_UGK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_UGK() {
+		return _finderPathWithoutPaginationFindByG_UGK;
+	}
+
 	private FinderPath _finderPathCountByG_UGK;
+
+	@Override
+	public FinderPath getFinderPathCountByG_UGK() {
+		return _finderPathCountByG_UGK;
+	}
 
 	/**
 	 * Returns all the lv entries where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -5491,7 +5603,18 @@ public class LVEntryPersistenceImpl
 		"(lvEntry.uniqueGroupKey IS NULL OR lvEntry.uniqueGroupKey = '')";
 
 	private FinderPath _finderPathFetchByG_UGK_Head;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_UGK_Head() {
+		return _finderPathFetchByG_UGK_Head;
+	}
+
 	private FinderPath _finderPathCountByG_UGK_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByG_UGK_Head() {
+		return _finderPathCountByG_UGK_Head;
+	}
 
 	/**
 	 * Returns the lv entry where groupId = &#63; and uniqueGroupKey = &#63; and head = &#63; or throws a <code>NoSuchLVEntryException</code> if it could not be found.
@@ -5766,7 +5889,18 @@ public class LVEntryPersistenceImpl
 		"lvEntry.head = ?";
 
 	private FinderPath _finderPathFetchByHeadId;
+
+	@Override
+	public FinderPath getFinderPathFetchByHeadId() {
+		return _finderPathFetchByHeadId;
+	}
+
 	private FinderPath _finderPathCountByHeadId;
+
+	@Override
+	public FinderPath getFinderPathCountByHeadId() {
+		return _finderPathCountByHeadId;
+	}
 
 	/**
 	 * Returns the lv entry where headId = &#63; or throws a <code>NoSuchLVEntryException</code> if it could not be found.

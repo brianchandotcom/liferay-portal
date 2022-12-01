@@ -109,9 +109,31 @@ public class SegmentsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the segments entries where uuid = &#63;.
@@ -656,7 +678,18 @@ public class SegmentsEntryPersistenceImpl
 		"(segmentsEntry.uuid IS NULL OR segmentsEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathFetchByUUID_G() {
+		return _finderPathFetchByUUID_G;
+	}
+
 	private FinderPath _finderPathCountByUUID_G;
+
+	@Override
+	public FinderPath getFinderPathCountByUUID_G() {
+		return _finderPathCountByUUID_G;
+	}
 
 	/**
 	 * Returns the segments entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -920,7 +953,18 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the segments entries where uuid = &#63; and companyId = &#63;.
@@ -1517,7 +1561,19 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
@@ -2872,7 +2928,19 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByCompanyId;
 
 	/**
@@ -3649,7 +3717,18 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindBySource;
 	private FinderPath _finderPathWithoutPaginationFindBySource;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySource() {
+		return _finderPathWithoutPaginationFindBySource;
+	}
+
 	private FinderPath _finderPathCountBySource;
+
+	@Override
+	public FinderPath getFinderPathCountBySource() {
+		return _finderPathCountBySource;
+	}
 
 	/**
 	 * Returns all the segments entries where source = &#63;.
@@ -4198,7 +4277,18 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByType;
 	private FinderPath _finderPathWithoutPaginationFindByType;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByType() {
+		return _finderPathWithoutPaginationFindByType;
+	}
+
 	private FinderPath _finderPathCountByType;
+
+	@Override
+	public FinderPath getFinderPathCountByType() {
+		return _finderPathCountByType;
+	}
 
 	/**
 	 * Returns all the segments entries where type = &#63;.
@@ -4743,7 +4833,18 @@ public class SegmentsEntryPersistenceImpl
 		"(segmentsEntry.type IS NULL OR segmentsEntry.type = '')";
 
 	private FinderPath _finderPathFetchByG_S;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_S() {
+		return _finderPathFetchByG_S;
+	}
+
 	private FinderPath _finderPathCountByG_S;
+
+	@Override
+	public FinderPath getFinderPathCountByG_S() {
+		return _finderPathCountByG_S;
+	}
 
 	/**
 	 * Returns the segments entry where groupId = &#63; and segmentsEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -5008,7 +5109,19 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_A() {
+		return _finderPathWithoutPaginationFindByG_A;
+	}
+
 	private FinderPath _finderPathCountByG_A;
+
+	@Override
+	public FinderPath getFinderPathCountByG_A() {
+		return _finderPathCountByG_A;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_A;
 
 	/**
@@ -6476,7 +6589,18 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByA_T;
 	private FinderPath _finderPathWithoutPaginationFindByA_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByA_T() {
+		return _finderPathWithoutPaginationFindByA_T;
+	}
+
 	private FinderPath _finderPathCountByA_T;
+
+	@Override
+	public FinderPath getFinderPathCountByA_T() {
+		return _finderPathCountByA_T;
+	}
 
 	/**
 	 * Returns all the segments entries where active = &#63; and type = &#63;.
@@ -7069,7 +7193,19 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_A_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_A_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_A_T() {
+		return _finderPathWithoutPaginationFindByG_A_T;
+	}
+
 	private FinderPath _finderPathCountByG_A_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_A_T() {
+		return _finderPathCountByG_A_T;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_A_T;
 
 	/**
@@ -8769,7 +8905,19 @@ public class SegmentsEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_A_S_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_A_S_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_A_S_T() {
+		return _finderPathWithoutPaginationFindByG_A_S_T;
+	}
+
 	private FinderPath _finderPathCountByG_A_S_T;
+
+	@Override
+	public FinderPath getFinderPathCountByG_A_S_T() {
+		return _finderPathCountByG_A_S_T;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByG_A_S_T;
 
 	/**

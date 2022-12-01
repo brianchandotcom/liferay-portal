@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 
@@ -39,6 +40,13 @@ public interface UserNotificationDeliveryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserNotificationDeliveryUtil} to access the user notification delivery persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the user notification deliveries where userId = &#63;.
@@ -182,6 +190,10 @@ public interface UserNotificationDeliveryPersistence
 	 * @return the number of matching user notification deliveries
 	 */
 	public int countByUserId(long userId);
+
+	public FinderPath getFinderPathFetchByU_P_C_N_D();
+
+	public FinderPath getFinderPathCountByU_P_C_N_D();
 
 	/**
 	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a <code>NoSuchUserNotificationDeliveryException</code> if it could not be found.

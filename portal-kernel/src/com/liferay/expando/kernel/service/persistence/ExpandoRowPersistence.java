@@ -16,6 +16,7 @@ package com.liferay.expando.kernel.service.persistence;
 
 import com.liferay.expando.kernel.exception.NoSuchRowException;
 import com.liferay.expando.kernel.model.ExpandoRow;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface ExpandoRowPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoRowUtil} to access the expando row persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByTableId();
+
+	public FinderPath getFinderPathCountByTableId();
 
 	/**
 	 * Returns all the expando rows where tableId = &#63;.
@@ -185,6 +193,10 @@ public interface ExpandoRowPersistence
 	 */
 	public int countByTableId(long tableId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByClassPK();
+
+	public FinderPath getFinderPathCountByClassPK();
+
 	/**
 	 * Returns all the expando rows where classPK = &#63;.
 	 *
@@ -327,6 +339,10 @@ public interface ExpandoRowPersistence
 	 * @return the number of matching expando rows
 	 */
 	public int countByClassPK(long classPK);
+
+	public FinderPath getFinderPathFetchByT_C();
+
+	public FinderPath getFinderPathCountByT_C();
 
 	/**
 	 * Returns the expando row where tableId = &#63; and classPK = &#63; or throws a <code>NoSuchRowException</code> if it could not be found.

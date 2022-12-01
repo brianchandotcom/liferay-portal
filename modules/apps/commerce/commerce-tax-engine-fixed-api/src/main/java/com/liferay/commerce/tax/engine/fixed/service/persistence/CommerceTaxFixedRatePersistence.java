@@ -16,6 +16,7 @@ package com.liferay.commerce.tax.engine.fixed.service.persistence;
 
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceTaxFixedRatePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxFixedRateUtil} to access the commerce tax fixed rate persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCPTaxCategoryId();
+
+	public FinderPath getFinderPathCountByCPTaxCategoryId();
 
 	/**
 	 * Returns all the commerce tax fixed rates where CPTaxCategoryId = &#63;.
@@ -185,6 +193,10 @@ public interface CommerceTaxFixedRatePersistence
 	 */
 	public int countByCPTaxCategoryId(long CPTaxCategoryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceTaxMethodId();
+
+	public FinderPath getFinderPathCountByCommerceTaxMethodId();
+
 	/**
 	 * Returns all the commerce tax fixed rates where commerceTaxMethodId = &#63;.
 	 *
@@ -328,6 +340,10 @@ public interface CommerceTaxFixedRatePersistence
 	 * @return the number of matching commerce tax fixed rates
 	 */
 	public int countByCommerceTaxMethodId(long commerceTaxMethodId);
+
+	public FinderPath getFinderPathFetchByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns the commerce tax fixed rate where CPTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or throws a <code>NoSuchTaxFixedRateException</code> if it could not be found.

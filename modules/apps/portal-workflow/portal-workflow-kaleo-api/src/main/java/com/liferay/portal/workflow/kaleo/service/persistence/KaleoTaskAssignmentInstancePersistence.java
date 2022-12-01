@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException;
@@ -42,6 +43,13 @@ public interface KaleoTaskAssignmentInstancePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskAssignmentInstanceUtil} to access the kaleo task assignment instance persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the kaleo task assignment instances where companyId = &#63;.
@@ -186,6 +194,11 @@ public interface KaleoTaskAssignmentInstancePersistence
 	 * @return the number of matching kaleo task assignment instances
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+
+	public FinderPath getFinderPathCountByKaleoDefinitionVersionId();
 
 	/**
 	 * Returns all the kaleo task assignment instances where kaleoDefinitionVersionId = &#63;.
@@ -336,6 +349,10 @@ public interface KaleoTaskAssignmentInstancePersistence
 	 */
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoInstanceId();
+
+	public FinderPath getFinderPathCountByKaleoInstanceId();
+
 	/**
 	 * Returns all the kaleo task assignment instances where kaleoInstanceId = &#63;.
 	 *
@@ -479,6 +496,11 @@ public interface KaleoTaskAssignmentInstancePersistence
 	 * @return the number of matching kaleo task assignment instances
 	 */
 	public int countByKaleoInstanceId(long kaleoInstanceId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByKaleoTaskInstanceTokenId();
+
+	public FinderPath getFinderPathCountByKaleoTaskInstanceTokenId();
 
 	/**
 	 * Returns all the kaleo task assignment instances where kaleoTaskInstanceTokenId = &#63;.
@@ -629,6 +651,10 @@ public interface KaleoTaskAssignmentInstancePersistence
 	 */
 	public int countByKaleoTaskInstanceTokenId(long kaleoTaskInstanceTokenId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByAssigneeClassName();
+
+	public FinderPath getFinderPathCountByAssigneeClassName();
+
 	/**
 	 * Returns all the kaleo task assignment instances where assigneeClassName = &#63;.
 	 *
@@ -772,6 +798,10 @@ public interface KaleoTaskAssignmentInstancePersistence
 	 * @return the number of matching kaleo task assignment instances
 	 */
 	public int countByAssigneeClassName(String assigneeClassName);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_ACPK();
+
+	public FinderPath getFinderPathCountByG_ACPK();
 
 	/**
 	 * Returns all the kaleo task assignment instances where groupId = &#63; and assigneeClassPK = &#63;.
@@ -928,6 +958,10 @@ public interface KaleoTaskAssignmentInstancePersistence
 	 * @return the number of matching kaleo task assignment instances
 	 */
 	public int countByG_ACPK(long groupId, long assigneeClassPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKTITI_ACN();
+
+	public FinderPath getFinderPathCountByKTITI_ACN();
 
 	/**
 	 * Returns all the kaleo task assignment instances where kaleoTaskInstanceTokenId = &#63; and assigneeClassName = &#63;.
@@ -1089,6 +1123,10 @@ public interface KaleoTaskAssignmentInstancePersistence
 	 */
 	public int countByKTITI_ACN(
 		long kaleoTaskInstanceTokenId, String assigneeClassName);
+
+	public FinderPath getFinderPathWithoutPaginationFindByACN_ACPK();
+
+	public FinderPath getFinderPathCountByACN_ACPK();
 
 	/**
 	 * Returns all the kaleo task assignment instances where assigneeClassName = &#63; and assigneeClassPK = &#63;.

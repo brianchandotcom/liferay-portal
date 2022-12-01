@@ -16,6 +16,7 @@ package com.liferay.commerce.term.service.persistence;
 
 import com.liferay.commerce.term.exception.NoSuchTermEntryRelException;
 import com.liferay.commerce.term.model.CommerceTermEntryRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceTermEntryRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTermEntryRelUtil} to access the commerce term entry rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceTermEntryId();
+
+	public FinderPath getFinderPathCountByCommerceTermEntryId();
 
 	/**
 	 * Returns all the commerce term entry rels where commerceTermEntryId = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceTermEntryRelPersistence
 	 * @return the number of matching commerce term entry rels
 	 */
 	public int countByCommerceTermEntryId(long commerceTermEntryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the commerce term entry rels where classNameId = &#63; and commerceTermEntryId = &#63;.
@@ -340,6 +352,10 @@ public interface CommerceTermEntryRelPersistence
 	 * @return the number of matching commerce term entry rels
 	 */
 	public int countByC_C(long classNameId, long commerceTermEntryId);
+
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
 
 	/**
 	 * Returns the commerce term entry rel where classNameId = &#63; and classPK = &#63; and commerceTermEntryId = &#63; or throws a <code>NoSuchTermEntryRelException</code> if it could not be found.

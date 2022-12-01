@@ -16,6 +16,7 @@ package com.liferay.commerce.service.persistence;
 
 import com.liferay.commerce.exception.NoSuchOrderTypeRelException;
 import com.liferay.commerce.model.CommerceOrderTypeRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceOrderTypeRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderTypeRelUtil} to access the commerce order type rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce order type rels where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface CommerceOrderTypeRelPersistence
 	 * @return the number of matching commerce order type rels
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce order type rels where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface CommerceOrderTypeRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceOrderTypeId();
+
+	public FinderPath getFinderPathCountByCommerceOrderTypeId();
+
 	/**
 	 * Returns all the commerce order type rels where commerceOrderTypeId = &#63;.
 	 *
@@ -482,6 +498,10 @@ public interface CommerceOrderTypeRelPersistence
 	 * @return the number of matching commerce order type rels
 	 */
 	public int countByCommerceOrderTypeId(long commerceOrderTypeId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the commerce order type rels where classNameId = &#63; and commerceOrderTypeId = &#63;.
@@ -639,6 +659,10 @@ public interface CommerceOrderTypeRelPersistence
 	 */
 	public int countByC_C(long classNameId, long commerceOrderTypeId);
 
+	public FinderPath getFinderPathFetchByC_C_C();
+
+	public FinderPath getFinderPathCountByC_C_C();
+
 	/**
 	 * Returns the commerce order type rel where classNameId = &#63; and classPK = &#63; and commerceOrderTypeId = &#63; or throws a <code>NoSuchOrderTypeRelException</code> if it could not be found.
 	 *
@@ -698,6 +722,10 @@ public interface CommerceOrderTypeRelPersistence
 	 */
 	public int countByC_C_C(
 		long classNameId, long classPK, long commerceOrderTypeId);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce order type rel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderTypeRelException</code> if it could not be found.

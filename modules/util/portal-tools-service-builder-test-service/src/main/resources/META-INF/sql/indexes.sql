@@ -41,6 +41,10 @@ create index IX_FA76694A on LVEntryVersion (uuid_[$COLUMN_LENGTH:75$], version);
 
 create unique index IX_F723689D on LazyBlobEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_DB93F544 on LoadFinderCacheEntry (companyId, groupId);
+create index IX_63446228 on LoadFinderCacheEntry (groupId);
+create unique index IX_8E6B8732 on LoadFinderCacheEntry (uniqueName[$COLUMN_LENGTH:75$]);
+
 create unique index IX_2E833843 on LocalizedEntryLocalization (localizedEntryId, languageId[$COLUMN_LENGTH:75$]);
 
 create unique index IX_46C721B9 on NullConvertibleEntry (name[$COLUMN_LENGTH:75$]);

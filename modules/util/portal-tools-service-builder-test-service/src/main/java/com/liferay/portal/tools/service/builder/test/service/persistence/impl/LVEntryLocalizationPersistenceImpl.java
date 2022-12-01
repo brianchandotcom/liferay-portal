@@ -81,9 +81,31 @@ public class LVEntryLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLvEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByLvEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByLvEntryId() {
+		return _finderPathWithoutPaginationFindByLvEntryId;
+	}
+
 	private FinderPath _finderPathCountByLvEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByLvEntryId() {
+		return _finderPathCountByLvEntryId;
+	}
 
 	/**
 	 * Returns all the lv entry localizations where lvEntryId = &#63;.
@@ -588,7 +610,18 @@ public class LVEntryLocalizationPersistenceImpl
 		"lvEntryLocalization.lvEntryId = ?";
 
 	private FinderPath _finderPathFetchByLvEntryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathFetchByLvEntryId_LanguageId() {
+		return _finderPathFetchByLvEntryId_LanguageId;
+	}
+
 	private FinderPath _finderPathCountByLvEntryId_LanguageId;
+
+	@Override
+	public FinderPath getFinderPathCountByLvEntryId_LanguageId() {
+		return _finderPathCountByLvEntryId_LanguageId;
+	}
 
 	/**
 	 * Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.
@@ -848,7 +881,18 @@ public class LVEntryLocalizationPersistenceImpl
 			"(lvEntryLocalization.languageId IS NULL OR lvEntryLocalization.languageId = '')";
 
 	private FinderPath _finderPathFetchByHeadId;
+
+	@Override
+	public FinderPath getFinderPathFetchByHeadId() {
+		return _finderPathFetchByHeadId;
+	}
+
 	private FinderPath _finderPathCountByHeadId;
+
+	@Override
+	public FinderPath getFinderPathCountByHeadId() {
+		return _finderPathCountByHeadId;
+	}
 
 	/**
 	 * Returns the lv entry localization where headId = &#63; or throws a <code>NoSuchLVEntryLocalizationException</code> if it could not be found.

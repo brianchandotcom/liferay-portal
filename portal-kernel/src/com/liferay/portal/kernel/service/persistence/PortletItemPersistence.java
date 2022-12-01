@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.model.PortletItem;
 
@@ -38,6 +39,13 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletItemUtil} to access the portlet item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C();
+
+	public FinderPath getFinderPathCountByG_C();
 
 	/**
 	 * Returns all the portlet items where groupId = &#63; and classNameId = &#63;.
@@ -193,6 +201,10 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	 * @return the number of matching portlet items
 	 */
 	public int countByG_C(long groupId, long classNameId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_P_C();
+
+	public FinderPath getFinderPathCountByG_P_C();
 
 	/**
 	 * Returns all the portlet items where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -360,6 +372,10 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	 * @return the number of matching portlet items
 	 */
 	public int countByG_P_C(long groupId, String portletId, long classNameId);
+
+	public FinderPath getFinderPathFetchByG_N_P_C();
+
+	public FinderPath getFinderPathCountByG_N_P_C();
 
 	/**
 	 * Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or throws a <code>NoSuchPortletItemException</code> if it could not be found.

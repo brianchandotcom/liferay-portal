@@ -95,9 +95,31 @@ public class AccountGroupRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByAccountGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAccountGroupId() {
+		return _finderPathWithoutPaginationFindByAccountGroupId;
+	}
+
 	private FinderPath _finderPathCountByAccountGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByAccountGroupId() {
+		return _finderPathCountByAccountGroupId;
+	}
 
 	/**
 	 * Returns all the account group rels where accountGroupId = &#63;.
@@ -603,7 +625,18 @@ public class AccountGroupRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByA_C;
 	private FinderPath _finderPathWithoutPaginationFindByA_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByA_C() {
+		return _finderPathWithoutPaginationFindByA_C;
+	}
+
 	private FinderPath _finderPathCountByA_C;
+
+	@Override
+	public FinderPath getFinderPathCountByA_C() {
+		return _finderPathCountByA_C;
+	}
 
 	/**
 	 * Returns all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
@@ -1147,7 +1180,18 @@ public class AccountGroupRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_C() {
+		return _finderPathWithoutPaginationFindByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns all the account group rels where classNameId = &#63; and classPK = &#63;.
@@ -1686,7 +1730,18 @@ public class AccountGroupRelPersistenceImpl
 		"accountGroupRel.classPK = ?";
 
 	private FinderPath _finderPathFetchByA_C_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByA_C_C() {
+		return _finderPathFetchByA_C_C;
+	}
+
 	private FinderPath _finderPathCountByA_C_C;
+
+	@Override
+	public FinderPath getFinderPathCountByA_C_C() {
+		return _finderPathCountByA_C_C;
+	}
 
 	/**
 	 * Returns the account group rel where accountGroupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchGroupRelException</code> if it could not be found.

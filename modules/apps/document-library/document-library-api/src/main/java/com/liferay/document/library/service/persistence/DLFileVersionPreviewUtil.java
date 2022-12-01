@@ -122,6 +122,31 @@ public class DLFileVersionPreviewUtil {
 		return getPersistence().update(dlFileVersionPreview, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFileEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByFileEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFileEntryId() {
+
+		return getPersistence().getFinderPathCountByFileEntryId();
+	}
+
 	/**
 	 * Returns all the dl file version previews where fileEntryId = &#63;.
 	 *
@@ -298,6 +323,19 @@ public class DLFileVersionPreviewUtil {
 	 */
 	public static int countByFileEntryId(long fileEntryId) {
 		return getPersistence().countByFileEntryId(fileEntryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFileVersionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByFileVersionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFileVersionId() {
+
+		return getPersistence().getFinderPathCountByFileVersionId();
 	}
 
 	/**
@@ -478,6 +516,18 @@ public class DLFileVersionPreviewUtil {
 		return getPersistence().countByFileVersionId(fileVersionId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByF_F() {
+
+		return getPersistence().getFinderPathFetchByF_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_F() {
+
+		return getPersistence().getFinderPathCountByF_F();
+	}
+
 	/**
 	 * Returns the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; or throws a <code>NoSuchFileVersionPreviewException</code> if it could not be found.
 	 *
@@ -546,6 +596,18 @@ public class DLFileVersionPreviewUtil {
 	 */
 	public static int countByF_F(long fileEntryId, long fileVersionId) {
 		return getPersistence().countByF_F(fileEntryId, fileVersionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByF_F_P() {
+
+		return getPersistence().getFinderPathFetchByF_F_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_F_P() {
+
+		return getPersistence().getFinderPathCountByF_F_P();
 	}
 
 	/**

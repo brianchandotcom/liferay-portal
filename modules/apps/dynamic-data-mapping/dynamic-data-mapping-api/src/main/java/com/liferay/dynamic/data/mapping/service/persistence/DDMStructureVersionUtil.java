@@ -122,6 +122,31 @@ public class DDMStructureVersionUtil {
 		return getPersistence().update(ddmStructureVersion, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByStructureId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByStructureId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByStructureId() {
+
+		return getPersistence().getFinderPathCountByStructureId();
+	}
+
 	/**
 	 * Returns all the ddm structure versions where structureId = &#63;.
 	 *
@@ -300,6 +325,18 @@ public class DDMStructureVersionUtil {
 		return getPersistence().countByStructureId(structureId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByS_V() {
+
+		return getPersistence().getFinderPathFetchByS_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_V() {
+
+		return getPersistence().getFinderPathCountByS_V();
+	}
+
 	/**
 	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or throws a <code>NoSuchStructureVersionException</code> if it could not be found.
 	 *
@@ -368,6 +405,18 @@ public class DDMStructureVersionUtil {
 	 */
 	public static int countByS_V(long structureId, String version) {
 		return getPersistence().countByS_V(structureId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByS_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByS_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByS_S() {
+
+		return getPersistence().getFinderPathCountByS_S();
 	}
 
 	/**

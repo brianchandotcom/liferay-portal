@@ -119,6 +119,30 @@ public class CTSContentUtil {
 		return getPersistence().update(ctsContent, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_R_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_R_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_R_S() {
+
+		return getPersistence().getFinderPathCountByC_R_S();
+	}
+
 	/**
 	 * Returns all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
 	 *
@@ -326,6 +350,18 @@ public class CTSContentUtil {
 
 		return getPersistence().countByC_R_S(
 			companyId, repositoryId, storeType);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_R_P_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_R_P_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_R_P_S() {
+
+		return getPersistence().getFinderPathCountByC_R_P_S();
 	}
 
 	/**
@@ -772,6 +808,18 @@ public class CTSContentUtil {
 
 		return getPersistence().countByC_R_LikeP_S(
 			companyId, repositoryId, path, storeType);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_R_P_V_S() {
+
+		return getPersistence().getFinderPathFetchByC_R_P_V_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_R_P_V_S() {
+
+		return getPersistence().getFinderPathCountByC_R_P_V_S();
 	}
 
 	/**

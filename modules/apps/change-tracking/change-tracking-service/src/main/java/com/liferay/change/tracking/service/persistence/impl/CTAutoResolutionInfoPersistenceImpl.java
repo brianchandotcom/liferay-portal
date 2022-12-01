@@ -95,9 +95,31 @@ public class CTAutoResolutionInfoPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId() {
+		return _finderPathWithoutPaginationFindByCtCollectionId;
+	}
+
 	private FinderPath _finderPathCountByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCtCollectionId() {
+		return _finderPathCountByCtCollectionId;
+	}
 
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63;.
@@ -609,7 +631,19 @@ public class CTAutoResolutionInfoPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_MCNI_SMCPK;
 	private FinderPath _finderPathWithoutPaginationFindByC_MCNI_SMCPK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_MCNI_SMCPK() {
+		return _finderPathWithoutPaginationFindByC_MCNI_SMCPK;
+	}
+
 	private FinderPath _finderPathCountByC_MCNI_SMCPK;
+
+	@Override
+	public FinderPath getFinderPathCountByC_MCNI_SMCPK() {
+		return _finderPathCountByC_MCNI_SMCPK;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByC_MCNI_SMCPK;
 
 	/**

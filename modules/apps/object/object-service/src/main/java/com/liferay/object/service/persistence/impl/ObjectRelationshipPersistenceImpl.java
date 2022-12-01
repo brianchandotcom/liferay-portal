@@ -100,9 +100,31 @@ public class ObjectRelationshipPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the object relationships where uuid = &#63;.
@@ -641,7 +663,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the object relationships where uuid = &#63; and companyId = &#63;.
@@ -1224,7 +1257,20 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId1;
 	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId1;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByObjectDefinitionId1() {
+
+		return _finderPathWithoutPaginationFindByObjectDefinitionId1;
+	}
+
 	private FinderPath _finderPathCountByObjectDefinitionId1;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectDefinitionId1() {
+		return _finderPathCountByObjectDefinitionId1;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63;.
@@ -1739,7 +1785,20 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId2;
 	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId2;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByObjectDefinitionId2() {
+
+		return _finderPathWithoutPaginationFindByObjectDefinitionId2;
+	}
+
 	private FinderPath _finderPathCountByObjectDefinitionId2;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectDefinitionId2() {
+		return _finderPathCountByObjectDefinitionId2;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63;.
@@ -2253,7 +2312,18 @@ public class ObjectRelationshipPersistenceImpl
 			"objectRelationship.objectDefinitionId2 = ?";
 
 	private FinderPath _finderPathFetchByObjectFieldId2;
+
+	@Override
+	public FinderPath getFinderPathFetchByObjectFieldId2() {
+		return _finderPathFetchByObjectFieldId2;
+	}
+
 	private FinderPath _finderPathCountByObjectFieldId2;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectFieldId2() {
+		return _finderPathCountByObjectFieldId2;
+	}
 
 	/**
 	 * Returns the object relationship where objectFieldId2 = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.
@@ -2469,7 +2539,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI1_N;
 	private FinderPath _finderPathWithoutPaginationFindByODI1_N;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_N() {
+		return _finderPathWithoutPaginationFindByODI1_N;
+	}
+
 	private FinderPath _finderPathCountByODI1_N;
+
+	@Override
+	public FinderPath getFinderPathCountByODI1_N() {
+		return _finderPathCountByODI1_N;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and name = &#63;.
@@ -3057,7 +3138,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI1_R;
 	private FinderPath _finderPathWithoutPaginationFindByODI1_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_R() {
+		return _finderPathWithoutPaginationFindByODI1_R;
+	}
+
 	private FinderPath _finderPathCountByODI1_R;
+
+	@Override
+	public FinderPath getFinderPathCountByODI1_R() {
+		return _finderPathCountByODI1_R;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63;.
@@ -3604,7 +3696,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI2_R;
 	private FinderPath _finderPathWithoutPaginationFindByODI2_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI2_R() {
+		return _finderPathWithoutPaginationFindByODI2_R;
+	}
+
 	private FinderPath _finderPathCountByODI2_R;
+
+	@Override
+	public FinderPath getFinderPathCountByODI2_R() {
+		return _finderPathCountByODI2_R;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
@@ -4151,7 +4254,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI1_ODI2_T;
 	private FinderPath _finderPathWithoutPaginationFindByODI1_ODI2_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_ODI2_T() {
+		return _finderPathWithoutPaginationFindByODI1_ODI2_T;
+	}
+
 	private FinderPath _finderPathCountByODI1_ODI2_T;
+
+	@Override
+	public FinderPath getFinderPathCountByODI1_ODI2_T() {
+		return _finderPathCountByODI1_ODI2_T;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
@@ -4793,7 +4907,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI1_DT_R;
 	private FinderPath _finderPathWithoutPaginationFindByODI1_DT_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_DT_R() {
+		return _finderPathWithoutPaginationFindByODI1_DT_R;
+	}
+
 	private FinderPath _finderPathCountByODI1_DT_R;
+
+	@Override
+	public FinderPath getFinderPathCountByODI1_DT_R() {
+		return _finderPathCountByODI1_DT_R;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
@@ -5433,7 +5558,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI1_R_T;
 	private FinderPath _finderPathWithoutPaginationFindByODI1_R_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_R_T() {
+		return _finderPathWithoutPaginationFindByODI1_R_T;
+	}
+
 	private FinderPath _finderPathCountByODI1_R_T;
+
+	@Override
+	public FinderPath getFinderPathCountByODI1_R_T() {
+		return _finderPathCountByODI1_R_T;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
@@ -6064,7 +6200,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI2_R_T;
 	private FinderPath _finderPathWithoutPaginationFindByODI2_R_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI2_R_T() {
+		return _finderPathWithoutPaginationFindByODI2_R_T;
+	}
+
 	private FinderPath _finderPathCountByODI2_R_T;
+
+	@Override
+	public FinderPath getFinderPathCountByODI2_R_T() {
+		return _finderPathCountByODI2_R_T;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
@@ -6695,7 +6842,18 @@ public class ObjectRelationshipPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI1_ODI2_N_T;
 	private FinderPath _finderPathWithoutPaginationFindByODI1_ODI2_N_T;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI1_ODI2_N_T() {
+		return _finderPathWithoutPaginationFindByODI1_ODI2_N_T;
+	}
+
 	private FinderPath _finderPathCountByODI1_ODI2_N_T;
+
+	@Override
+	public FinderPath getFinderPathCountByODI1_ODI2_N_T() {
+		return _finderPathCountByODI1_ODI2_N_T;
+	}
 
 	/**
 	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
@@ -7416,7 +7574,18 @@ public class ObjectRelationshipPersistenceImpl
 		"(objectRelationship.type IS NULL OR objectRelationship.type = '')";
 
 	private FinderPath _finderPathFetchByODI1_ODI2_N_R_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByODI1_ODI2_N_R_T() {
+		return _finderPathFetchByODI1_ODI2_N_R_T;
+	}
+
 	private FinderPath _finderPathCountByODI1_ODI2_N_R_T;
+
+	@Override
+	public FinderPath getFinderPathCountByODI1_ODI2_N_R_T() {
+		return _finderPathCountByODI1_ODI2_N_R_T;
+	}
 
 	/**
 	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and reverse = &#63; and type = &#63; or throws a <code>NoSuchObjectRelationshipException</code> if it could not be found.

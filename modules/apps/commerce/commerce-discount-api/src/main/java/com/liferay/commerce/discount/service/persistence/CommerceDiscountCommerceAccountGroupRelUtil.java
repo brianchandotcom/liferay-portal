@@ -130,6 +130,31 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 			commerceDiscountCommerceAccountGroupRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceDiscountId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceDiscountId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceDiscountId() {
+
+		return getPersistence().getFinderPathCountByCommerceDiscountId();
+	}
+
 	/**
 	 * Returns all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
 	 *
@@ -323,6 +348,19 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	 */
 	public static int countByCommerceDiscountId(long commerceDiscountId) {
 		return getPersistence().countByCommerceDiscountId(commerceDiscountId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommerceAccountGroupId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommerceAccountGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommerceAccountGroupId() {
+
+		return getPersistence().getFinderPathCountByCommerceAccountGroupId();
 	}
 
 	/**
@@ -526,6 +564,18 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 
 		return getPersistence().countByCommerceAccountGroupId(
 			commerceAccountGroupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCDI_CAGI() {
+
+		return getPersistence().getFinderPathFetchByCDI_CAGI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCDI_CAGI() {
+
+		return getPersistence().getFinderPathCountByCDI_CAGI();
 	}
 
 	/**

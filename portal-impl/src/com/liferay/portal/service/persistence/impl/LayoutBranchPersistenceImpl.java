@@ -82,9 +82,31 @@ public class LayoutBranchPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLayoutSetBranchId;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutSetBranchId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutSetBranchId() {
+		return _finderPathWithoutPaginationFindByLayoutSetBranchId;
+	}
+
 	private FinderPath _finderPathCountByLayoutSetBranchId;
+
+	@Override
+	public FinderPath getFinderPathCountByLayoutSetBranchId() {
+		return _finderPathCountByLayoutSetBranchId;
+	}
 
 	/**
 	 * Returns all the layout branches where layoutSetBranchId = &#63;.
@@ -593,7 +615,18 @@ public class LayoutBranchPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_P;
 	private FinderPath _finderPathWithoutPaginationFindByL_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_P() {
+		return _finderPathWithoutPaginationFindByL_P;
+	}
+
 	private FinderPath _finderPathCountByL_P;
+
+	@Override
+	public FinderPath getFinderPathCountByL_P() {
+		return _finderPathCountByL_P;
+	}
 
 	/**
 	 * Returns all the layout branches where layoutSetBranchId = &#63; and plid = &#63;.
@@ -1134,7 +1167,18 @@ public class LayoutBranchPersistenceImpl
 		"layoutBranch.plid = ?";
 
 	private FinderPath _finderPathFetchByL_P_N;
+
+	@Override
+	public FinderPath getFinderPathFetchByL_P_N() {
+		return _finderPathFetchByL_P_N;
+	}
+
 	private FinderPath _finderPathCountByL_P_N;
+
+	@Override
+	public FinderPath getFinderPathCountByL_P_N() {
+		return _finderPathCountByL_P_N;
+	}
 
 	/**
 	 * Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or throws a <code>NoSuchLayoutBranchException</code> if it could not be found.
@@ -1409,7 +1453,18 @@ public class LayoutBranchPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_P_M;
 	private FinderPath _finderPathWithoutPaginationFindByL_P_M;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_P_M() {
+		return _finderPathWithoutPaginationFindByL_P_M;
+	}
+
 	private FinderPath _finderPathCountByL_P_M;
+
+	@Override
+	public FinderPath getFinderPathCountByL_P_M() {
+		return _finderPathCountByL_P_M;
+	}
 
 	/**
 	 * Returns all the layout branches where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.

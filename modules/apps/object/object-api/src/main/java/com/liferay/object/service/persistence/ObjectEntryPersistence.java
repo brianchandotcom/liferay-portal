@@ -16,6 +16,7 @@ package com.liferay.object.service.persistence;
 
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -39,6 +40,13 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ObjectEntryUtil} to access the object entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the object entries where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the object entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
 	 *
@@ -232,6 +244,10 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @return the number of matching object entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the object entries where uuid = &#63; and companyId = &#63;.
@@ -388,6 +404,10 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByObjectDefinitionId();
+
+	public FinderPath getFinderPathCountByObjectDefinitionId();
+
 	/**
 	 * Returns all the object entries where objectDefinitionId = &#63;.
 	 *
@@ -531,6 +551,10 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @return the number of matching object entries
 	 */
 	public int countByObjectDefinitionId(long objectDefinitionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_ODI();
+
+	public FinderPath getFinderPathCountByG_ODI();
 
 	/**
 	 * Returns all the object entries where groupId = &#63; and objectDefinitionId = &#63;.
@@ -686,6 +710,10 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 * @return the number of matching object entries
 	 */
 	public int countByG_ODI(long groupId, long objectDefinitionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_ODI();
+
+	public FinderPath getFinderPathCountByU_ODI();
 
 	/**
 	 * Returns all the object entries where userId = &#63; and objectDefinitionId = &#63;.
@@ -997,6 +1025,10 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 */
 	public int countByODI_NotS(long objectDefinitionId, int status);
 
+	public FinderPath getFinderPathFetchByERC_G_C();
+
+	public FinderPath getFinderPathCountByERC_G_C();
+
 	/**
 	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
 	 *
@@ -1056,6 +1088,10 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 */
 	public int countByERC_G_C(
 		String externalReferenceCode, long groupId, long companyId);
+
+	public FinderPath getFinderPathFetchByERC_C_ODI();
+
+	public FinderPath getFinderPathCountByERC_C_ODI();
 
 	/**
 	 * Returns the object entry where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectEntryException</code> if it could not be found.
@@ -1118,6 +1154,10 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	 */
 	public int countByERC_C_ODI(
 		String externalReferenceCode, long companyId, long objectDefinitionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_ODI_S();
+
+	public FinderPath getFinderPathCountByG_ODI_S();
 
 	/**
 	 * Returns all the object entries where groupId = &#63; and objectDefinitionId = &#63; and status = &#63;.

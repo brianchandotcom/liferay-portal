@@ -126,6 +126,30 @@ public class CommerceInventoryBookedQuantityUtil {
 			commerceInventoryBookedQuantity, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindBySku() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindBySku();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountBySku() {
+
+		return getPersistence().getFinderPathCountBySku();
+	}
+
 	/**
 	 * Returns all the commerce inventory booked quantities where sku = &#63;.
 	 *
@@ -482,6 +506,18 @@ public class CommerceInventoryBookedQuantityUtil {
 	 */
 	public static int countByLtExpirationDate(Date expirationDate) {
 		return getPersistence().countByLtExpirationDate(expirationDate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_S() {
+
+		return getPersistence().getFinderPathCountByC_S();
 	}
 
 	/**

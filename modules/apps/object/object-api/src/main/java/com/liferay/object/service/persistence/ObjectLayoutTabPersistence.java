@@ -16,6 +16,7 @@ package com.liferay.object.service.persistence;
 
 import com.liferay.object.exception.NoSuchObjectLayoutTabException;
 import com.liferay.object.model.ObjectLayoutTab;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ObjectLayoutTabPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ObjectLayoutTabUtil} to access the object layout tab persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the object layout tabs where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ObjectLayoutTabPersistence
 	 * @return the number of matching object layout tabs
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the object layout tabs where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface ObjectLayoutTabPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByObjectLayoutId();
+
+	public FinderPath getFinderPathCountByObjectLayoutId();
+
 	/**
 	 * Returns all the object layout tabs where objectLayoutId = &#63;.
 	 *
@@ -482,6 +498,11 @@ public interface ObjectLayoutTabPersistence
 	 * @return the number of matching object layout tabs
 	 */
 	public int countByObjectLayoutId(long objectLayoutId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByObjectRelationshipId();
+
+	public FinderPath getFinderPathCountByObjectRelationshipId();
 
 	/**
 	 * Returns all the object layout tabs where objectRelationshipId = &#63;.

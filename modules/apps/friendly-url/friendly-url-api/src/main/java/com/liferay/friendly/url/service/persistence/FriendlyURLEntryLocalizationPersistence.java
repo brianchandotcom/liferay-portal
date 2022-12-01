@@ -16,6 +16,7 @@ package com.liferay.friendly.url.service.persistence;
 
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface FriendlyURLEntryLocalizationPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FriendlyURLEntryLocalizationUtil} to access the friendly url entry localization persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByFriendlyURLEntryId();
+
+	public FinderPath getFinderPathCountByFriendlyURLEntryId();
 
 	/**
 	 * Returns all the friendly url entry localizations where friendlyURLEntryId = &#63;.
@@ -189,6 +197,10 @@ public interface FriendlyURLEntryLocalizationPersistence
 	 */
 	public int countByFriendlyURLEntryId(long friendlyURLEntryId);
 
+	public FinderPath getFinderPathFetchByFriendlyURLEntryId_LanguageId();
+
+	public FinderPath getFinderPathCountByFriendlyURLEntryId_LanguageId();
+
 	/**
 	 * Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchFriendlyURLEntryLocalizationException</code> if it could not be found.
 	 *
@@ -242,6 +254,10 @@ public interface FriendlyURLEntryLocalizationPersistence
 	 */
 	public int countByFriendlyURLEntryId_LanguageId(
 		long friendlyURLEntryId, String languageId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_U();
+
+	public FinderPath getFinderPathCountByG_C_U();
 
 	/**
 	 * Returns all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
@@ -409,6 +425,10 @@ public interface FriendlyURLEntryLocalizationPersistence
 	 * @return the number of matching friendly url entry localizations
 	 */
 	public int countByG_C_U(long groupId, long classNameId, String urlTitle);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_L();
+
+	public FinderPath getFinderPathCountByG_C_C_L();
 
 	/**
 	 * Returns all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
@@ -592,6 +612,10 @@ public interface FriendlyURLEntryLocalizationPersistence
 	 */
 	public int countByG_C_C_L(
 		long groupId, long classNameId, long classPK, String languageId);
+
+	public FinderPath getFinderPathFetchByG_C_L_U();
+
+	public FinderPath getFinderPathCountByG_C_L_U();
 
 	/**
 	 * Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a <code>NoSuchFriendlyURLEntryLocalizationException</code> if it could not be found.

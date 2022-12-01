@@ -125,6 +125,30 @@ public class OAuthClientASLocalMetadataUtil {
 			oAuthClientASLocalMetadata, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the o auth client as local metadatas where companyId = &#63;.
 	 *
@@ -384,6 +408,18 @@ public class OAuthClientASLocalMetadataUtil {
 		return getPersistence().filterCountByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the o auth client as local metadatas where userId = &#63;.
 	 *
@@ -634,6 +670,18 @@ public class OAuthClientASLocalMetadataUtil {
 	 */
 	public static int filterCountByUserId(long userId) {
 		return getPersistence().filterCountByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByLocalWellKnownURI() {
+
+		return getPersistence().getFinderPathFetchByLocalWellKnownURI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLocalWellKnownURI() {
+
+		return getPersistence().getFinderPathCountByLocalWellKnownURI();
 	}
 
 	/**

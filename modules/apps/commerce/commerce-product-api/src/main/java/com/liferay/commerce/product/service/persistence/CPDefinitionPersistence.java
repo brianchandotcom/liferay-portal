@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -43,6 +44,13 @@ public interface CPDefinitionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionUtil} to access the cp definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cp definitions where uuid = &#63;.
@@ -187,6 +195,10 @@ public interface CPDefinitionPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the cp definition where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
 	 *
@@ -236,6 +248,10 @@ public interface CPDefinitionPersistence
 	 * @return the number of matching cp definitions
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cp definitions where uuid = &#63; and companyId = &#63;.
@@ -392,6 +408,10 @@ public interface CPDefinitionPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the cp definitions where groupId = &#63;.
 	 *
@@ -534,6 +554,10 @@ public interface CPDefinitionPersistence
 	 * @return the number of matching cp definitions
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the cp definitions where companyId = &#63;.
@@ -678,6 +702,10 @@ public interface CPDefinitionPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCProductId();
+
+	public FinderPath getFinderPathCountByCProductId();
+
 	/**
 	 * Returns all the cp definitions where CProductId = &#63;.
 	 *
@@ -820,6 +848,10 @@ public interface CPDefinitionPersistence
 	 * @return the number of matching cp definitions
 	 */
 	public int countByCProductId(long CProductId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCPTaxCategoryId();
+
+	public FinderPath getFinderPathCountByCPTaxCategoryId();
 
 	/**
 	 * Returns all the cp definitions where CPTaxCategoryId = &#63;.
@@ -964,6 +996,10 @@ public interface CPDefinitionPersistence
 	 * @return the number of matching cp definitions
 	 */
 	public int countByCPTaxCategoryId(long CPTaxCategoryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_SE();
+
+	public FinderPath getFinderPathCountByG_SE();
 
 	/**
 	 * Returns all the cp definitions where groupId = &#63; and subscriptionEnabled = &#63;.
@@ -1120,6 +1156,10 @@ public interface CPDefinitionPersistence
 	 */
 	public int countByG_SE(long groupId, boolean subscriptionEnabled);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
+
 	/**
 	 * Returns all the cp definitions where groupId = &#63; and status = &#63;.
 	 *
@@ -1274,6 +1314,10 @@ public interface CPDefinitionPersistence
 	 */
 	public int countByG_S(long groupId, int status);
 
+	public FinderPath getFinderPathFetchByC_V();
+
+	public FinderPath getFinderPathCountByC_V();
+
 	/**
 	 * Returns the cp definition where CProductId = &#63; and version = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
 	 *
@@ -1323,6 +1367,10 @@ public interface CPDefinitionPersistence
 	 * @return the number of matching cp definitions
 	 */
 	public int countByC_V(long CProductId, int version);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_S();
+
+	public FinderPath getFinderPathCountByC_S();
 
 	/**
 	 * Returns all the cp definitions where CProductId = &#63; and status = &#63;.

@@ -119,6 +119,30 @@ public class KaleoTransitionUtil {
 		return getPersistence().update(kaleoTransition, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the kaleo transitions where companyId = &#63;.
 	 *
@@ -291,6 +315,19 @@ public class KaleoTransitionUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByKaleoDefinitionVersionId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKaleoDefinitionVersionId() {
+
+		return getPersistence().getFinderPathCountByKaleoDefinitionVersionId();
 	}
 
 	/**
@@ -480,6 +517,19 @@ public class KaleoTransitionUtil {
 			kaleoDefinitionVersionId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByKaleoNodeId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByKaleoNodeId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKaleoNodeId() {
+
+		return getPersistence().getFinderPathCountByKaleoNodeId();
+	}
+
 	/**
 	 * Returns all the kaleo transitions where kaleoNodeId = &#63;.
 	 *
@@ -656,6 +706,18 @@ public class KaleoTransitionUtil {
 		return getPersistence().countByKaleoNodeId(kaleoNodeId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByKNI_N() {
+
+		return getPersistence().getFinderPathFetchByKNI_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKNI_N() {
+
+		return getPersistence().getFinderPathCountByKNI_N();
+	}
+
 	/**
 	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or throws a <code>NoSuchTransitionException</code> if it could not be found.
 	 *
@@ -719,6 +781,18 @@ public class KaleoTransitionUtil {
 	 */
 	public static int countByKNI_N(long kaleoNodeId, String name) {
 		return getPersistence().countByKNI_N(kaleoNodeId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByKNI_DT() {
+
+		return getPersistence().getFinderPathFetchByKNI_DT();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByKNI_DT() {
+
+		return getPersistence().getFinderPathCountByKNI_DT();
 	}
 
 	/**

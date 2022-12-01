@@ -89,9 +89,31 @@ public class UserGroupRolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the user group roles where userId = &#63;.
@@ -599,7 +621,18 @@ public class UserGroupRolePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the user group roles where groupId = &#63;.
@@ -1108,7 +1141,18 @@ public class UserGroupRolePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByRoleId;
 	private FinderPath _finderPathWithoutPaginationFindByRoleId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByRoleId() {
+		return _finderPathWithoutPaginationFindByRoleId;
+	}
+
 	private FinderPath _finderPathCountByRoleId;
+
+	@Override
+	public FinderPath getFinderPathCountByRoleId() {
+		return _finderPathCountByRoleId;
+	}
 
 	/**
 	 * Returns all the user group roles where roleId = &#63;.
@@ -1616,7 +1660,18 @@ public class UserGroupRolePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByU_G;
 	private FinderPath _finderPathWithoutPaginationFindByU_G;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByU_G() {
+		return _finderPathWithoutPaginationFindByU_G;
+	}
+
 	private FinderPath _finderPathCountByU_G;
+
+	@Override
+	public FinderPath getFinderPathCountByU_G() {
+		return _finderPathCountByU_G;
+	}
 
 	/**
 	 * Returns all the user group roles where userId = &#63; and groupId = &#63;.
@@ -2170,7 +2225,18 @@ public class UserGroupRolePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_R;
 	private FinderPath _finderPathWithoutPaginationFindByG_R;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_R() {
+		return _finderPathWithoutPaginationFindByG_R;
+	}
+
 	private FinderPath _finderPathCountByG_R;
+
+	@Override
+	public FinderPath getFinderPathCountByG_R() {
+		return _finderPathCountByG_R;
+	}
 
 	/**
 	 * Returns all the user group roles where groupId = &#63; and roleId = &#63;.
@@ -2723,7 +2789,18 @@ public class UserGroupRolePersistenceImpl
 		"userGroupRole.roleId = ?";
 
 	private FinderPath _finderPathFetchByU_G_R;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_G_R() {
+		return _finderPathFetchByU_G_R;
+	}
+
 	private FinderPath _finderPathCountByU_G_R;
+
+	@Override
+	public FinderPath getFinderPathCountByU_G_R() {
+		return _finderPathCountByU_G_R;
+	}
 
 	/**
 	 * Returns the user group role where userId = &#63; and groupId = &#63; and roleId = &#63; or throws a <code>NoSuchUserGroupRoleException</code> if it could not be found.

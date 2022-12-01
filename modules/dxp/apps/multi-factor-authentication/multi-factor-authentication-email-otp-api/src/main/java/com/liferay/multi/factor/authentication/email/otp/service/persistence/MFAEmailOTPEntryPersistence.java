@@ -16,6 +16,7 @@ package com.liferay.multi.factor.authentication.email.otp.service.persistence;
 
 import com.liferay.multi.factor.authentication.email.otp.exception.NoSuchEntryException;
 import com.liferay.multi.factor.authentication.email.otp.model.MFAEmailOTPEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface MFAEmailOTPEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MFAEmailOTPEntryUtil} to access the mfa email otp entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns the mfa email otp entry where userId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

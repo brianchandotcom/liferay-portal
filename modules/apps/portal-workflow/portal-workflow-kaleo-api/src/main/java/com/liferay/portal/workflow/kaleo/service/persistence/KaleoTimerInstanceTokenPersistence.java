@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerInstanceTokenException;
@@ -42,6 +43,13 @@ public interface KaleoTimerInstanceTokenPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTimerInstanceTokenUtil} to access the kaleo timer instance token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByKaleoInstanceId();
+
+	public FinderPath getFinderPathCountByKaleoInstanceId();
 
 	/**
 	 * Returns all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
@@ -187,6 +195,10 @@ public interface KaleoTimerInstanceTokenPersistence
 	 */
 	public int countByKaleoInstanceId(long kaleoInstanceId);
 
+	public FinderPath getFinderPathFetchByKITI_KTI();
+
+	public FinderPath getFinderPathCountByKITI_KTI();
+
 	/**
 	 * Returns the kaleo timer instance token where kaleoInstanceTokenId = &#63; and kaleoTimerId = &#63; or throws a <code>NoSuchTimerInstanceTokenException</code> if it could not be found.
 	 *
@@ -239,6 +251,10 @@ public interface KaleoTimerInstanceTokenPersistence
 	 * @return the number of matching kaleo timer instance tokens
 	 */
 	public int countByKITI_KTI(long kaleoInstanceTokenId, long kaleoTimerId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKITI_C();
+
+	public FinderPath getFinderPathCountByKITI_C();
 
 	/**
 	 * Returns all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63;.
@@ -395,6 +411,10 @@ public interface KaleoTimerInstanceTokenPersistence
 	 * @return the number of matching kaleo timer instance tokens
 	 */
 	public int countByKITI_C(long kaleoInstanceTokenId, boolean completed);
+
+	public FinderPath getFinderPathWithoutPaginationFindByKITI_B_C();
+
+	public FinderPath getFinderPathCountByKITI_B_C();
 
 	/**
 	 * Returns all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.

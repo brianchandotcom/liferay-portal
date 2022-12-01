@@ -104,9 +104,31 @@ public class DDMStorageLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the ddm storage links where uuid = &#63;.
@@ -653,7 +675,18 @@ public class DDMStorageLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the ddm storage links where uuid = &#63; and companyId = &#63;.
@@ -1249,7 +1282,18 @@ public class DDMStorageLinkPersistenceImpl
 		"ddmStorageLink.companyId = ?";
 
 	private FinderPath _finderPathFetchByClassPK;
+
+	@Override
+	public FinderPath getFinderPathFetchByClassPK() {
+		return _finderPathFetchByClassPK;
+	}
+
 	private FinderPath _finderPathCountByClassPK;
+
+	@Override
+	public FinderPath getFinderPathCountByClassPK() {
+		return _finderPathCountByClassPK;
+	}
 
 	/**
 	 * Returns the ddm storage link where classPK = &#63; or throws a <code>NoSuchStorageLinkException</code> if it could not be found.
@@ -1461,7 +1505,18 @@ public class DDMStorageLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByStructureId;
 	private FinderPath _finderPathWithoutPaginationFindByStructureId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStructureId() {
+		return _finderPathWithoutPaginationFindByStructureId;
+	}
+
 	private FinderPath _finderPathCountByStructureId;
+
+	@Override
+	public FinderPath getFinderPathCountByStructureId() {
+		return _finderPathCountByStructureId;
+	}
 
 	/**
 	 * Returns all the ddm storage links where structureId = &#63;.
@@ -1976,7 +2031,19 @@ public class DDMStorageLinkPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByStructureVersionId;
 	private FinderPath _finderPathWithoutPaginationFindByStructureVersionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStructureVersionId() {
+		return _finderPathWithoutPaginationFindByStructureVersionId;
+	}
+
 	private FinderPath _finderPathCountByStructureVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByStructureVersionId() {
+		return _finderPathCountByStructureVersionId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByStructureVersionId;
 
 	/**

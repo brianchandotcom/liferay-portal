@@ -16,6 +16,7 @@ package com.liferay.commerce.tax.service.persistence;
 
 import com.liferay.commerce.tax.exception.NoSuchTaxMethodException;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceTaxMethodPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceTaxMethodUtil} to access the commerce tax method persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the commerce tax methods where groupId = &#63;.
@@ -184,6 +192,10 @@ public interface CommerceTaxMethodPersistence
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathFetchByG_E();
+
+	public FinderPath getFinderPathCountByG_E();
+
 	/**
 	 * Returns the commerce tax method where groupId = &#63; and engineKey = &#63; or throws a <code>NoSuchTaxMethodException</code> if it could not be found.
 	 *
@@ -233,6 +245,10 @@ public interface CommerceTaxMethodPersistence
 	 * @return the number of matching commerce tax methods
 	 */
 	public int countByG_E(long groupId, String engineKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_A();
+
+	public FinderPath getFinderPathCountByG_A();
 
 	/**
 	 * Returns all the commerce tax methods where groupId = &#63; and active = &#63;.

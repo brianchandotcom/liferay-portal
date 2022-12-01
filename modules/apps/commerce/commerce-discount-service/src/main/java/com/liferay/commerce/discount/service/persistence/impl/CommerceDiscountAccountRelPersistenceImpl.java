@@ -98,9 +98,31 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the commerce discount account rels where uuid = &#63;.
@@ -647,7 +669,18 @@ public class CommerceDiscountAccountRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the commerce discount account rels where uuid = &#63; and companyId = &#63;.
@@ -1237,7 +1270,18 @@ public class CommerceDiscountAccountRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceAccountId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceAccountId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceAccountId() {
+		return _finderPathWithoutPaginationFindByCommerceAccountId;
+	}
+
 	private FinderPath _finderPathCountByCommerceAccountId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceAccountId() {
+		return _finderPathCountByCommerceAccountId;
+	}
 
 	/**
 	 * Returns all the commerce discount account rels where commerceAccountId = &#63;.
@@ -1755,7 +1799,18 @@ public class CommerceDiscountAccountRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCommerceDiscountId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId() {
+		return _finderPathWithoutPaginationFindByCommerceDiscountId;
+	}
+
 	private FinderPath _finderPathCountByCommerceDiscountId;
+
+	@Override
+	public FinderPath getFinderPathCountByCommerceDiscountId() {
+		return _finderPathCountByCommerceDiscountId;
+	}
 
 	/**
 	 * Returns all the commerce discount account rels where commerceDiscountId = &#63;.
@@ -2274,7 +2329,18 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			"commerceDiscountAccountRel.commerceDiscountId = ?";
 
 	private FinderPath _finderPathFetchByCAI_CDI;
+
+	@Override
+	public FinderPath getFinderPathFetchByCAI_CDI() {
+		return _finderPathFetchByCAI_CDI;
+	}
+
 	private FinderPath _finderPathCountByCAI_CDI;
+
+	@Override
+	public FinderPath getFinderPathCountByCAI_CDI() {
+		return _finderPathCountByCAI_CDI;
+	}
 
 	/**
 	 * Returns the commerce discount account rel where commerceAccountId = &#63; and commerceDiscountId = &#63; or throws a <code>NoSuchDiscountAccountRelException</code> if it could not be found.

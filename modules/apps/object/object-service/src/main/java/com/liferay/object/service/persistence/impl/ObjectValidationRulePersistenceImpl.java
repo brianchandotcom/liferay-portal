@@ -98,9 +98,31 @@ public class ObjectValidationRulePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the object validation rules where uuid = &#63;.
@@ -641,7 +663,18 @@ public class ObjectValidationRulePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the object validation rules where uuid = &#63; and companyId = &#63;.
@@ -1227,7 +1260,18 @@ public class ObjectValidationRulePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByObjectDefinitionId() {
+		return _finderPathWithoutPaginationFindByObjectDefinitionId;
+	}
+
 	private FinderPath _finderPathCountByObjectDefinitionId;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectDefinitionId() {
+		return _finderPathCountByObjectDefinitionId;
+	}
 
 	/**
 	 * Returns all the object validation rules where objectDefinitionId = &#63;.
@@ -1743,7 +1787,18 @@ public class ObjectValidationRulePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByODI_A;
 	private FinderPath _finderPathWithoutPaginationFindByODI_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByODI_A() {
+		return _finderPathWithoutPaginationFindByODI_A;
+	}
+
 	private FinderPath _finderPathCountByODI_A;
+
+	@Override
+	public FinderPath getFinderPathCountByODI_A() {
+		return _finderPathCountByODI_A;
+	}
 
 	/**
 	 * Returns all the object validation rules where objectDefinitionId = &#63; and active = &#63;.

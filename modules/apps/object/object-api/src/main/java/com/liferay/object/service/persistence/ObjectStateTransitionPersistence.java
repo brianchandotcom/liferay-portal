@@ -16,6 +16,7 @@ package com.liferay.object.service.persistence;
 
 import com.liferay.object.exception.NoSuchObjectStateTransitionException;
 import com.liferay.object.model.ObjectStateTransition;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface ObjectStateTransitionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ObjectStateTransitionUtil} to access the object state transition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the object state transitions where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ObjectStateTransitionPersistence
 	 * @return the number of matching object state transitions
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the object state transitions where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface ObjectStateTransitionPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByObjectStateFlowId();
+
+	public FinderPath getFinderPathCountByObjectStateFlowId();
+
 	/**
 	 * Returns all the object state transitions where objectStateFlowId = &#63;.
 	 *
@@ -483,6 +499,10 @@ public interface ObjectStateTransitionPersistence
 	 */
 	public int countByObjectStateFlowId(long objectStateFlowId);
 
+	public FinderPath getFinderPathWithoutPaginationFindBySourceObjectStateId();
+
+	public FinderPath getFinderPathCountBySourceObjectStateId();
+
 	/**
 	 * Returns all the object state transitions where sourceObjectStateId = &#63;.
 	 *
@@ -626,6 +646,10 @@ public interface ObjectStateTransitionPersistence
 	 * @return the number of matching object state transitions
 	 */
 	public int countBySourceObjectStateId(long sourceObjectStateId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByTargetObjectStateId();
+
+	public FinderPath getFinderPathCountByTargetObjectStateId();
 
 	/**
 	 * Returns all the object state transitions where targetObjectStateId = &#63;.

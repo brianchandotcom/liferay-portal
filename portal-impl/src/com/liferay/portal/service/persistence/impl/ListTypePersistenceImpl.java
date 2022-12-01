@@ -82,9 +82,31 @@ public class ListTypePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByType;
 	private FinderPath _finderPathWithoutPaginationFindByType;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByType() {
+		return _finderPathWithoutPaginationFindByType;
+	}
+
 	private FinderPath _finderPathCountByType;
+
+	@Override
+	public FinderPath getFinderPathCountByType() {
+		return _finderPathCountByType;
+	}
 
 	/**
 	 * Returns all the list types where type = &#63;.
@@ -612,7 +634,18 @@ public class ListTypePersistenceImpl
 		"(listType.type IS NULL OR listType.type = '')";
 
 	private FinderPath _finderPathFetchByN_T;
+
+	@Override
+	public FinderPath getFinderPathFetchByN_T() {
+		return _finderPathFetchByN_T;
+	}
+
 	private FinderPath _finderPathCountByN_T;
+
+	@Override
+	public FinderPath getFinderPathCountByN_T() {
+		return _finderPathCountByN_T;
+	}
 
 	/**
 	 * Returns the list type where name = &#63; and type = &#63; or throws a <code>NoSuchListTypeException</code> if it could not be found.

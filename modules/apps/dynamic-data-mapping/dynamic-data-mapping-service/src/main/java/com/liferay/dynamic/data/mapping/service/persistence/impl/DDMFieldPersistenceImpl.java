@@ -98,9 +98,31 @@ public class DDMFieldPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByStorageId;
 	private FinderPath _finderPathWithoutPaginationFindByStorageId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStorageId() {
+		return _finderPathWithoutPaginationFindByStorageId;
+	}
+
 	private FinderPath _finderPathCountByStorageId;
+
+	@Override
+	public FinderPath getFinderPathCountByStorageId() {
+		return _finderPathCountByStorageId;
+	}
 
 	/**
 	 * Returns all the ddm fields where storageId = &#63;.
@@ -607,7 +629,18 @@ public class DDMFieldPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByStructureVersionId;
 	private FinderPath _finderPathWithoutPaginationFindByStructureVersionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStructureVersionId() {
+		return _finderPathWithoutPaginationFindByStructureVersionId;
+	}
+
 	private FinderPath _finderPathCountByStructureVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByStructureVersionId() {
+		return _finderPathCountByStructureVersionId;
+	}
 
 	/**
 	 * Returns all the ddm fields where structureVersionId = &#63;.
@@ -1128,7 +1161,18 @@ public class DDMFieldPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_F;
 	private FinderPath _finderPathWithoutPaginationFindByC_F;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_F() {
+		return _finderPathWithoutPaginationFindByC_F;
+	}
+
 	private FinderPath _finderPathCountByC_F;
+
+	@Override
+	public FinderPath getFinderPathCountByC_F() {
+		return _finderPathCountByC_F;
+	}
 
 	/**
 	 * Returns all the ddm fields where companyId = &#63; and fieldType = &#63;.
@@ -1721,7 +1765,18 @@ public class DDMFieldPersistenceImpl
 		"(ddmField.fieldType IS NULL OR ddmField.fieldType = '')";
 
 	private FinderPath _finderPathFetchByS_I;
+
+	@Override
+	public FinderPath getFinderPathFetchByS_I() {
+		return _finderPathFetchByS_I;
+	}
+
 	private FinderPath _finderPathCountByS_I;
+
+	@Override
+	public FinderPath getFinderPathCountByS_I() {
+		return _finderPathCountByS_I;
+	}
 
 	/**
 	 * Returns the ddm field where storageId = &#63; and instanceId = &#63; or throws a <code>NoSuchFieldException</code> if it could not be found.

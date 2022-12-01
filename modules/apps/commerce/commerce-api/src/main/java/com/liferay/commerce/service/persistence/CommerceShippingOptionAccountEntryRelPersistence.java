@@ -16,6 +16,7 @@ package com.liferay.commerce.service.persistence;
 
 import com.liferay.commerce.exception.NoSuchShippingOptionAccountEntryRelException;
 import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingOptionAccountEntryRelUtil} to access the commerce shipping option account entry rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId();
+
+	public FinderPath getFinderPathCountByAccountEntryId();
 
 	/**
 	 * Returns all the commerce shipping option account entry rels where accountEntryId = &#63;.
@@ -189,6 +197,10 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 	 */
 	public int countByAccountEntryId(long accountEntryId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceChannelId();
+
+	public FinderPath getFinderPathCountByCommerceChannelId();
+
 	/**
 	 * Returns all the commerce shipping option account entry rels where commerceChannelId = &#63;.
 	 *
@@ -336,6 +348,11 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 	 * @return the number of matching commerce shipping option account entry rels
 	 */
 	public int countByCommerceChannelId(long commerceChannelId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByCommerceShippingOptionKey();
+
+	public FinderPath getFinderPathCountByCommerceShippingOptionKey();
 
 	/**
 	 * Returns all the commerce shipping option account entry rels where commerceShippingOptionKey = &#63;.
@@ -491,6 +508,10 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 	 */
 	public int countByCommerceShippingOptionKey(
 		String commerceShippingOptionKey);
+
+	public FinderPath getFinderPathFetchByA_C();
+
+	public FinderPath getFinderPathCountByA_C();
 
 	/**
 	 * Returns the commerce shipping option account entry rel where accountEntryId = &#63; and commerceChannelId = &#63; or throws a <code>NoSuchShippingOptionAccountEntryRelException</code> if it could not be found.

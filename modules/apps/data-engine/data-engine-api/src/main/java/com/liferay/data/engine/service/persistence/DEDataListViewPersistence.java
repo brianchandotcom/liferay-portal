@@ -16,6 +16,7 @@ package com.liferay.data.engine.service.persistence;
 
 import com.liferay.data.engine.exception.NoSuchDataListViewException;
 import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DEDataListViewPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DEDataListViewUtil} to access the de data list view persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the de data list views where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface DEDataListViewPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the de data list view where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDataListViewException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface DEDataListViewPersistence
 	 * @return the number of matching de data list views
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the de data list views where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface DEDataListViewPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByDDMStructureId();
+
+	public FinderPath getFinderPathCountByDDMStructureId();
+
 	/**
 	 * Returns all the de data list views where ddmStructureId = &#63;.
 	 *
@@ -533,6 +553,10 @@ public interface DEDataListViewPersistence
 	 * @return the number of matching de data list views
 	 */
 	public int countByDDMStructureId(long ddmStructureId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_DDMSI();
+
+	public FinderPath getFinderPathCountByG_C_DDMSI();
 
 	/**
 	 * Returns all the de data list views where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.

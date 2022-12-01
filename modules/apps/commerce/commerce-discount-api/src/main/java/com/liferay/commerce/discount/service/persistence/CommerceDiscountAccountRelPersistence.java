@@ -16,6 +16,7 @@ package com.liferay.commerce.discount.service.persistence;
 
 import com.liferay.commerce.discount.exception.NoSuchDiscountAccountRelException;
 import com.liferay.commerce.discount.model.CommerceDiscountAccountRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceDiscountAccountRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceDiscountAccountRelUtil} to access the commerce discount account rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce discount account rels where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface CommerceDiscountAccountRelPersistence
 	 * @return the number of matching commerce discount account rels
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce discount account rels where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface CommerceDiscountAccountRelPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceAccountId();
+
+	public FinderPath getFinderPathCountByCommerceAccountId();
+
 	/**
 	 * Returns all the commerce discount account rels where commerceAccountId = &#63;.
 	 *
@@ -483,6 +499,10 @@ public interface CommerceDiscountAccountRelPersistence
 	 */
 	public int countByCommerceAccountId(long commerceAccountId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceDiscountId();
+
+	public FinderPath getFinderPathCountByCommerceDiscountId();
+
 	/**
 	 * Returns all the commerce discount account rels where commerceDiscountId = &#63;.
 	 *
@@ -626,6 +646,10 @@ public interface CommerceDiscountAccountRelPersistence
 	 * @return the number of matching commerce discount account rels
 	 */
 	public int countByCommerceDiscountId(long commerceDiscountId);
+
+	public FinderPath getFinderPathFetchByCAI_CDI();
+
+	public FinderPath getFinderPathCountByCAI_CDI();
 
 	/**
 	 * Returns the commerce discount account rel where commerceAccountId = &#63; and commerceDiscountId = &#63; or throws a <code>NoSuchDiscountAccountRelException</code> if it could not be found.

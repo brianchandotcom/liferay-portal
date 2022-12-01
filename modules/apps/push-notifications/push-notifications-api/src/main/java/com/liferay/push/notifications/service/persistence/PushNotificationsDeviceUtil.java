@@ -124,6 +124,30 @@ public class PushNotificationsDeviceUtil {
 		return getPersistence().update(pushNotificationsDevice, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByToken() {
+
+		return getPersistence().getFinderPathFetchByToken();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByToken() {
+
+		return getPersistence().getFinderPathCountByToken();
+	}
+
 	/**
 	 * Returns the push notifications device where token = &#63; or throws a <code>NoSuchDeviceException</code> if it could not be found.
 	 *
@@ -180,6 +204,18 @@ public class PushNotificationsDeviceUtil {
 	 */
 	public static int countByToken(String token) {
 		return getPersistence().countByToken(token);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByU_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByU_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_P() {
+
+		return getPersistence().getFinderPathCountByU_P();
 	}
 
 	/**

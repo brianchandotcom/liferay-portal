@@ -98,6 +98,17 @@ public class SamlSpMessagePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLtExpirationDate;
 	private FinderPath _finderPathWithPaginationCountByLtExpirationDate;
 
@@ -635,7 +646,18 @@ public class SamlSpMessagePersistenceImpl
 			"samlSpMessage.expirationDate < ?";
 
 	private FinderPath _finderPathFetchBySIEI_SIRK;
+
+	@Override
+	public FinderPath getFinderPathFetchBySIEI_SIRK() {
+		return _finderPathFetchBySIEI_SIRK;
+	}
+
 	private FinderPath _finderPathCountBySIEI_SIRK;
+
+	@Override
+	public FinderPath getFinderPathCountBySIEI_SIRK() {
+		return _finderPathCountBySIEI_SIRK;
+	}
 
 	/**
 	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or throws a <code>NoSuchSpMessageException</code> if it could not be found.

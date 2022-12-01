@@ -16,6 +16,7 @@ package com.liferay.expando.kernel.service.persistence;
 
 import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface ExpandoTablePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoTableUtil} to access the expando table persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the expando tables where companyId = &#63; and classNameId = &#63;.
@@ -196,6 +204,10 @@ public interface ExpandoTablePersistence
 	 * @return the number of matching expando tables
 	 */
 	public int countByC_C(long companyId, long classNameId);
+
+	public FinderPath getFinderPathFetchByC_C_N();
+
+	public FinderPath getFinderPathCountByC_C_N();
 
 	/**
 	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or throws a <code>NoSuchTableException</code> if it could not be found.

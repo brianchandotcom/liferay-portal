@@ -124,6 +124,30 @@ public class LayoutPageTemplateEntryUtil {
 		return getPersistence().update(layoutPageTemplateEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the layout page template entries where uuid = &#63;.
 	 *
@@ -295,6 +319,18 @@ public class LayoutPageTemplateEntryUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the layout page template entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
 	 *
@@ -362,6 +398,18 @@ public class LayoutPageTemplateEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -551,6 +599,18 @@ public class LayoutPageTemplateEntryUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
 	}
 
 	/**
@@ -806,6 +866,19 @@ public class LayoutPageTemplateEntryUtil {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByLayoutPrototypeId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByLayoutPrototypeId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLayoutPrototypeId() {
+
+		return getPersistence().getFinderPathCountByLayoutPrototypeId();
+	}
+
 	/**
 	 * Returns all the layout page template entries where layoutPrototypeId = &#63;.
 	 *
@@ -985,6 +1058,18 @@ public class LayoutPageTemplateEntryUtil {
 		return getPersistence().countByLayoutPrototypeId(layoutPrototypeId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByPlid() {
+
+		return getPersistence().getFinderPathFetchByPlid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByPlid() {
+
+		return getPersistence().getFinderPathCountByPlid();
+	}
+
 	/**
 	 * Returns the layout page template entry where plid = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
 	 *
@@ -1043,6 +1128,18 @@ public class LayoutPageTemplateEntryUtil {
 	 */
 	public static int countByPlid(long plid) {
 		return getPersistence().countByPlid(plid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_L() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_L();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_L() {
+
+		return getPersistence().getFinderPathCountByG_L();
 	}
 
 	/**
@@ -1338,6 +1435,18 @@ public class LayoutPageTemplateEntryUtil {
 			groupId, layoutPageTemplateCollectionId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_LPTEK() {
+
+		return getPersistence().getFinderPathFetchByG_LPTEK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_LPTEK() {
+
+		return getPersistence().getFinderPathCountByG_LPTEK();
+	}
+
 	/**
 	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateEntryKey = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
 	 *
@@ -1413,6 +1522,18 @@ public class LayoutPageTemplateEntryUtil {
 
 		return getPersistence().countByG_LPTEK(
 			groupId, layoutPageTemplateEntryKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_N() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_N();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_N() {
+
+		return getPersistence().getFinderPathCountByG_N();
 	}
 
 	/**
@@ -1687,6 +1808,18 @@ public class LayoutPageTemplateEntryUtil {
 	 */
 	public static int filterCountByG_N(long groupId, String name) {
 		return getPersistence().filterCountByG_N(groupId, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_T() {
+
+		return getPersistence().getFinderPathCountByG_T();
 	}
 
 	/**
@@ -2436,6 +2569,18 @@ public class LayoutPageTemplateEntryUtil {
 			groupId, layoutPageTemplateCollectionId, name);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_L_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_L_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_L_T() {
+
+		return getPersistence().getFinderPathCountByG_L_T();
+	}
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
 	 *
@@ -2746,6 +2891,18 @@ public class LayoutPageTemplateEntryUtil {
 
 		return getPersistence().filterCountByG_L_T(
 			groupId, layoutPageTemplateCollectionId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_L_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_L_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_L_S() {
+
+		return getPersistence().getFinderPathCountByG_L_S();
 	}
 
 	/**
@@ -3061,6 +3218,18 @@ public class LayoutPageTemplateEntryUtil {
 
 		return getPersistence().filterCountByG_L_S(
 			groupId, layoutPageTemplateCollectionId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_N_T() {
+
+		return getPersistence().getFinderPathFetchByG_N_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_N_T() {
+
+		return getPersistence().getFinderPathCountByG_N_T();
 	}
 
 	/**
@@ -3602,6 +3771,18 @@ public class LayoutPageTemplateEntryUtil {
 		long groupId, String name, int[] types) {
 
 		return getPersistence().filterCountByG_T_LikeN(groupId, name, types);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_T_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_T_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_T_S() {
+
+		return getPersistence().getFinderPathCountByG_T_S();
 	}
 
 	/**
@@ -4413,6 +4594,18 @@ public class LayoutPageTemplateEntryUtil {
 			groupId, layoutPageTemplateCollectionId, name, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_C_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_C_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_C_T() {
+
+		return getPersistence().getFinderPathCountByG_C_C_T();
+	}
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63;.
 	 *
@@ -4739,6 +4932,18 @@ public class LayoutPageTemplateEntryUtil {
 
 		return getPersistence().filterCountByG_C_C_T(
 			groupId, classNameId, classTypeId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_C_D() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_C_D();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_C_D() {
+
+		return getPersistence().getFinderPathCountByG_C_C_D();
 	}
 
 	/**
@@ -5083,6 +5288,18 @@ public class LayoutPageTemplateEntryUtil {
 
 		return getPersistence().filterCountByG_C_C_D(
 			groupId, classNameId, classTypeId, defaultTemplate);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_T_D() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_T_D();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_T_D() {
+
+		return getPersistence().getFinderPathCountByG_C_T_D();
 	}
 
 	/**
@@ -5925,6 +6142,18 @@ public class LayoutPageTemplateEntryUtil {
 			groupId, name, types, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_T_D_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_T_D_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_T_D_S() {
+
+		return getPersistence().getFinderPathCountByG_T_D_S();
+	}
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
 	 *
@@ -6608,6 +6837,18 @@ public class LayoutPageTemplateEntryUtil {
 			groupId, classNameId, classTypeId, name, type);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_C_T_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_C_T_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_C_T_S() {
+
+		return getPersistence().getFinderPathCountByG_C_C_T_S();
+	}
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
 	 *
@@ -6960,6 +7201,18 @@ public class LayoutPageTemplateEntryUtil {
 
 		return getPersistence().filterCountByG_C_C_T_S(
 			groupId, classNameId, classTypeId, type, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_C_D_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_C_D_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_C_D_S() {
+
+		return getPersistence().getFinderPathCountByG_C_C_D_S();
 	}
 
 	/**

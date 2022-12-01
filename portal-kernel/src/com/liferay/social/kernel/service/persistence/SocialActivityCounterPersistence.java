@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.exception.NoSuchActivityCounterException;
@@ -42,6 +43,13 @@ public interface SocialActivityCounterPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityCounterUtil} to access the social activity counter persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the social activity counters where groupId = &#63;.
@@ -185,6 +193,10 @@ public interface SocialActivityCounterPersistence
 	 * @return the number of matching social activity counters
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the social activity counters where classNameId = &#63; and classPK = &#63;.
@@ -340,6 +352,10 @@ public interface SocialActivityCounterPersistence
 	 * @return the number of matching social activity counters
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_O();
+
+	public FinderPath getFinderPathCountByG_C_C_O();
 
 	/**
 	 * Returns all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
@@ -524,6 +540,10 @@ public interface SocialActivityCounterPersistence
 	public int countByG_C_C_O(
 		long groupId, long classNameId, long classPK, int ownerType);
 
+	public FinderPath getFinderPathFetchByG_C_C_N_O_S();
+
+	public FinderPath getFinderPathCountByG_C_C_N_O_S();
+
 	/**
 	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or throws a <code>NoSuchActivityCounterException</code> if it could not be found.
 	 *
@@ -602,6 +622,10 @@ public interface SocialActivityCounterPersistence
 	public int countByG_C_C_N_O_S(
 		long groupId, long classNameId, long classPK, String name,
 		int ownerType, int startPeriod);
+
+	public FinderPath getFinderPathFetchByG_C_C_N_O_E();
+
+	public FinderPath getFinderPathCountByG_C_C_N_O_E();
 
 	/**
 	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or throws a <code>NoSuchActivityCounterException</code> if it could not be found.

@@ -79,9 +79,31 @@ public class VersionedEntryVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByVersionedEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByVersionedEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByVersionedEntryId() {
+		return _finderPathWithoutPaginationFindByVersionedEntryId;
+	}
+
 	private FinderPath _finderPathCountByVersionedEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByVersionedEntryId() {
+		return _finderPathCountByVersionedEntryId;
+	}
 
 	/**
 	 * Returns all the versioned entry versions where versionedEntryId = &#63;.
@@ -593,7 +615,18 @@ public class VersionedEntryVersionPersistenceImpl
 			"versionedEntryVersion.versionedEntryId = ?";
 
 	private FinderPath _finderPathFetchByVersionedEntryId_Version;
+
+	@Override
+	public FinderPath getFinderPathFetchByVersionedEntryId_Version() {
+		return _finderPathFetchByVersionedEntryId_Version;
+	}
+
 	private FinderPath _finderPathCountByVersionedEntryId_Version;
+
+	@Override
+	public FinderPath getFinderPathCountByVersionedEntryId_Version() {
+		return _finderPathCountByVersionedEntryId_Version;
+	}
 
 	/**
 	 * Returns the versioned entry version where versionedEntryId = &#63; and version = &#63; or throws a <code>NoSuchVersionedEntryVersionException</code> if it could not be found.
@@ -828,7 +861,18 @@ public class VersionedEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the versioned entry versions where groupId = &#63;.
@@ -1332,7 +1376,18 @@ public class VersionedEntryVersionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId_Version;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId_Version;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Version() {
+		return _finderPathWithoutPaginationFindByGroupId_Version;
+	}
+
 	private FinderPath _finderPathCountByGroupId_Version;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId_Version() {
+		return _finderPathCountByGroupId_Version;
+	}
 
 	/**
 	 * Returns all the versioned entry versions where groupId = &#63; and version = &#63;.

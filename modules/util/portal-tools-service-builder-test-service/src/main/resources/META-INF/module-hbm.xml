@@ -14,6 +14,7 @@
 	<import class="com.liferay.portal.tools.service.builder.test.model.ERCGroupEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.LoadFinderCacheEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LocalizedEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LVEntry" />
@@ -135,6 +136,14 @@
 			</generator>
 		</id>
 		<property column="blob2" name="blob2Blob" type="blob" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.LoadFinderCacheEntryImpl" table="LoadFinderCacheEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="loadFinderCacheEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="uniqueName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryImpl" table="LocalizedEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="localizedEntryId" type="long">

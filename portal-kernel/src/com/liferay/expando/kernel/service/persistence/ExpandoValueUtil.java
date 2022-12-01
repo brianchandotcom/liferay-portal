@@ -119,6 +119,30 @@ public class ExpandoValueUtil {
 		return getPersistence().update(expandoValue, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByTableId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByTableId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByTableId() {
+
+		return getPersistence().getFinderPathCountByTableId();
+	}
+
 	/**
 	 * Returns all the expando values where tableId = &#63;.
 	 *
@@ -283,6 +307,18 @@ public class ExpandoValueUtil {
 	 */
 	public static int countByTableId(long tableId) {
 		return getPersistence().countByTableId(tableId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByColumnId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByColumnId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByColumnId() {
+
+		return getPersistence().getFinderPathCountByColumnId();
 	}
 
 	/**
@@ -454,6 +490,18 @@ public class ExpandoValueUtil {
 		return getPersistence().countByColumnId(columnId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByRowId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByRowId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByRowId() {
+
+		return getPersistence().getFinderPathCountByRowId();
+	}
+
 	/**
 	 * Returns all the expando values where rowId = &#63;.
 	 *
@@ -617,6 +665,18 @@ public class ExpandoValueUtil {
 	 */
 	public static int countByRowId(long rowId) {
 		return getPersistence().countByRowId(rowId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_C() {
+
+		return getPersistence().getFinderPathCountByT_C();
 	}
 
 	/**
@@ -803,6 +863,18 @@ public class ExpandoValueUtil {
 		return getPersistence().countByT_C(tableId, columnId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_R() {
+
+		return getPersistence().getFinderPathCountByT_R();
+	}
+
 	/**
 	 * Returns all the expando values where tableId = &#63; and rowId = &#63;.
 	 *
@@ -985,6 +1057,18 @@ public class ExpandoValueUtil {
 	 */
 	public static int countByT_R(long tableId, long rowId) {
 		return getPersistence().countByT_R(tableId, rowId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_CPK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_CPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_CPK() {
+
+		return getPersistence().getFinderPathCountByT_CPK();
 	}
 
 	/**
@@ -1171,6 +1255,18 @@ public class ExpandoValueUtil {
 		return getPersistence().countByT_CPK(tableId, classPK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_R() {
+
+		return getPersistence().getFinderPathFetchByC_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_R() {
+
+		return getPersistence().getFinderPathCountByC_R();
+	}
+
 	/**
 	 * Returns the expando value where columnId = &#63; and rowId = &#63; or throws a <code>NoSuchValueException</code> if it could not be found.
 	 *
@@ -1232,6 +1328,18 @@ public class ExpandoValueUtil {
 	 */
 	public static int countByC_R(long columnId, long rowId) {
 		return getPersistence().countByC_R(columnId, rowId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**
@@ -1419,6 +1527,18 @@ public class ExpandoValueUtil {
 		return getPersistence().countByC_C(classNameId, classPK);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByT_C_C() {
+
+		return getPersistence().getFinderPathFetchByT_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_C_C() {
+
+		return getPersistence().getFinderPathCountByT_C_C();
+	}
+
 	/**
 	 * Returns the expando value where tableId = &#63; and columnId = &#63; and classPK = &#63; or throws a <code>NoSuchValueException</code> if it could not be found.
 	 *
@@ -1490,6 +1610,18 @@ public class ExpandoValueUtil {
 	 */
 	public static int countByT_C_C(long tableId, long columnId, long classPK) {
 		return getPersistence().countByT_C_C(tableId, columnId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_C_D() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_C_D();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_C_D() {
+
+		return getPersistence().getFinderPathCountByT_C_D();
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchEagerBlobEntryException;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry;
@@ -40,6 +41,13 @@ public interface EagerBlobEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EagerBlobEntryUtil} to access the eager blob entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the eager blob entries where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface EagerBlobEntryPersistence
 	 * @return the number of matching eager blob entries
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
 
 	/**
 	 * Returns the eager blob entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEagerBlobEntryException</code> if it could not be found.

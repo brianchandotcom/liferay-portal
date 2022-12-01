@@ -79,9 +79,31 @@ public class VersionedEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the versioned entries where groupId = &#63;.
@@ -576,7 +598,18 @@ public class VersionedEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByGroupId_Head;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId_Head;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Head() {
+		return _finderPathWithoutPaginationFindByGroupId_Head;
+	}
+
 	private FinderPath _finderPathCountByGroupId_Head;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId_Head() {
+		return _finderPathCountByGroupId_Head;
+	}
 
 	/**
 	 * Returns all the versioned entries where groupId = &#63; and head = &#63;.
@@ -1115,7 +1148,18 @@ public class VersionedEntryPersistenceImpl
 		"versionedEntry.head = ?";
 
 	private FinderPath _finderPathFetchByHeadId;
+
+	@Override
+	public FinderPath getFinderPathFetchByHeadId() {
+		return _finderPathFetchByHeadId;
+	}
+
 	private FinderPath _finderPathCountByHeadId;
+
+	@Override
+	public FinderPath getFinderPathCountByHeadId() {
+		return _finderPathCountByHeadId;
+	}
 
 	/**
 	 * Returns the versioned entry where headId = &#63; or throws a <code>NoSuchVersionedEntryException</code> if it could not be found.

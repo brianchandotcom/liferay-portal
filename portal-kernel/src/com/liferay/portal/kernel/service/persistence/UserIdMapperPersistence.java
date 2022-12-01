@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchUserIdMapperException;
 import com.liferay.portal.kernel.model.UserIdMapper;
 
@@ -38,6 +39,13 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserIdMapperUtil} to access the user ID mapper persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the user ID mappers where userId = &#63;.
@@ -182,6 +190,10 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	 */
 	public int countByUserId(long userId);
 
+	public FinderPath getFinderPathFetchByU_T();
+
+	public FinderPath getFinderPathCountByU_T();
+
 	/**
 	 * Returns the user ID mapper where userId = &#63; and type = &#63; or throws a <code>NoSuchUserIdMapperException</code> if it could not be found.
 	 *
@@ -231,6 +243,10 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	 * @return the number of matching user ID mappers
 	 */
 	public int countByU_T(long userId, String type);
+
+	public FinderPath getFinderPathFetchByT_E();
+
+	public FinderPath getFinderPathCountByT_E();
 
 	/**
 	 * Returns the user ID mapper where type = &#63; and externalUserId = &#63; or throws a <code>NoSuchUserIdMapperException</code> if it could not be found.

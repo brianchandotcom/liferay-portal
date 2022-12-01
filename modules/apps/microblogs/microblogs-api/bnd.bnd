@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Microblogs API
 Bundle-SymbolicName: com.liferay.microblogs.api
-Bundle-Version: 7.1.1
+Bundle-Version: 7.2.0
 Export-Package:\
 	com.liferay.microblogs.constants,\
 	com.liferay.microblogs.exception,\

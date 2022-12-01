@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupRoleException;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -40,6 +41,13 @@ public interface UserGroupRolePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupRoleUtil} to access the user group role persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
 
 	/**
 	 * Returns all the user group roles where userId = &#63;.
@@ -184,6 +192,10 @@ public interface UserGroupRolePersistence
 	 */
 	public int countByUserId(long userId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the user group roles where groupId = &#63;.
 	 *
@@ -327,6 +339,10 @@ public interface UserGroupRolePersistence
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByRoleId();
+
+	public FinderPath getFinderPathCountByRoleId();
+
 	/**
 	 * Returns all the user group roles where roleId = &#63;.
 	 *
@@ -469,6 +485,10 @@ public interface UserGroupRolePersistence
 	 * @return the number of matching user group roles
 	 */
 	public int countByRoleId(long roleId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByU_G();
+
+	public FinderPath getFinderPathCountByU_G();
 
 	/**
 	 * Returns all the user group roles where userId = &#63; and groupId = &#63;.
@@ -624,6 +644,10 @@ public interface UserGroupRolePersistence
 	 */
 	public int countByU_G(long userId, long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_R();
+
+	public FinderPath getFinderPathCountByG_R();
+
 	/**
 	 * Returns all the user group roles where groupId = &#63; and roleId = &#63;.
 	 *
@@ -777,6 +801,10 @@ public interface UserGroupRolePersistence
 	 * @return the number of matching user group roles
 	 */
 	public int countByG_R(long groupId, long roleId);
+
+	public FinderPath getFinderPathFetchByU_G_R();
+
+	public FinderPath getFinderPathCountByU_G_R();
 
 	/**
 	 * Returns the user group role where userId = &#63; and groupId = &#63; and roleId = &#63; or throws a <code>NoSuchUserGroupRoleException</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchFieldException;
 import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DDMFieldPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMFieldUtil} to access the ddm field persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByStorageId();
+
+	public FinderPath getFinderPathCountByStorageId();
 
 	/**
 	 * Returns all the ddm fields where storageId = &#63;.
@@ -185,6 +193,10 @@ public interface DDMFieldPersistence
 	 */
 	public int countByStorageId(long storageId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByStructureVersionId();
+
+	public FinderPath getFinderPathCountByStructureVersionId();
+
 	/**
 	 * Returns all the ddm fields where structureVersionId = &#63;.
 	 *
@@ -328,6 +340,10 @@ public interface DDMFieldPersistence
 	 * @return the number of matching ddm fields
 	 */
 	public int countByStructureVersionId(long structureVersionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_F();
+
+	public FinderPath getFinderPathCountByC_F();
 
 	/**
 	 * Returns all the ddm fields where companyId = &#63; and fieldType = &#63;.
@@ -482,6 +498,10 @@ public interface DDMFieldPersistence
 	 * @return the number of matching ddm fields
 	 */
 	public int countByC_F(long companyId, String fieldType);
+
+	public FinderPath getFinderPathFetchByS_I();
+
+	public FinderPath getFinderPathCountByS_I();
 
 	/**
 	 * Returns the ddm field where storageId = &#63; and instanceId = &#63; or throws a <code>NoSuchFieldException</code> if it could not be found.

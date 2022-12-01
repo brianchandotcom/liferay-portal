@@ -16,6 +16,7 @@ package com.liferay.commerce.shop.by.diagram.service.persistence;
 
 import com.liferay.commerce.shop.by.diagram.exception.NoSuchCSDiagramSettingException;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface CSDiagramSettingPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CSDiagramSettingUtil} to access the cs diagram setting persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the cs diagram settings where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface CSDiagramSettingPersistence
 	 * @return the number of matching cs diagram settings
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the cs diagram settings where uuid = &#63; and companyId = &#63;.
@@ -339,6 +351,10 @@ public interface CSDiagramSettingPersistence
 	 * @return the number of matching cs diagram settings
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathFetchByCPDefinitionId();
+
+	public FinderPath getFinderPathCountByCPDefinitionId();
 
 	/**
 	 * Returns the cs diagram setting where CPDefinitionId = &#63; or throws a <code>NoSuchCSDiagramSettingException</code> if it could not be found.

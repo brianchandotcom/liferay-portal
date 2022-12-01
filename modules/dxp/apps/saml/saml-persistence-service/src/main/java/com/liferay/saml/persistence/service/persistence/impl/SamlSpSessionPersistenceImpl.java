@@ -98,9 +98,31 @@ public class SamlSpSessionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindBySamlPeerBindingId;
 	private FinderPath _finderPathWithoutPaginationFindBySamlPeerBindingId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindBySamlPeerBindingId() {
+		return _finderPathWithoutPaginationFindBySamlPeerBindingId;
+	}
+
 	private FinderPath _finderPathCountBySamlPeerBindingId;
+
+	@Override
+	public FinderPath getFinderPathCountBySamlPeerBindingId() {
+		return _finderPathCountBySamlPeerBindingId;
+	}
 
 	/**
 	 * Returns all the saml sp sessions where samlPeerBindingId = &#63;.
@@ -608,7 +630,18 @@ public class SamlSpSessionPersistenceImpl
 			"samlSpSession.samlPeerBindingId = ?";
 
 	private FinderPath _finderPathFetchByJSessionId;
+
+	@Override
+	public FinderPath getFinderPathFetchByJSessionId() {
+		return _finderPathFetchByJSessionId;
+	}
+
 	private FinderPath _finderPathCountByJSessionId;
+
+	@Override
+	public FinderPath getFinderPathCountByJSessionId() {
+		return _finderPathCountByJSessionId;
+	}
 
 	/**
 	 * Returns the saml sp session where jSessionId = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
@@ -850,7 +883,18 @@ public class SamlSpSessionPersistenceImpl
 		"(samlSpSession.jSessionId IS NULL OR samlSpSession.jSessionId = '')";
 
 	private FinderPath _finderPathFetchBySamlSpSessionKey;
+
+	@Override
+	public FinderPath getFinderPathFetchBySamlSpSessionKey() {
+		return _finderPathFetchBySamlSpSessionKey;
+	}
+
 	private FinderPath _finderPathCountBySamlSpSessionKey;
+
+	@Override
+	public FinderPath getFinderPathCountBySamlSpSessionKey() {
+		return _finderPathCountBySamlSpSessionKey;
+	}
 
 	/**
 	 * Returns the saml sp session where samlSpSessionKey = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
@@ -1082,7 +1126,18 @@ public class SamlSpSessionPersistenceImpl
 			"(samlSpSession.samlSpSessionKey IS NULL OR samlSpSession.samlSpSessionKey = '')";
 
 	private FinderPath _finderPathFetchByC_SI;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_SI() {
+		return _finderPathFetchByC_SI;
+	}
+
 	private FinderPath _finderPathCountByC_SI;
+
+	@Override
+	public FinderPath getFinderPathCountByC_SI() {
+		return _finderPathCountByC_SI;
+	}
 
 	/**
 	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.

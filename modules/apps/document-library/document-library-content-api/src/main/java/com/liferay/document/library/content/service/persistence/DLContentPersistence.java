@@ -16,6 +16,7 @@ package com.liferay.document.library.content.service.persistence;
 
 import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface DLContentPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLContentUtil} to access the document library content persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_R();
+
+	public FinderPath getFinderPathCountByC_R();
 
 	/**
 	 * Returns all the document library contents where companyId = &#63; and repositoryId = &#63;.
@@ -196,6 +204,10 @@ public interface DLContentPersistence
 	 * @return the number of matching document library contents
 	 */
 	public int countByC_R(long companyId, long repositoryId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_R_P();
+
+	public FinderPath getFinderPathCountByC_R_P();
 
 	/**
 	 * Returns all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -529,6 +541,10 @@ public interface DLContentPersistence
 	 * @return the number of matching document library contents
 	 */
 	public int countByC_R_LikeP(long companyId, long repositoryId, String path);
+
+	public FinderPath getFinderPathFetchByC_R_P_V();
+
+	public FinderPath getFinderPathCountByC_R_P_V();
 
 	/**
 	 * Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or throws a <code>NoSuchContentException</code> if it could not be found.

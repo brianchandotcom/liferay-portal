@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.workflow.metrics.exception.NoSuchSLADefinitionVersionException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
@@ -40,6 +41,13 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowMetricsSLADefinitionVersionUtil} to access the workflow metrics sla definition version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the workflow metrics sla definition versions where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSLADefinitionVersionException</code> if it could not be found.
 	 *
@@ -237,6 +249,10 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @return the number of matching workflow metrics sla definition versions
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
@@ -394,6 +410,11 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByWorkflowMetricsSLADefinitionId();
+
+	public FinderPath getFinderPathCountByWorkflowMetricsSLADefinitionId();
+
 	/**
 	 * Returns all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
 	 *
@@ -549,6 +570,10 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public int countByWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId);
+
+	public FinderPath getFinderPathFetchByV_WMSLAD();
+
+	public FinderPath getFinderPathCountByV_WMSLAD();
 
 	/**
 	 * Returns the workflow metrics sla definition version where version = &#63; and workflowMetricsSLADefinitionId = &#63; or throws a <code>NoSuchSLADefinitionVersionException</code> if it could not be found.

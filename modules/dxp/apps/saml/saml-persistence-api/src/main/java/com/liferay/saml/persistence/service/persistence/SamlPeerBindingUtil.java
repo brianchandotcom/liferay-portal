@@ -119,6 +119,31 @@ public class SamlPeerBindingUtil {
 		return getPersistence().update(samlPeerBinding, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_U_D_SNIF_SNINQ_SPEI() {
+
+		return getPersistence().getFinderPathCountByC_U_D_SNIF_SNINQ_SPEI();
+	}
+
 	/**
 	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlPeerEntityId = &#63;.
 	 *
@@ -386,6 +411,19 @@ public class SamlPeerBindingUtil {
 		return getPersistence().countByC_U_D_SNIF_SNINQ_SPEI(
 			companyId, userId, deleted, samlNameIdFormat,
 			samlNameIdNameQualifier, samlPeerEntityId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI() {
+
+		return getPersistence().getFinderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI();
 	}
 
 	/**

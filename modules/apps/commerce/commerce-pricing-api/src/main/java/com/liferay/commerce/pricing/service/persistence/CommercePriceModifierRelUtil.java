@@ -125,6 +125,31 @@ public class CommercePriceModifierRelUtil {
 			commercePriceModifierRel, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCommercePriceModifierId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCommercePriceModifierId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCommercePriceModifierId() {
+
+		return getPersistence().getFinderPathCountByCommercePriceModifierId();
+	}
+
 	/**
 	 * Returns all the commerce price modifier rels where commercePriceModifierId = &#63;.
 	 *
@@ -312,6 +337,18 @@ public class CommercePriceModifierRelUtil {
 
 		return getPersistence().countByCommercePriceModifierId(
 			commercePriceModifierId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCPM_CN() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCPM_CN();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPM_CN() {
+
+		return getPersistence().getFinderPathCountByCPM_CN();
 	}
 
 	/**
@@ -514,6 +551,18 @@ public class CommercePriceModifierRelUtil {
 			commercePriceModifierId, classNameId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCN_CPK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCN_CPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCN_CPK() {
+
+		return getPersistence().getFinderPathCountByCN_CPK();
+	}
+
 	/**
 	 * Returns all the commerce price modifier rels where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -703,6 +752,18 @@ public class CommercePriceModifierRelUtil {
 	 */
 	public static int countByCN_CPK(long classNameId, long classPK) {
 		return getPersistence().countByCN_CPK(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCPM_CN_CPK() {
+
+		return getPersistence().getFinderPathFetchByCPM_CN_CPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCPM_CN_CPK() {
+
+		return getPersistence().getFinderPathCountByCPM_CN_CPK();
 	}
 
 	/**

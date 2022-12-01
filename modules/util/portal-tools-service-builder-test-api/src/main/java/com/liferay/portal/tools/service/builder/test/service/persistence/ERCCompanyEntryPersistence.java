@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchERCCompanyEntryException;
 import com.liferay.portal.tools.service.builder.test.model.ERCCompanyEntry;
@@ -40,6 +41,13 @@ public interface ERCCompanyEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ERCCompanyEntryUtil} to access the erc company entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the erc company entries where uuid = &#63;.
@@ -183,6 +191,10 @@ public interface ERCCompanyEntryPersistence
 	 * @return the number of matching erc company entries
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the erc company entries where uuid = &#63; and companyId = &#63;.
@@ -338,6 +350,10 @@ public interface ERCCompanyEntryPersistence
 	 * @return the number of matching erc company entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the erc company entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchERCCompanyEntryException</code> if it could not be found.

@@ -93,9 +93,31 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the mfafido2 credential entries where userId = &#63;.
@@ -599,7 +621,18 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCredentialKeyHash;
 	private FinderPath _finderPathWithoutPaginationFindByCredentialKeyHash;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCredentialKeyHash() {
+		return _finderPathWithoutPaginationFindByCredentialKeyHash;
+	}
+
 	private FinderPath _finderPathCountByCredentialKeyHash;
+
+	@Override
+	public FinderPath getFinderPathCountByCredentialKeyHash() {
+		return _finderPathCountByCredentialKeyHash;
+	}
 
 	/**
 	 * Returns all the mfafido2 credential entries where credentialKeyHash = &#63;.
@@ -1114,7 +1147,18 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			"mfafido2CredentialEntry.credentialKeyHash = ?";
 
 	private FinderPath _finderPathFetchByU_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_C() {
+		return _finderPathFetchByU_C;
+	}
+
 	private FinderPath _finderPathCountByU_C;
+
+	@Override
+	public FinderPath getFinderPathCountByU_C() {
+		return _finderPathCountByU_C;
+	}
 
 	/**
 	 * Returns the mfafido2 credential entry where userId = &#63; and credentialKeyHash = &#63; or throws a <code>NoSuchMFAFIDO2CredentialEntryException</code> if it could not be found.

@@ -92,9 +92,31 @@ public class AccountEntryUserRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId() {
+		return _finderPathWithoutPaginationFindByAccountEntryId;
+	}
+
 	private FinderPath _finderPathCountByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAccountEntryId() {
+		return _finderPathCountByAccountEntryId;
+	}
 
 	/**
 	 * Returns all the account entry user rels where accountEntryId = &#63;.
@@ -604,7 +626,18 @@ public class AccountEntryUserRelPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByAccountUserId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAccountUserId() {
+		return _finderPathWithoutPaginationFindByAccountUserId;
+	}
+
 	private FinderPath _finderPathCountByAccountUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByAccountUserId() {
+		return _finderPathCountByAccountUserId;
+	}
 
 	/**
 	 * Returns all the account entry user rels where accountUserId = &#63;.
@@ -1113,7 +1146,18 @@ public class AccountEntryUserRelPersistenceImpl
 		"accountEntryUserRel.accountUserId = ?";
 
 	private FinderPath _finderPathFetchByAEI_AUI;
+
+	@Override
+	public FinderPath getFinderPathFetchByAEI_AUI() {
+		return _finderPathFetchByAEI_AUI;
+	}
+
 	private FinderPath _finderPathCountByAEI_AUI;
+
+	@Override
+	public FinderPath getFinderPathCountByAEI_AUI() {
+		return _finderPathCountByAEI_AUI;
+	}
 
 	/**
 	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.

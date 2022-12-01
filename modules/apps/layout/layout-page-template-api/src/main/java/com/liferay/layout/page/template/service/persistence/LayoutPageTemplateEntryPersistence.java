@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.service.persistence;
 
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateEntryUtil} to access the layout page template entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout page template entries where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the layout page template entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @return the number of matching layout page template entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout page template entries where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @return the number of matching layout page template entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63;.
@@ -599,6 +619,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public int filterCountByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutPrototypeId();
+
+	public FinderPath getFinderPathCountByLayoutPrototypeId();
+
 	/**
 	 * Returns all the layout page template entries where layoutPrototypeId = &#63;.
 	 *
@@ -743,6 +767,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public int countByLayoutPrototypeId(long layoutPrototypeId);
 
+	public FinderPath getFinderPathFetchByPlid();
+
+	public FinderPath getFinderPathCountByPlid();
+
 	/**
 	 * Returns the layout page template entry where plid = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
 	 *
@@ -787,6 +815,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @return the number of matching layout page template entries
 	 */
 	public int countByPlid(long plid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_L();
+
+	public FinderPath getFinderPathCountByG_L();
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
@@ -1016,6 +1048,10 @@ public interface LayoutPageTemplateEntryPersistence
 	public int filterCountByG_L(
 		long groupId, long layoutPageTemplateCollectionId);
 
+	public FinderPath getFinderPathFetchByG_LPTEK();
+
+	public FinderPath getFinderPathCountByG_LPTEK();
+
 	/**
 	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateEntryKey = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
 	 *
@@ -1069,6 +1105,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @return the number of matching layout page template entries
 	 */
 	public int countByG_LPTEK(long groupId, String layoutPageTemplateEntryKey);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_N();
+
+	public FinderPath getFinderPathCountByG_N();
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and name = &#63;.
@@ -1294,6 +1334,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @return the number of matching layout page template entries that the user has permission to view
 	 */
 	public int filterCountByG_N(long groupId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_T();
+
+	public FinderPath getFinderPathCountByG_T();
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and type = &#63;.
@@ -1904,6 +1948,10 @@ public interface LayoutPageTemplateEntryPersistence
 	public int filterCountByG_L_LikeN(
 		long groupId, long layoutPageTemplateCollectionId, String name);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_L_T();
+
+	public FinderPath getFinderPathCountByG_L_T();
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
 	 *
@@ -2155,6 +2203,10 @@ public interface LayoutPageTemplateEntryPersistence
 	public int filterCountByG_L_T(
 		long groupId, long layoutPageTemplateCollectionId, int type);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_L_S();
+
+	public FinderPath getFinderPathCountByG_L_S();
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
 	 *
@@ -2405,6 +2457,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public int filterCountByG_L_S(
 		long groupId, long layoutPageTemplateCollectionId, int status);
+
+	public FinderPath getFinderPathFetchByG_N_T();
+
+	public FinderPath getFinderPathCountByG_N_T();
 
 	/**
 	 * Returns the layout page template entry where groupId = &#63; and name = &#63; and type = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
@@ -2846,6 +2902,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @return the number of matching layout page template entries that the user has permission to view
 	 */
 	public int filterCountByG_T_LikeN(long groupId, String name, int[] types);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_T_S();
+
+	public FinderPath getFinderPathCountByG_T_S();
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
@@ -3506,6 +3566,10 @@ public interface LayoutPageTemplateEntryPersistence
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_T();
+
+	public FinderPath getFinderPathCountByG_C_C_T();
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63;.
 	 *
@@ -3772,6 +3836,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public int filterCountByG_C_C_T(
 		long groupId, long classNameId, long classTypeId, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_D();
+
+	public FinderPath getFinderPathCountByG_C_C_D();
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63;.
@@ -4048,6 +4116,10 @@ public interface LayoutPageTemplateEntryPersistence
 	public int filterCountByG_C_C_D(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_T_D();
+
+	public FinderPath getFinderPathCountByG_C_T_D();
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
@@ -4731,6 +4803,10 @@ public interface LayoutPageTemplateEntryPersistence
 	public int filterCountByG_T_LikeN_S(
 		long groupId, String name, int[] types, int status);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_T_D_S();
+
+	public FinderPath getFinderPathCountByG_T_D_S();
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
 	 *
@@ -5288,6 +5364,10 @@ public interface LayoutPageTemplateEntryPersistence
 		long groupId, long classNameId, long classTypeId, String name,
 		int type);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_T_S();
+
+	public FinderPath getFinderPathCountByG_C_C_T_S();
+
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
 	 *
@@ -5572,6 +5652,10 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public int filterCountByG_C_C_T_S(
 		long groupId, long classNameId, long classTypeId, int type, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_C_D_S();
+
+	public FinderPath getFinderPathCountByG_C_C_D_S();
 
 	/**
 	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.

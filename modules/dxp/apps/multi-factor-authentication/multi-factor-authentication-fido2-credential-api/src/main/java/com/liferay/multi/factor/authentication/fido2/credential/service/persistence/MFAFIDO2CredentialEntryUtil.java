@@ -124,6 +124,30 @@ public class MFAFIDO2CredentialEntryUtil {
 		return getPersistence().update(mfaFIDO2CredentialEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUserId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUserId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUserId() {
+
+		return getPersistence().getFinderPathCountByUserId();
+	}
+
 	/**
 	 * Returns all the mfafido2 credential entries where userId = &#63;.
 	 *
@@ -294,6 +318,19 @@ public class MFAFIDO2CredentialEntryUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCredentialKeyHash() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByCredentialKeyHash();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCredentialKeyHash() {
+
+		return getPersistence().getFinderPathCountByCredentialKeyHash();
 	}
 
 	/**
@@ -473,6 +510,18 @@ public class MFAFIDO2CredentialEntryUtil {
 	 */
 	public static int countByCredentialKeyHash(long credentialKeyHash) {
 		return getPersistence().countByCredentialKeyHash(credentialKeyHash);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByU_C() {
+
+		return getPersistence().getFinderPathFetchByU_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByU_C() {
+
+		return getPersistence().getFinderPathCountByU_C();
 	}
 
 	/**

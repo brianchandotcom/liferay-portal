@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.site.navigation.exception.NoSuchMenuItemException;
@@ -42,6 +43,13 @@ public interface SiteNavigationMenuItemPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuItemUtil} to access the site navigation menu item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the site navigation menu items where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface SiteNavigationMenuItemPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the site navigation menu item where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMenuItemException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface SiteNavigationMenuItemPersistence
 	 * @return the number of matching site navigation menu items
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the site navigation menu items where uuid = &#63; and companyId = &#63;.
@@ -391,6 +407,10 @@ public interface SiteNavigationMenuItemPersistence
 	 */
 	public int countByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the site navigation menu items where companyId = &#63;.
 	 *
@@ -535,6 +555,11 @@ public interface SiteNavigationMenuItemPersistence
 	 */
 	public int countByCompanyId(long companyId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySiteNavigationMenuId();
+
+	public FinderPath getFinderPathCountBySiteNavigationMenuId();
+
 	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63;.
 	 *
@@ -678,6 +703,11 @@ public interface SiteNavigationMenuItemPersistence
 	 * @return the number of matching site navigation menu items
 	 */
 	public int countBySiteNavigationMenuId(long siteNavigationMenuId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByParentSiteNavigationMenuItemId();
+
+	public FinderPath getFinderPathCountByParentSiteNavigationMenuItemId();
 
 	/**
 	 * Returns all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
@@ -830,6 +860,10 @@ public interface SiteNavigationMenuItemPersistence
 	 */
 	public int countByParentSiteNavigationMenuItemId(
 		long parentSiteNavigationMenuItemId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByS_P();
+
+	public FinderPath getFinderPathCountByS_P();
 
 	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.

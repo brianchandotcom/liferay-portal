@@ -16,6 +16,7 @@ package com.liferay.portal.background.task.service.persistence;
 
 import com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface BackgroundTaskPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BackgroundTaskUtil} to access the background task persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the background tasks where groupId = &#63;.
@@ -184,6 +192,10 @@ public interface BackgroundTaskPersistence
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the background tasks where companyId = &#63;.
 	 *
@@ -326,6 +338,10 @@ public interface BackgroundTaskPersistence
 	 * @return the number of matching background tasks
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompleted();
+
+	public FinderPath getFinderPathCountByCompleted();
 
 	/**
 	 * Returns all the background tasks where completed = &#63;.
@@ -470,6 +486,10 @@ public interface BackgroundTaskPersistence
 	 */
 	public int countByCompleted(boolean completed);
 
+	public FinderPath getFinderPathWithoutPaginationFindByStatus();
+
+	public FinderPath getFinderPathCountByStatus();
+
 	/**
 	 * Returns all the background tasks where status = &#63;.
 	 *
@@ -612,6 +632,10 @@ public interface BackgroundTaskPersistence
 	 * @return the number of matching background tasks
 	 */
 	public int countByStatus(int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_T();
+
+	public FinderPath getFinderPathCountByG_T();
 
 	/**
 	 * Returns all the background tasks where groupId = &#63; and taskExecutorClassName = &#63;.
@@ -847,6 +871,10 @@ public interface BackgroundTaskPersistence
 	 */
 	public int countByG_T(long[] groupIds, String[] taskExecutorClassNames);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_S();
+
+	public FinderPath getFinderPathCountByG_S();
+
 	/**
 	 * Returns all the background tasks where groupId = &#63; and status = &#63;.
 	 *
@@ -1000,6 +1028,10 @@ public interface BackgroundTaskPersistence
 	 * @return the number of matching background tasks
 	 */
 	public int countByG_S(long groupId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByT_S();
+
+	public FinderPath getFinderPathCountByT_S();
 
 	/**
 	 * Returns all the background tasks where taskExecutorClassName = &#63; and status = &#63;.
@@ -1234,6 +1266,10 @@ public interface BackgroundTaskPersistence
 	 * @return the number of matching background tasks
 	 */
 	public int countByT_S(String[] taskExecutorClassNames, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_T();
+
+	public FinderPath getFinderPathCountByG_N_T();
 
 	/**
 	 * Returns all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1495,6 +1531,10 @@ public interface BackgroundTaskPersistence
 	public int countByG_N_T(
 		long[] groupIds, String name, String[] taskExecutorClassNames);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_T_C();
+
+	public FinderPath getFinderPathCountByG_T_C();
+
 	/**
 	 * Returns all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
 	 *
@@ -1755,6 +1795,10 @@ public interface BackgroundTaskPersistence
 	public int countByG_T_C(
 		long[] groupIds, String[] taskExecutorClassNames, boolean completed);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_T_S();
+
+	public FinderPath getFinderPathCountByG_T_S();
+
 	/**
 	 * Returns all the background tasks where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
 	 *
@@ -2014,6 +2058,10 @@ public interface BackgroundTaskPersistence
 	 */
 	public int countByG_T_S(
 		long groupId, String[] taskExecutorClassNames, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_N_T_C();
+
+	public FinderPath getFinderPathCountByG_N_T_C();
 
 	/**
 	 * Returns all the background tasks where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.

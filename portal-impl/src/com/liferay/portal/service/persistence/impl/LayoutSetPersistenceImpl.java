@@ -94,9 +94,31 @@ public class LayoutSetPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the layout sets where groupId = &#63;.
@@ -601,7 +623,20 @@ public class LayoutSetPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByLayoutSetPrototypeUuid;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutSetPrototypeUuid;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByLayoutSetPrototypeUuid() {
+
+		return _finderPathWithoutPaginationFindByLayoutSetPrototypeUuid;
+	}
+
 	private FinderPath _finderPathCountByLayoutSetPrototypeUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByLayoutSetPrototypeUuid() {
+		return _finderPathCountByLayoutSetPrototypeUuid;
+	}
 
 	/**
 	 * Returns all the layout sets where layoutSetPrototypeUuid = &#63;.
@@ -1176,7 +1211,18 @@ public class LayoutSetPersistenceImpl
 			"(layoutSet.layoutSetPrototypeUuid IS NULL OR layoutSet.layoutSetPrototypeUuid = '')";
 
 	private FinderPath _finderPathFetchByG_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_P() {
+		return _finderPathFetchByG_P;
+	}
+
 	private FinderPath _finderPathCountByG_P;
+
+	@Override
+	public FinderPath getFinderPathCountByG_P() {
+		return _finderPathCountByG_P;
+	}
 
 	/**
 	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
@@ -1412,7 +1458,18 @@ public class LayoutSetPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_L() {
+		return _finderPathWithoutPaginationFindByC_L;
+	}
+
 	private FinderPath _finderPathCountByC_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_L() {
+		return _finderPathCountByC_L;
+	}
 
 	/**
 	 * Returns all the layout sets where companyId = &#63; and layoutSetPrototypeUuid = &#63;.
@@ -2014,7 +2071,18 @@ public class LayoutSetPersistenceImpl
 		"(layoutSet.layoutSetPrototypeUuid IS NULL OR layoutSet.layoutSetPrototypeUuid = '')";
 
 	private FinderPath _finderPathFetchByP_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByP_L() {
+		return _finderPathFetchByP_L;
+	}
+
 	private FinderPath _finderPathCountByP_L;
+
+	@Override
+	public FinderPath getFinderPathCountByP_L() {
+		return _finderPathCountByP_L;
+	}
 
 	/**
 	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.

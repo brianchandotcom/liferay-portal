@@ -122,6 +122,30 @@ public class AssetListEntryUsageUtil {
 		return getPersistence().update(assetListEntryUsage, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the asset list entry usages where uuid = &#63;.
 	 *
@@ -288,6 +312,18 @@ public class AssetListEntryUsageUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the asset list entry usage where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryUsageException</code> if it could not be found.
 	 *
@@ -349,6 +385,18 @@ public class AssetListEntryUsageUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -537,6 +585,19 @@ public class AssetListEntryUsageUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByAssetListEntryId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByAssetListEntryId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByAssetListEntryId() {
+
+		return getPersistence().getFinderPathCountByAssetListEntryId();
+	}
+
 	/**
 	 * Returns all the asset list entry usages where assetListEntryId = &#63;.
 	 *
@@ -713,6 +774,18 @@ public class AssetListEntryUsageUtil {
 		return getPersistence().countByAssetListEntryId(assetListEntryId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByPlid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByPlid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByPlid() {
+
+		return getPersistence().getFinderPathCountByPlid();
+	}
+
 	/**
 	 * Returns all the asset list entry usages where plid = &#63;.
 	 *
@@ -875,6 +948,18 @@ public class AssetListEntryUsageUtil {
 	 */
 	public static int countByPlid(long plid) {
 		return getPersistence().countByPlid(plid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByA_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByA_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByA_C() {
+
+		return getPersistence().getFinderPathCountByA_C();
 	}
 
 	/**
@@ -1064,6 +1149,18 @@ public class AssetListEntryUsageUtil {
 	 */
 	public static int countByA_C(long assetListEntryId, long classNameId) {
 		return getPersistence().countByA_C(assetListEntryId, classNameId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_K() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_K();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_K() {
+
+		return getPersistence().getFinderPathCountByG_C_K();
 	}
 
 	/**
@@ -1267,6 +1364,18 @@ public class AssetListEntryUsageUtil {
 	 */
 	public static int countByG_C_K(long groupId, long classNameId, String key) {
 		return getPersistence().countByG_C_K(groupId, classNameId, key);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_K() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_K();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_K() {
+
+		return getPersistence().getFinderPathCountByC_C_K();
 	}
 
 	/**
@@ -1474,6 +1583,18 @@ public class AssetListEntryUsageUtil {
 		return getPersistence().countByC_C_K(companyId, classNameId, key);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCK_CT_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCK_CT_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCK_CT_P() {
+
+		return getPersistence().getFinderPathCountByCK_CT_P();
+	}
+
 	/**
 	 * Returns all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
@@ -1679,6 +1800,18 @@ public class AssetListEntryUsageUtil {
 
 		return getPersistence().countByCK_CT_P(
 			containerKey, containerType, plid);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_C_K_T() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_C_K_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_K_T() {
+
+		return getPersistence().getFinderPathCountByG_C_K_T();
 	}
 
 	/**
@@ -1896,6 +2029,18 @@ public class AssetListEntryUsageUtil {
 		long groupId, long classNameId, String key, int type) {
 
 		return getPersistence().countByG_C_K_T(groupId, classNameId, key, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_C_CK_CT_K_P() {
+
+		return getPersistence().getFinderPathFetchByG_C_CK_CT_K_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_C_CK_CT_K_P() {
+
+		return getPersistence().getFinderPathCountByG_C_CK_CT_K_P();
 	}
 
 	/**

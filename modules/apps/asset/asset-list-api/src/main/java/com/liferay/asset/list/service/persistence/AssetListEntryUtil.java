@@ -119,6 +119,30 @@ public class AssetListEntryUtil {
 		return getPersistence().update(assetListEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the asset list entries where uuid = &#63;.
 	 *
@@ -283,6 +307,18 @@ public class AssetListEntryUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the asset list entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -344,6 +380,18 @@ public class AssetListEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -530,6 +578,18 @@ public class AssetListEntryUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByGroupId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByGroupId() {
+
+		return getPersistence().getFinderPathCountByGroupId();
 	}
 
 	/**
@@ -920,6 +980,18 @@ public class AssetListEntryUtil {
 		return getPersistence().filterCountByGroupId(groupIds);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_ALEK() {
+
+		return getPersistence().getFinderPathFetchByG_ALEK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_ALEK() {
+
+		return getPersistence().getFinderPathCountByG_ALEK();
+	}
+
 	/**
 	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -986,6 +1058,18 @@ public class AssetListEntryUtil {
 	 */
 	public static int countByG_ALEK(long groupId, String assetListEntryKey) {
 		return getPersistence().countByG_ALEK(groupId, assetListEntryKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByG_T() {
+
+		return getPersistence().getFinderPathFetchByG_T();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_T() {
+
+		return getPersistence().getFinderPathCountByG_T();
 	}
 
 	/**
@@ -1480,6 +1564,18 @@ public class AssetListEntryUtil {
 		return getPersistence().filterCountByG_LikeT(groupIds, title);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_TY() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_TY();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_TY() {
+
+		return getPersistence().getFinderPathCountByG_TY();
+	}
+
 	/**
 	 * Returns all the asset list entries where groupId = &#63; and type = &#63;.
 	 *
@@ -1746,6 +1842,18 @@ public class AssetListEntryUtil {
 	 */
 	public static int filterCountByG_TY(long groupId, int type) {
 		return getPersistence().filterCountByG_TY(groupId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_AET() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_AET();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_AET() {
+
+		return getPersistence().getFinderPathCountByG_AET();
 	}
 
 	/**
@@ -2665,6 +2773,18 @@ public class AssetListEntryUtil {
 
 		return getPersistence().filterCountByG_LikeT_AET(
 			groupIds, title, assetEntryTypes);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByG_AES_AET() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByG_AES_AET();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByG_AES_AET() {
+
+		return getPersistence().getFinderPathCountByG_AES_AET();
 	}
 
 	/**

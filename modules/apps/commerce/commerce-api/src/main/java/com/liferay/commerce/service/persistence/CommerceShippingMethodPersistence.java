@@ -16,6 +16,7 @@ package com.liferay.commerce.service.persistence;
 
 import com.liferay.commerce.exception.NoSuchShippingMethodException;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceShippingMethodPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingMethodUtil} to access the commerce shipping method persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the commerce shipping methods where groupId = &#63;.
@@ -183,6 +191,10 @@ public interface CommerceShippingMethodPersistence
 	 * @return the number of matching commerce shipping methods
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_A();
+
+	public FinderPath getFinderPathCountByG_A();
 
 	/**
 	 * Returns all the commerce shipping methods where groupId = &#63; and active = &#63;.
@@ -338,6 +350,10 @@ public interface CommerceShippingMethodPersistence
 	 * @return the number of matching commerce shipping methods
 	 */
 	public int countByG_A(long groupId, boolean active);
+
+	public FinderPath getFinderPathFetchByG_E();
+
+	public FinderPath getFinderPathCountByG_E();
 
 	/**
 	 * Returns the commerce shipping method where groupId = &#63; and engineKey = &#63; or throws a <code>NoSuchShippingMethodException</code> if it could not be found.

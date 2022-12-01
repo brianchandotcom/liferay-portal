@@ -100,9 +100,31 @@ public class JournalArticleLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByArticlePK;
 	private FinderPath _finderPathWithoutPaginationFindByArticlePK;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByArticlePK() {
+		return _finderPathWithoutPaginationFindByArticlePK;
+	}
+
 	private FinderPath _finderPathCountByArticlePK;
+
+	@Override
+	public FinderPath getFinderPathCountByArticlePK() {
+		return _finderPathCountByArticlePK;
+	}
 
 	/**
 	 * Returns all the journal article localizations where articlePK = &#63;.
@@ -627,7 +649,18 @@ public class JournalArticleLocalizationPersistenceImpl
 		"journalArticleLocalization.articlePK = ?";
 
 	private FinderPath _finderPathFetchByC_A;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_A() {
+		return _finderPathFetchByC_A;
+	}
+
 	private FinderPath _finderPathCountByC_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A() {
+		return _finderPathCountByC_A;
+	}
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -885,7 +918,18 @@ public class JournalArticleLocalizationPersistenceImpl
 		"journalArticleLocalization.articlePK = ?";
 
 	private FinderPath _finderPathFetchByA_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByA_L() {
+		return _finderPathFetchByA_L;
+	}
+
 	private FinderPath _finderPathCountByA_L;
+
+	@Override
+	public FinderPath getFinderPathCountByA_L() {
+		return _finderPathCountByA_L;
+	}
 
 	/**
 	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -1157,7 +1201,18 @@ public class JournalArticleLocalizationPersistenceImpl
 		"(journalArticleLocalization.languageId IS NULL OR journalArticleLocalization.languageId = '')";
 
 	private FinderPath _finderPathFetchByC_A_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_A_L() {
+		return _finderPathFetchByC_A_L;
+	}
+
 	private FinderPath _finderPathCountByC_A_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_L() {
+		return _finderPathCountByC_A_L;
+	}
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -1450,7 +1505,18 @@ public class JournalArticleLocalizationPersistenceImpl
 		"(journalArticleLocalization.languageId IS NULL OR journalArticleLocalization.languageId = '')";
 
 	private FinderPath _finderPathFetchByC_A_T_L;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_A_T_L() {
+		return _finderPathFetchByC_A_T_L;
+	}
+
 	private FinderPath _finderPathCountByC_A_T_L;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_T_L() {
+		return _finderPathCountByC_A_T_L;
+	}
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; and title = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.

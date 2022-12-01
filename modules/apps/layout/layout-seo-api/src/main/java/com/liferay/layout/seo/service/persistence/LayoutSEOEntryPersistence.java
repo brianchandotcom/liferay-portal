@@ -16,6 +16,7 @@ package com.liferay.layout.seo.service.persistence;
 
 import com.liferay.layout.seo.exception.NoSuchEntryException;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface LayoutSEOEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSEOEntryUtil} to access the layout seo entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the layout seo entries where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface LayoutSEOEntryPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the layout seo entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface LayoutSEOEntryPersistence
 	 * @return the number of matching layout seo entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the layout seo entries where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface LayoutSEOEntryPersistence
 	 * @return the number of matching layout seo entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathFetchByG_P_L();
+
+	public FinderPath getFinderPathCountByG_P_L();
 
 	/**
 	 * Returns the layout seo entry where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

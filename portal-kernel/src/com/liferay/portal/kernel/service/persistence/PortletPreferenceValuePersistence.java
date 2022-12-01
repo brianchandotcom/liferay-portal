@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferenceValueException;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -41,6 +42,14 @@ public interface PortletPreferenceValuePersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletPreferenceValueUtil} to access the portlet preference value persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByPortletPreferencesId();
+
+	public FinderPath getFinderPathCountByPortletPreferencesId();
 
 	/**
 	 * Returns all the portlet preference values where portletPreferencesId = &#63;.
@@ -185,6 +194,10 @@ public interface PortletPreferenceValuePersistence
 	 * @return the number of matching portlet preference values
 	 */
 	public int countByPortletPreferencesId(long portletPreferencesId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_N();
+
+	public FinderPath getFinderPathCountByP_N();
 
 	/**
 	 * Returns all the portlet preference values where portletPreferencesId = &#63; and name = &#63;.
@@ -342,6 +355,10 @@ public interface PortletPreferenceValuePersistence
 	 */
 	public int countByP_N(long portletPreferencesId, String name);
 
+	public FinderPath getFinderPathFetchByP_I_N();
+
+	public FinderPath getFinderPathCountByP_I_N();
+
 	/**
 	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or throws a <code>NoSuchPortletPreferenceValueException</code> if it could not be found.
 	 *
@@ -400,6 +417,10 @@ public interface PortletPreferenceValuePersistence
 	 * @return the number of matching portlet preference values
 	 */
 	public int countByP_I_N(long portletPreferencesId, int index, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByP_N_SV();
+
+	public FinderPath getFinderPathCountByP_N_SV();
 
 	/**
 	 * Returns all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.

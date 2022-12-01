@@ -119,6 +119,30 @@ public class JSONStorageEntryUtil {
 		return getPersistence().update(jsonStorageEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCN_CPK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCN_CPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCN_CPK() {
+
+		return getPersistence().getFinderPathCountByCN_CPK();
+	}
+
 	/**
 	 * Returns all the json storage entries where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -307,6 +331,19 @@ public class JSONStorageEntryUtil {
 	 */
 	public static int countByCN_CPK(long classNameId, long classPK) {
 		return getPersistence().countByCN_CPK(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_CN_I_T_VL() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_CN_I_T_VL();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_CN_I_T_VL() {
+
+		return getPersistence().getFinderPathCountByC_CN_I_T_VL();
 	}
 
 	/**
@@ -546,6 +583,19 @@ public class JSONStorageEntryUtil {
 
 		return getPersistence().countByC_CN_I_T_VL(
 			companyId, classNameId, index, type, valueLong);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_CN_K_T_VL() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByC_CN_K_T_VL();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_CN_K_T_VL() {
+
+		return getPersistence().getFinderPathCountByC_CN_K_T_VL();
 	}
 
 	/**
@@ -788,6 +838,18 @@ public class JSONStorageEntryUtil {
 
 		return getPersistence().countByC_CN_K_T_VL(
 			companyId, classNameId, key, type, valueLong);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByCN_CPK_P_I_K() {
+
+		return getPersistence().getFinderPathFetchByCN_CPK_P_I_K();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCN_CPK_P_I_K() {
+
+		return getPersistence().getFinderPathCountByCN_CPK_P_I_K();
 	}
 
 	/**

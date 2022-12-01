@@ -16,6 +16,7 @@ package com.liferay.fragment.service.persistence;
 
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface FragmentEntryPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentEntryUtil} to access the fragment entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63;.
@@ -184,6 +192,10 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_Head();
+
+	public FinderPath getFinderPathCountByUuid_Head();
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63; and head = &#63;.
@@ -340,6 +352,10 @@ public interface FragmentEntryPersistence
 	 */
 	public int countByUuid_Head(String uuid, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns all the fragment entries where uuid = &#63; and groupId = &#63;.
 	 *
@@ -495,6 +511,10 @@ public interface FragmentEntryPersistence
 	 */
 	public int countByUUID_G(String uuid, long groupId);
 
+	public FinderPath getFinderPathFetchByUUID_G_Head();
+
+	public FinderPath getFinderPathCountByUUID_G_Head();
+
 	/**
 	 * Returns the fragment entry where uuid = &#63; and groupId = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
@@ -552,6 +572,10 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByUUID_G_Head(String uuid, long groupId, boolean head);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63; and companyId = &#63;.
@@ -707,6 +731,10 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C_Head();
+
+	public FinderPath getFinderPathCountByUuid_C_Head();
 
 	/**
 	 * Returns all the fragment entries where uuid = &#63; and companyId = &#63; and head = &#63;.
@@ -874,6 +902,10 @@ public interface FragmentEntryPersistence
 	 */
 	public int countByUuid_C_Head(String uuid, long companyId, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
+
 	/**
 	 * Returns all the fragment entries where groupId = &#63;.
 	 *
@@ -1016,6 +1048,10 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByGroupId(long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId_Head();
+
+	public FinderPath getFinderPathCountByGroupId_Head();
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and head = &#63;.
@@ -1172,6 +1208,11 @@ public interface FragmentEntryPersistence
 	 */
 	public int countByGroupId_Head(long groupId, boolean head);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFragmentCollectionId();
+
+	public FinderPath getFinderPathCountByFragmentCollectionId();
+
 	/**
 	 * Returns all the fragment entries where fragmentCollectionId = &#63;.
 	 *
@@ -1315,6 +1356,11 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByFragmentCollectionId(long fragmentCollectionId);
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindByFragmentCollectionId_Head();
+
+	public FinderPath getFinderPathCountByFragmentCollectionId_Head();
 
 	/**
 	 * Returns all the fragment entries where fragmentCollectionId = &#63; and head = &#63;.
@@ -1473,6 +1519,10 @@ public interface FragmentEntryPersistence
 	public int countByFragmentCollectionId_Head(
 		long fragmentCollectionId, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByType();
+
+	public FinderPath getFinderPathCountByType();
+
 	/**
 	 * Returns all the fragment entries where type = &#63;.
 	 *
@@ -1615,6 +1665,10 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByType(int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByType_Head();
+
+	public FinderPath getFinderPathCountByType_Head();
 
 	/**
 	 * Returns all the fragment entries where type = &#63; and head = &#63;.
@@ -1771,6 +1825,10 @@ public interface FragmentEntryPersistence
 	 */
 	public int countByType_Head(int type, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI();
+
+	public FinderPath getFinderPathCountByG_FCI();
+
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63;.
 	 *
@@ -1925,6 +1983,10 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByG_FCI(long groupId, long fragmentCollectionId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_Head();
+
+	public FinderPath getFinderPathCountByG_FCI_Head();
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and head = &#63;.
@@ -2098,6 +2160,10 @@ public interface FragmentEntryPersistence
 	public int countByG_FCI_Head(
 		long groupId, long fragmentCollectionId, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FEK();
+
+	public FinderPath getFinderPathCountByG_FEK();
+
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentEntryKey = &#63;.
 	 *
@@ -2252,6 +2318,10 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByG_FEK(long groupId, String fragmentEntryKey);
+
+	public FinderPath getFinderPathFetchByG_FEK_Head();
+
+	public FinderPath getFinderPathCountByG_FEK_Head();
 
 	/**
 	 * Returns the fragment entry where groupId = &#63; and fragmentEntryKey = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -2668,6 +2738,10 @@ public interface FragmentEntryPersistence
 	public int countByG_FCI_LikeN_Head(
 		long groupId, long fragmentCollectionId, String name, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T();
+
+	public FinderPath getFinderPathCountByG_FCI_T();
+
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
 	 *
@@ -2836,6 +2910,10 @@ public interface FragmentEntryPersistence
 	 */
 	public int countByG_FCI_T(
 		long groupId, long fragmentCollectionId, int type);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_Head();
+
+	public FinderPath getFinderPathCountByG_FCI_T_Head();
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and head = &#63;.
@@ -3020,6 +3098,10 @@ public interface FragmentEntryPersistence
 	public int countByG_FCI_T_Head(
 		long groupId, long fragmentCollectionId, int type, boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_S();
+
+	public FinderPath getFinderPathCountByG_FCI_S();
+
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
 	 *
@@ -3189,6 +3271,10 @@ public interface FragmentEntryPersistence
 	 */
 	public int countByG_FCI_S(
 		long groupId, long fragmentCollectionId, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_S_Head();
+
+	public FinderPath getFinderPathCountByG_FCI_S_Head();
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; and head = &#63;.
@@ -3757,6 +3843,10 @@ public interface FragmentEntryPersistence
 		long groupId, long fragmentCollectionId, String name, int status,
 		boolean head);
 
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_S();
+
+	public FinderPath getFinderPathCountByG_FCI_T_S();
+
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
 	 *
@@ -3939,6 +4029,10 @@ public interface FragmentEntryPersistence
 	 */
 	public int countByG_FCI_T_S(
 		long groupId, long fragmentCollectionId, int type, int status);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_FCI_T_S_Head();
+
+	public FinderPath getFinderPathCountByG_FCI_T_S_Head();
 
 	/**
 	 * Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63; and head = &#63;.
@@ -4140,6 +4234,10 @@ public interface FragmentEntryPersistence
 	public int countByG_FCI_T_S_Head(
 		long groupId, long fragmentCollectionId, int type, int status,
 		boolean head);
+
+	public FinderPath getFinderPathFetchByHeadId();
+
+	public FinderPath getFinderPathCountByHeadId();
 
 	/**
 	 * Returns the fragment entry where headId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.

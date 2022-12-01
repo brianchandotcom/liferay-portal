@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.segments.exception.NoSuchExperimentRelException;
@@ -42,6 +43,14 @@ public interface SegmentsExperimentRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsExperimentRelUtil} to access the segments experiment rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperimentId();
+
+	public FinderPath getFinderPathCountBySegmentsExperimentId();
 
 	/**
 	 * Returns all the segments experiment rels where segmentsExperimentId = &#63;.
@@ -187,6 +196,11 @@ public interface SegmentsExperimentRelPersistence
 	 */
 	public int countBySegmentsExperimentId(long segmentsExperimentId);
 
+	public FinderPath
+		getFinderPathWithoutPaginationFindBySegmentsExperienceId();
+
+	public FinderPath getFinderPathCountBySegmentsExperienceId();
+
 	/**
 	 * Returns all the segments experiment rels where segmentsExperienceId = &#63;.
 	 *
@@ -330,6 +344,10 @@ public interface SegmentsExperimentRelPersistence
 	 * @return the number of matching segments experiment rels
 	 */
 	public int countBySegmentsExperienceId(long segmentsExperienceId);
+
+	public FinderPath getFinderPathFetchByS_S();
+
+	public FinderPath getFinderPathCountByS_S();
 
 	/**
 	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchExperimentRelException</code> if it could not be found.

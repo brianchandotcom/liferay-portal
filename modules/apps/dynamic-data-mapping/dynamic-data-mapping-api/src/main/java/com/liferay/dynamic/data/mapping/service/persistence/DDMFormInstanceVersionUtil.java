@@ -124,6 +124,31 @@ public class DDMFormInstanceVersionUtil {
 		return getPersistence().update(ddmFormInstanceVersion, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByFormInstanceId() {
+
+		return getPersistence().
+			getFinderPathWithoutPaginationFindByFormInstanceId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByFormInstanceId() {
+
+		return getPersistence().getFinderPathCountByFormInstanceId();
+	}
+
 	/**
 	 * Returns all the ddm form instance versions where formInstanceId = &#63;.
 	 *
@@ -303,6 +328,18 @@ public class DDMFormInstanceVersionUtil {
 		return getPersistence().countByFormInstanceId(formInstanceId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByF_V() {
+
+		return getPersistence().getFinderPathFetchByF_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_V() {
+
+		return getPersistence().getFinderPathCountByF_V();
+	}
+
 	/**
 	 * Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or throws a <code>NoSuchFormInstanceVersionException</code> if it could not be found.
 	 *
@@ -371,6 +408,18 @@ public class DDMFormInstanceVersionUtil {
 	 */
 	public static int countByF_V(long formInstanceId, String version) {
 		return getPersistence().countByF_V(formInstanceId, version);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByF_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByF_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByF_S() {
+
+		return getPersistence().getFinderPathCountByF_S();
 	}
 
 	/**

@@ -122,6 +122,18 @@ public class NestedSetsTreeEntryUtil {
 		return getPersistence().update(nestedSetsTreeEntry, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
 	/**
 	 * Caches the nested sets tree entry in the entity cache if it is enabled.
 	 *

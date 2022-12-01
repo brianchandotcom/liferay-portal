@@ -16,6 +16,7 @@ package com.liferay.commerce.wish.list.service.persistence;
 
 import com.liferay.commerce.wish.list.exception.NoSuchWishListItemException;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface CommerceWishListItemPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceWishListItemUtil} to access the commerce wish list item persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCommerceWishListId();
+
+	public FinderPath getFinderPathCountByCommerceWishListId();
 
 	/**
 	 * Returns all the commerce wish list items where commerceWishListId = &#63;.
@@ -185,6 +193,10 @@ public interface CommerceWishListItemPersistence
 	 */
 	public int countByCommerceWishListId(long commerceWishListId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCPInstanceUuid();
+
+	public FinderPath getFinderPathCountByCPInstanceUuid();
+
 	/**
 	 * Returns all the commerce wish list items where CPInstanceUuid = &#63;.
 	 *
@@ -329,6 +341,10 @@ public interface CommerceWishListItemPersistence
 	 */
 	public int countByCPInstanceUuid(String CPInstanceUuid);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCProductId();
+
+	public FinderPath getFinderPathCountByCProductId();
+
 	/**
 	 * Returns all the commerce wish list items where CProductId = &#63;.
 	 *
@@ -472,6 +488,10 @@ public interface CommerceWishListItemPersistence
 	 * @return the number of matching commerce wish list items
 	 */
 	public int countByCProductId(long CProductId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByCW_CPI();
+
+	public FinderPath getFinderPathCountByCW_CPI();
 
 	/**
 	 * Returns all the commerce wish list items where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
@@ -629,6 +649,10 @@ public interface CommerceWishListItemPersistence
 	 */
 	public int countByCW_CPI(long commerceWishListId, String CPInstanceUuid);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCW_CP();
+
+	public FinderPath getFinderPathCountByCW_CP();
+
 	/**
 	 * Returns all the commerce wish list items where commerceWishListId = &#63; and CProductId = &#63;.
 	 *
@@ -784,6 +808,10 @@ public interface CommerceWishListItemPersistence
 	 * @return the number of matching commerce wish list items
 	 */
 	public int countByCW_CP(long commerceWishListId, long CProductId);
+
+	public FinderPath getFinderPathFetchByCW_CPI_CP();
+
+	public FinderPath getFinderPathCountByCW_CPI_CP();
 
 	/**
 	 * Returns the commerce wish list item where commerceWishListId = &#63; and CPInstanceUuid = &#63; and CProductId = &#63; or throws a <code>NoSuchWishListItemException</code> if it could not be found.

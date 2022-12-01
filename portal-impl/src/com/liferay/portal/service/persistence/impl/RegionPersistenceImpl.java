@@ -90,9 +90,31 @@ public class RegionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the regions where uuid = &#63;.
@@ -620,7 +642,18 @@ public class RegionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the regions where uuid = &#63; and companyId = &#63;.
@@ -1196,7 +1229,18 @@ public class RegionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCountryId;
 	private FinderPath _finderPathWithoutPaginationFindByCountryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCountryId() {
+		return _finderPathWithoutPaginationFindByCountryId;
+	}
+
 	private FinderPath _finderPathCountByCountryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCountryId() {
+		return _finderPathCountByCountryId;
+	}
 
 	/**
 	 * Returns all the regions where countryId = &#63;.
@@ -1687,7 +1731,18 @@ public class RegionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByActive;
 	private FinderPath _finderPathWithoutPaginationFindByActive;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByActive() {
+		return _finderPathWithoutPaginationFindByActive;
+	}
+
 	private FinderPath _finderPathCountByActive;
+
+	@Override
+	public FinderPath getFinderPathCountByActive() {
+		return _finderPathCountByActive;
+	}
 
 	/**
 	 * Returns all the regions where active = &#63;.
@@ -2175,7 +2230,18 @@ public class RegionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A() {
+		return _finderPathWithoutPaginationFindByC_A;
+	}
+
 	private FinderPath _finderPathCountByC_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A() {
+		return _finderPathCountByC_A;
+	}
 
 	/**
 	 * Returns all the regions where countryId = &#63; and active = &#63;.
@@ -2708,7 +2774,18 @@ public class RegionPersistenceImpl
 		"region.active = ?";
 
 	private FinderPath _finderPathFetchByC_R;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_R() {
+		return _finderPathFetchByC_R;
+	}
+
 	private FinderPath _finderPathCountByC_R;
+
+	@Override
+	public FinderPath getFinderPathCountByC_R() {
+		return _finderPathCountByC_R;
+	}
 
 	/**
 	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.

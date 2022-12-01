@@ -82,8 +82,30 @@ public class RenameFinderColumnEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathFetchByColumnToRename;
+
+	@Override
+	public FinderPath getFinderPathFetchByColumnToRename() {
+		return _finderPathFetchByColumnToRename;
+	}
+
 	private FinderPath _finderPathCountByColumnToRename;
+
+	@Override
+	public FinderPath getFinderPathCountByColumnToRename() {
+		return _finderPathCountByColumnToRename;
+	}
 
 	/**
 	 * Returns the rename finder column entry where columnToRename = &#63; or throws a <code>NoSuchRenameFinderColumnEntryException</code> if it could not be found.

@@ -92,10 +92,34 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByNotificationQueueEntryId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByNotificationQueueEntryId;
+
+	@Override
+	public FinderPath
+		getFinderPathWithoutPaginationFindByNotificationQueueEntryId() {
+
+		return _finderPathWithoutPaginationFindByNotificationQueueEntryId;
+	}
+
 	private FinderPath _finderPathCountByNotificationQueueEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByNotificationQueueEntryId() {
+		return _finderPathCountByNotificationQueueEntryId;
+	}
 
 	/**
 	 * Returns all the notification queue entry attachments where notificationQueueEntryId = &#63;.

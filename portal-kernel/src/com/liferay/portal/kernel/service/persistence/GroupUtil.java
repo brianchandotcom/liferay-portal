@@ -115,6 +115,30 @@ public class GroupUtil {
 		return getPersistence().update(group, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid() {
+
+		return getPersistence().getFinderPathCountByUuid();
+	}
+
 	/**
 	 * Returns all the groups where uuid = &#63;.
 	 *
@@ -276,6 +300,18 @@ public class GroupUtil {
 		return getPersistence().countByUuid(uuid);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByUUID_G() {
+
+		return getPersistence().getFinderPathFetchByUUID_G();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUUID_G() {
+
+		return getPersistence().getFinderPathCountByUUID_G();
+	}
+
 	/**
 	 * Returns the group where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
 	 *
@@ -337,6 +373,18 @@ public class GroupUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByUuid_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByUuid_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByUuid_C() {
+
+		return getPersistence().getFinderPathCountByUuid_C();
 	}
 
 	/**
@@ -522,6 +570,18 @@ public class GroupUtil {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByCompanyId() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByCompanyId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByCompanyId() {
+
+		return getPersistence().getFinderPathCountByCompanyId();
+	}
+
 	/**
 	 * Returns all the groups where companyId = &#63;.
 	 *
@@ -690,6 +750,18 @@ public class GroupUtil {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByLiveGroupId() {
+
+		return getPersistence().getFinderPathFetchByLiveGroupId();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByLiveGroupId() {
+
+		return getPersistence().getFinderPathCountByLiveGroupId();
+	}
+
 	/**
 	 * Returns the group where liveGroupId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
 	 *
@@ -746,6 +818,18 @@ public class GroupUtil {
 	 */
 	public static int countByLiveGroupId(long liveGroupId) {
 		return getPersistence().countByLiveGroupId(liveGroupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C() {
+
+		return getPersistence().getFinderPathCountByC_C();
 	}
 
 	/**
@@ -932,6 +1016,18 @@ public class GroupUtil {
 		return getPersistence().countByC_C(companyId, classNameId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_P() {
+
+		return getPersistence().getFinderPathCountByC_P();
+	}
+
 	/**
 	 * Returns all the groups where companyId = &#63; and parentGroupId = &#63;.
 	 *
@@ -1116,6 +1212,24 @@ public class GroupUtil {
 		return getPersistence().countByC_P(companyId, parentGroupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_GK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_GK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_GK() {
+
+		return getPersistence().getFinderPathFetchByC_GK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_GK() {
+
+		return getPersistence().getFinderPathCountByC_GK();
+	}
+
 	/**
 	 * Returns all the groups where companyId = &#63; and groupKey = any &#63;.
 	 *
@@ -1271,6 +1385,18 @@ public class GroupUtil {
 		return getPersistence().countByC_GK(companyId, groupKeys);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_F() {
+
+		return getPersistence().getFinderPathFetchByC_F();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_F() {
+
+		return getPersistence().getFinderPathCountByC_F();
+	}
+
 	/**
 	 * Returns the group where companyId = &#63; and friendlyURL = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
 	 *
@@ -1333,6 +1459,18 @@ public class GroupUtil {
 	 */
 	public static int countByC_F(long companyId, String friendlyURL) {
 		return getPersistence().countByC_F(companyId, friendlyURL);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_S() {
+
+		return getPersistence().getFinderPathCountByC_S();
 	}
 
 	/**
@@ -1518,6 +1656,18 @@ public class GroupUtil {
 		return getPersistence().countByC_S(companyId, site);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A() {
+
+		return getPersistence().getFinderPathCountByC_A();
+	}
+
 	/**
 	 * Returns all the groups where companyId = &#63; and active = &#63;.
 	 *
@@ -1699,6 +1849,18 @@ public class GroupUtil {
 	 */
 	public static int countByC_A(long companyId, boolean active) {
 		return getPersistence().countByC_A(companyId, active);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_CPK() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_CPK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_CPK() {
+
+		return getPersistence().getFinderPathCountByC_CPK();
 	}
 
 	/**
@@ -1883,6 +2045,18 @@ public class GroupUtil {
 	 */
 	public static int countByC_CPK(long classNameId, long classPK) {
 		return getPersistence().countByC_CPK(classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByT_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByT_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByT_A() {
+
+		return getPersistence().getFinderPathCountByT_A();
 	}
 
 	/**
@@ -2249,6 +2423,18 @@ public class GroupUtil {
 			groupId, companyId, parentGroupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_C_C() {
+
+		return getPersistence().getFinderPathFetchByC_C_C();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_C() {
+
+		return getPersistence().getFinderPathCountByC_C_C();
+	}
+
 	/**
 	 * Returns the group where companyId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
 	 *
@@ -2323,6 +2509,18 @@ public class GroupUtil {
 		long companyId, long classNameId, long classPK) {
 
 		return getPersistence().countByC_C_C(companyId, classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_P() {
+
+		return getPersistence().getFinderPathCountByC_C_P();
 	}
 
 	/**
@@ -2532,6 +2730,18 @@ public class GroupUtil {
 			companyId, classNameId, parentGroupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_C_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_C_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_S() {
+
+		return getPersistence().getFinderPathCountByC_C_S();
+	}
+
 	/**
 	 * Returns all the groups where companyId = &#63; and classNameId = &#63; and site = &#63;.
 	 *
@@ -2734,6 +2944,18 @@ public class GroupUtil {
 		return getPersistence().countByC_C_S(companyId, classNameId, site);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_P_S() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_P_S();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_P_S() {
+
+		return getPersistence().getFinderPathCountByC_P_S();
+	}
+
 	/**
 	 * Returns all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
 	 *
@@ -2934,6 +3156,18 @@ public class GroupUtil {
 		long companyId, long parentGroupId, boolean site) {
 
 		return getPersistence().countByC_P_S(companyId, parentGroupId, site);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_L_GK() {
+
+		return getPersistence().getFinderPathFetchByC_L_GK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_L_GK() {
+
+		return getPersistence().getFinderPathCountByC_L_GK();
 	}
 
 	/**
@@ -3415,6 +3649,18 @@ public class GroupUtil {
 		long companyId, String name, boolean site) {
 
 		return getPersistence().countByC_LikeN_S(companyId, name, site);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_S_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_S_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_S_A() {
+
+		return getPersistence().getFinderPathCountByC_S_A();
 	}
 
 	/**
@@ -4015,6 +4261,18 @@ public class GroupUtil {
 			groupId, companyId, parentGroupId, site);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_C_L_GK() {
+
+		return getPersistence().getFinderPathFetchByC_C_L_GK();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_C_L_GK() {
+
+		return getPersistence().getFinderPathCountByC_C_L_GK();
+	}
+
 	/**
 	 * Returns the group where companyId = &#63; and classNameId = &#63; and liveGroupId = &#63; and groupKey = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
 	 *
@@ -4317,6 +4575,18 @@ public class GroupUtil {
 
 		return getPersistence().countByC_P_LikeN_S(
 			companyId, parentGroupId, name, site);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_P_S_I() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_P_S_I();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_P_S_I() {
+
+		return getPersistence().getFinderPathCountByC_P_S_I();
 	}
 
 	/**

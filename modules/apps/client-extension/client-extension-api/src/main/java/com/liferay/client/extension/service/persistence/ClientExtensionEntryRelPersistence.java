@@ -16,6 +16,7 @@ package com.liferay.client.extension.service.persistence;
 
 import com.liferay.client.extension.exception.NoSuchClientExtensionEntryRelException;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -42,6 +43,13 @@ public interface ClientExtensionEntryRelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ClientExtensionEntryRelUtil} to access the client extension entry rel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the client extension entry rels where uuid = &#63;.
@@ -186,6 +194,10 @@ public interface ClientExtensionEntryRelPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the client extension entry rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchClientExtensionEntryRelException</code> if it could not be found.
 	 *
@@ -235,6 +247,10 @@ public interface ClientExtensionEntryRelPersistence
 	 * @return the number of matching client extension entry rels
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the client extension entry rels where uuid = &#63; and companyId = &#63;.
@@ -390,6 +406,10 @@ public interface ClientExtensionEntryRelPersistence
 	 * @return the number of matching client extension entry rels
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_CETERC();
+
+	public FinderPath getFinderPathCountByC_CETERC();
 
 	/**
 	 * Returns all the client extension entry rels where companyId = &#63; and cetExternalReferenceCode = &#63;.
@@ -548,6 +568,10 @@ public interface ClientExtensionEntryRelPersistence
 	 */
 	public int countByC_CETERC(long companyId, String cetExternalReferenceCode);
 
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
+
 	/**
 	 * Returns all the client extension entry rels where classNameId = &#63; and classPK = &#63;.
 	 *
@@ -702,6 +726,10 @@ public interface ClientExtensionEntryRelPersistence
 	 * @return the number of matching client extension entry rels
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C_T();
+
+	public FinderPath getFinderPathCountByC_C_T();
 
 	/**
 	 * Returns all the client extension entry rels where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -869,6 +897,10 @@ public interface ClientExtensionEntryRelPersistence
 	 * @return the number of matching client extension entry rels
 	 */
 	public int countByC_C_T(long classNameId, long classPK, String type);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the client extension entry rel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchClientExtensionEntryRelException</code> if it could not be found.

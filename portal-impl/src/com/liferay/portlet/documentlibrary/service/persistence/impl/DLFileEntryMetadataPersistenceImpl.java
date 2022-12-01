@@ -93,9 +93,31 @@ public class DLFileEntryMetadataPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the document library file entry metadatas where uuid = &#63;.
@@ -650,7 +672,18 @@ public class DLFileEntryMetadataPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
@@ -1250,7 +1283,18 @@ public class DLFileEntryMetadataPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFileEntryId() {
+		return _finderPathWithoutPaginationFindByFileEntryId;
+	}
+
 	private FinderPath _finderPathCountByFileEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByFileEntryId() {
+		return _finderPathCountByFileEntryId;
+	}
 
 	/**
 	 * Returns all the document library file entry metadatas where fileEntryId = &#63;.
@@ -1773,7 +1817,18 @@ public class DLFileEntryMetadataPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByFileVersionId;
 	private FinderPath _finderPathWithoutPaginationFindByFileVersionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByFileVersionId() {
+		return _finderPathWithoutPaginationFindByFileVersionId;
+	}
+
 	private FinderPath _finderPathCountByFileVersionId;
+
+	@Override
+	public FinderPath getFinderPathCountByFileVersionId() {
+		return _finderPathCountByFileVersionId;
+	}
 
 	/**
 	 * Returns all the document library file entry metadatas where fileVersionId = &#63;.
@@ -2298,7 +2353,18 @@ public class DLFileEntryMetadataPersistenceImpl
 		"dlFileEntryMetadata.fileVersionId = ?";
 
 	private FinderPath _finderPathFetchByD_F;
+
+	@Override
+	public FinderPath getFinderPathFetchByD_F() {
+		return _finderPathFetchByD_F;
+	}
+
 	private FinderPath _finderPathCountByD_F;
+
+	@Override
+	public FinderPath getFinderPathCountByD_F() {
+		return _finderPathCountByD_F;
+	}
 
 	/**
 	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or throws a <code>NoSuchFileEntryMetadataException</code> if it could not be found.

@@ -99,9 +99,31 @@ public class ObjectStatePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid() {
+		return _finderPathWithoutPaginationFindByUuid;
+	}
+
 	private FinderPath _finderPathCountByUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid() {
+		return _finderPathCountByUuid;
+	}
 
 	/**
 	 * Returns all the object states where uuid = &#63;.
@@ -630,7 +652,18 @@ public class ObjectStatePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C() {
+		return _finderPathWithoutPaginationFindByUuid_C;
+	}
+
 	private FinderPath _finderPathCountByUuid_C;
+
+	@Override
+	public FinderPath getFinderPathCountByUuid_C() {
+		return _finderPathCountByUuid_C;
+	}
 
 	/**
 	 * Returns all the object states where uuid = &#63; and companyId = &#63;.
@@ -1209,7 +1242,18 @@ public class ObjectStatePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByListTypeEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByListTypeEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByListTypeEntryId() {
+		return _finderPathWithoutPaginationFindByListTypeEntryId;
+	}
+
 	private FinderPath _finderPathCountByListTypeEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByListTypeEntryId() {
+		return _finderPathCountByListTypeEntryId;
+	}
 
 	/**
 	 * Returns all the object states where listTypeEntryId = &#63;.
@@ -1713,7 +1757,18 @@ public class ObjectStatePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByObjectStateFlowId;
 	private FinderPath _finderPathWithoutPaginationFindByObjectStateFlowId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByObjectStateFlowId() {
+		return _finderPathWithoutPaginationFindByObjectStateFlowId;
+	}
+
 	private FinderPath _finderPathCountByObjectStateFlowId;
+
+	@Override
+	public FinderPath getFinderPathCountByObjectStateFlowId() {
+		return _finderPathCountByObjectStateFlowId;
+	}
 
 	/**
 	 * Returns all the object states where objectStateFlowId = &#63;.
@@ -2220,7 +2275,18 @@ public class ObjectStatePersistenceImpl
 			"objectState.objectStateFlowId = ?";
 
 	private FinderPath _finderPathFetchByLTEI_OSFI;
+
+	@Override
+	public FinderPath getFinderPathFetchByLTEI_OSFI() {
+		return _finderPathFetchByLTEI_OSFI;
+	}
+
 	private FinderPath _finderPathCountByLTEI_OSFI;
+
+	@Override
+	public FinderPath getFinderPathCountByLTEI_OSFI() {
+		return _finderPathCountByLTEI_OSFI;
+	}
 
 	/**
 	 * Returns the object state where listTypeEntryId = &#63; and objectStateFlowId = &#63; or throws a <code>NoSuchObjectStateException</code> if it could not be found.

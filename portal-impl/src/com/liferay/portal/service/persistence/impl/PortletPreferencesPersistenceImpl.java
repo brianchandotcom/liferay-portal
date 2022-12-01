@@ -91,9 +91,31 @@ public class PortletPreferencesPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByOwnerId;
 	private FinderPath _finderPathWithoutPaginationFindByOwnerId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByOwnerId() {
+		return _finderPathWithoutPaginationFindByOwnerId;
+	}
+
 	private FinderPath _finderPathCountByOwnerId;
+
+	@Override
+	public FinderPath getFinderPathCountByOwnerId() {
+		return _finderPathCountByOwnerId;
+	}
 
 	/**
 	 * Returns all the portlet preferenceses where ownerId = &#63;.
@@ -608,7 +630,18 @@ public class PortletPreferencesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByPlid;
 	private FinderPath _finderPathWithoutPaginationFindByPlid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByPlid() {
+		return _finderPathWithoutPaginationFindByPlid;
+	}
+
 	private FinderPath _finderPathCountByPlid;
+
+	@Override
+	public FinderPath getFinderPathCountByPlid() {
+		return _finderPathCountByPlid;
+	}
 
 	/**
 	 * Returns all the portlet preferenceses where plid = &#63;.
@@ -1117,7 +1150,18 @@ public class PortletPreferencesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByPortletId;
 	private FinderPath _finderPathWithoutPaginationFindByPortletId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByPortletId() {
+		return _finderPathWithoutPaginationFindByPortletId;
+	}
+
 	private FinderPath _finderPathCountByPortletId;
+
+	@Override
+	public FinderPath getFinderPathCountByPortletId() {
+		return _finderPathCountByPortletId;
+	}
 
 	/**
 	 * Returns all the portlet preferenceses where portletId = &#63;.
@@ -1681,7 +1725,18 @@ public class PortletPreferencesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByO_P;
 	private FinderPath _finderPathWithoutPaginationFindByO_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByO_P() {
+		return _finderPathWithoutPaginationFindByO_P;
+	}
+
 	private FinderPath _finderPathCountByO_P;
+
+	@Override
+	public FinderPath getFinderPathCountByO_P() {
+		return _finderPathCountByO_P;
+	}
 
 	/**
 	 * Returns all the portlet preferenceses where ownerType = &#63; and portletId = &#63;.
@@ -2281,7 +2336,18 @@ public class PortletPreferencesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByP_P;
 	private FinderPath _finderPathWithoutPaginationFindByP_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByP_P() {
+		return _finderPathWithoutPaginationFindByP_P;
+	}
+
 	private FinderPath _finderPathCountByP_P;
+
+	@Override
+	public FinderPath getFinderPathCountByP_P() {
+		return _finderPathCountByP_P;
+	}
 
 	/**
 	 * Returns all the portlet preferenceses where plid = &#63; and portletId = &#63;.
@@ -2880,7 +2946,18 @@ public class PortletPreferencesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByO_O_P;
 	private FinderPath _finderPathWithoutPaginationFindByO_O_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByO_O_P() {
+		return _finderPathWithoutPaginationFindByO_O_P;
+	}
+
 	private FinderPath _finderPathCountByO_O_P;
+
+	@Override
+	public FinderPath getFinderPathCountByO_O_P() {
+		return _finderPathCountByO_O_P;
+	}
 
 	/**
 	 * Returns all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
@@ -3474,7 +3551,18 @@ public class PortletPreferencesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByO_O_PI;
 	private FinderPath _finderPathWithoutPaginationFindByO_O_PI;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByO_O_PI() {
+		return _finderPathWithoutPaginationFindByO_O_PI;
+	}
+
 	private FinderPath _finderPathCountByO_O_PI;
+
+	@Override
+	public FinderPath getFinderPathCountByO_O_PI() {
+		return _finderPathCountByO_O_PI;
+	}
 
 	/**
 	 * Returns all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
@@ -4111,7 +4199,18 @@ public class PortletPreferencesPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByO_P_P;
 	private FinderPath _finderPathWithoutPaginationFindByO_P_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByO_P_P() {
+		return _finderPathWithoutPaginationFindByO_P_P;
+	}
+
 	private FinderPath _finderPathCountByO_P_P;
+
+	@Override
+	public FinderPath getFinderPathCountByO_P_P() {
+		return _finderPathCountByO_P_P;
+	}
 
 	/**
 	 * Returns all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -5422,7 +5521,18 @@ public class PortletPreferencesPersistenceImpl
 		"(portletPreferences.portletId IS NULL OR portletPreferences.portletId LIKE '')";
 
 	private FinderPath _finderPathFetchByO_O_P_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByO_O_P_P() {
+		return _finderPathFetchByO_O_P_P;
+	}
+
 	private FinderPath _finderPathCountByO_O_P_P;
+
+	@Override
+	public FinderPath getFinderPathCountByO_O_P_P() {
+		return _finderPathCountByO_O_P_P;
+	}
 
 	/**
 	 * Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or throws a <code>NoSuchPortletPreferencesException</code> if it could not be found.

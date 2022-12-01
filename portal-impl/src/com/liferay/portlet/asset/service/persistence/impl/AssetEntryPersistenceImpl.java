@@ -102,9 +102,31 @@ public class AssetEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId() {
+		return _finderPathWithoutPaginationFindByGroupId;
+	}
+
 	private FinderPath _finderPathCountByGroupId;
+
+	@Override
+	public FinderPath getFinderPathCountByGroupId() {
+		return _finderPathCountByGroupId;
+	}
 
 	/**
 	 * Returns all the asset entries where groupId = &#63;.
@@ -610,7 +632,18 @@ public class AssetEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the asset entries where companyId = &#63;.
@@ -1122,7 +1155,18 @@ public class AssetEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByVisible;
 	private FinderPath _finderPathWithoutPaginationFindByVisible;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByVisible() {
+		return _finderPathWithoutPaginationFindByVisible;
+	}
+
 	private FinderPath _finderPathCountByVisible;
+
+	@Override
+	public FinderPath getFinderPathCountByVisible() {
+		return _finderPathCountByVisible;
+	}
 
 	/**
 	 * Returns all the asset entries where visible = &#63;.
@@ -1628,7 +1672,18 @@ public class AssetEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByPublishDate;
 	private FinderPath _finderPathWithoutPaginationFindByPublishDate;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByPublishDate() {
+		return _finderPathWithoutPaginationFindByPublishDate;
+	}
+
 	private FinderPath _finderPathCountByPublishDate;
+
+	@Override
+	public FinderPath getFinderPathCountByPublishDate() {
+		return _finderPathCountByPublishDate;
+	}
 
 	/**
 	 * Returns all the asset entries where publishDate = &#63;.
@@ -2179,7 +2234,18 @@ public class AssetEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByExpirationDate;
 	private FinderPath _finderPathWithoutPaginationFindByExpirationDate;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByExpirationDate() {
+		return _finderPathWithoutPaginationFindByExpirationDate;
+	}
+
 	private FinderPath _finderPathCountByExpirationDate;
+
+	@Override
+	public FinderPath getFinderPathCountByExpirationDate() {
+		return _finderPathCountByExpirationDate;
+	}
 
 	/**
 	 * Returns all the asset entries where expirationDate = &#63;.
@@ -2733,7 +2799,18 @@ public class AssetEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByLayoutUuid;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutUuid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutUuid() {
+		return _finderPathWithoutPaginationFindByLayoutUuid;
+	}
+
 	private FinderPath _finderPathCountByLayoutUuid;
+
+	@Override
+	public FinderPath getFinderPathCountByLayoutUuid() {
+		return _finderPathCountByLayoutUuid;
+	}
 
 	/**
 	 * Returns all the asset entries where layoutUuid = &#63;.
@@ -3287,7 +3364,18 @@ public class AssetEntryPersistenceImpl
 		"(assetEntry.layoutUuid IS NULL OR assetEntry.layoutUuid = '')";
 
 	private FinderPath _finderPathFetchByG_CU;
+
+	@Override
+	public FinderPath getFinderPathFetchByG_CU() {
+		return _finderPathFetchByG_CU;
+	}
+
 	private FinderPath _finderPathCountByG_CU;
+
+	@Override
+	public FinderPath getFinderPathCountByG_CU() {
+		return _finderPathCountByG_CU;
+	}
 
 	/**
 	 * Returns the asset entry where groupId = &#63; and classUuid = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -3566,7 +3654,18 @@ public class AssetEntryPersistenceImpl
 		"(assetEntry.classUuid IS NULL OR assetEntry.classUuid = '')";
 
 	private FinderPath _finderPathFetchByC_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByC_C() {
+		return _finderPathFetchByC_C;
+	}
+
 	private FinderPath _finderPathCountByC_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_C() {
+		return _finderPathCountByC_C;
+	}
 
 	/**
 	 * Returns the asset entry where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -3802,7 +3901,18 @@ public class AssetEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_V;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_V;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_V() {
+		return _finderPathWithoutPaginationFindByG_C_V;
+	}
+
 	private FinderPath _finderPathCountByG_C_V;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_V() {
+		return _finderPathCountByG_C_V;
+	}
 
 	/**
 	 * Returns all the asset entries where groupId = &#63; and classNameId = &#63; and visible = &#63;.
@@ -4393,7 +4503,18 @@ public class AssetEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_C_P_E;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_P_E;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByG_C_P_E() {
+		return _finderPathWithoutPaginationFindByG_C_P_E;
+	}
+
 	private FinderPath _finderPathCountByG_C_P_E;
+
+	@Override
+	public FinderPath getFinderPathCountByG_C_P_E() {
+		return _finderPathCountByG_C_P_E;
+	}
 
 	/**
 	 * Returns all the asset entries where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.

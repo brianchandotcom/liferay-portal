@@ -92,9 +92,31 @@ public class CTCommentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCtCollectionId() {
+		return _finderPathWithoutPaginationFindByCtCollectionId;
+	}
+
 	private FinderPath _finderPathCountByCtCollectionId;
+
+	@Override
+	public FinderPath getFinderPathCountByCtCollectionId() {
+		return _finderPathCountByCtCollectionId;
+	}
 
 	/**
 	 * Returns all the ct comments where ctCollectionId = &#63;.
@@ -592,7 +614,18 @@ public class CTCommentPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByCtEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByCtEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCtEntryId() {
+		return _finderPathWithoutPaginationFindByCtEntryId;
+	}
+
 	private FinderPath _finderPathCountByCtEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByCtEntryId() {
+		return _finderPathCountByCtEntryId;
+	}
 
 	/**
 	 * Returns all the ct comments where ctEntryId = &#63;.

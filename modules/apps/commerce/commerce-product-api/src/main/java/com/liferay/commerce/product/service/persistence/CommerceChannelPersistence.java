@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.persistence;
 
 import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface CommerceChannelPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceChannelUtil} to access the commerce channel persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the commerce channels where uuid = &#63;.
@@ -248,6 +256,10 @@ public interface CommerceChannelPersistence
 	 * @return the number of matching commerce channels that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the commerce channels where uuid = &#63; and companyId = &#63;.
@@ -474,6 +486,10 @@ public interface CommerceChannelPersistence
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the commerce channels where companyId = &#63;.
 	 *
@@ -682,6 +698,10 @@ public interface CommerceChannelPersistence
 	 */
 	public int filterCountByCompanyId(long companyId);
 
+	public FinderPath getFinderPathFetchBySiteGroupId();
+
+	public FinderPath getFinderPathCountBySiteGroupId();
+
 	/**
 	 * Returns the commerce channel where siteGroupId = &#63; or throws a <code>NoSuchChannelException</code> if it could not be found.
 	 *
@@ -726,6 +746,10 @@ public interface CommerceChannelPersistence
 	 * @return the number of matching commerce channels
 	 */
 	public int countBySiteGroupId(long siteGroupId);
+
+	public FinderPath getFinderPathFetchByERC_C();
+
+	public FinderPath getFinderPathCountByERC_C();
 
 	/**
 	 * Returns the commerce channel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchChannelException</code> if it could not be found.

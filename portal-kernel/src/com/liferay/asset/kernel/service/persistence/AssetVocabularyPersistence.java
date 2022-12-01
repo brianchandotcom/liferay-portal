@@ -16,6 +16,7 @@ package com.liferay.asset.kernel.service.persistence;
 
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -41,6 +42,13 @@ public interface AssetVocabularyPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetVocabularyUtil} to access the asset vocabulary persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid();
+
+	public FinderPath getFinderPathCountByUuid();
 
 	/**
 	 * Returns all the asset vocabularies where uuid = &#63;.
@@ -185,6 +193,10 @@ public interface AssetVocabularyPersistence
 	 */
 	public int countByUuid(String uuid);
 
+	public FinderPath getFinderPathFetchByUUID_G();
+
+	public FinderPath getFinderPathCountByUUID_G();
+
 	/**
 	 * Returns the asset vocabulary where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchVocabularyException</code> if it could not be found.
 	 *
@@ -234,6 +246,10 @@ public interface AssetVocabularyPersistence
 	 * @return the number of matching asset vocabularies
 	 */
 	public int countByUUID_G(String uuid, long groupId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByUuid_C();
+
+	public FinderPath getFinderPathCountByUuid_C();
 
 	/**
 	 * Returns all the asset vocabularies where uuid = &#63; and companyId = &#63;.
@@ -389,6 +405,10 @@ public interface AssetVocabularyPersistence
 	 * @return the number of matching asset vocabularies
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the asset vocabularies where groupId = &#63;.
@@ -719,6 +739,10 @@ public interface AssetVocabularyPersistence
 	 */
 	public int filterCountByGroupId(long[] groupIds);
 
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
+
 	/**
 	 * Returns all the asset vocabularies where companyId = &#63;.
 	 *
@@ -861,6 +885,10 @@ public interface AssetVocabularyPersistence
 	 * @return the number of matching asset vocabularies
 	 */
 	public int countByCompanyId(long companyId);
+
+	public FinderPath getFinderPathFetchByG_N();
+
+	public FinderPath getFinderPathCountByG_N();
 
 	/**
 	 * Returns the asset vocabulary where groupId = &#63; and name = &#63; or throws a <code>NoSuchVocabularyException</code> if it could not be found.
@@ -1136,6 +1164,10 @@ public interface AssetVocabularyPersistence
 	 * @return the number of matching asset vocabularies that the user has permission to view
 	 */
 	public int filterCountByG_LikeN(long groupId, String name);
+
+	public FinderPath getFinderPathWithoutPaginationFindByG_V();
+
+	public FinderPath getFinderPathCountByG_V();
 
 	/**
 	 * Returns all the asset vocabularies where groupId = &#63; and visibilityType = &#63;.
@@ -1494,6 +1526,10 @@ public interface AssetVocabularyPersistence
 	 * @return the number of matching asset vocabularies that the user has permission to view
 	 */
 	public int filterCountByG_V(long[] groupIds, int[] visibilityTypes);
+
+	public FinderPath getFinderPathFetchByERC_G();
+
+	public FinderPath getFinderPathCountByERC_G();
 
 	/**
 	 * Returns the asset vocabulary where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchVocabularyException</code> if it could not be found.

@@ -94,9 +94,31 @@ public class AccountRolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId() {
+		return _finderPathWithoutPaginationFindByCompanyId;
+	}
+
 	private FinderPath _finderPathCountByCompanyId;
+
+	@Override
+	public FinderPath getFinderPathCountByCompanyId() {
+		return _finderPathCountByCompanyId;
+	}
 
 	/**
 	 * Returns all the account roles where companyId = &#63;.
@@ -968,7 +990,19 @@ public class AccountRolePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByAccountEntryId() {
+		return _finderPathWithoutPaginationFindByAccountEntryId;
+	}
+
 	private FinderPath _finderPathCountByAccountEntryId;
+
+	@Override
+	public FinderPath getFinderPathCountByAccountEntryId() {
+		return _finderPathCountByAccountEntryId;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByAccountEntryId;
 
 	/**
@@ -2302,7 +2336,18 @@ public class AccountRolePersistenceImpl
 		"accountRole.accountEntryId IN (";
 
 	private FinderPath _finderPathFetchByRoleId;
+
+	@Override
+	public FinderPath getFinderPathFetchByRoleId() {
+		return _finderPathFetchByRoleId;
+	}
+
 	private FinderPath _finderPathCountByRoleId;
+
+	@Override
+	public FinderPath getFinderPathCountByRoleId() {
+		return _finderPathCountByRoleId;
+	}
 
 	/**
 	 * Returns the account role where roleId = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
@@ -2510,7 +2555,19 @@ public class AccountRolePersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A() {
+		return _finderPathWithoutPaginationFindByC_A;
+	}
+
 	private FinderPath _finderPathCountByC_A;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A() {
+		return _finderPathCountByC_A;
+	}
+
 	private FinderPath _finderPathWithPaginationCountByC_A;
 
 	/**

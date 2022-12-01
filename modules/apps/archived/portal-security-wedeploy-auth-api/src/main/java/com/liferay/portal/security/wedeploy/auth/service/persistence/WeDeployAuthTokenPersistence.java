@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.wedeploy.auth.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.security.wedeploy.auth.exception.NoSuchTokenException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
@@ -40,6 +41,13 @@ public interface WeDeployAuthTokenPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthTokenUtil} to access the we deploy auth token persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathFetchByT_T();
+
+	public FinderPath getFinderPathCountByT_T();
 
 	/**
 	 * Returns the we deploy auth token where token = &#63; and type = &#63; or throws a <code>NoSuchTokenException</code> if it could not be found.
@@ -90,6 +98,10 @@ public interface WeDeployAuthTokenPersistence
 	 * @return the number of matching we deploy auth tokens
 	 */
 	public int countByT_T(String token, int type);
+
+	public FinderPath getFinderPathFetchByCI_T_T();
+
+	public FinderPath getFinderPathCountByCI_T_T();
 
 	/**
 	 * Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or throws a <code>NoSuchTokenException</code> if it could not be found.

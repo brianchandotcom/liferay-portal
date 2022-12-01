@@ -86,9 +86,31 @@ public class LayoutRevisionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByLayoutSetBranchId;
 	private FinderPath _finderPathWithoutPaginationFindByLayoutSetBranchId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByLayoutSetBranchId() {
+		return _finderPathWithoutPaginationFindByLayoutSetBranchId;
+	}
+
 	private FinderPath _finderPathCountByLayoutSetBranchId;
+
+	@Override
+	public FinderPath getFinderPathCountByLayoutSetBranchId() {
+		return _finderPathCountByLayoutSetBranchId;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63;.
@@ -600,7 +622,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByPlid;
 	private FinderPath _finderPathWithoutPaginationFindByPlid;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByPlid() {
+		return _finderPathWithoutPaginationFindByPlid;
+	}
+
 	private FinderPath _finderPathCountByPlid;
+
+	@Override
+	public FinderPath getFinderPathCountByPlid() {
+		return _finderPathCountByPlid;
+	}
 
 	/**
 	 * Returns all the layout revisions where plid = &#63;.
@@ -1091,7 +1124,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByStatus;
 	private FinderPath _finderPathWithoutPaginationFindByStatus;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByStatus() {
+		return _finderPathWithoutPaginationFindByStatus;
+	}
+
 	private FinderPath _finderPathCountByStatus;
+
+	@Override
+	public FinderPath getFinderPathCountByStatus() {
+		return _finderPathCountByStatus;
+	}
 
 	/**
 	 * Returns all the layout revisions where status = &#63;.
@@ -1584,7 +1628,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_H;
 	private FinderPath _finderPathWithoutPaginationFindByL_H;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_H() {
+		return _finderPathWithoutPaginationFindByL_H;
+	}
+
 	private FinderPath _finderPathCountByL_H;
+
+	@Override
+	public FinderPath getFinderPathCountByL_H() {
+		return _finderPathCountByL_H;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
@@ -2129,7 +2184,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_P;
 	private FinderPath _finderPathWithoutPaginationFindByL_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_P() {
+		return _finderPathWithoutPaginationFindByL_P;
+	}
+
 	private FinderPath _finderPathCountByL_P;
+
+	@Override
+	public FinderPath getFinderPathCountByL_P() {
+		return _finderPathCountByL_P;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
@@ -2672,7 +2738,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_S;
 	private FinderPath _finderPathWithoutPaginationFindByL_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_S() {
+		return _finderPathWithoutPaginationFindByL_S;
+	}
+
 	private FinderPath _finderPathCountByL_S;
+
+	@Override
+	public FinderPath getFinderPathCountByL_S() {
+		return _finderPathCountByL_S;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
@@ -3215,7 +3292,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByH_P;
 	private FinderPath _finderPathWithoutPaginationFindByH_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByH_P() {
+		return _finderPathWithoutPaginationFindByH_P;
+	}
+
 	private FinderPath _finderPathCountByH_P;
+
+	@Override
+	public FinderPath getFinderPathCountByH_P() {
+		return _finderPathCountByH_P;
+	}
 
 	/**
 	 * Returns all the layout revisions where head = &#63; and plid = &#63;.
@@ -4275,7 +4363,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_L_P;
 	private FinderPath _finderPathWithoutPaginationFindByL_L_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_L_P() {
+		return _finderPathWithoutPaginationFindByL_L_P;
+	}
+
 	private FinderPath _finderPathCountByL_L_P;
+
+	@Override
+	public FinderPath getFinderPathCountByL_L_P() {
+		return _finderPathCountByL_L_P;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
@@ -4867,7 +4966,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_P_P;
 	private FinderPath _finderPathWithoutPaginationFindByL_P_P;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_P_P() {
+		return _finderPathWithoutPaginationFindByL_P_P;
+	}
+
 	private FinderPath _finderPathCountByL_P_P;
+
+	@Override
+	public FinderPath getFinderPathCountByL_P_P() {
+		return _finderPathCountByL_P_P;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
@@ -5462,7 +5572,18 @@ public class LayoutRevisionPersistenceImpl
 		"layoutRevision.plid = ?";
 
 	private FinderPath _finderPathFetchByL_H_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByL_H_P() {
+		return _finderPathFetchByL_H_P;
+	}
+
 	private FinderPath _finderPathCountByL_H_P;
+
+	@Override
+	public FinderPath getFinderPathCountByL_H_P() {
+		return _finderPathCountByL_H_P;
+	}
 
 	/**
 	 * Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or throws a <code>NoSuchLayoutRevisionException</code> if it could not be found.
@@ -5727,7 +5848,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_H_P_Collection;
 	private FinderPath _finderPathWithoutPaginationFindByL_H_P_Collection;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_H_P_Collection() {
+		return _finderPathWithoutPaginationFindByL_H_P_Collection;
+	}
+
 	private FinderPath _finderPathCountByL_H_P_Collection;
+
+	@Override
+	public FinderPath getFinderPathCountByL_H_P_Collection() {
+		return _finderPathCountByL_H_P_Collection;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
@@ -6311,7 +6443,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_H_S;
 	private FinderPath _finderPathWithoutPaginationFindByL_H_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_H_S() {
+		return _finderPathWithoutPaginationFindByL_H_S;
+	}
+
 	private FinderPath _finderPathCountByL_H_S;
+
+	@Override
+	public FinderPath getFinderPathCountByL_H_S() {
+		return _finderPathCountByL_H_S;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
@@ -6893,7 +7036,18 @@ public class LayoutRevisionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByL_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByL_P_S;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByL_P_S() {
+		return _finderPathWithoutPaginationFindByL_P_S;
+	}
+
 	private FinderPath _finderPathCountByL_P_S;
+
+	@Override
+	public FinderPath getFinderPathCountByL_P_S() {
+		return _finderPathCountByL_P_S;
+	}
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
@@ -7472,7 +7626,18 @@ public class LayoutRevisionPersistenceImpl
 		"layoutRevision.status = ?";
 
 	private FinderPath _finderPathFetchByL_L_H_P;
+
+	@Override
+	public FinderPath getFinderPathFetchByL_L_H_P() {
+		return _finderPathFetchByL_L_H_P;
+	}
+
 	private FinderPath _finderPathCountByL_L_H_P;
+
+	@Override
+	public FinderPath getFinderPathCountByL_L_H_P() {
+		return _finderPathCountByL_L_H_P;
+	}
 
 	/**
 	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or throws a <code>NoSuchLayoutRevisionException</code> if it could not be found.

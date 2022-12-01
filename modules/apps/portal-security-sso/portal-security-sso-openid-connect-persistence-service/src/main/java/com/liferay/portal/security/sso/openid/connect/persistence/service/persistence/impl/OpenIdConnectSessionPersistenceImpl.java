@@ -96,9 +96,31 @@ public class OpenIdConnectSessionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindAll() {
+		return _finderPathWithoutPaginationFindAll;
+	}
+
+	@Override
+	public FinderPath getFinderPathCountAll() {
+		return _finderPathCountAll;
+	}
+
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByUserId() {
+		return _finderPathWithoutPaginationFindByUserId;
+	}
+
 	private FinderPath _finderPathCountByUserId;
+
+	@Override
+	public FinderPath getFinderPathCountByUserId() {
+		return _finderPathCountByUserId;
+	}
 
 	/**
 	 * Returns all the open ID connect sessions where userId = &#63;.
@@ -1161,7 +1183,18 @@ public class OpenIdConnectSessionPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_A_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_C;
+
+	@Override
+	public FinderPath getFinderPathWithoutPaginationFindByC_A_C() {
+		return _finderPathWithoutPaginationFindByC_A_C;
+	}
+
 	private FinderPath _finderPathCountByC_A_C;
+
+	@Override
+	public FinderPath getFinderPathCountByC_A_C() {
+		return _finderPathCountByC_A_C;
+	}
 
 	/**
 	 * Returns all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
@@ -1837,7 +1870,18 @@ public class OpenIdConnectSessionPersistenceImpl
 		"(openIdConnectSession.clientId IS NULL OR openIdConnectSession.clientId = '')";
 
 	private FinderPath _finderPathFetchByU_A_C;
+
+	@Override
+	public FinderPath getFinderPathFetchByU_A_C() {
+		return _finderPathFetchByU_A_C;
+	}
+
 	private FinderPath _finderPathCountByU_A_C;
+
+	@Override
+	public FinderPath getFinderPathCountByU_A_C() {
+		return _finderPathCountByU_A_C;
+	}
 
 	/**
 	 * Returns the open ID connect session where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchSessionException</code> if it could not be found.

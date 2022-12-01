@@ -119,6 +119,30 @@ public class DLContentUtil {
 		return getPersistence().update(dlContent, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_R() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_R();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_R() {
+
+		return getPersistence().getFinderPathCountByC_R();
+	}
+
 	/**
 	 * Returns all the document library contents where companyId = &#63; and repositoryId = &#63;.
 	 *
@@ -305,6 +329,18 @@ public class DLContentUtil {
 	 */
 	public static int countByC_R(long companyId, long repositoryId) {
 		return getPersistence().countByC_R(companyId, repositoryId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_R_P() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_R_P();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_R_P() {
+
+		return getPersistence().getFinderPathCountByC_R_P();
 	}
 
 	/**
@@ -717,6 +753,18 @@ public class DLContentUtil {
 		long companyId, long repositoryId, String path) {
 
 		return getPersistence().countByC_R_LikeP(companyId, repositoryId, path);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathFetchByC_R_P_V() {
+
+		return getPersistence().getFinderPathFetchByC_R_P_V();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_R_P_V() {
+
+		return getPersistence().getFinderPathCountByC_R_P_V();
 	}
 
 	/**

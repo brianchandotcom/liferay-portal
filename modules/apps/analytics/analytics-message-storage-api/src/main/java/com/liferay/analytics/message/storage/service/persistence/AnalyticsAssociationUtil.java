@@ -123,6 +123,30 @@ public class AnalyticsAssociationUtil {
 		return getPersistence().update(analyticsAssociation, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindAll() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountAll() {
+
+		return getPersistence().getFinderPathCountAll();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A() {
+
+		return getPersistence().getFinderPathCountByC_A();
+	}
+
 	/**
 	 * Returns all the analytics associations where companyId = &#63; and associationClassName = &#63;.
 	 *
@@ -531,6 +555,18 @@ public class AnalyticsAssociationUtil {
 
 		return getPersistence().countByC_GtM_A(
 			companyId, modifiedDate, associationClassName);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathWithoutPaginationFindByC_A_A() {
+
+		return getPersistence().getFinderPathWithoutPaginationFindByC_A_A();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.FinderPath
+		getFinderPathCountByC_A_A() {
+
+		return getPersistence().getFinderPathCountByC_A_A();
 	}
 
 	/**

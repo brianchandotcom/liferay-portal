@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.exception.NoSuchActivityLimitException;
@@ -42,6 +43,13 @@ public interface SocialActivityLimitPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityLimitUtil} to access the social activity limit persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByGroupId();
+
+	public FinderPath getFinderPathCountByGroupId();
 
 	/**
 	 * Returns all the social activity limits where groupId = &#63;.
@@ -186,6 +194,10 @@ public interface SocialActivityLimitPersistence
 	 */
 	public int countByGroupId(long groupId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the social activity limits where userId = &#63;.
 	 *
@@ -328,6 +340,10 @@ public interface SocialActivityLimitPersistence
 	 * @return the number of matching social activity limits
 	 */
 	public int countByUserId(long userId);
+
+	public FinderPath getFinderPathWithoutPaginationFindByC_C();
+
+	public FinderPath getFinderPathCountByC_C();
 
 	/**
 	 * Returns all the social activity limits where classNameId = &#63; and classPK = &#63;.
@@ -483,6 +499,10 @@ public interface SocialActivityLimitPersistence
 	 * @return the number of matching social activity limits
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	public FinderPath getFinderPathFetchByG_U_C_C_A_A();
+
+	public FinderPath getFinderPathCountByG_U_C_C_A_A();
 
 	/**
 	 * Returns the social activity limit where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and activityType = &#63; and activityCounterName = &#63; or throws a <code>NoSuchActivityLimitException</code> if it could not be found.

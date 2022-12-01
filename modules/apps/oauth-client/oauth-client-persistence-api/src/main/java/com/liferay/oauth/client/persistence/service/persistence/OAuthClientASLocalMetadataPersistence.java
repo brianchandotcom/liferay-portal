@@ -16,6 +16,7 @@ package com.liferay.oauth.client.persistence.service.persistence;
 
 import com.liferay.oauth.client.persistence.exception.NoSuchOAuthClientASLocalMetadataException;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -40,6 +41,13 @@ public interface OAuthClientASLocalMetadataPersistence
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthClientASLocalMetadataUtil} to access the o auth client as local metadata persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	public FinderPath getFinderPathWithoutPaginationFindAll();
+
+	public FinderPath getFinderPathCountAll();
+
+	public FinderPath getFinderPathWithoutPaginationFindByCompanyId();
+
+	public FinderPath getFinderPathCountByCompanyId();
 
 	/**
 	 * Returns all the o auth client as local metadatas where companyId = &#63;.
@@ -250,6 +258,10 @@ public interface OAuthClientASLocalMetadataPersistence
 	 */
 	public int filterCountByCompanyId(long companyId);
 
+	public FinderPath getFinderPathWithoutPaginationFindByUserId();
+
+	public FinderPath getFinderPathCountByUserId();
+
 	/**
 	 * Returns all the o auth client as local metadatas where userId = &#63;.
 	 *
@@ -457,6 +469,10 @@ public interface OAuthClientASLocalMetadataPersistence
 	 * @return the number of matching o auth client as local metadatas that the user has permission to view
 	 */
 	public int filterCountByUserId(long userId);
+
+	public FinderPath getFinderPathFetchByLocalWellKnownURI();
+
+	public FinderPath getFinderPathCountByLocalWellKnownURI();
 
 	/**
 	 * Returns the o auth client as local metadata where localWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.

@@ -111,6 +111,17 @@ public class MinifierUtil {
 
 			return unsyncStringWriter.toString();
 		}
+		catch (Throwable throwable) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to minify CSS with length:\n" + content.length(),
+					throwable);
+			}
+
+			unsyncStringWriter.append(content);
+
+			return unsyncStringWriter.toString();
+		}
 		finally {
 			if (_log.isDebugEnabled()) {
 				int length = 0;

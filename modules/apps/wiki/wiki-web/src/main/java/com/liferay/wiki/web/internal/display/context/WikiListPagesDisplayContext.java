@@ -83,12 +83,12 @@ import javax.servlet.http.HttpServletRequest;
 public class WikiListPagesDisplayContext {
 
 	public WikiListPagesDisplayContext(
-		HttpServletRequest httpServletRequest, WikiNode wikiNode,
-		TrashHelper trashHelper) {
+		HttpServletRequest httpServletRequest, TrashHelper trashHelper,
+		WikiNode wikiNode) {
 
 		_httpServletRequest = httpServletRequest;
-		_wikiNode = wikiNode;
 		_trashHelper = trashHelper;
+		_wikiNode = wikiNode;
 
 		_wikiRequestHelper = new WikiRequestHelper(httpServletRequest);
 	}

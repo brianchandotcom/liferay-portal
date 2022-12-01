@@ -63,14 +63,14 @@ import javax.servlet.http.HttpServletRequest;
 public class WikiPagesManagementToolbarDisplayContext {
 
 	public WikiPagesManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, String displayStyle,
+		String displayStyle, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer<WikiPage> searchContainer, TrashHelper trashHelper,
 		WikiURLHelper wikiURLHelper) {
 
+		_displayStyle = displayStyle;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_displayStyle = displayStyle;
 		_searchContainer = searchContainer;
 		_trashHelper = trashHelper;
 		_wikiURLHelper = wikiURLHelper;

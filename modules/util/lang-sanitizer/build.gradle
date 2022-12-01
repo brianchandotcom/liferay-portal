@@ -2,6 +2,7 @@ dependencies {
 	compile group: "junit", name: "junit", version: "4.13.1"
 	compile group: "org.owasp.antisamy", name: "antisamy", version: "1.7.1"
 
+	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 }
 

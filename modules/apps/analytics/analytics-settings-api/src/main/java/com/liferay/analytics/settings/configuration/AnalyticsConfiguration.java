@@ -85,6 +85,9 @@ public interface AnalyticsConfiguration {
 	public String[] syncedAccountGroupIds();
 
 	@Meta.AD(required = false)
+	public String[] syncedCategoryFieldNames();
+
+	@Meta.AD(required = false)
 	public String[] syncedCommerceChannelIds();
 
 	@Meta.AD(required = false)
@@ -95,6 +98,9 @@ public interface AnalyticsConfiguration {
 
 	@Meta.AD(required = false)
 	public String[] syncedOrderFieldNames();
+
+	@Meta.AD(required = false)
+	public String[] syncedProductChannelFieldNames();
 
 	@Meta.AD(required = false)
 	public String[] syncedProductFieldNames();

@@ -43,7 +43,7 @@ public class LayoutStatusLayoutUtilityPageEntryViewRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "status");
+		return _language.get(locale, "404-error");
 	}
 
 	@Override

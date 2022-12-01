@@ -143,6 +143,10 @@ public class RenderLayoutStructureTagTest {
 		renderLayoutStructureTag.doTag(
 			_getMockHttpServletRequest(), new MockHttpServletResponse());
 
+		Assert.assertEquals(
+			PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID,
+			layoutTypePortlet.getLayoutTemplateId());
+
 		_layout = _layoutLocalService.fetchLayout(_layout.getPlid());
 
 		layoutTypePortlet = (LayoutTypePortlet)_layout.getLayoutType();

@@ -4514,16 +4514,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			com.liferay.object.model.ObjectDefinition
 				serviceBuilderObjectDefinition =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-					entry.getKey()
-					,serviceContext.getCompanyId());
-
-			Long objectDefinitionID =
-				serviceBuilderObjectDefinition.getObjectDefinitionId();
+					_objectDefinitionLocalService.
+						getObjectDefinitionByExternalReferenceCode(
+							entry.getKey(), serviceContext.getCompanyId());
 
 			objectDefinitionResource.patchObjectDefinition(
-				objectDefinitionID, entry.getValue());
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
+				entry.getValue());
 		}
 	}
 

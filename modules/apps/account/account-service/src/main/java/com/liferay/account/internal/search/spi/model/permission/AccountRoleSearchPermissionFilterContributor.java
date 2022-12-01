@@ -103,6 +103,10 @@ public class AccountRoleSearchPermissionFilterContributor
 			}
 		}
 
+		if (accountEntryIds.isEmpty()) {
+			accountEntryIds.add(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+		}
+
 		for (long accountEntryId : accountEntryIds) {
 			List<AccountRole> accountRoles =
 				_accountRoleLocalService.getAccountRolesByAccountEntryIds(

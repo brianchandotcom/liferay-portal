@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -100,12 +101,13 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				{
 					name = entry.getKey();
 
-					value = entry.getValue();
+					if (entry.getValue() instanceof Date) {
+						Date date = (Date)entry.getValue();
 
-					if (value instanceof Date) {
-						Date date = (Date)value;
-
-						value = date.getTime();
+						value = GetterUtil.getString(date.getTime());
+					}
+					else {
+						value = GetterUtil.getString(entry.getValue());
 					}
 				}
 			};
@@ -175,7 +177,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					new Field() {
 						{
 							name = "columnId";
-							value = expandoColumn.getColumnId();
+							value = GetterUtil.getString(
+								expandoColumn.getColumnId());
 						}
 					});
 				add(
@@ -192,7 +195,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 							Date modifiedDate = expandoColumn.getModifiedDate();
 
-							value = modifiedDate.getTime();
+							value = GetterUtil.getString(
+								modifiedDate.getTime());
 						}
 					});
 				add(

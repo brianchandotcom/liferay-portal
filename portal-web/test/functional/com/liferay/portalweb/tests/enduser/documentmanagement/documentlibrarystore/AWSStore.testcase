@@ -1,0 +1,209 @@
+@component-name = "portal-document-library-store"
+definition {
+
+	property aws.store.enabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Document Library Stores";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+        JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			User.logoutPG();
+		}
+	}
+    
+    @description = "This is a use case for LPS-129271."
+	@priority = "4"
+	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
+		property test.name.skip.portal.instance = "AWSStore#AssertNoErrorMessageAfterExportAndImportSiteLAR";
+
+		var bucketID = PropsUtil.get("aws.bucket.id");
+		var companyId = JSONCompany.getCompanyId();
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name",
+			site = "true");
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		LAR.exportSiteCP(siteScopeName = "Test Site Name");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "Test Site Name 1");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Test Site Name 1");
+
+		AssertConsoleTextNotPresent(value1 = "java.io.IOException");
+	}
+
+    @priority = "5"
+	test AWSS3StoreSmoke {
+		property test.name.skip.portal.instance = "AWSStore#AWSS3StoreSmoke";
+
+		var bucketId = PropsUtil.get("aws.bucket.id");
+		var companyId = JSONCompany.getCompanyId();
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name",
+			site = "true");
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			portlet = "Recycle Bin");
+
+		RecycleBin.emptyCP();
+
+		AntCommand(
+			locator1 = "build-test-aws-s3.xml",
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+	}
+
+    @description = "This is a use case for LPS-122233."
+	@priority = "3"
+	test ReIndexingDoesNotAddNewS3StoreCacheFiles {
+		property test.name.skip.portal.instance = "AWSStore#ReIndexingDoesNotAddNewS3StoreCacheFiles";
+
+		for (var fileNum : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title ${fileNum}",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${fileNum}.jpg");
+		}
+
+		var tempDir = PropsUtil.get("app.server.temp.dir");
+		var displayDateHour = DateUtil.getFormattedCurrentDate("HH", "UTC");
+		var displayDateDay = DateUtil.getFormattedCurrentDate("dd", "UTC");
+		var displayDateMonth = DateUtil.getFormattedCurrentDate("MM", "UTC");
+		var displayDateYear = DateUtil.getFormattedCurrentDate("yyyy", "UTC");
+
+		var s3TempDir = "${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}";
+
+		var filesBeforeReIndex = FileUtil.listFiles("${s3TempDir}");
+
+		echo("S3 temp directory files before reindex: ${filesBeforeReIndex}.");
+
+		if ("${filesBeforeReIndex}" == "") {
+			fail("The S3 directory is empty at ${s3TempDir}.");
+		}
+
+		SearchAdministration.executeReindex();
+
+		var filesAfterReIndex = FileUtil.listFiles("${s3TempDir}");
+
+		echo("S3 temp directory files after reindex: ${filesAfterReIndex}.");
+
+		if ("${filesBeforeReIndex}" == "${filesAfterReIndex}") {
+			echo("The S3 temp directory remains unchanged after re-indexing.");
+		}
+		else {
+			fail("The S3 temp directory modified after re-indexing.");
+		}
+	}
+
+    @description = "This is a use case for LPS-127589."
+	@priority = "3"
+	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
+		property test.name.skip.portal.instance = "AWSStore#S3ConnectionDoesNotLeakWhenServingFileAsStream";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+			import com.liferay.document.library.kernel.store.DLStoreUtil;
+ 
+			List fileEntries = DLFileEntryLocalServiceUtil.getFileEntries(0,1);
+ 
+			fileEntries.each { fileEntry ->
+				(1..60).each {
+					try {
+						InputStream is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName())
+					} 
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		AssertConsoleTextNotPresent(value1 = "ConnectionPoolTimeoutException");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1");
+	}
+
+}

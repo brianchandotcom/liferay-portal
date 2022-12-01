@@ -20,7 +20,7 @@ interface BasicInfoProps {
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId: number;
@@ -35,7 +35,7 @@ export declare function BasicInfo({
 	handleChange,
 	isApproved,
 	isDefaultStorageType,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,
 	objectRelationshipId,

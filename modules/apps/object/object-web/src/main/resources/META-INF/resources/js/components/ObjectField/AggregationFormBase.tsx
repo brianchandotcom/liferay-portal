@@ -27,17 +27,19 @@ interface IAggregationSourcePropertyProps {
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectFieldSettings: ObjectFieldSetting[];
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (objectDefinitionId2: number) => void;
+	onRelationshipChange?: (
+		objectDefinitionExternalReferenceCode2: string
+	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
 type TObjectRelationship = {
 	label: LocalizedValue<string>;
 	name: string;
-	objectDefinitionId2: number;
+	objectDefinitionExternalReferenceCode2: string;
 };
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -71,7 +73,7 @@ export function AggregationFormBase({
 	editingField,
 	onAggregationFilterChange,
 	onRelationshipChange,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectFieldSettings = [],
 	setValues,
 }: IAggregationSourcePropertyProps) {
@@ -119,8 +121,8 @@ export function AggregationFormBase({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectRelationshipsData = await API.getObjectRelationships(
-				objectDefinitionId
+			const objectRelationshipsData = await API.getObjectRelationshipsByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
 			);
 
 			setObjectRelationships(
@@ -129,15 +131,15 @@ export function AggregationFormBase({
 						!(
 							objectRelationship.type === 'manyToMany' &&
 							objectRelationship.reverse &&
-							objectRelationship.objectDefinitionId1 ===
-								objectRelationship.objectDefinitionId2
+							objectRelationship.objectDefinitionExternalReferenceCode1 ===
+								objectRelationship.objectDefinitionExternalReferenceCode2
 						)
 				)
 			);
 		};
 
 		makeFetch();
-	}, [objectDefinitionId]);
+	}, [objectDefinitionExternalReferenceCode]);
 
 	useEffect(() => {
 		if (editingField && objectRelationships) {
@@ -154,8 +156,8 @@ export function AggregationFormBase({
 						aggregationFunction.value === settings.function
 				);
 
-				const relatedFields = await API.getObjectFields(
-					currentRelatedObjectRelationship.objectDefinitionId2
+				const relatedFields = await API.getObjectFieldsByExternalReferenceCode(
+					currentRelatedObjectRelationship.objectDefinitionExternalReferenceCode2
 				);
 
 				const currentSummarizeField = relatedFields.find(
@@ -165,7 +167,7 @@ export function AggregationFormBase({
 
 				if (onRelationshipChange) {
 					onRelationshipChange(
-						currentRelatedObjectRelationship.objectDefinitionId2
+						currentRelatedObjectRelationship.objectDefinitionExternalReferenceCode2
 					);
 				}
 
@@ -207,8 +209,8 @@ export function AggregationFormBase({
 		setSelectRelatedObjectRelationship(objectRelationship);
 		setSelectedSummarizeField('');
 
-		const relatedFields = await API.getObjectFields(
-			objectRelationship.objectDefinitionId2
+		const relatedFields = await API.getObjectFieldsByExternalReferenceCode(
+			objectRelationship.objectDefinitionExternalReferenceCode2
 		);
 
 		const numericFields = relatedFields.filter(
@@ -249,7 +251,9 @@ export function AggregationFormBase({
 		});
 
 		if (onRelationshipChange) {
-			onRelationshipChange(objectRelationship.objectDefinitionId2);
+			onRelationshipChange(
+				objectRelationship.objectDefinitionExternalReferenceCode2
+			);
 		}
 	};
 

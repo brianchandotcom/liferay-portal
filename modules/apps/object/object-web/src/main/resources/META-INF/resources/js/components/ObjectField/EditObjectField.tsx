@@ -33,7 +33,7 @@ interface EditObjectFieldProps {
 	forbiddenNames: string[];
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
@@ -51,7 +51,7 @@ export default function EditObjectField({
 	forbiddenNames,
 	isApproved,
 	isDefaultStorageType,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectField,
 	objectFieldTypes,
 	objectName,
@@ -128,7 +128,9 @@ export default function EditObjectField({
 						handleChange={handleChange}
 						isApproved={isApproved}
 						isDefaultStorageType={isDefaultStorageType}
-						objectDefinitionId={objectDefinitionId}
+						objectDefinitionExternalReferenceCode={
+							objectDefinitionExternalReferenceCode
+						}
 						objectFieldTypes={objectFieldTypes}
 						objectName={objectName}
 						objectRelationshipId={objectRelationshipId}

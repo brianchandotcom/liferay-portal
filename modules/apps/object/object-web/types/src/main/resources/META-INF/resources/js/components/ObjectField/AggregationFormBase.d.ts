@@ -19,10 +19,12 @@ interface IAggregationSourcePropertyProps {
 	disabled?: boolean;
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectFieldSettings: ObjectFieldSetting[];
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (objectDefinitionId2: number) => void;
+	onRelationshipChange?: (
+		objectDefinitionExternalReferenceCode2: string
+	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare function AggregationFormBase({
@@ -31,7 +33,7 @@ export declare function AggregationFormBase({
 	editingField,
 	onAggregationFilterChange,
 	onRelationshipChange,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectFieldSettings,
 	setValues,
 }: IAggregationSourcePropertyProps): JSX.Element;

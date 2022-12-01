@@ -31,7 +31,7 @@ interface IModal extends IProps {
 
 interface IProps {
 	apiURL: string;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 }
@@ -40,7 +40,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 function ModalAddObjectField({
 	apiURL,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,
 	observer,
@@ -117,7 +117,9 @@ function ModalAddObjectField({
 					<ObjectFieldFormBase
 						errors={errors}
 						handleChange={handleChange}
-						objectDefinitionId={objectDefinitionId}
+						objectDefinitionExternalReferenceCode={
+							objectDefinitionExternalReferenceCode
+						}
 						objectField={values}
 						objectFieldTypes={objectFieldTypes}
 						objectName={objectName}
@@ -148,7 +150,7 @@ function ModalAddObjectField({
 
 export default function AddObjectField({
 	apiURL,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,
 }: IProps) {
@@ -174,7 +176,9 @@ export default function AddObjectField({
 			{isVisible && (
 				<ModalAddObjectField
 					apiURL={apiURL}
-					objectDefinitionId={objectDefinitionId}
+					objectDefinitionExternalReferenceCode={
+						objectDefinitionExternalReferenceCode
+					}
 					objectFieldTypes={
 						!Liferay.FeatureFlags['LPS-164948']
 							? applyFeatureFlag()

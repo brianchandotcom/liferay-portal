@@ -61,7 +61,7 @@ interface BasicInfoProps {
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId: number;
@@ -80,7 +80,7 @@ export function BasicInfo({
 	handleChange,
 	isApproved,
 	isDefaultStorageType,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,
 	objectRelationshipId,
@@ -95,7 +95,10 @@ export function BasicInfo({
 
 	const [editingFilter, setEditingFilter] = useState(false);
 	const [objectFields, setObjectFields] = useState<ObjectField[]>();
-	const [objectDefinitionId2, setObjectDefinitionId2] = useState<number>();
+	const [
+		objectDefinitionExternalReferenceCode2,
+		setObjectDefinitionExternalReferenceCode2,
+	] = useState<string>();
 	const [aggregationFilters, setAggregationFilters] = useState<
 		AggregationFilters[]
 	>([]);
@@ -366,10 +369,21 @@ export function BasicInfo({
 	};
 
 	useEffect(() => {
-		if (values.businessType === 'Aggregation' && objectDefinitionId2) {
-			API.getObjectFields(objectDefinitionId2).then(setObjectFields);
+		if (
+			values.businessType === 'Aggregation' &&
+			objectDefinitionExternalReferenceCode2
+		) {
+			const makeFetch = async () => {
+				const items = await API.getObjectFieldsByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode2
+				);
+
+				setObjectFields(items);
+			};
+
+			makeFetch();
 		}
-	}, [values.businessType, objectDefinitionId2]);
+	}, [values.businessType, objectDefinitionExternalReferenceCode2]);
 
 	useEffect(() => {
 		if (values.businessType === 'Aggregation') {
@@ -551,13 +565,17 @@ export function BasicInfo({
 					editingField
 					errors={errors}
 					handleChange={handleChange}
-					objectDefinitionId={objectDefinitionId}
+					objectDefinitionExternalReferenceCode={
+						objectDefinitionExternalReferenceCode
+					}
 					objectField={values}
 					objectFieldTypes={objectFieldTypes}
 					objectName={objectName}
 					objectRelationshipId={objectRelationshipId}
 					onAggregationFilterChange={setAggregationFilters}
-					onRelationshipChange={setObjectDefinitionId2}
+					onRelationshipChange={
+						setObjectDefinitionExternalReferenceCode2
+					}
 					setValues={setValues}
 				>
 					{values.businessType === 'Attachment' && (

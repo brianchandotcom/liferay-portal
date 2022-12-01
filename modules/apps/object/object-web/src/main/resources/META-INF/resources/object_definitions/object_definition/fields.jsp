@@ -52,7 +52,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
 			).put(
-				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
 				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(false, locale)
 			).put(

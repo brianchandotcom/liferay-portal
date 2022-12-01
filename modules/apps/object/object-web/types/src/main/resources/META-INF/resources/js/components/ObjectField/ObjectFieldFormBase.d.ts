@@ -21,13 +21,15 @@ interface IProps {
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId?: number;
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (objectDefinitionId2: number) => void;
+	onRelationshipChange?: (
+		objectDefinitionExternalReferenceCode2: string
+	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare type ObjectFieldErrors = FormError<
@@ -42,7 +44,7 @@ export default function ObjectFieldFormBase({
 	editingField,
 	errors,
 	handleChange,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectField: values,
 	objectFieldTypes,
 	objectName,

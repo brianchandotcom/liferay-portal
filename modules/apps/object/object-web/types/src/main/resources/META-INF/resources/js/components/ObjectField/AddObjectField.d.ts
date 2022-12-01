@@ -16,13 +16,13 @@
 
 interface IProps {
 	apiURL: string;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 }
 export default function AddObjectField({
 	apiURL,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,
 }: IProps): JSX.Element;

@@ -42,13 +42,15 @@ interface IProps {
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
-	objectDefinitionId: number;
+	objectDefinitionExternalReferenceCode: string;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId?: number;
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (objectDefinitionId2: number) => void;
+	onRelationshipChange?: (
+		objectDefinitionExternalReferenceCode2: string
+	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
@@ -57,7 +59,7 @@ type TObjectRelationship = {
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;
-	objectDefinitionId2: number;
+	objectDefinitionExternalReferenceCode2: number;
 };
 
 export type ObjectFieldErrors = FormError<
@@ -72,7 +74,7 @@ export default function ObjectFieldFormBase({
 	editingField,
 	errors,
 	handleChange,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	objectField: values,
 	objectFieldTypes,
 	objectName,
@@ -310,7 +312,9 @@ export default function ObjectFieldFormBase({
 				<AggregationFormBase
 					editingField={editingField}
 					errors={errors}
-					objectDefinitionId={objectDefinitionId}
+					objectDefinitionExternalReferenceCode={
+						objectDefinitionExternalReferenceCode
+					}
 					objectFieldSettings={
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}

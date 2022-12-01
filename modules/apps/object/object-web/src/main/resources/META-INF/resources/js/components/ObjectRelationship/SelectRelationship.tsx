@@ -12,26 +12,31 @@
  * details.
  */
 
-import {API, Select} from '@liferay/object-js-components-web';
+import {
+	API,
+	AutoComplete,
+	stringIncludesQuery,
+} from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface IProps {
 	error?: string;
-	objectDefinitionId?: number;
-	onChange: (objectFieldId: number) => void;
-	value?: number;
+	objectDefinitionExternalReferenceCode: string;
+	onChange: (objectFieldName: string) => void;
+	value?: string;
 }
 
 export default function SelectRelationship({
 	error,
-	objectDefinitionId,
+	objectDefinitionExternalReferenceCode,
 	onChange,
 	value,
 	...otherProps
 }: IProps) {
 	const [fields, setFields] = useState<ObjectField[]>([]);
+	const [query, setQuery] = useState<string>('');
 	const options = useMemo(
 		() =>
 			fields.map(({label, name}) => {
@@ -42,38 +47,66 @@ export default function SelectRelationship({
 			}),
 		[fields]
 	);
+
+	const filteredOptions = useMemo(() => {
+		if (options) {
+			return options.filter((option) =>
+				stringIncludesQuery(option.label, query)
+			);
+		}
+	}, [options, query]);
+
 	const selectedValue = useMemo(() => {
-		return fields.find(({id}) => id === value);
+		return fields.find(({name}) => name === value);
 	}, [fields, value]);
 
 	useEffect(() => {
-		if (objectDefinitionId) {
-			API.getObjectFields(objectDefinitionId).then((fields) => {
-				const options = fields.filter(
+		if (objectDefinitionExternalReferenceCode) {
+			const makeFetch = async () => {
+				const items = await API.getObjectFieldsByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
+
+				const options = items.filter(
 					({businessType}) => businessType === 'Relationship'
 				);
+
 				setFields(options);
-			});
+			};
+
+			makeFetch();
 		}
 		else {
 			setFields([]);
 		}
-	}, [objectDefinitionId]);
+	}, [objectDefinitionExternalReferenceCode]);
 
 	return (
-		<Select
+		<AutoComplete<LabelNameObject>
+			emptyStateMessage={Liferay.Language.get('no-parameters-were-found')}
 			error={error}
+			items={filteredOptions ?? []}
 			label={Liferay.Language.get('parameter')}
-			onChange={({target: {value}}) => {
-				onChange(fields.find(({name}) => name === value)?.id!);
+			onChangeQuery={setQuery}
+			onSelectItem={({name}) => {
+				onChange(
+					fields.find(({name: fieldName}) => fieldName === name)
+						?.name!
+				);
 			}}
-			options={options}
+			query={query}
 			required
 			tooltip={Liferay.Language.get(
 				'choose-a-relationship-field-from-the-selected-object'
 			)}
 			value={selectedValue?.label[defaultLanguageId]}
 			{...otherProps}
-		/>
+		>
+			{({label, name}) => (
+				<div className="d-flex justify-content-between">
+					{label ?? name}
+				</div>
+			)}
+		</AutoComplete>
 	);
 }

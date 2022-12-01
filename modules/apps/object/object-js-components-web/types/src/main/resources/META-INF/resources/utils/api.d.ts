@@ -45,6 +45,8 @@ interface ObjectRelationship {
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;
+	objectDefinitionExternalReferenceCode1: string;
+	objectDefinitionExternalReferenceCode2: string;
 	objectDefinitionId1: number;
 	objectDefinitionId2: number;
 	readonly objectDefinitionName2: string;

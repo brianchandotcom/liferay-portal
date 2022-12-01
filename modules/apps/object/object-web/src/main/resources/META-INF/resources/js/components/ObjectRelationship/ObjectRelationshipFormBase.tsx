@@ -131,7 +131,9 @@ export function ObjectRelationshipFormBase({
 			const items = await API.getAllObjectDefinitions();
 
 			const currentObjectDefinition = items.find(
-				({id}) => values.objectDefinitionId1 === id
+				({externalReferenceCode}) =>
+					values.objectDefinitionExternalReferenceCode1 ===
+					externalReferenceCode
 			)!;
 
 			const objectDefinitions = items.filter(
@@ -148,6 +150,7 @@ export function ObjectRelationshipFormBase({
 		if (readonly) {
 			setObjectDefinitions([
 				{
+					externalReferenceCode: values.objectDefinitionExternalReferenceCode2 as string,
 					id: values.objectDefinitionId2 as number,
 					label: values.label as LocalizedValue<string>,
 					name: values.objectDefinitionName2 as string,
@@ -198,6 +201,8 @@ export function ObjectRelationshipFormBase({
 				onChangeQuery={setQuery}
 				onSelectItem={(item) => {
 					setValues({
+						objectDefinitionExternalReferenceCode2:
+							item.externalReferenceCode,
 						objectDefinitionId2: item.id,
 						objectDefinitionName2: item.name,
 					});
@@ -238,6 +243,7 @@ interface IPros {
 }
 
 type ObjectDefinition = {
+	externalReferenceCode: string;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;

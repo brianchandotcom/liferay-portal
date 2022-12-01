@@ -36,6 +36,7 @@ interface AutoCompleteProps<T> extends React.HTMLAttributes<HTMLElement> {
 	placeholder?: string;
 	query: string;
 	required?: boolean;
+	tooltip?: string;
 	value?: string;
 }
 
@@ -62,6 +63,7 @@ export default function AutoComplete<T>({
 	placeholder,
 	query,
 	required = false,
+	tooltip,
 	value,
 }: AutoCompleteProps<T>) {
 	const [active, setActive] = useState<boolean>(false);
@@ -80,6 +82,7 @@ export default function AutoComplete<T>({
 			id={id}
 			label={label}
 			required={required}
+			tooltip={tooltip}
 		>
 			<ClayDropDown
 				active={!disabled && active}

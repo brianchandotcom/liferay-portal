@@ -30,6 +30,7 @@ interface AutoCompleteProps<T> extends React.HTMLAttributes<HTMLElement> {
 	placeholder?: string;
 	query: string;
 	required?: boolean;
+	tooltip?: string;
 	value?: string;
 }
 declare type EmptyStateItem = {
@@ -54,6 +55,7 @@ export default function AutoComplete<T>({
 	placeholder,
 	query,
 	required,
+	tooltip,
 	value,
 }: AutoCompleteProps<T>): JSX.Element;
 export {};

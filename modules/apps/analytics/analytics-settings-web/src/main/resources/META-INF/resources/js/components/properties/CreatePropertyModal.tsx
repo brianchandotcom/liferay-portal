@@ -14,10 +14,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
+import getCN from 'classnames';
 import React, {useState} from 'react';
 
 import {createProperty} from '../../utils/api';
+import {MAX_LENGTH, MIN_LENGTH} from '../../utils/constants';
 import Loading from '../Loading';
 
 interface IModalProps {
@@ -34,6 +37,8 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 	const [propertyName, setPropertyName] = useState('');
 	const [submitting, setSubmitting] = useState(false);
 
+	const isValid = propertyName.length >= MIN_LENGTH;
+
 	return (
 		<ClayModal center observer={observer}>
 			<ClayForm>
@@ -42,19 +47,44 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 				</ClayModal.Header>
 
 				<ClayModal.Body className="pb-0 pt-3">
-					<ClayForm.Group className="mb-3">
+					<ClayForm.Group
+						className={getCN(
+							{
+								'has-error': propertyName && !isValid,
+							},
+							'mb-3'
+						)}
+					>
 						<label htmlFor="basicInputText">
 							{Liferay.Language.get('property-name')}
 						</label>
 
 						<ClayInput
 							id="inputPropertyName"
+							maxLength={MAX_LENGTH}
 							onChange={({target: {value}}) =>
 								setPropertyName(value)
 							}
 							type="text"
 							value={propertyName}
 						/>
+
+						{propertyName && !isValid && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayIcon
+										className="mr-1"
+										symbol="warning-full"
+									/>
+
+									<span>
+										{Liferay.Language.get(
+											'property-name-does-not-meet-minimum-length-required'
+										)}
+									</span>
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
 					</ClayForm.Group>
 				</ClayModal.Body>
 
@@ -69,7 +99,9 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 							</ClayButton>
 
 							<ClayButton
-								disabled={!propertyName || submitting}
+								disabled={
+									!propertyName || submitting || !isValid
+								}
 								onClick={async () => {
 									setSubmitting(true);
 

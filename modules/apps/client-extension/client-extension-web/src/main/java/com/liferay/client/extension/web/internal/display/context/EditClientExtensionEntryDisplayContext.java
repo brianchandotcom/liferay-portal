@@ -17,13 +17,26 @@ package com.liferay.client.extension.web.internal.display.context;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.web.internal.display.context.util.CETLabelUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.WebAppPool;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 
@@ -32,15 +45,19 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class EditClientExtensionEntryDisplayContext {
+public class EditClientExtensionEntryDisplayContext<T extends CET> {
 
 	public EditClientExtensionEntryDisplayContext(
-		CET cet, ClientExtensionEntry clientExtensionEntry,
+		T cet, ClientExtensionEntry clientExtensionEntry,
 		PortletRequest portletRequest) {
 
 		_cet = cet;
 		_clientExtensionEntry = clientExtensionEntry;
 		_portletRequest = portletRequest;
+	}
+
+	public T getCET() {
+		return _cet;
 	}
 
 	public String getCmd() {
@@ -70,6 +87,68 @@ public class EditClientExtensionEntryDisplayContext {
 			_clientExtensionEntry, _portletRequest, "name");
 	}
 
+	public List<SelectOption> getPortletCategoryNameSelectOptions(
+		String selectedPortletCategoryName) {
+
+		if (Validator.isBlank(selectedPortletCategoryName)) {
+			selectedPortletCategoryName = "category.remote-apps";
+		}
+
+		List<SelectOption> selectOptions = new ArrayList<>();
+
+		boolean found = false;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletCategory rootPortletCategory = (PortletCategory)WebAppPool.get(
+			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+		for (PortletCategory portletCategory :
+				rootPortletCategory.getCategories()) {
+
+			selectOptions.add(
+				new SelectOption(
+					LanguageUtil.get(
+						themeDisplay.getLocale(), portletCategory.getName()),
+					portletCategory.getName(),
+					selectedPortletCategoryName.equals(
+						portletCategory.getName())));
+
+			if (Objects.equals(
+					portletCategory.getName(), "category.remote-apps")) {
+
+				found = true;
+			}
+		}
+
+		if (!found) {
+			selectOptions.add(
+				new SelectOption(
+					LanguageUtil.get(
+						themeDisplay.getLocale(), "category.remote-apps"),
+					"category.remote-apps",
+					Objects.equals(
+						selectedPortletCategoryName, "category.remote-apps")));
+		}
+
+		return ListUtil.sort(
+			selectOptions,
+			new Comparator<SelectOption>() {
+
+				@Override
+				public int compare(
+					SelectOption selectOption1, SelectOption selectOption2) {
+
+					String label1 = selectOption1.getLabel();
+					String label2 = selectOption2.getLabel();
+
+					return label1.compareTo(label2);
+				}
+
+			});
+	}
+
 	public String getProperties() {
 		return BeanParamUtil.getString(
 			_clientExtensionEntry, _portletRequest, "properties");
@@ -82,6 +161,16 @@ public class EditClientExtensionEntryDisplayContext {
 	public String getSourceCodeURL() {
 		return BeanParamUtil.getString(
 			_clientExtensionEntry, _portletRequest, "sourceCodeURL");
+	}
+
+	public String[] getStrings(String urls) {
+		String[] strings = StringUtil.split(urls, CharPool.NEW_LINE);
+
+		if (strings.length == 0) {
+			return _EMPTY_STRINGS;
+		}
+
+		return strings;
 	}
 
 	public String getTitle() {
@@ -110,6 +199,14 @@ public class EditClientExtensionEntryDisplayContext {
 			CETLabelUtil.getTypeLabel(themeDisplay.getLocale(), getType()));
 	}
 
+	public boolean isNew() {
+		if (_clientExtensionEntry == null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isPropertiesVisible() {
 		return _cet.hasProperties();
 	}
@@ -125,7 +222,9 @@ public class EditClientExtensionEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private final CET _cet;
+	private static final String[] _EMPTY_STRINGS = {StringPool.BLANK};
+
+	private final T _cet;
 	private final ClientExtensionEntry _clientExtensionEntry;
 	private final PortletRequest _portletRequest;
 

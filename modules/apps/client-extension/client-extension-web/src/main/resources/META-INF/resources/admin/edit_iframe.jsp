@@ -17,15 +17,15 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditClientExtensionEntryPartDisplayContext<IFrameCET> editClientExtensionEntryPartDisplayContext = (EditClientExtensionEntryPartDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT);
+EditClientExtensionEntryDisplayContext<IFrameCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
 
-IFrameCET iFrameCET = editClientExtensionEntryPartDisplayContext.getCET();
+IFrameCET iFrameCET = editClientExtensionEntryDisplayContext.getCET();
 %>
 
 <aui:input label="url" name="url" type="text" value="<%= iFrameCET.getURL() %>" />
 
 <c:choose>
-	<c:when test="<%= editClientExtensionEntryPartDisplayContext.isNew() %>">
+	<c:when test="<%= editClientExtensionEntryDisplayContext.isNew() %>">
 		<aui:input label="instanceable" name="instanceable" type="checkbox" value="<%= iFrameCET.isInstanceable() %>" />
 	</c:when>
 	<c:otherwise>
@@ -38,7 +38,7 @@ IFrameCET iFrameCET = editClientExtensionEntryPartDisplayContext.getCET();
 <clay:select
 	label="portlet-category-name"
 	name="portletCategoryName"
-	options="<%= editClientExtensionEntryPartDisplayContext.getPortletCategoryNameSelectOptions(iFrameCET.getPortletCategoryName()) %>"
+	options="<%= editClientExtensionEntryDisplayContext.getPortletCategoryNameSelectOptions(iFrameCET.getPortletCategoryName()) %>"
 />
 
 <aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= iFrameCET.getFriendlyURLMapping() %>" />

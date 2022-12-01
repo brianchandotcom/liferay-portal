@@ -30,7 +30,6 @@ page import="com.liferay.client.extension.web.internal.constants.ClientExtension
 page import="com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.ClientExtensionAdminDisplayContext" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryDisplayContext" %><%@
-page import="com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryPartDisplayContext" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.ViewClientExtensionEntryDisplayContext" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.ViewClientExtensionEntryPartDisplayContext" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %>

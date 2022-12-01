@@ -17,9 +17,9 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditClientExtensionEntryPartDisplayContext<ThemeCSSCET> editClientExtensionEntryPartDisplayContext = (EditClientExtensionEntryPartDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT);
+EditClientExtensionEntryDisplayContext<ThemeCSSCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
 
-ThemeCSSCET themeCSSCET = editClientExtensionEntryPartDisplayContext.getCET();
+ThemeCSSCET themeCSSCET = editClientExtensionEntryDisplayContext.getCET();
 %>
 
 <aui:input label="main-css-url" name="mainURL" type="text" value="<%= themeCSSCET.getMainURL() %>" />

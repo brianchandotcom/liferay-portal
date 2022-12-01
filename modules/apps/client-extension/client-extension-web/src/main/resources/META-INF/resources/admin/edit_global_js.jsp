@@ -17,9 +17,9 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditClientExtensionEntryPartDisplayContext<GlobalJSCET> editClientExtensionEntryPartDisplayContext = (EditClientExtensionEntryPartDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT);
+EditClientExtensionEntryDisplayContext<GlobalJSCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
 
-GlobalJSCET globalJSCET = editClientExtensionEntryPartDisplayContext.getCET();
+GlobalJSCET globalJSCET = editClientExtensionEntryDisplayContext.getCET();
 %>
 
 <aui:input ignoreRequestValue="<%= true %>" label="url" name="url" type="text" value="<%= globalJSCET.getURL() %>" />

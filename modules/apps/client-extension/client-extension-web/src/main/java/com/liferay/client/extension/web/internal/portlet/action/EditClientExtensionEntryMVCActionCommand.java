@@ -21,7 +21,6 @@ import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys;
 import com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryDisplayContext;
-import com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryPartDisplayContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -102,11 +101,6 @@ public class EditClientExtensionEntryMVCActionCommand
 				ClientExtensionAdminWebKeys.
 					EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
 				new EditClientExtensionEntryDisplayContext(
-					cet, clientExtensionEntry, actionRequest));
-			actionRequest.setAttribute(
-				ClientExtensionAdminWebKeys.
-					EDIT_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT,
-				new EditClientExtensionEntryPartDisplayContext(
 					cet, clientExtensionEntry, actionRequest));
 
 			actionResponse.setRenderParameter(

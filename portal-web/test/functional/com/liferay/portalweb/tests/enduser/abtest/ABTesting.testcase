@@ -52,6 +52,10 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
+
+		JSONUser.tearDownNonAdminUsers();
+
+		JSONRole.deleteTestRoles();
 	}
 
 	@description = "LPS-101341: Validate if the user has one experience with the AB test in a Running status, the experiences dropdown menu shows the AB test icon and one help hint"
@@ -122,16 +126,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "Roles Regrole Name",
-				roleTitle = "Roles Regrole Name");
+				roleKey = "Roles Regrole Name Test",
+				roleTitle = "Roles Regrole Name Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Roles Regrole Name");
+				roleTitle = "Roles Regrole Name Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Roles Regrole Name",
+				roleTitle = "Roles Regrole Name Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -144,14 +148,6 @@ definition {
 
 		task ("Assert AB Test icon is not present") {
 			AssertElementNotPresent(locator1 = "ABTest#AB_TEST_BUTTON");
-		}
-
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
-			JSONRole.deleteRole(roleTitle = "Roles Regrole Name");
 		}
 	}
 
@@ -173,16 +169,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "Roles Regrole Name",
-				roleTitle = "Roles Regrole Name");
+				roleKey = "Roles Regrole Name Test",
+				roleTitle = "Roles Regrole Name Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Roles Regrole Name");
+				roleTitle = "Roles Regrole Name Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Roles Regrole Name",
+				roleTitle = "Roles Regrole Name Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -195,14 +191,6 @@ definition {
 
 		task ("Assert AB Test icon is present") {
 			AssertElementPresent(locator1 = "ABTest#AB_TEST_BUTTON");
-		}
-
-		task ("Login with Test user, to allow tearDown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
-			JSONRole.deleteRole(roleTitle = "Roles Regrole Name");
 		}
 	}
 
@@ -2344,16 +2332,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "Roles Regrole Name",
-				roleTitle = "Roles Regrole Name");
+				roleKey = "Roles Regrole Name Test",
+				roleTitle = "Roles Regrole Name Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Roles Regrole Name");
+				roleTitle = "Roles Regrole Name Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Roles Regrole Name",
+				roleTitle = "Roles Regrole Name Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -2420,16 +2408,16 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "Roles Regrole Name",
-				roleTitle = "Roles Regrole Name");
+				roleKey = "Roles Regrole Name Test",
+				roleTitle = "Roles Regrole Name Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Roles Regrole Name");
+				roleTitle = "Roles Regrole Name Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Roles Regrole Name",
+				roleTitle = "Roles Regrole Name Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 

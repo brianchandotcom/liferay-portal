@@ -409,6 +409,27 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
+	public void testProcessConcurrently() throws Exception {
+		_validateProcessConcurrently(
+			threadIds -> processConcurrently(
+				"select id from " + _TABLE_NAME,
+				resultSet -> new Object[] {resultSet.getInt("id")},
+				values -> {
+					Thread currentThread = Thread.currentThread();
+
+					threadIds.add(currentThread.getId());
+
+					int value = (int)values[0];
+
+					runSQL(
+						StringBundler.concat(
+							"update ", _TABLE_NAME, " set typeInteger = ",
+							value, " where id = ", value));
+				},
+				null));
+	}
+
+	@Test
 	public void testProcessConcurrentlyWithBatch() throws Exception {
 		_validateProcessConcurrently(
 			threadIds -> processConcurrently(
@@ -446,27 +467,6 @@ public class BaseDBProcessTest extends BaseDBProcess {
 					Thread currentThread = Thread.currentThread();
 
 					threadIds.add(currentThread.getId());
-
-					runSQL(
-						StringBundler.concat(
-							"update ", _TABLE_NAME, " set typeInteger = ",
-							value, " where id = ", value));
-				},
-				null));
-	}
-
-	@Test
-	public void testProcessConcurrentlyWithSelect() throws Exception {
-		_validateProcessConcurrently(
-			threadIds -> processConcurrently(
-				"select id from " + _TABLE_NAME,
-				resultSet -> new Object[] {resultSet.getInt("id")},
-				values -> {
-					Thread currentThread = Thread.currentThread();
-
-					threadIds.add(currentThread.getId());
-
-					int value = (int)values[0];
 
 					runSQL(
 						StringBundler.concat(

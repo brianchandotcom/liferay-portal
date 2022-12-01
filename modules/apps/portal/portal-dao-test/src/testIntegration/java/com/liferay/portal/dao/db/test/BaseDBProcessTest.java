@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -34,7 +35,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 import org.junit.After;
@@ -407,29 +410,28 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	@Test
 	public void testProcessConcurrentlyWithBatch() throws Exception {
-		_populateTable();
+		_validateProcessConcurrently(
+			threadIds -> processConcurrently(
+				"select id from " + _TABLE_NAME,
+				"update " + _TABLE_NAME + " set typeInteger = ? where id = ?",
+				resultSet -> new Object[] {resultSet.getInt("id")},
+				(values, preparedStatement) -> {
+					Thread currentThread = Thread.currentThread();
 
-		processConcurrently(
-			"select id from " + _TABLE_NAME,
-			"update " + _TABLE_NAME + " set typeInteger = ? where id = ?",
-			resultSet -> new Object[] {resultSet.getInt("id")},
-			(values, preparedStatement) -> {
-				int value = (int)values[0];
+					threadIds.add(currentThread.getId());
 
-				preparedStatement.setInt(1, value);
-				preparedStatement.setInt(2, value);
+					int value = (int)values[0];
 
-				preparedStatement.addBatch();
-			},
-			null);
+					preparedStatement.setInt(1, value);
+					preparedStatement.setInt(2, value);
 
-		_verifyTableContent();
+					preparedStatement.addBatch();
+				},
+				null));
 	}
 
 	@Test
 	public void testProcessConcurrentlyWithList() throws Exception {
-		_populateTable();
-
 		Integer[] values = IntStream.rangeClosed(
 			1, _RANGE_MAX
 		).boxed(
@@ -437,35 +439,41 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			Integer[]::new
 		);
 
-		processConcurrently(
-			values,
-			value -> runSQL(
-				StringBundler.concat(
-					"update ", _TABLE_NAME, " set typeInteger = ", value,
-					" where id = ", value)),
-			null);
+		_validateProcessConcurrently(
+			threadIds -> processConcurrently(
+				values,
+				value -> {
+					Thread currentThread = Thread.currentThread();
 
-		_verifyTableContent();
+					threadIds.add(currentThread.getId());
+
+					runSQL(
+						StringBundler.concat(
+							"update ", _TABLE_NAME, " set typeInteger = ",
+							value, " where id = ", value));
+				},
+				null));
 	}
 
 	@Test
 	public void testProcessConcurrentlyWithSelect() throws Exception {
-		_populateTable();
+		_validateProcessConcurrently(
+			threadIds -> processConcurrently(
+				"select id from " + _TABLE_NAME,
+				resultSet -> new Object[] {resultSet.getInt("id")},
+				values -> {
+					Thread currentThread = Thread.currentThread();
 
-		processConcurrently(
-			"select id from " + _TABLE_NAME,
-			resultSet -> new Object[] {resultSet.getInt("id")},
-			values -> {
-				int value = (int)values[0];
+					threadIds.add(currentThread.getId());
 
-				runSQL(
-					StringBundler.concat(
-						"update ", _TABLE_NAME, " set typeInteger = ", value,
-						" where id = ", value));
-			},
-			null);
+					int value = (int)values[0];
 
-		_verifyTableContent();
+					runSQL(
+						StringBundler.concat(
+							"update ", _TABLE_NAME, " set typeInteger = ",
+							value, " where id = ", value));
+				},
+				null));
 	}
 
 	private void _addIndex(String[] columnNames) {
@@ -508,7 +516,22 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			ArrayUtil.sortedUnique(indexMetadata.getColumnNames()));
 	}
 
-	private void _verifyTableContent() throws Exception {
+	private void _validateProcessConcurrently(
+			UnsafeConsumer<Set<Long>, Exception> unsafeConsumer)
+		throws Exception {
+
+		_populateTable();
+
+		Set<Long> threadIds = new HashSet<>();
+
+		unsafeConsumer.accept(threadIds);
+
+		Assert.assertTrue(threadIds.size() > 1);
+
+		_validateTableContent();
+	}
+
+	private void _validateTableContent() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select count(1) from ", _TABLE_NAME,

@@ -15,13 +15,20 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,6 +58,7 @@ public class ContributedFragmentManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			fragmentDisplayContext.getContributedEntriesSearchContainer());
 
+		_liferayPortletResponse = liferayPortletResponse;
 		_fragmentDisplayContext = fragmentDisplayContext;
 	}
 
@@ -83,21 +91,54 @@ public class ContributedFragmentManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
-	public Map<String, Object> getComponentContext() throws Exception {
-		return HashMapBuilder.<String, Object>put(
-			"copyContributedEntryURL",
-			() -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+	public Map<String, Object> getComponentContext() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-				return PortletURLBuilder.createActionURL(
-					liferayPortletResponse
-				).setActionName(
-					"/fragment/copy_fragment_entry"
-				).setRedirect(
-					themeDisplay.getURLCurrent()
-				).buildString();
+		return HashMapBuilder.<String, Object>put(
+			"addFragmentCollectionURL",
+			() -> {
+				LiferayPortletURL addFragmentCollectionURL =
+					(LiferayPortletURL)
+						_liferayPortletResponse.createResourceURL();
+
+				addFragmentCollectionURL.setCopyCurrentRenderParameters(false);
+				addFragmentCollectionURL.setResourceID(
+					"/fragment/add_fragment_collection");
+
+				return addFragmentCollectionURL.toString();
+			}
+		).put(
+			"copyContributedEntryURL",
+			() -> PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/fragment/copy_fragment_entry"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).buildString()
+		).put(
+			"fragmentCollections",
+			() -> {
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				for (FragmentCollection fragmentCollection :
+						FragmentCollectionLocalServiceUtil.
+							getFragmentCollections(
+								themeDisplay.getScopeGroupId(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+					jsonArray.put(
+						JSONUtil.put(
+							"fragmentCollectionId",
+							fragmentCollection.getFragmentCollectionId()
+						).put(
+							"name", fragmentCollection.getName()
+						));
+				}
+
+				return jsonArray;
 			}
 		).put(
 			"selectFragmentCollectionURL",
@@ -123,5 +164,6 @@ public class ContributedFragmentManagementToolbarDisplayContext
 	}
 
 	private final FragmentDisplayContext _fragmentDisplayContext;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

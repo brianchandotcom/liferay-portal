@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,9 +66,19 @@ public class ContributedFragmentCompositionActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getCopyToFragmentCompositionActionUnsafeConsumer() {
 
+		LiferayPortletURL addFragmentCollectionURL =
+			(LiferayPortletURL)_renderResponse.createResourceURL();
+
+		addFragmentCollectionURL.setCopyCurrentRenderParameters(false);
+		addFragmentCollectionURL.setResourceID(
+			"/fragment/add_fragment_collection");
+
 		return dropdownItem -> {
 			dropdownItem.putData(
 				"action", "copyContributedEntryToFragmentCollection");
+			dropdownItem.putData(
+				"addFragmentCollectionURL",
+				addFragmentCollectionURL.toString());
 			dropdownItem.putData(
 				"contributedEntryKey",
 				_fragmentComposition.getFragmentCompositionKey());

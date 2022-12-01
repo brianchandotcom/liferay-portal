@@ -33,9 +33,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -113,6 +117,44 @@ public class FragmentDisplayContext {
 						"viewImportURL"));
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "import"));
+			}
+		).build();
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"addFragmentCollectionURL",
+			() -> {
+				LiferayPortletURL addFragmentCollectionURL =
+					(LiferayPortletURL)_renderResponse.createResourceURL();
+
+				addFragmentCollectionURL.setCopyCurrentRenderParameters(false);
+				addFragmentCollectionURL.setResourceID(
+					"/fragment/add_fragment_collection");
+
+				return addFragmentCollectionURL.toString();
+			}
+		).put(
+			"fragmentCollections",
+			() -> {
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				for (FragmentCollection fragmentCollection :
+						FragmentCollectionLocalServiceUtil.
+							getFragmentCollections(
+								_themeDisplay.getScopeGroupId(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+					jsonArray.put(
+						JSONUtil.put(
+							"fragmentCollectionId",
+							fragmentCollection.getFragmentCollectionId()
+						).put(
+							"name", fragmentCollection.getName()
+						));
+				}
+
+				return jsonArray;
 			}
 		).build();
 	}

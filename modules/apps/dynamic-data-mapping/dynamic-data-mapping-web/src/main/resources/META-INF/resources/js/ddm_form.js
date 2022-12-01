@@ -253,7 +253,7 @@ AUI.add(
 					delete templateResourceParameters.doAsGroupId;
 				}
 
-				const fields = instance._valueFields();
+				const fields = instance.get('fields');
 
 				if (fields && fields.length) {
 					instance._removeDoAsGroupIdParam(

@@ -1,19 +1,11 @@
 definition {
 
-	macro changeExperienceABTest {
-		WaitForElementPresent(locator1 = "ABTest#CHANGE_EXPERIENCE");
-
-		Select(
-			locator1 = "ABTest#CHANGE_EXPERIENCE",
-			value1 = "${experience}");
-	}
-
 	macro checkAnalyticsCloudInfo {
-		if (IsElementPresent(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON")) {
+		if (IsElementPresent(key_text = "Review and Run Test", locator1 = "Button#ANY")) {
 			ABTest.runTest();
 		}
 
-		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+		Button.click(button = "View Data in Analytics Cloud");
 
 		SelectWindow(locator1 = "name=undefined");
 
@@ -34,11 +26,11 @@ definition {
 	macro checkVariantAnalyticsCloud {
 		var index = "1";
 
-		if (IsElementPresent(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON")) {
+		if (IsElementPresent(key_text = "Review and Run Test", locator1 = "Button#ANY")) {
 			ABTest.runTest();
 		}
 
-		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+		Button.click(button = "View Data in Analytics Cloud");
 
 		SelectWindow(locator1 = "name=undefined");
 
@@ -61,35 +53,31 @@ definition {
 	}
 
 	macro createABTest {
-		while (IsElementNotPresent(locator1 = "ABTest#CREATE_TEST_BUTTON")) {
+		while (IsElementNotPresent(key_text = "Create Test", locator1 = "Button#ANY")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
 
-		Click(locator1 = "ABTest#CREATE_TEST_BUTTON");
+		Button.click(button = "Create Test");
 
-		Click(locator1 = "ABTest#AB_TEST_TITLE_FIELD");
+		ABTest.fillInput(
+			key_testTitle = "${testTitle}",
+			labelValue = "Test Name");
 
-		Type(
-			locator1 = "ABTest#AB_TEST_TITLE_FIELD",
-			value1 = "${testTitle}");
+		ABTest.selectGoal(key_goal = "${goal}");
 
-		Select(
-			locator1 = "ABTest#CHANGE_SELECT_GOAL",
-			value1 = "${goal}");
-
-		Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
+		Click(locator1 = "Modal#SAVE_BUTTON");
 	}
 
 	macro createVariant {
-		Click(locator1 = "ABTest#CREATE_VARIANT_BUTTON");
+		Button.click(button = "Create Variant");
 
-		Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
+		ABTest.fillInput(
+			key_testTitle = "${variantName}",
+			labelValue = "Name");
 
-		Type(
-			locator1 = "ABTest#VARIANT_NAME_FIELD",
-			value1 = "${variantName}");
-
-		Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
+		Click(
+			key_name = "Save",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
 	macro deleteABTestInAC {
@@ -109,7 +97,7 @@ definition {
 
 		Click(locator1 = "ABTest#VARIANT_DROPDOWN");
 
-		ClickNoError(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
+		MenuItem.clickNoError(menuItem = "Delete");
 
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -119,9 +107,7 @@ definition {
 	macro editOrDeleteABTest {
 		Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
-		ClickNoError(
-			locator1 = "ABTest#KEBAB_OPTIONS_AB_TEST",
-			value = "${value}");
+		MenuItem.clickNoError(menuItem = "${value}");
 
 		if ("${value}" == "Delete") {
 			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
@@ -137,11 +123,22 @@ definition {
 
 		Click(locator1 = "ABTest#VARIANT_DROPDOWN");
 
-		Click(locator1 = "ABTest#EDIT_VARIANT_BUTTON");
+		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
+	macro fillInput {
+		Click(
+			key_fieldLabel = "${labelValue}",
+			locator1 = "Modal#INPUT_WITH_LABEL");
+
+		Type(
+			key_fieldLabel = "${labelValue}",
+			locator1 = "Modal#INPUT_WITH_LABEL",
+			value1 = "${key_testTitle}");
 	}
 
 	macro openABTestInAC {
-		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
+		Button.click(button = "View Data in Analytics Cloud");
 
 		SelectWindow(locator1 = "name=undefined");
 
@@ -163,13 +160,15 @@ definition {
 	}
 
 	macro runTest {
-		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
+		Button.click(button = "Review and Run Test");
 
-		if (IsElementPresent(locator1 = "ABTest#RUN_TEST_BUTTON")) {
-			ClickNoError(locator1 = "ABTest#RUN_TEST_BUTTON");
+		Click(
+			key_name = "Run",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 
-			Click(locator1 = "ABTest#OK_BUTTON");
-		}
+		Click(
+			key_name = "OK",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
 	macro selectElementID {
@@ -178,12 +177,12 @@ definition {
 		}
 
 		Click(
-			key_value = "Select Clickable Element",
-			locator1 = "ABTest#SECONDARY_BUTTON");
+			key_text = "Select Clickable Element",
+			locator1 = "Button#ANY_SECONDARY");
 
 		Click(locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
 
-		Click(locator1 = "ABTest#SET_ELEMENT_AS_CLICK_TARGET_BUTTON");
+		Button.click(button = "Set Element as Click Target");
 
 		Alert.viewSuccessMessage();
 
@@ -192,9 +191,16 @@ definition {
 			value1 = "Target");
 	}
 
+	macro selectGoal {
+		Select(
+			locator1 = "Modal#SELECT_WITH_LABEL",
+			selectLabel = "Select Goal",
+			value1 = "${key_goal}");
+	}
+
 	macro statusABTestInAC {
 		AssertTextEquals(
-			locator1 = "ABTest#LABEL_ITEM_STATUS",
+			locator1 = "ACTests#SUMMARY_CARD_TEXT",
 			value1 = "${status}");
 	}
 
@@ -212,8 +218,8 @@ definition {
 		}
 
 		Click(
-			key_value = "Select Clickable Element",
-			locator1 = "ABTest#SECONDARY_BUTTON");
+			key_text = "Select Clickable Element",
+			locator1 = "Button#ANY_SECONDARY");
 
 		Click(locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
 
@@ -227,13 +233,13 @@ definition {
 	}
 
 	macro terminateTest {
-		if (IsElementPresent(locator1 = "ABTest#TERMINATE_TEST_BUTTON")) {
-			ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
+		if (IsElementPresent(key_text = "Terminate Test", locator1 = "Button#ANY")) {
+			Button.clickNoError(button = "Terminate Test");
 		}
 		else {
 			Refresh();
 
-			ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
+			Button.clickNoError(button = "Terminate Test");
 		}
 
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to terminate this test?");

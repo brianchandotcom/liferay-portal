@@ -72,7 +72,9 @@ definition {
 		task ("Click on the A/B Test icon and click on 'Hide A/B Test Panel'") {
 			ABTest.openABTestPanel();
 
-			Click(locator1 = "ABTest#HIDE_AB_TEST_BUTTON");
+			Click(
+				key_textValue = "Do not show me this again",
+				locator1 = "Sidebar#LINK");
 		}
 
 		task ("Assert 'AB Test' icon is not present") {
@@ -86,7 +88,9 @@ definition {
 		task ("Click on the A/B Test icon and Assert hide AB Test icon is present") {
 			ABTest.openABTestPanel();
 
-			AssertVisible(locator1 = "ABTest#HIDE_AB_TEST_BUTTON");
+			AssertVisible(
+				key_textValue = "Do not show me this again",
+				locator1 = "Sidebar#LINK");
 		}
 	}
 

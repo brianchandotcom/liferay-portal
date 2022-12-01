@@ -446,6 +446,13 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				MustNotExceedMaximumSize(nameMaxLength);
 		}
 
+		for (char c : _BLACKLIST_CHAR) {
+			if (name.indexOf(c) >= 0) {
+				throw new LayoutUtilityPageEntryNameException.
+					MustNotContainInvalidCharacters(c);
+			}
+		}
+
 		LayoutUtilityPageEntry duplicatedLayoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.fetchByG_N_T(groupId, name, type);
 
@@ -457,6 +464,11 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				groupId, name);
 		}
 	}
+
+	private static final char[] _BLACKLIST_CHAR = {
+		';', '/', '?', ':', '@', '=', '&', '\"', '<', '>', '#', '%', '{', '}',
+		'|', '\\', '^', '~', '[', ']', '`'
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutUtilityPageEntryLocalServiceImpl.class);

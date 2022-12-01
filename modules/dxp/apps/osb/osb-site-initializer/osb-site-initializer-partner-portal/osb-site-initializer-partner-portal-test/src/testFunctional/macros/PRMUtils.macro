@@ -33,4 +33,34 @@ definition {
 		}
 	}
 
+	@summary = "Publish an object"
+	macro publishObject {
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "${objectName}");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+	}
+
+	@summary = "Define object permission to a role"
+	macro definePermission {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "${objectName}");
+
+        ObjectCustomViews.gotoPermissions(entryName = "${itemName}");
+
+		var roleName = StringUtil.loweCase("${roleName}");
+		var permissionName = StringUtil.upperCase("${permissionName}");
+
+		Click(
+			locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS",
+			key_roleName = "${roleName}",
+			key_permissionName = "${permissionName}");
+
+        Button.clickSave();
+	}
 }

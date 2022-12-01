@@ -1,0 +1,9 @@
+{
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "client-extensions/able-remote-app",
+            "client-extensions/able-theme-css"
+        ]
+    }
+}

@@ -16,33 +16,27 @@ package com.liferay.wiki.web.internal.display.context;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.wiki.display.context.WikiPageInfoPanelDisplayContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.internal.display.context.helper.WikiPageInfoPanelRequestHelper;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultWikiPageInfoPanelDisplayContext
-	implements WikiPageInfoPanelDisplayContext {
+public class DefaultWikiPageInfoPanelDisplayContext {
 
 	public DefaultWikiPageInfoPanelDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
+		HttpServletRequest httpServletRequest) {
 
 		_wikiPageInfoPanelRequestHelper = new WikiPageInfoPanelRequestHelper(
 			httpServletRequest);
 	}
 
-	@Override
 	public WikiPage getFirstPage() {
 		List<WikiPage> pages = _wikiPageInfoPanelRequestHelper.getPages();
 
@@ -53,7 +47,6 @@ public class DefaultWikiPageInfoPanelDisplayContext
 		return pages.get(0);
 	}
 
-	@Override
 	public String getPageRSSURL(WikiPage page) {
 		ThemeDisplay themeDisplay =
 			_wikiPageInfoPanelRequestHelper.getThemeDisplay();
@@ -63,26 +56,18 @@ public class DefaultWikiPageInfoPanelDisplayContext
 			"&title=", page.getTitle());
 	}
 
-	@Override
 	public int getPagesCount() {
 		WikiNode node = _wikiPageInfoPanelRequestHelper.getCurrentNode();
 
 		return WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true);
 	}
 
-	@Override
 	public int getSelectedPagesCount() {
 		List<?> items = _getSelectedPages();
 
 		return items.size();
 	}
 
-	@Override
-	public UUID getUuid() {
-		return _UUID;
-	}
-
-	@Override
 	public boolean isMultiplePageSelection() {
 		List<?> items = _getSelectedPages();
 
@@ -93,12 +78,10 @@ public class DefaultWikiPageInfoPanelDisplayContext
 		return false;
 	}
 
-	@Override
 	public boolean isShowSidebarHeader() {
 		return _wikiPageInfoPanelRequestHelper.isShowSidebarHeader();
 	}
 
-	@Override
 	public boolean isSinglePageSelection() {
 		List<WikiPage> pages = _wikiPageInfoPanelRequestHelper.getPages();
 
@@ -118,9 +101,6 @@ public class DefaultWikiPageInfoPanelDisplayContext
 	private List<WikiPage> _getSelectedPages() {
 		return _wikiPageInfoPanelRequestHelper.getPages();
 	}
-
-	private static final UUID _UUID = UUID.fromString(
-		"7099F1F8-ED73-47D8-9CDC-ED292BF7779F");
 
 	private final WikiPageInfoPanelRequestHelper
 		_wikiPageInfoPanelRequestHelper;

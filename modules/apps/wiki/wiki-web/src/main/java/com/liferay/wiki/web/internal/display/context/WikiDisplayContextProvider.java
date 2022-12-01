@@ -20,7 +20,6 @@ import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.display.context.WikiDisplayContextFactory;
 import com.liferay.wiki.display.context.WikiEditPageDisplayContext;
 import com.liferay.wiki.display.context.WikiListPagesDisplayContext;
-import com.liferay.wiki.display.context.WikiPageInfoPanelDisplayContext;
 import com.liferay.wiki.display.context.WikiViewPageDisplayContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -80,26 +79,6 @@ public class WikiDisplayContextProvider {
 		}
 
 		return wikiListPagesDisplayContext;
-	}
-
-	public WikiPageInfoPanelDisplayContext getWikiPageInfoPanelDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext =
-			new DefaultWikiPageInfoPanelDisplayContext(
-				httpServletRequest, httpServletResponse);
-
-		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				_serviceTrackerList) {
-
-			wikiPageInfoPanelDisplayContext =
-				wikiDisplayContextFactory.getWikiPageInfoPanelDisplayContext(
-					wikiPageInfoPanelDisplayContext, httpServletRequest,
-					httpServletResponse);
-		}
-
-		return wikiPageInfoPanelDisplayContext;
 	}
 
 	public WikiViewPageDisplayContext getWikiViewPageDisplayContext(

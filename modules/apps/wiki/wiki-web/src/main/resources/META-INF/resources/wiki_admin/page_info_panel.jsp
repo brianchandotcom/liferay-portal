@@ -19,7 +19,7 @@
 <%
 WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
 
-DefaultWikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = new DefaultWikiPageInfoPanelDisplayContext(request, response);
+DefaultWikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = new DefaultWikiPageInfoPanelDisplayContext(request);
 
 request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayContext.getFirstPage());
 %>

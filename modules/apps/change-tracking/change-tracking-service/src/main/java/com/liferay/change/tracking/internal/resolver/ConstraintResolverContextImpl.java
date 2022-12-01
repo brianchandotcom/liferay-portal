@@ -56,7 +56,7 @@ public class ConstraintResolverContextImpl<T extends CTModel<T>>
 				_sourcePrimaryKey));
 	}
 
-	@Override
+	@OverrideBaseDBProcessTest
 	public T getTargetCTModel() {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

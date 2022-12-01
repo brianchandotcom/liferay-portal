@@ -539,13 +539,11 @@ public class BaseDBProcessTest extends BaseDBProcess {
 					_PROCESS_CONCURRENTLY_EXECUTIONS, " and typeInteger = id"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			if (resultSet.next()) {
-				Assert.assertEquals(
-					_PROCESS_CONCURRENTLY_EXECUTIONS, resultSet.getInt(1));
-			}
-		}
+			resultSet.next();
 
-		throw new Exception("Table does not exist");
+			Assert.assertEquals(
+				_PROCESS_CONCURRENTLY_EXECUTIONS, resultSet.getInt(1));
+		}
 	}
 
 	private static final String _INDEX_NAME = "IX_TEMP";

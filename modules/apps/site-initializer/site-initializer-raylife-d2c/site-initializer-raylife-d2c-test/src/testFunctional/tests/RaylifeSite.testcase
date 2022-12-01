@@ -33,6 +33,7 @@ definition {
 	@priority = "5"
 	test AllObjectsIsCreatedForRaylifeD2c {
 		property test.name.skip.portal.instance = "RaylifeSite#AllObjectsIsCreatedForRaylifeD2c";
+
 		task ("Add site Raylife D2C") {
 			Raylife.createRaylifeSite(siteName = "${testSiteName}");
 		}
@@ -46,7 +47,7 @@ definition {
 	@priority = "5"
 	test CanRaylifeBeCreated {
 		property test.name.skip.portal.instance = "RaylifeSite#CanRaylifeBeCreated";
-		
+
 		Site.openSitesAdmin();
 
 		LexiconEntry.gotoAdd();
@@ -98,6 +99,7 @@ definition {
 	@priority = "5"
 	test ProductsForRaylifeIsCreated {
 		property test.name.skip.portal.instance = "RaylifeSite#ProductsForRaylifeIsCreated";
+
 		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 
 		CommerceNavigator.gotoPortlet(

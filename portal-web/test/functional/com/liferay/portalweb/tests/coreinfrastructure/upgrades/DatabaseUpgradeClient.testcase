@@ -65,7 +65,6 @@ definition {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-client-home-ext-properties");
-
 	}
 
 }

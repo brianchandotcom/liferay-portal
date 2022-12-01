@@ -1549,30 +1549,30 @@ public class ObjectEntryLocalServiceImpl
 
 		Predicate objectFieldPredicate = null;
 
-		if (StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING) ||
-			StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_CLOB)) {
+		if (StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_CLOB) ||
+			StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			objectFieldPredicate = column.like("%" + search + "%");
-		}
-		else if (StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_LONG) ||
-				 StringUtil.equals(
-					 dbType, ObjectFieldConstants.DB_TYPE_INTEGER)) {
-
-			long searchLong = GetterUtil.getLong(search);
-
-			if (searchLong != 0L) {
-				objectFieldPredicate = column.eq(searchLong);
-			}
 		}
 		else if (StringUtil.equals(
 					dbType, ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
 				 dbType.equals(ObjectFieldConstants.DB_TYPE_DOUBLE)) {
 
-			BigDecimal searchDecimal = BigDecimal.valueOf(
+			BigDecimal searchBigDecimal = BigDecimal.valueOf(
 				GetterUtil.getDouble(search));
 
-			if (searchDecimal.compareTo(BigDecimal.ZERO) != 0) {
-				objectFieldPredicate = column.eq(searchDecimal);
+			if (searchBigDecimal.compareTo(BigDecimal.ZERO) != 0) {
+				objectFieldPredicate = column.eq(searchBigDecimal);
+			}
+		}
+		else if (StringUtil.equals(
+					dbType, ObjectFieldConstants.DB_TYPE_INTEGER) ||
+				 StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_LONG)) {
+
+			long searchLong = GetterUtil.getLong(search);
+
+			if (searchLong != 0L) {
+				objectFieldPredicate = column.eq(searchLong);
 			}
 		}
 

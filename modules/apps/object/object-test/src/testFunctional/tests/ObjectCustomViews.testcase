@@ -571,6 +571,72 @@ definition {
 		}
 	}
 
+	@description = "LPS-166590 - Verify that it’s possible to delete the configured filters from the object"
+	@priority = "3"
+	test CanDeleteFilterWithRelationshipField {
+		task ("Given: An object related to another object, in a One-to-Many relationship and the relationship field as a Default Filter") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 166590",
+				objectName = "CustomObject166590",
+				pluralLabelName = "Custom Objects 166590");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject166590",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject166590");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 166590");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Status");
+
+			Button.clickSave();
+		}
+
+		task ("And: The user creates a custom filter") {
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(filterBy = "Relationship");
+
+			Button.clickSave();
+		}
+
+		task ("When: The user delete the custom filter") {
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.deleteSpecificColumn(columnName = "Relationship");
+
+			Button.clickSave();
+		}
+
+		task ("Then: Assert the custom filter is deleted") {
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.assertColumnNotPresent(columnName = "Relationship");
+		}
+	}
+
 	@description = "LPS-144472 - Verify it is possible the user to delete the pre-order column"
 	@priority = "4"
 	test CanDeletePreOrderColumn {

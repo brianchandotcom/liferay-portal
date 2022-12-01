@@ -84,6 +84,12 @@ definition {
 			locator1 = "TestrayCases#FIELD_STEPS",
 			value1 = "${steps}");
 
+		if (isSet(addAnotherCase)) {
+			Click.clickAtNotVisible(
+				key_checkboxOption = "${addAnotherCase}",
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+		}
+
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 

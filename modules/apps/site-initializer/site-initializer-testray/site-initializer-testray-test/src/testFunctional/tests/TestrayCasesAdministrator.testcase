@@ -85,12 +85,30 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163753 - Verify as an administrator I can add another Cases in the Add Another button"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AdminCanAddAnotherCase {
+		task ("Given that the user add a new Case") {
+			TestrayCases.typeCasesField(
+				addAnotherCase = "Add Another",
+				caseName = "Cases_1 Case",
+				caseTypeId = "Manual Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
 
-		// TODO LPS-163753 AdminCanAddAnotherCase pending implementation
+			Button.click(button = "Save");
+		}
 
+		task ("Then the case is created with the new infos") {
+			Button.click(button = "Cancel");
+
+			TestrayCases.verifyCase(
+				caseName = "Copy - Cases_1 Case",
+				casePriority = "5",
+				key_caseComponent = "Components_1 Project 1");
+		}
 	}
 
 	@description = "This is a test for LPS-156790 - Verify if as an Administrator I am able to add Cases without Subcomponents"
@@ -99,7 +117,7 @@ definition {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "60",
@@ -121,7 +139,7 @@ definition {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "60",
@@ -193,7 +211,7 @@ definition {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "60",
@@ -213,7 +231,7 @@ definition {
 
 			TestrayCases.editCases(
 				caseName = "Cases_1 Case Edited",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 2",
 				description = "Cases_1 Case Description Edited",
 				duration = "30",
@@ -244,7 +262,7 @@ definition {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "60",
@@ -301,7 +319,7 @@ definition {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "",
 				duration = "-1",
@@ -322,7 +340,7 @@ definition {
 		task ("Given that the user add a new Case duplicate") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "60",
@@ -331,7 +349,7 @@ definition {
 
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "60",

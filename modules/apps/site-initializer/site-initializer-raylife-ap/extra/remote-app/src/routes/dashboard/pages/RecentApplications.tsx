@@ -52,7 +52,7 @@ const HEADERS = [
 	{
 		greyColor: true,
 		key: 'name',
-		type: 'status',
+		type: 'hasBubble',
 		value: 'Status',
 	},
 ];

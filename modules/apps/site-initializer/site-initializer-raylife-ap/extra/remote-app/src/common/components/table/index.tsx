@@ -28,8 +28,10 @@ type TableProps = {
 
 type TableHeaders = {
 	bold?: boolean;
+	centered?: boolean;
 	clickable?: boolean;
 	greyColor?: boolean;
+	icon?: boolean;
 	key: string;
 	redColor?: boolean;
 	type?: string;
@@ -76,10 +78,11 @@ const Table: React.FC<TableProps> = ({
 								<div
 									className={classnames({
 										'align-items-center d-flex':
-											item.type === 'status',
+											item.type === 'hasBubble',
+										'text-center': item.centered,
 									})}
 								>
-									{item.type === 'status' && (
+									{item.type === 'hasBubble' && (
 										<div
 											className={`${rowContent[
 												item.key

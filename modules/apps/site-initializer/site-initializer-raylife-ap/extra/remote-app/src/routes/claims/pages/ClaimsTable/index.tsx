@@ -68,7 +68,7 @@ const ClaimsTable = () => {
 		{
 			greyColor: true,
 			key: 'claimStatus',
-			type: 'status',
+			type: 'hasBubble',
 			value: 'Status',
 		},
 	];

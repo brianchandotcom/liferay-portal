@@ -40,6 +40,7 @@ type Policy = {
 	endDate: string;
 	externalReferenceCode: string;
 	policyOwnerName: string;
+	policyStatus: {name: string};
 	productName: string;
 	startDate: string;
 	termPremium: number;
@@ -374,9 +375,9 @@ const PoliciesTable = () => {
 	const HEADERS = [
 		{
 			bold: false,
+			centered: true,
 			key: 'renewalDue',
 			redColor: hasRedLine,
-			type: 'status',
 			value: 'Renewal Due',
 		},
 		{
@@ -398,7 +399,6 @@ const PoliciesTable = () => {
 		{
 			greyColor: true,
 			key: 'monthlyPremium',
-			type: 'status',
 			value: 'Monthly Premium',
 		},
 		{
@@ -409,8 +409,12 @@ const PoliciesTable = () => {
 		{
 			greyColor: true,
 			key: 'commission',
-			type: 'status',
 			value: 'Commission',
+		},
+		{
+			greyColor: true,
+			key: 'policyStatus',
+			value: 'Status',
 		},
 	];
 
@@ -478,6 +482,7 @@ const PoliciesTable = () => {
 					endDate,
 					externalReferenceCode,
 					policyOwnerName,
+					policyStatus,
 					productName,
 					startDate,
 					termPremium,
@@ -528,6 +533,7 @@ const PoliciesTable = () => {
 						monthlyPremium: `$${monthlyPremium.toFixed(2)}`,
 						policyOwnerName,
 						policyPeriod: `${policyPeriod}`,
+						policyStatus: policyStatus?.name,
 						productName,
 						renewalDue: `${renewalDueDisplayRules()}`,
 						renewalDueCalculation: `${

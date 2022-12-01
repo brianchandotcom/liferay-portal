@@ -428,6 +428,8 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	@Test
 	public void testProcessConcurrentlyWithList() throws Exception {
+		_populateTable();
+
 		Integer[] values = IntStream.rangeClosed(
 			1, _RANGE_MAX
 		).boxed(
@@ -439,9 +441,8 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			values,
 			value -> runSQL(
 				StringBundler.concat(
-					"insert into ", _TABLE_NAME,
-					" (id, notNilColumn, typeInteger) values (", value,
-					", '1', ", value, ")")),
+					"update ", _TABLE_NAME, " set typeInteger = ", value,
+					" where id = ", value)),
 			null);
 
 		_verifyTableContent();

@@ -54,7 +54,7 @@ public class CETFDSEntry {
 	}
 
 	public String getType() {
-		return CETLabelUtil.getTypeNameLabel(_locale, _cet.getType());
+		return CETLabelUtil.getTypeLabel(_locale, _cet.getType());
 	}
 
 	public boolean isReadOnly() {

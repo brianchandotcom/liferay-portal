@@ -107,7 +107,7 @@ public class EditClientExtensionEntryDisplayContext {
 
 		return LanguageUtil.get(
 			_getHttpServletRequest(),
-			CETLabelUtil.getTypeNameLabel(themeDisplay.getLocale(), getType()));
+			CETLabelUtil.getTypeLabel(themeDisplay.getLocale(), getType()));
 	}
 
 	public boolean isPropertiesVisible() {

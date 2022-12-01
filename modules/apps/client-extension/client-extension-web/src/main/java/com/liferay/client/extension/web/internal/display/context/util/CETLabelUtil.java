@@ -35,7 +35,7 @@ public class CETLabelUtil {
 			locale, "new-x", _getCETTypeLanguageKey(type));
 	}
 
-	public static String getTypeNameLabel(Locale locale, String type) {
+	public static String getTypeLabel(Locale locale, String type) {
 		return LanguageUtil.get(locale, _getCETTypeLanguageKey(type));
 	}
 

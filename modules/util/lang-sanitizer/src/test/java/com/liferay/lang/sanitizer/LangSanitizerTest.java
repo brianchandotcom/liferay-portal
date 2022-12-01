@@ -51,21 +51,18 @@ public class LangSanitizerTest {
 	public void testCorrectProperties() throws Exception {
 		ClassLoader classLoader = LangSanitizerTest.class.getClassLoader();
 
-		URL testFileURL = classLoader.getResource(
-			_CORRECT_PROPERTIES_FILE_NAME);
+		URL url = classLoader.getResource(_CORRECT_PROPERTIES_FILE_NAME);
 
-		if (testFileURL == null) {
+		if (url == null) {
 			throw new FileNotFoundException(_CORRECT_PROPERTIES_FILE_NAME);
 		}
 
 		Properties properties = new Properties();
 
-		File testFile = new File(testFileURL.getFile());
+		File file = new File(url.getFile());
 
-		if (testFile.exists()) {
-			try (FileInputStream fileInputStream = new FileInputStream(
-					testFile)) {
-
+		if (file.exists()) {
+			try (FileInputStream fileInputStream = new FileInputStream(file)) {
 				properties.load(fileInputStream);
 			}
 		}
@@ -79,10 +76,10 @@ public class LangSanitizerTest {
 
 			CleanResults cleanResults = antiSamy.scan(originalString, _policy);
 
-			String sanitizedString = EscapeUtil.unEscape(
+			String sanitizedString = EscapeUtil.unescape(
 				cleanResults.getCleanHTML());
 
-			String value = EscapeUtil.unEscape(
+			String value = EscapeUtil.unescape(
 				EscapeUtil.formatTag(originalString));
 
 			Assert.assertEquals(value, sanitizedString);
@@ -93,21 +90,18 @@ public class LangSanitizerTest {
 	public void testIncorrectProperties() throws Exception {
 		ClassLoader classLoader = LangSanitizerTest.class.getClassLoader();
 
-		URL testFileURL = classLoader.getResource(
-			_INCORRECT_PROPERTIES_FILE_NAME);
+		URL url = classLoader.getResource(_INCORRECT_PROPERTIES_FILE_NAME);
 
-		if (testFileURL == null) {
+		if (url == null) {
 			throw new FileNotFoundException(_INCORRECT_PROPERTIES_FILE_NAME);
 		}
 
 		Properties properties = new Properties();
 
-		File testFile = new File(testFileURL.getFile());
+		File file = new File(url.getFile());
 
-		if (testFile.exists()) {
-			try (FileInputStream fileInputStream = new FileInputStream(
-					testFile)) {
-
+		if (file.exists()) {
+			try (FileInputStream fileInputStream = new FileInputStream(file)) {
 				properties.load(fileInputStream);
 			}
 		}
@@ -121,10 +115,10 @@ public class LangSanitizerTest {
 
 			CleanResults cleanResults = antiSamy.scan(originalString, _policy);
 
-			String sanitizedString = EscapeUtil.unEscape(
+			String sanitizedString = EscapeUtil.unescape(
 				cleanResults.getCleanHTML());
 
-			String value = EscapeUtil.unEscape(
+			String value = EscapeUtil.unescape(
 				EscapeUtil.formatTag(originalString));
 
 			Assert.assertNotEquals(value, sanitizedString);

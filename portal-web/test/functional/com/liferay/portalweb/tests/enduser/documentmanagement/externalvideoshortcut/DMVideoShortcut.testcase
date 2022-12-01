@@ -811,6 +811,12 @@ definition {
 			videoShortcutTitle = "Test Twitch Video",
 			videoURL = "https://www.twitch.tv/videos/806178790");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "tag name");
+
+		DMDocument.viewAllDocumentsChecked(detailsMessage = "3 items are selected.");
+
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
 			siteName = "Guest");

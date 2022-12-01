@@ -1,0 +1,131 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "partner@liferay.com",
+				userFirstName = "partner",
+				userLastName = "partner",
+				userScreenName = "partner");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "partner@liferay.com");
+		}
+
+		task ("Add a new account and assign the created user to the account") {
+            JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account 1",
+				accountEntryType = "Business");
+            
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account 1");
+
+			Account.assignUsers(
+				accountName = "Account 1",
+				assigneeName = "partner partner");
+		}
+
+		task ("Create a new Partner Portal Site") {
+			PRMUtils.addPRMSite();
+		}
+
+		task ("Add permission for the user to be able to see the 'Name' column on MDF Listing") {
+			PRMUtils.publishObject(objectName = "MDF Listing Column");
+
+			PRMUtils.definePermission(
+				objectName = "MDF Listing Column",
+				itemName = "Name",
+				roleName = "User",
+				permissionName = "View");
+		}
+
+		task ("Go to Partner Portal and login with the created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMUtils.gotoPRM();
+		}
+
+		task ("Go to 'Marketing' page") {
+			PRMNavigator.goToNavItem(navItem = "Marketing");
+		}
+	}
+  
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
+		}
+	}
+
+	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
+	@priority = "5"
+	test SubmittedMDFAppearsOnListing {
+		task ("Given I go to add a new MDF Request") {
+			PRMMarketing.gotoAddNewMDF();
+		}
+
+		task ("And I fill all Goals form with my informations") {
+			PRMMDFRequest.fillGoalsPage(
+				accountName = "Account 1",
+				countryName = "Global",
+				campaignName = "Campaign Name",
+				campaignDescription = "Campaign Description",
+				targetMarketOptions = "Education,Energy",
+				goalsOptions = "Lead generation",
+				targetRolesOptions = "Administrator",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform");
+
+			Button.click(button = "Continue");
+		}
+
+		task ("And I add a new activity") {
+			PRMMDFRequest.newActivity(
+				activityName = "Activity Name 1",
+				typeOfActivity = "Miscellaneous Marketing",
+				tactic = "Other",
+				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				leadList = "true",
+				targetOfLeads = "test",
+				leadFollowUpList = "Other",
+				followUpStrategy = "test");
+
+			Button.click(button = "Continue");
+		}
+
+		task ("When I submit the MDF") {
+			Button.click(button = "Continue");
+
+        	Button.click(button = "Submit");
+		}
+
+		task ("Then the MDF is submited and visible on listing page") {
+			WaitForPageLoad();
+
+			PRMMDFListing.viewOnList(campaignName = "Campaign Name");
+		}
+	}
+
+}

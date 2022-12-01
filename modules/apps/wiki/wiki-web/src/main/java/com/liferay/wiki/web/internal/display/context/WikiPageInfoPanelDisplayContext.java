@@ -28,9 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class DefaultWikiPageInfoPanelDisplayContext {
+public class WikiPageInfoPanelDisplayContext {
 
-	public DefaultWikiPageInfoPanelDisplayContext(
+	public WikiPageInfoPanelDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
 		_wikiPageInfoPanelRequestHelper = new WikiPageInfoPanelRequestHelper(

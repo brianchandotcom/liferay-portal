@@ -17,7 +17,7 @@
 <%@ include file="/wiki/init.jsp" %>
 
 <%
-DefaultWikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = new DefaultWikiPageInfoPanelDisplayContext(request);
+WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = new WikiPageInfoPanelDisplayContext(request);
 
 WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 

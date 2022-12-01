@@ -14,7 +14,7 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import ClayPopover from '@clayui/popover';
-import React, {Children, ReactNode, useEffect, useState} from 'react';
+import React, {Children, Fragment, ReactNode, useEffect, useState} from 'react';
 
 import {BaseSelect, CustomItem, SelectProps} from './BaseSelect';
 
@@ -56,7 +56,7 @@ export function SingleSelect<
 				}
 
 				return (
-					<>
+					<Fragment key={option.value}>
 						<ClayPopover
 							alignPosition="right"
 							disableScroll={false}
@@ -92,7 +92,7 @@ export function SingleSelect<
 						>
 							{option.popover?.body}
 						</ClayPopover>
-					</>
+					</Fragment>
 				);
 			})}
 		</BaseSelect>

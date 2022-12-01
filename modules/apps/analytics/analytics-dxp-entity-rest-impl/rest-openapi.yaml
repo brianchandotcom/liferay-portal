@@ -33,7 +33,7 @@ components:
                 name:
                     type: string
                 value:
-                    type: object
+                    type: string
             type: object
 info:
     license:

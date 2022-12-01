@@ -283,4 +283,72 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-168163. The fragment developer could see the usages of fragment in staging site."
+	@priority = "4"
+	test ViewUsagesOfFragmentInStagingSite {
+		task ("Given a fragment developer has a new fragment") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name (Staging)",
+				name = "Fragment Set Name",
+				site = "false");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+    Fragment Example
+</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("When the fragment developer adds a new fragment into page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Fragment Set Name",
+				fragmentName = "Fragment Name");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 2 in staging site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "2 Usages");
+		}
+
+		task ("When the fragment developer publishes to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is still 2 in staging site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "2 Usages");
+		}
+	}
+
 }

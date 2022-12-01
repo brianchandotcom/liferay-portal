@@ -147,6 +147,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		WebDriver.Options options = webDriver.manage();
 
+		options.deleteAllCookies();
+
 		WebDriver.Window window = options.window();
 
 		window.setSize(new Dimension(1280, 1040));

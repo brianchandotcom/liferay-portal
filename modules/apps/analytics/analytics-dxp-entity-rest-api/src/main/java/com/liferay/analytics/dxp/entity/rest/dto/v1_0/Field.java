@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -36,8 +35,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
-
-import javax.validation.Valid;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -86,18 +83,17 @@ public class Field implements Serializable {
 	protected String name;
 
 	@Schema
-	@Valid
-	public Object getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
 	@JsonIgnore
 	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
 
 		try {
 			value = valueUnsafeSupplier.get();
@@ -112,7 +108,7 @@ public class Field implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object value;
+	protected String value;
 
 	@Override
 	public boolean equals(Object object) {
@@ -162,17 +158,11 @@ public class Field implements Serializable {
 
 			sb.append("\"value\": ");
 
-			if (value instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)value));
-				sb.append("\"");
-			}
-			else {
-				sb.append(value);
-			}
+			sb.append("\"");
+
+			sb.append(_escape(value));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

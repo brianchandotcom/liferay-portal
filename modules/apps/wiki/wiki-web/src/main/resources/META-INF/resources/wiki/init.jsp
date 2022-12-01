@@ -30,9 +30,10 @@ page import="com.liferay.portal.kernel.search.RelatedSearchResult" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.TempFileEntryUtil" %><%@
+page import="com.liferay.trash.TrashHelper" %><%@
+page import="com.liferay.trash.util.TrashWebKeys" %><%@
 page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
 page import="com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration" %><%@
-page import="com.liferay.wiki.display.context.WikiListPagesDisplayContext" %><%@
 page import="com.liferay.wiki.engine.WikiEngineRenderer" %><%@
 page import="com.liferay.wiki.exception.DuplicateNodeNameException" %><%@
 page import="com.liferay.wiki.exception.DuplicatePageException" %><%@
@@ -49,7 +50,7 @@ page import="com.liferay.wiki.social.WikiActivityKeys" %><%@
 page import="com.liferay.wiki.util.comparator.PageVersionComparator" %><%@
 page import="com.liferay.wiki.validator.WikiPageTitleValidator" %><%@
 page import="com.liferay.wiki.web.internal.configuration.WikiPortletInstanceConfiguration" %><%@
-page import="com.liferay.wiki.web.internal.display.context.WikiDisplayContextProvider" %><%@
+page import="com.liferay.wiki.web.internal.display.context.DefaultWikiListPagesDisplayContext" %><%@
 page import="com.liferay.wiki.web.internal.display.context.WikiNodeInfoPanelDisplayContext" %><%@
 page import="com.liferay.wiki.web.internal.display.context.WikiPageInfoPanelDisplayContext" %><%@
 page import="com.liferay.wiki.web.internal.display.context.helper.MailTemplatesHelper" %><%@
@@ -79,8 +80,6 @@ WikiGroupServiceOverriddenConfiguration wikiGroupServiceOverriddenConfiguration 
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 
 WikiWebComponentProvider wikiWebComponentProvider = WikiWebComponentProvider.getWikiWebComponentProvider();
-
-WikiDisplayContextProvider wikiDisplayContextProvider = wikiWebComponentProvider.getWikiDisplayContextProvider();
 
 WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 

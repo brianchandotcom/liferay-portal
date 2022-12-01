@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
+import com.liferay.message.boards.exception.CategoryNameException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
@@ -70,6 +71,37 @@ public class MBCategoryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAddCategories() throws Exception{
+
+		addCategory("Test");
+
+		Class<?> exceptionClass = Exception.class;
+
+		try {
+			addCategory("Test");
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Add MBCategory with existing name",
+			CategoryNameException.class, exceptionClass);
+
+		try {
+			addCategory(null);
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			"Name is null",
+			CategoryNameException.class, exceptionClass);
+
 	}
 
 	@Test
@@ -547,6 +579,14 @@ public class MBCategoryLocalServiceTest {
 		return MBCategoryServiceUtil.addCategory(
 			TestPropsValues.getUserId(), parentCategoryId,
 			RandomTestUtil.randomString(), StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	protected MBCategory addCategory(String name) throws Exception {
+		return MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			name, StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}

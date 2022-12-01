@@ -101,8 +101,8 @@ public interface DestinationNames {
 
 	public static final String MONITORING = "liferay/monitoring";
 
-	public static final String OBJECT_ENTRY_ATTACHMENT_DOWNLOAD =
-		"liferay/object_entry_attachment_download";
+	public static final String OBJECT_ENTRY_BUSINESS_TYPE_ATTACHMENT_DOWNLOAD =
+		"liferay/object_entry_business_type_attachment_download";
 
 	public static final String POLLER = "liferay/poller";
 

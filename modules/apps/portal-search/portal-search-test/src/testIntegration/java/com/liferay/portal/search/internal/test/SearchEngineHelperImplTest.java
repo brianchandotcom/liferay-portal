@@ -76,16 +76,17 @@ public class SearchEngineHelperImplTest {
 		String vendor = searchEngine.getVendor();
 
 		ComponentConfigurationDTO componentConfigurationDTO =
-			_getElasticsearchSearchEngineComponentConfigurationDTO(
+			_getRealSearchEngineComponentConfigurationDTO(
 				bundleContext, vendor);
 
-		// Assert ElasticsearchSearchEngine or SolrSearchEngine is on duty
+		// Assert real SearchEngine is on duty
 
 		Assert.assertEquals(
 			ComponentConfigurationDTO.ACTIVE, componentConfigurationDTO.state);
 
-		// Register mock SeachEngine to swap out ElasticsearchSearchEngine
-		// or SolrSearchEngine
+		Assert.assertNotEquals("MockSearchEngine", vendor);
+
+		// Register mock SeachEngine to swap out real SearchEngine
 
 		MockIndexSearcher mockIndexSearcher = new MockIndexSearcher();
 
@@ -105,7 +106,7 @@ public class SearchEngineHelperImplTest {
 			Assert.assertEquals("MockSearchEngine", searchEngine.getVendor());
 
 			componentConfigurationDTO =
-				_getElasticsearchSearchEngineComponentConfigurationDTO(
+				_getRealSearchEngineComponentConfigurationDTO(
 					bundleContext, vendor);
 
 			// Assert search request went to MockIndexSearcher
@@ -123,7 +124,7 @@ public class SearchEngineHelperImplTest {
 
 			Assert.assertSame(document, mockIndexWriter._document);
 
-			// Assert ElasticsearchSearchEngine or SolrSearchEngine is off duty
+			// Assert real SearchEngine is off duty
 
 			Assert.assertEquals(
 				ComponentConfigurationDTO.SATISFIED,
@@ -134,10 +135,10 @@ public class SearchEngineHelperImplTest {
 		}
 
 		componentConfigurationDTO =
-			_getElasticsearchSearchEngineComponentConfigurationDTO(
+			_getRealSearchEngineComponentConfigurationDTO(
 				bundleContext, vendor);
 
-		// Assert ElasticsearchSearchEngine or SolrSearchEngine is back on duty
+		// Assert real SearchEngine is back on duty
 
 		Assert.assertEquals(
 			ComponentConfigurationDTO.ACTIVE, componentConfigurationDTO.state);
@@ -148,7 +149,7 @@ public class SearchEngineHelperImplTest {
 	}
 
 	private ComponentConfigurationDTO
-			_getElasticsearchSearchEngineComponentConfigurationDTO(
+			_getRealSearchEngineComponentConfigurationDTO(
 				BundleContext bundleContext, String vendor)
 		throws Exception {
 

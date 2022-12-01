@@ -476,38 +476,6 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			_connection, indexMetadatas);
 	}
 
-	private boolean _checkValue(int key) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select typeInteger from ", _TABLE_NAME, " where id = ",
-					key));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				if (resultSet.getInt("typeInteger") == key) {
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		return false;
-	}
-
-	private int _getCount(String tableName) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(1) from " + tableName);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				return resultSet.getInt(1);
-			}
-		}
-
-		throw new Exception("Table does not exist");
-	}
-
 	private void _populateTable() throws Exception {
 		for (int i = 1; i <= _RANGE_MAX; i++) {
 			runSQL(
@@ -540,12 +508,19 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	private void _verifyTableContent() throws Exception {
-		Assert.assertEquals(_RANGE_MAX, _getCount(_TABLE_NAME));
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(1) from ", _TABLE_NAME,
+					" where id >= 1 and id <= ", _RANGE_MAX,
+					" and typeInteger = id"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-		for (int i = 1; i <= _RANGE_MAX; i++) {
-			Assert.assertTrue(
-				"Key " + i + " does not have the right value", _checkValue(i));
+			if (resultSet.next()) {
+				Assert.assertEquals(_RANGE_MAX, resultSet.getInt(1));
+			}
 		}
+
+		throw new Exception("Table does not exist");
 	}
 
 	private static final String _INDEX_NAME = "IX_TEMP";

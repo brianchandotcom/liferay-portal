@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.machine.learning.internal.dispatch.executor;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
@@ -25,10 +26,13 @@ import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductChannel;
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.CategoryBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.ProductBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.ProductChannelBatchEngineTaskItemDelegate;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
@@ -51,6 +55,10 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
+		AnalyticsConfiguration analyticsConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AnalyticsConfiguration.class, dispatchTrigger.getCompanyId());
+
 		DispatchLog dispatchLog =
 			dispatchLogLocalService.fetchLatestDispatchLog(
 				dispatchTrigger.getDispatchTriggerId(),
@@ -61,7 +69,8 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
 			CategoryBatchEngineTaskItemDelegate.KEY,
-			dispatchTrigger.getCompanyId(), null,
+			dispatchTrigger.getCompanyId(),
+			Arrays.asList(analyticsConfiguration.syncedCategoryFieldNames()),
 			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -70,7 +79,8 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
 			ProductBatchEngineTaskItemDelegate.KEY,
-			dispatchTrigger.getCompanyId(), null,
+			dispatchTrigger.getCompanyId(),
+			Arrays.asList(analyticsConfiguration.syncedProductFieldNames()),
 			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -79,7 +89,9 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
 			ProductChannelBatchEngineTaskItemDelegate.KEY,
-			dispatchTrigger.getCompanyId(), null,
+			dispatchTrigger.getCompanyId(),
+			Arrays.asList(
+				analyticsConfiguration.syncedProductChannelFieldNames()),
 			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -91,5 +103,8 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 	public String getName() {
 		return KEY;
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

@@ -56,7 +56,9 @@ public interface CET {
 
 	public String getTypeSettings();
 
-	public String getViewJSP();
+	public default String getViewJSP() {
+		return null;
+	}
 
 	public boolean hasProperties();
 

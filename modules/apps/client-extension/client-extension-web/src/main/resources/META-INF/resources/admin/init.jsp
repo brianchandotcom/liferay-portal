@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException" %><%@
-page import="com.liferay.client.extension.type.CET" %><%@
 page import="com.liferay.client.extension.type.CustomElementCET" %><%@
 page import="com.liferay.client.extension.type.GlobalCSSCET" %><%@
 page import="com.liferay.client.extension.type.GlobalJSCET" %><%@

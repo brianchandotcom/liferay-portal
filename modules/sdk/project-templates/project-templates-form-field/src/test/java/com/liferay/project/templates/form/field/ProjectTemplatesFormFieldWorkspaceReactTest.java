@@ -82,6 +82,8 @@ public class ProjectTemplatesFormFieldWorkspaceReactTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
+		setProductVersion(workspaceDir, _liferayVersion);
+
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "modules"), "form-field", name,
 			"--js-framework", "react", "--liferay-version", _liferayVersion);

@@ -141,6 +141,8 @@ public class ProjectTemplatesServiceBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
+
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
 
@@ -214,6 +216,8 @@ public class ProjectTemplatesServiceBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
+
 		File gradlePropertiesFile = new File(
 			gradleWorkspaceDir + "gradle.properties");
 
@@ -240,9 +244,7 @@ public class ProjectTemplatesServiceBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
-		writeGradlePropertiesInWorkspace(
-			gradleWorkspaceDir,
-			"liferay.workspace.target.platform.version=7.4.3.36");
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");
 
@@ -325,6 +327,8 @@ public class ProjectTemplatesServiceBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
+
 		buildTemplateWithGradle(
 			gradleWorkspaceDir, "service-builder", name, "--add-ons", "true",
 			"--liferay-version", liferayVersion);
@@ -343,6 +347,8 @@ public class ProjectTemplatesServiceBuilderTest
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
+
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
 
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");

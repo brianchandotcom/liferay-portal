@@ -69,6 +69,8 @@ public class ProjectTemplatesApiTest implements BaseProjectTemplatesTestCase {
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
+
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
 
@@ -131,6 +133,8 @@ public class ProjectTemplatesApiTest implements BaseProjectTemplatesTestCase {
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
+
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
 
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");

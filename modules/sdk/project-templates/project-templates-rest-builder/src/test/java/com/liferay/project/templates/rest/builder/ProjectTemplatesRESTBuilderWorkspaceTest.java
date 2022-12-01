@@ -122,6 +122,8 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
+		setProductVersion(gradleWorkspaceDir, _liferayVersion);
+
 		if (_liferayVersion.startsWith("7.0")) {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir, "liferay.workspace.product=portal-7.0-ga7");

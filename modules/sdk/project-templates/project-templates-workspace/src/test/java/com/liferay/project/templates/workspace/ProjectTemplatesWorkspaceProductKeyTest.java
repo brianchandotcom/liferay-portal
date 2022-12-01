@@ -82,6 +82,8 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 		File workspaceProjectDir = buildWorkspace(
 			temporaryFolder, "gradle", "foows", _liferayVersion, mavenExecutor);
 
+		setProductVersion(workspaceProjectDir, _liferayVersion);
+
 		if (isBuildProjects()) {
 			String name = "foo-portlet";
 

@@ -71,6 +71,8 @@ public class ProjectTemplatesRESTBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
+
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
 
@@ -110,6 +112,8 @@ public class ProjectTemplatesRESTBuilderTest
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
+
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
 
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
@@ -152,6 +156,8 @@ public class ProjectTemplatesRESTBuilderTest
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
+
+		setProductVersion(gradleWorkspaceDir, liferayVersion);
 
 		File gradlePropertiesFile = new File(
 			gradleWorkspaceDir + "gradle.properties");

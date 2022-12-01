@@ -71,6 +71,8 @@ public class ProjectTemplatesWorkspaceTest
 			temporaryFolder, "gradle", "foows", getDefaultLiferayVersion(),
 			mavenExecutor);
 
+		setProductVersion(workspaceProjectDir, getDefaultLiferayVersion());
+
 		testExists(workspaceProjectDir, "configs/dev/portal-ext.properties");
 		testExists(workspaceProjectDir, "gradle.properties");
 		testExists(workspaceProjectDir, "modules");
@@ -148,6 +150,8 @@ public class ProjectTemplatesWorkspaceTest
 			temporaryFolder, "gradle", "foows", getDefaultLiferayVersion(),
 			mavenExecutor);
 
+		setProductVersion(workspaceProjectDir, getDefaultLiferayVersion());
+
 		File gradleProperties = new File(
 			workspaceProjectDir, "gradle.properties");
 
@@ -180,6 +184,8 @@ public class ProjectTemplatesWorkspaceTest
 		File workspaceProjectDir = buildWorkspace(
 			temporaryFolder, "gradle", "foo", getDefaultLiferayVersion(),
 			mavenExecutor);
+
+		setProductVersion(workspaceProjectDir, getDefaultLiferayVersion());
 
 		testExists(workspaceProjectDir, "gradle-local.properties");
 
@@ -221,6 +227,8 @@ public class ProjectTemplatesWorkspaceTest
 			temporaryFolder, "gradle", "foows", getDefaultLiferayVersion(),
 			mavenExecutor);
 
+		setProductVersion(workspaceProjectDir, getDefaultLiferayVersion());
+
 		File gradleProperties = new File(
 			workspaceProjectDir, "gradle.properties");
 
@@ -256,6 +264,9 @@ public class ProjectTemplatesWorkspaceTest
 		File gradleWorkspaceProjectDir = buildWorkspace(
 			temporaryFolder, "gradle", "withportlet",
 			getDefaultLiferayVersion(), mavenExecutor);
+
+		setProductVersion(
+			gradleWorkspaceProjectDir, getDefaultLiferayVersion());
 
 		File gradleModulesDir = new File(gradleWorkspaceProjectDir, "modules");
 
@@ -297,6 +308,8 @@ public class ProjectTemplatesWorkspaceTest
 		File workspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
+
+		setProductVersion(workspaceDir, liferayVersion);
 
 		File modulesDir = new File(workspaceDir, "modules");
 

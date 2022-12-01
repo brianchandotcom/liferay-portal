@@ -86,6 +86,8 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
+		setProductVersion(gradleWorkspaceDir, _liferayVersion);
+
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
 

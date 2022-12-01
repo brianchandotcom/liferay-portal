@@ -39,6 +39,8 @@ public class ProjectTemplatesWarCoreExtTest
 			temporaryFolder, "gradle", "testWorkspace",
 			getDefaultLiferayVersion(), mavenExecutor);
 
+		setProductVersion(workspaceDir, getDefaultLiferayVersion());
+
 		File modulesDir = new File(workspaceDir, "modules");
 
 		File projectDir = buildTemplateWithGradle(

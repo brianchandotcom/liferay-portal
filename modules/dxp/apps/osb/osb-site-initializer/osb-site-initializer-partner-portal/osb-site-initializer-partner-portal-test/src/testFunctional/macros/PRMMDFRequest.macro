@@ -1,0 +1,55 @@
+definition {
+    @summary = "Fill the goals page form"
+    macro fillGoalsPage {
+        Select(
+            locator1 = "PRMMDFRequest#SELECT",
+            key_fieldName = "company",
+            value1 = "${accountName}");
+
+        Select(
+            locator1 = "PRMMDFRequest#SELECT",
+            key_fieldName = "country",
+            value1 = "${countryName}");
+
+        Type(
+            locator1 = "PRMMDFRequest#TEXT_FIELD",
+            key_fieldName = "overallCampaignName",
+            value1 = "${campaignName}");
+
+        Type(
+            locator1 = "PRMMDFRequest#TEXT_FIELD",
+            key_fieldName = "overallCampaignDescription",
+            value1 = "${campaignDescription}");
+
+        for (var goalsList : list "${goalsOptions}") {
+            Click.clickAtNotVisible(
+                locator1 = "PRMMDFRequest#CHECKBOX",
+                key_fieldName = "liferayBusinessSalesGoals",
+                key_optionValue = "${goalsList}");
+        }
+
+        for (var targetMarketList : list "${targetMarketOptions}") {
+            Click.clickAtNotVisible(
+                locator1 = "PRMMDFRequest#CHECKBOX",
+                key_fieldName = "targetMarkets",
+                key_optionValue = "${targetMarketList}");
+        }
+
+        if (isSet(additionalOptions)) {
+            for (var optionsList : list "${additionalOptions}") {
+                Click.clickAtNotVisible(
+                    locator1 = "PRMMDFRequest#INPUT_BUTTON",
+                    key_fieldName = "additionalOption",
+                    key_buttonText = "${optionsList}");
+            }
+        }
+
+        for (var targetRolesList : list "${targetRolesOptions}") {
+            Click.clickAtNotVisible(
+                locator1 = "PRMMDFRequest#CHECKBOX",
+                key_fieldName = "targetAudienceRoles",
+                key_optionValue = "${targetRolesList}");
+        }
+    }
+
+}

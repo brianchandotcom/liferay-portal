@@ -22,6 +22,7 @@ import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.TransitionUtil
 import com.liferay.headless.admin.workflow.internal.odata.entity.v1_0.WorkflowDefinitionEntityModel;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
@@ -63,6 +64,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/workflow-definition.properties",
 	scope = ServiceScope.PROTOTYPE, service = WorkflowDefinitionResource.class
 )
+@CTAware
 public class WorkflowDefinitionResourceImpl
 	extends BaseWorkflowDefinitionResourceImpl implements EntityModelResource {
 

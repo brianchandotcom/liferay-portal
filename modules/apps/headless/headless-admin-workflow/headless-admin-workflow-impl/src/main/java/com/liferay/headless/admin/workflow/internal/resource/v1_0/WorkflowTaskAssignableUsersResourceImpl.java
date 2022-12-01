@@ -20,6 +20,7 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignableUsers;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskIds;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.AssigneeUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskAssignableUsersResource;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
@@ -43,6 +44,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE,
 	service = WorkflowTaskAssignableUsersResource.class
 )
+@CTAware
 public class WorkflowTaskAssignableUsersResourceImpl
 	extends BaseWorkflowTaskAssignableUsersResourceImpl {
 

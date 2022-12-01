@@ -15,6 +15,7 @@
 package com.liferay.account.service.test;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -182,9 +183,47 @@ public class AccountRoleServiceTest {
 		Assert.assertEquals(accountRole, accountRoles.get(0));
 	}
 
+	@Test
+	public void testSearchAccountRolesWithDefaultAccountEntryId()
+		throws Exception {
+
+		AccountRole accountRoleWithViewPermissions = _addAccountRole(
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+		AccountRole accountRoleWithoutViewPermissions = _addAccountRole(
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user.getUserId());
+
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			accountRoleWithViewPermissions.getCompanyId(), Role.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(accountRoleWithViewPermissions.getRoleId()),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
+
+		BaseModelSearchResult<AccountRole> baseModelSearchResult =
+			_accountRoleService.searchAccountRoles(
+				_accountEntry.getCompanyId(),
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT},
+				StringPool.BLANK, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		List<AccountRole> accountRoles = baseModelSearchResult.getBaseModels();
+
+		Assert.assertTrue(
+			accountRoles.contains(accountRoleWithViewPermissions));
+		Assert.assertFalse(
+			accountRoles.contains(accountRoleWithoutViewPermissions));
+	}
+
 	private AccountRole _addAccountRole() throws Exception {
+		return _addAccountRole(_accountEntry.getAccountEntryId());
+	}
+
+	private AccountRole _addAccountRole(long accountEntryId) throws Exception {
 		return _accountRoleLocalService.addAccountRole(
-			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
+			TestPropsValues.getUserId(), accountEntryId,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap());

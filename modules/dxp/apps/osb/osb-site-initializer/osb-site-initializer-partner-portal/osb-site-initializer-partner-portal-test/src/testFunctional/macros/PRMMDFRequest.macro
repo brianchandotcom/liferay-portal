@@ -162,4 +162,42 @@ definition {
             value1 = "${followUpStrategy}");
     }
 
+    @summary = "Add a new MDF Request filling the goals and activity pages"
+    macro createNewRequest {
+        PRMMDFRequest.fillGoalsPage(
+            accountName = "${accountName}",
+            countryName = "${countryName}",
+            campaignName = "${campaignName}",
+            campaignDescription = "${campaignDescription}",
+            targetMarketOptions = "${targetMarketOptions}",
+            goalsOptions = "${goalsOptions}",
+            targetRolesOptions = "${targetRolesOptions}",
+            additionalOptions = "${additionalOptions}");
+
+        Button.click(button = "Continue");
+
+        Click(
+            locator1 = "PRMMDFRequest#ADD_BUTTON",
+            key_buttonText = "Add Activity");
+
+        PRMMDFRequest.newActivity(
+            activityName = "${activityName}",
+            typeOfActivity = "${typeOfActivity}",
+            tactic = "${tactic}",
+            budgetList = "${budgetList}",
+            leadList = "${leadList}",
+            targetOfLeads = "${targetOfLeads}",
+            leadFollowUpList = "${leadFollowUpList}",
+            followUpStrategy = "${followUpStrategy}");
+
+        Button.click(button = "Continue");
+
+        Button.click(button = "Continue");
+
+        ScrollWebElementIntoView(locator1 = "Button#SUBMIT");
+
+        Button.click(button = "Submit");
+
+        WaitForPageLoad();
+    }
 }

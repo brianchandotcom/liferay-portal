@@ -280,6 +280,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_INFO_PANEL</td>
+	<td>//li//button[*[name()='svg'][contains(@class,'info-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_INFO_PANEL_DETAILS_MESSAGE</td>
+	<td>//strong[contains(.,'${key_detailsMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
 	<td>//li[@class='nav-item']//div[contains(@class,'checkbox')]//input</td>
 	<td></td>

@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -150,6 +151,14 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 		oAuth2Application = oAuth2ApplicationLocalService.updateScopeAliases(
 			oAuth2Application.getUserId(), oAuth2Application.getUserName(),
 			oAuth2Application.getOAuth2ApplicationId(), scopeAliasesList);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"OAuth2Application {externalReferenceCode: ",
+					oAuth2Application.getExternalReferenceCode(),
+					", clientId: ", oAuth2Application.getClientId(), "}"));
+		}
 
 		Class<?> clazz = getClass();
 

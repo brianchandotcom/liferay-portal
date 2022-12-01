@@ -2,6 +2,7 @@
 
 <Configuration strict="true">
 	<Loggers>
+		<Logger level="INFO" name="com.liferay.oauth2.provider.internal.configuration" />
 		<Logger level="INFO" name="com.liferay.oauth2.provider.internal.security.permission.resource" />
 		<Logger level="INFO" name="com.liferay.oauth2.provider.model.impl" />
 		<Logger level="INFO" name="com.liferay.oauth2.provider.service" />

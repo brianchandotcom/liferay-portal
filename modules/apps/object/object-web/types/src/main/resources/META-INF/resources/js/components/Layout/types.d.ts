@@ -17,7 +17,6 @@ export declare type TObjectLayout = {
 	defaultObjectLayout: boolean;
 	name: LocalizedValue<string>;
 	objectDefinitionExternalReferenceCode: string;
-	objectDefinitionId: number;
 	objectLayoutTabs: TObjectLayoutTab[];
 };
 export declare type TObjectLayoutTab = {

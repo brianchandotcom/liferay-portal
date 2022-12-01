@@ -123,7 +123,6 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				defaultObjectLayout,
 				name,
 				objectDefinitionExternalReferenceCode,
-				objectDefinitionId,
 				objectLayoutTabs,
 			} = await API.fetchJSON<TObjectLayout>(
 				`/o/object-admin/v1.0/object-layouts/${objectLayoutId}`
@@ -133,17 +132,18 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				objectDefinitionExternalReferenceCode
 			);
 
-			const objectFields = await API.getObjectFields(objectDefinitionId);
+			const objectFields = await API.getObjectFieldsByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
+			);
 
-			const objectRelationships = await API.getObjectRelationships(
-				objectDefinitionId
+			const objectRelationships = await API.getObjectRelationshipsByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
 			);
 
 			const objectLayout = {
 				defaultObjectLayout,
 				name,
 				objectDefinitionExternalReferenceCode,
-				objectDefinitionId,
 				objectLayoutTabs,
 			};
 

@@ -33,6 +33,8 @@ public interface TypeFacetPortletPreferences {
 	public static final String PREFERENCE_KEY_FREQUENCY_THRESHOLD =
 		"frequencyThreshold";
 
+	public static final String PREFERENCE_KEY_ORDER = "order";
+
 	public static final String PREFERENCE_KEY_PARAMETER_NAME = "parameterName";
 
 	public Optional<String[]> getAssetTypesArray();
@@ -48,6 +50,8 @@ public interface TypeFacetPortletPreferences {
 	public String[] getCurrentAssetTypesArray(long companyId);
 
 	public int getFrequencyThreshold();
+
+	public String getOrder();
 
 	public String getParameterName();
 

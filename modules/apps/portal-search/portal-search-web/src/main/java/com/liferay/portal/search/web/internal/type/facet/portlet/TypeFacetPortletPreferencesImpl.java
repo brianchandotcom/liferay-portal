@@ -115,6 +115,12 @@ public class TypeFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public String getOrder() {
+		return _portletPreferencesHelper.getString(
+			TypeFacetPortletPreferences.PREFERENCE_KEY_ORDER, "count:desc");
+	}
+
+	@Override
 	public String getParameterName() {
 		return _portletPreferencesHelper.getString(
 			TypeFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME, "type");

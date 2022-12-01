@@ -808,4 +808,175 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-168163. The fragment developer could see the usages of form fragment."
+	@priority = "5"
+	test ViewUsagesOfFormFragment {
+		task ("Given a fragment developer has a custom object with Text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+
+		task ("When the fragment developer adds a new form fragment with Text field") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdmin.addFragment(
+				fragmentName = "Fragment Name",
+				fragmentType = "Form Fragment",
+				supportedFieldTypes = "Text");
+
+			var htmlSnippet = '''
+<div class="text-input">
+	<div class="form-group mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-text-input">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+
+		<input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-text-input" maxlength="280" name="${input.name}" placeholder="${configuration.placeholder}" ${input.required?then('required', '')} type="text" [#if input.value??]value="${input.value}"[/#if] />
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-text-input-help-text">${htmlUtil.escape(input.helpText)}</p>
+		[/#if]
+	</div>
+</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			var jsSnippet = '''
+if (layoutMode === 'edit') {
+	const input = document.getElementById(`${fragmentNamespace}-text-input`);
+
+	if (input) {
+		input.setAttribute('disabled', true);
+	}
+}''';
+
+			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "placeholder",
+					"localizable": true,
+					"name": "placeholder",
+					"type": "text"
+				}
+			]
+		}
+	]
+}''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 0") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "0 Usages");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Fragment Name",
+				locator1 = "Card#CARD_ELLIPSIS");
+
+			MenuItem.viewDisabled(menuItem = "View Usages");
+		}
+
+		task ("When the fragment developer adds a new fragment into a Form Container") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.removeFragment(fragmentName = "Text Input");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Fragment Set Name",
+				fragmentName = "Fragment Name",
+				targetFragmentName = "Submit Button");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 1") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "1 Usages");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "View Usages");
+
+			AssertElementPresent(
+				locator1 = "AssetLists#ASSET_LIST_USAGES",
+				usageAmount = "1",
+				usageType = "All");
+		}
+
+		task ("When the fragment developer publishes the page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 2") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "2 Usages");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
 }

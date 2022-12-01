@@ -1249,6 +1249,16 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setScope(scope);
 
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId(),
+					StringPool.BLANK)) {
+
+			objectField.setDBTableName(objectDefinition.getDBTableName());
+
+			_objectFieldLocalService.updateObjectField(objectField);
+		}
+
 		return objectDefinitionPersistence.update(objectDefinition);
 	}
 

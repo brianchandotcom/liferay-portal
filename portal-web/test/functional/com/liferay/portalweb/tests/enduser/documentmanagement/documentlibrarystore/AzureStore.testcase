@@ -12,7 +12,7 @@ definition {
 
 		User.firstLoginPG();
 
-        JSONGroup.addGroup(groupName = "Test Site Name");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {

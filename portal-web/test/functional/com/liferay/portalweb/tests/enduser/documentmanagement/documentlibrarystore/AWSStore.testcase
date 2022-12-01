@@ -12,7 +12,7 @@ definition {
 
 		User.firstLoginPG();
 
-        JSONGroup.addGroup(groupName = "Test Site Name");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -27,8 +27,8 @@ definition {
 			User.logoutPG();
 		}
 	}
-    
-    @description = "This is a use case for LPS-129271."
+
+	@description = "This is a use case for LPS-129271."
 	@priority = "4"
 	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
 		property test.name.skip.portal.instance = "AWSStore#AssertNoErrorMessageAfterExportAndImportSiteLAR";
@@ -69,7 +69,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.io.IOException");
 	}
 
-    @priority = "5"
+	@priority = "5"
 	test AWSS3StoreSmoke {
 		property test.name.skip.portal.instance = "AWSStore#AWSS3StoreSmoke";
 
@@ -111,7 +111,7 @@ definition {
 			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 	}
 
-    @description = "This is a use case for LPS-122233."
+	@description = "This is a use case for LPS-122233."
 	@priority = "3"
 	test ReIndexingDoesNotAddNewS3StoreCacheFiles {
 		property test.name.skip.portal.instance = "AWSStore#ReIndexingDoesNotAddNewS3StoreCacheFiles";
@@ -155,7 +155,7 @@ definition {
 		}
 	}
 
-    @description = "This is a use case for LPS-127589."
+	@description = "This is a use case for LPS-127589."
 	@priority = "3"
 	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
 		property test.name.skip.portal.instance = "AWSStore#S3ConnectionDoesNotLeakWhenServingFileAsStream";

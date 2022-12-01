@@ -14,6 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
@@ -496,30 +497,21 @@ class SegmentEdit extends Component {
 				/>
 
 				{invalidSegment && Liferay.FeatureFlags['LPS-166954'] ? (
-					<div className="mt-10 taglib-empty-result-message">
-						<div className="taglib-empty-result-message-header"></div>
-
-						<div className="sheet-text text-center">
-							<h3 className="text-default">
-								{Liferay.Language.get('segment-not-found')}
-							</h3>
-
-							<p className="text-default">
-								{Liferay.Language.get(
-									'the-criteria-used-in-this-segment-is-no-longer-available'
-								)}
-							</p>
-
-							<ClayButton
-								displayType="secondary"
-								onClick={this._redirect}
-								small
-								type="button"
-							>
-								{Liferay.Language.get('go-to-segments')}
-							</ClayButton>
-						</div>
-					</div>
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'the-criteria-used-in-this-segment-is-no-longer-available'
+						)}
+						imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+						title={Liferay.Language.get('segment-not-found')}
+					>
+						<ClayButton
+							displayType="secondary"
+							onClick={this._redirect}
+							type="button"
+						>
+							{Liferay.Language.get('go-to-segments')}
+						</ClayButton>
+					</ClayEmptyState>
 				) : (
 					<>
 						<div className="form-header">

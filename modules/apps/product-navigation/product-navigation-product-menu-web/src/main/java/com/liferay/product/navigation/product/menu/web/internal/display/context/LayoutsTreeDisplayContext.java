@@ -708,6 +708,8 @@ public class LayoutsTreeDisplayContext {
 			return selectedLayoutPath;
 		}
 
+		selectedLayoutPath.add(selPlid);
+
 		selectedLayoutPath.addAll(
 			ListUtil.toList(
 				_layoutService.getAncestorLayouts(selPlid),

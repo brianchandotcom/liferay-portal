@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>PRMMDFRequest</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRMMDFRequest</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>SELECT</td>
+	<td>//select[contains(@name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FIELD</td>
+	<td>//input[contains(@name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX</td>
+	<td>//input[contains(@name,'${key_fieldName}')][@value='${key_optionValue}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_BUTTON</td>
+	<td>//input[contains(@name,'${key_fieldName}')]//ancestor::label//span[contains(text(),'${key_buttonText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BUTTON</td>
+	<td>//*[contains(@class,'lexicon-icon-plus')]//ancestor::button[contains(text(),'${key_buttonText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LISTING_TABLE_NAME</td>
+	<td>//*[@route='mdf-request-list']//thead//th/p[contains(text(),'Name')]//ancestor::table//tbody//th[6][contains(text(),'Campaign Name')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

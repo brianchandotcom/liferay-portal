@@ -12,7 +12,9 @@
  * details.
  */
 
-export declare const SPRITEMAP: string;
-export declare const NOT_FOUND_GIF: string;
 export declare const EMPTY_STATE_GIF: string;
 export declare const ERROR_MESSAGE: string;
+export declare const MAX_LENGTH = 65;
+export declare const MIN_LENGTH = 3;
+export declare const NOT_FOUND_GIF: string;
+export declare const SPRITEMAP: string;

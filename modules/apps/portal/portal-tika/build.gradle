@@ -16,7 +16,6 @@ dependencies {
 	compileInclude group: "org.apache.poi", name: "poi-scratchpad", version: "5.2.2"
 	compileInclude group: "org.apache.tika", name: "tika-core", version: "1.28.5"
 	compileInclude group: "org.apache.tika", name: "tika-parsers", version: "1.28.5"
-	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.0.2"
 	compileInclude group: "org.ccil.cowan.tagsoup", name: "tagsoup", version: "1.2.1"
 	compileInclude group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
 	compileInclude group: "org.tallison", name: "jmatio", version: "1.2"
@@ -28,6 +27,7 @@ dependencies {
 	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
 	compileOnly group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
 	compileOnly group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
+	compileOnly group: "org.apache.xmlbeans", name: "xmlbeans", version: "5.0.3"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":core:petra:petra-concurrent")

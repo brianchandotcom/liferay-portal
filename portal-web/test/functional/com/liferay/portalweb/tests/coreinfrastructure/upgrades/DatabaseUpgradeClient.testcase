@@ -59,4 +59,13 @@ definition {
 			value1 = "check-upgrade-client-zip-content");
 	}
 
+	@description = "LPS-168551:  Upgrade client throws error when portal-ext.properties exists in home directory"
+	@priority = "3"
+	test HomeExtPropertiesReturnsError {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-home-ext-properties");
+
+	}
+
 }

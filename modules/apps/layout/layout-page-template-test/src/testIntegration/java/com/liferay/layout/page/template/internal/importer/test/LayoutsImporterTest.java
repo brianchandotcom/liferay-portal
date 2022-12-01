@@ -550,7 +550,7 @@ public class LayoutsImporterTest {
 				fragmentEntry, layoutPageTemplateEntry);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
-				fragmentEntry,
+				2, fragmentEntry,
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 
 			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
@@ -566,7 +566,7 @@ public class LayoutsImporterTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), file, false);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
-				fragmentEntry,
+				2, fragmentEntry,
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 		}
 		finally {
@@ -828,7 +828,8 @@ public class LayoutsImporterTest {
 
 	private void
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
-				FragmentEntry fragmentEntry, String layoutPageTemplateEntryKey)
+				int expectedChildrenItemIdsSize, FragmentEntry fragmentEntry,
+				String layoutPageTemplateEntryKey)
 		throws PortalException {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -869,7 +870,8 @@ public class LayoutsImporterTest {
 			fragmentStyledLayoutStructureItem.getChildrenItemIds();
 
 		Assert.assertEquals(
-			childrenItemIds.toString(), 2, childrenItemIds.size());
+			childrenItemIds.toString(), expectedChildrenItemIdsSize,
+			childrenItemIds.size());
 
 		for (String itemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =

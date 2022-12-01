@@ -3805,17 +3805,39 @@ AUI.add(
 					Field.prototype.setLabel.apply(instance, arguments);
 				},
 
-				setValue(value) {
+				setValue(values) {
 					const instance = this;
+					const currentlyAvailableValues = instance
+						.getInputNode()
+						.all('option')
+						.val();
+					const predefinedValues = JSON.parse(
+						instance.getFieldByNameInFieldDefinition(
+							instance.get('name')
+						).predefinedValue[instance.get('displayLocale')]
+					);
 
-					if (Lang.isString(value)) {
-						if (value !== '') {
-							value = JSON.parse(value);
+					if (Lang.isString(values)) {
+						if (values !== '') {
+							values = JSON.parse(values);
 						}
 						else {
-							value = [''];
+							values = [''];
 						}
 					}
+
+					let resultValues = [];
+
+					values.forEach((value) => {
+						if (!currentlyAvailableValues.includes(value)) {
+							resultValues.push(...predefinedValues);
+						}
+						else {
+							resultValues.push(value);
+						}
+					});
+
+					resultValues = [...new Set(resultValues)];
 
 					instance
 						.getInputNode()
@@ -3823,7 +3845,7 @@ AUI.add(
 						.each((item) => {
 							item.set(
 								'selected',
-								value.indexOf(item.val()) > -1
+								resultValues.indexOf(item.val()) > -1
 							);
 						});
 				},

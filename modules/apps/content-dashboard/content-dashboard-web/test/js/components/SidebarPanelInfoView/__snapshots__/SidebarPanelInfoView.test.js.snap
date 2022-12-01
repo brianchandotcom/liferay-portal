@@ -27,6 +27,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
             class="autofit-col"
           >
             <button
+              aria-label="Subscribe"
               class="component-action mr-2 btn btn-monospaced btn-unstyled"
               data-tooltip-align="bottom"
               title="Subscribe"

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -56,6 +57,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -115,15 +117,22 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	public void testRemovedLayoutTemplateId() throws Exception {
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)_layout.getLayoutType();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_layout.getTypeSettingsProperties();
 
-		layoutTypePortlet.setLayoutTemplateId(
-			_layout.getUserId(), "removed-template-id");
+		typeSettingsUnicodeProperties.setProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
+			"removed-template-id");
 
 		_layout = LayoutLocalServiceUtil.updateLayout(
 			_layout.getGroupId(), _layout.isPrivateLayout(),
-			_layout.getLayoutId(), _layout.getTypeSettings());
+			_layout.getLayoutId(), typeSettingsUnicodeProperties.toString());
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)_layout.getLayoutType();
+
+		Assert.assertEquals(
+			"removed-template-id", layoutTypePortlet.getLayoutTemplateId());
 
 		RenderLayoutStructureTag renderLayoutStructureTag =
 			new RenderLayoutStructureTag();

@@ -1197,7 +1197,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_invoke(
 			() -> _updateObjectDefinitionAccountEntryRestricted(
-				objectDefinitionMap, objectDefinitionResource));
+				objectDefinitionMap, objectDefinitionResource, serviceContext));
 		_invoke(
 			() -> _addOrUpdateObjectFields(
 				listTypeDefinitionIdsStringUtilReplaceValues,
@@ -4505,14 +4505,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _updateObjectDefinitionAccountEntryRestricted(
 			Map<String, ObjectDefinition> objectDefinitionMap,
-			ObjectDefinitionResource objectDefinitionResource)
+			ObjectDefinitionResource objectDefinitionResource,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		for (Map.Entry<String, ObjectDefinition> entry :
 				objectDefinitionMap.entrySet()) {
 
-			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
-				entry.getKey(), entry.getValue());
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition =
+				_objectDefinitionLocalService.
+					getObjectDefinitionByExternalReferenceCode(
+					entry.getKey()
+					,serviceContext.getCompanyId());
+
+			Long objectDefinitionID =
+				serviceBuilderObjectDefinition.getObjectDefinitionId();
+
+			objectDefinitionResource.patchObjectDefinition(
+				objectDefinitionID, entry.getValue());
 		}
 	}
 

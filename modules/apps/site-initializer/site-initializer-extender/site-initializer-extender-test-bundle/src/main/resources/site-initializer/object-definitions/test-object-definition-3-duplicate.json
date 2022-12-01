@@ -1,4 +1,7 @@
 {
+	"accountEntryRestrictedObjectFieldName": "",
+	"accountEntryRestricted": false,
+	"externalReferenceCode": "ODRC-003T",
 	"label": {
 		"en_US": "Test Object Definition 3"
 	},

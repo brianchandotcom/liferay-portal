@@ -138,28 +138,35 @@ definition {
 	}
 
 	macro setUpGlobalUserAccountId {
+		var response = UserAccountAPI.createUserAccount(
+			alternateName = "user",
+			emailAddress = "user@liferay.com",
+			familyName = "userfn",
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}",
+			givenName = "usergn");
+
+		static var staticResponse = "${response}";
+		static var staticUserAccountId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		return "${staticResponse}";
+
+		return "${staticUserAccountId}";
+	}
+
+	macro setUpGlobalUserAccountIds {
 		var response1 = UserAccountAPI.createUserAccount(
 			alternateName = "${alternateName1}",
 			emailAddress = "${emailAddress1}",
 			familyName = "${familyName1}",
-			fieldName = "${fieldName1}",
-			fieldValue = "${fieldValue1}",
 			givenName = "${givenName1}");
 		var response2 = UserAccountAPI.createUserAccount(
 			alternateName = "${alternateName2}",
 			emailAddress = "${emailAddress2}",
 			familyName = "${familyName2}",
-			fieldName = "${fieldName2}",
-			fieldValue = "${fieldValue2}",
 			givenName = "${givenName2}");
 		static var staticUserAccountId1 = JSONUtil.getWithJSONPath("${response1}", "$.id");
 		static var staticUserAccountId2 = JSONUtil.getWithJSONPath("${response2}", "$.id");
-		static var staticResponse1 = "${response1}";
-		static var staticResponse2 = "${response2}";
-
-		return "${staticResponse1}";
-
-		return "${staticResponse2}";
 
 		return "${staticUserAccountId1}";
 

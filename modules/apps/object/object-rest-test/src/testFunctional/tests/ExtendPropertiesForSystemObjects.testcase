@@ -20,23 +20,13 @@ definition {
 
 		task ("When with post request postUserAccount to create a user with the new field") {
 			UserAccountAPI.setUpGlobalUserAccountId(
-				alternateName1 = "userln",
-				alternateName2 = "user2",
-				emailAddress1 = "userln@liferay.com",
-				emailAddress2 = "user2@liferay.com",
-				familyName1 = "userfn",
-				familyName2 = "userfn2",
-				fieldName1 = "passportNumber",
-				fieldValue1 = "passportNum2022",
-				givenName1 = "usergn",
-				givenName2 = "usergn2");
+				fieldName = "passportNumber",
+				fieldValue = "passportNum2022");
 		}
 	}
 
 	tearDown {
-		for (var userId : list "${staticUserAccountId1},${staticUserAccountId2}") {
-			JSONUser.deleteUserByUserId(userId = "${userId}");
-		}
+		JSONUser.deleteUserByUserId(userId = "${staticUserAccountId}");
 
 		ObjectFieldAPI.deleteObjectField();
 	}
@@ -47,7 +37,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Then the value of the added field is set successfully in response") {
-			var actualValueOfPassportNumber = JSONUtil.getWithJSONPath("${staticResponse1}", "$.passportNumber");
+			var actualValueOfPassportNumber = JSONUtil.getWithJSONPath("${staticResponse}", "$.passportNumber");
 
 			TestUtils.assertEquals(
 				actual = "${actualValueOfPassportNumber}",
@@ -64,7 +54,7 @@ definition {
 			var actualValueOfPassportNumber = UserAccountAPI.getUpdatedFieldOfUserAccountWithPatchRequest(
 				fieldName = "passportNumber",
 				updatedFieldValue = "updateByPatch-passportNum2022",
-				userAccountId = "${staticUserAccountId1}");
+				userAccountId = "${staticUserAccountId}");
 		}
 
 		task ("Then the value of the added filed is updated successfully") {
@@ -87,7 +77,7 @@ definition {
 				fieldName = "passportNumber",
 				givenName = "usergn",
 				updatedFieldValue = "updateByPut-passportNum2022",
-				userAccountId = "${staticUserAccountId1}");
+				userAccountId = "${staticUserAccountId}");
 		}
 
 		task ("Then the value of the added filed is replaced successfully in response") {

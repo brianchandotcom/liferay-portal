@@ -72,6 +72,17 @@ definition {
 		return "${response}";
 	}
 
+	macro deleteUserAccountRelationship {
+		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${customObjectId}");
+
+		var curl = UserAccountAPI._curlUserAccount(
+			customObjectId = "${customObjectId}",
+			relationshipName = "${relationshipName}",
+			userAccountId = "${userAccountId}");
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
 	macro getRelationshipByUserAccountId {
 		var curl = UserAccountAPI._curlUserAccount(
 			relationshipName = "${relationshipName}",

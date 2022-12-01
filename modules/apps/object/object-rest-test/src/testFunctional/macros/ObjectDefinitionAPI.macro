@@ -807,6 +807,16 @@ definition {
 		return "${staticObjectId2}";
 	}
 
+	macro setUpGlobalObjectDefinitionIdWithName {
+		Variables.assertDefined(parameterList = "${objectName}");
+
+		var objectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "${objectName}");
+
+		static var staticObjectId = "${objectId}";
+
+		return "${staticObjectId}";
+	}
+
 	macro setUpGlobalObjectEntryId {
 		var objectEntryId1 = ObjectDefinitionAPI.createObjectEntryWithName(
 			en_US_plural_label = "foundations",

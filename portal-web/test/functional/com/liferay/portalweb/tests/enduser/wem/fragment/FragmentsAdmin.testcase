@@ -979,4 +979,115 @@ if (layoutMode === 'edit') {
 		}
 	}
 
+	@description = "This is a test for LPS-168163. The fragment developer could see the usages of fragment used in fragment composition."
+	@priority = "4"
+	test ViewUsagesOfFragmentUsedInFragmentComposition {
+		task ("Given a fragment developer has a fragment composition with a new fragment") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+    Fragment Example
+</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 1",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Fragment Set Name",
+				fragmentName = "Fragment Name",
+				navTab = "Fragments");
+
+			PageEditor.gotoSaveAsFragment(fragmentName = "Container");
+
+			PageEditorComposition.saveAsFragment(
+				collectionName = "Fragment Set Name",
+				fragmentName = "New Composition");
+		}
+
+		task ("When the fragment developer add a fragment composition to a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Fragment Set Name",
+				composition = "true",
+				fragmentName = "New Composition");
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 2") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "2 Usages");
+		}
+
+		task ("When the fragment developer adds the second fragment composition to the same page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Fragment Set Name",
+				composition = "true",
+				fragmentName = "New Composition",
+				targetFragmentName = "Container");
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 3") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "3 Usages");
+		}
+
+		task ("When the fragment developer publishes the page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the fragment developer sees the usages of new fragment is 5") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardSubtitle(
+				card = "Fragment Name",
+				cardSubtitle = "5 Usages");
+		}
+	}
+
 }

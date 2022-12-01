@@ -14,12 +14,54 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+
 /**
  * @author Bryan Engler
  */
 public class BucketDisplayContext {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
+	 */
+	@Deprecated
+	public String getAssetCategoryId() {
+		return _filterValue;
+	}
+
 	public String getBucketText() {
+		return _bucketText;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFrequency()}
+	 */
+	@Deprecated
+	public int getCount() {
+		return _frequency;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getBucketText()}
+	 */
+	@Deprecated
+	public String getDescriptiveName() {
+		return _bucketText;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getBucketText()}
+	 */
+	@Deprecated
+	public String getDisplayName() {
+		return _bucketText;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getBucketText()} or {@link #getFilterValue()}
+	 */
+	@Deprecated
+	public String getFieldName() {
 		return _bucketText;
 	}
 
@@ -27,12 +69,36 @@ public class BucketDisplayContext {
 		return _filterValue;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
+	 */
+	@Deprecated
+	public long getFolderId() {
+		return GetterUtil.getLong(_filterValue);
+	}
+
 	public int getFrequency() {
 		return _frequency;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
+	 */
+	@Deprecated
+	public long getGroupId() {
+		return GetterUtil.getLong(_filterValue);
+	}
+
 	public int getPopularity() {
 		return _popularity;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
+	 */
+	@Deprecated
+	public String getValue() {
+		return _filterValue;
 	}
 
 	public boolean isFrequencyVisible() {
@@ -41,6 +107,14 @@ public class BucketDisplayContext {
 
 	public boolean isSelected() {
 		return _selected;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isFrequencyVisible()}
+	 */
+	@Deprecated
+	public boolean isShowCount() {
+		return _frequencyVisible;
 	}
 
 	public void setBucketText(String bucketText) {

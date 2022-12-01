@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.io.Serializable;
 
@@ -170,6 +171,12 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			bucketDisplayContexts.add(bucketDisplayContext);
 		}
 
+		if (_order != null) {
+			bucketDisplayContexts.sort(
+				BucketDisplayContextComparatorFactoryUtil.
+					getBucketDisplayContextComparator(_order));
+		}
+
 		return bucketDisplayContexts;
 	}
 
@@ -207,6 +214,10 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 
 	public void setLocale(Locale locale) {
 		_locale = locale;
+	}
+
+	public void setOrder(String order) {
+		_order = order;
 	}
 
 	public void setPaginationStartParameterName(
@@ -298,6 +309,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
 	private Locale _locale;
+	private String _order;
 	private String _paginationStartParameterName;
 	private String _parameterName;
 	private List<String> _parameterValues = Collections.emptyList();

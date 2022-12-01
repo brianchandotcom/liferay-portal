@@ -143,6 +143,8 @@ public class TypeFacetPortlet extends MVCPortlet {
 			typeFacetPortletPreferences.getFrequencyThreshold());
 		assetEntriesSearchFacetDisplayContextBuilder.setLocale(
 			themeDisplay.getLocale());
+		assetEntriesSearchFacetDisplayContextBuilder.setOrder(
+			typeFacetPortletPreferences.getOrder());
 		assetEntriesSearchFacetDisplayContextBuilder.
 			setPaginationStartParameterName(
 				_getPaginationStartParameterName(portletSharedSearchResponse));

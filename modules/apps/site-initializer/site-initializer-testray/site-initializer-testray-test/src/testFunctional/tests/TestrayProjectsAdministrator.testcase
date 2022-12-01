@@ -27,6 +27,8 @@ definition {
 
 		Testray.tearDownCP();
 
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}

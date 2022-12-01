@@ -299,6 +299,41 @@
 		<clean-database-upgrade-client />
 	</target>
 
+	<target name="check-upgrade-client-home-ext-properties">
+		<get-database-upgrade-client-paths />
+
+		<property name="user.home" value="~" />
+
+		<execute dir="${user.home}" failonerror="true">
+			touch portal-ext.properties
+		</execute>
+
+		<execute dir="${db.upgrade.client.home}" failonerror="true">
+			db_upgrade${file.suffix.bat} run > temp.log
+		</execute>
+
+		<loadfile
+			property="upgrade.process.output"
+			srcFile="temp.log"
+		/>
+
+		<echo>${upgrade.process.output}</echo>
+
+		<if>
+			<contains string="${upgrade.process.output}" substring="Remove ${user.home}/portal-ext.properties prior to running an upgrade to prevent possible conflicts." />
+			<then>
+				<echo>Upgrade process did not start because portal-ext.properties is in user's home directory.</echo>
+			</then>
+			<else>
+				<fail message="Upgrade client is attempting to start an upgrade process with portal-ext.properties in user's home directory." />
+			</else>
+		</if>
+
+		<delete file="${user.home}/portal-ext.properties" />
+
+		<clean-database-upgrade-client />
+	</target>
+
 	<target name="check-upgrade-client-java-version">
 		<get-database-upgrade-client-paths />
 

@@ -100,11 +100,11 @@ const Modal = ({
 					const form = iframeDocument.getElementById(formId);
 
 					if (form) {
-						form.submit();
+						form.requestSubmit();
 					}
 				}
 				else if (forms.length >= 1) {
-					forms[0].submit();
+					forms[0].requestSubmit();
 				}
 			}
 		}

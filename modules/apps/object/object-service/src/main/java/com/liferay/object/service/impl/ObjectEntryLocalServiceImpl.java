@@ -1587,8 +1587,8 @@ public class ObjectEntryLocalServiceImpl
 			return predicate;
 		}
 
-		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_S(
-			objectDefinitionId, false);
+		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_I(
+			objectDefinitionId, true);
 
 		if (objectFields.isEmpty()) {
 			return predicate;

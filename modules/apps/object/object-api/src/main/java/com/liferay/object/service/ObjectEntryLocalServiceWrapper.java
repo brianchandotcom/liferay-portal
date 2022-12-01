@@ -598,6 +598,14 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<String, java.io.Serializable> getSystemValues(
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getSystemValues(objectEntry);
+	}
+
+	@Override
 	public String getTitleValue(long objectDefinitionId, long primaryKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

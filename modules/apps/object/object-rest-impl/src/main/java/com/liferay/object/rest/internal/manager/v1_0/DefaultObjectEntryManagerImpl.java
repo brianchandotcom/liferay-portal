@@ -14,8 +14,6 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -61,7 +59,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -360,38 +357,6 @@ public class DefaultObjectEntryManagerImpl
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
 
-		long[] accountEntryIds = {_NONEXISTING_ACCOUNT_ENTRY_ID};
-
-		if (objectDefinition.isAccountEntryRestricted()) {
-			List<AccountEntry> accountEntries = null;
-
-			if (_roleLocalService.hasUserRole(
-					dtoConverterContext.getUserId(), companyId,
-					RoleConstants.ADMINISTRATOR, true)) {
-
-				accountEntries = _accountEntryLocalService.getAccountEntries(
-					companyId, WorkflowConstants.STATUS_APPROVED,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-			}
-			else {
-				accountEntries =
-					_accountEntryLocalService.getUserAccountEntries(
-						dtoConverterContext.getUserId(),
-						AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-						new String[] {
-							AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-							AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-						},
-						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS);
-			}
-
-			if (!accountEntries.isEmpty()) {
-				accountEntryIds = ListUtil.toLongArray(
-					accountEntries, AccountEntry::getAccountEntryId);
-			}
-		}
-
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
 
@@ -478,8 +443,9 @@ public class DefaultObjectEntryManagerImpl
 			facets,
 			TransformUtil.transform(
 				_objectEntryLocalService.getValuesList(
-					objectDefinition.getObjectDefinitionId(), groupId,
-					accountEntryIds, predicate, search, start, end,
+					groupId, companyId, dtoConverterContext.getUserId(),
+					objectDefinition.getObjectDefinitionId(), predicate, search,
+					start, end,
 					OrderByExpressionUtil.getOrderByExpressions(
 						objectDefinition.getObjectDefinitionId(),
 						_objectFieldLocalService, sorts)),
@@ -487,8 +453,8 @@ public class DefaultObjectEntryManagerImpl
 					dtoConverterContext, objectDefinition, values)),
 			pagination,
 			_objectEntryLocalService.getValuesListCount(
-				objectDefinition.getObjectDefinitionId(), groupId,
-				accountEntryIds, predicate, search));
+				groupId, companyId, dtoConverterContext.getUserId(),
+				objectDefinition.getObjectDefinitionId(), predicate, search));
 	}
 
 	@Override
@@ -1086,8 +1052,6 @@ public class DefaultObjectEntryManagerImpl
 
 		return values;
 	}
-
-	private static final long _NONEXISTING_ACCOUNT_ENTRY_ID = -1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultObjectEntryManagerImpl.class);

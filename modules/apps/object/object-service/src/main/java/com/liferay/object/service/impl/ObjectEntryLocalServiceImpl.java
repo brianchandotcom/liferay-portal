@@ -14,6 +14,10 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntryOrganizationRelTable;
+import com.liferay.account.model.AccountEntryTable;
+import com.liferay.account.model.AccountEntryUserRelTable;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -85,6 +89,7 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -109,10 +114,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Users_OrgsTable;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -128,6 +136,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
@@ -895,7 +904,7 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public List<Map<String, Serializable>> getValuesList(
-			long objectDefinitionId, long groupId, long[] accountEntryIds,
+			long groupId, long companyId, long userId, long objectDefinitionId,
 			Predicate predicate, String search, int start, int end,
 			OrderByExpression[] orderByExpressions)
 		throws PortalException {
@@ -940,7 +949,7 @@ public class ObjectEntryLocalServiceImpl
 					}
 				).and(
 					_fillAccountEntriesPredicate(
-						objectDefinitionId, accountEntryIds)
+						companyId, userId, objectDefinitionId)
 				).and(
 					_fillPredicate(objectDefinitionId, predicate, search)
 				).and(
@@ -966,7 +975,7 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public int getValuesListCount(
-			long objectDefinitionId, long groupId, long[] accountEntryIds,
+			long groupId, long companyId, long userId, long objectDefinitionId,
 			Predicate predicate, String search)
 		throws PortalException {
 
@@ -1002,7 +1011,7 @@ public class ObjectEntryLocalServiceImpl
 				}
 			).and(
 				_fillAccountEntriesPredicate(
-					objectDefinitionId, accountEntryIds)
+					companyId, userId, objectDefinitionId)
 			).and(
 				_fillPredicate(objectDefinitionId, predicate, search)
 			).and(
@@ -1506,7 +1515,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Predicate _fillAccountEntriesPredicate(
-			long objectDefinitionId, long[] accountEntryIds)
+			long companyId, long userId, long objectDefinitionId)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -1525,7 +1534,89 @@ public class ObjectEntryLocalServiceImpl
 		Column<?, Long> column = (Column<?, Long>)table.getColumn(
 			objectField.getDBColumnName());
 
-		return column.in(ArrayUtil.toLongArray(accountEntryIds));
+		JoinStep joinStep = DSLQueryFactoryUtil.select(
+			AccountEntryTable.INSTANCE.accountEntryId
+		).from(
+			AccountEntryTable.INSTANCE
+		);
+
+		if (_roleLocalService.hasUserRole(
+				userId, companyId, RoleConstants.ADMINISTRATOR, true)) {
+
+			return column.in(
+				joinStep.where(
+					AccountEntryTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						AccountEntryTable.INSTANCE.status.eq(
+							WorkflowConstants.STATUS_APPROVED)
+					)));
+		}
+
+		Table<OrganizationTable> tempOrganizationTable =
+			DSLQueryFactoryUtil.select(
+				OrganizationTable.INSTANCE.companyId,
+				OrganizationTable.INSTANCE.treePath
+			).from(
+				OrganizationTable.INSTANCE
+			).innerJoinON(
+				Users_OrgsTable.INSTANCE,
+				Users_OrgsTable.INSTANCE.organizationId.eq(
+					OrganizationTable.INSTANCE.organizationId)
+			).where(
+				Users_OrgsTable.INSTANCE.userId.eq(userId)
+			).as(
+				"tempOrganizationTable", OrganizationTable.INSTANCE
+			);
+
+		return column.in(
+			joinStep.innerJoinON(
+				AccountEntryOrganizationRelTable.INSTANCE,
+				AccountEntryOrganizationRelTable.INSTANCE.accountEntryId.eq(
+					AccountEntryTable.INSTANCE.accountEntryId)
+			).where(
+				AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
+					DSLQueryFactoryUtil.selectDistinct(
+						OrganizationTable.INSTANCE.organizationId
+					).from(
+						OrganizationTable.INSTANCE
+					).innerJoinON(
+						tempOrganizationTable,
+						OrganizationTable.INSTANCE.companyId.eq(
+							tempOrganizationTable.getColumn(
+								"companyId", Long.class)
+						).and(
+							OrganizationTable.INSTANCE.treePath.like(
+								DSLFunctionFactoryUtil.concat(
+									DSLFunctionFactoryUtil.castText(
+										tempOrganizationTable.getColumn(
+											"treePath", String.class)),
+									new Scalar<>(StringPool.PERCENT)))
+						)
+					)
+				).and(
+					_getAccountEntryWherePredicate()
+				)
+			).union(
+				joinStep.where(
+					AccountEntryTable.INSTANCE.userId.eq(
+						userId
+					).and(
+						_getAccountEntryWherePredicate()
+					))
+			).union(
+				joinStep.innerJoinON(
+					AccountEntryUserRelTable.INSTANCE,
+					AccountEntryUserRelTable.INSTANCE.accountEntryId.eq(
+						AccountEntryTable.INSTANCE.accountEntryId)
+				).where(
+					AccountEntryUserRelTable.INSTANCE.accountUserId.eq(
+						userId
+					).and(
+						_getAccountEntryWherePredicate()
+					)
+				)
+			));
 	}
 
 	private void _fillBusinessTypePicklistDefaultValue(
@@ -1595,6 +1686,21 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return predicate.and(searchPredicate.withParentheses());
+	}
+
+	private Predicate _getAccountEntryWherePredicate() {
+		return AccountEntryTable.INSTANCE.parentAccountEntryId.eq(
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT
+		).and(
+			AccountEntryTable.INSTANCE.status.eq(
+				WorkflowConstants.STATUS_APPROVED)
+		).and(
+			AccountEntryTable.INSTANCE.type.in(
+				new String[] {
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+				})
+		);
 	}
 
 	private DLFolder _getDLFolder(
@@ -3426,6 +3532,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private Searcher _searcher;

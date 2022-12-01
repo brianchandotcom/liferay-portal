@@ -524,7 +524,8 @@ public class RepositoryBrowserTagDisplayContext {
 
 		searchContainer.setOrderByCol(
 			ParamUtil.getString(
-				_httpServletRequest, searchContainer.getOrderByColParam()));
+				_httpServletRequest, searchContainer.getOrderByColParam(),
+				"title"));
 		searchContainer.setOrderByType(
 			ParamUtil.getString(
 				_httpServletRequest, searchContainer.getOrderByTypeParam(),

@@ -104,7 +104,7 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 		for (KaleoNode kaleoNode : kaleoNodes) {
-			NodeBuilder nodeBuilder = _serviceTrackerMap.getService(
+			NodeBuilder<Node> nodeBuilder = _serviceTrackerMap.getService(
 				kaleoNode.getType());
 
 			Node node = nodeBuilder.buildNode(kaleoNode);

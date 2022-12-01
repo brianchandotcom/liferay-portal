@@ -45,82 +45,80 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 	</liferay-ui:error>
 
 	<liferay-frontend:edit-form-body>
-		<liferay-frontend:fieldset-group>
-			<h3 class="mb-3"><%= editClientExtensionEntryDisplayContext.getTitle() %></h3>
+		<h3 class="mb-3"><%= editClientExtensionEntryDisplayContext.getTitle() %></h3>
 
-			<p class="text-secondary"><%= editClientExtensionEntryDisplayContext.getHelpLabel() %> <a href="https://learn.liferay.com/dxp/latest/en/building-applications/remote-apps/understanding-remote-app-types.html" target="_blank"><liferay-ui:message arguments="Client Extensions" key="learn-more-about-x" /></a></p>
+		<p class="text-secondary"><%= editClientExtensionEntryDisplayContext.getHelpLabel() %> <a href="https://learn.liferay.com/dxp/latest/en/building-applications/remote-apps/understanding-remote-app-types.html" target="_blank"><liferay-ui:message arguments="Client Extensions" key="learn-more-about-x" /></a></p>
 
-			<liferay-ui:panel-container
-				cssClass="panel-group-flush "
+		<liferay-ui:panel-container
+			cssClass="panel-group-flush "
+			extended="<%= true %>"
+			id="clientExtensionOptions"
+			persistState="<%= true %>"
+		>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				cssClass="panel-unstyled text-secondary"
+				defaultState="opened"
 				extended="<%= true %>"
-				id="clientExtensionOptions"
+				id="clientExtensionOptionIdentiy"
+				markupView="lexicon"
 				persistState="<%= true %>"
+				title="identity"
 			>
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="panel-unstyled text-secondary"
-					defaultState="opened"
-					extended="<%= true %>"
-					id="clientExtensionOptionIdentiy"
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="identity"
-				>
-					<aui:field-wrapper label="name" name="name" required="<%= true %>">
-						<liferay-ui:input-localized
-							autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-							name="name"
-							xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
-						/>
-					</aui:field-wrapper>
-
-					<liferay-editor:editor
-						contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
-						editorName="contentEditor"
-						name="description"
-						placeholder="description"
+				<aui:field-wrapper label="name" name="name" required="<%= true %>">
+					<liferay-ui:input-localized
+						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+						name="name"
+						xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
 					/>
-				</liferay-ui:panel>
+				</aui:field-wrapper>
 
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="panel-unstyled text-secondary"
-					defaultState="opened"
-					extended="<%= true %>"
-					id="clientExtensionOptionContent"
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="content"
-				>
-					<liferay-util:include page="<%= editClientExtensionEntryDisplayContext.getEditJSP() %>" servletContext="<%= application %>" />
-				</liferay-ui:panel>
+				<liferay-editor:editor
+					contents="<%= editClientExtensionEntryDisplayContext.getDescription() %>"
+					editorName="contentEditor"
+					name="description"
+					placeholder="description"
+				/>
+			</liferay-ui:panel>
 
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="panel-unstyled text-secondary"
-					defaultState="opened"
-					extended="<%= true %>"
-					id="clientExtensionOptionTools"
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="additional-resources"
-				>
-					<aui:field-wrapper cssClass="form-group">
-						<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				cssClass="panel-unstyled text-secondary"
+				defaultState="opened"
+				extended="<%= true %>"
+				id="clientExtensionOptionContent"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="content"
+			>
+				<liferay-util:include page="<%= editClientExtensionEntryDisplayContext.getEditJSP() %>" servletContext="<%= application %>" />
+			</liferay-ui:panel>
 
-						<div class="form-text">
-							<liferay-ui:message key="a-url-to-the-external-application-source-code-for-convenience" />
-						</div>
-					</aui:field-wrapper>
+			<liferay-ui:panel
+				collapsible="<%= true %>"
+				cssClass="panel-unstyled text-secondary"
+				defaultState="opened"
+				extended="<%= true %>"
+				id="clientExtensionOptionTools"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="additional-resources"
+			>
+				<aui:field-wrapper cssClass="form-group">
+					<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />
 
-					<aui:input name="type" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getType() %>" />
+					<div class="form-text">
+						<liferay-ui:message key="a-url-to-the-external-application-source-code-for-convenience" />
+					</div>
+				</aui:field-wrapper>
 
-					<c:if test="<%= editClientExtensionEntryDisplayContext.isPropertiesVisible() %>">
-						<aui:input label="properties" name="properties" placeholder="define-the-default-properties-that-are-included-in-all-instances-of-the-client-extension-these-properties-are-passed-to-the-application-as-additional-url-attributes-so-they-be-accessed-programmatically" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
-					</c:if>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
-		</liferay-frontend:fieldset-group>
+				<aui:input name="type" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getType() %>" />
+
+				<c:if test="<%= editClientExtensionEntryDisplayContext.isPropertiesVisible() %>">
+					<aui:input label="properties" name="properties" placeholder="define-the-default-properties-that-are-included-in-all-instances-of-the-client-extension-these-properties-are-passed-to-the-application-as-additional-url-attributes-so-they-be-accessed-programmatically" type="textarea" value="<%= editClientExtensionEntryDisplayContext.getProperties() %>" />
+				</c:if>
+			</liferay-ui:panel>
+		</liferay-ui:panel-container>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

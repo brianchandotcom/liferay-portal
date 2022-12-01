@@ -29,6 +29,14 @@ public class BucketDisplayContext {
 		return _filterValue;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
+	 */
+	@Deprecated
+	public String getAssetType() {
+		return _filterValue;
+	}
+
 	public String getBucketText() {
 		return _bucketText;
 	}
@@ -91,6 +99,14 @@ public class BucketDisplayContext {
 
 	public int getPopularity() {
 		return _popularity;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getBucketText()}
+	 */
+	@Deprecated
+	public String getTypeName() {
+		return _bucketText;
 	}
 
 	/**

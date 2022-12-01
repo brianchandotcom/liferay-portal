@@ -197,8 +197,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	}
 
 	private LayoutTypePortlet _getLayoutTypePortlet(
-			Layout layout, LayoutTypePortlet layoutTypePortlet, String themeId)
-		throws Exception {
+		Layout layout, LayoutTypePortlet layoutTypePortlet, String themeId) {
 
 		String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
 

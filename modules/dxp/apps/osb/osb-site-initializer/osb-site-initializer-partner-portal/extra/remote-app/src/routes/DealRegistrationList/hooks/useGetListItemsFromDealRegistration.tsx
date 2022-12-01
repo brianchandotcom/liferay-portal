@@ -17,6 +17,7 @@ import useGetDealRegistration from '../../../common/services/liferay/object/deal
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import getDealAmount from '../utils/getDealAmount';
 import getDealDates from '../utils/getDealDates';
+import getDoubleParagraph from '../utils/getDoubleParagraph';
 
 export default function useGetListItemsFromDealRegistration(
 	page: number,
@@ -44,6 +45,12 @@ export default function useGetListItemsFromDealRegistration(
 				),
 				...getDealAmount(item.amount),
 				[DealRegistrationColumnKey.STAGE]: item.stage,
+				[DealRegistrationColumnKey.PARTNER_REP]: getDoubleParagraph(
+					`${item.partnerFirstName ? item.partnerFirstName : ''} ${
+						item.partnerLastName ? item.partnerLastName : ''
+					}`,
+					item.partnerEmail && item.partnerEmail
+				),
 			})),
 		[swrResponse.data?.items]
 	);

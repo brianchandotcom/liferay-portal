@@ -17,7 +17,10 @@ package com.liferay.layout.page.template.internal.importer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -33,10 +36,12 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -44,6 +49,7 @@ import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -83,6 +89,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.File;
 import java.io.IOException;
@@ -492,6 +499,82 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
+	public void testImportLayoutPageTemplateEntryDropZoneFragment()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionLocalService.
+					addLayoutPageTemplateCollection(
+						TestPropsValues.getUserId(), _group.getGroupId(),
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString(), serviceContext);
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			FragmentCollection fragmentCollection =
+				_fragmentCollectionLocalService.addFragmentCollection(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), serviceContext);
+
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLocalService.addFragmentEntry(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					fragmentCollection.getFragmentCollectionId(),
+					StringUtil.randomString(), StringUtil.randomString(),
+					RandomTestUtil.randomString(),
+					StringBundler.concat(
+						"<div class=\"fragment_1\"><h1> Drop Zone 1 </h1>",
+						"<lfr-drop-zone></lfr-drop-zone><h1> Drop Zone 2 </h1>",
+						"<lfr-drop-zone></lfr-drop-zone></div>"),
+					RandomTestUtil.randomString(), false, "{fieldSets: []}",
+					null, 0, FragmentConstants.TYPE_COMPONENT, null,
+					WorkflowConstants.STATUS_APPROVED,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId()));
+
+			_addFragmentEntryToLayoutPageTemplateEntry(
+				fragmentEntry, layoutPageTemplateEntry);
+
+			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
+				fragmentEntry,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+
+			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+				new long[] {
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				},
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+
+			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group.getGroupId(), file, false);
+
+			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
+				fragmentEntry,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
 	public void testImportLayoutPageTemplateEntryHTMLFragment()
 		throws Exception {
 
@@ -696,6 +779,38 @@ public class LayoutsImporterTest {
 				layoutPageTemplateEntry.getPreviewFileEntryId()));
 	}
 
+	private void _addFragmentEntryToLayoutPageTemplateEntry(
+			FragmentEntry fragmentEntry,
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				"{}", fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), draftLayout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				null, 0, defaultSegmentsExperienceId);
+
+		for (FragmentEntryLinkListener fragmentEntryLinkListener :
+				_fragmentEntryLinkListenerRegistry.
+					getFragmentEntryLinkListeners()) {
+
+			fragmentEntryLinkListener.onAddFragmentEntryLink(fragmentEntryLink);
+		}
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+	}
+
 	private void _addZipWriterEntry(
 			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
 		throws IOException {
@@ -709,6 +824,61 @@ public class LayoutsImporterTest {
 
 		zipWriter.addEntry(
 			zipPath, StringUtil.replace(content, "${", "}", valuesMap));
+	}
+
+	private void
+			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
+				FragmentEntry fragmentEntry, String layoutPageTemplateEntryKey)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(), layoutPageTemplateEntryKey);
+
+		Assert.assertNotNull(layoutPageTemplateEntry);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
+
+		Assert.assertNotNull(layoutPageTemplateStructure);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		LayoutStructureItem mainChildLayoutStructureItem =
+			_getMainChildLayoutStructureItem(layoutStructure);
+
+		Assert.assertTrue(
+			mainChildLayoutStructureItem instanceof
+				FragmentStyledLayoutStructureItem);
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)mainChildLayoutStructureItem;
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			fragmentEntry.getFragmentEntryId(),
+			fragmentEntryLink.getFragmentEntryId());
+
+		List<String> childrenItemIds =
+			fragmentStyledLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 2, childrenItemIds.size());
+
+		for (String itemId : childrenItemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(itemId);
+
+			Assert.assertTrue(
+				layoutStructureItem instanceof
+					FragmentDropZoneLayoutStructureItem);
+		}
 	}
 
 	private void _createFragmentEntry(String key, String name, String html)
@@ -1131,6 +1301,10 @@ public class LayoutsImporterTest {
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Inject
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Inject
@@ -1178,6 +1352,9 @@ public class LayoutsImporterTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();

@@ -12,10 +12,18 @@
  * details.
  */
 
+import {render} from '@liferay/frontend-js-react-web';
 import {getCheckedCheckboxes, openSelectionModal} from 'frontend-js-web';
 
+import CopyFragmentModal from './CopyFragmentModal';
+
 export default function propsTransformer({
-	additionalProps: {copyContributedEntryURL, selectFragmentCollectionURL},
+	additionalProps: {
+		addFragmentCollectionURL,
+		copyContributedEntryURL,
+		fragmentCollections,
+		selectFragmentCollectionURL,
+	},
 	portletNamespace,
 	...otherProps
 }) {
@@ -31,45 +39,60 @@ export default function propsTransformer({
 			`${portletNamespace}allRowIds`
 		);
 
-		openSelectionModal({
-			id: `${portletNamespace}selectFragmentCollection`,
-			onSelect(selectedItem) {
-				if (selectedItem) {
-					const fragmentCollectionIdElement = document.getElementById(
-						`${portletNamespace}fragmentCollectionId`
-					);
-
-					if (fragmentCollectionIdElement) {
-						fragmentCollectionIdElement.setAttribute(
-							'value',
-							selectedItem.id
+		if (Liferay.FeatureFlags['LPS-166203']) {
+			render(
+				CopyFragmentModal,
+				{
+					addFragmentCollectionURL,
+					contributedEntryKeys: contributedEntryKeys.split(','),
+					copyFragmentEntriesURL: copyContributedEntryURL,
+					fragmentCollections,
+					portletNamespace,
+				},
+				document.createElement('div')
+			);
+		}
+		else {
+			openSelectionModal({
+				id: `${portletNamespace}selectFragmentCollection`,
+				onSelect(selectedItem) {
+					if (selectedItem) {
+						const fragmentCollectionIdElement = document.getElementById(
+							`${portletNamespace}fragmentCollectionId`
 						);
-					}
 
-					const contributedEntryKeysElement = document.getElementById(
-						`${portletNamespace}contributedEntryKeys`
-					);
+						if (fragmentCollectionIdElement) {
+							fragmentCollectionIdElement.setAttribute(
+								'value',
+								selectedItem.id
+							);
+						}
 
-					if (contributedEntryKeysElement) {
-						contributedEntryKeysElement.setAttribute(
-							'value',
-							contributedEntryKeys
+						const contributedEntryKeysElement = document.getElementById(
+							`${portletNamespace}contributedEntryKeys`
 						);
-					}
 
-					const form = document.getElementById(
-						`${portletNamespace}fragmentEntryFm`
-					);
+						if (contributedEntryKeysElement) {
+							contributedEntryKeysElement.setAttribute(
+								'value',
+								contributedEntryKeys
+							);
+						}
 
-					if (form) {
-						submitForm(form, copyContributedEntryURL);
+						const form = document.getElementById(
+							`${portletNamespace}fragmentEntryFm`
+						);
+
+						if (form) {
+							submitForm(form, copyContributedEntryURL);
+						}
 					}
-				}
-			},
-			selectEventName: `${portletNamespace}selectFragmentCollection`,
-			title: Liferay.Language.get('select-fragment-set'),
-			url: selectFragmentCollectionURL,
-		});
+				},
+				selectEventName: `${portletNamespace}selectFragmentCollection`,
+				title: Liferay.Language.get('select-fragment-set'),
+				url: selectFragmentCollectionURL,
+			});
+		}
 	};
 
 	return {

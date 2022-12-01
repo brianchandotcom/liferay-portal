@@ -38,12 +38,14 @@ ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagement
 				<c:choose>
 					<c:when test="<%= object instanceof FragmentComposition %>">
 						<clay:vertical-card
+							additionalProps="<%= fragmentDisplayContext.getAdditionalProps() %>"
 							propsTransformer="js/ContributedFragmentEntryDropdownPropsTransformer"
 							verticalCard="<%= new ContributedFragmentCompositionVerticalCard((FragmentComposition)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
+							additionalProps="<%= fragmentDisplayContext.getAdditionalProps() %>"
 							propsTransformer="js/ContributedFragmentEntryDropdownPropsTransformer"
 							verticalCard="<%= new ContributedFragmentEntryVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>

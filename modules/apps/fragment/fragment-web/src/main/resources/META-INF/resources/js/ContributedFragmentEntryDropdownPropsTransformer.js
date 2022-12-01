@@ -12,38 +12,61 @@
  * details.
  */
 
+import {render} from '@liferay/frontend-js-react-web';
 import {openSelectionModal} from 'frontend-js-web';
 
-const ACTIONS = {
-	copyContributedEntryToFragmentCollection(itemData, portletNamespace) {
-		openSelectionModal({
-			id: `${portletNamespace}selectFragmentCollection`,
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
-					document.getElementById(
-						`${portletNamespace}contributedEntryKeys`
-					).value = itemData.contributedEntryKey;
-					document.getElementById(
-						`${portletNamespace}fragmentCollectionId`
-					).value = selectedItem.id;
+import CopyFragmentModal from './CopyFragmentModal';
 
-					submitForm(
+const ACTIONS = {
+	copyContributedEntryToFragmentCollection(
+		itemData,
+		portletNamespace,
+		fragmentCollections
+	) {
+		if (Liferay.FeatureFlags['LPS-166203']) {
+			render(
+				CopyFragmentModal,
+				{
+					addFragmentCollectionURL: itemData.addFragmentCollectionURL,
+					contributedEntryKeys: [itemData.contributedEntryKey],
+					copyFragmentEntriesURL: itemData.copyContributedEntryURL,
+					fragmentCollections,
+					portletNamespace,
+				},
+				document.createElement('div')
+			);
+		}
+		else {
+			openSelectionModal({
+				id: `${portletNamespace}selectFragmentCollection`,
+				onSelect: (selectedItem) => {
+					if (selectedItem) {
 						document.getElementById(
-							`${portletNamespace}fragmentEntryFm`
-						),
-						itemData.copyContributedEntryURL
-					);
-				}
-			},
-			selectEventName: `${portletNamespace}selectFragmentCollection`,
-			title: Liferay.Language.get('select-fragment-set'),
-			url: itemData.selectFragmentCollectionURL,
-		});
+							`${portletNamespace}contributedEntryKeys`
+						).value = itemData.contributedEntryKey;
+						document.getElementById(
+							`${portletNamespace}fragmentCollectionId`
+						).value = selectedItem.id;
+
+						submitForm(
+							document.getElementById(
+								`${portletNamespace}fragmentEntryFm`
+							),
+							itemData.copyContributedEntryURL
+						);
+					}
+				},
+				selectEventName: `${portletNamespace}selectFragmentCollection`,
+				title: Liferay.Language.get('select-fragment-set'),
+				url: itemData.selectFragmentCollectionURL,
+			});
+		}
 	},
 };
 
 export default function propsTransformer({
 	actions,
+	additionalProps: {fragmentCollections},
 	portletNamespace,
 	...props
 }) {
@@ -63,7 +86,11 @@ export default function propsTransformer({
 				if (action) {
 					event.preventDefault();
 
-					ACTIONS[action](actionItem.data, portletNamespace);
+					ACTIONS[action](
+						actionItem.data,
+						portletNamespace,
+						fragmentCollections
+					);
 				}
 			},
 		};

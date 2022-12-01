@@ -12,6 +12,7 @@
  * details.
  */
 
+import {render} from '@liferay/frontend-js-react-web';
 import {
 	openConfirmModal,
 	openSelectionModal,
@@ -19,6 +20,7 @@ import {
 	setFormValues,
 } from 'frontend-js-web';
 
+import CopyFragmentModal from './CopyFragmentModal';
 import openDeleteFragmentModal from './openDeleteFragmentModal';
 
 const ACTIONS = {
@@ -42,29 +44,44 @@ const ACTIONS = {
 
 	copyToFragmentEntry(
 		{copyFragmentEntryURL, fragmentEntryId, selectFragmentCollectionURL},
-		portletNamespace
+		portletNamespace,
+		fragmentCollections
 	) {
-		openSelectionModal({
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
-					const form = document.getElementById(
-						`${portletNamespace}fragmentEntryFm`
-					);
+		if (Liferay.FeatureFlags['LPS-166203']) {
+			render(
+				CopyFragmentModal,
+				{
+					copyFragmentEntriesURL: copyFragmentEntryURL,
+					fragmentCollections,
+					fragmentEntryIds: [fragmentEntryId],
+					portletNamespace,
+				},
+				document.createElement('div')
+			);
+		}
+		else {
+			openSelectionModal({
+				onSelect: (selectedItem) => {
+					if (selectedItem) {
+						const form = document.getElementById(
+							`${portletNamespace}fragmentEntryFm`
+						);
 
-					if (form) {
-						setFormValues(form, {
-							fragmentCollectionId: selectedItem.id,
-							fragmentEntryIds: fragmentEntryId,
-						});
+						if (form) {
+							setFormValues(form, {
+								fragmentCollectionId: selectedItem.id,
+								fragmentEntryIds: fragmentEntryId,
+							});
+						}
+
+						submitForm(form, copyFragmentEntryURL);
 					}
-
-					submitForm(form, copyFragmentEntryURL);
-				}
-			},
-			selectEventName: `${portletNamespace}selectFragmentCollection`,
-			title: Liferay.Language.get('select-fragment-set'),
-			url: selectFragmentCollectionURL,
-		});
+				},
+				selectEventName: `${portletNamespace}selectFragmentCollection`,
+				title: Liferay.Language.get('select-fragment-set'),
+				url: selectFragmentCollectionURL,
+			});
+		}
 	},
 
 	deleteDraftFragmentEntry({deleteDraftFragmentEntryURL}) {
@@ -168,6 +185,7 @@ const ACTIONS = {
 
 export default function propsTransformer({
 	actions,
+	additionalProps: {fragmentCollections},
 	portletNamespace,
 	...props
 }) {
@@ -187,7 +205,11 @@ export default function propsTransformer({
 				if (action) {
 					event.preventDefault();
 
-					ACTIONS[action](actionItem.data, portletNamespace);
+					ACTIONS[action](
+						actionItem.data,
+						portletNamespace,
+						fragmentCollections
+					);
 				}
 			},
 		};

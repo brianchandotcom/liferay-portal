@@ -58,6 +58,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 					</c:when>
 					<c:otherwise>
 						<clay:vertical-card
+							additionalProps="<%= fragmentDisplayContext.getAdditionalProps() %>"
 							propsTransformer="js/FragmentEntryDropdownPropsTransformer"
 							verticalCard="<%= fragmentEntryVerticalCardFactory.getVerticalCard((FragmentEntry)object, renderRequest, renderResponse, searchContainer.getRowChecker(), fragmentDisplayContext.getFragmentType()) %>"
 						/>

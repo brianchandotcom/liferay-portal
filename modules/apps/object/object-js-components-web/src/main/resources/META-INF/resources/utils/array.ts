@@ -30,9 +30,16 @@ export function filterArrayByQuery<T>(
 			const localizedValue = ((item as {[key: string]: unknown}) as {
 				[key: string]: LocalizedValue<string>;
 			})[str];
-			const label = (localizedValue as LocalizedValue<string>)[
-				defaultLanguageId
-			] as string;
+
+			const localizedLabels = localizedValue as LocalizedValue<string>;
+
+			let label = localizedLabels[defaultLanguageId] as string;
+
+			if (!label) {
+				label = localizedLabels[
+					item.defaultLanguageId as Locale
+				] as string;
+			}
 
 			return stringIncludesQuery(label, query);
 		}

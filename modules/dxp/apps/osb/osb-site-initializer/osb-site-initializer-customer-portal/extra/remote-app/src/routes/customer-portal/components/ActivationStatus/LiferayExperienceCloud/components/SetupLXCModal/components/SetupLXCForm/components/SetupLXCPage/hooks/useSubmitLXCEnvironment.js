@@ -95,7 +95,6 @@ export default function useSubmitLXCEnvironment(
 						accountSubscriptionGroup: {
 							accountKey: project.accountKey,
 							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
-							manageContactsURL: `http://${liferayExperienceCloudEnvironmentId}.lxc.liferay.com`,
 							r_accountEntryToAccountSubscriptionGroup_accountEntryId:
 								project.id,
 						},

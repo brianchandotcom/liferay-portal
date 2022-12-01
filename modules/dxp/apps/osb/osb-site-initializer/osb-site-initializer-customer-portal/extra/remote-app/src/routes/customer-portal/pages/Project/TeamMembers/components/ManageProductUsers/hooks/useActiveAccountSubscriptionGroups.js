@@ -25,7 +25,7 @@ export default function useActiveAccountSubscriptionGroups(
 		data,
 		loading: accountSubscriptionGroupsLoading,
 	} = useGetAccountSubscriptionGroups({
-		filter: `accountKey eq '${accountKey}' and activationStatus eq '${ACCOUNT_SUBSCRIPTION_GROUPS_STATUS_TYPES.active}'${productNames}`,
+		filter: `accountKey eq '${accountKey}' and activationStatus eq '${ACCOUNT_SUBSCRIPTION_GROUPS_STATUS_TYPES.active}' and manageContactsURL ne ''${productNames}`,
 		skip: loading,
 	});
 

@@ -71,7 +71,6 @@ const ModalDXPCActivationStatus = ({
 				accountSubscriptionGroup: {
 					accountKey: project.accountKey,
 					activationStatus: STATUS_TAG_TYPE_NAMES.active,
-					manageContactsURL: `https://console.liferay.cloud/projects/${projectIdValue}/overview`,
 					r_accountEntryToAccountSubscriptionGroup_accountEntryId:
 						project?.id,
 				},

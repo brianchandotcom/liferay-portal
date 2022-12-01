@@ -279,28 +279,6 @@ definition {
 		}
 	}
 
-	@description = "Test for LPS-163801 to check that pages can be saved after Site Default locales are changed"
-	@priority = "3"
-	test CanAccessPageAfterSiteDefaultLocalesChange {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Page Title");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "Spanish (Spain)");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Title",
-			siteName = "Test Site Name");
-
-		Navigator.gotoEditPageViaControlMenu(pageName = "Page Title");
-
-		PagesAdmin.editName(pageNameEdit = "Page Title Edit");
-
-		PagesAdmin.viewPageItemPresent(pageName = "Page Title Edit");
-	}
-
 	@description = "This is a test for LPS-145215. View alert message when delete a page."
 	@priority = "5"
 	@uitest
@@ -1098,6 +1076,42 @@ definition {
 				fragmentName = "heading",
 				id = "element-text",
 				text = "Heading Example");
+		}
+	}
+
+	@description = "This is a test for LPS-163801. The page designer could save page changes after changing the site default language."
+	@priority = "3"
+	test SavePageChangesAfterChangingSiteDefaultLanguage {
+		task ("Given a page designer has a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the page designer changes the site default language to the Spanish") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "Spanish (Spain)");
+		}
+
+		task ("Then the page designer could save page changes") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			PagesAdmin.editName(pageNameEdit = "Nombre de la página de prueba");
+
+			Navigator.gotoBack();
+
+			Navigator.ensureLocaleURL(locale = "es");
+
+			AssertVisible(
+				key_itemName = "Nombre de la página de prueba",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
 	}
 

@@ -20,6 +20,32 @@ import {
 	openToast,
 } from 'frontend-js-web';
 
+function handleCreationMenuClick(
+	event,
+	item,
+	portletNamespace,
+	repositoryBrowserURL
+) {
+	if (item?.data?.action === 'addFolder') {
+		const createFolderURL = `${repositoryBrowserURL}?repositoryId=${item.data.repositoryId}&parentFolderId=${item.data.parentFolderId}`;
+
+		openSimpleInputModal({
+			dialogTitle: Liferay.Language.get('add-folder'),
+			formSubmitURL: createFolderURL,
+			mainFieldLabel: Liferay.Language.get('name'),
+			mainFieldName: 'name',
+			method: 'PUT',
+			namespace: '',
+			onFormSuccess: () => window.location.reload(),
+		});
+	}
+	else if (item?.data?.action === 'uploadFile') {
+		const fileInput = document.getElementById(`${portletNamespace}file`);
+
+		fileInput?.click();
+	}
+}
+
 export default function propsTransformer({
 	additionalProps: {repositoryBrowserURL},
 	portletNamespace,
@@ -71,27 +97,20 @@ export default function propsTransformer({
 			}
 		},
 
-		onCreationMenuItemClick: (event, {item}) => {
-			if (item?.data?.action === 'addFolder') {
-				const createFolderURL = `${repositoryBrowserURL}?repositoryId=${item.data.repositoryId}&parentFolderId=${item.data.parentFolderId}`;
+		onCreateButtonClick: (event, {item}) =>
+			handleCreationMenuClick(
+				event,
+				item,
+				portletNamespace,
+				repositoryBrowserURL
+			),
 
-				openSimpleInputModal({
-					dialogTitle: Liferay.Language.get('add-folder'),
-					formSubmitURL: createFolderURL,
-					mainFieldLabel: Liferay.Language.get('name'),
-					mainFieldName: 'name',
-					method: 'PUT',
-					namespace: '',
-					onFormSuccess: () => window.location.reload(),
-				});
-			}
-			else if (item?.data?.action === 'uploadFile') {
-				const fileInput = document.getElementById(
-					`${portletNamespace}file`
-				);
-
-				fileInput?.click();
-			}
-		},
+		onCreationMenuItemClick: (event, {item}) =>
+			handleCreationMenuClick(
+				event,
+				item,
+				portletNamespace,
+				repositoryBrowserURL
+			),
 	};
 }

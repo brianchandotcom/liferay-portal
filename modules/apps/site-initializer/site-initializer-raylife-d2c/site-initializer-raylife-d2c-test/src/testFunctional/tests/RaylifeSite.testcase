@@ -3,7 +3,7 @@ definition {
 
 	property osgi.modules.includes = "site-initializer-raylife-d2c";
 	property portal.release = "false";
-	property portal.upstream = "true";
+	property portal.upstream = "talitha";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
@@ -32,6 +32,7 @@ definition {
 	@description = "LPS-155319 - Verify that when Raylife D2C is created, the Objects APIs are created"
 	@priority = "5"
 	test AllObjectsIsCreatedForRaylifeD2c {
+		property test.name.skip.portal.instance = "RaylifeSite#AllObjectsIsCreatedForRaylifeD2c";
 		task ("Add site Raylife D2C") {
 			Raylife.createRaylifeSite(siteName = "${testSiteName}");
 		}
@@ -44,6 +45,8 @@ definition {
 	@description = "Verify if Raylife can be created"
 	@priority = "5"
 	test CanRaylifeBeCreated {
+		property test.name.skip.portal.instance = "RaylifeSite#CanRaylifeBeCreated";
+		
 		Site.openSitesAdmin();
 
 		LexiconEntry.gotoAdd();
@@ -56,7 +59,7 @@ definition {
 
 		PortletEntry.inputName(name = "${testSiteName}");
 
-		Click(locator1 = "Button#ADD");
+		Click(locator1 = "Raylife#BUTTON_ADD");
 
 		Site.openSitesAdmin();
 
@@ -70,6 +73,8 @@ definition {
 	@description = "LPS-142178 - Verify if when Raylife is created, a Catalog in Commerce will be created for it as well."
 	@priority = "5"
 	test CatalogForRaylifeIsCreated {
+		property test.name.skip.portal.instance = "RaylifeSite#CatalogForRaylifeIsCreated";
+
 		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 
 		CommerceNavigator.gotoPortlet(
@@ -92,6 +97,7 @@ definition {
 	@description = "LPS-142180 - Verify if, when Raylife is created, Products related to Raylife are also created."
 	@priority = "5"
 	test ProductsForRaylifeIsCreated {
+		property test.name.skip.portal.instance = "RaylifeSite#ProductsForRaylifeIsCreated";
 		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 
 		CommerceNavigator.gotoPortlet(

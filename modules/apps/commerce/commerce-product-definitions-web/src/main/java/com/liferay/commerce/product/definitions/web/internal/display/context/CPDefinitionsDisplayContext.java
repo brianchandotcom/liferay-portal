@@ -381,7 +381,7 @@ public class CPDefinitionsDisplayContext
 					"screenNavigationCategoryKey",
 					CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS
 				).buildString(),
-				"view", "view", LanguageUtil.get(httpServletRequest, "view"),
+				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
 				"get", null, null),
 			new FDSActionDropdownItem(
 				sb.toString(), "trash", "delete",

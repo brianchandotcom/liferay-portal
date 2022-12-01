@@ -1,24 +1,14 @@
 .portlet-remote-app-admin {
-	.lfr-form-rows {
-		counter-reset: line-number;
+	.configured-from-ui {
+		border-color: rgb(90, 202, 117);
+		color: rgb(40, 125, 60);
+		font-weight: bold;
 	}
 
-	.undomanager {
-		display: none;
-	}
-
-	.lfr-form-row {
-		border: none;
-		counter-increment: line-number;
-		padding: 0;
-
-		&:not(:nth-child(2)) label:after {
-			content: '(' counter(line-number) ')';
-		}
-
-		&:hover {
-			border: none;
-		}
+	.configured-from-workspace {
+		border-color: rgb(39, 40, 51);
+		color: rgb(153, 153, 153);
+		font-weight: bold;
 	}
 
 	.lfr-autorow-controls {
@@ -26,6 +16,24 @@
 		position: absolute;
 		right: 0;
 		top: 0;
+	}
+
+	.lfr-form-row {
+		border: none;
+		counter-increment: line-number;
+		padding: 0;
+
+		&:hover {
+			border: none;
+		}
+
+		&:not(:nth-child(2)) label:after {
+			content: '(' counter(line-number) ')';
+		}
+	}
+
+	.lfr-form-rows {
+		counter-reset: line-number;
 	}
 
 	.toolbar-content {
@@ -38,26 +46,18 @@
 			padding: 0;
 			width: 20px;
 
+			&[disabled] {
+				display: none;
+			}
+
 			.lexicon-icon {
 				height: 10px;
 				width: 10px;
 			}
-
-			&[disabled] {
-				display: none;
-			}
 		}
 	}
 
-	.configured-from-ui {
-		border-color: rgb(90, 202, 117);
-		color: rgb(40, 125, 60);
-		font-weight: bold;
-	}
-
-	.configured-from-workspace {
-		border-color: rgb(39, 40, 51);
-		color: rgb(153, 153, 153);
-		font-weight: bold;
+	.undomanager {
+		display: none;
 	}
 }

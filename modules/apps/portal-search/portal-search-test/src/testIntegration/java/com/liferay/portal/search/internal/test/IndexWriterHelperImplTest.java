@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.test.rule.Inject;
@@ -44,7 +45,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -64,8 +64,6 @@ public class IndexWriterHelperImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Assume.assumeTrue(!_isSearchEngine("Solr"));
-
 		_reindex(null);
 
 		Thread.sleep(10000);
@@ -150,21 +148,8 @@ public class IndexWriterHelperImplTest {
 		Map<Long, Long> originalCounts, String className) {
 
 		for (long companyId : _getCompanyIds()) {
-			CountSearchRequest countSearchRequest = new CountSearchRequest();
-
-			countSearchRequest.setIndexNames("liferay-" + companyId);
-
-			TermQuery termQuery = _queries.term(
-				Field.ENTRY_CLASS_NAME, className);
-
-			countSearchRequest.setQuery(termQuery);
-
-			CountSearchResponse countSearchResponse =
-				_searchEngineAdapter.execute(countSearchRequest);
-
+			Long newCount = Long.valueOf(_getCount(companyId, className));
 			Long originalCount = originalCounts.get(companyId);
-
-			Long newCount = Long.valueOf(countSearchResponse.getCount());
 
 			Assert.assertEquals(
 				className + " companyId=" + companyId, originalCount, newCount);
@@ -182,6 +167,32 @@ public class IndexWriterHelperImplTest {
 		return companyIds;
 	}
 
+	private long _getCount(long companyId, String className) {
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
+
+		if (_isSearchEngine("Solr")) {
+			countSearchRequest.setIndexNames("liferay");
+		}
+		else {
+			countSearchRequest.setIndexNames("liferay-" + companyId);
+		}
+
+		TermQuery classNameTermQuery = _queries.term(
+			Field.ENTRY_CLASS_NAME, className);
+		TermQuery companyTermQuery = _queries.term(Field.COMPANY_ID, companyId);
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustQueryClauses(classNameTermQuery, companyTermQuery);
+
+		countSearchRequest.setQuery(booleanQuery);
+
+		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
+			countSearchRequest);
+
+		return countSearchResponse.getCount();
+	}
+
 	private boolean _isSearchEngine(String vendor) {
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
@@ -193,40 +204,26 @@ public class IndexWriterHelperImplTest {
 		boolean systemIndexer) {
 
 		for (long companyId : _getCompanyIds()) {
-			CountSearchRequest countSearchRequest = new CountSearchRequest();
-
-			countSearchRequest.setIndexNames("liferay-" + companyId);
-
-			TermQuery termQuery = _queries.term(
-				Field.ENTRY_CLASS_NAME, className);
-
-			countSearchRequest.setQuery(termQuery);
-
-			CountSearchResponse countSearchResponse =
-				_searchEngineAdapter.execute(countSearchRequest);
+			long count = _getCount(companyId, className);
 
 			if (systemIndexer) {
 				if (companyId == CompanyConstants.SYSTEM) {
-					_assertCountGreaterThanZero(
-						className, companyId, countSearchResponse.getCount());
+					_assertCountGreaterThanZero(className, companyId, count);
 				}
 				else {
-					_assertCountEqualsZero(
-						className, companyId, countSearchResponse.getCount());
+					_assertCountEqualsZero(className, companyId, count);
 				}
 			}
 			else {
 				if (companyId == CompanyConstants.SYSTEM) {
-					_assertCountEqualsZero(
-						className, companyId, countSearchResponse.getCount());
+					_assertCountEqualsZero(className, companyId, count);
 				}
 				else {
-					_assertCountGreaterThanZero(
-						className, companyId, countSearchResponse.getCount());
+					_assertCountGreaterThanZero(className, companyId, count);
 				}
 			}
 
-			originalCounts.put(companyId, countSearchResponse.getCount());
+			originalCounts.put(companyId, count);
 		}
 	}
 

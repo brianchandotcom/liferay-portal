@@ -19,7 +19,6 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys;
 import com.liferay.client.extension.web.internal.display.context.ViewClientExtensionEntryDisplayContext;
-import com.liferay.client.extension.web.internal.display.context.ViewClientExtensionEntryPartDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,11 +58,6 @@ public class ViewClientExtensionEntryMVCRenderCommand
 				ClientExtensionAdminWebKeys.
 					VIEW_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
 				new ViewClientExtensionEntryDisplayContext(cet, renderRequest));
-			renderRequest.setAttribute(
-				ClientExtensionAdminWebKeys.
-					VIEW_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT,
-				new ViewClientExtensionEntryPartDisplayContext(
-					cet, renderRequest));
 
 			return "/admin/view_client_extension_entry.jsp";
 		}

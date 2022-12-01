@@ -15,13 +15,24 @@
 package com.liferay.client.extension.web.internal.display.context;
 
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.annotation.CETProperty;
 import com.liferay.client.extension.web.internal.display.context.util.CETLabelUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.lang.reflect.Method;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -30,13 +41,17 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ViewClientExtensionEntryDisplayContext {
+public class ViewClientExtensionEntryDisplayContext<T extends CET> {
 
 	public ViewClientExtensionEntryDisplayContext(
-		CET cet, PortletRequest portletRequest) {
+		T cet, PortletRequest portletRequest) {
 
 		_cet = cet;
 		_portletRequest = portletRequest;
+	}
+
+	public T getCET() {
+		return _cet;
 	}
 
 	public String getDescription() {
@@ -47,6 +62,18 @@ public class ViewClientExtensionEntryDisplayContext {
 		return _cet.getExternalReferenceCode();
 	}
 
+	public String getLabel(Method method) {
+		CETProperty cetProperty = method.getAnnotation(CETProperty.class);
+
+		String label = cetProperty.label();
+
+		if (Validator.isBlank(label)) {
+			label = CamelCaseUtil.fromCamelCase(cetProperty.name());
+		}
+
+		return LanguageUtil.get(_getHttpServletRequest(), label);
+	}
+
 	public String getName() {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
@@ -55,6 +82,29 @@ public class ViewClientExtensionEntryDisplayContext {
 
 	public String getProperties() {
 		return PropertiesUtil.toString(_cet.getProperties());
+	}
+
+	public Collection<Method> getPropertyMethods() {
+		List<Method> methods = new ArrayList<>();
+
+		Class<? extends CET> clazz = _cet.getClass();
+
+		for (Class<?> iface : clazz.getInterfaces()) {
+			if ((iface == _CET_CLASS) || !_CET_CLASS.isAssignableFrom(iface)) {
+				continue;
+			}
+
+			for (Method method : iface.getDeclaredMethods()) {
+				if (method.getAnnotation(CETProperty.class) != null) {
+					methods.add(method);
+				}
+			}
+		}
+
+		Collections.sort(
+			methods, Comparator.comparing(method -> getLabel(method)));
+
+		return methods;
 	}
 
 	public String getRedirect() {
@@ -83,6 +133,15 @@ public class ViewClientExtensionEntryDisplayContext {
 			CETLabelUtil.getTypeLabel(themeDisplay.getLocale(), getType()));
 	}
 
+	public <T> T getValue(Method method) {
+		try {
+			return (T)method.invoke(_cet);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	public String getViewJSP() {
 		return _cet.getViewJSP();
 	}
@@ -102,7 +161,9 @@ public class ViewClientExtensionEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private final CET _cet;
+	private static final Class<CET> _CET_CLASS = CET.class;
+
+	private final T _cet;
 	private final PortletRequest _portletRequest;
 
 }

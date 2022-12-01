@@ -17,14 +17,14 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-ViewClientExtensionEntryPartDisplayContext<CET> viewClientExtensionEntryPartDisplayContext = (ViewClientExtensionEntryPartDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.VIEW_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT);
+ViewClientExtensionEntryDisplayContext<CET> viewClientExtensionEntryDisplayContext = (ViewClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.VIEW_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT);
 
-Collection<Method> propertyMethods = viewClientExtensionEntryPartDisplayContext.getPropertyMethods();
+Collection<Method> propertyMethods = viewClientExtensionEntryDisplayContext.getPropertyMethods();
 
 for (Method method : propertyMethods) {
 	CETProperty cetProperty = method.getAnnotation(CETProperty.class);
-	String label = viewClientExtensionEntryPartDisplayContext.getLabel(method);
-	Object value = viewClientExtensionEntryPartDisplayContext.getValue(method);
+	String label = viewClientExtensionEntryDisplayContext.getLabel(method);
+	Object value = viewClientExtensionEntryDisplayContext.getValue(method);
 %>
 
 	<c:choose>

@@ -46,6 +46,7 @@ import java.util.concurrent.Future;
 import org.owasp.validator.html.AntiSamy;
 import org.owasp.validator.html.CleanResults;
 import org.owasp.validator.html.Policy;
+import org.owasp.validator.html.ScanException;
 
 /**
  * @author Seiphon Wang
@@ -178,16 +179,22 @@ public class LangSanitizer {
 	private String _sanitizeContent(File file, String key, String originalValue)
 		throws Exception {
 
-		if (key.equals("form-navigator-entry-keys-help")) {
-			return null;
-		}
-
 		AntiSamy antiSamy = new AntiSamy();
 
-		CleanResults cleanResults = antiSamy.scan(originalValue, _policy);
+		String sanitizedValue = EscapeUtil.unEscape(originalValue);
 
-		String sanitizedValue = EscapeUtil.unEscape(
-			cleanResults.getCleanHTML());
+		try {
+			CleanResults cleanResults = antiSamy.scan(originalValue, _policy);
+
+			sanitizedValue = EscapeUtil.unEscape(cleanResults.getCleanHTML());
+		}
+		catch (ScanException scanException) {
+			return StringBundler.concat(
+				"File: ", file.getAbsolutePath(), System.lineSeparator(),
+				"\tKey: ", key, System.lineSeparator(), "\tOriginal Content: ",
+				originalValue, System.lineSeparator(), "\tSantized Content: ",
+				EscapeUtil.escapeTag(originalValue));
+		}
 
 		String value = EscapeUtil.unEscape(originalValue);
 

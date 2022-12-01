@@ -26,6 +26,13 @@ import java.util.regex.Pattern;
  */
 public class EscapeUtil {
 
+	public static String escapeTag(String content) {
+		content = content.replaceAll(">", "&gt;");
+		content = content.replaceAll("<", "&lt;");
+
+		return content;
+	}
+
 	public static String formatTag(String content) {
 		Matcher matcher = _tagPattern.matcher(content);
 

@@ -77,12 +77,12 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//div[a[@aria-expanded='true']]//a[contains(@id,'Portlet') and @data-title='${key_portlet}']</td>
+	<td>//li[a[@aria-expanded='true']]//a[contains(@id,'Portlet') and @data-title='${key_portlet}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PORTLET_ACTIVE</td>
-	<td>//div[a[@aria-expanded='true']]//li[contains(@class,'active')]//a[contains(@id,'Portlet') and @data-title='${key_portlet}']</td>
+	<td>//li[a[@aria-expanded='true']]//li[contains(@class,'active')]//a[contains(@id,'Portlet') and @data-title='${key_portlet}']</td>
 	<td></td>
 </tr>
 <tr>

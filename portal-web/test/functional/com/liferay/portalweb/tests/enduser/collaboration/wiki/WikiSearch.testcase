@@ -52,7 +52,7 @@ definition {
 		JSONWiki.addAttachmentToWikiPage(
 			fileName = "Document_1.txt",
 			groupName = "Guest",
-			mimeType = "image/jpeg",
+			mimeType = "text/txt",
 			wikiNodeName = "Main",
 			wikiPageName = "FrontPage");
 

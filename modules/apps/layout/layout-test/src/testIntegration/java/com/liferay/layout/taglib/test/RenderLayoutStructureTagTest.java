@@ -148,8 +148,7 @@ public class RenderLayoutStructureTagTest {
 		layoutTypePortlet = (LayoutTypePortlet)_layout.getLayoutType();
 
 		Assert.assertEquals(
-			PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID,
-			layoutTypePortlet.getLayoutTemplateId());
+			"removed-template-id", layoutTypePortlet.getLayoutTemplateId());
 	}
 
 	@Test

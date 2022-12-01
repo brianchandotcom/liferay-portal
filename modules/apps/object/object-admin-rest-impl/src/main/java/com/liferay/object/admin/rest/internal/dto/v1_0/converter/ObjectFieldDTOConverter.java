@@ -67,6 +67,7 @@ public class ObjectFieldDTOConverter
 				indexedLanguageId = objectField.getIndexedLanguageId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectField.getLabelMap());
+				listTypeDefinitionId = objectField.getListTypeDefinitionId();
 				name = objectField.getName();
 				objectFieldSettings = TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),

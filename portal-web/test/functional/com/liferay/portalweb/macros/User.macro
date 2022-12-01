@@ -1319,7 +1319,7 @@ definition {
 	macro editAddressCP {
 		UserNavigator.gotoContact();
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
 
 		if (isSet(addressType)) {
 			Select(

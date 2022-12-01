@@ -456,6 +456,7 @@ div {
 }
 
 .questions-labels-limit {
+	display: block;
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;

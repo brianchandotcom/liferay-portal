@@ -33,14 +33,6 @@ export default function QuestionsBadge({
 			data-tooltip-align="top"
 			title={tooltip}
 		>
-			{symbol && (
-				<ClayIcon
-					className={classNames(symbolClassName, 'mr-2 mt-0')}
-					fontSize={16}
-					symbol={symbol}
-				/>
-			)}
-
 			<span
 				className={classNames(
 					'label-badge-activity questions-labels-limit',
@@ -49,6 +41,14 @@ export default function QuestionsBadge({
 					}
 				)}
 			>
+				{symbol && (
+					<ClayIcon
+						className={classNames(symbolClassName, 'mr-2 mt-0')}
+						fontSize={16}
+						symbol={symbol}
+					/>
+				)}
+
 				{value || 0}
 			</span>
 		</div>

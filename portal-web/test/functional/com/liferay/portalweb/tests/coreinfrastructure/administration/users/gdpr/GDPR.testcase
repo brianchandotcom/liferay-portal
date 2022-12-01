@@ -1150,14 +1150,14 @@ definition {
 		}
 
 		task ("Filter by name and assert that data exports are listed alphabetically") {
-			ManagementBar.toggleViewOrder(order = "list-down");
+			ManagementBar.toggleViewOrder(order = "list-up");
 
 			ManagementBar.setFilterAndOrder(orderBy = "Name");
 
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "1",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "Blogs");
+				value1 = "Message Boards");
 
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "2",
@@ -1167,7 +1167,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "3",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "Message Boards");
+				value1 = "Blogs");
 		}
 	}
 
@@ -2032,8 +2032,6 @@ definition {
 
 		task ("and entries in Export Personal Data are ordered by name in descending order") {
 			ManagementBar.setFilterAndOrder(orderBy = "Name");
-
-			ManagementBar.toggleViewOrder(order = "list-down");
 		}
 
 		task ("When pagination is changed, assert the correct number of entries are listed") {

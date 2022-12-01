@@ -35,9 +35,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to Collections administration in the staging site") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Collections");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
 		}
 
 		task ("Assert Collections admin is written accessible") {

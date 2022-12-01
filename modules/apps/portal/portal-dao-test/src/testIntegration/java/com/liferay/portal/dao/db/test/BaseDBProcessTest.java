@@ -433,7 +433,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	@Test
 	public void testProcessConcurrentlyWithList() throws Exception {
 		Integer[] values = IntStream.rangeClosed(
-			1, _RANGE_MAX
+			1, _PROCESS_CONCURRENTLY_EXECUTIONS
 		).boxed(
 		).toArray(
 			Integer[]::new
@@ -486,7 +486,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	private void _populateTable() throws Exception {
-		for (int i = 1; i <= _RANGE_MAX; i++) {
+		for (int i = 1; i <= _PROCESS_CONCURRENTLY_EXECUTIONS; i++) {
 			runSQL(
 				StringBundler.concat(
 					"insert into ", _TABLE_NAME, " (id, notNilColumn) values (",
@@ -535,12 +535,13 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select count(1) from ", _TABLE_NAME,
-					" where id >= 1 and id <= ", _RANGE_MAX,
-					" and typeInteger = id"));
+					" where id >= 1 and id <= ",
+					_PROCESS_CONCURRENTLY_EXECUTIONS, " and typeInteger = id"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				Assert.assertEquals(_RANGE_MAX, resultSet.getInt(1));
+				Assert.assertEquals(
+					_PROCESS_CONCURRENTLY_EXECUTIONS, resultSet.getInt(1));
 			}
 		}
 
@@ -549,7 +550,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	private static final String _INDEX_NAME = "IX_TEMP";
 
-	private static final int _RANGE_MAX = 2000;
+	private static final int _PROCESS_CONCURRENTLY_EXECUTIONS = 100;
 
 	private static final String _TABLE_NAME = "BasedDBProcessTest";
 

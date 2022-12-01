@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -362,6 +363,20 @@ public class ObjectDefinitionResourceImpl
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
 			new ArrayList<>(
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+
+		List<com.liferay.object.model.ObjectField>
+			serviceBuilderObjectFieldsWithNoDBColumnName = ListUtil.filter(
+				serviceBuilderObjectFields,
+				serviceBuilderObjectField -> Validator.isNull(
+					serviceBuilderObjectField.getDBTableName()));
+
+		for (com.liferay.object.model.ObjectField
+				serviceBuilderObjectFieldWithNoDBColumnName :
+					serviceBuilderObjectFieldsWithNoDBColumnName) {
+
+			_objectFieldLocalService.updateDBTableName(
+				serviceBuilderObjectFieldWithNoDBColumnName.getObjectFieldId());
+		}
 
 		for (ObjectField objectField : objectDefinition.getObjectFields()) {
 			long listTypeDefinitionId = ObjectFieldUtil.getListTypeDefinitionId(

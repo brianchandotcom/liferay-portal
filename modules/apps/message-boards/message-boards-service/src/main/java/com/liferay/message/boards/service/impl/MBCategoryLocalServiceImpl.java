@@ -1149,7 +1149,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory mbCategory = mbCategoryPersistence.fetchByG_N(groupId, name);
 
 		if (mbCategory != null) {
-			throw new CategoryNameException("Name must not be duplicated");
+			throw new CategoryNameException("Add MBCategory with existing name");
 		}
 	}
 

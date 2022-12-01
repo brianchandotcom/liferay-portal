@@ -4,7 +4,9 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record" />
 	<style fontName="ipaexm" fontSize="14" isDefault="true" name="Sans_Normal" />
 	<queryString><![CDATA[select * from User_]]></queryString>
-	<background><band splitType="Stretch" /></background>
+	<background>
+		<band splitType="Stretch" />
+	</background>
 	<title>
 		<band height="141" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" />

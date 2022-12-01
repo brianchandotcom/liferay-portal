@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
-<md:EntityDescriptor entityID="samlidp" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<md:EntityDescriptor entityID="samlidp" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">
+	<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
 		<ds:SignedInfo>
 			<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
 			<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
@@ -20,7 +21,9 @@ fD1PV7JMbDySyZkgM34HtslkC7M27TwqT1BITzZ9rDGrO6IkdTKy6n5q5kuKHhhdS/MAUGjuGtL6&#xd
 +kdcOy2K1AstuXdBuwa7Ahu5iN8Vo7QmNd3OjmZTfC4veW2fj2G7A07zb7RX52la6d5bsY6zq5Yo&#xd;
 Zr3kkPBMfi1pKnbbgth07YKjiWHNLyOJzWFhJA==
 		</ds:SignatureValue>
-		<ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIC4zCCAcsCBgGAlB9pQjANBgkqhkiG9w0BAQsFADA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAw
+		<ds:KeyInfo>
+			<ds:X509Data>
+				<ds:X509Certificate>MIIC4zCCAcsCBgGAlB9pQjANBgkqhkiG9w0BAQsFADA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAw
 DgYDVQQKDAdMaWZlcmF5MQwwCgYDVQQGEwNVU0EwHhcNMjIwNTA1MTIwODQ4WhcNMjMwNDI2MTIw
 ODQ4WjA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAwDgYDVQQKDAdMaWZlcmF5MQwwCgYDVQQGEwNV
 U0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCAHy7AhyX6sGQrBhRUk+RFi4GuYYnT
@@ -33,7 +36,25 @@ zGHb2S4cFDqW9BPT8poczdeKCAWydM0ULxc+YW2XPMekx0E/xIFWXsrjx8FsGR672YcVHAJK4qNU
 duimXK5Ecih0/vE4zNMfBh03VPQY55OtfI14GNeJmX7D/hluNJqJrYOAe0diP/vMzy9SdUErB0fN
 fbJWHdhSR81yVLBeRfofrZU1olpoCRW30K67hvy1fqI+SxONA/EyNiPDfDirxdUVm9d293YkX21L
 7yV98xrZyegRUqi0emF8DtkjObcdlamDLcpSvuHCCfER5N89ZRTG4grFpGrIEvV/DR7Pkowve+Uh
-GOE=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><md:IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:Extensions><alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha384" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha384" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/></md:Extensions><md:KeyDescriptor use="signing"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIC4zCCAcsCBgGAlB9pQjANBgkqhkiG9w0BAQsFADA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAw
+GOE=</ds:X509Certificate>
+			</ds:X509Data>
+		</ds:KeyInfo>
+	</ds:Signature>
+	<md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" WantAuthnRequestsSigned="true">
+		<md:Extensions>
+			<alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" />
+			<alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha384" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" />
+			<alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" />
+			<alg:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" />
+			<alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" />
+			<alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha384" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" />
+			<alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" />
+			<alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" />
+		</md:Extensions>
+		<md:KeyDescriptor use="signing">
+			<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<ds:X509Data>
+					<ds:X509Certificate>MIIC4zCCAcsCBgGAlB9pQjANBgkqhkiG9w0BAQsFADA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAw
 DgYDVQQKDAdMaWZlcmF5MQwwCgYDVQQGEwNVU0EwHhcNMjIwNTA1MTIwODQ4WhcNMjMwNDI2MTIw
 ODQ4WjA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAwDgYDVQQKDAdMaWZlcmF5MQwwCgYDVQQGEwNV
 U0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCAHy7AhyX6sGQrBhRUk+RFi4GuYYnT
@@ -46,4 +67,13 @@ zGHb2S4cFDqW9BPT8poczdeKCAWydM0ULxc+YW2XPMekx0E/xIFWXsrjx8FsGR672YcVHAJK4qNU
 duimXK5Ecih0/vE4zNMfBh03VPQY55OtfI14GNeJmX7D/hluNJqJrYOAe0diP/vMzy9SdUErB0fN
 fbJWHdhSR81yVLBeRfofrZU1olpoCRW30K67hvy1fqI+SxONA/EyNiPDfDirxdUVm9d293YkX21L
 7yV98xrZyegRUqi0emF8DtkjObcdlamDLcpSvuHCCfER5N89ZRTG4grFpGrIEvV/DR7Pkowve+Uh
-GOE=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8080/c/portal/saml/slo"/><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/c/portal/saml/slo"/><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/c/portal/saml/sso"/><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8080/c/portal/saml/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>
+GOE=</ds:X509Certificate>
+				</ds:X509Data>
+			</ds:KeyInfo>
+		</md:KeyDescriptor>
+		<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8080/c/portal/saml/slo" />
+		<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/c/portal/saml/slo" />
+		<md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/c/portal/saml/sso" />
+		<md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8080/c/portal/saml/sso" />
+	</md:IDPSSODescriptor>
+</md:EntityDescriptor>

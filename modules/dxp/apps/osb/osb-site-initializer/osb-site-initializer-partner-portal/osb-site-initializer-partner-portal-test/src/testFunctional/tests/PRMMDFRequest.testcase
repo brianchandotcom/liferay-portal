@@ -1,5 +1,6 @@
 @component-name = "OSB Site Initializer Partner Portal"
 definition {
+
 	property custom.properties = "feature.flag.LPS-135430=true";
 	property osgi.modules.includes = "osb-site-initializer-partner-portal";
 	property portal.release = "false";
@@ -28,10 +29,10 @@ definition {
 		}
 
 		task ("Add a new account and assign the created user to the account") {
-            JSONAccountEntry.addAccountEntry(
+			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account 1",
 				accountEntryType = "Business");
-            
+
 			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account 1");
@@ -49,10 +50,10 @@ definition {
 			PRMUtils.publishObject(objectName = "MDF Listing Column");
 
 			PRMUtils.definePermission(
-				objectName = "MDF Listing Column",
 				itemName = "Name",
-				roleName = "User",
-				permissionName = "View");
+				objectName = "MDF Listing Column",
+				permissionName = "View",
+				roleName = "User");
 		}
 
 		task ("Go to Partner Portal and login with the created user") {
@@ -67,14 +68,13 @@ definition {
 			PRMNavigator.goToNavItem(navItem = "Marketing");
 		}
 	}
-  
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
 		}
@@ -90,13 +90,13 @@ definition {
 		task ("And I fill all Goals form with my informations") {
 			PRMMDFRequest.fillGoalsPage(
 				accountName = "Account 1",
-				countryName = "Global",
-				campaignName = "Campaign Name",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				campaignDescription = "Campaign Description",
-				targetMarketOptions = "Education,Energy",
+				campaignName = "Campaign Name",
+				countryName = "Global",
 				goalsOptions = "Lead generation",
-				targetRolesOptions = "Administrator",
-				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform");
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator");
 
 			Button.click(button = "Continue");
 		}
@@ -104,13 +104,13 @@ definition {
 		task ("And I add a new activity") {
 			PRMMDFRequest.newActivity(
 				activityName = "Activity Name 1",
-				typeOfActivity = "Miscellaneous Marketing",
-				tactic = "Other",
 				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
-				leadList = "true",
-				targetOfLeads = "test",
+				followUpStrategy = "test",
 				leadFollowUpList = "Other",
-				followUpStrategy = "test");
+				leadList = "true",
+				tactic = "Other",
+				targetOfLeads = "test",
+				typeOfActivity = "Miscellaneous Marketing");
 
 			Button.click(button = "Continue");
 		}
@@ -118,7 +118,7 @@ definition {
 		task ("When I submit the MDF") {
 			Button.click(button = "Continue");
 
-        	Button.click(button = "Submit");
+			Button.click(button = "Submit");
 		}
 
 		task ("Then the MDF is submited and visible on listing page") {

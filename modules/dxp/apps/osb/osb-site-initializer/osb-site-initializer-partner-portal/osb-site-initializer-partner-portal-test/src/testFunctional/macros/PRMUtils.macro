@@ -14,6 +14,26 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
+	@summary = "Define object permission to a role"
+	macro definePermission {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "${objectName}");
+
+		ObjectCustomViews.gotoPermissions(entryName = "${itemName}");
+
+		var roleName = StringUtil.loweCase("${roleName}");
+		var permissionName = StringUtil.upperCase("${permissionName}");
+
+		Click(
+			key_permissionName = "${permissionName}",
+			key_roleName = "${roleName}",
+			locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+
+		Button.clickSave();
+	}
+
 	macro downloadFileViaCurl {
 		var currentURL = selenium.getCurrentUrl();
 		var testDependenciesDir = PropsUtil.get("output.dir.name");
@@ -44,23 +64,4 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	@summary = "Define object permission to a role"
-	macro definePermission {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "${objectName}");
-
-        ObjectCustomViews.gotoPermissions(entryName = "${itemName}");
-
-		var roleName = StringUtil.loweCase("${roleName}");
-		var permissionName = StringUtil.upperCase("${permissionName}");
-
-		Click(
-			locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS",
-			key_roleName = "${roleName}",
-			key_permissionName = "${permissionName}");
-
-        Button.clickSave();
-	}
 }

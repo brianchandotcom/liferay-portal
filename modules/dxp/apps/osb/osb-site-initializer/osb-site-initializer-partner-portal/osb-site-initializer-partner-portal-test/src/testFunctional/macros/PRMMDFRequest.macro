@@ -1,83 +1,134 @@
 definition {
-    @summary = "Fill the goals page form"
-    macro fillGoalsPage {
-        Select(
-            locator1 = "PRMMDFRequest#SELECT",
-            key_fieldName = "company",
-            value1 = "${accountName}");
 
-        Select(
-            locator1 = "PRMMDFRequest#SELECT",
-            key_fieldName = "country",
-            value1 = "${countryName}");
+	@summary = "Add a new MDF Request filling the goals and activity pages"
+	macro createNewRequest {
+		PRMMDFRequest.fillGoalsPage(
+			accountName = "${accountName}",
+			additionalOptions = "${additionalOptions}",
+			campaignDescription = "${campaignDescription}",
+			campaignName = "${campaignName}",
+			countryName = "${countryName}",
+			goalsOptions = "${goalsOptions}",
+			targetMarketOptions = "${targetMarketOptions}",
+			targetRolesOptions = "${targetRolesOptions}");
 
-        Type(
-            locator1 = "PRMMDFRequest#TEXT_FIELD",
-            key_fieldName = "overallCampaignName",
-            value1 = "${campaignName}");
+		Button.click(button = "Continue");
 
-        Type(
-            locator1 = "PRMMDFRequest#TEXT_FIELD",
-            key_fieldName = "overallCampaignDescription",
-            value1 = "${campaignDescription}");
+		Click(
+			key_buttonText = "Add Activity",
+			locator1 = "PRMMDFRequest#ADD_BUTTON");
 
-        for (var goalsList : list "${goalsOptions}") {
-            Click.clickAtNotVisible(
-                locator1 = "PRMMDFRequest#CHECKBOX",
-                key_fieldName = "liferayBusinessSalesGoals",
-                key_optionValue = "${goalsList}");
-        }
+		PRMMDFRequest.newActivity(
+			activityName = "${activityName}",
+			budgetList = "${budgetList}",
+			followUpStrategy = "${followUpStrategy}",
+			leadFollowUpList = "${leadFollowUpList}",
+			leadList = "${leadList}",
+			tactic = "${tactic}",
+			targetOfLeads = "${targetOfLeads}",
+			typeOfActivity = "${typeOfActivity}");
 
-        for (var targetMarketList : list "${targetMarketOptions}") {
-            Click.clickAtNotVisible(
-                locator1 = "PRMMDFRequest#CHECKBOX",
-                key_fieldName = "targetMarkets",
-                key_optionValue = "${targetMarketList}");
-        }
+		Button.click(button = "Continue");
 
-        if (isSet(additionalOptions)) {
-            for (var optionsList : list "${additionalOptions}") {
-                Click.clickAtNotVisible(
-                    locator1 = "PRMMDFRequest#INPUT_BUTTON",
-                    key_fieldName = "additionalOption",
-                    key_buttonText = "${optionsList}");
-            }
-        }
+		Button.click(button = "Continue");
 
-        for (var targetRolesList : list "${targetRolesOptions}") {
-            Click.clickAtNotVisible(
-                locator1 = "PRMMDFRequest#CHECKBOX",
-                key_fieldName = "targetAudienceRoles",
-                key_optionValue = "${targetRolesList}");
-        }
-    }
+		ScrollWebElementIntoView(locator1 = "Button#SUBMIT");
 
-    @summary = "Add a new activity"
-    macro newActivity {
-        if (!(isSet(activityIndex))) {
-            var activityIndex = "0";
-        }
+		Button.click(button = "Submit");
 
-        Click(
-            locator1 = "PRMMDFRequest#ADD_BUTTON",
-            key_buttonText = "Add Activity");
+		WaitForPageLoad();
+	}
 
-        Type(
-            locator1 = "PRMMDFRequest#TEXT_FIELD",
-            key_fieldName = "activities[${activityIndex}].name",
-            value1 = "${activityName}");
+	@summary = "Fill the goals page form"
+	macro fillGoalsPage {
+		Select(
+			key_fieldName = "company",
+			locator1 = "PRMMDFRequest#SELECT",
+			value1 = "${accountName}");
 
-        Select(
-            locator1 = "PRMMDFRequest#SELECT",
-            key_fieldName = "activities[${activityIndex}].typeActivity",
-            value1 = "${typeOfActivity}");
+		Select(
+			key_fieldName = "country",
+			locator1 = "PRMMDFRequest#SELECT",
+			value1 = "${countryName}");
 
-        Select(
-            locator1 = "PRMMDFRequest#SELECT",
-            key_fieldName = "activities[${activityIndex}].tactic",
-            value1 = "${tactic}");
+		Type(
+			key_fieldName = "overallCampaignName",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${campaignName}");
 
-        var currentDay = DateUtil.getCurrentDate();
+		Type(
+			key_fieldName = "overallCampaignDescription",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${campaignDescription}");
+
+		for (var goalsList : list "${goalsOptions}") {
+			Click.clickAtNotVisible(
+				key_fieldName = "liferayBusinessSalesGoals",
+				key_optionValue = "${goalsList}",
+				locator1 = "PRMMDFRequest#CHECKBOX");
+		}
+
+		for (var targetMarketList : list "${targetMarketOptions}") {
+			Click.clickAtNotVisible(
+				key_fieldName = "targetMarkets",
+				key_optionValue = "${targetMarketList}",
+				locator1 = "PRMMDFRequest#CHECKBOX");
+		}
+
+		if (isSet(additionalOptions)) {
+			for (var optionsList : list "${additionalOptions}") {
+				Click.clickAtNotVisible(
+					key_buttonText = "${optionsList}",
+					key_fieldName = "additionalOption",
+					locator1 = "PRMMDFRequest#INPUT_BUTTON");
+			}
+		}
+
+		for (var targetRolesList : list "${targetRolesOptions}") {
+			Click.clickAtNotVisible(
+				key_fieldName = "targetAudienceRoles",
+				key_optionValue = "${targetRolesList}",
+				locator1 = "PRMMDFRequest#CHECKBOX");
+		}
+	}
+
+	@summary = "Format the date that will be inputed on start and end date"
+	macro formatDate {
+		var nextDayDate = DateUtil.getFormattedDate("+1", "MMddyyyy");
+
+		if (isSet(endDate)) {
+			var nextDayDate = DateUtil.getFormattedDate("+2", "MMddyyyy");
+		}
+
+		return "${nextDayDate}";
+	}
+
+	@summary = "Add a new activity"
+	macro newActivity {
+		if (!(isSet(activityIndex))) {
+			var activityIndex = "0";
+		}
+
+		Click(
+			key_buttonText = "Add Activity",
+			locator1 = "PRMMDFRequest#ADD_BUTTON");
+
+		Type(
+			key_fieldName = "activities[${activityIndex}].name",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${activityName}");
+
+		Select(
+			key_fieldName = "activities[${activityIndex}].typeActivity",
+			locator1 = "PRMMDFRequest#SELECT",
+			value1 = "${typeOfActivity}");
+
+		Select(
+			key_fieldName = "activities[${activityIndex}].tactic",
+			locator1 = "PRMMDFRequest#SELECT",
+			value1 = "${tactic}");
+
+		var currentDay = DateUtil.getCurrentDate();
 		var currentMonth = DateUtil.getCurrentMonth();
 		var currentYear = DateUtil.getCurrentYear();
 		var nextDayStartDate = DateUtil.getFormattedDate("+1", "dd");
@@ -85,119 +136,81 @@ definition {
 		if ("${nextDayStartDate}" == "01") {
 			var currentMonth = ${currentMonth} + 1;
 
-            if ("${currentMonth}" == "13") {
-                fail("The selected date will be on next year. The start date can be only on current year");
-            }
+			if ("${currentMonth}" == "13") {
+				fail("The selected date will be on next year. The start date can be only on current year");
+			}
 		}
 
 		var currentDate = "${currentMonth}${nextDayStartDate}${currentYear}";
 
-        Type.sendKeys(
-            locator1 = "PRMMDFRequest#TEXT_FIELD",
-            key_fieldName = "activities[${activityIndex}].startDate",
-            value1 = "${currentDate}");
-        
-        var nextDayEndDate = DateUtil.getFormattedDate("+2", "dd");
+		Type.sendKeys(
+			key_fieldName = "activities[${activityIndex}].startDate",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${currentDate}");
 
-	    var endIsLessThanStart = MathUtil.isLessThan("${nextDayEndDate}", "${nextDayStartDate}");
+		var nextDayEndDate = DateUtil.getFormattedDate("+2", "dd");
+
+		var endIsLessThanStart = MathUtil.isLessThan("${nextDayEndDate}", "${nextDayStartDate}");
 
 		if ("${endIsLessThanStart}" == "true") {
 			var currentMonth = ${currentMonth} + 1;
 
-             if ("${currentMonth}" == "13") {
-                fail("The end date can not be different from start date.");
-            }
+			if ("${currentMonth}" == "13") {
+				fail("The end date can not be different from start date.");
+			}
 		}
 
-        var futureDate = "${currentMonth}${nextDayEndDate}${currentYear}";
+		var futureDate = "${currentMonth}${nextDayEndDate}${currentYear}";
 
-        Type.sendKeys(
-            locator1 = "PRMMDFRequest#TEXT_FIELD",
-            key_fieldName = "activities[${activityIndex}].endDate",
-            value1 = "${futureDate}");
+		Type.sendKeys(
+			key_fieldName = "activities[${activityIndex}].endDate",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${futureDate}");
 
-        var budgetIndex = "0";
+		var budgetIndex = "0";
 
-        for (var bugdetValues : list "${budgetList}") {
-            var expenseOption = StringUtil.extractFirst("${bugdetValues}", "-");
-            var bugdetValue = StringUtil.extractLast("${bugdetValues}", "-");
+		for (var bugdetValues : list "${budgetList}") {
+			var expenseOption = StringUtil.extractFirst("${bugdetValues}", "-");
+			var bugdetValue = StringUtil.extractLast("${bugdetValues}", "-");
 
-            Click(
-                locator1 = "PRMMDFRequest#ADD_BUTTON",
-                key_buttonText = "Add Expense");
+			Click(
+				key_buttonText = "Add Expense",
+				locator1 = "PRMMDFRequest#ADD_BUTTON");
 
-            Select(
-                locator1 = "PRMMDFRequest#SELECT",
-                key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].expense",
-                value1 = "${expenseOption}");
+			Select(
+				key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].expense",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = "${expenseOption}");
 
-            Type(
-                locator1 = "PRMMDFRequest#TEXT_FIELD",
-                key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].cost",
-                value1 = "${bugdetValue}");
+			Type(
+				key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].cost",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "${bugdetValue}");
 
-            var budgetIndex = ${budgetIndex} + 1;
-        }
+			var budgetIndex = ${budgetIndex} + 1;
+		}
 
-        Click.clickAtNotVisible(
-            locator1 = "PRMMDFRequest#CHECKBOX",
-            key_fieldName = "activities[${activityIndex}].leadGenerated",
-            key_optionValue = "${leadList}");
+		Click.clickAtNotVisible(
+			key_fieldName = "activities[${activityIndex}].leadGenerated",
+			key_optionValue = "${leadList}",
+			locator1 = "PRMMDFRequest#CHECKBOX");
 
-        Type(
-            locator1 = "PRMMDFRequest#TEXT_FIELD",
-            key_fieldName = "activities[${activityIndex}].targetOfLeads",
-            value1 = "${targetOfLeads}");
+		Type(
+			key_fieldName = "activities[${activityIndex}].targetOfLeads",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${targetOfLeads}");
 
-        for (var leadFollowUp : list "${leadFollowUpList}") {
-            Click.clickAtNotVisible(
-                locator1 = "PRMMDFRequest#CHECKBOX",
-                key_fieldName = "activities[${activityIndex}].leadFollowUpStrategies",
-                key_optionValue = "${leadFollowUp}");
-        }
+		for (var leadFollowUp : list "${leadFollowUpList}") {
+			Click.clickAtNotVisible(
+				key_fieldName = "activities[${activityIndex}].leadFollowUpStrategies",
+				key_optionValue = "${leadFollowUp}",
+				locator1 = "PRMMDFRequest#CHECKBOX");
+		}
 
-        Type(
-            locator1 = "PRMMDFRequest#TEXT_FIELD",
-            key_fieldName = "activities[${activityIndex}].detailsLeadFollowUp",
-            value1 = "${followUpStrategy}");
-    }
+		Type(
+			key_fieldName = "activities[${activityIndex}].detailsLeadFollowUp",
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			value1 = "${followUpStrategy}");
+	}
 
-    @summary = "Add a new MDF Request filling the goals and activity pages"
-    macro createNewRequest {
-        PRMMDFRequest.fillGoalsPage(
-            accountName = "${accountName}",
-            countryName = "${countryName}",
-            campaignName = "${campaignName}",
-            campaignDescription = "${campaignDescription}",
-            targetMarketOptions = "${targetMarketOptions}",
-            goalsOptions = "${goalsOptions}",
-            targetRolesOptions = "${targetRolesOptions}",
-            additionalOptions = "${additionalOptions}");
-
-        Button.click(button = "Continue");
-
-        Click(
-            locator1 = "PRMMDFRequest#ADD_BUTTON",
-            key_buttonText = "Add Activity");
-
-        PRMMDFRequest.newActivity(
-            activityName = "${activityName}",
-            typeOfActivity = "${typeOfActivity}",
-            tactic = "${tactic}",
-            budgetList = "${budgetList}",
-            leadList = "${leadList}",
-            targetOfLeads = "${targetOfLeads}",
-            leadFollowUpList = "${leadFollowUpList}",
-            followUpStrategy = "${followUpStrategy}");
-
-        Button.click(button = "Continue");
-
-        Button.click(button = "Continue");
-
-        ScrollWebElementIntoView(locator1 = "Button#SUBMIT");
-
-        Button.click(button = "Submit");
-
-        WaitForPageLoad();
-    }
 }

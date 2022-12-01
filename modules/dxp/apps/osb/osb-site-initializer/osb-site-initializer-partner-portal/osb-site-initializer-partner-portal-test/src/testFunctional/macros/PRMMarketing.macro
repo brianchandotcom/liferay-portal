@@ -1,7 +1,8 @@
 definition {
 
-    @summary = "Click on button that takes the user do MDF Forms"
-    macro gotoAddNewMDF {
-        Click(locator1 = "PRMMarketing#APPLY_FOR_FUNDS");
-    }
+	@summary = "Click on button that takes the user do MDF Forms"
+	macro gotoAddNewMDF {
+		Click(locator1 = "PRMMarketing#APPLY_FOR_FUNDS");
+	}
+
 }

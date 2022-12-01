@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 
 import org.osgi.framework.BundleContext;
@@ -32,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class NodeExecutorRegistry {
 
 	public NodeExecutor getNodeExecutor(String nodeTypeString) {
-		return _serviceTrackerMap.getService(NodeType.valueOf(nodeTypeString));
+		return _serviceTrackerMap.getService(nodeTypeString);
 	}
 
 	@Activate
@@ -42,7 +41,7 @@ public class NodeExecutorRegistry {
 			ServiceReferenceMapperFactory.create(
 				bundleContext,
 				(nodeExecutor, emitter) -> emitter.emit(
-					nodeExecutor.getNodeType())));
+					String.valueOf(nodeExecutor.getNodeType()))));
 	}
 
 	@Deactivate
@@ -50,6 +49,6 @@ public class NodeExecutorRegistry {
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<NodeType, NodeExecutor> _serviceTrackerMap;
+	private ServiceTrackerMap<String, NodeExecutor> _serviceTrackerMap;
 
 }

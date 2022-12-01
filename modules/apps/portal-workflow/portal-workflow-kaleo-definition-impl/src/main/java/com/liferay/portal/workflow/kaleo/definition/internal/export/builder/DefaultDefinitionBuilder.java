@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
-import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.export.builder.DefinitionBuilder;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -82,7 +81,7 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 			ServiceReferenceMapperFactory.create(
 				bundleContext,
 				(nodeBuilder, emitter) -> emitter.emit(
-					nodeBuilder.getNodeType())));
+					String.valueOf(nodeBuilder.getNodeType()))));
 	}
 
 	@Deactivate
@@ -106,7 +105,7 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 
 		for (KaleoNode kaleoNode : kaleoNodes) {
 			NodeBuilder nodeBuilder = _serviceTrackerMap.getService(
-				NodeType.valueOf(kaleoNode.getType()));
+				kaleoNode.getType());
 
 			Node node = nodeBuilder.buildNode(kaleoNode);
 
@@ -159,6 +158,6 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 	@Reference
 	private KaleoTransitionLocalService _kaleoTransitionLocalService;
 
-	private ServiceTrackerMap<NodeType, NodeBuilder<Node>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, NodeBuilder<Node>> _serviceTrackerMap;
 
 }

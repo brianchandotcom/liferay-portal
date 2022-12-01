@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>OVERVIEW_HEADER_PROPERTY_NAME</td>
-	<td>//div[contains(@class,'card-header')]//h5[contains(text(),'${propertyName}')]</td>
+	<td>//a[contains(@class,'breadcrumb') and contains(text(), '${propertyName}')]</td>
 	<td></td>
 </tr>
 <tr>

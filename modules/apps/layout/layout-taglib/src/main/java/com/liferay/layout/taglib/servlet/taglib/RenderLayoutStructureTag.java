@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -1251,11 +1250,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		layoutTypePortlet.setLayoutTemplateId(
 			layout.getUserId(), PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
-		layout = LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-
-		return (LayoutTypePortlet)layout.getLayoutType();
+		return layoutTypePortlet;
 	}
 
 	private void _write(

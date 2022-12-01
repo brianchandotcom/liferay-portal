@@ -38,6 +38,8 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 		).put(
 			"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggersJSONArray()
 		).put(
+			"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
+		).put(
 			"objectDefinitionsRelationshipsURL", objectDefinitionsActionsDisplayContext.getObjectDefinitionsRelationshipsURL()
 		).put(
 			"readOnly", !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission()

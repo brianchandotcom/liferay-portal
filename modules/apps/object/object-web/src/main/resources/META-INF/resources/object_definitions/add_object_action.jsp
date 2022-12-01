@@ -37,6 +37,8 @@ ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = 
 		).put(
 			"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggersJSONArray()
 		).put(
+			"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
+		).put(
 			"objectDefinitionId", objectDefinitionsActionsDisplayContext.getObjectDefinitionId()
 		).put(
 			"objectDefinitionsRelationshipsURL", objectDefinitionsActionsDisplayContext.getObjectDefinitionsRelationshipsURL()

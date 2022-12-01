@@ -23,6 +23,7 @@ interface EditObjectActionProps {
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
@@ -36,6 +37,7 @@ export default function EditObjectAction({
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	readOnly,
@@ -49,6 +51,9 @@ export default function EditObjectAction({
 			objectActionCodeEditorElements={objectActionCodeEditorElements}
 			objectActionExecutors={objectActionExecutors}
 			objectActionTriggers={objectActionTriggers}
+			objectDefinitionExternalReferenceCode={
+				objectDefinitionExternalReferenceCode
+			}
 			objectDefinitionId={objectDefinitionId}
 			objectDefinitionsRelationshipsURL={
 				objectDefinitionsRelationshipsURL

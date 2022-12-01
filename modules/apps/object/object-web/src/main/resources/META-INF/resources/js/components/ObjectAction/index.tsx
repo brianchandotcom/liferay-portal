@@ -45,6 +45,7 @@ interface ActionProps {
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
@@ -83,6 +84,7 @@ export default function Action({
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	readOnly,
@@ -208,6 +210,9 @@ export default function Action({
 						}
 						objectActionExecutors={objectActionExecutors}
 						objectActionTriggers={objectActionTriggers}
+						objectDefinitionExternalReferenceCode={
+							objectDefinitionExternalReferenceCode
+						}
 						objectDefinitionId={
 							objectDefinitionId ??
 							initialValues.objectDefinitionId
@@ -276,8 +281,8 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 			);
 		}
 		else if (values.objectActionExecutorKey === 'add-object-entry') {
-			if (!values.parameters?.objectDefinitionId) {
-				errors.objectDefinitionId = REQUIRED_MSG;
+			if (!values.parameters?.objectDefinitionExternalReferenceCode) {
+				errors.objectDefinitionExternalReferenceCode = REQUIRED_MSG;
 			}
 		}
 
@@ -336,24 +341,29 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 	});
 
 	useEffect(() => {
-		if (values.parameters?.objectDefinitionId) {
-			API.getObjectFields(values.parameters.objectDefinitionId).then(
-				(fields) => {
-					const filteredFields = fields.filter(
-						({businessType, system}) =>
-							businessType !== 'Aggregation' &&
-							businessType !== 'Relationship' &&
-							!system
-					);
+		if (values.parameters?.objectDefinitionExternalReferenceCode) {
+			const makeFetch = async () => {
+				const response = await API.getObjectFieldsByExternalReferenceCode(
+					values.parameters
+						?.objectDefinitionExternalReferenceCode as string
+				);
 
-					setFields(filteredFields);
-				}
-			);
+				const filteredFields = response.filter(
+					({businessType, system}) =>
+						businessType !== 'Aggregation' &&
+						businessType !== 'Relationship' &&
+						!system
+				);
+
+				setFields(filteredFields);
+			};
+
+			makeFetch();
 		}
 		else {
 			setFields([]);
 		}
-	}, [values.parameters?.objectDefinitionId]);
+	}, [values.parameters?.objectDefinitionExternalReferenceCode]);
 
 	return {errors: errors as ActionError, values, ...otherProps};
 }

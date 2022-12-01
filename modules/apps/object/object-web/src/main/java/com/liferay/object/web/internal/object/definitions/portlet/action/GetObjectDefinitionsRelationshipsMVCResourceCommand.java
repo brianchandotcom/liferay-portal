@@ -70,6 +70,9 @@ public class GetObjectDefinitionsRelationshipsMVCResourceCommand
 
 			objectDefinitionsJSONArray.put(
 				JSONUtil.put(
+					"externalReferenceCode",
+					objectDefinition.getExternalReferenceCode()
+				).put(
 					"id", objectDefinition.getObjectDefinitionId()
 				).put(
 					"label",

@@ -54,6 +54,17 @@ public abstract class BaseObjectDefinitionsDisplayContext {
 		return creationMenu;
 	}
 
+	public String getObjectDefinitionExternalReferenceCode() {
+		HttpServletRequest httpServletRequest =
+			objectRequestHelper.getRequest();
+
+		ObjectDefinition objectDefinition =
+			(ObjectDefinition)httpServletRequest.getAttribute(
+				ObjectWebKeys.OBJECT_DEFINITION);
+
+		return objectDefinition.getExternalReferenceCode();
+	}
+
 	public long getObjectDefinitionId() {
 		HttpServletRequest httpServletRequest =
 			objectRequestHelper.getRequest();

@@ -220,7 +220,8 @@ public class ObjectDefinitionsActionsDisplayContext
 		return ResourceURLBuilder.createResourceURL(
 			objectRequestHelper.getLiferayPortletResponse()
 		).setParameter(
-			"objectDefinitionId", getObjectDefinitionId()
+			"objectDefinitionExternalReferenceCode",
+			getObjectDefinitionExternalReferenceCode()
 		).setResourceID(
 			"/object_definitions/get_object_definitions_relationships"
 		).buildString();

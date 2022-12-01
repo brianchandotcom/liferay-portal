@@ -42,6 +42,7 @@ interface ActionBuilderProps {
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	setValues: (values: Partial<ObjectAction>) => void;
@@ -52,7 +53,7 @@ interface ActionBuilderProps {
 
 interface SelectItem {
 	label: string;
-	value: number;
+	value: string;
 }
 
 interface WarningStates {
@@ -78,6 +79,7 @@ export default function ActionBuilder({
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	setValues,
@@ -128,16 +130,16 @@ export default function ActionBuilder({
 		const unrelatedObjects: SelectItem[] = [];
 
 		relationships?.forEach((object) => {
-			const {id, label} = object;
+			const {externalReferenceCode, id, label} = object;
 
 			const target = object.related ? relatedObjects : unrelatedObjects;
 
-			target.push({label, value: id});
+			target.push({label, value: `${externalReferenceCode},${id}`});
 		});
 
 		const objectsOptionsList = [];
 
-		if (!values.parameters?.objectDefinitionId) {
+		if (!values.parameters?.objectDefinitionExternalReferenceCode) {
 			objectsOptionsList.push({
 				disabled: true,
 				label: Liferay.Language.get('choose-an-object'),
@@ -290,13 +292,18 @@ export default function ActionBuilder({
 	const fetchObjectDefinitionFields = async () => {
 		let validFields: ObjectField[] = [];
 		let definitionId = objectDefinitionId;
+		let externalReferenceCode = objectDefinitionExternalReferenceCode;
 
 		if (values.objectActionExecutorKey === 'add-object-entry') {
 			definitionId = values?.parameters?.objectDefinitionId as number;
+			externalReferenceCode = values.parameters
+				?.objectDefinitionExternalReferenceCode as string;
 		}
 
-		if (definitionId) {
-			const items = await API.getObjectFields(definitionId);
+		if (externalReferenceCode) {
+			const items = await API.getObjectFieldsByExternalReferenceCode(
+				externalReferenceCode
+			);
 
 			validFields = items.filter(isValidField);
 		}
@@ -336,24 +343,35 @@ export default function ActionBuilder({
 		setValues({
 			parameters: {
 				...values.parameters,
+				objectDefinitionExternalReferenceCode: externalReferenceCode,
 				objectDefinitionId: definitionId,
 				predefinedValues: newPredefinedValues,
 			},
 		});
 	};
 
-	const updateParameters = async (objectDefinitionId: number) => {
-		const object = relationships.find(({id}) => id === objectDefinitionId);
+	const updateParameters = async (value: string) => {
+		const [externalReferenceCode, definitionIdValue] = value.split(',');
+
+		const definitionId = Number(definitionIdValue);
+
+		const object = relationships.find(
+			(relationship) =>
+				relationship.externalReferenceCode === externalReferenceCode
+		);
 
 		const parameters: ObjectActionParameters = {
-			objectDefinitionId,
+			objectDefinitionExternalReferenceCode: externalReferenceCode,
+			objectDefinitionId: definitionId,
 			predefinedValues: [],
 		};
 
 		if (object?.related) {
 			parameters.relatedObjectEntries = false;
 		}
-		const items = await API.getObjectFields(objectDefinitionId);
+		const items = await API.getObjectFieldsByExternalReferenceCode(
+			externalReferenceCode
+		);
 
 		const validFields: ObjectField[] = [];
 
@@ -403,9 +421,7 @@ export default function ActionBuilder({
 	const handleSelectObject = async ({
 		target: {value},
 	}: React.ChangeEvent<HTMLSelectElement>) => {
-		const objectDefinitionId = parseInt(value, 10);
-
-		updateParameters(objectDefinitionId);
+		updateParameters(value);
 	};
 
 	useEffect(() => {
@@ -414,7 +430,7 @@ export default function ActionBuilder({
 			fetchObjectDefinitionFields();
 		}
 		else if (values.objectActionExecutorKey === 'update-object-entry') {
-			updateParameters(objectDefinitionId);
+			updateParameters(objectDefinitionExternalReferenceCode);
 			fetchObjectDefinitionFields();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -625,11 +641,16 @@ export default function ActionBuilder({
 									aria-label={Liferay.Language.get(
 										'choose-an-object'
 									)}
-									error={errors.objectDefinitionId}
+									error={
+										errors.objectDefinitionExternalReferenceCode
+									}
 									onChange={handleSelectObject}
 									options={objectsOptions}
 									value={
-										values.parameters?.objectDefinitionId
+										values.parameters
+											?.objectDefinitionExternalReferenceCode
+											? `${values.parameters.objectDefinitionExternalReferenceCode},${values.parameters.objectDefinitionId}`
+											: ''
 									}
 								/>
 								{values.parameters?.relatedObjectEntries !==
@@ -716,7 +737,8 @@ export default function ActionBuilder({
 
 				{(values.objectActionExecutorKey === 'add-object-entry' ||
 					values.objectActionExecutorKey === 'update-object-entry') &&
-					values.parameters?.objectDefinitionId && (
+					values.parameters
+						?.objectDefinitionExternalReferenceCode && (
 						<PredefinedValuesTable
 							currentObjectDefinitionFields={
 								currentObjectDefinitionFields

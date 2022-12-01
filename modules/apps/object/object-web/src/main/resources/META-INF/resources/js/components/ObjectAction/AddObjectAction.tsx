@@ -22,6 +22,7 @@ interface AddObjectActionProps {
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	systemObject: boolean;
@@ -33,6 +34,7 @@ export default function AddObjectAction({
 	objectActionCodeEditorElements,
 	objectActionExecutors = [],
 	objectActionTriggers = [],
+	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	systemObject,
@@ -44,6 +46,9 @@ export default function AddObjectAction({
 			objectActionCodeEditorElements={objectActionCodeEditorElements}
 			objectActionExecutors={objectActionExecutors}
 			objectActionTriggers={objectActionTriggers}
+			objectDefinitionExternalReferenceCode={
+				objectDefinitionExternalReferenceCode
+			}
 			objectDefinitionId={objectDefinitionId}
 			objectDefinitionsRelationshipsURL={
 				objectDefinitionsRelationshipsURL

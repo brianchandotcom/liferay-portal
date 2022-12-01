@@ -3239,12 +3239,14 @@ definition {
 			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
-			actionsTemplateValue = "Action Template",
-			description = "Liferay Actions Description",
-			executionTypeOption = "On Entry",
 			name = "Liferay Actions",
 			priorityValue = "10",
-			singleAction = "true");
+			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
+                        import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+
+                        WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);''',
+			singleAction = "true",
+			type = "Groovy");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -3252,12 +3254,7 @@ definition {
 			propertyName = "Actions",
 			propertyValue = "Liferay Actions");
 
-		ProcessBuilderKaleoDesignerReact.viewActionsInfo(
-			actionsTemplateValue = "Action Template",
-			description = "Liferay Actions Description",
-			executionTypeOption = "On Entry",
-			name = "Liferay Actions",
-			priorityValue = "10");
+		ProcessBuilderKaleoDesignerReact.viewActionsInfo(priorityValue = "10");
 	}
 
 	@description = "Verify that the user can set transition Default"

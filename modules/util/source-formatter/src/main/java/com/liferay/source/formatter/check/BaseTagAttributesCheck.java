@@ -44,13 +44,19 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
 
 		while (matcher.find()) {
+			String match = StringUtil.trimLeading(matcher.group());
+
+			if (fileName.endsWith(".svg") && match.startsWith("<image")) {
+				continue;
+			}
+
 			String s = stripQuotes(matcher.group(3));
 
 			if (s.contains(">")) {
 				continue;
 			}
 
-			if (getLevel(matcher.group(), "<", ">") != 0) {
+			if (getLevel(match, "<", ">") != 0) {
 				addMessage(
 					fileName,
 					"There should be a line break after '" + matcher.group(2) +

@@ -52,4 +52,114 @@ definition {
         }
     }
 
+    @summary = "Add a new activity"
+    macro newActivity {
+        if (!(isSet(activityIndex))) {
+            var activityIndex = "0";
+        }
+
+        Click(
+            locator1 = "PRMMDFRequest#ADD_BUTTON",
+            key_buttonText = "Add Activity");
+
+        Type(
+            locator1 = "PRMMDFRequest#TEXT_FIELD",
+            key_fieldName = "activities[${activityIndex}].name",
+            value1 = "${activityName}");
+
+        Select(
+            locator1 = "PRMMDFRequest#SELECT",
+            key_fieldName = "activities[${activityIndex}].typeActivity",
+            value1 = "${typeOfActivity}");
+
+        Select(
+            locator1 = "PRMMDFRequest#SELECT",
+            key_fieldName = "activities[${activityIndex}].tactic",
+            value1 = "${tactic}");
+
+        var currentDay = DateUtil.getCurrentDate();
+		var currentMonth = DateUtil.getCurrentMonth();
+		var currentYear = DateUtil.getCurrentYear();
+		var nextDayStartDate = DateUtil.getFormattedDate("+1", "dd");
+
+		if ("${nextDayStartDate}" == "01") {
+			var currentMonth = ${currentMonth} + 1;
+
+            if ("${currentMonth}" == "13") {
+                fail("The selected date will be on next year. The start date can be only on current year");
+            }
+		}
+
+		var currentDate = "${currentMonth}${nextDayStartDate}${currentYear}";
+
+        Type.sendKeys(
+            locator1 = "PRMMDFRequest#TEXT_FIELD",
+            key_fieldName = "activities[${activityIndex}].startDate",
+            value1 = "${currentDate}");
+        
+        var nextDayEndDate = DateUtil.getFormattedDate("+2", "dd");
+
+	    var endIsLessThanStart = MathUtil.isLessThan("${nextDayEndDate}", "${nextDayStartDate}");
+
+		if ("${endIsLessThanStart}" == "true") {
+			var currentMonth = ${currentMonth} + 1;
+
+             if ("${currentMonth}" == "13") {
+                fail("The end date can not be different from start date.");
+            }
+		}
+
+        var futureDate = "${currentMonth}${nextDayEndDate}${currentYear}";
+
+        Type.sendKeys(
+            locator1 = "PRMMDFRequest#TEXT_FIELD",
+            key_fieldName = "activities[${activityIndex}].endDate",
+            value1 = "${futureDate}");
+
+        var budgetIndex = "0";
+
+        for (var bugdetValues : list "${budgetList}") {
+            var expenseOption = StringUtil.extractFirst("${bugdetValues}", "-");
+            var bugdetValue = StringUtil.extractLast("${bugdetValues}", "-");
+
+            Click(
+                locator1 = "PRMMDFRequest#ADD_BUTTON",
+                key_buttonText = "Add Expense");
+
+            Select(
+                locator1 = "PRMMDFRequest#SELECT",
+                key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].expense",
+                value1 = "${expenseOption}");
+
+            Type(
+                locator1 = "PRMMDFRequest#TEXT_FIELD",
+                key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].cost",
+                value1 = "${bugdetValue}");
+
+            var budgetIndex = ${budgetIndex} + 1;
+        }
+
+        Click.clickAtNotVisible(
+            locator1 = "PRMMDFRequest#CHECKBOX",
+            key_fieldName = "activities[${activityIndex}].leadGenerated",
+            key_optionValue = "${leadList}");
+
+        Type(
+            locator1 = "PRMMDFRequest#TEXT_FIELD",
+            key_fieldName = "activities[${activityIndex}].targetOfLeads",
+            value1 = "${targetOfLeads}");
+
+        for (var leadFollowUp : list "${leadFollowUpList}") {
+            Click.clickAtNotVisible(
+                locator1 = "PRMMDFRequest#CHECKBOX",
+                key_fieldName = "activities[${activityIndex}].leadFollowUpStrategies",
+                key_optionValue = "${leadFollowUp}");
+        }
+
+        Type(
+            locator1 = "PRMMDFRequest#TEXT_FIELD",
+            key_fieldName = "activities[${activityIndex}].detailsLeadFollowUp",
+            value1 = "${followUpStrategy}");
+    }
+
 }

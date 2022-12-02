@@ -77,7 +77,7 @@ definition {
 
 			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-			Button.click(button = "Submit");
+			CustomerPortal.clickAtButton(text = "Submit");
 		}
 
 		task ("Change the activation card status to Active") {
@@ -103,7 +103,9 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "Active");
+			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
+				position = "1",
+				status = "Active");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				email = "test@liferay.com",
@@ -168,7 +170,7 @@ definition {
 
 			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-			Button.click(button = "Submit");
+			CustomerPortal.clickAtButton(text = "Submit");
 		}
 
 		//task ("Assert the card legend change") {
@@ -178,7 +180,9 @@ definition {
 		//}
 
 		task ("Delete the entries and objects created") {
-			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "In-Progress");
+			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
+				position = "1",
+				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				email = "test@liferay.com",

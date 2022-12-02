@@ -28,7 +28,9 @@ definition {
 			entry = "${entry}",
 			portlet = "DXP Cloud Environments");
 
-		CustomerPortal.clearActivationStatus(status = "${status}");
+		CustomerPortal.clearActivationStatus(
+			position = "${position}",
+			status = "${status}");
 	}
 
 	macro clickOnAddAnotherAdminButton {

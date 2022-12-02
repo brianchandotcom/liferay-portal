@@ -235,7 +235,7 @@ definition {
 		task ("Fill out the form and submit it") {
 			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-			Button.click(button = "Submit");
+			CustomerPortal.clickAtButton(text = "Submit");
 		}
 
 		task ("Assert the success message when submitting the form") {
@@ -243,7 +243,9 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "In-Progress");
+			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
+				position = "1",
+				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				email = "test@liferay.com",
@@ -672,7 +674,7 @@ definition {
 		task ("Fill out the form and submit it") {
 			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-			Button.click(button = "Submit");
+			CustomerPortal.clickAtButton(text = "Submit");
 		}
 
 		task ("Assert that the card status has changed") {
@@ -680,7 +682,9 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "In-Progress");
+			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
+				position = "1",
+				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				email = "test@liferay.com",

@@ -105,7 +105,12 @@ definition {
 		task ("Delete the entries and objects created") {
 			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
 				position = "3",
-				status = "Active");
+				status = "Active",
+				entry = "ERC-003");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "Incident Report Contacts Analytics Cloud");
 		}
 	}
 
@@ -152,9 +157,9 @@ definition {
 
 		task ("Delete the entries and objects created") {
 			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
-				entry = "ERC-003",
 				position = "3",
-				status = "In-Progress");
+				status = "In-Progress",
+				entry = "ERC-003");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				email = "test@liferay.com",

@@ -22,9 +22,9 @@ definition {
 
 		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
 
-		Button.click(button = "Submit");
+		CustomerPortal.clickAtButton(text = "Submit");
 
-		Button.click(button = "Done");
+		CustomerPortal.clickAtButton(text = "Done");
 	}
 
 	macro assertFieldExtraIsNotVisible {

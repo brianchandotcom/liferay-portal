@@ -377,8 +377,11 @@ public class StructuredContentResourceTest
 					structuredContent.getId(), _ddmTemplate.getTemplateKey()));
 	}
 
+	@Override
 	@Test
-	public void testPatchStructuredContentWithoutPriority() throws Exception {
+	public void testPatchStructuredContent() throws Exception {
+		super.testPatchStructuredContent();
+
 		StructuredContent structuredContent = randomStructuredContent();
 
 		structuredContent.setPriority(1.0);

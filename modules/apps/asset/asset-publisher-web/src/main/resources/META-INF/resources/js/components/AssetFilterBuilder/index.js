@@ -246,6 +246,7 @@ function Rule({
 					monospaced
 					onClick={onDeleteRule}
 					small
+					title={Liferay.Language.get('delete-condition')}
 				>
 					<ClayIcon symbol="trash" />
 				</ClayButton>

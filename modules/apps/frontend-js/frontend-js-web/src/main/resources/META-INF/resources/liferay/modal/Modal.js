@@ -78,6 +78,21 @@ const Modal = ({
 	});
 
 	const onButtonClick = ({formId, onClick, type}) => {
+		const submitForm = (form) => {
+			if (form.requestSubmit) {
+				form.requestSubmit();
+			}
+			else {
+				const accepted = form.dispatchEvent(
+					new Event('submit', {cancelable: true})
+				);
+
+				if (accepted) {
+					form.submit();
+				}
+			}
+		};
+
 		if (type === 'cancel') {
 			processClose();
 		}
@@ -100,11 +115,11 @@ const Modal = ({
 					const form = iframeDocument.getElementById(formId);
 
 					if (form) {
-						form.requestSubmit();
+						submitForm(form);
 					}
 				}
 				else if (forms.length >= 1) {
-					forms[0].requestSubmit();
+					submitForm(forms[0]);
 				}
 			}
 		}

@@ -1,0 +1,7 @@
+logging:
+    level:
+        com.able.service: DEBUG
+        org.springframework.security: DEBUG
+        org.springframework.web: DEBUG
+server:
+    port: 58081

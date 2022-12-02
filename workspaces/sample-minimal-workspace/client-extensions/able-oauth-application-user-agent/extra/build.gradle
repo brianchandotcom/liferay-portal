@@ -1,0 +1,32 @@
+buildscript {
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+plugins {
+	id "application"
+}
+
+apply plugin: "java"
+
+ext {
+	javaMainClass = "com.able.service.GenerateJWKConfiguration"
+}
+
+application {
+	mainClassName = javaMainClass
+}
+
+dependencies {
+	implementation group: "org.bitbucket.b_c", name: "jose4j", version: "0.9.2"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+
+	}
+}

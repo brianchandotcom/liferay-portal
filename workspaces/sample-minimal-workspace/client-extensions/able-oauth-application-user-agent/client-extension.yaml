@@ -1,0 +1,4 @@
+able-oauth-application-user-agent:
+    homePageURL: http://localhost:58081
+    name: Able Object Action OAuth Application
+    type: oAuthApplicationUserAgent

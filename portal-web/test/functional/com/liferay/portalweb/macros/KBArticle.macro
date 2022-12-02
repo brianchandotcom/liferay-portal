@@ -904,6 +904,12 @@ definition {
 					locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
 			}
 
+			if (isSet(childArticles)) {
+				Click(
+					key_listEntry = "${childArticles}",
+					locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
+			}
+
 			AssertClick(
 				key_kbArticleTitle = "${kbArticleTitle}",
 				locator1 = "KnowledgeBaseSelectParent#SELECTOR_FIELD",

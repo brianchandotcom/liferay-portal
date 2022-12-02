@@ -223,6 +223,14 @@ public class DataValuesMappingExportImportContentProcessor
 				_exportCollectionContentReferences(
 					itemJSONObject, portletDataContext, stagedModel);
 			}
+			else if (Objects.equals(
+						itemJSONObject.get("type"),
+						LayoutDataItemTypeConstants.TYPE_ROW)) {
+
+				_exportRowContentReferences(
+					exportReferencedContent, itemJSONObject, portletDataContext,
+					stagedModel);
+			}
 		}
 	}
 
@@ -374,6 +382,31 @@ public class DataValuesMappingExportImportContentProcessor
 		}
 	}
 
+	private void _exportRowContentReferences(
+			boolean exportReferencedContent, JSONObject itemJSONObject,
+			PortletDataContext portletDataContext, StagedModel stagedModel)
+		throws Exception {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("styles")) {
+			return;
+		}
+
+		JSONObject stylesJSONObject = configJSONObject.getJSONObject("styles");
+
+		if (stylesJSONObject.has("backgroundImage")) {
+			_exportMappedFieldContentReference(
+				exportReferencedContent,
+				stylesJSONObject.getJSONObject("backgroundImage"),
+				portletDataContext, stagedModel);
+		}
+	}
+
 	private void _replaceCollectionImportContentReferences(
 		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
 
@@ -483,12 +516,18 @@ public class DataValuesMappingExportImportContentProcessor
 				_replaceContainerImportContentReferences(
 					itemJSONObject, portletDataContext);
 			}
-
-			if (Objects.equals(
-					itemJSONObject.get("type"),
-					LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+			else if (Objects.equals(
+						itemJSONObject.get("type"),
+						LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
 
 				_replaceCollectionImportContentReferences(
+					itemJSONObject, portletDataContext);
+			}
+			else if (Objects.equals(
+						itemJSONObject.get("type"),
+						LayoutDataItemTypeConstants.TYPE_ROW)) {
+
+				_replaceRowImportContentReferences(
 					itemJSONObject, portletDataContext);
 			}
 		}
@@ -590,6 +629,28 @@ public class DataValuesMappingExportImportContentProcessor
 
 		if (jsonObject.has("fileEntryId")) {
 			jsonObject.put("fileEntryId", classPK);
+		}
+	}
+
+	private void _replaceRowImportContentReferences(
+		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("styles")) {
+			return;
+		}
+
+		JSONObject stylesJSONObject = configJSONObject.getJSONObject("styles");
+
+		if (stylesJSONObject.has("backgroundImage")) {
+			_replaceMappedFieldImportContentReferences(
+				stylesJSONObject.getJSONObject("backgroundImage"),
+				portletDataContext);
 		}
 	}
 

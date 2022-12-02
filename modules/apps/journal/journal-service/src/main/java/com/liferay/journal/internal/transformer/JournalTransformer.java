@@ -20,10 +20,12 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -102,12 +104,11 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalTransformer {
 
 	public String transform(
-			JournalArticle article, Document document,
+			JournalArticle article, DDMTemplate ddmTemplate,
 			JournalHelper journalHelper, String languageId,
 			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
 			PortletRequestModel portletRequestModel, boolean propagateException,
-			String script, ThemeDisplay themeDisplay,
-			Map<String, String> tokens, String viewMode)
+			String script, ThemeDisplay themeDisplay, String viewMode)
 		throws Exception {
 
 		// Setup listeners
@@ -119,6 +120,18 @@ public class JournalTransformer {
 		if (Validator.isNull(viewMode)) {
 			viewMode = Constants.VIEW;
 		}
+
+		Map<String, String> tokens = JournalUtil.getTokens(
+			article, ddmTemplate, portletRequestModel, themeDisplay);
+
+		Document document = article.getDocument();
+
+		document = document.clone();
+
+		Element rootElement = document.getRootElement();
+
+		JournalUtil.addAllReservedEls(
+			rootElement, tokens, article, languageId, themeDisplay);
 
 		if (_logTokens.isDebugEnabled()) {
 			String tokensString = PropertiesUtil.list(tokens);
@@ -234,8 +247,6 @@ public class JournalTransformer {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			if (document != null) {
-				Element rootElement = document.getRootElement();
-
 				long ddmStructureId = GetterUtil.getLong(
 					tokens.get("ddm_structure_id"));
 

@@ -390,18 +390,17 @@ public class JournalUtil {
 	}
 
 	public static String transform(
-			JournalArticle article, Document document,
+			JournalArticle article, DDMTemplate ddmTemplate,
 			JournalHelper journalHelper, String languageId,
 			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
 			PortletRequestModel portletRequestModel, boolean propagateException,
-			String script, ThemeDisplay themeDisplay,
-			Map<String, String> tokens, String viewMode)
+			String script, ThemeDisplay themeDisplay, String viewMode)
 		throws Exception {
 
 		return _journalTransformer.transform(
-			article, document, journalHelper, languageId,
+			article, ddmTemplate, journalHelper, languageId,
 			layoutDisplayPageProviderRegistry, portletRequestModel,
-			propagateException, script, themeDisplay, tokens, viewMode);
+			propagateException, script, themeDisplay, viewMode);
 	}
 
 	private static void _addReservedEl(

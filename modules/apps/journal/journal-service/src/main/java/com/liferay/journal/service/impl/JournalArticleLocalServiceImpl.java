@@ -7579,12 +7579,6 @@ public class JournalArticleLocalServiceImpl
 
 		boolean cacheable = true;
 
-		Document document = article.getDocument();
-
-		document = document.clone();
-
-		Element rootElement = document.getRootElement();
-
 		try {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -7613,12 +7607,6 @@ public class JournalArticleLocalServiceImpl
 					article.getDDMTemplateKey(), true);
 			}
 
-			Map<String, String> tokens = JournalUtil.getTokens(
-				article, ddmTemplate, portletRequestModel, themeDisplay);
-
-			JournalUtil.addAllReservedEls(
-				rootElement, tokens, article, languageId, themeDisplay);
-
 			String script = StringPool.BLANK;
 
 			if (ddmTemplate != null) {
@@ -7635,9 +7623,9 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			content = JournalUtil.transform(
-				article, document, _journalHelper, languageId,
+				article, ddmTemplate, _journalHelper, languageId,
 				_layoutDisplayPageProviderRegistry, portletRequestModel,
-				propagateException, script, themeDisplay, tokens, viewMode);
+				propagateException, script, themeDisplay, viewMode);
 
 			JournalServiceConfiguration journalServiceConfiguration =
 				configurationProvider.getCompanyConfiguration(

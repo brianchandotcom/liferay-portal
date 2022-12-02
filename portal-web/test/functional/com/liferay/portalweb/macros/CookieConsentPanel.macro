@@ -181,7 +181,7 @@ definition {
 
 		var siteNameURL = StringUtil.lowerCase("${siteNameURL}");
 		var baseURL = "${baseURL}";
-		var actualLink = selenium.getAttribute("CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK_VALUE");
+		var actualLink = selenium.getAttribute("CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK_VALUE_IN_VIRTUAL_HOST");
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -198,12 +198,12 @@ definition {
 
 		AssertElementPresent(
 			key_text = "${key_text}_4",
-			locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_TITLE");
+			locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_TITLE_IN_VIRTUAL_HOST");
 
 		for (var id : list "2,5,6,7,8") {
 			AssertElementPresent(
 				key_text = "${id}",
-				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_LOCALIZED_TEXT");
+				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_LOCALIZED_TEXT_IN_VIRTUAL_HOST");
 		}
 	}
 

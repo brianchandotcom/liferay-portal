@@ -525,9 +525,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
-	private String[] _processPortletProperties(ClassLoader classLoader)
-		throws Exception {
-
+	private String[] _processPortletProperties(ClassLoader classLoader) {
 		Configuration portletPropertiesConfiguration =
 			ConfigurationFactoryUtil.getConfiguration(classLoader, "portlet");
 

@@ -140,19 +140,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"ar_SA": "Opportunity Registration",
-																"ca_ES": "Opportunity Registration",
-																"de_DE": "Opportunity Registration",
-																"en_US": "Opportunity Registration",
-																"es_ES": "Opportunity Registration",
-																"fi_FI": "Opportunity Registration",
-																"fr_FR": "Opportunity Registration",
-																"hu_HU": "Opportunity Registration",
-																"ja_JP": "Opportunity Registration",
-																"nl_NL": "Opportunity Registration",
-																"pt_BR": "Opportunity Registration",
-																"sv_SE": "Opportunity Registration",
-																"zh_CN": "Opportunity Registration"
+																"ar_SA": "Deal Registration",
+																"ca_ES": "Deal Registration",
+																"de_DE": "Deal Registration",
+																"en_US": "Deal Registration",
+																"es_ES": "Deal Registration",
+																"fi_FI": "Deal Registration",
+																"fr_FR": "Deal Registration",
+																"hu_HU": "Deal Registration",
+																"ja_JP": "Deal Registration",
+																"nl_NL": "Deal Registration",
+																"pt_BR": "Deal Registration",
+																"sv_SE": "Deal Registration",
+																"zh_CN": "Deal Registration"
 															}
 														}
 													}
@@ -267,19 +267,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Opportunity Registration Resources",
-																		"ca_ES": "Opportunity Registration Resources",
-																		"de_DE": "Opportunity Registration Resources",
-																		"en_US": "Opportunity Registration Resources",
-																		"es_ES": "Opportunity Registration Resources",
-																		"fi_FI": "Opportunity Registration Resources",
-																		"fr_FR": "Opportunity Registration Resources",
-																		"hu_HU": "Opportunity Registration Resources",
-																		"ja_JP": "Opportunity Registration Resources",
-																		"nl_NL": "Opportunity Registration Resources",
-																		"pt_BR": "Opportunity Registration Resources",
-																		"sv_SE": "Opportunity Registration Resources",
-																		"zh_CN": "Opportunity Registration Resources"
+																		"ar_SA": "Deal Registration Resources",
+																		"ca_ES": "Deal Registration Resources",
+																		"de_DE": "Deal Registration Resources",
+																		"en_US": "Deal Registration Resources",
+																		"es_ES": "Deal Registration Resources",
+																		"fi_FI": "Deal Registration Resources",
+																		"fr_FR": "Deal Registration Resources",
+																		"hu_HU": "Deal Registration Resources",
+																		"ja_JP": "Deal Registration Resources",
+																		"nl_NL": "Deal Registration Resources",
+																		"pt_BR": "Deal Registration Resources",
+																		"sv_SE": "Deal Registration Resources",
+																		"zh_CN": "Deal Registration Resources"
 																	}
 																}
 															}

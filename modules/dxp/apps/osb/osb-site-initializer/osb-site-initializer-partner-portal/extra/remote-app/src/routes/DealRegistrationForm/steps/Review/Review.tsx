@@ -32,9 +32,8 @@ const Review = ({
 		<>
 			<PRMForm
 				className="bg-neutral-0"
-				description="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus"
 				name="review"
-				title="Review Opportunity Registration"
+				title="Review Deal Registration"
 			>
 				<Table
 					borderless

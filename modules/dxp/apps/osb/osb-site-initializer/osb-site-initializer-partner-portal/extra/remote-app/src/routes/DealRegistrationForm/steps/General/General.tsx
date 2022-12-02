@@ -107,7 +107,7 @@ const General = ({
 	);
 
 	return (
-		<PRMForm name="general" title="Opportunity Registration">
+		<PRMForm name="general" title="Deal Registration">
 			<PRMForm.Section title="General Details">
 				<PRMForm.Group>
 					<PRMFormik.Field

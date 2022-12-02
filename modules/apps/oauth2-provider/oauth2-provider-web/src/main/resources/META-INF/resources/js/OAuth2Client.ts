@@ -101,9 +101,10 @@ class OAuth2Client {
 					resolve(tokenResponse);
 
 					tokenResponse.then((response) =>
-						sessionStorage.setItem(
+						Liferay.Util.SessionStorage.setItem(
 							sessionKey,
-							JSON.stringify(response)
+							JSON.stringify(response),
+							Liferay.Util.SessionStorage.TYPES.NECESSARY
 						)
 					);
 				}
@@ -167,9 +168,12 @@ class OAuth2Client {
 		const sessionKey = `${oauth2Client.clientId}-${Liferay.authToken}-token`;
 
 		return new Promise((resolve) => {
-			const cachedTokenData = sessionStorage.getItem(sessionKey);
+			const cachedTokenData = Liferay.Util.SessionStorage.getItem(
+				sessionKey,
+				Liferay.Util.SessionStorage.TYPES.NECESSARY
+			);
 
-			if (cachedTokenData !== null) {
+			if (cachedTokenData !== null && cachedTokenData !== undefined) {
 				resolve(JSON.parse(cachedTokenData));
 
 				return;

@@ -1265,44 +1265,39 @@ definition {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add Pages permissions to Student under the Site and Asset Library Administration tab") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
-			Role.definePermissionCP(
-				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
-				permissionDefinitionValue = "View",
-				permissionNavigationValue = "Pages",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 				roleTitle = "Student",
-				roleType = "Site");
+				roleType = "site");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
-			Role.definePermissionCP(
-				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VIEW_CHECKBOX",
-				permissionDefinitionValue = "View",
-				permissionNavigationValue = "Pages",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
 				roleTitle = "Student",
-				roleType = "Site");
+				roleType = "site");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
-			Role.definePermissionCP(
-				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX",
-				permissionDefinitionValue = "View",
-				permissionNavigationValue = "Site",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Group",
 				roleTitle = "Student",
-				roleType = "Site");
+				roleType = "site");
 		}
 
 		task ("View table permissions to Student") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Navigator.gotoNavItem(navItem = "Site Roles");
+
+			Click(
+				key_itemName = "Student",
+				locator1 = "ListGroupItem#ITEM_NAME_LINK");
+
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
 			AssertElementPresent(
 				key_permissionDefinitionValue = "Pages",
 				key_permissionNavigationValue = "Pages: View",
@@ -1327,44 +1322,39 @@ definition {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add Pages permissions to Teacher under the Site and Asset Library Administration tab") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
-			Role.definePermissionCP(
-				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
-				permissionDefinitionValue = "View",
-				permissionNavigationValue = "Pages",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 				roleTitle = "Teacher",
-				roleType = "Site");
+				roleType = "site");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
-			Role.definePermissionCP(
-				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VIEW_CHECKBOX",
-				permissionDefinitionValue = "View",
-				permissionNavigationValue = "Pages",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
 				roleTitle = "Teacher",
-				roleType = "Site");
+				roleType = "site");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
-			Role.definePermissionCP(
-				permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX",
-				permissionDefinitionValue = "View",
-				permissionNavigationValue = "Site",
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.portal.kernel.model.Group",
 				roleTitle = "Teacher",
-				roleType = "Site");
+				roleType = "site");
 		}
 
 		task ("View table permissions to Teacher") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Navigator.gotoNavItem(navItem = "Site Roles");
+
+			Click(
+				key_itemName = "Teacher",
+				locator1 = "ListGroupItem#ITEM_NAME_LINK");
+
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
 			AssertElementPresent(
 				key_permissionDefinitionValue = "Pages",
 				key_permissionNavigationValue = "Pages: View",

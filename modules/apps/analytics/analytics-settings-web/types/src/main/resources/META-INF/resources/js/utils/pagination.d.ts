@@ -12,16 +12,11 @@
  * details.
  */
 
+export declare const DELTAS: readonly [5, 10, 20, 30, 50];
 export declare type TPagination = {
 	maxCount: number;
 	page: number;
-	pageSize: number;
+	pageSize: typeof DELTAS[number];
 	totalCount: number;
 };
-export declare const DEFAULT_PAGINATION: {
-	maxCount: number;
-	page: number;
-	pageSize: number;
-	totalCount: number;
-};
-export declare const DELTAS: number[];
+export declare const DEFAULT_PAGINATION: TPagination;

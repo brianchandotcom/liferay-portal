@@ -14,15 +14,21 @@
 
 import React from 'react';
 import {TProperty} from './Properties';
-interface IAssignModalProps {
-	observer: any;
-	onCancel: () => void;
-	onSubmit: () => void;
-	property: TProperty;
-}
 export declare enum ETabs {
 	Channel = 0,
 	Sites = 1,
 }
-declare const AssignModal: React.FC<IAssignModalProps>;
-export default AssignModal;
+interface IAssignModalWrapperProps {
+	observer: any;
+	onCancel: () => void;
+	onSubmit: ({
+		commerceChannelIds,
+		siteIds,
+	}: {
+		commerceChannelIds: number[];
+		siteIds: number[];
+	}) => void;
+	property: TProperty | null;
+}
+declare const AssignModalWrapper: React.FC<IAssignModalWrapperProps>;
+export default AssignModalWrapper;

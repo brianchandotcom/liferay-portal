@@ -17,6 +17,7 @@ import {TColumn} from './types';
 interface IContentProps {
 	columns: TColumn[];
 	disabled: boolean;
+	showCheckbox: boolean;
 }
 declare const Content: React.FC<IContentProps>;
 export default Content;

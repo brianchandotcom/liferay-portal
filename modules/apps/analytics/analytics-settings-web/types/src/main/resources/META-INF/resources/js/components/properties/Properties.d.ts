@@ -12,17 +12,18 @@
  * details.
  */
 
-import React from 'react';
+/// <reference types="react" />
+
+export declare type TDataSource = {
+	commerceChannelIds: number[];
+	dataSourceId?: string;
+	siteIds: number[];
+};
 export declare type TProperty = {
 	channelId: string;
 	commerceSyncEnabled: boolean;
 	dataSources: TDataSource[] | [];
 	name: string;
 };
-declare type TDataSource = {
-	commerceChannelIds: number[];
-	dataSourceId: string;
-	siteIds: number[];
-};
-declare const Properties: React.FC;
-export default Properties;
+declare const PropertiesWrapper: () => JSX.Element;
+export default PropertiesWrapper;

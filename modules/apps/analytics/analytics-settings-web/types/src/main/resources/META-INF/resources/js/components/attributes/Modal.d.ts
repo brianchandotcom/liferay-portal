@@ -13,8 +13,8 @@
  */
 
 import React from 'react';
-import {TTableRequestParams} from '../table/types';
-declare type TRawItem = {
+import {TFormattedItems, TTableRequestParams} from '../table/types';
+export declare type TRawItem = {
 	example: string;
 	name: string;
 	required: boolean;
@@ -25,10 +25,9 @@ declare type TRawItem = {
 interface IModalProps {
 	observer: any;
 	onCancel: () => void;
-	onSubmit: () => void;
+	onSubmit: (items: TFormattedItems) => void;
 	requestFn: (params: TTableRequestParams) => Promise<any>;
 	title: string;
-	updateFn: (fields: TRawItem[]) => Promise<any>;
 }
 declare const Modal: React.FC<IModalProps>;
 export default Modal;

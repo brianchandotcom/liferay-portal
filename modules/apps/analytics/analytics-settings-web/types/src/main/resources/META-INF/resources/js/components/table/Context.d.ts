@@ -18,10 +18,12 @@ import {TPagination} from '../../utils/pagination';
 import {TFormattedItems} from './types';
 export declare enum Events {
 	ChangeFilter = 'CHANGE_FILTER',
+	ChangeItem = 'CHANGE_ITEM',
 	ChangeItems = 'CHANGE_ITEMS',
 	ChangeKeywords = 'CHANGE_KEYWORDS',
 	ChangePagination = 'CHANGE_PAGINATION',
 	FormatData = 'FORMAT_DATA',
+	Reload = 'RELOAD',
 	ToggleGlobalCheckbox = 'TOGGLE_CHECKBOX',
 }
 declare type TState = {
@@ -31,10 +33,16 @@ declare type TState = {
 	internalKeywords: string;
 	keywords: string;
 	pagination: TPagination;
+	reload: () => void;
 	rows: string[];
 };
 declare const useData: () => TState;
 declare const useDispatch: () => any;
-declare const TableContext: React.FC;
+interface ITableContextProps {
+	initialFilter?: TFilter;
+	initialKeywords?: string;
+	initialPagination?: TPagination;
+}
+declare const TableContext: React.FC<ITableContextProps>;
 export {useData, useDispatch};
 export default TableContext;

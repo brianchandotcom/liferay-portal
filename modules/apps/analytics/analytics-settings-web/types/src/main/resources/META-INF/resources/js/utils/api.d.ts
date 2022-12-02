@@ -29,7 +29,9 @@ export declare function fetchContactsUsersGroup(
 	params: TTableRequestParams
 ): Promise<any>;
 export declare function fetchAttributesConfiguration(): Promise<any>;
-export declare function fetchProperties(): Promise<any>;
+export declare function fetchProperties(
+	params: TTableRequestParams
+): Promise<any>;
 export declare function fetchSites(params: TTableRequestParams): Promise<any>;
 export declare function updateProperty({
 	channelId,
@@ -40,7 +42,7 @@ export declare function updateProperty({
 }: {
 	channelId: string;
 	commerceChannelIds?: number[];
-	commerceSyncEnabled?: boolean;
+	commerceSyncEnabled: boolean;
 	dataSourceId?: string;
 	siteIds?: number[];
 }): Promise<any>;
@@ -49,10 +51,7 @@ export declare function updatecommerceSyncEnabled({
 	commerceSyncEnabled,
 }: {
 	channelId: string;
-	commerceChannelIds?: number[];
-	commerceSyncEnabled?: boolean;
-	dataSourceId?: string;
-	siteIds?: number[];
+	commerceSyncEnabled: boolean;
 }): Promise<any>;
 export declare function updateAttributesConfiguration({
 	syncAllAccounts,

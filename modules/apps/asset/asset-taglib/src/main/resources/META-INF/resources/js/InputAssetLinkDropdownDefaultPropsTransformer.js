@@ -16,6 +16,7 @@ import {openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	actions,
+	additionalProps,
 	items,
 	portletNamespace,
 	...props
@@ -51,38 +52,25 @@ export default function propsTransformer({
 							const entityId = assetEntry.assetEntryId;
 
 							if (searchContainerData.indexOf(entityId) === -1) {
-								const entryLink = `<div class="text-right">
-												<button class="modify-link btn btn-unstyled" data-rowId="${entityId}" type="button">
-													<span class="lfr-portal-tooltip" tabindex="0" title="${Liferay.Language.get(
-														'remove'
-													)}">
-														<span class="c-inner" tabindex="=-1">
-															<svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle" focusable="false">
-																<use xlink:href="${item.data.removeIcon}#times-circle" />
-															</svg>
-														</span>
-													</span>
-												</button>
-											</div>`;
+								const rowColumns = [];
 
-								const entryHtml = `<h4 class="list-group-title">
-												${Liferay.Util.escapeHTML(assetEntry.title)}
-											</h4>
-											<p class="list-group-subtitle">
-												${Liferay.Util.escapeHTML(assetEntry.assetType)}
-											</p>
-											<p class="list-group-subtitle">
-												${Liferay.Language.get('scope')}: ${Liferay.Util.escapeHTML(
+								rowColumns.push(`<h4 class="list-group-title">
+									${Liferay.Util.escapeHTML(assetEntry.title)}
+								</h4>
+								<p class="list-group-subtitle">
+									${Liferay.Util.escapeHTML(assetEntry.assetType)}
+								</p>
+								<p class="list-group-subtitle">
+									${Liferay.Language.get('scope')}: ${Liferay.Util.escapeHTML(
 									assetEntry.groupDescriptiveName
 								)}
-											</p>
-												
-										`;
+								</p>`);
 
-								searchContainer.addRow(
-									[entryHtml, entryLink],
-									entityId
+								rowColumns.push(
+									`<a class="float-right modify-link" data-rowId="${entityId}" href="javascript:void(0);">${additionalProps.removeIcon}</a>`
 								);
+
+								searchContainer.addRow(rowColumns, entityId);
 
 								searchContainer.updateDataStore();
 							}

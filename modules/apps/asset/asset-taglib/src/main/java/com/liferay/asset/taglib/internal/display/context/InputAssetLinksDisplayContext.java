@@ -31,7 +31,6 @@ import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -142,9 +141,6 @@ public class InputAssetLinksDisplayContext {
 										assetRendererFactory,
 										classType.getClassTypeId())));
 							dropdownItem.putData(
-								"removeIcon",
-								FrontendIconsUtil.getSpritemap(_themeDisplay));
-							dropdownItem.putData(
 								"title",
 								LanguageUtil.format(
 									TagResourceBundleUtil.getResourceBundle(
@@ -162,9 +158,6 @@ public class InputAssetLinksDisplayContext {
 							String.valueOf(
 								_getAssetEntryItemSelectorPortletURL(
 									assetRendererFactory, -1)));
-						dropdownItem.putData(
-							"removeIcon",
-							FrontendIconsUtil.getSpritemap(_themeDisplay));
 						dropdownItem.putData(
 							"title",
 							LanguageUtil.format(

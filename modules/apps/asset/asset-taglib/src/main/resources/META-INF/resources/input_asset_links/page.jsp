@@ -16,14 +16,6 @@
 
 <%@ include file="/input_asset_links/init.jsp" %>
 
-<clay:dropdown-menu
-	aria-label='<%= LanguageUtil.get(request, "select-items") %>'
-	cssClass="btn btn-secondary"
-	dropdownItems="<%= inputAssetLinksDisplayContext.getActionDropdownItems() %>"
-	label='<%= LanguageUtil.get(request, "select") %>'
-	propsTransformer="js/InputAssetLinkDropdownDefaultPropsTransformer"
-/>
-
 <liferay-util:buffer
 	var="removeLinkIcon"
 >
@@ -33,6 +25,19 @@
 		message="remove"
 	/>
 </liferay-util:buffer>
+
+<clay:dropdown-menu
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"removeIcon", removeLinkIcon
+		).build()
+	%>'
+	aria-label='<%= LanguageUtil.get(request, "select-items") %>'
+	cssClass="btn btn-secondary"
+	dropdownItems="<%= inputAssetLinksDisplayContext.getActionDropdownItems() %>"
+	label='<%= LanguageUtil.get(request, "select") %>'
+	propsTransformer="js/InputAssetLinkDropdownDefaultPropsTransformer"
+/>
 
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"

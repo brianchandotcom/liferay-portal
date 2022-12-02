@@ -1,0 +1,17 @@
+able-remote-app:
+    cssURLs:
+        - static/css/main.*.css
+    friendlyURLMapping: able-remote-app
+    htmlElementName: able-remote-app
+    instanceable: false
+    name: Able Remote App
+    portletCategoryName: category.remote-apps
+    type: customElement
+    urls:
+        - static/js/main.*.js
+    useESM: false
+
+assemble:
+    - from: build/
+      include: "static/**/*"
+      into: static/

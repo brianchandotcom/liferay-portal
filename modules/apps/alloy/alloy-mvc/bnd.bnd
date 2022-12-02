@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Alloy MVC
 Bundle-SymbolicName: com.liferay.alloy.mvc
-Bundle-Version: 6.0.23
+Bundle-Version: 6.1.0
 Export-Package:\
 	com.liferay.alloy.mvc,\
 	com.liferay.alloy.mvc.json.web.service

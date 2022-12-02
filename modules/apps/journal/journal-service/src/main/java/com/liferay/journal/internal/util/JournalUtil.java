@@ -390,18 +390,18 @@ public class JournalUtil {
 	}
 
 	public static String transform(
-			JournalArticle article, ThemeDisplay themeDisplay,
-			Map<String, String> tokens, JournalHelper journalHelper,
+			JournalArticle article, Document document,
+			JournalHelper journalHelper, String languageId,
 			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
-			String viewMode, String languageId, Document document,
-			PortletRequestModel portletRequestModel, String script,
-			boolean propagateException)
+			PortletRequestModel portletRequestModel, boolean propagateException,
+			String script, ThemeDisplay themeDisplay,
+			Map<String, String> tokens, String viewMode)
 		throws Exception {
 
 		return _journalTransformer.transform(
-			article, themeDisplay, tokens, viewMode, languageId, journalHelper,
-			layoutDisplayPageProviderRegistry, document, portletRequestModel,
-			script, propagateException);
+			article, document, journalHelper, languageId,
+			layoutDisplayPageProviderRegistry, portletRequestModel,
+			propagateException, script, themeDisplay, tokens, viewMode);
 	}
 
 	private static void _addReservedEl(

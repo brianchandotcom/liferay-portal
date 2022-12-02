@@ -102,12 +102,12 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalTransformer {
 
 	public String transform(
-			JournalArticle article, ThemeDisplay themeDisplay,
-			Map<String, String> tokens, String viewMode, String languageId,
-			JournalHelper journalHelper,
+			JournalArticle article, Document document,
+			JournalHelper journalHelper, String languageId,
 			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
-			Document document, PortletRequestModel portletRequestModel,
-			String script, boolean propagateException)
+			PortletRequestModel portletRequestModel, boolean propagateException,
+			String script, ThemeDisplay themeDisplay,
+			Map<String, String> tokens, String viewMode)
 		throws Exception {
 
 		// Setup listeners

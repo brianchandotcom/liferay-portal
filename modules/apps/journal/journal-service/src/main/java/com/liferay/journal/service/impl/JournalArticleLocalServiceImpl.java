@@ -7635,9 +7635,9 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			content = JournalUtil.transform(
-				article, themeDisplay, tokens, _journalHelper,
-				_layoutDisplayPageProviderRegistry, viewMode, languageId,
-				document, portletRequestModel, script, propagateException);
+				article, document, _journalHelper, languageId,
+				_layoutDisplayPageProviderRegistry, portletRequestModel,
+				propagateException, script, themeDisplay, tokens, viewMode);
 
 			JournalServiceConfiguration journalServiceConfiguration =
 				configurationProvider.getCompanyConfiguration(

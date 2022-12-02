@@ -7,6 +7,7 @@
 		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/PermissionFilterFacetedSearcherTest\.java" />
 		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/SearchPermissionCheckerFacetedSearcherTest\.java" />
 		<suppress checks="GenericTypeCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/indexer/IndexerDocumentBuilderImpl\.java" />
+		<suppress checks="GenericTypeCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/IndexerRegistryImpl\.java" />
 		<suppress checks="MapBuilderCheck" files="portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/display/context/builder/FieldMappingsDisplayContextBuilder\.java" />
 	</checkstyle>
 </suppressions>

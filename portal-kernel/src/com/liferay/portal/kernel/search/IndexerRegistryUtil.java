@@ -43,18 +43,6 @@ public class IndexerRegistryUtil {
 		return _indexerRegistry.nullSafeGetIndexer(className);
 	}
 
-	public static void register(Indexer<?> indexer) {
-		_indexerRegistry.register(indexer);
-	}
-
-	public static void unregister(Indexer<?> indexer) {
-		_indexerRegistry.unregister(indexer);
-	}
-
-	public static void unregister(String className) {
-		_indexerRegistry.unregister(className);
-	}
-
 	private static volatile IndexerRegistry _indexerRegistry =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			IndexerRegistry.class, IndexerRegistryUtil.class,

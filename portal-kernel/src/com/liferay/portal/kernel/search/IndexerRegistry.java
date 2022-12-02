@@ -31,10 +31,4 @@ public interface IndexerRegistry {
 
 	public <T> Indexer<T> nullSafeGetIndexer(String className);
 
-	public void register(Indexer<?> indexer);
-
-	public void unregister(Indexer<?> indexer);
-
-	public void unregister(String className);
-
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -33,11 +35,11 @@ import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.internal.buffer.IndexerRequestBufferOverflowHandler;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -53,7 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -72,14 +73,20 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 	@Override
 	public <T> Indexer<T> getIndexer(String className) {
-		Indexer<T> indexer = (Indexer<T>)_indexers.get(className);
+		ServiceTrackerMap<String, Indexer> indexerServiceTrackerMap =
+			_getIndexerServiceTrackerMap();
+
+		Indexer<T> indexer = indexerServiceTrackerMap.getService(className);
 
 		return _proxyIndexer(indexer);
 	}
 
 	@Override
 	public Set<Indexer<?>> getIndexers() {
-		return new HashSet<>(_indexers.values());
+		ServiceTrackerMap<String, Indexer> indexerServiceTrackerMap =
+			_getIndexerServiceTrackerMap();
+
+		return new HashSet<>((Collection)indexerServiceTrackerMap.values());
 	}
 
 	@Override
@@ -102,91 +109,13 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		return (Indexer<T>)_dummyIndexer;
 	}
 
-	@Override
-	public void register(Indexer<?> indexer) {
-		Class<?> clazz = indexer.getClass();
-
-		_indexers.put(clazz.getName(), indexer);
-
-		_indexers.put(indexer.getClassName(), indexer);
-
-		synchronized (_queuedIndexerPostProcessors) {
-			List<IndexerPostProcessor> indexerPostProcessors =
-				_queuedIndexerPostProcessors.getOrDefault(
-					clazz.getName(), new ArrayList<>());
-
-			Optional.ofNullable(
-				_queuedIndexerPostProcessors.get(indexer.getClassName())
-			).ifPresent(
-				indexerPostProcessors::addAll
-			);
-
-			indexerPostProcessors.forEach(
-				indexer::registerIndexerPostProcessor);
-
-			_queuedIndexerPostProcessors.remove(clazz.getName());
-
-			_queuedIndexerPostProcessors.remove(indexer.getClassName());
-		}
-	}
-
-	@Override
-	public void unregister(Indexer<?> indexer) {
-		Class<?> clazz = indexer.getClass();
-
-		unregister(clazz.getName());
-
-		unregister(indexer.getClassName());
-	}
-
-	@Override
-	public void unregister(String className) {
-		_bufferedInvocationHandlers.remove(className);
-		_indexers.remove(className);
-		_proxiedIndexers.remove(className);
-	}
-
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
+		_bundleContext = bundleContext;
+
 		modified(properties);
-
-		_indexerServiceTracker = new ServiceTracker<>(
-			bundleContext, Indexer.class.getName(),
-			new ServiceTrackerCustomizer<Indexer<?>, Indexer<?>>() {
-
-				@Override
-				public Indexer<?> addingService(
-					ServiceReference<Indexer<?>> serviceReference) {
-
-					Indexer<?> indexer = bundleContext.getService(
-						serviceReference);
-
-					register(indexer);
-
-					return indexer;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<Indexer<?>> serviceReference,
-					Indexer<?> indexer) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<Indexer<?>> serviceReference,
-					Indexer<?> indexer) {
-
-					unregister(indexer);
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
-
-		_indexerServiceTracker.open();
 	}
 
 	@Reference(
@@ -231,7 +160,12 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		_indexerServiceTracker.close();
+		ServiceTrackerMap<String, Indexer> indexerServiceTrackerMap =
+			_indexerServiceTrackerMap;
+
+		if (indexerServiceTrackerMap != null) {
+			_indexerServiceTrackerMap.close();
+		}
 	}
 
 	@Modified
@@ -317,6 +251,109 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		}
 	}
 
+	private ServiceTrackerMap<String, Indexer> _getIndexerServiceTrackerMap() {
+		ServiceTrackerMap<String, Indexer> indexerServiceTrackerMap =
+			_indexerServiceTrackerMap;
+
+		if (indexerServiceTrackerMap != null) {
+			return indexerServiceTrackerMap;
+		}
+
+		synchronized (this) {
+			if (_indexerServiceTrackerMap == null) {
+				_indexerServiceTrackerMap =
+					ServiceTrackerMapFactory.openSingleValueMap(
+						_bundleContext, Indexer.class, null,
+						(serviceReference, emitter) -> {
+							Indexer<?> indexer = _bundleContext.getService(
+								serviceReference);
+
+							emitter.emit(indexer.getClassName());
+
+							Class<?> clazz = indexer.getClass();
+
+							emitter.emit(clazz.getName());
+
+							_bundleContext.ungetService(serviceReference);
+						},
+						new ServiceTrackerCustomizer<Indexer, Indexer>() {
+
+							@Override
+							public Indexer addingService(
+								ServiceReference<Indexer> serviceReference) {
+
+								Indexer<?> indexer = _bundleContext.getService(
+									serviceReference);
+
+								Class<?> clazz = indexer.getClass();
+
+								synchronized (_queuedIndexerPostProcessors) {
+									List<IndexerPostProcessor>
+										indexerPostProcessors =
+											_queuedIndexerPostProcessors.remove(
+												clazz.getName());
+
+									if (indexerPostProcessors != null) {
+										for (IndexerPostProcessor
+												indexerPostProcessor :
+													indexerPostProcessors) {
+
+											indexer.
+												registerIndexerPostProcessor(
+													indexerPostProcessor);
+										}
+									}
+
+									indexerPostProcessors =
+										_queuedIndexerPostProcessors.remove(
+											indexer.getClassName());
+
+									if (indexerPostProcessors != null) {
+										for (IndexerPostProcessor
+												indexerPostProcessor :
+													indexerPostProcessors) {
+
+											indexer.
+												registerIndexerPostProcessor(
+													indexerPostProcessor);
+										}
+									}
+								}
+
+								return indexer;
+							}
+
+							@Override
+							public void modifiedService(
+								ServiceReference<Indexer> serviceReference,
+								Indexer indexer) {
+							}
+
+							@Override
+							public void removedService(
+								ServiceReference<Indexer> serviceReference,
+								Indexer indexer) {
+
+								Class<?> clazz = indexer.getClass();
+
+								_bufferedInvocationHandlers.remove(
+									clazz.getName());
+								_proxiedIndexers.remove(clazz.getName());
+
+								_bufferedInvocationHandlers.remove(
+									indexer.getClassName());
+								_proxiedIndexers.remove(indexer.getClassName());
+							}
+
+						});
+			}
+
+			indexerServiceTrackerMap = _indexerServiceTrackerMap;
+		}
+
+		return indexerServiceTrackerMap;
+	}
+
 	private <T> Indexer<T> _proxyIndexer(Indexer<T> indexer) {
 		if (indexer == null) {
 			return null;
@@ -372,6 +409,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 	private final Map<String, BufferedIndexerInvocationHandler>
 		_bufferedInvocationHandlers = new ConcurrentHashMap<>();
+	private BundleContext _bundleContext;
 
 	@Reference(target = "(mode=DEFAULT)")
 	private IndexerRequestBufferOverflowHandler
@@ -381,9 +419,8 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
 	private volatile IndexerRequestBufferOverflowHandler
 		_indexerRequestBufferOverflowHandler;
-	private final Map<String, Indexer<? extends Object>> _indexers =
-		new ConcurrentHashMap<>();
-	private ServiceTracker<Indexer<?>, Indexer<?>> _indexerServiceTracker;
+	private volatile ServiceTrackerMap<String, Indexer>
+		_indexerServiceTrackerMap;
 
 	@Reference
 	private IndexStatusManager _indexStatusManager;

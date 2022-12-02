@@ -1,0 +1,200 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.component.names = "Friendly URL Service";
+	property testray.main.component.name = "Upgrades Lima";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@priority = "5"
+	test CanConfigurePageFriendlyURLAfterUpgradeFrom71105 {
+		property data.archive.type = "data-archive-page-friendly-url";
+		property portal.version = "7.1.10.5";
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.viewFriendlyURL(pageName = "new-test-page");
+
+		PagesAdmin.viewFriendlyURL(
+			localizedFriendlyURL = "es-ES",
+			pageName = "inicio");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page-after-upragde");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "de-DE",
+			localizedFriendlyURLList = "/german",
+			localizedNameList = "German Test Page");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.viewFriendlyURL(pageName = "new-test-page-after-upragde");
+
+		PagesAdmin.viewFriendlyURL(
+			localizedFriendlyURL = "de-DE",
+			pageName = "german");
+	}
+
+	@priority = "5"
+	test CanConfigurePageFriendlyURLAfterUpgradeFrom72104 {
+		property data.archive.type = "data-archive-page-friendly-url";
+		property portal.version = "7.2.10.4";
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.viewFriendlyURL(pageName = "new-test-page");
+
+		PagesAdmin.viewFriendlyURL(
+			localizedFriendlyURL = "es-ES",
+			pageName = "inicio");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page-after-upragde");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "de-DE",
+			localizedFriendlyURLList = "/german",
+			localizedNameList = "German Test Page");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.viewFriendlyURL(pageName = "new-test-page-after-upragde");
+
+		PagesAdmin.viewFriendlyURL(
+			localizedFriendlyURL = "de-DE",
+			pageName = "german");
+	}
+
+	@priority = "5"
+	test CanConfigurePageFriendlyURLAfterUpgradeFrom73101 {
+		property data.archive.type = "data-archive-page-friendly-url";
+		property portal.version = "7.3.10.1";
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.viewFriendlyURL(pageName = "new-test-page");
+
+		PagesAdmin.gotoFriendlyURLHistory();
+
+		PagesAdmin.viewActiveURL(activeURL = "/new-test-page");
+
+		PagesAdmin.viewOldFriendlyURL(oldFriendlyURL = "/test-page");
+
+		PagesAdmin.removeOldFriendlyURL(oldFriendlyURL = "/test-page");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PortletEntry.changeLocale(
+			fieldName = "Friendly URL",
+			locale = "es-ES");
+
+		PagesAdmin.viewFriendlyURL(pageName = "inicio");
+
+		PagesAdmin.gotoFriendlyURLHistory();
+
+		PagesAdmin.viewActiveURL(activeURL = "/inicio");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page-after-upragde");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "de-DE",
+			localizedFriendlyURLList = "/german",
+			localizedNameList = "German Test Page");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.viewFriendlyURL(pageName = "new-test-page-after-upragde");
+
+		PagesAdmin.viewFriendlyURL(
+			localizedFriendlyURL = "de-DE",
+			pageName = "german");
+	}
+
+	@priority = "5"
+	test CanConfigurePageFriendlyURLAfterUpgradeFrom701015 {
+		property data.archive.type = "data-archive-page-friendly-url";
+		property portal.version = "7.0.10.15";
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.viewFriendlyURL(pageName = "new-test-page");
+
+		PagesAdmin.viewFriendlyURL(
+			localizedFriendlyURL = "es-ES",
+			pageName = "inicio");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page-after-upragde");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "de-DE",
+			localizedFriendlyURLList = "/german",
+			localizedNameList = "German Test Page");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			siteURLKey = "guest");
+
+		PagesAdmin.viewFriendlyURL(pageName = "new-test-page-after-upragde");
+
+		PagesAdmin.viewFriendlyURL(
+			localizedFriendlyURL = "de-DE",
+			pageName = "german");
+	}
+
+}

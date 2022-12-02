@@ -43,8 +43,8 @@ Serializable defaultValue = null;
 UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 if (expandoColumn != null) {
-	unicodeProperties = expandoBridge.getAttributeProperties(expandoColumn.getName());
 	defaultValue = expandoBridge.getAttributeDefault(expandoColumn.getName());
+	unicodeProperties = expandoBridge.getAttributeProperties(expandoColumn.getName());
 }
 
 int propertyHeight = GetterUtil.getInteger(unicodeProperties.get(ExpandoColumnConstants.PROPERTY_HEIGHT), ExpandoColumnConstants.PROPERTY_HEIGHT_DEFAULT);

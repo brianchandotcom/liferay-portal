@@ -47,11 +47,7 @@ public class MBThreadModelDocumentContributor
 		else {
 			document.addKeyword("discussion", true);
 		}
-
-		Date lastPostDate = mbThread.getLastPostDate();
-
-		document.addKeyword("lastPostDate", lastPostDate.getTime());
-
+		document.addDate("lastPostDate", mbThread.getLastPostDate());
 		document.addKeyword(
 			"participantUserIds", mbThread.getParticipantUserIds());
 	}

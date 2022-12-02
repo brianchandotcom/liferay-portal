@@ -186,6 +186,7 @@ $request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
 	@priority = "4"
 	test ViewInstanceManagerWildfly {
 		property app.server.types = "wildfly";
+		property test.assert.warning.exceptions = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

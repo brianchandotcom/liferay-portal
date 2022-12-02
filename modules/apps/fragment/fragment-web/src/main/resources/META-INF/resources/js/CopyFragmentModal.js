@@ -12,12 +12,14 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch, navigate} from 'frontend-js-web';
+import {fetch, navigate, openToast, sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
+
+import FormField from './FormField';
 
 export default function CopyFragmentModal({
 	addFragmentCollectionURL,
@@ -33,6 +35,7 @@ export default function CopyFragmentModal({
 		onClose: () => setVisible(false),
 	});
 
+	const [errors, setErrors] = useState({});
 	const [showFragmentSetForm, setShowFragmentSetForm] = useState(
 		noFragmentCollections
 	);
@@ -65,13 +68,22 @@ export default function CopyFragmentModal({
 		fetch(copyFragmentEntriesURL, {
 			body: formData,
 			method: 'POST',
-		}).then((response) => {
-			onClose();
+		})
+			.then((response) => {
+				onClose();
 
-			if (response.redirected) {
-				navigate(response.url);
-			}
-		});
+				if (response.redirected) {
+					navigate(response.url);
+				}
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
 	};
 
 	return (
@@ -84,12 +96,24 @@ export default function CopyFragmentModal({
 				</ClayModal.Header>
 
 				<ClayModal.Body>
+					{errors.error && (
+						<ClayAlert
+							className="mb-0"
+							displayType="danger"
+							title={Liferay.Language.get('error')}
+						>
+							{errors.error}
+						</ClayAlert>
+					)}
+
 					{showFragmentSetForm ? (
 						<FragmentSetForm
 							addFragmentCollectionURL={addFragmentCollectionURL}
 							copyFragments={copyFragments}
+							errors={errors}
 							formId={formId}
 							portletNamespace={portletNamespace}
+							setErrors={setErrors}
 							showNoFragmentCollectionMessage={
 								noFragmentCollections
 							}
@@ -97,9 +121,11 @@ export default function CopyFragmentModal({
 					) : (
 						<FragmentSetSelector
 							copyFragments={copyFragments}
+							errors={errors}
 							formId={formId}
 							fragmentCollections={fragmentCollections}
 							portletNamespace={portletNamespace}
+							setErrors={setErrors}
 						/>
 					)}
 				</ClayModal.Body>
@@ -141,9 +167,11 @@ export default function CopyFragmentModal({
 
 function FragmentSetSelector({
 	copyFragments,
+	errors,
 	formId,
 	fragmentCollections,
 	portletNamespace,
+	setErrors,
 }) {
 	const [
 		selectedFragmentCollection,
@@ -164,18 +192,28 @@ function FragmentSetSelector({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
+		if (!selectedFragmentCollection) {
+			setErrors({
+				fragmentSets: sub(
+					Liferay.Language.get('x-field-is-required'),
+					Liferay.Language.get('fragment-set')
+				),
+			});
+
+			return;
+		}
+
 		copyFragments(selectedFragmentCollection);
 	};
 
 	return (
 		<ClayForm id={formId} onSubmit={handleSubmit}>
-			<ClayForm.Group>
-				<label htmlFor={`${portletNamespace}fragment-sets`}>
-					{Liferay.Language.get('fragment-sets')}
-
-					<ClayIcon className="reference-mark" symbol="asterisk" />
-				</label>
-
+			<FormField
+				error={errors.fragmentSets}
+				id={`${portletNamespace}fragment-sets`}
+				name={Liferay.Language.get('fragment-sets')}
+				required
+			>
 				<ClaySelectWithOption
 					id={`${portletNamespace}fragment-sets`}
 					onChange={(event) =>
@@ -184,7 +222,7 @@ function FragmentSetSelector({
 					options={items}
 					value={selectedFragmentCollection}
 				/>
-			</ClayForm.Group>
+			</FormField>
 		</ClayForm>
 	);
 }
@@ -192,8 +230,10 @@ function FragmentSetSelector({
 function FragmentSetForm({
 	addFragmentCollectionURL,
 	copyFragments,
+	errors,
 	formId,
 	portletNamespace,
+	setErrors,
 	showNoFragmentCollectionMessage,
 }) {
 	const [name, setName] = useState(
@@ -206,6 +246,17 @@ function FragmentSetForm({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
+		if (!name) {
+			setErrors({
+				name: sub(
+					Liferay.Language.get('x-field-is-required'),
+					Liferay.Language.get('name')
+				),
+			});
+
+			return;
+		}
+
 		const formData = new FormData();
 
 		formData.append(`${portletNamespace}name`, name);
@@ -215,14 +266,17 @@ function FragmentSetForm({
 		fetch(addFragmentCollectionURL, {body: formData, method: 'POST'})
 			.then((response) => response.json())
 			.then((response) => {
-				if (response.fragmentCollectionId) {
+				if (response.error) {
+					setErrors({error: response.error});
+				}
+				else if (response.fragmentCollectionId) {
 					copyFragments(response.fragmentCollectionId);
 				}
 			});
 	};
 
 	return (
-		<ClayForm id={formId} onSubmit={handleSubmit}>
+		<ClayForm id={formId} noValidate onSubmit={handleSubmit}>
 			{showNoFragmentCollectionMessage ? (
 				<p className="text-secondary">
 					{Liferay.Language.get(
@@ -231,13 +285,12 @@ function FragmentSetForm({
 				</p>
 			) : null}
 
-			<ClayForm.Group>
-				<label htmlFor={`${portletNamespace}name`}>
-					{Liferay.Language.get('name')}
-
-					<ClayIcon className="reference-mark" symbol="asterisk" />
-				</label>
-
+			<FormField
+				error={errors.name}
+				id={`${portletNamespace}name`}
+				name={Liferay.Language.get('name')}
+				required
+			>
 				<ClayInput
 					id={`${portletNamespace}name`}
 					name={`${portletNamespace}name`}
@@ -246,13 +299,12 @@ function FragmentSetForm({
 					type="text"
 					value={name}
 				/>
-			</ClayForm.Group>
+			</FormField>
 
-			<ClayForm.Group>
-				<label htmlFor={`${portletNamespace}description`}>
-					{Liferay.Language.get('description')}
-				</label>
-
+			<FormField
+				id={`${portletNamespace}description`}
+				name={Liferay.Language.get('description')}
+			>
 				<textarea
 					className="form-control"
 					id={`${portletNamespace}description`}
@@ -260,7 +312,7 @@ function FragmentSetForm({
 					onChange={(event) => setDescription(event.target.value)}
 					value={description}
 				/>
-			</ClayForm.Group>
+			</FormField>
 		</ClayForm>
 	);
 }

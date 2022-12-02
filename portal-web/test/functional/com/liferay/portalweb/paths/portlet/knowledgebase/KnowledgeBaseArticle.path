@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_PRINT_PREVIEW</td>
+	<td>//div[contains(@class,'kb-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT</td>
 	<td>//div[contains(@class,'kb-entity-body')]//p</td>
 	<td></td>

@@ -91,7 +91,7 @@ public class IndexerClausesPermissionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Assume.assumeTrue(!_isSearchEngine("solr"));
+		Assume.assumeTrue(!_isSearchEngine("Solr"));
 
 		BlogsEntrySearchFixture blogsEntrySearchFixture =
 			new BlogsEntrySearchFixture(blogsEntryLocalService);

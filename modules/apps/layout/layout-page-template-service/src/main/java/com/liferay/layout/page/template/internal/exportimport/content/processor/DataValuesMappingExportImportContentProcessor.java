@@ -225,9 +225,12 @@ public class DataValuesMappingExportImportContentProcessor
 			}
 			else if (Objects.equals(
 						itemJSONObject.get("type"),
-						LayoutDataItemTypeConstants.TYPE_ROW)) {
+						LayoutDataItemTypeConstants.TYPE_FORM) ||
+					 Objects.equals(
+						 itemJSONObject.get("type"),
+						 LayoutDataItemTypeConstants.TYPE_ROW)) {
 
-				_exportRowContentReferences(
+				_exportFormOrRowContentReferences(
 					exportReferencedContent, itemJSONObject, portletDataContext,
 					stagedModel);
 			}
@@ -256,6 +259,31 @@ public class DataValuesMappingExportImportContentProcessor
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, stagedModel, ddmTemplate,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
+	private void _exportFormOrRowContentReferences(
+			boolean exportReferencedContent, JSONObject itemJSONObject,
+			PortletDataContext portletDataContext, StagedModel stagedModel)
+		throws Exception {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("styles")) {
+			return;
+		}
+
+		JSONObject stylesJSONObject = configJSONObject.getJSONObject("styles");
+
+		if (stylesJSONObject.has("backgroundImage")) {
+			_exportMappedFieldContentReference(
+				exportReferencedContent,
+				stylesJSONObject.getJSONObject("backgroundImage"),
+				portletDataContext, stagedModel);
 		}
 	}
 
@@ -382,31 +410,6 @@ public class DataValuesMappingExportImportContentProcessor
 		}
 	}
 
-	private void _exportRowContentReferences(
-			boolean exportReferencedContent, JSONObject itemJSONObject,
-			PortletDataContext portletDataContext, StagedModel stagedModel)
-		throws Exception {
-
-		if (!itemJSONObject.has("config")) {
-			return;
-		}
-
-		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
-
-		if (!configJSONObject.has("styles")) {
-			return;
-		}
-
-		JSONObject stylesJSONObject = configJSONObject.getJSONObject("styles");
-
-		if (stylesJSONObject.has("backgroundImage")) {
-			_exportMappedFieldContentReference(
-				exportReferencedContent,
-				stylesJSONObject.getJSONObject("backgroundImage"),
-				portletDataContext, stagedModel);
-		}
-	}
-
 	private void _replaceCollectionImportContentReferences(
 		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
 
@@ -493,6 +496,28 @@ public class DataValuesMappingExportImportContentProcessor
 		}
 	}
 
+	private void _replaceFormOrRowImportContentReferences(
+		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("styles")) {
+			return;
+		}
+
+		JSONObject stylesJSONObject = configJSONObject.getJSONObject("styles");
+
+		if (stylesJSONObject.has("backgroundImage")) {
+			_replaceMappedFieldImportContentReferences(
+				stylesJSONObject.getJSONObject("backgroundImage"),
+				portletDataContext);
+		}
+	}
+
 	private void _replaceImportContentReferences(
 		JSONObject jsonObject, PortletDataContext portletDataContext) {
 
@@ -525,9 +550,12 @@ public class DataValuesMappingExportImportContentProcessor
 			}
 			else if (Objects.equals(
 						itemJSONObject.get("type"),
-						LayoutDataItemTypeConstants.TYPE_ROW)) {
+						LayoutDataItemTypeConstants.TYPE_FORM) ||
+					 Objects.equals(
+						 itemJSONObject.get("type"),
+						 LayoutDataItemTypeConstants.TYPE_ROW)) {
 
-				_replaceRowImportContentReferences(
+				_replaceFormOrRowImportContentReferences(
 					itemJSONObject, portletDataContext);
 			}
 		}
@@ -629,28 +657,6 @@ public class DataValuesMappingExportImportContentProcessor
 
 		if (jsonObject.has("fileEntryId")) {
 			jsonObject.put("fileEntryId", classPK);
-		}
-	}
-
-	private void _replaceRowImportContentReferences(
-		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
-
-		if (!itemJSONObject.has("config")) {
-			return;
-		}
-
-		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
-
-		if (!configJSONObject.has("styles")) {
-			return;
-		}
-
-		JSONObject stylesJSONObject = configJSONObject.getJSONObject("styles");
-
-		if (stylesJSONObject.has("backgroundImage")) {
-			_replaceMappedFieldImportContentReferences(
-				stylesJSONObject.getJSONObject("backgroundImage"),
-				portletDataContext);
 		}
 	}
 

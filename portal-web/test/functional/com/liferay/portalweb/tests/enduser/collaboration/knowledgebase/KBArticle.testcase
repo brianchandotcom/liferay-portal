@@ -522,6 +522,21 @@ definition {
 		KBArticle.viewDefaultCP();
 	}
 
+	@description = "This test ensures that users can print the kb entry by clicking the ellipsis on the kb entry."
+	@priority = "5"
+	test CanPreviewPrintContent {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewPrintContent(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@description = "This test ensures that users can replace the attachment for an article via the new configuration pane."
 	@priority = "5"
 	test CanReplaceArticleAttachment {
@@ -705,6 +720,25 @@ definition {
 			kbStatus = "Draft");
 	}
 
+	@description = "This test ensures that users can subscribe to a kb article by clicking the ellipsis on the kb entry."
+	@priority = "5"
+	test CanSubscribeToArticle {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.subscribeCP(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryMenu(
+			menuItem = "Unsubscribe",
+			rowEntry = "Knowledge Base Article Title");
+	}
+
 	@description = "This test ensures that a user can subscribe to a kb article from the navigation pane."
 	@priority = "5"
 	test CanSubscribeToArticleFromNavigationPane {
@@ -873,6 +907,30 @@ definition {
 			siteURLKey = "guest");
 
 		KBArticle.viewImageViaContentCmd();
+	}
+
+	@description = "This test ensures that users can view kb entry history by clicking the ellipsis on the kb entry."
+	@priority = "5"
+	test CanViewKBArticleHistory {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.updateKBArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			newKbArticleContent = "Knowledge Base Article Content Edit",
+			newKbArticleTitle = "Knowledge Base Article Title Edit");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewArticleHistoryCP(
+			kbArticleContent = "Knowledge Base Article Content Edit",
+			kbArticleContentAddedDiff = "Edit",
+			kbArticleTitle = "Knowledge Base Article Title Edit",
+			kbArticleVersionNew = "2",
+			kbArticleVersionOld = "1");
 	}
 
 	@description = "This ensures that an external video in the KB content field can be rendered correctly after moving it to a folder."

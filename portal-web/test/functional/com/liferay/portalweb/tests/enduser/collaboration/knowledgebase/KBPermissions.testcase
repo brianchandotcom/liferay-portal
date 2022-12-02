@@ -10,6 +10,16 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Display");
 	}
 
 	tearDown {
@@ -31,20 +41,34 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that users can edit the kb entry permissions by clicking the ellipsis on the kb entry."
+	@priority = "5"
+	test CanViewArticleAsGuest {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.goToEntryPermissions(kbArticleTitle = "Knowledge Base Article Title");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@priority = "4"
 	@refactorneeded
 	test ViewSuggestionsWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-156421=true";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Knowledge Base Display Page",
-			widgetName = "Knowledge Base Display");
 
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",

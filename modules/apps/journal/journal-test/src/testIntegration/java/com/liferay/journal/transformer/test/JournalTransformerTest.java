@@ -279,11 +279,6 @@ public class JournalTransformerTest {
 	}
 
 	protected void initRegexTransformerListener() {
-		TransformerListener transformerListener =
-			_journalTransformerListenerRegistry.getTransformerListener(
-				"com.liferay.journal.internal.transformer." +
-					"RegexTransformerListener");
-
 		CacheRegistryUtil.setActive(true);
 
 		List<Pattern> patterns = new ArrayList<>();
@@ -304,9 +299,9 @@ public class JournalTransformerTest {
 		}
 
 		ReflectionTestUtil.setFieldValue(
-			transformerListener, "_patterns", patterns);
+			_transformerListener, "_patterns", patterns);
 		ReflectionTestUtil.setFieldValue(
-			transformerListener, "_replacements", replacements);
+			_transformerListener, "_replacements", replacements);
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -344,6 +339,11 @@ public class JournalTransformerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject(
+		filter = "component.name=com.liferay.journal.internal.transformer.RegexTransformerListener"
+	)
+	private TransformerListener _transformerListener;
 
 	private Method _transformMethod;
 

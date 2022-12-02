@@ -31,12 +31,11 @@ public class ClassicBatchEngineZipUnitImpl<T> implements BatchEngineZipUnit<T> {
 	public ClassicBatchEngineZipUnitImpl(
 		ZipFile zipFile, ZipEntry... zipEntries) {
 
-		if ((zipEntries == null) || (zipEntries.length > 2)) {
-			throw new IllegalArgumentException(
-				"Invalid zip entries " + zipEntries);
-		}
+		_zipFile = zipFile;
 
-		_zipFile = Objects.requireNonNull(zipFile);
+		if ((zipEntries == null) || (zipEntries.length > 2)) {
+			return;
+		}
 
 		for (ZipEntry zipEntry : zipEntries) {
 			if (_isBatchEngineConfiguration(zipEntry.getName())) {
@@ -46,15 +45,6 @@ public class ClassicBatchEngineZipUnitImpl<T> implements BatchEngineZipUnit<T> {
 			}
 
 			_dataZipEntry = zipEntry;
-		}
-
-		if (Objects.isNull(_configurationZipEntry)) {
-			throw new IllegalArgumentException(
-				"Configuration zip entry is null");
-		}
-
-		if (Objects.isNull(_dataZipEntry)) {
-			throw new IllegalArgumentException("Data zip entry is null");
 		}
 	}
 

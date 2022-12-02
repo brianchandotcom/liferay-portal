@@ -25,9 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MessageBus {
 
-	public boolean addMessageBusEventListener(
-		MessageBusEventListener messageBusEventListener);
-
 	public Destination getDestination(String destinationName);
 
 	public int getDestinationCount();
@@ -42,9 +39,6 @@ public interface MessageBus {
 
 	public boolean registerMessageListener(
 		String destinationName, MessageListener messageListener);
-
-	public boolean removeMessageBusEventListener(
-		MessageBusEventListener messageBusEventListener);
 
 	public void sendMessage(String destinationName, Message message);
 

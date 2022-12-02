@@ -71,13 +71,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 	@Override
-	public boolean addMessageBusEventListener(
-		MessageBusEventListener messageBusEventListener) {
-
-		return _messageBusEventListeners.add(messageBusEventListener);
-	}
-
-	@Override
 	public void deleted(String factoryPid) {
 		String destinationName = _factoryPidsToDestinationName.remove(
 			factoryPid);
@@ -155,13 +148,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean removeMessageBusEventListener(
-		MessageBusEventListener messageBusEventListener) {
-
-		return _messageBusEventListeners.remove(messageBusEventListener);
 	}
 
 	@Override
@@ -411,7 +397,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	protected void registerMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener) {
 
-		addMessageBusEventListener(messageBusEventListener);
+		_messageBusEventListeners.add(messageBusEventListener);
 	}
 
 	protected synchronized void unregisterDestination(
@@ -445,7 +431,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	protected void unregisterMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener) {
 
-		removeMessageBusEventListener(messageBusEventListener);
+		_messageBusEventListeners.remove(messageBusEventListener);
 	}
 
 	private void _addDestination(Destination destination) {

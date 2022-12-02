@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	service = {SharingDropdownItemFactory.class, SharingMenuItemFactory.class}
 )
 public class SharingMenuItemFactoryImpl

@@ -1,26 +1,3 @@
-<div class="primary-navigation-account-menu">
-	<#if entries?has_content>
-		<#list entries as menuItem>
-			<#assign
-				menuItemCustomFields = menuItem.getExpandoAttributes()!{}
-				iconURL = getLocalizedExpandoValue(menuItemCustomFields["Menu Item Image Url"])!""
-			/>
-
-			<a class="account-menu-item d-flex justify-content-between p-3 text-decoration-none" href="${menuItem.getURL()}">
-				<div class="account-menu-item-group d-flex">
-					<div class="account-menu-item-icon mr-1 pr-1">
-						<img class="account-menu-item-icon-image" src=${iconURL}>
-					</div>
-
-					<div class="account-menu-item-text ml-2">
-						${menuItem.getName()}
-					</div>
-				</div>
-			</a>
-		</#list>
-	</#if>
-</div>
-
 <#function getLocalizedExpandoValue expandoField>
 	<#list expandoField as language, expandoValue>
 		<#if language == locale>
@@ -62,3 +39,26 @@
 		display: block;
 	}
 </style>
+
+<div class="primary-navigation-account-menu">
+	<#if entries?has_content>
+		<#list entries as menuItem>
+			<#assign
+				menuItemCustomFields = menuItem.getExpandoAttributes()!{}
+				iconURL = getLocalizedExpandoValue(menuItemCustomFields["Menu Item Image Url"])!""
+			/>
+
+			<a class="account-menu-item d-flex justify-content-between p-3 text-decoration-none" href="${menuItem.getURL()}">
+				<div class="account-menu-item-group d-flex">
+					<div class="account-menu-item-icon mr-1 pr-1">
+						<img class="account-menu-item-icon-image" src=${iconURL}>
+					</div>
+
+					<div class="account-menu-item-text ml-2">
+						${menuItem.getName()}
+					</div>
+				</div>
+			</a>
+		</#list>
+	</#if>
+</div>

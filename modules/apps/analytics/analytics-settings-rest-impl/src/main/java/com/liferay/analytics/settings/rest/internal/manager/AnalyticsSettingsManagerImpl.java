@@ -17,9 +17,9 @@ package com.liferay.analytics.settings.rest.internal.manager;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.rest.internal.constants.FieldAccountConstants;
-import com.liferay.analytics.settings.rest.internal.constants.FieldPeopleConstants;
-import com.liferay.analytics.settings.rest.internal.constants.FieldProductConstants;
+import com.liferay.analytics.settings.rest.constants.FieldAccountConstants;
+import com.liferay.analytics.settings.rest.constants.FieldPeopleConstants;
+import com.liferay.analytics.settings.rest.constants.FieldProductConstants;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;

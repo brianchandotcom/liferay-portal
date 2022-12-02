@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.settings.rest.internal.constants;
+package com.liferay.analytics.settings.rest.constants;
 
 /**
  * @author Riccardo Ferrari
@@ -32,9 +32,7 @@ public class FieldPeopleConstants {
 		"smsSn", "suffixListTypeId", "twitterSn"
 	};
 
-	public static final String[] FIELD_CONTACT_REQUIRED_NAMES = {
-		"classPK", "emailAddress"
-	};
+	public static final String[] FIELD_CONTACT_REQUIRED_NAMES = {"classPK"};
 
 	public static final String[] FIELD_CONTACT_TYPES = {
 		"Date", "Long", "Long", "String", "String", "String", "String",
@@ -47,7 +45,7 @@ public class FieldPeopleConstants {
 		"test@liferay.com", "True", "key=value,...", "external12345", "12345",
 		"John", "12345", "Hello John!", "Manager", "12345", "Doe", "12345",
 		"12354,34567,...", "Michael", "31st Oct 2008", "12345", "12345",
-		"johndoe", "0", "12345", "asd23-erwer34-..."
+		"johndoe", "0", "12345", "12345", "asd23-erwer34-..."
 	};
 
 	public static final String[] FIELD_USER_NAMES = {
@@ -68,7 +66,7 @@ public class FieldPeopleConstants {
 		"Boolean", "String", "Long", "Long", "Date", "Boolean", "String",
 		"Boolean", "String", "String", "Long", "String", "String", "String",
 		"String", "String", "String", "Long", "String", "String", "Date",
-		"String", "Long", "String", "Integer", "Long", "String"
+		"String", "Long", "String", "Integer", "Long", "Long", "String"
 	};
 
 }

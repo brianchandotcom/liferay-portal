@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.settings.rest.internal.constants;
+package com.liferay.analytics.settings.rest.constants;
 
 /**
  * @author Riccardo Ferrari

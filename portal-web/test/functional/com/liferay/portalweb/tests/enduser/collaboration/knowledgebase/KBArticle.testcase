@@ -153,8 +153,6 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanAddArticleWithRelatedBlog {
-		property test.name.skip.portal.instance = "KBArticle#CanAddArticleWithRelatedBlog";
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -242,8 +240,6 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanCancelAddingArticle {
-		property test.name.skip.portal.instance = "KBArticle#CanCancelAddingArticle";
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.cancelAddKBArticle(
@@ -256,8 +252,6 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanCancelEditingArticle {
-		property test.name.skip.portal.instance = "KBArticle#CanCancelEditingArticle";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -470,8 +464,6 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CannotAddArticleWithoutCategory {
-		property test.name.skip.portal.instance = "KBArticle#CannotAddArticleWithoutCategory";
-
 		Category.openCategoriesAdmin(siteURLKey = "guest");
 
 		Vocabulary.addWithAssociatedAssetTypeCP(

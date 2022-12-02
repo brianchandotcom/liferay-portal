@@ -33,7 +33,6 @@ definition {
 	@refactordone
 	test CanAddArticleWithTemplate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "KBTemplates#CanAddArticleWithTemplate";
 
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",

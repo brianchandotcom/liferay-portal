@@ -89,7 +89,6 @@ definition {
 	@refactordone
 	test CanViewPendingContent {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "KBWorkflow#CanViewPendingContent";
 
 		Navigator.openURL();
 

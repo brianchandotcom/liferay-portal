@@ -255,8 +255,6 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CannotAddDuplicateFolder {
-		property test.name.skip.portal.instance = "KBFolder#CannotAddDuplicateFolder";
-
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",

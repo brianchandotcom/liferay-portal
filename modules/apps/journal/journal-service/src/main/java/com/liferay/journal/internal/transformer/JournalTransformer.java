@@ -15,16 +15,16 @@
 package com.liferay.journal.internal.transformer;
 
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.constants.JournalStructureConstants;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalHelper;
@@ -32,6 +32,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,12 +45,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
@@ -69,7 +72,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -79,6 +84,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -130,7 +136,7 @@ public class JournalTransformer {
 
 		Element rootElement = document.getRootElement();
 
-		JournalUtil.addAllReservedEls(
+		_addAllReservedEls(
 			rootElement, tokens, article, languageId, themeDisplay);
 
 		if (_logTokens.isDebugEnabled()) {
@@ -461,6 +467,149 @@ public class JournalTransformer {
 		}
 
 		return backwardsCompatibilityTemplateNodes;
+	}
+
+	private void _addAllReservedEls(
+		Element rootElement, Map<String, String> tokens, JournalArticle article,
+		String languageId, ThemeDisplay themeDisplay) {
+
+		_addReservedEl(
+			rootElement, tokens, JournalStructureConstants.RESERVED_ARTICLE_ID,
+			article.getArticleId());
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
+			String.valueOf(article.getVersion()));
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_TITLE,
+			article.getTitle(languageId));
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE,
+			article.getUrlTitle());
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
+			article.getDescription(languageId));
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
+			article.getCreateDate());
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
+			article.getModifiedDate());
+
+		if (article.getDisplayDate() != null) {
+			_addReservedEl(
+				rootElement, tokens,
+				JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
+				article.getDisplayDate());
+		}
+
+		String smallImageURL = StringPool.BLANK;
+
+		if (Validator.isNotNull(article.getSmallImageURL())) {
+			smallImageURL = article.getSmallImageURL();
+		}
+		else if ((themeDisplay != null) && article.isSmallImage()) {
+			smallImageURL = StringBundler.concat(
+				themeDisplay.getPathImage(), "/journal/article?img_id=",
+				article.getSmallImageId(), "&t=",
+				WebServerServletTokenUtil.getToken(article.getSmallImageId()));
+		}
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
+			smallImageURL);
+
+		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_ASSET_TAG_NAMES,
+			StringUtil.merge(assetTagNames));
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID,
+			String.valueOf(article.getUserId()));
+
+		String userName = StringPool.BLANK;
+		String userEmailAddress = StringPool.BLANK;
+		String userComments = StringPool.BLANK;
+		String userJobTitle = StringPool.BLANK;
+
+		User user = UserLocalServiceUtil.fetchUserById(article.getUserId());
+
+		if (user != null) {
+			userName = user.getFullName();
+			userEmailAddress = user.getEmailAddress();
+			userComments = user.getComments();
+			userJobTitle = user.getJobTitle();
+		}
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME, userName);
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
+			userEmailAddress);
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS,
+			userComments);
+
+		_addReservedEl(
+			rootElement, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
+			userJobTitle);
+	}
+
+	private void _addReservedEl(
+		Element rootElement, Map<String, String> tokens, String name,
+		Date value) {
+
+		_addReservedEl(rootElement, tokens, name, Time.getRFC822(value));
+	}
+
+	private void _addReservedEl(
+		Element rootElement, Map<String, String> tokens, String name,
+		String value) {
+
+		// XML
+
+		if (rootElement != null) {
+			Element dynamicElementElement = rootElement.addElement(
+				"dynamic-element");
+
+			dynamicElementElement.addAttribute("name", name);
+
+			dynamicElementElement.addAttribute("type", "text");
+
+			Element dynamicContentElement = dynamicElementElement.addElement(
+				"dynamic-content");
+
+			//dynamicContentElement.setText("<![CDATA[" + value + "]]>");
+			dynamicContentElement.setText(value);
+		}
+
+		// Tokens
+
+		tokens.put(
+			StringUtil.replace(name, CharPool.DASH, CharPool.UNDERLINE), value);
 	}
 
 	private String _convertToReferenceIfNeeded(

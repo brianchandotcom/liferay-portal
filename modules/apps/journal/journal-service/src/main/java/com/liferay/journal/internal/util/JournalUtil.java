@@ -14,19 +14,15 @@
 
 package com.liferay.journal.internal.util;
 
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.constants.JournalStructureConstants;
 import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,7 +31,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -47,7 +42,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -56,14 +50,9 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -82,115 +71,6 @@ public class JournalUtil {
 	public static final String[] SELECTED_FIELD_NAMES = {
 		Field.ARTICLE_ID, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
-
-	public static void addAllReservedEls(
-		Element rootElement, Map<String, String> tokens, JournalArticle article,
-		String languageId, ThemeDisplay themeDisplay) {
-
-		_addReservedEl(
-			rootElement, tokens, JournalStructureConstants.RESERVED_ARTICLE_ID,
-			article.getArticleId());
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
-			String.valueOf(article.getVersion()));
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_TITLE,
-			article.getTitle(languageId));
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE,
-			article.getUrlTitle());
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
-			article.getDescription(languageId));
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
-			article.getCreateDate());
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
-			article.getModifiedDate());
-
-		if (article.getDisplayDate() != null) {
-			_addReservedEl(
-				rootElement, tokens,
-				JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
-				article.getDisplayDate());
-		}
-
-		String smallImageURL = StringPool.BLANK;
-
-		if (Validator.isNotNull(article.getSmallImageURL())) {
-			smallImageURL = article.getSmallImageURL();
-		}
-		else if ((themeDisplay != null) && article.isSmallImage()) {
-			smallImageURL = StringBundler.concat(
-				themeDisplay.getPathImage(), "/journal/article?img_id=",
-				article.getSmallImageId(), "&t=",
-				WebServerServletTokenUtil.getToken(article.getSmallImageId()));
-		}
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
-			smallImageURL);
-
-		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_ASSET_TAG_NAMES,
-			StringUtil.merge(assetTagNames));
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID,
-			String.valueOf(article.getUserId()));
-
-		String userName = StringPool.BLANK;
-		String userEmailAddress = StringPool.BLANK;
-		String userComments = StringPool.BLANK;
-		String userJobTitle = StringPool.BLANK;
-
-		User user = UserLocalServiceUtil.fetchUserById(article.getUserId());
-
-		if (user != null) {
-			userName = user.getFullName();
-			userEmailAddress = user.getEmailAddress();
-			userComments = user.getComments();
-			userJobTitle = user.getJobTitle();
-		}
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME, userName);
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
-			userEmailAddress);
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS,
-			userComments);
-
-		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
-			userJobTitle);
-	}
 
 	public static String getJournalControlPanelLink(
 		long folderId, long groupId,
@@ -401,40 +281,6 @@ public class JournalUtil {
 			article, ddmTemplate, journalHelper, languageId,
 			layoutDisplayPageProviderRegistry, portletRequestModel,
 			propagateException, script, themeDisplay, viewMode);
-	}
-
-	private static void _addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		Date value) {
-
-		_addReservedEl(rootElement, tokens, name, Time.getRFC822(value));
-	}
-
-	private static void _addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		String value) {
-
-		// XML
-
-		if (rootElement != null) {
-			Element dynamicElementElement = rootElement.addElement(
-				"dynamic-element");
-
-			dynamicElementElement.addAttribute("name", name);
-
-			dynamicElementElement.addAttribute("type", "text");
-
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			//dynamicContentElement.setText("<![CDATA[" + value + "]]>");
-			dynamicContentElement.setText(value);
-		}
-
-		// Tokens
-
-		tokens.put(
-			StringUtil.replace(name, CharPool.DASH, CharPool.UNDERLINE), value);
 	}
 
 	private static String _getCustomTokenValue(

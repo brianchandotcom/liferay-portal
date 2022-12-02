@@ -36,6 +36,63 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that a user can select a child article to display from the widget configuration."
+	@priority = "5"
+	test CanSelectChildArticleToDisplay {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "KB Child Article Content",
+			kbChildArticleTitle = "KB Child Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		KBArticle.selectArticlesToDisplayOnWidget(
+			childArticles = "1 Child Articles",
+			kbArticle = "true",
+			kbArticleTitle = "KB Child Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "KB Child Article Content",
+			kbArticleTitle = "KB Child Article Title");
+	}
+
+	@description = "This test ensures that a user can select an article in a folder to display from the widget configuration."
+	@priority = "5"
+	test CanSelectFolderArticleToDisplay {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		KBArticle.selectArticlesToDisplayOnWidget(
+			kbArticle = "true",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbFolderName = "KB Folder",
+			viewExpandedSectionsInModal = "true");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@priority = "3"
 	@refactordone
 	test DeleteKBArticleViaKBArticle {

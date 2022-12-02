@@ -75,8 +75,7 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddCategories() throws Exception{
-
+	public void testAddCategories() throws Exception {
 		addCategory("Test");
 
 		Class<?> exceptionClass = Exception.class;
@@ -100,9 +99,7 @@ public class MBCategoryLocalServiceTest {
 		}
 
 		Assert.assertEquals(
-			"Name is null",
-			CategoryNameException.class, exceptionClass);
-
+			"Name is null", CategoryNameException.class, exceptionClass);
 	}
 
 	@Test
@@ -586,8 +583,9 @@ public class MBCategoryLocalServiceTest {
 
 	protected MBCategory addCategory(String name) throws Exception {
 		return MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			name, StringPool.BLANK,
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, name,
+			StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}

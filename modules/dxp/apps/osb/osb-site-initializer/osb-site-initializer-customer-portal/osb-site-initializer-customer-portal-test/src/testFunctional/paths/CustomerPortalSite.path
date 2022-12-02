@@ -361,6 +361,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH</td>
+	<td>//input[contains(@placeholder, 'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALERT_NOTIFICATIONS</td>
 	<td>//*[contains(@class, 'alert-notifications')]//*[text()='${key_alertText}']</td>
 	<td></td>

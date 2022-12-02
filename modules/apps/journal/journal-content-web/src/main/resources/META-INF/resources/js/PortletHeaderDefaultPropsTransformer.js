@@ -15,10 +15,10 @@
 import {openModal} from 'frontend-js-web';
 
 const ACTIONS = {
-	permissionsPortletHeader(itemData) {
+	permissions(itemData) {
 		openModal({
 			title: Liferay.Language.get('permissions'),
-			url: itemData.permissionsPortletHeaderURL,
+			url: itemData.permissionsURL,
 		});
 	},
 };

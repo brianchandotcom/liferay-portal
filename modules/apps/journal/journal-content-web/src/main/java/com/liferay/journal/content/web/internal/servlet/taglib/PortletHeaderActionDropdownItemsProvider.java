@@ -72,9 +72,9 @@ public class PortletHeaderActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), article,
 				ActionKeys.PERMISSIONS),
 			dropdownItem -> {
-				dropdownItem.putData("action", "permissionsPortletHeader");
+				dropdownItem.putData("action", "permissions");
 				dropdownItem.putData(
-					"permissionsPortletHeaderURL",
+					"permissionsURL",
 					PermissionsURLTag.doTag(
 						StringPool.BLANK, JournalArticle.class.getName(),
 						HtmlUtil.escape(

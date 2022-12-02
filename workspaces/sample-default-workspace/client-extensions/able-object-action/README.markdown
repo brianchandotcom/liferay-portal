@@ -34,9 +34,10 @@ directory:
 
     ```bash
     cd client-extensions/able-object-action/extra
+    export CLIENT_ID=id-c2224747-79ae-e877-1bb8-802a1efda4ef
     ./gradlew \
         -Ddxp.domains=localhost \
-        -Doauth.client.id=<CLIENT_ID> \
+        -Doauth.client.id=${CLIENT_ID} \
         -Doauth.jwks.uri=http://localhost:8080/o/oauth2/jwks \
         bootRun
     ```

@@ -30,8 +30,6 @@ long[] selectableClassNameIds = ParamUtil.getLongValues(request, "selectableClas
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectKBObject");
 
-String parentTitle = LanguageUtil.get(request, "home");
-
 KBSelectParentDisplayContext kbSelectParentDisplayContext = new KBSelectParentDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest);
 
 kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
@@ -57,7 +55,7 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 						).put(
 							"resourcePrimKey", kbSelectParentDisplayContext.getParentResourcePrimKey()
 						).put(
-							"title", parentTitle
+							"title", kbSelectParentDisplayContext.getSelectedEntryTitle()
 						).build()
 					%>'
 					value='<%= (kbSelectParentDisplayContext.getParentResourceClassNameId() == kbFolderClassNameId) ? "select-this-folder" : "select-this-article" %>'

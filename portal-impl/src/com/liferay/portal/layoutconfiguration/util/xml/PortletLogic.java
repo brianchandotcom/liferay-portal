@@ -46,12 +46,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PortletLogic extends RuntimeLogic {
 
-	public static final String CLOSE_1_TAG = "</runtime-portlet>";
-
-	public static final String CLOSE_2_TAG = "/>";
-
-	public static final String OPEN_TAG = "<runtime-portlet";
-
 	public PortletLogic(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {

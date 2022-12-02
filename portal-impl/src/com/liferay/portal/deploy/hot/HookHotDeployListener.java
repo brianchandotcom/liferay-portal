@@ -1184,26 +1184,20 @@ public class HookHotDeployListener
 			return;
 		}
 
-		Configuration portalPropertiesConfiguration = null;
+		String name = portalPropertiesLocation;
 
-		try {
-			String name = portalPropertiesLocation;
+		int pos = name.lastIndexOf(".properties");
 
-			int pos = name.lastIndexOf(".properties");
-
-			if (pos != -1) {
-				name = name.substring(0, pos);
-			}
-
-			portalPropertiesConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
-					portletClassLoader, name);
+		if (pos != -1) {
+			name = name.substring(0, pos);
 		}
-		catch (Exception exception) {
-			_log.error("Unable to read " + portalPropertiesLocation, exception);
-		}
+
+		Configuration portalPropertiesConfiguration =
+			ConfigurationFactoryUtil.getConfiguration(portletClassLoader, name);
 
 		if (portalPropertiesConfiguration == null) {
+			_log.error("Unable to read " + portalPropertiesLocation);
+
 			return;
 		}
 

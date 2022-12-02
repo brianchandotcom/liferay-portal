@@ -168,16 +168,12 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			ServletContext servletContext, ClassLoader classLoader)
 		throws Exception {
 
-		Configuration serviceBuilderPropertiesConfiguration = null;
+		Configuration serviceBuilderPropertiesConfiguration =
+			ConfigurationFactoryUtil.getConfiguration(classLoader, "service");
 
-		try {
-			serviceBuilderPropertiesConfiguration =
-				ConfigurationFactoryUtil.getConfiguration(
-					classLoader, "service");
-		}
-		catch (Exception exception) {
+		if (serviceBuilderPropertiesConfiguration == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read service.properties", exception);
+				_log.debug("Unable to read service.properties");
 			}
 
 			return;

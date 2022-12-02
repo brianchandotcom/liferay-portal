@@ -49,8 +49,6 @@ public class ServiceConfigurationInitializer {
 		_classLoader = classLoader;
 		_serviceConfiguration = serviceConfiguration;
 		_serviceComponentLocalService = serviceComponentLocalService;
-
-		_serviceComponentConfiguration = new ModuleResourceLoader(bundle);
 	}
 
 	public void stop() {
@@ -117,16 +115,13 @@ public class ServiceConfigurationInitializer {
 	private final ClassLoader _classLoader;
 	private ServiceRegistration<Configuration>
 		_configurationServiceRegistration;
-	private final ServiceComponentConfiguration _serviceComponentConfiguration;
+	private final ServiceComponentConfiguration _serviceComponentConfiguration =
+		new ModuleResourceLoader();
 	private final ServiceComponentLocalService _serviceComponentLocalService;
 	private final Configuration _serviceConfiguration;
 
 	private class ModuleResourceLoader
 		implements ServiceComponentConfiguration {
-
-		public ModuleResourceLoader(Bundle bundle) {
-			_bundle = bundle;
-		}
 
 		@Override
 		public InputStream getHibernateInputStream() {
@@ -185,8 +180,6 @@ public class ServiceConfigurationInitializer {
 
 			return inputStream;
 		}
-
-		private final Bundle _bundle;
 
 	}
 

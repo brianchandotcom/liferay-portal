@@ -63,13 +63,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 
 	@Override
 	public List<String> getSocialBookmarksTypes() {
-		Set<String> socialBookmarksTypes = new LinkedHashSet<>();
-
-		for (String type : _serviceTrackerList) {
-			socialBookmarksTypes.add(type);
-		}
-
-		return new ArrayList<>(socialBookmarksTypes);
+		return _serviceTrackerList.toList();
 	}
 
 	@Activate

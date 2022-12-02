@@ -238,10 +238,6 @@ definition {
 
 			AssertElementPresent(locator1 = "ABTest#ELEMENT_ID_INPUT_READONLY");
 		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97195: Validate if, in the list of the variant for A/B Test, the user have the options to edit the name and delete"
@@ -268,12 +264,6 @@ definition {
 				key_menuItem = "Edit",
 				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
-
-		task ("Run and terminate the AB test") {
-			ABTest.runTest();
-
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97194: Validate if the goal input test for the AB Test appears when the user tries to edit one AB Test"
@@ -294,16 +284,6 @@ definition {
 				locator1 = "Modal#SELECT_WITH_LABEL",
 				selectLabel = "Select Goal",
 				value = "Bounce Rate");
-
-			Click(locator1 = "Modal#SAVE_BUTTON");
-
-			Alert.viewSuccessMessage();
-
-			ABTest.runTest();
-		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
 		}
 	}
 
@@ -403,10 +383,6 @@ definition {
 				locator1 = "ABTest#AB_TEST_DETAILS_FIELD",
 				value1 = "Click");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-97882: Validate if when the user is editing the A/B Testing, he can press the cancel button on the modal, and the changes in the A/B Testing is not saved"
@@ -441,10 +417,6 @@ definition {
 				locator1 = "ABTest#AB_TEST_DETAILS_FIELD",
 				value1 = "Bounce Rate");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-97882: Validate if when the user is editing the A/B Testing, he can close the modal, and the changes in the A/B Testing is not saved"
@@ -478,10 +450,6 @@ definition {
 				key_name = "Bounce Rate",
 				locator1 = "ABTest#AB_TEST_DETAILS_FIELD",
 				value1 = "Bounce Rate");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -667,12 +635,6 @@ definition {
 				key_text = "Select Clickable Element",
 				locator1 = "Button#ANY_SECONDARY");
 		}
-
-		task ("Delete AB Test") {
-			Click(locator1 = "ABTest#X_BUTTON_TARGET_ID_ELEMENT");
-
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-152323 Bug: Element ID field gets empty after changing from variant"
@@ -748,14 +710,6 @@ definition {
 				locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 
 			AssertVisible(locator1 = "ABTest#IMAGE_SUCCESS");
-
-			Click(
-				key_name = "OK",
-				locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
 		}
 	}
 
@@ -781,16 +735,6 @@ definition {
 				locator1 = "ACTests#SUMMARY_CARD_TEXT",
 				value1 = "Test Is Running");
 		}
-
-		task ("Go back to DXP") {
-			Navigator.openURL();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
@@ -806,16 +750,6 @@ definition {
 
 		task ("Check the info is correct in Analytics Cloud and run the test") {
 			ABTest.checkVariantAnalyticsCloud(variantNames = "Variant name");
-		}
-
-		task ("Go back to DXP") {
-			Navigator.openURL();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
 		}
 	}
 
@@ -861,16 +795,6 @@ definition {
 				locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD",
 				name = "Variant name");
 		}
-
-		task ("Go back to DXP") {
-			Navigator.openURL();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was edited on Liferay portal is visible in the Analytics Cloud"
@@ -902,16 +826,6 @@ definition {
 
 		task ("Check the info is correct in Analytics Cloud") {
 			ABTest.checkVariantAnalyticsCloud(variantNames = "Variant name 2");
-		}
-
-		task ("Go back to DXP") {
-			Navigator.openURL();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
 		}
 	}
 
@@ -955,10 +869,6 @@ definition {
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "Validate if the user can create an A/B Test by Bounce rate"
@@ -977,16 +887,6 @@ definition {
 
 		task ("Check the info is correct in Analytics Cloud") {
 			ABTest.checkAnalyticsCloudInfo(abTestTitle = "AB test title");
-		}
-
-		task ("Go back to DXP") {
-			Navigator.openURL();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
 		}
 	}
 
@@ -1020,16 +920,6 @@ definition {
 
 		task ("Check the info is correct in Analytics Cloud") {
 			ABTest.checkAnalyticsCloudInfo(abTestTitle = "AB test title");
-		}
-
-		task ("Go back to DXP") {
-			Navigator.openURL();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Terminate the AB test") {
-			ABTest.terminateTest();
 		}
 	}
 
@@ -1115,12 +1005,6 @@ definition {
 
 		task ("Assert that variants where created") {
 			ABTest.viewVariantName(variantNames = "Variant name,Variant name");
-		}
-
-		task ("Run and terminate the AB test") {
-			ABTest.runTest();
-
-			ABTest.terminateTest();
 		}
 	}
 
@@ -1268,12 +1152,6 @@ definition {
 			Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
 			MenuItem.viewVisible(menuItem = "Delete");
-
-			Click(locator1 = "ABTest#KEBAB_AB_TEST");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -1319,10 +1197,6 @@ definition {
 				locator1 = "ABTest#ELEMENT_NEEDS_TO_BE_SELECTED_MESSAGE",
 				value1 = "An element needs to be selected.");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
@@ -1358,10 +1232,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "ABTest#ELEMENT_NEEDS_TO_BE_SELECTED_MESSAGE",
 				value1 = "An element needs to be selected.");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -1465,16 +1335,6 @@ definition {
 
 			AssertElementPresent(locator1 = "ABTest#DELETE_SEGMENT_WITH_EXPERIENCE_MESSAGE");
 		}
-
-		task ("Delete AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ContentPages.changeExperience(experienceName = "NewExp1");
-
-			ABTest.openABTestPanel();
-
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in terminated status"
@@ -1535,14 +1395,6 @@ definition {
 				locator1 = "ABTest#REVIEW_NO_HAVE_VARIANTS",
 				value1 = "Create at least one variant to run the test.");
 		}
-
-		task ("Run and terminate AB Test") {
-			ABTest.createVariant(variantName = "Variant name");
-
-			ABTest.runTest();
-
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97195: Validate if the user not will delete a variant for A/B Test, if when he will delete and he presses the cancel button"
@@ -1568,12 +1420,6 @@ definition {
 
 		task ("Assert that variant is not deleted") {
 			ABTest.viewVariantName(variantNames = "Variant name");
-		}
-
-		task ("Run and terminate the AB test") {
-			ABTest.runTest();
-
-			ABTest.terminateTest();
 		}
 	}
 
@@ -1628,8 +1474,6 @@ definition {
 			AssertElementNotPresent(
 				key_experienceName = "NewAnyoneExperience",
 				locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
-
-			Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
 		}
 	}
 
@@ -1698,10 +1542,6 @@ definition {
 				locator1 = "ABTest#AB_TEST_TITLE_DXP",
 				value1 = "AB test title");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-96791: Validate if the user can edit the target"
@@ -1757,10 +1597,6 @@ definition {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "${idelement}");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -1864,14 +1700,6 @@ definition {
 
 			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
 		}
-
-		task ("Delete AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
-
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, a modal is opened requiring some initial fields information"
@@ -1897,12 +1725,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "Modal#SELECT_WITH_LABEL",
 				selectLabel = "Select Goal");
-
-			Click(locator1 = "Modal#SAVE_BUTTON");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -1936,12 +1758,6 @@ definition {
 		task ("Assert that variant name is changed") {
 			ABTest.viewVariantName(variantNames = "Variant name,Variant name 3");
 		}
-
-		task ("Run and terminate AB Test") {
-			ABTest.runTest();
-
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97195: Validate if the user can cancel the creation of one variant for A/B Test, and the data that he inputs during the creation is discarded"
@@ -1967,14 +1783,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "ABTest#REVIEW_NO_HAVE_VARIANTS",
 				value1 = "Create at least one variant to run the test.");
-		}
-
-		task ("Run and terminate AB Test") {
-			ABTest.createVariant(variantName = "Variant name");
-
-			ABTest.runTest();
-
-			ABTest.terminateTest();
 		}
 	}
 
@@ -2013,10 +1821,6 @@ definition {
 				fragmentName = "button",
 				id = "link",
 				text = "Go Somewhere");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -2061,10 +1865,6 @@ definition {
 				index = "1",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with the same name that already exists with success"
@@ -2096,12 +1896,6 @@ definition {
 
 		task ("Assert that variant name is changed") {
 			ABTest.viewVariantName(variantNames = "Variant name,Variant name");
-		}
-
-		task ("Run and terminate AB Test") {
-			ABTest.runTest();
-
-			ABTest.terminateTest();
 		}
 	}
 
@@ -2137,8 +1931,6 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "New text");
-
-			Button.clickPublish();
 		}
 	}
 
@@ -2204,10 +1996,6 @@ definition {
 				key_idElement = "${idbutton}",
 				locator1 = "ABTest#TARGET_ELEMENT",
 				value1 = "${idbutton}");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -2283,10 +2071,6 @@ definition {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "${idbutton}");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -2514,14 +2298,6 @@ definition {
 
 			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
 		}
-
-		task ("Terminate AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
-
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97882: Validate if, when the A/B Test icon is pressed, it calls the function to open or close the A/B Test sidebar"
@@ -2584,14 +2360,6 @@ definition {
 
 			Button.clickPublish();
 		}
-
-		task ("Delete AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ContentPages.changeExperience(experienceName = "NewExp1");
-
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-99225: Validate if the admin cannot reassign a segment in an experience with an A/B test in running status"
@@ -2631,14 +2399,6 @@ definition {
 			PageEditor.openExperienceMenu();
 
 			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
-		}
-
-		task ("Terminate AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ContentPages.changeExperience(experienceName = "NewExp1");
-
-			ABTest.terminateTest();
 		}
 	}
 
@@ -2690,10 +2450,6 @@ definition {
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "${idbutton}");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
@@ -2731,14 +2487,6 @@ definition {
 			Button.clickSave();
 
 			Alert.viewSuccessMessage();
-		}
-
-		task ("Delete AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ContentPages.changeExperience(experienceName = "NewExp1");
-
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -2779,14 +2527,6 @@ definition {
 			Button.clickSave();
 
 			Alert.viewSuccessMessage();
-		}
-
-		task ("Terminate AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ContentPages.changeExperience(experienceName = "NewExp1");
-
-			ABTest.terminateTest();
 		}
 	}
 
@@ -2854,12 +2594,6 @@ definition {
 				key_text = "Review and Run Test",
 				locator1 = "Button#ANY");
 		}
-
-		task ("Run and terminate AB Test") {
-			ABTest.runTest();
-
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks in closed button"
@@ -2883,12 +2617,6 @@ definition {
 			AssertVisible(
 				key_text = "Review and Run Test",
 				locator1 = "Button#ANY");
-		}
-
-		task ("Run and terminate AB Test") {
-			ABTest.runTest();
-
-			ABTest.terminateTest();
 		}
 	}
 
@@ -2922,14 +2650,6 @@ definition {
 				locator1 = "ABTest#VIEW_ESTIMATED_TIME",
 				value1 = "N/A");
 		}
-
-		task ("Terminate AB Test") {
-			Click(
-				key_name = "Run",
-				locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-
-			ABTest.terminateTest();
-		}
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, the sum of all traffic split options should be 100%"
@@ -2951,14 +2671,6 @@ definition {
 
 		task ("Assert the sum values should be 100") {
 			ABTest.viewInfoItems(values = "34,33,33");
-
-			Click(
-				key_name = "Run",
-				locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-		}
-
-		task ("Terminate AB Test") {
-			ABTest.terminateTest();
 		}
 	}
 
@@ -2992,10 +2704,6 @@ definition {
 				key_text = "Change Clickable Element",
 				locator1 = "Button#ANY_SECONDARY",
 				value1 = "Change Clickable Element");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -3053,10 +2761,6 @@ definition {
 				key_idElement = "customId",
 				locator1 = "ABTest#TARGET_ELEMENT_EDIT",
 				value1 = "customId");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -3206,10 +2910,6 @@ definition {
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "${idbutton}");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-119475: When a user enters a valid ID and presses Enter or clicks anywhere outside the box, the element with that ID get highlighted and the element with the ID is selected"
@@ -3253,10 +2953,6 @@ definition {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "${idbutton}");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 
@@ -3311,10 +3007,6 @@ definition {
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "customId");
 		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
-		}
 	}
 
 	@description = "LPS-119475: When a user clicks on the x icon of the selected element, the element gets unselected"
@@ -3356,10 +3048,6 @@ definition {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
 				value1 = "");
-		}
-
-		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}
 

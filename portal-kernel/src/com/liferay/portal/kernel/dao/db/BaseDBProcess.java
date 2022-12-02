@@ -388,7 +388,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected void processConcurrently(
-			String selectSqlQuery, String updateSqlQuery,
+			String sql, String updateSql,
 			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
 			UnsafeBiConsumer<Object[], PreparedStatement, Exception>
 				unsafeBiConsumer,
@@ -401,7 +401,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		try (Statement statement = connection.createStatement()) {
 			statement.setFetchSize(fetchSize);
 
-			try (ResultSet resultSet = statement.executeQuery(selectSqlQuery)) {
+			try (ResultSet resultSet = statement.executeQuery(sql)) {
 				_processConcurrently(
 					() -> {
 						if (resultSet.next()) {
@@ -410,13 +410,13 @@ public abstract class BaseDBProcess implements DBProcess {
 
 						return null;
 					},
-					null, updateSqlQuery, unsafeBiConsumer, exceptionMessage);
+					null, updateSql, unsafeBiConsumer, exceptionMessage);
 			}
 		}
 	}
 
 	protected void processConcurrently(
-			String sqlQuery,
+			String sql,
 			UnsafeFunction<ResultSet, Object[], Exception> unsafeFunction,
 			UnsafeConsumer<Object[], Exception> unsafeConsumer,
 			String exceptionMessage)
@@ -428,7 +428,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		try (Statement statement = connection.createStatement()) {
 			statement.setFetchSize(fetchSize);
 
-			try (ResultSet resultSet = statement.executeQuery(sqlQuery)) {
+			try (ResultSet resultSet = statement.executeQuery(sql)) {
 				_processConcurrently(
 					() -> {
 						if (resultSet.next()) {
@@ -471,7 +471,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	protected Connection connection;
 
 	private PreparedStatement _getConcurrentPreparedStatement(
-		String updateSqlQuery,
+		String updateSql,
 		Map<Thread, PreparedStatement> preparedStatementHashMap) {
 
 		return preparedStatementHashMap.computeIfAbsent(
@@ -479,7 +479,7 @@ public abstract class BaseDBProcess implements DBProcess {
 			k -> {
 				try {
 					return AutoBatchPreparedStatementUtil.autoBatch(
-						connection, updateSqlQuery);
+						connection, updateSql);
 				}
 				catch (SQLException sqlException) {
 					throw new RuntimeException(sqlException);
@@ -531,14 +531,14 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	private <T> void _processConcurrently(
 			UnsafeSupplier<T, Exception> unsafeSupplier,
-			UnsafeConsumer<T, Exception> unsafeConsumer, String updateSqlQuery,
+			UnsafeConsumer<T, Exception> unsafeConsumer, String updateSql,
 			UnsafeBiConsumer<T, PreparedStatement, Exception> unsafeBiConsumer,
 			String exceptionMessage)
 		throws Exception {
 
 		Objects.requireNonNull(unsafeSupplier);
 
-		if (Validator.isNull(updateSqlQuery)) {
+		if (Validator.isNull(updateSql)) {
 			Objects.requireNonNull(unsafeConsumer);
 		}
 		else {
@@ -573,15 +573,14 @@ public abstract class BaseDBProcess implements DBProcess {
 						try (SafeCloseable safeCloseable =
 								CompanyThreadLocal.lock(companyId)) {
 
-							if (Validator.isNull(updateSqlQuery)) {
+							if (Validator.isNull(updateSql)) {
 								unsafeConsumer.accept(current);
 							}
 							else {
 								unsafeBiConsumer.accept(
 									current,
 									_getConcurrentPreparedStatement(
-										updateSqlQuery,
-										preparedStatementHashMap));
+										updateSql, preparedStatementHashMap));
 							}
 						}
 						catch (Exception exception) {

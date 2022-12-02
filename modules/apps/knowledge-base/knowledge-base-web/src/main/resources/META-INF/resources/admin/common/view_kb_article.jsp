@@ -61,9 +61,6 @@ if (portletTitleBasedNavigation) {
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
 			<ul class="navbar-nav navbar-nav-expand">
-				<li class="m-auto nav-item">
-					<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" version="<%= String.valueOf(kbArticle.getVersion()) %>" />
-				</li>
 				<li class="nav-item">
 					<liferay-frontend:sidebar-toggler-button
 						cssClass="btn btn-monospaced btn-sm btn-unstyled"

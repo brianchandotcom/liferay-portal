@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -40,11 +39,10 @@ public class PortletHeaderActionDropdownItemsProvider {
 
 	public PortletHeaderActionDropdownItemsProvider(
 		JournalContentDisplayContext journalContentDisplayContext,
-		HttpServletRequest httpServletRequest, PortletDisplay portletDisplay) {
+		HttpServletRequest httpServletRequest) {
 
 		_journalContentDisplayContext = journalContentDisplayContext;
 		_httpServletRequest = httpServletRequest;
-		_portletDisplay = portletDisplay;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -52,18 +50,10 @@ public class PortletHeaderActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		JournalArticle article = _journalContentDisplayContext.getArticle();
-		JournalArticle latestArticle =
-			_journalContentDisplayContext.getLatestArticle();
 
 		return DropdownItemListBuilder.add(
 			_journalContentDisplayContext::isShowEditArticleIcon,
 			dropdownItem -> {
-				dropdownItem.putData("destroyOnHide", "true");
-				dropdownItem.putData(
-					"id", _portletDisplay.getPortletName() + "editAsset");
-				dropdownItem.putData(
-					"title",
-					latestArticle.getTitle(_httpServletRequest.getLocale()));
 				dropdownItem.setHref(
 					_journalContentDisplayContext.getURLEdit());
 				dropdownItem.setLabel(
@@ -100,12 +90,6 @@ public class PortletHeaderActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), article,
 				ActionKeys.UPDATE),
 			dropdownItem -> {
-				dropdownItem.putData("destroyOnHide", "true");
-				dropdownItem.putData(
-					"id", _portletDisplay.getPortletName() + "editAsset");
-				dropdownItem.putData(
-					"title",
-					latestArticle.getTitle(_httpServletRequest.getLocale()));
 				dropdownItem.setHref(
 					_journalContentDisplayContext.getURLViewHistory());
 				dropdownItem.setLabel(
@@ -116,7 +100,6 @@ public class PortletHeaderActionDropdownItemsProvider {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalContentDisplayContext _journalContentDisplayContext;
-	private final PortletDisplay _portletDisplay;
 	private final ThemeDisplay _themeDisplay;
 
 }

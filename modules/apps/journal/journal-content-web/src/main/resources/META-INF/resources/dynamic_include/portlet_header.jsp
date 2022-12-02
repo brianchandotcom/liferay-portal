@@ -21,7 +21,7 @@
 <div class="visible-interaction">
 
 	<%
-	PortletHeaderActionDropdownItemsProvider portletHeaderActionDropdownItemsProvider = new PortletHeaderActionDropdownItemsProvider(journalContentDisplayContext, request, portletDisplay);
+	PortletHeaderActionDropdownItemsProvider portletHeaderActionDropdownItemsProvider = new PortletHeaderActionDropdownItemsProvider(journalContentDisplayContext, request);
 	%>
 
 	<clay:dropdown-actions

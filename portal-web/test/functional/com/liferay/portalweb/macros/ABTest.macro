@@ -271,19 +271,6 @@ definition {
 		}
 	}
 
-	macro viewVariantName {
-		var index = "1";
-
-		for (var variantNames : list "${variantNames}") {
-			var index = ${index} + 1;
-
-			AssertElementPresent(
-				key_index = "${index}",
-				key_name = "${variantNames}",
-				locator1 = "ABTest#VALUES_IN_LIST");
-		}
-	}
-
 	macro writeId {
 		Click(locator1 = "ABTest#ELEMENT_ID_INPUT");
 

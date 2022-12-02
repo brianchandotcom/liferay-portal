@@ -821,7 +821,9 @@ definition {
 		}
 
 		task ("Assert that variant name is changed in DXP and run the test") {
-			ABTest.viewVariantName(variantNames = "Variant name 2");
+			AssertVisible(
+				key_variantName = "Variant name 2",
+				locator1 = "ABTest#VARIANT_TITLE");
 		}
 
 		task ("Check the info is correct in Analytics Cloud") {
@@ -1004,7 +1006,15 @@ definition {
 		}
 
 		task ("Assert that variants where created") {
-			ABTest.viewVariantName(variantNames = "Variant name,Variant name");
+			AssertVisible(
+				key_index = "1",
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE_INDEX");
+
+			AssertVisible(
+				key_index = "2",
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE_INDEX");
 		}
 	}
 
@@ -1419,7 +1429,9 @@ definition {
 		}
 
 		task ("Assert that variant is not deleted") {
-			ABTest.viewVariantName(variantNames = "Variant name");
+			AssertVisible(
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
 		}
 	}
 
@@ -1742,8 +1754,6 @@ definition {
 		}
 
 		task ("Edit variant") {
-			ABTest.viewVariantName(variantNames = "Variant name,Variant name 2");
-
 			ABTest.editVariantName(key_index = "2");
 
 			ABTest.fillInput(
@@ -1756,7 +1766,13 @@ definition {
 		}
 
 		task ("Assert that variant name is changed") {
-			ABTest.viewVariantName(variantNames = "Variant name,Variant name 3");
+			AssertVisible(
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
+
+			AssertVisible(
+				key_variantName = "Variant name 3",
+				locator1 = "ABTest#VARIANT_TITLE");
 		}
 	}
 
@@ -1811,9 +1827,8 @@ definition {
 
 		task ("Select the variant view") {
 			Click(
-				key_index = "2",
-				key_name = "Variant name",
-				locator1 = "ABTest#VALUES_IN_LIST");
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
 		}
 
 		task ("Assert the modifications are shown when the variant is selected") {
@@ -1853,9 +1868,8 @@ definition {
 
 		task ("Select the variant view") {
 			Click(
-				key_index = "2",
-				key_name = "Variant name",
-				locator1 = "ABTest#VALUES_IN_LIST");
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
 		}
 
 		task ("Assert the modifications are shown when the variant is selected") {
@@ -1881,8 +1895,6 @@ definition {
 		}
 
 		task ("Edit variant") {
-			ABTest.viewVariantName(variantNames = "Variant name,Variant name 2");
-
 			ABTest.editVariantName(key_index = "2");
 
 			ABTest.fillInput(
@@ -1895,7 +1907,15 @@ definition {
 		}
 
 		task ("Assert that variant name is changed") {
-			ABTest.viewVariantName(variantNames = "Variant name,Variant name");
+			AssertVisible(
+				key_index = "1",
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE_INDEX");
+
+			AssertVisible(
+				key_index = "2",
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE_INDEX");
 		}
 	}
 

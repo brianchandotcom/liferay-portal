@@ -151,6 +151,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VARIANT_TITLE_INDEX</td>
+	<td>xpath=(//*[@data-title='${key_variantName}'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_INFO_ITEMS</td>
 	<td>xpath=(//label[contains(@class,'form-group-autofit')])[${key_index}]//*[contains(text(),'${key_value}')]</td>
 	<td></td>

@@ -80,6 +80,16 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
+	macro deleteABTest {
+		Click(locator1 = "ABTest#KEBAB_AB_TEST");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteABTestInAC {
 		Click(
 			key_text = "ellipsis-v",
@@ -102,18 +112,6 @@ definition {
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro editOrDeleteABTest {
-		Click(locator1 = "ABTest#KEBAB_AB_TEST");
-
-		MenuItem.clickNoError(menuItem = "${value}");
-
-		if ("${value}" == "Delete") {
-			AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-			Alert.viewSuccessMessage();
-		}
 	}
 
 	macro editVariantName {
@@ -157,6 +155,12 @@ definition {
 		while (IsNotVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
 			WaitForElementPresent(locator1 = "ABTest#AB_TEST_SIDE_BAR");
 		}
+	}
+
+	macro openEditABTest {
+		Click(locator1 = "ABTest#KEBAB_AB_TEST");
+
+		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
 	macro openTab {

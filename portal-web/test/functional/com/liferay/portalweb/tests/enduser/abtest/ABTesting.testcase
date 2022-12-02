@@ -278,7 +278,7 @@ definition {
 		}
 
 		task ("Edit test A/B and assert that user can edit the goal input") {
-			ABTest.editOrDeleteABTest(value = "Edit");
+			ABTest.openEditABTest();
 
 			AssertElementPresent(
 				locator1 = "Modal#SELECT_WITH_LABEL",
@@ -361,7 +361,7 @@ definition {
 		}
 
 		task ("Open modal Edit test A/B, modify mandatory values and save") {
-			ABTest.editOrDeleteABTest(value = "Edit");
+			ABTest.openEditABTest();
 
 			ABTest.fillInput(
 				key_testTitle = "AB test title 2",
@@ -395,7 +395,7 @@ definition {
 		}
 
 		task ("Open modal Edit test A/B, modify mandatory values and Cancel") {
-			ABTest.editOrDeleteABTest(value = "Edit");
+			ABTest.openEditABTest();
 
 			ABTest.fillInput(
 				key_testTitle = "AB test title 2",
@@ -429,7 +429,7 @@ definition {
 		}
 
 		task ("Open modal Edit test A/B, modify mandatory values and close") {
-			ABTest.editOrDeleteABTest(value = "Edit");
+			ABTest.openEditABTest();
 
 			ABTest.fillInput(
 				key_testTitle = "AB test title 2",
@@ -1020,7 +1020,7 @@ definition {
 		}
 
 		task ("Delete AB Test") {
-			ABTest.editOrDeleteABTest(value = "Delete");
+			ABTest.deleteABTest();
 		}
 
 		task ("Assert that does not exist ab test") {
@@ -1127,7 +1127,7 @@ definition {
 		task ("Delete the AB test") {
 			ABTest.openABTestPanel();
 
-			ABTest.editOrDeleteABTest(value = "Delete");
+			ABTest.deleteABTest();
 		}
 
 		task ("Go to AC page and assert the ERROR page is open") {
@@ -1712,7 +1712,7 @@ definition {
 		}
 
 		task ("Open modal Edit test A/B and assert that user can edit the goal input") {
-			ABTest.editOrDeleteABTest(value = "Edit");
+			ABTest.openEditABTest();
 
 			AssertTextEquals(
 				locator1 = "Modal#HEADER",

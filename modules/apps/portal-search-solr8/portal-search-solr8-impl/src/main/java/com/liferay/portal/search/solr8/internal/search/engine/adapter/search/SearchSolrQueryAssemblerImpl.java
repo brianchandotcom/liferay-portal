@@ -27,9 +27,9 @@ import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.legacy.groupby.GroupByRequestFactory;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.solr8.internal.groupby.GroupByTranslator;
+import com.liferay.portal.search.solr8.internal.sort.SolrSortFieldTranslator;
 import com.liferay.portal.search.solr8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.sort.Sort;
-import com.liferay.portal.search.sort.SortFieldTranslator;
 import com.liferay.portal.search.stats.StatsRequestBuilder;
 
 import java.util.HashSet;
@@ -287,7 +287,7 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 	private GroupByTranslator _groupByTranslator;
 
 	@Reference
-	private SortFieldTranslator<SolrQuery.SortClause> _sortFieldTranslator;
+	private SolrSortFieldTranslator _sortFieldTranslator;
 
 	@Reference
 	private StatsRequestBuilderFactory _statsRequestBuilderFactory;

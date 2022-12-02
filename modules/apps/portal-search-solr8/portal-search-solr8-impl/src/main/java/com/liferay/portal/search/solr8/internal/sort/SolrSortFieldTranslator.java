@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(
-	property = "search.engine.impl=Solr",
-	service = {SortFieldTranslator.class, SortVisitor.class}
-)
+@Component(service = SolrSortFieldTranslator.class)
 public class SolrSortFieldTranslator
 	implements SortFieldTranslator<SolrQuery.SortClause>,
 			   SortVisitor<SolrQuery.SortClause> {

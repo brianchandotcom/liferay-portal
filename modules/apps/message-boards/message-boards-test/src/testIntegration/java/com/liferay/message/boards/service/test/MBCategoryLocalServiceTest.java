@@ -19,6 +19,7 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.CategoryNameException;
+import com.liferay.message.boards.exception.DuplicateCategoryNameException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
@@ -89,7 +90,7 @@ public class MBCategoryLocalServiceTest {
 
 		Assert.assertEquals(
 			"Add MBCategory with existing name",
-			CategoryNameException.class, exceptionClass);
+			DuplicateCategoryNameException.class, exceptionClass);
 
 		try {
 			addCategory(null);

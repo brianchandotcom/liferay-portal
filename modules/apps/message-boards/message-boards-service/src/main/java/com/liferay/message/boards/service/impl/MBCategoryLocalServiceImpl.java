@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.impl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.exception.CategoryNameException;
+import com.liferay.message.boards.exception.DuplicateCategoryNameException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.model.MBMessage;
@@ -1153,7 +1154,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		if ((mbCategory != null) &&
 			(mbCategory.getCategoryId() != categoryId)) {
 
-			throw new CategoryNameException(
+			throw new DuplicateCategoryNameException(
 				"Add MBCategory with existing name");
 		}
 	}

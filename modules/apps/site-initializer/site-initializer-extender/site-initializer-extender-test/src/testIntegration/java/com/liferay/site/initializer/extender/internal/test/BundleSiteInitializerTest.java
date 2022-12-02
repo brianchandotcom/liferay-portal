@@ -974,7 +974,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(objectDefinition1.isSystem(), false);
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(objectDefinition1.isAccountEntryRestricted(), true);
+		Assert.assertTrue(objectDefinition1.isAccountEntryRestricted());
 		Assert.assertNotEquals(
 			"accountEntryRestrictedObjectFieldName", 0,
 			objectDefinition1.getAccountEntryRestrictedObjectFieldId());
@@ -991,8 +991,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(objectDefinition2.isSystem(), false);
 		Assert.assertEquals(
 			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(
-			objectDefinition2.isAccountEntryRestricted(), false);
+		Assert.assertFalse(
+			objectDefinition2.isAccountEntryRestricted());
 		Assert.assertEquals(
 			"accountEntryRestrictedObjectFieldName", 0,
 			objectDefinition2.getAccountEntryRestrictedObjectFieldId());
@@ -1011,8 +1011,8 @@ public class BundleSiteInitializerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 		Assert.assertEquals(
 			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(
-			objectDefinition3.isAccountEntryRestricted(), false);
+		Assert.assertFalse(
+			objectDefinition3.isAccountEntryRestricted());
 		Assert.assertEquals(
 			"accountEntryRestrictedObjectFieldName", 0,
 			objectDefinition3.getAccountEntryRestrictedObjectFieldId());
@@ -1839,16 +1839,6 @@ public class BundleSiteInitializerTest {
 				_objectDefinitionLocalService.deleteObjectDefinition(
 					objectDefinition3.getObjectDefinitionId());
 			}
-
-			ObjectDefinition objectDefinition4 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition4");
-
-			if (objectDefinition4 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition4.getObjectDefinitionId());
-			}
-
 			//FileUtil.deltree(unzipFolder);
 		}
 	}

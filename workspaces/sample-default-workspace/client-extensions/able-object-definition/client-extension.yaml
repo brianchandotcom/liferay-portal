@@ -1,3 +1,2 @@
 assemble:
-    - include:
-          - "batch/*"
+    - include: "batch/*"

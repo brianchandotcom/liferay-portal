@@ -67,7 +67,7 @@ const DealRegistrationList = () => {
 		},
 		{
 			columnKey: DealRegistrationColumnKey.DEAL_AMOUNT,
-			label: 'Amount',
+			label: 'Deal Amount',
 		},
 		{
 			columnKey: DealRegistrationColumnKey.PARTNER_REP,

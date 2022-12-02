@@ -112,6 +112,19 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "Owner_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Owner Name"
+			},
+			"name": "ownerName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "StageName",
 			"indexed": true,
 			"indexedAsKeyword": false,

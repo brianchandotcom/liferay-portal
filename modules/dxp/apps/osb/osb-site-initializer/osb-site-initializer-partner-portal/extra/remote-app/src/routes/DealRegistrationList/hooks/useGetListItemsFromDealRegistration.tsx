@@ -51,6 +51,7 @@ export default function useGetListItemsFromDealRegistration(
 					}`,
 					item.partnerEmail && item.partnerEmail
 				),
+				[DealRegistrationColumnKey.LIFERAY_REP]: item.ownerName,
 			})),
 		[swrResponse.data?.items]
 	);

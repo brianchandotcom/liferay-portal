@@ -93,8 +93,6 @@ public interface ExpandoBridge {
 
 	public boolean hasAttribute(String name);
 
-	public boolean isIndexEnabled();
-
 	public void setAttribute(String name, Serializable value);
 
 	public void setAttribute(String name, Serializable value, boolean secure);
@@ -121,7 +119,5 @@ public interface ExpandoBridge {
 	public void setClassPK(long classPK);
 
 	public void setCompanyId(long companyId);
-
-	public void setIndexEnabled(boolean indexEnabled);
 
 }

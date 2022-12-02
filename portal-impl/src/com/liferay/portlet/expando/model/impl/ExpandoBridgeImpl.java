@@ -69,10 +69,6 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 		_className = className;
 		_classPK = classPK;
-
-		if (IndexerRegistryUtil.getIndexer(className) == null) {
-			setIndexEnabled(true);
-		}
 	}
 
 	@Override
@@ -391,17 +387,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		return HashUtil.hash(hash, getAttributeColumns());
 	}
 
-	@Override
-	public boolean isIndexEnabled() {
-		if (_indexEnabled && (_classPK > 0)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public void reindex() {
-		if (!isIndexEnabled()) {
+		if (_classPK <= 0) {
 			return;
 		}
 
@@ -598,11 +585,6 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		_companyId = companyId;
 	}
 
-	@Override
-	public void setIndexEnabled(boolean indexEnabled) {
-		_indexEnabled = indexEnabled;
-	}
-
 	protected boolean equals(
 		int type, Serializable serializable1, Serializable serializable2) {
 
@@ -687,6 +669,5 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	private String _className;
 	private long _classPK;
 	private long _companyId;
-	private boolean _indexEnabled;
 
 }

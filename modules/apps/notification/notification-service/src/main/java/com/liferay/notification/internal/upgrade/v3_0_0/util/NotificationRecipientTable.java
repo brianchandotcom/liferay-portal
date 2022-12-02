@@ -39,6 +39,6 @@ public class NotificationRecipientTable {
 	private static final String _TABLE_NAME = "NotificationRecipient";
 
 	private static final String _TABLE_SQL_CREATE =
-		"create table NotificationRecipient (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationRecipientId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classPK LONG,className VARCHAR(75) null)";
+		"create table NotificationRecipient (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationRecipientId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classPK LONG,classNameId LONG)";
 
 }

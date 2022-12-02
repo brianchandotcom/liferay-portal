@@ -11,6 +11,6 @@
 
 export default interface TableColumn<T> {
 	columnKey: string;
-	label: string;
+	label: string | JSX.Element;
 	render?: (data: T[keyof T], item: T) => JSX.Element;
 }

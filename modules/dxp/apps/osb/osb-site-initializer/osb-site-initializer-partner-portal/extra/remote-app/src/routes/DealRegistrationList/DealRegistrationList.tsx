@@ -29,6 +29,7 @@ import {Liferay} from '../../common/services/liferay';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDealRegistration';
+import getDoubleParagraph from './utils/getDoubleParagraph';
 
 export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
@@ -70,7 +71,7 @@ const DealRegistrationList = () => {
 		},
 		{
 			columnKey: DealRegistrationColumnKey.PARTNER_REP,
-			label: 'Partner Rep',
+			label: getDoubleParagraph('Partner Rep', 'Partner Email'),
 		},
 		{
 			columnKey: DealRegistrationColumnKey.LIFERAY_REP,

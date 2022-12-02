@@ -264,6 +264,15 @@ export type TestraySubTaskCaseResult = {
 	subTask?: TestraySubTask;
 };
 
+export type TestraySubTaskIssue = {
+	id: number;
+	issue?: TestrayIssue;
+	name: string;
+	r_issueToSubtasksIssues_c_issue?: TestrayIssue;
+	r_subtaskToSubtasksIssues_c_subtask?: TestraySubTask;
+	subTask?: TestraySubTask;
+};
+
 export type TestraySuite = {
 	caseParameters: string;
 	creator: {

@@ -18,7 +18,9 @@ import {SubTaskStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import Rest from './Rest';
 import {testrayCaseResultImpl} from './TestrayCaseResult';
+import {testrayIssueImpl} from './TestrayIssues';
 import {testraySubtaskCaseResultImpl} from './TestraySubtaskCaseResults';
+import {testraySubtaskIssuesImpl} from './TestraySubtaskIssues';
 import {TestraySubTask} from './types';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType & {
@@ -115,7 +117,39 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		);
 	}
 
-	public async complete(subTaskId: number, dueStatus: string) {
+	public async complete(
+		subTaskId: number,
+		dueStatus: string,
+		issues: string[]
+	) {
+		const subtaskIssuesResponse = await testraySubtaskIssuesImpl.getAll(
+			searchUtil.eq('subtaskId', subTaskId)
+		);
+
+		for (const issue of issues) {
+			const testrayIssue = await testrayIssueImpl.createIfNotExist(issue);
+
+			await testraySubtaskIssuesImpl.createIfNotExist({
+				issueId: testrayIssue?.id,
+				name: `${issue}-${subTaskId}`,
+				subTaskId,
+			});
+		}
+
+		if (subtaskIssuesResponse?.items) {
+			const caseResultIssuesTransform = testraySubtaskIssuesImpl.transformDataFromList(
+				subtaskIssuesResponse
+			);
+
+			const subtaskIssueIdsToRemove = caseResultIssuesTransform.items
+				.filter(({issue}) => !issues.includes(issue?.name || ''))
+				.map(({id}) => id);
+
+			for (const caseResultIssueId of subtaskIssueIdsToRemove) {
+				await testraySubtaskIssuesImpl.remove(caseResultIssueId);
+			}
+		}
+
 		await this.update(subTaskId, {
 			dueStatus: SubTaskStatuses.COMPLETE,
 		});

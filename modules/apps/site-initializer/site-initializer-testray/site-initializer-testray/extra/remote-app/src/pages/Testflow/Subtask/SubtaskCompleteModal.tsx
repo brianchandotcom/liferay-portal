@@ -13,6 +13,7 @@
  */
 
 import {useForm} from 'react-hook-form';
+import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import Form from '../../../components/Form';
@@ -22,7 +23,12 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {TestraySubTask, testraySubTaskImpl} from '../../../services/rest';
+import {
+	TestraySubTask,
+	TestraySubTaskIssue,
+	TestrayTask,
+	testraySubTaskImpl,
+} from '../../../services/rest';
 import {CaseResultStatuses} from '../../../util/statuses';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType;
@@ -33,32 +39,72 @@ type SubTaskCompleteModalProps = {
 	subtask: TestraySubTask;
 };
 
+type OutletContext = {
+	mergedSubtaskNames: string;
+	mutateSubtask: KeyedMutator<any>;
+	mutateSubtaskIssues: KeyedMutator<TestraySubTask>;
+	subtaskIssues: TestraySubTaskIssue[];
+	testraySubtask: TestraySubTask;
+	testrayTask: TestrayTask;
+};
+
 const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	modal: {observer, onClose, onError, onSave},
-	mutate,
 	subtask,
 }) => {
-	const {register, watch} = useForm<SubtaskForm>({
-		defaultValues: {dueStatus: CaseResultStatuses.FAILED},
+	const {
+		mutateSubtask,
+		mutateSubtaskIssues,
+		subtaskIssues = [],
+		testraySubtask,
+	} = useOutletContext<OutletContext>();
 
+	const issues = subtaskIssues
+		.map((subtaskIssue: TestraySubTaskIssue) => subtaskIssue?.issue?.name)
+		.join(', ');
+
+	const {
+		formState: {errors},
+		handleSubmit,
+		register,
+	} = useForm<SubtaskForm>({
+		defaultValues: testraySubtask?.dueStatus
+			? ({dueStatus: CaseResultStatuses.FAILED, issues} as any)
+			: {dueStatus: CaseResultStatuses.FAILED},
 		resolver: yupResolver(yupSchema.subtask),
 	});
 
-	const dueStatus = watch('dueStatus');
+	const _onSubmit = ({dueStatus, issues = ''}: SubtaskForm) => {
+		const _issues = issues
+			.split(',')
+			.map((name) => name.trim())
+			.filter(Boolean);
 
-	const issue = watch('issue');
-
-	const _onSubmit = () => {
 		testraySubTaskImpl
-			.complete(subtask.id, dueStatus as string)
-			.then(mutate)
+			.complete(
+				testraySubtask.id || subtask.id,
+				dueStatus as string,
+				_issues
+			)
+			.then(mutateSubtask)
+			.then(mutateSubtaskIssues)
 			.then(() => onSave())
 			.catch(() => onError);
 	};
 
+	const inputProps = {
+		errors,
+		register,
+	};
+
 	return (
 		<Modal
-			last={<Form.Footer onClose={onClose} onSubmit={_onSubmit} />}
+			last={
+				<Form.Footer
+					onClose={onClose}
+					onSubmit={handleSubmit(_onSubmit)}
+				/>
+			}
 			observer={observer}
 			size="lg"
 			title={i18n.sub('edit-x', 'status')}
@@ -80,16 +126,19 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				/>
 
 				<Form.Input
+					{...inputProps}
 					className="container-fluid-max-md"
 					label={i18n.translate('issues')}
-					name="issue"
-					value={issue}
+					name="issues"
+					register={register}
 				/>
 
 				<Form.Input
+					{...inputProps}
 					className="container-fluid-max-md"
 					label={i18n.translate('comment')}
 					name="comment"
+					register={register}
 					type="textarea"
 				/>
 			</Container>

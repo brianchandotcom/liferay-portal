@@ -209,13 +209,18 @@ const yupSchema = {
 	subtask: yup.object({
 		dueStatus: yup.string(),
 		errors: yup.string(),
-		id: yup.number().required(),
-		issue: yup.string(),
+		id: yup.number(),
+		issues: yup.string(),
 		mergedToSubtaskId: yup.number(),
 		name: yup.string(),
 		score: yup.number(),
 		taskId: yup.number(),
 		userId: yup.number(),
+	}),
+	subtaskIssues: yup.object({
+		issueId: yup.number(),
+		name: yup.string(),
+		subTaskId: yup.number(),
 	}),
 	subtaskToCaseResult: yup.object({
 		caseResultId: yup.number(),

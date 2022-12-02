@@ -213,6 +213,19 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewAndEditUserAfterUpgrade740 {
+		property data.archive.type = "data-archive-user";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.4.0";
+
+		SignIn.signIn();
+
+		SearchAdministration.executeReindex();
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
 	test ViewAndEditUserAfterUpgrade7110 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.1.10";
@@ -228,6 +241,18 @@ definition {
 	test ViewAndEditUserAfterUpgrade7210 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.2.10";
+
+		SignIn.signIn();
+
+		SearchAdministration.executeReindex();
+
+		Upgrade.viewAndEditUser();
+	}
+
+	@priority = "5"
+	test ViewAndEditUserAfterUpgrade7413 {
+		property data.archive.type = "data-archive-user";
+		property portal.version = "7.4.13";
 
 		SignIn.signIn();
 

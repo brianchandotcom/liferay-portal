@@ -176,7 +176,7 @@ public class InputAssetLinksDisplayContext {
 
 		return ListUtil.sort(
 			dropdownItemList,
-			new SelectorEntriesMessageComparator(_themeDisplay.getLocale()));
+			new SelectorEntriesLabelComparator(_themeDisplay.getLocale()));
 	}
 
 	public AssetEntry getAssetLinkEntry(AssetLink assetLink)
@@ -445,24 +445,24 @@ public class InputAssetLinksDisplayContext {
 	private Boolean _stagedReferrerPortlet;
 	private final ThemeDisplay _themeDisplay;
 
-	private class SelectorEntriesMessageComparator
+	private class SelectorEntriesLabelComparator
 		implements Comparator<Map<String, Object>>, Serializable {
 
-		public SelectorEntriesMessageComparator(Locale locale) {
+		public SelectorEntriesLabelComparator(Locale locale) {
 			_collator = CollatorUtil.getInstance(locale);
 		}
 
 		@Override
 		public int compare(Map<String, Object> map1, Map<String, Object> map2) {
-			String message1 = StringPool.BLANK;
-			String message2 = StringPool.BLANK;
+			String label1 = StringPool.BLANK;
+			String label2 = StringPool.BLANK;
 
-			if (map1.containsKey("message") && map2.containsKey("message")) {
-				message1 = (String)map1.get("message");
-				message2 = (String)map2.get("message");
+			if (map1.containsKey("label") && map2.containsKey("label")) {
+				label1 = (String)map1.get("label");
+				label2 = (String)map2.get("label");
 			}
 
-			return _collator.compare(message1, message2);
+			return _collator.compare(label1, label2);
 		}
 
 		private final Collator _collator;

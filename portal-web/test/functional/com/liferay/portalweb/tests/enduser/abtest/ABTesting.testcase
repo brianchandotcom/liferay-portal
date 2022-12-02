@@ -1251,7 +1251,7 @@ definition {
 		}
 
 		task ("Click history AB Test") {
-			Click(locator1 = "ABTest#HISTORY_AB_TEST_BUTTON");
+			ABTest.openTab(tabValue = "History");
 		}
 
 		task ("Delete the History Tab and Assert is empty") {
@@ -2029,12 +2029,10 @@ definition {
 		}
 
 		task ("Click history AB Test") {
-			Click(locator1 = "ABTest#HISTORY_AB_TEST_BUTTON");
+			ABTest.openTab(tabValue = "History");
 		}
 
 		task ("Assert the second AB test appears first in the History Tab") {
-			Click(locator1 = "ABTest#HISTORY_AB_TEST_BUTTON");
-
 			AssertElementPresent(
 				key_index = "1",
 				key_name = "AB test title 2",

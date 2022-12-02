@@ -76,11 +76,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HISTORY_AB_TEST_BUTTON</td>
-	<td>//button[@class="nav-link btn btn-unstyled"]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NO_HAVE_HISTORY_AB_TEST_MESSAGE</td>
 	<td>//div[@class="text-center"]//h4[text()="There is no test history for this experience."]</td>
 	<td></td>
@@ -113,6 +108,11 @@
 <tr>
 	<td>SIDEBAR_MESSAGE</td>
 	<td>//div[contains(@class,'sidebar-body')]//p[contains(text(),'${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB</td>
+	<td>//*[contains(@class,'sidebar-body')]//*[@role="tablist"]//button[contains(text(),'${tabValue}')]</td>
 	<td></td>
 </tr>
 <tr>

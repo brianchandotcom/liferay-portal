@@ -159,6 +159,12 @@ definition {
 		}
 	}
 
+	macro openTab {
+		Click(
+			locator1 = "ABTest#TAB",
+			tabValue = "${tabValue}");
+	}
+
 	macro runTest {
 		Button.click(button = "Review and Run Test");
 

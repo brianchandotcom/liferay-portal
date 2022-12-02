@@ -29,6 +29,7 @@ import com.liferay.object.internal.notification.handler.ObjectDefinitionNotifica
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
 import com.liferay.object.internal.persistence.ObjectDefinitionTableArgumentsResolver;
 import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
+import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsProviderImpl;
@@ -269,6 +270,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				ObjectRelatedModelsPredicateProvider.class,
 				new ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl(
+					objectDefinition, _objectFieldLocalService),
+				null),
+			_bundleContext.registerService(
+				ObjectRelatedModelsPredicateProvider.class,
+				new ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl(
 					objectDefinition, _objectFieldLocalService),
 				null),
 			_bundleContext.registerService(

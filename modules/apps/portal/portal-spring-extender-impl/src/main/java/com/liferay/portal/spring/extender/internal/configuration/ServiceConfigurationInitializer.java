@@ -23,7 +23,11 @@ import com.liferay.portal.kernel.service.configuration.ServiceComponentConfigura
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.internal.loader.ModuleResourceLoader;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.Properties;
 
@@ -116,5 +120,74 @@ public class ServiceConfigurationInitializer {
 	private final ServiceComponentConfiguration _serviceComponentConfiguration;
 	private final ServiceComponentLocalService _serviceComponentLocalService;
 	private final Configuration _serviceConfiguration;
+
+	private class ModuleResourceLoader
+		implements ServiceComponentConfiguration {
+
+		public ModuleResourceLoader(Bundle bundle) {
+			_bundle = bundle;
+		}
+
+		@Override
+		public InputStream getHibernateInputStream() {
+			return _getInputStream("/META-INF/module-hbm.xml");
+		}
+
+		@Override
+		public InputStream getModelHintsExtInputStream() {
+			return _getInputStream("/META-INF/portlet-model-hints-ext.xml");
+		}
+
+		@Override
+		public InputStream getModelHintsInputStream() {
+			return _getInputStream("/META-INF/portlet-model-hints.xml");
+		}
+
+		@Override
+		public String getServletContextName() {
+			return _bundle.getSymbolicName();
+		}
+
+		@Override
+		public InputStream getSQLIndexesInputStream() {
+			return _getInputStream("/META-INF/sql/indexes.sql");
+		}
+
+		@Override
+		public InputStream getSQLSequencesInputStream() {
+			return _getInputStream("/META-INF/sql/sequences.sql");
+		}
+
+		@Override
+		public InputStream getSQLTablesInputStream() {
+			return _getInputStream("/META-INF/sql/tables.sql");
+		}
+
+		private InputStream _getInputStream(String location) {
+			URL url = _bundle.getResource(location);
+
+			if (url == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to find " + location);
+				}
+
+				return null;
+			}
+
+			InputStream inputStream = null;
+
+			try {
+				inputStream = url.openStream();
+			}
+			catch (IOException ioException) {
+				_log.error("Unable to read " + location, ioException);
+			}
+
+			return inputStream;
+		}
+
+		private final Bundle _bundle;
+
+	}
 
 }

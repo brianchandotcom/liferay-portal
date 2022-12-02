@@ -1436,6 +1436,11 @@
 				"store": true,
 				"type": "date"
 			},
+			"lastPostDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
 			"layoutUuid": {
 				"store": true,
 				"type": "keyword"

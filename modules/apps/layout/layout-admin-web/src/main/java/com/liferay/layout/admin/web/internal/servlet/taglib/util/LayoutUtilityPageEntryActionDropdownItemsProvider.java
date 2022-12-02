@@ -287,6 +287,8 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 					"layoutUtilityPageEntryId",
 					_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()
 				).buildString());
+			dropdownItem.setDisabled(
+				_draftLayout.getStatus() != WorkflowConstants.STATUS_APPROVED);
 
 			String message = StringPool.BLANK;
 

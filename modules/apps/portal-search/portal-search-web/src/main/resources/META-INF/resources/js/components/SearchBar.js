@@ -56,7 +56,7 @@ export default function SearchBar({
 	const alignElementRef = useRef();
 	const dropdownRef = useRef();
 
-	const _fetchSuggestions = (value, currentScope) => {
+	const _fetchSuggestions = (searchValue, scopeValue) => {
 		fetch(
 			addParams(
 				{
@@ -66,8 +66,8 @@ export default function SearchBar({
 						: '/search',
 					groupId: Liferay.ThemeDisplay.getScopeGroupId(),
 					plid: Liferay.ThemeDisplay.getPlid(),
-					scope: currentScope,
-					search: value,
+					scope: scopeValue,
+					search: searchValue,
 				},
 				suggestionsURL
 			),
@@ -128,7 +128,7 @@ export default function SearchBar({
 
 			// Immediately show loading spinner unless the value hasn't changed.
 			// If the value hasn't changed, no new request will be made and the
-			// loading spinner will never be hidden.
+			// loading spinner will not be shown.
 
 			if (value.trim() !== autocompleteSearchValue) {
 				setLoading(true);

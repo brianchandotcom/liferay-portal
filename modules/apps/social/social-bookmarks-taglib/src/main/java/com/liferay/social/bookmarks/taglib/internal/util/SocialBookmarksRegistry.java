@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.social.bookmarks.SocialBookmark;
-import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
 import java.util.List;
 import java.util.Map;
@@ -37,9 +36,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Alejandro Tardín
  */
 @Component(service = SocialBookmarksRegistry.class)
-public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
+public class SocialBookmarksRegistry {
 
-	@Override
 	public SocialBookmark getSocialBookmark(String type) {
 		SocialBookmark socialBookmark = _socialBookmarks.get(type);
 
@@ -53,7 +51,6 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 		return socialBookmark;
 	}
 
-	@Override
 	public List<String> getSocialBookmarksTypes() {
 		return _serviceTrackerList.toList();
 	}
@@ -65,6 +62,8 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 			new SocialBookmarkTypeServiceTrackerCustomizer(bundleContext),
 			new PropertyServiceReferenceComparator<>(
 				"social.bookmarks.priority"));
+
+		SocialBookmarksRegistryUtil.setSocialBookmarksRegistry(this);
 	}
 
 	@Deactivate
@@ -73,7 +72,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SocialBookmarksRegistryImpl.class);
+		SocialBookmarksRegistry.class);
 
 	private ServiceTrackerList<String> _serviceTrackerList;
 	private final Map<String, SocialBookmark> _socialBookmarks =

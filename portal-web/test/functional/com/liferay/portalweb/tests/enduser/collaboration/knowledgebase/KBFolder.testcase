@@ -149,7 +149,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.selectPGViaKBArticle(
+		KBArticle.selectArticlesToDisplayOnWidget(
 			kbArticleTitle = "KB Folder",
 			kbDisplay = "true",
 			pageName = "Knowledge Base Article Page");

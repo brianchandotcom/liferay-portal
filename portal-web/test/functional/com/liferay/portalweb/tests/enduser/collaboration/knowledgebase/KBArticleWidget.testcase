@@ -48,7 +48,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
 
-		KBArticle.selectPGViaKBArticle(
+		KBArticle.selectArticlesToDisplayOnWidget(
 			kbArticle = "true",
 			kbArticleTitle = "Knowledge Base Article Title",
 			pageName = "Knowledge Base Article Page");

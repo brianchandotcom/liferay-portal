@@ -80,6 +80,11 @@
 	<td>//div[contains(@class, 'cp-activation-key-container')]/following::div//p[contains(text(),'your developer key to download.')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MODAL_TEXT</td>
+	<td>//*[contains(@class, 'modal-content')]//*[text()='${key_text}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

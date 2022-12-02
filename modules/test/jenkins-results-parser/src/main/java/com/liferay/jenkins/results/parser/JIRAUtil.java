@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.jenkins.results.parser;
 
 import com.atlassian.jira.rest.client.api.IssueRestClient;
@@ -8,190 +22,211 @@ import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.Transition;
 import com.atlassian.jira.rest.client.api.domain.input.TransitionInput;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
+
 import io.atlassian.util.concurrent.Promise;
 
 import java.io.IOException;
+
 import java.net.URI;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
+/**
+ * @author Charlotte Wong
+ */
 public class JIRAUtil {
-    public static void addIssue(String issueNumber) {
-        Issue issue = _getIssue(issueNumber);
 
+	public static void addIssue(String issueNumber) {
+		Issue issue = _getIssue(issueNumber);
 
-        if (_issueSet == null) {
-            _issueSet = Collections.emptySet();
-        }
+		if (_issueSet == null) {
+			_issueSet = Collections.emptySet();
+		}
 
-        Set<Issue> issueSet = Collections.singleton(issue);
-        issueSet.addAll(_issueSet);
+		Set<Issue> issueSet = Collections.singleton(issue);
 
-        _issueSet = issueSet;
-    }
+		issueSet.addAll(_issueSet);
 
-    public static Set<Issue> getIssues() {
-        if (_issueSet == null) {
-            _issueSet = Collections.emptySet();
-        }
+		_issueSet = issueSet;
+	}
 
-        if (_issueSet.isEmpty()) {
-            throw new IllegalStateException("Unable to find any valid issues within pull request");
-        }
+	public static String generateComment(PullRequest pullRequest) {
+		StringBuilder sb = new StringBuilder();
 
-        return _issueSet;
-    }
+		sb.append(
+			"The following tickets were automatically submitted for review:");
 
-    public static String generateComment(PullRequest pullRequest) {
-        StringBuilder sb = new StringBuilder();
+		sb.append("\n");
 
-        sb.append("The following tickets were automatically submitted for review: \n");
+		for (Issue issue : _issueSet) {
+			String issueKey = issue.getKey();
 
-        for (Issue issue : _issueSet) {
-            String issueKey = issue.getKey();
+			sb.append("https://issues.liferay.com/browse/");
 
-            sb.append("https://issues.liferay.com/browse/");
+			sb.append(issueKey);
 
-            sb.append(issueKey);
+			sb.append("\n");
+		}
 
-            sb.append("\n");
-        }
+		sb.append("\n");
 
-        sb.append("\n");
+		sb.append("Pull request: ");
 
-        sb.append("Pull request: ");
+		sb.append(
+			pullRequest.getURL(
+				pullRequest.getOwnerUsername(),
+				pullRequest.getGitHubRemoteGitRepositoryName(),
+				pullRequest.getNumber()));
 
-        String ownerUsername = pullRequest.getOwnerUsername();
-        String gitHubRemoteGitRepositoryName = pullRequest.getGitHubRemoteGitRepositoryName();
-        String number = pullRequest.getNumber();
+		return sb.toString();
+	}
 
-        String url = pullRequest.getURL(ownerUsername, gitHubRemoteGitRepositoryName, number);
+	public static Set<Issue> getIssues() {
+		if (_issueSet == null) {
+			_issueSet = Collections.emptySet();
+		}
 
-        sb.append(url);
+		if (_issueSet.isEmpty()) {
+			throw new IllegalStateException(
+				"Unable to find any valid issues within pull request");
+		}
 
-        return sb.toString();
-    }
+		return _issueSet;
+	}
 
-    private static int _getTransitions(Issue issue, String transitionName) {
-            if (_issueRestClient == null) {
-                initRestClient();
-            }
+	public static void transition(
+		String comment, Issue issue, int transitionId) {
 
-            if (_transitions == null) {
-                Promise<Iterable<Transition>> promise = _issueRestClient.getTransitions(issue);
+		if (_issueRestClient == null) {
+			_initRestClient();
+		}
 
-                _transitions = promise.claim();
-            }
+		TransitionInput transitionInput = new TransitionInput(
+			transitionId, Comment.valueOf(comment));
 
-            int transitionId = -1;
+		try {
+			Promise<Void> transition = _issueRestClient.transition(
+				issue, transitionInput);
 
-            for (Iterator iterator = _transitions.iterator(); iterator.hasNext();) {
+			transition.get();
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"JIRA rest client process workflow action error. cause: " +
+					exception.getMessage());
+		}
+	}
 
-                Transition transition = (Transition) iterator.next();
+	public static void transition(
+		String comment, Issue issue, String transitionName) {
 
-                if(transition.getName().equals(transitionName)){
-                    transitionId = transition.getId();
-                }
-            }
+		if (_issueRestClient == null) {
+			_initRestClient();
+		}
 
-            return transitionId;
-    }
+		int transitionId = _getTransitions(issue, transitionName);
 
-    public static void transition(String comment, Issue issue, int transitionId) {
-        if (_issueRestClient == null) {
-            initRestClient();
-        }
+		if (transitionId == -1) {
+			System.out.println(
+				"No valid transition with provided transitionName:" +
+					transitionName);
+		}
 
-        TransitionInput transitionInput = new TransitionInput(transitionId, Comment.valueOf(comment));
+		TransitionInput transitionInput = new TransitionInput(
+			transitionId, Comment.valueOf(comment));
 
-        try {
-            Promise<Void> transition = _issueRestClient.transition(issue, transitionInput);
+		try {
+			Promise<Void> transition = _issueRestClient.transition(
+				issue, transitionInput);
 
-            transition.get();
+			transition.get();
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"JIRA rest client process workflow action error. cause: " +
+					exception.getMessage());
+		}
+	}
 
-        } catch (Exception exception) {
-            System.out.println("JIRA rest client process workflow action error. cause: " + exception.getMessage());
-        }
-    }
+	private static Issue _getIssue(String issueNumber) {
+		if (_issueRestClient == null) {
+			_initRestClient();
+		}
 
-    public static void transition(String comment, Issue issue, String transitionName) {
-        if (_issueRestClient == null) {
-            initRestClient();
-        }
+		Promise<Issue> promise = _issueRestClient.getIssue(issueNumber);
 
-        int transitionId = _getTransitions(issue, transitionName);
+		return promise.claim();
+	}
 
-        if (transitionId == -1) {
-            // error out
-        }
+	private static void _getProperties() {
+		try {
+			_jenkinsBuildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
 
-        TransitionInput transitionInput = new TransitionInput(transitionId, Comment.valueOf(comment));
+		_jiraAdminPassword = _jenkinsBuildProperties.getProperty(
+			"ci.jira.admin.password");
+		_jiraAdminUsername = _jenkinsBuildProperties.getProperty(
+			"ci.jira.admin.username");
+	}
 
-        try {
-            Promise<Void> transition = _issueRestClient.transition(issue, transitionInput);
+	private static int _getTransitions(Issue issue, String transitionName) {
+		if (_issueRestClient == null) {
+			_initRestClient();
+		}
 
-            transition.get();
+		if (_transitions == null) {
+			Promise<Iterable<Transition>> promise =
+				_issueRestClient.getTransitions(issue);
 
-        } catch (Exception exception) {
-            System.out.println("JIRA rest client process workflow action error. cause: " + exception.getMessage());
-        }
-    }
+			_transitions = promise.claim();
+		}
 
-    private static Issue _getIssue(String issueNumber) {
+		int transitionId = -1;
 
-        if (_issueRestClient == null) {
-            initRestClient();
-        }
+		for (Iterator<Transition> iterator = _transitions.iterator();
+			 iterator.hasNext();) {
 
-        Promise<Issue> promise = _issueRestClient.getIssue(issueNumber);
+			Transition transition = iterator.next();
 
-        return promise.claim();
-    }
+			String name = transition.getName();
 
-    private static void initRestClient() {
-        _getProperties();
+			if (name.equals(transitionName)) {
+				transitionId = transition.getId();
+			}
+		}
 
-        _jiraRestClientFactory = new AsynchronousJiraRestClientFactory();
+		return transitionId;
+	}
 
-        _jiraRestClient =
-                _jiraRestClientFactory.createWithBasicHttpAuthentication(
-                        _URI, Auth.JIRA_USERNAME,
-                        Auth.JIRA_PASSWORD);
+	private static void _initRestClient() {
+		_getProperties();
 
-        _issueRestClient = _jiraRestClient.getIssueClient();
-    }
+		_jiraRestClientFactory = new AsynchronousJiraRestClientFactory();
 
-    private static void _getProperties() {
+		_jiraRestClient =
+			_jiraRestClientFactory.createWithBasicHttpAuthentication(
+				_URI, _jiraAdminUsername, _jiraAdminPassword);
 
-        try {
-            _jenkinsBuildProperties =
-                    JenkinsResultsParserUtil.getBuildProperties();
-        }
-        catch (IOException ioException) {
-            throw new RuntimeException(
-                    "Unable to get build properties", ioException);
-        }
+		_issueRestClient = _jiraRestClient.getIssueClient();
+	}
 
-        _jiraAdminPassword = _jenkinsBuildProperties.getProperty("ci.jira.admin.password");
-        _jiraAdminUsername = _jenkinsBuildProperties.getProperty("ci.jira.admin.username");
-    }
+	private static final URI _URI = URI.create("https://issues.liferay.com");
 
-    private static IssueRestClient _issueRestClient;
-    private static Properties _jenkinsBuildProperties;
+	private static IssueRestClient _issueRestClient;
+	private static Set<Issue> _issueSet;
+	private static Properties _jenkinsBuildProperties;
+	private static String _jiraAdminPassword;
+	private static String _jiraAdminUsername;
+	private static JiraRestClient _jiraRestClient;
+	private static JiraRestClientFactory _jiraRestClientFactory;
+	private static Iterable<Transition> _transitions;
 
-    private static String _jiraAdminPassword;
-
-    private static String _jiraAdminUsername;
-
-    private static JiraRestClient _jiraRestClient;
-
-    private static JiraRestClientFactory _jiraRestClientFactory;
-
-    private static final URI _URI = URI.create("https://issues.liferay.com");
-
-    private static Set<Issue> _issueSet;
-
-    private static Iterable _transitions;
 }

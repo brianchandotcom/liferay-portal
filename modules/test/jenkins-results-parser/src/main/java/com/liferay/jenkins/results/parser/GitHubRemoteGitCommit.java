@@ -19,7 +19,11 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,9 +43,7 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 			"/commit/", getSHA());
 	}
 
-	public void getJIRAIssue()
-		throws IOException{
-
+	public void getJIRAIssue() throws IOException {
 		String commitMessage = getMessage();
 
 		Matcher matcher = _issuePattern.matcher(commitMessage);
@@ -216,10 +218,11 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 
 	protected List<String> modifiedFilenames;
 
-	private static final List<String> _allowedProjects = new ArrayList<>(Arrays.asList("LPS", "LRCI"));
-	private final String _gitHubUsername;
-
+	private static final List<String> _allowedProjects = new ArrayList<>(
+		Arrays.asList("LPS", "LRCI"));
 	private static final Pattern _issuePattern = Pattern.compile(
-			"^([A-Z]+[-][\\d]+)");
+		"^([A-Z]+[-][\\d]+)");
+
+	private final String _gitHubUsername;
 
 }

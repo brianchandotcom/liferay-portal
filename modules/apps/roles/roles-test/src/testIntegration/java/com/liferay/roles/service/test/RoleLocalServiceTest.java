@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -90,10 +88,6 @@ public class RoleLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_indexer = _indexerRegistry.getIndexer(Organization.class.getName());
-
-		_indexerRegistry.unregister(Organization.class.getName());
-
 		List<Role> roles = _roleLocalService.getRoles(
 			RoleConstants.TYPE_REGULAR, StringPool.BLANK);
 
@@ -111,8 +105,6 @@ public class RoleLocalServiceTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		_indexerRegistry.register(_indexer);
-
 		_resourcePermissionLocalService.deleteResourcePermission(
 			_resourcePermission);
 	}
@@ -594,11 +586,6 @@ public class RoleLocalServiceTest {
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
-
-	private static Indexer<Organization> _indexer;
-
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
 
 	@Inject
 	private static OrganizationLocalService _organizationLocalService;

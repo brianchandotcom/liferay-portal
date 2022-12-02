@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -40,17 +39,22 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Michael C. Han
@@ -67,16 +71,6 @@ public class AssetTagLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_organizationIndexer = IndexerRegistryUtil.getIndexer(
-			Organization.class);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_organizationIndexer != null) {
-			IndexerRegistryUtil.register(_organizationIndexer);
-		}
 	}
 
 	@Test(expected = DuplicateTagException.class)
@@ -235,17 +229,25 @@ public class AssetTagLocalServiceTest {
 		testAssetIndexer.setExpectedValues(
 			Organization.class.getName(), _organization.getOrganizationId());
 
-		if (_organizationIndexer == null) {
-			_organizationIndexer = IndexerRegistryUtil.getIndexer(
-				Organization.class);
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				Indexer.class, testAssetIndexer,
+				MapUtil.singletonDictionary(
+					"service.ranking", Integer.MAX_VALUE));
+
+		try {
+			AssetTagLocalServiceUtil.deleteTag(assetTag);
+
+			Assert.assertNull(
+				AssetTagLocalServiceUtil.fetchAssetTag(assetTag.getTagId()));
 		}
-
-		IndexerRegistryUtil.register(testAssetIndexer);
-
-		AssetTagLocalServiceUtil.deleteTag(assetTag);
-
-		Assert.assertNull(
-			AssetTagLocalServiceUtil.fetchAssetTag(assetTag.getTagId()));
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -283,7 +285,5 @@ public class AssetTagLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Organization _organization;
-
-	private Indexer<Organization> _organizationIndexer;
 
 }

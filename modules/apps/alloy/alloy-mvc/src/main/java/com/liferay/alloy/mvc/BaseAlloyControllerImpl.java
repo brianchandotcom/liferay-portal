@@ -822,17 +822,11 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		baseAlloyIndexer.setAlloyServiceInvoker(alloyServiceInvoker);
 		baseAlloyIndexer.setClassName(portlet.getModelClassName());
 
-		if (existingIndexer != null) {
-			IndexerRegistryUtil.unregister(existingIndexer);
-		}
-
-		IndexerRegistryUtil.register(indexer);
-
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		bundleContext.registerService(
+		indexerServiceRegistration = bundleContext.registerService(
 			Indexer.class, indexer,
 			MapUtil.singletonDictionary(
 				"javax.portlet.name", portlet.getPortletName()));
@@ -1662,6 +1656,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected HttpServletResponse httpServletResponse;
 	protected Indexer<BaseModel<?>> indexer;
 	protected String indexerClassName;
+	protected ServiceRegistration<?> indexerServiceRegistration;
 	protected String lifecycle;
 	protected LiferayPortletConfig liferayPortletConfig;
 	protected LiferayPortletResponse liferayPortletResponse;

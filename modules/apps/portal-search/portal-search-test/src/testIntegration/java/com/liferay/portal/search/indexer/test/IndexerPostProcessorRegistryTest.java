@@ -297,8 +297,6 @@ public class IndexerPostProcessorRegistryTest {
 			Arrays.toString(indexerPostProcessors), 0,
 			indexerPostProcessors.length);
 
-		IndexerRegistryUtil.unregister(indexer);
-
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -314,8 +312,6 @@ public class IndexerPostProcessorRegistryTest {
 				).build());
 
 		try {
-			IndexerRegistryUtil.register(indexer);
-
 			indexerPostProcessors = indexer.getIndexerPostProcessors();
 
 			Assert.assertEquals(

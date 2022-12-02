@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -43,6 +42,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -51,13 +51,17 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Michael C. Han
@@ -73,16 +77,6 @@ public class AssetCategoryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_organizationIndexer = IndexerRegistryUtil.getIndexer(
-			Organization.class);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_organizationIndexer != null) {
-			IndexerRegistryUtil.register(_organizationIndexer);
-		}
 	}
 
 	@Test
@@ -286,14 +280,22 @@ public class AssetCategoryLocalServiceTest {
 		testAssetIndexer.setExpectedValues(
 			Organization.class.getName(), _organization.getOrganizationId());
 
-		if (_organizationIndexer == null) {
-			_organizationIndexer = IndexerRegistryUtil.getIndexer(
-				Organization.class);
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				Indexer.class, testAssetIndexer,
+				MapUtil.singletonDictionary(
+					"service.ranking", Integer.MAX_VALUE));
+
+		try {
+			_assetCategoryLocalService.deleteCategory(assetCategory, true);
 		}
-
-		IndexerRegistryUtil.register(testAssetIndexer);
-
-		_assetCategoryLocalService.deleteCategory(assetCategory, true);
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test(expected = DuplicateCategoryExternalReferenceCodeException.class)
@@ -344,8 +346,6 @@ public class AssetCategoryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Organization _organization;
-
-	private Indexer<Organization> _organizationIndexer;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

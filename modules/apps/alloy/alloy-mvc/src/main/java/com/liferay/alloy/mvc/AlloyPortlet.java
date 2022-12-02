@@ -20,14 +20,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,10 +61,11 @@ public abstract class AlloyPortlet extends GenericPortlet {
 		for (BaseAlloyControllerImpl baseAlloyControllerImpl :
 				_alloyControllers.values()) {
 
-			Indexer<BaseModel<?>> indexer = baseAlloyControllerImpl.indexer;
+			ServiceRegistration<?> indexerServiceRegistration =
+				baseAlloyControllerImpl.indexerServiceRegistration;
 
-			if (indexer != null) {
-				IndexerRegistryUtil.unregister(indexer);
+			if (indexerServiceRegistration != null) {
+				indexerServiceRegistration.unregister();
 			}
 
 			Map<String, ServiceRegistration<Destination>> serviceRegistrations =

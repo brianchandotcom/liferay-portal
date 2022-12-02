@@ -64,14 +64,19 @@ const Tab: React.FC<ITabProps> = ({
 			columns={header}
 			disabled={!enableCheckboxs}
 			emptyStateTitle={emptyStateTitle}
-			mapperItems={(items: TRawItem[]) => {
+			mapperItems={(items) => {
 				return items.map((item) => ({
 					checked: !!(
 						item.channelName && item.channelName === property.name
 					),
-					columns: columns.map((column) => ({
-						label: item?.[column] ?? '',
-					})),
+					columns: columns.map((column) => {
+						const value = item?.[column] ?? '';
+
+						return {
+							id: column,
+							value,
+						};
+					}),
 					disabled: !!(
 						item.channelName && item.channelName !== property.name
 					),

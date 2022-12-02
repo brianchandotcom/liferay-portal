@@ -22,20 +22,12 @@ export function serializeTableRequestParams({
 	keywords,
 	pagination: {page, pageSize},
 }: TTableRequestParams): string {
-	let params: any = {
+	const params: any = {
+		keywords,
 		page,
 		pageSize,
 		sort: `${value}:${type}`,
 	};
-
-	if (keywords) {
-		params = {
-			keywords,
-			page: 1,
-			pageSize,
-			sort: `${value}:${type}`,
-		};
-	}
 
 	const arrs = Object.keys(params).map((key) => [key, String(params[key])]);
 	const path = new URLSearchParams(arrs);
@@ -116,13 +108,11 @@ export function getIds(items: TFormattedItems, initialIds: number[]): number[] {
 			ids.forEach((id, index) => {
 				if (id === Number(item.id) && !item.checked) {
 					ids.splice(index, 1);
-				}
-				else if (id !== Number(item.id) && item.checked) {
+				} else if (id !== Number(item.id) && item.checked) {
 					ids.push(Number(item.id));
 				}
 			});
-		}
-		else if (item.checked) {
+		} else if (item.checked) {
 			ids.push(Number(item.id));
 		}
 	});

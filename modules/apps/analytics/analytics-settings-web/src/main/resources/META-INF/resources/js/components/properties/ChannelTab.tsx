@@ -15,26 +15,32 @@
 import React from 'react';
 
 import {fetchChannels} from '../../utils/api';
+import {TColumn} from '../table/types';
 import {TProperty} from './Properties';
 import Tab, {TRawItem} from './Tab';
 
-const columns = [
+enum EColumn {
+	Name = 'name',
+	SiteName = 'siteName',
+	ChannelName = 'channelName',
+}
+
+const columns: TColumn[] = [
 	{
 		expanded: true,
+		id: EColumn.Name,
 		label: Liferay.Language.get('channel-name'),
-		value: 'name',
 	},
 	{
 		expanded: true,
+		id: EColumn.SiteName,
 		label: Liferay.Language.get('related-site'),
-		sortable: false,
-		value: 'siteName',
 	},
 	{
 		expanded: true,
+		id: EColumn.ChannelName,
 		label: Liferay.Language.get('assigned-property'),
 		sortable: false,
-		value: 'channelName',
 	},
 ];
 
@@ -50,7 +56,7 @@ const ChannelTab: React.FC<IChannelTabProps> = ({
 	property,
 }) => (
 	<Tab
-		columns={columns.map(({value}) => value) as Array<keyof TRawItem>}
+		columns={columns.map(({id}) => id) as Array<keyof TRawItem>}
 		description={Liferay.Language.get(
 			'analytics-cloud-assign-commerce-channel-help'
 		)}

@@ -25,20 +25,23 @@ import {
 
 export enum Events {
 	ChangeFilter = 'CHANGE_FILTER',
+	ChangeItem = 'CHANGE_ITEM',
 	ChangeItems = 'CHANGE_ITEMS',
 	ChangeKeywords = 'CHANGE_KEYWORDS',
 	ChangePagination = 'CHANGE_PAGINATION',
 	FormatData = 'FORMAT_DATA',
+	Reload = 'RELOAD',
 	ToggleGlobalCheckbox = 'TOGGLE_CHECKBOX',
 }
 
-const initialState = {
+const INITIAL_STATE: TState = {
 	filter: DEFAULT_FILTER,
 	formattedItems: {},
 	globalChecked: false,
 	internalKeywords: '',
 	keywords: '',
 	pagination: DEFAULT_PAGINATION,
+	reload: () => {},
 	rows: [],
 };
 
@@ -49,16 +52,19 @@ type TState = {
 	internalKeywords: string;
 	keywords: string;
 	pagination: TPagination;
+	reload: () => void;
 	rows: string[];
 };
 
-const TableContextData = createContext<TState>(initialState);
+type TAction = {payload: any; type: Events};
+
+const TableContextData = createContext<TState>(INITIAL_STATE);
 const TableContextDispatch = createContext<any>(null);
 
 const useData = () => useContext(TableContextData);
 const useDispatch = () => useContext(TableContextDispatch);
 
-function reducer(state: TState, action: {payload: any; type: Events}) {
+function reducer(state: TState, action: TAction) {
 	switch (action.type) {
 		case Events.ChangeFilter: {
 			return {
@@ -66,6 +72,42 @@ function reducer(state: TState, action: {payload: any; type: Events}) {
 				filter: {
 					...state.filter,
 					...action.payload,
+				},
+			};
+		}
+		case Events.ChangeItem: {
+			const {
+				id,
+				values,
+			}: {
+				id: string;
+				values: {
+					id: string;
+					value: number | boolean | string;
+				}[];
+			} = action.payload;
+
+			return {
+				...state,
+				formattedItems: {
+					...state.formattedItems,
+					[id]: {
+						...state.formattedItems[id],
+						columns: state.formattedItems[id].columns.map(
+							(column) => {
+								for (const {id, value} of values) {
+									if (column.id === id) {
+										return {
+											...column,
+											value,
+										};
+									}
+								}
+
+								return column;
+							}
+						),
+					},
 				},
 			};
 		}
@@ -92,6 +134,9 @@ function reducer(state: TState, action: {payload: any; type: Events}) {
 		}
 		case Events.FormatData: {
 			const {items, page, pageSize, totalCount} = action.payload;
+
+			// It is necessary to maintain the formatting order of
+			// items so that state items override request items
 
 			const formattedItems = {
 				...getFormattedItems(items),
@@ -120,6 +165,12 @@ function reducer(state: TState, action: {payload: any; type: Events}) {
 				},
 			};
 		}
+		case Events.Reload: {
+			return {
+				...state,
+				reload: action.payload,
+			};
+		}
 		case Events.ToggleGlobalCheckbox: {
 			const {globalChecked, items} = action.payload;
 
@@ -140,8 +191,27 @@ function reducer(state: TState, action: {payload: any; type: Events}) {
 	}
 }
 
-const TableContext: React.FC = ({children}) => {
-	const [state, dispatch] = useReducer(reducer, initialState);
+interface ITableContextProps {
+	initialFilter?: TFilter;
+	initialKeywords?: string;
+	initialPagination?: TPagination;
+}
+
+const TableContext: React.FC<ITableContextProps> = ({
+	children,
+	initialFilter,
+	initialKeywords,
+	initialPagination,
+}) => {
+	const [state, dispatch] = useReducer<React.Reducer<TState, TAction>>(
+		reducer,
+		{
+			...INITIAL_STATE,
+			...(initialFilter && {filter: initialFilter}),
+			...(initialKeywords && {keywords: initialKeywords}),
+			...(initialPagination && {pagination: initialPagination}),
+		}
+	);
 
 	return (
 		<TableContextData.Provider value={state}>

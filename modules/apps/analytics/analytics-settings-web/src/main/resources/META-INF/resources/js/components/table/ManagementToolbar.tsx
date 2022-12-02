@@ -26,15 +26,21 @@ import {TColumn} from './types';
 import {getOrderBy, getOrderBySymbol, getResultsLanguage} from './utils';
 
 interface IManagementToolbarProps {
+	addItemTitle?: string;
 	columns: TColumn[];
 	disabled: boolean;
 	makeRequest: () => void;
+	onAddItem?: () => void;
+	showCheckbox: boolean;
 }
 
 const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
+	addItemTitle,
 	columns,
 	disabled,
 	makeRequest,
+	onAddItem,
+	showCheckbox,
 }) => {
 	const {filter, globalChecked, keywords: storedKeywords, rows} = useData();
 	const dispatch = useDispatch();
@@ -46,13 +52,15 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 		<>
 			<ClayManagementToolbar>
 				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
-						<ClayCheckbox
-							checked={globalChecked}
-							disabled={disabled}
-							onChange={makeRequest}
-						/>
-					</ClayManagementToolbar.Item>
+					{showCheckbox && (
+						<ClayManagementToolbar.Item>
+							<ClayCheckbox
+								checked={globalChecked}
+								disabled={disabled}
+								onChange={makeRequest}
+							/>
+						</ClayManagementToolbar.Item>
+					)}
 
 					<ClayDropDownWithItems
 						items={columns
@@ -66,7 +74,7 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 									onClick: () => {
 										dispatch({
 											payload: {
-												value: column.value,
+												value: column.id,
 											},
 											type: Events.ChangeFilter,
 										});
@@ -166,18 +174,19 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 					</ClayInput.Group>
 				</ClayManagementToolbar.Search>
 
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
-						<ClayButton
-							className="nav-link nav-link-monospaced"
-							disabled={disabled}
-							displayType="unstyled"
-							onClick={() => setSearchMobile(true)}
-						>
-							<ClayIcon symbol="search" />
-						</ClayButton>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+				{onAddItem && (
+					<ClayManagementToolbar.ItemList>
+						<ClayManagementToolbar.Item>
+							<ClayButtonWithIcon
+								className="nav-btn nav-btn-monospaced"
+								data-tooltip-align="top"
+								onClick={onAddItem}
+								symbol="plus"
+								title={addItemTitle}
+							/>
+						</ClayManagementToolbar.Item>
+					</ClayManagementToolbar.ItemList>
+				)}
 			</ClayManagementToolbar>
 
 			{storedKeywords && (

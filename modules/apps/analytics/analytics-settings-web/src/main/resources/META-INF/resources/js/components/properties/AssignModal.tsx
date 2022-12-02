@@ -27,7 +27,13 @@ import SitesTab from './SitesTab';
 interface IAssignModalProps {
 	observer: any;
 	onCancel: () => void;
-	onSubmit: () => void;
+	onSubmit: ({
+		commerceChannelIds,
+		siteIds,
+	}: {
+		commerceChannelIds: number[];
+		siteIds: number[];
+	}) => void;
 	property: TProperty;
 }
 
@@ -48,7 +54,7 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 			{
 				commerceChannelIds: initialCommerceChannelIds,
 				siteIds: initialSiteIds,
-			} = {commerceChannelIds: [], siteIds: []},
+			},
 		],
 	} = property;
 
@@ -91,7 +97,10 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
-					<ClayTabs.TabPane aria-labelledby="tab-1">
+					<ClayTabs.TabPane
+						aria-labelledby="tab-1"
+						data-testid={ETabs.Channel}
+					>
 						<ChannelTab
 							initialIds={commerceChannelIds}
 							onChannelsChange={setCommerceChannelIds}
@@ -99,7 +108,10 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 						/>
 					</ClayTabs.TabPane>
 
-					<ClayTabs.TabPane aria-labelledby="tab-2">
+					<ClayTabs.TabPane
+						aria-labelledby="tab-2"
+						data-testid={ETabs.Sites}
+					>
 						<SitesTab
 							initialIds={siteIds}
 							onSitesChange={setSiteIds}
@@ -139,7 +151,7 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 
 								setSubmitting(false);
 
-								ok && onSubmit();
+								ok && onSubmit({commerceChannelIds, siteIds});
 							}}
 						>
 							{submitting && <Loading inline />}
@@ -153,4 +165,28 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 	);
 };
 
-export default AssignModal;
+interface IAssignModalWrapperProps {
+	observer: any;
+	onCancel: () => void;
+	onSubmit: ({
+		commerceChannelIds,
+		siteIds,
+	}: {
+		commerceChannelIds: number[];
+		siteIds: number[];
+	}) => void;
+	property: TProperty | null;
+}
+
+const AssignModalWrapper: React.FC<IAssignModalWrapperProps> = ({
+	property,
+	...otherProps
+}) => {
+	if (!property) {
+		return null;
+	}
+
+	return <AssignModal {...otherProps} property={property} />;
+};
+
+export default AssignModalWrapper;

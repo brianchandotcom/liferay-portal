@@ -77,10 +77,15 @@ const Modal: React.FC<IModalProps> = ({
 				<Table<TRawItem>
 					columns={columns}
 					emptyStateTitle={emptyStateTitle}
-					mapperItems={(items: TRawItem[]) => {
+					mapperItems={(items) => {
 						return items.map(({id, name, selected}) => ({
 							checked: selected,
-							columns: [{label: name}],
+							columns: [
+								{
+									id: 'name',
+									value: name,
+								},
+							],
 							disabled: false,
 							id: String(id),
 						}));

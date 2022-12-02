@@ -29,8 +29,8 @@ const ModalOrganizations: React.FC<ICommonModalProps> = ({
 		columns={[
 			{
 				expanded: false,
+				id: 'name',
 				label: Liferay.Language.get('organizations'),
-				value: 'name',
 			},
 		]}
 		emptyStateTitle={Liferay.Language.get('there-are-no-organizations')}

@@ -14,18 +14,30 @@
 
 import {TFilter} from '../../utils/filter';
 
+export enum EColumnAlign {
+	Left = 'start',
+	Right = 'end',
+}
+
 export type TColumn = {
-	expanded: boolean;
+	align?: EColumnAlign;
+	expanded?: boolean;
+	id: string;
 	label: string;
 	show?: boolean;
 	sortable?: boolean;
-	value: string;
+};
+
+export type TColumnItem = {
+	cellRenderer?: (item: TItem) => JSX.Element;
+	id: string;
+	value: boolean | string | number;
 };
 
 export type TItem = {
-	checked: boolean;
-	columns: {label: string; show?: boolean}[];
-	disabled: boolean;
+	checked?: boolean;
+	columns: TColumnItem[];
+	disabled?: boolean;
 	id: string;
 };
 

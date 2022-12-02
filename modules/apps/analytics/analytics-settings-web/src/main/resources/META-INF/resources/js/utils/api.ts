@@ -76,8 +76,10 @@ export function fetchAttributesConfiguration() {
 	});
 }
 
-export function fetchProperties() {
-	return request('/channels?sort=createDate:desc', {method: 'GET'});
+export function fetchProperties(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
+
+	return request(`/channels?${queryString}`, {method: 'GET'});
 }
 
 export function fetchSites(params: TTableRequestParams) {
@@ -97,7 +99,7 @@ export function updateProperty({
 }: {
 	channelId: string;
 	commerceChannelIds?: number[];
-	commerceSyncEnabled?: boolean;
+	commerceSyncEnabled: boolean;
 	dataSourceId?: string;
 	siteIds?: number[];
 }) {
@@ -122,10 +124,7 @@ export function updatecommerceSyncEnabled({
 	commerceSyncEnabled,
 }: {
 	channelId: string;
-	commerceChannelIds?: number[];
-	commerceSyncEnabled?: boolean;
-	dataSourceId?: string;
-	siteIds?: number[];
+	commerceSyncEnabled: boolean;
 }) {
 	return request('/channels', {
 		body: JSON.stringify({

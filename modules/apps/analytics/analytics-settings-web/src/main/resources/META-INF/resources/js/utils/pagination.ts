@@ -12,18 +12,18 @@
  * details.
  */
 
+export const DELTAS = [5, 10, 20, 30, 50] as const;
+
 export type TPagination = {
 	maxCount: number;
 	page: number;
-	pageSize: number;
+	pageSize: typeof DELTAS[number];
 	totalCount: number;
 };
 
-export const DEFAULT_PAGINATION = {
+export const DEFAULT_PAGINATION: TPagination = {
 	maxCount: 0,
 	page: 1,
 	pageSize: 20,
 	totalCount: 0,
 };
-
-export const DELTAS = [5, 10, 20, 30, 50];

@@ -13,6 +13,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useContext, useReducer} from 'react';
 
 import DefaultPage from './pages/default/DefaultPage';
@@ -85,15 +86,17 @@ const App: React.FC<IAppProps> = ({connected, liferayAnalyticsURL, token}) => {
 	});
 
 	return (
-		<ClayIconSpriteContext.Provider value={SPRITEMAP}>
-			<AppContextData.Provider value={state}>
-				<AppContextDispatch.Provider value={dispatch}>
-					<div className="analytics-settings-web mt-5">
-						<AppContent />
-					</div>
-				</AppContextDispatch.Provider>
-			</AppContextData.Provider>
-		</ClayIconSpriteContext.Provider>
+		<ClayTooltipProvider>
+			<ClayIconSpriteContext.Provider value={SPRITEMAP}>
+				<AppContextData.Provider value={state}>
+					<AppContextDispatch.Provider value={dispatch}>
+						<div className="analytics-settings-web mt-5">
+							<AppContent />
+						</div>
+					</AppContextDispatch.Provider>
+				</AppContextData.Provider>
+			</ClayIconSpriteContext.Provider>
+		</ClayTooltipProvider>
 	);
 };
 

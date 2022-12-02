@@ -66,15 +66,21 @@ describe('getOrderBy', () => {
 
 describe('getOrderBySymbol', () => {
 	it('returns OrderBy symbol based on value ASC', () => {
-		expect(getOrderBySymbol({type: OrderBy.Asc, value: 'name'})).toEqual(
-			'order-list-up'
-		);
+		expect(
+			getOrderBySymbol({
+				type: OrderBy.Asc,
+				value: 'name',
+			})
+		).toEqual('order-list-up');
 	});
 
 	it('returns OrderBy symbol based on value DESC', () => {
-		expect(getOrderBySymbol({type: OrderBy.Desc, value: 'name'})).toEqual(
-			'order-list-down'
-		);
+		expect(
+			getOrderBySymbol({
+				type: OrderBy.Desc,
+				value: 'name',
+			})
+		).toEqual('order-list-down');
 	});
 });
 
@@ -95,19 +101,34 @@ describe('getGlobalChecked', () => {
 		const items = {
 			123: {
 				checked: true,
-				columns: [{label: 'Site A'}],
+				columns: [
+					{
+						id: 'SiteA',
+						value: 'Site A',
+					},
+				],
 				disabled: false,
 				id: '123',
 			},
 			456: {
 				checked: true,
-				columns: [{label: 'Site B'}],
+				columns: [
+					{
+						id: 'SiteB',
+						value: 'Site B',
+					},
+				],
 				disabled: false,
 				id: '456',
 			},
 			789: {
 				checked: true,
-				columns: [{label: 'Site C'}],
+				columns: [
+					{
+						id: 'SiteC',
+						value: 'Site C',
+					},
+				],
 				disabled: false,
 				id: '789',
 			},
@@ -120,19 +141,34 @@ describe('getGlobalChecked', () => {
 		const items = {
 			123: {
 				checked: true,
-				columns: [{label: 'Site A'}],
+				columns: [
+					{
+						id: 'SiteA',
+						value: 'Site A',
+					},
+				],
 				disabled: false,
 				id: '123',
 			},
 			456: {
 				checked: true,
-				columns: [{label: 'Site B'}],
+				columns: [
+					{
+						id: 'SiteB',
+						value: 'Site B',
+					},
+				],
 				disabled: false,
 				id: '456',
 			},
 			789: {
 				checked: false,
-				columns: [{label: 'Site C'}],
+				columns: [
+					{
+						id: 'SiteC',
+						value: 'Site C',
+					},
+				],
 				disabled: false,
 				id: '789',
 			},
@@ -155,19 +191,34 @@ describe('updateFormattedItems', () => {
 				{
 					123: {
 						checked: false,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: false,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: false,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -177,19 +228,34 @@ describe('updateFormattedItems', () => {
 		).toEqual({
 			123: {
 				checked: true,
-				columns: [{label: 'Site A'}],
+				columns: [
+					{
+						id: 'SiteA',
+						value: 'Site A',
+					},
+				],
 				disabled: false,
 				id: '123',
 			},
 			456: {
 				checked: true,
-				columns: [{label: 'Site B'}],
+				columns: [
+					{
+						id: 'SiteB',
+						value: 'Site B',
+					},
+				],
 				disabled: false,
 				id: '456',
 			},
 			789: {
 				checked: true,
-				columns: [{label: 'Site C'}],
+				columns: [
+					{
+						id: 'SiteC',
+						value: 'Site C',
+					},
+				],
 				disabled: false,
 				id: '789',
 			},
@@ -202,19 +268,34 @@ describe('updateFormattedItems', () => {
 				{
 					123: {
 						checked: true,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: true,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: true,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -224,19 +305,34 @@ describe('updateFormattedItems', () => {
 		).toEqual({
 			123: {
 				checked: false,
-				columns: [{label: 'Site A'}],
+				columns: [
+					{
+						id: 'SiteA',
+						value: 'Site A',
+					},
+				],
 				disabled: false,
 				id: '123',
 			},
 			456: {
 				checked: false,
-				columns: [{label: 'Site B'}],
+				columns: [
+					{
+						id: 'SiteB',
+						value: 'Site B',
+					},
+				],
 				disabled: false,
 				id: '456',
 			},
 			789: {
 				checked: false,
-				columns: [{label: 'Site C'}],
+				columns: [
+					{
+						id: 'SiteC',
+						value: 'Site C',
+					},
+				],
 				disabled: false,
 				id: '789',
 			},
@@ -249,19 +345,34 @@ describe('updateFormattedItems', () => {
 				{
 					123: {
 						checked: true,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: true,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: true,
 						id: '456',
 					},
 					789: {
 						checked: true,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -271,19 +382,34 @@ describe('updateFormattedItems', () => {
 		).toEqual({
 			123: {
 				checked: false,
-				columns: [{label: 'Site A'}],
+				columns: [
+					{
+						id: 'SiteA',
+						value: 'Site A',
+					},
+				],
 				disabled: false,
 				id: '123',
 			},
 			456: {
 				checked: true,
-				columns: [{label: 'Site B'}],
+				columns: [
+					{
+						id: 'SiteB',
+						value: 'Site B',
+					},
+				],
 				disabled: true,
 				id: '456',
 			},
 			789: {
 				checked: false,
-				columns: [{label: 'Site C'}],
+				columns: [
+					{
+						id: 'SiteC',
+						value: 'Site C',
+					},
+				],
 				disabled: false,
 				id: '789',
 			},
@@ -297,19 +423,34 @@ describe('getFormattedItems', () => {
 			getFormattedItems([
 				{
 					checked: false,
-					columns: [{label: 'Site A'}],
+					columns: [
+						{
+							id: 'SiteA',
+							value: 'Site A',
+						},
+					],
 					disabled: false,
 					id: '123',
 				},
 				{
 					checked: true,
-					columns: [{label: 'Site B'}],
+					columns: [
+						{
+							id: 'SiteB',
+							value: 'Site B',
+						},
+					],
 					disabled: true,
 					id: '456',
 				},
 				{
 					checked: false,
-					columns: [{label: 'Site C'}],
+					columns: [
+						{
+							id: 'SiteC',
+							value: 'Site C',
+						},
+					],
 					disabled: false,
 					id: '789',
 				},
@@ -317,19 +458,34 @@ describe('getFormattedItems', () => {
 		).toEqual({
 			123: {
 				checked: false,
-				columns: [{label: 'Site A'}],
+				columns: [
+					{
+						id: 'SiteA',
+						value: 'Site A',
+					},
+				],
 				disabled: false,
 				id: '123',
 			},
 			456: {
 				checked: true,
-				columns: [{label: 'Site B'}],
+				columns: [
+					{
+						id: 'SiteB',
+						value: 'Site B',
+					},
+				],
 				disabled: true,
 				id: '456',
 			},
 			789: {
 				checked: false,
-				columns: [{label: 'Site C'}],
+				columns: [
+					{
+						id: 'SiteC',
+						value: 'Site C',
+					},
+				],
 				disabled: false,
 				id: '789',
 			},
@@ -348,19 +504,34 @@ describe('getIds', () => {
 				{
 					123: {
 						checked: true,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: true,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: true,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -374,19 +545,34 @@ describe('getIds', () => {
 				{
 					123: {
 						checked: false,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: false,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: true,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -402,19 +588,34 @@ describe('getIds', () => {
 				{
 					123: {
 						checked: true,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: true,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: true,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -428,19 +629,34 @@ describe('getIds', () => {
 				{
 					123: {
 						checked: true,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: true,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: true,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -456,19 +672,34 @@ describe('getIds', () => {
 				{
 					123: {
 						checked: false,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: false,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: false,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -482,19 +713,34 @@ describe('getIds', () => {
 				{
 					123: {
 						checked: false,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: true,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: false,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -510,19 +756,34 @@ describe('getIds', () => {
 				{
 					123: {
 						checked: false,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: false,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: false,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},
@@ -536,19 +797,34 @@ describe('getIds', () => {
 				{
 					123: {
 						checked: false,
-						columns: [{label: 'Site A'}],
+						columns: [
+							{
+								id: 'SiteA',
+								value: 'Site A',
+							},
+						],
 						disabled: false,
 						id: '123',
 					},
 					456: {
 						checked: false,
-						columns: [{label: 'Site B'}],
+						columns: [
+							{
+								id: 'SiteB',
+								value: 'Site B',
+							},
+						],
 						disabled: false,
 						id: '456',
 					},
 					789: {
 						checked: false,
-						columns: [{label: 'Site C'}],
+						columns: [
+							{
+								id: 'SiteC',
+								value: 'Site C',
+							},
+						],
 						disabled: false,
 						id: '789',
 					},

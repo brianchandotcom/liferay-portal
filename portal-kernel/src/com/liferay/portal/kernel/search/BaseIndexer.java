@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -154,7 +153,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			Document document = doGetDocument(object);
 
 			for (IndexerPostProcessor indexerPostProcessor :
-					_indexerPostProcessors) {
+					IndexerRegistryUtil.getIndexerPostProcessors(this)) {
 
 				indexerPostProcessor.postProcessDocument(document, object);
 			}
@@ -240,7 +239,10 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public IndexerPostProcessor[] getIndexerPostProcessors() {
-		return _indexerPostProcessors;
+		List<IndexerPostProcessor> indexerPostProcessors =
+			IndexerRegistryUtil.getIndexerPostProcessors(this);
+
+		return indexerPostProcessors.toArray(new IndexerPostProcessor[0]);
 	}
 
 	@Override
@@ -278,7 +280,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				document, locale, snippet, portletRequest, portletResponse);
 
 			for (IndexerPostProcessor indexerPostProcessor :
-					_indexerPostProcessors) {
+					IndexerRegistryUtil.getIndexerPostProcessors(this)) {
 
 				indexerPostProcessor.postProcessSummary(
 					summary, document, locale, snippet);
@@ -394,19 +396,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
-	}
-
-	@Override
-	public void registerIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		List<IndexerPostProcessor> indexerPostProcessorsList =
-			ListUtil.fromArray(_indexerPostProcessors);
-
-		indexerPostProcessorsList.add(indexerPostProcessor);
-
-		_indexerPostProcessors = indexerPostProcessorsList.toArray(
-			new IndexerPostProcessor[0]);
 	}
 
 	@Override
@@ -586,19 +575,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	public void setSelectAllLocales(boolean selectAllLocales) {
 		_selectAllLocales = selectAllLocales;
-	}
-
-	@Override
-	public void unregisterIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		List<IndexerPostProcessor> indexerPostProcessorsList =
-			ListUtil.fromArray(_indexerPostProcessors);
-
-		indexerPostProcessorsList.remove(indexerPostProcessor);
-
-		_indexerPostProcessors = indexerPostProcessorsList.toArray(
-			new IndexerPostProcessor[0]);
 	}
 
 	protected void addDefaultHighlightFieldNames(QueryConfig queryConfig) {
@@ -1026,7 +1002,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		postProcessFullQuery(fullBooleanQuery, searchContext);
 
 		for (IndexerPostProcessor indexerPostProcessor :
-				_indexerPostProcessors) {
+				IndexerRegistryUtil.getIndexerPostProcessors(this)) {
 
 			indexerPostProcessor.postProcessFullQuery(
 				fullBooleanQuery, searchContext);
@@ -1579,8 +1555,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		_documentContributors;
 	private boolean _filterSearch;
 	private Boolean _indexerEnabled;
-	private IndexerPostProcessor[] _indexerPostProcessors =
-		new IndexerPostProcessor[0];
 	private boolean _permissionAware;
 	private boolean _selectAllLocales;
 	private boolean _stagingAware = true;

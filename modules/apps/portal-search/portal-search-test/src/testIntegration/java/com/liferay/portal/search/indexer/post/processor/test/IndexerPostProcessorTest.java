@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
@@ -48,6 +49,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Wade Cao
@@ -165,11 +171,22 @@ public class IndexerPostProcessorTest {
 	}
 
 	protected void registerIndexerPostProcessor() {
-		_indexer.registerIndexerPostProcessor(_indexerPostProcessor);
+		Bundle bundle = FrameworkUtil.getBundle(IndexerPostProcessorTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			IndexerPostProcessor.class, _indexerPostProcessor,
+			MapUtil.singletonDictionary(
+				"indexer.class.name", _indexer.getClassName()));
 	}
 
 	protected void unregisterIndexerPostProcessor() {
-		_indexer.unregisterIndexerPostProcessor(_indexerPostProcessor);
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
 	}
 
 	@Inject
@@ -185,6 +202,7 @@ public class IndexerPostProcessorTest {
 	private Indexer<User> _indexer;
 	private final IndexerPostProcessor _indexerPostProcessor =
 		createIndexerPostProcessor();
+	private ServiceRegistration<?> _serviceRegistration;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

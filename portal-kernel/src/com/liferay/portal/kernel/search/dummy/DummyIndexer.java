@@ -163,11 +163,6 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	@Override
-	public void registerIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-	}
-
-	@Override
 	public void reindex(Collection<Object> objects) {
 	}
 
@@ -202,11 +197,6 @@ public class DummyIndexer implements Indexer<Object> {
 
 	@Override
 	public void setIndexerEnabled(boolean indexerEnabled) {
-	}
-
-	@Override
-	public void unregisterIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
 	}
 
 }

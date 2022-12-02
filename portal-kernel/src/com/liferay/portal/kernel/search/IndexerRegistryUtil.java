@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,6 +30,18 @@ public class IndexerRegistryUtil {
 
 	public static <T> Indexer<T> getIndexer(String className) {
 		return _indexerRegistry.getIndexer(className);
+	}
+
+	public static List<IndexerPostProcessor> getIndexerPostProcessors(
+		Indexer<?> indexer) {
+
+		return _indexerRegistry.getIndexerPostProcessors(indexer);
+	}
+
+	public static List<IndexerPostProcessor> getIndexerPostProcessors(
+		String className) {
+
+		return _indexerRegistry.getIndexerPostProcessors(className);
 	}
 
 	public static Set<Indexer<?>> getIndexers() {

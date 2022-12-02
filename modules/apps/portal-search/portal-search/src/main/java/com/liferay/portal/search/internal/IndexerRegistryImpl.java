@@ -16,8 +16,6 @@ package com.liferay.portal.search.internal;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.util.StringPlus;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +24,7 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.dummy.DummyIndexer;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
@@ -34,9 +33,8 @@ import com.liferay.portal.search.internal.buffer.BufferedIndexerInvocationHandle
 import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.internal.buffer.IndexerRequestBufferOverflowHandler;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +80,56 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	@Override
+	public List<IndexerPostProcessor> getIndexerPostProcessors(
+		Indexer<?> indexer) {
+
+		ServiceTrackerMap<String, List<IndexerPostProcessor>>
+			indexerPostProcessorsServiceTrackerMap =
+				_getIndexerPostProcessorsServiceTrackerMap();
+
+		List<IndexerPostProcessor> indexerPostProcessors1 =
+			indexerPostProcessorsServiceTrackerMap.getService(
+				indexer.getClassName());
+
+		Class<?> clazz = indexer.getClass();
+
+		List<IndexerPostProcessor> indexerPostProcessors2 =
+			indexerPostProcessorsServiceTrackerMap.getService(clazz.getName());
+
+		if (indexerPostProcessors1 == null) {
+			if (indexerPostProcessors2 == null) {
+				return Collections.emptyList();
+			}
+
+			return indexerPostProcessors2;
+		}
+
+		if (indexerPostProcessors2 == null) {
+			return indexerPostProcessors1;
+		}
+
+		return ListUtil.concat(indexerPostProcessors1, indexerPostProcessors2);
+	}
+
+	@Override
+	public List<IndexerPostProcessor> getIndexerPostProcessors(
+		String className) {
+
+		ServiceTrackerMap<String, List<IndexerPostProcessor>>
+			indexerPostProcessorsServiceTrackerMap =
+				_getIndexerPostProcessorsServiceTrackerMap();
+
+		List<IndexerPostProcessor> indexerPostProcessors =
+			indexerPostProcessorsServiceTrackerMap.getService(className);
+
+		if (indexerPostProcessors == null) {
+			return Collections.emptyList();
+		}
+
+		return indexerPostProcessors;
+	}
+
+	@Override
 	public Set<Indexer<?>> getIndexers() {
 		ServiceTrackerMap<String, Indexer> indexerServiceTrackerMap =
 			_getIndexerServiceTrackerMap();
@@ -118,46 +166,6 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		modified(properties);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(indexer.class.name=*)"
-	)
-	protected void addIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor,
-		Map<String, Object> properties) {
-
-		List<String> indexerClassNames = StringPlus.asList(
-			properties.get("indexer.class.name"));
-
-		for (String indexerClassName : indexerClassNames) {
-			Indexer<?> indexer = getIndexer(indexerClassName);
-
-			if (indexer != null) {
-				indexer.registerIndexerPostProcessor(indexerPostProcessor);
-			}
-			else {
-				synchronized (_queuedIndexerPostProcessors) {
-					List<IndexerPostProcessor> indexerPostProcessors =
-						_queuedIndexerPostProcessors.computeIfAbsent(
-							indexerClassName, key -> new ArrayList<>());
-
-					indexerPostProcessors.add(indexerPostProcessor);
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Registration of indexer post processor for ",
-								indexerClassName,
-								" will be completed once the indexer becomes ",
-								"available"));
-					}
-				}
-			}
-		}
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		ServiceTrackerMap<String, Indexer> indexerServiceTrackerMap =
@@ -165,6 +173,14 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 		if (indexerServiceTrackerMap != null) {
 			_indexerServiceTrackerMap.close();
+		}
+
+		ServiceTrackerMap<String, List<IndexerPostProcessor>>
+			indexerPostProcessorsServiceTrackerMap =
+				_indexerPostProcessorsServiceTrackerMap;
+
+		if (indexerPostProcessorsServiceTrackerMap != null) {
+			indexerPostProcessorsServiceTrackerMap.close();
 		}
 	}
 
@@ -178,40 +194,6 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 			bufferedIndexerInvocationHandler.setIndexerRegistryConfiguration(
 				_indexerRegistryConfiguration);
-		}
-	}
-
-	protected void removeIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor,
-		Map<String, Object> properties) {
-
-		List<String> indexerClassNames = StringPlus.asList(
-			properties.get("indexer.class.name"));
-
-		for (String indexerClassName : indexerClassNames) {
-			Indexer<?> indexer = getIndexer(indexerClassName);
-
-			if (indexer == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("No indexer exists for " + indexerClassName);
-				}
-			}
-			else {
-				indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
-			}
-
-			synchronized (_queuedIndexerPostProcessors) {
-				List<IndexerPostProcessor> indexerPostProcessors =
-					_queuedIndexerPostProcessors.get(indexerClassName);
-
-				if (indexerPostProcessors != null) {
-					indexerPostProcessors.remove(indexerPostProcessor);
-
-					if (indexerPostProcessors.isEmpty()) {
-						_queuedIndexerPostProcessors.remove(indexerClassName);
-					}
-				}
-			}
 		}
 	}
 
@@ -251,6 +233,32 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		}
 	}
 
+	private ServiceTrackerMap<String, List<IndexerPostProcessor>>
+		_getIndexerPostProcessorsServiceTrackerMap() {
+
+		ServiceTrackerMap<String, List<IndexerPostProcessor>>
+			indexerPostProcessorsServiceTrackerMap =
+				_indexerPostProcessorsServiceTrackerMap;
+
+		if (indexerPostProcessorsServiceTrackerMap != null) {
+			return indexerPostProcessorsServiceTrackerMap;
+		}
+
+		synchronized (this) {
+			if (_indexerPostProcessorsServiceTrackerMap == null) {
+				_indexerPostProcessorsServiceTrackerMap =
+					ServiceTrackerMapFactory.openMultiValueMap(
+						_bundleContext, IndexerPostProcessor.class,
+						"indexer.class.name");
+			}
+
+			indexerPostProcessorsServiceTrackerMap =
+				_indexerPostProcessorsServiceTrackerMap;
+		}
+
+		return indexerPostProcessorsServiceTrackerMap;
+	}
+
 	private ServiceTrackerMap<String, Indexer> _getIndexerServiceTrackerMap() {
 		ServiceTrackerMap<String, Indexer> indexerServiceTrackerMap =
 			_indexerServiceTrackerMap;
@@ -282,45 +290,8 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 							public Indexer addingService(
 								ServiceReference<Indexer> serviceReference) {
 
-								Indexer<?> indexer = _bundleContext.getService(
+								return _bundleContext.getService(
 									serviceReference);
-
-								Class<?> clazz = indexer.getClass();
-
-								synchronized (_queuedIndexerPostProcessors) {
-									List<IndexerPostProcessor>
-										indexerPostProcessors =
-											_queuedIndexerPostProcessors.remove(
-												clazz.getName());
-
-									if (indexerPostProcessors != null) {
-										for (IndexerPostProcessor
-												indexerPostProcessor :
-													indexerPostProcessors) {
-
-											indexer.
-												registerIndexerPostProcessor(
-													indexerPostProcessor);
-										}
-									}
-
-									indexerPostProcessors =
-										_queuedIndexerPostProcessors.remove(
-											indexer.getClassName());
-
-									if (indexerPostProcessors != null) {
-										for (IndexerPostProcessor
-												indexerPostProcessor :
-													indexerPostProcessors) {
-
-											indexer.
-												registerIndexerPostProcessor(
-													indexerPostProcessor);
-										}
-									}
-								}
-
-								return indexer;
 							}
 
 							@Override
@@ -416,6 +387,8 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		_defaultIndexerRequestBufferOverflowHandler;
 
 	private final Indexer<?> _dummyIndexer = new DummyIndexer();
+	private volatile ServiceTrackerMap<String, List<IndexerPostProcessor>>
+		_indexerPostProcessorsServiceTrackerMap;
 	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
 	private volatile IndexerRequestBufferOverflowHandler
 		_indexerRequestBufferOverflowHandler;
@@ -431,7 +404,5 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 	private final Map<String, Indexer<? extends Object>> _proxiedIndexers =
 		new ConcurrentHashMap<>();
-	private final Map<String, List<IndexerPostProcessor>>
-		_queuedIndexerPostProcessors = new HashMap<>();
 
 }

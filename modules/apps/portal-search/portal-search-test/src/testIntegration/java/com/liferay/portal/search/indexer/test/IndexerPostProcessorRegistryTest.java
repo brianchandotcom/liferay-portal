@@ -231,9 +231,8 @@ public class IndexerPostProcessorRegistryTest {
 		Indexer<BlogsEntry> blogsEntryIndexer = IndexerRegistryUtil.getIndexer(
 			BlogsEntry.class.getName());
 
-		Class<?> clazz = blogsEntryIndexer.getClass();
-
-		testQueuedIndexerPostProcessor(blogsEntryIndexer, clazz.getName());
+		testQueuedIndexerPostProcessor(
+			blogsEntryIndexer, blogsEntryIndexer.getClassName());
 	}
 
 	@Test

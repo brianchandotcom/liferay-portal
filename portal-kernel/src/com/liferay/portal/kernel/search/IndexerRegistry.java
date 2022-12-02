@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,6 +25,12 @@ public interface IndexerRegistry {
 	public <T> Indexer<T> getIndexer(Class<T> clazz);
 
 	public <T> Indexer<T> getIndexer(String className);
+
+	public List<IndexerPostProcessor> getIndexerPostProcessors(
+		Indexer<?> indexer);
+
+	public List<IndexerPostProcessor> getIndexerPostProcessors(
+		String className);
 
 	public Set<Indexer<?>> getIndexers();
 

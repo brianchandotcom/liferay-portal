@@ -126,9 +126,6 @@ public interface Indexer<T> {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception;
 
-	public void registerIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor);
-
 	@Bufferable
 	public void reindex(Collection<T> objects) throws SearchException;
 
@@ -149,8 +146,5 @@ public interface Indexer<T> {
 	public long searchCount(SearchContext searchContext) throws SearchException;
 
 	public void setIndexerEnabled(boolean indexerEnabled);
-
-	public void unregisterIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor);
 
 }

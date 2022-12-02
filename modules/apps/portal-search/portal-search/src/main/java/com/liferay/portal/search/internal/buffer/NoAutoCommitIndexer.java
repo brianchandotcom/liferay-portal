@@ -210,13 +210,6 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public void registerIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		_indexer.registerIndexerPostProcessor(indexerPostProcessor);
-	}
-
-	@Override
 	public void reindex(Collection<T> objects) throws SearchException {
 		_indexer.reindex(objects);
 	}
@@ -259,13 +252,6 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	@Override
 	public void setIndexerEnabled(boolean indexerEnabled) {
 		_indexer.setIndexerEnabled(indexerEnabled);
-	}
-
-	@Override
-	public void unregisterIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		_indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
 	}
 
 	private final Indexer<T> _indexer;

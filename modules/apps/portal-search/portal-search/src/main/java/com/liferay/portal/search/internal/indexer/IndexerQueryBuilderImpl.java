@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
@@ -44,6 +46,7 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -65,7 +68,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		Iterable<SearchContextContributor> modelSearchContextContributors,
 		PreFilterContributorHelper preFilterContributorHelper,
 		Iterable<SearchContextContributor> searchContextContributors,
-		IndexerPostProcessorsHolder indexerPostProcessorsHolder,
+		String className,
 		RelatedEntryIndexerRegistry relatedEntryIndexerRegistry) {
 
 		_addSearchKeywordsQueryContributorHelper =
@@ -78,7 +81,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		_modelSearchContextContributors = modelSearchContextContributors;
 		_preFilterContributorHelper = preFilterContributorHelper;
 		_searchContextContributors = searchContextContributors;
-		_indexerPostProcessorsHolder = indexerPostProcessorsHolder;
+		_className = className;
 		_relatedEntryIndexerRegistry = relatedEntryIndexerRegistry;
 	}
 
@@ -215,7 +218,10 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		BooleanQuery booleanQuery, BooleanFilter booleanFilter,
 		SearchContext searchContext) {
 
-		_indexerPostProcessorsHolder.forEach(
+		List<IndexerPostProcessor> indexerPostProcessors =
+			IndexerRegistryUtil.getIndexerPostProcessors(_className);
+
+		indexerPostProcessors.forEach(
 			indexerPostProcessor -> {
 				try {
 					indexerPostProcessor.postProcessSearchQuery(
@@ -325,7 +331,10 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	private void _postProcessFullQuery(
 		BooleanQuery booleanQuery, SearchContext searchContext) {
 
-		_indexerPostProcessorsHolder.forEach(
+		List<IndexerPostProcessor> indexerPostProcessors =
+			IndexerRegistryUtil.getIndexerPostProcessors(_className);
+
+		indexerPostProcessors.forEach(
 			indexerPostProcessor -> {
 				try {
 					indexerPostProcessor.postProcessFullQuery(
@@ -352,8 +361,8 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 
 	private final AddSearchKeywordsQueryContributorHelper
 		_addSearchKeywordsQueryContributorHelper;
+	private final String _className;
 	private final ExpandoQueryContributorHelper _expandoQueryContributorHelper;
-	private final IndexerPostProcessorsHolder _indexerPostProcessorsHolder;
 	private final IndexerRegistry _indexerRegistry;
 	private final ModelKeywordQueryContributorsRegistry
 		_modelKeywordQueryContributorsRegistry;

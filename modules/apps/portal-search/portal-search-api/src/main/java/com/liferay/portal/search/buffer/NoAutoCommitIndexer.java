@@ -195,13 +195,6 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public void registerIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void reindex(Collection<T> objects) throws SearchException {
 		throw new UnsupportedOperationException();
 	}
@@ -243,13 +236,6 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void setIndexerEnabled(boolean indexerEnabled) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void unregisterIndexerPostProcessor(
-		IndexerPostProcessor indexerPostProcessor) {
-
 		throw new UnsupportedOperationException();
 	}
 

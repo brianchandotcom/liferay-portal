@@ -35,19 +35,6 @@ describe('serializeTableRequestParams', () => {
 			})
 		).toEqual('page=1&pageSize=20&sort=name:asc');
 	});
-
-	it('returns a serialized table request params, changing page to 1 when has a keywords', () => {
-		expect(
-			serializeTableRequestParams({
-				filter: DEFAULT_FILTER,
-				keywords: 'Liferay DXP',
-				pagination: {
-					...DEFAULT_PAGINATION,
-					page: 10,
-				},
-			})
-		).toEqual('keywords=Liferay+DXP&page=1&pageSize=20&sort=name:asc');
-	});
 });
 
 describe('getOrderBy', () => {

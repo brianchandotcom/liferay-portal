@@ -113,6 +113,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1821,9 +1822,17 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		roleIds = UsersAdminUtil.addRequiredRoles(userId, roleIds);
 
-		_userPersistence.setRoles(userId, roleIds);
+		Arrays.sort(roleIds);
 
-		reindex(userId);
+		long[] currentRoleIds = _userPersistence.getRolePrimaryKeys(userId);
+
+		Arrays.sort(currentRoleIds);
+
+		if (!Arrays.equals(currentRoleIds, roleIds)) {
+			_userPersistence.setRoles(userId, roleIds);
+
+			reindex(userId);
+		}
 	}
 
 	/**

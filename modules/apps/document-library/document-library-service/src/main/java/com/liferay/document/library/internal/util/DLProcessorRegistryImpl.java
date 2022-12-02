@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLFileEntryConfiguration",
-	service = DLProcessorRegistry.class
+	immediate = true, service = DLProcessorRegistry.class
 )
 public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 

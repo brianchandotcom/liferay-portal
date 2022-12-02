@@ -23,6 +23,8 @@ import com.liferay.journal.constants.JournalStructureConstants;
 import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.util.JournalHelper;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -47,8 +49,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -390,21 +390,18 @@ public class JournalUtil {
 	}
 
 	public static String transform(
-			ThemeDisplay themeDisplay, Map<String, String> tokens,
+			JournalArticle article, ThemeDisplay themeDisplay,
+			Map<String, String> tokens, JournalHelper journalHelper,
+			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
 			String viewMode, String languageId, Document document,
 			PortletRequestModel portletRequestModel, String script,
-			boolean propagateException, Map<String, Object> contextObjects)
+			boolean propagateException)
 		throws Exception {
 
-		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(
-				JournalArticle.class.getName());
-
-		contextObjects.putAll(templateHandler.getCustomContextObjects());
-
 		return _journalTransformer.transform(
-			themeDisplay, contextObjects, tokens, viewMode, languageId,
-			document, portletRequestModel, script, propagateException);
+			article, themeDisplay, tokens, viewMode, languageId, journalHelper,
+			layoutDisplayPageProviderRegistry, document, portletRequestModel,
+			script, propagateException);
 	}
 
 	private static void _addReservedEl(

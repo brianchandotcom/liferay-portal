@@ -17,7 +17,6 @@ package com.liferay.journal.service.impl;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
-import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
@@ -59,7 +58,6 @@ import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationExce
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalActivityKeys;
@@ -96,8 +94,6 @@ import com.liferay.journal.util.JournalDefaultTemplateProvider;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -135,7 +131,6 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
-import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -7639,17 +7634,10 @@ public class JournalArticleLocalServiceImpl
 				cacheable = _journalDefaultTemplateProvider.isCacheable();
 			}
 
-			Map<String, String> friendlyURLMap = _getFriendlyURLMap(
-				article, themeDisplay);
-
 			content = JournalUtil.transform(
-				themeDisplay, tokens, viewMode, languageId, document,
-				portletRequestModel, script, propagateException,
-				HashMapBuilder.<String, Object>put(
-					"friendlyURL", _getFriendlyURL(friendlyURLMap, languageId)
-				).put(
-					"friendlyURLs", friendlyURLMap
-				).build());
+				article, themeDisplay, tokens, _journalHelper,
+				_layoutDisplayPageProviderRegistry, viewMode, languageId,
+				document, portletRequestModel, script, propagateException);
 
 			JournalServiceConfiguration journalServiceConfiguration =
 				configurationProvider.getCompanyConfiguration(
@@ -8695,72 +8683,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private String _getFriendlyURL(
-		Map<String, String> friendlyURLMap, String languageId) {
-
-		String friendlyURL = friendlyURLMap.get(languageId);
-
-		if (Validator.isNotNull(friendlyURL)) {
-			return friendlyURL;
-		}
-
-		friendlyURL = friendlyURLMap.get(
-			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
-
-		if (Validator.isNotNull(friendlyURL)) {
-			return friendlyURL;
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private Map<String, String> _getFriendlyURLMap(
-			JournalArticle article, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Map<String, String> friendlyURLMap = new HashMap<>();
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(
-					JournalArticle.class.getName());
-
-		if (layoutDisplayPageProvider == null) {
-			return friendlyURLMap;
-		}
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey()));
-
-		if ((themeDisplay == null) ||
-			(layoutDisplayPageObjectProvider == null) ||
-			(themeDisplay.getSiteGroup() == null) ||
-			!AssetDisplayPageUtil.hasAssetDisplayPage(
-				themeDisplay.getScopeGroupId(),
-				layoutDisplayPageObjectProvider.getClassNameId(),
-				layoutDisplayPageObjectProvider.getClassPK(),
-				layoutDisplayPageObjectProvider.getClassTypeId())) {
-
-			return friendlyURLMap;
-		}
-
-		Map<Locale, String> friendlyURLs = article.getFriendlyURLMap();
-
-		for (Locale locale : friendlyURLs.keySet()) {
-			friendlyURLMap.put(
-				LocaleUtil.toLanguageId(locale),
-				_journalHelper.createURLPattern(
-					article, locale, false,
-					FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
-					themeDisplay));
-		}
-
-		return friendlyURLMap;
 	}
 
 	private Map<Locale, String> _getLocalizedBodyMap(

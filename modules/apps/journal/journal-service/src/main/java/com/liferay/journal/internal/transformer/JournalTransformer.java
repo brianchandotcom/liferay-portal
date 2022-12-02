@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.transformer;
 
+import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -21,10 +22,17 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.util.JournalHelper;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -36,6 +44,7 @@ import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -43,6 +52,8 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
@@ -91,8 +102,10 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalTransformer {
 
 	public String transform(
-			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+			JournalArticle article, ThemeDisplay themeDisplay,
 			Map<String, String> tokens, String viewMode, String languageId,
+			JournalHelper journalHelper,
+			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
 			Document document, PortletRequestModel portletRequestModel,
 			String script, boolean propagateException)
 		throws Exception {
@@ -215,10 +228,6 @@ public class JournalTransformer {
 			template.prepare(httpServletRequest);
 		}
 
-		if (contextObjects != null) {
-			template.putAll(contextObjects);
-		}
-
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
@@ -263,6 +272,15 @@ public class JournalTransformer {
 			template.put("company", _getCompany(themeDisplay, companyId));
 			template.put("companyId", companyId);
 			template.put("device", _getDevice(themeDisplay));
+
+			Map<String, String> friendlyURLMap = _getFriendlyURLMap(
+				article, journalHelper, layoutDisplayPageProviderRegistry,
+				themeDisplay);
+
+			template.put(
+				"friendlyURL", _getFriendlyURL(friendlyURLMap, languageId));
+			template.put("friendlyURLs", friendlyURLMap);
+
 			template.put("locale", _getLocale(themeDisplay, locale));
 			template.put(
 				"permissionChecker",
@@ -279,6 +297,12 @@ public class JournalTransformer {
 			template.put("templatesPath", templatesPath);
 
 			template.put("viewMode", viewMode);
+
+			TemplateHandler templateHandler =
+				TemplateHandlerRegistryUtil.getTemplateHandler(
+					JournalArticle.class.getName());
+
+			template.putAll(templateHandler.getCustomContextObjects());
 
 			if (themeDisplay != null) {
 				template.prepareTaglib(
@@ -657,6 +681,74 @@ public class JournalTransformer {
 		}
 
 		return null;
+	}
+
+	private String _getFriendlyURL(
+		Map<String, String> friendlyURLMap, String languageId) {
+
+		String friendlyURL = friendlyURLMap.get(languageId);
+
+		if (Validator.isNotNull(friendlyURL)) {
+			return friendlyURL;
+		}
+
+		friendlyURL = friendlyURLMap.get(
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+
+		if (Validator.isNotNull(friendlyURL)) {
+			return friendlyURL;
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private Map<String, String> _getFriendlyURLMap(
+			JournalArticle article, JournalHelper journalHelper,
+			LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Map<String, String> friendlyURLMap = new HashMap<>();
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					JournalArticle.class.getName());
+
+		if (layoutDisplayPageProvider == null) {
+			return friendlyURLMap;
+		}
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey()));
+
+		if ((themeDisplay == null) ||
+			(layoutDisplayPageObjectProvider == null) ||
+			(themeDisplay.getSiteGroup() == null) ||
+			!AssetDisplayPageUtil.hasAssetDisplayPage(
+				themeDisplay.getScopeGroupId(),
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getClassTypeId())) {
+
+			return friendlyURLMap;
+		}
+
+		Map<Locale, String> friendlyURLs = article.getFriendlyURLMap();
+
+		for (Locale locale : friendlyURLs.keySet()) {
+			friendlyURLMap.put(
+				LocaleUtil.toLanguageId(locale),
+				journalHelper.createURLPattern(
+					article, locale, false,
+					FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
+					themeDisplay));
+		}
+
+		return friendlyURLMap;
 	}
 
 	private Locale _getLocale(ThemeDisplay themeDisplay, Locale locale)

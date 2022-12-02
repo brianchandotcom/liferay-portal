@@ -48,6 +48,10 @@ public class ConfigurationFactoryImpl implements ConfigurationFactory {
 	public Configuration getConfiguration(
 		ClassLoader classLoader, String name) {
 
+		if (classLoader.getResource(name + ".properties") == null) {
+			return null;
+		}
+
 		return new ConfigurationImpl(
 			classLoader, name, CompanyConstants.SYSTEM, null);
 	}

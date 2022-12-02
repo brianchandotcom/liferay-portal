@@ -229,6 +229,37 @@ definition {
 		PortletEntry.save();
 	}
 
+	test ViewTxtaiSystemSettingsRequiredFieldValidation {
+		property custom.properties = "feature.flag.LPS-163688=true";
+
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+		Select(
+			ariaLabel = "Sentence Transformer",
+			locator1 = "Select#ANY_ARIA_LABEL",
+			value1 = "txtai");
+
+		PortletEntry.inputText(
+			fieldLabel = "txtai Host Address",
+			text = "");
+
+		AssertElementPresent(
+			key_text = "Test Configuration",
+			locator1 = "Button#ANY_DISABLED_CLASS");
+
+		Button.clickSave();
+
+		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
+
+		PortletEntry.inputText(
+			fieldLabel = "txtai Host Address",
+			text = "test");
+
+		PortletEntry.save();
+	}
+
 	test ViewTxtaiSystemSettingsTestConfiguration {
 		property custom.properties = "feature.flag.LPS-163688=true";
 		property test.name.skip.portal.instance = "SemanticSearch#ViewTxtaiSystemSettingsTestConfiguration";

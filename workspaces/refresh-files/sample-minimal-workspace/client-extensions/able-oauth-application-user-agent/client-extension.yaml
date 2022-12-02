@@ -1,4 +1,4 @@
 able-oauth-application-user-agent:
-    homePageURL: http://host.docker.internal:58081
+    homePageURL: http://localhost:58081
     name: Able Object Action OAuth Application
     type: oAuthApplicationUserAgent

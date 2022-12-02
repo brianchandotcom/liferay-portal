@@ -181,15 +181,13 @@ public class JournalTransformer {
 
 		// Transform
 
-		long companyId = 0;
+		long companyId = article.getCompanyId();
 		long companyGroupId = 0;
-		long articleGroupId = 0;
+		long articleGroupId = article.getGroupId();
 		long classNameId = 0;
 
 		if (tokens != null) {
-			companyId = GetterUtil.getLong(tokens.get("company_id"));
 			companyGroupId = GetterUtil.getLong(tokens.get("company_group_id"));
-			articleGroupId = GetterUtil.getLong(tokens.get("article_group_id"));
 			classNameId = GetterUtil.getLong(
 				tokens.get(TemplateConstants.CLASS_NAME_ID));
 		}
@@ -204,11 +202,10 @@ public class JournalTransformer {
 			siteGroupId = themeDisplay.getSiteGroupId();
 		}
 
-		String templateId = tokens.get("ddm_template_id");
-
 		Template template = _getTemplate(
 			_getTemplateId(
-				templateId, companyId, companyGroupId, articleGroupId),
+				ddmTemplate.getTemplateKey(), companyId, companyGroupId,
+				articleGroupId),
 			script);
 
 		PortletRequest originalPortletRequest = null;
@@ -247,17 +244,9 @@ public class JournalTransformer {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			if (document != null) {
-				long ddmStructureId = GetterUtil.getLong(
-					tokens.get("ddm_structure_id"));
-
-				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.getStructure(ddmStructureId);
-
-				DDMForm ddmForm = ddmStructure.getDDMForm();
-
 				List<TemplateNode> templateNodes = _getTemplateNodes(
-					themeDisplay, rootElement,
-					ddmForm.getDDMFormFieldsMap(true), locale);
+					themeDisplay, rootElement, article.getDDMStructure(),
+					locale);
 
 				templateNodes.addAll(
 					includeBackwardsCompatibilityTemplateNodes(
@@ -805,7 +794,7 @@ public class JournalTransformer {
 
 	private List<TemplateNode> _getTemplateNodes(
 			ThemeDisplay themeDisplay, Element element,
-			Map<String, DDMFormField> ddmFormFieldsMap, Locale locale)
+			DDMStructure ddmStructure, Locale locale)
 		throws Exception {
 
 		List<TemplateNode> templateNodes = new ArrayList<>();
@@ -823,7 +812,7 @@ public class JournalTransformer {
 					"Element missing \"name\" attribute");
 			}
 
-			DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
+			DDMFormField ddmFormField = ddmStructure.getDDMFormField(name);
 
 			if (ddmFormField == null) {
 				String data = StringPool.BLANK;
@@ -849,7 +838,7 @@ public class JournalTransformer {
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
 					_getTemplateNodes(
-						themeDisplay, dynamicElementElement, ddmFormFieldsMap,
+						themeDisplay, dynamicElementElement, ddmStructure,
 						locale));
 			}
 

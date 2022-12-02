@@ -14,15 +14,12 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.cache.PortalCacheListenerFactory;
-import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.ehcache.internal.configurator.SingleVMEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.io.Serializable;
@@ -69,27 +66,6 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		getBaseEhcachePortalCacheManagerConfigurator() {
 
 		return _singleVMEhcachePortalCacheManagerConfigurator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalCacheListenerFactory(
-		PortalCacheListenerFactory portalCacheListenerFactory) {
-
-		this.portalCacheListenerFactory = portalCacheListenerFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalCacheManagerListenerFactory(
-		PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
-			portalCacheManagerListenerFactory) {
-
-		this.portalCacheManagerListenerFactory =
-			portalCacheManagerListenerFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
 	}
 
 	private static final String _DEFAULT_CONFIG_FILE_NAME =

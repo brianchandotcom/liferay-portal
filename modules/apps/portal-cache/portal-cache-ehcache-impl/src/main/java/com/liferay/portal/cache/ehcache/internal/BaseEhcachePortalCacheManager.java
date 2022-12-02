@@ -66,6 +66,7 @@ import net.sf.ehcache.event.CacheManagerEventListenerRegistry;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -396,10 +397,16 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	protected BundleContext bundleContext;
+
+	@Reference
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
+
+	@Reference
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
-	protected volatile Props props;
+
+	@Reference
+	protected Props props;
 
 	private void _initPortalCacheListeners(
 		PortalCache<K, V> portalCache,

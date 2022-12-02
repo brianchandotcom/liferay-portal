@@ -59,7 +59,8 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new DateTimeEntityField(
-				"lastPostDate", locale -> "lastPostDate",
+				"lastPostDate",
+				locale -> Field.getSortableFieldName("lastPostDate"),
 				locale -> "lastPostDate"),
 			new EntityField(
 				"showAsAnswer", EntityField.Type.BOOLEAN,

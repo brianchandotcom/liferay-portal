@@ -90,6 +90,8 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Assert fragments admin is accessible in the staging site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
 			ProductMenuHelper.openProductMenu();
 
 			ProductMenuHelper.expandCategory(category = "Design");

@@ -2643,7 +2643,7 @@ definition {
 			Account._goToInviteUsers(accountName = "S Auto Service");
 
 			Type(
-				key_text = "Emails",
+				key_text = "Email Addresses",
 				locator1 = "TextInput#ANY",
 				value1 = "john.doe@liferay1.com");
 

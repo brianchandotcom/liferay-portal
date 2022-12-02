@@ -59,7 +59,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class DepotAssetRendererFactoryRegistryTest {
+public class DepotAssetRendererFactoryTrackerTest {
 
 	@ClassRule
 	@Rule

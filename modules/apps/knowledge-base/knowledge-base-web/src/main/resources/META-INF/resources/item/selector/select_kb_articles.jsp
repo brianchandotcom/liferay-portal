@@ -75,13 +75,13 @@ KBArticleItemSelectorViewDisplayContext kbArticleItemSelectorViewDisplayContext 
 							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 							%>
 
-							<span class="text-default">
-								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curKBArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-							</span>
-
 							<p class="font-weight-bold h5">
 								<%= HtmlUtil.escape(curKBArticle.getTitle()) %>
 							</p>
+
+							<span class="text-default">
+								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curKBArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+							</span>
 						</div>
 
 						<%
@@ -113,15 +113,15 @@ KBArticleItemSelectorViewDisplayContext kbArticleItemSelectorViewDisplayContext 
 						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 						%>
 
-						<span class="text-default">
-							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curKBFolder.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-						</span>
-
 						<p class="font-weight-bold h5">
 							<a href="<%= kbArticleItemSelectorViewDisplayContext.getKBFolderRowURL(curKBFolder.getGroupId(), curKBFolder.getKbFolderId()) %>">
 								<%= HtmlUtil.escape(curKBFolder.getName()) %>
 							</a>
 						</p>
+
+						<span class="text-default">
+							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curKBFolder.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+						</span>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 			</c:choose>

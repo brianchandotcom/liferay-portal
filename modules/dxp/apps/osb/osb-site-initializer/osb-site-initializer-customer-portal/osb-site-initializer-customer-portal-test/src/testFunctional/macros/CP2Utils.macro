@@ -165,4 +165,10 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro assertTextVisible {
+		var key_text = "${text}";
+
+		AssertVisible(locator1 = "CP2Utils#MODAL_TEXT");
+	}
+
 }

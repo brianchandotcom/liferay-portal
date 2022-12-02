@@ -574,6 +574,16 @@ definition {
 			value1 = "Child Article");
 	}
 
+	macro goToEntryPermissions {
+		Click(
+			key_rowEntry = "${kbArticleTitle}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Permissions");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
 	macro gotoKBArticleViaKBDisplayHierarchyNavigationPG {
 		AssertClick(
 			key_kbArticleTitle = "${kbArticleTitle}",
@@ -946,7 +956,16 @@ definition {
 	}
 
 	macro subscribeCP {
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Subscribe");
+		if (isSet(kbArticleTitle)) {
+			Click(
+				key_rowEntry = "${kbArticleTitle}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Subscribe");
+		}
+		else {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Subscribe");
+		}
 
 		Alert.viewSuccessMessage();
 	}
@@ -966,6 +985,41 @@ definition {
 			AssertConfirm(value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
 
 			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro viewArticleHistoryCP {
+		Click(
+			key_rowEntry = "${kbArticleTitle}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "History");
+
+		Check(
+			key_versionNumber = "${kbArticleVersionNew}",
+			locator1 = "KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX",
+			value1 = "${kbArticleVersionNew}");
+
+		Check(
+			key_versionNumber = "${kbArticleVersionOld}",
+			locator1 = "KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX",
+			value1 = "${kbArticleVersionOld}");
+
+		AssertClick(
+			locator1 = "Button#COMPARE_VERSIONS",
+			value1 = "Compare Versions");
+
+		if (isSet(kbArticleContentRemovedDiff)) {
+			AssertTextEquals(
+				key_kbArticleContentRemovedDiff = "${kbArticleContentRemovedDiff}",
+				locator1 = "KnowledgeBaseArticle#HISTORY_CONTENT_REMOVED_DIFF",
+				value1 = "${kbArticleContentRemovedDiff}");
+		}
+
+		if (isSet(kbArticleContentAddedDiff)) {
+			AssertTextEquals(
+				locator1 = "KnowledgeBaseArticle#HISTORY_CONTENT_ADDED_DIFF",
+				value1 = "${kbArticleContentAddedDiff}");
 		}
 	}
 
@@ -1456,6 +1510,24 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+			value1 = "${kbArticleContent}");
+	}
+
+	macro viewPrintContent {
+		Click(
+			key_rowEntry = "${kbArticleTitle}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Print");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseArticle#TITLE_PRINT_PREVIEW",
+			value1 = "${kbArticleTitle}");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseArticle#CONTENT",
 			value1 = "${kbArticleContent}");
 	}
 

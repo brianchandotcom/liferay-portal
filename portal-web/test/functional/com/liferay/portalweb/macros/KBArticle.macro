@@ -884,6 +884,12 @@ definition {
 				value1 = "Select");
 		}
 		else if (isSet(kbArticle)) {
+			if (isSet(kbFolderName)) {
+				Click(
+					key_listEntry = "${kbFolderName}",
+					locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
+			}
+
 			AssertClick(
 				key_kbArticleTitle = "${kbArticleTitle}",
 				locator1 = "KnowledgeBaseSelectParent#SELECTOR_FIELD",

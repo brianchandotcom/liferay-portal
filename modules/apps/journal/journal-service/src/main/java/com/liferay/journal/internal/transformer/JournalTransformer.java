@@ -84,7 +84,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -136,8 +135,10 @@ public class JournalTransformer {
 
 		Element rootElement = document.getRootElement();
 
+		List<TemplateNode> templateNodes = new ArrayList<>();
+
 		_addAllReservedEls(
-			rootElement, tokens, article, languageId, themeDisplay);
+			article, languageId, templateNodes, themeDisplay, tokens);
 
 		if (_logTokens.isDebugEnabled()) {
 			String tokensString = PropertiesUtil.list(tokens);
@@ -250,9 +251,10 @@ public class JournalTransformer {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			if (document != null) {
-				List<TemplateNode> templateNodes = _getTemplateNodes(
-					themeDisplay, rootElement, article.getDDMStructure(),
-					locale);
+				templateNodes.addAll(
+					_getTemplateNodes(
+						themeDisplay, rootElement, article.getDDMStructure(),
+						locale));
 
 				templateNodes.addAll(
 					includeBackwardsCompatibilityTemplateNodes(
@@ -470,48 +472,46 @@ public class JournalTransformer {
 	}
 
 	private void _addAllReservedEls(
-		Element rootElement, Map<String, String> tokens, JournalArticle article,
-		String languageId, ThemeDisplay themeDisplay) {
+		JournalArticle article, String languageId,
+		List<TemplateNode> templateNodes, ThemeDisplay themeDisplay,
+		Map<String, String> tokens) {
 
 		_addReservedEl(
-			rootElement, tokens, JournalStructureConstants.RESERVED_ARTICLE_ID,
-			article.getArticleId());
+			article.getArticleId(), templateNodes, themeDisplay, tokens,
+			JournalStructureConstants.RESERVED_ARTICLE_ID);
 
 		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
-			String.valueOf(article.getVersion()));
+			JournalStructureConstants.RESERVED_ARTICLE_VERSION, templateNodes,
+			themeDisplay, tokens, String.valueOf(article.getVersion()));
 
 		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_TITLE,
-			article.getTitle(languageId));
+			JournalStructureConstants.RESERVED_ARTICLE_TITLE, templateNodes,
+			themeDisplay, tokens, article.getTitle(languageId));
 
 		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE,
-			article.getUrlTitle());
+			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE, templateNodes,
+			themeDisplay, tokens, article.getUrlTitle());
 
 		_addReservedEl(
-			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
+			templateNodes, themeDisplay, tokens,
 			article.getDescription(languageId));
 
 		_addReservedEl(
-			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
-			article.getCreateDate());
+			templateNodes, themeDisplay, tokens,
+			Time.getRFC822(article.getCreateDate()));
 
 		_addReservedEl(
-			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
-			article.getModifiedDate());
+			templateNodes, themeDisplay, tokens,
+			Time.getRFC822(article.getModifiedDate()));
 
 		if (article.getDisplayDate() != null) {
 			_addReservedEl(
-				rootElement, tokens,
 				JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
-				article.getDisplayDate());
+				templateNodes, themeDisplay, tokens,
+				Time.getRFC822(article.getDisplayDate()));
 		}
 
 		String smallImageURL = StringPool.BLANK;
@@ -527,22 +527,20 @@ public class JournalTransformer {
 		}
 
 		_addReservedEl(
-			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
-			smallImageURL);
+			templateNodes, themeDisplay, tokens, smallImageURL);
 
 		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		_addReservedEl(
-			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_ASSET_TAG_NAMES,
+			templateNodes, themeDisplay, tokens,
 			StringUtil.merge(assetTagNames));
 
 		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID,
-			String.valueOf(article.getUserId()));
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID, templateNodes,
+			themeDisplay, tokens, String.valueOf(article.getUserId()));
 
 		String userName = StringPool.BLANK;
 		String userEmailAddress = StringPool.BLANK;
@@ -559,52 +557,31 @@ public class JournalTransformer {
 		}
 
 		_addReservedEl(
-			rootElement, tokens,
-			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME, userName);
+			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME,
+			templateNodes, themeDisplay, tokens, userName);
 
 		_addReservedEl(
-			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
-			userEmailAddress);
+			templateNodes, themeDisplay, tokens, userEmailAddress);
 
 		_addReservedEl(
-			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS,
-			userComments);
+			templateNodes, themeDisplay, tokens, userComments);
 
 		_addReservedEl(
-			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
-			userJobTitle);
+			templateNodes, themeDisplay, tokens, userJobTitle);
 	}
 
 	private void _addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		Date value) {
+		String name, List<TemplateNode> templateNodes,
+		ThemeDisplay themeDisplay, Map<String, String> tokens, String value) {
 
-		_addReservedEl(rootElement, tokens, name, Time.getRFC822(value));
-	}
+		// Template nodes
 
-	private void _addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		String value) {
-
-		// XML
-
-		if (rootElement != null) {
-			Element dynamicElementElement = rootElement.addElement(
-				"dynamic-element");
-
-			dynamicElementElement.addAttribute("name", name);
-
-			dynamicElementElement.addAttribute("type", "text");
-
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			//dynamicContentElement.setText("<![CDATA[" + value + "]]>");
-			dynamicContentElement.setText(value);
-		}
+		templateNodes.add(
+			new TemplateNode(
+				themeDisplay, name, value, StringPool.BLANK, new HashMap<>()));
 
 		// Tokens
 

@@ -953,11 +953,19 @@ public abstract class AbstractComponentManager<S> implements ComponentManager<S>
      */
     protected boolean registerService()
     {
-        String[] services = getProvidedServices();
-        if (services != null)
-        {
-            return registrationManager.changeRegistration(RegistrationManager.RegState.registered, services);
-        }
+		DotGraphUtil.startRegister(this);
+
+		try {
+			String[] services = getProvidedServices();
+			if (services != null)
+			{
+				return registrationManager.changeRegistration(RegistrationManager.RegState.registered, services);
+			}
+		}
+		finally {
+			DotGraphUtil.endRegister(this);
+		}
+
         return true;
     }
 
@@ -1469,3 +1477,4 @@ public abstract class AbstractComponentManager<S> implements ComponentManager<S>
         return null;
     }
 }
+/* @generated */

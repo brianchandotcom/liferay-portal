@@ -1,0 +1,36 @@
+diff --git a/org/apache/felix/scr/impl/manager/AbstractComponentManager.java b/org/apache/felix/scr/impl/manager/AbstractComponentManager.java
+index 15fc1cd996f0..ac591aa0f189 100755
+--- a/org/apache/felix/scr/impl/manager/AbstractComponentManager.java
++++ b/org/apache/felix/scr/impl/manager/AbstractComponentManager.java
+@@ -953,11 +953,19 @@ public abstract class AbstractComponentManager<S> implements ComponentManager<S>
+      */
+     protected boolean registerService()
+     {
+-        String[] services = getProvidedServices();
+-        if (services != null)
+-        {
+-            return registrationManager.changeRegistration(RegistrationManager.RegState.registered, services);
+-        }
++		DotGraphUtil.startRegister(this);
++
++		try {
++			String[] services = getProvidedServices();
++			if (services != null)
++			{
++				return registrationManager.changeRegistration(RegistrationManager.RegState.registered, services);
++			}
++		}
++		finally {
++			DotGraphUtil.endRegister(this);
++		}
++
+         return true;
+     }
+ 
+@@ -1468,4 +1476,5 @@ public abstract class AbstractComponentManager<S> implements ComponentManager<S>
+         }
+         return null;
+     }
+ }
++/* @generated */
+\ No newline at end of file

@@ -17,8 +17,15 @@ package com.liferay.object.rest.internal.odata.filter.expression;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsPredicateProviderRegistry;
+import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -36,10 +43,12 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
+import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
@@ -50,6 +59,7 @@ import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
+import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.text.DateFormat;
@@ -73,11 +83,14 @@ public class PredicateExpressionVisitorImpl
 	public PredicateExpressionVisitorImpl(
 		EntityModel entityModel, long objectDefinitionId,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
-		ObjectFieldLocalService objectFieldLocalService) {
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelatedModelsPredicateProviderRegistry
+			objectRelatedModelsPredicateProviderRegistry) {
 
 		this(
 			entityModel, new HashMap<>(), objectDefinitionId,
-			objectFieldBusinessTypeRegistry, objectFieldLocalService);
+			objectFieldBusinessTypeRegistry, objectFieldLocalService,
+			objectRelatedModelsPredicateProviderRegistry);
 	}
 
 	@Override
@@ -103,12 +116,45 @@ public class PredicateExpressionVisitorImpl
 
 		return (Predicate)lambdaFunctionExpression.accept(
 			new PredicateExpressionVisitorImpl(
-				_entityModel,
+				_getObjectDefinitionEntityModel(_objectDefinitionId),
 				Collections.singletonMap(
 					lambdaFunctionExpression.getVariableName(),
 					collectionPropertyExpression.getName()),
 				_objectDefinitionId, _objectFieldBusinessTypeRegistry,
-				_objectFieldLocalService));
+				_objectFieldLocalService,
+				_objectRelatedModelsPredicateProviderRegistry));
+	}
+
+	@Override
+	public Object visitComplexPropertyExpression(
+			ComplexPropertyExpression complexPropertyExpression)
+		throws ExpressionVisitException {
+
+		EntityModel entityModel = _getObjectDefinitionEntityModel(
+			_objectDefinitionId);
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		ComplexEntityField complexEntityField =
+			(ComplexEntityField)entityFieldsMap.get(
+				complexPropertyExpression.getName());
+
+		_objectRelationship = _fetchObjectRelationship(
+			complexPropertyExpression.getName());
+
+		PropertyExpression propertyExpression =
+			complexPropertyExpression.getPropertyExpression();
+
+		Map<String, EntityField> complexEntityFieldEntityFieldsMap =
+			complexEntityField.getEntityFieldsMap();
+
+		EntityField entityField = complexEntityFieldEntityFieldsMap.get(
+			propertyExpression.getName());
+
+		_relatedFieldName = entityField.getName();
+
+		return entityField.getName();
 	}
 
 	@Override
@@ -135,11 +181,13 @@ public class PredicateExpressionVisitorImpl
 		throws ExpressionVisitException {
 
 		if (Objects.equals(ListExpression.Operation.IN, operation)) {
-			Column<?, Object> column = _getColumn(left);
+			Column<?, Object> column = _getColumn(left, _objectDefinitionId);
 
 			return column.in(
 				TransformUtil.transformToArray(
-					rights, right -> _getValue(left, right), Object.class));
+					rights,
+					right -> _getValue(_objectDefinitionId, left, right),
+					Object.class));
 		}
 
 		throw new UnsupportedOperationException(
@@ -261,36 +309,152 @@ public class PredicateExpressionVisitorImpl
 		Map<String, String> lambdaVariableExpressionFieldNames,
 		long objectDefinitionId,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
-		ObjectFieldLocalService objectFieldLocalService) {
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelatedModelsPredicateProviderRegistry
+			objectRelatedModelsPredicateProviderRegistry) {
 
-		_entityModel = entityModel;
+		_objectDefinitionsEntityModelMap.put(objectDefinitionId, entityModel);
 		_lambdaVariableExpressionFieldNames =
 			lambdaVariableExpressionFieldNames;
 		_objectDefinitionId = objectDefinitionId;
 		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelatedModelsPredicateProviderRegistry =
+			objectRelatedModelsPredicateProviderRegistry;
 	}
 
 	private Predicate _contains(Object fieldName, Object fieldValue) {
-		Column<?, Object> column = _getColumn(fieldName);
+		Column<?, Object> column = _getColumn(fieldName, _objectDefinitionId);
 
 		return column.like(
-			StringPool.PERCENT + _getValue(fieldName, fieldValue) +
-				StringPool.PERCENT);
+			StringPool.PERCENT +
+				_getValue(_objectDefinitionId, fieldName, fieldValue) +
+					StringPool.PERCENT);
 	}
 
-	private Column<?, Object> _getColumn(Object fieldName) {
-		EntityField entityField = _getEntityField(fieldName);
+	private EntityModel _createEntityModel(long objectDefinitionId) {
+		try {
+			return new ObjectEntryEntityModel(
+				ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+					objectDefinitionId),
+				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+		}
+		catch (Exception exception) {
+			_logExceptionInDebugMode(exception);
+
+			return new ObjectEntryEntityModel(Collections.emptyList());
+		}
+	}
+
+	private ObjectRelationship _fetchObjectRelationship(
+		String relationshipName) {
+
+		try {
+			return ObjectRelationshipLocalServiceUtil.
+				getObjectRelationshipByObjectDefinitionId(
+					_objectDefinitionId,
+					GetterUtil.getString(relationshipName));
+		}
+		catch (Exception exception) {
+			_logExceptionInDebugMode(exception);
+
+			return null;
+		}
+	}
+
+	private Column<?, Object> _getColumn(
+		Object fieldName, long objectDefinitionId) {
+
+		EntityField entityField = _getEntityField(
+			fieldName, objectDefinitionId);
 
 		return (Column<?, Object>)_objectFieldLocalService.getColumn(
-			_objectDefinitionId, entityField.getFilterableName(null));
+			objectDefinitionId, entityField.getFilterableName(null));
 	}
 
-	private EntityField _getEntityField(Object fieldName) {
-		Map<String, EntityField> entityFieldsMap =
-			_entityModel.getEntityFieldsMap();
+	private EntityField _getEntityField(
+		Object fieldName, long objectDefinitionId) {
+
+		Map<String, EntityField> entityFieldsMap = _getEntityFieldsMap(
+			objectDefinitionId);
 
 		return entityFieldsMap.get(GetterUtil.getString(fieldName));
+	}
+
+	private Map<String, EntityField> _getEntityFieldsMap(
+		long objectDefinitionId) {
+
+		EntityModel entityModel = _getObjectDefinitionEntityModel(
+			objectDefinitionId);
+
+		return entityModel.getEntityFieldsMap();
+	}
+
+	private Predicate _getExpressionPredicate(
+		Column<?, Object> column, BinaryExpression.Operation operation,
+		Object value) {
+
+		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
+			return column.eq(value);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
+			return column.gte(value);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
+			return column.gt(value);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
+			return column.lte(value);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
+			return column.lt(value);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
+			return column.neq(value);
+		}
+
+		return null;
+	}
+
+	private EntityModel _getObjectDefinitionEntityModel(
+		long objectDefinitionId) {
+
+		EntityModel entityModel = _objectDefinitionsEntityModelMap.get(
+			objectDefinitionId);
+
+		if (entityModel == null) {
+			entityModel = _createEntityModel(objectDefinitionId);
+
+			_objectDefinitionsEntityModelMap.put(
+				objectDefinitionId, entityModel);
+		}
+
+		return entityModel;
+	}
+
+	private Predicate _getPredicateForRelationships(
+			BinaryExpression.Operation operation, Object left, Object right)
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+				_objectDefinitionId);
+
+		ObjectRelatedModelsPredicateProvider
+			objectRelatedModelsPredicateProvider =
+				_objectRelatedModelsPredicateProviderRegistry.
+					getObjectRelatedModelsPredicateProvider(
+						objectDefinition1.getClassName(),
+						_objectRelationship.getType());
+
+		long relatedObjectDefinitionId = _getRelatedObjectDefinitionId(
+			_objectDefinitionId, _objectRelationship);
+
+		return objectRelatedModelsPredicateProvider.getPredicate(
+			_objectRelationship,
+			_getExpressionPredicate(
+				_getColumn(_relatedFieldName, relatedObjectDefinitionId),
+				operation, _getValue(relatedObjectDefinitionId, left, right)));
 	}
 
 	private Optional<Predicate> _getPredicateOptional(
@@ -321,37 +485,38 @@ public class PredicateExpressionVisitorImpl
 			return Optional.of(predicate);
 		}
 
-		Column<?, Object> column = _getColumn(left);
+		if (_objectRelationship != null) {
+			try {
+				return Optional.ofNullable(
+					_getPredicateForRelationships(operation, left, right));
+			}
+			catch (Exception exception) {
+				_logExceptionInDebugMode(exception);
 
-		Object value = _getValue(left, right);
-
-		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
-			predicate = column.eq(value);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
-			predicate = column.gte(value);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
-			predicate = column.gt(value);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
-			predicate = column.lte(value);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
-			predicate = column.lt(value);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
-			predicate = column.neq(value);
-		}
-		else {
-			return Optional.empty();
+				return Optional.empty();
+			}
 		}
 
-		return Optional.of(predicate);
+		return Optional.ofNullable(
+			_getExpressionPredicate(
+				_getColumn(left, _objectDefinitionId), operation,
+				_getValue(_objectDefinitionId, left, right)));
 	}
 
-	private Object _getValue(Object left, Object right) {
-		EntityField entityField = _getEntityField(left);
+	private long _getRelatedObjectDefinitionId(
+		long objectDefinitionId, ObjectRelationship objectRelationship) {
+
+		if (objectRelationship.getObjectDefinitionId1() != objectDefinitionId) {
+			return objectRelationship.getObjectDefinitionId1();
+		}
+
+		return objectRelationship.getObjectDefinitionId2();
+	}
+
+	private Object _getValue(
+		long objectDefinitionId, Object left, Object right) {
+
+		EntityField entityField = _getEntityField(left, objectDefinitionId);
 
 		EntityField.Type entityType = entityField.getType();
 
@@ -402,29 +567,39 @@ public class PredicateExpressionVisitorImpl
 			return value;
 		}
 		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
+			_logExceptionInDebugMode(portalException);
 
 			return right;
 		}
 	}
 
+	private void _logExceptionInDebugMode(Exception exception) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(exception);
+		}
+	}
+
 	private Predicate _startsWith(Object fieldName, Object fieldValue) {
-		Column<?, Object> column = _getColumn(fieldName);
+		Column<?, Object> column = _getColumn(fieldName, _objectDefinitionId);
 
 		return column.like(
-			_getValue(fieldName, fieldValue) + StringPool.PERCENT);
+			_getValue(_objectDefinitionId, fieldName, fieldValue) +
+				StringPool.PERCENT);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PredicateExpressionVisitorImpl.class);
 
-	private final EntityModel _entityModel;
-	private Map<String, String> _lambdaVariableExpressionFieldNames;
+	private final Map<String, String> _lambdaVariableExpressionFieldNames;
 	private final long _objectDefinitionId;
+	private final Map<Long, EntityModel> _objectDefinitionsEntityModelMap =
+		new HashMap<>();
 	private final ObjectFieldBusinessTypeRegistry
 		_objectFieldBusinessTypeRegistry;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelatedModelsPredicateProviderRegistry
+		_objectRelatedModelsPredicateProviderRegistry;
+	private ObjectRelationship _objectRelationship;
+	private String _relatedFieldName;
 
 }

@@ -14,19 +14,17 @@
 
 package com.liferay.search.experiences.internal.search.spi.model.index.contributor;
 
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
@@ -35,7 +33,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -95,30 +92,24 @@ public class JournalArticleSentenceEmbeddingModelDocumentContributor
 	private String _getArticleContent(
 		JournalArticle journalArticle, String languageId) {
 
-		try {
-			com.liferay.portal.kernel.xml.Document document =
-				SAXReaderUtil.read(
-					journalArticle.getContentByLocale(languageId));
+		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
 
-			Node contentNode = document.selectSingleNode(
-				"/root/dynamic-element[@name='content']/dynamic-content");
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(true);
 
-			if (!Objects.equals(contentNode, null)) {
-				return contentNode.getText();
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"content");
+
+		if (ddmFormFieldValues.isEmpty()) {
+			return StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		return value.getString(_language.getLocale(languageId));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleSentenceEmbeddingModelDocumentContributor.class);
-
-	@Reference
-	private JournalContent _journalContent;
 
 	@Reference
 	private Language _language;

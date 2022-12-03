@@ -14,6 +14,9 @@
 
 package com.liferay.journal.internal.transformer;
 
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -21,6 +24,7 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
@@ -79,7 +83,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 			_log.debug("onXml");
 		}
 
-		replace(document, tokens);
+		replace(document, languageId, tokens);
 
 		return document;
 	}
@@ -91,14 +95,16 @@ public class ContentTransformerListener extends BaseTransformerListener {
 			JournalServiceConfiguration.class, properties);
 	}
 
-	protected void replace(Document document, Map<String, String> tokens) {
+	protected void replace(
+		Document document, String languageId, Map<String, String> tokens) {
+
 		try {
 			Element rootElement = document.getRootElement();
 
 			long articleGroupId = GetterUtil.getLong(
 				tokens.get("article_group_id"));
 
-			replace(rootElement, articleGroupId);
+			replace(rootElement, articleGroupId, languageId);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -107,7 +113,9 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		}
 	}
 
-	protected void replace(Element root, long articleGroupId) throws Exception {
+	protected void replace(Element root, long articleGroupId, String languageId)
+		throws Exception {
+
 		for (Element element : root.elements()) {
 			List<Element> dynamicContentElements = element.elements(
 				"dynamic-content");
@@ -132,14 +140,12 @@ public class ContentTransformerListener extends BaseTransformerListener {
 						String articleId = text.substring(0, pos);
 						String elementName = text.substring(pos + 1);
 
-						JournalArticle article =
-							JournalArticleLocalServiceUtil.getArticle(
-								articleGroupId, articleId);
-
 						dynamicContentElement.clearContent();
 						dynamicContentElement.addCDATA(
-							_getDynamicContent(
-								article.getDocument(), elementName));
+							_getContent(
+								JournalArticleLocalServiceUtil.getArticle(
+									articleGroupId, articleId),
+								elementName, languageId));
 					}
 				}
 				else if ((text != null) &&
@@ -152,7 +158,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 				}
 			}
 
-			replace(element, articleGroupId);
+			replace(element, articleGroupId, languageId);
 		}
 	}
 
@@ -162,11 +168,13 @@ public class ContentTransformerListener extends BaseTransformerListener {
 	 *
 	 * @return the processed string
 	 */
-	protected String replace(String xml, Map<String, String> tokens) {
+	protected String replace(
+		String xml, String languageId, Map<String, String> tokens) {
+
 		try {
 			Document document = SAXReaderUtil.read(xml);
 
-			replace(document, tokens);
+			replace(document, languageId, tokens);
 
 			document.formattedString(StringPool.DOUBLE_SPACE);
 		}
@@ -179,28 +187,26 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		return xml;
 	}
 
-	private String _getDynamicContent(Document document, String elementName) {
-		String content = null;
+	private String _getContent(
+		JournalArticle article, String elementName, String languageId) {
 
-		try {
-			Element rootElement = document.getRootElement();
+		DDMFormValues ddmFormValues = article.getDDMFormValues();
 
-			for (Element element : rootElement.elements()) {
-				String curElementName = element.attributeValue(
-					"name", StringPool.BLANK);
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(true);
 
-				if (curElementName.equals(elementName)) {
-					content = element.elementText("dynamic-content");
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			elementName);
 
-					break;
-				}
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
+		if (ddmFormFieldValues.isEmpty()) {
+			return null;
 		}
 
-		return GetterUtil.getString(content);
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		return value.getString(_language.getLocale(languageId));
 	}
 
 	private String _injectEditInPlace(String script, Document document) {
@@ -258,5 +264,8 @@ public class ContentTransformerListener extends BaseTransformerListener {
 	private Html _html;
 
 	private volatile JournalServiceConfiguration _journalServiceConfiguration;
+
+	@Reference
+	private Language _language;
 
 }

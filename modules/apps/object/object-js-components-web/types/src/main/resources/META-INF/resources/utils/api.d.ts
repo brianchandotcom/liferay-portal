@@ -12,7 +12,7 @@
  * details.
  */
 
-interface NotificationTemplate {
+export interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
 	body: LocalizedValue<string>;

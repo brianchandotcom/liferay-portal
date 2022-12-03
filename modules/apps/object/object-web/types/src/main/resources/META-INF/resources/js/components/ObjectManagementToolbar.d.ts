@@ -14,24 +14,19 @@
 
 /// <reference types="react" />
 
-import {Observer} from '@clayui/modal/lib/types';
-import {Entity} from './index';
-interface ModalEditExternalReferenceCodeProps {
+interface ObjectManagementToolbarProps {
+	backURL: string;
 	externalReferenceCode: string;
-	helpMessage: string;
-	observer: Observer;
-	onClose: () => void;
-	onGetEntity: () => Promise<Entity>;
-	saveURL: string;
-	setExternalReferenceCode: (value: string) => void;
+	hasPublishObjectPermission: boolean;
+	hasUpdateObjectDefinitionPermission: boolean;
+	isApproved: boolean;
+	label: string;
+	objectDefinitionId: number;
+	portletNamespace: string;
+	screenNavigationCategoryKey: string;
+	system: boolean;
 }
-export declare function ModalEditExternalReferenceCode({
-	externalReferenceCode,
-	helpMessage,
-	observer,
-	onClose,
-	onGetEntity,
-	saveURL,
-	setExternalReferenceCode,
-}: ModalEditExternalReferenceCodeProps): JSX.Element;
+export default function ObjectManagementToolbar(
+	props: ObjectManagementToolbarProps
+): JSX.Element;
 export {};

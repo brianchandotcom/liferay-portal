@@ -17,11 +17,13 @@
 import './EditNotificationTemplate.scss';
 declare type editorTypeOptions = 'freemarker' | 'richText';
 interface IProps {
+	backURL: string;
 	baseResourceURL: string;
 	editorConfig: object;
 	externalReferenceCode: string;
 	notificationTemplateId: number;
 	notificationTemplateType: string;
+	portletNamespace: string;
 }
 declare type TEmailRecipients = {
 	bcc: string;
@@ -49,10 +51,12 @@ export declare type TNotificationTemplate = {
 	type: string;
 };
 export default function EditNotificationTemplate({
+	backURL,
 	baseResourceURL,
 	editorConfig,
-	externalReferenceCode: initialExternalReferenceCode,
+	externalReferenceCode,
 	notificationTemplateId,
 	notificationTemplateType,
+	portletNamespace,
 }: IProps): JSX.Element;
 export {};

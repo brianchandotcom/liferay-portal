@@ -24,7 +24,7 @@ ObjectDefinitionsDetailsDisplayContext objectDefinitionsDetailsDisplayContext = 
 <div class="lfr-object__edit-object-definition">
 	<div>
 		<react:component
-			module="js/components/ManagementToolbar"
+			module="js/components/ObjectManagementToolbar"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))

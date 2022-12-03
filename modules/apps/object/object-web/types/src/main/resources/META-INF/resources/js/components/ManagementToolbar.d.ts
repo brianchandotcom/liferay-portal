@@ -14,18 +14,6 @@
 
 /// <reference types="react" />
 
-export default function ManagementToolbar({
-	backURL,
-	externalReferenceCode: initialExternalReferenceCode,
-	hasPublishObjectPermission,
-	hasUpdateObjectDefinitionPermission,
-	isApproved,
-	label,
-	objectDefinitionId,
-	portletNamespace,
-	screenNavigationCategoryKey,
-	system,
-}: IProps): JSX.Element;
 interface IProps {
 	backURL: string;
 	externalReferenceCode: string;
@@ -38,4 +26,5 @@ interface IProps {
 	screenNavigationCategoryKey: string;
 	system: boolean;
 }
+export default function ManagementToolbar(props: IProps): JSX.Element;
 export {};

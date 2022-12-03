@@ -23,13 +23,14 @@ import {FormError, useForm} from '../../hooks/useForm';
 import {save} from '../../utils/api';
 import {Input} from '../Input';
 import {openToast} from '../SidePanelContent';
+import {Entity} from './index';
 
-interface IProps {
+interface ModalEditExternalReferenceCodeProps {
 	externalReferenceCode: string;
-	getEntity: Function;
 	helpMessage: string;
 	observer: Observer;
 	onClose: () => void;
+	onGetEntity: () => Promise<Entity>;
 	saveURL: string;
 	setExternalReferenceCode: (value: string) => void;
 }
@@ -40,13 +41,13 @@ type TInitialValues = {
 
 export function ModalEditExternalReferenceCode({
 	externalReferenceCode,
-	getEntity,
 	helpMessage,
 	observer,
 	onClose,
+	onGetEntity,
 	saveURL,
 	setExternalReferenceCode,
-}: IProps) {
+}: ModalEditExternalReferenceCodeProps) {
 	const [error, setError] = useState<string>('');
 	const initialValues: TInitialValues = {
 		externalReferenceCode,
@@ -54,7 +55,7 @@ export function ModalEditExternalReferenceCode({
 
 	const onSubmit = async ({externalReferenceCode}: TInitialValues) => {
 		try {
-			const entity = await getEntity();
+			const entity = await onGetEntity();
 
 			await save(`${saveURL}`, {
 				...entity,

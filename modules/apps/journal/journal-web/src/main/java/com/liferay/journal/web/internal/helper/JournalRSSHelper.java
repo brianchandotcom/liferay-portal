@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -606,9 +607,11 @@ public class JournalRSSHelper {
 			Value value = ddmFormFieldValue.getValue();
 
 			if (Objects.equals(
-					ddmFormFieldValue.getType(), "document_library") ||
-				Objects.equals(ddmFormFieldValue.getType(), "image") ||
-				Objects.equals(ddmFormFieldValue.getType(), "image_gallery")) {
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.DOCUMENT_LIBRARY) ||
+				Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.IMAGE)) {
 
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					value.getString(_language.getLocale(languageId)));
@@ -632,7 +635,13 @@ public class JournalRSSHelper {
 						themeDisplay.getURLPortal(), url, "\" />");
 				}
 			}
-			else if (Objects.equals(ddmFormFieldValue.getType(), "text_box")) {
+			else if (Objects.equals(
+						ddmFormFieldValue.getType(),
+						DDMFormFieldTypeConstants.RICH_TEXT) ||
+					 Objects.equals(
+						 ddmFormFieldValue.getType(),
+						 DDMFormFieldTypeConstants.TEXT)) {
+
 				syndContent.setType("text");
 
 				content = value.getString(_language.getLocale(languageId));

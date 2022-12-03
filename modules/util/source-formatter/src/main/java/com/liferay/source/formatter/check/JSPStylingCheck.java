@@ -255,7 +255,22 @@ public class JSPStylingCheck extends BaseStylingCheck {
 
 		matcher = _incorrectLineBreakPattern5.matcher(content);
 
-		return matcher.replaceAll("$1$3$6");
+		while (matcher.find()) {
+			String s = matcher.group(2);
+
+			if (!s.contains("%>") && !s.startsWith("HashMapBuilder.")) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(),
+					StringBundler.concat(
+						matcher.group(1), " ",
+						StringUtil.trim(matcher.group(2)), " ",
+						matcher.group(3)));
+			}
+		}
+
+		matcher = _incorrectLineBreakPattern6.matcher(content);
+
+		return matcher.replaceAll("$1\n$2\t$3\n$2$4");
 	}
 
 	private static final Pattern _adjacentJavaBlocksPattern = Pattern.compile(
@@ -275,7 +290,9 @@ public class JSPStylingCheck extends BaseStylingCheck {
 	private static final Pattern _incorrectLineBreakPattern4 = Pattern.compile(
 		"(\n(\t*)<(\\w+)>)(<\\w+>.*)(</\\3>\n)");
 	private static final Pattern _incorrectLineBreakPattern5 = Pattern.compile(
-		"(<%=)(\n\t*)(((?!%>).)*)(\n\t*)(%>)");
+		"(<%=)\n\t*(.*)\n\t*(%>)");
+	private static final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
+		"(\n(\t+)\\w+='<%=) (HashMapBuilder\\..*) *(%>')");
 	private static final Pattern _incorrectSingleLineJavaSourcePattern =
 		Pattern.compile("(\t*)(<% (.*) %>)\n");
 	private static final Pattern _jspExpressionTagPattern = Pattern.compile(

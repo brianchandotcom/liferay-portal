@@ -540,8 +540,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetPriority(journalArticle, structuredContent),
-					journalArticle.getGroupId(),
-					structuredContent)));
+					journalArticle.getGroupId(), structuredContent)));
 	}
 
 	@Override
@@ -754,8 +753,7 @@ public class StructuredContentResourceImpl
 					).orElse(
 						0.0
 					),
-					groupId,
-					structuredContent)));
+					groupId, structuredContent)));
 	}
 
 	private ServiceContext _createServiceContext(
@@ -1211,8 +1209,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetPriority(journalArticle, structuredContent),
-					journalArticle.getGroupId(),
-					structuredContent)));
+					journalArticle.getGroupId(), structuredContent)));
 	}
 
 	private void _validateContentFields(

@@ -18,12 +18,19 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -33,6 +40,7 @@ import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -43,87 +51,35 @@ import java.util.Objects;
 public class ObjectEntryEntityModel implements EntityModel {
 
 	public ObjectEntryEntityModel(List<ObjectField> objectFields) {
-		_entityFieldsMap = HashMapBuilder.<String, EntityField>put(
-			"creator", new StringEntityField("creator", locale -> "creator")
-		).put(
-			"creatorId",
-			new IntegerEntityField("creatorId", locale -> Field.USER_ID)
-		).put(
-			"dateCreated",
-			new DateTimeEntityField(
-				"dateCreated", locale -> Field.CREATE_DATE,
-				locale -> Field.CREATE_DATE)
-		).put(
-			"dateModified",
-			new DateTimeEntityField(
-				"dateModified", locale -> "modifiedDate",
-				locale -> "modifiedDate")
-		).put(
-			"externalReferenceCode",
-			() -> new StringEntityField(
-				"externalReferenceCode", locale -> "externalReferenceCode")
-		).put(
-			"id", new IdEntityField("id", locale -> "id", String::valueOf)
-		).put(
-			"objectDefinitionId",
-			new IntegerEntityField(
-				"objectDefinitionId", locale -> "objectDefinitionId")
-		).put(
-			"siteId", new IntegerEntityField("siteId", locale -> Field.GROUP_ID)
-		).put(
-			"status",
-			new CollectionEntityField(
-				new IntegerEntityField("status", locale -> Field.STATUS))
-		).put(
-			"userId", new IntegerEntityField("userId", locale -> Field.USER_ID)
-		).build();
+		_entityFieldsMap = _getStringEntityFieldMap(objectFields);
+	}
 
-		for (ObjectField objectField : objectFields) {
-			if (objectField.isSystem()) {
-				continue;
-			}
+	public ObjectEntryEntityModel(
+			ObjectDefinition objectDefinition, List<ObjectField> objectFields)
+		throws Exception {
 
-			if (!Objects.equals(
-					objectField.getRelationshipType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+		_entityFieldsMap = _getStringEntityFieldMap(objectFields);
 
-				EntityField entityField = _getEntityField(objectField);
+		List<ObjectRelationship> objectRelationships =
+			ObjectRelationshipLocalServiceUtil.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-				if (entityField != null) {
-					_entityFieldsMap.putIfAbsent(
-						objectField.getName(), entityField);
-				}
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition relatedObjectDefinition =
+				_getRelatedObjectDefinition(
+					objectDefinition, objectRelationship);
 
-				continue;
-			}
-
-			String objectFieldName = objectField.getName();
+			Map<String, EntityField> relatedEntityFieldsMap =
+				_getStringEntityFieldMap(
+					ObjectFieldLocalServiceUtil.getObjectFields(
+						relatedObjectDefinition.getObjectDefinitionId()));
 
 			_entityFieldsMap.put(
-				objectFieldName,
-				new IdEntityField(
-					objectFieldName, locale -> objectFieldName,
-					String::valueOf));
-
-			String objectRelationshipERCFieldName =
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
-					objectField);
-
-			_entityFieldsMap.put(
-				objectRelationshipERCFieldName,
-				new StringEntityField(
-					objectRelationshipERCFieldName, locale -> objectFieldName));
-
-			String relationshipIdName = objectFieldName.substring(
-				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1);
-
-			_entityFieldsMap.put(
-				relationshipIdName,
-				new IdEntityField(
-					relationshipIdName, locale -> objectFieldName,
-					String::valueOf));
+				objectRelationship.getName(),
+				new ComplexEntityField(
+					objectRelationship.getName(),
+					new ArrayList<>(relatedEntityFieldsMap.values())));
 		}
 	}
 
@@ -202,6 +158,114 @@ public class ObjectEntryEntityModel implements EntityModel {
 		}
 
 		return null;
+	}
+
+	private ObjectDefinition _getRelatedObjectDefinition(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
+
+		if (objectDefinitionId1 != objectDefinition.getObjectDefinitionId()) {
+			return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+		}
+
+		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
+	}
+
+	private Map<String, EntityField> _getStringEntityFieldMap(
+		List<ObjectField> objectFields) {
+
+		Map<String, EntityField> entityFieldsMap =
+			HashMapBuilder.<String, EntityField>put(
+				"creator", new StringEntityField("creator", locale -> "creator")
+			).put(
+				"creatorId",
+				new IntegerEntityField("creatorId", locale -> Field.USER_ID)
+			).put(
+				"dateCreated",
+				new DateTimeEntityField(
+					"dateCreated", locale -> Field.CREATE_DATE,
+					locale -> Field.CREATE_DATE)
+			).put(
+				"dateModified",
+				new DateTimeEntityField(
+					"dateModified", locale -> "modifiedDate",
+					locale -> "modifiedDate")
+			).put(
+				"externalReferenceCode",
+				() -> new StringEntityField(
+					"externalReferenceCode", locale -> "externalReferenceCode")
+			).put(
+				"id", new IdEntityField("id", locale -> "id", String::valueOf)
+			).put(
+				"objectDefinitionId",
+				new IntegerEntityField(
+					"objectDefinitionId", locale -> "objectDefinitionId")
+			).put(
+				"siteId",
+				new IntegerEntityField("siteId", locale -> Field.GROUP_ID)
+			).put(
+				"status",
+				new CollectionEntityField(
+					new IntegerEntityField("status", locale -> Field.STATUS))
+			).put(
+				"userId",
+				new IntegerEntityField("userId", locale -> Field.USER_ID)
+			).build();
+
+		for (ObjectField objectField : objectFields) {
+			if (objectField.isSystem()) {
+				continue;
+			}
+
+			if (!Objects.equals(
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				EntityField entityField = _getEntityField(objectField);
+
+				if (entityField != null) {
+					entityFieldsMap.putIfAbsent(
+						objectField.getName(), entityField);
+				}
+
+				continue;
+			}
+
+			String objectFieldName = objectField.getName();
+
+			entityFieldsMap.put(
+				objectFieldName,
+				new IdEntityField(
+					objectFieldName, locale -> objectFieldName,
+					String::valueOf));
+
+			String objectRelationshipERCFieldName =
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+					objectField);
+
+			entityFieldsMap.put(
+				objectRelationshipERCFieldName,
+				new StringEntityField(
+					objectRelationshipERCFieldName, locale -> objectFieldName));
+
+			String relationshipIdName = objectFieldName.substring(
+				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1);
+
+			entityFieldsMap.put(
+				relationshipIdName,
+				new IdEntityField(
+					relationshipIdName, locale -> objectFieldName,
+					String::valueOf));
+		}
+
+		return entityFieldsMap;
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

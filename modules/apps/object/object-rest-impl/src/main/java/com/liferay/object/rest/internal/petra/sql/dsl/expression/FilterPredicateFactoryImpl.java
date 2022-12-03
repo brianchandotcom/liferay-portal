@@ -40,15 +40,14 @@ import org.osgi.service.component.annotations.Reference;
 public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 
 	@Override
-	public Predicate create(String filterString, long objectDefinitionId) {
+	public Predicate create(
+		EntityModel entityModel, String filterString, long objectDefinitionId) {
+
 		if (Validator.isNull(filterString)) {
 			return null;
 		}
 
 		try {
-			EntityModel entityModel = new ObjectEntryEntityModel(
-				_objectFieldLocalService.getObjectFields(objectDefinitionId));
-
 			FilterParser filterParser = _filterParserProvider.provide(
 				entityModel);
 
@@ -67,6 +66,14 @@ public class FilterPredicateFactoryImpl implements FilterPredicateFactory {
 		}
 
 		return null;
+	}
+
+	@Override
+	public Predicate create(String filterString, long objectDefinitionId) {
+		ObjectEntryEntityModel entityModel = new ObjectEntryEntityModel(
+			_objectFieldLocalService.getObjectFields(objectDefinitionId));
+
+		return create(entityModel, filterString, objectDefinitionId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

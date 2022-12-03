@@ -15,11 +15,15 @@
 package com.liferay.object.rest.petra.sql.dsl.expression;
 
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.portal.odata.entity.EntityModel;
 
 /**
  * @author Gabriel Albuquerque
  */
 public interface FilterPredicateFactory {
+
+	public Predicate create(
+		EntityModel entityModel, String filterString, long objectDefinitionId);
 
 	public Predicate create(String filterString, long objectDefinitionId);
 

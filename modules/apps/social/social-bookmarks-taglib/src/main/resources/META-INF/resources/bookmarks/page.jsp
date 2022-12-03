@@ -45,7 +45,19 @@
 
 					<li class="taglib-social-bookmark taglib-social-bookmark-<%= types[i] %>">
 						<liferay-social-bookmarks:bookmark
-							additionalProps='<%= HashMapBuilder.<String, Object>put("className", HtmlUtil.escapeJS(className)).put("classPK", String.valueOf(classPK)).put("postURL", socialBookmark.getPostURL(title, url)).put("type", types[i]).put("url", HtmlUtil.escapeJS(url)).build() %>'
+							additionalProps='<%=
+								HashMapBuilder.<String, Object>put(
+									"className", HtmlUtil.escapeJS(className)
+								).put(
+									"classPK", String.valueOf(classPK)
+								).put(
+									"postURL", socialBookmark.getPostURL(title, url)
+								).put(
+									"type", types[i]
+								).put(
+									"url", HtmlUtil.escapeJS(url)
+								).build()
+							%>'
 							displayStyle="<%= displayStyle %>"
 							target="<%= target %>"
 							title="<%= title %>"

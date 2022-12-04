@@ -87,7 +87,7 @@ public class RelationshipObjectFieldBusinessType
 		return SetUtil.fromArray(
 			ObjectFieldSettingConstants.NAME_OBJECT_DEFINITION_1_SHORT_NAME,
 			ObjectFieldSettingConstants.
-				NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME);
+				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME);
 	}
 
 	@Override
@@ -102,16 +102,18 @@ public class RelationshipObjectFieldBusinessType
 			return values.get(objectField.getName());
 		}
 
-		String objectRelationshipERCFieldName = ObjectFieldSettingUtil.getValue(
-			ObjectFieldSettingConstants.NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
-			objectField);
+		String objectRelationshipERCObjectFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				objectField);
 
-		if (!values.containsKey(objectRelationshipERCFieldName)) {
+		if (!values.containsKey(objectRelationshipERCObjectFieldName)) {
 			return null;
 		}
 
 		String externalReferenceCode = GetterUtil.getString(
-			values.get(objectRelationshipERCFieldName));
+			values.get(objectRelationshipERCObjectFieldName));
 
 		if (Validator.isNull(externalReferenceCode)) {
 			return 0;

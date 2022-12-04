@@ -322,8 +322,9 @@ public class DefaultObjectEntryManagerImplTest {
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		_objectRelationshipERCFieldName = ObjectFieldSettingUtil.getValue(
-			ObjectFieldSettingConstants.NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+		_objectRelationshipERCObjectFieldName = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.
+				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 			objectField);
 		_objectRelationshipFieldName = objectField.getName();
 	}
@@ -348,7 +349,8 @@ public class DefaultObjectEntryManagerImplTest {
 		ObjectEntry childObjectEntry1 = new ObjectEntry() {
 			{
 				properties = HashMapBuilder.<String, Object>put(
-					_objectRelationshipERCFieldName, "newExternalReferenceCode"
+					_objectRelationshipERCObjectFieldName,
+					"newExternalReferenceCode"
 				).put(
 					"attachmentObjectFieldName",
 					_getAttachmentObjectFieldValue()
@@ -428,7 +430,7 @@ public class DefaultObjectEntryManagerImplTest {
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
-						_objectRelationshipERCFieldName,
+						_objectRelationshipERCObjectFieldName,
 						"newExternalReferenceCode"
 					).put(
 						"dateObjectFieldName", "2020-01-02"
@@ -642,7 +644,7 @@ public class DefaultObjectEntryManagerImplTest {
 			HashMapBuilder.put(
 				"filter",
 				_buildEqualsExpressionFilterString(
-					_objectRelationshipERCFieldName,
+					_objectRelationshipERCObjectFieldName,
 					parentObjectEntry1.getExternalReferenceCode())
 			).build(),
 			childObjectEntry1);
@@ -650,7 +652,7 @@ public class DefaultObjectEntryManagerImplTest {
 			HashMapBuilder.put(
 				"filter",
 				_buildEqualsExpressionFilterString(
-					_objectRelationshipERCFieldName,
+					_objectRelationshipERCObjectFieldName,
 					parentObjectEntry2.getExternalReferenceCode())
 			).build(),
 			childObjectEntry2);
@@ -689,7 +691,7 @@ public class DefaultObjectEntryManagerImplTest {
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
-					_objectRelationshipERCFieldName, true,
+					_objectRelationshipERCObjectFieldName, true,
 					parentObjectEntry1.getExternalReferenceCode())
 			).build(),
 			childObjectEntry1);
@@ -697,7 +699,7 @@ public class DefaultObjectEntryManagerImplTest {
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
-					_objectRelationshipERCFieldName, false,
+					_objectRelationshipERCObjectFieldName, false,
 					parentObjectEntry1.getExternalReferenceCode())
 			).build(),
 			childObjectEntry2);
@@ -1088,7 +1090,7 @@ public class DefaultObjectEntryManagerImplTest {
 			}
 			else if (Objects.equals(
 						expectedEntry.getKey(),
-						_objectRelationshipERCFieldName)) {
+						_objectRelationshipERCObjectFieldName)) {
 
 				Assert.assertEquals(
 					expectedEntry.getValue(),
@@ -1342,7 +1344,7 @@ public class DefaultObjectEntryManagerImplTest {
 	@Inject
 	private ObjectFilterLocalService _objectFilterLocalService;
 
-	private String _objectRelationshipERCFieldName;
+	private String _objectRelationshipERCObjectFieldName;
 	private String _objectRelationshipFieldName;
 
 	@Inject

@@ -138,16 +138,16 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 					objectField.getRelationshipType(),
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				String objectRelationshipERCFieldName =
+				String objectRelationshipERCObjectFieldName =
 					ObjectFieldSettingUtil.getValue(
 						ObjectFieldSettingConstants.
-							NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+							NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 						objectField);
 
 				extendedPropertyDefinitions.put(
-					objectRelationshipERCFieldName,
+					objectRelationshipERCObjectFieldName,
 					new PropertyDefinition(
-						null, objectRelationshipERCFieldName,
+						null, objectRelationshipERCObjectFieldName,
 						PropertyDefinition.PropertyType.TEXT,
 						objectField.isRequired()));
 			}

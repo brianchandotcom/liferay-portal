@@ -240,7 +240,7 @@ public class ObjectEntryOpenAPIResourceImpl
 						Collections.singletonMap("x-parent-map", "properties"),
 						ObjectFieldSettingUtil.getValue(
 							ObjectFieldSettingConstants.
-								NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+								NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 							objectField),
 						String.class.getSimpleName()) {
 

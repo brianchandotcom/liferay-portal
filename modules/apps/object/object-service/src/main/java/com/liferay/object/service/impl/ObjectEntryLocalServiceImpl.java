@@ -1389,10 +1389,10 @@ public class ObjectEntryLocalServiceImpl
 				_objectDefinitionPersistence.fetchByPrimaryKey(
 					objectRelationship.getObjectDefinitionId1());
 
-			String objectRelationshipERCFieldName =
+			String objectRelationshipERCObjectFieldName =
 				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 					objectField);
 
 			if (objectDefinition.isSystem()) {
@@ -1403,7 +1403,7 @@ public class ObjectEntryLocalServiceImpl
 
 				try {
 					values.put(
-						objectRelationshipERCFieldName,
+						objectRelationshipERCObjectFieldName,
 						systemObjectDefinitionMetadata.getExternalReferenceCode(
 							primaryKey));
 				}
@@ -1424,7 +1424,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			values.put(
-				objectRelationshipERCFieldName,
+				objectRelationshipERCObjectFieldName,
 				objectEntry.getExternalReferenceCode());
 		}
 	}

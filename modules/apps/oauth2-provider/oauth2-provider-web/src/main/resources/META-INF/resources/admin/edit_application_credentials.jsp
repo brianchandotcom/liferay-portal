@@ -94,7 +94,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					<aui:model-context bean="<%= oAuth2Application %>" model="<%= OAuth2Application.class %>" />
 
 					<c:if test="<%= oAuth2Application != null %>">
-						<aui:fieldset style="margin-bottom: 1em; border-bottom: 2px solid #F0F0F0;">
+						<aui:fieldset style="border-bottom: 2px solid #F0F0F0; margin-bottom: 1em;">
 							<div class="pencil-wrapper">
 								<aui:button href="" onClick='<%= liferayPortletResponse.getNamespace() + "showEditClientIdModal();" %>' value="edit" />
 

@@ -15,49 +15,46 @@
 package com.liferay.journal.transformer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.JournalTransformerListenerRegistry;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
@@ -80,151 +77,110 @@ public class JournalTransformerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_ddmStructure = DDMStructureTestUtil.addStructure(
-			JournalArticle.class.getName());
-
 		_transformMethod = JournalTestUtil.getJournalUtilTransformMethod();
+
+		_group = GroupTestUtil.addGroup();
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_read("data_definition.json"), TestPropsValues.getUser());
+
+		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
+			_group.getGroupId(), _read("journal_content.xml"),
+			dataDefinition.getDataDefinitionKey(), null);
 	}
 
 	@Test
 	public void testFTLTransformation() throws Exception {
-		Map<String, String> tokens = getTokens();
-
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", "Joe Bloggs");
-
-		String script = "${name.getData()} - ${viewMode}";
-
-		String content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.PRINT, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script, false,
-			new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs - print", content);
+		Assert.assertEquals(
+			"Joe Bloggs - print",
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${name.getData()} - ${viewMode}", null, Constants.PRINT));
 	}
 
 	@Test
 	public void testLocaleTransformerListener() throws Exception {
-		Map<String, String> tokens = getTokens();
+		Assert.assertEquals(
+			"Joe Bloggs",
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${name.getData()}", null, Constants.VIEW));
 
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			HashMapBuilder.put(
-				LocaleUtil.BRAZIL, "Joao da Silva"
-			).put(
-				LocaleUtil.US, "Joe Bloggs"
-			).build(),
-			_language.getLanguageId(LocaleUtil.US));
+		Assert.assertEquals(
+			"Joao da Silva",
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${name.getData()}", null, Constants.VIEW));
 
-		String script = "${name.getData()}";
-
-		String content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script, false,
-			new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs", content);
-
-		content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "pt_BR",
-			UnsecureSAXReaderUtil.read(xml), null, script, false,
-			new HashMap<>());
-
-		Assert.assertEquals("Joao da Silva", content);
-
-		content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "fr_CA",
-			UnsecureSAXReaderUtil.read(xml), null, script, false,
-			new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs", content);
+		Assert.assertEquals(
+			"Joe Bloggs",
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.FRENCH),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${name.getData()}", null, Constants.VIEW));
 	}
 
 	@Test
 	public void testLocaleTransformerListenerNestedFieldWithNoTranslation()
 		throws Exception {
 
-		Map<String, String> tokens = getTokens();
+		Assert.assertEquals(
+			"2022-11-26",
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${birthday.getData()}", null, Constants.VIEW));
 
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			HashMapBuilder.put(
-				LocaleUtil.US, "Joe Bloggs"
-			).build(),
-			_language.getLanguageId(LocaleUtil.US));
-
-		Document document = UnsecureSAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		Attribute availableLocalesAttribute = rootElement.attribute(
-			"available-locales");
-
-		availableLocalesAttribute.setValue("en_US,pt_BR");
-
-		Element dynamicElement = (Element)document.selectSingleNode(
-			"//dynamic-element");
-
-		dynamicElement.addElement("nestedElement");
-
-		String script = "${name.getData()}";
-
-		String content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US", document, null, script,
-			false, new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs", content);
-
-		content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "pt_BR", document, null, script,
-			false, new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs", content);
+		Assert.assertEquals(
+			"2022-11-26",
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${birthday.getData()}", null, Constants.VIEW));
 	}
 
 	@Test
 	public void testRegexTransformerListener() throws Exception {
 		initRegexTransformerListener();
 
-		Map<String, String> tokens = getTokens();
-
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", "Joe Bloggs");
-
-		String script = "Hello ${name.getData()}, Welcome to beta.sample.com.";
-
-		String content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script, false,
-			new HashMap<>());
-
 		Assert.assertEquals(
-			"Hello Joe Bloggs, Welcome to production.sample.com.", content);
+			"Hello Joe Bloggs, Welcome to production.sample.com.",
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"Hello ${name.getData()}, Welcome to beta.sample.com.", null,
+				Constants.VIEW));
 	}
 
 	@Test
 	public void testTokensTransformerListener() throws Exception {
-		Map<String, String> tokens = getTokens();
-
-		String xml = DDMStructureTestUtil.getSampleStructuredContent();
-
-		String script = "@company_id@";
-
-		String content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script, false,
-			new HashMap<>());
+		Assert.assertEquals(
+			String.valueOf(TestPropsValues.getCompanyId()),
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false, "@company_id@",
+				null, Constants.VIEW));
 
 		Assert.assertEquals(
-			String.valueOf(TestPropsValues.getCompanyId()), content);
-
-		script = "@@company_id@@";
-
-		content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script, false,
-			new HashMap<>());
-
-		Assert.assertEquals(
-			String.valueOf(TestPropsValues.getCompanyId()), content);
+			String.valueOf(TestPropsValues.getCompanyId()),
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"@@company_id@@", null, Constants.VIEW));
 	}
 
 	@Test
@@ -280,42 +236,18 @@ public class JournalTransformerTest {
 
 	@Test
 	public void testViewCounterTransformerListener() throws Exception {
-		Map<String, String> tokens = getTokens();
-
-		tokens.put("article_resource_pk", "1");
-
-		String xml = DDMStructureTestUtil.getSampleStructuredContent();
-
-		String script = "@view_counter@";
-
-		String content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script, false,
-			new HashMap<>());
-
 		Assert.assertEquals(
 			StringBundler.concat(
 				"<script type=\"text/javascript\">",
 				"Liferay.Service('/assetentry/increment-view-counter',",
 				"{userId:0, className:'",
-				"com.liferay.journal.model.JournalArticle', classPK:1});",
-				"</script>"),
-			content);
-	}
-
-	protected Map<String, String> getTokens() throws Exception {
-		return HashMapBuilder.put(
-			TemplateConstants.CLASS_NAME_ID,
-			String.valueOf(
-				_classNameLocalService.getClassNameId(
-					DDMStructure.class.getName()))
-		).put(
-			"article_group_id", String.valueOf(TestPropsValues.getGroupId())
-		).put(
-			"company_id", String.valueOf(TestPropsValues.getCompanyId())
-		).put(
-			"ddm_structure_id", String.valueOf(_ddmStructure.getStructureId())
-		).build();
+				"com.liferay.journal.model.JournalArticle', classPK:",
+				_journalArticle.getResourcePrimKey(), "});</script>"),
+			_transformMethod.invoke(
+				null, _journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"@view_counter@", null, Constants.VIEW));
 	}
 
 	protected void initRegexTransformerListener() {
@@ -349,6 +281,11 @@ public class JournalTransformerTest {
 			transformerListener, "_replacements", replacements);
 	}
 
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
 	private void _testTransformDDMFormField(
 			DDMFormField ddmFormField, String expected, String fieldValue,
 			Locale locale)
@@ -360,44 +297,30 @@ public class JournalTransformerTest {
 
 		Assert.assertEquals(
 			expected,
-			(String)_transformMethod.invoke(
-				null, null,
-				HashMapBuilder.put(
-					TemplateConstants.CLASS_NAME_ID,
-					String.valueOf(
-						_classNameLocalService.getClassNameId(
-							DDMStructure.class.getName()))
-				).put(
-					"article_group_id",
-					String.valueOf(journalArticle.getGroupId())
-				).put(
-					"company_id", String.valueOf(journalArticle.getCompanyId())
-				).put(
-					"ddm_structure_id",
-					() -> {
-						DDMStructure ddmStructure =
-							journalArticle.getDDMStructure();
-
-						return String.valueOf(ddmStructure.getStructureId());
-					}
-				).build(),
-				Constants.VIEW, LocaleUtil.toLanguageId(locale),
-				journalArticle.getDocument(), null,
-				"${" + ddmFormField.getName() + ".getData()}", false,
-				new HashMap<>()));
+			_transformMethod.invoke(
+				null, journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(locale),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${" + ddmFormField.getName() + ".getData()}", null,
+				Constants.VIEW));
 	}
 
 	@Inject
-	private ClassNameLocalService _classNameLocalService;
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@DeleteAfterTestRun
-	private DDMStructure _ddmStructure;
+	private Group _group;
+
+	private JournalArticle _journalArticle;
 
 	@Inject
 	private JournalConverter _journalConverter;
+
+	@Inject
+	private JournalHelper _journalHelper;
 
 	@Inject
 	private JournalTransformerListenerRegistry
@@ -405,6 +328,10 @@ public class JournalTransformerTest {
 
 	@Inject
 	private Language _language;
+
+	@Inject
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Inject
 	private Portal _portal;

@@ -35,20 +35,15 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.lang.reflect.Method;
-
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -76,8 +71,6 @@ public class JournalTestUtilTest {
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			JournalArticle.class.getName());
 		_group = GroupTestUtil.addGroup();
-
-		_transformMethod = JournalTestUtil.getJournalUtilTransformMethod();
 	}
 
 	@Test
@@ -193,24 +186,6 @@ public class JournalTestUtilTest {
 	}
 
 	@Test
-	public void testAddDynamicContent() throws Exception {
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			HashMapBuilder.put(
-				LocaleUtil.BRAZIL, "Joe Bloggs"
-			).put(
-				LocaleUtil.US, "Joe Bloggs"
-			).build(),
-			LanguageUtil.getLanguageId(LocaleUtil.US));
-
-		String content = (String)_transformMethod.invoke(
-			null, null, getTokens(), Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null,
-			JournalTestUtil.getSampleTemplateFTL(), false, new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs", content);
-	}
-
-	@Test
 	public void testAddDynamicElement() {
 		Document document = SAXReaderUtil.createDocument();
 
@@ -253,19 +228,6 @@ public class JournalTestUtilTest {
 		}
 		catch (NoSuchArticleException noSuchArticleException) {
 		}
-	}
-
-	@Test
-	public void testGetSampleStructuredContent() throws Exception {
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", "Joe Bloggs");
-
-		String content = (String)_transformMethod.invoke(
-			null, null, getTokens(), Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null,
-			JournalTestUtil.getSampleTemplateFTL(), false, new HashMap<>());
-
-		Assert.assertEquals("Joe Bloggs", content);
 	}
 
 	@Test
@@ -315,7 +277,5 @@ public class JournalTestUtilTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private Method _transformMethod;
 
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US,pt_BR" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="hKlUdDWA" name="name" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Joe Bloggs]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[Joao da Silva]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="FieldsGroup19507604" index-type="" instance-id="Ws4ltySg" name="FieldsGroup19507604" type="fieldset">
+		<dynamic-element index-type="keyword" instance-id="V8zPgbYz" name="birthday" type="date">
+			<dynamic-content language-id="en_US"><![CDATA[2022-11-26]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="CWwtPaEO" name="salary" type="numeric">
+			<dynamic-content language-id="en_US"><![CDATA[100]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

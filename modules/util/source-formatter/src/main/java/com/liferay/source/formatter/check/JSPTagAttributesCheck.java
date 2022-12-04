@@ -42,10 +42,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -329,7 +329,7 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 			return attributeValue;
 		}
 
-		Map<String, String> styleAttributesMap = new LinkedHashMap<>();
+		Map<String, String> styleAttributesMap = new TreeMap<>();
 
 		String styleAttributeAttributeName = null;
 		int x = -1;

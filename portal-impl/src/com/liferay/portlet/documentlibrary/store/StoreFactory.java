@@ -17,16 +17,10 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Set;
@@ -52,56 +46,6 @@ public class StoreFactory {
 		return _storeFactory;
 	}
 
-	public void checkProperties() {
-		if (_warned) {
-			return;
-		}
-
-		String dlHookImpl = PropsUtil.get("dl.hook.impl");
-
-		if (Validator.isNull(dlHookImpl)) {
-			_warned = true;
-
-			return;
-		}
-
-		boolean found = false;
-
-		for (String key : _serviceTrackerMap.keySet()) {
-			Store store = getStore(key);
-
-			Class<?> clazz = store.getClass();
-
-			String className = clazz.getName();
-
-			if (dlHookImpl.equals(className)) {
-				PropsValues.DL_STORE_IMPL = className;
-
-				found = true;
-
-				break;
-			}
-		}
-
-		if (!found) {
-			PropsValues.DL_STORE_IMPL = dlHookImpl;
-		}
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Liferay is configured with the legacy property ",
-					"\"dl.hook.impl=", dlHookImpl,
-					"\" in portal-ext.properties. Please reconfigure to use ",
-					"the new property \"", PropsKeys.DL_STORE_IMPL,
-					"\". Liferay will attempt to temporarily set \"",
-					PropsKeys.DL_STORE_IMPL, "=", PropsValues.DL_STORE_IMPL,
-					"\"."));
-		}
-
-		_warned = true;
-	}
-
 	public Store getStore() {
 		Store store = _defaultStore;
 
@@ -124,8 +68,6 @@ public class StoreFactory {
 		return storeTypes.toArray(new String[0]);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
-
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 	private static volatile Store _defaultStore;
@@ -136,7 +78,6 @@ public class StoreFactory {
 				String.valueOf(serviceReference1.getProperty("store.type"))),
 			new StoreTypeServiceTrackerCustomizer());
 	private static StoreFactory _storeFactory;
-	private static boolean _warned;
 
 	private static class StoreTypeServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Store, Store> {

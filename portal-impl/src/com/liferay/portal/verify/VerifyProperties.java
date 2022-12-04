@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,8 +42,6 @@ public class VerifyProperties {
 		verifySystemProperties();
 
 		List<String> keys = verifyPortalProperties();
-
-		verifyDocumentLibrary();
 
 		if (!keys.isEmpty()) {
 			_log.error(
@@ -110,14 +107,6 @@ public class VerifyProperties {
 		}
 
 		return properties;
-	}
-
-	protected static void verifyDocumentLibrary() {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StoreFactory storeFactory = StoreFactory.getInstance();
-
-			storeFactory.checkProperties();
-		}
 	}
 
 	protected static void verifyMigratedPortalProperty(

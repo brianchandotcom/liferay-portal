@@ -242,6 +242,11 @@ public class ObjectServiceUpgradeStepRegistrator
 				"ObjectDefinition", "className", "VARCHAR(255) null"));
 
 		registry.register("3.26.1", "3.27.0", new ObjectActionUpgradeProcess());
+
+		registry.register(
+			"3.27.0", "3.27.1",
+			new com.liferay.object.internal.upgrade.v3_27_1.
+				ObjectFieldSettingUpgradeProcess());
 	}
 
 	@Reference

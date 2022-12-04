@@ -83,8 +83,8 @@
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remoteAddress") %>' />
-				<portlet:param name="remotePort" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remotePort") %>' />
 				<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remotePathContext") %>' />
+				<portlet:param name="remotePort" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remotePort") %>' />
 				<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("remoteGroupId") %>' />
 				<portlet:param name="secureConnection" value='<%= liveGroupTypeSettingsUnicodeProperties.getProperty("secureConnection") %>' />
 				<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />

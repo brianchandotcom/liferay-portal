@@ -64,10 +64,6 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 
 		Store store = storeFactory.getStore();
 
-		if (store == null) {
-			return null;
-		}
-
 		String[] storeTypes = storeFactory.getStoreTypes();
 
 		StringBundler sb = new StringBundler((storeTypes.length * 2) + 2);

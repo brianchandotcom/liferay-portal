@@ -14,8 +14,10 @@
 
 package com.liferay.osgi.service.tracker.collections.internal.list;
 
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.internal.ServiceReferenceServiceTupleComparator;
+import com.liferay.osgi.service.tracker.collections.internal.ServiceTrackerManager;
 import com.liferay.osgi.service.tracker.collections.internal.ServiceTrackerUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 
@@ -57,16 +59,25 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 			_bundleContext, clazz, filterString,
 			new ServiceReferenceServiceTrackerCustomizer());
 
-		_serviceTracker.open();
+		_serviceTrackerManager = new ServiceTrackerManager(
+			_serviceTracker, false);
+
+		if (_serviceTrackerCustomizer instanceof
+				EagerServiceTrackerCustomizer) {
+
+			_serviceTrackerManager.open();
+		}
 	}
 
 	@Override
 	public void close() {
-		_serviceTracker.close();
+		_serviceTrackerManager.close();
 	}
 
 	@Override
 	public void forEach(Consumer<? super T> consumer) {
+		_serviceTrackerManager.open();
+
 		_services.forEach(
 			serviceReferenceServiceTuple -> consumer.accept(
 				serviceReferenceServiceTuple.getService()));
@@ -74,11 +85,15 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 
 	@Override
 	public Iterator<T> iterator() {
+		_serviceTrackerManager.open();
+
 		return new ServiceTrackerListIterator<>(_services.iterator());
 	}
 
 	@Override
 	public int size() {
+		_serviceTrackerManager.open();
+
 		return _services.size();
 	}
 
@@ -91,6 +106,8 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 
 	@Override
 	public List<T> toList() {
+		_serviceTrackerManager.open();
+
 		List<T> list = new ArrayList<>(_services.size());
 
 		_services.forEach(
@@ -106,6 +123,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 		new CopyOnWriteArrayList<>();
 	private final ServiceTracker<S, T> _serviceTracker;
 	private final ServiceTrackerCustomizer<S, T> _serviceTrackerCustomizer;
+	private final ServiceTrackerManager _serviceTrackerManager;
 
 	private static class ServiceTrackerListIterator<S, T>
 		implements Iterator<T> {

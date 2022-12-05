@@ -57,7 +57,7 @@ definition {
 
 		Clustering.shutdownSpecificServer(nodePort = "9080");
 
-		WaitForConsoleTextPresent(value1 = "Spring Extender Unavailable Component Checker check result");
+		WaitForConsoleTextPresent(value1 = "Finished shutting down overloaded nodes");
 
 		for (var nodeNumber : list "8,10") {
 			User.firstLoginUI(

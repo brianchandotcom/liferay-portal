@@ -1634,21 +1634,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticleLocalService.updateStatus(
 				userId, kbArticle.getResourcePrimKey(),
 				WorkflowConstants.STATUS_EXPIRED, serviceContext);
-
-			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
-
-			_assetEntryLocalService.updateEntry(
-				userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
-				kbArticle.getModifiedDate(), KBArticle.class.getName(),
-				kbArticle.getResourcePrimKey(), kbArticle.getUuid(), 0,
-				assetEntry.getCategoryIds(), assetEntry.getTagNames(), true,
-				false, null, null, null, kbArticle.getExpirationDate(),
-				ContentTypes.TEXT_HTML, kbArticle.getTitle(),
-				kbArticle.getDescription(), assetEntry.getSummary(), null, null,
-				0, 0, null);
-
-			_indexKBArticle(kbArticle);
 		}
 	}
 

@@ -1,43 +1,43 @@
 {
 	"object-entries": [
 		{
-			"externalReferenceCode": "PRMMDFC-001",
+			"externalReferenceCode": "ACTIVITY-PERIOD",
 			"label": "Activity Period"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-002",
+			"externalReferenceCode": "PARTNER",
 			"label": "Partner"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-003",
+			"externalReferenceCode": "TOTAL-COST",
 			"label": "Total Cost"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-004",
+			"externalReferenceCode": "NAME",
 			"label": "Name"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-005",
+			"externalReferenceCode": "REQUESTED",
 			"label": "Requested"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-006",
+			"externalReferenceCode": "AMOUNT-CLAIMED",
 			"label": "Amount Claimed"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-007",
+			"externalReferenceCode": "APPROVED",
 			"label": "Approved"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-008",
+			"externalReferenceCode": "PAID",
 			"label": "Paid"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-009",
+			"externalReferenceCode": "DATE-SUBMITTTED",
 			"label": "Date Submitted"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-010",
+			"externalReferenceCode": "LAST-MODIFIED",
 			"label": "Last Modified"
 		}
 	],

@@ -14,6 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
 import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
@@ -174,6 +175,16 @@ const MDFRequestList = () => {
 				</div>
 
 				<div className="mb-2 mb-lg-0">
+					{data.listItems.items && (
+						<CSVLink
+							className="btn btn-secondary mr-2"
+							data={data.listItems.items}
+							filename="mdf-request.csv"
+						>
+							Export MDF Report
+						</CSVLink>
+					)}
+
 					<ClayButton
 						className="mr-2 mr-md-2"
 						onClick={() =>

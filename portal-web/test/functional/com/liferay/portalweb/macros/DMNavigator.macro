@@ -142,6 +142,8 @@ definition {
 	macro gotoFolder {
 		var key_dmFolderName = "${dmFolderName}";
 
+		SelectFrame(locator1 = "DocumentsAndMedia#CARD_FOLDER");
+
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
 			value1 = "${dmFolderName}");

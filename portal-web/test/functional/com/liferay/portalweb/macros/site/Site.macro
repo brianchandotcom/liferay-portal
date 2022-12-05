@@ -430,7 +430,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		if (IsElementNotPresent(key_card = "${roleName}", locator1 = "Card#CARD")) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		}
 
 		LexiconCard.checkCardCheckbox(card = "${roleName}");
 

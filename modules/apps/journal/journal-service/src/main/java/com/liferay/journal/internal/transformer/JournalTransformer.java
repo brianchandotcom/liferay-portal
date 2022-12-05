@@ -254,12 +254,10 @@ public class JournalTransformer {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			if (document != null) {
-				Element rootElement = document.getRootElement();
-
 				templateNodes.addAll(
 					_getTemplateNodes(
-						themeDisplay, rootElement, article.getDDMStructure(),
-						locale));
+						themeDisplay, document.getRootElement(),
+						article.getDDMStructure(), locale));
 
 				templateNodes.addAll(
 					includeBackwardsCompatibilityTemplateNodes(
@@ -271,12 +269,6 @@ public class JournalTransformer {
 
 				if (portletRequestModel != null) {
 					template.put("requestMap", portletRequestModel.toMap());
-				}
-				else {
-					Element requestElement = rootElement.element("request");
-
-					template.put(
-						"requestMap", _insertRequestVariables(requestElement));
 				}
 			}
 
@@ -996,57 +988,6 @@ public class JournalTransformer {
 		return StringBundler.concat(
 			TemplateConstants.TEMPLATE_SEPARATOR, StringPool.SLASH, companyId,
 			StringPool.SLASH, groupId, StringPool.SLASH, classNameId);
-	}
-
-	private Map<String, Object> _insertRequestVariables(Element element) {
-		Map<String, Object> map = new HashMap<>();
-
-		if (element == null) {
-			return map;
-		}
-
-		for (Element childElement : element.elements()) {
-			String name = childElement.getName();
-
-			if (name.equals("attribute")) {
-				Element nameElement = childElement.element("name");
-				Element valueElement = childElement.element("value");
-
-				map.put(nameElement.getText(), valueElement.getText());
-			}
-			else if (name.equals("parameter")) {
-				Element nameElement = childElement.element("name");
-
-				List<Element> valueElements = childElement.elements("value");
-
-				if (valueElements.size() == 1) {
-					Element valueElement = valueElements.get(0);
-
-					map.put(nameElement.getText(), valueElement.getText());
-				}
-				else {
-					List<String> values = new ArrayList<>();
-
-					for (Element valueElement : valueElements) {
-						values.add(valueElement.getText());
-					}
-
-					map.put(nameElement.getText(), values);
-				}
-			}
-			else {
-				List<Element> elements = childElement.elements();
-
-				if (!elements.isEmpty()) {
-					map.put(name, _insertRequestVariables(childElement));
-				}
-				else {
-					map.put(name, childElement.getText());
-				}
-			}
-		}
-
-		return map;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

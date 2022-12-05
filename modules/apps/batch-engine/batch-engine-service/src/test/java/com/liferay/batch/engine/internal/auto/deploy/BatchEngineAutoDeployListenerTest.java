@@ -396,6 +396,20 @@ public class BatchEngineAutoDeployListenerTest {
 		Assert.assertEquals(
 			_batchEngineImportTasks.toString(), 1,
 			_batchEngineImportTasks.size());
+
+		autoDeploymentContext = new AutoDeploymentContext();
+
+		autoDeploymentContext.setFile(_toZipFile("batch7"));
+
+		Mockito.verify(
+			_noticeableExecutorService, Mockito.times(1)
+		).submit(
+			Mockito.any(Runnable.class)
+		);
+
+		Assert.assertEquals(
+			_batchEngineImportTasks.toString(), 1,
+			_batchEngineImportTasks.size());
 	}
 
 	private File _toZipFile(String fileName) throws Exception {

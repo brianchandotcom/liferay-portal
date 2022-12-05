@@ -401,9 +401,15 @@ public class UpgradeClient {
 	private boolean _isFinished(GogoShellClient gogoShellClient)
 		throws IOException {
 
-		System.out.print("Checking to see if all upgrades have completed...");
-
 		String upgradeCheck = gogoShellClient.send("upgrade:check");
+
+		if (upgradeCheck.contains("CommandNotFoundException")) {
+			System.out.print("Portal upgrade failed. Fix the issue and retry.");
+
+			return true;
+		}
+
+		System.out.print("Checking to see if all upgrades have completed...");
 
 		String upgradeSteps = gogoShellClient.send(
 			"upgrade:list | grep Registered | grep step");

@@ -37,14 +37,14 @@ export function normalizeLanguageId(languageId: string): string {
 /**
  * Format string removing spaces and special characters
  */
- export function removeAllSpecialCharacters(str: string): string {
+export function removeAllSpecialCharacters(str: string): string {
 	return str.replace(/[^A-Z0-9]/gi, '');
 }
 
 /**
  * Separate CamelCase string
  */
- export function separateCamelCase(str: string): string {
+export function separateCamelCase(str: string): string {
 	const separatedCamelCaseString = str.replace(/([a-z])([A-Z])/g, '$1 $2');
 
 	return separatedCamelCaseString;
@@ -66,7 +66,7 @@ export function specialCharactersInString(str: string) {
 /**
  * Normalize string in camel case pattern.
  */
- export function toCamelCase(
+export function toCamelCase(
 	str: string,
 	removeSpecialCharacters?: boolean
 ): string {

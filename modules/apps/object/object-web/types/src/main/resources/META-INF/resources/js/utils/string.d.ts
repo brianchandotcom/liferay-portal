@@ -13,11 +13,6 @@
  */
 
 /**
- * Format string removing spaces and special characters
- */
-export declare function removeAllSpecialCharacters(str: string): string;
-
-/**
  * Transform first letter in lowercase
  */
 export declare function firstLetterLowercase(str: string): string;
@@ -34,12 +29,14 @@ export declare function firstLetterUppercase(str: string): string;
 export declare function normalizeLanguageId(languageId: string): string;
 
 /**
- * Normalize string in camel case pattern.
+ * Format string removing spaces and special characters
  */
-export declare function toCamelCase(
-	str: string,
-	removeSpecialCharacters?: boolean
-): string;
+export declare function removeAllSpecialCharacters(str: string): string;
+
+/**
+ * Separate CamelCase string
+ */
+export declare function separateCamelCase(str: string): string;
 
 /**
  * Verify if string contains any special characters
@@ -47,6 +44,9 @@ export declare function toCamelCase(
 export declare function specialCharactersInString(str: string): boolean;
 
 /**
- * Separate CamelCase string
+ * Normalize string in camel case pattern.
  */
-export declare function separateCamelCase(str: string): string;
+export declare function toCamelCase(
+	str: string,
+	removeSpecialCharacters?: boolean
+): string;

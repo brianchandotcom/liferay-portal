@@ -48,6 +48,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -195,9 +196,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.validation.ModelValidator;
 import com.liferay.portal.validation.ModelValidatorRegistryUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -7343,60 +7342,17 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	protected String copyArticleImages(
+	protected DDMFormValues copyArticleImages(
 		JournalArticle oldArticle, JournalArticle newArticle) {
+
+		DDMFormValues ddmFormValues = oldArticle.getDDMFormValues();
 
 		try {
 			Folder folder = newArticle.addImagesFolder();
 
-			for (FileEntry fileEntry : oldArticle.getImagesFileEntries()) {
-				_portletFileRepository.addPortletFileEntry(
-					null, oldArticle.getGroupId(), newArticle.getUserId(),
-					JournalArticle.class.getName(),
-					newArticle.getResourcePrimKey(),
-					JournalConstants.SERVICE_NAME, folder.getFolderId(),
-					fileEntry.getContentStream(), fileEntry.getFileName(),
-					fileEntry.getMimeType(), false);
-			}
-
-			Document contentDocument = oldArticle.getDocument();
-
-			contentDocument = contentDocument.clone();
-
-			XPath xPathSelector = SAXReaderUtil.createXPath(
-				"//dynamic-element[@type='image']");
-
-			List<Node> imageNodes = xPathSelector.selectNodes(contentDocument);
-
-			for (Node imageNode : imageNodes) {
-				Element imageEl = (Element)imageNode;
-
-				List<Element> dynamicContentEls = imageEl.elements(
-					"dynamic-content");
-
-				for (Element dynamicContentEl : dynamicContentEls) {
-					String fileName = dynamicContentEl.attributeValue("name");
-
-					FileEntry fileEntry =
-						_portletFileRepository.getPortletFileEntry(
-							newArticle.getGroupId(), folder.getFolderId(),
-							fileName);
-
-					String previewURL = _dlURLHelper.getPreviewURL(
-						fileEntry, fileEntry.getFileVersion(), null,
-						StringPool.BLANK, false, true);
-
-					dynamicContentEl.addAttribute(
-						"resourcePrimKey",
-						String.valueOf(newArticle.getResourcePrimKey()));
-
-					dynamicContentEl.clearContent();
-
-					dynamicContentEl.addCDATA(previewURL);
-				}
-			}
-
-			return contentDocument.formattedString();
+			_copyArticleImages(
+				newArticle, ddmFormValues.getDDMFormFieldValues(),
+				oldArticle.getGroupId(), folder.getFolderId());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -7404,7 +7360,7 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		return oldArticle.getContent();
+		return ddmFormValues;
 	}
 
 	@Deactivate
@@ -8181,6 +8137,38 @@ public class JournalArticleLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
+	protected void updateDDMFields(
+			JournalArticle article, DDMFormValues ddmFormValues)
+		throws PortalException {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(article.getGroupId()),
+			_portal.getClassNameId(JournalArticle.class),
+			article.getDDMStructureKey(), true);
+
+		_ddmFieldLocalService.updateDDMFormValues(
+			ddmStructure.getStructureId(), article.getId(), ddmFormValues);
+
+		// Document Cache
+
+		try {
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
+				ddmStructure, ddmFormValues);
+
+			String content = _journalConverter.getContent(
+				ddmStructure, fields, article.getGroupId());
+
+			article.setDocument(SAXReaderUtil.read(content));
+
+			journalArticlePersistence.cacheResult(article);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+	}
+
 	protected void updateDDMFields(JournalArticle article, String content)
 		throws PortalException {
 
@@ -8591,6 +8579,79 @@ public class JournalArticleLocalServiceImpl
 		).build();
 	}
 
+	private void _copyArticleImages(
+		JournalArticle article, List<DDMFormFieldValue> ddmFormFieldValues,
+		long groupId, long folderId) {
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (ListUtil.isNotEmpty(
+					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
+
+				_copyArticleImages(
+					article, ddmFormFieldValue.getNestedDDMFormFieldValues(),
+					groupId, folderId);
+			}
+
+			if (Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.FIELDSET) ||
+				!Objects.equals(
+					DDMFormFieldTypeConstants.IMAGE,
+					ddmFormFieldValue.getType())) {
+
+				continue;
+			}
+
+			Value newValue = new LocalizedValue();
+
+			Value oldValue = ddmFormFieldValue.getValue();
+
+			newValue.setDefaultLocale(oldValue.getDefaultLocale());
+
+			for (Locale locale : oldValue.getAvailableLocales()) {
+				try {
+					JSONObject valueJSONObject = _jsonFactory.createJSONObject(
+						oldValue.getString(locale));
+
+					FileEntry oldFileEntry = _getFileEntry(valueJSONObject);
+
+					if (oldFileEntry == null) {
+						continue;
+					}
+
+					FileEntry newFileEntry =
+						_portletFileRepository.addPortletFileEntry(
+							null, groupId, article.getUserId(),
+							JournalArticle.class.getName(),
+							article.getResourcePrimKey(),
+							JournalConstants.SERVICE_NAME, folderId,
+							oldFileEntry.getContentStream(),
+							oldFileEntry.getFileName(),
+							oldFileEntry.getMimeType(), false);
+
+					String previewURL = _dlURLHelper.getPreviewURL(
+						newFileEntry, newFileEntry.getFileVersion(), null,
+						StringPool.BLANK, false, true);
+
+					newValue.addString(
+						locale,
+						_toJSON(
+							valueJSONObject.getString("alt"), article,
+							newFileEntry, valueJSONObject.getString("height"),
+							valueJSONObject.getString("type"), previewURL,
+							valueJSONObject.getString("width")));
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
+			}
+
+			ddmFormFieldValue.setValue(newValue);
+		}
+	}
+
 	private void _deleteDDMStructurePredefinedValues(
 			long groupId, String ddmStructureKey)
 		throws PortalException {
@@ -8671,6 +8732,25 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private FileEntry _getFileEntry(JSONObject valueJSONObject) {
+		if ((valueJSONObject == null) || (valueJSONObject.length() <= 0)) {
+			return null;
+		}
+
+		try {
+			return _dlAppLocalService.getFileEntryByUuidAndGroupId(
+				valueJSONObject.getString("uuid"),
+				valueJSONObject.getLong("groupId"));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get file entry", portalException);
+			}
+
+			return null;
+		}
 	}
 
 	private Map<Locale, String> _getLocalizedBodyMap(
@@ -9012,6 +9092,37 @@ public class JournalArticleLocalServiceImpl
 
 				return null;
 			});
+	}
+
+	private String _toJSON(
+		String alt, JournalArticle article, FileEntry fileEntry, String height,
+		String type, String url, String width) {
+
+		return JSONUtil.put(
+			"alt", alt
+		).put(
+			"description", alt
+		).put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"height", height
+		).put(
+			"name", fileEntry.getFileName()
+		).put(
+			"resourcePrimKey", article.getResourcePrimKey()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", type
+		).put(
+			"url", url
+		).put(
+			"uuid", fileEntry.getUuid()
+		).put(
+			"width", width
+		).toString();
 	}
 
 	private List<JournalArticleLocalization> _updateArticleLocalizedFields(

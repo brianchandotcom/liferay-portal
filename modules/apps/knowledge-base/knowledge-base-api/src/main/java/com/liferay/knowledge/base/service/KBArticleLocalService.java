@@ -266,6 +266,10 @@ public interface KBArticleLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
+	public KBArticle expireKBArticle(
+			long userId, long resourcePrimKey, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchFirstChildKBArticle(
 		long groupId, long parentResourcePrimKey);

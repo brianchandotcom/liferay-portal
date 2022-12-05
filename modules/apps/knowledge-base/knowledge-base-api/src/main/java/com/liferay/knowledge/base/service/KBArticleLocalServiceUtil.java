@@ -313,6 +313,15 @@ public class KBArticleLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static KBArticle expireKBArticle(
+			long userId, long resourcePrimKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().expireKBArticle(
+			userId, resourcePrimKey, serviceContext);
+	}
+
 	public static KBArticle fetchFirstChildKBArticle(
 		long groupId, long parentResourcePrimKey) {
 

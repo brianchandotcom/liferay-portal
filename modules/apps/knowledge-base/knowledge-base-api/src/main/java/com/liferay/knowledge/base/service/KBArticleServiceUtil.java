@@ -100,6 +100,14 @@ public class KBArticleServiceUtil {
 			groupId, resourcePrimKey, fileName, tempFolderName);
 	}
 
+	public static KBArticle expireKBArticle(
+			long resourcePrimKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().expireKBArticle(resourcePrimKey, serviceContext);
+	}
+
 	public static KBArticle fetchFirstChildKBArticle(
 		long groupId, long parentResourcePrimKey) {
 

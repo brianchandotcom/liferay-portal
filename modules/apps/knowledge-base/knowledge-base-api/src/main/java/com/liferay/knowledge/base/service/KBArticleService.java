@@ -90,6 +90,10 @@ public interface KBArticleService extends BaseService {
 			String tempFolderName)
 		throws PortalException;
 
+	public KBArticle expireKBArticle(
+			long resourcePrimKey, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchFirstChildKBArticle(
 		long groupId, long parentResourcePrimKey);

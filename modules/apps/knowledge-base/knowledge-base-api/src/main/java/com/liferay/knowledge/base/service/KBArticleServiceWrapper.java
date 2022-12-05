@@ -102,6 +102,16 @@ public class KBArticleServiceWrapper
 	}
 
 	@Override
+	public com.liferay.knowledge.base.model.KBArticle expireKBArticle(
+			long resourcePrimKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleService.expireKBArticle(
+			resourcePrimKey, serviceContext);
+	}
+
+	@Override
 	public com.liferay.knowledge.base.model.KBArticle fetchFirstChildKBArticle(
 		long groupId, long parentResourcePrimKey) {
 

@@ -29,6 +29,7 @@ import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,6 +57,11 @@ public class ModifiedFacetPortletSharedSearchContributor
 		portletSharedSearchSettings.addFacet(
 			_buildFacet(
 				modifiedFacetPortletPreferences, portletSharedSearchSettings));
+	}
+
+	@Activate
+	protected void activate() {
+		_dateRangeFactory = new DateRangeFactory(_dateFormatFactory);
 	}
 
 	private Facet _buildFacet(
@@ -92,18 +98,8 @@ public class ModifiedFacetPortletSharedSearchContributor
 		return modifiedFacetBuilder.build();
 	}
 
-	private DateRangeFactory _getDateRangeFactory() {
-		if (_dateRangeFactory == null) {
-			_dateRangeFactory = new DateRangeFactory(_dateFormatFactory);
-		}
-
-		return _dateRangeFactory;
-	}
-
 	private JSONArray _replaceAliases(JSONArray rangesJSONArray) {
-		DateRangeFactory dateRangeFactory = _getDateRangeFactory();
-
-		return dateRangeFactory.replaceAliases(
+		return _dateRangeFactory.replaceAliases(
 			rangesJSONArray, _calendarFactory.getCalendar(), _jsonFactory);
 	}
 
@@ -113,7 +109,7 @@ public class ModifiedFacetPortletSharedSearchContributor
 	@Reference
 	private DateFormatFactory _dateFormatFactory;
 
-	private DateRangeFactory _dateRangeFactory;
+	private volatile DateRangeFactory _dateRangeFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

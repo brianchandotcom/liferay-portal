@@ -227,7 +227,7 @@ const MDFClaimList = () => {
 				</div>
 
 				<div className="mb-2 mb-lg-0">
-					{data.items && (
+					{!!data.items?.length && (
 						<CSVLink
 							className="btn btn-secondary mr-2"
 							data={data.items}

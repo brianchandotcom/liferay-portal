@@ -14,11 +14,15 @@
 
 package com.liferay.notification.internal.type.test;
 
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalService;
 import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.NotificationTypeServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -26,6 +30,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 
 /**
@@ -58,6 +63,20 @@ public class BaseNotificationTypeTest {
 		return notificationRecipientSetting;
 	}
 
+	protected void sendNotification(
+			NotificationContext notificationContext, String type)
+		throws PortalException {
+
+		NotificationType notificationType =
+			_notificationTypeServiceTracker.getNotificationType(type);
+
+		if (notificationType == null) {
+			Assert.fail("There is no notificationType with type " + type);
+		}
+
+		notificationType.sendNotification(notificationContext);
+	}
+
 	protected static User user;
 
 	@Inject
@@ -74,5 +93,8 @@ public class BaseNotificationTypeTest {
 
 	@Inject
 	protected NotificationTemplateLocalService notificationTemplateLocalService;
+
+	@Inject
+	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
 
 }

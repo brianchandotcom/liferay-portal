@@ -18,18 +18,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.constants.NotificationRecipientConstants;
+import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.context.NotificationContextBuilder;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationTemplate;
-import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
@@ -61,7 +60,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntryLocalService.
 				getNotificationQueueEntriesCount());
 
-		_notificationType.sendNotification(
+		sendNotification(
 			new NotificationContextBuilder(
 			).notificationTemplate(
 				notificationTemplateLocalService.addNotificationTemplate(
@@ -74,7 +73,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				).build()
 			).userId(
 				user.getUserId()
-			).build());
+			).build(),
+			NotificationConstants.TYPE_EMAIL);
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getUnsentNotificationEntries(
@@ -142,6 +142,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationTemplateLocalService.createNotificationTemplate(0L);
 
 		notificationTemplate.setBody("Body [%term%]");
+		notificationTemplate.setEditorType(
+			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
 		notificationTemplate.setName(RandomTestUtil.randomString());
 		notificationTemplate.setRecipientType(
 			NotificationRecipientConstants.TYPE_EMAIL);
@@ -154,10 +156,5 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		return notificationContext;
 	}
-
-	@Inject(
-		filter = "notification.type.key=" + NotificationConstants.TYPE_EMAIL
-	)
-	private NotificationType _notificationType;
 
 }

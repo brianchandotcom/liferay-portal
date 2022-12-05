@@ -24,7 +24,6 @@ import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
-import com.liferay.notification.type.NotificationType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -132,7 +131,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			_userNotificationEventLocalService.getUserNotificationEventsCount(
 				user.getUserId()));
 
-		_notificationType.sendNotification(
+		sendNotification(
 			new NotificationContextBuilder(
 			).notificationTemplate(
 				notificationTemplateLocalService.addNotificationTemplate(
@@ -146,7 +145,8 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				).build()
 			).userId(
 				user.getUserId()
-			).build());
+			).build(),
+			NotificationConstants.TYPE_USER_NOTIFICATION);
 
 		notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationQueueEntries(
@@ -187,11 +187,6 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@DeleteAfterTestRun
 	private NotificationQueueEntry _notificationQueueEntry;
-
-	@Inject(
-		filter = "notification.type.key=" + NotificationConstants.TYPE_USER_NOTIFICATION
-	)
-	private NotificationType _notificationType;
 
 	@Inject
 	private UserNotificationEventLocalService

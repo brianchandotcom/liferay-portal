@@ -77,6 +77,8 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetDisplayContext =
 				new AssetEntriesSearchFacetDisplayContext();
 
+		assetEntriesSearchFacetDisplayContext.setBucketDisplayContexts(
+			bucketDisplayContexts);
 		assetEntriesSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
 		assetEntriesSearchFacetDisplayContext.setNothingSelected(
@@ -90,8 +92,6 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 			_parameterValues);
 		assetEntriesSearchFacetDisplayContext.setRenderNothing(
 			ListUtil.isEmpty(bucketDisplayContexts));
-		assetEntriesSearchFacetDisplayContext.setBucketDisplayContexts(
-			bucketDisplayContexts);
 		assetEntriesSearchFacetDisplayContext.
 			setTypeFacetPortletInstanceConfiguration(
 				_typeFacetPortletInstanceConfiguration);

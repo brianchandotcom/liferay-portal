@@ -43,6 +43,8 @@ public class UserConstants {
 
 	public static final int TYPE_SERVICE_ACCOUNT = 1;
 
+	public static final int TYPE_USER = 0;
+
 	public static final long USER_ID_DEFAULT = 0;
 
 	public static final String USERS_EMAIL_ADDRESS_AUTO_SUFFIX = PropsUtil.get(

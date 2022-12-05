@@ -157,8 +157,10 @@ public class ValidationBuild extends BaseBuild {
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
 		String urlSuffix = "testReport/api/json";
 
-		if (archiveFileExists(urlSuffix)) {
-			return new JSONObject(getArchiveFileContent(urlSuffix));
+		String archiveFileContent = getArchiveFileContent(urlSuffix);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return new JSONObject(archiveFileContent);
 		}
 
 		try {

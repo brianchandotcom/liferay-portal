@@ -440,8 +440,10 @@ public abstract class BaseBuild implements Build {
 	public JSONObject getBuildJSONObject() {
 		String urlSuffix = "api/json";
 
-		if (archiveFileExists(urlSuffix)) {
-			return new JSONObject(getArchiveFileContent(urlSuffix));
+		String archiveFileContent = getArchiveFileContent(urlSuffix);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return new JSONObject(archiveFileContent);
 		}
 
 		try {
@@ -736,8 +738,10 @@ public abstract class BaseBuild implements Build {
 	public String getConsoleText() {
 		String urlSuffix = "consoleText";
 
-		if (archiveFileExists(urlSuffix)) {
-			return getArchiveFileContent(urlSuffix);
+		String archiveFileContent = getArchiveFileContent(urlSuffix);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return archiveFileContent;
 		}
 
 		String buildURL = getBuildURL();
@@ -1577,8 +1581,10 @@ public abstract class BaseBuild implements Build {
 
 		String urlSuffix = "testReport/api/json";
 
-		if (archiveFileExists(urlSuffix)) {
-			return new JSONObject(getArchiveFileContent(urlSuffix));
+		String archiveFileContent = getArchiveFileContent(urlSuffix);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return new JSONObject(archiveFileContent);
 		}
 
 		try {
@@ -2675,15 +2681,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getArchiveFileContent(String urlSuffix) {
-		if (!archiveFileExists(urlSuffix)) {
+		File archiveFile = getArchiveFile(urlSuffix);
+
+		if (!archiveFile.exists()) {
 			return null;
 		}
 
 		try {
-			return JenkinsResultsParserUtil.read(getArchiveFile(urlSuffix));
+			return JenkinsResultsParserUtil.read(archiveFile);
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+			return null;
 		}
 	}
 
@@ -2753,8 +2761,10 @@ public abstract class BaseBuild implements Build {
 	protected JSONObject getBuildJSONObject(String tree) {
 		String urlSuffix = "api/json";
 
-		if (archiveFileExists(urlSuffix)) {
-			return new JSONObject(getArchiveFileContent(urlSuffix));
+		String archiveFileContent = getArchiveFileContent(urlSuffix);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return new JSONObject(archiveFileContent);
 		}
 
 		return JenkinsAPIUtil.getAPIJSONObject(getBuildURL(), tree);

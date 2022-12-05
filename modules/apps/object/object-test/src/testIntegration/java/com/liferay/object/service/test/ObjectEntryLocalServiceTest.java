@@ -44,7 +44,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -953,50 +952,14 @@ public class ObjectEntryLocalServiceTest {
 	public void testAddOrUpdateObjectEntryWithAccountEntryRestrictedObjectFieldId()
 		throws Exception {
 
-		_user = UserTestUtil.addUser();
-
-		ObjectDefinition accountObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				_user.getCompanyId(), "accountEntry");
-
-		ObjectDefinition customObjectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, "text")));
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				_user.getUserId(),
-				accountObjectDefinition.getObjectDefinitionId(),
-				customObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"relationship", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		customObjectDefinition.setAccountEntryRestricted(true);
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			customObjectDefinition.getObjectDefinitionId(),
-			"r_relationship_accountEntryId");
-
-		customObjectDefinition.setAccountEntryRestrictedObjectFieldId(
-			objectField.getObjectFieldId());
-
-		_objectDefinitionLocalService.updateObjectDefinition(
-			customObjectDefinition);
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			_user.getUserId(), customObjectDefinition.getObjectDefinitionId());
+		ObjectDefinition objectDefinition =
+			_addObjectDefinitionWithAccountEntryRestricted();
 
 		long invalidAccountEntryId = -1;
 
 		try {
 			_objectEntryLocalService.addObjectEntry(
-				_user.getUserId(), 0,
-				customObjectDefinition.getObjectDefinitionId(),
+				_user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"r_relationship_accountEntryId", invalidAccountEntryId
 				).build(),
@@ -1039,8 +1002,7 @@ public class ObjectEntryLocalServiceTest {
 		_userLocalService.addRoleUser(role.getRoleId(), _user);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			_user.getUserId(), 0,
-			customObjectDefinition.getObjectDefinitionId(),
+			_user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"r_relationship_accountEntryId",
 				accountEntry1.getAccountEntryId()
@@ -1110,11 +1072,7 @@ public class ObjectEntryLocalServiceTest {
 			accountEntry2.getAccountEntryId(),
 			values.get("r_relationship_accountEntryId"));
 
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			customObjectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
 			accountEntryUserRel1);
@@ -2481,6 +2439,47 @@ public class ObjectEntryLocalServiceTest {
 
 	@Rule
 	public TestName testName = new TestName();
+
+	private ObjectDefinition _addObjectDefinitionWithAccountEntryRestricted()
+		throws Exception {
+
+		_user = UserTestUtil.addUser();
+
+		ObjectDefinition accountObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_user.getCompanyId(), "accountEntry");
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "text")));
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			_user.getUserId(), accountObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"relationship", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		objectDefinition.setAccountEntryRestricted(true);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getObjectDefinitionId(),
+			"r_relationship_accountEntryId");
+
+		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			_user.getUserId(), objectDefinition.getObjectDefinitionId());
+
+		return objectDefinition;
+	}
 
 	private ObjectEntry _addObjectEntry(Map<String, Serializable> values)
 		throws Exception {

@@ -12,8 +12,8 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 
 import {useSidebarTask} from '../../../hooks/useSidebarTask';
@@ -21,6 +21,7 @@ import i18n from '../../../i18n';
 import {TestraySubTask} from '../../../services/rest';
 import {StatusesProgressScore, chartClassNames} from '../../../util/constants';
 import TaskbarProgress from '../../ProgressBar/TaskbarProgress';
+import Tooltip from '../../Tooltip';
 
 type TaskBadgeProps = {
 	className?: string;
@@ -32,55 +33,46 @@ type TaskSidebarProps = {
 };
 
 type SubtaskCardProps = {
-	expanded: boolean;
 	subtask: {
+		id: number;
 		name: string;
 		score: number;
 	};
+	taskId: number;
 };
 
 const TaskBadge: React.FC<TaskBadgeProps> = ({className, count}) => (
-	<div
+	<span
 		className={classNames(
 			'align-items-center d-flex justify-content-center quantity-task-badge',
 			className
 		)}
 	>
 		{count}
-	</div>
+	</span>
 );
 
-const SubtaskCard: React.FC<SubtaskCardProps> = ({expanded, subtask}) => (
-	<div className="align-items-center d-flex justify-content-between mb-2 px-2 py-3 subtask-sidebar text-nowrap">
-		<div>{subtask.name}</div>
+const SubtaskCard: React.FC<SubtaskCardProps> = ({subtask, taskId}) => (
+	<Link
+		className="align-items-center d-flex justify-content-between subtask-sidebar text-nowrap"
+		to={`testflow/${taskId}/subtasks/${subtask?.id}`}
+	>
+		<span className="" style={{float: 'left'}}>
+			{subtask.name}
+		</span>
 
-		{expanded && (
-			<>
-				<div>{i18n.translate('score')}</div>
+		<span className="d-flex">{i18n.translate('score')}</span>
 
-				<div>{subtask.score}</div>
-			</>
-		)}
-	</div>
+		<span>{subtask.score}</span>
+	</Link>
 );
 
 const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
-	const {
-		filteredTasks,
-		selectedTask,
-		setSelectedTask,
-		subTasks,
-		tasks,
-	} = useSidebarTask();
+	const {tasks} = useSidebarTask();
 
-	const justifyContentSidebar = {
-		'justify-content-between': expanded,
-		'justify-content-center': !expanded,
-	};
-
-	const sidebarItemVisibility = {
-		'sidebar-item-hidden': !expanded,
-		'sidebar-item-visible': expanded,
+	const sidebarVisibility = {
+		'task-sidebar-expanded': expanded,
+		'task-sidebar-hidden': !expanded,
 	};
 
 	if (!tasks.length) {
@@ -88,109 +80,116 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 	}
 
 	return (
-		<div className="task-sidebar">
+		<div
+			className={classNames('task-sidebar', {
+				'overflow-hidden': !expanded,
+			})}
+		>
 			<div
-				className={classNames(
-					'align-items-center d-flex task-sidebar-title',
-					justifyContentSidebar
-				)}
+				className={classNames('d-flex sticky-top task-sidebar-title', {
+					'task-sidebar-title-expanded': expanded,
+					'task-sidebar-title-hidden ': !expanded,
+				})}
 			>
-				<span
+				<div
 					className={classNames(
-						'font-weight-bold',
-						sidebarItemVisibility
+						'd-flex flex-row justify-content-between',
+						sidebarVisibility
 					)}
 				>
-					{i18n.translate('tasks')}
-				</span>
+					<span>{i18n.translate('tasks')}</span>
 
-				<TaskBadge count={tasks.length} />
-			</div>
-
-			<div className="d-flex flex-column mb-1">
-				<div
-					className={classNames('d-flex mb-2', justifyContentSidebar)}
-				>
-					<TaskBadge
-						className={classNames({
-							'mr-3': expanded,
-						})}
-						count={subTasks.length}
-					/>
-
-					<Link
-						className={classNames(
-							'd-flex justify-content-between',
-							sidebarItemVisibility
-						)}
-						onClick={() => setSelectedTask(selectedTask)}
-						to={`testflow/${selectedTask?.id}`}
-					>
-						{selectedTask?.name}
-					</Link>
+					<TaskBadge count={tasks.length} />
 				</div>
 
-				{expanded && (
-					<Link
-						className="sidebar-link"
-						onClick={() => setSelectedTask(selectedTask)}
-						to={`/project/${selectedTask?.build?.project?.id}/routines/${selectedTask?.build?.routine?.id}/build/${selectedTask?.build?.id}`}
-					>
-						{selectedTask?.build?.name}
-					</Link>
-				)}
+				<div
+					className={classNames('mt-3 notification', {
+						'notification-hide': expanded,
+						'notification-show': !expanded,
+					})}
+				>
+					<ClayIcon symbol="blogs" />
 
-				<TaskbarProgress
-					displayTotalCompleted
-					items={[
-						[StatusesProgressScore.SELF, 0],
-						[
-							StatusesProgressScore.OTHER,
-							Number(selectedTask?.subtaskScoreCompleted ?? 0),
-						],
-						[
-							StatusesProgressScore.INCOMPLETE,
-							Number(selectedTask?.subtaskScoreIncomplete ?? 0),
-						],
-					]}
-					taskbarClassNames={chartClassNames}
-				/>
+					<span className="task-sidebar-notification">
+						{tasks.length}
+					</span>
+				</div>
 			</div>
 
-			{expanded && (
-				<div>
-					{subTasks.map((subtask: TestraySubTask, index) => (
-						<SubtaskCard
-							expanded={expanded}
-							key={index}
-							subtask={{
-								name: subtask?.name,
-								score: subtask.score,
-							}}
-						/>
-					))}
-
-					{filteredTasks.map((task, index) => (
-						<div className="mb-5 mt-6c sidebar-link" key={index}>
+			<ul className="list-unstyled">
+				{tasks.map((task, index) => (
+					<li
+						className={classNames('mb-6 mt-4', sidebarVisibility)}
+						key={index}
+					>
+						<Tooltip position="right" title={task?.name}>
 							<Link
-								className="d-flex justify-content-between"
-								onClick={() => setSelectedTask(task)}
-								to={`testflow/${task.id}`}
+								className={classNames(
+									'sidebar-link d-flex mb-2',
+									sidebarVisibility
+								)}
+								to={`testflow/${task?.id}`}
 							>
-								{task.name}
-							</Link>
+								<TaskBadge
+									className={classNames({
+										'mr-2': expanded,
+									})}
+									count={task?.subTasks?.length as number}
+								/>
 
+								{task?.name}
+							</Link>
+						</Tooltip>
+
+						<Tooltip position="right" title={task?.build?.name}>
 							<Link
-								className="sidebar-link"
-								onClick={() => setSelectedTask(task)}
 								to={`/project/${task?.build?.project?.id}/routines/${task?.build?.routine?.id}/build/${task?.build?.id}`}
 							>
-								{task.build?.name}
+								{task?.build?.name}
 							</Link>
+						</Tooltip>
+
+						<div
+							className="mb-3"
+							style={{height: '20px', overflow: 'hidden'}}
+						>
+							<TaskbarProgress
+								displayTotalCompleted
+								items={[
+									[StatusesProgressScore.SELF, 0],
+									[
+										StatusesProgressScore.OTHER,
+										Number(
+											task?.subtaskScoreCompleted ?? 0
+										),
+									],
+									[
+										StatusesProgressScore.INCOMPLETE,
+										Number(
+											task?.subtaskScoreIncomplete ?? 0
+										),
+									],
+								]}
+								taskbarClassNames={chartClassNames}
+							/>
 						</div>
-					))}
-				</div>
-			)}
+
+						{task?.subTasks?.map(
+							(subtask: TestraySubTask, index) => (
+								<SubtaskCard
+									key={index}
+									subtask={{
+										id: subtask?.id,
+										name: subtask?.name,
+										score: subtask.score,
+									}}
+									taskId={task.id as number}
+								/>
+							)
+						)}
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 };

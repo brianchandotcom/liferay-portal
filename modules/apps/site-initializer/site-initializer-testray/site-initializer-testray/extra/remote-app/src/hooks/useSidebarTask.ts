@@ -12,60 +12,62 @@
  * details.
  */
 
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo} from 'react';
 
 import {Liferay} from '../services/liferay';
 import {
 	APIResponse,
 	TestraySubTask,
-	TestrayTask,
 	TestrayTaskUser,
 	testraySubTaskImpl,
 	testrayTaskUsersImpl,
 } from '../services/rest';
-import {searchUtil} from '../util/search';
+import {SearchBuilder} from '../util/search';
+import {SubTaskStatuses} from '../util/statuses';
 import {useFetch} from './useFetch';
 
 export function useSidebarTask() {
-	const [selectedTask, setSelectedTask] = useState<TestrayTask>();
+	const taskSearchBuilder = new SearchBuilder();
+	const subTaskSearchBuilder = new SearchBuilder();
+
+	const taskFilters = taskSearchBuilder
+		.eq('userId', Liferay.ThemeDisplay.getUserId())
+		.build();
+
+	const subTasksFilter = subTaskSearchBuilder
+		.eq('userId', Liferay.ThemeDisplay.getUserId())
+		.and()
+		.ne('dueStatus', SubTaskStatuses.MERGED)
+		.and()
+		.ne('dueStatus', SubTaskStatuses.COMPLETE)
+		.build();
 
 	const {data: tasksUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
-		`${testrayTaskUsersImpl.resource}&filter=${searchUtil.eq(
-			'userId',
-			Liferay.ThemeDisplay.getUserId()
-		)}`,
+		`${testrayTaskUsersImpl.resource}&filter=${taskFilters}`,
 		(response) => testrayTaskUsersImpl.transformDataFromList(response)
 	);
 
 	const {data: subtasksResponse} = useFetch<APIResponse<TestraySubTask>>(
-		selectedTask
-			? `${testraySubTaskImpl.resource}&filter=${searchUtil.eq(
-					'taskId',
-					selectedTask?.id
-			  )}`
-			: null
+		`${testraySubTaskImpl.resource}&filter=${subTasksFilter}`,
+		(response) => testraySubTaskImpl.transformDataFromList(response)
 	);
-
-	const tasks = useMemo(
-		() =>
-			(tasksUserResponse?.items || []).map(
-				({task}) => task as TestrayTask
-			),
-		[tasksUserResponse?.items]
-	);
-
-	useEffect(() => setSelectedTask(tasks[0]), [tasks]);
 
 	const subTasks = useMemo(() => subtasksResponse?.items || [], [
 		subtasksResponse?.items,
 	]);
 
-	const filteredTasks = tasks.filter((task) => task !== selectedTask);
+	const tasks = useMemo(
+		() =>
+			(tasksUserResponse?.items || []).map(({task}) => ({
+				...task,
+				subTasks: subtasksResponse?.items.filter((subtask) => {
+					return subtask?.task?.id === task?.id ? subtask : undefined;
+				}),
+			})),
+		[subtasksResponse?.items, tasksUserResponse?.items]
+	);
 
 	return {
-		filteredTasks,
-		selectedTask,
-		setSelectedTask,
 		subTasks,
 		tasks,
 		tasksUserResponse,

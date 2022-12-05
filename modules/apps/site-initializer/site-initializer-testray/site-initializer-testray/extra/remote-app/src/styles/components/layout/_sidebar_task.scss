@@ -1,7 +1,4 @@
-$hover-transition-width: width 0.9s ease;
-$hover-transition: opacity 1s ease;
-$normal-transition-width: width 0.9s ease;
-$normal-transition: opacity 1s ease;
+$opacity-transition: opacity 1s ease;
 
 .task-sidebar {
 	color: #8b8db2;
@@ -10,42 +7,107 @@ $normal-transition: opacity 1s ease;
 	flex-direction: column;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	padding-left: 10px;
-	width: 100%;
+	padding: 0 20px 20px;
+
+	&-expanded {
+		opacity: 1;
+		transition: $opacity-transition;
+		visibility: visible;
+		width: 100%;
+	}
+
+	&-hidden {
+		height: 0 !important;
+		opacity: 0;
+		overflow: hidden;
+		transition: $opacity-transition;
+		visibility: hidden;
+		width: 0 !important;
+	}
+
+	.task-sidebar-title {
+		background-color: #18215c;
+		height: 30px;
+
+		&-expanded {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+
+		&-hidden {
+			display: flex;
+			justify-content: center;
+		}
+	}
 
 	.quantity-task-badge {
 		background-color: #303376;
 		color: #fff;
-		height: 25px;
-		width: 25px;
+		height: 22px;
+		padding: 9px;
+		width: 22px;
 	}
 
 	.subtask-sidebar {
 		background-color: #303376;
 		box-sizing: border-box;
 		font-size: 14px !important;
+		margin-bottom: 8px;
+		padding: 8px;
+		text-decoration: none !important;
 		text-transform: uppercase;
 		width: 100%;
-	}
 
-	.task-sidebar-title {
-		background-color: #18215c;
-		padding-bottom: 24px;
-		position: sticky;
-		top: 0;
+		&:hover {
+			background-color: #434796;
+			color: #b0b2dd;
+		}
 	}
 
 	.sidebar-item-hidden {
 		opacity: 0;
-		transform: $normal-transition-width;
+		transition: $opacity-transition;
 		visibility: hidden;
 		width: 0;
 	}
 
 	.sidebar-item-visible {
 		opacity: 1;
-		transform: $normal-transition-width;
+		transition: $opacity-transition;
 		visibility: visible;
+	}
+
+	.notification {
+		.task-sidebar-notification {
+			align-items: center;
+			background: #f00;
+			border-radius: 100%;
+			bottom: 35px;
+			box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+			color: #fff;
+			display: flex;
+			height: 25px;
+			justify-content: center;
+			left: 10px;
+			padding: 10px;
+			position: relative;
+			width: 25px;
+		}
+
+		&-hide {
+			opacity: 0;
+			transition: $opacity-transition;
+			visibility: hidden;
+			width: 0;
+		}
+
+		&-show {
+			opacity: 1;
+			transition: $opacity-transition;
+			visibility: visible;
+			width: 100%;
+		}
 	}
 
 	.scroller {
@@ -54,7 +116,7 @@ $normal-transition: opacity 1s ease;
 	}
 
 	&::-webkit-scrollbar {
-		width: 10px;
+		width: 5px;
 	}
 
 	&::-webkit-scrollbar-track {
@@ -64,7 +126,7 @@ $normal-transition: opacity 1s ease;
 
 	&::-webkit-scrollbar-thumb {
 		background-color: #8b8db2;
-		border: 3px solid #18215c;
+		border: 1px solid #18215c;
 		border-radius: 20px;
 	}
 
@@ -72,12 +134,19 @@ $normal-transition: opacity 1s ease;
 		color: #8b8db2;
 	}
 
+	.sidebar-buildlink {
+		max-width: 50px;
+		overflow: auto;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 50px;
+	}
+
 	.sidebar-link {
-		box-sizing: border-box;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		width: 200px;
+		width: 180px;
 	}
 }
 

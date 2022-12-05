@@ -1624,7 +1624,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 						kbArticle.getExpirationDate()));
 			}
 
-			updateStatus(
+			kbArticleLocalService.updateStatus(
 				userId, kbArticle.getResourcePrimKey(),
 				WorkflowConstants.STATUS_EXPIRED, serviceContext);
 

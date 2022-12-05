@@ -1186,6 +1186,19 @@ public class GraphQLServletExtender {
 			).build());
 	}
 
+	private void _registerFields(
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder, String namespace,
+		GraphQLObjectType.Builder rootGraphQLObjectTypeBuilder) {
+
+		GraphQLObjectType queryGraphQLObjectType =
+			graphQLObjectTypeBuilder.build();
+
+		if (ListUtil.isNotEmpty(queryGraphQLObjectType.getFieldDefinitions())) {
+			rootGraphQLObjectTypeBuilder.field(
+				_addField(queryGraphQLObjectType, namespace));
+		}
+	}
+
 	private void _registerGraphQLDTOContributor(
 		GraphQLDTOContributor graphQLDTOContributor,
 		GraphQLSchema.Builder graphQLSchemaBuilder,
@@ -1388,23 +1401,13 @@ public class GraphQLServletExtender {
 				queryGraphQLObjectTypeBuilder);
 		}
 
-		GraphQLObjectType queryGraphQLObjectType =
-			queryGraphQLObjectTypeBuilder.build();
+		_registerFields(
+			queryGraphQLObjectTypeBuilder, namespace,
+			rootQueryGraphQLObjectTypeBuilder);
 
-		if (ListUtil.isNotEmpty(queryGraphQLObjectType.getFieldDefinitions())) {
-			rootQueryGraphQLObjectTypeBuilder.field(
-				_addField(queryGraphQLObjectType, namespace));
-		}
-
-		GraphQLObjectType mutationGraphQLObjectType =
-			mutationGraphQLObjectTypeBuilder.build();
-
-		if (ListUtil.isNotEmpty(
-				mutationGraphQLObjectType.getFieldDefinitions())) {
-
-			rootMutationGraphQLObjectTypeBuilder.field(
-				_addField(mutationGraphQLObjectType, namespace));
-		}
+		_registerFields(
+			mutationGraphQLObjectTypeBuilder, namespace,
+			rootMutationGraphQLObjectTypeBuilder);
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 			processingElementsContainer.getCodeRegistryBuilder();

@@ -181,7 +181,7 @@ public class ProductNavigationControlMenuTagDisplayContext {
 			writer.append("<div ");
 		}
 
-		writer.append("class=\"control-menu-nav\" role=\"tablist\">");
+		writer.append("class=\"control-menu-nav\">");
 
 		for (ProductNavigationControlMenuEntry
 				productNavigationControlMenuEntry :

@@ -75,7 +75,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long userId, long groupId,
-			String name, String type, long masterLayoutPlid)
+			long previewFileEntryId, String name, String type,
+			long masterLayoutPlid)
 		throws PortalException {
 
 		_validateName(groupId, 0, name, type);
@@ -106,6 +107,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		layoutUtilityPageEntry.setPlid(plid);
 
+		layoutUtilityPageEntry.setPreviewFileEntryId(previewFileEntryId);
 		layoutUtilityPageEntry.setName(name);
 		layoutUtilityPageEntry.setType(type);
 

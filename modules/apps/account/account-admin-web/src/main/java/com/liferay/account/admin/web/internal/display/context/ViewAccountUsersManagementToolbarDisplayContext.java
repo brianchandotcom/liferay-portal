@@ -129,7 +129,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					).setParameter(
 						"showCreateButton", Boolean.TRUE
 					).setWindowState(
-						LiferayWindowState.MAXIMIZED
+						LiferayWindowState.POP_UP
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "assign-users"));

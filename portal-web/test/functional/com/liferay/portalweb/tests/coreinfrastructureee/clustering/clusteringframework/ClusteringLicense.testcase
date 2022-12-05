@@ -27,14 +27,16 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Spring Extender Unavailable Component Checker check result");
 
-		User.loginPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		for (var nodeNumber : list "8,9") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:${nodeNumber}080",
+				userEmailAddress = "test@liferay.com");
 
-		Alert.viewErrorMessage(errorMessage = "The maximum number of 2 nodes licensed for this cluster has been exceeded. Please shut down excess nodes as soon as possible. An additional 2 nodes are temporarily permitted during the grace period");
+			Alert.viewErrorMessage(errorMessage = "The maximum number of 2 nodes licensed for this cluster has been exceeded. Please shut down excess nodes as soon as possible. An additional 2 nodes are temporarily permitted during the grace period");
 
-		Alert.viewErrorMessage(errorMessage = "This current node is within the licensed node count and will not be automatically deactivated nor shut down after the grace period expires.");
+			Alert.viewErrorMessage(errorMessage = "This current node is within the licensed node count and will not be automatically deactivated nor shut down after the grace period expires.");
+		}
 
 		Clustering.waitForNodeShutdown(nodePort = "10080");
 

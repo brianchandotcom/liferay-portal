@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.portlet.shared.search;
 
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.CalendarFactory;
@@ -73,8 +72,9 @@ public class ModifiedFacetPortletSharedSearchContributor
 			_jsonFactory);
 
 		modifiedFacetBuilder.setRangesJSONArray(
-			_replaceAliases(
-				modifiedFacetPortletPreferences.getRangesJSONArray()));
+			_dateRangeFactory.replaceAliases(
+				modifiedFacetPortletPreferences.getRangesJSONArray(),
+				_calendarFactory.getCalendar(), _jsonFactory));
 
 		modifiedFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
@@ -96,11 +96,6 @@ public class ModifiedFacetPortletSharedSearchContributor
 			modifiedFacetBuilder::setCustomRangeTo);
 
 		return modifiedFacetBuilder.build();
-	}
-
-	private JSONArray _replaceAliases(JSONArray rangesJSONArray) {
-		return _dateRangeFactory.replaceAliases(
-			rangesJSONArray, _calendarFactory.getCalendar(), _jsonFactory);
 	}
 
 	@Reference

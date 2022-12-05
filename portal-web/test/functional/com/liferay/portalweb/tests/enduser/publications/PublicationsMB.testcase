@@ -352,6 +352,7 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.editCP(
+			key_listEntry = "MB Thread Message Subject",
 			threadBodyEdit = "MB Thread Message Body Edit",
 			threadSubjectEdit = "MB Thread Message Subject Edit");
 

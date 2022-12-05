@@ -14,6 +14,7 @@ components:
                         $ref: "#/components/schemas/DataSource"
                     type: array
                 name:
+                    minLength: 3
                     type: string
         CommerceChannel:
             properties:

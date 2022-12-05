@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>RELATED_ASSETS_SELECT</td>
-	<td>//div[contains(@id,'relatedAssets')]//button[normalize-space()='Select']</td>
+	<td>//div[contains(@id,'relatedAssets') or contains(@id,'related-assets')]//button[normalize-space()='Select']</td>
 	<td></td>
 </tr>
 <tr>

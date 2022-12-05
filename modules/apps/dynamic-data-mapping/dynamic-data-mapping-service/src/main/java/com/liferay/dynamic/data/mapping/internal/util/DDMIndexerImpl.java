@@ -334,7 +334,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 				catch (PortalException portalException) {
 					throw new IllegalArgumentException(
 						StringBundler.concat(
-							"Unable to obtain index tpe for field ",
+							"Unable to obtain index type for field ",
 							fieldReference, " and DDM structure ID ",
 							ddmStructureId),
 						portalException);

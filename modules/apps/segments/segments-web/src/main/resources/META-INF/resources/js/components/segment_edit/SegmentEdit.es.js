@@ -474,14 +474,16 @@ class SegmentEdit extends Component {
 			validTitle,
 		} = this.state;
 
+		const contributorsError = this.props.contributors.some(
+			(contributor) => contributor.initialQuery?.error
+		);
+
 		const disabledSaveButton = disabledSave || !validTitle;
 
 		const placeholder = Liferay.Language.get('untitled-segment');
 
 		const showDisabledSegmentationAlert =
 			!isSegmentationEnabled && !isSegmentationDisabledAlertDismissed;
-
-		const invalidSegment = true;
 
 		return (
 			<div
@@ -496,7 +498,7 @@ class SegmentEdit extends Component {
 					value={values.active}
 				/>
 
-				{invalidSegment && Liferay.FeatureFlags['LPS-166954'] ? (
+				{Liferay.FeatureFlags['LPS-166954'] && contributorsError ? (
 					<ClayEmptyState
 						description={Liferay.Language.get(
 							'the-criteria-used-in-this-segment-is-no-longer-available'

@@ -250,6 +250,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"notification.type.key", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
+				ObjectRelatedModelsPredicateProvider.class,
+				new ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl(
+					objectDefinition, _objectFieldLocalService),
+				null),
+			_bundleContext.registerService(
+				ObjectRelatedModelsPredicateProvider.class,
+				new ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl(
+					objectDefinition, _objectFieldLocalService),
+				null),
+			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
 				new ObjectEntry1to1ObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
@@ -266,16 +276,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
 					_objectRelationshipLocalService),
-				null),
-			_bundleContext.registerService(
-				ObjectRelatedModelsPredicateProvider.class,
-				new ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl(
-					objectDefinition, _objectFieldLocalService),
-				null),
-			_bundleContext.registerService(
-				ObjectRelatedModelsPredicateProvider.class,
-				new ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl(
-					objectDefinition, _objectFieldLocalService),
 				null),
 			_bundleContext.registerService(
 				PortletResourcePermission.class, portletResourcePermission,

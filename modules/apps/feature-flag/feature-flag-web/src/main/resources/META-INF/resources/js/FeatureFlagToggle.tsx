@@ -21,8 +21,6 @@ interface IProps {
 	inputName: string;
 	labelOff: string;
 	labelOn: string;
-	symbolOff: string;
-	symbolOn: string;
 }
 
 const FeatureFlagToggle = ({
@@ -31,8 +29,6 @@ const FeatureFlagToggle = ({
 	inputName,
 	labelOff,
 	labelOn,
-	symbolOff,
-	symbolOn,
 }: IProps) => {
 	const [enabled, setEnabled] = useState(initialEnabled);
 
@@ -65,7 +61,6 @@ const FeatureFlagToggle = ({
 				id={inputName}
 				label={enabled ? labelOn : labelOff}
 				onToggle={updateEnabled}
-				symbol={{off: symbolOff, on: symbolOn}}
 				toggled={enabled}
 				type="checkbox"
 			/>

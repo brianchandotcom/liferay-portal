@@ -20,8 +20,6 @@ interface IProps {
 	inputName: string;
 	labelOff: string;
 	labelOn: string;
-	symbolOff: string;
-	symbolOn: string;
 }
 declare const FeatureFlagToggle: ({
 	enabled: initialEnabled,
@@ -29,7 +27,5 @@ declare const FeatureFlagToggle: ({
 	inputName,
 	labelOff,
 	labelOn,
-	symbolOff,
-	symbolOn,
 }: IProps) => JSX.Element;
 export default FeatureFlagToggle;

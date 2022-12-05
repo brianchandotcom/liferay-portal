@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -95,6 +96,7 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			"url", _getURL(ddmFormField, ddmFormFieldRenderingContext)
 		).putAll(
 			_getFileEntryProperties(
+				ddmFormField,
 				ddmFormFieldRenderingContext.getHttpServletRequest(),
 				GetterUtil.getLong(ddmFormFieldRenderingContext.getValue()))
 		).build();
@@ -108,7 +110,8 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 	}
 
 	private Map<String, String> _getFileEntryProperties(
-		HttpServletRequest httpServletRequest, long value) {
+		DDMFormField ddmFormField, HttpServletRequest httpServletRequest,
+		long value) {
 
 		try {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(value);
@@ -119,9 +122,31 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 			return HashMapBuilder.put(
 				"contentURL",
-				_dlURLHelper.getDownloadURL(
-					fileEntry, fileEntry.getFileVersion(), themeDisplay,
-					StringPool.BLANK)
+				() -> {
+					String url = GetterUtil.getString(
+						ddmFormField.getProperty("contentURL"));
+
+					if (Validator.isNotNull(url)) {
+						return url;
+					}
+
+					url = _dlURLHelper.getDownloadURL(
+						fileEntry, fileEntry.getFileVersion(), themeDisplay,
+						StringPool.BLANK);
+
+					url = HttpComponentsUtil.addParameter(
+						url, "objectDefinitionExternalReferenceCode",
+						GetterUtil.getString(
+							ddmFormField.getProperty(
+								"objectDefinitionExternalReferenceCode")));
+					url = HttpComponentsUtil.addParameter(
+						url, "objectEntryExternalReferenceCode",
+						GetterUtil.getString(
+							ddmFormField.getProperty(
+								"objectEntryExternalReferenceCode")));
+
+					return url;
+				}
 			).put(
 				"title", fileEntry.getFileName()
 			).build();

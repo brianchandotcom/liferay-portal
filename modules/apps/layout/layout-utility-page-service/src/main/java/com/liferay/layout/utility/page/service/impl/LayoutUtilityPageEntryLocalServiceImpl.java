@@ -341,7 +341,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			String colorSchemeId = _getColorSchemeId(
 				layout.getCompanyId(), themeId);
 
-			draftLayout = _layoutLocalService.updateLookAndFeel(
+			_layoutLocalService.updateLookAndFeel(
 				groupId, true, draftLayout.getLayoutId(), themeId,
 				colorSchemeId, StringPool.BLANK);
 
@@ -349,10 +349,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				groupId, true, layout.getLayoutId(), themeId, colorSchemeId,
 				StringPool.BLANK);
 		}
-
-		_layoutLocalService.updateStatus(
-			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_DRAFT,
-			serviceContext);
 
 		return _layoutLocalService.updateStatus(
 			userId, layout.getPlid(), WorkflowConstants.STATUS_DRAFT,

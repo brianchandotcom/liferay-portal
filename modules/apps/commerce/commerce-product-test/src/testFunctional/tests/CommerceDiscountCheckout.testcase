@@ -1,0 +1,207 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium="true");
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-10343. Can checkout a product with two discounts, lower discount will be apply"
+	@priority = "3"
+	test CanCheckoutProductWithDiscountLowerDiscountIsApply {
+		task ("Given a Commerce Account and Buyer User are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And 2 different discounts is added to the same product") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Discount 1 20% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 20% off",
+				productName = "ABS Sensor");
+
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "30",
+				target = "products",
+				title = "Discount 2 30% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 2 30% off",
+				productName = "ABS Sensor");
+		}
+
+		task("And check if the higher discount is applied"){
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+			
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+			
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "30",
+				productDiscountedPrice = "35.00",
+				productListPrice = "50.00");
+		}
+
+		task("And the higher discount is deleted so the lower discount can be apllied"){
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 2 30% off");
+
+			ObjectCustomValidation.desactiveValidation();
+
+			Button.click(button = "Publish");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And Buyer User logged in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And buyer user add a product to the cart") {
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+			FrontStore.addInitializerProductToCart(
+				productName = "ABS Sensor",
+				productQuantity = "1");
+		}
+
+		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productUnitPrice = "50",
+				productDiscountedTotalPrice = "40",
+				productDiscountValue = "10",
+				shippingMethod = "Standard"); 
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+    }
+
+	@description = "This is a test for COMMERCE-10344. Can checkout a product with two discounts, and one discount is applied to the discounted amount"
+	@priority = "3"
+	test CanCheckoutProductWithTwoDiscount {
+		task ("Given a Commerce Account and Buyer User are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And 2 different discounts is added to the same product") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Discount 1 20% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 20% off",
+				productName = "ABS Sensor");
+
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L2",
+				percentageLevel1 = "30",
+				target = "products",
+				title = "Discount 2 30% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 2 30% off",
+				productName = "ABS Sensor");
+		}
+
+		task ("And Buyer User logged in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And buyer user add a product to the cart") {
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+			FrontStore.addInitializerProductToCart(
+				productName = "ABS Sensor",
+				productQuantity = "1");
+		}
+
+		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productUnitPrice = "50",
+				productDiscountedTotalPrice = "28",
+				productDiscountValue = "22",
+				shippingMethod = "Standard"); 
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
+}

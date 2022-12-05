@@ -162,6 +162,12 @@ definition {
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
 
 			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_QUANTITY");
+
+			if (isSet(replaceSku)) {
+				AssertElementPresent(
+					key_text = "${replaceText}",
+					locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
+			}
 		}
 		else if ("${selectedType}" == "Linked to a Diagram") {
 			AssertElementPresent(

@@ -1366,7 +1366,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticle = kbArticlePersistence.update(kbArticle);
 
-		if (status != WorkflowConstants.STATUS_APPROVED) {
+		if ((status != WorkflowConstants.STATUS_APPROVED) &&
+			(status != WorkflowConstants.STATUS_EXPIRED)) {
+
 			return kbArticle;
 		}
 
@@ -1382,8 +1384,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Asset
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-			KBArticle.class.getName(), kbArticle.getKbArticleId());
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			assetEntry = _assetEntryLocalService.getEntry(
+				KBArticle.class.getName(), kbArticle.getKbArticleId());
+		}
 
 		List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
 			assetEntry.getEntryId(), AssetLinkConstants.TYPE_RELATED);

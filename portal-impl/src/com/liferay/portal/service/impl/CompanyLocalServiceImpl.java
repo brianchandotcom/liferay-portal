@@ -1853,6 +1853,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		defaultUser.setLoginDate(date);
 		defaultUser.setFailedLoginAttempts(0);
 		defaultUser.setAgreedToTermsOfUse(true);
+		defaultUser.setType(UserConstants.TYPE_USER);
 		defaultUser.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		// Invoke updateImpl so that we do not trigger model listeners. See

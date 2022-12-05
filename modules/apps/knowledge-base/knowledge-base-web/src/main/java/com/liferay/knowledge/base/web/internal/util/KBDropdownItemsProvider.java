@@ -112,23 +112,36 @@ public class KBDropdownItemsProvider {
 						_hasChildKBArticles(kbArticle) &&
 						_hasViewChildKBArticlesPermission(),
 					_getViewChildKBArticlesActionUnsafeConsumer(kbArticle)
-				).add(
-					() ->
-						_isSubscriptionEnabled() &&
-						_hasSubscriptionPermission(kbArticle) &&
-						_hasSubscription(kbArticle),
-					_getUnsubscribeActionUnsafeConsumer(kbArticle)
-				).add(
-					() ->
-						_isSubscriptionEnabled() &&
-						_hasSubscriptionPermission(kbArticle) &&
-						!_hasSubscription(kbArticle),
-					_getSubscribeActionUnsafeConsumer(kbArticle)
-				).add(
-					() ->
-						_isHistoryEnabled() && _hasHistoryPermission(kbArticle),
-					_getHistoryActionUnsafeConsumer(kbArticle)
 				).build())
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							_hasExpirationPermission(kbArticle) &&
+							!kbArticle.isExpired(),
+						_getExpireArticleActionConsumer(kbArticle)
+					).add(
+						() ->
+							_isSubscriptionEnabled() &&
+							_hasSubscriptionPermission(kbArticle) &&
+							_hasSubscription(kbArticle),
+						_getUnsubscribeActionUnsafeConsumer(kbArticle)
+					).add(
+						() ->
+							_isSubscriptionEnabled() &&
+							_hasSubscriptionPermission(kbArticle) &&
+							!_hasSubscription(kbArticle),
+						_getSubscribeActionUnsafeConsumer(kbArticle)
+					).add(
+						() ->
+							_isHistoryEnabled() &&
+							_hasHistoryPermission(kbArticle),
+						_getHistoryActionUnsafeConsumer(kbArticle)
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
@@ -550,6 +563,27 @@ public class KBDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_liferayPortletRequest.getHttpServletRequest(), "edit"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getExpireArticleActionConsumer(KBArticle kbArticle) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/expire_kb_article"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).buildActionURL());
+			dropdownItem.setIcon("time");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "expire"));
 		};
 	}
 
@@ -1030,6 +1064,20 @@ public class KBDropdownItemsProvider {
 		if (KBTemplatePermission.contains(
 				_themeDisplay.getPermissionChecker(), kbTemplate,
 				KBActionKeys.DELETE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasExpirationPermission(KBArticle kbArticle)
+		throws Exception {
+
+		if (kbArticle.isApproved() &&
+			KBArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), kbArticle,
+				KBActionKeys.UPDATE)) {
 
 			return true;
 		}

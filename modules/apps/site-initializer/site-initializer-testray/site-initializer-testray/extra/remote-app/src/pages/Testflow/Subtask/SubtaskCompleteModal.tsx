@@ -20,6 +20,7 @@ import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import Modal from '../../../components/Modal';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
+import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
@@ -29,6 +30,8 @@ import {
 	TestrayTask,
 	testraySubTaskImpl,
 } from '../../../services/rest';
+import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIssues';
+import {searchUtil} from '../../../util/search';
 import {CaseResultStatuses} from '../../../util/statuses';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType;
@@ -42,22 +45,28 @@ type SubTaskCompleteModalProps = {
 type OutletContext = {
 	mergedSubtaskNames: string;
 	mutateSubtask: KeyedMutator<any>;
-	mutateSubtaskIssues: KeyedMutator<TestraySubTask>;
-	subtaskIssues: TestraySubTaskIssue[];
 	testraySubtask: TestraySubTask;
 	testrayTask: TestrayTask;
 };
 
 const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	modal: {observer, onClose, onError, onSave},
+	mutate,
 	subtask,
 }) => {
-	const {
-		mutateSubtask,
-		mutateSubtaskIssues,
-		subtaskIssues = [],
-		testraySubtask,
-	} = useOutletContext<OutletContext>();
+	const {mutateSubtask, testraySubtask} = useOutletContext<OutletContext>();
+
+	const subTaskId = testraySubtask ? testraySubtask.id : subtask.id;
+
+	const {data, mutate: mutateSubtaskIssues} = useFetch(
+		`${testraySubtaskIssuesImpl.resource}&filter=${searchUtil.eq(
+			'subtaskId',
+			subTaskId
+		)}`,
+		(response) => testraySubtaskIssuesImpl.transformDataFromList(response)
+	);
+
+	const subtaskIssues = data?.items || [];
 
 	const issues = subtaskIssues
 		.map((subtaskIssue: TestraySubTaskIssue) => subtaskIssue?.issue?.name)
@@ -68,9 +77,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 		handleSubmit,
 		register,
 	} = useForm<SubtaskForm>({
-		defaultValues: testraySubtask?.dueStatus
-			? ({dueStatus: CaseResultStatuses.FAILED, issues} as any)
-			: {dueStatus: CaseResultStatuses.FAILED},
+		defaultValues: {dueStatus: CaseResultStatuses.FAILED, issues},
 		resolver: yupResolver(yupSchema.subtask),
 	});
 
@@ -81,12 +88,8 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			.filter(Boolean);
 
 		testraySubTaskImpl
-			.complete(
-				testraySubtask.id || subtask.id,
-				dueStatus as string,
-				_issues
-			)
-			.then(mutateSubtask)
+			.complete(subTaskId, dueStatus as string, _issues)
+			.then(mutateSubtask || mutate)
 			.then(mutateSubtaskIssues)
 			.then(() => onSave())
 			.catch(() => onError);

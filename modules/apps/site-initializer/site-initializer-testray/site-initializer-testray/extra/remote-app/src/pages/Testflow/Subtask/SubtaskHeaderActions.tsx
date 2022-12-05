@@ -51,11 +51,7 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 		<>
 			<AssignModal modal={assignUserModal} />
 
-			<SubtaskCompleteModal
-				modal={completeModal}
-				mutate={mutateSubtask}
-				subtask={subtask}
-			/>
+			<SubtaskCompleteModal modal={completeModal} subtask={subtask} />
 
 			{buttonDisabled && (
 				<>

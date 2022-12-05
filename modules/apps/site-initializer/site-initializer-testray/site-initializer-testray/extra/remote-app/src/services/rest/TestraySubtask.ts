@@ -160,6 +160,13 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			Number(caseResult.caseResult?.id)
 		);
 
+		for (const caseResultId of caseResultIds) {
+			await testrayCaseResultImpl.assignCaseResultIssue(
+				caseResultId,
+				issues
+			);
+		}
+
 		await testrayCaseResultImpl.updateBatch(
 			caseResultIds,
 			caseResultIds.map(() => ({

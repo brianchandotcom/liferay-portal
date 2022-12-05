@@ -14,6 +14,7 @@
 
 package com.liferay.image.internal.upgrade.registry;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.image.internal.upgrade.v1_0_0.ImageStorageUpgradeProcess;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,7 +64,7 @@ public class ImageServiceUpgradeStepRegistrator
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutSetBranchLocalService::getActionableDynamicQuery,
 				LayoutSetBranch::getCompanyId, LayoutSetBranch::getLiveLogoId),
-			new ImageStorageUpgradeProcess(_imageLocalService, _storeFactory));
+			new ImageStorageUpgradeProcess(_imageLocalService, _store));
 	}
 
 	@Reference
@@ -85,7 +85,7 @@ public class ImageServiceUpgradeStepRegistrator
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
 
-	@Reference(target = "(dl.store.impl.enabled=true)")
-	private StoreFactory _storeFactory;
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

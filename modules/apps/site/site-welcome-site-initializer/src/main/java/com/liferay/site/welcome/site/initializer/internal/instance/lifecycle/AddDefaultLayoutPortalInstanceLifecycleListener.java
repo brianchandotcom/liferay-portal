@@ -16,6 +16,7 @@ package com.liferay.site.welcome.site.initializer.internal.instance.lifecycle;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistration;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.List;
@@ -144,8 +144,8 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 	)
 	private SiteInitializer _siteInitializer;
 
-	@Reference(target = "(dl.store.impl.enabled=true)")
-	private StoreFactory _storeFactory;
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 	@Reference
 	private UserLocalService _userLocalService;

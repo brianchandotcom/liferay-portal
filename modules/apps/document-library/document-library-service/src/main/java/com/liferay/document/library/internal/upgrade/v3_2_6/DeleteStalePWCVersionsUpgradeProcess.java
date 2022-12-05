@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.upgrade.v3_2_6;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -26,6 +26,10 @@ import java.sql.ResultSet;
  * @author Adolfo Pérez
  */
 public class DeleteStalePWCVersionsUpgradeProcess extends UpgradeProcess {
+
+	public DeleteStalePWCVersionsUpgradeProcess(Store store) {
+		_store = store;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -41,7 +45,7 @@ public class DeleteStalePWCVersionsUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					DLStoreUtil.deleteFile(
+					_store.deleteFile(
 						resultSet.getLong(1), resultSet.getLong(2),
 						resultSet.getString(3),
 						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -49,5 +53,7 @@ public class DeleteStalePWCVersionsUpgradeProcess extends UpgradeProcess {
 			}
 		}
 	}
+
+	private final Store _store;
 
 }

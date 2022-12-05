@@ -22,6 +22,7 @@ import com.liferay.blogs.internal.upgrade.v2_2_0.BlogsEntryExternalReferenceCode
 import com.liferay.blogs.internal.upgrade.v3_0_0.BlogsStatsUserUpgradeProcess;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.function.UnsafeBiFunction;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.sql.Connection;
@@ -162,8 +162,8 @@ public class BlogsServiceUpgradeStepRegistrator
 	@Reference
 	private PortletFileRepository _portletFileRepository;
 
-	@Reference(target = "(dl.store.impl.enabled=true)")
-	private StoreFactory _storeFactory;
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

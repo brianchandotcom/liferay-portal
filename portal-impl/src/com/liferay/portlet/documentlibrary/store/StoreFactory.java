@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -44,18 +45,12 @@ public class StoreFactory {
 	}
 
 	public Store getStore() {
-		Store store = _defaultStore;
-
-		if (store == null) {
-			throw new IllegalStateException(
-				"Store is not available. Caller service needs to wait for " +
-					"store factory with \"dl.store.impl.enabled=true\".");
-		}
-
-		return store;
+		return _store;
 	}
 
-	private static volatile Store _defaultStore;
+	private static volatile Store _store =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Store.class, StoreFactory.class, "_store", "(default=true)", true);
 	private static StoreFactory _storeFactory;
 
 	static {
@@ -82,23 +77,11 @@ public class StoreFactory {
 							return null;
 						}
 
-						Store store = bundleContext.getService(
-							serviceReference);
-
-						_defaultStore = store;
+						_store = bundleContext.getService(serviceReference);
 
 						return bundleContext.registerService(
-							StoreFactory.class,
-							new StoreFactory() {
-
-								@Override
-								public Store getStore() {
-									return store;
-								}
-
-							},
-							MapUtil.singletonDictionary(
-								"dl.store.impl.enabled", "true"));
+							Store.class, _store,
+							MapUtil.singletonDictionary("default", "true"));
 					}
 
 					@Override

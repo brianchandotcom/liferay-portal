@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.InputStream;
 
@@ -34,16 +33,14 @@ import java.io.InputStream;
 public class ImageStorageUpgradeProcess extends UpgradeProcess {
 
 	public ImageStorageUpgradeProcess(
-		ImageLocalService imageLocalService, StoreFactory storeFactory) {
+		ImageLocalService imageLocalService, Store store) {
 
 		_imageLocalService = imageLocalService;
-		_storeFactory = storeFactory;
+		_store = store;
 	}
 
 	@Override
 	protected void doUpgrade() throws PortalException {
-		Store store = _storeFactory.getStore();
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			_imageLocalService.getActionableDynamicQuery();
 
@@ -51,22 +48,22 @@ public class ImageStorageUpgradeProcess extends UpgradeProcess {
 			(Image image) -> {
 				String fileName = _getFileName(image);
 
-				if (!store.hasFile(
+				if (!_store.hasFile(
 						CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
 						StringPool.BLANK)) {
 
 					return;
 				}
 
-				try (InputStream inputStream = store.getFileAsStream(
+				try (InputStream inputStream = _store.getFileAsStream(
 						CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
 						StringPool.BLANK)) {
 
-					store.addFile(
+					_store.addFile(
 						image.getCompanyId(), _REPOSITORY_ID, fileName,
 						Store.VERSION_DEFAULT, inputStream);
 
-					store.deleteFile(
+					_store.deleteFile(
 						CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
 						Store.VERSION_DEFAULT);
 				}
@@ -88,6 +85,6 @@ public class ImageStorageUpgradeProcess extends UpgradeProcess {
 		ImageStorageUpgradeProcess.class);
 
 	private final ImageLocalService _imageLocalService;
-	private final StoreFactory _storeFactory;
+	private final Store _store;
 
 }

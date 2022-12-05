@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Provides the local service utility for CTCollectionTemplate. This utility wraps
@@ -302,6 +303,16 @@ public class CTCollectionTemplateLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static Set<String> getTemplateStringTokens() {
+		return getService().getTemplateStringTokens();
+	}
+
+	public static String parseTemplateString(
+		long ctCollectionTemplateId, String s) {
+
+		return getService().parseTemplateString(ctCollectionTemplateId, s);
 	}
 
 	/**

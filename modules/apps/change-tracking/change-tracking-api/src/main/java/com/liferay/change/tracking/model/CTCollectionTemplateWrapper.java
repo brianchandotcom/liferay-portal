@@ -189,6 +189,11 @@ public class CTCollectionTemplateWrapper
 	}
 
 	@Override
+	public String getParsedPublicationDescription() {
+		return model.getParsedPublicationDescription();
+	}
+
+	@Override
 	public String getParsedPublicationName() {
 		return model.getParsedPublicationName();
 	}
@@ -201,6 +206,16 @@ public class CTCollectionTemplateWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	@Override
+	public String getPublicationDescription() {
+		return model.getPublicationDescription();
+	}
+
+	@Override
+	public String getPublicationName() {
+		return model.getPublicationName();
 	}
 
 	/**
@@ -331,6 +346,11 @@ public class CTCollectionTemplateWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	public String toXmlString() {
+		return model.toXmlString();
 	}
 
 	@Override

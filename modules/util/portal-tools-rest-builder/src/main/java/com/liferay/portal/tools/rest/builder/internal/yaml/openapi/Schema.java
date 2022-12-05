@@ -71,8 +71,16 @@ public class Schema {
 		return _maximum;
 	}
 
+	public Integer getMaxLength() {
+		return _maxLength;
+	}
+
 	public Double getMinimum() {
 		return _minimum;
+	}
+
+	public Integer getMinLength() {
+		return _minLength;
 	}
 
 	public String getName() {
@@ -167,8 +175,16 @@ public class Schema {
 		_maximum = maximum;
 	}
 
+	public void setMaxLength(Integer maxLength) {
+		_maxLength = maxLength;
+	}
+
 	public void setMinimum(Double minimum) {
 		_minimum = minimum;
+	}
+
+	public void setMinLength(Integer minLength) {
+		_minLength = minLength;
 	}
 
 	public void setName(String name) {
@@ -221,7 +237,9 @@ public class Schema {
 	private Items _items;
 	private boolean _jsonMap;
 	private Double _maximum;
+	private Integer _maxLength;
 	private Double _minimum;
+	private Integer _minLength;
 	private String _name;
 	private List<Schema> _oneOfSchemas;
 	private Map<String, Schema> _propertySchemas;

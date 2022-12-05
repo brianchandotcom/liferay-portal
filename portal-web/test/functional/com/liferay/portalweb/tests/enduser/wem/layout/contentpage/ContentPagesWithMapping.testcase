@@ -146,8 +146,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99686. The user can map the content of link editable to a field of a Blog and the editable link display text will update to the published Blog field content."
-	@priority = "4"
+	@priority = "5"
 	test MapBlogsContentToLinkFragment {
+		property portal.acceptance = "true";
+
 		task ("Add a blogs entry") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",

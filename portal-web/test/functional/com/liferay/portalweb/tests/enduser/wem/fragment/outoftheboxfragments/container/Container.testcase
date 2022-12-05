@@ -1300,6 +1300,8 @@ definition {
 	@description = "This is a test for LPS-107285. When the Container with Heading fragment is duplicated, the mapped content should also be duplicated."
 	@priority = "4"
 	test ViewMappedContentDuplicatedInDuplicatedContainerWithHeading {
+		property portal.acceptance = "true";
+
 		task ("Add a Web Content Article") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",

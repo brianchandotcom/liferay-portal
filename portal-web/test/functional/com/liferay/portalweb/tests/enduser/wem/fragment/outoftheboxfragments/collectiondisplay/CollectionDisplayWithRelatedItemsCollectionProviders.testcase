@@ -897,8 +897,9 @@ definition {
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can preview the mapped content of collection item in DPT for Category."
-	@priority = "4"
+	@priority = "5"
 	test PreviewMappedContentOfCollectionItemOnDisplayPageTemplateForCategory {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#PreviewMappedContentOfCollectionItemOnDisplayPageTemplateForCategory";
 
 		task ("Enable the DDMStructure and DLFileEntry feature via gogo shell") {

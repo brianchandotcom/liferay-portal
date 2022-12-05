@@ -1647,7 +1647,7 @@ definition {
 
 			var key_subItem = "Applications";
 
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED");
+			Click.clickNoWaitForVisible(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED");
 
 			var key_subItem = "Account Management";
 

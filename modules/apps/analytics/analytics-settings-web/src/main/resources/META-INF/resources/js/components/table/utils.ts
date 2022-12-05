@@ -108,11 +108,13 @@ export function getIds(items: TFormattedItems, initialIds: number[]): number[] {
 			ids.forEach((id, index) => {
 				if (id === Number(item.id) && !item.checked) {
 					ids.splice(index, 1);
-				} else if (id !== Number(item.id) && item.checked) {
+				}
+				else if (id !== Number(item.id) && item.checked) {
 					ids.push(Number(item.id));
 				}
 			});
-		} else if (item.checked) {
+		}
+		else if (item.checked) {
 			ids.push(Number(item.id));
 		}
 	});

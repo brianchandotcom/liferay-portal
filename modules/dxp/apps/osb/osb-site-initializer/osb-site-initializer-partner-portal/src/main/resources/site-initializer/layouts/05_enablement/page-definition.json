@@ -253,6 +253,7 @@
 								{
 									"id": "tablet",
 									"rowViewportDefinition": {
+										"modulesPerRow": 1
 									}
 								}
 							],
@@ -275,75 +276,8 @@
 										},
 										{
 											"columnViewportDefinition": {
-											},
-											"id": "tablet"
-										}
-									],
-									"size": 4
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"textAlign": "",
-												"width": "388px"
-											},
-											"indexed": true,
-											"layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											}
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"widgetInstance": {
-														"widgetConfig": {
-															"articleId": "WEB-CONTENT-ENABLEMENT-01",
-															"assetEntryId": "47376",
-															"contentMetadataAssetAddonEntryKeys": "false",
-															"ddmTemplateKey": "",
-															"enableViewCountIncrement": "false",
-															"groupId": "",
-															"userToolAssetAddonEntryKeys": "false"
-														},
-														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
-													}
-												},
-												"type": "Widget"
-											}
-										],
-										"type": "Section"
-									}
-								],
-								"type": "Column"
-							},
-							{
-								"definition": {
-									"columnViewports": [
-										{
-											"columnViewportDefinition": {
 												"size": 12
 											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
 											"id": "tablet"
 										}
 									],
@@ -352,66 +286,327 @@
 								"pageElements": [
 									{
 										"definition": {
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"textAlign": "",
-												"width": "388px"
-											},
 											"indexed": true,
 											"layout": {
 												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"justify": "Center",
 												"marginBottom": 0,
 												"marginLeft": 0,
 												"marginRight": 0,
 												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
 												"paddingTop": 0,
 												"widthType": "Fluid"
-											}
+											},
+											"name": "Card Container"
 										},
 										"pageElements": [
 											{
 												"definition": {
-													"widgetInstance": {
-														"widgetConfig": {
-															"articleId": "WEB-CONTENT-ENABLEMENT-02",
-															"assetEntryId": "47385",
-															"contentMetadataAssetAddonEntryKeys": "false",
-															"ddmTemplateKey": "",
-															"enableViewCountIncrement": "false",
-															"groupId": "",
-															"userToolAssetAddonEntryKeys": "false"
-														},
-														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
-														"widgetPermissions": [
-															{
-																"actionKeys": [
-																	"VIEW"
-																],
-																"roleKey": "Guest"
-															},
-															{
-																"actionKeys": [
-																	"VIEW"
-																],
-																"roleKey": "Site Member"
-															},
-															{
-																"actionKeys": [
-																	"PERMISSIONS",
-																	"PREFERENCES",
-																	"CONFIGURATION",
-																	"VIEW",
-																	"ADD_TO_PAGE"
-																],
-																"roleKey": "Owner"
+													"fragmentStyle": {
+														"borderColor": "colorNeutral2",
+														"borderRadius": "8px",
+														"borderWidth": "1px",
+														"width": "388px"
+													},
+													"gutters": true,
+													"indexed": true,
+													"modulesPerRow": 1,
+													"name": "Enablement Card",
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
 															}
-														]
-													}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+															}
+														}
+													],
+													"verticalAlignment": "top"
 												},
-												"type": "Widget"
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 12
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "business-marketing-sales.png"
+																					},
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/prm/business-marketing-sales-png?download=true"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 12
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"paddingBottom": "4",
+																		"paddingLeft": "4",
+																		"paddingRight": "4",
+																		"paddingTop": "4"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 2,
+																		"paddingLeft": 2,
+																		"paddingRight": 2,
+																		"paddingTop": 2,
+																		"widthType": "Fluid"
+																	},
+																	"name": "Body Container"
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "COURSES",
+																								"ca_ES": "COURSES",
+																								"de_DE": "COURSES",
+																								"en_US": "COURSES",
+																								"es_ES": "COURSES",
+																								"fi_FI": "COURSES",
+																								"fr_FR": "COURSES",
+																								"hu_HU": "COURSES",
+																								"ja_JP": "COURSES",
+																								"nl_NL": "COURSES",
+																								"pt_BR": "COURSES",
+																								"sv_SE": "COURSES",
+																								"zh_CN": "COURSES"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "2",
+																				"textColor": "colorNeutral6"
+																			},
+																			"indexed": true,
+																			"name": "Category"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h4",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Business/Marketing/Sales",
+																								"ca_ES": "Business/Marketing/Sales",
+																								"de_DE": "Business/Marketing/Sales",
+																								"en_US": "Business/Marketing/Sales",
+																								"es_ES": "Business/Marketing/Sales",
+																								"fi_FI": "Business/Marketing/Sales",
+																								"fr_FR": "Business/Marketing/Sales",
+																								"hu_HU": "Business/Marketing/Sales",
+																								"ja_JP": "Business/Marketing/Sales",
+																								"nl_NL": "Business/Marketing/Sales",
+																								"pt_BR": "Business/Marketing/Sales",
+																								"sv_SE": "Business/Marketing/Sales",
+																								"zh_CN": "Business/Marketing/Sales"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold"
+																			},
+																			"indexed": true,
+																			"name": "Title"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-button"
+																			},
+																			"fragmentConfig": {
+																				"buttonSize": "",
+																				"inverted": false,
+																				"style": "primary",
+																				"type": "solid",
+																				"uppercase": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "link",
+																					"value": {
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"ar_SA": "https://passport.liferay.com/page/business-and-sales-73",
+																										"ca_ES": "https://passport.liferay.com/page/business-and-sales-73",
+																										"de_DE": "https://passport.liferay.com/page/business-and-sales-73",
+																										"en_US": "https://passport.liferay.com/page/business-and-sales-73",
+																										"es_ES": "https://passport.liferay.com/page/business-and-sales-73",
+																										"fi_FI": "https://passport.liferay.com/page/business-and-sales-73",
+																										"fr_FR": "https://passport.liferay.com/page/business-and-sales-73",
+																										"hu_HU": "https://passport.liferay.com/page/business-and-sales-73",
+																										"ja_JP": "https://passport.liferay.com/page/business-and-sales-73",
+																										"nl_NL": "https://passport.liferay.com/page/business-and-sales-73",
+																										"pt_BR": "https://passport.liferay.com/page/business-and-sales-73",
+																										"sv_SE": "https://passport.liferay.com/page/business-and-sales-73",
+																										"zh_CN": "https://passport.liferay.com/page/business-and-sales-73"
+																									}
+																								}
+																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Start learning",
+																								"ca_ES": "Start learning",
+																								"de_DE": "Start learning",
+																								"en_US": "Start learning",
+																								"es_ES": "Start learning",
+																								"fi_FI": "Start learning",
+																								"fr_FR": "Start learning",
+																								"hu_HU": "Start learning",
+																								"ja_JP": "Start learning",
+																								"nl_NL": "Start learning",
+																								"pt_BR": "Start learning",
+																								"sv_SE": "Start learning",
+																								"zh_CN": "Start learning"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginTop": "4"
+																			},
+																			"indexed": true,
+																			"name": "Link Button"
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
 											}
 										],
 										"type": "Section"
@@ -435,6 +630,7 @@
 										},
 										{
 											"columnViewportDefinition": {
+												"size": 12
 											},
 											"id": "tablet"
 										}
@@ -444,18 +640,384 @@
 								"pageElements": [
 									{
 										"definition": {
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"textAlign": "",
-												"width": "388px"
-											},
 											"indexed": true,
 											"layout": {
 												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"justify": "Center",
 												"marginBottom": 0,
 												"marginLeft": 0,
 												"marginRight": 0,
 												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											},
+											"name": "Card Container"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderColor": "colorNeutral2",
+														"borderRadius": "8px",
+														"borderWidth": "1px",
+														"shadow": "",
+														"textAlign": "",
+														"width": "388px"
+													},
+													"gutters": true,
+													"indexed": true,
+													"modulesPerRow": 1,
+													"name": "Enablement Card",
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+															}
+														}
+													],
+													"verticalAlignment": "top"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 12
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "pre-sales.png"
+																					},
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/prm/pre-sales-png?download=true"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 12
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderRadius": "",
+																		"borderWidth": "0",
+																		"paddingBottom": "4",
+																		"paddingLeft": "4",
+																		"paddingRight": "4",
+																		"paddingTop": "4",
+																		"shadow": "",
+																		"textAlign": ""
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 2,
+																		"paddingLeft": 2,
+																		"paddingRight": 2,
+																		"paddingTop": 2,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "COURSES",
+																								"ca_ES": "COURSES",
+																								"de_DE": "COURSES",
+																								"en_US": "COURSES",
+																								"es_ES": "COURSES",
+																								"fi_FI": "COURSES",
+																								"fr_FR": "COURSES",
+																								"hu_HU": "COURSES",
+																								"ja_JP": "COURSES",
+																								"nl_NL": "COURSES",
+																								"pt_BR": "COURSES",
+																								"sv_SE": "COURSES",
+																								"zh_CN": "COURSES"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "2",
+																				"shadow": "",
+																				"textAlign": "",
+																				"textColor": "colorNeutral6"
+																			},
+																			"indexed": true,
+																			"name": "Category"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h4",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Pre-Sales Engineering",
+																								"ca_ES": "Pre-Sales Engineering",
+																								"de_DE": "Pre-Sales Engineering",
+																								"en_US": "Pre-Sales Engineering",
+																								"es_ES": "Pre-Sales Engineering",
+																								"fi_FI": "Pre-Sales Engineering",
+																								"fr_FR": "Pre-Sales Engineering",
+																								"hu_HU": "Pre-Sales Engineering",
+																								"ja_JP": "Pre-Sales Engineering",
+																								"nl_NL": "Pre-Sales Engineering",
+																								"pt_BR": "Pre-Sales Engineering",
+																								"sv_SE": "Pre-Sales Engineering",
+																								"zh_CN": "Pre-Sales Engineering"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"fontWeight": "fontWeightBold",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"indexed": true,
+																			"name": "Title"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-button"
+																			},
+																			"fragmentConfig": {
+																				"buttonSize": "",
+																				"inverted": false,
+																				"style": "primary",
+																				"type": "solid",
+																				"uppercase": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "link",
+																					"value": {
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"ar_SA": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"ca_ES": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"de_DE": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"en_US": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"es_ES": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"fi_FI": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"fr_FR": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"hu_HU": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"ja_JP": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"nl_NL": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"pt_BR": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"sv_SE": "https://passport.liferay.com/page/pre-sales-engineers-73",
+																										"zh_CN": "https://passport.liferay.com/page/pre-sales-engineers-73"
+																									}
+																								}
+																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Start learning",
+																								"ca_ES": "Start learning",
+																								"de_DE": "Start learning",
+																								"en_US": "Start learning",
+																								"es_ES": "Start learning",
+																								"fi_FI": "Start learning",
+																								"fr_FR": "Start learning",
+																								"hu_HU": "Start learning",
+																								"ja_JP": "Start learning",
+																								"nl_NL": "Start learning",
+																								"pt_BR": "Start learning",
+																								"sv_SE": "Start learning",
+																								"zh_CN": "Start learning"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"paddingTop": "4",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"indexed": true,
+																			"name": "Link Button"
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"justify": "Center",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -466,20 +1028,320 @@
 										"pageElements": [
 											{
 												"definition": {
-													"widgetInstance": {
-														"widgetConfig": {
-															"articleId": "WEB-CONTENT-ENABLEMENT-03",
-															"assetEntryId": "47394",
-															"contentMetadataAssetAddonEntryKeys": "false",
-															"ddmTemplateKey": "",
-															"enableViewCountIncrement": "false",
-															"groupId": "",
-															"userToolAssetAddonEntryKeys": "false"
+													"fragmentStyle": {
+														"borderColor": "colorNeutral2",
+														"borderRadius": "8px",
+														"borderWidth": "1px",
+														"shadow": "",
+														"textAlign": "",
+														"width": "388px"
+													},
+													"gutters": true,
+													"indexed": true,
+													"modulesPerRow": 1,
+													"name": "Enablement Card",
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
 														},
-														"widgetName": "com_liferay_journal_content_web_portlet_JournalContentPortlet"
-													}
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {
+															}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+															}
+														}
+													],
+													"verticalAlignment": "top"
 												},
-												"type": "Widget"
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 12
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "developer.png"
+																					},
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "/documents/d/prm/developer-png?download=true"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 12
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderRadius": "",
+																		"borderWidth": "0",
+																		"paddingBottom": "4",
+																		"paddingLeft": "4",
+																		"paddingRight": "4",
+																		"paddingTop": "4",
+																		"shadow": "",
+																		"textAlign": ""
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"marginBottom": 0,
+																		"marginLeft": 0,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 2,
+																		"paddingLeft": 2,
+																		"paddingRight": 2,
+																		"paddingTop": 2,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "COURSES",
+																								"ca_ES": "COURSES",
+																								"de_DE": "COURSES",
+																								"en_US": "COURSES",
+																								"es_ES": "COURSES",
+																								"fi_FI": "COURSES",
+																								"fr_FR": "COURSES",
+																								"hu_HU": "COURSES",
+																								"ja_JP": "COURSES",
+																								"nl_NL": "COURSES",
+																								"pt_BR": "COURSES",
+																								"sv_SE": "COURSES",
+																								"zh_CN": "COURSES"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "2",
+																				"shadow": "",
+																				"textAlign": "",
+																				"textColor": "colorNeutral6"
+																			},
+																			"indexed": true,
+																			"name": "Category"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-text"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h4",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Developer",
+																								"ca_ES": "Developer",
+																								"de_DE": "Developer",
+																								"en_US": "Developer",
+																								"es_ES": "Developer",
+																								"fi_FI": "Developer",
+																								"fr_FR": "Developer",
+																								"hu_HU": "Developer",
+																								"ja_JP": "Developer",
+																								"nl_NL": "Developer",
+																								"pt_BR": "Developer",
+																								"sv_SE": "Developer",
+																								"zh_CN": "Developer"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"fontWeight": "fontWeightBold",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"indexed": true,
+																			"name": "Title"
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "DIALECT-dialect-button"
+																			},
+																			"fragmentConfig": {
+																				"buttonSize": "",
+																				"inverted": false,
+																				"style": "primary",
+																				"type": "solid",
+																				"uppercase": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "link",
+																					"value": {
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"ar_SA": "https://passport.liferay.com/page/developers-73",
+																										"ca_ES": "https://passport.liferay.com/page/developers-73",
+																										"de_DE": "https://passport.liferay.com/page/developers-73",
+																										"en_US": "https://passport.liferay.com/page/developers-73",
+																										"es_ES": "https://passport.liferay.com/page/developers-73",
+																										"fi_FI": "https://passport.liferay.com/page/developers-73",
+																										"fr_FR": "https://passport.liferay.com/page/developers-73",
+																										"hu_HU": "https://passport.liferay.com/page/developers-73",
+																										"ja_JP": "https://passport.liferay.com/page/developers-73",
+																										"nl_NL": "https://passport.liferay.com/page/developers-73",
+																										"pt_BR": "https://passport.liferay.com/page/developers-73",
+																										"sv_SE": "https://passport.liferay.com/page/developers-73",
+																										"zh_CN": "https://passport.liferay.com/page/developers-73"
+																									}
+																								}
+																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"ar_SA": "Start learning",
+																								"ca_ES": "Start learning",
+																								"de_DE": "Start learning",
+																								"en_US": "Start learning",
+																								"es_ES": "Start learning",
+																								"fi_FI": "Start learning",
+																								"fr_FR": "Start learning",
+																								"hu_HU": "Start learning",
+																								"ja_JP": "Start learning",
+																								"nl_NL": "Start learning",
+																								"pt_BR": "Start learning",
+																								"sv_SE": "Start learning",
+																								"zh_CN": "Start learning"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"borderRadius": "",
+																				"paddingTop": "4",
+																				"shadow": "",
+																				"textAlign": ""
+																			},
+																			"indexed": true,
+																			"name": "Link Button"
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
 											}
 										],
 										"type": "Section"

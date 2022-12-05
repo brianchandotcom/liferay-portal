@@ -65,8 +65,8 @@ public class ImportDisplayContext {
 			ListUtil.isEmpty(notImportedLayoutsImporterResultEntries)) {
 
 			dialogMessage =
-				"some-page-templates-were-imported-correctly-and-other-page-" +
-					"templates-were-imported-with-warnings";
+				"some-utility-pages-were-imported-correctly-and-other-" +
+					"utility-pages-were-imported-with-warnings";
 		}
 		else if (ListUtil.isEmpty(layoutsImporterResultEntriesWithWarnings) &&
 				 ListUtil.isEmpty(notImportedLayoutsImporterResultEntries)) {

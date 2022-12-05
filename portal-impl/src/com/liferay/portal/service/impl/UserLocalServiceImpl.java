@@ -6116,6 +6116,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			return false;
 		}
+		else if (user.isServiceAccountUser()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Authentication is disabled for service account user");
+			}
+
+			return false;
+		}
 		else if (!user.isActive()) {
 			if (_log.isInfoEnabled()) {
 				_log.info(

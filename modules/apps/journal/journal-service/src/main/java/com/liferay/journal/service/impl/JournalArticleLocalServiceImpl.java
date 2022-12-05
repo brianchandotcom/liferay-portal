@@ -193,9 +193,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.validation.ModelValidator;
 import com.liferay.portal.validation.ModelValidatorRegistryUtil;
@@ -873,9 +870,8 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		content = _formatContent(article, content, groupId, user);
-
-		updateDDMFields(article, content);
+		updateDDMFields(
+			article, _formatContent(article, content, groupId, user));
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
 	}
@@ -6370,9 +6366,8 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		content = _formatContent(article, content, groupId, user);
-
-		updateDDMFields(article, content);
+		updateDDMFields(
+			article, _formatContent(article, content, groupId, user));
 
 		// Small image
 
@@ -6943,90 +6938,64 @@ public class JournalArticleLocalServiceImpl
 		JournalArticleImpl.setJournalConverter(_journalConverter);
 	}
 
-	protected void addImageFileEntries(
-			JournalArticle article, Element dynamicElementElement)
+	protected String addImageFileEntries(JournalArticle article, String value)
 		throws PortalException {
 
 		if (ExportImportThreadLocal.isImportInProcess()) {
-			return;
+			return value;
 		}
 
-		Map<Long, FileEntry> tempFileEntries = new HashMap<>();
+		JSONObject valueJSONObject = _jsonFactory.createJSONObject(value);
+
+		FileEntry fileEntry = _getFileEntry(valueJSONObject);
+
+		if (fileEntry == null) {
+			return value;
+		}
+
+		long tempFileEntryId = 0;
 
 		try {
-			for (Element dynamicContentElement :
-					dynamicElementElement.elements("dynamic-content")) {
+			boolean tempFile = fileEntry.isRepositoryCapabilityProvided(
+				TemporaryFileEntriesCapability.class);
 
-				String value = dynamicContentElement.getText();
+			if (tempFile) {
+				FileEntry tempFileEntry = fileEntry;
 
-				if (Validator.isNull(value)) {
-					continue;
-				}
+				Folder folder = article.addImagesFolder();
 
-				JSONObject jsonObject = _jsonFactory.createJSONObject(value);
+				String fileEntryName = DLUtil.getUniqueFileName(
+					folder.getGroupId(), folder.getFolderId(),
+					tempFileEntry.getFileName(), false);
 
-				if (!jsonObject.has("groupId") || !jsonObject.has("uuid")) {
-					continue;
-				}
+				fileEntry = _portletFileRepository.addPortletFileEntry(
+					null, folder.getGroupId(), tempFileEntry.getUserId(),
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey(), JournalConstants.SERVICE_NAME,
+					folder.getFolderId(), tempFileEntry.getContentStream(),
+					fileEntryName, tempFileEntry.getMimeType(), false);
 
-				String uuid = jsonObject.getString("uuid");
-				long groupId = jsonObject.getLong("groupId");
-
-				FileEntry fileEntry =
-					_dlAppLocalService.getFileEntryByUuidAndGroupId(
-						uuid, groupId);
-
-				boolean tempFile = fileEntry.isRepositoryCapabilityProvided(
-					TemporaryFileEntriesCapability.class);
-
-				if (tempFile) {
-					FileEntry tempFileEntry = fileEntry;
-
-					fileEntry = tempFileEntries.get(
-						tempFileEntry.getFileEntryId());
-
-					if (fileEntry == null) {
-						Folder folder = article.addImagesFolder();
-
-						String fileEntryName = DLUtil.getUniqueFileName(
-							folder.getGroupId(), folder.getFolderId(),
-							tempFileEntry.getFileName(), false);
-
-						fileEntry = _portletFileRepository.addPortletFileEntry(
-							null, folder.getGroupId(),
-							tempFileEntry.getUserId(),
-							JournalArticle.class.getName(),
-							article.getResourcePrimKey(),
-							JournalConstants.SERVICE_NAME, folder.getFolderId(),
-							tempFileEntry.getContentStream(), fileEntryName,
-							tempFileEntry.getMimeType(), false);
-
-						tempFileEntries.put(
-							tempFileEntry.getFileEntryId(), fileEntry);
-					}
-				}
-
-				JSONObject cdataJSONObject = _jsonFactory.createJSONObject(
-					dynamicContentElement.getText());
-
-				cdataJSONObject.put(
-					"fileEntryId", fileEntry.getFileEntryId()
-				).put(
-					"resourcePrimKey", article.getResourcePrimKey()
-				).put(
-					"uuid", fileEntry.getUuid()
-				);
-
-				dynamicContentElement.clearContent();
-
-				dynamicContentElement.addCDATA(cdataJSONObject.toString());
+				tempFileEntryId = tempFileEntry.getFileEntryId();
 			}
+
+			String previewURL = _dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, true);
+
+			return _toJSON(
+				valueJSONObject.getString("alt"), article, fileEntry,
+				valueJSONObject.getString("height"),
+				valueJSONObject.getString("type"), previewURL,
+				valueJSONObject.getString("width"));
 		}
 		finally {
+			long finalTempFileEntryId = tempFileEntryId;
+
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					for (Long tempFileEntryId : tempFileEntries.keySet()) {
-						TempFileEntryUtil.deleteTempFileEntry(tempFileEntryId);
+					if (finalTempFileEntryId > 0) {
+						TempFileEntryUtil.deleteTempFileEntry(
+							finalTempFileEntryId);
 					}
 
 					return null;
@@ -7427,70 +7396,78 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void format(
-			User user, long groupId, JournalArticle article, Element root)
+			User user, long groupId, JournalArticle article,
+			List<DDMFormFieldValue> ddmFormFieldValues)
 		throws PortalException {
 
-		for (Element element : root.elements()) {
-			String elType = element.attributeValue("type", StringPool.BLANK);
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (ListUtil.isNotEmpty(
+					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
 
-			if (elType.equals(DDMFormFieldTypeConstants.IMAGE)) {
-				addImageFileEntries(article, element);
+				format(
+					user, groupId, article,
+					ddmFormFieldValue.getNestedDDMFormFieldValues());
 			}
-			else if (elType.equals(DDMFormFieldTypeConstants.RICH_TEXT) ||
-					 elType.equals(DDMFormFieldTypeConstants.TEXT)) {
 
-				List<Element> dynamicContentElements = element.elements(
-					"dynamic-content");
+			if (Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.FIELDSET)) {
 
-				for (Element dynamicContentElement : dynamicContentElements) {
-					String dynamicContent = dynamicContentElement.getText();
+				continue;
+			}
 
-					if (Validator.isNotNull(dynamicContent)) {
-						String contentType = ContentTypes.TEXT_PLAIN;
+			Value oldValue = ddmFormFieldValue.getValue();
 
-						if (elType.equals(
-								DDMFormFieldTypeConstants.RICH_TEXT)) {
+			if (oldValue == null) {
+				continue;
+			}
 
-							contentType = ContentTypes.TEXT_HTML;
-						}
+			Value newValue = new LocalizedValue();
 
-						dynamicContent = SanitizerUtil.sanitize(
-							user.getCompanyId(), groupId, user.getUserId(),
-							JournalArticle.class.getName(), 0, contentType,
-							dynamicContent);
+			newValue.setDefaultLocale(oldValue.getDefaultLocale());
 
-						dynamicContentElement.clearContent();
+			for (Locale locale : oldValue.getAvailableLocales()) {
+				String content = oldValue.getString(locale);
 
-						dynamicContentElement.addCDATA(dynamicContent);
-					}
+				if (Validator.isNull(content)) {
+					newValue.addString(locale, content);
+
+					continue;
 				}
+
+				if (Objects.equals(
+						ddmFormFieldValue.getType(),
+						DDMFormFieldTypeConstants.IMAGE)) {
+
+					content = addImageFileEntries(article, content);
+				}
+				else if (Objects.equals(
+							ddmFormFieldValue.getType(),
+							DDMFormFieldTypeConstants.RICH_TEXT) ||
+						 Objects.equals(
+							 ddmFormFieldValue.getType(),
+							 DDMFormFieldTypeConstants.TEXT)) {
+
+					String contentType = ContentTypes.TEXT_PLAIN;
+
+					if (Objects.equals(
+							ddmFormFieldValue.getType(),
+							DDMFormFieldTypeConstants.RICH_TEXT)) {
+
+						contentType = ContentTypes.TEXT_HTML;
+					}
+
+					content = SanitizerUtil.sanitize(
+						user.getCompanyId(), groupId, user.getUserId(),
+						JournalArticle.class.getName(), 0, contentType,
+						content);
+				}
+
+				newValue.addString(locale, content);
 			}
 
-			format(user, groupId, article, element);
+			ddmFormFieldValue.setValue(newValue);
 		}
-	}
-
-	protected String format(
-			User user, long groupId, JournalArticle article, String content)
-		throws PortalException {
-
-		Document document = null;
-
-		try {
-			document = SAXReaderUtil.read(content);
-
-			format(user, groupId, article, document.getRootElement());
-
-			content = document.formattedString(StringPool.DOUBLE_SPACE);
-		}
-		catch (DocumentException documentException) {
-			_log.error(documentException);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
-
-		return content;
 	}
 
 	protected long getArticleCheckInterval() {
@@ -8169,35 +8146,6 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	protected void updateDDMFields(JournalArticle article, String content)
-		throws PortalException {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			_portal.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
-
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-			ddmStructure,
-			_journalConverter.getDDMFields(ddmStructure, content));
-
-		_ddmFieldLocalService.updateDDMFormValues(
-			ddmStructure.getStructureId(), article.getId(), ddmFormValues);
-
-		// Document Cache
-
-		try {
-			article.setDocument(SAXReaderUtil.read(content));
-
-			journalArticlePersistence.cacheResult(article);
-		}
-		catch (DocumentException documentException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(documentException);
-			}
-		}
-	}
-
 	protected void updateDDMLinks(
 			long id, long groupId, String ddmStructureKey,
 			String ddmTemplateKey, boolean incrementVersion)
@@ -8602,9 +8550,13 @@ public class JournalArticleLocalServiceImpl
 				continue;
 			}
 
-			Value newValue = new LocalizedValue();
-
 			Value oldValue = ddmFormFieldValue.getValue();
+
+			if (oldValue == null) {
+				continue;
+			}
+
+			Value newValue = new LocalizedValue();
 
 			newValue.setDefaultLocale(oldValue.getDefaultLocale());
 
@@ -8688,15 +8640,23 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	private String _formatContent(
+	private DDMFormValues _formatContent(
 			JournalArticle article, String content, long groupId, User user)
 		throws PortalException {
 
 		content = _journalContentCompatibilityConverter.convert(content);
 
-		content = format(user, groupId, article, content);
+		content = _replaceTempImages(article, content);
 
-		return _replaceTempImages(article, content);
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure,
+			_journalConverter.getDDMFields(ddmStructure, content));
+
+		format(user, groupId, article, ddmFormValues.getDDMFormFieldValues());
+
+		return ddmFormValues;
 	}
 
 	private String _getArticleDiffs(

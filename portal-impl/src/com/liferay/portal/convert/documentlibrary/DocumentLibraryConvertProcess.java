@@ -18,6 +18,8 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.comparator.FileVersionVersionComparator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.BaseConvertProcess;
@@ -35,6 +37,7 @@ import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Minhchau Dang
@@ -42,6 +45,17 @@ import java.util.List;
  * @author László Csontos
  */
 public class DocumentLibraryConvertProcess extends BaseConvertProcess {
+
+	public void afterPropertiesSet() {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), Store.class, "(ct.aware=true)",
+			(serviceReference1, emitter) -> emitter.emit(
+				String.valueOf(serviceReference1.getProperty("store.type"))));
+	}
+
+	public void destroy() {
+		_serviceTrackerMap.close();
+	}
 
 	@Override
 	public String getConfigurationErrorMessage() {
@@ -64,9 +78,9 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 
 		Store store = storeFactory.getStore();
 
-		String[] storeTypes = storeFactory.getStoreTypes();
+		Set<String> storeTypes = _serviceTrackerMap.keySet();
 
-		StringBundler sb = new StringBundler((storeTypes.length * 2) + 2);
+		StringBundler sb = new StringBundler((storeTypes.size() * 2) + 2);
 
 		sb.append(PropsKeys.DL_STORE_IMPL);
 		sb.append(StringPool.EQUAL);
@@ -102,7 +116,7 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 
 		migrateDLStoreConvertProcesses(
 			storeFactory.getStore(),
-			storeFactory.getStore(targetStoreClassName));
+			_serviceTrackerMap.getService(targetStoreClassName));
 
 		MaintenanceUtil.appendStatus(
 			StringBundler.concat(
@@ -157,5 +171,7 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 	private static final ServiceTrackerList<DLStoreConvertProcess>
 		_dlStoreConvertProcesses = ServiceTrackerListFactory.open(
 			SystemBundleUtil.getBundleContext(), DLStoreConvertProcess.class);
+
+	private ServiceTrackerMap<String, Store> _serviceTrackerMap;
 
 }

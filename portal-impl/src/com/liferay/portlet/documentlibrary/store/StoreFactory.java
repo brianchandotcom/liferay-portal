@@ -15,19 +15,16 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Set;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -58,78 +55,71 @@ public class StoreFactory {
 		return store;
 	}
 
-	public Store getStore(String key) {
-		return _serviceTrackerMap.getService(key);
-	}
-
-	public String[] getStoreTypes() {
-		Set<String> storeTypes = _serviceTrackerMap.keySet();
-
-		return storeTypes.toArray(new String[0]);
-	}
-
-	private static final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
 	private static volatile Store _defaultStore;
-	private static final ServiceTrackerMap<String, Store> _serviceTrackerMap =
-		ServiceTrackerMapFactory.openSingleValueMap(
-			_bundleContext, Store.class, "(ct.aware=true)",
-			(serviceReference1, emitter) -> emitter.emit(
-				String.valueOf(serviceReference1.getProperty("store.type"))),
-			new StoreTypeServiceTrackerCustomizer());
 	private static StoreFactory _storeFactory;
 
-	private static class StoreTypeServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Store, Store> {
+	static {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		@Override
-		public Store addingService(ServiceReference<Store> serviceReference) {
-			String storeType = GetterUtil.getString(
-				serviceReference.getProperty("store.type"));
+		ServiceTracker<Store, ServiceRegistration<?>> serviceTracker =
+			new ServiceTracker<>(
+				bundleContext,
+				SystemBundleUtil.createFilter(
+					"(&(ct.aware=true)(objectClass=" + Store.class.getName() +
+						"))"),
+				new ServiceTrackerCustomizer<Store, ServiceRegistration<?>>() {
 
-			Store store = _bundleContext.getService(serviceReference);
+					@Override
+					public ServiceRegistration<?> addingService(
+						ServiceReference<Store> serviceReference) {
 
-			if (StringUtil.equals(storeType, PropsValues.DL_STORE_IMPL)) {
-				_defaultStore = store;
+						String storeType = GetterUtil.getString(
+							serviceReference.getProperty("store.type"));
 
-				_serviceRegistration = _bundleContext.registerService(
-					StoreFactory.class,
-					new StoreFactory() {
+						if (!StringUtil.equals(
+								storeType, PropsValues.DL_STORE_IMPL)) {
 
-						@Override
-						public Store getStore() {
-							return store;
+							return null;
 						}
 
-					},
-					MapUtil.singletonDictionary(
-						"dl.store.impl.enabled", "true"));
-			}
+						Store store = bundleContext.getService(
+							serviceReference);
 
-			return store;
-		}
+						_defaultStore = store;
 
-		@Override
-		public void modifiedService(
-			ServiceReference<Store> serviceReference, Store service) {
-		}
+						return bundleContext.registerService(
+							StoreFactory.class,
+							new StoreFactory() {
 
-		@Override
-		public void removedService(
-			ServiceReference<Store> serviceReference, Store service) {
+								@Override
+								public Store getStore() {
+									return store;
+								}
 
-			String storeType = GetterUtil.getString(
-				serviceReference.getProperty("store.type"));
+							},
+							MapUtil.singletonDictionary(
+								"dl.store.impl.enabled", "true"));
+					}
 
-			if (StringUtil.equals(storeType, PropsValues.DL_STORE_IMPL)) {
-				_serviceRegistration.unregister();
-			}
+					@Override
+					public void modifiedService(
+						ServiceReference<Store> serviceReference,
+						ServiceRegistration<?> serviceRegistration) {
+					}
 
-			_bundleContext.ungetService(serviceReference);
-		}
+					@Override
+					public void removedService(
+						ServiceReference<Store> serviceReference,
+						ServiceRegistration<?> serviceRegistration) {
 
-		private ServiceRegistration<StoreFactory> _serviceRegistration;
+						serviceRegistration.unregister();
 
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
+
+		serviceTracker.open();
 	}
 
 }

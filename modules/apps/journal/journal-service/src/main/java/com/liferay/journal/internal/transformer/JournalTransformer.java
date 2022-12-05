@@ -253,23 +253,20 @@ public class JournalTransformer {
 		try {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			if (document != null) {
-				templateNodes.addAll(
-					_getTemplateNodes(
-						themeDisplay, document.getRootElement(),
-						article.getDDMStructure(), locale));
+			templateNodes.addAll(
+				_getTemplateNodes(
+					themeDisplay, document.getRootElement(),
+					article.getDDMStructure(), locale));
 
-				templateNodes.addAll(
-					includeBackwardsCompatibilityTemplateNodes(
-						templateNodes, -1));
+			templateNodes.addAll(
+				includeBackwardsCompatibilityTemplateNodes(templateNodes, -1));
 
-				for (TemplateNode templateNode : templateNodes) {
-					template.put(templateNode.getName(), templateNode);
-				}
+			for (TemplateNode templateNode : templateNodes) {
+				template.put(templateNode.getName(), templateNode);
+			}
 
-				if (portletRequestModel != null) {
-					template.put("requestMap", portletRequestModel.toMap());
-				}
+			if (portletRequestModel != null) {
+				template.put("requestMap", portletRequestModel.toMap());
 			}
 
 			template.put("articleGroupId", articleGroupId);

@@ -351,6 +351,17 @@ public class CTCollectionTemplateLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public java.util.Set<String> getTemplateStringTokens() {
+		return _ctCollectionTemplateLocalService.getTemplateStringTokens();
+	}
+
+	@Override
+	public String parseTemplateString(long ctCollectionTemplateId, String s) {
+		return _ctCollectionTemplateLocalService.parseTemplateString(
+			ctCollectionTemplateId, s);
+	}
+
 	/**
 	 * Updates the ct collection template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

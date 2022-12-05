@@ -24,8 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -362,17 +360,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			return previewFileEntryId;
 		}
 
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			previewFileEntryId);
-
-		if (dlFileEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get file entry" + dlFileEntry.getFileEntryId());
-			}
-
-			return 0;
-		}
 
 		Folder folder = _portletFileRepository.addPortletFolder(
 			userId, dlFileEntry.getRepositoryId(),
@@ -456,9 +445,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		';', '/', '?', ':', '@', '=', '&', '\"', '<', '>', '#', '%', '{', '}',
 		'|', '\\', '^', '~', '[', ']', '`'
 	};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutUtilityPageEntryLocalServiceImpl.class);
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

@@ -72,12 +72,12 @@ public class CommerceChannelDTOConverter
 							typeSettingsUnicodeProperties.getProperty(
 								"siteGroupId", null);
 
-						if (siteGroupId == null) {
+						Group siteGroup = _groupLocalService.fetchGroup(
+							GetterUtil.getLong(siteGroupId));
+
+						if (siteGroup == null) {
 							return null;
 						}
-
-						Group siteGroup = _groupLocalService.getGroup(
-							GetterUtil.getLong(siteGroupId));
 
 						return siteGroup.getDescriptiveName();
 					});

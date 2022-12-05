@@ -71,7 +71,14 @@ public class ProjectTemplatesRESTBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(gradleWorkspaceDir, liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
@@ -113,7 +120,14 @@ public class ProjectTemplatesRESTBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(gradleWorkspaceDir, liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");
@@ -157,7 +171,14 @@ public class ProjectTemplatesRESTBuilderTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(gradleWorkspaceDir, liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		File gradlePropertiesFile = new File(
 			gradleWorkspaceDir + "gradle.properties");

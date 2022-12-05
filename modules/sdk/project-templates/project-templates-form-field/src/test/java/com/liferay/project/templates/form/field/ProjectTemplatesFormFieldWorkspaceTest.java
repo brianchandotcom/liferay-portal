@@ -92,7 +92,14 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(gradleWorkspaceDir, _liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			_liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		writeGradlePropertiesInWorkspace(
 			gradleWorkspaceDir, "liferay.workspace.node.package.manager=npm");
@@ -133,7 +140,14 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(workspaceDir, _liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			_liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				workspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "modules"), template, name,
@@ -260,7 +274,14 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(gradleWorkspaceDir, _liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			_liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
@@ -297,7 +318,14 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(gradleWorkspaceDir, _liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			_liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules/test"), template, name,
@@ -336,7 +364,14 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(gradleWorkspaceDir, _liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			_liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceDir, template, name, "--liferay-version",

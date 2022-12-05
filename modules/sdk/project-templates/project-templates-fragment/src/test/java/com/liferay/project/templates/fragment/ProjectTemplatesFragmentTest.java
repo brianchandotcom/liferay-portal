@@ -71,7 +71,14 @@ public class ProjectTemplatesFragmentTest
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,
 			mavenExecutor);
 
-		setProductVersion(gradleWorkspaceDir, liferayVersion);
+		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
+			liferayVersion);
+
+		if (liferayWorkspaceProduct != null) {
+			writeGradlePropertiesInWorkspace(
+				gradleWorkspaceDir,
+				"liferay.workspace.product=" + liferayWorkspaceProduct);
+		}
 
 		File gradleWorkspaceModulesDir = new File(
 			gradleWorkspaceDir, "modules");

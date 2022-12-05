@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -102,6 +103,11 @@ public class WikiServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"2.3.0", "2.4.0",
+			new CTModelUpgradeProcess(
+				"WikiNode", "WikiPage", "WikiPageResource"));
 	}
 
 	@Reference

@@ -98,7 +98,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		Layout layout = _addLayout(
 			userId, groupId, name, masterLayoutPlid,
-			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_DRAFT,
 			ServiceContextThreadLocal.getServiceContext());
 
 		if (layout != null) {

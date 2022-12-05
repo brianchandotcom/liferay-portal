@@ -234,9 +234,7 @@ public class UpgradeClient {
 		}
 
 		try (GogoShellClient gogoShellClient = _initGogoShellClient()) {
-			boolean finished = _isFinished(gogoShellClient);
-
-			if (!finished || _shell) {
+			if (!_isModuleUpgradesFinished(gogoShellClient) || _shell) {
 				System.out.println("Connecting to Gogo shell...");
 
 				_printHelp();
@@ -398,7 +396,7 @@ public class UpgradeClient {
 		return new GogoShellClient(host, port);
 	}
 
-	private boolean _isFinished(GogoShellClient gogoShellClient)
+	private boolean _isModuleUpgradesFinished(GogoShellClient gogoShellClient)
 		throws IOException {
 
 		String upgradeCheck = gogoShellClient.send("upgrade:check");
@@ -409,7 +407,7 @@ public class UpgradeClient {
 			return true;
 		}
 
-		System.out.print("Checking to see if all upgrades have completed...");
+		System.out.println("Checking to see if all upgrades have completed...");
 
 		String upgradeSteps = gogoShellClient.send(
 			"upgrade:list | grep Registered | grep step");
@@ -418,13 +416,13 @@ public class UpgradeClient {
 			upgradeSteps.contains("true")) {
 
 			System.out.println(
-				" your upgrades have failed, have not started, or are still " +
+				"Module upgrades have failed, have not started, or are still " +
 					"running.");
 
 			return false;
 		}
 
-		System.out.println(" done.");
+		System.out.println("Looks good.");
 
 		return true;
 	}

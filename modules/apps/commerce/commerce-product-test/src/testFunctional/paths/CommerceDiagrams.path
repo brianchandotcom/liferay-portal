@@ -168,6 +168,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_ADD_TO_CART_BUTTON</td>
+	<td>//button[contains(@class, 'btn-add-to-cart icon-only')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU</td>
 	<td>//div[contains(@class,'diagram-tooltip')]//h4//a[contains(text(),'${key_sku}')]</td>
 	<td></td>
@@ -185,6 +190,11 @@
 <tr>
 	<td>DIAGRAM_PRODUCT_TOOLTIP_QUANTITY</td>
 	<td>//div[contains(@class,'diagram-tooltip')]//p[contains(text(),'Quantity')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT</td>
+	<td>//*[contains(@class,'autofit-section') and contains(text(),'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

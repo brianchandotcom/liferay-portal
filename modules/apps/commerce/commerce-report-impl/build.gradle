@@ -22,8 +22,6 @@ dependencies {
 	compileInclude group: "org.apache.lucene", name: "lucene-sandbox", version: "7.1.0"
 	compileInclude group: "org.codehaus.groovy", name: "groovy-all", version: "2.4.21"
 	compileInclude group: "org.eclipse.jdt.core.compiler", name: "ecj", version: "4.4.2"
-	compileInclude group: "org.jfree", name: "jcommon", version: "1.0.24"
-	compileInclude group: "org.jfree", name: "jfreechart", version: "1.0.19"
 	compileInclude group: "org.olap4j", name: "olap4j", version: "1.2.0"
 
 	compileOnly group: "com.adobe.xmp", name: "xmpcore", version: "6.1.11"
@@ -33,6 +31,8 @@ dependencies {
 	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
 	compileOnly group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
 	compileOnly group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
+	compileOnly group: "org.jfree", name: "jcommon", version: "1.0.24"
+	compileOnly group: "org.jfree", name: "jfreechart", version: "1.0.19"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:commerce:commerce-report-api")
 }

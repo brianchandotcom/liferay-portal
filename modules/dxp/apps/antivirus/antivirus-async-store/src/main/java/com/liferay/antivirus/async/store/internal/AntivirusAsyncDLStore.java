@@ -58,10 +58,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AntivirusAsyncDLStore implements DLStore {
 
-	public AntivirusAsyncDLStore() {
-		_storeFactory = StoreFactory.getInstance();
-	}
-
 	@Override
 	public void addFile(DLStoreRequest dlStoreRequest, byte[] bytes)
 		throws PortalException {
@@ -70,7 +66,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 			dlStoreRequest.getFileName(),
 			dlStoreRequest.isValidateFileExtension());
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		try {
 			store.addFile(
@@ -93,7 +89,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 			dlStoreRequest.getFileName(),
 			dlStoreRequest.isValidateFileExtension());
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		try (InputStream inputStream = new FileInputStream(file)) {
 			store.addFile(
@@ -128,7 +124,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 			dlStoreRequest.getFileName(),
 			dlStoreRequest.isValidateFileExtension());
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		File tempFile = null;
 
@@ -238,7 +234,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		InputStream inputStream = store.getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
@@ -255,7 +251,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		store.deleteDirectory(companyId, repositoryId, dirName);
 	}
@@ -266,7 +262,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		for (String versionLabel :
 				store.getFileVersions(companyId, repositoryId, fileName)) {
@@ -283,7 +279,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		try {
 			store.deleteFile(companyId, repositoryId, fileName, versionLabel);
@@ -300,7 +296,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		try {
 			return StreamUtil.toByteArray(
@@ -320,7 +316,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		try {
 			return StreamUtil.toByteArray(
@@ -339,7 +335,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		return store.getFileAsStream(
 			companyId, repositoryId, fileName, StringPool.BLANK);
@@ -353,7 +349,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		return store.getFileAsStream(
 			companyId, repositoryId, fileName, versionLabel);
@@ -368,7 +364,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 			throw new DirectoryNameException(dirName);
 		}
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		return store.getFileNames(companyId, repositoryId, dirName);
 	}
@@ -379,7 +375,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		return store.getFileSize(
 			companyId, repositoryId, fileName, StringPool.BLANK);
@@ -391,7 +387,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		return store.hasFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
@@ -405,7 +401,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
@@ -421,7 +417,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		_dlValidator.validateVersionLabel(dlStoreRequest.getVersionLabel());
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		try (InputStream inputStream = new FileInputStream(file)) {
 			store.addFile(
@@ -451,7 +447,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		_dlValidator.validateVersionLabel(dlStoreRequest.getVersionLabel());
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		try {
 			store.addFile(
@@ -472,7 +468,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 			String fileName)
 		throws PortalException {
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		for (String versionLabel :
 				store.getFileVersions(companyId, repositoryId, fileName)) {
@@ -536,7 +532,7 @@ public class AntivirusAsyncDLStore implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		InputStream inputStream = store.getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
@@ -730,7 +726,5 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;
-
-	private final StoreFactory _storeFactory;
 
 }

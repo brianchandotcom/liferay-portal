@@ -269,9 +269,7 @@ public class DLFileVersionCTDisplayRenderer
 			throw new PortalException(exception);
 		}
 
-		StoreFactory storeFactory = StoreFactory.getInstance();
-
-		Store store = storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
 

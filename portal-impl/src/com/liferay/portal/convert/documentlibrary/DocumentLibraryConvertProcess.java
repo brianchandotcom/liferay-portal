@@ -74,9 +74,7 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 
 	@Override
 	public String[] getParameterNames() {
-		StoreFactory storeFactory = StoreFactory.getInstance();
-
-		Store store = storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		Set<String> storeTypes = _serviceTrackerMap.keySet();
 
@@ -110,12 +108,10 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 
 	@Override
 	protected void doConvert() throws Exception {
-		StoreFactory storeFactory = StoreFactory.getInstance();
-
 		String targetStoreClassName = getTargetStoreClassName();
 
 		migrateDLStoreConvertProcesses(
-			storeFactory.getStore(),
+			StoreFactory.getStore(),
 			_serviceTrackerMap.getService(targetStoreClassName));
 
 		MaintenanceUtil.appendStatus(

@@ -60,10 +60,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AntivirusAsyncMessageListener implements MessageListener {
 
-	public AntivirusAsyncMessageListener() {
-		_storeFactory = StoreFactory.getInstance();
-	}
-
 	@Override
 	public void receive(Message message) {
 		try {
@@ -131,7 +127,7 @@ public class AntivirusAsyncMessageListener implements MessageListener {
 	}
 
 	private void _receive(Message message) throws Exception {
-		Store store = _storeFactory.getStore();
+		Store store = StoreFactory.getStore();
 
 		long companyId = message.getLong("companyId");
 		long repositoryId = message.getLong("repositoryId");
@@ -222,6 +218,5 @@ public class AntivirusAsyncMessageListener implements MessageListener {
 	private DestinationFactory _destinationFactory;
 
 	private ServiceRegistration<Destination> _destinationServiceRegistration;
-	private final StoreFactory _storeFactory;
 
 }

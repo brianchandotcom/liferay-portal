@@ -36,22 +36,13 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class StoreFactory {
 
-	public static StoreFactory getInstance() {
-		if (_storeFactory == null) {
-			_storeFactory = new StoreFactory();
-		}
-
-		return _storeFactory;
-	}
-
-	public Store getStore() {
+	public static Store getStore() {
 		return _store;
 	}
 
 	private static volatile Store _store =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			Store.class, StoreFactory.class, "_store", "(default=true)", true);
-	private static StoreFactory _storeFactory;
 
 	static {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();

@@ -138,9 +138,7 @@ public class DBUpgrader {
 
 			upgradeModules();
 
-			StoreFactory storeFactory = StoreFactory.getInstance();
-
-			storeFactory.getStore();
+			StoreFactory.getStore();
 
 			System.out.println(
 				"\nCompleted Liferay core upgrade process in " +

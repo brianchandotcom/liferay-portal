@@ -13,13 +13,6 @@
  */
 
 /**
- * Format string removing spaces and special characters
- */
-export function removeAllSpecialCharacters(str: string): string {
-	return str.replace(/[^A-Z0-9]/gi, '');
-}
-
-/**
  * Transform first letter in lowercase
  */
 export function firstLetterLowercase(str: string): string {
@@ -42,23 +35,19 @@ export function normalizeLanguageId(languageId: string): string {
 }
 
 /**
- * Normalize string in camel case pattern.
+ * Format string removing spaces and special characters
  */
-export function toCamelCase(
-	str: string,
-	removeSpecialCharacters?: boolean
-): string {
-	const split = str.split(' ');
-	const capitalizeFirstLetters = split.map((str: string) =>
-		firstLetterUppercase(str)
-	);
-	const join = capitalizeFirstLetters.join('');
+ export function removeAllSpecialCharacters(str: string): string {
+	return str.replace(/[^A-Z0-9]/gi, '');
+}
 
-	if (removeSpecialCharacters) {
-		return firstLetterLowercase(removeAllSpecialCharacters(join));
-	}
+/**
+ * Separate CamelCase string
+ */
+ export function separateCamelCase(str: string): string {
+	const separatedCamelCaseString = str.replace(/([a-z])([A-Z])/g, '$1 $2');
 
-	return firstLetterLowercase(join);
+	return separatedCamelCaseString;
 }
 
 /**
@@ -75,10 +64,21 @@ export function specialCharactersInString(str: string) {
 }
 
 /**
- * Separate CamelCase string
+ * Normalize string in camel case pattern.
  */
-export function separateCamelCase(str: string): string {
-	const separetedCamelCaseString = str.replace(/([a-z])([A-Z])/g, '$1 $2');
+ export function toCamelCase(
+	str: string,
+	removeSpecialCharacters?: boolean
+): string {
+	const split = str.split(' ');
+	const capitalizeFirstLetters = split.map((str: string) =>
+		firstLetterUppercase(str)
+	);
+	const join = capitalizeFirstLetters.join('');
 
-	return separetedCamelCaseString;
+	if (removeSpecialCharacters) {
+		return firstLetterLowercase(removeAllSpecialCharacters(join));
+	}
+
+	return firstLetterLowercase(join);
 }

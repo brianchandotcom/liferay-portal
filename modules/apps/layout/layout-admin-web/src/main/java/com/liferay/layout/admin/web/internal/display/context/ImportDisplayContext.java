@@ -199,7 +199,8 @@ public class ImportDisplayContext {
 			return null;
 		}
 
-		_layoutsImporterResultEntryMap = new HashMap<>();
+		Map<LayoutsImporterResultEntry.Status, List<LayoutsImporterResultEntry>>
+			layoutsImporterResultEntryMap = new HashMap<>();
 
 		for (LayoutsImporterResultEntry layoutsImporterResultEntry :
 				layoutsImporterResultEntries) {
@@ -210,16 +211,18 @@ public class ImportDisplayContext {
 			LayoutsImporterResultEntry.Status status =
 				layoutsImporterResultEntry.getStatus();
 
-			if (_layoutsImporterResultEntryMap.get(status) != null) {
+			if (layoutsImporterResultEntryMap.get(status) != null) {
 				statusLayoutsImporterResultEntries =
-					_layoutsImporterResultEntryMap.get(status);
+					layoutsImporterResultEntryMap.get(status);
 			}
 
 			statusLayoutsImporterResultEntries.add(layoutsImporterResultEntry);
 
-			_layoutsImporterResultEntryMap.put(
+			layoutsImporterResultEntryMap.put(
 				status, statusLayoutsImporterResultEntries);
 		}
+
+		_layoutsImporterResultEntryMap = layoutsImporterResultEntryMap;
 
 		return _layoutsImporterResultEntryMap;
 	}

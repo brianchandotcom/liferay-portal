@@ -139,17 +139,13 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			groupId, sourceLayoutUtilityPageEntry.getName(),
 			sourceLayoutUtilityPageEntry.getType(), serviceContext.getLocale());
 
-		LayoutUtilityPageEntry copyLayoutUtilityPageEntry =
-			addLayoutUtilityPageEntry(
-				null, userId, serviceContext.getScopeGroupId(), name,
-				sourceLayoutUtilityPageEntry.getType(), 0);
+		long previewFileEntryId = _copyPreviewFileEntryId(
+			userId, sourceLayoutUtilityPageEntry.getPreviewFileEntryId(), name,
+			serviceContext);
 
-		copyLayoutUtilityPageEntry.setPreviewFileEntryId(
-			_copyPreviewFileEntryId(
-				userId, sourceLayoutUtilityPageEntry.getPreviewFileEntryId(),
-				name, serviceContext));
-
-		return copyLayoutUtilityPageEntry;
+		return addLayoutUtilityPageEntry(
+			null, userId, serviceContext.getScopeGroupId(), previewFileEntryId,
+			name, sourceLayoutUtilityPageEntry.getType(), 0);
 	}
 
 	@Override

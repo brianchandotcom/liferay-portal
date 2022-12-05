@@ -51,11 +51,6 @@ public class CETLabelUtil {
 			return "css";
 		}
 		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP)) {
-
-			return "svg";
-		}
-		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
 
 			return "js";
@@ -79,6 +74,11 @@ public class CETLabelUtil {
 					type, ClientExtensionEntryConstants.TYPE_THEME_JS)) {
 
 			return "theme-js";
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP)) {
+
+			return "theme-svg";
 		}
 
 		return type;

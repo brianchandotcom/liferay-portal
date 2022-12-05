@@ -52,7 +52,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 	<div>
 		<react:component
 			module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), selLayoutSet.getLayoutSetId()) %>"
+			props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
 		/>
 	</div>
 </clay:sheet-section>

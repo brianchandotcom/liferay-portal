@@ -21,6 +21,10 @@ components:
                         Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 description:
                     type: string
                 domains:

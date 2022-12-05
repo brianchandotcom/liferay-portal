@@ -45,7 +45,7 @@ export function getPolicies(parameters: Parameters = {}) {
 
 	if (parametersList.length) {
 		return axios.get(
-			`${DeliveryAPI}/${parametersFormater(parametersList, parameters)}`
+			`${DeliveryAPI}/?${parametersFormater(parametersList, parameters)}`
 		);
 	}
 
@@ -57,7 +57,7 @@ export function getPoliciesExpired(parameters: Parameters = {}) {
 
 	if (parametersList.length) {
 		return axios.get(
-			`${DeliveryAPI}/${parametersFormater(
+			`${DeliveryAPI}/?${parametersFormater(
 				parametersList,
 				parameters
 			)}&filter=endDate lt ${getCurrentDate}`
@@ -72,7 +72,7 @@ export function getNotExpiredPolicies(parameters: Parameters = {}) {
 
 	if (parametersList.length) {
 		return axios.get(
-			`${DeliveryAPI}/${parametersFormater(
+			`${DeliveryAPI}/?${parametersFormater(
 				parametersList,
 				parameters
 			)}&filter=endDate ge ${getCurrentDate}`

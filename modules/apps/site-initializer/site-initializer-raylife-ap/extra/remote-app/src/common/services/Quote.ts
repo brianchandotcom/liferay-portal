@@ -28,7 +28,7 @@ export function getQuotes(parameters: Parameters = {}) {
 
 	if (parametersList.length) {
 		return axios.get(
-			`${DeliveryAPI}/${parametersFormater(parametersList, parameters)}`
+			`${DeliveryAPI}/?${parametersFormater(parametersList, parameters)}`
 		);
 	}
 

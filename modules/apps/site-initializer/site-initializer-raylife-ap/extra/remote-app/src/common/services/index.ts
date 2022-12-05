@@ -26,7 +26,7 @@ export function parametersFormater(
 		parametersContainer.push(`${item}=${parameters[item]}`);
 	});
 
-	const parametersString = '?' + parametersContainer.join('&');
+	const parametersString = parametersContainer.join('&');
 
 	return parametersString;
 }

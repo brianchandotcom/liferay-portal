@@ -9,32 +9,46 @@
 	tbody {
 		tr {
 			td {
+				.approved {
+					background-color: #4bc286;
+				}
+
 				.bound {
 					background-color: #d9e4fe;
 				}
 
-				.underwriting {
-					background-color: #b5cdfe;
+				.declined {
+					background-color: #e62a2a;
+				}
+
+				.estimation,
+				.investigation,
+				.reviewed,
+				.submitted,
+				.settled {
+					background-color: #4c84ff;
+				}
+
+				.incomplete,
+				.settlement,
+				.repair {
+					background-color: #1f77d4;
+				}
+
+				.open {
+					background-color: #ff7f0e;
 				}
 
 				.quoted {
 					background-color: #81a8ff;
 				}
 
-				.reviewed {
-					background-color: #4c84ff;
-				}
-
-				.incomplete {
-					background-color: #1f77d4;
-				}
-
 				.rejected {
 					background-color: #191970;
 				}
 
-				.open {
-					background-color: #ff7f0e;
+				.underwriting {
+					background-color: #b5cdfe;
 				}
 
 				&::after {

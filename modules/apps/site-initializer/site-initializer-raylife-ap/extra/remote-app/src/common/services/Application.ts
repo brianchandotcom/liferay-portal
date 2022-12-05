@@ -22,7 +22,7 @@ export function getApplications(parameters: Parameters = {}) {
 
 	if (parametersList.length) {
 		return axios.get(
-			`${DeliveryAPI}/${parametersFormater(parametersList, parameters)}`
+			`${DeliveryAPI}/?${parametersFormater(parametersList, parameters)}`
 		);
 	}
 
@@ -34,7 +34,7 @@ export function getAllApplications(parameters: Parameters = {}) {
 
 	if (parametersList.length) {
 		return axios.get(
-			`${DeliveryAPI}/${parametersFormater(parametersList, parameters)}`
+			`${DeliveryAPI}/?${parametersFormater(parametersList, parameters)}`
 		);
 	}
 

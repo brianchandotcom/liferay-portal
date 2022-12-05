@@ -149,11 +149,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		this.userLocalService = userLocalService;
-	}
-
+	@Reference
 	protected UserLocalService userLocalService;
 
 	private static List<String> _read(String fileName) {

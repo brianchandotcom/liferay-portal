@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
@@ -83,6 +84,26 @@ public class AccountSerDes {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(account.getActions()));
+		}
+
+		if (account.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < account.getCustomFields().length; i++) {
+				sb.append(String.valueOf(account.getCustomFields()[i]));
+
+				if ((i + 1) < account.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (account.getDescription() != null) {
@@ -259,6 +280,13 @@ public class AccountSerDes {
 			map.put("actions", String.valueOf(account.getActions()));
 		}
 
+		if (account.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put("customFields", String.valueOf(account.getCustomFields()));
+		}
+
 		if (account.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -372,6 +400,18 @@ public class AccountSerDes {
 				if (jsonParserFieldValue != null) {
 					account.setActions(
 						(Map)AccountSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					account.setCustomFields(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {

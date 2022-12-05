@@ -193,4 +193,8 @@ public interface CTCollectionTemplateModel
 	@Override
 	public CTCollectionTemplate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

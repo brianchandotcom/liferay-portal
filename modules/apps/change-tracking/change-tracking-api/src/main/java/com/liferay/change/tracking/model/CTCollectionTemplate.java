@@ -62,7 +62,13 @@ public interface CTCollectionTemplate
 
 	public com.liferay.portal.kernel.json.JSONObject getJSONObject();
 
+	public String getParsedPublicationDescription();
+
 	public String getParsedPublicationName();
+
+	public String getPublicationDescription();
+
+	public String getPublicationName();
 
 	public String getUserName();
 

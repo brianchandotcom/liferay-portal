@@ -1134,20 +1134,33 @@ definition {
 			var displayPageTemplateType = "Specific";
 		}
 
-		Click(
-			ariaLabel = "Select Display Page Type",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-		Click(
-			key_menuItem = "${displayPageTemplateType}",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
-
-		if ("${displayPageTemplateType}" == "Specific") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
+		if (IsElementPresent(locator1 = "Select#SELECT_ID", selectFieldId = "displayPageType")) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "displayPageType",
+				value1 = "${displayPageTemplateType}");
+		}
+		else {
+			Click(
+				ariaLabel = "Select Display Page Type",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			Click(
-				ariaLabel = "Select Display Page",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+				key_menuItem = "${displayPageTemplateType}",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+
+		if ("${displayPageTemplateType}" == "Specific") {
+			if (IsElementPresent(buttonId = "chooseSpecificDisplayPage", locator1 = "Button#BUTTON_ID")) {
+				Click(
+					buttonId = "chooseSpecificDisplayPage",
+					locator1 = "Button#BUTTON_ID");
+			}
+			else {
+				Click(
+					ariaLabel = "Select Display Page",
+					locator1 = "Button#ANY_WITH_ARIA_LABEL");
+			}
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1182,17 +1195,54 @@ definition {
 
 			SelectFrameTop();
 
-			if ("${pageType}" == "Public Pages") {
-				AssertTextEquals(
-					key_placeHolder = "Select Display Page",
-					locator1 = "TextInput#ANY_PLACEHOLDER",
-					value1 = "Public Pages > ${pageName}");
+			if (IsElementPresent(inputFieldId = "specificDisplayPageNameInput", locator1 = "TextInput#INPUT_ID")) {
+				if ("${pageType}" == "Public Pages") {
+					AssertTextEquals(
+						inputFieldId = "specificDisplayPageNameInput",
+						locator1 = "TextInput#INPUT_ID",
+						value1 = "Public Pages > ${pageName}");
+				}
+				else if ("${pageType}" == "Pages") {
+					AssertTextEquals(
+						inputFieldId = "specificDisplayPageNameInput",
+						locator1 = "TextInput#INPUT_ID",
+						value1 = "Pages > ${pageName}");
+				}
+				else {
+					AssertTextEquals(
+						inputFieldId = "specificDisplayPageNameInput",
+						locator1 = "TextInput#INPUT_ID",
+						value1 = "${pageName}");
+				}
 			}
-			else if ("${pageType}" == "Pages") {
+			else {
+				if ("${pageType}" == "Public Pages") {
+					AssertTextEquals(
+						key_placeHolder = "Select Display Page",
+						locator1 = "TextInput#ANY_PLACEHOLDER",
+						value1 = "Public Pages > ${pageName}");
+				}
+				else if ("${pageType}" == "Pages") {
+					AssertTextEquals(
+						key_placeHolder = "Select Display Page",
+						locator1 = "TextInput#ANY_PLACEHOLDER",
+						value1 = "Pages > ${pageName}");
+				}
+				else {
+					AssertTextEquals(
+						key_placeHolder = "Select Display Page",
+						locator1 = "TextInput#ANY_PLACEHOLDER",
+						value1 = "${pageName}");
+				}
+			}
+		}
+
+		if ("${displayPageTemplateType}" == "Default") {
+			if (IsElementPresent(inputFieldId = "defaultDisplayPageNameInput", locator1 = "TextInput#INPUT_ID")) {
 				AssertTextEquals(
-					key_placeHolder = "Select Display Page",
-					locator1 = "TextInput#ANY_PLACEHOLDER",
-					value1 = "Pages > ${pageName}");
+					inputFieldId = "defaultDisplayPageNameInput",
+					locator1 = "TextInput#INPUT_ID",
+					value1 = "${pageName}");
 			}
 			else {
 				AssertTextEquals(
@@ -1200,13 +1250,6 @@ definition {
 					locator1 = "TextInput#ANY_PLACEHOLDER",
 					value1 = "${pageName}");
 			}
-		}
-
-		if ("${displayPageTemplateType}" == "Default") {
-			AssertTextEquals(
-				key_placeHolder = "Select Display Page",
-				locator1 = "TextInput#ANY_PLACEHOLDER",
-				value1 = "${pageName}");
 		}
 	}
 

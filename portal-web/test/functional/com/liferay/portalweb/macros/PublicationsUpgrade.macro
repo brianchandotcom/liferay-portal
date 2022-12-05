@@ -23,6 +23,20 @@ definition {
 	}
 
 	macro viewNoUnrelatedPreviews {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Upgrades",
+			configurationName = "Data Removal",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "Remove DL Preview Change Tracking Store Content Data");
+
+		SystemSettings.saveConfiguration();
+
 		PublicationsNavigator.openPublicationsAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");

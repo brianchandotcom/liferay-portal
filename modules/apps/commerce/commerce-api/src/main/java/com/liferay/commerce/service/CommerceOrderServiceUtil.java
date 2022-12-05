@@ -310,6 +310,15 @@ public class CommerceOrderServiceUtil {
 			companyId, groupId, keywords);
 	}
 
+	public static List<CommerceOrder> getUserOpenCommerceOrders(
+			long companyId, long groupId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
+
+		return getService().getUserOpenCommerceOrders(
+			companyId, groupId, keywords, start, end, sort);
+	}
+
 	public static List<CommerceOrder> getUserPendingCommerceOrders(
 			long companyId, long groupId, String keywords, int start, int end)
 		throws PortalException {
@@ -332,6 +341,15 @@ public class CommerceOrderServiceUtil {
 
 		return getService().getUserPlacedCommerceOrders(
 			companyId, groupId, keywords, start, end);
+	}
+
+	public static List<CommerceOrder> getUserPlacedCommerceOrders(
+			long companyId, long groupId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
+
+		return getService().getUserPlacedCommerceOrders(
+			companyId, groupId, keywords, start, end, sort);
 	}
 
 	public static long getUserPlacedCommerceOrdersCount(

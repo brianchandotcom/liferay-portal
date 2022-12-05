@@ -512,6 +512,17 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static List<CommerceOrder> getCommerceOrders(
+			long companyId, long groupId, long[] commerceAccountIds,
+			String keywords, int[] orderStatuses, boolean excludeOrderStatus,
+			int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
+
+		return getService().getCommerceOrders(
+			companyId, groupId, commerceAccountIds, keywords, orderStatuses,
+			excludeOrderStatus, start, end, sort);
+	}
+
+	public static List<CommerceOrder> getCommerceOrders(
 		long groupId, String commercePaymentMethodKey) {
 
 		return getService().getCommerceOrders(

@@ -579,6 +579,20 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrder>
+			getCommerceOrders(
+				long companyId, long groupId, long[] commerceAccountIds,
+				String keywords, int[] orderStatuses,
+				boolean excludeOrderStatus, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.getCommerceOrders(
+			companyId, groupId, commerceAccountIds, keywords, orderStatuses,
+			excludeOrderStatus, start, end, sort);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrder>
 		getCommerceOrders(long groupId, String commercePaymentMethodKey) {
 
 		return _commerceOrderLocalService.getCommerceOrders(

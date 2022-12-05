@@ -1612,9 +1612,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(
-			key_fieldsetName = "displayPage",
-			locator1 = "WC#PREVIEW_BUTTON");
+		Button.click(button = "Preview");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -2361,10 +2359,18 @@ definition {
 	macro viewSelectedDisplayPageTemplateCP {
 		Panel.expandPanel(panel = "Display Page");
 
-		AssertSelectedLabel(
-			locator1 = "Select#SELECT_ID",
-			selectFieldId = "displayPageType",
-			value1 = "${displayPageTemplateType}");
+		if (IsElementPresent(locator1 = "Select#SELECT_ID", selectFieldId = "displayPageType")) {
+			AssertSelectedLabel(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "displayPageType",
+				value1 = "${displayPageTemplateType}");
+		}
+		else {
+			AssertTextEquals(
+				ariaLabel = "Select Display Page Type",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "${displayPageTemplateType}");
+		}
 
 		if (isSet(displayPageTemplateName)) {
 			AssertTextEquals(

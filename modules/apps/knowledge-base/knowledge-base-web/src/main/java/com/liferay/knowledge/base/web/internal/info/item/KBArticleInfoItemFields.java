@@ -49,6 +49,8 @@ public class KBArticleInfoItemFields {
 			TextInfoFieldType.INSTANCE
 		).name(
 			"content"
+		).attribute(
+			TextInfoFieldType.HTML, true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				KBArticleInfoItemFields.class, "content")

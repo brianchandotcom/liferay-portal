@@ -37,11 +37,13 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -355,9 +357,15 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	private long _getGroupId() throws PortalException {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
+			return BeanParamUtil.getLong(
+				_getSegmentsEntry(), _httpServletRequest, "groupId",
+				_themeDisplay.getScopeGroupId());
+		}
+
 		return BeanParamUtil.getLong(
 			_getSegmentsEntry(), _httpServletRequest, "groupId",
-			_themeDisplay.getScopeGroupId());
+			_themeDisplay.getCompanyGroupId());
 	}
 
 	private JSONObject _getInitialQueryJSONObject(

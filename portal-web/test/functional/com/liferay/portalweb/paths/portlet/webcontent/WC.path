@@ -163,11 +163,6 @@
 <!--SIDEBAR -->
 
 <tr>
-	<td>PREVIEW_BUTTON</td>
-	<td>//fieldset[contains(@id,'${key_fieldsetName}')]//button[.//*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SIDEBAR_BODY</td>
 	<td>//div[@class='sidebar-body']//div[contains(@id,'TabsSection')]</td>
 	<td></td>

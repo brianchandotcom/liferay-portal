@@ -54,6 +54,10 @@ else {
 	renderResponse.setTitle(LanguageUtil.get(request, "create-new-publication"));
 }
 
+if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161313"))) {
+	showTemplates = false;
+}
+
 portletDisplay.setURLBack(redirect);
 portletDisplay.setShowBackIcon(true);
 %>

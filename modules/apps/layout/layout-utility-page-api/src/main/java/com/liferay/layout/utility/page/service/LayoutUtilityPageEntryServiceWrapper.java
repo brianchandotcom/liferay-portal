@@ -40,12 +40,13 @@ public class LayoutUtilityPageEntryServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId, String name,
-			String type, long masterLayoutPlid)
+			String externalReferenceCode, long groupId, long previewFileEntryId,
+			String name, String type, long masterLayoutPlid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
-			externalReferenceCode, groupId, name, type, masterLayoutPlid);
+			externalReferenceCode, groupId, previewFileEntryId, name, type,
+			masterLayoutPlid);
 	}
 
 	@Override

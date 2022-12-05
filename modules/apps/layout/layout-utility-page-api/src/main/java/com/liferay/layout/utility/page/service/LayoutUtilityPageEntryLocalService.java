@@ -89,7 +89,8 @@ public interface LayoutUtilityPageEntryLocalService
 
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long userId, long groupId,
-			String name, String type, long masterLayoutPlid)
+			long previewFileEntryId, String name, String type,
+			long masterLayoutPlid)
 		throws PortalException;
 
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(

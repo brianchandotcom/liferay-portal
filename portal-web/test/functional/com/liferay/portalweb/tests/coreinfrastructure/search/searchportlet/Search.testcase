@@ -124,6 +124,84 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
 	}
 
+	@priority = "3"
+	test AssertCategoryFacetLayouts {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary");
+
+		var categoryId1 = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Company",
+			vocabularyName = "Vocabulary");
+		var categoryId2 = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Product",
+			vocabularyName = "Vocabulary");
+		var categoryId3 = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Engineering",
+			vocabularyName = "Vocabulary");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3}",
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC WebContent Title 1");
+
+		Navigator.gotoPage(pageName = "Home");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Cloud Layout",
+			portletName = "Category Facet");
+
+		Refresh();
+
+		for (var categories : list "Company,Product,Engineering") {
+			AssertElementPresent(
+				locator1 = "Search#CATEGORY_FACET_PORTLET",
+				tagName = "${categories}");
+		}
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Compact Layout",
+			portletName = "Category Facet");
+
+		Refresh();
+
+		for (var categories : list "Company,Product,Engineering") {
+			AssertElementPresent(
+				locator1 = "Search#CATEGORY_FACET_PORTLET",
+				tagName = "${categories}");
+		}
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Label Layout",
+			portletName = "Category Facet");
+
+		Refresh();
+
+		for (var categories : list "Company,Product,Engineering") {
+			AssertElementPresent(
+				locator1 = "Search#CATEGORY_FACET_PORTLET",
+				tagName = "${categories}");
+		}
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Vocabulary Layout",
+			portletName = "Category Facet");
+
+		Refresh();
+
+		for (var categories : list "Company,Product,Engineering") {
+			AssertElementPresent(
+				locator1 = "Search#CATEGORY_FACET_PORTLET",
+				tagName = "${categories}");
+		}
+	}
+
 	@description = "This is a use case for LPS-138720."
 	@priority = "4"
 	test AssertCustomFacetNoXSS {

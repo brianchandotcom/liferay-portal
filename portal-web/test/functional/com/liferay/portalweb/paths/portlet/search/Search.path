@@ -225,6 +225,11 @@
 	<td>//select[contains(@id, "currentAssetTypes")]/option[contains(., "${assetType}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CATEGORY_FACET_PORTLET</td>
+	<td>//div[contains(@aria-labelledby, 'CategoryFacetPortlet')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

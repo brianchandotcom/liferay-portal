@@ -1956,7 +1956,7 @@ definition {
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = '''/\<>:"?|*''',
-			escapedTitle = '''/\&lt;&gt;:&#34;?|*''',
+			escapedTitle = '''/\<>:"?|*''',
 			specialCharacters = "true");
 	}
 

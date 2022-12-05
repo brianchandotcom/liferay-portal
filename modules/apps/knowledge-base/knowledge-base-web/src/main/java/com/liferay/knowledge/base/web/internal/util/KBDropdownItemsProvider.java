@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.rss.util.RSSUtil;
@@ -118,6 +119,7 @@ public class KBDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() ->
+							_isExpirationEnabled() &&
 							_hasExpirationPermission(kbArticle) &&
 							!kbArticle.isExpired(),
 						_getExpireArticleActionConsumer(kbArticle)
@@ -1319,6 +1321,14 @@ public class KBDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), kbTemplate,
 				KBActionKeys.VIEW)) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	private Boolean _isExpirationEnabled() {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165476"))) {
 			return true;
 		}
 

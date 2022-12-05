@@ -1,5 +1,17 @@
 # Poshi Runner Change Log
 
+## 1.0.391
+
+### Gradle
+
+* [POSHI-443](https://issues.liferay.com/browse/POSHI-443) - Update chromedriver 103 version
+
+### WebDriver
+
+* [POSHI-445](https://issues.liferay.com/browse/POSHI-445) - Refactor selectFrame to select parentFrame
+* [POSHI-446](https://issues.liferay.com/browse/POSHI-446) - Make getWrappedWebDriver reusable
+* [POSHI-447](https://issues.liferay.com/browse/POSHI-447) - Clear cookies before each case run
+
 ## 1.0.390
 
 ### WebDriver

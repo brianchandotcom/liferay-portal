@@ -38,6 +38,13 @@ definition {
 			Alert.viewErrorMessage(errorMessage = "This current node is within the licensed node count and will not be automatically deactivated nor shut down after the grace period expires.");
 		}
 
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:10080",
+			userEmailAddress = "test@liferay.com");
+
+		Alert.viewErrorMessage(errorMessage = "This current node is within the temporarily permitted node count and will be automatically deactivated after the grace period expires");
+
 		Clustering.waitForNodeShutdown(nodePort = "10080");
 
 		Navigator.openSpecificURL(url = "http://localhost:10080");

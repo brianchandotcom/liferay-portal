@@ -135,6 +135,9 @@ public class ImportDisplayContext {
 			}
 		}
 
+		_importedLayoutsImporterResultEntries =
+			importedLayoutsImporterResultEntries;
+
 		return importedLayoutsImporterResultEntries;
 	}
 
@@ -173,6 +176,9 @@ public class ImportDisplayContext {
 					layoutsImporterResultEntry);
 			}
 		}
+
+		_layoutsImporterResultEntriesWithWarnings =
+			layoutsImporterResultEntriesWithWarnings;
 
 		return _layoutsImporterResultEntriesWithWarnings;
 	}
@@ -248,7 +254,10 @@ public class ImportDisplayContext {
 			}
 		}
 
-		return notImportedLayoutsImporterResultEntries;
+		_notImportedLayoutsImporterResultEntries =
+			notImportedLayoutsImporterResultEntries;
+
+		return _notImportedLayoutsImporterResultEntries;
 	}
 
 	public String getSuccessMessage(

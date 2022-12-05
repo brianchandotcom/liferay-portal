@@ -467,6 +467,150 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-8151 | As a buyer, using SBD I want discontinued products to be replaced by the replacement product when adding a discontinued product to an order"
+	@priority = "3"
+	test CanAddReplacementProductToCart {
+		property portal.acceptance = "false";
+
+		task ("Given a diagram product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Diagram T-Shirt",
+				productType = "Diagram");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Diagram T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+		}
+
+		task ("And a pin is added on the diagram product") {
+			CommerceDiagram.addPin(
+				pinNumber = "2",
+				position = "150,100",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN55861");
+		}
+
+		task ("And MIN55861 is flagged as 'Discontinued' and a replacement Sku is set") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				discontinued = "true",
+				productSku = "MIN55861",
+				replacementSku = "MIN93015");
+		}
+
+		task ("And the discontinued sku has 0 quantity available") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN55861",
+					quantity = "0",
+					warehouseName = "${warehouseName}");
+			}
+		}
+
+		task ("And product's Allow Back Order is disabled") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("And the buyer user navigates to the diagram product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram T-Shirt");
+		}
+
+		task ("When the user hovers on the discontinued sku's pin") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "2");
+		}
+
+		task ("Then the warnings and data about the discontinued product are shown in the tooltip") {
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "ABS Sensor",
+				replaceSku = "true",
+				replaceText = "MIN55861 has been replaced by MIN93015",
+				selectedType = "Linked to a SKU",
+				sku = "MIN93015");
+		}
+
+		task ("When the discontinued sku is attempted to be added to the cart via pin") {
+			Click(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the replacement sku is added to the cart") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "ABS Sensor",
+				cartItemPriceValue = "50",
+				cartItemQuantity = "1",
+				cartItemSku = "MIN93015");
+		}
+
+		task ("When the buyer creates a new order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+		}
+
+		task ("And navigates to the diagram product details page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram T-Shirt");
+		}
+
+		task ("When the buyer clicks on the mapped product SKU") {
+			Click(
+				key_entryName = "ABS Sensor",
+				locator1 = "CommerceEntry#SEARCH_MAPPED_PRODUCTS_RESULT");
+		}
+
+		task ("Then the warnings and data about the discontinued product are shown in the tooltip") {
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "ABS Sensor",
+				replaceSku = "true",
+				replaceText = "MIN55861 has been replaced by MIN93015",
+				selectedType = "Linked to a SKU",
+				sku = "MIN93015");
+		}
+
+		task ("When the discontinued sku is attempted to be added to the cart via mapped products table") {
+			Refresh();
+
+			Check.checkNotVisible(
+				key_pinNumber = "1",
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX");
+
+			Click(
+				key_entryName = "Add Selected Product(s) to the Order",
+				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the replacement sku is added to the cart") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "ABS Sensor",
+				cartItemPriceValue = "50",
+				cartItemQuantity = "1",
+				cartItemSku = "MIN93015");
+		}
+	}
+
 	@description = "COMMERCE-8971. Verify that the Diagram Product name and short description are displayed on the product card."
 	@priority = "4"
 	test CanAssertDiagramNameAndDescriptionOnTheProductCard {

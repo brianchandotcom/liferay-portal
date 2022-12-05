@@ -22,4 +22,4 @@ EditClientExtensionEntryPartDisplayContext<ThemeSpritemapCET> editClientExtensio
 ThemeSpritemapCET themeSpritemapCET = editClientExtensionEntryPartDisplayContext.getCET();
 %>
 
-<aui:input label="url" name="url" required="true" type="text" value="<%= themeSpritemapCET.getURL() %>" />
+<aui:input label="url" name="url" required="<%= true %>" type="text" value="<%= themeSpritemapCET.getURL() %>" />

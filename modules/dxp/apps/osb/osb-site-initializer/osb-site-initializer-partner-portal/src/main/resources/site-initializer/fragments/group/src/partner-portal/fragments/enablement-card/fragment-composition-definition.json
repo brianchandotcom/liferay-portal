@@ -1,0 +1,219 @@
+{
+	"definition": {
+		"indexed": true,
+		"layout": {
+			"borderWidth": 0,
+			"contentDisplay": "FlexRow",
+			"justify": "Center",
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"opacity": 100,
+			"paddingBottom": 0,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 0,
+			"widthType": "Fluid"
+		},
+		"name": "Card Container"
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragmentStyle": {
+					"borderColor": "colorNeutral2",
+					"borderRadius": "8px",
+					"borderWidth": "1px",
+					"width": "388px"
+				},
+				"gutters": true,
+				"indexed": true,
+				"modulesPerRow": 1,
+				"name": "Enablement Card",
+				"numberOfColumns": 2,
+				"reverseOrder": false,
+				"rowViewports": [
+					{
+						"id": "landscapeMobile",
+						"rowViewportDefinition": {
+							"modulesPerRow": 1
+						}
+					},
+					{
+						"id": "portraitMobile",
+						"rowViewportDefinition": {
+						}
+					},
+					{
+						"id": "tablet",
+						"rowViewportDefinition": {
+						}
+					}
+				],
+				"verticalAlignment": "top"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"columnViewports": [
+							{
+								"columnViewportDefinition": {
+									"size": 12
+								},
+								"id": "landscapeMobile"
+							},
+							{
+								"columnViewportDefinition": {
+								},
+								"id": "portraitMobile"
+							},
+							{
+								"columnViewportDefinition": {
+								},
+								"id": "tablet"
+							}
+						],
+						"size": 12
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-image"
+								},
+								"fragmentConfig": {
+									"imageSize": "w-100"
+								},
+								"fragmentFields": [
+								],
+								"indexed": true
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "Column"
+				},
+				{
+					"definition": {
+						"columnViewports": [
+							{
+								"columnViewportDefinition": {
+									"size": 12
+								},
+								"id": "landscapeMobile"
+							},
+							{
+								"columnViewportDefinition": {
+								},
+								"id": "portraitMobile"
+							},
+							{
+								"columnViewportDefinition": {
+								},
+								"id": "tablet"
+							}
+						],
+						"size": 12
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragmentStyle": {
+									"paddingBottom": "4",
+									"paddingLeft": "4",
+									"paddingRight": "4",
+									"paddingTop": "4"
+								},
+								"indexed": true,
+								"layout": {
+									"borderWidth": 0,
+									"marginBottom": 0,
+									"marginLeft": 0,
+									"marginRight": 0,
+									"marginTop": 0,
+									"opacity": 100,
+									"paddingBottom": 2,
+									"paddingLeft": 2,
+									"paddingRight": 2,
+									"paddingTop": 2,
+									"widthType": "Fluid"
+								},
+								"name": "Body Container"
+							},
+							"pageElements": [
+								{
+									"definition": {
+										"fragment": {
+											"key": "DIALECT-dialect-text"
+										},
+										"fragmentConfig": {
+											"textType": "text-paragraph",
+											"truncateText": false
+										},
+										"fragmentFields": [
+										],
+										"fragmentStyle": {
+											"fontFamily": "fontFamilySansSerif",
+											"fontWeight": "fontWeightBold",
+											"marginBottom": "2",
+											"textColor": "colorNeutral6"
+										},
+										"indexed": true,
+										"name": "Category"
+									},
+									"type": "Fragment"
+								},
+								{
+									"definition": {
+										"fragment": {
+											"key": "DIALECT-dialect-text"
+										},
+										"fragmentConfig": {
+											"textType": "h4",
+											"truncateText": false
+										},
+										"fragmentFields": [
+										],
+										"fragmentStyle": {
+											"fontWeight": "fontWeightBold"
+										},
+										"indexed": true,
+										"name": "Title"
+									},
+									"type": "Fragment"
+								},
+								{
+									"definition": {
+										"fragment": {
+											"key": "DIALECT-dialect-button"
+										},
+										"fragmentConfig": {
+											"buttonSize": "",
+											"inverted": false,
+											"style": "primary",
+											"type": "solid",
+											"uppercase": false
+										},
+										"fragmentFields": [
+										],
+										"fragmentStyle": {
+											"marginTop": "4"
+										},
+										"indexed": true,
+										"name": "Link Button"
+									},
+									"type": "Fragment"
+								}
+							],
+							"type": "Section"
+						}
+					],
+					"type": "Column"
+				}
+			],
+			"type": "Row"
+		}
+	],
+	"type": "Section"
+}

@@ -19,6 +19,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Collection;
@@ -505,6 +507,24 @@ public class FragmentEntryProcessorHelperImpl
 
 				if (!htmlOptional.orElse(false)) {
 					return _html.escape((String)value);
+				}
+			}
+
+			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
+				try {
+					SimpleDateFormat formatter = new SimpleDateFormat(
+						"MM/dd/yy", locale);
+
+					return _getDateValue(
+						editableValueJSONObject,
+						formatter.parse(value.toString()), locale);
+				}
+				catch (ParseException parseException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(parseException);
+					}
+
+					return value;
 				}
 			}
 

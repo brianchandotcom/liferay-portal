@@ -389,14 +389,15 @@ public class JournalArticleModelValidator
 			serviceContext = new ServiceContext();
 		}
 
+		String content = article.getContent();
+
 		try {
 			validate(
 				article.getCompanyId(), article.getGroupId(),
-				article.getClassNameId(), article.getTitleMap(),
-				article.getContent(), ddmStructureKey, ddmTemplateKey,
-				article.getDisplayDate(), article.getExpirationDate(),
-				smallImage, smallImageURL, smallImageFile, smallImageBytes,
-				serviceContext);
+				article.getClassNameId(), article.getTitleMap(), content,
+				ddmStructureKey, ddmTemplateKey, article.getDisplayDate(),
+				article.getExpirationDate(), smallImage, smallImageURL,
+				smallImageFile, smallImageBytes, serviceContext);
 		}
 		catch (PortalException portalException) {
 			ModelValidationResults.FailureBuilder failureBuilder =
@@ -411,8 +412,7 @@ public class JournalArticleModelValidator
 			validateReferences(
 				article.getGroupId(), ddmStructureKey, ddmTemplateKey,
 				article.getLayoutUuid(), smallImage, smallImageURL,
-				smallImageBytes, article.getSmallImageId(),
-				article.getContent());
+				smallImageBytes, article.getSmallImageId(), content);
 		}
 		catch (ExportImportContentValidationException
 					exportImportContentValidationException) {

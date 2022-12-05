@@ -2738,10 +2738,6 @@ catch (Exception e) {
 				webContentContent = "WC WebContent Content",
 				webContentTitle = "WC WebContent Title");
 
-			WebContent.editDisplayPage(
-				pageName = "Asset Publisher Page",
-				pageType = "Pages");
-
 			PortletEntry.publish();
 		}
 

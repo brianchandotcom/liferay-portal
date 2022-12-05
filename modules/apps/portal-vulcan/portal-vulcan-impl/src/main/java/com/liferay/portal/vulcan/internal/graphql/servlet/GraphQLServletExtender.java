@@ -1388,10 +1388,23 @@ public class GraphQLServletExtender {
 				queryGraphQLObjectTypeBuilder);
 		}
 
-		rootQueryGraphQLObjectTypeBuilder.field(
-			_addField(queryGraphQLObjectTypeBuilder.build(), namespace));
-		rootMutationGraphQLObjectTypeBuilder.field(
-			_addField(mutationGraphQLObjectTypeBuilder.build(), namespace));
+		GraphQLObjectType queryGraphQLObjectType =
+			queryGraphQLObjectTypeBuilder.build();
+
+		if (ListUtil.isNotEmpty(queryGraphQLObjectType.getFieldDefinitions())) {
+			rootQueryGraphQLObjectTypeBuilder.field(
+				_addField(queryGraphQLObjectType, namespace));
+		}
+
+		GraphQLObjectType mutationGraphQLObjectType =
+			mutationGraphQLObjectTypeBuilder.build();
+
+		if (ListUtil.isNotEmpty(
+				mutationGraphQLObjectType.getFieldDefinitions())) {
+
+			rootMutationGraphQLObjectTypeBuilder.field(
+				_addField(mutationGraphQLObjectType, namespace));
+		}
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 			processingElementsContainer.getCodeRegistryBuilder();

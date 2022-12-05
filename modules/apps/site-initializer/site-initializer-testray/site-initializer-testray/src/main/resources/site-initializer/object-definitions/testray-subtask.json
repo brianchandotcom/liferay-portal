@@ -6,12 +6,23 @@
 	"objectFields": [
 		{
 			"DBType": "Long",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Comment MB Message Id"
+				"en_US": "Message Board Message Id"
 			},
-			"name": "commentMBMessageId",
+			"name": "mbMessageId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Message Board Thread Id"
+			},
+			"name": "mbThreadId",
 			"required": false,
 			"type": "Long"
 		},

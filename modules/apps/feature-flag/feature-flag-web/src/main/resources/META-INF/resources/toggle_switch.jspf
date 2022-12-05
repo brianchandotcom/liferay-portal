@@ -18,9 +18,6 @@
 String labelOff = LanguageUtil.get(request, "disabled");
 String labelOn = LanguageUtil.get(request, "enabled");
 
-String symbolOff = "flag-empty";
-String symbolOn = "flag-full";
-
 String inputName = featureFlagDisplay.getKey() + "-toggle";
 %>
 
@@ -29,18 +26,7 @@ String inputName = featureFlagDisplay.getKey() + "-toggle";
 		<input disabled class="toggle-switch-check" id="<%= inputName %>" type="checkbox" value="" <%= featureFlagDisplay.isEnabled() ? "checked" : "" %> />
 
 		<span aria-hidden="true" class="toggle-switch-bar">
-			<span class="toggle-switch-handle">
-				<span class="button-icon button-icon-on toggle-switch-icon">
-					<clay:icon
-						symbol="<%= symbolOn %>"
-					/>
-				</span>
-				<span class="button-icon button-icon-off toggle-switch-icon">
-					<clay:icon
-						symbol="<%= symbolOff %>"
-					/>
-				</span>
-			</span>
+			<span class="toggle-switch-handle"></span>
 		</span>
 	</span>
 	<span class="toggle-switch-label">
@@ -61,10 +47,6 @@ String inputName = featureFlagDisplay.getKey() + "-toggle";
 			"labelOff", labelOff
 		).put(
 			"labelOn", labelOn
-		).put(
-			"symbolOff", symbolOff
-		).put(
-			"symbolOn", symbolOn
 		).build()
 	%>'
 />

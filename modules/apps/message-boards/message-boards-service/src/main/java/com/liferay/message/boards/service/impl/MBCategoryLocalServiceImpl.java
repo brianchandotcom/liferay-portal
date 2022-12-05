@@ -28,6 +28,7 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBCategoryLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -1155,7 +1156,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			(mbCategory.getCategoryId() != categoryId)) {
 
 			throw new DuplicateCategoryNameException(
-				"Add MBCategory with existing name");
+				StringBundler.concat(
+					"MBCategory name \"", name, "\" already exists for group ",
+					groupId));
 		}
 	}
 

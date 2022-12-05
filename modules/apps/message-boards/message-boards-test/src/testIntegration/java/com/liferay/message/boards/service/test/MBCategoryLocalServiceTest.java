@@ -76,12 +76,12 @@ public class MBCategoryLocalServiceTest {
 
 	@Test
 	public void testAddCategories() throws Exception {
-		addCategory("Test");
+		addCategory("TestMBCategory");
 
 		Class<?> exceptionClass = Exception.class;
 
 		try {
-			addCategory("Test");
+			addCategory("TestMBCategory");
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -99,7 +99,8 @@ public class MBCategoryLocalServiceTest {
 		}
 
 		Assert.assertEquals(
-			"Name is null", CategoryNameException.class, exceptionClass);
+			"Add dispatch trigger with no name", CategoryNameException.class,
+			exceptionClass);
 	}
 
 	@Test

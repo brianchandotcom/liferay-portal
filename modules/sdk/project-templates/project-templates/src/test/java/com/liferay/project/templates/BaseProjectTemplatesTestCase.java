@@ -1121,9 +1121,7 @@ public interface BaseProjectTemplatesTestCase {
 		return projectTemplatesArgs.getLiferayVersion();
 	}
 
-	public default String getLiferayWorkspaceProduct(String liferayVersion)
-		throws IOException {
-
+	public default String getLiferayWorkspaceProduct(String liferayVersion) {
 		if (liferayVersion.startsWith("7.0")) {
 			return "dxp-7.0-sp17";
 		}

@@ -37,12 +37,10 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.questions.web.internal.configuration.QuestionsConfiguration;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
@@ -161,10 +159,7 @@ public class QuestionsPortlet extends MVCPortlet {
 				() -> HashMapBuilder.<String, Object>put(
 					"captchaURI", FlagsTagUtil.getCaptchaURI(httpServletRequest)
 				).put(
-					"isFlagEnabled",
-					FlagsTagUtil.isFlagsEnabled(themeDisplay) &&
-					GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-159928"))
+					"isFlagEnabled", FlagsTagUtil.isFlagsEnabled(themeDisplay)
 				).put(
 					"pathTermsOfUse",
 					_portal.getPathMain() + "/portal/terms_of_use"

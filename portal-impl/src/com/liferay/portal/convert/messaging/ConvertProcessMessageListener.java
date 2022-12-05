@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.util.ShutdownUtil;
 
 /**
@@ -40,10 +39,7 @@ public class ConvertProcessMessageListener implements MessageListener {
 	}
 
 	protected void doReceive(Message message) throws Exception {
-		String className = (String)message.getPayload();
-
-		ConvertProcess convertProcess = (ConvertProcess)InstancePool.get(
-			className);
+		ConvertProcess convertProcess = (ConvertProcess)message.getPayload();
 
 		convertProcess.convert();
 	}

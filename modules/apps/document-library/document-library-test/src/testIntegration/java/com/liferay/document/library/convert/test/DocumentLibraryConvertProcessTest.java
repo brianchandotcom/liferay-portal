@@ -31,6 +31,7 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.ConvertProcess;
+import com.liferay.portal.convert.ConvertProcessUtil;
 import com.liferay.portal.convert.documentlibrary.DocumentLibraryConvertProcess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -101,7 +101,7 @@ public class DocumentLibraryConvertProcessTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_convertProcess = (ConvertProcess)InstancePool.get(
+		_convertProcess = ConvertProcessUtil.getConvertProcess(
 			DocumentLibraryConvertProcess.class.getName());
 
 		_convertProcess.setParameterValues(

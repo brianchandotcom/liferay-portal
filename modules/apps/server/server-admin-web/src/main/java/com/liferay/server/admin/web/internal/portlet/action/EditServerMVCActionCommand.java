@@ -22,6 +22,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.ConvertException;
 import com.liferay.portal.convert.ConvertProcess;
+import com.liferay.portal.convert.ConvertProcessUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -86,7 +87,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -490,7 +490,7 @@ public class EditServerMVCActionCommand
 		String className = StringUtil.replaceFirst(
 			cmd, "convertProcess.", StringPool.BLANK);
 
-		ConvertProcess convertProcess = (ConvertProcess)InstancePool.get(
+		ConvertProcess convertProcess = ConvertProcessUtil.getConvertProcess(
 			className);
 
 		String[] parameters = convertProcess.getParameterNames();
@@ -547,7 +547,7 @@ public class EditServerMVCActionCommand
 
 		Message message = new Message();
 
-		message.setPayload(className);
+		message.setPayload(convertProcess);
 
 		_messageBus.sendMessage(DestinationNames.CONVERT_PROCESS, message);
 

@@ -129,12 +129,6 @@ public class JournalTransformer {
 		Map<String, String> tokens = JournalUtil.getTokens(
 			article, ddmTemplate, portletRequestModel, themeDisplay);
 
-		Document document = article.getDocument();
-
-		document = document.clone();
-
-		Element rootElement = document.getRootElement();
-
 		List<TemplateNode> templateNodes = new ArrayList<>();
 
 		_addAllReservedEls(
@@ -145,6 +139,10 @@ public class JournalTransformer {
 
 			_logTokens.debug(tokensString);
 		}
+
+		Document document = article.getDocument();
+
+		document = document.clone();
 
 		if (_logTransformBefore.isDebugEnabled()) {
 			_logTransformBefore.debug(document);
@@ -256,6 +254,8 @@ public class JournalTransformer {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			if (document != null) {
+				Element rootElement = document.getRootElement();
+
 				templateNodes.addAll(
 					_getTemplateNodes(
 						themeDisplay, rootElement, article.getDDMStructure(),

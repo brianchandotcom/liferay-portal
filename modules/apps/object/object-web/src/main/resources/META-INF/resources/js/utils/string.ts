@@ -13,13 +13,6 @@
  */
 
 /**
- * Format string removing spaces and special characters
- */
-export function removeAllSpecialCharacters(str: string): string {
-	return str.replace(/[^A-Z0-9]/gi, '');
-}
-
-/**
  * Transform first letter in lowercase
  */
 export function firstLetterLowercase(str: string): string {
@@ -42,6 +35,35 @@ export function normalizeLanguageId(languageId: string): string {
 }
 
 /**
+ * Format string removing spaces and special characters
+ */
+export function removeAllSpecialCharacters(str: string): string {
+	return str.replace(/[^A-Z0-9]/gi, '');
+}
+
+/**
+ * Separate CamelCase string
+ */
+export function separateCamelCase(str: string): string {
+	const separatedCamelCaseString = str.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+	return separatedCamelCaseString;
+}
+
+/**
+ * Verify if string contains any special characters
+ */
+export function specialCharactersInString(str: string) {
+	const replaceString = removeAllSpecialCharacters(str);
+
+	if (replaceString.normalize() === str.normalize()) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
  * Normalize string in camel case pattern.
  */
 export function toCamelCase(
@@ -59,26 +81,4 @@ export function toCamelCase(
 	}
 
 	return firstLetterLowercase(join);
-}
-
-/**
- * Verify if string contains any special characters
- */
-export function specialCharactersInString(str: string) {
-	const replaceString = removeAllSpecialCharacters(str);
-
-	if (replaceString.normalize() === str.normalize()) {
-		return false;
-	}
-
-	return true;
-}
-
-/**
- * Separate CamelCase string
- */
-export function separateCamelCase(str: string): string {
-	const separetedCamelCaseString = str.replace(/([a-z])([A-Z])/g, '$1 $2');
-
-	return separetedCamelCaseString;
 }

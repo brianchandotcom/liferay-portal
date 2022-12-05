@@ -492,6 +492,23 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
+	public KBArticle expireKBArticle(
+			long userId, long resourcePrimKey, ServiceContext serviceContext)
+		throws PortalException {
+
+		KBArticle kbArticle = getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		kbArticle.setExpirationDate(new Date());
+
+		kbArticleLocalService.updateKBArticle(kbArticle);
+
+		return kbArticleLocalService.updateStatus(
+			userId, resourcePrimKey, WorkflowConstants.STATUS_EXPIRED,
+			serviceContext);
+	}
+
+	@Override
 	public KBArticle fetchFirstChildKBArticle(
 		long groupId, long parentResourcePrimKey) {
 

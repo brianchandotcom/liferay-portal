@@ -165,6 +165,18 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	@Override
+	public KBArticle expireKBArticle(
+			long resourcePrimKey, ServiceContext serviceContext)
+		throws PortalException {
+
+		_kbArticleModelResourcePermission.check(
+			getPermissionChecker(), resourcePrimKey, KBActionKeys.UPDATE);
+
+		return kbArticleLocalService.expireKBArticle(
+			getUserId(), resourcePrimKey, serviceContext);
+	}
+
+	@Override
 	public KBArticle fetchFirstChildKBArticle(
 		long groupId, long parentResourcePrimKey) {
 

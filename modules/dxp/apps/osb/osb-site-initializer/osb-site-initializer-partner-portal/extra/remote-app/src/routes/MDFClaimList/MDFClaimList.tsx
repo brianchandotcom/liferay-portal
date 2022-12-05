@@ -14,6 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {CSVLink} from 'react-csv';
 
 import Dropdown from '../../common/components/Dropdown';
 import StatusBadge from '../../common/components/StatusBadge';
@@ -223,6 +224,18 @@ const MDFClaimList = () => {
 							</ClayButton>
 						}
 					/>
+				</div>
+
+				<div className="mb-2 mb-lg-0">
+					{data.items && (
+						<CSVLink
+							className="btn btn-secondary mr-2"
+							data={data.items}
+							filename="mdf-claim.csv"
+						>
+							Export Claim Report
+						</CSVLink>
+					)}
 				</div>
 			</TableHeader>
 

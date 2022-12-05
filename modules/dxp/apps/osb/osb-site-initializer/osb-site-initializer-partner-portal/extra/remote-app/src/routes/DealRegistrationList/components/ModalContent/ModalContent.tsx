@@ -38,12 +38,12 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 					<div className="col-8">
 						<ModalFormatedInformation
 							className="mb-4"
-							information={content['PRMDRC-001']}
+							information={content['ACCOUNT-NAME']}
 							label="Account Name"
 						/>
 
 						<ModalFormatedInformation
-							information={content['PRMDRC-007']}
+							information={content['STAGE']}
 							label="Stage"
 						/>
 					</div>
@@ -51,12 +51,12 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 					<div className="col-4 d-flex flex-column">
 						<ModalFormatedInformation
 							className="mb-4"
-							information={content['PRMDRC-002']}
+							information={content['START-DATE']}
 							label="Start Date"
 						/>
 
 						<ModalFormatedInformation
-							information={content['PRMDRC-003']}
+							information={content['END-DATE']}
 							label="End Date"
 						/>
 					</div>
@@ -65,19 +65,19 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 				<div className="d-flex">
 					<ModalFormatedInformation
 						className="col"
-						information={content['PRMDRC-004']}
+						information={content['DEAL-AMOUNT']}
 						label="Amount"
 					/>
 
 					<ModalFormatedInformation
 						className="col"
-						information={content['PRMDRC-005']}
+						information={content['PARTNER-REP']}
 						label="Partner Rep"
 					/>
 
 					<ModalFormatedInformation
 						className="col"
-						information={content['PRMDRC-006']}
+						information={content['LIFERAY-REP']}
 						label="Liferay Rep"
 					/>
 				</div>

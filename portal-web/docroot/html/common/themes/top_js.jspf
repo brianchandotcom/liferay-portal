@@ -152,11 +152,11 @@
 			};
 		})();
 
-		var featureFlags = <%= PropsValues.FEATURE_FLAGS_JSON %>;
+		var featureFlags = <%= FeatureFlagManagerUtil.getJSON(themeDisplay.getCompanyId()) %>;
 
 		Liferay.FeatureFlags = Object.keys(featureFlags).reduce(
 			(acc, key) => ({
-				...acc, [key]: featureFlags[key] === 'true'
+				...acc, [key]: featureFlags[key] === 'true' || featureFlags[key] === true
 			}), {}
 		);
 

@@ -51,7 +51,9 @@ import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -327,21 +329,27 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		String originalPortletId = portletDataContext.getPortletId();
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167777"))) {
+			String originalPortletId = portletDataContext.getPortletId();
 
-		try {
-			String portletId = _getPortletIdForClassName(
-				ExportImportClassedModelUtil.getClassName(stagedModel));
+			try {
+				String portletId = _getPortletIdForClassName(
+					ExportImportClassedModelUtil.getClassName(stagedModel));
 
-			if (Validator.isNotNull(portletId)) {
-				portletDataContext.setPortletId(portletId);
+				if (Validator.isNotNull(portletId)) {
+					portletDataContext.setPortletId(portletId);
+				}
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, stagedModel);
 			}
-
+			finally {
+				portletDataContext.setPortletId(originalPortletId);
+			}
+		}
+		else {
 			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, stagedModel);
-		}
-		finally {
-			portletDataContext.setPortletId(originalPortletId);
 		}
 
 		return true;

@@ -161,11 +161,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRODUCT_CARD_DESCRIPTION</td>
-	<td>//p[@title='${key_productName}']/..//following-sibling::p[@class='card-body']//span[contains(normalize-space(text()),'${key_productDescription}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PRODUCT_CARD_NAME</td>
 	<td>//p[@class='card-title']//span[text() = '${key_productName}']</td>
 	<td></td>
@@ -422,6 +417,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_SUMMARY_PRODUCT_TABLE_VALUE</td>
+	<td>//td[contains(@class,'lfr-${key_column}-column')]//*/*[contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUMMARY_PRODUCT_TABLE_PRICE</td>
 	<td>//td[contains(@class,'lfr-price-column')]//*/*[contains(.,'${key_productPrice}')]</td>
 	<td></td>
@@ -655,6 +655,11 @@
 <tr>
 	<td>PRODUCT_CARD_VIEW_ALL_VARIANTS</td>
 	<td>//p[@class='card-title']//span[text()='${key_productName}']/ancestor::div[contains(@class,'card-body')]//div/a[normalize-space(text()='View All Variants')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_CARD_DESCRIPTION</td>
+	<td>//p[@title='${key_productName}']/..//following-sibling::p[@class='card-body']//span[contains(normalize-space(text()),'${key_productDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

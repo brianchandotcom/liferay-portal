@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.wiki.model.WikiNode">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="nodeId" type="long" />
@@ -27,6 +28,7 @@
 	</model>
 	<model name="com.liferay.wiki.model.WikiPage">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="pageId" type="long" />
 		<field name="resourcePrimKey" type="long" />
@@ -71,6 +73,7 @@
 	</model>
 	<model name="com.liferay.wiki.model.WikiPageResource">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="resourcePrimKey" type="long" />
 		<field name="groupId" type="long" />

@@ -66,10 +66,10 @@ public class WikiPageResourceModelImpl
 	public static final String TABLE_NAME = "WikiPageResource";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"nodeId", Types.BIGINT},
-		{"title", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"resourcePrimKey", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"nodeId", Types.BIGINT}, {"title", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,6 +77,7 @@ public class WikiPageResourceModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -86,7 +87,7 @@ public class WikiPageResourceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WikiPageResource (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,companyId LONG,nodeId LONG,title VARCHAR(255) null)";
+		"create table WikiPageResource (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,resourcePrimKey LONG not null,groupId LONG,companyId LONG,nodeId LONG,title VARCHAR(255) null,primary key (resourcePrimKey, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table WikiPageResource";
 
@@ -257,6 +258,12 @@ public class WikiPageResourceModelImpl
 			"mvccVersion",
 			(BiConsumer<WikiPageResource, Long>)
 				WikiPageResource::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", WikiPageResource::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<WikiPageResource, Long>)
+				WikiPageResource::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", WikiPageResource::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -303,6 +310,20 @@ public class WikiPageResourceModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -502,6 +523,7 @@ public class WikiPageResourceModelImpl
 		WikiPageResourceImpl wikiPageResourceImpl = new WikiPageResourceImpl();
 
 		wikiPageResourceImpl.setMvccVersion(getMvccVersion());
+		wikiPageResourceImpl.setCtCollectionId(getCtCollectionId());
 		wikiPageResourceImpl.setUuid(getUuid());
 		wikiPageResourceImpl.setResourcePrimKey(getResourcePrimKey());
 		wikiPageResourceImpl.setGroupId(getGroupId());
@@ -520,6 +542,8 @@ public class WikiPageResourceModelImpl
 
 		wikiPageResourceImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		wikiPageResourceImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		wikiPageResourceImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
 		wikiPageResourceImpl.setResourcePrimKey(
@@ -610,6 +634,8 @@ public class WikiPageResourceModelImpl
 
 		wikiPageResourceCacheModel.mvccVersion = getMvccVersion();
 
+		wikiPageResourceCacheModel.ctCollectionId = getCtCollectionId();
+
 		wikiPageResourceCacheModel.uuid = getUuid();
 
 		String uuid = wikiPageResourceCacheModel.uuid;
@@ -697,6 +723,7 @@ public class WikiPageResourceModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _resourcePrimKey;
 	private long _groupId;
@@ -734,6 +761,7 @@ public class WikiPageResourceModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("resourcePrimKey", _resourcePrimKey);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -765,17 +793,19 @@ public class WikiPageResourceModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("resourcePrimKey", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("resourcePrimKey", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("nodeId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("title", 64L);
+		columnBitmasks.put("nodeId", 64L);
+
+		columnBitmasks.put("title", 128L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

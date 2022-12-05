@@ -33,6 +33,9 @@ public class WikiPageResourceTable extends BaseTable<WikiPageResourceTable> {
 
 	public final Column<WikiPageResourceTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<WikiPageResourceTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<WikiPageResourceTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<WikiPageResourceTable, Long> resourcePrimKey =

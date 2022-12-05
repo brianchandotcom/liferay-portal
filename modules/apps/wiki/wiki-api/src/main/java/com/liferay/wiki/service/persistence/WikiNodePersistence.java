@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface WikiNodePersistence extends BasePersistence<WikiNode> {
+public interface WikiNodePersistence
+	extends BasePersistence<WikiNode>, CTPersistence<WikiNode> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

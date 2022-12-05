@@ -76,10 +76,12 @@ public class WikiPageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", pageId=");
@@ -140,6 +142,7 @@ public class WikiPageCacheModel
 		WikiPageImpl wikiPageImpl = new WikiPageImpl();
 
 		wikiPageImpl.setMvccVersion(mvccVersion);
+		wikiPageImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			wikiPageImpl.setUuid("");
@@ -265,6 +268,8 @@ public class WikiPageCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		pageId = objectInput.readLong();
@@ -306,6 +311,8 @@ public class WikiPageCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -408,6 +415,7 @@ public class WikiPageCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long pageId;
 	public long resourcePrimKey;

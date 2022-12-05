@@ -76,10 +76,12 @@ public class WikiNodeCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
@@ -124,6 +126,7 @@ public class WikiNodeCacheModel
 		WikiNodeImpl wikiNodeImpl = new WikiNodeImpl();
 
 		wikiNodeImpl.setMvccVersion(mvccVersion);
+		wikiNodeImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			wikiNodeImpl.setUuid("");
@@ -218,6 +221,8 @@ public class WikiNodeCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -246,6 +251,8 @@ public class WikiNodeCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -311,6 +318,7 @@ public class WikiNodeCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String externalReferenceCode;
 	public long nodeId;

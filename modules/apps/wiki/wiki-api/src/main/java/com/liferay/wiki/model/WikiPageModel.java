@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -41,8 +42,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface WikiPageModel
-	extends BaseModel<WikiPage>, ContainerModel, MVCCModel, ResourcedModel,
-			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
+	extends BaseModel<WikiPage>, ContainerModel, CTModel<WikiPage>, MVCCModel,
+			ResourcedModel, ShardedModel, StagedGroupedModel, TrashedModel,
+			WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +57,7 @@ public interface WikiPageModel
 	 *
 	 * @return the primary key of this wiki page
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -62,6 +65,7 @@ public interface WikiPageModel
 	 *
 	 * @param primaryKey the primary key of this wiki page
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -79,6 +83,22 @@ public interface WikiPageModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this wiki page.
+	 *
+	 * @return the ct collection ID of this wiki page
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this wiki page.
+	 *
+	 * @param ctCollectionId the ct collection ID of this wiki page
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this wiki page.

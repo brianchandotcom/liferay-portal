@@ -15,6 +15,7 @@
 package com.liferay.wiki.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.wiki.model.WikiNode;
 
 /**
  * Provides a wrapper for {@link WikiNodeService}.
@@ -40,7 +41,7 @@ public class WikiNodeServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.wiki.model.WikiNode addNode(
+	public WikiNode addNode(
 			String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -49,7 +50,7 @@ public class WikiNodeServiceWrapper
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode addNode(
+	public WikiNode addNode(
 			String externalReferenceCode, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -66,54 +67,50 @@ public class WikiNodeServiceWrapper
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode getNode(long nodeId)
+	public WikiNode getNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _wikiNodeService.getNode(nodeId);
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode getNode(long groupId, String name)
+	public WikiNode getNode(long groupId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _wikiNodeService.getNode(groupId, name);
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-			long groupId)
+	public java.util.List<WikiNode> getNodes(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _wikiNodeService.getNodes(groupId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-			long groupId, int status)
+	public java.util.List<WikiNode> getNodes(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _wikiNodeService.getNodes(groupId, status);
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int start, int end) {
-
+	public java.util.List<WikiNode> getNodes(long groupId, int start, int end) {
 		return _wikiNodeService.getNodes(groupId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+	public java.util.List<WikiNode> getNodes(
 		long groupId, int status, int start, int end) {
 
 		return _wikiNodeService.getNodes(groupId, status, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+	public java.util.List<WikiNode> getNodes(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.wiki.model.WikiNode> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
+			orderByComparator) {
 
 		return _wikiNodeService.getNodes(
 			groupId, status, start, end, orderByComparator);
@@ -140,7 +137,7 @@ public class WikiNodeServiceWrapper
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode getWikiNodeByExternalReferenceCode(
+	public WikiNode getWikiNodeByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -158,7 +155,7 @@ public class WikiNodeServiceWrapper
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
+	public WikiNode moveNodeToTrash(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _wikiNodeService.moveNodeToTrash(nodeId);
@@ -186,7 +183,7 @@ public class WikiNodeServiceWrapper
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode updateNode(
+	public WikiNode updateNode(
 			long nodeId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

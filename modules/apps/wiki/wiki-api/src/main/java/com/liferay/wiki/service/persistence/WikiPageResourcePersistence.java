@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.model.WikiPageResource;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface WikiPageResourcePersistence
-	extends BasePersistence<WikiPageResource> {
+	extends BasePersistence<WikiPageResource>, CTPersistence<WikiPageResource> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

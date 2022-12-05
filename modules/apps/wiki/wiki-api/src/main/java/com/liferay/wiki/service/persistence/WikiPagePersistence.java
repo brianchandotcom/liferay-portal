@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface WikiPagePersistence extends BasePersistence<WikiPage> {
+public interface WikiPagePersistence
+	extends BasePersistence<WikiPage>, CTPersistence<WikiPage> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

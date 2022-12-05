@@ -98,7 +98,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		Layout layout = _addLayout(
 			userId, groupId, name, masterLayoutPlid,
-			WorkflowConstants.STATUS_DRAFT,
 			ServiceContextThreadLocal.getServiceContext());
 
 		if (layout != null) {
@@ -299,7 +298,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	private Layout _addLayout(
 			long userId, long groupId, String name, long masterLayoutPlid,
-			int status, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<Locale, String> titleMap = Collections.singletonMap(
@@ -307,10 +306,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			new UnicodeProperties();
-
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			typeSettingsUnicodeProperties.put("published", "true");
-		}
 
 		if (masterLayoutPlid > 0) {
 			typeSettingsUnicodeProperties.setProperty(
@@ -355,15 +350,13 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				StringPool.BLANK);
 		}
 
-		if (status == WorkflowConstants.STATUS_DRAFT) {
-			_layoutLocalService.updateStatus(
-				userId, draftLayout.getPlid(), status, serviceContext);
+		_layoutLocalService.updateStatus(
+			userId, draftLayout.getPlid(), WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
 
-			layout = _layoutLocalService.updateStatus(
-				userId, layout.getPlid(), status, serviceContext);
-		}
-
-		return layout;
+		return _layoutLocalService.updateStatus(
+			userId, layout.getPlid(), WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
 	}
 
 	private long _copyPreviewFileEntryId(

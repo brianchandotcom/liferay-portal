@@ -43,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	service = CheckKBArticleMessageListener.class
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, service = {}
 )
 public class CheckKBArticleMessageListener extends BaseMessageListener {
 

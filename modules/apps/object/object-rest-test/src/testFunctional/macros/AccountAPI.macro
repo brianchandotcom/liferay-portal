@@ -80,4 +80,12 @@ definition {
 		return "${response}";
 	}
 
+	macro setUpGlobalAccountId {
+		var accountId = AccountAPI.createAccount(name = "user1");
+
+		static var staticAccountId = "${accountId}";
+
+		return "${staticAccountId}";
+	}
+
 }

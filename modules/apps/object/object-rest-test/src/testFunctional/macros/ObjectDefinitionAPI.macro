@@ -531,6 +531,16 @@ definition {
 			expected = "${expectedValue}");
 	}
 
+	macro assertNoItemsInResponse {
+		Variables.assertDefined(parameterList = "${responseToParse}");
+
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "");
+	}
+
 	macro assertResponseHasCorrectObjectEntryName {
 		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectEntryId})].name");
 
@@ -842,6 +852,16 @@ definition {
 		return "${staticObjectEntryId3}";
 
 		return "${staticObjectEntryId4}";
+	}
+
+	macro setUpGlobalUniversityId {
+		var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
+			en_US_plural_label = "universities",
+			name = "University Name");
+
+		static var staticUniversityId = "${universityId}";
+
+		return "${staticUniversityId}";
 	}
 
 	macro updateEmployee {

@@ -53,7 +53,7 @@ definition {
 		}
 
 		task ("Given two userAccount entries created") {
-			UserAccountAPI.setUpGlobalUserAccountId(
+			UserAccountAPI.setUpGlobalUserAccountIds(
 				alternateName1 = "user1",
 				alternateName2 = "user2",
 				emailAddress1 = "user1@liferay.com",

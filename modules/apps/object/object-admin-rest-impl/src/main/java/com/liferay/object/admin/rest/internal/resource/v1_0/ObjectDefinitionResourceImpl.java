@@ -347,7 +347,9 @@ public class ObjectDefinitionResourceImpl
 				titleObjectFieldId,
 				GetterUtil.getBoolean(
 					objectDefinition.getAccountEntryRestricted()),
-				GetterUtil.getBoolean(objectDefinition.getActive(), true),
+				GetterUtil.getBoolean(
+					objectDefinition.getActive(),
+					serviceBuilderObjectDefinition.getActive()),
 				GetterUtil.getBoolean(
 					objectDefinition.getEnableCategorization(), true),
 				GetterUtil.getBoolean(objectDefinition.getEnableComments()),
@@ -356,7 +358,7 @@ public class ObjectDefinitionResourceImpl
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
 				objectDefinition.getPanelCategoryKey(),
-				objectDefinition.getPortlet(),
+				GetterUtil.getBoolean(objectDefinition.getPortlet()),
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
 				objectDefinition.getScope());
@@ -365,38 +367,41 @@ public class ObjectDefinitionResourceImpl
 			new ArrayList<>(
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
 
-		for (ObjectField objectField : objectDefinition.getObjectFields()) {
-			long listTypeDefinitionId = ObjectFieldUtil.getListTypeDefinitionId(
-				serviceBuilderObjectDefinition.getCompanyId(),
-				_listTypeDefinitionLocalService, objectField);
+		if (objectDefinition.getObjectFields() != null) {
+			for (ObjectField objectField : objectDefinition.getObjectFields()) {
+				long listTypeDefinitionId =
+					ObjectFieldUtil.getListTypeDefinitionId(
+						serviceBuilderObjectDefinition.getCompanyId(),
+						_listTypeDefinitionLocalService, objectField);
 
-			_objectFieldLocalService.updateObjectField(
-				objectField.getExternalReferenceCode(),
-				GetterUtil.getLong(objectField.getId()),
-				contextUser.getUserId(), listTypeDefinitionId,
-				objectDefinitionId, objectField.getBusinessTypeAsString(), null,
-				null, objectField.getDBTypeAsString(),
-				objectField.getDefaultValue(), objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
-				objectField.getIndexedLanguageId(),
-				com.liferay.portal.vulcan.util.LocalizedMapUtil.getLocalizedMap(
-					objectField.getLabel()),
-				objectField.getName(), objectField.getRequired(),
-				GetterUtil.getBoolean(objectField.getState()),
-				objectField.getSystem(),
-				transformToList(
-					objectField.getObjectFieldSettings(),
-					objectFieldSetting ->
-						ObjectFieldSettingUtil.toObjectFieldSetting(
-							objectField.getBusinessTypeAsString(),
-							listTypeDefinitionId, objectFieldSetting,
-							_objectFieldSettingLocalService,
-							_objectFilterLocalService)));
+				_objectFieldLocalService.updateObjectField(
+					objectField.getExternalReferenceCode(),
+					GetterUtil.getLong(objectField.getId()),
+					contextUser.getUserId(), listTypeDefinitionId,
+					objectDefinitionId, objectField.getBusinessTypeAsString(),
+					null, null, objectField.getDBTypeAsString(),
+					objectField.getDefaultValue(), objectField.getIndexed(),
+					objectField.getIndexedAsKeyword(),
+					objectField.getIndexedLanguageId(),
+					com.liferay.portal.vulcan.util.LocalizedMapUtil.
+						getLocalizedMap(objectField.getLabel()),
+					objectField.getName(), objectField.getRequired(),
+					GetterUtil.getBoolean(objectField.getState()),
+					objectField.getSystem(),
+					transformToList(
+						objectField.getObjectFieldSettings(),
+						objectFieldSetting ->
+							ObjectFieldSettingUtil.toObjectFieldSetting(
+								objectField.getBusinessTypeAsString(),
+								listTypeDefinitionId, objectFieldSetting,
+								_objectFieldSettingLocalService,
+								_objectFilterLocalService)));
 
-			serviceBuilderObjectFields.removeIf(
-				serviceBuilderObjectField -> Objects.equals(
-					serviceBuilderObjectField.getName(),
-					objectField.getName()));
+				serviceBuilderObjectFields.removeIf(
+					serviceBuilderObjectField -> Objects.equals(
+						serviceBuilderObjectField.getName(),
+						objectField.getName()));
+			}
 		}
 
 		for (com.liferay.object.model.ObjectField serviceBuilderObjectField :

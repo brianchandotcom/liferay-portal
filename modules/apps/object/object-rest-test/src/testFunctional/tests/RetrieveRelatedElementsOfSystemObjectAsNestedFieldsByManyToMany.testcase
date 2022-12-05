@@ -1,0 +1,226 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-162964=true${line.separator}feature.flag.LPS-153324=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given a Foundation object") {
+			var objectDefinitionId2 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "foundation",
+				en_US_plural_label = "foundations",
+				name = "Foundation",
+				requiredStringFieldName = "name");
+		}
+
+		task ("Given a secondFoundation object") {
+			var objectDefinitionId3 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "secondFoundation",
+				en_US_plural_label = "secondFoundations",
+				name = "SecondFoundation",
+				requiredStringFieldName = "name");
+		}
+
+		task ("Given manyToMany relationship usersFoundations created") {
+			var objectDefinitionId1 = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "User");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UsersFoundations",
+				name = "usersFoundations",
+				objectDefinitionId1 = "${objectDefinitionId1}",
+				objectDefinitionId2 = "${objectDefinitionId2}",
+				type = "manyToMany");
+		}
+
+		task ("Given manyToMany relationship usersSecondFoundations created") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "UsersSecondFoundations",
+				name = "usersSecondFoundations",
+				objectDefinitionId1 = "${objectDefinitionId1}",
+				objectDefinitionId2 = "${objectDefinitionId3}",
+				type = "manyToMany");
+		}
+
+		task ("Given object entries created") {
+			ObjectDefinitionAPI.setUpGlobalObjectEntryId();
+		}
+
+		task ("Given two userAccount entries created") {
+			UserAccountAPI.setUpGlobalUserAccountIds(
+				alternateName1 = "user1",
+				alternateName2 = "user2",
+				emailAddress1 = "user1@liferay.com",
+				emailAddress2 = "user2@liferay.com",
+				familyName1 = "userfn1",
+				familyName2 = "userfn2",
+				givenName1 = "usergn1",
+				givenName2 = "usergn2");
+		}
+	}
+
+	tearDown {
+		for (var objectName : list "Foundation,SecondFoundation") {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "${objectName}");
+		}
+
+		for (var userId : list "${staticUserAccountId1},${staticUserAccountId2}") {
+			JSONUser.deleteUserByUserId(userId = "${userId}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "3"
+	test CanGetRelationshipDetailsInNestedFieldsWithoutRelatedEntries {
+		property portal.acceptance = "true";
+
+		task ("When I call userAccount object GET endpoint with nestedFields=usersFoundations") {
+			var response = UserAccountAPI.getSystemObjectsWithNestedField(
+				parameter = "nestedFields",
+				parameterValue = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("Then I can receive correct information in the system object GET endpoint with nestedFields=usersFoundations") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$..usersFoundations");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "[]");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "3"
+	test CanNotGetRelationshipDetailsInNestedFieldsAfterRelationshipIsDeleted {
+		property portal.acceptance = "true";
+
+		task ("And Given I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId1}",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("When deleting the relationship") {
+			ObjectDefinitionAPI.deleteRelationship(
+				name = "User",
+				relationshipName = "usersFoundations");
+		}
+
+		task ("Then I can't receive any information about the related objects in the system object GET endpoint with nestedFields=usersFoundations") {
+			var response = UserAccountAPI.getSystemObjectsWithNestedField(
+				parameter = "nestedFields",
+				parameterValue = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$..usersFoundations");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanReturnMultipleNestedFieldsDetailsInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When I relate all the foundation entries with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId1}",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId3}",
+				relationshipName = "usersSecondFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("Then receiving correct information about the related objects in the system object GET endpoint with nestedFields=usersFirstFoundations,usersSecondFoundations") {
+			var response = UserAccountAPI.getSystemObjectsWithNestedField(
+				parameter = "nestedFields",
+				parameterValue = "usersFoundations,usersSecondFoundations",
+				userAccountId = "${staticUserAccountId1}");
+
+			var actualValue1 = JSONUtil.getWithJSONPath("${response}", "$.usersFoundations[*].name");
+			var actualValue2 = JSONUtil.getWithJSONPath("${response}", "$.usersSecondFoundations[*].name");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue1},${actualValue2}",
+				expected = "Foundation First,Foundation First-1");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanReturnNestedFieldsDetailsInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("When I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId1}",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+		}
+
+		task ("Then receiving correct information about the related objects in the system object GET endpoint with nestedFields=usersFoundations") {
+			var response = UserAccountAPI.getSystemObjectsWithNestedField(
+				parameter = "nestedFields",
+				parameterValue = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.usersFoundations[*].name");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "Foundation First");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanReturnNestedFieldsDetailsInManyToManyRelationshipAfterObjectEntryDeletion {
+		property portal.acceptance = "true";
+
+		task ("And Given I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId1}",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId1}");
+
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = "${staticObjectEntryId2}",
+				relationshipName = "usersFoundations",
+				userAccountId = "${staticUserAccountId2}");
+		}
+
+		task ("When deleting one of the foundation entries") {
+			ObjectDefinitionAPI.deleteObjectEntry(
+				en_US_plural_label = "foundations",
+				objectEntryId = "${staticObjectEntryId1}");
+		}
+
+		task ("Then receiving correct information about the related objects in the system object GET endpoint with nestedFields=usersFoundations") {
+			var response = UserAccountAPI.getSystemObjectsWithNestedField(
+				parameter = "nestedFields",
+				parameterValue = "usersFoundations",
+				userAccountId = "${staticUserAccountId2}");
+
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.usersFoundations[*].name");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "Foundation Second");
+		}
+	}
+
+}

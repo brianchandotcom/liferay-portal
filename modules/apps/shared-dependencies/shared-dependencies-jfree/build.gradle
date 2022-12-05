@@ -1,0 +1,4 @@
+dependencies {
+	compileInclude group: "org.jfree", name: "jcommon", version: "1.0.24"
+	compileInclude group: "org.jfree", name: "jfreechart", version: "1.0.19"
+}

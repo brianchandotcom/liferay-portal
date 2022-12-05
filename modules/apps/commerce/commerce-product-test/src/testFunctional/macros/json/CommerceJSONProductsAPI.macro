@@ -894,6 +894,80 @@ definition {
 		return "${responseBody}";
 	}
 
+	macro _patchCommerceSku {
+		Variables.assertDefined(parameterList = "${productSku}");
+
+		var baseURL = "${baseURL}";
+		var fieldsList = ListUtil.newList();
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(discontinued)) {
+			var discontinued = '''"discontinued": ${discontinued}''';
+
+			ListUtil.add("${fieldsList}", "${discontinued}");
+		}
+
+		if (isSet(gtin)) {
+			var gtin = '''"gtin": "${gtin}"''';
+
+			ListUtil.add("${fieldsList}", "${gtin}");
+		}
+
+		if (isSet(manufacturerPartNumber)) {
+			var manufacturerPartNumber = '''"manufacturerPartNumber": "${manufacturerPartNumber}"''';
+
+			ListUtil.add("${fieldsList}", "${manufacturerPartNumber}");
+		}
+
+		if (isSet(price)) {
+			var price = '''"price": ${price}''';
+
+			ListUtil.add("${fieldsList}", "${price}");
+		}
+
+		if (isSet(promoPrice)) {
+			var promoPrice = '''"promoPrice": ${promoPrice}''';
+
+			ListUtil.add("${fieldsList}", "${promoPrice}");
+		}
+
+		if (isSet(published)) {
+			var published = '''"published": ${published}''';
+
+			ListUtil.add("${fieldsList}", "${published}");
+		}
+
+		if (isSet(replacementSku)) {
+			var replacementSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${replacementSku}");
+
+			var replacementSkuId = '''"replacementSkuId": ${replacementSkuId}''';
+
+			ListUtil.add("${fieldsList}", "${replacementSkuId}");
+		}
+
+		var sku = '''"sku": "${productSku}"''';
+
+		ListUtil.add("${fieldsList}", "${sku}");
+
+		var fieldsList = ListUtil.toString("${fieldsList}");
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = "${fieldsList}");
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${productSku}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+  			-H 'Content-Type: application/json' \
+  			-d '{${payload}}'
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");
+	}
+
 	macro _updateCommerceProduct {
 		Variables.assertDefined(parameterList = "${productName}");
 

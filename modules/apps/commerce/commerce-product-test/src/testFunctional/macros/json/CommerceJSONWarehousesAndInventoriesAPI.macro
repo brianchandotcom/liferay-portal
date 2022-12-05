@@ -164,4 +164,80 @@ definition {
 		return "${warehouseId}";
 	}
 
+	macro _getWarehouseItemId {
+		Variables.assertDefined(parameterList = "${productSku},${warehouseName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = "${warehouseName}");
+
+		var curl = '''
+						${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/warehouseItems?pageSize=200 \
+						-u test@liferay.com:test \
+						-H 'accept: application/json' \
+					''';
+
+		var warehouseItemId = JSONCurlUtil.get("${curl}", "$..items[?(@['sku'] == '${productSku}')]['id']");
+
+		return "${warehouseItemId}";
+	}
+
+	macro _patchWarehouseItem {
+		Variables.assertDefined(parameterList = "${warehouseName}");
+
+		var baseURL = "${baseURL}";
+		var fieldsList = ListUtil.newList();
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(quantity)) {
+			var quantity = '''"quantity": ${quantity}''';
+
+			ListUtil.add("${fieldsList}", "${quantity}");
+		}
+
+		if (isSet(reservedQuantity)) {
+			var reservedQuantity = '''"reservedQuantity": ${reservedQuantity}''';
+
+			ListUtil.add("${fieldsList}", "${reservedQuantity}");
+		}
+
+		if (isSet(productSku)) {
+			var sku = '''"sku": "${productSku}"''';
+
+			ListUtil.add("${fieldsList}", "${sku}");
+		}
+
+		if (isSet(warehouseName)) {
+			var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = "${warehouseName}");
+
+			var warehouseId = '''"warehouseId": ${warehouseId}''';
+
+			ListUtil.add("${fieldsList}", "${warehouseId}");
+		}
+
+		var fieldsList = ListUtil.toString("${fieldsList}");
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = "${fieldsList}");
+		var warehouseItemId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseItemId(
+			productSku = "${productSku}",
+			warehouseName = "${warehouseName}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouseItems/${warehouseItemId} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+  			-H 'Content-Type: application/json' \
+  			-d '{${payload}}'
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");
+	}
+
 }

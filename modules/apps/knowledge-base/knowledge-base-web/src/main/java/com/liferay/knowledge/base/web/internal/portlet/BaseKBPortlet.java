@@ -98,20 +98,18 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long resourcePrimKey = ParamUtil.getLong(
 			resourceRequest, "resourcePrimKey");
-
-		String displayStyle = ParamUtil.getString(
-			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 		int max = ParamUtil.getInteger(
 			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
 		String type = ParamUtil.getString(
 			resourceRequest, "type", RSSUtil.FORMAT_DEFAULT);
 		double version = ParamUtil.getDouble(
 			resourceRequest, "version", RSSUtil.VERSION_DEFAULT);
+		String displayStyle = ParamUtil.getString(
+			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String rss = kbArticleService.getKBArticleRSS(
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED, max, type,

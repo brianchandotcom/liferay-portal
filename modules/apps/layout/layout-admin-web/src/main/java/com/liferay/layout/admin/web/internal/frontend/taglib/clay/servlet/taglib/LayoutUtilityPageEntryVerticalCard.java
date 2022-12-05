@@ -56,6 +56,9 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			_layoutUtilityPageEntry.getPlid());
+
+		_layout = LayoutLocalServiceUtil.fetchLayout(
+			_layoutUtilityPageEntry.getPlid());
 	}
 
 	@Override
@@ -107,7 +110,14 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		}
 
 		return LabelItemListBuilder.add(
-			labelItem -> labelItem.setStatus(_draftLayout.getStatus())
+			labelItem -> {
+				if (_layout.isPublished()) {
+					labelItem.setStatus(_draftLayout.getStatus());
+				}
+				else {
+					labelItem.setStatus(_layout.getStatus());
+				}
+			}
 		).build();
 	}
 
@@ -155,6 +165,7 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 		LayoutUtilityPageEntryVerticalCard.class);
 
 	private final Layout _draftLayout;
+	private final Layout _layout;
 	private final LayoutUtilityPageEntry _layoutUtilityPageEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

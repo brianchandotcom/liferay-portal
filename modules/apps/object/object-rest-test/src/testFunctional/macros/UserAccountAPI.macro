@@ -6,7 +6,10 @@ definition {
 		if (isSet(userAccountId)) {
 			var api = "user-accounts/${userAccountId}";
 
-			if (isSet(customObjectId)) {
+			if (isSet(parameter)) {
+				var api = "user-accounts/${userAccountId}?${parameter}=${parameterValue}";
+			}
+			else if (isSet(customObjectId)) {
 				var api = "user-accounts/${userAccountId}/${relationshipName}/${customObjectId}";
 			}
 			else {
@@ -86,6 +89,17 @@ definition {
 	macro getRelationshipByUserAccountId {
 		var curl = UserAccountAPI._curlUserAccount(
 			relationshipName = "${relationshipName}",
+			userAccountId = "${userAccountId}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+	macro getSystemObjectsWithNestedField {
+		var curl = UserAccountAPI._curlUserAccount(
+			parameter = "${parameter}",
+			parameterValue = "${parameterValue}",
 			userAccountId = "${userAccountId}");
 
 		var response = JSONCurlUtil.get("${curl}");

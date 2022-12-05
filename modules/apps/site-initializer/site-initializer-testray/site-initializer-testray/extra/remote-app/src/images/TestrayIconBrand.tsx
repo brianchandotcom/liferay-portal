@@ -23,7 +23,7 @@ const TestrayIconBrand: React.FC<TestrayIconBrandProps> = ({
 }) => (
 	<div className={className}>
 		<svg
-			height="30px"
+			height="25px"
 			id="logo"
 			version="1.1"
 			viewBox="0 0 213.60001 26.799999"

@@ -23,11 +23,11 @@ const TestrayIcon: React.FC<TestrayIconProps> = ({
 }) => (
 	<div className={className}>
 		<svg
-			height="40px"
+			height="35px"
 			id="icon"
 			version="1.1"
 			viewBox="0 0 11.90625 15.901459"
-			width="40px"
+			width="35px"
 			xmlns="http://www.w3.org/2000/svg"
 			xmlnsXlink="http://www.w3.org/1999/xlink"
 		>

@@ -344,7 +344,7 @@ export default {
 		'Test Lead should only have access to Builds, Test Plans, Test Suites and Test Cases. This role will be responsible for creating Builds and for creating Test Plans/Test Runs. The people assigned to these would be our current product leads.',
 	'testers-carry-permissions-to-analyze-test-results-by-workflowing-results-or-collaborating-on-tasks':
 		'Testers carry permissions to analyze test results by workflowing results or collaborating on tasks',
-	'testflow': 'Testflow',
+	'testflow': 'TestFlow',
 	'testflow-archived': 'Testflow Archived',
 	'testray-user': ' User',
 	'tests': 'Tests',

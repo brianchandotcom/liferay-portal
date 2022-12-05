@@ -22,6 +22,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.info.filter.CategoriesInfoFilter;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.KeywordsInfoFilter;
+import com.liferay.info.filter.TagsInfoFilter;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
@@ -77,6 +78,7 @@ public class AssetEntryListLayoutListRetriever
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, segmentsEntryIds,
 				_getAssetCategoryIds(layoutListRetrieverContext),
+				_getAssetTagNames(layoutListRetrieverContext),
 				_getKeywords(layoutListRetrieverContext), StringPool.BLANK,
 				pagination.getStart(), pagination.getEnd());
 
@@ -112,6 +114,7 @@ public class AssetEntryListLayoutListRetriever
 		return _assetListAssetEntryProvider.getAssetEntriesCount(
 			assetListEntry, segmentsEntryIds,
 			_getAssetCategoryIds(layoutListRetrieverContext),
+			_getAssetTagNames(layoutListRetrieverContext),
 			_getKeywords(layoutListRetrieverContext), StringPool.BLANK);
 	}
 
@@ -137,6 +140,22 @@ public class AssetEntryListLayoutListRetriever
 		}
 
 		return categoriesInfoFilter.getCategoryIds();
+	}
+
+	private String[][] _getAssetTagNames(
+		LayoutListRetrieverContext layoutListRetrieverContext) {
+
+		Optional<TagsInfoFilter> infoFilterOptional =
+			layoutListRetrieverContext.getInfoFilterOptional(
+				TagsInfoFilter.class);
+
+		TagsInfoFilter tagsInfoFilter = infoFilterOptional.orElse(null);
+
+		if (tagsInfoFilter == null) {
+			return new String[0][];
+		}
+
+		return tagsInfoFilter.getTagNames();
 	}
 
 	private String _getKeywords(
@@ -168,7 +187,8 @@ public class AssetEntryListLayoutListRetriever
 	}
 
 	private static final List<InfoFilter> _supportedInfoFilters = Arrays.asList(
-		new CategoriesInfoFilter(), new KeywordsInfoFilter());
+		new CategoriesInfoFilter(), new KeywordsInfoFilter(),
+		new TagsInfoFilter());
 
 	@Reference
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;

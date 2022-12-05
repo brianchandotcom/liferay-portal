@@ -150,18 +150,29 @@ public class AssetListAssetEntryProviderImpl
 		long[][] assetCategoryIds, String keywords, String userId, int start,
 		int end) {
 
+		return getAssetEntries(
+			assetListEntry, segmentsEntryIds, assetCategoryIds, null, keywords,
+			userId, start, end);
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
+		String userId, int start, int end) {
+
 		if (Objects.equals(
 				assetListEntry.getType(),
 				AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
 			return _getManualAssetEntries(
-				assetListEntry, segmentsEntryIds, assetCategoryIds, keywords,
-				start, end);
+				assetListEntry, segmentsEntryIds, assetCategoryIds,
+				assetTagNames, keywords, start, end);
 		}
 
 		return _getDynamicAssetEntries(
-			assetListEntry, segmentsEntryIds, assetCategoryIds, keywords,
-			userId, start, end);
+			assetListEntry, segmentsEntryIds, assetCategoryIds, assetTagNames,
+			keywords, userId, start, end);
 	}
 
 	@Override
@@ -214,17 +225,29 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String keywords, String userId) {
 
+		return getAssetEntriesCount(
+			assetListEntry, segmentsEntryIds, assetCategoryIds, null, keywords,
+			userId);
+	}
+
+	@Override
+	public int getAssetEntriesCount(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
+		String userId) {
+
 		if (Objects.equals(
 				assetListEntry.getType(),
 				AssetListEntryTypeConstants.TYPE_MANUAL)) {
 
 			return _getManualAssetEntriesCount(
-				assetListEntry, segmentsEntryIds, assetCategoryIds, keywords);
+				assetListEntry, segmentsEntryIds, assetCategoryIds,
+				assetTagNames, keywords);
 		}
 
 		return _getDynamicAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, assetCategoryIds, keywords,
-			userId);
+			assetListEntry, segmentsEntryIds, assetCategoryIds, assetTagNames,
+			keywords, userId);
 	}
 
 	@Override
@@ -429,7 +452,8 @@ public class AssetListAssetEntryProviderImpl
 
 	private List<AssetEntry> _dynamicSearch(
 		long companyId, long[][] assetCategoryIds,
-		List<AssetEntryQuery> assetEntryQueries, String keywords) {
+		List<AssetEntryQuery> assetEntryQueries, String[][] assetTagNames,
+		String keywords) {
 
 		try {
 			if (ListUtil.isEmpty(assetEntryQueries)) {
@@ -441,7 +465,8 @@ public class AssetListAssetEntryProviderImpl
 			if (assetEntryQueries.size() == 1) {
 				Hits hits = _assetHelper.search(
 					_getDynamicSearchContext(
-						companyId, assetCategoryIds, assetEntryQuery, keywords),
+						companyId, assetCategoryIds, assetEntryQuery,
+						assetTagNames, keywords),
 					assetEntryQuery, assetEntryQuery.getStart(),
 					assetEntryQuery.getEnd());
 
@@ -451,7 +476,7 @@ public class AssetListAssetEntryProviderImpl
 			SearchHits searchHits = _assetHelper.search(
 				_getDynamicSearchContext(
 					companyId, assetCategoryIds, assetEntryQueries.get(0),
-					keywords),
+					assetTagNames, keywords),
 				assetEntryQueries, assetEntryQuery.getStart(),
 				assetEntryQuery.getEnd());
 
@@ -466,7 +491,8 @@ public class AssetListAssetEntryProviderImpl
 
 	private int _dynamicSearchCount(
 		long companyId, long[][] assetCategoryIds,
-		List<AssetEntryQuery> assetEntryQueries, String keywords) {
+		List<AssetEntryQuery> assetEntryQueries, String[][] assetTagNames,
+		String keywords) {
 
 		try {
 			if (ListUtil.isEmpty(assetEntryQueries)) {
@@ -478,7 +504,8 @@ public class AssetListAssetEntryProviderImpl
 			if (assetEntryQueries.size() == 1) {
 				Long count = _assetHelper.searchCount(
 					_getDynamicSearchContext(
-						companyId, assetCategoryIds, assetEntryQuery, keywords),
+						companyId, assetCategoryIds, assetEntryQuery,
+						assetTagNames, keywords),
 					assetEntryQuery);
 
 				return count.intValue();
@@ -486,7 +513,8 @@ public class AssetListAssetEntryProviderImpl
 
 			Long count = _assetHelper.searchCount(
 				_getDynamicSearchContext(
-					companyId, assetCategoryIds, assetEntryQuery, keywords),
+					companyId, assetCategoryIds, assetEntryQuery, assetTagNames,
+					keywords),
 				assetEntryQueries, assetEntryQuery.getStart(),
 				assetEntryQuery.getEnd());
 
@@ -643,6 +671,36 @@ public class AssetListAssetEntryProviderImpl
 		return allAssetTagNames.toArray(new String[0]);
 	}
 
+	private BooleanClause[] _getAssetTagNamesBooleanClauses(
+		String[][] assetTagNames) {
+
+		if (ArrayUtil.isEmpty(assetTagNames)) {
+			return new BooleanClause[0];
+		}
+
+		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+
+		BooleanFilter assetTagNamesBooleanFilter = new BooleanFilter();
+
+		for (String[] assetTagArrayNames : assetTagNames) {
+			TermsFilter assetTagIdTermsFilter = new TermsFilter(
+				Field.ASSET_TAG_NAMES);
+
+			assetTagIdTermsFilter.addValues(
+				ArrayUtil.toStringArray(assetTagArrayNames));
+
+			assetTagNamesBooleanFilter.add(
+				assetTagIdTermsFilter, BooleanClauseOccur.MUST);
+		}
+
+		booleanQueryImpl.setPreBooleanFilter(assetTagNamesBooleanFilter);
+
+		return new BooleanClause[] {
+			BooleanClauseFactoryUtil.create(
+				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+		};
+	}
+
 	private long[] _getClassNameIds(
 		UnicodeProperties unicodeProperties, long[] availableClassNameIds) {
 
@@ -781,8 +839,8 @@ public class AssetListAssetEntryProviderImpl
 
 	private List<AssetEntry> _getDynamicAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords, String userId, int start,
-		int end) {
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
+		String userId, int start, int end) {
 
 		if (!_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
@@ -795,7 +853,8 @@ public class AssetListAssetEntryProviderImpl
 
 			return _dynamicSearch(
 				assetListEntry.getCompanyId(), assetCategoryIds,
-				Collections.singletonList(assetEntryQuery), keywords);
+				Collections.singletonList(assetEntryQuery), assetTagNames,
+				keywords);
 		}
 
 		LongStream longStream = Arrays.stream(
@@ -809,12 +868,13 @@ public class AssetListAssetEntryProviderImpl
 			).collect(
 				Collectors.toList()
 			),
-			keywords);
+			assetTagNames, keywords);
 	}
 
 	private int _getDynamicAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords, String userId) {
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
+		String userId) {
 
 		if (!_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
@@ -824,7 +884,8 @@ public class AssetListAssetEntryProviderImpl
 
 			return _dynamicSearchCount(
 				assetListEntry.getCompanyId(), assetCategoryIds,
-				Collections.singletonList(assetEntryQuery), keywords);
+				Collections.singletonList(assetEntryQuery), assetTagNames,
+				keywords);
 		}
 
 		LongStream longStream = Arrays.stream(
@@ -838,17 +899,20 @@ public class AssetListAssetEntryProviderImpl
 			).collect(
 				Collectors.toList()
 			),
-			keywords);
+			assetTagNames, keywords);
 	}
 
 	private SearchContext _getDynamicSearchContext(
 		long companyId, long[][] assetCategoryIds,
-		AssetEntryQuery assetEntryQuery, String keywords) {
+		AssetEntryQuery assetEntryQuery, String[][] assetTagNames,
+		String keywords) {
 
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setBooleanClauses(
-			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
+			ArrayUtil.append(
+				_getAssetCategoryIdsBooleanClauses(assetCategoryIds),
+				_getAssetTagNamesBooleanClauses(assetTagNames)));
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(assetEntryQuery.getEnd());
 		searchContext.setKeywords(keywords);
@@ -945,7 +1009,8 @@ public class AssetListAssetEntryProviderImpl
 
 	private List<AssetEntry> _getManualAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords, int start, int end) {
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
+		int start, int end) {
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
 			_getAssetListEntryAssetEntryRels(
@@ -963,7 +1028,7 @@ public class AssetListAssetEntryProviderImpl
 		try {
 			Hits hits = _assetHelper.search(
 				_getManualSearchContext(
-					assetCategoryIds, assetEntryIds,
+					assetCategoryIds, assetEntryIds, assetTagNames,
 					assetListEntry.getCompanyId(), keywords),
 				_getManualAssetEntryQuery(assetListEntry), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
@@ -987,7 +1052,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private int _getManualAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String keywords) {
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords) {
 
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
 			_getAssetListEntryAssetEntryRels(
@@ -1005,7 +1070,7 @@ public class AssetListAssetEntryProviderImpl
 		try {
 			Long count = _assetHelper.searchCount(
 				_getManualSearchContext(
-					assetCategoryIds, assetEntryIds,
+					assetCategoryIds, assetEntryIds, assetTagNames,
 					assetListEntry.getCompanyId(), keywords),
 				_getManualAssetEntryQuery(assetListEntry));
 
@@ -1047,15 +1112,17 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private SearchContext _getManualSearchContext(
-		long[][] assetCategoryIds, List<Long> assetEntryIds, long companyId,
-		String keywords) {
+		long[][] assetCategoryIds, List<Long> assetEntryIds,
+		String[][] assetTagNames, long companyId, String keywords) {
 
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttribute(
 			Field.ASSET_ENTRY_IDS, ArrayUtil.toLongArray(assetEntryIds));
 		searchContext.setBooleanClauses(
-			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
+			ArrayUtil.append(
+				_getAssetTagNamesBooleanClauses(assetTagNames),
+				_getAssetCategoryIdsBooleanClauses(assetCategoryIds)));
 		searchContext.setCompanyId(companyId);
 		searchContext.setKeywords(keywords);
 

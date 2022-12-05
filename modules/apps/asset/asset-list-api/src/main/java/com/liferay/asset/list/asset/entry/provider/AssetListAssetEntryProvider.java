@@ -48,6 +48,11 @@ public interface AssetListAssetEntryProvider {
 		long[][] assetCategoryIds, String keywords, String userId, int start,
 		int end);
 
+	public List<AssetEntry> getAssetEntries(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
+		String userId, int start, int end);
+
 	public default List<AssetEntry> getAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {
 
@@ -74,6 +79,11 @@ public interface AssetListAssetEntryProvider {
 	public int getAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String keywords, String userId);
+
+	public int getAssetEntriesCount(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds,
+		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
+		String userId);
 
 	public default int getAssetEntriesCount(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId) {

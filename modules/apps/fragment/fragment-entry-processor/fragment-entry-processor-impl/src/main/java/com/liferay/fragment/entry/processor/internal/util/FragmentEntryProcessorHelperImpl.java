@@ -340,9 +340,18 @@ public class FragmentEntryProcessorHelperImpl
 			return _DEFAULT_DATE_FORMAT.format(date);
 		}
 
-		DateFormat dateFormatPattern = new SimpleDateFormat(pattern);
+		try {
+			DateFormat dateFormatPattern = new SimpleDateFormat(pattern);
 
-		return dateFormatPattern.format(date);
+			return dateFormatPattern.format(date);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return _DEFAULT_DATE_FORMAT.format(date);
+		}
 	}
 
 	private long _getFileEntryId(

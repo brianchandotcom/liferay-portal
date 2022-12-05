@@ -187,7 +187,7 @@ public class ImportDisplayContext {
 		<LayoutsImporterResultEntry.Status, List<LayoutsImporterResultEntry>>
 			getLayoutsImporterResultEntryMap() {
 
-		if (MapUtil.isNotEmpty(_layoutsImporterResultEntryMap)) {
+		if (_layoutsImporterResultEntryMap != null) {
 			return _layoutsImporterResultEntryMap;
 		}
 

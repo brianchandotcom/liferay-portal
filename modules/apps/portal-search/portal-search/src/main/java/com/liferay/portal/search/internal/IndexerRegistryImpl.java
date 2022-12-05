@@ -50,9 +50,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -197,42 +194,6 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setIndexerRequestBufferOverflowHandler(
-		IndexerRequestBufferOverflowHandler
-			indexerRequestBufferOverflowHandler) {
-
-		_indexerRequestBufferOverflowHandler =
-			indexerRequestBufferOverflowHandler;
-
-		for (BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler :
-				_bufferedInvocationHandlers.values()) {
-
-			bufferedIndexerInvocationHandler.
-				setIndexerRequestBufferOverflowHandler(
-					_indexerRequestBufferOverflowHandler);
-		}
-	}
-
-	protected void unsetIndexerRequestBufferOverflowHandler(
-		IndexerRequestBufferOverflowHandler
-			indexerRequestBufferOverflowHandler) {
-
-		_indexerRequestBufferOverflowHandler = null;
-
-		for (BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler :
-				_bufferedInvocationHandlers.values()) {
-
-			bufferedIndexerInvocationHandler.
-				setIndexerRequestBufferOverflowHandler(
-					_defaultIndexerRequestBufferOverflowHandler);
-		}
-	}
-
 	private ServiceTrackerMap<String, List<IndexerPostProcessor>>
 		_getIndexerPostProcessorsServiceTrackerMap() {
 
@@ -350,16 +311,9 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 					indexer, _indexStatusManager, _indexerRegistryConfiguration,
 					_persistedModelLocalServiceRegistry);
 
-			if (_indexerRequestBufferOverflowHandler == null) {
-				bufferedIndexerInvocationHandler.
-					setIndexerRequestBufferOverflowHandler(
-						_defaultIndexerRequestBufferOverflowHandler);
-			}
-			else {
-				bufferedIndexerInvocationHandler.
-					setIndexerRequestBufferOverflowHandler(
-						_indexerRequestBufferOverflowHandler);
-			}
+			bufferedIndexerInvocationHandler.
+				setIndexerRequestBufferOverflowHandler(
+					_indexerRequestBufferOverflowHandler);
 
 			_bufferedInvocationHandlers.put(
 				indexer.getClassName(), bufferedIndexerInvocationHandler);
@@ -381,17 +335,15 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	private final Map<String, BufferedIndexerInvocationHandler>
 		_bufferedInvocationHandlers = new ConcurrentHashMap<>();
 	private BundleContext _bundleContext;
-
-	@Reference(target = "(mode=DEFAULT)")
-	private IndexerRequestBufferOverflowHandler
-		_defaultIndexerRequestBufferOverflowHandler;
-
 	private final Indexer<?> _dummyIndexer = new DummyIndexer();
 	private volatile ServiceTrackerMap<String, List<IndexerPostProcessor>>
 		_indexerPostProcessorsServiceTrackerMap;
 	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
-	private volatile IndexerRequestBufferOverflowHandler
+
+	@Reference
+	private IndexerRequestBufferOverflowHandler
 		_indexerRequestBufferOverflowHandler;
+
 	private volatile ServiceTrackerMap<String, Indexer>
 		_indexerServiceTrackerMap;
 

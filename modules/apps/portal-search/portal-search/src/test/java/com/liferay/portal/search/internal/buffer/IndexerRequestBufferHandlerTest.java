@@ -92,7 +92,7 @@ public class IndexerRequestBufferHandlerTest {
 
 		IndexerRequestBufferOverflowHandler
 			indexerRequestBufferOverflowHandler =
-				new DefaultIndexerRequestBufferOverflowHandler();
+				new IndexerRequestBufferOverflowHandler();
 
 		ReflectionTestUtil.setFieldValue(
 			indexerRequestBufferOverflowHandler,

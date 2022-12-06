@@ -48,10 +48,11 @@ definition {
 		WaitForPageLoad();
 	}
 
-		ACDXPSettings.navToSyncedSitesMenu();
+	macro switchTab {
+		var key_tab = "${tabName}";
 
-		if (!(isSet(siteName))) {
-			LexiconEntry.gotoAdd();
+		Click(locator1 = "Modal#TAB_LINK");
+	}
 
 			WaitForElementPresent(locator1 = "ACDXPSettings#SITE_NAME");
 

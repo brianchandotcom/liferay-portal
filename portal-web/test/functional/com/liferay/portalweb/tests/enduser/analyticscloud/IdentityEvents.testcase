@@ -218,7 +218,9 @@ definition {
 		task ("Create another property and sync the second site") {
 			ACDXPSettings.navToSyncedSitesMenu();
 
-			ACDXPSettings.createCombinedProperties(siteName = ${sitePageName});
+			ACDXPSettings.syncSites(
+				newPropertyName = "${sitePageName} Property",
+				siteName = "${sitePageName}");
 		}
 
 		task ("Add a new user") {

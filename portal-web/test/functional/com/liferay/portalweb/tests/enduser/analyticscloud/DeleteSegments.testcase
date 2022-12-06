@@ -527,8 +527,6 @@ definition {
 
 		task ("Get site assigned property name") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-			var dataSource = StringUtil.replace(${assignedPropertyName}, " Combined Property", "");
 		}
 
 		task ("Add a new user in DXP") {
@@ -596,7 +594,7 @@ definition {
 		}
 
 		task ("Delete the Data Source") {
-			ACSettings.deleteDataSource(dataSourceName = ${dataSource});
+			ACSettings.deleteDataSource(dataSourceName = "${assignedPropertyName}");
 		}
 
 		task ("Exit Settings") {

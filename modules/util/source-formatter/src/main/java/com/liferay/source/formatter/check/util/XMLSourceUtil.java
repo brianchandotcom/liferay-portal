@@ -37,4 +37,22 @@ public class XMLSourceUtil {
 		return false;
 	}
 
+	public static boolean isInsideComment(String content, int pos) {
+		String s = content.substring(pos);
+
+		int x = s.indexOf("-->");
+
+		if (x == -1) {
+			return false;
+		}
+
+		s = s.substring(0, x);
+
+		if (!s.contains("<!--")) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

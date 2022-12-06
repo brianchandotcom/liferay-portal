@@ -243,6 +243,27 @@ public class WebServerServlet extends HttpServlet {
 					}
 				}
 			}
+
+			String objectDefinitionExternalReferenceCode = ParamUtil.getString(
+				httpServletRequest, "objectDefinitionExternalReferenceCode");
+
+			if (Validator.isNotNull(objectDefinitionExternalReferenceCode)) {
+				Message message = new Message();
+
+				message.put("companyId", user.getCompanyId());
+				message.put(
+					"objectDefinitionExternalReferenceCode",
+					objectDefinitionExternalReferenceCode);
+				message.put(
+					"objectEntryExternalReferenceCode",
+					ParamUtil.getString(
+						httpServletRequest,
+						"objectEntryExternalReferenceCode"));
+				message.put("userId", user.getUserId());
+
+				_messageBus.sendMessage(
+					DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD, message);
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -1185,26 +1206,6 @@ public class WebServerServlet extends HttpServlet {
 					httpServletRequest, httpServletResponse, fileName,
 					inputStream, contentLength, contentType);
 			}
-		}
-
-		String objectDefinitionExternalReferenceCode = ParamUtil.getString(
-			httpServletRequest, "objectDefinitionExternalReferenceCode");
-
-		if (Validator.isNotNull(objectDefinitionExternalReferenceCode)) {
-			Message message = new Message();
-
-			message.put("companyId", user.getCompanyId());
-			message.put(
-				"objectDefinitionExternalReferenceCode",
-				objectDefinitionExternalReferenceCode);
-			message.put(
-				"objectEntryExternalReferenceCode",
-				ParamUtil.getString(
-					httpServletRequest, "objectEntryExternalReferenceCode"));
-			message.put("userId", user.getUserId());
-
-			_messageBus.sendMessage(
-				DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD, message);
 		}
 	}
 

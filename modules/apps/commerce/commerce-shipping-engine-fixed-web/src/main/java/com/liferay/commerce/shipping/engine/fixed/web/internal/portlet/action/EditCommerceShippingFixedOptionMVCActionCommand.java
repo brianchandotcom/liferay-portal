@@ -189,8 +189,9 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 				actionRequest, "commerceShippingMethodId");
 
 			CommerceShippingMethod commerceShippingMethod =
-				_commerceShippingMethodService.getCommerceShippingMethod(
-					commerceShippingMethodId);
+				_commerceShippingMethodService.
+					getCommerceChannelCommerceShippingMethod(
+						commerceShippingMethodId);
 
 			commerceShippingFixedOption =
 				_commerceShippingFixedOptionService.

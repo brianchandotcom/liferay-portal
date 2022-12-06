@@ -21,6 +21,10 @@ import com.liferay.commerce.constants.CommercePortletKeys;
  */
 public class CommerceShippingFixedOptionFDSNames {
 
+	public static final String ACCOUNT_ENTRY_SHIPPING_OPTIONS =
+		CommercePortletKeys.COMMERCE_SHIPPING_METHODS +
+			"-accountEntryShippingOptions";
+
 	public static final String ORDER_TYPES =
 		CommercePortletKeys.COMMERCE_SHIPPING_METHODS + "-orderTypes";
 

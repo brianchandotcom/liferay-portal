@@ -161,8 +161,10 @@ public class CommerceShippingFixedOptionsDisplayContext
 				getCommerceShippingFixedOption();
 
 			commerceShippingMethod =
-				commerceShippingMethodService.getCommerceShippingMethod(
-					commerceShippingFixedOption.getCommerceShippingMethodId());
+				commerceShippingMethodService.
+					getCommerceChannelCommerceShippingMethod(
+						commerceShippingFixedOption.
+							getCommerceShippingMethodId());
 		}
 
 		String engineKey = commerceShippingMethod.getEngineKey();

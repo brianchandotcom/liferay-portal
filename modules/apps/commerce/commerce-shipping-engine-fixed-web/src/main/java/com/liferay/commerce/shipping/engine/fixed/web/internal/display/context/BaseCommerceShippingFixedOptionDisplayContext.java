@@ -83,8 +83,9 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 
 		if (commerceShippingMethodId > 0) {
 			_commerceShippingMethod =
-				commerceShippingMethodService.getCommerceShippingMethod(
-					commerceShippingMethodId);
+				commerceShippingMethodService.
+					getCommerceChannelCommerceShippingMethod(
+						commerceShippingMethodId);
 		}
 
 		return _commerceShippingMethod;

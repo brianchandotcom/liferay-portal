@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -53,8 +54,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -101,6 +104,15 @@ public class CommerceShippingFixedOptionTableFDSView
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "delete"));
 			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getManageShippingFixedOptionPermissionsURL(
+						httpServletRequest, shippingFixedOption));
+				dropdownItem.setLabel(
+					_language.get(httpServletRequest, "permissions"));
+				dropdownItem.setTarget("modal-permissions");
+			}
 		).build();
 	}
 
@@ -139,11 +151,13 @@ public class CommerceShippingFixedOptionTableFDSView
 				commerceShippingMethodId);
 
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
-				themeDisplay.getCompanyId(),
-				commerceShippingMethod.getGroupId(), commerceShippingMethodId,
-				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition());
+			_commerceShippingFixedOptionService.
+				getCommerceChannelCommerceShippingFixedOptions(
+					themeDisplay.getCompanyId(),
+					commerceShippingMethod.getGroupId(),
+					commerceShippingMethodId, fdsKeywords.getKeywords(),
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition());
 
 		List<ShippingFixedOption> shippingFixedOptions = new ArrayList<>();
 
@@ -184,12 +198,50 @@ public class CommerceShippingFixedOptionTableFDSView
 				commerceShippingMethodId);
 
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
-				commerceShippingMethod.getCompanyId(),
-				commerceShippingMethod.getGroupId(), commerceShippingMethodId,
-				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			_commerceShippingFixedOptionService.
+				getCommerceChannelCommerceShippingFixedOptions(
+					commerceShippingMethod.getCompanyId(),
+					commerceShippingMethod.getGroupId(),
+					commerceShippingMethodId, null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
 
 		return commerceShippingFixedOptions.size();
+	}
+
+	private PortletURL _getManageShippingFixedOptionPermissionsURL(
+			HttpServletRequest httpServletRequest,
+			ShippingFixedOption shippingFixedOption)
+		throws PortalException {
+
+		PortletURL portletURL = PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
+			ParamUtil.getString(
+				httpServletRequest, "currentUrl",
+				_portal.getCurrentURL(httpServletRequest))
+		).setParameter(
+			"modelResource", CommerceShippingFixedOption.class.getName()
+		).setParameter(
+			"modelResourceDescription", shippingFixedOption.getName()
+		).setParameter(
+			"resourcePrimKey", shippingFixedOption.getShippingFixedOptionId()
+		).buildPortletURL();
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
+		}
+
+		return portletURL;
 	}
 
 	private String _getShippingFixedOptionDeleteURL(

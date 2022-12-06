@@ -461,6 +461,14 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro viewIdentityProviderConfigurations {
+		AssertValue(
+			locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE_INPUT",
+			value1 = "${sessionMaximum}");
+
+		AssertNotChecked(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX");
+	}
+
 	@description = "View metadata configurations of SP, in Identity Provider Configurations"
 	macro viewMetadataConfigurationsOfSP {
 		AssertClick(

@@ -3021,6 +3021,58 @@ definition {
 		}
 	}
 
+	@description = "LPS-152122 TC6. Import JSon file to configure the SAML IdP provider via Import/Export Center."
+	@priority = "4"
+	test ImportJSONFileToConfigureSAMLIDP {
+		property app.server.bundles.size = "0";
+		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property keystore.enabled = "true";
+		property portal.release = "false";
+
+		task ("Given: Add SAP") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
+
+			ServiceAccessPolicy.addServiceAccessPolicy(
+				enabled = "true",
+				methodName = "*",
+				policyName = "SAML_Provider",
+				serviceClass = "com.liferay.saml.admin.rest.internal.resource.v1_0.SamlProviderResourceImpl",
+				title = "Configure SAML provider");
+		}
+
+		task ("When: Import the JSON file via Import/Export Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				fileName = "saml-idp.json");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then: SAML is enabled with IDP role") {
+			SAML.goToSAMLAdmin();
+
+			SAMLRole.viewGeneralConfigurations(
+				samlEntityId = "samlidp",
+				samlRoleType = "Identity Provider");
+		}
+
+		task ("And: All the configurations which defines in saml-idp.json are configured") {
+			SAMLNavigation.gotoIdentityProvider();
+
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+		}
+	}
+
 	@description = "LPS-152122 TC5. Import JSon file to configure the SAML SP provider via Import/Export Center."
 	@priority = "4"
 	test ImportJSONFileToConfigureSAMLSP {

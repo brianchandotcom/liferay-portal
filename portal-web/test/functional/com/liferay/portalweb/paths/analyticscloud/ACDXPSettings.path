@@ -91,7 +91,7 @@
 
 <tr>
 	<td>AC_GENERIC_CHECKBOX</td>
-	<td>//*[contains(@type, 'checkbox')]</td>
+	<td>//div[contains(@class,'fade show')]//*[contains(@type, 'checkbox')]</td>
 	<td></td>
 </tr>
 

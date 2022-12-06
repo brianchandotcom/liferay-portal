@@ -807,29 +807,9 @@ definition {
 	@priority = "3"
 	test CanOrderSiteFacetTerms {
 		task ("Add Sites") {
-			Site.openSitesAdmin();
-
-			Site.addSiteTemplateCP(
-				siteName = "Sales",
-				siteTemplateName = "Blank Site");
-
-			Site.openSitesAdmin();
-
-			Site.addSiteTemplateCP(
-				siteName = "Community",
-				siteTemplateName = "Blank Site");
-
-			Site.openSitesAdmin();
-
-			Site.addSiteTemplateCP(
-				siteName = "Product",
-				siteTemplateName = "Blank Site");
-
-			Site.openSitesAdmin();
-
-			Site.addSiteTemplateCP(
-				siteName = "Engineering",
-				siteTemplateName = "Blank Site");
+			for (var siteName : list "Sales,Community,Product,Engineering") {
+				JSONGroup.addGroup(groupName = "${siteName}");
+			}
 		}
 
 		task ("Add the Web Contents into the Sites") {
@@ -859,8 +839,6 @@ definition {
 					title = "Engineering Web Content ${count}");
 			}
 		}
-
-		ApplicationsMenu.gotoSite(site = "Liferay DXP");
 
 		Search.openSearchPage();
 

@@ -20,7 +20,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -85,7 +84,7 @@ public class ObjectFieldDTOConverter
 				setListTypeDefinitionExternalReferenceCode(
 					() -> {
 						if (objectField.getListTypeDefinitionId() == 0) {
-							return StringPool.BLANK;
+							return null;
 						}
 
 						ListTypeDefinition listTypeDefinition =

@@ -647,8 +647,10 @@ definition {
 	@description = "Bug: LRAC-11848 | Automation ID: LRAC-12005 | Test Summary: Add a segment using custom field of type Breakdwon, Checkbox and Radio"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldThatUsesList {
-		property analytics.cloud.upstream = "false";
-		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldThatUsesList";
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine reason: Custom field values take a long time to appear in AC
+		// AC Quarantine ticket: Wait for segments migration to see if this case becomes faster - LRAC-11818
 
 		var customFieldDropdown = "user custom field dropdown";
 		var customFieldCheckbox = "user custom field checkbox";

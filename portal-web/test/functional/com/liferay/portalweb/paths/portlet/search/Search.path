@@ -36,8 +36,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_FACET_VOCABULARY_LAYOUT</td>
+	<td>//span[contains(@class,'custom-control-label')]//span[contains(.,'${categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_FACET_VOCABULARY_SCOPE_RADIO</td>
 	<td>//span[contains(.,'${vocabularyScope}')]/preceding-sibling::input[@role='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACET_COMPACT_LAYOUT</td>
+	<td>//ul[contains(@class,'list-unstyled')]//button[contains(.,'${facetValueName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACET_LABEL_LAYOUT</td>
+	<td>//div[contains(@class,'label-container')]//button[contains(.,'${facetValueName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -223,11 +238,6 @@
 <tr>
 	<td>TYPE_FACET_CURRENT_ASSET_TYPE</td>
 	<td>//select[contains(@id, "currentAssetTypes")]/option[contains(., "${assetType}")]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY_FACET_PORTLET</td>
-	<td>//div[contains(@aria-labelledby, 'CategoryFacetPortlet')]</td>
 	<td></td>
 </tr>
 </tbody>

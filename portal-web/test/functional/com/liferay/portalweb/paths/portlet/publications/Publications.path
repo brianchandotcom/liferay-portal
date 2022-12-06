@@ -92,12 +92,12 @@
 </tr>
 <tr>
 	<td>PUBLICATION_DESCRIPTION</td>
-	<td>//textarea[contains(@name,'description')]</td>
+	<td>//textarea[contains(@placeholder,'Enter the description of the publication')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATION_NAME</td>
-	<td>//input[contains(@name,'name')]</td>
+	<td>//input[contains(@placeholder,'Enter the name of the publication')]</td>
 	<td></td>
 </tr>
 <tr>

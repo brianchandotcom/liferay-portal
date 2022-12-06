@@ -39,7 +39,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.stream.Stream;
 
 import org.owasp.validator.html.AntiSamy;
 import org.owasp.validator.html.CleanResults;
@@ -122,10 +121,10 @@ public class LangSanitizer {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					Stream<String> stream = Arrays.stream(_SKIP_DIR_NAMES);
+					List<String> skipDirNames = Arrays.asList(_SKIP_DIR_NAMES);
 
 					if (dirName.startsWith(".") ||
-						stream.anyMatch(dirName::equals)) {
+						skipDirNames.contains(dirName)) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}

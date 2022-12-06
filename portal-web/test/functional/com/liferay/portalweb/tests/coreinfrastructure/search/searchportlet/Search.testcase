@@ -621,8 +621,8 @@ definition {
 
 		for (var categories : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				categoryName = "${categories}",
-				locator1 = "Search#CATEGORY_FACET_CLOUD_LAYOUT");
+				facetValueName = "${categories}",
+				locator1 = "Search#FACET_CLOUD_LAYOUT");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -1590,8 +1590,8 @@ definition {
 		Refresh();
 
 		AssertElementPresent(
-			categoryName = "Category Name",
-			locator1 = "Search#CATEGORY_FACET_CLOUD_LAYOUT");
+			facetValueName = "Category Name",
+			locator1 = "Search#FACET_CLOUD_LAYOUT");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Category");
 

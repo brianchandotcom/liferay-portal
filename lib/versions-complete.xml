@@ -665,7 +665,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!httpcore.jar</file-name>
@@ -1167,7 +1167,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2017-10-02 22:09:27</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 16:37:45</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-02 21:06:47</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-client-java6.jar</file-name>
@@ -1180,7 +1180,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2017-10-02 22:09:39</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 16:39:40</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-02 21:04:06</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-client-servlet.jar</file-name>
@@ -1193,7 +1193,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2017-10-02 22:07:45</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 16:29:38</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-02 21:10:57</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-client.jar</file-name>
@@ -1206,7 +1206,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2017-10-02 22:07:35</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 16:32:39</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-02 21:08:20</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-services-drive.jar</file-name>
@@ -2546,7 +2546,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-31 11:45:35</current-version-publish-date>
-				<latest-version-publish-date>2022-10-27 13:58:33</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-06 09:58:57</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth2.provider.rest.jar!javax.annotation-api.jar</file-name>
@@ -2561,6 +2561,20 @@
 				</licenses>
 				<current-version-publish-date>2016-09-22 18:50:21</current-version-publish-date>
 				<latest-version-publish-date>2018-02-21 10:24:24</latest-version-publish-date>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth2.provider.rest.jar!jose4j.jar</file-name>
+				<version>0.9.2</version>
+				<project-name>jose4j</project-name>
+				<project-url>https://bitbucket.org/b_c/jose4j/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+				<current-version-publish-date>2022-10-31 20:24:45</current-version-publish-date>
+				<latest-version-publish-date>2022-10-31 20:24:45</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth2.provider.web.jar!jgrapht-core.jar</file-name>
@@ -2791,7 +2805,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.json.web.service.client.jar!httpcore-nio.jar</file-name>
@@ -3371,7 +3385,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.osgi.web.portlet.container.test.util.jar!httpcore.jar</file-name>
@@ -3399,7 +3413,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:58</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:58</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:41:04</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.osgi.web.servlet.jsp.compiler.jar!javax.servlet.jsp.jar</file-name>
@@ -3762,7 +3776,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!httpcore-nio.jar</file-name>
@@ -4403,7 +4417,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-31 11:45:35</current-version-publish-date>
-				<latest-version-publish-date>2022-10-27 13:58:33</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-06 09:58:57</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!accessors-smart.jar</file-name>
@@ -4501,7 +4515,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-31 11:45:35</current-version-publish-date>
-				<latest-version-publish-date>2022-10-27 13:58:33</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-06 09:58:57</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!api-common.jar</file-name>
@@ -4598,7 +4612,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 19:03:21</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 21:06:22</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 16:09:30</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!gax.jar</file-name>
@@ -4612,7 +4626,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 19:02:37</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 21:02:58</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 16:11:03</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-api-client.jar</file-name>
@@ -4626,7 +4640,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-01 22:21:22</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 16:32:39</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-02 21:08:20</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-api-services-storage.jar</file-name>
@@ -4679,7 +4693,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 03:10:47</current-version-publish-date>
-				<latest-version-publish-date>2022-11-09 17:04:34</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 18:36:55</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-cloud-core.jar</file-name>
@@ -4693,7 +4707,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 03:10:45</current-version-publish-date>
-				<latest-version-publish-date>2022-11-09 17:03:06</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 18:37:47</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-cloud-storage.jar</file-name>
@@ -4830,7 +4844,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!httpcore.jar</file-name>
@@ -4970,7 +4984,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-23 22:41:55</current-version-publish-date>
-				<latest-version-publish-date>2022-10-29 21:41:57</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-06 08:17:08</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-core.jar</file-name>
@@ -4984,7 +4998,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:32</current-version-publish-date>
-				<latest-version-publish-date>2022-12-02 03:52:17</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 21:36:30</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -4998,7 +5012,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:29</current-version-publish-date>
-				<latest-version-publish-date>2022-12-02 03:53:23</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 21:37:25</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -5012,7 +5026,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:53:45</current-version-publish-date>
-				<latest-version-publish-date>2022-12-02 03:52:54</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 21:37:04</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>
@@ -5054,7 +5068,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!httpcore.jar</file-name>
@@ -5676,7 +5690,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-09-20 07:35:38</current-version-publish-date>
-				<latest-version-publish-date>2022-08-17 17:48:18</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 10:31:34</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java-servlet.jar</file-name>
@@ -5690,7 +5704,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-09-20 07:35:48</current-version-publish-date>
-				<latest-version-publish-date>2022-08-17 17:48:21</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 10:31:42</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java.jar</file-name>
@@ -5704,7 +5718,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-26 23:55:52</current-version-publish-date>
-				<latest-version-publish-date>2022-12-02 05:19:17</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-06 04:35:20</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!guava.jar</file-name>
@@ -6017,7 +6031,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.microsoft.jar!httpcore.jar</file-name>
@@ -6059,7 +6073,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!httpcore.jar</file-name>
@@ -6352,7 +6366,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.apache.http.components.jar!httpcore-nio.jar</file-name>
@@ -6394,7 +6408,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:58</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:58</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:41:04</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.asm.jar!asm-analysis.jar</file-name>
@@ -6991,7 +7005,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 19:03:21</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 21:06:22</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 16:09:30</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!gax.jar</file-name>
@@ -7005,7 +7019,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 19:02:37</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 21:02:58</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 16:11:03</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!google-api-client.jar</file-name>
@@ -7019,7 +7033,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-01 17:36:13</current-version-publish-date>
-				<latest-version-publish-date>2022-11-30 16:32:39</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-02 21:08:20</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!google-api-services-storage.jar</file-name>
@@ -7072,7 +7086,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 03:10:47</current-version-publish-date>
-				<latest-version-publish-date>2022-11-09 17:04:34</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 18:36:55</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!google-cloud-core.jar</file-name>
@@ -7086,7 +7100,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 03:10:45</current-version-publish-date>
-				<latest-version-publish-date>2022-11-09 17:03:06</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-05 18:37:47</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!google-cloud-storage.jar</file-name>
@@ -7223,7 +7237,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-03 14:47:41</current-version-publish-date>
-				<latest-version-publish-date>2020-10-03 14:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-30 18:40:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!httpcore.jar</file-name>
@@ -7377,7 +7391,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-23 22:41:55</current-version-publish-date>
-				<latest-version-publish-date>2022-10-29 21:41:57</latest-version-publish-date>
+				<latest-version-publish-date>2022-12-06 08:17:08</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.translation.service.jar!icu4j.jar</file-name>

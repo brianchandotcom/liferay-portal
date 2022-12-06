@@ -184,7 +184,9 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 
 	public async update(
 		id: number,
-		data: Partial<CaseResultForm & {issues: string[]}>
+		data: Partial<
+			CaseResultForm & {defaultMessageId?: number; issues: string[]}
+		>
 	): Promise<TestrayCaseResult> {
 		const issues = data.issues || [];
 
@@ -198,12 +200,10 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		}
 
 		if (!data.comment && data.mbMessageId) {
-			data.mbMessageId = 0;
+			data.mbMessageId = data.defaultMessageId ?? 0;
 		}
 
-		const caseResult = await super.update(id, data);
-
-		return caseResult;
+		return super.update(id, data);
 	}
 }
 

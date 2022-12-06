@@ -114,13 +114,15 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option
 	 * @return the commerce shipping fixed option that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public
 		com.liferay.commerce.shipping.engine.fixed.model.
 			CommerceShippingFixedOption deleteCommerceShippingFixedOption(
-				com.liferay.commerce.shipping.engine.fixed.model.
-					CommerceShippingFixedOption commerceShippingFixedOption) {
+					com.liferay.commerce.shipping.engine.fixed.model.
+						CommerceShippingFixedOption commerceShippingFixedOption)
+				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingFixedOptionLocalService.
 			deleteCommerceShippingFixedOption(commerceShippingFixedOption);
@@ -150,7 +152,8 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 
 	@Override
 	public void deleteCommerceShippingFixedOptions(
-		long commerceShippingMethodId) {
+			long commerceShippingMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_commerceShippingFixedOptionLocalService.
 			deleteCommerceShippingFixedOptions(commerceShippingMethodId);

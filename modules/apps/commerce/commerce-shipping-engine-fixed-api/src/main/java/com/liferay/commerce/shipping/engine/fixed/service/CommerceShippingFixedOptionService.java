@@ -76,30 +76,39 @@ public interface CommerceShippingFixedOptionService extends BaseService {
 			long companyId, String key)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
-			long commerceShippingMethodId, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
+	public List<CommerceShippingFixedOption> findCommerceShippingFixedOptions(
 			long commerceShippingMethodId, int start, int end,
 			OrderByComparator<CommerceShippingFixedOption> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
-			long companyId, long groupId, long commerceShippingMethodId,
-			String keywords, int start, int end)
+	public List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShippingFixedOptionsCount(
+	public List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end,
+				OrderByComparator<CommerceShippingFixedOption>
+					orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long companyId, long groupId, long commerceShippingMethodId,
+				String keywords, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelCommerceShippingFixedOptionsCount(
 			long commerceShippingMethodId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getCommerceShippingFixedOptionsCount(
+	public long getCommerceChannelCommerceShippingFixedOptionsCount(
 			long companyId, long groupId, long commerceShippingMethodId,
 			String keywords)
 		throws PortalException;

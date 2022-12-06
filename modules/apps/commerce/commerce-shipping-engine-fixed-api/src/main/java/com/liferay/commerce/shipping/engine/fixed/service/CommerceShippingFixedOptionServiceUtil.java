@@ -76,49 +76,60 @@ public class CommerceShippingFixedOptionServiceUtil {
 	}
 
 	public static List<CommerceShippingFixedOption>
-			getCommerceShippingFixedOptions(
-				long commerceShippingMethodId, int start, int end)
-		throws PortalException {
-
-		return getService().getCommerceShippingFixedOptions(
-			commerceShippingMethodId, start, end);
-	}
-
-	public static List<CommerceShippingFixedOption>
-			getCommerceShippingFixedOptions(
+			findCommerceShippingFixedOptions(
 				long commerceShippingMethodId, int start, int end,
 				OrderByComparator<CommerceShippingFixedOption>
 					orderByComparator)
 		throws PortalException {
 
-		return getService().getCommerceShippingFixedOptions(
+		return getService().findCommerceShippingFixedOptions(
 			commerceShippingMethodId, start, end, orderByComparator);
 	}
 
 	public static List<CommerceShippingFixedOption>
-			getCommerceShippingFixedOptions(
+			getCommerceChannelCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingFixedOptions(
+			commerceShippingMethodId, start, end);
+	}
+
+	public static List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end,
+				OrderByComparator<CommerceShippingFixedOption>
+					orderByComparator)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingFixedOptions(
+			commerceShippingMethodId, start, end, orderByComparator);
+	}
+
+	public static List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
 				long companyId, long groupId, long commerceShippingMethodId,
 				String keywords, int start, int end)
 		throws PortalException {
 
-		return getService().getCommerceShippingFixedOptions(
+		return getService().getCommerceChannelCommerceShippingFixedOptions(
 			companyId, groupId, commerceShippingMethodId, keywords, start, end);
 	}
 
-	public static int getCommerceShippingFixedOptionsCount(
+	public static int getCommerceChannelCommerceShippingFixedOptionsCount(
 			long commerceShippingMethodId)
 		throws PortalException {
 
-		return getService().getCommerceShippingFixedOptionsCount(
+		return getService().getCommerceChannelCommerceShippingFixedOptionsCount(
 			commerceShippingMethodId);
 	}
 
-	public static long getCommerceShippingFixedOptionsCount(
+	public static long getCommerceChannelCommerceShippingFixedOptionsCount(
 			long companyId, long groupId, long commerceShippingMethodId,
 			String keywords)
 		throws PortalException {
 
-		return getService().getCommerceShippingFixedOptionsCount(
+		return getService().getCommerceChannelCommerceShippingFixedOptionsCount(
 			companyId, groupId, commerceShippingMethodId, keywords);
 	}
 

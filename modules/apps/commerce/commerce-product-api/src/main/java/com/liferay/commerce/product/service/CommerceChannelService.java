@@ -80,6 +80,11 @@ public interface CommerceChannelService extends BaseService {
 	public CommerceChannel fetchCommerceChannel(long commerceChannelId)
 		throws PortalException;
 
+	public List<CommerceChannel> findCommerceChannels(long companyId)
+		throws PortalException;
+
+	public int findCommerceChannelsCount(long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceChannel getCommerceChannel(long commerceChannelId)
 		throws PortalException;

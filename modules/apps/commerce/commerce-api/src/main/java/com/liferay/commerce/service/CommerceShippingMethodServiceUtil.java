@@ -133,6 +133,52 @@ public class CommerceShippingMethodServiceUtil {
 			commerceShippingMethodId);
 	}
 
+	public static CommerceShippingMethod
+			getCommerceChannelCommerceShippingMethod(
+				long commerceShippingMethodId)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingMethod(
+			commerceShippingMethodId);
+	}
+
+	public static List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, boolean active, int start, int end,
+				OrderByComparator<CommerceShippingMethod> orderByComparator)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingMethods(
+			groupId, active, start, end, orderByComparator);
+	}
+
+	public static List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, int start, int end,
+				OrderByComparator<CommerceShippingMethod> orderByComparator)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingMethods(
+			groupId, start, end, orderByComparator);
+	}
+
+	public static List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, long countryId, boolean active)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingMethods(
+			groupId, countryId, active);
+	}
+
+	public static int getCommerceChannelCommerceShippingMethodsCount(
+			long groupId)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingMethodsCount(
+			groupId);
+	}
+
 	public static CommerceShippingMethod getCommerceShippingMethod(
 			long commerceShippingMethodId)
 		throws PortalException {
@@ -147,29 +193,6 @@ public class CommerceShippingMethodServiceUtil {
 
 		return getService().getCommerceShippingMethods(
 			groupId, active, start, end, orderByComparator);
-	}
-
-	public static List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, int start, int end,
-			OrderByComparator<CommerceShippingMethod> orderByComparator)
-		throws PortalException {
-
-		return getService().getCommerceShippingMethods(
-			groupId, start, end, orderByComparator);
-	}
-
-	public static List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, long countryId, boolean active)
-		throws PortalException {
-
-		return getService().getCommerceShippingMethods(
-			groupId, countryId, active);
-	}
-
-	public static int getCommerceShippingMethodsCount(long groupId)
-		throws PortalException {
-
-		return getService().getCommerceShippingMethodsCount(groupId);
 	}
 
 	/**

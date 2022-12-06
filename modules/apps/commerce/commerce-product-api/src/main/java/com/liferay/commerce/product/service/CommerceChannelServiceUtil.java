@@ -88,6 +88,16 @@ public class CommerceChannelServiceUtil {
 		return getService().fetchCommerceChannel(commerceChannelId);
 	}
 
+	public static List<CommerceChannel> findCommerceChannels(long companyId)
+		throws PortalException {
+
+		return getService().findCommerceChannels(companyId);
+	}
+
+	public static int findCommerceChannelsCount(long companyId) {
+		return getService().findCommerceChannelsCount(companyId);
+	}
+
 	public static CommerceChannel getCommerceChannel(long commerceChannelId)
 		throws PortalException {
 

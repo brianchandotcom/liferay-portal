@@ -143,6 +143,63 @@ public class CommerceShippingMethodServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceShippingMethod
+			getCommerceChannelCommerceShippingMethod(
+				long commerceShippingMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingMethodService.
+			getCommerceChannelCommerceShippingMethod(commerceShippingMethodId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, boolean active, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.model.CommerceShippingMethod>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingMethodService.
+			getCommerceChannelCommerceShippingMethods(
+				groupId, active, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.model.CommerceShippingMethod>
+						orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingMethodService.
+			getCommerceChannelCommerceShippingMethods(
+				groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, long countryId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingMethodService.
+			getCommerceChannelCommerceShippingMethods(
+				groupId, countryId, active);
+	}
+
+	@Override
+	public int getCommerceChannelCommerceShippingMethodsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingMethodService.
+			getCommerceChannelCommerceShippingMethodsCount(groupId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShippingMethod
 			getCommerceShippingMethod(long commerceShippingMethodId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -161,37 +218,6 @@ public class CommerceShippingMethodServiceWrapper
 
 		return _commerceShippingMethodService.getCommerceShippingMethods(
 			groupId, active, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceShippingMethod>
-			getCommerceShippingMethods(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CommerceShippingMethod>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceShippingMethodService.getCommerceShippingMethods(
-			groupId, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceShippingMethod>
-			getCommerceShippingMethods(
-				long groupId, long countryId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceShippingMethodService.getCommerceShippingMethods(
-			groupId, countryId, active);
-	}
-
-	@Override
-	public int getCommerceShippingMethodsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceShippingMethodService.getCommerceShippingMethodsCount(
-			groupId);
 	}
 
 	/**

@@ -87,6 +87,28 @@ public class DDMFormValidationException extends PortalException {
 
 	}
 
+	public static class MustNotDuplicateFieldReference
+		extends DDMFormValidationException {
+
+		public MustNotDuplicateFieldReference(
+			Set<String> duplicatedFieldReferences) {
+
+			super(
+				String.format(
+					"Field references %s were defined more than once",
+					duplicatedFieldReferences));
+
+			_duplicatedFieldReferences = duplicatedFieldReferences;
+		}
+
+		public Set<String> getDuplicatedFieldReferences() {
+			return _duplicatedFieldReferences;
+		}
+
+		private final Set<String> _duplicatedFieldReferences;
+
+	}
+
 	public static class MustSetAvailableLocales
 		extends DDMFormValidationException {
 

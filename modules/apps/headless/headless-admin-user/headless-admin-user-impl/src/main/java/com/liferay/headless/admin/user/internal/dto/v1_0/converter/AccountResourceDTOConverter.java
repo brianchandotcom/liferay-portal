@@ -20,6 +20,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -83,6 +84,12 @@ public class AccountResourceDTOConverter
 		return new Account() {
 			{
 				actions = dtoConverterContext.getActions();
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					AccountEntry.class.getName(),
+					accountEntry.getAccountEntryId(),
+					accountEntry.getCompanyId(),
+					dtoConverterContext.getLocale());
 				description = accountEntry.getDescription();
 				domains = StringUtil.split(accountEntry.getDomains());
 				externalReferenceCode = accountEntry.getExternalReferenceCode();

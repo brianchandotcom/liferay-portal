@@ -244,6 +244,8 @@ export type TestraySubTask = {
 	dueStatus: PickList;
 	errors: string;
 	id: number;
+	mbMessageId: number;
+	mbThreadId: number;
 	mergedToSubtaskId: TestraySubTask;
 	name: string;
 	r_mergedToTestraySubtask_c_subtaskId: TestraySubTask;

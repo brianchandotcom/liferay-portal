@@ -207,10 +207,13 @@ const yupSchema = {
 		number: yup.number().required(),
 	}),
 	subtask: yup.object({
+		comment: yup.string(),
 		dueStatus: yup.string(),
 		errors: yup.string(),
 		id: yup.number(),
 		issues: yup.string(),
+		mbMessageId: yup.number().nullable(),
+		mbThreadId: yup.number().nullable(),
 		mergedToSubtaskId: yup.number(),
 		name: yup.string(),
 		score: yup.number(),

@@ -24,10 +24,13 @@ import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {Liferay} from '../../../services/liferay';
 import {
+	MessageBoardMessage,
 	TestraySubTask,
 	TestraySubTaskIssue,
 	TestrayTask,
+	liferayMessageBoardImpl,
 	testraySubTaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIssues';
@@ -43,6 +46,7 @@ type SubTaskCompleteModalProps = {
 };
 
 type OutletContext = {
+	mbMessage: MessageBoardMessage;
 	mergedSubtaskNames: string;
 	mutateSubtask: KeyedMutator<any>;
 	testraySubtask: TestraySubTask;
@@ -58,12 +62,26 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 
 	const subTaskId = testraySubtask ? testraySubtask.id : subtask.id;
 
+	const subTaskMbMessageId = testraySubtask
+		? testraySubtask?.mbMessageId
+		: subtask?.mbMessageId;
+
+	const subTaskMbThredId = testraySubtask
+		? testraySubtask?.mbThreadId
+		: subtask?.mbThreadId;
+
 	const {data, mutate: mutateSubtaskIssues} = useFetch(
 		`${testraySubtaskIssuesImpl.resource}&filter=${searchUtil.eq(
 			'subtaskId',
 			subTaskId
 		)}`,
 		(response) => testraySubtaskIssuesImpl.transformDataFromList(response)
+	);
+
+	const {data: mbMessage, mutate: mutateComment} = useFetch(
+		subTaskMbMessageId
+			? liferayMessageBoardImpl.getMessagesIdURL(subTaskMbMessageId)
+			: null
 	);
 
 	const subtaskIssues = data?.items || [];
@@ -77,20 +95,32 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 		handleSubmit,
 		register,
 	} = useForm<SubtaskForm>({
-		defaultValues: {dueStatus: CaseResultStatuses.FAILED, issues},
+		defaultValues: {
+			comment: mbMessage?.articleBody,
+			dueStatus: CaseResultStatuses.FAILED,
+			issues,
+		},
 		resolver: yupResolver(yupSchema.subtask),
 	});
 
-	const _onSubmit = ({dueStatus, issues = ''}: SubtaskForm) => {
+	const _onSubmit = ({comment, dueStatus, issues = ''}: SubtaskForm) => {
 		const _issues = issues
 			.split(',')
 			.map((name) => name.trim())
 			.filter(Boolean);
 
+		const commentSubtask = {
+			comment,
+			mbMessageId: subTaskMbMessageId,
+			mbThreadId: subTaskMbThredId,
+			userId: Number(Liferay.ThemeDisplay.getUserId()),
+		};
+
 		testraySubTaskImpl
-			.complete(subTaskId, dueStatus as string, _issues)
+			.complete(dueStatus as string, _issues, commentSubtask, subTaskId)
 			.then(mutateSubtask || mutate)
 			.then(mutateSubtaskIssues)
+			.then(mutateComment)
 			.then(() => onSave())
 			.catch(() => onError);
 	};

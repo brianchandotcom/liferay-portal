@@ -31,6 +31,7 @@ const CONTRIBUTORS = {
 };
 
 const DEFAULT_ATTRIBUTES = {
+	characterThreshold: '',
 	fields: [],
 	includeAssetSearchSummary: true,
 	includeAssetURL: true,
@@ -241,8 +242,22 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 						</ClayButton>
 					</div>
 				</ClayInput.GroupItem>
+			</div>
 
-				<ClayInput.GroupItem className="include-input">
+			<div className="form-group-autofit">
+				<ClayInput.GroupItem>
+					<label>{Liferay.Language.get('character-threshold')}</label>
+
+					<ClayInput
+						aria-label={Liferay.Language.get('character-threshold')}
+						min="0"
+						onChange={_handleChangeAttribute('characterThreshold')}
+						type="number"
+						value={value.attributes?.characterThreshold || ''}
+					/>
+				</ClayInput.GroupItem>
+
+				<ClayInput.GroupItem>
 					<label>{Liferay.Language.get('include-asset-url')}</label>
 
 					<ClaySelect
@@ -262,7 +277,7 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 					</ClaySelect>
 				</ClayInput.GroupItem>
 
-				<ClayInput.GroupItem className="include-input">
+				<ClayInput.GroupItem>
 					<label>
 						{Liferay.Language.get('include-asset-summary')}
 					</label>

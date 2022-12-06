@@ -56,6 +56,17 @@ export default function SearchBar({
 	const alignElementRef = useRef();
 	const dropdownRef = useRef();
 
+	const characterThresholds = JSON.parse(suggestionsContributorConfiguration)
+		.filter((config) => config.attributes?.characterThreshold)
+		.map((config) => parseInt(config.attributes.characterThreshold, 10));
+
+	// If the blueprint suggestions contributor does not set its own threshold,
+	// the suggestions display threshold will default to the global one.
+
+	const finalSuggestionsDisplayThreshold = characterThresholds.length
+		? Math.min(...characterThresholds)
+		: parseInt(suggestionsDisplayThreshold, 10);
+
 	const _fetchSuggestions = (searchValue, scopeValue) => {
 		fetch(
 			addParams(
@@ -108,6 +119,16 @@ export default function SearchBar({
 		setScope(event.target.value);
 	};
 
+	const _handleFocus = () => {
+		if (finalSuggestionsDisplayThreshold === 0 && inputValue === '') {
+			setLoading(true);
+
+			_fetchSuggestions(inputValue, scope);
+
+			setActive(true);
+		}
+	};
+
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -124,7 +145,7 @@ export default function SearchBar({
 
 		setInputValue(value);
 
-		if (value.trim().length > parseInt(suggestionsDisplayThreshold, 10)) {
+		if (value.trim().length >= finalSuggestionsDisplayThreshold) {
 
 			// Immediately show loading spinner unless the value hasn't changed.
 			// If the value hasn't changed, no new request will be made and the
@@ -158,6 +179,7 @@ export default function SearchBar({
 					data-qa-id="searchInput"
 					name={keywordsParameterName}
 					onChange={_handleValueChange}
+					onFocus={_handleFocus}
 					onKeyDown={_handleKeyDown}
 					placeholder={Liferay.Language.get('search-...')}
 					title={Liferay.Language.get('search')}
@@ -195,6 +217,7 @@ export default function SearchBar({
 							data-qa-id="searchInput"
 							name={keywordsParameterName}
 							onChange={_handleValueChange}
+							onFocus={_handleFocus}
 							onKeyDown={_handleKeyDown}
 							placeholder={Liferay.Language.get('search-...')}
 							type="text"

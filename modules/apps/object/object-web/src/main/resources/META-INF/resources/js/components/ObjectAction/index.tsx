@@ -301,7 +301,8 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 				});
 			}
 		}
-		else if (
+
+		if (
 			values.objectActionTriggerKey === 'standalone' &&
 			invalidateRequired(values.errorMessage?.[defaultLanguageId])
 		) {

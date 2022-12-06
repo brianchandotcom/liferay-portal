@@ -167,19 +167,4 @@ definition {
 			kbChildArticleTitle = "Knowledge Base Article Title Child");
 	}
 
-	@priority = "4"
-	@refactordone
-	test CanViewArticlePriority {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content 1",
-			kbArticleTitle = "Knowledge Base Article Title 1");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewKBArticlePriorityCP(
-			kbArticleTitle = "Knowledge Base Article Title 1",
-			kbPriority = "1.0");
-	}
-
 }

@@ -42,6 +42,51 @@ definition {
 		}
 	}
 
+	@description = "This ensures that indeterminate checkboxes appear in the permissions modal when editing multiple folders with different permissions."
+	@priority = "5"
+	test CanAddPermissionsForFoldersWithDifferentPermissions {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name1",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name2",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name2");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.selectFolders(dmFolderName = "DM Folder Name1,DM Folder Name2");
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Add",
+			permissionsBulkEditing = "true",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.viewEntryPresent(dmFolderName = "DM Folder Name1");
+
+		DMFolder.viewEntryPresent(dmFolderName = "DM Folder Name2");
+	}
+
 	@description = "This test adds a tag for a single document via management toolbar"
 	@priority = "4"
 	test CanAddTagToSingleAsset {
@@ -348,6 +393,73 @@ definition {
 			guestWithViewPermission = "true");
 	}
 
+	@description = "This ensures that multiple folders with the same permissions can be edited via bulk editing."
+	@priority = "5"
+	test CanEditFoldersWithSamePermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name1",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name2",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.selectFolders(dmFolderName = "DM Folder Name1,DM Folder Name2");
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsBulkEditing = "true",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Add",
+			permissionsBulkEditing = "true",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "User");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconCard.viewCardNotPresent(card = "DM Folder Name1");
+
+		LexiconCard.viewCardNotPresent(card = "DM Folder Name2");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMFolder.viewEntryPresent(dmFolderName = "DM Folder Name1");
+
+		DMFolder.viewEntryPresent(dmFolderName = "DM Folder Name2");
+	}
+
 	@description = "This test selects multiple documents and moves them into one folder."
 	@priority = "5"
 	test CanMoveDocumentsToFolder {
@@ -481,6 +593,51 @@ definition {
 			dmDocumentTitle = "Document_2",
 			groupName = "Guest",
 			guestWithoutViewPermission = "true");
+	}
+
+	@description = "This ensures that the indeterminate permissions in the permissions modal can be unchecked and saved when editing the multiple folders."
+	@priority = "5"
+	test CanRemovePermissionsForFoldersWithDifferentPermissions {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name1",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name2",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name2");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.selectFolders(dmFolderName = "DM Folder Name1,DM Folder Name2");
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsBulkEditing = "true",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconCard.viewCardNotPresent(card = "DM Folder Name1");
+
+		LexiconCard.viewCardNotPresent(card = "DM Folder Name2");
 	}
 
 	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."

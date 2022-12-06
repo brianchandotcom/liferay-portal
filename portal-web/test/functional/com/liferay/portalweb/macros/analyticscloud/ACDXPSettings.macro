@@ -263,8 +263,6 @@ definition {
 
 		ACDXPSettings.navToSyncedContactDataMenu();
 
-		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
-
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");

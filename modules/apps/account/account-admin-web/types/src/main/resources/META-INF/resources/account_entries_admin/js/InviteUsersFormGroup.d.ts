@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import {InputGroup, MultiSelectItem} from './types';
 declare type OnItemsChangeFn = (items: MultiSelectItem[]) => void;
 interface IProps extends InputGroup {

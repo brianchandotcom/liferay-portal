@@ -17,15 +17,12 @@ package com.liferay.portal.kernel.repository.friendly.url.resolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
-import java.util.Optional;
-
 /**
  * @author Adolfo Pérez
  */
 public interface FileEntryFriendlyURLResolver {
 
-	public Optional<FileEntry> resolveFriendlyURL(
-			long groupId, String friendlyURL)
+	public FileEntry resolveFriendlyURL(long groupId, String friendlyURL)
 		throws PortalException;
 
 }

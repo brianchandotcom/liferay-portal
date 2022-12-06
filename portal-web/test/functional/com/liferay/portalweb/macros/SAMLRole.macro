@@ -202,4 +202,16 @@ definition {
 		}
 	}
 
+	macro viewGeneralConfigurations {
+		AssertChecked(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+
+		AssertElementPresent(
+			locator1 = "CPSAMLAdmin#SAML_ROLE_SELECT",
+			value1 = "${samlRoleType}");
+
+		AssertElementPresent(
+			locator1 = "CPSAMLAdmin#SAML_ENTITY_ID_FIELD",
+			value1 = "${samlEntityId}");
+	}
+
 }

@@ -101,10 +101,11 @@ public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 		List<CommerceShippingMethod> commerceShippingMethods =
-			_commerceShippingMethodService.getCommerceShippingMethods(
-				commerceChannel.getGroupId(), true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS,
-				new CommerceShippingMethodPriorityComparator());
+			_commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethods(
+					commerceChannel.getGroupId(), true, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS,
+					new CommerceShippingMethodPriorityComparator());
 
 		for (CommerceShippingMethod commerceShippingMethod :
 				commerceShippingMethods) {

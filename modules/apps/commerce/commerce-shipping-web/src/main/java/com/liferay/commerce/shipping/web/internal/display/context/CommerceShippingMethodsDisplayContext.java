@@ -80,8 +80,9 @@ public class CommerceShippingMethodsDisplayContext {
 			"commerceShippingMethodId");
 
 		if (commerceShippingMethodId != 0) {
-			return _commerceShippingMethodService.getCommerceShippingMethod(
-				commerceShippingMethodId);
+			return _commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethod(
+					commerceShippingMethodId);
 		}
 
 		CommerceChannel commerceChannel =
@@ -131,7 +132,7 @@ public class CommerceShippingMethodsDisplayContext {
 		}
 
 		return _commerceShippingFixedOptionService.
-			getCommerceShippingFixedOptionsCount(
+			getCommerceChannelCommerceShippingFixedOptionsCount(
 				commerceShippingMethod.getCommerceShippingMethodId());
 	}
 

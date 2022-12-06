@@ -103,10 +103,11 @@ public class CommerceShippingRestrictionsPageTableFDSView
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 		List<CommerceShippingMethod> commerceShippingMethods =
-			_commerceShippingMethodService.getCommerceShippingMethods(
-				commerceChannel.getGroupId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS,
-				new CommerceShippingMethodPriorityComparator());
+			_commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethods(
+					commerceChannel.getGroupId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS,
+					new CommerceShippingMethodPriorityComparator());
 
 		String orderByFieldName = _beanProperties.getString(
 			sort, "fieldName", StringPool.BLANK);

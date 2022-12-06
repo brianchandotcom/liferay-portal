@@ -82,7 +82,7 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "Your request failed to complete.");
 
-		AssertElementPresent(locator1 = "Button#PLUS");
+		WaitForElementPresent(locator1 = "Button#PLUS");
 
 		AssertConsoleTextNotPresent(value1 = "Please configure tunneling.servlet.shared.secret");
 

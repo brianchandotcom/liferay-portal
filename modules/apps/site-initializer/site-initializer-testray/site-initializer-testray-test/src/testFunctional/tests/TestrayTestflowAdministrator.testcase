@@ -272,6 +272,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169349 - Verify if as an Administrator I should be able view task in analysis"
+	@priority = "4"
+	test AdminCanViewTaskInAnalysis {
+		task ("Given the user add a Task in a different flow") {
+			TestrayLayout.clickResultsOnSidebar();
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+
+			Button.click(button = "Analyze");
+
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "Task_1");
+
+			Click(
+				key_checkboxOption = "Compile",
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+
+			Button.click(button = "Assign Users");
+
+			Click.clickAtNotVisible(
+				key_checkboxOption = "Test Test",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+			Button.click(button = "Select Users");
+
+			Testray.checkSuccessAlertAppearsAndDisappears();
+
+			Button.click(button = "Save");
+
+			Button.click(button = "View Task");
+		}
+
+		task ("Then can see the status of the task In Analysis") {
+			TestrayTestflow.assertStatus(
+				label = "Task Details",
+				status = "In Analysis");
+		}
+	}
+
 	@description = "This is a test for LPS-163863 - Verify that As an administrator can remove users from the context menu"
 	@priority = "4"
 	test CanRemoveUser {

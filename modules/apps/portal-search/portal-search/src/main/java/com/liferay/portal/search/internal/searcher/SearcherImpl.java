@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.searcher;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
@@ -30,11 +32,18 @@ import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.spi.searcher.SearchRequestContributor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -46,6 +55,18 @@ public class SearcherImpl implements Searcher {
 	@Override
 	public SearchResponse search(SearchRequest searchRequest) {
 		return doSearch(_transformSearchRequest(searchRequest));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, SearchRequestContributor.class,
+			"search.request.contributor.id");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	protected SearchResponse doSearch(SearchRequest searchRequest) {
@@ -109,11 +130,21 @@ public class SearcherImpl implements Searcher {
 	protected IndexSearcherHelper indexSearcherHelper;
 
 	@Reference
-	protected SearchRequestContributorsRegistry
-		searchRequestContributorsRegistry;
-
-	@Reference
 	protected SearchResponseBuilderFactory searchResponseBuilderFactory;
+
+	private void _exclude(
+		Collection<SearchRequestContributor> collection,
+		Collection<String> ids) {
+
+		for (String id : ids) {
+			List<SearchRequestContributor> searchRequestContributors =
+				_serviceTrackerMap.getService(id);
+
+			if (Objects.nonNull(searchRequestContributors)) {
+				collection.removeAll(searchRequestContributors);
+			}
+		}
+	}
 
 	private void _federatedSearches(
 		SearchRequest searchRequest,
@@ -131,10 +162,12 @@ public class SearcherImpl implements Searcher {
 	private Stream<Function<SearchRequest, SearchRequest>> _getContributors(
 		SearchRequest searchRequest) {
 
-		Stream<SearchRequestContributor> stream =
-			searchRequestContributorsRegistry.stream(
-				searchRequest.getIncludeContributors(),
-				searchRequest.getExcludeContributors());
+		Collection<SearchRequestContributor> collection = _include(
+			searchRequest.getIncludeContributors());
+
+		_exclude(collection, searchRequest.getExcludeContributors());
+
+		Stream<SearchRequestContributor> stream = collection.stream();
 
 		return stream.map(
 			searchRequestContributor -> searchRequestContributor::contribute);
@@ -151,6 +184,33 @@ public class SearcherImpl implements Searcher {
 		}
 
 		return null;
+	}
+
+	private Collection<SearchRequestContributor> _include(
+		Collection<String> ids) {
+
+		if ((ids == null) || ids.isEmpty()) {
+			Collection<SearchRequestContributor> searchRequestContributors =
+				new HashSet<>();
+
+			Collection<List<SearchRequestContributor>>
+				searchRequestContributorLists = _serviceTrackerMap.values();
+
+			searchRequestContributorLists.forEach(
+				searchRequestContributorList ->
+					searchRequestContributors.addAll(
+						searchRequestContributorList));
+
+			return searchRequestContributors;
+		}
+
+		Collection<SearchRequestContributor> collection = new ArrayList<>();
+
+		for (String id : ids) {
+			collection.addAll(_serviceTrackerMap.getService(id));
+		}
+
+		return collection;
 	}
 
 	private void _indexerSearch(
@@ -284,5 +344,8 @@ public class SearcherImpl implements Searcher {
 
 		return new RuntimeException(searchException);
 	}
+
+	private ServiceTrackerMap<String, List<SearchRequestContributor>>
+		_serviceTrackerMap;
 
 }

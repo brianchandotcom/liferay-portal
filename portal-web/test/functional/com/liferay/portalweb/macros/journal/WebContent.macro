@@ -1246,8 +1246,8 @@ definition {
 			}
 			else {
 				AssertTextEquals(
-					key_placeHolder = "Select Display Page",
-					locator1 = "TextInput#ANY_PLACEHOLDER",
+					ariaLabel = "Display Page Name",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
 					value1 = "${pageName}");
 			}
 		}

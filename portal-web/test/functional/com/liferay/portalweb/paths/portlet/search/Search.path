@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_FACET_CLOUD_LAYOUT</td>
-	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${categoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_FACET_EXPAND_VOCABULARIES</td>
 	<td>xpath=(//span[*[name()='svg'][contains(@class,'lexicon-icon-angle-right component-expanded-d-none')]])[2]</td>
 	<td></td>
@@ -43,6 +38,11 @@
 <tr>
 	<td>CATEGORY_FACET_VOCABULARY_SCOPE_RADIO</td>
 	<td>//span[contains(.,'${vocabularyScope}')]/preceding-sibling::input[@role='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACET_CLOUD_LAYOUT</td>
+	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${facetValueName}')]</td>
 	<td></td>
 </tr>
 <tr>

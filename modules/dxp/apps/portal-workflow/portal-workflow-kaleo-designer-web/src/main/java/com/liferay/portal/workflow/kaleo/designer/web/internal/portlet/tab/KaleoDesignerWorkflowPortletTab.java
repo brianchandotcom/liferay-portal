@@ -120,13 +120,11 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_kaleoDesignerDisplayContext == null) {
-			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
-				_functionActionExecutorServiceWrapperTracker, renderRequest,
-				_kaleoDefinitionVersionLocalService, _portletResourcePermission,
-				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-				_userLocalService);
-		}
+		_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
+			_functionActionExecutorServiceWrapperTracker, renderRequest,
+			_kaleoDefinitionVersionLocalService, _portletResourcePermission,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
+			_userLocalService);
 
 		renderRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,

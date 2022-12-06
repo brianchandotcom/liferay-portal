@@ -127,9 +127,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8835 | Test Summary: Assert Liferay Data Source Contact Count Preview"
-	@priority = 4
+	@ignore = "true"
+	@priority = "4"
 	test AssertLiferayDataSourceContactCountPreview {
 		property portal.release = "true";
+
+		// These tests cannot be executed in the new connection wizard since it does not have an indication of the number of users synchronized
 
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
@@ -137,8 +140,6 @@ definition {
 
 		task ("Go to contact data and get the string with number of contacts") {
 			ACDXPSettings.navToSyncedContactDataMenu();
-
-			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
 			var currentContacts = selenium.getText("ACDXPSettings#SYNC_ALL_CONTACTS_NUMBER");
 
@@ -167,8 +168,6 @@ definition {
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.navToSyncedContactDataMenu();
-
-			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
 			AssertTextEquals(
 				locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_NUMBER",

@@ -54,17 +54,22 @@
 
 <tr>
 	<td>AC_CONNECTION_NAV_SIDEBAR</td>
-	<td>//*[contains(@class, 'nav-link') and contains(@href,'connection')]</td>
+	<td>//*[contains(@class, 'nav-link') and contains(text(),'Connection')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SYNCED_SITES_NAV_SIDEBAR</td>
-	<td>//*[contains(@class, 'nav-link') and contains(@href,'synced-sites')]</td>
+	<td>//*[contains(@class, 'nav-link') and contains(text(),'Properties')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SYNCED_CONTACT_DATA_NAV_SIDEBAR</td>
-	<td>//*[contains(@class, 'nav-link') and contains(@href,'contact')]</td>
+	<td>//*[contains(@class, 'nav-link') and contains(text(),'People')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNCED_ATTRIBUTES_DATA_NAV_SIDEBAR</td>
+	<td>//*[contains(@class, 'nav-link') and contains(text(),'Attributes')]</td>
 	<td></td>
 </tr>
 

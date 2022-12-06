@@ -30,6 +30,8 @@ definition {
 		else {
 			DMDocument.tearDownCP();
 
+			PagesAdmin.tearDownCP();
+
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
 			User.logoutPG();

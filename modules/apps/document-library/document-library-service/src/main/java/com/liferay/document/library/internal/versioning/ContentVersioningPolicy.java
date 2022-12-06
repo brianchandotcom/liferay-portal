@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,33 +39,33 @@ import org.osgi.service.component.annotations.Reference;
 public class ContentVersioningPolicy implements VersioningPolicy {
 
 	@Override
-	public Optional<DLVersionNumberIncrease> computeDLVersionNumberIncrease(
+	public DLVersionNumberIncrease computeDLVersionNumberIncrease(
 		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion) {
 
 		long previousSize = previousDLFileVersion.getSize();
 		long nextSize = nextDLFileVersion.getSize();
 
 		if ((previousSize == 0) && (nextSize >= 0)) {
-			return Optional.empty();
+			return null;
 		}
 
 		if (previousSize != nextSize) {
-			return Optional.of(DLVersionNumberIncrease.MAJOR);
+			return DLVersionNumberIncrease.MAJOR;
 		}
 
 		String previousChecksum = _computeChecksum(previousDLFileVersion);
 
 		if (previousChecksum == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		String nextChecksum = _computeChecksum(nextDLFileVersion);
 
 		if ((nextChecksum == null) || previousChecksum.equals(nextChecksum)) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(DLVersionNumberIncrease.MAJOR);
+		return DLVersionNumberIncrease.MAJOR;
 	}
 
 	private String _computeChecksum(DLFileVersion dlFileVersion) {

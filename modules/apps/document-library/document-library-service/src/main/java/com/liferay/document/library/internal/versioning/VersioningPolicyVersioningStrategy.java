@@ -24,7 +24,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -46,12 +45,12 @@ public class VersioningPolicyVersioningStrategy implements VersioningStrategy {
 		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion) {
 
 		for (VersioningPolicy versioningPolicy : _serviceTrackerList) {
-			Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
+			DLVersionNumberIncrease dlVersionNumberIncrease =
 				versioningPolicy.computeDLVersionNumberIncrease(
 					previousDLFileVersion, nextDLFileVersion);
 
-			if (dlVersionNumberIncreaseOptional.isPresent()) {
-				return dlVersionNumberIncreaseOptional.get();
+			if (dlVersionNumberIncrease != null) {
+				return dlVersionNumberIncrease;
 			}
 		}
 

@@ -32,7 +32,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MetadataVersioningPolicy implements VersioningPolicy {
 
 	@Override
-	public Optional<DLVersionNumberIncrease> computeDLVersionNumberIncrease(
+	public DLVersionNumberIncrease computeDLVersionNumberIncrease(
 		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion) {
 
 		if (!Objects.equals(
@@ -62,10 +61,10 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 				previousDLFileVersion, nextDLFileVersion) ||
 			_isExpandoUpdated(previousDLFileVersion, nextDLFileVersion)) {
 
-			return Optional.of(DLVersionNumberIncrease.MINOR);
+			return DLVersionNumberIncrease.MINOR;
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	private boolean _isDLFileEntryTypeUpdated(

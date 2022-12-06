@@ -70,7 +70,7 @@ public class SkuCommerceMLForecastManagerTest {
 					0, _skuCommerceMLForecasts.size() - 1));
 
 		IdempotentRetryAssert.retryAssert(
-			1, TimeUnit.SECONDS, 3, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_assertResultEquals(
 					skuCommerceMLForecast.getForecastId(),
@@ -99,7 +99,7 @@ public class SkuCommerceMLForecastManagerTest {
 			);
 
 		IdempotentRetryAssert.retryAssert(
-			1, TimeUnit.SECONDS, 3, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_assertResultEquals(
 					skuCommerceMLForecast.getSku(), skuCommerceMLForecasts);

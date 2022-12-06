@@ -61,7 +61,7 @@ public abstract class BaseItemCollectionProviderTestCase {
 		collectionQuery.setRelatedItemObject(cpDefinition);
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_testGetRelatedItemsInfoPage(
 					relatedInfoItemCollectionProvider, collectionQuery);

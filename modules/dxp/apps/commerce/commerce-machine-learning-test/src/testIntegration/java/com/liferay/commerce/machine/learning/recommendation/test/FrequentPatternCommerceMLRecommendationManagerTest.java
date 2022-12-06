@@ -106,7 +106,7 @@ public class FrequentPatternCommerceMLRecommendationManagerTest {
 				);
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_assetResultEquals(
 					antecedentIds,

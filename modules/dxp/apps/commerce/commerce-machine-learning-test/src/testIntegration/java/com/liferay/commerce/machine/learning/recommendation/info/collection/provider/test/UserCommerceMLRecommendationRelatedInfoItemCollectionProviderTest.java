@@ -113,7 +113,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 			_getServiceContext(userCommerceMLRecommendation.getEntryClassPK()));
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_testGetRelatedItemsInfoPage(
 					_cpDefinitions.get(cpDefinitionIndex),
@@ -132,7 +132,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 			_getServiceContext(userCommerceMLRecommendation.getEntryClassPK()));
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_testGetRelatedItemsInfoPage(_cpDefinitions.get(0), 10);
 
@@ -149,7 +149,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 			_getServiceContext(userCommerceMLRecommendation.getEntryClassPK()));
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_testInfoCollectionProvider();
 

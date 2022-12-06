@@ -2416,10 +2416,26 @@ definition {
 		}
 
 		if (isSet(displayPageTemplateName)) {
-			AssertTextEquals(
-				key_titleName = "${displayPageTemplateType} Display Page Template",
-				locator1 = "TextInput#INPUT_CONTAINS_TITLE",
-				value1 = "${displayPageTemplateName}");
+			if (IsElementPresent(key_titleName = "Display Page Template", locator1 = "TextInput#INPUT_CONTAINS_TITLE")) {
+				AssertTextEquals(
+					key_titleName = "${displayPageTemplateType} Display Page Template",
+					locator1 = "TextInput#INPUT_CONTAINS_TITLE",
+					value1 = "${displayPageTemplateName}");
+			}
+			else {
+				if ("${displayPageTemplateType}" == "Default") {
+					AssertTextEquals(
+						ariaLabel = "Display Page Name",
+						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+						value1 = "${displayPageTemplateName}");
+				}
+				else {
+					AssertTextEquals(
+						key_placeHolder = "Select Display Page",
+						locator1 = "TextInput#ANY_PLACEHOLDER",
+						value1 = "${displayPageTemplateName}");
+				}
+			}
 		}
 	}
 

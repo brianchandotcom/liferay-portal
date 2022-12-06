@@ -139,6 +139,8 @@
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
+				<action-key>MANAGE_CHANNEL_ACCOUNT_MANAGERS</action-key>
+				<action-key>MANAGE_OVERRIDE_ELIGIBILITY</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>

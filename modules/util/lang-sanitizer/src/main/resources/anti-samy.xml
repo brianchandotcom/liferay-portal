@@ -377,10 +377,11 @@
 				<literal value="colgroup" />
 			</literal-list>
 		</attribute>
-
-		<!-- If you want users to be able to mess with tabindex, uncomment this -->
-
-		<!--<attribute name="tabindex" description="..."> <regexp-list> <regexp name="number"/> </regexp-list> </attribute>-->
+		<attribute name="tabindex">
+			<regexp-list>
+				<regexp name="number" />
+			</regexp-list>
+		</attribute>
 
 		<!-- Input/form related common attributes -->
 
@@ -574,10 +575,9 @@
 			</attribute>
 		</tag>
 		<tag action="validate" name="map" />
-
-		<!-- base tag removed per demo - this could be enabled with literal-list values you allow -->
-
-		<!--<tag name="base" action="validate"> <attribute name="href"/> </tag>-->
+		<tag action="validate" name="base">
+			<attribute name="href" />
+		</tag>
 
 		<!-- Stylesheet Tags -->
 

@@ -150,8 +150,9 @@ public class ObjectFieldResourceImpl
 				ObjectFieldUtil.getDBType(
 					objectField.getDBTypeAsString(),
 					objectField.getTypeAsString()),
-				objectField.getDefaultValue(), objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
+				objectField.getDefaultValue(),
+				GetterUtil.getBoolean(objectField.getIndexed()),
+				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired(),
@@ -214,8 +215,9 @@ public class ObjectFieldResourceImpl
 				ObjectFieldUtil.getDBType(
 					objectField.getDBTypeAsString(),
 					objectField.getTypeAsString()),
-				objectField.getDefaultValue(), objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
+				objectField.getDefaultValue(),
+				GetterUtil.getBoolean(objectField.getIndexed()),
+				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired(),

@@ -14,7 +14,7 @@ definition {
 
 		Elasticsearch.viewClusterStatus(clusterStatus = "\"cluster_name\" : \"LiferayElasticsearchCluster\"");
 
-		Navigator.openSpecificURL(url = "http://${portalHostname}:9201/_cluster/health?pretty");
+		Navigator.openSpecificURL(url = "http://${portalHostname}:${port}/_cluster/health?pretty");
 
 		while (((IsTextNotEqual(locator1 = "//pre", value1 = "\"status\" : \"green\"")) || (IsTextNotEqual(locator1 = "//pre", value1 = "\"status\" : \"yellow\"")) || (IsElementNotPresent(locator1 = "//pre"))) && (maxIterations = "10")) {
 			Refresh();
@@ -75,8 +75,9 @@ definition {
 			var fileContent = FileUtil.read("${fileLocation}");
 
 			var productionModeEnabled = RegexUtil.replace("${fileContent}", "productionModeEnabled=\"(.*)\"", "1");
+			var updatedProductionMode = RegexUtil.replace("${fileContent}", "productionModeEnabled=B\"(.*)\"", "1");
 
-			if ("${productionModeEnabled}" == "true") {
+			if (("${productionModeEnabled}" == "true") || ("${updatedProductionMode}" == "true")) {
 				return "true";
 			}
 			else {

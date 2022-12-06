@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.rest.internal.resource.v1_0;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -91,7 +93,7 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 					RenderResponseFactory.create(
 						contextHttpServletResponse, liferayRenderRequest),
 					_createSearchContext(
-						destinationFriendlyURL, _getGroupId(groupId),
+						_slashify(destinationFriendlyURL), _getGroupId(groupId),
 						keywordsParameterName, scope, search,
 						suggestionsContributorConfigurations)),
 				suggestionsContributorResult ->
@@ -226,6 +228,14 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
+	}
+
+	private String _slashify(String s) {
+		if (s.charAt(0) == CharPool.SLASH) {
+			return s;
+		}
+
+		return StringPool.SLASH.concat(s);
 	}
 
 	@Reference

@@ -148,7 +148,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		throws PortalException {
 
 		return _commerceShippingFixedOptionService.
-			getCommerceShippingFixedOptions(
+			getCommerceChannelCommerceShippingFixedOptions(
 				getCommerceShippingMethodId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 	}

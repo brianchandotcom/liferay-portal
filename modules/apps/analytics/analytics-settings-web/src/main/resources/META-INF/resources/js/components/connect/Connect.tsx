@@ -97,7 +97,7 @@ const Connect: React.FC<IConnectProps> = ({onConnect, title}) => {
 						<>
 							<ClayButton
 								className="mr-3"
-								displayType="secondary"
+								displayType="primary"
 								onClick={() => window.open(liferayAnalyticsURL)}
 							>
 								{Liferay.Language.get('go-to-workspace')}

@@ -23,7 +23,9 @@ import com.liferay.commerce.shipping.engine.fixed.service.base.CommerceShippingF
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.math.BigDecimal;
@@ -111,13 +113,15 @@ public class CommerceShippingFixedOptionServiceImpl
 	}
 
 	@Override
-	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
-			long commerceShippingMethodId, int start, int end)
+	public List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end)
 		throws PortalException {
 
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.getCommerceShippingMethod(
-				commerceShippingMethodId);
+			_commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethod(
+					commerceShippingMethodId);
 
 		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
@@ -128,14 +132,17 @@ public class CommerceShippingFixedOptionServiceImpl
 	}
 
 	@Override
-	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
-			long commerceShippingMethodId, int start, int end,
-			OrderByComparator<CommerceShippingFixedOption> orderByComparator)
+	public List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end,
+				OrderByComparator<CommerceShippingFixedOption>
+					orderByComparator)
 		throws PortalException {
 
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.getCommerceShippingMethod(
-				commerceShippingMethodId);
+			_commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethod(
+					commerceShippingMethodId);
 
 		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
@@ -146,9 +153,10 @@ public class CommerceShippingFixedOptionServiceImpl
 	}
 
 	@Override
-	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
-			long companyId, long groupId, long commerceShippingMethodId,
-			String keywords, int start, int end)
+	public List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long companyId, long groupId, long commerceShippingMethodId,
+				String keywords, int start, int end)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
@@ -160,13 +168,14 @@ public class CommerceShippingFixedOptionServiceImpl
 	}
 
 	@Override
-	public int getCommerceShippingFixedOptionsCount(
+	public int getCommerceChannelCommerceShippingFixedOptionsCount(
 			long commerceShippingMethodId)
 		throws PortalException {
 
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.getCommerceShippingMethod(
-				commerceShippingMethodId);
+			_commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethod(
+					commerceShippingMethodId);
 
 		_checkCommerceChannel(commerceShippingMethod.getGroupId());
 
@@ -176,7 +185,7 @@ public class CommerceShippingFixedOptionServiceImpl
 	}
 
 	@Override
-	public long getCommerceShippingFixedOptionsCount(
+	public long getCommerceChannelCommerceShippingFixedOptionsCount(
 			long companyId, long groupId, long commerceShippingMethodId,
 			String keywords)
 		throws PortalException {
@@ -186,6 +195,27 @@ public class CommerceShippingFixedOptionServiceImpl
 		return commerceShippingFixedOptionLocalService.
 			getCommerceShippingFixedOptionsCount(
 				companyId, groupId, commerceShippingMethodId, keywords);
+	}
+
+	@Override
+	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
+			long commerceShippingMethodId, int start, int end,
+			OrderByComparator<CommerceShippingFixedOption> orderByComparator)
+		throws PortalException {
+
+		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
+			commerceShippingFixedOptionLocalService.
+				getCommerceShippingFixedOptions(
+					commerceShippingMethodId, start, end, orderByComparator);
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		return ListUtil.filter(
+			commerceShippingFixedOptions,
+			commerceShippingFixedOption -> permissionChecker.hasPermission(
+				null, CommerceShippingFixedOption.class.getName(),
+				commerceShippingFixedOption.getCommerceShippingFixedOptionId(),
+				ActionKeys.VIEW));
 	}
 
 	@Override

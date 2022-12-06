@@ -114,6 +114,11 @@
 <!-- NEW PROPERTY SCREEN -->
 
 <tr>
+	<td>NEW_PROPERTY_NAME</td>
+	<td>//input[@id='inputPropertyName']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMBINATED_PROPERTY_OPTION</td>
 	<td>//*[contains(@value, 'combined')]</td>
 	<td></td>

@@ -74,6 +74,33 @@ definition {
 	}
 
 	@priority = "4"
+	test CanEditTheRoleTitle {
+		JSONRole.addRegularRole(
+			roleKey = "Update Role Title",
+			roleTitle = "Update Role Title");
+
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Update Role Title");
+
+		Role.editRole(
+			roleDescriptionEdit = "This is an updated role description.",
+			roleKeyEdit = "This is an updated Role Key",
+			roleTitleEdit = "This is an updated Role Title");
+
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoRoleType();
+
+		Role.viewCP(
+			roleDescription = "This is an updated role description.",
+			roleKey = "This is an updated Role Key",
+			roleTitle = "This is an updated Role Title");
+	}
+
+	@priority = "4"
 	test CannotAddRoleIfSimilarKeyExists {
 		Role.openRolesAdmin();
 

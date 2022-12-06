@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//li[a[@aria-expanded='true']]//a[contains(@id,'Portlet') and @data-title='${key_portlet}']</td>
+	<td>xpath=(//div | //li)[a[@aria-expanded='true']]//a[contains(@id,'Portlet') and @data-title='${key_portlet}']</td>
 	<td></td>
 </tr>
 <tr>

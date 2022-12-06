@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -1006,12 +1007,18 @@ public class DefaultObjectEntryManagerImplTest {
 					repositoryFileEntry = _dlAppService.getFileEntry(
 						fileEntry.getId());
 
-				Assert.assertEquals(
-					_dlURLHelper.getDownloadURL(
-						repositoryFileEntry,
-						repositoryFileEntry.getFileVersion(), null,
-						StringPool.BLANK),
-					link.getHref());
+				String url = _dlURLHelper.getDownloadURL(
+					repositoryFileEntry, repositoryFileEntry.getFileVersion(),
+					null, StringPool.BLANK);
+
+				url = HttpComponentsUtil.addParameter(
+					url, "objectDefinitionExternalReferenceCode",
+					_objectDefinition2.getExternalReferenceCode());
+				url = HttpComponentsUtil.addParameter(
+					url, "objectEntryExternalReferenceCode",
+					actualObjectEntry.getExternalReferenceCode());
+
+				Assert.assertEquals(url, link.getHref());
 			}
 			else if (Objects.equals(
 						expectedEntry.getKey(), "dateObjectFieldName")) {

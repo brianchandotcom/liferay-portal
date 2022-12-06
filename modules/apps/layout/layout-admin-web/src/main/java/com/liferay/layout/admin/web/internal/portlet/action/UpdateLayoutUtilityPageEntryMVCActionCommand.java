@@ -111,9 +111,12 @@ public class UpdateLayoutUtilityPageEntryMVCActionCommand
 		else if (portalException instanceof
 					LayoutUtilityPageEntryNameException.MustNotBeDuplicate) {
 
-			errorMessage = _language.get(
+			String name = ParamUtil.getString(actionRequest, "name");
+
+			errorMessage = _language.format(
 				themeDisplay.getLocale(),
-				"already-exist-another-utility-page-with-this-name");
+				"there-is-already-a-utility-page-with-the-name-x",
+				new String[] {name});
 		}
 		else if (portalException instanceof
 					LayoutUtilityPageEntryNameException.

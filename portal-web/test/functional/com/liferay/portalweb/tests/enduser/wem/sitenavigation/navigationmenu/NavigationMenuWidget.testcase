@@ -804,8 +804,6 @@ definition {
 	<#list entries as navItem>
 		<#assign customFields = navItem.getExpandoAttributes()/>
 		${customFields["subtitle"]}
-	</#list>
-</#if>
 			''';
 
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");

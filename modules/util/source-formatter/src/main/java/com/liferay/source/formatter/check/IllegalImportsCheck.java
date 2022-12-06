@@ -14,7 +14,12 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.GitUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.processor.SourceProcessor;
 
 /**
  * @author Hugo Huijser
@@ -28,7 +33,8 @@ public class IllegalImportsCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
 		content = StringUtil.replace(
 			content,
@@ -204,18 +210,38 @@ public class IllegalImportsCheck extends BaseFileCheck {
 
 		// LPS-170503
 
-		if (isAttributeValue(_AVOID_OPTIONAL_KEY, absolutePath) &&
-			content.contains("java.util.Optional")) {
+		SourceProcessor sourceProcessor = getSourceProcessor();
 
-			addMessage(
-				fileName, "Do not use java.util.Optional, see LPS-170503");
-		}
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
 
-		if (isAttributeValue(_AVOID_STREAM_KEY, absolutePath) &&
-			content.contains("java.util.stream.Stream")) {
+		if (sourceFormatterArgs.isFormatCurrentBranch()) {
+			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
+				sourceFormatterArgs.getBaseDirName(),
+				sourceFormatterArgs.getGitWorkingBranchName(),
+				SourceUtil.getAbsolutePath(fileName));
 
-			addMessage(
-				fileName, "Do not use java.util.stream.Stream, see LPS-170503");
+			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
+				if (!line.startsWith(StringPool.PLUS)) {
+					continue;
+				}
+
+				if (isAttributeValue(_AVOID_OPTIONAL_KEY, absolutePath) &&
+					line.contains("java.util.Optional")) {
+
+					addMessage(
+						fileName,
+						"Do not use java.util.Optional, see LPS-170503");
+				}
+
+				if (isAttributeValue(_AVOID_STREAM_KEY, absolutePath) &&
+					line.contains("java.util.stream.Stream")) {
+
+					addMessage(
+						fileName,
+						"Do not use java.util.stream.Stream, see LPS-170503");
+				}
+			}
 		}
 
 		return content;

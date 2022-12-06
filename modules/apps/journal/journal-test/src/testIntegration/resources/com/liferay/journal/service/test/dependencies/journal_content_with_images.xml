@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<root available-locales="es_ES,en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Image47928126" index-type="text" instance-id="a4NC7xMP" name="Image47928126" type="image">
+		<dynamic-content language-id="es_ES"><![CDATA[[$IMAGE_JSON_1$]]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$IMAGE_JSON_2$]]]></dynamic-content>
+	</dynamic-element>
+</root>

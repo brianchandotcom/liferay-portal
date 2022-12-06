@@ -1,0 +1,210 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"dataType": "image",
+				"fieldNamespace": "",
+				"fieldReference": "Image66588963",
+				"objectFieldName": "",
+				"requiredDescription": true,
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": {
+				}
+			},
+			"fieldType": "image",
+			"indexType": "text",
+			"indexable": true,
+			"label": {
+				"en_US": "Image"
+			},
+			"localizable": true,
+			"name": "Image66588963",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "Fieldset08801351",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Image85846367"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Date08509053"
+								],
+								"size": 12
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"en_US": "Fields Group"
+			},
+			"localizable": false,
+			"name": "Fieldset08801351",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"dataType": "image",
+						"fieldNamespace": "",
+						"fieldReference": "Image85846367",
+						"objectFieldName": "",
+						"requiredDescription": true,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": {
+						}
+					},
+					"fieldType": "image",
+					"indexType": "text",
+					"indexable": true,
+					"label": {
+						"en_US": "Image"
+					},
+					"localizable": true,
+					"name": "Image85846367",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"dataType": "date",
+						"fieldNamespace": "",
+						"fieldReference": "Date08509053",
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "date",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Date"
+					},
+					"localizable": true,
+					"name": "Date08509053",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Image66588963"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Fieldset08801351"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Image With Repeatable Fields"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "Image With Repeatable Fields"
+	},
+	"storageType": "default"
+}

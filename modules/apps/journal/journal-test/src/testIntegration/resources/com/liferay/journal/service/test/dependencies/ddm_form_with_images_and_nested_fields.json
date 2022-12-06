@@ -1,0 +1,166 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"collapsible": false,
+				"ddmStructureId": "",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "Fieldset65181910",
+				"labelAtStructureLevel": true,
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Image73854855"
+								],
+								"size": 12
+							}
+						]
+					},
+					{
+						"columns": [
+							{
+								"fields": [
+									"Date40725435"
+								],
+								"size": 12
+							}
+						]
+					}
+				],
+				"upgradedStructure": false
+			},
+			"defaultValue": {
+			},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {
+				"en_US": "Fields Group"
+			},
+			"localizable": false,
+			"name": "Fieldset65181910",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"dataType": "image",
+						"fieldNamespace": "",
+						"fieldReference": "Image73854855",
+						"objectFieldName": "",
+						"requiredDescription": true,
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": {
+						}
+					},
+					"fieldType": "image",
+					"indexType": "text",
+					"indexable": true,
+					"label": {
+						"en_US": "Image"
+					},
+					"localizable": true,
+					"name": "Image73854855",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				},
+				{
+					"customProperties": {
+						"dataType": "date",
+						"fieldNamespace": "",
+						"fieldReference": "Date40725435",
+						"labelAtStructureLevel": true,
+						"nativeField": false,
+						"objectFieldName": "",
+						"requiredErrorMessage": {
+							"en_US": ""
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "date",
+					"indexType": "keyword",
+					"indexable": true,
+					"label": {
+						"en_US": "Date"
+					},
+					"localizable": true,
+					"name": "Date40725435",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					}
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Fieldset65181910"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Image With Nested Fields"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "Image With Nested Fields"
+	},
+	"storageType": "default"
+}

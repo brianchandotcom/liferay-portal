@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<root available-locales="es_ES,en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Image66588963" index-type="text" instance-id="ZAap3sqt" name="Image66588963" type="image">
+		<dynamic-content language-id="es_ES"><![CDATA[[$IMAGE_JSON_1$]]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$IMAGE_JSON_2$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Image66588963" index-type="text" instance-id="2iectcvt" name="Image66588963" type="image">
+		<dynamic-content language-id="es_ES"><![CDATA[[$IMAGE_JSON_3$]]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$IMAGE_JSON_4$]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Fieldset08801351" index-type="" instance-id="sdz9D7zb" name="Fieldset08801351" type="fieldset">
+		<dynamic-element field-reference="Image85846367" index-type="text" instance-id="3UXvAXCm" name="Image85846367" type="image">
+			<dynamic-content language-id="es_ES"><![CDATA[[$IMAGE_JSON_5$]]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[[$IMAGE_JSON_6$]]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Date08509053" index-type="keyword" instance-id="es3CrqGr" name="Date08509053" type="date">
+			<dynamic-content language-id="es_ES"><![CDATA[2022-12-06]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[2022-12-06]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="Fieldset08801351" index-type="" instance-id="lurnkggc" name="Fieldset08801351" type="fieldset">
+		<dynamic-element field-reference="Image85846367" index-type="text" instance-id="uyspeck0" name="Image85846367" type="image">
+			<dynamic-content language-id="es_ES"><![CDATA[[$IMAGE_JSON_7$]]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[[$IMAGE_JSON_8$]]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Date08509053" index-type="keyword" instance-id="67sp0iqm" name="Date08509053" type="date">
+			<dynamic-content language-id="es_ES"><![CDATA[2022-12-07]]></dynamic-content>
+			<dynamic-content language-id="en_US"><![CDATA[2022-12-07]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

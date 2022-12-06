@@ -146,11 +146,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SYNC_CONTACTS_OPTION</td>
-	<td>//fieldset//*[contains(@href, 'synced-contact-data')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SYNC_BY_ORGANIZATIONS_PREVIEW</td>
 	<td>//fieldset//a[2]//div[2]//small[contains(@class,'list-group-subtext')]</td>
 	<td></td>

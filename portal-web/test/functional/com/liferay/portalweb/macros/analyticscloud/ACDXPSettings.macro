@@ -229,36 +229,52 @@ definition {
 		}
 	}
 
-	macro syncContactData {
-		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
-
-		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro syncContactSingleUserGroupData {
-		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
-
+	macro syncContactsData {
 		Click(
-			key_option = "Sync by User Groups",
-			locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+			key_option = "Select Contacts",
+			locator1 = "Panel#PANEL_COLLAPSED");
 
-		Click(
-			key_entry = ${userGroup},
-			locator1 = "ACDXPSettings#USER_GROUP_OPTION_CHECKBOX");
+		if (isSet(orgName)) {
+			Click(
+				key_option = "Organizations",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
 
-		Click(
-			key_text = "Save and Next",
-			locator1 = "Button#ANY");
+			Click(
+				key_entry = "${orgName}",
+				locator1 = "ACDXPSettings#SELECT_OPTION_CHECKBOX");
 
-		Button.clickSave();
+			Click(
+				key_text = "Add",
+				locator1 = "Button#ANY");
 
-		Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
+		}
+		else if (isSet(userGroup)) {
+			Click(
+				key_option = "User Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+
+			Click(
+				key_entry = "${userGroup}",
+				locator1 = "ACDXPSettings#SELECT_OPTION_CHECKBOX");
+
+			Click(
+				key_text = "Add",
+				locator1 = "Button#ANY");
+
+			Alert.viewSuccessMessage();
+		}
+		else{
+			// if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
+			// 	Check.checkToggleSwitch(
+			// 		key_syncFieldName = "Sync All Contacts",
+			// 		locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
+			// }
+
+			Check.checkToggleSwitch(
+				key_syncFieldName = "Sync All Contacts",
+				locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
+		}
 	}
 
 	macro syncNewContactData {

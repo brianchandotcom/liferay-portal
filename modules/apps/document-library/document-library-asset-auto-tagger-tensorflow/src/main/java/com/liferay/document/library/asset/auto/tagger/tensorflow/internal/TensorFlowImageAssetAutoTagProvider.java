@@ -39,8 +39,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -123,22 +121,6 @@ public class TensorFlowImageAssetAutoTagProvider
 				properties);
 	}
 
-	private Stream<Integer> _getBestIndexesStream(
-		float[] probabilities, float confidenceThreshold) {
-
-		List<Integer> bestIndexes = new ArrayList<>();
-
-		for (int i = 0; i < probabilities.length; i++) {
-			if ((probabilities[i] >= confidenceThreshold) &&
-				(i < _labels.length)) {
-
-				bestIndexes.add(i);
-			}
-		}
-
-		return bestIndexes.stream();
-	}
-
 	private boolean _isSupportedMimeType(String mimeType) {
 		return _supportedMimeTypes.contains(mimeType);
 	}
@@ -162,14 +144,17 @@ public class TensorFlowImageAssetAutoTagProvider
 			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType),
 			maximumNumberOfRelaunches, maximumNumberOfRelaunchesTimeout * 1000);
 
-		Stream<Integer> stream = _getBestIndexesStream(
-			labelProbabilities, confidenceThreshold);
+		List<String> labels = new ArrayList<>();
 
-		return stream.map(
-			i -> _labels[i]
-		).collect(
-			Collectors.toList()
-		);
+		for (int i = 0; i < labelProbabilities.length; i++) {
+			if ((labelProbabilities[i] >= confidenceThreshold) &&
+				(i < _labels.length)) {
+
+				labels.add(_labels[i]);
+			}
+		}
+
+		return labels;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

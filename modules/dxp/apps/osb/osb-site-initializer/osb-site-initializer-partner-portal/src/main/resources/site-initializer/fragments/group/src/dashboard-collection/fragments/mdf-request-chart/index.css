@@ -2,11 +2,6 @@
 	font-weight: 500;
 }
 
-.mdf-chart-card-height {
-	box-sizing: border-box;
-	height: 479px;
-}
-
 .label-chart.pending {
 	background-color: #ffd764;
 	border-color: #ffd764;
@@ -19,65 +14,7 @@
 	color: #fff;
 }
 
-.mdf-progress-bar {
-	border-radius: 4px;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	height: 24px;
-	margin: 10px, 0;
-	white-space: nowrap;
-}
-
-.mdf-progress-bar .progress-bar-item.pending {
-	background-color: #ffae1b;
-	border-radius: 4px;
-}
-
-.mdf-progress-bar .progress-bar-item.approved {
-	background-color: #47c464;
-	border-radius: 4px;
-}
-
-.mdf-progress-bar .legend-item-label {
-	color: #6c6c75;
-	font-size: 13px;
-	font-weight: 400;
-	line-height: 16px;
-}
-
-.mdf-progress-bar .legend-bar-item {
-	border-radius: 2px;
-	height: 16px;
-	margin-right: 11px;
-	width: 16px;
-}
-
-.mdf-progress-bar .legend-bar-item.pending {
-	background-color: #ffae1b;
-}
-.mdf-progress-bar .legend-bar-item.requested {
-	background-color: #ffae1b;
-	margin-left: 32px;
-}
-
-.mdf-progress-bar .legend-bar-item.approved {
-	background-color: #47c464;
-}
-
-/*# sourceMappingURL=index.css.map */
-.mdf-progress-bar .approvedItem {
-	margin-right: 2px;
-}
-
-.mdf-progress-bar .pendingItem {
-	margin-left: 50px;
-}
-
-.progress-bar-border {
-	background-color: #e7efff;
-	border-radius: 4px;
+.mdf-request-chart-card-height {
 	box-sizing: border-box;
-	max-height: 32px;
-	padding: 4px;
+	height: 560px;
 }

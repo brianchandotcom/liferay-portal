@@ -10,136 +10,83 @@
  */
 
 import ClayButton from '@clayui/button';
-import classNames from 'classnames';
-import React from 'react';
+import ClayChart from '@clayui/charts';
+import React, {useCallback} from 'react';
 
 import Container from '../../common/components/container';
-import {mdf} from '../../common/mock/mock';
-import {naNToZero} from '../../common/utils';
+import {currencyFormat} from '../../common/utils';
 
-const MDFbarProgress = ({
-	items,
-	MdfbarClassNames = {
-		approved: 'approved',
-		pending: 'pending',
-	},
-}) => {
-	const total = items.reduce(
-		(prevValue, currentValue) => prevValue + currentValue[1].qtd,
-		0
-	);
+const newdata = [
+	['Requested', 3000],
+	['Approved', 1500],
+	['Claimed', 2000],
+	['Claim Approved', 1000],
+	['Expiring Soon', 1000],
+	['Expired', 1000],
+	['Paid', 500],
+];
 
-	return (
-		<>
-			<div className="progress-bar-border">
-				<div className="mdf-progress-bar">
-					{items.map((item, index) => {
-						const [label, value] = item;
-
-						const percent = naNToZero((value.qtd / total) * 100);
-
-						return (
-							<div
-								className={classNames(
-									'progress-bar-item',
-									MdfbarClassNames[label],
-									{
-										approvedItem: index === 0,
-									}
-								)}
-								key={index}
-								style={{width: `${percent}%`}}
-								title={`${value.qtd} ${label}`}
-							/>
-						);
-					})}
-				</div>
-			</div>
-
-			<div className="d-flex mdf-progress-bar">
-				{items.map((item, index) => {
-					const [label, value] = item;
-					const percent = naNToZero((value.qtd / total) * 100);
-
-					return (
-						<div
-							className="d-flex flex-row"
-							key={index}
-							style={{width: `${percent}%`}}
-						>
-							<div className="align-items-center">
-								<div className="d-flex flex-column">
-									<span
-										className="font-family-sans-serif mx-1"
-										title={value.qtd}
-									>
-										{value.qtd} {label}
-									</span>
-
-									<span className="font-family-sans-serif mx-1">
-										{value.total}
-									</span>
-								</div>
-							</div>
-						</div>
-					);
-				})}
-			</div>
-		</>
-	);
-};
-
-const LegendMDF = () => {
-	const label = {
-		aproved: 'Approved',
-		requested: 'Requested',
-	};
-
-	return (
-		<>
-			<div className="d-flex mdf-progress-bar">
-				<div className="d-flex flex-row">
-					<div className="align-items-center d-flex">
-						<div className="approved legend-bar-item" />
-					</div>
-
-					<span className="legend-item-label ml-1 mr-2 mt-1 text-neutral-6">
-						{label.aproved}
-					</span>
-				</div>
-
-				<div className="d-flex flex-row">
-					<div className="align-items-center d-flex">
-						<div className="legend-bar-item requested" />
-					</div>
-
-					<span className="legend-item-label ml-1 mr-2 mt-1 text-neutral-6">
-						{label.requested}
-					</span>
-				</div>
-			</div>
-		</>
-	);
+const colors = {
+	'Approved': '#003EB3',
+	'Claim Approved': '#377CFF',
+	'Claimed': '#0053F0',
+	'Expired': '#BBD2FF',
+	'Expiring Soon': '#8FB5FF',
+	'Paid': '#E7EFFF',
+	'Requested': '#00256C',
 };
 
 export default function () {
-	const sortedItems = Object.entries(mdf.ProgressMdf);
+	const mdfRequestTotal = newdata.reduce(
+		(prevValue, currValue) => prevValue + currValue[1],
+		0
+	);
 
-	const sortedItemsClain = Object.entries(mdf.ProgressClain);
+	const chart = {
+		data: {
+			colors,
+			columns: newdata,
+			type: 'donut',
+		},
+		donut: {
+			expand: false,
+			label: {
+				ratio: 1,
+				show: true,
+			},
+			legend: {
+				show: false,
+			},
+			title: `USD ${currencyFormat(mdfRequestTotal)}\nTotal MDF`,
+			width: 65,
+		},
+		legend: {show: false},
+		size: {
+			height: 400,
+			width: 300,
+		},
+		tooltip: {
+			show: true,
+		},
+	};
 
-	const totalRequest =
-		mdf.ProgressMdf.approved.qtd + mdf.ProgressMdf.pending.qtd;
+	const legendTransformData = useCallback((newItems, colors) => {
+		return newItems.map((item, index) => ({
+			color: Object.entries(colors)[index][1],
+			name: item[0],
+			value: item[1],
+		}));
+	}, []);
 
-	const totalClain =
-		mdf.ProgressClain.approved.qtd + mdf.ProgressClain.pending.qtd;
+	const legendItems = legendTransformData(newdata, colors);
 
 	return (
 		<Container
-			className="mdf-chart-card-height"
+			className="mdf-request-chart-card-height"
 			footer={
 				<>
 					<ClayButton className="mr-4 mt-2" displayType="primary">
-						New MDF Request
+						New MDF TESTE
 					</ClayButton>
 					<ClayButton
 						className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
@@ -149,47 +96,47 @@ export default function () {
 					</ClayButton>
 				</>
 			}
-			title="MDF Requests"
+			title="Market Development Funds"
 		>
-			<div className="d-flex flex-column flex-content-between h-100">
-				<div className="d-flex flex-column h-100 mb-5">
-					<div className="d-flex flex-row justify-content-between">
-						<div className="font-weight-bold h5">Request Funds</div>
-
-						<div>
-							<span className="font-weight-bold text-neutral-9">
-								{totalRequest} &nbsp;
-							</span>
-							total requests &nbsp; | &nbsp;
-							<span className="font-weight-bold text-neutral-9">
-								USD $92.993,29
-							</span>
-						</div>
+			<div className="align-items-stretch d-flex">
+				<div className="d-flex px-4">
+					<div className="d-flex justify-content-start mdf-request-chart">
+						<ClayChart
+							className="d-flex justify-content-center"
+							data={chart.data}
+							donut={chart.donut}
+							legend={chart.legend}
+							size={chart.size}
+							title={chart.donut.title}
+						/>
 					</div>
-
-					<MDFbarProgress items={sortedItems} />
 				</div>
 
-				<div className="d-flex flex-column h-100 mb-3">
-					<div className="d-flex flex-row justify-content-between">
-						<div className="font-weight-bold h5">Clain Funds</div>
+				<div className="d-flex flex-column justify-content-between pb-4 pl-4">
+					<div className="d-flex flex-wrap h-100 justify-content-between mb-1">
+						{legendItems.map((item, index) => {
+							return (
+								<div key={index}>
+									<div className="align-items-center d-flex">
+										<span
+											className="mr-2 rounded-xs square-status-legend"
+											style={{
+												backgroundColor: item.color,
+											}}
+										></span>
 
-						<div>
-							<span className="font-weight-bold text-neutral-9">
-								{totalClain} &nbsp;
-							</span>
-							total &nbsp;| &nbsp;
-							<span className="font-weight-bold text-neutral-9">
-								USD $12.000,50
-							</span>
-						</div>
+										<div className="mr-1">{item.name}</div>
+
+										<div className="font-weight-semi-bold">
+											{`USD ${currencyFormat(
+												item.value
+											)}`}
+										</div>
+									</div>
+								</div>
+							);
+						})}
 					</div>
-
-					<MDFbarProgress items={sortedItemsClain} />
-				</div>
-
-				<div className="d-flex flex-column h-100 mt-5">
-					<LegendMDF />
 				</div>
 			</div>
 		</Container>

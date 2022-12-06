@@ -32,6 +32,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -84,13 +88,30 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		String className, long companyId, String objectActionTriggerKey,
 		JSONObject payloadJSONObject, long userId) {
 
+		String name = PrincipalThreadLocal.getName();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		try {
+			User user = _userLocalService.getUser(userId);
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
+
 			_executeObjectActions(
 				className, companyId, objectActionTriggerKey, payloadJSONObject,
 				userId);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 	}
 
@@ -234,6 +255,9 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private SystemObjectDefinitionMetadataRegistry

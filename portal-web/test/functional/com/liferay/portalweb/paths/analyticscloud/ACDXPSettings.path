@@ -36,11 +36,6 @@
 	<td>//button[@disabled='' and contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SITE_NAME</td>
-	<td>//td[contains(@class, 'lfr-site-name-column')]</td>
-	<td></td>
-</tr>
 
 <!-- NAVIGATION WIZARD ITEMS -->
 

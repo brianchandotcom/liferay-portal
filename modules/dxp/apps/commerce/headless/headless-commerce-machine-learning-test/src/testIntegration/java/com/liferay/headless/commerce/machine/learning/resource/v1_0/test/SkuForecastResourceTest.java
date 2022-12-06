@@ -73,7 +73,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 		List<String> expectedSkus = _skus.subList(0, 2);
 
 		IdempotentRetryAssert.retryAssert(
-			1, TimeUnit.SECONDS, 3, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_testGetSkuForecastsByMonthlyRevenuePage(expectedSkus);
 
@@ -87,7 +87,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
-			1, TimeUnit.SECONDS, 3, TimeUnit.SECONDS,
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> {
 				_testGetSkuForecastsByMonthlyRevenuePageWithPagination();
 

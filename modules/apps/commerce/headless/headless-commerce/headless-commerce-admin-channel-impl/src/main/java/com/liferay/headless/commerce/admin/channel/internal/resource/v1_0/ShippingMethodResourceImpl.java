@@ -59,23 +59,27 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 
 		return Page.of(
 			transform(
-				_commerceShippingMethodService.getCommerceShippingMethods(
-					commerceChannel.getGroupId(), pagination.getStartPosition(),
-					pagination.getEndPosition(),
-					new CommerceShippingMethodPriorityComparator()),
+				_commerceShippingMethodService.
+					getCommerceChannelCommerceShippingMethods(
+						commerceChannel.getGroupId(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition(),
+						new CommerceShippingMethodPriorityComparator()),
 				this::_toShippingMethod),
 			pagination,
-			_commerceShippingMethodService.getCommerceShippingMethodsCount(
-				commerceChannel.getGroupId()));
+			_commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethodsCount(
+					commerceChannel.getGroupId()));
 	}
 
 	private ShippingOption[] _getShippingOptions(long shippingMethodId)
 		throws PortalException {
 
 		return transformToArray(
-			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
-				shippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new CommerceShippingFixedOptionPriorityComparator()),
+			_commerceShippingFixedOptionService.
+				getCommerceChannelCommerceShippingFixedOptions(
+					shippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					new CommerceShippingFixedOptionPriorityComparator()),
 			commerceShippingFixedOption -> new ShippingOption() {
 				{
 					description = LanguageUtils.getLanguageIdMap(

@@ -124,6 +124,7 @@ definition {
 		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingGroupID";
 
 		JSONGroup.addGroup(groupName = "Site Name");
+
 		var groupId1 = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var groupId2 = JSONGroupSetter.setGroupId(groupName = "Site Name");
 		var keyword = "general groupid";

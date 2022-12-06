@@ -204,18 +204,26 @@ public class IllegalImportsCheck extends BaseFileCheck {
 
 		// LPS-170503
 
-		if (content.contains("java.util.Optional")) {
+		if (isAttributeValue(_AVOID_OPTIONAL_KEY, absolutePath) &&
+			content.contains("java.util.Optional")) {
+
 			addMessage(
 				fileName, "Do not use java.util.Optional, see LPS-170503");
 		}
 
-		if (content.contains("java.util.stream.Stream")) {
+		if (isAttributeValue(_AVOID_STREAM_KEY, absolutePath) &&
+			content.contains("java.util.stream.Stream")) {
+
 			addMessage(
 				fileName, "Do not use java.util.stream.Stream, see LPS-170503");
 		}
 
 		return content;
 	}
+
+	private static final String _AVOID_OPTIONAL_KEY = "avoidOptional";
+
+	private static final String _AVOID_STREAM_KEY = "avoidStream";
 
 	private static final String _ENFORCE_COOKIES_MANAGER_UTIL_KEY =
 		"enforceCookiesManagerUtil";

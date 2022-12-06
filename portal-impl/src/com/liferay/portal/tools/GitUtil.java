@@ -85,14 +85,28 @@ public class GitUtil {
 			String baseDirName, String gitWorkingBranchName)
 		throws Exception {
 
+		return getCurrentBranchFileDiff(baseDirName, gitWorkingBranchName, "");
+	}
+
+	public static String getCurrentBranchFileDiff(
+			String baseDirName, String gitWorkingBranchName, String fileName)
+		throws Exception {
+
 		String gitWorkingBranchLatestCommitId = _getLatestCommitId(
 			gitWorkingBranchName, "origin/" + gitWorkingBranchName,
 			"upstream/" + gitWorkingBranchName);
 
 		StringBundler sb = new StringBundler();
 
+		String gitCommand =
+			"git diff " + gitWorkingBranchLatestCommitId + "..HEAD";
+
+		if (Validator.isNotNull(fileName)) {
+			gitCommand = gitCommand + " -- " + fileName;
+		}
+
 		try (UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-				"git diff " + gitWorkingBranchLatestCommitId + "..HEAD")) {
+				gitCommand)) {
 
 			String line = null;
 

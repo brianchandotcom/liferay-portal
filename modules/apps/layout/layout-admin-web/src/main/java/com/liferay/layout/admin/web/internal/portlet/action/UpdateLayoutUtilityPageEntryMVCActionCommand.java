@@ -123,14 +123,14 @@ public class UpdateLayoutUtilityPageEntryMVCActionCommand
 						MustNotContainInvalidCharacters) {
 
 			LayoutUtilityPageEntryNameException.MustNotContainInvalidCharacters
-				lptene =
+				layoutUtilityPageEntryNameException =
 					(LayoutUtilityPageEntryNameException.
 						MustNotContainInvalidCharacters)portalException;
 
 			errorMessage = _language.format(
 				themeDisplay.getLocale(),
 				"name-cannot-contain-the-following-invalid-character-x",
-				lptene.character);
+				layoutUtilityPageEntryNameException.character);
 		}
 		else if (portalException instanceof
 					LayoutUtilityPageEntryNameException.

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.4.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_4_0.dtd">
+
+<resource-action-mapping>
+	<model-resource>
+		<model-name>com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption</model-name>
+		<portlet-ref>
+			<portlet-name>com.liferay.commerce.account.web.internal.portlet.CommerceAccountPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_shipping_web_internal_portlet_CommerceShippingMethodPortlet</portlet-name>
+		</portlet-ref>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+			<owner-defaults>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</owner-defaults>
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

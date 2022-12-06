@@ -202,6 +202,18 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					"org.slf4j.Logger");
 		}
 
+		// LPS-170503
+
+		if (content.contains("java.util.Optional")) {
+			addMessage(
+				fileName, "Do not use java.util.Optional, see LPS-170503");
+		}
+
+		if (content.contains("java.util.stream.Stream")) {
+			addMessage(
+				fileName, "Do not use java.util.stream.Stream, see LPS-170503");
+		}
+
 		return content;
 	}
 

@@ -81,6 +81,41 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro createNewPublicationWithTemplate {
+		if ("${gotoPublicationsAdmin}" == "true") {
+			PublicationsNavigator.openPublicationsAdmin();
+
+			Click(locator1 = "Button#PLUS");
+		}
+		else {
+			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+
+			MenuItem.click(menuItem = "Create New Publication");
+		}
+
+		Click(locator1 = "PublicationsTemplate#TEMPLATE_SELECTOR");
+
+		Select(
+			key_templateName = "${templateName}",
+			locator1 = "Publications#TEMPLATE_OPTION");
+
+		if (isSet(publicationName)) {
+			AssertTextEquals(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "${publicationName}");
+		}
+
+		if (isSet(publicationDescription)) {
+			AssertTextEquals(
+				locator1 = "Publications#PUBLICATION_DESCRIPTION",
+				value1 = "${publicationDescription}");
+		}
+
+		Button.click(button = "Create");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deletePublication {
 		PublicationsNavigator._gotoPublicationEllipsisItem(
 			menuItem = "Delete",

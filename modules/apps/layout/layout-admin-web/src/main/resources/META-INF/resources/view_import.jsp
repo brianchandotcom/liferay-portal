@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest);
+LayoutUtilityPageEntryImportDisplayContext layoutUtilityPageEntryImportDisplayContext = new LayoutUtilityPageEntryImportDisplayContext(request, renderRequest);
 %>
 
 <portlet:actionURL name="/layout_admin/import_layout_utility_page_entries" var="importURL">
@@ -52,32 +52,34 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 		</liferay-frontend:fieldset>
 
 		<%
-		Map<LayoutsImporterResultEntry.Status, List<LayoutsImporterResultEntry>> layoutsImporterResultEntryMap = importDisplayContext.getLayoutsImporterResultEntryMap();
+		Map<LayoutsImporterResultEntry.Status, List<LayoutsImporterResultEntry>> layoutsImporterResultEntryMap = layoutUtilityPageEntryImportDisplayContext.getLayoutsImporterResultEntryMap();
 		%>
 
 		<c:if test="<%= MapUtil.isNotEmpty(layoutsImporterResultEntryMap) %>">
 
 			<%
-			String dialogType = importDisplayContext.getDialogType();
+			String dialogType = layoutUtilityPageEntryImportDisplayContext.getDialogType();
 			%>
 
 			<div class="alert alert-<%= dialogType %> <%= dialogType %>-dialog">
-				<span class="<%= dialogType %>-message"><%= importDisplayContext.getDialogMessage() %></span>
+				<span class="<%= dialogType %>-message"><%= layoutUtilityPageEntryImportDisplayContext.getDialogMessage() %></span>
 
 				<ul class="<%= dialogType %>-list-items">
 
 					<%
-					List<LayoutsImporterResultEntry> importedLayoutsImporterResultEntriesMap = importDisplayContext.getImportedLayoutsImporterResultEntries();
+					List<LayoutsImporterResultEntry> importedLayoutsImporterResultEntriesMap = layoutUtilityPageEntryImportDisplayContext.getImportedLayoutsImporterResultEntries();
 					%>
 
 					<c:if test="<%= ListUtil.isNotEmpty(importedLayoutsImporterResultEntriesMap) %>">
 						<li>
-							<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(importDisplayContext.getSuccessMessage(importedLayoutsImporterResultEntriesMap)) %></span>
+							<span class="<%= dialogType %>-info"><%=
+							HtmlUtil.escape(
+								layoutUtilityPageEntryImportDisplayContext.getSuccessMessage(importedLayoutsImporterResultEntriesMap)) %></span>
 						</li>
 					</c:if>
 
 					<%
-					List<LayoutsImporterResultEntry> layoutsImporterResultEntriesWithWarnings = importDisplayContext.getLayoutsImporterResultEntriesWithWarnings();
+					List<LayoutsImporterResultEntry> layoutsImporterResultEntriesWithWarnings = layoutUtilityPageEntryImportDisplayContext.getLayoutsImporterResultEntriesWithWarnings();
 					%>
 
 					<c:if test="<%= ListUtil.isNotEmpty(layoutsImporterResultEntriesWithWarnings) %>">
@@ -90,7 +92,9 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 						%>
 
 							<li>
-								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(importDisplayContext.getWarningMessage(layoutsImporterResultEntry.getName())) %></span>
+								<span class="<%= dialogType %>-info"><%=
+								HtmlUtil.escape(
+									layoutUtilityPageEntryImportDisplayContext.getWarningMessage(layoutsImporterResultEntry.getName())) %></span>
 
 								<ul>
 
@@ -117,7 +121,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					int total = 0;
 					int viewTotal = 0;
 
-					List<LayoutsImporterResultEntry> notImportedLayoutsImporterResultEntries = importDisplayContext.getNotImportedLayoutsImporterResultEntries();
+					List<LayoutsImporterResultEntry> notImportedLayoutsImporterResultEntries = layoutUtilityPageEntryImportDisplayContext.getNotImportedLayoutsImporterResultEntries();
 					%>
 
 					<c:if test="<%= ListUtil.isNotEmpty(notImportedLayoutsImporterResultEntries) %>">

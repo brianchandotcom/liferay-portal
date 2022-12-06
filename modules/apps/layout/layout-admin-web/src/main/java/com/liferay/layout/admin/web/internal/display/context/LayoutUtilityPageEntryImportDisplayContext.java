@@ -33,9 +33,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Bárbara Cabrera
  */
-public class ImportDisplayContext {
+public class LayoutUtilityPageEntryImportDisplayContext {
 
-	public ImportDisplayContext(
+	public LayoutUtilityPageEntryImportDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest) {
 
 		_httpServletRequest = httpServletRequest;

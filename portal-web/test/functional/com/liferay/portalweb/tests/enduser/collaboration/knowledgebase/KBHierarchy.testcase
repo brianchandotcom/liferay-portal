@@ -426,7 +426,7 @@ definition {
 
 	@priority = "3"
 	@refactorneeded
-	test ViewKBArticlesWithTheSamePriorityViaNavigationLinks {
+	test ViewKBArticlesViaNavigationLinks {
 		for (var kbCount : list "1,2,3") {
 			JSONKnowledgeBase.addkBArticle(
 				groupName = "Guest",
@@ -435,20 +435,6 @@ definition {
 		}
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		for (var kbCount : list "1,2,3") {
-			KBArticle.viewKBArticlePriorityCP(
-				kbArticleTitle = "Knowledge Base Article Parent Title ${kbCount}",
-				kbPriority = "${kbCount}.0");
-		}
-
-		KBArticle.viewKBArticlePriorityCP(
-			kbArticleTitle = "Knowledge Base Article Parent Title 2",
-			kbPriority = "2.0");
-
-		KBArticle.viewKBArticlePriorityCP(
-			kbArticleTitle = "Knowledge Base Article Parent Title 3",
-			kbPriority = "3.0");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 

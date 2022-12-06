@@ -1101,6 +1101,54 @@ definition {
 		}
 	}
 
+	@description = " LPS-162175 - Verify that the ERC field is not displayed on the Objects entry table"
+	@priority = "4"
+	test CannotSeeERCFieldOnObjectEntryTable {
+		property portal.acceptance = "true";
+
+		task ("Given an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 158821",
+				objectName = "CustomObject158821",
+				pluralLabelName = "Custom Objects 158821");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject158821");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject158821");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject158821",
+				value = "Entry Test");
+		}
+
+		task ("When the user views the object entry table") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 158821");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToViewsBuilderTab();
+		}
+
+		task ("Then the ERC field shouldn't be seen") {
+			ObjectPortlet.assertEntryColumnNotPresent(column = "External Reference Code");
+
+			ObjectPortlet.assertEntryColumnNotPresent(column = "ERC");
+		}
+	}
+
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' the user is not allowed to type any value outside the informed range on the help text"
 	@priority = "4"
 	test CannotTypeValueOutsideRange {

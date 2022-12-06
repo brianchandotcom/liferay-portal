@@ -114,7 +114,7 @@ definition {
 		if ("${contentSharingPermission}" == "View") {
 			AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
@@ -125,7 +125,7 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 
-			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
@@ -136,7 +136,7 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 
-			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 			MenuItem.viewPresent(menuItem = "Edit");
 		}

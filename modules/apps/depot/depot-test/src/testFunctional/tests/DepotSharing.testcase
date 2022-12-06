@@ -458,7 +458,7 @@ definition {
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title");
 

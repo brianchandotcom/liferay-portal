@@ -189,7 +189,7 @@ definition {
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
 
 		BlogsEntry.editEntryContent(
 			entryContent = "Blogs Entry Content",

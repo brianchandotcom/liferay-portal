@@ -82,7 +82,8 @@ public class XMLIndentationCheck extends BaseFileCheck {
 			if (Validator.isNull(s) || StringUtil.startsWith(s, "\n") ||
 				!s.startsWith("<") || s.startsWith("</") ||
 				s.startsWith("<![CDATA[") ||
-				XMLSourceUtil.isInsideCDATAMarkup(content, x)) {
+				XMLSourceUtil.isInsideCDATAMarkup(content, x) ||
+				XMLSourceUtil.isInsideComment(content, x)) {
 
 				continue;
 			}
@@ -96,7 +97,8 @@ public class XMLIndentationCheck extends BaseFileCheck {
 			String s = matcher.group(1);
 
 			if (s.equals("</code>") ||
-				XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start())) {
+				XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start()) ||
+				XMLSourceUtil.isInsideComment(content, matcher.start())) {
 
 				continue;
 			}
@@ -108,7 +110,9 @@ public class XMLIndentationCheck extends BaseFileCheck {
 		matcher = _incorrectLineBreakPattern2.matcher(content);
 
 		while (matcher.find()) {
-			if (XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start())) {
+			if (XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start()) ||
+				XMLSourceUtil.isInsideComment(content, matcher.start())) {
+
 				continue;
 			}
 

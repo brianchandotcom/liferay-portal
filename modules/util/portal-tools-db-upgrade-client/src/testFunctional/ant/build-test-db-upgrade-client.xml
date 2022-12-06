@@ -225,7 +225,7 @@
 				<waitfor maxwait="900000" timeoutproperty="upgrade.notfailed">
 					<resourcecontains
 						resource="${db.upgrade.client.log}"
-						substring="Checking to see if all upgrades have completed... your upgrades have failed, have not started, or are still running"
+						substring="Checking to see if all upgrades have completed..."
 					/>
 				</waitfor>
 
@@ -401,7 +401,7 @@
 				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.failed">
 					<resourcecontains
 						resource="${db.upgrade.client.log}"
-						substring="Checking to see if all upgrades have completed... done"
+						substring="Checking to see if all upgrades have completed..."
 					/>
 				</waitfor>
 

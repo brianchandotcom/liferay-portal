@@ -100,13 +100,34 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro syncSites {
+		if (isSet(newPropertyName)) {
+			Click(
+				key_text = "New Property",
+				locator1 = "Button#ANY");
+
+			Type(
+				locator1 = "ACDXPSettings#NEW_PROPERTY_NAME",
+				value1 = "${newPropertyName}");
+
+			Click(
+				key_text = "Create",
+				locator1 = "Button#ANY");
+		}
+
+		ACDXPSettings.clickToAssignSitesAndChannel();
+
+		ACDXPSettings.switchTab(tabName = "Sites");
+
 		if (isSet(siteName)) {
 			ACDXPSettings.searchACItem(searchItem = ${siteName});
 		}
 
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
 
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		Click(
+			key_name = "Assign",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 
 		Alert.viewSuccessMessage();
 	}

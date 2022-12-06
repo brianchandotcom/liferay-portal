@@ -16,6 +16,7 @@ package com.liferay.document.library.video.internal.util;
 
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Iterator;
@@ -40,6 +41,10 @@ public class DLVideoExternalShortcutUIItemsUtil {
 
 	private static <T> void _removeUIItems(
 		List<T> items, Function<T, String> function, Set<String> keys) {
+
+		if (ListUtil.isEmpty(items)) {
+			return;
+		}
 
 		Iterator<T> iterator = items.iterator();
 

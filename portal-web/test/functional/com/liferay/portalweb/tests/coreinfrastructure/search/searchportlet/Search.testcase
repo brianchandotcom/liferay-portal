@@ -149,8 +149,6 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title 1");
 
-		Navigator.gotoPage(pageName = "Home");
-
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -161,8 +159,8 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				locator1 = "Search#CATEGORY_FACET_PORTLET",
-				tagName = "${categories}");
+				categoryName = "${categories}",
+				locator1 = "Search#CATEGORY_FACET_CLOUD_LAYOUT");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -173,8 +171,8 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				locator1 = "Search#CATEGORY_FACET_PORTLET",
-				tagName = "${categories}");
+				facetValueName = "${categories}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -185,8 +183,8 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				locator1 = "Search#CATEGORY_FACET_PORTLET",
-				tagName = "${categories}");
+				facetValueName = "${categories}",
+				locator1 = "Search#FACET_LABEL_LAYOUT");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -197,8 +195,8 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				locator1 = "Search#CATEGORY_FACET_PORTLET",
-				tagName = "${categories}");
+				categoryName = "${categories}",
+				locator1 = "Search#CATEGORY_FACET_VOCABULARY_LAYOUT");
 		}
 	}
 

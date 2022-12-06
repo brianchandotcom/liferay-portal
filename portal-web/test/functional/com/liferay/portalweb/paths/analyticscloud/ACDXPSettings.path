@@ -147,12 +147,7 @@
 </tr>
 <tr>
 	<td>SYNC_BY_ORGANIZATIONS_PREVIEW</td>
-	<td>//fieldset//a[2]//div[2]//small[contains(@class,'list-group-subtext')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SYNC_BY_ORGANIZATIONS_BUTTON</td>
-	<td>//fieldset//a[2]//div[2]//p[contains(@class,'list-group-title')]</td>
+	<td>//p[contains(text(),'Organizations')]/..//p[contains(@class,'list-group-text')]</td>
 	<td></td>
 </tr>
 <tr>

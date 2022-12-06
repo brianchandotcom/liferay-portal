@@ -713,33 +713,69 @@ definition {
 	test BulkDeleteOrders {
 		property portal.acceptance = "false";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		task ("Given a Minium Site is created and account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Commerce Account",
-			accountEntryType = "Business");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-		CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-		CommerceNavigator.gotoPortlet(
-			category = "Order Management",
-			portlet = "Orders");
-
-		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			CommerceProducts.deleteEntries();
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
 		}
 
-		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+		task ("And the admin goes into the Minium and create orders") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			WaitForVisible(locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID");
+
+			var getOrderId = selenium.getText("CommerceOrders#PENDING_ORDERS_ORDER_ID");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("And the admin goes into the Orders and verifies if the Trash icon is not present in the header") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			AssertElementNotPresent(locator1 = "Button#TRASH_ENABLED");
+		}
+
+		task ("When the admin selects one order using the checkbox and verifies if the Trash icon is now present in the header") {
+			CommerceNavigator.searchEntry(entryName = "${getOrderId}");
+
+			Click.clickNoMouseOverNoWaitForVisible(
+				key_productName = "${getOrderId}",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_CHECKBOX");
+
+			AssertElementPresent(locator1 = "Button#TRASH_ENABLED");
+		}
+
+		task ("Then the admin can remove the order by clicking on the Trash icon") {
+			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+
+			CommerceNavigator.searchEntry(entryName = "${getOrderId}");
+
+			AssertElementNotPresent(
+				key_entryName = "${getOrderId}",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("And the admin can delete all the orders with one click by using the select all checkbox") {
+			CommerceNavigator.searchEntry(entryName = "");
+
+			while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+				CommerceProducts.deleteEntries();
+			}
+
+			AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+		}
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9358"

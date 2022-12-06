@@ -7,7 +7,7 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp(minium="true");
+		CommerceConfiguration.commerceSetUp(minium = "true");
 	}
 
 	tearDown {
@@ -58,11 +58,11 @@ definition {
 				productName = "ABS Sensor");
 		}
 
-		task("And check if the higher discount is applied"){
+		task ("And check if the higher discount is applied") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-			
+
 			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-			
+
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
 
 			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
@@ -71,7 +71,7 @@ definition {
 				productListPrice = "50.00");
 		}
 
-		task("And the higher discount is deleted so the lower discount can be apllied"){
+		task ("And the higher discount is deleted so the lower discount can be apllied") {
 			CommerceNavigator.gotoPortlet(
 				category = "Pricing",
 				portlet = "Discounts");
@@ -96,6 +96,7 @@ definition {
 
 		task ("And buyer user add a product to the cart") {
 			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
 			FrontStore.addInitializerProductToCart(
 				productName = "ABS Sensor",
 				productQuantity = "1");
@@ -110,18 +111,18 @@ definition {
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
+				productDiscountedTotalPrice = "40",
+				productDiscountValue = "10",
 				productName = "ABS Sensor",
 				productQuantity = "1",
 				productUnitPrice = "50",
-				productDiscountedTotalPrice = "40",
-				productDiscountValue = "10",
-				shippingMethod = "Standard"); 
+				shippingMethod = "Standard");
 
 			AssertTextEquals(
 				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
 				value1 = "Success! Your order has been processed.");
 		}
-    }
+	}
 
 	@description = "This is a test for COMMERCE-10344. Can checkout a product with two discounts, and one discount is applied to the discounted amount"
 	@priority = "3"
@@ -178,6 +179,7 @@ definition {
 
 		task ("And buyer user add a product to the cart") {
 			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
 			FrontStore.addInitializerProductToCart(
 				productName = "ABS Sensor",
 				productQuantity = "1");
@@ -192,16 +194,17 @@ definition {
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
+				productDiscountedTotalPrice = "28",
+				productDiscountValue = "22",
 				productName = "ABS Sensor",
 				productQuantity = "1",
 				productUnitPrice = "50",
-				productDiscountedTotalPrice = "28",
-				productDiscountValue = "22",
-				shippingMethod = "Standard"); 
+				shippingMethod = "Standard");
 
 			AssertTextEquals(
 				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
 				value1 = "Success! Your order has been processed.");
 		}
 	}
+
 }

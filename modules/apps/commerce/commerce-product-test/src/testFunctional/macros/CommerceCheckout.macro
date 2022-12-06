@@ -110,13 +110,12 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		if (isSet(productDiscountedTotalPrice)){
-			var subtotal = "${productDiscountedTotalPrice}";
-		}
-		else
-
-		 {
+		if (isSet(productUnitPrice) && isSet(productQuantity)) {
 			var subtotal = ${productUnitPrice} * ${productQuantity};
+		}
+
+		if (isSet(productDiscountedTotalPrice)) {
+			var subtotal = "${productDiscountedTotalPrice}";
 		}
 
 		if (isSet(singleShippingOption)) {
@@ -296,10 +295,10 @@ definition {
 			deliveryValue = "${deliveryValue}",
 			paymentMethod = "${paymentMethod}",
 			paymentTerm = "${paymentTerm}",
+			productDiscountedTotalPrice = "${productDiscountedTotalPrice}",
+			productDiscountValue = "${productDiscountValue}",
 			productName = "${productName}",
 			productPrice = "${productUnitPrice}",
-			productDiscountValue = "${productDiscountValue}",
-			productDiscountedTotalPrice = "${productDiscountedTotalPrice}",
 			productQuantity = "${productQuantity}",
 			shippingOption = "${shippingOption}",
 			subtotalValue = "${subtotal}",
@@ -492,7 +491,7 @@ definition {
 				value1 = "${productPrice}");
 		}
 
-		if (isSet(productDiscountValue)){
+		if (isSet(productDiscountValue)) {
 			AssertTextEquals.assertPartialText(
 				key_column = "discount",
 				key_value = "${productDiscountValue}",
@@ -500,7 +499,7 @@ definition {
 				value1 = "${productDiscountValue}");
 		}
 
-		if (isSet(productDiscountedTotalPrice)){
+		if (isSet(productDiscountedTotalPrice)) {
 			AssertTextEquals.assertPartialText(
 				key_column = "total",
 				key_value = "${productDiscountedTotalPrice}",

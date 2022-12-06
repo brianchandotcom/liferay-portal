@@ -80,12 +80,25 @@ definition {
 		return ${assignedPropertyName};
 	}
 
-	macro createCombinedProperties {
-		var siteName = ${siteName};
+	macro syncChannel {
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 
-		LexiconEntry.gotoAdd();
+		ACDXPSettings.clickToAssignSitesAndChannel();
 
-		Click(locator1 = "ACDXPSettings#COMBINATED_PROPERTY_OPTION");
+		ACDXPSettings.switchTab(tabName = "Channel");
+
+		if (isSet(channelName)) {
+			ACDXPSettings.searchACItem(searchItem = "${channelName}");
+		}
+
+		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+
+		Click(
+			key_name = "Assign",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+
+		Alert.viewSuccessMessage();
+	}
 
 		if (isSet(siteName)) {
 			ACDXPSettings.searchACItem(searchItem = ${siteName});

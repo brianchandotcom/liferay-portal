@@ -27,6 +27,7 @@ import QATable from '../../../components/Table/QATable';
 import {ApplicationPropertiesContext} from '../../../context/ApplicationPropertiesContext';
 import i18n from '../../../i18n';
 import {
+	MessageBoardMessage,
 	TestraySubTask,
 	TestraySubTaskIssue,
 	TestrayTask,
@@ -37,6 +38,7 @@ import SubtasksCaseResults from './SubtaskCaseResults';
 import SubtaskHeaderActions from './SubtaskHeaderActions';
 
 type OutletContext = {
+	mbMessage: MessageBoardMessage;
 	mergedSubtaskNames: string;
 	mutateSubtask: KeyedMutator<TestraySubTask>;
 	mutateSubtaskIssues: KeyedMutator<TestraySubTask>;
@@ -49,6 +51,7 @@ const Subtasks = () => {
 	const {jiraBaseURL} = useContext(ApplicationPropertiesContext);
 
 	const {
+		mbMessage,
 		mergedSubtaskNames,
 		mutateSubtask,
 		subtaskIssues,
@@ -128,7 +131,27 @@ const Subtasks = () => {
 								},
 								{
 									title: i18n.translate('comment'),
-									value: 'None',
+									value: mbMessage ? (
+										<div className="d-flex flex-column mt-3">
+											<cite>
+												{mbMessage?.articleBody}
+											</cite>
+
+											<small className="mt-1 text-gray">
+												<Avatar
+													displayName
+													name={`${
+														mbMessage.creator?.name
+													} · ${getTimeFromNow(
+														mbMessage.dateCreated
+													)}`}
+													url={
+														mbMessage.creator?.image
+													}
+												/>
+											</small>
+										</div>
+									) : null,
 								},
 							]}
 						/>

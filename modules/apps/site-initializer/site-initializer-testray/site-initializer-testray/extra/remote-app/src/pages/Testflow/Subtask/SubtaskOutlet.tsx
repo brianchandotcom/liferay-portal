@@ -22,6 +22,7 @@ import {
 	APIResponse,
 	TestraySubTask,
 	TestrayTask,
+	liferayMessageBoardImpl,
 	testraySubTaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIssues';
@@ -60,6 +61,14 @@ const SubtaskOutlet = () => {
 		(response) => testraySubtaskIssuesImpl.transformDataFromList(response)
 	);
 
+	const {data: mbMessage} = useFetch(
+		testraySubtask?.mbMessageId
+			? liferayMessageBoardImpl.getMessagesIdURL(
+					testraySubtask.mbMessageId
+			  )
+			: null
+	);
+
 	const subtaskIssues = data?.items || [];
 
 	const mergedSubtaskNames = (testraySubtaskToMerged?.items || [])
@@ -72,7 +81,7 @@ const SubtaskOutlet = () => {
 				setHeading([
 					{
 						category: i18n.translate('task'),
-						path: `/testflow/${testrayTask.id}`,
+						path: `/testflow/${testrayTask?.id}`,
 						title: testrayTask.name,
 					},
 					{
@@ -87,6 +96,7 @@ const SubtaskOutlet = () => {
 	return (
 		<Outlet
 			context={{
+				mbMessage,
 				mergedSubtaskNames,
 				mutateSubtask,
 				mutateSubtaskIssues,

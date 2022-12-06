@@ -1,0 +1,17 @@
+{
+	"dependencies": {
+		"frontend-js-web": "*",
+		"react": "16.12.0",
+		"react-router-dom": "^5.0.1"
+	},
+	"description": "",
+	"main": "js/index.js",
+	"name": "@liferay/portal-company-log-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.43"
+}

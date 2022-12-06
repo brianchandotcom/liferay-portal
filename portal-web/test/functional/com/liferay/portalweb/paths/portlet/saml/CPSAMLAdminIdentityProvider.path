@@ -23,6 +23,11 @@
 	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-authn-request-signature-required')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE_INPUT</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-session-maximum-age')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

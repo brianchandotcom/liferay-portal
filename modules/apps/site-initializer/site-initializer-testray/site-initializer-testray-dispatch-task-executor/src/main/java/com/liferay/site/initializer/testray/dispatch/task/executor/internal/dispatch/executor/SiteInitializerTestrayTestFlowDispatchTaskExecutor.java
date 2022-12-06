@@ -14,18 +14,13 @@
 
 package com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor;
 
-import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -42,7 +37,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -72,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = DispatchTaskExecutor.class
 )
 public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
-	extends BaseDispatchTaskExecutor {
+	extends BaseSiteInitializerTestrayDispatchTaskExecutor {
 
 	@Override
 	public void doExecute(
@@ -95,7 +89,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		User user = _userLocalService.getUser(dispatchTrigger.getUserId());
 
-		_defaultDTOConverterContext = new DefaultDTOConverterContext(
+		defaultDTOConverterContext = new DefaultDTOConverterContext(
 			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
 			user);
 
@@ -110,7 +104,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
-			_loadObjectDefinitions(dispatchTrigger.getCompanyId());
+			loadObjectDefinitions(dispatchTrigger.getCompanyId());
+
 			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 		}
 		finally {
@@ -126,57 +121,16 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		return "testray-testflow";
 	}
 
-	private ObjectEntry _addObjectEntry(
-			String objectDefinitionShortName, Map<String, Object> properties)
-		throws Exception {
-
-		ObjectDefinition objectDefinition = _objectDefinitions.get(
-			objectDefinitionShortName);
-
-		if (objectDefinition == null) {
-			throw new PortalException(
-				"No object definition found with short name " +
-					objectDefinitionShortName);
-		}
-
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setProperties(properties);
-
-		return _objectEntryManager.addObjectEntry(
-			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
-	}
-
-	private Page<ObjectEntry> _getObjectEntriesPage(
-			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionName)
-		throws Exception {
-
-		return _objectEntryManager.getObjectEntries(
-			companyId, _objectDefinitions.get(objectDefinitionName), null,
-			aggregation, _defaultDTOConverterContext, filter, null, null, null);
-	}
-
-	private Object _getProperty(String key, ObjectEntry objectEntry) {
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		return properties.get(key);
-	}
-
 	private String _getTestrayIssueNames(
 			long companyId, ObjectEntry testrayCaseResultObjectEntry)
 		throws Exception {
 
-		Page<ObjectEntry> testrayCaseResultsIssuesObjectEntriesPage1 =
-			_getObjectEntriesPage(
+		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
+			getObjectEntries(
 				null, companyId,
 				"caseResultId eq '" + testrayCaseResultObjectEntry.getId() +
 					"'",
-				"CaseResultsIssues");
-
-		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
-			(List<ObjectEntry>)
-				testrayCaseResultsIssuesObjectEntriesPage1.getItems();
+				"CaseResultsIssues", null);
 
 		if (testrayCaseResultsIssuesObjectEntries.isEmpty()) {
 			return StringPool.BLANK;
@@ -187,20 +141,16 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		for (ObjectEntry testrayCaseResultsIssuesObjectEntry :
 				testrayCaseResultsIssuesObjectEntries) {
 
-			long issueId = (long)_getProperty(
+			long issueId = (long)getProperty(
 				"r_issueToCaseResultsIssues_c_issueId",
 				testrayCaseResultsIssuesObjectEntry);
 
-			Page<ObjectEntry> testrayIssueObejctEntriesPage =
-				_getObjectEntriesPage(
-					null, companyId, "id eq '" + issueId + "'", "Issue");
-
-			ObjectEntry testrayIssueObjectEntry =
-				testrayIssueObejctEntriesPage.fetchFirstItem();
+			ObjectEntry testrayIssueObjectEntry = getObjectEntry(
+				"Issue", issueId);
 
 			sb.append(
 				StringUtil.removeSubstring(
-					(String)_getProperty("name", testrayIssueObjectEntry),
+					(String)getProperty("name", testrayIssueObjectEntry),
 					StringPool.DASH));
 
 			sb.append(StringPool.COMMA);
@@ -211,68 +161,22 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		return sb.toString();
 	}
 
-	private int _getTestraySubtaskScore(
-			long companyId, List<ObjectEntry> objectEntries)
+	private int _getTestraySubtaskScore(List<ObjectEntry> objectEntries)
 		throws Exception {
 
 		int score = 0;
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			Long testrayCaseId = (Long)_getProperty(
+			Long testrayCaseId = (Long)getProperty(
 				"r_caseToCaseResult_c_caseId", objectEntry);
 
-			Page<ObjectEntry> testrayCaseObjectEntriesPage =
-				_getObjectEntriesPage(
-					null, companyId, "id eq '" + testrayCaseId + "'", "Case");
+			ObjectEntry testrayCaseObjectEntry = getObjectEntry(
+				"Case", testrayCaseId);
 
-			ObjectEntry testrayCaseObjectEntry =
-				testrayCaseObjectEntriesPage.fetchFirstItem();
-
-			score += (int)_getProperty("priority", testrayCaseObjectEntry);
+			score += (int)getProperty("priority", testrayCaseObjectEntry);
 		}
 
 		return score;
-	}
-
-	private long _incrementTestrayFieldValue(
-			long companyId, String fieldName, String filterString,
-			String objectDefinitionShortName)
-		throws Exception {
-
-		Page<ObjectEntry> objectEntriesPage =
-			_objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get(objectDefinitionShortName),
-				null, null, _defaultDTOConverterContext, filterString, null,
-				null, new Sort[] {new Sort("createDate", true)});
-
-		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
-
-		if (objectEntry == null) {
-			return 1;
-		}
-
-		String fieldValue = (String)_getProperty(fieldName, objectEntry);
-
-		if (fieldValue == null) {
-			return 1;
-		}
-
-		return Long.valueOf(StringUtil.extractDigits(fieldValue)) + 1;
-	}
-
-	private void _loadObjectDefinitions(long companyId) {
-		List<ObjectDefinition> objectDefinitions =
-			_objectDefinitionLocalService.getObjectDefinitions(
-				companyId, true, WorkflowConstants.STATUS_APPROVED);
-
-		if (ListUtil.isEmpty(objectDefinitions)) {
-			return;
-		}
-
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			_objectDefinitions.put(
-				objectDefinition.getShortName(), objectDefinition);
-		}
 	}
 
 	private void _process(long companyId, UnicodeProperties unicodeProperties)
@@ -303,9 +207,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			unicodeProperties.getProperty("testrayBuildId"));
 
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
-			_getObjectEntriesPage(
+			getObjectEntriesPage(
 				aggregation, companyId, "buildId eq '" + testrayBuildId + "'",
-				"CaseResult");
+				"CaseResult", null);
 
 		List<Facet> testrayCaseResultFacets =
 			(List<Facet>)testrayCaseResultObjectEntriesPage1.getFacets();
@@ -315,11 +219,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		List<Facet.FacetValue> testrayCaseResultFacetValues =
 			testrayCaseResultFacet.getFacetValues();
 
-		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = _getObjectEntriesPage(
-			null, companyId, sb.toString(), "Case");
-
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
-			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);
+			getObjectEntries(null, companyId, sb.toString(), "Case", null),
+			ObjectEntry::getId);
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 
@@ -330,27 +232,20 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				continue;
 			}
 
-			Page<ObjectEntry> testrayCaseResultObjectEntriesPage2 =
-				_objectEntryManager.getObjectEntries(
-					companyId, _objectDefinitions.get("CaseResult"), null, null,
-					_defaultDTOConverterContext,
-					StringBundler.concat(
-						"buildId eq '", testrayBuildId, "' and errors eq '",
-						StringUtil.removeChar(
-							StringUtil.replace(
-								testrayCaseResultFacetValue.getTerm(), '\'',
-								"''"),
-							'\\'),
-						"'"),
-					null, null, null);
-
-			List<ObjectEntry> testrayCaseResultObjectEntries =
-				(List<ObjectEntry>)
-					testrayCaseResultObjectEntriesPage2.getItems();
+			List<ObjectEntry> testrayCaseResultObjectEntries = getObjectEntries(
+				null, companyId,
+				StringBundler.concat(
+					"buildId eq '", testrayBuildId, "' and errors eq '",
+					StringUtil.removeChar(
+						StringUtil.replace(
+							testrayCaseResultFacetValue.getTerm(), '\'', "''"),
+						'\\'),
+					"'"),
+				"CaseResult", null);
 
 			testrayCaseResultObjectEntries.removeIf(
 				objectEntry -> !testrayCaseObjectEntriesIds.contains(
-					(Long)_getProperty(
+					(Long)getProperty(
 						"r_caseToCaseResult_c_caseId", objectEntry)));
 
 			Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
@@ -392,10 +287,10 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 					try {
 						testraySubtaskScore1 = _getTestraySubtaskScore(
-							companyId, testrayCaseResultObjectEntries1);
+							testrayCaseResultObjectEntries1);
 
 						testraySubtaskScore2 = _getTestraySubtaskScore(
-							companyId, testrayCaseResultObjectEntries2);
+							testrayCaseResultObjectEntries2);
 					}
 					catch (Exception exception) {
 						throw new RuntimeException(exception);
@@ -419,14 +314,11 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		for (List<ObjectEntry> testrayCaseResultObjectEntry :
 				testrayCaseResultGroups) {
 
-			int testraySubtaskScore = _getTestraySubtaskScore(
-				companyId, testrayCaseResultObjectEntry);
-
-			long testraySubtaskName = _incrementTestrayFieldValue(
+			long testraySubtaskName = incrementTestrayFieldValue(
 				companyId, "name", "taskId eq '" + testrayTaskId + "'",
-				"Subtask");
+				"Subtask", new Sort[] {new Sort("createDate", true)});
 
-			ObjectEntry testraySubtaskObjectEntry = _addObjectEntry(
+			ObjectEntry testraySubtaskObjectEntry = addObjectEntry(
 				"Subtask",
 				HashMapBuilder.<String, Object>put(
 					"dueStatus", "OPEN"
@@ -435,11 +327,12 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				).put(
 					"r_taskToSubtasks_c_taskId", testrayTaskId
 				).put(
-					"score", testraySubtaskScore
+					"score",
+					_getTestraySubtaskScore(testrayCaseResultObjectEntry)
 				).build());
 
 			for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
-				_addObjectEntry(
+				addObjectEntry(
 					"SubtasksCasesResults",
 					HashMapBuilder.<String, Object>put(
 						"caseResultId", objectEntry.getId()
@@ -453,17 +346,6 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayTestFlowDispatchTaskExecutor.class);
-
-	private DefaultDTOConverterContext _defaultDTOConverterContext;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	private final Map<String, ObjectDefinition> _objectDefinitions =
-		new HashMap<>();
-
-	@Reference(target = "(object.entry.manager.storage.type=default)")
-	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

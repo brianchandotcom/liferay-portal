@@ -21,9 +21,11 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {
 	fetchAccountsFields,
 	fetchPeopleFields,
+	fetchProductsFields,
 	fetchSelectedFields,
 	updateAccountsFields,
 	updatePeopleFields,
+	updateProductsFields,
 } from '../../utils/api';
 import Loading from '../Loading';
 import Modal from './Modal';
@@ -224,9 +226,9 @@ const Attributes: React.FC = () => {
 							onOpenChangeProductsAttributes
 						)
 					}
-					requestFn={() => Promise.resolve()}
+					requestFn={fetchProductsFields}
 					title={Liferay.Language.get('sync-product-attributes')}
-					updateFn={() => Promise.resolve()}
+					updateFn={updateProductsFields}
 				/>
 			)}
 		</>

@@ -52,56 +52,6 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-11860 | Automation ID: LRAC-12438 | Test Summary: Connect AC Token Authentication Passes"
-	@priority = "5"
-	test CheckIsPossibleConnectACWithValidToken {
-		property portal.release = "true";
-
-		task ("Connect AC with DXP") {
-			ACDXPSettings.connectAnalyticsCloud();
-		}
-
-		task ("Check that the connection was successful") {
-			ACDXPSettings.assertSuccessfulConnection();
-		}
-	}
-
-	@description = "Story: LRAC-11860 | Automation ID: LRAC-12440 | Test Summary: Connect AC Token Authentication Fails"
-	@priority = "5"
-	test CheckUnableConnectACWithInvalidToken {
-		task ("Go to Instance Settings > Analytics Cloud") {
-			ACDXPSettings.goToInstanceSettingsAC();
-		}
-
-		task ("Try connecting with an invalid token") {
-			Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
-
-			Type(
-				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
-				value1 = "InvalidTokenAC");
-
-			Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
-		}
-
-		task ("Check that the connection is not made and an error message appears") {
-			ACDXPSettings.NavigateBetweenWizardSteps(wizardStepName = "Connect");
-
-			AssertElementNotPresent(locator1 = "Message#SUCCESS");
-
-			Alert.viewErrorMessage(errorMessage = "An unexpected system error occurred.");
-		}
-	}
-
-	@description = "Validate if the user can connect AC to DXP"
-	@priority = "5"
-	test ConnectACToDXPAndSyncSitesAndContacts {
-		property portal.release = "true";
-
-		// Maybe this test will be covered by another one in the future of new stories
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
-	}
-
 	@description = "Story: LRAC-11860 | Automation ID: LRAC-12439 | Test Summary: Connect DXP with AC token updates data source status"
 	@priority = "4"
 	test CheckDataSourceStatusUpdateWhenSyncSitesAndContacts {
@@ -196,6 +146,56 @@ definition {
 				sectionTitleList = "${sectionTitleList}",
 				statusList = "Disconnected,Unconfigured,Unconfigured");
 		}
+	}
+
+	@description = "Story: LRAC-11860 | Automation ID: LRAC-12438 | Test Summary: Connect AC Token Authentication Passes"
+	@priority = "5"
+	test CheckIsPossibleConnectACWithValidToken {
+		property portal.release = "true";
+
+		task ("Connect AC with DXP") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Check that the connection was successful") {
+			ACDXPSettings.assertSuccessfulConnection();
+		}
+	}
+
+	@description = "Story: LRAC-11860 | Automation ID: LRAC-12440 | Test Summary: Connect AC Token Authentication Fails"
+	@priority = "5"
+	test CheckUnableConnectACWithInvalidToken {
+		task ("Go to Instance Settings > Analytics Cloud") {
+			ACDXPSettings.goToInstanceSettingsAC();
+		}
+
+		task ("Try connecting with an invalid token") {
+			Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
+
+			Type(
+				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+				value1 = "InvalidTokenAC");
+
+			Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+		}
+
+		task ("Check that the connection is not made and an error message appears") {
+			ACDXPSettings.NavigateBetweenWizardSteps(wizardStepName = "Connect");
+
+			AssertElementNotPresent(locator1 = "Message#SUCCESS");
+
+			Alert.viewErrorMessage(errorMessage = "An unexpected system error occurred.");
+		}
+	}
+
+	@description = "Validate if the user can connect AC to DXP"
+	@priority = "5"
+	test ConnectACToDXPAndSyncSitesAndContacts {
+		property portal.release = "true";
+
+		// Maybe this test will be covered by another one in the future of new stories
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 }

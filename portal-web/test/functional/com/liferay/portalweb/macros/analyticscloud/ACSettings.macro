@@ -128,27 +128,6 @@ definition {
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
-	macro checkDataSourceStatus {
-		var sectionTitleList = ListUtil.newListFromString("${sectionTitleList}");
-		var statusList = ListUtil.newListFromString("${statusList}");
-		var size = ListUtil.size("${sectionTitleList}");
-
-		var i = "0";
-
-		while ("${i}" != "${size}") {
-			var section = ListUtil.get("${sectionTitleList}", "${i}");
-			var status = ListUtil.get("${statusList}", "${i}");
-
-			ACSettings.assertDataSourceStatus(
-				section = "${section}",
-				status = "${status}");
-
-			var i = ${i} + 1;
-
-			var i = StringUtil.valueOf("${i}");
-		}
-	}
-
 	macro addSalesforceAndCancel {
 		var key_salesforceName = ${salesforceName};
 		var key_consumerKey = ${consumerKey};
@@ -478,6 +457,26 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro checkDataSourceStatus {
+		var sectionTitleList = ListUtil.newListFromString("${sectionTitleList}");
+		var statusList = ListUtil.newListFromString("${statusList}");
+		var size = ListUtil.size("${sectionTitleList}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var section = ListUtil.get("${sectionTitleList}", "${i}");
+			var status = ListUtil.get("${statusList}", "${i}");
+
+			ACSettings.assertDataSourceStatus(
+				section = "${section}",
+				status = "${status}");
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf("${i}");
+		}
 	}
 
 	macro clearProperty {

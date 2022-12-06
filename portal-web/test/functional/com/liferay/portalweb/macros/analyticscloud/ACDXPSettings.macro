@@ -28,18 +28,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro connectAnalyticsCloud {
-		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-
-		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
-
-		Paste(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
-
-		WaitForElementNotPresent(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON_DISABLED");
-
-		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
-	}
-
 	macro clickToAssignSitesAndChannel {
 		Click(
 			key_text = "Assign",
@@ -48,10 +36,14 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro switchTab {
-		var key_tab = "${tabName}";
+	macro connectAnalyticsCloud {
+		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
-		Click(locator1 = "Modal#TAB_LINK");
+		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
+
+		Paste(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
+
+		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 	}
 
 	macro connectDXPtoAnalyticsCloud {
@@ -82,58 +74,6 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
 		return "${assignedPropertyName}";
-	}
-
-	macro syncChannel {
-		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
-
-		ACDXPSettings.clickToAssignSitesAndChannel();
-
-		ACDXPSettings.switchTab(tabName = "Channel");
-
-		if (isSet(channelName)) {
-			ACDXPSettings.searchACItem(searchItem = "${channelName}");
-		}
-
-		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
-
-		Click(
-			key_name = "Assign",
-			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro syncSites {
-		if (isSet(newPropertyName)) {
-			Click(
-				key_text = "New Property",
-				locator1 = "Button#ANY");
-
-			Type(
-				locator1 = "ACDXPSettings#NEW_PROPERTY_NAME",
-				value1 = "${newPropertyName}");
-
-			Click(
-				key_text = "Create",
-				locator1 = "Button#ANY");
-		}
-
-		ACDXPSettings.clickToAssignSitesAndChannel();
-
-		ACDXPSettings.switchTab(tabName = "Sites");
-
-		if (isSet(siteName)) {
-			ACDXPSettings.searchACItem(searchItem = ${siteName});
-		}
-
-		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
-
-		Click(
-			key_name = "Assign",
-			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro disconnectDXPFromAnalyticsCloud {
@@ -192,12 +132,10 @@ definition {
 			value1 = "\ENTER");
 	}
 
-	macro syncContactsAndAccountstData {
-		// if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-		// 	Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
-		// }
+	macro switchTab {
+		var key_tab = "${tabName}";
 
-		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+		Click(locator1 = "Modal#TAB_LINK");
 	}
 
 	macro syncAccountsData {
@@ -220,17 +158,47 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
-		else{
-			// if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-			// 	Check.checkToggleSwitch(
-			// 		key_syncFieldName = "Sync All Accounts",
-			// 		locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
-			// }
+		else {
+
+			//if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
+			//	Check.checkToggleSwitch(
+			//		key_syncFieldName = "Sync All Accounts",
+			//		locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
+			//}
 
 			Check.checkToggleSwitch(
 				key_syncFieldName = "Sync All Accounts",
 				locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
 		}
+	}
+
+	macro syncChannel {
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+
+		ACDXPSettings.clickToAssignSitesAndChannel();
+
+		ACDXPSettings.switchTab(tabName = "Channel");
+
+		if (isSet(channelName)) {
+			ACDXPSettings.searchACItem(searchItem = "${channelName}");
+		}
+
+		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+
+		Click(
+			key_name = "Assign",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro syncContactsAndAccountstData {
+
+		//if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
+		//	Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+		//}
+
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 	}
 
 	macro syncContactsData {
@@ -268,12 +236,13 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
-		else{
-			// if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-			// 	Check.checkToggleSwitch(
-			// 		key_syncFieldName = "Sync All Contacts",
-			// 		locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
-			// }
+		else {
+
+			//if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
+			//	Check.checkToggleSwitch(
+			//		key_syncFieldName = "Sync All Contacts",
+			//		locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
+			//}
 
 			Check.checkToggleSwitch(
 				key_syncFieldName = "Sync All Contacts",
@@ -309,6 +278,38 @@ definition {
 		}
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro syncSites {
+		if (isSet(newPropertyName)) {
+			Click(
+				key_text = "New Property",
+				locator1 = "Button#ANY");
+
+			Type(
+				locator1 = "ACDXPSettings#NEW_PROPERTY_NAME",
+				value1 = "${newPropertyName}");
+
+			Click(
+				key_text = "Create",
+				locator1 = "Button#ANY");
+		}
+
+		ACDXPSettings.clickToAssignSitesAndChannel();
+
+		ACDXPSettings.switchTab(tabName = "Sites");
+
+		if (isSet(siteName)) {
+			ACDXPSettings.searchACItem(searchItem = "${siteName}");
+		}
+
+		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+
+		Click(
+			key_name = "Assign",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 
 		Alert.viewSuccessMessage();
 	}

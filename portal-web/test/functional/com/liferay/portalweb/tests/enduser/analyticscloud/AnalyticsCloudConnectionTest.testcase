@@ -284,14 +284,10 @@ definition {
 			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 		}
 
-		task ("Form the data source name") {
-			var dataSourceName = StringUtil.replace(${assignedPropertyName}, " Combined Property", "");
-		}
-
 		task ("Launch AC and copy the token from an existing data source") {
 			ACUtils.launchAC();
 
-			ACSettings.takeTokenFromExistingDataSource(dataSourceName = ${dataSourceName});
+			ACSettings.takeTokenFromExistingDataSource(dataSourceName = "${assignedPropertyName}");
 		}
 
 		task ("Reconnect AC with DXP") {
@@ -305,17 +301,15 @@ definition {
 		task ("Launch AC then go to Data Sources and open the created data source") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace(${assignedPropertyName}, " Combined Property", "");
-
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = ${dataSource});
+			ACUtils.searchBar(searchItem = "${assignedPropertyName}");
 
-			ACNavigation.openItem(itemName = ${dataSource});
+			ACNavigation.openItem(itemName = "${assignedPropertyName}");
 		}
 
 		task ("See that the status of sites and contacts are 'configured'") {
@@ -442,7 +436,9 @@ definition {
 		task ("Assert preview the number of Organization contacts to sync") {
 			ACDXPSettings.navToSyncedContactDataMenu();
 
-			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+			Click(
+				key_option = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
 
 			var entrieOrg = selenium.getText("ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW");
 
@@ -477,15 +473,15 @@ definition {
 
 			ACDXPSettings.navToSyncedContactDataMenu();
 
-			ACDXPSettings.syncByOrganizations(
-				index = 2,
-				orgName = "Organization Name 2");
+			ACDXPSettings.syncContactsData(orgName = "Organization Name 2");
 		}
 
 		task ("Assert preview the number of Organization contacts to sync") {
 			ACDXPSettings.navToSyncedContactDataMenu();
 
-			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+			Click(
+				key_option = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
 
 			var newNumberOrg = ${numberOrg} + 1;
 
@@ -675,7 +671,9 @@ definition {
 		task ("Assert preview the number of users groups contacts to sync") {
 			ACDXPSettings.navToSyncedContactDataMenu();
 
-			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+			Click(
+				key_option = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
 
 			var entrieGrup = selenium.getText("ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW");
 
@@ -689,11 +687,13 @@ definition {
 		}
 
 		task ("Assert preview the number of users groups contacts to sync") {
-			ACDXPSettings.syncContactSingleUserGroupData(userGroup = "User Group2");
+			ACDXPSettings.syncContactsData(userGroup = "User Group2");
 
 			ACDXPSettings.navToSyncedContactDataMenu();
 
-			Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+			Click(
+				key_option = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
 
 			var newNumberGrup = ${numberGrup} + 1;
 

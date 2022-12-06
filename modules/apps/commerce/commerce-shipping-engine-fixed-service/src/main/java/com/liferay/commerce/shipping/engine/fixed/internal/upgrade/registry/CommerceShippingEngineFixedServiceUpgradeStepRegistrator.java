@@ -15,15 +15,17 @@
 package com.liferay.commerce.shipping.engine.fixed.internal.upgrade.registry;
 
 import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_2_0.util.CommerceShippingFixedOptionQualifierTable;
-import com.liferay.commerce.shipping.engine.fixed.internal.upgrade.v2_3_0.CommerceShippingFixedOptionUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -73,9 +75,17 @@ public class CommerceShippingEngineFixedServiceUpgradeStepRegistrator
 			CommerceShippingFixedOptionQualifierTable.create());
 
 		registry.register(
-			"2.2.0", "2.3.0", new CommerceShippingFixedOptionUpgradeProcess());
+			"2.2.0", "2.3.0",
+			new com.liferay.commerce.shipping.engine.fixed.internal.upgrade.
+				v2_3_0.CommerceShippingFixedOptionUpgradeProcess());
 
 		registry.register("2.3.0", "2.4.0", new DummyUpgradeStep());
+
+		registry.register(
+			"2.4.0", "2.5.0",
+			new com.liferay.commerce.shipping.engine.fixed.internal.upgrade.
+				v2_5_0.CommerceShippingFixedOptionUpgradeProcess(
+					_resourceActionLocalService, _resourceLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -86,5 +96,11 @@ public class CommerceShippingEngineFixedServiceUpgradeStepRegistrator
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceShippingEngineFixedServiceUpgradeStepRegistrator.class);
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

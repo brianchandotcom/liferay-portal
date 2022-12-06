@@ -17,9 +17,9 @@ package com.liferay.commerce.account.web.internal.model;
 /**
  * @author Crescenzo Rega
  */
-public class User {
+public class ChannelAccountManager {
 
-	public User(
+	public ChannelAccountManager(
 		long accountEntryId, String channelName,
 		long commerceChannelAccountEntryRelId, String name, int type) {
 

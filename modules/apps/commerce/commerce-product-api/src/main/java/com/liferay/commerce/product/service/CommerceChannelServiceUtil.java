@@ -126,6 +126,17 @@ public class CommerceChannelServiceUtil {
 		return getService().getCommerceChannelsCount(companyId, keywords);
 	}
 
+	public static List<CommerceChannel> getCompanyCommerceChannels(
+			long companyId)
+		throws PortalException {
+
+		return getService().getCompanyCommerceChannels(companyId);
+	}
+
+	public static int getCompanyCommerceChannelsCount(long companyId) {
+		return getService().getCompanyCommerceChannelsCount(companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

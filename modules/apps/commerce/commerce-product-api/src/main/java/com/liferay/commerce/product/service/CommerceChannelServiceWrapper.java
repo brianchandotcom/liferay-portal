@@ -139,6 +139,20 @@ public class CommerceChannelServiceWrapper
 			companyId, keywords);
 	}
 
+	@Override
+	public java.util.List<CommerceChannel> getCompanyCommerceChannels(
+			long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelService.getCompanyCommerceChannels(companyId);
+	}
+
+	@Override
+	public int getCompanyCommerceChannelsCount(long companyId) {
+		return _commerceChannelService.getCompanyCommerceChannelsCount(
+			companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

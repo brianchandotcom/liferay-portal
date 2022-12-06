@@ -144,11 +144,13 @@ public abstract class CommerceShippingFixedOptionLocalServiceBaseImpl
 	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option
 	 * @return the commerce shipping fixed option that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceShippingFixedOption deleteCommerceShippingFixedOption(
-		CommerceShippingFixedOption commerceShippingFixedOption) {
+			CommerceShippingFixedOption commerceShippingFixedOption)
+		throws PortalException {
 
 		return commerceShippingFixedOptionPersistence.remove(
 			commerceShippingFixedOption);

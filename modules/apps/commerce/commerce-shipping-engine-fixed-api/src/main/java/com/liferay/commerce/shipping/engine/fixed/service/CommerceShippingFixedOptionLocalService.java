@@ -116,11 +116,13 @@ public interface CommerceShippingFixedOptionLocalService
 	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option
 	 * @return the commerce shipping fixed option that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceShippingFixedOption deleteCommerceShippingFixedOption(
-		CommerceShippingFixedOption commerceShippingFixedOption);
+			CommerceShippingFixedOption commerceShippingFixedOption)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce shipping fixed option with the primary key from the database. Also notifies the appropriate model listeners.
@@ -139,7 +141,8 @@ public interface CommerceShippingFixedOptionLocalService
 		throws PortalException;
 
 	public void deleteCommerceShippingFixedOptions(
-		long commerceShippingMethodId);
+			long commerceShippingMethodId)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

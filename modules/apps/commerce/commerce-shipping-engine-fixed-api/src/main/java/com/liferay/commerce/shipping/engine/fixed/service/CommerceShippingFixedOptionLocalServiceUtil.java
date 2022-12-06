@@ -107,9 +107,11 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option
 	 * @return the commerce shipping fixed option that was removed
+	 * @throws PortalException
 	 */
 	public static CommerceShippingFixedOption deleteCommerceShippingFixedOption(
-		CommerceShippingFixedOption commerceShippingFixedOption) {
+			CommerceShippingFixedOption commerceShippingFixedOption)
+		throws PortalException {
 
 		return getService().deleteCommerceShippingFixedOption(
 			commerceShippingFixedOption);
@@ -135,7 +137,8 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 	}
 
 	public static void deleteCommerceShippingFixedOptions(
-		long commerceShippingMethodId) {
+			long commerceShippingMethodId)
+		throws PortalException {
 
 		getService().deleteCommerceShippingFixedOptions(
 			commerceShippingMethodId);

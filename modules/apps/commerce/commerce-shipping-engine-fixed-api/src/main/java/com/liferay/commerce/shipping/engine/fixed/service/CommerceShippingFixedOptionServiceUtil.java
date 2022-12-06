@@ -76,12 +76,50 @@ public class CommerceShippingFixedOptionServiceUtil {
 	}
 
 	public static List<CommerceShippingFixedOption>
-			getCommerceShippingFixedOptions(
+			getCommerceChannelCommerceShippingFixedOptions(
 				long commerceShippingMethodId, int start, int end)
 		throws PortalException {
 
-		return getService().getCommerceShippingFixedOptions(
+		return getService().getCommerceChannelCommerceShippingFixedOptions(
 			commerceShippingMethodId, start, end);
+	}
+
+	public static List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long commerceShippingMethodId, int start, int end,
+				OrderByComparator<CommerceShippingFixedOption>
+					orderByComparator)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingFixedOptions(
+			commerceShippingMethodId, start, end, orderByComparator);
+	}
+
+	public static List<CommerceShippingFixedOption>
+			getCommerceChannelCommerceShippingFixedOptions(
+				long companyId, long groupId, long commerceShippingMethodId,
+				String keywords, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingFixedOptions(
+			companyId, groupId, commerceShippingMethodId, keywords, start, end);
+	}
+
+	public static int getCommerceChannelCommerceShippingFixedOptionsCount(
+			long commerceShippingMethodId)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingFixedOptionsCount(
+			commerceShippingMethodId);
+	}
+
+	public static long getCommerceChannelCommerceShippingFixedOptionsCount(
+			long companyId, long groupId, long commerceShippingMethodId,
+			String keywords)
+		throws PortalException {
+
+		return getService().getCommerceChannelCommerceShippingFixedOptionsCount(
+			companyId, groupId, commerceShippingMethodId, keywords);
 	}
 
 	public static List<CommerceShippingFixedOption>
@@ -93,33 +131,6 @@ public class CommerceShippingFixedOptionServiceUtil {
 
 		return getService().getCommerceShippingFixedOptions(
 			commerceShippingMethodId, start, end, orderByComparator);
-	}
-
-	public static List<CommerceShippingFixedOption>
-			getCommerceShippingFixedOptions(
-				long companyId, long groupId, long commerceShippingMethodId,
-				String keywords, int start, int end)
-		throws PortalException {
-
-		return getService().getCommerceShippingFixedOptions(
-			companyId, groupId, commerceShippingMethodId, keywords, start, end);
-	}
-
-	public static int getCommerceShippingFixedOptionsCount(
-			long commerceShippingMethodId)
-		throws PortalException {
-
-		return getService().getCommerceShippingFixedOptionsCount(
-			commerceShippingMethodId);
-	}
-
-	public static long getCommerceShippingFixedOptionsCount(
-			long companyId, long groupId, long commerceShippingMethodId,
-			String keywords)
-		throws PortalException {
-
-		return getService().getCommerceShippingFixedOptionsCount(
-			companyId, groupId, commerceShippingMethodId, keywords);
 	}
 
 	/**

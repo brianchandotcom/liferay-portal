@@ -109,6 +109,35 @@ public interface CommerceShippingMethodService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShippingMethod getCommerceChannelCommerceShippingMethod(
+			long commerceShippingMethodId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, boolean active, int start, int end,
+				OrderByComparator<CommerceShippingMethod> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, int start, int end,
+				OrderByComparator<CommerceShippingMethod> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, long countryId, boolean active)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelCommerceShippingMethodsCount(long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShippingMethod getCommerceShippingMethod(
 			long commerceShippingMethodId)
 		throws PortalException;
@@ -117,21 +146,6 @@ public interface CommerceShippingMethodService extends BaseService {
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
 			long groupId, boolean active, int start, int end,
 			OrderByComparator<CommerceShippingMethod> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, int start, int end,
-			OrderByComparator<CommerceShippingMethod> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, long countryId, boolean active)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShippingMethodsCount(long groupId)
 		throws PortalException;
 
 	/**

@@ -132,22 +132,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro createMultipleProperties {
-		LexiconEntry.gotoAdd();
-
-		Click(locator1 = "ACDXPSettings#MULTIPLE_PROPERTY_OPTION");
-
-		for (var siteName : list ${siteNameList}) {
-			Check(
-				key_tableEntry = ${siteName},
-				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-		}
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro disconnectDXPFromAnalyticsCloud {
 		ACDXPSettings.goToInstanceSettingsAC();
 

@@ -71,12 +71,6 @@
 <!-- SYNCS SITES TO PROPERTY SCREEN -->
 
 <tr>
-	<td>AVAILABLE_PROPERTY_NAME</td>
-	<td>//td[contains(., '${key_availablePropertyName}')]</td>
-	<td></td>
-</tr>
-
-<tr>
 	<td>FIRST_AVAILABLE_PROPERTY</td>
 	<td>//td[@class='table-cell-expand']</td>
 	<td></td>

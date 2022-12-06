@@ -188,12 +188,12 @@ definition {
 			value1 = "\ENTER");
 	}
 
-	macro selectAvailableProperties {
-		var key_availablePropertyName = ${availablePropertyName};
+	macro syncContactsAndAccountstData {
+		// if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
+		// 	Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+		// }
 
-		Click(locator1 = "ACDXPSettings#AVAILABLE_PROPERTY_NAME");
-
-		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 	}
 
 	macro syncByOrganizations {

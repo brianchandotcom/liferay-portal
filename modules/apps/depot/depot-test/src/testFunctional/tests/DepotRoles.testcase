@@ -550,13 +550,18 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX",
-			permissionDefinitionValue = "Add Document",
-			permissionNavigationValue = "Documents and Media",
-			roleTitle = "AL Role Name",
-			roleTitleEdit = "AL Role Name Edit",
-			roleType = "Asset Library");
+		RoleNavigator.gotoRoleType(roleType = "Asset Library");
+
+		LexiconEntry.gotoEntry(rowEntry = "AL Role Name");
+
+		Role.editRole(roleTitleEdit = "AL Role Name Edit");
+
+		Role.editPermissionCmdCPUI(
+			define = "true",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "Documents",
+			permissionValues = "Add Document");
 	}
 
 	@description = "This ensures that a depot owner can assign specific roles to a user."

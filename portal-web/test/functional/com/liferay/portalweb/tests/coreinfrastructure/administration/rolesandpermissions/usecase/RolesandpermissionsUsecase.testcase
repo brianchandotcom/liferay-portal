@@ -55,12 +55,16 @@ definition {
 
 		Role.openRolesAdmin();
 
-		// The define permission via json macro is not able to change the permission scope
+		RoleNavigator.gotoRoleType();
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
-			roleTitle = "Roles Regrole Name",
+		LexiconEntry.gotoEntry(rowEntry = "Roles Regrole Name");
+
+		Role.editPermissionCmdCPUI(
+			define = "true",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "General Permissions",
+			permissionValues = "Access in Site and Asset Library Administration",
 			siteNameScope = "${siteName}");
 
 		Role.viewPermissionCP(
@@ -465,6 +469,7 @@ definition {
 
 	@priority = "4"
 	test GroupScopePermissionCheck {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.app.includes = "bookmarks";
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#GroupScopePermissionCheck";
@@ -475,14 +480,12 @@ definition {
 
 		Role.add(roleTitle = "Group Scope Role Name");
 
-		Role.openRolesAdmin();
-
-		// The define permission via json macro is not able to change the permission scope
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
-			roleTitle = "Group Scope Role Name",
+		Role.editPermissionCmdCPUI(
+			define = "true",
+			permissionNavHeader = "Applications",
+			permissionNavItem = "Bookmarks",
+			permissionSheetSubtitle = "Bookmarks Entry",
+			permissionValues = "View",
 			siteNameScope = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -545,37 +548,24 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editUserSiteCP(
 			siteName = "${siteName}",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editUserSiteCP(
 			siteName = "google.com Name",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.assignRegularRoleCP(
 			roleTitle = "Group Scope Role Name",
@@ -668,15 +658,12 @@ definition {
 
 		Role.add(roleTitle = "Roles Siterole Name");
 
-		Role.openRolesAdmin();
-
-		// The define permission via json macro is not able to change the permission scope
-
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site");
+		Role.editPermissionCmdCPUI(
+			define = "true",
+			permissionNavHeader = "Applications",
+			permissionNavItem = "Bookmarks",
+			permissionSheetSubtitle = "Bookmarks Entry",
+			permissionValues = "View");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -1205,23 +1192,16 @@ definition {
 	test ViewAutomaticAssignedRoles {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
-		Role.openRolesAdmin();
-
-		// This macro can not be replaced by the one define permission via json, since no additional role automatically added when using json api
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX",
-			permissionDefinitionValue = "Access in Control Panel",
-			permissionNavigationKey = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS",
-			permissionNavigationValue = "Users and Organizations",
-			roleTitle = "Roles Regrole Name");
+		Role.editPermissionCmdCPUI(
+			define = "true",
+			permissionNavHeader = "Users",
+			permissionNavItem = "Users and Organizations",
+			permissionSheetSubtitle = "Application Permissions",
+			permissionValues = "Access in Control Panel");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View Control Panel Menu",
@@ -1229,16 +1209,20 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
-			permissionNavigationKey = "SITE_ADMIN_PAGES_SITE_PAGES",
-			permissionNavigationValue = "Pages",
-			roleTitle = "Roles Regrole Name");
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Roles Regrole Name");
+
+		Role.editPermissionCmdCPUI(
+			define = "true",
+			permissionNavHeader = "Site Builder",
+			permissionNavItem = "Pages",
+			permissionSheetSubtitle = "General Permissions",
+			permissionValues = "Access in Site and Asset Library Administration");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View Site and Asset Library Administration Menu",
-			permissionNavigationValue = "Settings > Site");
+			permissionNavigationValue = "Site Settings > Site");
 	}
 
 	@priority = "4"
@@ -1254,11 +1238,17 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.removePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX",
-			permissionDefinitionValue = "Add Repository",
-			roleTitle = "Site Member",
-			roleType = "Site");
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		LexiconEntry.gotoEntry(rowEntry = "Site Member");
+
+		Role.editPermissionCmdCPUI(
+			permissionNavHeader = "Applications",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "Documents",
+			permissionValues = "Add Repository",
+			remove = "true",
+			siteNameScope = "${siteName}");
 
 		var key_permissionDefinitionValue = "Add Repository";
 		var key_permissionNavigationValue = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX";

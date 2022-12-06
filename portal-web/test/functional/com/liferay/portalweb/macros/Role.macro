@@ -511,7 +511,7 @@ definition {
 		}
 
 		if (isSet(roleDescriptionEdit)) {
-			PortletEntry.inputDescription(description = "${roleDescriptionEdit}");
+			PortletEntry.inputDescriptionTextInput(description = "${roleDescriptionEdit}");
 		}
 
 		if (isSet(roleKeyEdit)) {
@@ -644,6 +644,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
 			value1 = "${roleTitle}");
+
+		if (isSet(roleDescription)) {
+			AssertTextEquals(
+				locator1 = "TextInput#DESCRIPTION",
+				value1 = "${roleDescription}");
+		}
 
 		AssertTextEquals(
 			locator1 = "TextInput#KEY",

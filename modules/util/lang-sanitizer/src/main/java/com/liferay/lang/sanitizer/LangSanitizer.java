@@ -72,7 +72,7 @@ public class LangSanitizer {
 		ClassLoader classLoader = LangSanitizer.class.getClassLoader();
 
 		_policy = Policy.getInstance(
-			classLoader.getResourceAsStream("anti-samy.xml"));
+			classLoader.getResourceAsStream("sanitizer-configuration.xml"));
 	}
 
 	public void sanitize(String baseDirName) throws Exception {

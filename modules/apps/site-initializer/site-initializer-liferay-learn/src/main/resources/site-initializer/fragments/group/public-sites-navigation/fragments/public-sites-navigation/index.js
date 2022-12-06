@@ -28,6 +28,12 @@ const accountMenus = fragmentElement.querySelectorAll('.account');
 
 const sites = fragmentElement.querySelector('.sites');
 
+const languageSelectorContainer = fragmentElement.querySelector('.language-selector-container');
+
+const languageSelector = fragmentElement.querySelector('.language-selector');
+
+const languageDropdownList = fragmentElement.querySelector('.language-dropdown-list-container');
+
 menuBtn.addEventListener('click', () => {
 	menuButtonGroup.classList.toggle('menu-open');
 	tabletMobileNavSection.classList.toggle('menu-open');
@@ -46,4 +52,12 @@ accountMenus.forEach((accountMenu) => {
 
 sites.addEventListener('click', () => {
 	sites.classList.toggle('show');
+});
+
+languageSelectorContainer.addEventListener('click', () => {
+	languageDropdownList.classList.toggle('list-open');
+});
+
+languageSelectorContainer.addEventListener('click', () => {
+	languageSelector.classList.toggle('list-open');
 });

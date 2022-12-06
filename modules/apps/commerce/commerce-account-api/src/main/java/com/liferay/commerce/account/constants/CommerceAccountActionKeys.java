@@ -34,6 +34,9 @@ public class CommerceAccountActionKeys {
 	public static final String MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL =
 		"MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL";
 
+	public static final String MANAGE_CHANNEL_ACCOUNT_MANAGERS =
+		"MANAGE_CHANNEL_ACCOUNT_MANAGERS";
+
 	public static final String MANAGE_MEMBERS = "MANAGE_MEMBERS";
 
 	public static final String MANAGE_ORGANIZATIONS = "MANAGE_ORGANIZATIONS";

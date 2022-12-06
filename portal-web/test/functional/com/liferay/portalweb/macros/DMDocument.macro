@@ -1064,9 +1064,7 @@ definition {
 			locator1 = "Message#CHECKOUT_SUCCESS",
 			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 
-		AssertClick(
-			locator1 = "Button#CHECKIN",
-			value1 = "Checkin");
+		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Checkin");
 
 		if (IsElementPresent(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
 			if ("${revision}" == "Major") {
@@ -1526,9 +1524,7 @@ definition {
 				value1 = "You cannot modify this document because it was locked by ${userName}");
 		}
 		else {
-			AssertClick(
-				locator1 = "Button#EDIT",
-				value1 = "Edit");
+			DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Edit");
 		}
 
 		if (isSet(dmDocumentFileEdit)) {
@@ -3029,9 +3025,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#CHECKOUT_SUCCESS");
 
-		AssertClick(
-			locator1 = "Button#EDIT",
-			value1 = "Edit");
+		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Edit");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}

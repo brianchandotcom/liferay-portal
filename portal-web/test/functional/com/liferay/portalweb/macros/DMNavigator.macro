@@ -120,7 +120,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");
 
-		Click(locator1 = "Button#EDIT");
+		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Edit");
 	}
 
 	macro gotoEditDocumentType {

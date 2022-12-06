@@ -154,6 +154,18 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean patchFieldOrder(@GraphQLName("fields") Field[] fields)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_fieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			fieldResource -> fieldResource.patchFieldOrder(fields));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean patchFieldPeople(@GraphQLName("fields") Field[] fields)
 		throws Exception {
 

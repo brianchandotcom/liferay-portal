@@ -393,6 +393,197 @@ public abstract class BaseFieldResourceTestCase {
 	}
 
 	@Test
+	public void testGetFieldsOrdersPage() throws Exception {
+		Page<Field> page = fieldResource.getFieldsOrdersPage(
+			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		Field field1 = testGetFieldsOrdersPage_addField(randomField());
+
+		Field field2 = testGetFieldsOrdersPage_addField(randomField());
+
+		page = fieldResource.getFieldsOrdersPage(
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(field1, (List<Field>)page.getItems());
+		assertContains(field2, (List<Field>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetFieldsOrdersPageWithPagination() throws Exception {
+		Page<Field> totalPage = fieldResource.getFieldsOrdersPage(
+			null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		Field field1 = testGetFieldsOrdersPage_addField(randomField());
+
+		Field field2 = testGetFieldsOrdersPage_addField(randomField());
+
+		Field field3 = testGetFieldsOrdersPage_addField(randomField());
+
+		Page<Field> page1 = fieldResource.getFieldsOrdersPage(
+			null, Pagination.of(1, totalCount + 2), null);
+
+		List<Field> fields1 = (List<Field>)page1.getItems();
+
+		Assert.assertEquals(fields1.toString(), totalCount + 2, fields1.size());
+
+		Page<Field> page2 = fieldResource.getFieldsOrdersPage(
+			null, Pagination.of(2, totalCount + 2), null);
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<Field> fields2 = (List<Field>)page2.getItems();
+
+		Assert.assertEquals(fields2.toString(), 1, fields2.size());
+
+		Page<Field> page3 = fieldResource.getFieldsOrdersPage(
+			null, Pagination.of(1, totalCount + 3), null);
+
+		assertContains(field1, (List<Field>)page3.getItems());
+		assertContains(field2, (List<Field>)page3.getItems());
+		assertContains(field3, (List<Field>)page3.getItems());
+	}
+
+	@Test
+	public void testGetFieldsOrdersPageWithSortDateTime() throws Exception {
+		testGetFieldsOrdersPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, field1, field2) -> {
+				BeanTestUtil.setProperty(
+					field1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetFieldsOrdersPageWithSortDouble() throws Exception {
+		testGetFieldsOrdersPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, field1, field2) -> {
+				BeanTestUtil.setProperty(field1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(field2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetFieldsOrdersPageWithSortInteger() throws Exception {
+		testGetFieldsOrdersPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, field1, field2) -> {
+				BeanTestUtil.setProperty(field1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(field2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetFieldsOrdersPageWithSortString() throws Exception {
+		testGetFieldsOrdersPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, field1, field2) -> {
+				Class<?> clazz = field1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						field1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						field2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						field1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						field2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						field1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						field2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetFieldsOrdersPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Field, Field, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Field field1 = randomField();
+		Field field2 = randomField();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, field1, field2);
+		}
+
+		field1 = testGetFieldsOrdersPage_addField(field1);
+
+		field2 = testGetFieldsOrdersPage_addField(field2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Field> ascPage = fieldResource.getFieldsOrdersPage(
+				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(field1, field2), (List<Field>)ascPage.getItems());
+
+			Page<Field> descPage = fieldResource.getFieldsOrdersPage(
+				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(field2, field1),
+				(List<Field>)descPage.getItems());
+		}
+	}
+
+	protected Field testGetFieldsOrdersPage_addField(Field field)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchFieldOrder() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetFieldsPeoplePage() throws Exception {
 		Page<Field> page = fieldResource.getFieldsPeoplePage(
 			RandomTestUtil.randomString(), Pagination.of(1, 10), null);

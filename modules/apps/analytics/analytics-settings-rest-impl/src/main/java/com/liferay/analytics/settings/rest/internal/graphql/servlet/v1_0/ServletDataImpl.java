@@ -150,6 +150,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							FieldResourceImpl.class, "patchFieldAccount"));
 					put(
+						"mutation#patchFieldOrder",
+						new ObjectValuePair<>(
+							FieldResourceImpl.class, "patchFieldOrder"));
+					put(
 						"mutation#patchFieldPeople",
 						new ObjectValuePair<>(
 							FieldResourceImpl.class, "patchFieldPeople"));
@@ -191,6 +195,10 @@ public class ServletDataImpl implements ServletData {
 						"query#fieldsAccounts",
 						new ObjectValuePair<>(
 							FieldResourceImpl.class, "getFieldsAccountsPage"));
+					put(
+						"query#fieldsOrders",
+						new ObjectValuePair<>(
+							FieldResourceImpl.class, "getFieldsOrdersPage"));
 					put(
 						"query#fieldsPeople",
 						new ObjectValuePair<>(

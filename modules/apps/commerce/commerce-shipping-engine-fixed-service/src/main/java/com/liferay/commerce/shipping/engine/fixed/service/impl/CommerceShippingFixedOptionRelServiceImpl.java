@@ -131,8 +131,9 @@ public class CommerceShippingFixedOptionRelServiceImpl
 		throws PortalException {
 
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.getCommerceShippingMethod(
-				commerceShippingMethodId);
+			_commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethod(
+					commerceShippingMethodId);
 
 		return commerceShippingFixedOptionRelLocalService.
 			getCommerceShippingMethodFixedOptionRels(
@@ -146,8 +147,9 @@ public class CommerceShippingFixedOptionRelServiceImpl
 		throws PortalException {
 
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodService.getCommerceShippingMethod(
-				commerceShippingMethodId);
+			_commerceShippingMethodService.
+				getCommerceChannelCommerceShippingMethod(
+					commerceShippingMethodId);
 
 		return commerceShippingFixedOptionRelLocalService.
 			getCommerceShippingMethodFixedOptionRelsCount(

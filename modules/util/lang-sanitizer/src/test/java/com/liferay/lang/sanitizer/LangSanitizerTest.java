@@ -44,7 +44,7 @@ public class LangSanitizerTest {
 		ClassLoader classLoader = LangSanitizer.class.getClassLoader();
 
 		_policy = Policy.getInstance(
-			classLoader.getResourceAsStream("anti-samy.xml"));
+			classLoader.getResourceAsStream("sanitizer-configuration.xml"));
 	}
 
 	@Test

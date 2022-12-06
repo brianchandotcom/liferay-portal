@@ -18,6 +18,9 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -54,13 +57,30 @@ public class CTStoreRegistrator {
 					String storeType = String.valueOf(
 						serviceReference.getProperty("store.type"));
 
+					Store ctStore = _ctStoreFactory.createCTStore(
+						bundleContext.getService(serviceReference), storeType);
+
+					if (StringUtil.equals(
+							storeType, PropsValues.DL_STORE_IMPL)) {
+
+						StoreFactory.setStore(ctStore);
+					}
+
 					return bundleContext.registerService(
-						Store.class,
-						_ctStoreFactory.createCTStore(
-							bundleContext.getService(serviceReference),
-							storeType),
+						Store.class, ctStore,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"ct.aware", true
+						).put(
+							"default",
+							() -> {
+								if (StringUtil.equals(
+										storeType, PropsValues.DL_STORE_IMPL)) {
+
+									return true;
+								}
+
+								return null;
+							}
 						).put(
 							"store.type", storeType
 						).build());

@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
-import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
 
 /**
@@ -218,8 +217,7 @@ public class IllegalImportsCheck extends BaseFileCheck {
 		if (sourceFormatterArgs.isFormatCurrentBranch()) {
 			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
 				sourceFormatterArgs.getBaseDirName(),
-				sourceFormatterArgs.getGitWorkingBranchName(),
-				SourceUtil.getAbsolutePath(fileName));
+				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
 
 			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
 				if (!line.startsWith(StringPool.PLUS)) {

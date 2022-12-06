@@ -40,10 +40,13 @@ definition {
 		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 	}
 
-	macro connectDXPtoAnalyticsCloud {
-		ACDXPSettings.connectAnalyticsCloud();
+	macro clickToAssignSitesAndChannel {
+		Click(
+			key_text = "Assign",
+			locator1 = "Button#ANY");
 
-		Alert.viewSuccessMessage();
+		WaitForPageLoad();
+	}
 
 		ACDXPSettings.navToSyncedSitesMenu();
 

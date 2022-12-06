@@ -434,6 +434,12 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro selectFolders {
+		for (var key_dmFolderName : list "${dmFolderName}") {
+			Check.checkNotVisible(locator1 = "DocumentsAndMedia#ICON_FOLDER_CHECKBOX");
+		}
+	}
+
 	macro subscribePG {
 		Click(locator1 = "Icon#INFO");
 

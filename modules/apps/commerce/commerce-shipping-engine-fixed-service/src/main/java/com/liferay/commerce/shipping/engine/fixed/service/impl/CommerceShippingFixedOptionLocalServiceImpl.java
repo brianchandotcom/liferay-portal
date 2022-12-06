@@ -31,6 +31,7 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -116,6 +118,12 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		commerceShippingFixedOption.setNameMap(nameMap);
 		commerceShippingFixedOption.setPriority(priority);
 
+		_resourceLocalService.addResources(
+			user.getCompanyId(), groupId, user.getUserId(),
+			CommerceShippingFixedOption.class.getName(),
+			commerceShippingFixedOption.getCommerceShippingFixedOptionId(),
+			false, true, true);
+
 		return commerceShippingFixedOptionPersistence.update(
 			commerceShippingFixedOption);
 	}
@@ -124,7 +132,8 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceShippingFixedOption deleteCommerceShippingFixedOption(
-		CommerceShippingFixedOption commerceShippingFixedOption) {
+			CommerceShippingFixedOption commerceShippingFixedOption)
+		throws PortalException {
 
 		// Commerce shipping fixed option
 
@@ -143,12 +152,16 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 			deleteCommerceShippingOptionAccountEntryRelsByCSFixedOptionKey(
 				commerceShippingFixedOption.getKey());
 
+		_resourceLocalService.deleteResource(
+			commerceShippingFixedOption, ResourceConstants.SCOPE_INDIVIDUAL);
+
 		return commerceShippingFixedOption;
 	}
 
 	@Override
 	public void deleteCommerceShippingFixedOptions(
-		long commerceShippingMethodId) {
+			long commerceShippingMethodId)
+		throws PortalException {
 
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
 			commerceShippingFixedOptionPersistence.
@@ -472,6 +485,9 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 	@Reference
 	private CommerceShippingOptionAccountEntryRelLocalService
 		_commerceShippingOptionAccountEntryRelLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

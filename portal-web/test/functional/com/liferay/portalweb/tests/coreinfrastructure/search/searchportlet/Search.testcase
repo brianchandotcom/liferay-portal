@@ -804,6 +804,105 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test CanOrderSiteFacetTerms {
+		task ("Add Sites") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Sales",
+				siteTemplateName = "Blank Site");
+
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Community",
+				siteTemplateName = "Blank Site");
+
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Product",
+				siteTemplateName = "Blank Site");
+
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Engineering",
+				siteTemplateName = "Blank Site");
+		}
+
+		task ("Add the Web Contents into the Sites") {
+			JSONWebcontent.addWebContent(
+				content = "Some content about sales",
+				groupName = "Sales",
+				title = "Sales Web Content 1");
+
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Some content about community",
+					groupName = "Community",
+					title = "Community Web Content ${count}");
+			}
+
+			for (var count : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "Some content about product",
+					groupName = "Product",
+					title = "Product Web Content ${count}");
+			}
+
+			for (var count : list "1,2,3,4") {
+				JSONWebcontent.addWebContent(
+					content = "Some content about engineering",
+					groupName = "Engineering",
+					title = "Engineering Web Content ${count}");
+			}
+		}
+
+		ApplicationsMenu.gotoSite(site = "Liferay DXP");
+
+		Search.openSearchPage();
+
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+
+		SearchPortlets.searchEmbedded(searchTerm = "web content");
+
+		task ("Assert the order of site facet by term frequency descending by default") {
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Engineering,Community,Product,Sales");
+		}
+
+		task ("Assert the order of site facet by Frequency term ascending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Site Facet",
+				sortOption = "Term Frequency Ascending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Sales,Product,Community,Engineering");
+		}
+
+		task ("Assert the order of site facet by Term value ascending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Site Facet",
+				sortOption = "Term Value Ascending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Community,Engineering,Product,Sales");
+		}
+
+		task ("Assert the order of site facet by Term value descending") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Site Facet",
+				sortOption = "Term Value Descending");
+
+			Refresh();
+
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Sales,Product,Engineering,Community");
+		}
+	}
+
 	test CanOrderTagFacetTerms {
 		task ("Create the tags and the Web Contents") {
 			for (var tagList : list "engineering,product,2021,2022") {

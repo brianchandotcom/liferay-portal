@@ -17,14 +17,12 @@ package com.liferay.document.library.versioning;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 
-import java.util.Optional;
-
 /**
  * @author Adolfo Pérez
  */
 public interface VersioningPolicy {
 
-	public Optional<DLVersionNumberIncrease> computeDLVersionNumberIncrease(
+	public DLVersionNumberIncrease computeDLVersionNumberIncrease(
 		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion);
 
 }

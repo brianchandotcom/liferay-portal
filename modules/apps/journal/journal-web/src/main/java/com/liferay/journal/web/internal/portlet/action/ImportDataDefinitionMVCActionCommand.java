@@ -104,9 +104,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			hideDefaultSuccessMessage(actionRequest);
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+			_log.error(exception);
 
 			SessionErrors.add(
 				actionRequest, "importDataDefinitionErrorMessage", exception);

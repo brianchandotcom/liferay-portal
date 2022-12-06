@@ -74,6 +74,9 @@ export declare function fetchPeopleFields(
 export declare function fetchAccountsFields(
 	params: TTableRequestParams
 ): Promise<any>;
+export declare function fetchProductsFields(
+	params: TTableRequestParams
+): Promise<any>;
 declare type TField = {
 	example: string;
 	name: string;
@@ -84,4 +87,5 @@ declare type TField = {
 };
 export declare function updatePeopleFields(fields: TField[]): Promise<any>;
 export declare function updateAccountsFields(fields: TField[]): Promise<any>;
+export declare function updateProductsFields(fields: TField[]): Promise<any>;
 export {};

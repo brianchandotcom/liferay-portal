@@ -44,10 +44,11 @@ definition {
 			locator1 = "TestrayTestflow#ASSIGN_INFORMATIONS");
 	}
 
-	macro assertStatusTasks {
+	macro assertStatus {
 		AssertElementPresent(
-			key_value = "${key_value}",
-			locator1 = "TestrayTestflow#STATUS_TASKS");
+			key_label = "${label}",
+			key_status = "${status}",
+			locator1 = "TestrayTestflow#TESTFLOW_STATUS");
 	}
 
 	macro assertTaskDetails {

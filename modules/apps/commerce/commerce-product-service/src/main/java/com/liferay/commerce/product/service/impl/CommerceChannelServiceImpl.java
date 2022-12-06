@@ -129,6 +129,18 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	}
 
 	@Override
+	public List<CommerceChannel> findCommerceChannels(long companyId)
+		throws PortalException {
+
+		return commerceChannelPersistence.filterFindByCompanyId(companyId);
+	}
+
+	@Override
+	public int findCommerceChannelsCount(long companyId) {
+		return commerceChannelPersistence.filterCountByCompanyId(companyId);
+	}
+
+	@Override
 	public CommerceChannel getCommerceChannel(long commerceChannelId)
 		throws PortalException {
 

@@ -161,8 +161,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AC_CHECKBOX_INDEX</td>
-	<td>xpath=(//*[contains(@type, 'checkbox')])[${key_index}]</td>
+	<td>SYNC_BY_USER_GROUPS_PREVIEW</td>
+	<td>//p[contains(text(),'User Groups')]/..//p[contains(@class,'list-group-text')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -86,6 +87,8 @@ public class SQLServerDB extends BaseDB {
 		throws Exception {
 
 		dropIndexes(connection, tableName, columnName);
+
+		_dropDefaultConstraint(connection, tableName, columnName);
 
 		super.alterTableDropColumn(connection, tableName, columnName);
 	}
@@ -280,6 +283,42 @@ public class SQLServerDB extends BaseDB {
 
 			return sb.toString();
 		}
+	}
+
+	private void _dropDefaultConstraint(
+			Connection connection, String tableName, String columnName)
+		throws Exception {
+
+		String defaultConstraintName = null;
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select default_constraints.name from sys.",
+					"default_constraints inner join sys.tables on ",
+					"default_constraints.parent_object_id = tables.object_id ",
+					"inner join sys.columns on default_constraints.",
+					"parent_object_id = columns.object_id and ",
+					"default_constraints.parent_column_id = columns.column_id ",
+					"where tables.name = ? and columns.name = ?"))) {
+
+			preparedStatement.setString(1, tableName);
+			preparedStatement.setString(2, columnName);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					defaultConstraintName = resultSet.getString("name");
+				}
+			}
+		}
+
+		if (Validator.isNull(defaultConstraintName)) {
+			return;
+		}
+
+		runSQL(
+			StringBundler.concat(
+				"alter table ", tableName, " drop constraint ",
+				defaultConstraintName));
 	}
 
 	private static final String[] _SQL_SERVER = {

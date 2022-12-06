@@ -213,9 +213,10 @@ public class CommerceShipmentDisplayContext
 			_commerceAddressService.getCommerceAddress(
 				commerceShipment.getCommerceAddressId());
 
-		return _commerceShippingMethodService.getCommerceShippingMethods(
-			commerceShipment.getGroupId(), commerceAddress.getCountryId(),
-			true);
+		return _commerceShippingMethodService.
+			getCommerceChannelCommerceShippingMethods(
+				commerceShipment.getGroupId(), commerceAddress.getCountryId(),
+				true);
 	}
 
 	public List<Country> getCountries() {

@@ -118,6 +118,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -1684,6 +1685,27 @@ public class ObjectEntryLocalServiceTest {
 			values.get(_objectDefinition.getPKObjectFieldName()));
 		Assert.assertEquals(values.toString(), 19, values.size());
 
+		Map<String, Serializable> systemValues =
+			_objectEntryLocalService.getSystemValues(objectEntry);
+
+		_assertTimestamp(
+			objectEntry.getCreateDate(),
+			(Timestamp)systemValues.get("createDate"));
+		Assert.assertEquals(
+			objectEntry.getExternalReferenceCode(),
+			systemValues.get("externalReferenceCode"));
+		_assertTimestamp(
+			objectEntry.getModifiedDate(),
+			(Timestamp)systemValues.get("modifiedDate"));
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId(), systemValues.get("objectEntryId"));
+		Assert.assertEquals(
+			objectEntry.getStatus(), systemValues.get("status"));
+		Assert.assertEquals(
+			objectEntry.getUserName(), systemValues.get("userName"));
+
+		Assert.assertEquals(systemValues.toString(), 6, systemValues.size());
+
 		try {
 			_objectEntryLocalService.getValues(0);
 
@@ -2630,6 +2652,22 @@ public class ObjectEntryLocalServiceTest {
 				0, _objectDefinition.getObjectDefinitionId(), keywords, 0, 20);
 
 		Assert.assertEquals(count, baseModelSearchResult.getLength());
+	}
+
+	private void _assertTimestamp(Date expectedDate, Timestamp objectDate) {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(expectedDate);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		Timestamp objectDateTimestamp = new Timestamp(
+			calendar.getTimeInMillis());
+
+		Assert.assertEquals(objectDateTimestamp, objectDate);
 	}
 
 	private void _assertValuesListWithAccountEntryRestricted(

@@ -601,7 +601,6 @@ definition {
 		DMDocument.viewDocumentTypePG(
 			fieldFieldLabel = "Text",
 			locale = "es",
-			localizedButton = "Información",
 			textContent = "Texto de prueba");
 	}
 

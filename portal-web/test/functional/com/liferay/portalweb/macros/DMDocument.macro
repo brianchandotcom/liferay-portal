@@ -3301,9 +3301,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Click.clickNoMouseOver(
-				key_text = "${localizedButton}",
-				locator1 = "Button#ANY");
+			ManagementBar.clickInfo();
 		}
 		else {
 			DMDocument.expandInfo();

@@ -258,7 +258,7 @@ definition {
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
-		Click.clickAt(locator1 = "Icon#INFO");
+		DMDocument.expandInfo();
 
 		AssertElementPresent(locator1 = "Button#SHARE_SIDEBAR");
 

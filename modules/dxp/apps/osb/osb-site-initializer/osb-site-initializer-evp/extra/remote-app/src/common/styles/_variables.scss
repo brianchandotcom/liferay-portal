@@ -1,0 +1,381 @@
+// ---------- Color palette ----------
+
+$color-primary: #373ecc;
+$color-primary-dark: #0e1387;
+$color-primary-light: #abbbff;
+$color-primary-lighter: #dfe5fe;
+$color-primary-lightest: #f3f6ff;
+
+$color-black: #2e414e;
+$color-gray: #acbcc7;
+$color-gray-dark: #768b99;
+$color-gray-light: #e3e9ee;
+$color-gray-lighter: #f5f6f7;
+$color-white: #fff;
+
+$color-indigo: #303376;
+$color-indigo-dark: #18215c;
+$color-indigo-light: #8b8db2;
+
+$color-orange: #f78c52;
+$color-orange-dark: #d87827;
+$color-orange-light: #fff0e5;
+
+$color-green: #3cd587;
+$color-green-dark: #07ad58;
+$color-green-light: #ebffef;
+
+$color-red: #e73a45;
+$color-red-light: #fff0f1;
+
+$color-yellow: #f8d72e;
+$color-yellow-dark: #cf9700;
+$color-yellow-light: #fffbe7;
+
+$color-blue: #59bbfc;
+
+// ---------- Avatar colors ------------------
+
+.bg-accent-1 {
+	background-color: #eb2453;
+}
+
+.bg-accent-2 {
+	background-color: #a7e204;
+}
+
+.bg-accent-3 {
+	background-color: #c70d95;
+}
+
+.bg-accent-4 {
+	background-color: #221874;
+}
+
+.text-brand-secondary-lighten-6 {
+	color: #fff;
+}
+
+$blocked-color: $color-yellow;
+$dnr-color: $color-gray;
+$failed-color: $color-red;
+$incomplete-color: $color-gray-light;
+$passed-color: $color-green;
+$test-fix-color: $color-blue;
+
+$blockedColor: #ffd764;
+$failedColor: #fe5160;
+$incompleteColor: #bcbdc0;
+$passedColor: #37d27e;
+$testFixColor: #68d8ff;
+$untestedColor: #bcbdc0;
+
+// ---------- TestFlow status colors ----------
+
+$abandoned-color: $color-gray;
+$completed-color: $color-primary;
+$in-analysis-color: $color-orange;
+$others-completed-color: $color-primary-light;
+$self-completed-color: $color-primary;
+
+// ---------- Validation ----------
+
+$validation-error-background: $color-red-light;
+$validation-error-border: $color-red-light;
+$validation-error-text: $color-red;
+
+$validation-info-background: $color-primary-lightest;
+$validation-info-border: $color-primary-lightest;
+$validation-info-text: $color-primary;
+
+$validation-success-background: $color-green-light;
+$validation-success-border: $color-green-light;
+$validation-success-text: $color-green-dark;
+
+$validation-warning-background: $color-yellow-light;
+$validation-warning-border: $color-yellow-light;
+$validation-warning-text: $color-yellow-dark;
+
+// ---------- General ----------
+
+$background-color: $color-white;
+$background-color-secondary: $color-gray-lighter;
+
+$border-color: $color-gray-light;
+$border-hover-color: $color-gray-dark;
+
+$content-background-color: $color-gray-lighter;
+$content-color: $color-black;
+$content-empty-color: $color-gray-dark;
+
+$label-color: $color-gray;
+
+$link-color: $color-primary;
+$link-hover-color: $color-primary-dark;
+
+$current-marker-color: $color-primary;
+$placeholder-color: $color-gray-lighter;
+
+// ---------- Breakpoints ----------
+
+$breakpoint-large: 1440px;
+
+// ---------- Fonts ----------
+
+$font-header-weight: 500;
+$font-size-default: 14px;
+$font-size-large: 1.1em;
+$font-size-small: 0.95em;
+$font-size-smallest: 0.85em;
+$font-weight: 400;
+$letter-spacing: 0.01em;
+
+// ---------- Radius ----------
+
+$border-radius: 0;
+
+// ---------- Shadows ----------
+
+$box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.04), 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+$box-shadow-deep: 0 8px 22px 0 rgba(0, 0, 0, 0.18);
+$box-shadow-light: 0 2px 4px 0 rgba(38, 47, 87, 0.05);
+
+// ---------- Sizing ----------
+
+$alert-container-width: 450px;
+$avatar-size-default: 36px;
+$avatar-size-small: 28px;
+$compact-vertical-spacing: 15px;
+$default-vertical-spacing: 20px;
+$input-max-width: 800px;
+$layout-padding-horizontal: 30px;
+$metrics-bar-height: 15px;
+$metrics-legend-block-size: 16px;
+$portlet-min-width: 1000px;
+
+// ---------- Transitions ----------
+
+$transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
+
+// ---------- Banners ----------
+
+$banner-abandoned-bg-color: $color-gray-lighter;
+$banner-abandoned-color: $color-gray-dark;
+$banner-complete-bg-color: lighten($completed-color, 40%);
+$banner-complete-color: saturate(darken($completed-color, 18%), 22%);
+$banner-in-analysis-bg-color: $color-orange-light;
+$banner-in-analysis-color: $color-orange-dark;
+
+// ---------- Buttons ----------
+
+$button-default-background-color: $color-gray-light;
+$button-default-background-hover-color: $color-gray;
+$button-default-border-color: $color-gray-light;
+$button-default-icon-color: $color-gray-dark;
+$button-default-text-color: $color-black;
+
+$button-disabled-background-color: $color-gray-lighter;
+$button-disabled-border-color: $color-gray-lighter;
+$button-disabled-text-color: $color-gray;
+
+$button-primary-background-color: $color-primary;
+$button-primary-background-hover-color: $color-primary-dark;
+$button-primary-text-color: $color-white;
+
+// ---------- Code ----------
+
+$code-background-color: $color-gray-lighter;
+$code-border-color: $color-gray-lighter;
+$code-text-color: $color-black;
+
+// ---------- Compare runs colors ----------
+
+$blocked-cell-color: lighten($blocked-color, 40%);
+$blocked-hover-cell-color: lighten($blocked-color, 30%);
+$failed-cell-color: lighten($failed-color, 40%);
+$failed-hover-cell-color: lighten($failed-color, 30%);
+$passed-cell-color: lighten($passed-color, 40%);
+$passed-hover-cell-color: lighten($passed-color, 30%);
+$test-fix-cell-color: lighten($test-fix-color, 30%);
+$test-fix-hover-cell-color: lighten($test-fix-color, 20%);
+
+// ---------- Form fields ----------
+
+$input-border-color: $color-gray;
+$input-border-focus-color: $color-primary;
+
+// ---------- Sidebar ----------
+
+$sidebar-background-active-color: $color-indigo;
+$sidebar-background-color: $color-indigo-dark;
+$sidebar-background-hover-color: $color-indigo;
+
+$sidebar-divider-color: $color-indigo-light;
+
+$sidebar-text-active-color: $color-white;
+$sidebar-text-color: $color-indigo-light;
+
+$sidebar-width: 250px;
+
+// ---------- Tables ----------
+
+$table-border-color: $color-gray-light;
+$table-odd-row-bg-color: $color-white;
+$table-row-bg-hover-color: $color-gray-lighter;
+$table-row-border-color: $color-gray-light;
+$table-row-check-color: $color-primary-lightest;
+$table-row-check-hover-color: $color-primary-lighter;
+$table-row-focused-color: #d3f6ff;
+
+$sidebar-divider-color: #8b8db2;
+
+:root {
+	--primary: #373ecc !important;
+	--btn-primary-hover-border-color: #0e1387 !important;
+	--btn-primary-hover-background-color: #0e1387 !important;
+}
+
+// ---------- Result status colors ----------
+
+.label-chart {
+	font-weight: 500;
+
+	&.blocked {
+		background-color: $blockedColor;
+		border-color: $blockedColor;
+		color: $color-black;
+	}
+
+	&.completed {
+		background-color: $completed-color;
+		border-color: $completed-color;
+		color: $color-white;
+	}
+
+	&.failed {
+		background-color: $failedColor;
+		border-color: $failedColor;
+		color: $color-white;
+	}
+
+	&.in-analysis {
+		background-color: $in-analysis-color;
+		border-color: $in-analysis-color;
+		color: $color-white;
+	}
+
+	&.untested {
+		background-color: $color-gray-light;
+		border-color: $color-gray-light;
+		color: $color-black;
+	}
+
+	&.inprogress {
+		background-color: $color-gray-light;
+		border-color: $color-gray-light;
+		color: $color-black;
+	}
+
+	&.test-fix {
+		background-color: $testFixColor;
+		border-color: $testFixColor;
+		color: $color-white;
+	}
+
+	&.secondary {
+		background-color: #ed7105;
+		border-color: #ed7105;
+	}
+
+	&.light {
+		background-color: #f7f6f9;
+		border-color: #f7f6f9;
+	}
+
+	&.primary {
+		background-color: #5924eb;
+		border-color: #5924eb;
+	}
+
+	&.passed {
+		background-color: $passedColor;
+		border-color: $passedColor;
+		color: $color-white;
+	}
+
+	&.info {
+		background-color: #2e5aac;
+		border-color: #2e5aac;
+	}
+}
+
+.build-alert-bar {
+	.alert-indicator {
+		display: none;
+	}
+
+	&.alert-primary {
+		background-color: #dadbf5;
+		border-color: #dadbf5;
+		color: #101698;
+
+		.lead {
+			color: #101698;
+			font-weight: 400;
+		}
+
+		.label {
+			&.label-primary {
+				background-color: $color-primary;
+				border-color: $color-primary;
+				color: $color-white;
+			}
+		}
+	}
+
+	&.alert-warning {
+		background-color: #fff0e5;
+		border-color: #fff0e5;
+		color: #d87827;
+
+		.lead {
+			color: #d87827;
+			font-weight: 400;
+		}
+
+		.label {
+			&.label-warning {
+				background-color: #f78c52;
+				border-color: #f78c52;
+				color: $color-white;
+			}
+		}
+	}
+
+	&.alert-secondary {
+		background-color: transparent;
+		border-color: transparent;
+		color: #768b99;
+
+		.lead {
+			color: #768b99;
+			font-weight: 400;
+		}
+
+		.label {
+			&.label-secondary {
+				background-color: #acbcc7;
+				border-color: #acbcc7;
+				color: $color-white;
+			}
+		}
+	}
+}
+
+.label-tonal-success {
+	background-color: #edf7eb;
+}
+
+.text-gray {
+	color: $color-gray;
+}

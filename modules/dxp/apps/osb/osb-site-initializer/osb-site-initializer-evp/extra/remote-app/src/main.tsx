@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,19 @@
 
 import {Root, createRoot} from 'react-dom/client';
 
+import ClayIconProvider from './common/provider/ClayIconProvider';
+import GenerateReport from './routes/reports/generateReport';
+
 import './style/index.css';
 
 const NoRouteSelected = () => <div className="evp-app">No route selected</div>;
 
-type EVPComponentType = {
+export type EVPComponentType = {
 	[key: string]: JSX.Element;
 };
 
 const EVPComponent: EVPComponentType = {
+	'generate-report': <GenerateReport />,
 	'no-route-selected': <NoRouteSelected />,
 };
 
@@ -38,7 +43,11 @@ class EVPRemoteAppComponent extends HTMLElement {
 		if (!this.root) {
 			this.root = createRoot(this);
 
-			this.root.render(EVPComponent[properties.route]);
+			this.root.render(
+				<ClayIconProvider>
+					{EVPComponent[properties.route]}
+				</ClayIconProvider>
+			);
 		}
 	}
 }

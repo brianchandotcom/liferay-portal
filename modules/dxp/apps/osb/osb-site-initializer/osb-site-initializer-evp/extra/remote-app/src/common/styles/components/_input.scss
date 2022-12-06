@@ -1,0 +1,42 @@
+label {
+	display: flex;
+	font-size: 1.125rem;
+	font-weight: bold;
+	gap: 0.75rem;
+	margin-right: -5px;
+
+	&.required::after {
+		color: red;
+		content: '*';
+		font-size: 1rem;
+		font-weight: bold;
+		left: -10px;
+		position: relative;
+		top: -5px;
+	}
+}
+
+.label-tonal-danger {
+	background-color: #fbe8e8;
+	border-color: transparent;
+	color: var(--color-state-error);
+	font-weight: 600;
+	height: 35px;
+	padding: 4px;
+	text-transform: none;
+	.text-paragraph {
+		font-size: 16px;
+	}
+}
+
+.badge .inline-item .lexicon-icon {
+	height: 13px;
+	margin-right: 0;
+	width: 13px;
+}
+
+.change-user-password {
+	margin: auto;
+	padding: 50px !important;
+	width: 760px;
+}

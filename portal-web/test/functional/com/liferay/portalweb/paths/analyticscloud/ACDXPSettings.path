@@ -166,7 +166,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_GROUP_OPTION_CHECKBOX</td>
+	<td>SELECT_OPTION_CHECKBOX</td>
 	<td>//tr[contains(., '${key_entry}')]//input</td>
 	<td></td>
 </tr>
@@ -176,8 +176,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SYNC_BY_USER_GROUPS_PREVIEW</td>
-	<td>//fieldset//a[1]//div[2]//small[contains(@class,'list-group-subtext')]</td>
+	<td>SYNC_TOGGLE_ICON</td>
+	<td>//*[contains(@class, 'toggle-switch-check')]/..//span[text()='${key_syncFieldName}']</td>
 	<td></td>
 </tr>
 </tbody>

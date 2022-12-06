@@ -74,11 +74,8 @@ public class EditAccountEntryUserMVCRenderCommand implements MVCRenderCommand {
 				new CommerceAccountDisplayContext(
 					_accountEntryModelResourcePermission, _accountEntryService,
 					_commerceChannelAccountEntryRelService,
-					_commerceChannelService,
-					_commerceShippingFixedOptionService,
-					_commerceShippingMethodService,
-					_commerceShippingOptionAccountEntryRelService,
-					httpServletRequest, _language, _portal, _userService);
+					_commerceChannelService, httpServletRequest, _language,
+					_userService);
 
 			httpServletRequest.setAttribute(
 				CommerceAccountWebKeys.COMMERCE_ACCOUNT_DISPLAY_CONTEXT,

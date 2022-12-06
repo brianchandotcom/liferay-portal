@@ -15,12 +15,12 @@
 package com.liferay.commerce.account.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.account.web.internal.constants.CommerceAccountFDSNames;
-import com.liferay.commerce.account.web.internal.model.User;
+import com.liferay.commerce.account.web.internal.model.ChannelAccountManager;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
-import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -28,8 +28,9 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
@@ -47,10 +48,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = FDSDataProvider.class
 )
 public class AccountEntryDefaultUsersDataSetDataProvider
-	implements FDSDataProvider<User> {
+	implements FDSDataProvider<ChannelAccountManager> {
 
 	@Override
-	public List<User> getItems(
+	public List<ChannelAccountManager> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
@@ -66,11 +67,10 @@ public class AccountEntryDefaultUsersDataSetDataProvider
 					CommerceChannelAccountEntryRelConstants.TYPE_USER,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			commerceChannelAccountEntryRel -> {
-				com.liferay.portal.kernel.model.User user =
-					_userService.getUserById(
-						commerceChannelAccountEntryRel.getClassPK());
+				User user = _userLocalService.getUserById(
+					commerceChannelAccountEntryRel.getClassPK());
 
-				return new User(
+				return new ChannelAccountManager(
 					commerceChannelAccountEntryRel.getAccountEntryId(),
 					_getChannelName(
 						accountEntryId,
@@ -103,7 +103,8 @@ public class AccountEntryDefaultUsersDataSetDataProvider
 		throws PortalException {
 
 		CommerceChannel commerceChannel =
-			_commerceChannelService.fetchCommerceChannel(commerceChannelId);
+			_commerceChannelLocalService.fetchCommerceChannel(
+				commerceChannelId);
 
 		if (commerceChannel == null) {
 			List<CommerceChannelAccountEntryRel>
@@ -138,12 +139,12 @@ public class AccountEntryDefaultUsersDataSetDataProvider
 		_commerceChannelAccountEntryRelService;
 
 	@Reference
-	private CommerceChannelService _commerceChannelService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private Language _language;
 
 	@Reference
-	private UserService _userService;
+	private UserLocalService _userLocalService;
 
 }

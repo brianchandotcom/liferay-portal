@@ -16,26 +16,35 @@ package com.liferay.commerce.account.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.account.web.internal.constants.CommerceAccountFDSNames;
-import com.liferay.commerce.account.web.internal.model.User;
+import com.liferay.commerce.account.web.internal.model.ChannelAccountManager;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,31 +68,29 @@ public class AccountEntryDefaultUsersFDSActionProvider
 			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
-		User user = (User)model;
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		ChannelAccountManager channelAccountManager =
+			(ChannelAccountManager)model;
 
 		return DropdownItemListBuilder.add(
-			() -> _accountEntryModelResourcePermission.contains(
-				permissionChecker, user.getAccountEntryId(), ActionKeys.UPDATE),
+			() -> _hasPermission(channelAccountManager.getAccountEntryId()),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getCommerceChannelAccountEntryRelEditURL(
-						user.getAccountEntryId(),
-						user.getCommerceChannelAccountEntryRelId(),
-						httpServletRequest, user.getType()));
+						channelAccountManager.getAccountEntryId(),
+						channelAccountManager.
+							getCommerceChannelAccountEntryRelId(),
+						httpServletRequest, channelAccountManager.getType()));
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, Constants.EDIT));
 				dropdownItem.setTarget("modal-lg");
 			}
 		).add(
-			() -> _accountEntryModelResourcePermission.contains(
-				permissionChecker, user.getAccountEntryId(), ActionKeys.UPDATE),
+			() -> _hasPermission(channelAccountManager.getAccountEntryId()),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getCommerceChannelAccountEntryRelDeleteURL(
-						user.getCommerceChannelAccountEntryRelId(),
+						channelAccountManager.
+							getCommerceChannelAccountEntryRelId(),
 						httpServletRequest));
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, Constants.DELETE));
@@ -95,10 +102,32 @@ public class AccountEntryDefaultUsersFDSActionProvider
 		long commerceChannelAccountEntryRelId,
 		HttpServletRequest httpServletRequest) {
 
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		PortletURL portletURL = null;
+
+		if (AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN.equals(
+				portletDisplay.getId())) {
+
+			portletURL = _portal.getControlPanelPortletURL(
 				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-				PortletRequest.ACTION_PHASE)
+				PortletRequest.ACTION_PHASE);
+		}
+		else if (AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT.equals(
+					portletDisplay.getId())) {
+
+			portletURL = PortletURLFactoryUtil.create(
+				httpServletRequest,
+				AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,
+				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+		}
+
+		return PortletURLBuilder.create(
+			portletURL
 		).setActionName(
 			"/account_entries_admin/edit_account_entry_user"
 		).setCMD(
@@ -116,10 +145,32 @@ public class AccountEntryDefaultUsersFDSActionProvider
 		long accountEntryId, long commerceChannelAccountEntryRelId,
 		HttpServletRequest httpServletRequest, int type) {
 
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		PortletURL portletURL = null;
+
+		if (AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN.equals(
+				portletDisplay.getId())) {
+
+			portletURL = _portal.getControlPanelPortletURL(
 				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-				PortletRequest.RENDER_PHASE)
+				PortletRequest.RENDER_PHASE);
+		}
+		else if (AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT.equals(
+					portletDisplay.getId())) {
+
+			portletURL = PortletURLFactoryUtil.create(
+				httpServletRequest,
+				AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+		}
+
+		return PortletURLBuilder.create(
+			portletURL
 		).setMVCRenderCommandName(
 			"/account_entries_admin/edit_account_entry_user"
 		).setParameter(
@@ -131,6 +182,29 @@ public class AccountEntryDefaultUsersFDSActionProvider
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	private boolean _hasPermission(long accountEntryId) throws PortalException {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (_accountEntryModelResourcePermission.contains(
+				permissionChecker, accountEntryId, ActionKeys.UPDATE) &&
+			permissionChecker.hasPermission(
+				null, CommerceChannel.class.getName(),
+				CompanyThreadLocal.getCompanyId(), ActionKeys.VIEW) &&
+			permissionChecker.hasPermission(
+				null, CommerceChannel.class.getName(),
+				CompanyThreadLocal.getCompanyId(),
+				CommerceAccountActionKeys.MANAGE_CHANNEL_ACCOUNT_MANAGERS) &&
+			permissionChecker.hasPermission(
+				null, User.class.getName(), CompanyThreadLocal.getCompanyId(),
+				ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference(

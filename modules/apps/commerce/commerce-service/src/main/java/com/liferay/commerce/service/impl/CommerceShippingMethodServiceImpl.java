@@ -202,7 +202,7 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
-	public CommerceShippingMethod getCommerceShippingMethod(
+	public CommerceShippingMethod getCommerceChannelCommerceShippingMethod(
 			long commerceShippingMethodId)
 		throws PortalException {
 
@@ -216,9 +216,10 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
-	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, boolean active, int start, int end,
-			OrderByComparator<CommerceShippingMethod> orderByComparator)
+	public List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, boolean active, int start, int end,
+				OrderByComparator<CommerceShippingMethod> orderByComparator)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
@@ -228,9 +229,10 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
-	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, int start, int end,
-			OrderByComparator<CommerceShippingMethod> orderByComparator)
+	public List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, int start, int end,
+				OrderByComparator<CommerceShippingMethod> orderByComparator)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
@@ -240,8 +242,9 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
-	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, long countryId, boolean active)
+	public List<CommerceShippingMethod>
+			getCommerceChannelCommerceShippingMethods(
+				long groupId, long countryId, boolean active)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
@@ -251,13 +254,48 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
-	public int getCommerceShippingMethodsCount(long groupId)
+	public int getCommerceChannelCommerceShippingMethodsCount(long groupId)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.
 			getCommerceShippingMethodsCount(groupId);
+	}
+
+	@Override
+	public CommerceShippingMethod getCommerceShippingMethod(
+			long commerceShippingMethodId)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(
+				commerceShippingMethod.getGroupId());
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannel, ActionKeys.VIEW);
+
+		return commerceShippingMethod;
+	}
+
+	@Override
+	public List<CommerceShippingMethod> getCommerceShippingMethods(
+			long groupId, boolean active, int start, int end,
+			OrderByComparator<CommerceShippingMethod> orderByComparator)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannel, ActionKeys.VIEW);
+
+		return commerceShippingMethodLocalService.getCommerceShippingMethods(
+			groupId, active, start, end, orderByComparator);
 	}
 
 	@Override

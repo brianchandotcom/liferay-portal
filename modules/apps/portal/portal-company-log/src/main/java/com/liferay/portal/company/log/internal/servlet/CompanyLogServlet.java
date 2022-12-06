@@ -16,7 +16,6 @@ package com.liferay.portal.company.log.internal.servlet;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -95,8 +94,6 @@ public class CompanyLogServlet extends HttpServlet {
 			}
 			else if (pathArray.length == 2) {
 				long companyId = GetterUtil.getLongStrict(pathArray[0]);
-				String fileName = pathArray[1];
-				String action = ParamUtil.getString(httpServletRequest, "action");
 
 				_companyLocalService.getCompanyById(companyId);
 
@@ -107,6 +104,11 @@ public class CompanyLogServlet extends HttpServlet {
 					throw new PrincipalException.MustBeCompanyAdmin(
 						permissionChecker.getUserId());
 				}
+
+				String fileName = pathArray[1];
+
+				String action = ParamUtil.getString(
+					httpServletRequest, "action");
 
 				File file = _getFile(companyId, fileName);
 
@@ -192,24 +194,7 @@ public class CompanyLogServlet extends HttpServlet {
 		}
 	}
 
-	private void _read(HttpServletResponse httpServletResponse, File file)
-		throws IOException {
-
-		Scanner scanner = new Scanner(file);
-		StringBuilder sb = new StringBuilder();
-
-		while (scanner.hasNextLine()) {
-			sb.append(scanner.nextLine() + "\n");
-		}
-
-		scanner.close();
-
-		ServletResponseUtil.write(httpServletResponse, sb.toString());
-	}
-
-	private File _getFile(long companyId, String fileName)
-		throws Exception {
-
+	private File _getFile(long companyId, String fileName) throws Exception {
 		File companyLogDirectory = Log4JUtil.getCompanyLogDirectory(companyId);
 
 		Path path = Paths.get(companyLogDirectory.getPath(), fileName);
@@ -308,6 +293,21 @@ public class CompanyLogServlet extends HttpServlet {
 		}
 
 		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
+	}
+
+	private void _read(HttpServletResponse httpServletResponse, File file)
+		throws IOException {
+
+		Scanner scanner = new Scanner(file);
+		StringBuilder sb = new StringBuilder();
+
+		while (scanner.hasNextLine()) {
+			sb.append(scanner.nextLine() + "\n");
+		}
+
+		scanner.close();
+
+		ServletResponseUtil.write(httpServletResponse, sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

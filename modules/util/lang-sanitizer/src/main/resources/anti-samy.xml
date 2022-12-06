@@ -33,7 +33,9 @@
 		<regexp name="numberOrPercent" value="(\d)+(%{0,1})" />
 		<regexp name="paragraph" value="([\p{L}\p{N},'\.\s\-_\(\)]|&amp;[0-9]{2};)*" />
 		<regexp name="htmlId" value="[a-zA-Z0-9\:\-_\.]+" />
-		<regexp name="htmlTitle" value="[\p{L}\p{N}\s\-_',:\[\]!\./\\\(\)&amp;]*" /> <!-- force non-empty with a '+' at the end instead of '*' -->
+		<regexp name="htmlTitle" value="[\p{L}\p{N}\s\-_',:\[\]!\./\\\(\)&amp;]*" />
+
+		<!-- force non-empty with a '+' at the end instead of '*' -->
 
 		<regexp name="htmlClass" value="[a-zA-Z0-9\s,\-_]+" />
 		<regexp
@@ -46,7 +48,9 @@
 		/>
 
 		<regexp name="boolean" value="(true|false)" />
-		<regexp name="singlePrintable" value="[a-zA-Z0-9]{1}" /> <!-- \w allows the '_' character -->
+		<regexp name="singlePrintable" value="[a-zA-Z0-9]{1}" />
+
+		<!-- \w allows the '_' character -->
 
 		<!-- This is for elements (ex: elemName { ... }) -->
 
@@ -444,7 +448,9 @@
 		<!-- Tags related to JavaScript -->
 
 		<tag action="remove" name="script" />
-		<tag name="noscript" action="validate" /> <!-- although no javascript can fire inside a noscript tag, css is still a viable attack vector -->
+		<tag action="validate" name="noscript" />
+
+		<!-- although no javascript can fire inside a noscript tag, css is still a viable attack vector -->
 
 		<!-- Frame & related tags -->
 

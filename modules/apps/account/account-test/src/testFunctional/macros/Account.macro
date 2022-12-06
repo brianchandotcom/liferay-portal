@@ -1110,8 +1110,6 @@ definition {
 			value1 = "\RETURN");
 
 		Button.click(button = "Invite");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro openAccountsAdmin {

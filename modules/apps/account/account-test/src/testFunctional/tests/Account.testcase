@@ -2371,6 +2371,8 @@ definition {
 				accountName = "Acme Inc.",
 				userEmailAddress = "userea@liferay.com");
 
+			Alert.viewSuccessMessage();
+
 			User.logoutPG();
 		}
 
@@ -2640,19 +2642,9 @@ definition {
 		}
 
 		task ("When admin invites a user with a different domain") {
-			Account._goToInviteUsers(accountName = "S Auto Service");
-
-			Type(
-				key_text = "Email Addresses",
-				locator1 = "TextInput#ANY",
-				value1 = "john.doe@liferay1.com");
-
-			KeyPress(
-				key_text = "Email Addresses",
-				locator1 = "TextInput#ANY",
-				value1 = "\RETURN");
-
-			Button.click(button = "Invite");
+			Account.inviteUser(
+				accountName = "S Auto Service",
+				userEmailAddress = "john.doe@liferay1.com");
 		}
 
 		task ("Then the user is not invited") {

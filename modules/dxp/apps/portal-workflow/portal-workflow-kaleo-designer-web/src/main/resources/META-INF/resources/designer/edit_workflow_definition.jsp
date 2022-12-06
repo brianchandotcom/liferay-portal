@@ -54,7 +54,7 @@ renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 		).put(
 			"functionActionExecutors", kaleoDesignerDisplayContext.getFunctionActionExecutorsJSONArray()
 		).put(
-			"isView", view || !permissionChecker.isOmniadmin()
+			"isView", view || !kaleoDesignerDisplayContext.canPublishWorkflowDefinition()
 		).put(
 			"languageIds", LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
 		).put(

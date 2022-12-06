@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SERVICE_PROVIDER_CLOCK_SKEW_INPUT</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-sp-clock-skew')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_saml-sp-ldap-import-enabled')]</td>
 	<td></td>

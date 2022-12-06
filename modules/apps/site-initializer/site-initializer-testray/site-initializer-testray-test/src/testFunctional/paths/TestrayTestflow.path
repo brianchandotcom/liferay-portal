@@ -52,7 +52,12 @@
 </tr>
 <tr>
 	<td>TESTFLOW_SIDEBAR</td>
-	<td>//div[contains(@class, 'testray-sidebar')]//span[normalize-space()='Testflow']</td>
+	<td>//div[contains(@class, 'testray-sidebar')]//span[normalize-space()='TestFlow']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TESTFLOW_STATUS</td>
+	<td>//h5[normalize-space()='${key_label}']//following::*[contains (text(), '${key_status}')]</td>
 	<td></td>
 </tr>
 </tbody>

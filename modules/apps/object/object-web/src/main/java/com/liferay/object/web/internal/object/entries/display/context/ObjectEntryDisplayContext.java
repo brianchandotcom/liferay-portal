@@ -710,15 +710,15 @@ public class ObjectEntryDisplayContext {
 			ObjectEntry objectEntry = getObjectEntry();
 
 			if (objectEntry != null) {
-				ddmFormField.setProperty(
-					"objectEntryExternalReferenceCode",
-					objectEntry.getExternalReferenceCode());
-
 				ObjectDefinition objectDefinition = getObjectDefinition();
 
 				ddmFormField.setProperty(
 					"objectDefinitionExternalReferenceCode",
 					objectDefinition.getExternalReferenceCode());
+
+				ddmFormField.setProperty(
+					"objectEntryExternalReferenceCode",
+					objectEntry.getExternalReferenceCode());
 			}
 		}
 

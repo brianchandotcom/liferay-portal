@@ -302,11 +302,7 @@
 	<target name="check-upgrade-client-home-ext-properties">
 		<get-database-upgrade-client-paths />
 
-		<property name="user.home" value="~" />
-
-		<execute dir="${user.home}" failonerror="true">
-			touch portal-ext.properties
-		</execute>
+		<touch file="${user.home}/portal-ext.properties" />
 
 		<execute dir="${db.upgrade.client.home}" failonerror="true">
 			db_upgrade${file.suffix.bat} run > temp.log

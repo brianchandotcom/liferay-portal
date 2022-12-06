@@ -232,7 +232,9 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.mapImport(fieldMappings = ${fieldMappings});
+		if (isSet(fieldMappings)) {
+			ImportExport.mapImport(fieldMappings = ${fieldMappings});
+		}
 
 		if (isSet(templateName)) {
 			ImportExport.saveAsTemplate(templateName = ${templateName});

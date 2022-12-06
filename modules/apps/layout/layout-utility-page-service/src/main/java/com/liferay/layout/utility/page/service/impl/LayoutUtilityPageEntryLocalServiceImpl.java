@@ -133,13 +133,12 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			layoutUtilityPageEntryPersistence.findByPrimaryKey(
 				layoutUtilityPageEntryId);
 
-		String name = _getUniqueCopyName(
-			groupId, sourceLayoutUtilityPageEntry.getName(),
-			sourceLayoutUtilityPageEntry.getType(), serviceContext.getLocale());
-
 		long previewFileEntryId = _copyPreviewFileEntryId(
 			userId, sourceLayoutUtilityPageEntry.getPreviewFileEntryId(), name,
 			serviceContext);
+		String name = _getUniqueCopyName(
+			groupId, sourceLayoutUtilityPageEntry.getName(),
+			sourceLayoutUtilityPageEntry.getType(), serviceContext.getLocale());
 
 		return addLayoutUtilityPageEntry(
 			null, userId, serviceContext.getScopeGroupId(), previewFileEntryId,

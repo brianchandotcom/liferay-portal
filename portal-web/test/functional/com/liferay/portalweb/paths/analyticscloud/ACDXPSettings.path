@@ -81,6 +81,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>FIRST_AVAILABLE_PROPERTY</td>
+	<td>//td[@class='table-cell-expand']</td>
+	<td></td>
+</tr>
+
 <!-- GENERIC CHECKBOX -->
 
 <tr>

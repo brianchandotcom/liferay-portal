@@ -121,21 +121,11 @@ definition {
 	}
 
 	macro getAssignedPropertyName {
-		if (IsElementNotPresent(locator1 = "//*[@data-qa-id='headerTitle'][normalize-space(text())='Analytics Cloud']")) {
-			ACDXPSettings.goToInstanceSettingsAC();
-		}
-
-		ACDXPSettings.navToSyncedSitesMenu();
-
-		LexiconEntry.gotoAdd();
-
 		WaitForVisible(
-			key_tableEntry = ${siteName},
-			locator1 = "LexiconTable#TABLE_ENTRY");
+			key_text = "Assign",
+			locator1 = "Button#ANY");
 
-		static var assignedPropertyName = selenium.getText("//tr[@data-qa-id='row'][contains(.,'${siteName}')]//td[contains(@class,'assigned-property-column')]");
-
-		ACNavigation.clickCancelButton();
+		static var assignedPropertyName = selenium.getText("ACDXPSettings#FIRST_AVAILABLE_PROPERTY");
 
 		return ${assignedPropertyName};
 	}

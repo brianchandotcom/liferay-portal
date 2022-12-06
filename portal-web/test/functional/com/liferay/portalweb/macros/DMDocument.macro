@@ -3921,6 +3921,10 @@ definition {
 		var key_mgDocumentTitle = "${mgDocumentTitle}";
 
 		if (isSet(mgVideoPreview)) {
+			while (IsElementNotPresent(key_mgDocumentTitle = "${mgDocumentTitle}", locator1 = "MediaGallery#ENTRY_THUMBNAIL")) {
+				Refresh();
+			}
+
 			Click(
 				key_mgDocumentTitle = "${mgDocumentTitle}",
 				locator1 = "MediaGallery#ENTRY_THUMBNAIL");

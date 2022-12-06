@@ -16,6 +16,9 @@ package com.liferay.commerce.shipping.engine.fixed.internal.model.listener;
 
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -31,10 +34,18 @@ public class CommerceShippingMethodModelListener
 
 	@Override
 	public void onBeforeRemove(CommerceShippingMethod commerceShippingMethod) {
-		_commerceShippingFixedOptionLocalService.
-			deleteCommerceShippingFixedOptions(
-				commerceShippingMethod.getCommerceShippingMethodId());
+		try {
+			_commerceShippingFixedOptionLocalService.
+				deleteCommerceShippingFixedOptions(
+					commerceShippingMethod.getCommerceShippingMethodId());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceShippingMethodModelListener.class);
 
 	@Reference
 	private CommerceShippingFixedOptionLocalService

@@ -35,11 +35,6 @@
 	<td>//*[contains(@class,'lexicon-icon-plus')]//ancestor::button[contains(text(),'${key_buttonText}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>LISTING_TABLE_NAME</td>
-	<td>//*[@route='mdf-request-list']//thead//th/p[contains(text(),'Name')]//ancestor::table//tbody//th[6][contains(text(),'Campaign Name')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

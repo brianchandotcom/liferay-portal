@@ -11,8 +11,8 @@
 
 <tbody>
 <tr>
-	<td>LISTING_TABLE_NAME</td>
-	<td>//*[@route='mdf-request-list']//thead//th/p[contains(text(),'Name')]//ancestor::table//tbody//th[3][normalize-space(text())='${key_campaignName}']</td>
+	<td>LISTING_TABLE</td>
+	<td>//table/tbody//th[${key_rowNumber}][normalize-space(text())='${key_rowValue}']</td>
 	<td></td>
 </tr>
 </tbody>

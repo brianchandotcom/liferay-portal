@@ -41,7 +41,7 @@ CommerceChannelAccountEntryRel commerceChannelAccountEntryRel = commerceAccountD
 			<aui:option label="<%= LanguageUtil.get(request, commerceAccountDisplayContext.getCommerceChannelsEmptyOptionKey()) %>" selected="<%= commerceAccountDisplayContext.isCommerceChannelSelected(0) %>" value="0" />
 
 			<%
-			for (CommerceChannel commerceChannel : commerceAccountDisplayContext.getFilteredCommerceChannels()) {
+			for (CommerceChannel commerceChannel : commerceAccountDisplayContext.getCommerceChannels()) {
 			%>
 
 				<aui:option label="<%= commerceChannel.getName() %>" selected="<%= commerceAccountDisplayContext.isCommerceChannelSelected(commerceChannel.getCommerceChannelId()) %>" value="<%= commerceChannel.getCommerceChannelId() %>" />
@@ -58,7 +58,7 @@ CommerceChannelAccountEntryRel commerceChannelAccountEntryRel = commerceAccountD
 			for (User allowedUser : commerceAccountDisplayContext.getAllowedUsers()) {
 			%>
 
-				<aui:option label="<%= allowedUser.getScreenName() %>" selected="<%= commerceAccountDisplayContext.isUserSelected(allowedUser.getUserId()) %>" value="<%= allowedUser.getUserId() %>" />
+				<aui:option label="<%= allowedUser.getFullName() %>" selected="<%= commerceAccountDisplayContext.isUserSelected(allowedUser.getUserId()) %>" value="<%= allowedUser.getUserId() %>" />
 
 			<%
 			}

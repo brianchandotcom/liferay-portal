@@ -22,9 +22,6 @@ import com.liferay.commerce.account.web.internal.constants.AccountEntryScreenNav
 import com.liferay.commerce.account.web.internal.display.context.CommerceAccountDisplayContext;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService;
-import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -35,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -117,11 +113,8 @@ public class AccountEntryCommerceChannelDefaultsScreenNavigationCategory
 				new CommerceAccountDisplayContext(
 					_accountEntryModelResourcePermission, _accountEntryService,
 					_commerceChannelAccountEntryRelService,
-					_commerceChannelService,
-					_commerceShippingFixedOptionService,
-					_commerceShippingMethodService,
-					_commerceShippingOptionAccountEntryRelService,
-					httpServletRequest, _language, _portal, _userService);
+					_commerceChannelService, httpServletRequest, _language,
+					_userService);
 
 			httpServletRequest.setAttribute(
 				CommerceAccountWebKeys.COMMERCE_ACCOUNT_DISPLAY_CONTEXT,
@@ -158,24 +151,10 @@ public class AccountEntryCommerceChannelDefaultsScreenNavigationCategory
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
-	private CommerceShippingFixedOptionService
-		_commerceShippingFixedOptionService;
-
-	@Reference
-	private CommerceShippingMethodService _commerceShippingMethodService;
-
-	@Reference
-	private CommerceShippingOptionAccountEntryRelService
-		_commerceShippingOptionAccountEntryRelService;
-
-	@Reference
 	private JSPRenderer _jspRenderer;
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.account.web)"

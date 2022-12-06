@@ -102,4 +102,100 @@ definition {
 		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
+	@description = "Story: LRAC-11860 | Automation ID: LRAC-12439 | Test Summary: Connect DXP with AC token updates data source status"
+	@priority = "4"
+	test CheckDataSourceStatusUpdateWhenSyncSitesAndContacts {
+		property portal.release = "true";
+
+		var sectionTitleList = "Current Status,Synced Sites,Synced Contacts";
+
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			var dataSource = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Launch AC, go to settings and data source and click in the data source searched") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
+			ACUtils.searchBar(searchItem = "${dataSource}");
+
+			ACNavigation.openItem(itemName = "${dataSource}");
+		}
+
+		task ("Assert the data source Status: Connected, Sites: Unconfigured, Contacts: Unconfigured") {
+			ACSettings.checkDataSourceStatus(
+				sectionTitleList = "${sectionTitleList}",
+				statusList = "Connected,Unconfigured,Unconfigured");
+		}
+
+		task ("Launch DXP and sync sites") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedSitesMenu();
+
+			ACDXPSettings.syncSites();
+		}
+
+		task ("Launch AC, go to settings and data source and click in the data source searched") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
+			ACUtils.searchBar(searchItem = "${dataSource}");
+
+			ACNavigation.openItem(itemName = "${dataSource}");
+		}
+
+		task ("Assert the data source Status: Active, Sites: Configured, Contacts: Unconfigured") {
+			ACSettings.checkDataSourceStatus(
+				sectionTitleList = "${sectionTitleList}",
+				statusList = "Active,Configured,Unconfigured");
+		}
+
+		task ("Launch DXP and sync contacts") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.navToSyncedContactDataMenu();
+
+			ACDXPSettings.syncContactsAndAccountstData();
+		}
+
+		task ("Launch AC, go to settings and data source and click in the data source searched") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDataSources();
+
+			ACUtils.searchBar(searchItem = "${dataSource}");
+
+			ACNavigation.openItem(itemName = "${dataSource}");
+		}
+
+		task ("Assert the data source Status: Active, Sites: Configured, Contacts: Configured") {
+			ACSettings.checkDataSourceStatus(
+				sectionTitleList = "${sectionTitleList}",
+				statusList = "Active,Configured,Configured");
+		}
+
+		task ("Disconnect data source and assert the data source Status: Disconnected, Sites: Unconfigured, Contacts: Unconfigured") {
+			ACSettings.disconnectDataSource();
+
+			ACSettings.checkDataSourceStatus(
+				sectionTitleList = "${sectionTitleList}",
+				statusList = "Disconnected,Unconfigured,Unconfigured");
+		}
+	}
+
 }

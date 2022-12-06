@@ -88,25 +88,56 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		String className, long companyId, String objectActionTriggerKey,
 		JSONObject payloadJSONObject, long userId) {
 
+		if ((companyId == 0) || (userId == 0)) {
+			return;
+		}
+
+		User user = _userLocalService.fetchUser(userId);
+
+		if ((user == null) || (companyId != user.getCompanyId())) {
+			return;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				user.getCompanyId(), className);
+
+		if (objectDefinition == null) {
+			return;
+		}
+
 		String name = PrincipalThreadLocal.getName();
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			User user = _userLocalService.getUser(userId);
-
 			PrincipalThreadLocal.setName(user.getUserId());
 
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
 
-			_executeObjectActions(
-				className, companyId, objectActionTriggerKey, payloadJSONObject,
-				userId);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
+			_updatePayloadJSONObject(objectDefinition, payloadJSONObject, user);
+
+			Map<String, Object> variables =
+				ObjectEntryVariablesUtil.getActionVariables(
+					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+					_systemObjectDefinitionMetadataRegistry);
+
+			for (ObjectAction objectAction :
+					_objectActionLocalService.getObjectActions(
+						objectDefinition.getObjectDefinitionId(),
+						objectActionTriggerKey)) {
+
+				try {
+					_executeObjectAction(
+						objectAction, objectDefinition, payloadJSONObject,
+						userId, variables);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
@@ -172,52 +203,6 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				ObjectActionConstants.STATUS_FAILED);
 
 			throw exception;
-		}
-	}
-
-	private void _executeObjectActions(
-			String className, long companyId, String objectActionTriggerKey,
-			JSONObject payloadJSONObject, long userId)
-		throws Exception {
-
-		if ((companyId == 0) || (userId == 0)) {
-			return;
-		}
-
-		User user = _userLocalService.fetchUser(userId);
-
-		if ((user == null) || (companyId != user.getCompanyId())) {
-			return;
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				user.getCompanyId(), className);
-
-		if (objectDefinition == null) {
-			return;
-		}
-
-		_updatePayloadJSONObject(objectDefinition, payloadJSONObject, user);
-
-		Map<String, Object> variables =
-			ObjectEntryVariablesUtil.getActionVariables(
-				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionMetadataRegistry);
-
-		for (ObjectAction objectAction :
-				_objectActionLocalService.getObjectActions(
-					objectDefinition.getObjectDefinitionId(),
-					objectActionTriggerKey)) {
-
-			try {
-				_executeObjectAction(
-					objectAction, objectDefinition, payloadJSONObject, userId,
-					variables);
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
 		}
 	}
 

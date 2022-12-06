@@ -65,9 +65,11 @@ export function Attachments({setValues, values}: IProps) {
 	};
 
 	const getAttachmentFields = async function fetchObjectFields(
-		objectDefinitionId: number
+		objectDefinitionExternalReferenceCode: string
 	) {
-		const items = await API.getObjectFieldsById(objectDefinitionId);
+		const items = await API.getObjectFieldsByExternalReferenceCode(
+			objectDefinitionExternalReferenceCode
+		);
 
 		const fields: ObjectField[] = items?.filter(
 			(field) => field.businessType === 'Attachment'
@@ -109,7 +111,9 @@ export function Attachments({setValues, values}: IProps) {
 		setSelectedEntity(currentObjectDefinition);
 
 		if (values.objectDefinitionId) {
-			getAttachmentFields(values.objectDefinitionId);
+			getAttachmentFields(
+				values.objectDefinitionExternalReferenceCode as string
+			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.objectDefinitionId]);
@@ -156,7 +160,9 @@ export function Attachments({setValues, values}: IProps) {
 							}}
 							onSelectItem={(item) => {
 								if (item.id) {
-									getAttachmentFields(item.id);
+									getAttachmentFields(
+										item.externalReferenceCode
+									);
 									setSelectedEntity(item);
 								}
 								else {

@@ -32,6 +32,7 @@ interface NotificationTemplate {
 	fromName: LocalizedValue<string>;
 	id: number;
 	name: string;
+	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number | null;
 	recipientType: RecipientType;
 	recipients: Recipients[];

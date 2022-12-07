@@ -202,7 +202,7 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getNavigationKeys() {
-		return new String[] {"active", "inactive"};
+		return new String[] {"all", "active", "inactive"};
 	}
 
 	@Override

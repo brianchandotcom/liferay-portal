@@ -37,6 +37,7 @@ import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
@@ -71,7 +72,7 @@ public class JSResolveModulesServlet
 	extends HttpServlet implements NPMRegistryUpdatesListener {
 
 	public String getURL() {
-		return _state.url;
+		return _state.getUrl();
 	}
 
 	@Override
@@ -140,7 +141,10 @@ public class JSResolveModulesServlet
 			return;
 		}
 
-		if (!state.expectedPathInfo.equals(httpServletRequest.getPathInfo())) {
+		if (!Objects.equals(
+				state.getExpectedPathInfo(),
+				httpServletRequest.getPathInfo())) {
+
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
@@ -214,10 +218,7 @@ public class JSResolveModulesServlet
 			return;
 		}
 
-		NPMRegistryResolutionStateDigest npmRegistryResolutionStateDigest =
-			new NPMRegistryResolutionStateDigest(npmRegistry);
-
-		_state = new State(npmRegistryResolutionStateDigest.getDigest());
+		_state = new State(npmRegistry);
 	}
 
 	@Reference
@@ -232,13 +233,59 @@ public class JSResolveModulesServlet
 
 	private static class State {
 
-		public State(String digest) {
-			expectedPathInfo = StringPool.SLASH + digest;
-			url = "/js_resolve_modules/" + digest;
+		public String getExpectedPathInfo() {
+			String expectedPathInfo = _expectedPathInfo;
+
+			if (expectedPathInfo != null) {
+				return expectedPathInfo;
+			}
+
+			synchronized (this) {
+				if (_expectedPathInfo == null) {
+					_calculate();
+				}
+
+				expectedPathInfo = _expectedPathInfo;
+			}
+
+			return expectedPathInfo;
 		}
 
-		public final String expectedPathInfo;
-		public final String url;
+		public String getUrl() {
+			String url = _url;
+
+			if (url != null) {
+				return url;
+			}
+
+			synchronized (this) {
+				if (_url == null) {
+					_calculate();
+				}
+
+				url = _url;
+			}
+
+			return url;
+		}
+
+		private State(NPMRegistry npmRegistry) {
+			_npmRegistry = npmRegistry;
+		}
+
+		private void _calculate() {
+			NPMRegistryResolutionStateDigest npmRegistryResolutionStateDigest =
+				new NPMRegistryResolutionStateDigest(_npmRegistry);
+
+			String digest = npmRegistryResolutionStateDigest.getDigest();
+
+			_expectedPathInfo = StringPool.SLASH + digest;
+			_url = "/js_resolve_modules/" + digest;
+		}
+
+		private volatile String _expectedPathInfo;
+		private final NPMRegistry _npmRegistry;
+		private volatile String _url;
 
 	}
 

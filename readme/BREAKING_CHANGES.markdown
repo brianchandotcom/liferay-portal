@@ -1232,3 +1232,26 @@ Delete usages of `<liferay-frontend:fieldset-group>` and replace usages of `<aui
 ### Why was this change made?
 
 The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added unnecessary markup to the page and caused accessibility issues.
+
+---------------------------------------
+
+## Removed ContainerTag
+
+- **Date:** 2022-Dec-22
+- **JIRA Ticket:** [LPS-166546](https://issues.liferay.com/browse/LPS-166546)
+
+### What changed?
+
+`ContainerTag` was removed because `<aui:container>` was removed from tld definition.
+
+### Who is affected?
+
+Anyone using `<aui:container>`.
+
+### How should I update my code?
+
+Replace usages of `<aui:container>` with `<clay:container>`.
+
+### Why was this change made?
+
+The tag `<aui:container>` was deprecated in previous versions.

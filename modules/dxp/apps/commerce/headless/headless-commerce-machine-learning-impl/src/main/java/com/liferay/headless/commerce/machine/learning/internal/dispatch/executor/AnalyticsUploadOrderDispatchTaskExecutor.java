@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.machine.learning.internal.dispatch.executor;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
@@ -21,8 +22,13 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.Order;
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.OrderBatchEngineTaskItemDelegate;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.ArrayUtil;
+
+import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
@@ -45,6 +51,9 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
+		AnalyticsConfiguration analyticsConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				AnalyticsConfiguration.class, dispatchTrigger.getCompanyId());
 		DispatchLog dispatchLog =
 			dispatchLogLocalService.fetchLatestDispatchLog(
 				dispatchTrigger.getDispatchTriggerId(),
@@ -52,7 +61,11 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
 			OrderBatchEngineTaskItemDelegate.KEY,
-			dispatchTrigger.getCompanyId(), null,
+			dispatchTrigger.getCompanyId(),
+			Arrays.asList(
+				ArrayUtil.append(
+					analyticsConfiguration.syncedOrderFieldNames(),
+					analyticsConfiguration.syncedOrderItemFieldNames())),
 			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -65,5 +78,8 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 	public String getName() {
 		return KEY;
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

@@ -21,7 +21,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -122,7 +121,7 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 			return 1;
 		}
 
-		String fieldValue = (String)getProperty(fieldName, objectEntry);
+		String fieldValue = String.valueOf(getProperty(fieldName, objectEntry));
 
 		if (fieldValue == null) {
 			return 1;

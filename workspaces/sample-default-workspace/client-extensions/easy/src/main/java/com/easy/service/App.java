@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.able.service;
+package com.easy.service;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@RequestMapping("/")
-@RestController
-public class HealthResource {
+@Configuration
+@SpringBootApplication
+public class App {
 
-	@GetMapping("/")
-	public String ready() {
-		return "READY";
+	public static void main(String[] args) {
+		SpringApplication.run(App.class, args);
 	}
 
 }

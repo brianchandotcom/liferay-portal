@@ -12,32 +12,11 @@
 
 1. Wait for Liferay to start.
 
-1. Run the java app in the `client-extensions/able-oauth-application-user-agent/extra` directory:
+1. Launch the application with the following command from the `client-extensions/easy` directory:
 
     ```bash
-    cd client-extensions/able-oauth-application-user-agent/extra
-    ./gradlew run
-    ```
-
-1. Copy the generated file `<workspace>/configs/osgi/configs/*.config` to the `osgi/configs` directory of Liferay
-
-1. In the Liferay logs find and copy the `clientId` of the `able-oauth-application-user-agent` client extension.
-
-    e.g.
-
-    ```bash
-    OAuth2Application {externalReferenceCode: able-object-action-oauth-application, clientId: id-c2224747-79ae-e877-1bb8-802a1efda4ef}
-    ```
-
-1. Use the Client ID in the following command executed from the `client-extensions/able-object-action/extra`
-directory:
-
-    ```bash
-    cd client-extensions/able-object-action/extra
-    export CLIENT_ID=id-c2224747-79ae-e877-1bb8-802a1efda4ef
+    cd client-extensions/easy
     ./gradlew \
-        -Ddxp.domains=localhost \
-        -Doauth.client.id=${CLIENT_ID} \
-        -Doauth.jwks.uri=http://localhost:8080/o/oauth2/jwks \
+        -Ddxp.domains=localhost:8080 \
         bootRun
     ```

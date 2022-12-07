@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.able.service.config;
+package com.easy.service.config;
 
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
@@ -43,6 +43,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Brian Wing Shun Chan
@@ -85,25 +86,56 @@ public class HttpSecurityConfig {
 
 	@Bean
 	public JwtDecoder jwtDecoder(
-			@Value("${oauth.client.id}") String clientId,
-			@Value("${oauth.jwks.uri}") String jwkSetUrl)
+			@Value("${oauth.application.externalReferenceCode}") String externalReferenceCode,
+			@Value("${oauth.application.uri}") String applicationUri,
+			@Value("${oauth.jwks.uri}") String jwkSetUri)
 		throws Exception {
 
 		DefaultJWTProcessor<SecurityContext> jwtProcessor =
 			new DefaultJWTProcessor<>();
 
 		jwtProcessor.setJWSKeySelector(
-			JWSAlgorithmFamilyJWSKeySelector.fromJWKSetURL(new URL(jwkSetUrl)));
+			JWSAlgorithmFamilyJWSKeySelector.fromJWKSetURL(new URL(jwkSetUri)));
 		jwtProcessor.setJWSTypeVerifier(
 			new DefaultJOSEObjectTypeVerifier<>(new JOSEObjectType("at+jwt")));
 
 		NimbusJwtDecoder nimbusJwtDecoder = new NimbusJwtDecoder(jwtProcessor);
+
+		String clientId = _getClientId(applicationUri, externalReferenceCode);
+
+		System.out.println("Using clientId: " + clientId + " to decode Jwt");
 
 		nimbusJwtDecoder.setJwtValidator(
 			new DelegatingOAuth2TokenValidator<>(
 				new ClientIdValidator(clientId)));
 
 		return nimbusJwtDecoder;
+	}
+
+	private static class ApplicationInfo {
+		public String client_id;
+	}
+
+	private String _getClientId(String applicationUri, String externalReferenceCode) throws Exception {
+		while (true) {
+			try {
+				return WebClient.create(
+					applicationUri
+				).get(
+				).uri(
+					uriBuilder -> uriBuilder.queryParam(
+						"externalReferenceCode", externalReferenceCode
+					).build()
+				).retrieve(
+				).bodyToMono(
+					ApplicationInfo.class
+				).block(
+				).client_id;
+			} catch (Throwable throwable) {
+				System.err.println("Unable to get client_id: " + throwable);
+				Thread.sleep(1000);
+			}	
+		}
 	}
 
 	@Bean

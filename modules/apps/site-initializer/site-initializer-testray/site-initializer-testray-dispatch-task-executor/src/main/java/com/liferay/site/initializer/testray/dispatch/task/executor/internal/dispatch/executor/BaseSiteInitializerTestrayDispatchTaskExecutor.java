@@ -146,6 +146,17 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 		}
 	}
 
+	protected void updateObjectEntry(
+			String objectDefinitionName, ObjectEntry objectEntry,
+			long objectEntryId)
+		throws Exception {
+
+		objectEntryManager.updateObjectEntry(
+			defaultDTOConverterContext,
+			getObjectDefinition(objectDefinitionName), objectEntryId,
+			objectEntry);
+	}
+
 	protected DefaultDTOConverterContext defaultDTOConverterContext;
 
 	@Reference

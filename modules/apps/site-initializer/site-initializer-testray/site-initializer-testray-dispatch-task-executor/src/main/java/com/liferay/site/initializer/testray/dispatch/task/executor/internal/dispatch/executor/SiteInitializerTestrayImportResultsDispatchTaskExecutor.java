@@ -23,7 +23,6 @@ import com.google.cloud.storage.StorageOptions;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
@@ -434,10 +433,9 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				"r_userToCaseResults_userId",
 				sourceTestrayCaseResultObjectEntry));
 
-		objectEntryManager.updateObjectEntry(
-			defaultDTOConverterContext, _objectDefinitions.get("CaseResult"),
-			destinationTestrayCaseResultObjectEntry.getId(),
-			destinationTestrayCaseResultObjectEntry);
+		updateObjectEntry(
+			"CaseResult", destinationTestrayCaseResultObjectEntry,
+			destinationTestrayCaseResultObjectEntry.getId());
 
 		for (ObjectEntry sourceTestrayCaseResultsIssuesObjectEntry :
 				sourceTestrayCaseResultsIssuesObjectEntries) {
@@ -1077,9 +1075,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			_getTestrayRunEnvironmentHash(companyId, element, testrayRunId)
 		);
 
-		objectEntryManager.updateObjectEntry(
-			defaultDTOConverterContext, _objectDefinitions.get("Run"),
-			objectEntry.getId(), objectEntry);
+		updateObjectEntry("Run", objectEntry, objectEntry.getId());
 
 		_objectEntryIds.put(objectEntryIdsKey, testrayRunId);
 
@@ -1481,8 +1477,6 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayImportResultsDispatchTaskExecutor.class);
 
-	private final Map<String, ObjectDefinition> _objectDefinitions =
-		new HashMap<>();
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 
 	@Reference

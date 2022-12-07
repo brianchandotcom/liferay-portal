@@ -135,6 +135,14 @@ definition {
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
 			CommerceChannels.editShippingMethod(
+				active = "true",
+				configureShippingOption = "true",
+				shippingMethod = "Variable Rate",
+				shippingOptions = "Standard Option",
+				shippingOptionSettingsFixedPrice = "5",
+				shippingOptionSettingsPriceUnitWeight = "2");
+
+			CommerceChannels.editShippingMethod(
 				active = "false",
 				shippingMethod = "Flat Rate");
 		}
@@ -153,9 +161,13 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 		}
 
-		task ("Then the Sales Manager can choose only 'Use Priority Settings'") {
+		task ("Then the Sales Manager can choose only 'Use Priority Settings' and 'Variable Rate/Standard Option'") {
 			AssertElementPresent(
 				key_radioOption = "Use Priority Settings",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertElementPresent(
+				key_radioOption = "Variable Rate / Standard Option",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			AssertElementNotPresent(
@@ -167,7 +179,7 @@ definition {
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			Click.clickAtNotVisible(
-				key_radioOption = "Use Priority Settings",
+				key_radioOption = "Variable Rate / Standard Option",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			Button.clickSave();
@@ -176,8 +188,8 @@ definition {
 
 			CommerceChannels.assertDefaultAccountShippingOption(
 				channelName = "Minium Portal",
-				shippingMethod = "Use Priority Settings",
-				shippingOption = "Use Priority Settings");
+				shippingMethod = "Variable Rate",
+				shippingOption = "Standard Option");
 		}
 	}
 

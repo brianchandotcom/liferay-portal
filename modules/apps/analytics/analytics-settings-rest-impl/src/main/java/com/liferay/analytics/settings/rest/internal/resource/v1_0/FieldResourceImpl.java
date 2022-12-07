@@ -16,6 +16,7 @@ package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.constants.FieldAccountConstants;
+import com.liferay.analytics.settings.rest.constants.FieldOrderConstants;
 import com.liferay.analytics.settings.rest.constants.FieldPeopleConstants;
 import com.liferay.analytics.settings.rest.constants.FieldProductConstants;
 import com.liferay.analytics.settings.rest.dto.v1_0.Field;
@@ -69,6 +70,41 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 			FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES, "account",
 			analyticsConfiguration.syncedAccountFieldNames(),
 			FieldAccountConstants.FIELD_ACCOUNT_TYPES);
+
+		fields = _filter(fields, keyword);
+
+		fields = _sort(fields, sorts);
+
+		return Page.of(
+			ListUtil.subList(
+				fields, pagination.getStartPosition(),
+				pagination.getEndPosition()),
+			pagination, fields.size());
+	}
+
+	@Override
+	public Page<Field> getFieldsOrdersPage(
+			String keyword, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		List<Field> fields = _getFields(
+			FieldOrderConstants.FIELD_ORDER_EXAMPLES,
+			FieldOrderConstants.FIELD_ORDER_NAMES,
+			FieldOrderConstants.FIELD_ORDER_REQUIRED_NAMES, "order",
+			analyticsConfiguration.syncedOrderFieldNames(),
+			FieldOrderConstants.FIELD_ORDER_TYPES);
+
+		fields.addAll(
+			_getFields(
+				FieldOrderConstants.FIELD_ORDER_ITEM_EXAMPLES,
+				FieldOrderConstants.FIELD_ORDER_ITEM_NAMES,
+				FieldOrderConstants.FIELD_ORDER_ITEM_REQUIRED_NAMES,
+				"order-item", analyticsConfiguration.syncedOrderFieldNames(),
+				FieldOrderConstants.FIELD_ORDER_ITEM_TYPES));
 
 		fields = _filter(fields, keyword);
 
@@ -173,6 +209,29 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 					analyticsConfiguration.syncedAccountFieldNames(), fields,
 					FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES,
 					"account", FieldAccountConstants.FIELD_ACCOUNT_NAMES)
+			).build());
+	}
+
+	@Override
+	public void patchFieldOrder(Field[] fields) throws Exception {
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		_analyticsSettingsManager.updateCompanyConfiguration(
+			contextCompany.getCompanyId(),
+			HashMapBuilder.<String, Object>put(
+				"syncedOrderFieldNames",
+				_updateSelectedFields(
+					analyticsConfiguration.syncedOrderFieldNames(), fields,
+					FieldOrderConstants.FIELD_ORDER_REQUIRED_NAMES, "order",
+					FieldOrderConstants.FIELD_ORDER_NAMES)
+			).put(
+				"syncedOrderItemFieldNames",
+				_updateSelectedFields(
+					analyticsConfiguration.syncedOrderItemFieldNames(), fields,
+					FieldOrderConstants.FIELD_ORDER_ITEM_REQUIRED_NAMES,
+					"order-item", FieldOrderConstants.FIELD_ORDER_ITEM_NAMES)
 			).build());
 	}
 

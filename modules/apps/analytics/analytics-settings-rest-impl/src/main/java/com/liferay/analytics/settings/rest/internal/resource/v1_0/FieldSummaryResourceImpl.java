@@ -46,6 +46,8 @@ public class FieldSummaryResourceImpl extends BaseFieldSummaryResourceImpl {
 			analyticsConfiguration.syncedContactFieldNames();
 		String[] syncedOrderFieldNames =
 			analyticsConfiguration.syncedOrderFieldNames();
+		String[] syncedOrderItemFieldNames =
+			analyticsConfiguration.syncedOrderItemFieldNames();
 		String[] syncedProductFieldNames =
 			analyticsConfiguration.syncedProductFieldNames();
 		String[] syncedProductChannelFieldNames =
@@ -56,7 +58,9 @@ public class FieldSummaryResourceImpl extends BaseFieldSummaryResourceImpl {
 		return new FieldSummary() {
 			{
 				account = syncedAccountFieldNames.length;
-				order = syncedOrderFieldNames.length;
+				order =
+					syncedOrderFieldNames.length +
+						syncedOrderItemFieldNames.length;
 				people =
 					syncedContactFieldNames.length +
 						syncedUserFieldNames.length;

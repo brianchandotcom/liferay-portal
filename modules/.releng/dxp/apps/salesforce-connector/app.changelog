@@ -1,0 +1,10 @@
+#
+# Liferay App Version 1.0.1
+#
+
+app.artifacts-1.0.1=\
+	com.liferay.salesforce.connector-1.0.6.jar
+
+app.change.log-1.0.1=COMMERCE-4270 LPS-163573 LPS-165840 LPS-166317
+
+app.git.id-1.0.1=67b4cf6bb65b6734267cac21dcc2a242a094f033

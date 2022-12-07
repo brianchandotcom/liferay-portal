@@ -295,6 +295,12 @@ definition {
 		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
+	macro clickAtLink {
+		var key_text = "${text}";
+
+		Click(locator1 = "CustomerPortalSite#ANY_LINK");
+	}
+
 	macro clickOnCancelButton {
 		var key_text = "Cancel";
 

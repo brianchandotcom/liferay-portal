@@ -92,17 +92,17 @@ export default {
 		);
 	},
 
-	createLayoutPageTemplateEntry(
-		layoutPageTemplateCollectionId,
-		name,
-		segmentsExperienceId
-	) {
+	createLayoutPageTemplateEntry({
+		segmentsExperienceId,
+		templateName,
+		templateSet,
+	}) {
 		return layoutServiceFetch(
 			config.createLayoutPageTemplateEntryURL,
 			{
 				body: {
-					layoutPageTemplateCollectionId,
-					name,
+					layoutPageTemplateCollectionId: templateSet,
+					name: templateName,
 					segmentsExperienceId,
 				},
 			},

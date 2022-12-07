@@ -95,7 +95,12 @@ public class CompanyLogServlet extends HttpServlet {
 			else if (pathArray.length == 2) {
 				long companyId = GetterUtil.getLongStrict(pathArray[0]);
 
-				_companyLocalService.getCompanyById(companyId);
+				Company company = _companyLocalService.fetchCompanyById(
+					companyId);
+
+				if (company == null) {
+					return;
+				}
 
 				PermissionChecker permissionChecker = _getPermissionChecker(
 					httpServletRequest);
@@ -300,7 +305,7 @@ public class CompanyLogServlet extends HttpServlet {
 
 		try (Scanner scanner = new Scanner(file)) {
 			StringBuilder sb = new StringBuilder();
-	
+
 			while (scanner.hasNextLine()) {
 				sb.append(scanner.nextLine() + "\n");
 			}

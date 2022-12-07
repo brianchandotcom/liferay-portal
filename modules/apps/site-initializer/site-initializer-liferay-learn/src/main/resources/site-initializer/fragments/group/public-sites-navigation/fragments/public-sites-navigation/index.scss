@@ -209,15 +209,17 @@ nav.public-sites-navigation {
 					padding-left: 0.25rem;
 
 					.language-entry-long-text {
-						color: #004ad7;
 						padding-left: 0;
 					}
 				}
 
 				.selected.language-nav-item {
 					&:before {
-						content: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%229%22%20viewBox%3D%220%200%2012%209%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%0A%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M9.62623%200.958909C10.0168%200.568385%2010.6499%200.568385%2011.0404%200.958909C11.431%201.34943%2011.431%201.9826%2011.0404%202.37312L5.04127%208.37229C5.04099%208.37257%205.04072%208.37285%205.04044%208.37312C4.64992%208.76365%204.01675%208.76365%203.62623%208.37312L0.292893%205.03979C-0.0976311%204.64927%20-0.0976311%204.0161%200.292893%203.62558C0.683417%203.23505%201.31658%203.23505%201.70711%203.62558L4.33333%206.2518L9.62623%200.958909Z%22%20fill%3D%22%23004AD7%22/%3E%0A%3C/svg%3E%0A');
 						margin: 0 1rem;
+					}
+
+					.language-entry-long-text {
+						padding-left: 1rem;
 					}
 				}
 			}

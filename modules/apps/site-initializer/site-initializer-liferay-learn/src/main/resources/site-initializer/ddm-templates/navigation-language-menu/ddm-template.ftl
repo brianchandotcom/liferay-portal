@@ -8,14 +8,20 @@
 																cap_first />
 
 			<#if !entry.isDisabled()>
-				<li class="${(entry.isSelected())?then('selected', '')} language-nav-item">
-					<@liferay_aui["a"]
-						cssClass="language-entry-long-text"
-						href=entry.getURL()
-						label=entryLanguage
-						lang=entry.getW3cLanguageId()
-						rel="nofollow"
-					/>
+					<li class="${(entry.isSelected())?then('selected', '')} language-nav-item">
+						<#if entry.isSelected()>
+							<div class="d-inline-block pl-3 selected-icon">
+								<@clay["icon"] symbol="check" />
+							</div>
+						</#if>
+
+						<@liferay_aui["a"]
+							cssClass="language-entry-long-text"
+							href=entry.getURL()
+							label=entryLanguage
+							lang=entry.getW3cLanguageId()
+							rel="nofollow"
+						/>
 					</li>
 			</#if>
 		</#list>

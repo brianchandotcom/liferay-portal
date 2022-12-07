@@ -72,11 +72,11 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 	const [openAddTemplateSetModal, setOpenAddTemplateSetModal] = useState(
 		false
 	);
-	const [templateSet, setTemplateSet] = useState('');
+	const [templateSetDescription, setTemplateSetDescription] = useState('');
+	const [templateSetId, setTemplateSetId] = useState('');
 	const [templateSetName, setTemplateSetName] = useState(
 		Liferay.Language.get('untitled-set')
 	);
-	const [templateSetDescription, setTemplateSetDescription] = useState('');
 
 	const nameInputRef = useRef(null);
 
@@ -128,8 +128,8 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			}
 		}
 		else {
-			if (!templateSet) {
-				errors.templateSet = sub(
+			if (!templateSetId) {
+				errors.templateSetId = sub(
 					Liferay.Language.get('x-field-is-required'),
 					Liferay.Language.get('page-template-set')
 				);
@@ -137,7 +137,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 		}
 
 		return errors;
-	}, [templateSet, templateSetName, openAddTemplateSetModal]);
+	}, [templateSetId, templateSetName, openAddTemplateSetModal]);
 
 	// We are using flush here because this way we can clear errors inmediately
 	// in handleSubmit. Otherwise, React will batch setStates and will do only
@@ -168,7 +168,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			setLoading(true);
 
 			LayoutService.createLayoutPageTemplateEntry(
-				templateSet,
+				templateSetId,
 				segmentsExperienceId
 			)
 				.then((response) => {
@@ -197,7 +197,13 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 					});
 				});
 		},
-		[onClose, segmentsExperienceId, validateForm, templateSet, resetErrors]
+		[
+			onClose,
+			segmentsExperienceId,
+			validateForm,
+			templateSetId,
+			resetErrors,
+		]
 	);
 
 	return (
@@ -284,22 +290,22 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 							</div>
 
 							<FormField
-								error={formErrors.templateSet}
+								error={formErrors.templateSetId}
 								id={`${config.portletNamespace}templateSet`}
 								name={Liferay.Language.get('page-template-set')}
 							>
 								<ClaySelectWithOption
 									id={`${config.portletNamespace}templateSet`}
 									onChange={(event) => {
-										setTemplateSet(event.target.value);
+										setTemplateSetId(event.target.value);
 										setFormErrors({
 											...formErrors,
-											templateSet: null,
+											templateSetId: null,
 										});
 									}}
 									options={templateSetSelectOptions}
 									required
-									value={templateSet}
+									value={templateSetId}
 								/>
 							</FormField>
 						</>

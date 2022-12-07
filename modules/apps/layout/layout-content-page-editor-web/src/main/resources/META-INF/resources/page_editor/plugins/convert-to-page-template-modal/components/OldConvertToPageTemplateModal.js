@@ -67,7 +67,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 
 	const [availableSets, setAvailableSets] = useState([]);
 	const [templateName, setTemplateName] = useState('');
-	const [templateSet, setTemplateSet] = useState('');
+	const [templateSetId, setTemplateSetId] = useState('');
 	const [formErrors, setFormErrors] = useState({});
 	const [loading, setLoading] = useState(false);
 
@@ -112,15 +112,15 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			);
 		}
 
-		if (!templateSet) {
-			errors.templateSet = sub(
+		if (!templateSetId) {
+			errors.templateSetId = sub(
 				Liferay.Language.get('x-field-is-required'),
 				Liferay.Language.get('page-template-set')
 			);
 		}
 
 		return errors;
-	}, [templateName, templateSet]);
+	}, [templateName, templateSetId]);
 
 	// We are using flush here because this way we can clear errors inmediately
 	// in handleSubmit. Otherwise, React will batch setStates and will do only
@@ -153,7 +153,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			LayoutService.createLayoutPageTemplateEntry({
 				segmentsExperienceId,
 				templateName,
-				templateSet,
+				templateSetId,
 			})
 				.then((response) => {
 					openToast({
@@ -192,7 +192,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			segmentsExperienceId,
 			validateForm,
 			templateName,
-			templateSet,
+			templateSetId,
 			resetErrors,
 		]
 	);
@@ -246,22 +246,22 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 					</FormField>
 
 					<FormField
-						error={formErrors.templateSet}
+						error={formErrors.templateSetId}
 						id={`${config.portletNamespace}templateSet`}
 						name={Liferay.Language.get('page-template-set')}
 					>
 						<ClaySelectWithOption
 							id={`${config.portletNamespace}templateSet`}
 							onChange={(event) => {
-								setTemplateSet(event.target.value);
+								setTemplateSetId(event.target.value);
 								setFormErrors({
 									...formErrors,
-									templateSet: null,
+									templateSetId: null,
 								});
 							}}
 							options={templateSetSelectOptions}
 							required
-							value={templateSet}
+							value={templateSetId}
 						/>
 					</FormField>
 				</ClayForm>

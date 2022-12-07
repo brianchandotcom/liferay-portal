@@ -227,4 +227,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160717 - Verify if as an Administrator I should be able to complete a subtask as passing"
+	@priority = "5"
+	test AdminCanCompleteSubtaskAsPassing {
+		task ("Given the user edit a Subtask as passed") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "sub tasks_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me and Begin Analysis");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "sub tasks_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+		}
+
+		task ("Then the complete status appears of the subtask") {
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Complete");
+		}
+	}
+
 }

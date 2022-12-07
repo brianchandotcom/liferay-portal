@@ -289,6 +289,74 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-152856 | Test Summary: Verify that a modal confirming the deactivation of the key is displayed"
+	@ignore = "true"
+	@priority = "3"
+	test IfModalConfirmingTheDeactivationOfTheKeyAppears {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		var testAccount = "NASA ICE";
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "${testAccount}");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Then I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Going through onboarding") {
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("When the user selects multiple keys to deactivate") {
+			Search.searchCP(searchTerm = "redacted");
+
+			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "Redacted");
+
+			Button.click(button = "Deactivate");
+		}
+
+		task ("Then an informative modal is shown") {
+			CustomerPortal.clickAtButton(text = "Confirm Deactivate Keys");
+
+			CP2Utils.assertTextVisible(text = "A request was just sent to deactivate the selected activation keys. From now on they will be hidden and no longer be visible.");
+
+			CustomerPortal.clickAtButton(text = "Continue");
+		}
+	}
+
 	@description = "LPS-148118 - Assert there are no changes to selected keys after clicking 'Cancel' on the Deactivation Terms modal."
 	@ignore = "true"
 	@priority = "4"

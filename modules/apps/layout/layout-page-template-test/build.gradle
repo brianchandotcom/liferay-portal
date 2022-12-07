@@ -19,6 +19,7 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":apps:portal:portal-json-validator")
+	testIntegrationCompile project(":apps:portal:portal-props-test-util")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

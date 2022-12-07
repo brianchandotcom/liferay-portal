@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const FormField = ({children, error, id, name}) => {
+const FormField = ({children, error, id, name, required = true}) => {
 	const hasError = Boolean(error);
 
 	return (
@@ -26,7 +26,9 @@ const FormField = ({children, error, id, name}) => {
 			<label htmlFor={id}>
 				{name}
 
-				<ClayIcon className="reference-mark" symbol="asterisk" />
+				{required ? (
+					<ClayIcon className="reference-mark" symbol="asterisk" />
+				) : null}
 			</label>
 
 			{children}

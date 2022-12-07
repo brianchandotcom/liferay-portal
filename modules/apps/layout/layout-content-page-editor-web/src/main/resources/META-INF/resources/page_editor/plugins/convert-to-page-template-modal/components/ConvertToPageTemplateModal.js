@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
@@ -26,6 +26,7 @@ import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExperienceId';
 import LayoutService from '../../../app/services/LayoutService';
+import getUniqueName from '../../../app/utils/getUniqueName';
 import FormField from './FormField';
 
 export default function ModalWrapper() {
@@ -66,9 +67,16 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 	);
 
 	const [availableSets, setAvailableSets] = useState([]);
-	const [templateSet, setTemplateSet] = useState('');
 	const [formErrors, setFormErrors] = useState({});
 	const [loading, setLoading] = useState(false);
+	const [openAddTemplateSetModal, setOpenAddTemplateSetModal] = useState(
+		false
+	);
+	const [templateSet, setTemplateSet] = useState('');
+	const [templateSetName, setTemplateSetName] = useState(
+		Liferay.Language.get('untitled-set')
+	);
+	const [templateSetDescription, setTemplateSetDescription] = useState('');
 
 	const nameInputRef = useRef(null);
 
@@ -91,6 +99,13 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			.then((sets) => {
 				if (Array.isArray(sets)) {
 					setAvailableSets(sets);
+					setOpenAddTemplateSetModal(!sets.length);
+					setTemplateSetName(
+						getUniqueName(
+							sets,
+							Liferay.Language.get('untitled-set')
+						)
+					);
 				}
 				else {
 					throw new Error();
@@ -104,15 +119,25 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 	const validateForm = useCallback(() => {
 		const errors = {};
 
-		if (!templateSet) {
-			errors.templateSet = sub(
-				Liferay.Language.get('x-field-is-required'),
-				Liferay.Language.get('page-template-set')
-			);
+		if (openAddTemplateSetModal) {
+			if (!templateSetName) {
+				errors.templateSetName = sub(
+					Liferay.Language.get('x-field-is-required'),
+					Liferay.Language.get('name')
+				);
+			}
+		}
+		else {
+			if (!templateSet) {
+				errors.templateSet = sub(
+					Liferay.Language.get('x-field-is-required'),
+					Liferay.Language.get('page-template-set')
+				);
+			}
 		}
 
 		return errors;
-	}, [templateSet]);
+	}, [templateSet, templateSetName, openAddTemplateSetModal]);
 
 	// We are using flush here because this way we can clear errors inmediately
 	// in handleSubmit. Otherwise, React will batch setStates and will do only
@@ -182,7 +207,9 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			size="md"
 		>
 			<ClayModal.Header>
-				{Liferay.Language.get('select-page-template-set')}
+				{openAddTemplateSetModal
+					? Liferay.Language.get('add-page-template-set')
+					: Liferay.Language.get('select-page-template-set')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -201,39 +228,95 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 				)}
 
 				<ClayForm onSubmit={handleSubmit}>
-					<div className="mb-3 text-secondary">
-						{Liferay.Language.get(
-							'select-an-existing-set-or-create-a-new-one-to-save-your-page-template'
-						)}
-					</div>
+					{openAddTemplateSetModal ? (
+						<>
+							<div className="mb-3 text-secondary">
+								{Liferay.Language.get(
+									'a-page-template-set-must-first-be-created-before-you-can-create-your-page-template'
+								)}
+							</div>
+							<FormField
+								error={formErrors.templateSetName}
+								id={`${config.portletNamespace}templateSetName`}
+								name={Liferay.Language.get('name')}
+							>
+								<ClayInput
+									id={`${config.portletNamespace}templateSetName`}
+									name={`${config.portletNamespace}name`}
+									onChange={(event) => {
+										setTemplateSetName(event.target.value);
 
-					<FormField
-						error={formErrors.templateSet}
-						id={`${config.portletNamespace}templateSet`}
-						name={Liferay.Language.get('page-template-set')}
-					>
-						<ClaySelectWithOption
-							id={`${config.portletNamespace}templateSet`}
-							onChange={(event) => {
-								setTemplateSet(event.target.value);
-								setFormErrors({
-									...formErrors,
-									templateSet: null,
-								});
-							}}
-							options={templateSetSelectOptions}
-							required
-							value={templateSet}
-						/>
-					</FormField>
+										setFormErrors({
+											...formErrors,
+											setTemplateSetName: null,
+										});
+									}}
+									ref={nameInputRef}
+									required
+									value={templateSetName}
+								/>
+							</FormField>
+							<FormField
+								id={`${config.portletNamespace}templateSetDescription`}
+								name={Liferay.Language.get('description')}
+								required={false}
+							>
+								<ClayInput
+									component="textarea"
+									id={`${config.portletNamespace}templateSetDescription`}
+									name={`${config.portletNamespace}description`}
+									onChange={(event) => {
+										setTemplateSetDescription(
+											event.target.value
+										);
+									}}
+									ref={nameInputRef}
+									value={templateSetDescription}
+								/>
+							</FormField>
+						</>
+					) : (
+						<>
+							<div className="mb-3 text-secondary">
+								{Liferay.Language.get(
+									'select-an-existing-set-or-create-a-new-one-to-save-your-page-template'
+								)}
+							</div>
+
+							<FormField
+								error={formErrors.templateSet}
+								id={`${config.portletNamespace}templateSet`}
+								name={Liferay.Language.get('page-template-set')}
+							>
+								<ClaySelectWithOption
+									id={`${config.portletNamespace}templateSet`}
+									onChange={(event) => {
+										setTemplateSet(event.target.value);
+										setFormErrors({
+											...formErrors,
+											templateSet: null,
+										});
+									}}
+									options={templateSetSelectOptions}
+									required
+									value={templateSet}
+								/>
+							</FormField>
+						</>
+					)}
 				</ClayForm>
 			</ClayModal.Body>
 
 			<ClayModal.Footer
 				first={
-					<ClayButton displayType="secondary">
-						{Liferay.Language.get('save-in-new-set')}
-					</ClayButton>
+					!openAddTemplateSetModal ? (
+						<ClayButton
+							displayType="secondary"
+							onClick={() => setOpenAddTemplateSetModal(true)}
+						>
+							{Liferay.Language.get('save-in-new-set')}
+						</ClayButton>
+					) : null
 				}
 				last={
 					<ClayButton.Group spaced>
@@ -254,7 +337,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 								</span>
 							)}
 
-							{Liferay.Language.get('create')}
+							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

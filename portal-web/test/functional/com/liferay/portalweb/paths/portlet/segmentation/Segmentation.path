@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARD_HEADING</td>
+	<td>//*[contains(@class,'panel')]//button[contains(@class,'collapse')][not(contains(@data-qa-id,'app'))] //h2[normalize-space()='${panelHeader}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLICKABLE_SEGMENT_NAME</td>
 	<td>//table[contains(@class, 'table-list')]//tr//a[contains(href,'') and contains(text(),'${key_segmentName}')]</td>
 	<td></td>
@@ -113,6 +118,11 @@
 <tr>
 	<td>SEARCH_FIELD</td>
 	<td>//input[contains(@class,'form-control') and contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_CARD_SITE</td>
+	<td>//*[contains(@role,'tablist')] //div[@role='tabpanel'] //p</td>
 	<td></td>
 </tr>
 <tr>

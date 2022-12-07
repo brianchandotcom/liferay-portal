@@ -2470,6 +2470,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-167025: Add the Scope Card to the Segment Editor"
+	@priority = "3"
+	test ConditionsCardCollapsible {
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		task ("Given the Segments editor") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the user clicks on Add new segment") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the user can collapse the conditions card by clicking on the title of the card") {
+			Click(
+				locator1 = "Segmentation#CARD_HEADING",
+				panelHeader = "Conditions");
+
+			AssertNotVisible(locator1 = "Segmentation#ADD_FIELD_POSITION");
+		}
+	}
+
 	@description = "LPS-152077 Bug: Error updating segment which contains a non-existing segment"
 	@priority = "4"
 	test DeleteUnavailableSegmentCriteria {
@@ -2712,6 +2734,28 @@ definition {
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "Audience Category 1");
+		}
+	}
+
+	@description = "LPS-167025: Add the Scope Card to the Segment Editor"
+	@priority = "3"
+	test ScopeCardCollapsible {
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		task ("Given the Segments editor") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the user clicks on Add new segment") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the user can collapse the scope card by clicking on the title of the card") {
+			Click(
+				locator1 = "Segmentation#CARD_HEADING",
+				panelHeader = "Scope");
+
+			AssertNotVisible(locator1 = "Segmentation#SCOPE_CARD_SITE");
 		}
 	}
 

@@ -113,7 +113,8 @@ public class AMImageContentTransformerTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(AMImageContentTransformerTest.class, "image.jpg"),
+			FileUtil.getBytes(
+				AMImageContentTransformerTest.class, "dependencies/image.jpg"),
 			null, null, serviceContext);
 	}
 

@@ -18,6 +18,7 @@ import com.liferay.analytics.settings.rest.client.dto.v1_0.Field;
 import com.liferay.analytics.settings.rest.client.pagination.Page;
 import com.liferay.analytics.settings.rest.client.pagination.Pagination;
 import com.liferay.analytics.settings.rest.constants.FieldAccountConstants;
+import com.liferay.analytics.settings.rest.constants.FieldOrderConstants;
 import com.liferay.analytics.settings.rest.constants.FieldPeopleConstants;
 import com.liferay.analytics.settings.rest.constants.FieldProductConstants;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
@@ -96,6 +97,50 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 	@Override
 	@Test
 	public void testGetFieldsAccountsPageWithSortString() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testGetFieldsOrdersPage() throws Exception {
+		Page<Field> totalPage = fieldResource.getFieldsOrdersPage(
+			null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		Assert.assertEquals(
+			FieldOrderConstants.FIELD_ORDER_NAMES.length +
+				FieldOrderConstants.FIELD_ORDER_ITEM_NAMES.length,
+			totalCount);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetFieldsOrdersPageWithPagination() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetFieldsOrdersPageWithSortDateTime() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetFieldsOrdersPageWithSortDouble() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetFieldsOrdersPageWithSortInteger() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetFieldsOrdersPageWithSortString() throws Exception {
 	}
 
 	@Override
@@ -284,6 +329,45 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 					Assert.assertEquals(
 						FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES.
 							length,
+						selectedCount);
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+
+				return null;
+			});
+	}
+
+	@Override
+	@Test
+	public void testPatchFieldOrder() throws Exception {
+		fieldResource.patchFieldOrder(
+			new Field[] {
+				_getField("externalReferenceCode", true, "order"),
+				_getField("externalReferenceCode", true, "order")
+			});
+
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				try {
+					Page<Field> fieldsOrdersPage =
+						fieldResource.getFieldsOrdersPage(
+							null, Pagination.of(1, 100), null);
+
+					int selectedCount = 0;
+
+					for (Field field : fieldsOrdersPage.getItems()) {
+						if (field.getSelected()) {
+							selectedCount += 1;
+						}
+					}
+
+					Assert.assertEquals(
+						FieldOrderConstants.FIELD_ORDER_REQUIRED_NAMES.length +
+							FieldOrderConstants.FIELD_ORDER_ITEM_REQUIRED_NAMES.
+								length,
 						selectedCount);
 				}
 				catch (Exception exception) {

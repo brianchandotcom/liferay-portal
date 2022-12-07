@@ -15,6 +15,11 @@
 type Locale = Liferay.Language.Locale;
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
+interface LabelValueObject {
+	label: string;
+	value: string;
+}
+
 type editorTypeOptions = 'freemarker' | 'richText';
 
 type EmailRecipients = {

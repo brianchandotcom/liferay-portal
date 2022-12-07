@@ -2022,21 +2022,13 @@ definition {
 			DMDocument.viewPG(dmDocumentTitle = "${dmDocumentTitle}");
 		}
 
-		JSONStaging.enableLocalStaging(
-			branchingPrivate = "true",
-			branchingPublic = "true",
-			groupName = "Site Name");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
+		Staging.activateStagingCP(siteName = "Site Name");
 
-		WaitForElementPresent(
-			key_pageName = "Staging Test Page",
-			locator1 = "Home#PAGE_ACTIVE");
-
-		AssertClick(
-			key_pageName = "Staging Test Page",
-			locator1 = "Home#PAGE",
-			value1 = "Staging Test Page");
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

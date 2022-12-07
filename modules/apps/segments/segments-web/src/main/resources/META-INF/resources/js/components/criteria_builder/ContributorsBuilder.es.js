@@ -18,6 +18,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
 import getCN from 'classnames';
+import {openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -53,6 +54,7 @@ class ContributorBuilder extends React.Component {
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 		renderEmptyValuesErrors: PropTypes.bool,
 		scopeName: PropTypes.string,
+		siteSelectorURL: PropTypes.string,
 		supportedConjunctions: PropTypes.arrayOf(conjunctionShape).isRequired,
 		supportedOperators: PropTypes.arrayOf(operatorShape).isRequired,
 		supportedPropertyTypes: propertyTypesShape.isRequired,
@@ -72,7 +74,7 @@ class ContributorBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {contributors, propertyGroups} = props;
+		const {contributors, propertyGroups, scopeName} = props;
 
 		const firstContributorNotEmpty = contributors.find(
 			(contributor) => contributor.query !== ''
@@ -84,6 +86,7 @@ class ContributorBuilder extends React.Component {
 
 		this.state = {
 			editingId: propertyKey,
+			scopeName,
 		};
 	}
 
@@ -96,6 +99,17 @@ class ContributorBuilder extends React.Component {
 	_handleCriteriaEdit = (id, editing) => {
 		this.setState({
 			editingId: editing ? undefined : id,
+		});
+	};
+
+	_handleScopeChange = () => {
+		openSelectionModal({
+			onSelect: (selectedItems) => {
+				this.setState({scopeName: selectedItems.groupscopelabel});
+			},
+			selectEventName: 'selectSegmentScope',
+			title: Liferay.Language.get('select-site'),
+			url: this.props.siteSelectorURL,
 		});
 	};
 
@@ -113,13 +127,12 @@ class ContributorBuilder extends React.Component {
 			onPreviewMembers,
 			propertyGroups,
 			renderEmptyValuesErrors,
-			scopeName,
 			supportedConjunctions,
 			supportedOperators,
 			supportedPropertyTypes,
 		} = this.props;
 
-		const {editingId} = this.state;
+		const {editingId, scopeName} = this.state;
 
 		const rootClasses = getCN('contributor-builder-root', {
 			editing,
@@ -192,6 +205,19 @@ class ContributorBuilder extends React.Component {
 													<p className="mb-0 mr-6">
 														{scopeName}
 													</p>
+
+													<ClayButton
+														displayType="secondary"
+														onClick={
+															this
+																._handleScopeChange
+														}
+														size="sm"
+													>
+														{Liferay.Language.get(
+															'select'
+														)}
+													</ClayButton>
 												</ClayPanel.Body>
 											</ClayPanel>
 

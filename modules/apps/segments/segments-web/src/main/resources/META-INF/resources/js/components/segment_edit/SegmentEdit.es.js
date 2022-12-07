@@ -75,6 +75,7 @@ class SegmentEdit extends Component {
 		setFieldValue: PropTypes.func,
 		setValues: PropTypes.func,
 		showInEditMode: PropTypes.bool,
+		siteSelectorURL: PropTypes.string,
 		source: PropTypes.string,
 		validateForm: PropTypes.func,
 		values: PropTypes.object,
@@ -259,6 +260,7 @@ class SegmentEdit extends Component {
 			locale,
 			propertyGroups,
 			requestMembersCountURL,
+			siteSelectorURL,
 			values,
 		} = this.props;
 
@@ -294,6 +296,7 @@ class SegmentEdit extends Component {
 				requestMembersCountURL={requestMembersCountURL}
 				scopeName={this.props.scopeName}
 				segmentName={segmentName}
+				siteSelectorURL={siteSelectorURL}
 				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
 				supportedOperators={SUPPORTED_OPERATORS}
 				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}

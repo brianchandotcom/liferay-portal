@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,8 +60,8 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
 			new EditSegmentsEntryDisplayContext(
 				_filterParserProvider, _groupLocalService,
-				_portal.getHttpServletRequest(renderRequest), renderRequest,
-				renderResponse, _segmentsConfigurationProvider,
+				_portal.getHttpServletRequest(renderRequest), _itemSelector,
+				renderRequest, renderResponse, _segmentsConfigurationProvider,
 				_segmentsCriteriaContributorRegistry,
 				_segmentsEntryProviderRegistry, _segmentsEntryService);
 
@@ -76,6 +77,9 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

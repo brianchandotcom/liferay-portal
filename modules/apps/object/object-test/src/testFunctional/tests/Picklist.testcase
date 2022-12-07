@@ -311,8 +311,6 @@ definition {
 	@description = "LPS-136595 - Verify it is not possible to add special characters for the Key field for a Picklist item"
 	@priority = "3"
 	test CannotAddSpecialCharacterForPicklistItemKeyField {
-		property portal.acceptance = "quarantine";
-
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.gotoPicklists();

@@ -38,17 +38,21 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -281,6 +285,18 @@ public class ObjectActionLocalServiceTest {
 			).put(
 				"url", "https://onafterupdate.com"
 			).build());
+		ObjectAction objectAction4 = _objectActionLocalService.addObjectAction(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"script", "println \"Hello World\""
+			).build());
 
 		_publishCustomObjectDefinition();
 
@@ -302,11 +318,21 @@ public class ObjectActionLocalServiceTest {
 			"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
 			WorkflowConstants.STATUS_DRAFT);
 
+		// Execute standalone action
+
+		_executeStandaloneAction(
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				"/object-actions/", objectAction4.getName()));
+
+		_assertGroovyObjectActionExecutorArguments("John", objectEntry);
+
 		// Update object entry
 
 		Assert.assertEquals(0, _argumentsList.size());
 
-		_objectEntryLocalService.updateObjectEntry(
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "João"
@@ -318,6 +344,17 @@ public class ObjectActionLocalServiceTest {
 		_assertWebhookObjectActionExecutorArguments(
 			"João", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, "John",
 			WorkflowConstants.STATUS_APPROVED);
+
+		// Execute standalone action
+
+		_executeStandaloneAction(
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(),
+				"/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(), "/object-actions/",
+				objectAction4.getName()));
+
+		_assertGroovyObjectActionExecutorArguments("João", objectEntry);
 
 		// Delete object entry
 
@@ -336,6 +373,7 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction1);
 		_objectActionLocalService.deleteObjectAction(objectAction2);
 		_objectActionLocalService.deleteObjectAction(objectAction3);
+		_objectActionLocalService.deleteObjectAction(objectAction4);
 	}
 
 	@Test
@@ -381,29 +419,7 @@ public class ObjectActionLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.deleteObjectEntry(objectEntry);
 
-		Object[] arguments = _argumentsList.poll();
-
-		Assert.assertEquals(
-			HashMapBuilder.<String, Object>put(
-				"createDate", objectEntry.getCreateDate()
-			).put(
-				"creator", String.valueOf(TestPropsValues.getUserId())
-			).put(
-				"currentUserId", String.valueOf(TestPropsValues.getUserId())
-			).put(
-				"externalReferenceCode", objectEntry.getExternalReferenceCode()
-			).put(
-				"firstName", "João"
-			).put(
-				"id", objectEntry.getObjectEntryId()
-			).put(
-				"modifiedDate", objectEntry.getModifiedDate()
-			).put(
-				"status", objectEntry.getStatus()
-			).build(),
-			arguments[0]);
-		Assert.assertEquals(Collections.emptySet(), arguments[1]);
-		Assert.assertEquals("println \"Hello World\"", arguments[2]);
+		_assertGroovyObjectActionExecutorArguments("João", objectEntry);
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 	}
@@ -557,6 +573,26 @@ public class ObjectActionLocalServiceTest {
 			new UnicodeProperties());
 	}
 
+	private void _assertGroovyObjectActionExecutorArguments(
+		String firstName, ObjectEntry objectEntry) {
+
+		Assert.assertEquals(1, _argumentsList.size());
+
+		Object[] arguments = _argumentsList.poll();
+
+		Map<String, Object> inputObjects = (Map<String, Object>)arguments[0];
+
+		Assert.assertEquals(
+			objectEntry.getExternalReferenceCode(),
+			inputObjects.get("externalReferenceCode"));
+		Assert.assertEquals(firstName, inputObjects.get("firstName"));
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId(), inputObjects.get("id"));
+
+		Assert.assertEquals(Collections.emptySet(), arguments[1]);
+		Assert.assertEquals("println \"Hello World\"", arguments[2]);
+	}
+
 	private void _assertObjectAction(
 		boolean active, String conditionExpression, String description,
 		Map<Locale, String> errorMessageMap, Map<Locale, String> labelMap,
@@ -643,6 +679,20 @@ public class ObjectActionLocalServiceTest {
 				JSONUtil.getValue(
 					payloadJSONObject, "JSONObject/originalObjectEntry"));
 		}
+	}
+
+	private void _executeStandaloneAction(String endpoint) throws Exception {
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.addHeader(
+			"Authorization",
+			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
+		options.setLocation("http://localhost:8080/o/" + endpoint);
+		options.setMethod(Http.Method.PUT);
+
+		HttpUtil.URLtoString(options);
 	}
 
 	private Object _getAndSetFieldValue(

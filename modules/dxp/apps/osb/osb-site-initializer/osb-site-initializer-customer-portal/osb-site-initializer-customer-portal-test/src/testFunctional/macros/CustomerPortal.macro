@@ -203,6 +203,12 @@ definition {
 			typeCard = "${typeCard}");
 	}
 
+	macro assertThatLinkIsVisible {
+		var key_text = "${text}";
+
+		AssertVisible(locator1 = "CustomerPortalSite#ANY_LINK");
+	}
+
 	macro assignUserToOrganization {
 		if (!(isSet(organizationName))) {
 			var organizationName = "Liferay Staff";

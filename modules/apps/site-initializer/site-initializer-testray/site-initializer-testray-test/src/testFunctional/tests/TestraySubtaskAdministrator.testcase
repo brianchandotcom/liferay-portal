@@ -1,0 +1,159 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-163118=true";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.addTestraySite();
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+		}
+
+		task ("Go to Case Types and add a new case type") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+
+			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Change pagination and create Team") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam(teamName = "Teams_1 Team");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to component and Add a new Component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project",
+				teamName = "Teams_1 Team");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to project page and add a new routine") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("Go to tab cases and Add a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Case_Type",
+				componentId = "Components_1 Project",
+				description = "Cases_1 Case Description",
+				duration = "40",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
+
+		task ("Go to Routine and Add Environments Factors") {
+			Testray.projectTabNavigator(navTabName = "Routines");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+		}
+
+		task ("Go to routine and add a new build") {
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				addVersion = "1.2",
+				caseName = "Cases_1 Case",
+				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.2",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Go to Testray 2 and add a Task in Testflow") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1",
+				userName = "Test Test");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-169401 - Verify if, as an Administrator, can cancel merge subtasks"
+	@priority = "3"
+	test AdminCanCancelMergeSubtask {
+		task ("Given that the user trying merge subtasks") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+		}
+
+		task ("Then can clear the merge") {
+			TestraySubtask.mergeSubtasks(
+				cancel = "Clear",
+				wcsubtaskName = "sub tasks_1,sub tasks_2");
+		}
+	}
+
+}

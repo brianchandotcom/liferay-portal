@@ -123,6 +123,7 @@ definition {
 
 		WebContentDisplayPortlet.searchWebContent(
 			depotName = "Test Depot Name",
+			errorMessage = "Info:This application is not supported for Asset Libraries. Please, go back to scope selection.",
 			webContentTitleNotPresentList = "WC Depot Title");
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "test-site-name");

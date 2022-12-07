@@ -826,6 +826,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				siteName = "Test Site Name");
 
 			WebContentDisplayPortlet.searchWebContent(
+				errorMessage = "Info:Web Content is disabled for this scope.",
 				searchTerm = "Web Content Title 1",
 				webContentTitleList = "Web Content Title 1,Web Content Title 2");
 
@@ -834,6 +835,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 		task ("View first web content is shown when searching for specific title in Web Content Display") {
 			WebContentDisplayPortlet.searchWebContent(
+				errorMessage = "Info:Web Content is disabled for this scope.",
 				searchTerm = '''"Web Content Title 1"''',
 				webContentTitleList = "Web Content Title 1");
 
@@ -846,6 +848,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 		task ("View web contents are not shown when searching for invalid value in Web Content Display") {
 			WebContentDisplayPortlet.searchWebContent(
+				errorMessage = "Info:Web Content is disabled for this scope.",
 				searchTerm = '''"Web1 Content1 Title 1"''',
 				webContentTitleNotPresentList = "Web Content Title 1,Web Content Title 2");
 		}

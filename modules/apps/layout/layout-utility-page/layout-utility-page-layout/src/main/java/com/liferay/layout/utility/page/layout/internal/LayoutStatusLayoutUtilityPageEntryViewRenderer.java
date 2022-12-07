@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "utility.page.type=" + LayoutUtilityPageEntryTypesConstants.STATUS,
+	property = "utility.page.type=" + LayoutUtilityPageEntryTypesConstants.LAYOUT,
 	service = LayoutUtilityPageEntryViewRenderer.class
 )
 public class LayoutStatusLayoutUtilityPageEntryViewRenderer
@@ -48,7 +48,7 @@ public class LayoutStatusLayoutUtilityPageEntryViewRenderer
 
 	@Override
 	public String getType() {
-		return LayoutUtilityPageEntryTypesConstants.STATUS;
+		return LayoutUtilityPageEntryTypesConstants.LAYOUT;
 	}
 
 	@Override

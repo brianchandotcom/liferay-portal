@@ -229,9 +229,13 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				"Case",
 				HashMapBuilder.<String, Object>put(
 					"caseNumber",
-					_incrementTestrayFieldValue(
+					incrementTestrayFieldValue(
 						companyId, "caseNumber",
-						"projectId eq '" + testrayProjectId + "'", "Case")
+						"projectId eq '" + testrayProjectId + "'", "Case",
+						new Sort[] {
+							new Sort(
+								"nestedFieldArray.value_long#caseNumber", true)
+						})
 				).put(
 					"description",
 					testrayCasePropertiesMap.get("testray.testcase.description")
@@ -1090,9 +1094,12 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 				"name", testrayRunName
 			).put(
 				"number",
-				_incrementTestrayFieldValue(
+				incrementTestrayFieldValue(
 					companyId, "number", "buildId eq '" + testrayBuildId + "'",
-					"Run")
+					"Run",
+					new Sort[] {
+						new Sort("nestedFieldArray.value_long#number", true)
+					})
 			).put(
 				"r_buildToRuns_c_buildId", testrayBuildId
 			).build());
@@ -1143,33 +1150,6 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		_objectEntryIds.put(objectEntryIdsKey, objectEntry.getId());
 
 		return objectEntry.getId();
-	}
-
-	private long _incrementTestrayFieldValue(
-			long companyId, String fieldName, String filterString,
-			String objectDefinitionShortName)
-		throws Exception {
-
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			objectEntriesPage = getObjectEntriesPage(
-				null, companyId, filterString, objectDefinitionShortName,
-				new Sort[] {
-					new Sort("nestedFieldArray.value_long#" + fieldName, true)
-				});
-
-		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
-
-		if (objectEntry == null) {
-			return 1;
-		}
-
-		Long fieldValue = (Long)getProperty(fieldName, objectEntry);
-
-		if (fieldValue == null) {
-			return 1;
-		}
-
-		return fieldValue.longValue() + 1;
 	}
 
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)

@@ -193,30 +193,6 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		return score;
 	}
 
-	private long _incrementTestrayFieldValue(
-			long companyId, String fieldName, String filterString,
-			String objectDefinitionShortName)
-		throws Exception {
-
-		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			null, companyId, filterString, objectDefinitionShortName,
-			new Sort[] {new Sort("createDate", true)});
-
-		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
-
-		if (objectEntry == null) {
-			return 1;
-		}
-
-		String fieldValue = (String)getProperty(fieldName, objectEntry);
-
-		if (fieldValue == null) {
-			return 1;
-		}
-
-		return Long.valueOf(StringUtil.extractDigits(fieldValue)) + 1;
-	}
-
 	private void _process(long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
 
@@ -364,9 +340,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			int testraySubtaskScore = _getTestraySubtaskScore(
 				companyId, testrayCaseResultObjectEntry);
 
-			long testraySubtaskName = _incrementTestrayFieldValue(
+			long testraySubtaskName = incrementTestrayFieldValue(
 				companyId, "name", "taskId eq '" + testrayTaskId + "'",
-				"Subtask");
+				"Subtask", new Sort[] {new Sort("createDate", true)});
 
 			ObjectEntry testraySubtaskObjectEntry = addObjectEntry(
 				"Subtask",

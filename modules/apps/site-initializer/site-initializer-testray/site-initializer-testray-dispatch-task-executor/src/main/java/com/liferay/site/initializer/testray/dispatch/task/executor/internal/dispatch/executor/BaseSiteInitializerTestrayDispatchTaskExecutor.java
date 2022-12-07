@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -104,6 +105,29 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		return properties.get(key);
+	}
+
+	protected long incrementTestrayFieldValue(
+			long companyId, String fieldName, String filterString,
+			String objectDefinitionShortName, Sort[] sorts)
+		throws Exception {
+
+		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+			null, companyId, filterString, objectDefinitionShortName, sorts);
+
+		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
+
+		if (objectEntry == null) {
+			return 1;
+		}
+
+		String fieldValue = (String)getProperty(fieldName, objectEntry);
+
+		if (fieldValue == null) {
+			return 1;
+		}
+
+		return Long.valueOf(StringUtil.extractDigits(fieldValue)) + 1;
 	}
 
 	protected void loadObjectDefinitions(long companyId) {

@@ -11,10 +11,9 @@
 
 import ClayButton from '@clayui/button';
 import ClassNames from 'classnames';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
-
 const items = [
 	{
 		name: 'Rent-A-Centre Texas, L.P',
@@ -33,20 +32,47 @@ const items = [
 		status: 90,
 	},
 ];
-
 const status = {
 	30: 'bg-accent-1',
 	60: 'bg-warning',
 	90: 'bg-success',
 };
-
 export default function () {
+	const [data, setData] = useState();
+	useEffect(() => {
+		const getRenewalsData = async () => {
+			// eslint-disable-next-line @liferay/portal/no-global-fetch
+			await fetch('/o/c/opportunitysfs', {
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					setData(data);
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+				});
+		};
+		getRenewalsData();
+	}, []);
+	// eslint-disable-next-line no-console
+	console.log(data);
+
 	return (
 		<Container
 			className="renewals-chart-card-height"
 			footer={
-				<ClayButton displayType="secondary">
-					View all Renewasl
+				<ClayButton
+					displayType="secondary"
+					onClick={() =>
+						Liferay.Util.navigate('https://www.liferay.com/pt/home')
+					}
+					type="button"
+				>
+					View all Renewals
 				</ClayButton>
 			}
 			title="Renewals"

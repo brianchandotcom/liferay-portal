@@ -134,6 +134,32 @@
 			"name": "stage",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "CloseDate",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Close Date"
+			},
+			"name": "closeDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Name",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Opportunity Name"
+			},
+			"name": "opportunityName",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

@@ -740,6 +740,67 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectDefinition"
             tags: ["ObjectDefinition"]
+    "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-actions":
+        get:
+            operationId: getObjectDefinitionObjectActionsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectAction"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectAction"
+                                type: array
+            tags: ["ObjectAction"]
+        post:
+            operationId: postObjectDefinitionObjectAction
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectAction"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectAction"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectAction"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectAction"
+            tags: ["ObjectAction"]
     "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields":
         get:
             operationId: getObjectDefinitionByExternalReferenceCodeObjectFieldsPage

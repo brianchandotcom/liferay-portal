@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.message.body;
+package com.liferay.oauth2.provider.rest.internal.endpoint.introspect.message.body;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.introspect.TokenIntrospection;
 import com.liferay.petra.string.StringBundler;
@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Component;
 )
 @Produces("application/json")
 @Provider
-public class TokenIntrospectionMessageBodyWriter
+public class TokenIntrospectionJSONProviderMessageBodyWriter
 	implements MessageBodyWriter<TokenIntrospection> {
 
 	@Override

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.container.response.filter;
+package com.liferay.oauth2.provider.rest.internal.endpoint.filter;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ContainerResponseFilter.class
 )
 @Provider
-public class NoCacheContainerResponseFilter implements ContainerResponseFilter {
+public class OAuth2NoCacheFilter implements ContainerResponseFilter {
 
 	@Override
 	public void filter(

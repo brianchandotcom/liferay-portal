@@ -55,6 +55,16 @@ public class KBNavigationDisplayContext {
 		_kbArticle = kbArticle;
 	}
 
+	public String getAlertMessageLabel() {
+		if (KBFolderConstants.DEFAULT_PARENT_FOLDER_ID !=
+				getResourcePrimKey()) {
+
+			return "the-selected-knowledge-base-is-empty";
+		}
+
+		return "please-configure-this-portlet-to-make-it-visible-to-all-users";
+	}
+
 	public List<Long> getAncestorResourcePrimaryKeys() throws PortalException {
 		if (_kbArticle == null) {
 			return Collections.singletonList(

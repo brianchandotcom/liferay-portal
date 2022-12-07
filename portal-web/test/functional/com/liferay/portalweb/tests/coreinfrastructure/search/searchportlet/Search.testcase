@@ -587,6 +587,50 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test AssertSiteFacetDisplays {
+		JSONGroup.addGroup(groupName = "Community");
+
+		JSONGroup.addGroup(groupName = "Engineering");
+
+		JSONGroup.addGroup(groupName = "Product");
+
+		for (var site : list "Community,Engineering,Product") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content",
+				groupName = "${site}",
+				title = "Web Content");
+		}
+
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Web Content");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Compact Layout",
+			portletName = "Site Facet");
+
+		Refresh();
+
+		for (var categories : list "Community,Engineering,Product") {
+			AssertElementPresent(
+				key_itemName = "${categories}",
+				locator1 = "SearchResults#FACET_PORTLET_ITEMS");
+		}
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Label Layout",
+			portletName = "Site Facet");
+
+		Refresh();
+
+		for (var categories : list "Community,Engineering,Product") {
+			AssertElementPresent(
+				key_itemName = "${categories}",
+				locator1 = "SearchResults#FACET_PORTLET_ITEMS");
+		}
+	}
+
 	@description = "This is a use case for LPS-152993."
 	@priority = "4"
 	test AssertSortWidgetNoXSS {

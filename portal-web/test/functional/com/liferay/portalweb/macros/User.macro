@@ -2243,42 +2243,12 @@ definition {
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 	}
 
-	macro removeAccountCP {
-		User.openUsersAdmin();
-
-		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
-
-		UserNavigator.gotoMemberships();
-
-		for (var accountName : list "${accountName}") {
-			Click(
-				key_entryName = "${accountName}",
-				locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
-		}
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro removeContactInformation {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = "${rowEntry}",
 			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Remove");
-	}
-
-	macro removeUserAssetLibraryCP {
-		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
-
-		UserNavigator.gotoMemberships();
-
-		Click(
-			key_entryName = "${depotName}",
-			locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
-
-		PortletEntry.save();
 	}
 
 	macro resetPassword {
@@ -2551,6 +2521,24 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+	}
+
+	macro unassignMembershipCP {
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+
+		UserNavigator.gotoMemberships();
+
+		for (var entryName : list "${entryName}") {
+			Click(
+				key_entryName = "${entryName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro unassignRegularRoleCP {

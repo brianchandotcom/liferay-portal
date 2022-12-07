@@ -418,6 +418,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169310. The Add menu should persist tab selection in the same browser session."
+	@priority = "5"
+	test PersistAddMenuTabSelectionInTheSameBrowserSession {
+		task ("Given a page designer accesses to the Add menu on a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "ControlMenu#ADD");
+		}
+
+		task ("When the page designer selects the Content tab") {
+			Navigator.gotoNavTab(navTab = "Content");
+		}
+
+		task ("Then the Add menu persists the tab selection in the same browser session") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Page Name");
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			Navigator.viewActivatedNavTab(navTab = "Content");
+		}
+	}
+
 	@description = "This is a use case for LPS-123143. View the languageId shown in configuration page."
 	@priority = "3"
 	test ViewLanguageIdInConfigurationPage {

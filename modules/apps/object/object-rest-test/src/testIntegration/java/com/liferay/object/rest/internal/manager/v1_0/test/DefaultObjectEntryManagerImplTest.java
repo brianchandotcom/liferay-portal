@@ -363,8 +363,7 @@ public class DefaultObjectEntryManagerImplTest {
 				).put(
 					"picklistObjectFieldName", listTypeEntryKey
 				).put(
-					"precisionDecimalObjectFieldName",
-					new BigDecimal(0.1234567891234567, MathContext.DECIMAL64)
+					"precisionDecimalObjectFieldName", "0.1234567891234567"
 				).put(
 					"richTextObjectFieldName",
 					StringBundler.concat(
@@ -379,6 +378,23 @@ public class DefaultObjectEntryManagerImplTest {
 			childObjectEntry1,
 			_objectEntryManager.addObjectEntry(
 				_dtoConverterContext, _objectDefinition2, childObjectEntry1,
+				ObjectDefinitionConstants.SCOPE_COMPANY));
+
+		childObjectEntry1 = new ObjectEntry() {
+			{
+				properties = HashMapBuilder.<String, Object>put(
+					"precisionDecimalObjectFieldName", "0,123456789123456"
+				).build();
+			}
+		};
+
+		_assertEquals(
+			childObjectEntry1,
+			_objectEntryManager.addObjectEntry(
+				new DefaultDTOConverterContext(
+					false, Collections.emptyMap(), _dtoConverterRegistry, null,
+					LocaleUtil.SPAIN, null, _adminUser),
+				_objectDefinition2, childObjectEntry1,
 				ObjectDefinitionConstants.SCOPE_COMPANY));
 
 		_assertEquals(

@@ -11,6 +11,10 @@
 
 <tbody>
 <tr>
+	<td>ANY_LINK</td>
+	<td>//*[contains(@href, 'liferay') and text()='${key_text}']</td>
+	<td></td>
+</tr>
 	<td>BUTTON</td>
 	<td>//*[contains(@class, btn) and text()='${key_text}']</td>
 	<td></td>

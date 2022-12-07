@@ -163,22 +163,8 @@ export default function AddObjectField({
 
 	const applyFeatureFlag = () => {
 		return objectFieldTypes.filter((objectFieldType) => {
-			if (
-				!Liferay.FeatureFlags['LPS-164948'] &&
-				!Liferay.FeatureFlags['LPS-158776']
-			) {
-				return (
-					objectFieldType.businessType !== 'Formula' &&
-					objectFieldType.businessType !== 'MultiselectPicklist'
-				);
-			}
-
 			if (!Liferay.FeatureFlags['LPS-164948']) {
 				return objectFieldType.businessType !== 'Formula';
-			}
-
-			if (!Liferay.FeatureFlags['LPS-158776']) {
-				return objectFieldType.businessType !== 'MultiselectPicklist';
 			}
 		});
 	};
@@ -190,8 +176,7 @@ export default function AddObjectField({
 					apiURL={apiURL}
 					objectDefinitionId={objectDefinitionId}
 					objectFieldTypes={
-						!Liferay.FeatureFlags['LPS-164948'] ||
-						!Liferay.FeatureFlags['LPS-158776']
+						!Liferay.FeatureFlags['LPS-164948']
 							? applyFeatureFlag()
 							: objectFieldTypes
 					}

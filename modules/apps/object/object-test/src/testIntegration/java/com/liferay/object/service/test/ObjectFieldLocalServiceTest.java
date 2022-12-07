@@ -66,10 +66,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -81,7 +79,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -103,11 +100,6 @@ public class ObjectFieldLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158776", "true"
-			).build());
-
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
@@ -120,14 +112,6 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), _listTypeEntryKey,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158776", "false"
-			).build());
 	}
 
 	@Test

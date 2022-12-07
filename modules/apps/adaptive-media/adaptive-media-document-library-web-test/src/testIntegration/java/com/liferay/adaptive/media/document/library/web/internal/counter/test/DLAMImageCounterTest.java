@@ -217,7 +217,8 @@ public class DLAMImageCounterTest {
 	}
 
 	private byte[] _getImageBytes() throws Exception {
-		return FileUtil.getBytes(DLAMImageCounterTest.class, "image.jpg");
+		return FileUtil.getBytes(
+			DLAMImageCounterTest.class, "dependencies/image.jpg");
 	}
 
 	private static final int _WELCOME_SITE_INITIALIZER_IMAGES_COUNT = 1;

@@ -9,30 +9,49 @@
  * distribution rights of the Software.
  */
 
-const requestType = document.querySelector('[name="requestType"]');
-const requestStatus = document.querySelector('[name="requestStatus"]');
-const serviceForm = document.getElementsByClassName('.service-form');
-const grantForm = document.getElementsByClassName('.grant-form');
-const grantRequestType = document.querySelector('[name="grantRequestType"]');
-const grantAmount = document.querySelector('[name="grantAmount"]');
-const managerEmailAddress = document.querySelector(
-	'[name="managerEmailAddress"]'
-);
-const totalHoursRequested = document.querySelector(
-	'[name="totalHoursRequested"]'
-);
-const startDate = document.querySelector('[name="startDate"]');
-const endDate = document.querySelector('[name="endDate"]');
+function main() {
+	const requestType = document.querySelector('[name="requestType"]');
 
-document.addEventListener('click', handleDocumentClick);
+	handleDocumentClick(requestType);
+}
+
+document.addEventListener('click', main);
 
 function updateValue(requestType) {
+	const serviceForm = document.getElementsByClassName('.service-form');
+	const grantForm = document.getElementsByClassName('.grant-form');
+	const grantRequestType = document.querySelector(
+		'[name="grantRequestType"]'
+	);
+	const grantAmount = document.querySelector('[name="grantAmount"]');
+	const grantCombobox = document.querySelector(
+		'.grant-combobox div div div div div input'
+	);
+	const managerEmailAddress = document.querySelector(
+		'[name="managerEmailAddress"]'
+	);
+	const totalHoursRequested = document.querySelector(
+		'[name="totalHoursRequested"]'
+	);
+	const startDate = document.querySelector('[name="startDate"]');
+	const endDate = document.querySelector('[name="endDate"]');
+	const labelName = document.querySelector(
+		'.grant-combobox div div div div div label'
+	);
+
+	if (!labelName.innerText.includes('*')) {
+		labelName.innerHTML =
+			labelName.innerText +
+			"<span style='color:#DA1414;margin-left:4px;font-size:15px;'>*</span>";
+	}
+
 	if (
 		requestType.value === 'grant' &&
 		grantForm[0].classList.contains('d-none')
 	) {
 		grantForm[0].classList.toggle('d-none');
 		toggleGrantRequired(grantForm[0]);
+		grantCombobox.setAttribute('required', true);
 
 		if (!serviceForm[0].classList.contains('d-none')) {
 			managerEmailAddress.value = '';
@@ -50,6 +69,7 @@ function updateValue(requestType) {
 	) {
 		serviceForm[0].classList.toggle('d-none');
 		toggleServiceRequired(serviceForm[0]);
+		grantCombobox.removeAttribute('required');
 
 		if (!grantForm[0].classList.contains('d-none')) {
 			grantRequestType.value = '';
@@ -59,8 +79,6 @@ function updateValue(requestType) {
 			toggleGrantRequired(grantForm[0]);
 		}
 	}
-
-	requestStatus.value = 'pendingEVPApproval';
 }
 
 function toggleServiceRequired(service) {
@@ -87,6 +105,6 @@ function toggleGrantRequired(grant) {
 	}
 }
 
-function handleDocumentClick() {
+function handleDocumentClick(requestType) {
 	updateValue(requestType);
 }

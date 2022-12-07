@@ -5,8 +5,7 @@
 				"definition": {
 					"formConfig": {
 						"formReference": {
-							"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
-							"classType": 0
+							"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]"
 						}
 					},
 					"fragmentStyle": {
@@ -24,7 +23,8 @@
 								"key": "DIALECT-dialect-text"
 							},
 							"fragmentConfig": {
-								"textType": "h2"
+								"textType": "h2",
+								"truncateText": false
 							},
 							"fragmentFields": [
 								{
@@ -55,7 +55,8 @@
 								"key": "DIALECT-dialect-text"
 							},
 							"fragmentConfig": {
-								"textType": "h5"
+								"textType": "h5",
+								"truncateText": false
 							},
 							"fragmentFields": [
 								{
@@ -83,13 +84,13 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
 								"marginBottom": "3"
 							},
 							"indexed": true,
 							"layout": {
 								"contentDisplay": "FlexRow",
 								"marginBottom": 1,
+								"opacity": 100,
 								"widthType": "Fluid"
 							},
 							"name": "Employee Info"
@@ -242,6 +243,7 @@
 							},
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fluid"
 							},
 							"name": "Service Form"
@@ -249,12 +251,11 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {
-									},
 									"indexed": true,
 									"layout": {
 										"contentDisplay": "FlexColumn",
 										"justify": "SpaceBetween",
+										"opacity": 100,
 										"widthType": "Fluid"
 									},
 									"name": "Container"
@@ -266,7 +267,8 @@
 												"key": "DIALECT-dialect-text"
 											},
 											"fragmentConfig": {
-												"textType": "h5"
+												"textType": "h5",
+												"truncateText": false
 											},
 											"fragmentFields": [
 												{
@@ -321,6 +323,7 @@
 												"contentDisplay": "FlexRow",
 												"justify": "SpaceBetween",
 												"marginBottom": 1,
+												"opacity": 100,
 												"widthType": "Fluid"
 											}
 										},
@@ -413,10 +416,9 @@
 								"d-none",
 								".grant-form"
 							],
-							"fragmentStyle": {
-							},
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fluid"
 							},
 							"name": "Grant Form"
@@ -428,7 +430,8 @@
 										"key": "DIALECT-dialect-text"
 									},
 									"fragmentConfig": {
-										"textType": "h5"
+										"textType": "h5",
+										"truncateText": false
 									},
 									"fragmentFields": [
 										{
@@ -464,6 +467,7 @@
 										"contentDisplay": "FlexRow",
 										"justify": "SpaceBetween",
 										"marginBottom": 1,
+										"opacity": 100,
 										"widthType": "Fluid"
 									},
 									"name": "Container"
@@ -471,12 +475,15 @@
 								"pageElements": [
 									{
 										"definition": {
+											"cssClasses": [
+												"grant-combobox"
+											],
 											"fragment": {
 												"key": "INPUTS-select-from-list"
 											},
 											"fragmentConfig": {
 												"inputFieldId": "ObjectField_grantRequestType",
-												"inputRequired": true
+												"inputRequired": false
 											},
 											"fragmentFields": [
 											],
@@ -531,10 +538,9 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {
-							},
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fluid"
 							},
 							"name": "General Info"
@@ -549,6 +555,7 @@
 									"layout": {
 										"contentDisplay": "FlexRow",
 										"marginBottom": 1,
+										"opacity": 100,
 										"widthType": "Fluid"
 									}
 								},
@@ -713,26 +720,10 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "request-form-handler"
+								"key": "request-form-handler",
+								"siteKey": "$GROUP_KEY$"
 							},
 							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
-							"indexed": true
-						},
-						"type": "Fragment"
-					},
-					{
-						"definition": {
-							"cssClasses": [
-								"d-none"
-							],
-							"fragment": {
-								"key": "INPUTS-select-from-list"
-							},
-							"fragmentConfig": {
-								"inputFieldId": "ObjectField_requestStatus"
 							},
 							"fragmentFields": [
 							],

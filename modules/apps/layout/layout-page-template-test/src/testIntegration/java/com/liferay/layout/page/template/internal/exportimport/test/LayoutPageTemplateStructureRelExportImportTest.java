@@ -121,7 +121,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
-			_read("sample.png"), null, null, serviceContext);
+			_read("dependencies/sample.png"), null, null, serviceContext);
 
 		JSONObject exportedItemConfigJSONObject = JSONUtil.put(
 			"styles",

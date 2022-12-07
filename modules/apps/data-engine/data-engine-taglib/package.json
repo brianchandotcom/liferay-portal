@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/data-provider": "3.81.0",
+		"@clayui/data-provider": "3.82.0",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/frontend-js-state-web": "*",
 		"data-engine-js-components-web": "*",

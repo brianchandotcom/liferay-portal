@@ -331,7 +331,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			new KBArticleModifiedDateComparator());
 
 		return _exportToRSS(
-			displayStyle, type, version, name, description, feedURL, kbArticles,
+			name, description, feedURL, kbArticles, type, version, displayStyle,
 			themeDisplay);
 	}
 
@@ -377,8 +377,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			new KBArticleModifiedDateComparator());
 
 		return _exportToRSS(
-			displayStyle, type, version, name, description, feedURL,
-			ListUtil.subList(kbArticles, 0, max), themeDisplay);
+			name, description, feedURL, ListUtil.subList(kbArticles, 0, max),
+			type, version, displayStyle, themeDisplay);
 	}
 
 	@Override
@@ -891,9 +891,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	private String _exportToRSS(
-		String displayStyle, String type, double version, String name,
-		String description, String feedURL, List<KBArticle> kbArticles,
-		ThemeDisplay themeDisplay) {
+		String name, String description, String feedURL,
+		List<KBArticle> kbArticles, String type, double version,
+		String displayStyle, ThemeDisplay themeDisplay) {
 
 		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
 

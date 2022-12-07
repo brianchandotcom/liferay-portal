@@ -14,23 +14,15 @@
 
 /// <reference types="react" />
 
-import './EditNotificationTemplate.scss';
-interface IProps {
-	backURL: string;
-	baseResourceURL: string;
-	editorConfig: object;
-	externalReferenceCode: string;
-	notificationTemplateId: number;
-	notificationTemplateType: string;
-	portletNamespace: string;
+import {FormError} from '@liferay/object-js-components-web';
+interface BasicInfoContainerProps {
+	errors: FormError<NotificationTemplate>;
+	setValues: (values: Partial<NotificationTemplate>) => void;
+	values: NotificationTemplate;
 }
-export default function EditNotificationTemplate({
-	backURL,
-	baseResourceURL,
-	editorConfig,
-	externalReferenceCode,
-	notificationTemplateId,
-	notificationTemplateType,
-	portletNamespace,
-}: IProps): JSX.Element;
+export declare function BasicInfoContainer({
+	errors,
+	setValues,
+	values,
+}: BasicInfoContainerProps): JSX.Element;
 export {};

@@ -15,6 +15,36 @@
 type Locale = Liferay.Language.Locale;
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
+type editorTypeOptions = 'freemarker' | 'richText';
+
+type EmailRecipients = {
+	bcc: string;
+	cc: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+};
+
+type UserNotificationRecipients = {
+	[key in 'term' | 'userScreenName' | 'roleName']?: string;
+};
+interface NotificationTemplate {
+	attachmentObjectFieldIds: string[] | number[];
+	body: LocalizedValue<string>;
+	description: string;
+	editorType: editorTypeOptions;
+	name: string;
+	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionId: number | null;
+	recipientType: string;
+	recipients:
+		| Partial<EmailRecipients>[]
+		| Partial<UserNotificationRecipients>[]
+		| [];
+	subject: LocalizedValue<string>;
+	type: string;
+}
+
 interface ObjectField {
 	DBType: string;
 	businessType: ObjectFieldBusinessType;

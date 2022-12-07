@@ -70,6 +70,25 @@ public class DropZoneFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testValidateFragmentEntryHTMLNoValidationWhenFFDisabled()
+		throws Exception {
+
+		_setFeatureFlag(false);
+
+		String dropZoneId = RandomTestUtil.randomString();
+
+		String duplicatedIdHTML = _getHTML(dropZoneId, dropZoneId);
+
+		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
+			duplicatedIdHTML, null);
+
+		String missingIdHTML = _getHTML(StringPool.BLANK, dropZoneId);
+
+		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
+			missingIdHTML, null);
+	}
+
+	@Test
 	public void testValidateFragmentEntryHTMLValidWithIds() throws Exception {
 		_setFeatureFlag(true);
 

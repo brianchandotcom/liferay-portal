@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alberto Chaparro
  */
-@Component(service = UpgradeStepRegistrator.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class BundleBlacklistImplUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

@@ -27,6 +27,7 @@ const columns = [
 	{
 		expanded: true,
 		label: Liferay.Language.get('related-site'),
+		sortable: false,
 		value: 'siteName',
 	},
 	{

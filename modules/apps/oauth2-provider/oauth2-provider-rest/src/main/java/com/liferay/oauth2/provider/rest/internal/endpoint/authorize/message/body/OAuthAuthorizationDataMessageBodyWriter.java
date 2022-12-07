@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.message.body;
+package com.liferay.oauth2.provider.rest.internal.endpoint.authorize.message.body;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;

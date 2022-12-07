@@ -62,7 +62,8 @@ public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 					Cookie[] cookies = (Cookie[])values;
 
 					for (Cookie cookie : cookies) {
-						CookiesManagerUtil.addCookie(cookie, null, httpServletResponse);
+						CookiesManagerUtil.addCookie(
+							cookie, null, httpServletResponse);
 					}
 				}
 				else if (values instanceof Integer[]) {
@@ -279,7 +280,8 @@ public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 						}
 					}
 					else if (value instanceof Cookie) {
-						CookiesManagerUtil.addCookie((Cookie)value, null, _httpServletResponse);
+						CookiesManagerUtil.addCookie(
+							(Cookie)value, null, _httpServletResponse);
 					}
 					else if (value instanceof Integer) {
 						if (headerAction.isOverride()) {

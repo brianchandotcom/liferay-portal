@@ -78,7 +78,8 @@ public class Header implements Externalizable {
 		String key, HttpServletResponse httpServletResponse) {
 
 		if (_type == Type.COOKIE) {
-			CookiesManagerUtil.addCookie(_cookieValue, null, httpServletResponse);
+			CookiesManagerUtil.addCookie(
+				_cookieValue, null, httpServletResponse);
 		}
 		else if (_type == Type.DATE) {
 			httpServletResponse.addDateHeader(key, _dateValue);
@@ -182,7 +183,8 @@ public class Header implements Externalizable {
 		String key, HttpServletResponse httpServletResponse) {
 
 		if (_type == Type.COOKIE) {
-			CookiesManagerUtil.addCookie(_cookieValue, null, httpServletResponse);
+			CookiesManagerUtil.addCookie(
+				_cookieValue, null, httpServletResponse);
 		}
 		else if (_type == Type.DATE) {
 			httpServletResponse.setDateHeader(key, _dateValue);

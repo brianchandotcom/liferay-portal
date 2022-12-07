@@ -59,15 +59,14 @@ public class CookiesManagerImpl implements CookiesManager {
 		Cookie cookie, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		boolean isSecure = false;
+		boolean secure = false;
 
 		if (httpServletRequest != null) {
-			isSecure = _portal.isSecure(httpServletRequest);
+			secure = _portal.isSecure(httpServletRequest);
 		}
 
 		return addCookie(
-			cookie, httpServletRequest, httpServletResponse,
-			isSecure);
+			cookie, httpServletRequest, httpServletResponse, secure);
 	}
 
 	@Override
@@ -77,14 +76,16 @@ public class CookiesManagerImpl implements CookiesManager {
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(
-				"The following cookie is trying to be added without consent type: " +
-					cookie.getName());
+				"The following cookie is trying to be added without consent " +
+					"type: " + cookie.getName());
 		}
 
 		if (_knownCookies.get(cookie.getName()) != null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"The cookie will be added with the consent type used previously. Use the API with explicitly declared consent type!");
+					"The cookie will be added with the consent type used " +
+						"previously. Use the API with explicitly declared " +
+							"consent type.");
 			}
 
 			return addCookie(
@@ -94,7 +95,8 @@ public class CookiesManagerImpl implements CookiesManager {
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(
-				"The cookie will be deleted! Use the API with explicitly declared consent type!");
+				"The cookie will be deleted. Use the API with explicitly " +
+					"declared consent type.");
 		}
 
 		return deleteCookies(
@@ -162,14 +164,15 @@ public class CookiesManagerImpl implements CookiesManager {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"This cookie has been previously added with different consent type " +
-						cookie.getName());
+					"This cookie has been previously added with different " +
+						"consent type " + cookie.getName());
 				_log.warn("Known consent type: " + consentType);
 				_log.warn(
 					"Current consent type: " +
 						_knownCookies.get(cookie.getName()));
 			}
-		} else {
+		}
+		else {
 			_knownCookies.put(cookie.getName(), consentType);
 		}
 

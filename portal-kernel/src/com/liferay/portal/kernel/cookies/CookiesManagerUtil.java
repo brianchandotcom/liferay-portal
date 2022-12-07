@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Tamas Molnar
  */
 public class CookiesManagerUtil {
+
 	public static boolean addCookie(
 		Cookie cookie, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -37,10 +38,8 @@ public class CookiesManagerUtil {
 		HttpServletResponse httpServletResponse, boolean secure) {
 
 		return _cookiesManager.addCookie(
-			cookie, httpServletRequest, httpServletResponse,
-			secure);
+			cookie, httpServletRequest, httpServletResponse, secure);
 	}
-
 
 	public static boolean addCookie(
 		int consentType, Cookie cookie, HttpServletRequest httpServletRequest,

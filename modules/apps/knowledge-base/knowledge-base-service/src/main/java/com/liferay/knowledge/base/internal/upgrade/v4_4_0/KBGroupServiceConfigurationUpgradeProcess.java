@@ -26,9 +26,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Marco Galluzzi
  */
-public class RSSConfigurationUpgradeProcess extends UpgradeProcess {
+public class KBGroupServiceConfigurationUpgradeProcess extends UpgradeProcess {
 
-	public RSSConfigurationUpgradeProcess(
+	public KBGroupServiceConfigurationUpgradeProcess(
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;

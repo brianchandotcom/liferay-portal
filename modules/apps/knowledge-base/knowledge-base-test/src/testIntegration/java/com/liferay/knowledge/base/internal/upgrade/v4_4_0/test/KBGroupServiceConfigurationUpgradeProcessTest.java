@@ -48,7 +48,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Marco Galluzzi
  */
 @RunWith(Arquillian.class)
-public class RSSConfigurationUpgradeProcessTest {
+public class KBGroupServiceConfigurationUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -106,7 +106,7 @@ public class RSSConfigurationUpgradeProcessTest {
 	}
 
 	@Test
-	public void testRSSConfigurationUpgradeProcessWithExistingConfiguration()
+	public void testKBGroupServiceConfigurationUpgradeProcessWithExistingConfiguration()
 		throws Exception {
 
 		for (Configuration configuration : _getConfigurations()) {
@@ -178,7 +178,7 @@ public class RSSConfigurationUpgradeProcessTest {
 
 	private static final String _CLASS_NAME =
 		"com.liferay.knowledge.base.internal.upgrade.v4_4_0." +
-			"RSSConfigurationUpgradeProcess";
+			"KBGroupServiceConfigurationUpgradeProcess";
 
 	private static final String _SERVICE_PID =
 		"com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration";

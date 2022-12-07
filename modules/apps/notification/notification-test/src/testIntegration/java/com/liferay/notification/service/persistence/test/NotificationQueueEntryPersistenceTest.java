@@ -227,19 +227,21 @@ public class NotificationQueueEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByLtSentDate() throws Exception {
-		_persistence.countByLtSentDate(RandomTestUtil.nextDate());
+	public void testCountByC_LtSentDate() throws Exception {
+		_persistence.countByC_LtSentDate(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextDate());
 
-		_persistence.countByLtSentDate(RandomTestUtil.nextDate());
+		_persistence.countByC_LtSentDate(0L, RandomTestUtil.nextDate());
 	}
 
 	@Test
-	public void testCountByT_S() throws Exception {
-		_persistence.countByT_S("", RandomTestUtil.nextInt());
+	public void testCountByC_T_S() throws Exception {
+		_persistence.countByC_T_S(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByT_S("null", 0);
+		_persistence.countByC_T_S(0L, "null", 0);
 
-		_persistence.countByT_S((String)null, 0);
+		_persistence.countByC_T_S(0L, (String)null, 0);
 	}
 
 	@Test

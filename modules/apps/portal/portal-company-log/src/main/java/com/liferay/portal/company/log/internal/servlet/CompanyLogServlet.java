@@ -298,16 +298,15 @@ public class CompanyLogServlet extends HttpServlet {
 	private void _read(HttpServletResponse httpServletResponse, File file)
 		throws IOException {
 
-		Scanner scanner = new Scanner(file);
-		StringBuilder sb = new StringBuilder();
+		try (Scanner scanner = new Scanner(file)) {
+			StringBuilder sb = new StringBuilder();
+	
+			while (scanner.hasNextLine()) {
+				sb.append(scanner.nextLine() + "\n");
+			}
 
-		while (scanner.hasNextLine()) {
-			sb.append(scanner.nextLine() + "\n");
+			ServletResponseUtil.write(httpServletResponse, sb.toString());
 		}
-
-		scanner.close();
-
-		ServletResponseUtil.write(httpServletResponse, sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

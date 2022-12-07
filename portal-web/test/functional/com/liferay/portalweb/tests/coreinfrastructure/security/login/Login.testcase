@@ -5,12 +5,6 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Login";
 
-	setUp {
-		task ("Setup: Setup portal instance") {
-			TestCase.setUpPortalInstance();
-		}
-	}
-
 	@description = "This is a use case for LPS-39744 and LPS-78508. Default landing page could be set by property and user is redirected to the changed landing page."
 	@priority = "5"
 	test DefaultPortalLandingPageSetByProperty {

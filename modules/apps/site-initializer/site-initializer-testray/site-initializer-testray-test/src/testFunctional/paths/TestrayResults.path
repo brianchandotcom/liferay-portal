@@ -11,31 +11,6 @@
 
 <tbody>
 <tr>
-	<td>ICON_ASSIGN_USER</td>
-	<td>//th[normalize-space()='Assignee']//following::span[normalize-space()='${key_iconUser}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INPUT_COMMENT</td>
-	<td>//textarea[@id='comment']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INPUT_ISSUES</td>
-	<td>//input[@id='issues']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_STATUS_CASE_RESULTS</td>
-	<td>//select[@id='dueStatus']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STATUS_CASE_RESULTS</td>
-	<td>//span[normalize-space()='${key_status}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOTAL_TEST_CASE_RESULTS</td>
 	<td>//h5[text()='Total test cases']//following::*[@class='bb-chart-arcs-title']</td>
 	<td></td>

@@ -654,28 +654,11 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testGetArticleDisplayWithComplexData() throws Exception {
-		DataDefinition dataDefinition = DataDefinition.toDTO(
-			_readFileToString("dependencies/complex_data_definition.json"));
-
-		dataDefinition.setName(
+		DataDefinition dataDefinition = _addDataDefinition(
+			"complex_data_definition.json",
 			HashMapBuilder.<String, Object>put(
 				String.valueOf(LocaleUtil.SPAIN), "TMX_Main_Menu"
 			).build());
-
-		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
-			_dataDefinitionResourceFactory.create();
-
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourcedBuilder.user(
-				TestPropsValues.getUser()
-			).build();
-
-		dataDefinition =
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				_group.getGroupId(), "journal", dataDefinition);
-
-		String xml = _readFileToString(
-			"dependencies/complex_journal_content.xml");
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -684,16 +667,15 @@ public class JournalArticleLocalServiceTest {
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_jsonFactory.looseSerialize(fileEntry));
-
 		JournalArticle journalArticle =
 			JournalTestUtil.addArticleWithXMLContent(
 				_group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
 				StringUtil.replace(
-					xml, "[$DOCUMENT_JSON$]", jsonObject.toString()),
+					_readFileToString(
+						"dependencies/complex_journal_content.xml"),
+					"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
 				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.SPAIN);
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
@@ -801,30 +783,13 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testRemoveArticleLocale() throws Exception {
-		DataDefinition dataDefinition = DataDefinition.toDTO(
-			_readFileToString("dependencies/ddm_form.json"));
-
-		dataDefinition.setName(
+		DataDefinition dataDefinition = _addDataDefinition(
+			"ddm_form.json",
 			HashMapBuilder.<String, Object>put(
 				String.valueOf(LocaleUtil.SPAIN), "data-definition-es"
 			).put(
 				String.valueOf(LocaleUtil.US), "data-definition"
 			).build());
-
-		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
-			_dataDefinitionResourceFactory.create();
-
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourcedBuilder.user(
-				TestPropsValues.getUser()
-			).build();
-
-		dataDefinition =
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				_group.getGroupId(), "journal", dataDefinition);
-
-		String xml = _readFileToString(
-			"dependencies/journal_content_with_different_locales.xml");
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -832,9 +797,6 @@ public class JournalArticleLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_jsonFactory.looseSerialize(fileEntry));
 
 		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.addArticle(
@@ -857,7 +819,10 @@ public class JournalArticleLocalServiceTest {
 					LocaleUtil.US, "friendly-url"
 				).build(),
 				StringUtil.replace(
-					xml, "[$DOCUMENT_JSON$]", jsonObject.toString()),
+					_readFileToString(
+						"dependencies/journal_content_with_different_locales." +
+							"xml"),
+					"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
 				dataDefinition.getDataDefinitionKey(), null, null, 1, 1, 1965,
 				0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
 				null, null, null, null,
@@ -890,31 +855,13 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testRemoveArticleLocaleWithNestedFields() throws Exception {
-		DataDefinition dataDefinition = DataDefinition.toDTO(
-			_readFileToString("dependencies/ddm_form_nested_fields.json"));
-
-		dataDefinition.setName(
+		DataDefinition dataDefinition = _addDataDefinition(
+			"ddm_form_nested_fields.json",
 			HashMapBuilder.<String, Object>put(
 				String.valueOf(LocaleUtil.SPAIN), "data-definition-es"
 			).put(
 				String.valueOf(LocaleUtil.US), "data-definition"
 			).build());
-
-		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
-			_dataDefinitionResourceFactory.create();
-
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourcedBuilder.user(
-				TestPropsValues.getUser()
-			).build();
-
-		dataDefinition =
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				_group.getGroupId(), "journal", dataDefinition);
-
-		String xml = _readFileToString(
-			"dependencies" +
-				"/journal_content_nested_fields_with_different_locales.xml");
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -922,9 +869,6 @@ public class JournalArticleLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_jsonFactory.looseSerialize(fileEntry));
 
 		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.addArticle(
@@ -947,7 +891,11 @@ public class JournalArticleLocalServiceTest {
 					LocaleUtil.US, "friendly-url"
 				).build(),
 				StringUtil.replace(
-					xml, "[$DOCUMENT_JSON$]", jsonObject.toString()),
+					_readFileToString(
+						"dependencies" +
+							"/journal_content_nested_fields_with_different_" +
+								"locales.xml"),
+					"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
 				dataDefinition.getDataDefinitionKey(), null, null, 1, 1, 1965,
 				0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
 				null, null, null, null,

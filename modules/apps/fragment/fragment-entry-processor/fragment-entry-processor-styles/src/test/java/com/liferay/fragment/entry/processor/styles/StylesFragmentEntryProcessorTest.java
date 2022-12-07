@@ -67,7 +67,7 @@ public class StylesFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testFragmentWithStylesAttribute() {
+	public void testProcessFragmentEntryLinkHTMLFragmentWithStylesAttribute() {
 		FragmentEntryLink fragmentEntryLink = _getMockFragmentEntryLink();
 
 		LayoutStructure layoutStructure = new LayoutStructure();
@@ -113,7 +113,7 @@ public class StylesFragmentEntryProcessorTest {
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
-	public void testInvalidFragmentThrows() throws Exception {
+	public void testValidateFragmentEntryHTMLInvalidHTML() throws Exception {
 		_stylesFragmentEntryProcessor.validateFragmentEntryHTML(
 			"<div data-lfr-styles><span data-lfr-styles>Test</span>Fragment" +
 				"</div>",

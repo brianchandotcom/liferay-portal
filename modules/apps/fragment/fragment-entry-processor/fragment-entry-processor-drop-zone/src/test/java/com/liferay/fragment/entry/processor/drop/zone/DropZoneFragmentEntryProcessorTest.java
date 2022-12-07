@@ -71,6 +71,72 @@ public class DropZoneFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testProcessFragmentEntryLinkHTMLInEditAddingDropZone()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = _getMockFragmentEntryLink();
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		String dropZoneId1 = RandomTestUtil.randomString();
+		String dropZoneId2 = RandomTestUtil.randomString();
+
+		FragmentDropZoneLayoutStructureItem[]
+			fragmentDropZoneLayoutStructureItems =
+				_addFragmentDropZoneLayoutStructureItems(
+					fragmentEntryLink, layoutStructure, dropZoneId1,
+					dropZoneId2);
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem1 =
+				fragmentDropZoneLayoutStructureItems[0];
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem2 =
+				fragmentDropZoneLayoutStructureItems[1];
+
+		String newDropZoneId = RandomTestUtil.randomString();
+
+		String html = _getHTML(dropZoneId1, newDropZoneId, dropZoneId2);
+
+		_setFeatureFlag(false);
+
+		Assert.assertEquals(
+			_getExpectedHTML(
+				new KeyValuePair(
+					dropZoneId1,
+					fragmentDropZoneLayoutStructureItem1.getItemId()),
+				new KeyValuePair(
+					newDropZoneId,
+					fragmentDropZoneLayoutStructureItem2.getItemId()),
+				new KeyValuePair(dropZoneId2, StringPool.BLANK)),
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html,
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
+
+		_setFeatureFlag(true);
+
+		Assert.assertEquals(
+			_getExpectedHTML(
+				new KeyValuePair(
+					dropZoneId1,
+					fragmentDropZoneLayoutStructureItem1.getItemId()),
+				new KeyValuePair(newDropZoneId, StringPool.BLANK),
+				new KeyValuePair(
+					dropZoneId2,
+					fragmentDropZoneLayoutStructureItem2.getItemId())),
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html,
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
+	}
+
+	@Test
 	public void testProcessFragmentEntryLinkHTMLInEditMode() throws Exception {
 		FragmentEntryLink fragmentEntryLink = _getMockFragmentEntryLink();
 
@@ -157,6 +223,200 @@ public class DropZoneFragmentEntryProcessorTest {
 				fragmentDropZoneLayoutStructureItem.getItemId()),
 			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
 				fragmentEntryLink, _getHTML(fragmentDropZoneId),
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
+	}
+
+	@Test
+	public void testProcessFragmentEntryLinkHTMLInEditMultipleDropZonesWithoutIds()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = _getMockFragmentEntryLink();
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		FragmentDropZoneLayoutStructureItem[]
+			fragmentDropZoneLayoutStructureItems =
+				_addFragmentDropZoneLayoutStructureItems(
+					fragmentEntryLink, layoutStructure, StringPool.BLANK,
+					StringPool.BLANK);
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem1 =
+				fragmentDropZoneLayoutStructureItems[0];
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem2 =
+				fragmentDropZoneLayoutStructureItems[1];
+
+		String dropZoneId1 = RandomTestUtil.randomString();
+		String dropZoneId2 = RandomTestUtil.randomString();
+
+		String expectedHTML = _getExpectedHTML(
+			new KeyValuePair(
+				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()),
+			new KeyValuePair(
+				dropZoneId2, fragmentDropZoneLayoutStructureItem2.getItemId()));
+
+		String html = _getHTML(dropZoneId1, dropZoneId2);
+
+		_setFeatureFlag(false);
+
+		Assert.assertEquals(
+			expectedHTML,
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html,
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
+
+		_setFeatureFlag(true);
+
+		Assert.assertEquals(
+			expectedHTML,
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html,
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
+	}
+
+	@Test
+	public void testProcessFragmentEntryLinkHTMLInEditRemovingDropZone()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = _getMockFragmentEntryLink();
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		String dropZoneId1 = RandomTestUtil.randomString();
+		String dropZoneId2 = RandomTestUtil.randomString();
+
+		FragmentDropZoneLayoutStructureItem[]
+			fragmentDropZoneLayoutStructureItems =
+				_addFragmentDropZoneLayoutStructureItems(
+					fragmentEntryLink, layoutStructure, dropZoneId1,
+					RandomTestUtil.randomString(), dropZoneId2);
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem1 =
+				fragmentDropZoneLayoutStructureItems[0];
+
+		FragmentDropZoneLayoutStructureItem
+			removedFragmentDropZoneLayoutStructureItem =
+				fragmentDropZoneLayoutStructureItems[1];
+
+		String html = _getHTML(dropZoneId1, dropZoneId2);
+
+		_setFeatureFlag(false);
+
+		Assert.assertEquals(
+			_getExpectedHTML(
+				new KeyValuePair(
+					dropZoneId1,
+					fragmentDropZoneLayoutStructureItem1.getItemId()),
+				new KeyValuePair(
+					dropZoneId2,
+					removedFragmentDropZoneLayoutStructureItem.getItemId())),
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html,
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
+
+		_setFeatureFlag(true);
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem2 =
+				fragmentDropZoneLayoutStructureItems[2];
+
+		Assert.assertEquals(
+			_getExpectedHTML(
+				new KeyValuePair(
+					dropZoneId1,
+					fragmentDropZoneLayoutStructureItem1.getItemId()),
+				new KeyValuePair(
+					dropZoneId2,
+					fragmentDropZoneLayoutStructureItem2.getItemId())),
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html,
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
+	}
+
+	@Test
+	public void testProcessFragmentEntryLinkHTMLInEditSwappingDropZones()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = _getMockFragmentEntryLink();
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		String dropZoneId1 = RandomTestUtil.randomString();
+		String dropZoneId2 = RandomTestUtil.randomString();
+		String dropZoneId3 = RandomTestUtil.randomString();
+
+		FragmentDropZoneLayoutStructureItem[]
+			fragmentDropZoneLayoutStructureItems =
+				_addFragmentDropZoneLayoutStructureItems(
+					fragmentEntryLink, layoutStructure, dropZoneId1,
+					dropZoneId2, dropZoneId3);
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem1 =
+				fragmentDropZoneLayoutStructureItems[0];
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem2 =
+				fragmentDropZoneLayoutStructureItems[1];
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem3 =
+				fragmentDropZoneLayoutStructureItems[2];
+
+		String html = _getHTML(dropZoneId2, dropZoneId3, dropZoneId1);
+
+		_setFeatureFlag(false);
+
+		Assert.assertEquals(
+			_getExpectedHTML(
+				new KeyValuePair(
+					dropZoneId2,
+					fragmentDropZoneLayoutStructureItem1.getItemId()),
+				new KeyValuePair(
+					dropZoneId3,
+					fragmentDropZoneLayoutStructureItem2.getItemId()),
+				new KeyValuePair(
+					dropZoneId1,
+					fragmentDropZoneLayoutStructureItem3.getItemId())),
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html,
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
+
+		_setFeatureFlag(true);
+
+		Assert.assertEquals(
+			_getExpectedHTML(
+				new KeyValuePair(
+					dropZoneId2,
+					fragmentDropZoneLayoutStructureItem2.getItemId()),
+				new KeyValuePair(
+					dropZoneId3,
+					fragmentDropZoneLayoutStructureItem3.getItemId()),
+				new KeyValuePair(
+					dropZoneId1,
+					fragmentDropZoneLayoutStructureItem1.getItemId())),
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html,
 				new DefaultFragmentEntryProcessorContext(
 					_getMockHttpServletRequest(layoutStructure), null,
 					FragmentEntryLinkConstants.EDIT,

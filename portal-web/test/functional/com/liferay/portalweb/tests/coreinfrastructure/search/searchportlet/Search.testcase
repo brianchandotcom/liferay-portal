@@ -159,8 +159,8 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				categoryName = "${categories}",
-				locator1 = "Search#CATEGORY_FACET_CLOUD_LAYOUT");
+				facetValueName = "${categories}",
+				locator1 = "Search#FACET_CLOUD_LAYOUT");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(

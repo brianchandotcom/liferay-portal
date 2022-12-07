@@ -163,33 +163,6 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro createTestrayTasks {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Testray Tasks");
-
-		LexiconEntry.gotoAdd();
-
-		Type(
-			locator1 = "TestrayTestflow#STATUS_EDIT",
-			value1 = "${value}");
-
-		Type(
-			locator1 = "TestrayTestflow#ADD_NAME_TASKS",
-			value1 = "Hotfix Tester - liferay-hotfix-1987-2008 - 7.4.10.7");
-
-		Type(
-			locator1 = "TestrayTestflow#ADD_BUILD_TASKS",
-			value1 = "43015");
-
-		Type(
-			locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
-			value1 = "04/01/2022");
-
-		Click(locator1 = "Button#SAVE");
-	}
-
 	macro deleteAllProjects {
 		TestrayLayout.clickResultsOnSidebar();
 
@@ -265,25 +238,6 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro enableTestrayTasksInPortlet {
-		Refresh();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
-
-		Click(
-			key_pageNumber = "2",
-			locator1 = "Pagination#ANY_PAGE");
-
-		ObjectPortlet.selectCustomObject(label = "Testray Task");
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-		CreateObject.saveObject();
-	}
-
 	macro gotoAddProject {
 		Click(locator1 = "Testray#ADD_PROJECT");
 	}
@@ -322,23 +276,6 @@ definition {
 		Click(locator1 = "TestrayUser#USER_ICON_SIDEBAR");
 
 		Click(locator1 = "TestrayUser#SIGN_OUT");
-	}
-
-	macro statusChangeTestray {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Testray Tasks");
-
-		Click(locator1 = "CommerceEntry#DROPDOWN");
-
-		MenuItem.click(menuItem = "View");
-
-		Type(
-			locator1 = "TestrayTestflow#STATUS_EDIT",
-			value1 = "${value}");
-
-		Click(locator1 = "Button#SAVE");
 	}
 
 	macro tearDownCP {

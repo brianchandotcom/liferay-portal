@@ -143,7 +143,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		return addLayoutUtilityPageEntry(
 			null, userId, serviceContext.getScopeGroupId(), 0,
-			previewFileEntryId, name, sourceLayoutUtilityPageEntry.getType(), 0);
+			previewFileEntryId, name, sourceLayoutUtilityPageEntry.getType(),
+			0);
 	}
 
 	@Override

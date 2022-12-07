@@ -29,6 +29,8 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.utility.page.constants.LayoutUtilityPageConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
@@ -84,7 +86,8 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(LayoutPageTemplateCollection.class),
-			new StagedModelType(LayoutPageTemplateEntry.class));
+			new StagedModelType(LayoutPageTemplateEntry.class),
+			new StagedModelType(LayoutUtilityPageEntry.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "page-template-sets", true, true, null,
@@ -92,6 +95,10 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "page-templates", true, false, null,
 				LayoutPageTemplateEntry.class.getName(),
+				StagedModelType.REFERRER_CLASS_NAME_ALL),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "utility-pages", true, false, null,
+				LayoutUtilityPageEntry.class.getName(),
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
 		setPublishToLiveByDefault(true);
 		setStagingControls(getExportControls());
@@ -120,31 +127,53 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		if (!portletDataContext.getBooleanParameter(
+		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "page-templates")) {
+
+			portletDataContext.addPortletPermissions(
+				LayoutPageTemplateConstants.RESOURCE_NAME);
+
+			rootElement.addAttribute(
+				"group-id",
+				String.valueOf(portletDataContext.getScopeGroupId()));
+
+			ActionableDynamicQuery
+				layoutPageTemplateCollectionExportActionableDynamicQuery =
+					_layoutPageTemplateCollectionStagedModelRepository.
+						getExportActionableDynamicQuery(portletDataContext);
+
+			layoutPageTemplateCollectionExportActionableDynamicQuery.
+				performActions();
+
+			ActionableDynamicQuery
+				layoutPageTemplateEntryActionableDynamicQuery =
+					_layoutPageTemplateEntryStagedModelRepository.
+						getExportActionableDynamicQuery(portletDataContext);
+
+			layoutPageTemplateEntryActionableDynamicQuery.performActions();
 
 			return getExportDataRootElementString(rootElement);
 		}
 
-		portletDataContext.addPortletPermissions(
-			LayoutPageTemplateConstants.RESOURCE_NAME);
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "utility-pages")) {
 
-		rootElement.addAttribute(
-			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
+			portletDataContext.addPortletPermissions(
+				LayoutUtilityPageConstants.RESOURCE_NAME);
 
-		ActionableDynamicQuery
-			layoutPageTemplateCollectionExportActionableDynamicQuery =
-				_layoutPageTemplateCollectionStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
+			rootElement.addAttribute(
+				"group-id",
+				String.valueOf(portletDataContext.getScopeGroupId()));
 
-		layoutPageTemplateCollectionExportActionableDynamicQuery.
-			performActions();
+			ActionableDynamicQuery
+				layoutUtilityPageEntryActionableDynamicQuery =
+					_layoutUtilityPageEntryStagedModelRepository.
+						getExportActionableDynamicQuery(portletDataContext);
 
-		ActionableDynamicQuery layoutPageTemplateEntryActionableDynamicQuery =
-			_layoutPageTemplateEntryStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
+			layoutUtilityPageEntryActionableDynamicQuery.performActions();
 
-		layoutPageTemplateEntryActionableDynamicQuery.performActions();
+			return getExportDataRootElementString(rootElement);
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -155,55 +184,73 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		if (!portletDataContext.getBooleanParameter(
+		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "page-templates")) {
 
-			return null;
-		}
+			portletDataContext.importPortletPermissions(
+				LayoutPageTemplateConstants.RESOURCE_NAME);
 
-		portletDataContext.importPortletPermissions(
-			LayoutPageTemplateConstants.RESOURCE_NAME);
+			Element layoutPageTemplateCollectionsElement =
+				portletDataContext.getImportDataGroupElement(
+					LayoutPageTemplateCollection.class);
 
-		Element layoutPageTemplateCollectionsElement =
-			portletDataContext.getImportDataGroupElement(
-				LayoutPageTemplateCollection.class);
+			List<Element> layoutPageTemplateCollectionElements =
+				layoutPageTemplateCollectionsElement.elements();
 
-		List<Element> layoutPageTemplateCollectionElements =
-			layoutPageTemplateCollectionsElement.elements();
+			for (Element layoutPageTemplateCollectionElement :
+					layoutPageTemplateCollectionElements) {
 
-		for (Element layoutPageTemplateCollectionElement :
-				layoutPageTemplateCollectionElements) {
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutPageTemplateCollectionElement);
-		}
-
-		Element fragmentEntriesElement =
-			portletDataContext.getImportDataGroupElement(
-				LayoutPageTemplateEntry.class);
-
-		List<Element> layoutPageTemplateEntryElements =
-			fragmentEntriesElement.elements();
-
-		for (Element layoutPageTemplateEntryElement :
-				layoutPageTemplateEntryElements) {
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				(LayoutPageTemplateEntry)portletDataContext.getZipEntryAsObject(
-					layoutPageTemplateEntryElement.attributeValue("path"));
-
-			boolean privateLayout = portletDataContext.isPrivateLayout();
-
-			if (layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
-
-				portletDataContext.setPrivateLayout(true);
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, layoutPageTemplateCollectionElement);
 			}
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutPageTemplateEntryElement);
+			Element fragmentEntriesElement =
+				portletDataContext.getImportDataGroupElement(
+					LayoutPageTemplateEntry.class);
 
-			portletDataContext.setPrivateLayout(privateLayout);
+			List<Element> layoutPageTemplateEntryElements =
+				fragmentEntriesElement.elements();
+
+			for (Element layoutPageTemplateEntryElement :
+					layoutPageTemplateEntryElements) {
+
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					(LayoutPageTemplateEntry)
+						portletDataContext.getZipEntryAsObject(
+							layoutPageTemplateEntryElement.attributeValue(
+								"path"));
+
+				boolean privateLayout = portletDataContext.isPrivateLayout();
+
+				if (layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+
+					portletDataContext.setPrivateLayout(true);
+				}
+
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, layoutPageTemplateEntryElement);
+
+				portletDataContext.setPrivateLayout(privateLayout);
+			}
+		}
+
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "utility-pages")) {
+
+			Element layoutUtilityPageEntriesElement =
+				portletDataContext.getImportDataGroupElement(
+					LayoutUtilityPageEntry.class);
+
+			List<Element> layoutUtilityPageEntryElements =
+				layoutUtilityPageEntriesElement.elements();
+
+			for (Element layoutUtilityPageEntryElement :
+					layoutUtilityPageEntryElements) {
+
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, layoutUtilityPageEntryElement);
+			}
 		}
 
 		return null;
@@ -223,7 +270,9 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 				new StagedModelType[] {
 					new StagedModelType(
 						LayoutPageTemplateCollection.class.getName()),
-					new StagedModelType(LayoutPageTemplateEntry.class.getName())
+					new StagedModelType(
+						LayoutPageTemplateEntry.class.getName()),
+					new StagedModelType(LayoutUtilityPageEntry.class.getName())
 				});
 
 			return;
@@ -242,6 +291,13 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 					getExportActionableDynamicQuery(portletDataContext);
 
 		layoutPageTemplateEntryExportActionableDynamicQuery.performCount();
+
+		ActionableDynamicQuery
+			layoutUtilityPageEntryExportActionableDynamicQuery =
+				_layoutUtilityPageEntryStagedModelRepository.
+					getExportActionableDynamicQuery(portletDataContext);
+
+		layoutUtilityPageEntryExportActionableDynamicQuery.performCount();
 	}
 
 	@Reference(
@@ -257,6 +313,13 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 	)
 	private StagedModelRepository<LayoutPageTemplateEntry>
 		_layoutPageTemplateEntryStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.layout.utility.page.model.LayoutUtilityPageEntry)",
+		unbind = "-"
+	)
+	private StagedModelRepository<LayoutUtilityPageEntry>
+		_layoutUtilityPageEntryStagedModelRepository;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

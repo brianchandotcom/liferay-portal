@@ -48,6 +48,68 @@ function refresh_liferay_learn_workspace {
 	init_workspace liferay-learn-workspace
 }
 
+function refresh_react_remote_app {
+	../tools/create_remote_app.sh fox-remote-app react
+
+	cat << EOF > fox-remote-app/client-extension.yaml
+assemble:
+    - from: build/
+      include: "static/**/*"
+      into: static/
+fox-remote-app:
+    cssURLs:
+        - static/css/main.*.css
+    friendlyURLMapping: fox-remote-app
+    htmlElementName: fox-remote-app
+    instanceable: false
+    name: Fox Remote App
+    portletCategoryName: category.remote-apps
+    type: customElement
+    urls:
+        - static/js/main.*.js
+        # To enable dev mode uncomment following url
+        # Run gradle deploy && yarn start
+        #- http://localhost:3000/static/js/bundle.js
+    useESM: false
+EOF
+
+	sed -i'.bak' "s/Hello World/Hello <span className=\"hello-world-name\">World<\/span>/" fox-remote-app/src/routes/hello-world/pages/HelloWorld.js
+
+	SEARCH="import HelloWorld from '.\/routes\/hello-world\/pages\/HelloWorld';"
+	REPLACE="import HelloWorld from '.\/routes\/hello-world\/pages\/HelloWorld';\n\
+import api from '.\/common\/services\/liferay\/api';\n\
+import { Liferay } from '.\/common\/services\/liferay\/liferay';\n\
+"
+	sed -i'.bak' "s/$SEARCH/$REPLACE/" fox-remote-app/src/index.js
+
+	SEARCH="		ReactDOM.render(\n\
+			<App route={this.getAttribute(\"route\")} \/>,\n\
+			this\n\
+		);"
+	REPLACE="		ReactDOM.render(\n\
+			<App route={this.getAttribute(\"route\")} \/>,\n\
+			this\n\
+		);\n\
+		if (Liferay.ThemeDisplay.isSignedIn()) {\n\
+			api(\n\
+				'o\/headless-admin-user\/v1.0\/my-user-account'\n\
+			).then(\n\
+				res => res.json()\n\
+			).then(res => {\n\
+				let nameEls = document.getElementsByClassName('hello-world-name');\n\
+				if (nameEls.length > 0){\n\
+					if (res.givenName) {\n\
+						nameEls[0].innerHTML = res.givenName;\n\
+					}\n\
+				}\n\
+			});\n\
+		}"
+
+	sed -i'.bak' "s/$SEARCH/$REPLACE/" fox-remote-app/src/index.js
+
+	sed -i'.bak' "s/^.*\"test\": \"react-scripts test\",.*$//" fox-remote-app/package.json
+}
+
 function refresh_sample_default_workspace {
 	rm -fr sample-default-workspace
 
@@ -55,13 +117,16 @@ function refresh_sample_default_workspace {
 
 	cd sample-default-workspace
 
-	${BLADE_PATH} init --liferay-version dxp-7.4-u40
+	${BLADE_PATH} init --liferay-version dxp-7.4-u53
+
+	sed -i'.bak' "s/\"com.liferay.gradle.plugins.workspace\", version: \".*\"/\"com.liferay.gradle.plugins.workspace\", version: \"4.0.31\"/" settings.gradle
 
 	echo -e "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
 
 	echo -e "\n\nfeature.flag.LPS-153457=true" >> configs/local/portal-ext.properties
 
-	echo -e "\nliferay.workspace.docker.image.liferay=liferay/7.4.13.nightly-d4.1.4-20220707214146" >> gradle.properties
+	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13-u53-d5.0.3-20221201085420" >> gradle.properties
+	echo -e "\nliferay.workspace.node.package.manager=yarn" >> gradle.properties
 
 	sort -o gradle.properties gradle.properties
 
@@ -83,9 +148,19 @@ function refresh_sample_minimal_workspace {
 	copy_template theme-css sample-minimal-workspace/client-extensions/able-theme-css "Able Theme CSS"
 	copy_template theme-favicon sample-minimal-workspace/client-extensions/able-theme-favicon "Able Theme Favicon"
 
+	refresh_react_remote_app
+
+	rm -fr sample-minimal-workspace/client-extensions/fox-remote-app
+
+	mv fox-remote-app sample-minimal-workspace/client-extensions
+
 	rm -fr sample-default-workspace/client-extensions
 
 	cp -R sample-minimal-workspace/client-extensions sample-default-workspace
+}
+
+function remove_bak_files {
+	find . -name '*.bak' -exec rm {} +
 }
 
 function main {
@@ -96,6 +171,8 @@ function main {
 	refresh_sample_minimal_workspace
 
 	refresh_liferay_learn_workspace
+
+	remove_bak_files
 }
 
 main "${@}"

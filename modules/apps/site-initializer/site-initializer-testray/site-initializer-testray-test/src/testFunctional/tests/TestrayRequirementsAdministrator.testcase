@@ -200,7 +200,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166833 - Verify that As an administrator I cannot create requirements with a invalid URL link"
+	@description = "This is a test for LPS-166833 - Verify that as an administrator I cannot create requirements with an invalid URL link"
 	@priority = "4"
 	test AdminCanNotAddRequirementsWithInvalidUrl {
 		task ("Given the user tries to create a requirement with an invalid URL") {

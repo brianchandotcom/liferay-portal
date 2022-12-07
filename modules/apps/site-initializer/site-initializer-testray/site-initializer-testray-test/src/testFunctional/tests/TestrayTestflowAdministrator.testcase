@@ -113,8 +113,6 @@ definition {
 
 		task ("Go to Testray 2 and change the pagination") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayTestflow.goToTestflow();
 		}
 	}
 
@@ -133,7 +131,7 @@ definition {
 	@description = "This is a test for LPS-160724 - Verify if as an Administrator I should be able to add a task with user groups"
 	@priority = "5"
 	test AdminCanAddTaskWithUserGroups {
-		task ("Given Given the user add a user and UserGroups") {
+		task ("Given the user add a user and UserGroups") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
@@ -149,7 +147,7 @@ definition {
 			UserGroup.assignAllMembersCP(userGroupName = "UG UserGroup Name");
 		}
 
-		task ("Given the user add a Task with user groups") {
+		task ("When the user add a Task with user groups") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			TestrayTestflow.goToTestflow();
@@ -182,17 +180,15 @@ definition {
 			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
-		task ("When the users appears in the list") {
+		task ("Then can see a created task with details") {
 			TestrayTestflow.assertAssignTask(
 				email = "test@liferay.com",
-				nameUser = "Test Test");
+				userName = "Test Test");
 
 			TestrayTestflow.assertAssignTask(
 				email = "userea@liferay.com",
-				nameUser = "userfn userln");
-		}
+				userName = "userfn userln");
 
-		task ("Then can see a task created with task details") {
 			Button.click(button = "Save");
 
 			TestrayTestflow.assertTaskDetails(
@@ -208,6 +204,8 @@ definition {
 	@priority = "5"
 	test AdminCanNotAddDuplicateTestflow {
 		task ("Given the user try to add a duplicate Task") {
+			TestrayTestflow.goToTestflow();
+
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
 				selectBuild = "Builds_1 Project",
@@ -242,6 +240,8 @@ definition {
 	@priority = "4"
 	test AdminCanViewRequiredAssignUsers {
 		task ("Given the user try to add a Task without User") {
+			TestrayTestflow.goToTestflow();
+
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
 				selectBuild = "Builds_1 Project",
@@ -259,6 +259,8 @@ definition {
 	@priority = "4"
 	test AdminCanViewRequiredCaseType {
 		task ("Given the user try to add a Task without case type") {
+			TestrayTestflow.goToTestflow();
+
 			TestrayTestflow.addTask(
 				selectBuild = "Builds_1 Project",
 				selectProject = "Projects_1 Project",
@@ -324,6 +326,8 @@ definition {
 	@priority = "4"
 	test CanRemoveUser {
 		task ("Given the user add a Task") {
+			TestrayTestflow.goToTestflow();
+
 			Click(locator1 = "Button#PLUS");
 
 			TestrayTestflow.editBreadcrumb(
@@ -340,7 +344,9 @@ definition {
 			Click(
 				key_checkboxOption = "Compile",
 				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+		}
 
+		task ("When assign a user") {
 			Button.click(button = "Assign Users");
 
 			Click.clickAtNotVisible(
@@ -353,16 +359,14 @@ definition {
 
 			TestrayTestflow.assertAssignTask(
 				email = "test@liferay.com",
-				nameUser = "Test Test");
+				userName = "Test Test");
 		}
 
-		task ("When remove a user") {
+		task ("Then can remove a user") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Test Test");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Remove");
-		}
 
-		task ("Then state that it has been removed") {
 			Testray.assertItemNotPresent(key_name = "Test Test");
 		}
 	}
@@ -371,6 +375,8 @@ definition {
 	@priority = "3"
 	test CanViewFieldNameRequired {
 		task ("Given the user try to add a Task without name") {
+			TestrayTestflow.goToTestflow();
+
 			TestrayTestflow.addTask(
 				selectBuild = "Builds_1 Project",
 				selectProject = "Projects_1 Project",

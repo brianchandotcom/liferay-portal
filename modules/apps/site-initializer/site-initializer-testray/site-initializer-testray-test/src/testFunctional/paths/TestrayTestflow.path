@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ASSIGN_INFORMATIONS</td>
-	<td>//td[normalize-space()='${key_nameUser}']//following::td[normalize-space()='${key_email}']</td>
+	<td>//td[normalize-space()='${key_userName}']//following::td[normalize-space()='${key_email}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -26,28 +26,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STATUS_EDIT</td>
-	<td>//div[contains(@data-field-name, 'dueStatus')]//input[contains(@type, 'text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NAME_TASKS</td>
-	<td>//div[contains(@class, 'panel-group')]//div[contains(@data-field-name, 'name')]//input[contains(@type, 'text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_BUILD_TASKS</td>
-	<td>//div[contains(@class, 'panel-group')]//div[contains(@data-field-name, 'buildToTasks')]//input[contains(@type, 'text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STATUS_TASKS</td>
-	<td>//div[(@class='testray-content')]//div[contains(@class, 'table-responsive') and contains(., '${key_value}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TASK_DETAILS</td>
 	<td>//td/span[contains(text(),'${key_status}')]//following::td[normalize-space()='${key_nameTask}']//following::td[normalize-space()='${key_project}']//following::td[normalize-space()='${key_routine}']//following::td[normalize-space()='${key_build}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_COMMENT</td>
+	<td>//textarea[@id='comment']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_ISSUES</td>
+	<td>//input[contains(@name,'issue')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_STATUS_CASE_RESULTS</td>
+	<td>//select[@id='dueStatus']</td>
 	<td></td>
 </tr>
 <tr>
@@ -58,6 +53,11 @@
 <tr>
 	<td>TESTFLOW_STATUS</td>
 	<td>//h5[normalize-space()='${key_label}']//following::*[contains (text(), '${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_AVATAR_IMAGE</td>
+	<td>//h5[normalize-space()='${label}']//following::span[@class='sticker-overlay']</td>
 	<td></td>
 </tr>
 </tbody>

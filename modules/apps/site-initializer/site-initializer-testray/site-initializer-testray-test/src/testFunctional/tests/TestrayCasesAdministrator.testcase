@@ -162,7 +162,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-167574 - Verify that as administrator can deleted cases in the 'Select Cases to Export' modal"
+	@description = "This is a test for LPS-167574 - Verify that an administrator can delete cases in the 'Select Cases to Export' modal"
 	@priority = "3"
 	test AdminCanDeleteCasesInModalExportCases {
 		task ("Given that the user add a new Case") {
@@ -315,7 +315,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166791 - Verify that cannot add cases with an estimated duration less than zero"
+	@description = "This is a test for LPS-166791 - Verify that cases be added with an estimated duration less than zero"
 	@priority = "4"
 	test AdminCanNotAddCasesWithEstimatedDurationLessThanZero {
 		task ("Given that the user add a new Case") {
@@ -364,7 +364,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-167573 - Verify that as administrator cannot Export Cases without linked Cases"
+	@description = "This is a test for LPS-167573 - Verify that as administrator cases cannot be exported without linked Cases"
 	@priority = "3"
 	test AdminCannotExportCasesWithoutCasesLinked {
 		task ("Given that the user add a new Case") {

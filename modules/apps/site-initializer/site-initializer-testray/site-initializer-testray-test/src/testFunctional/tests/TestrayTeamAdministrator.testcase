@@ -58,7 +58,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166560 - Verify if as an administrator can assign teams without components to dualbox"
+	@description = "This is a test for LPS-166560 - Verify if as an administrator I can assign teams without components to dualbox"
 	@priority = "4"
 	test AdminCanAssignTeamsByDualbox {
 		task ("Go to Testray and Create Project") {

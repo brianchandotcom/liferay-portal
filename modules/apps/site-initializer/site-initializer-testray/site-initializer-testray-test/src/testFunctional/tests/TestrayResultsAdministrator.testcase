@@ -156,7 +156,7 @@ definition {
 		}
 
 		task ("Then the user name appears") {
-			TestrayResults.assertAssignCaseResults(assignName = "test");
+			TestrayTestflow.userAvatarPresent(label = "Tests");
 		}
 	}
 
@@ -225,21 +225,23 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign");
 
-			TestrayResults.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(userName = "Test Test");
 
 			TestrayResults.goToCaseResults(caseResultsName = "Cases_1 Case");
 
-			TestrayResults.enableIconAssign(assignIcon = "Test");
+			TestrayTestflow.userAvatarPresent(label = "Dates");
 
-			Button.click(button = "Edit");
+			Button.click(button = "Complete Test");
 
-			TestrayResults.editTestsCaseResults(
+			TestrayTestflow.editStatus(
 				issues = "LPS-111111",
-				typeStatus = "Failed");
+				selectStatus = "Failed");
 		}
 
 		task ("Then the Failed status appear in the list") {
-			TestrayResults.assertStatus(status = "Failed");
+			TestrayTestflow.assertStatus(
+				label = "Test Details",
+				status = "Failed");
 		}
 	}
 
@@ -259,18 +261,20 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
-			TestrayResults.enableIconAssign(assignIcon = "Test");
+			TestrayTestflow.userAvatarPresent(label = "Dates");
 
-			Button.click(button = "Edit");
+			Button.click(button = "Complete Test");
 
-			TestrayResults.editTestsCaseResults(
+			TestrayTestflow.editStatus(
 				comment = "button does not work",
 				issues = "LPS-111111",
-				typeStatus = "Test Fix");
+				selectStatus = "Test Fix");
 		}
 
 		task ("Then the Test Fix status appear in the list") {
-			TestrayResults.assertStatus(status = "Test Fix");
+			TestrayTestflow.assertStatus(
+				label = "Test Details",
+				status = "Test Fix");
 		}
 	}
 
@@ -290,32 +294,34 @@ definition {
 
 			Button.click(button = "Assign");
 
-			TestrayResults.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(userName = "Test Test");
 
-			TestrayResults.enableIconAssign(assignIcon = "Test");
+			TestrayTestflow.userAvatarPresent(label = "Dates");
 
 			Button.click(button = "Complete Test");
 		}
 
 		task ("And the user edit test for Blocked status") {
-			Button.click(button = "Edit");
-
-			TestrayResults.editTestsCaseResults(
+			TestrayTestflow.editStatus(
 				comment = "button does not work",
 				issues = "LPS-111111",
-				typeStatus = "Blocked");
+				selectStatus = "Blocked");
 
-			TestrayResults.assertStatus(status = "Blocked");
+			TestrayTestflow.assertStatus(
+				label = "Test Details",
+				status = "Blocked");
 		}
 
 		task ("Then the user reopen test and in progress status appear in the list") {
 			Button.click(button = "Reopen Test");
 
-			TestrayResults.assertStatus(status = "In Progress");
+			TestrayTestflow.assertStatus(
+				label = "Test Details",
+				status = "In Progress");
 		}
 	}
 
-	@description = "This is a test for LPS-167470 - Verify if as an Administrator I am able to reset Test"
+	@description = "This is a test for LPS-167470 - Verify if as an Administrator I am able to reset Tests"
 	@priority = "4"
 	test AdminCanResetTests {
 		task ("Given that the user add a new case results") {
@@ -331,15 +337,19 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
-			TestrayResults.enableIconAssign(assignIcon = "Test");
+			TestrayTestflow.userAvatarPresent(label = "Dates");
 
-			TestrayResults.assertStatus(status = "In Progress");
+			TestrayTestflow.assertStatus(
+				label = "Test Details",
+				status = "In Progress");
 		}
 
 		task ("Then the user reset test and Untested status appear in the list") {
 			Button.click(button = "Reset Test");
 
-			TestrayResults.assertStatus(status = "UNTESTED");
+			TestrayTestflow.assertStatus(
+				label = "Test Details",
+				status = "Untested");
 		}
 	}
 
@@ -359,13 +369,17 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
-			TestrayResults.enableIconAssign(assignIcon = "Test");
+			TestrayTestflow.userAvatarPresent(label = "Dates");
 
-			Button.click(button = "Unassign Myself");
+			TestrayHeader.clickBreadcrumbTitle(breadcrumbName = "Builds_1 Project");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Unassign Myself");
 		}
 
 		task ("Then the user name does not appear in the list") {
-			TestrayResults.disableIconAssign(assignIcon = "Test");
+			TestrayTestflow.userAvatarNotPresent(label = "Tests");
 		}
 	}
 
@@ -385,7 +399,7 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me");
 
-			TestrayResults.assertAssignCaseResults(assignName = "test");
+			TestrayTestflow.userAvatarPresent(label = "Tests");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
 
@@ -393,7 +407,7 @@ definition {
 		}
 
 		task ("Then the user name does not appear in the list") {
-			TestrayResults.assertUnassignCaseResults(unassign = "test");
+			TestrayTestflow.userAvatarNotPresent(label = "Tests");
 		}
 	}
 

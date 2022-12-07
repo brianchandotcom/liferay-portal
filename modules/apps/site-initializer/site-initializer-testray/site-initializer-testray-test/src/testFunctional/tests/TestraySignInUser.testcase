@@ -42,7 +42,7 @@ definition {
 		}
 
 		task ("Sign in New Account and assert the name field label is Green") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/testray-2");
+			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 
 			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 
@@ -66,7 +66,7 @@ definition {
 		}
 
 		task ("Sign in New Account and assert the name field label is Red") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/testray-2");
+			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 
 			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 
@@ -92,7 +92,7 @@ definition {
 		}
 
 		task ("Sign in New Account and assert the user can enter with an valid email") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/testray-2");
+			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 
 			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 
@@ -118,7 +118,7 @@ definition {
 		}
 
 		task ("Sign in New Account and assert the user can enter with an valid email after getting the password wrong") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/testray-2");
+			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 
 			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 

@@ -85,7 +85,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-165997 - Verify if as an administrator can not save roles without options selected"
+	@description = "This is a test for LPS-165997 - Verify if as an administrator I cannot save roles without the select options"
 	@priority = "4"
 	test CanNotSaveRolesWithoutOptions {
 		task ("Given that the user tries to save roles without options selected") {

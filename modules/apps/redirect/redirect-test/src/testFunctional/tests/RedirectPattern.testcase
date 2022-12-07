@@ -112,7 +112,7 @@ definition {
 
 		Redirect.addPattern(
 			destinationIndex = "0",
-			destinationURL = "void",
+			destinationURL = "/web/void",
 			pattern = "void",
 			patternIndex = "0");
 

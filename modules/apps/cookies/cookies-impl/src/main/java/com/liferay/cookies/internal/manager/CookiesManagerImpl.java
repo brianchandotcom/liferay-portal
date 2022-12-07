@@ -108,6 +108,22 @@ public class CookiesManagerImpl implements CookiesManager {
 			cookiesMap.put(StringUtil.toUpperCase(cookie.getName()), cookie);
 		}
 
+		if ((_knownCookies.get(cookie.getName()) != null) &&
+			(_knownCookies.get(cookie.getName()) != consentType)) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"This cookie has been previously added with different consent type " +
+						cookie.getName());
+				_log.warn("Known consent type: " + consentType);
+				_log.warn(
+					"Current consent type: " +
+						_knownCookies.get(cookie.getName()));
+			}
+		} else {
+			_knownCookies.put(cookie.getName(), consentType);
+		}
+
 		return true;
 	}
 
@@ -410,6 +426,9 @@ public class CookiesManagerImpl implements CookiesManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CookiesManagerImpl.class);
+
+	private static final HashMap<String, Integer> _knownCookies =
+		new HashMap<>();
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

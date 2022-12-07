@@ -492,13 +492,12 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			(List<ObjectEntry>)testrayBuildsObjectEntriesPage.getItems();
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayRunsObjectEntriesPage = objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get("Run"), null, null,
-				defaultDTOConverterContext,
+			testrayRunsObjectEntriesPage = getObjectEntriesPage(
+				null, companyId,
 				StringBundler.concat(
 					"environmentHash eq '", environmentHash, "' and id ne '",
 					testrayRunId, "'"),
-				null, null, new Sort[] {new Sort("createDate", 3, true)});
+				"Run", new Sort[] {new Sort("createDate", 3, true)});
 
 		List<ObjectEntry> testrayRunsObjectEntries =
 			(List<ObjectEntry>)testrayRunsObjectEntriesPage.getItems();
@@ -1152,10 +1151,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		throws Exception {
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			objectEntriesPage = objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get(objectDefinitionShortName),
-				null, null, defaultDTOConverterContext, filterString, null,
-				null,
+			objectEntriesPage = getObjectEntriesPage(
+				null, companyId, filterString, objectDefinitionShortName,
 				new Sort[] {
 					new Sort("nestedFieldArray.value_long#" + fieldName, true)
 				});

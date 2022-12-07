@@ -20,6 +20,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -91,12 +92,12 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 
 	protected Page<ObjectEntry> getObjectEntriesPage(
 			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionName)
+			String objectDefinitionName, Sort[] sorts)
 		throws Exception {
 
 		return objectEntryManager.getObjectEntries(
 			companyId, objectDefinitionsMap.get(objectDefinitionName), null,
-			aggregation, defaultDTOConverterContext, filter, null, null, null);
+			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
 	}
 
 	protected Object getProperty(String key, ObjectEntry objectEntry) {

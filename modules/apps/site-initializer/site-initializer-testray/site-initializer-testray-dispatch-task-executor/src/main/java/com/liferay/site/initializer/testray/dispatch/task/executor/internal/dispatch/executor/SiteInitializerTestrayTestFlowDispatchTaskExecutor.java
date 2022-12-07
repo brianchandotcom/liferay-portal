@@ -130,7 +130,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				null, companyId,
 				"caseResultId eq '" + testrayCaseResultObjectEntry.getId() +
 					"'",
-				"CaseResultsIssues");
+				"CaseResultsIssues", null);
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
 			(List<ObjectEntry>)
@@ -151,7 +151,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 			Page<ObjectEntry> testrayIssueObjectEntriesPage =
 				getObjectEntriesPage(
-					null, companyId, "id eq '" + issueId + "'", "Issue");
+					null, companyId, "id eq '" + issueId + "'", "Issue", null);
 
 			ObjectEntry testrayIssueObjectEntry =
 				testrayIssueObjectEntriesPage.fetchFirstItem();
@@ -181,7 +181,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 			Page<ObjectEntry> testrayCaseObjectEntriesPage =
 				getObjectEntriesPage(
-					null, companyId, "id eq '" + testrayCaseId + "'", "Case");
+					null, companyId, "id eq '" + testrayCaseId + "'", "Case",
+					null);
 
 			ObjectEntry testrayCaseObjectEntry =
 				testrayCaseObjectEntriesPage.fetchFirstItem();
@@ -197,11 +198,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			String objectDefinitionShortName)
 		throws Exception {
 
-		Page<ObjectEntry> objectEntriesPage =
-			objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get(objectDefinitionShortName),
-				null, null, defaultDTOConverterContext, filterString, null,
-				null, new Sort[] {new Sort("createDate", true)});
+		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+			null, companyId, filterString, objectDefinitionShortName,
+			new Sort[] {new Sort("createDate", true)});
 
 		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
@@ -248,7 +247,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
 			getObjectEntriesPage(
 				aggregation, companyId, "buildId eq '" + testrayBuildId + "'",
-				"CaseResult");
+				"CaseResult", null);
 
 		List<Facet> testrayCaseResultFacets =
 			(List<Facet>)testrayCaseResultObjectEntriesPage1.getFacets();
@@ -259,7 +258,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			testrayCaseResultFacet.getFacetValues();
 
 		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = getObjectEntriesPage(
-			null, companyId, sb.toString(), "Case");
+			null, companyId, sb.toString(), "Case", null);
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
 			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);

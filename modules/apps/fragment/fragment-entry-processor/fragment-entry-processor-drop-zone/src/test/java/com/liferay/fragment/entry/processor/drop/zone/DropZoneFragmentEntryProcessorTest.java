@@ -14,19 +14,32 @@
 
 package com.liferay.fragment.entry.processor.drop.zone;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.uuid.PortalUUIDImpl;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -48,7 +61,35 @@ public class DropZoneFragmentEntryProcessorTest {
 	public static void setUpClass() {
 		_setUpDropZoneFragmentEntryProcessor();
 
+		_setUpPortalUUIDUtil();
+
 		_setUpPropsUtil();
+	}
+
+	@Test
+	public void testProcessFragmentEntryLinkHTMLInEditMode() throws Exception {
+		FragmentEntryLink fragmentEntryLink = _getMockFragmentEntryLink();
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem =
+				_addFragmentDropZoneLayoutStructureItem(
+					fragmentEntryLink, layoutStructure);
+
+		String expectedHTML = StringBundler.concat(
+			"<div class=\"fragment_1\"><lfr-drop-zone uuid=\"",
+			fragmentDropZoneLayoutStructureItem.getItemId(),
+			"\"></lfr-drop-zone></div>");
+
+		Assert.assertEquals(
+			expectedHTML,
+			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, _getHTML(StringPool.BLANK),
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(layoutStructure), null,
+					FragmentEntryLinkConstants.EDIT,
+					LocaleUtil.getMostRelevantLocale())));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -130,10 +171,51 @@ public class DropZoneFragmentEntryProcessorTest {
 			_dropZoneFragmentEntryProcessor, "_portal", _portal);
 	}
 
+	private static void _setUpPortalUUIDUtil() {
+		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+
+		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
+	}
+
 	private static void _setUpPropsUtil() {
 		_props = Mockito.mock(Props.class);
 
 		ReflectionTestUtil.setFieldValue(PropsUtil.class, "_props", _props);
+	}
+
+	private FragmentDropZoneLayoutStructureItem
+		_addFragmentDropZoneLayoutStructureItem(
+			FragmentEntryLink fragmentEntryLink,
+			LayoutStructure layoutStructure) {
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addLayoutStructureItem(
+			containerStyledLayoutStructureItem);
+
+		LayoutStructureItem fragmentStyledLayoutStructureItem =
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				containerStyledLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addLayoutStructureItem(
+			fragmentStyledLayoutStructureItem);
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem =
+				(FragmentDropZoneLayoutStructureItem)
+					layoutStructure.addFragmentDropZoneLayoutStructureItem(
+						fragmentStyledLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addLayoutStructureItem(
+			fragmentDropZoneLayoutStructureItem);
+
+		return fragmentDropZoneLayoutStructureItem;
 	}
 
 	private String _getHTML(String... dropZoneIds) {
@@ -154,6 +236,34 @@ public class DropZoneFragmentEntryProcessorTest {
 		sb.append("</div>");
 
 		return sb.toString();
+	}
+
+	private FragmentEntryLink _getMockFragmentEntryLink() {
+		FragmentEntryLink fragmentEntryLink = Mockito.mock(
+			FragmentEntryLink.class);
+
+		Mockito.when(
+			fragmentEntryLink.getFragmentEntryLinkId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		return fragmentEntryLink;
+	}
+
+	private HttpServletRequest _getMockHttpServletRequest(
+		LayoutStructure layoutStructure) {
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(LayoutWebKeys.LAYOUT_STRUCTURE)
+		).thenReturn(
+			layoutStructure
+		);
+
+		return httpServletRequest;
 	}
 
 	private void _setFeatureFlag(boolean enabled) {

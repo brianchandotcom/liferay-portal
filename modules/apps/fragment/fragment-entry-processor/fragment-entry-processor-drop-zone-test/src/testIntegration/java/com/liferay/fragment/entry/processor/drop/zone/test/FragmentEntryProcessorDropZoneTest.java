@@ -81,56 +81,6 @@ public class FragmentEntryProcessorDropZoneTest {
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 	}
 
-	@Test
-	public void testFragmentEntryProcessorDropZoneInEditMode()
-		throws Exception {
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.addRootLayoutStructureItem();
-
-		LayoutStructureItem containerStyledLayoutStructureItem =
-			layoutStructure.addContainerStyledLayoutStructureItem(
-				rootLayoutStructureItem.getItemId(), 0);
-
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			defaultSegmentsExperienceId);
-
-		LayoutStructureItem fragmentStyledLayoutStructureItem =
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				containerStyledLayoutStructureItem.getItemId(), 0);
-
-		LayoutStructureItem fragmentDropZoneLayoutStructureItem =
-			layoutStructure.addFragmentDropZoneLayoutStructureItem(
-				fragmentStyledLayoutStructureItem.getItemId(), 0);
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), _layout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
-
-		String processedHTML = _getProcessedHTML(
-			"processed_edit_mode_fragment_entry.html");
-
-		processedHTML = StringUtil.replace(
-			processedHTML, "${UUID}",
-			fragmentDropZoneLayoutStructureItem.getItemId());
-
-		Assert.assertEquals(
-			processedHTML,
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink,
-				new DefaultFragmentEntryProcessorContext(
-					null, null, FragmentEntryLinkConstants.EDIT,
-					LocaleUtil.getMostRelevantLocale())));
-	}
-
 	private FragmentEntryLink _addFragmentEntryLink(long segmentsExperienceId)
 		throws Exception {
 

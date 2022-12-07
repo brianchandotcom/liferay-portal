@@ -84,9 +84,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1215,22 +1214,15 @@ public class DDMFormEvaluatorHelperTest {
 
 		evaluate(ddmForm, ddmFormValues, LocaleUtil.BRAZIL);
 
-		List<DDMFormFieldValue> evaluatedDDMFormFieldValues =
-			ddmFormValues.getDDMFormFieldValues();
+		Value actualValue = null;
 
-		Stream<DDMFormFieldValue> evaluatedDDMFormFieldValuesStream =
-			evaluatedDDMFormFieldValues.stream();
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
 
-		Optional<DDMFormFieldValue> actualDDMFormFieldValueOptional =
-			evaluatedDDMFormFieldValuesStream.filter(
-				ddmFormFieldValue -> ddmFormFieldValue.getName(
-				).equals(
-					"field2"
-				)
-			).findFirst();
-
-		Value actualValue = actualDDMFormFieldValueOptional.get(
-		).getValue();
+			if (Objects.equals("field2", ddmFormFieldValue.getName())) {
+				actualValue = ddmFormFieldValue.getValue();
+			}
+		}
 
 		Assert.assertEquals("10", actualValue.getString(LocaleUtil.US));
 	}

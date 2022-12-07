@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
@@ -66,7 +66,6 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 	);
 
 	const [availableSets, setAvailableSets] = useState([]);
-	const [templateName, setTemplateName] = useState('');
 	const [templateSet, setTemplateSet] = useState('');
 	const [formErrors, setFormErrors] = useState({});
 	const [loading, setLoading] = useState(false);
@@ -105,13 +104,6 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 	const validateForm = useCallback(() => {
 		const errors = {};
 
-		if (!templateName) {
-			errors.templateName = sub(
-				Liferay.Language.get('x-field-is-required'),
-				Liferay.Language.get('name')
-			);
-		}
-
 		if (!templateSet) {
 			errors.templateSet = sub(
 				Liferay.Language.get('x-field-is-required'),
@@ -120,7 +112,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 		}
 
 		return errors;
-	}, [templateName, templateSet]);
+	}, [templateSet]);
 
 	// We are using flush here because this way we can clear errors inmediately
 	// in handleSubmit. Otherwise, React will batch setStates and will do only
@@ -152,7 +144,6 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 
 			LayoutService.createLayoutPageTemplateEntry(
 				templateSet,
-				templateName,
 				segmentsExperienceId
 			)
 				.then((response) => {
@@ -161,40 +152,27 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 							Liferay.Language.get(
 								'the-page-template-was-created-successfully.-you-can-view-it-here-x'
 							),
-							`<a href="${response.url}"><b>${templateName}</b></a>`
+							`<a href="${response.url}">${Liferay.Language.get(
+								'see-in-page-templates'
+							)}</a>`
 						),
 						type: 'success',
 					});
 
 					onClose();
 				})
-				.catch((error) => {
+				.catch(() => {
 					setLoading(false);
 
-					if (typeof error === 'string') {
-						setFormErrors((previousErrors) => ({
-							...previousErrors,
-							templateName: error,
-						}));
-					}
-					else {
-						openToast({
-							message: Liferay.Language.get(
-								'an-unexpected-error-occurred'
-							),
-							type: 'danger',
-						});
-					}
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						type: 'danger',
+					});
 				});
 		},
-		[
-			onClose,
-			segmentsExperienceId,
-			validateForm,
-			templateName,
-			templateSet,
-			resetErrors,
-		]
+		[onClose, segmentsExperienceId, validateForm, templateSet, resetErrors]
 	);
 
 	return (
@@ -204,7 +182,7 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			size="md"
 		>
 			<ClayModal.Header>
-				{Liferay.Language.get('create-page-template')}
+				{Liferay.Language.get('select-page-template-set')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -223,27 +201,11 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 				)}
 
 				<ClayForm onSubmit={handleSubmit}>
-					<FormField
-						error={formErrors.templateName}
-						id={`${config.portletNamespace}templateName`}
-						name={Liferay.Language.get('name')}
-					>
-						<ClayInput
-							id={`${config.portletNamespace}templateName`}
-							name={`${config.portletNamespace}name`}
-							onChange={(event) => {
-								setTemplateName(event.target.value);
-
-								setFormErrors({
-									...formErrors,
-									templateName: null,
-								});
-							}}
-							ref={nameInputRef}
-							required
-							value={templateName}
-						/>
-					</FormField>
+					<div className="mb-3 text-secondary">
+						{Liferay.Language.get(
+							'select-an-existing-set-or-create-a-new-one-to-save-your-page-template'
+						)}
+					</div>
 
 					<FormField
 						error={formErrors.templateSet}
@@ -268,6 +230,11 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			</ClayModal.Body>
 
 			<ClayModal.Footer
+				first={
+					<ClayButton displayType="secondary">
+						{Liferay.Language.get('save-in-new-set')}
+					</ClayButton>
+				}
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton displayType="secondary" onClick={onClose}>

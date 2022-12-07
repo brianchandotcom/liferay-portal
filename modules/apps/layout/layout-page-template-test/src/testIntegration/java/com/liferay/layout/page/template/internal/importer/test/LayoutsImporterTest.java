@@ -77,12 +77,15 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
@@ -550,7 +553,8 @@ public class LayoutsImporterTest {
 				fragmentEntry, layoutPageTemplateEntry);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
-				2, fragmentEntry,
+				new String[] {StringPool.BLANK, StringPool.BLANK},
+				fragmentEntry,
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 
 			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
@@ -566,7 +570,8 @@ public class LayoutsImporterTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), file, false);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
-				2, fragmentEntry,
+				new String[] {StringPool.BLANK, StringPool.BLANK},
+				fragmentEntry,
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 		}
 		finally {
@@ -626,7 +631,8 @@ public class LayoutsImporterTest {
 				fragmentEntry, layoutPageTemplateEntry);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
-				2, fragmentEntry,
+				new String[] {StringPool.BLANK, StringPool.BLANK},
+				fragmentEntry,
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 
 			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
@@ -652,7 +658,10 @@ public class LayoutsImporterTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), file, false);
 
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
-				3, fragmentEntry,
+				new String[] {
+					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK
+				},
+				fragmentEntry,
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 		}
 		finally {
@@ -914,7 +923,7 @@ public class LayoutsImporterTest {
 
 	private void
 			_assertLayoutPageTemplateEntryFragmentDropZoneLayoutStructureItems(
-				int expectedChildrenItemIdsSize, FragmentEntry fragmentEntry,
+				String[] dropZoneIds, FragmentEntry fragmentEntry,
 				String layoutPageTemplateEntryKey)
 		throws PortalException {
 
@@ -956,8 +965,39 @@ public class LayoutsImporterTest {
 			fragmentStyledLayoutStructureItem.getChildrenItemIds();
 
 		Assert.assertEquals(
-			childrenItemIds.toString(), expectedChildrenItemIdsSize,
+			childrenItemIds.toString(), dropZoneIds.length,
 			childrenItemIds.size());
+
+		for (int i = 0; i < childrenItemIds.size(); i++) {
+			String itemId = childrenItemIds.get(i);
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(itemId);
+
+			Assert.assertTrue(
+				layoutStructureItem instanceof
+					FragmentDropZoneLayoutStructureItem);
+
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-167932"))) {
+
+				continue;
+			}
+
+			String dropZoneId = dropZoneIds[i];
+
+			if (!Validator.isBlank(dropZoneId)) {
+				FragmentDropZoneLayoutStructureItem
+					fragmentDropZoneLayoutStructureItem =
+						(FragmentDropZoneLayoutStructureItem)
+							layoutStructureItem;
+
+				Assert.assertEquals(
+					dropZoneId,
+					fragmentDropZoneLayoutStructureItem.
+						getFragmentDropZoneId());
+			}
+		}
 
 		for (String itemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =

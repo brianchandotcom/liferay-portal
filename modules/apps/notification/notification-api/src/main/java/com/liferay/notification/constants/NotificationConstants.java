@@ -19,6 +19,10 @@ package com.liferay.notification.constants;
  */
 public class NotificationConstants {
 
+	public static final int CHECK_INTERVAL = 15;
+
+	public static final int DELETE_INTERVAL = 43200;
+
 	public static final String RESOURCE_NAME = "com.liferay.notification";
 
 	public static final String TYPE_EMAIL = "email";

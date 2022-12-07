@@ -116,11 +116,8 @@ public class NotificationQueueEntryLocalServiceImpl
 				notificationQueueEntryPersistence.findByC_LtSentDate(
 					companyId, sentDate)) {
 
-			notificationQueueEntryPersistence.remove(notificationQueueEntry);
-
-			_notificationQueueEntryAttachmentLocalService.
-				deleteNotificationQueueEntryAttachments(
-					notificationQueueEntry.getNotificationQueueEntryId());
+			notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+				notificationQueueEntry);
 		}
 	}
 
@@ -137,6 +134,7 @@ public class NotificationQueueEntryLocalServiceImpl
 			notificationQueueEntry);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public NotificationQueueEntry deleteNotificationQueueEntry(

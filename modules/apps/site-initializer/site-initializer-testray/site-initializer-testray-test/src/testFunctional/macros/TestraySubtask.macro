@@ -8,17 +8,6 @@ definition {
 		}
 	}
 
-	macro verifySubtaskDetails {
-		AssertElementPresent(
-			key_status = "${status}",
-			key_userName = "${userName}",
-			key_updated = "${updated}",
-			key_issues = "${issues}",
-			key_comment = "${comment}",
-			key_score = "${score}",
-			locator1 = "TestraySubtask#SUBTASK_DETAILS");
-	}
-
 	macro goToSubTask {
 		Click(
 			key_projectName = "${subTaskName}",
@@ -37,6 +26,17 @@ definition {
 		}
 
 		Button.click(button = "Merge Subtasks");
+	}
+
+	macro verifySubtaskDetails {
+		AssertElementPresent(
+			key_comment = "${comment}",
+			key_issues = "${issues}",
+			key_score = "${score}",
+			key_status = "${status}",
+			key_updated = "${updated}",
+			key_userName = "${userName}",
+			locator1 = "TestraySubtask#SUBTASK_DETAILS");
 	}
 
 }

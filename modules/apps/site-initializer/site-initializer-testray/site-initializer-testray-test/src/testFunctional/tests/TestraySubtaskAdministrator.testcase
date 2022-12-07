@@ -181,12 +181,12 @@ definition {
 
 		task ("Then the complete status appears of the subtask with details") {
 			TestraySubtask.verifySubtaskDetails(
-				status = "Complete",
-				userName = "Test",
-				updated = "a few seconds ago",
-				issues = "LPS-166191",
 				comment = "None",
-				score = "5");
+				issues = "LPS-166191",
+				score = "5",
+				status = "Complete",
+				updated = "a few seconds ago",
+				userName = "Test");
 		}
 	}
 
@@ -218,12 +218,12 @@ definition {
 
 		task ("Then the complete status appears of the subtask with details") {
 			TestraySubtask.verifySubtaskDetails(
-				status = "Complete",
-				userName = "Test",
-				updated = "a few seconds ago",
-				issues = "LPS-166191",
 				comment = "None",
-				score = "5");
+				issues = "LPS-166191",
+				score = "5",
+				status = "Complete",
+				updated = "a few seconds ago",
+				userName = "Test");
 		}
 	}
 
@@ -281,12 +281,12 @@ definition {
 
 		task ("Then the complete status appears of the subtask with details") {
 			TestraySubtask.verifySubtaskDetails(
-				status = "Complete",
-				userName = "Test",
-				updated = "a few seconds ago",
-				issues = "LPS-166191",
 				comment = "None",
-				score = "5");
+				issues = "LPS-166191",
+				score = "5",
+				status = "Complete",
+				updated = "a few seconds ago",
+				userName = "Test");
 		}
 	}
 

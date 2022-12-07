@@ -1,6 +1,6 @@
 definition {
 
-    property portal.release = "true";
+	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Remote Apps";
 	property testray.main.component.name = "Remote Apps";
@@ -9,9 +9,9 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-	}   
+	}
 
-    tearDown {
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
@@ -21,24 +21,23 @@ definition {
 			RemoteApps.tearDown();
 
 			Navigator.gotoPage(pageName = "Home");
-        }
+		}
 	}
 
-    @description = "LPS-168960 - create automated test for Client Extensions"
-    @priority = "3"
-    test HasWidgetCategory {
+	@description = "LPS-168960 - create automated test for Client Extensions"
+	@priority = "3"
+	test HasWidgetCategory {
+		task ("When access IFrame type client extension") {
+			RemoteApps.goToRemoteAppsPortlet();
 
-        task("When access IFrame type client extension"){
-            RemoteApps.goToRemoteAppsPortlet();
+			RemoteApps.addType(type = "IFrame");
+		}
 
-		    RemoteApps.addType(type = "IFrame");
-        }
-
-        task("Then portal category 'Client Extensions' is set by default"){
-            AssertTextEquals(
-                locator1 = "RemoteApps#PORTLET_CATEGORY_NAME",
-                value1 = "Client Extensions");
-        }   
-    }
+		task ("Then portal category 'Client Extensions' is set by default") {
+			AssertTextEquals(
+				locator1 = "RemoteApps#PORTLET_CATEGORY_NAME",
+				value1 = "Client Extensions");
+		}
+	}
 
 }

@@ -1241,9 +1241,7 @@ definition {
 			siteURLKey = "${siteURLKey}",
 			threadSubject = "${threadSubject}");
 
-		Click(
-			key_threadSubject = "${threadSubject}",
-			locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Unlock");
 

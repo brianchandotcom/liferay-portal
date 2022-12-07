@@ -1157,8 +1157,8 @@ definition {
 
 	@description = "This is a use case for LPS-74621."
 	@priority = "3"
-	@refactorneeded
-	test CommentDMDocumentOnLiveSite {
+	@refactordone
+	test CanOnlyCommentOnLiveSite {
 		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
@@ -1212,45 +1212,6 @@ definition {
 		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
 
 		Comments.viewCommentReadOnly();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging");
-
-		Staging.deactivateStagingCP(siteName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		LAR.exportPortlet(larFileName = "DM.portlet.lar");
-
-		JSONGroup.addGroup(groupName = "Second Site");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Second Site",
-			layoutName = "DM Page");
-
-		Navigator.openSiteURL(siteName = "Second Site");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		Navigator.openSiteURL(siteName = "Second Site");
-
-		LAR.importPortlet(larFileName = "DM.portlet.lar");
-
-		Navigator.openSiteURL(siteName = "Second Site");
-
-		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
-
-		Comments.viewPG(
-			commentCount = "1",
-			entryComment = "DM Document Comment",
-			userFullName = "Test Test (You)");
 	}
 
 	@description = "This ensures that the document using custom document type can be deleted and republished."

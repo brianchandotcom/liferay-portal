@@ -104,6 +104,7 @@ public class WikiListPagesDisplayContext {
 					).setParameter(
 						"title", HtmlUtil.unescape(wikiPage.getTitle())
 					).buildString());
+				dropdownItem.setIcon("pencil");
 				dropdownItem.setKey(WikiUIItemKeys.EDIT);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));
@@ -121,6 +122,7 @@ public class WikiListPagesDisplayContext {
 						null, String.valueOf(wikiPage.getResourcePrimKey()),
 						LiferayWindowState.POP_UP.toString(), null,
 						_httpServletRequest));
+				dropdownItem.setIcon("password-policies");
 				dropdownItem.setKey(WikiUIItemKeys.PERMISSIONS);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "permissions"));
@@ -146,6 +148,7 @@ public class WikiListPagesDisplayContext {
 					).setParameter(
 						"title", StringPool.BLANK
 					).buildString());
+				dropdownItem.setIcon("copy");
 				dropdownItem.setKey(WikiUIItemKeys.COPY);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "copy"));
@@ -165,6 +168,7 @@ public class WikiListPagesDisplayContext {
 					).setParameter(
 						"title", HtmlUtil.unescape(wikiPage.getTitle())
 					).buildString());
+				dropdownItem.setIcon("move-folder");
 				dropdownItem.setKey(WikiUIItemKeys.MOVE);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "move"));
@@ -192,6 +196,7 @@ public class WikiListPagesDisplayContext {
 					).setParameter(
 						"title", StringPool.BLANK
 					).buildString());
+				dropdownItem.setIcon("wiki-page");
 				dropdownItem.setKey(WikiUIItemKeys.ADD_CHILD_PAGE);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add-child-page"));
@@ -213,6 +218,7 @@ public class WikiListPagesDisplayContext {
 					).setParameter(
 						"title", HtmlUtil.unescape(wikiPage.getTitle())
 					).buildString());
+				dropdownItem.setIcon("bell-off");
 				dropdownItem.setKey(WikiUIItemKeys.UNSUBSCRIBE);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "unsubscribe"));
@@ -234,6 +240,7 @@ public class WikiListPagesDisplayContext {
 					).setParameter(
 						"title", HtmlUtil.unescape(wikiPage.getTitle())
 					).buildString());
+				dropdownItem.setIcon("bell-on");
 				dropdownItem.setKey(WikiUIItemKeys.SUBSCRIBE);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "subscribe"));
@@ -261,6 +268,7 @@ public class WikiListPagesDisplayContext {
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
+				dropdownItem.setIcon("print");
 				dropdownItem.setKey(WikiUIItemKeys.PRINT);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "print"));
@@ -301,6 +309,7 @@ public class WikiListPagesDisplayContext {
 						!wikiPage.isDraft() &&
 						_trashHelper.isTrashEnabled(
 							_wikiRequestHelper.getScopeGroupId())));
+				dropdownItem.setIcon("trash");
 				dropdownItem.setKey(WikiUIItemKeys.DELETE);
 
 				String label = "delete";

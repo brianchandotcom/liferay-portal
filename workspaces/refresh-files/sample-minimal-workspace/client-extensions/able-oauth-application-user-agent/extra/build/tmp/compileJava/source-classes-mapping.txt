@@ -1,2 +1,0 @@
-com/able/service/GenerateJWKConfiguration.java
- com.able.service.GenerateJWKConfiguration

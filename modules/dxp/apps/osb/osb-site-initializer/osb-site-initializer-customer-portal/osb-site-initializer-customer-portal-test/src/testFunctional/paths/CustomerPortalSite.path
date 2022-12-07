@@ -15,6 +15,11 @@
 	<td>//*[contains(@href, 'liferay') and text()='${key_text}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SVG_ACTIVATION_STATUS</td>
+	<td>//*[contains(@class, 'cp-label-activation-status')]//div/descendant::button</td>
+	<td></td>
+</tr>
 	<td>BUTTON</td>
 	<td>//*[contains(@class, btn) and text()='${key_text}']</td>
 	<td></td>

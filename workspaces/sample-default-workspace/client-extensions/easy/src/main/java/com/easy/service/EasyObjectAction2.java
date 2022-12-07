@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.able.service;
+package com.easy.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -31,12 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Brian Wing Shun Chan
  */
 @RestController
-public class AbleObjectAction {
+public class EasyObjectAction2 {
 
 	@PostMapping(
 		consumes = MediaType.APPLICATION_JSON_VALUE,
 		produces = MediaType.APPLICATION_JSON_VALUE,
-		value = "/able-object/action"
+		value = "/easy-object/action/2"
 	)
 	public ResponseEntity<String> action(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody JsonNode jsonNode)

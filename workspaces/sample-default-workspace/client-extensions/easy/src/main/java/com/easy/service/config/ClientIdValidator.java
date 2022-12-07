@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.able.service.config;
+package com.easy.service.config;
 
 import java.util.Objects;
 

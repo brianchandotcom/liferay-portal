@@ -1,0 +1,14 @@
+logging:
+    level:
+        com.easy.service: DEBUG
+        org.springframework.security: DEBUG
+        org.springframework.web: DEBUG
+oauth:
+  application:
+    externalReferenceCode: easy-oauth-application-user-agent
+    uri: "http://localhost:8080/o/oauth2/application"
+  jwks:
+    uri: "http://localhost:8080/o/oauth2/jwks"
+
+server:
+    port: 58081

@@ -51,8 +51,8 @@ public class OAuthErrorMessageBodyWriter
 		MediaType mediaType) {
 
 		if (clazz.isAssignableFrom(OAuthError.class) &&
-			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "html") &&
-			StringUtil.equalsIgnoreCase(mediaType.getType(), "text")) {
+			StringUtil.equalsIgnoreCase(mediaType.getType(), "text") &&
+			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "html")) {
 
 			return true;
 		}

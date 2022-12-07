@@ -61,8 +61,8 @@ public class OAuthAuthorizationDataMessageBodyWriter
 		MediaType mediaType) {
 
 		if (clazz.isAssignableFrom(OAuthAuthorizationData.class) &&
-			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "html") &&
-			StringUtil.equalsIgnoreCase(mediaType.getType(), "text")) {
+			StringUtil.equalsIgnoreCase(mediaType.getType(), "text") &&
+			StringUtil.equalsIgnoreCase(mediaType.getSubtype(), "html")) {
 
 			return true;
 		}

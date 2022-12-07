@@ -211,9 +211,11 @@ public class MBThreadIndexerIndexedFieldsTest {
 		MBThread mbThread, MBMessage mbMessage, Map<String, String> map) {
 
 		indexedFieldsFixture.populateDate(
+			Field.CREATE_DATE, mbThread.getCreateDate(), map);
+		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, mbMessage.getModifiedDate(), map);
 		indexedFieldsFixture.populateDate(
-			Field.CREATE_DATE, mbThread.getCreateDate(), map);
+			"lastPostDate", mbThread.getLastPostDate(), map);
 	}
 
 	private void _populateRoles(MBThread mbThread, Map<String, String> map)

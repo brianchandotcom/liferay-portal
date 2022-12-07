@@ -20,8 +20,6 @@ import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -105,9 +103,6 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement4.executeBatch();
 		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
 	}
 
 	@Override
@@ -171,8 +166,5 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 			preparedStatement4.addBatch();
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		NotificationRecipientUpgradeProcess.class);
 
 }

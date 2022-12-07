@@ -61,8 +61,12 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
+
+import jodd.util.StringUtil;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -292,47 +296,11 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertEquals(1, _argumentsList.size());
-
 		// On after create
 
-		Object[] arguments = _argumentsList.poll();
-
-		Http.Options options = (Http.Options)arguments[0];
-
-		Http.Body body = options.getBody();
-
-		Assert.assertEquals(StringPool.UTF8, body.getCharset());
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON, body.getContentType());
-
-		JSONObject payloadJSONObject = _jsonFactory.createJSONObject(
-			body.getContent());
-
-		Assert.assertEquals(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			payloadJSONObject.getString("objectActionTriggerKey"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
-			"John",
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
-		Assert.assertEquals(
-			"John",
-			JSONUtil.getValue(
-				payloadJSONObject,
-				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
-				"JSONObject/properties", "Object/firstName"));
-		Assert.assertNull(
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry"));
-
-		Assert.assertEquals("onafteradd", options.getHeader("x-api-key"));
-		Assert.assertEquals("https://onafteradd.com", options.getLocation());
+		_assertWebhookObjectActionExecutorArguments(
+			"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
+			WorkflowConstants.STATUS_DRAFT);
 
 		// Update object entry
 
@@ -345,53 +313,11 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		Assert.assertEquals(1, _argumentsList.size());
-
 		// On after update
 
-		arguments = _argumentsList.poll();
-
-		options = (Http.Options)arguments[0];
-
-		body = options.getBody();
-
-		Assert.assertEquals(StringPool.UTF8, body.getCharset());
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON, body.getContentType());
-
-		payloadJSONObject = _jsonFactory.createJSONObject(body.getContent());
-
-		Assert.assertEquals(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			payloadJSONObject.getString("objectActionTriggerKey"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
-			"João",
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
-		Assert.assertEquals(
-			"João",
-			JSONUtil.getValue(
-				payloadJSONObject,
-				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
-				"JSONObject/properties", "Object/firstName"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry",
-				"Object/status"));
-		Assert.assertEquals(
-			"John",
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry",
-				"JSONObject/values", "Object/firstName"));
-
-		Assert.assertEquals("onafterupdate", options.getHeader("x-api-key"));
-		Assert.assertEquals("https://onafterupdate.com", options.getLocation());
+		_assertWebhookObjectActionExecutorArguments(
+			"João", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, "John",
+			WorkflowConstants.STATUS_APPROVED);
 
 		// Delete object entry
 
@@ -399,46 +325,11 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry);
 
-		Assert.assertEquals(1, _argumentsList.size());
-
 		// On after remove
 
-		arguments = _argumentsList.poll();
-
-		options = (Http.Options)arguments[0];
-
-		body = options.getBody();
-
-		Assert.assertEquals(StringPool.UTF8, body.getCharset());
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_JSON, body.getContentType());
-
-		payloadJSONObject = _jsonFactory.createJSONObject(body.getContent());
-
-		Assert.assertEquals(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
-			payloadJSONObject.getString("objectActionTriggerKey"));
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
-			"João",
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/firstName"));
-		Assert.assertEquals(
-			"João",
-			JSONUtil.getValue(
-				payloadJSONObject,
-				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
-				"JSONObject/properties", "Object/firstName"));
-		Assert.assertNull(
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/originalObjectEntry"));
-
-		Assert.assertEquals("onafterdelete", options.getHeader("x-api-key"));
-		Assert.assertEquals("https://onafterdelete.com", options.getLocation());
+		_assertWebhookObjectActionExecutorArguments(
+			"João", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null,
+			WorkflowConstants.STATUS_APPROVED);
 
 		// Delete object actions
 
@@ -583,33 +474,18 @@ public class ObjectActionLocalServiceTest {
 				"url", "https://onafteradd.com"
 			).build());
 
-		Assert.assertTrue(objectAction.isActive());
-		Assert.assertEquals(
-			"equals(firstName, \"John\")",
-			objectAction.getConditionExpression());
-		Assert.assertEquals("Able Description", objectAction.getDescription());
-		Assert.assertEquals(
+		_assertObjectAction(
+			true, "equals(firstName, \"John\")", "Able Description",
 			LocalizedMapUtil.getLocalizedMap("Able Error Message"),
-			objectAction.getErrorMessageMap());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Able Label"),
-			objectAction.getLabelMap());
-		Assert.assertEquals("Able", objectAction.getName());
-		Assert.assertEquals(
-			ObjectActionExecutorConstants.KEY_WEBHOOK,
-			objectAction.getObjectActionExecutorKey());
-		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Able Label"), "Able",
+			objectAction, ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			objectAction.getObjectActionTriggerKey());
-		Assert.assertEquals(
 			UnicodePropertiesBuilder.put(
 				"secret", "0123456789"
 			).put(
 				"url", "https://onafteradd.com"
 			).build(),
-			objectAction.getParametersUnicodeProperties());
-		Assert.assertEquals(
-			ObjectActionConstants.STATUS_NEVER_RAN, objectAction.getStatus());
+			ObjectActionConstants.STATUS_NEVER_RAN);
 
 		objectAction = _objectActionLocalService.updateObjectAction(
 			objectAction.getObjectActionId(), false,
@@ -624,33 +500,18 @@ public class ObjectActionLocalServiceTest {
 				"url", "https://onafterdelete.com"
 			).build());
 
-		Assert.assertFalse(objectAction.isActive());
-		Assert.assertEquals(
-			"equals(firstName, \"João\")",
-			objectAction.getConditionExpression());
-		Assert.assertEquals("Baker Description", objectAction.getDescription());
-		Assert.assertEquals(
+		_assertObjectAction(
+			false, "equals(firstName, \"João\")", "Baker Description",
 			LocalizedMapUtil.getLocalizedMap("Baker Error Message"),
-			objectAction.getErrorMessageMap());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Baker Label"),
-			objectAction.getLabelMap());
-		Assert.assertEquals("Baker", objectAction.getName());
-		Assert.assertEquals(
-			ObjectActionExecutorConstants.KEY_GROOVY,
-			objectAction.getObjectActionExecutorKey());
-		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Baker Label"), "Baker",
+			objectAction, ObjectActionExecutorConstants.KEY_GROOVY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
-			objectAction.getObjectActionTriggerKey());
-		Assert.assertEquals(
 			UnicodePropertiesBuilder.put(
 				"secret", "30624700"
 			).put(
 				"url", "https://onafterdelete.com"
 			).build(),
-			objectAction.getParametersUnicodeProperties());
-		Assert.assertEquals(
-			ObjectActionConstants.STATUS_NEVER_RAN, objectAction.getStatus());
+			ObjectActionConstants.STATUS_NEVER_RAN);
 
 		_publishCustomObjectDefinition();
 
@@ -667,34 +528,18 @@ public class ObjectActionLocalServiceTest {
 				"url", "https://onafterdelete.com"
 			).build());
 
-		Assert.assertTrue(objectAction.isActive());
-		Assert.assertEquals(
-			"equals(firstName, \"John\")",
-			objectAction.getConditionExpression());
-		Assert.assertEquals(
-			"Charlie Description", objectAction.getDescription());
-		Assert.assertEquals(
+		_assertObjectAction(
+			true, "equals(firstName, \"John\")", "Charlie Description",
 			LocalizedMapUtil.getLocalizedMap("Charlie Error Message"),
-			objectAction.getErrorMessageMap());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("Charlie Label"),
-			objectAction.getLabelMap());
-		Assert.assertEquals("Baker", objectAction.getName());
-		Assert.assertEquals(
-			ObjectActionExecutorConstants.KEY_WEBHOOK,
-			objectAction.getObjectActionExecutorKey());
-		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Charlie Label"), "Baker",
+			objectAction, ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
-			objectAction.getObjectActionTriggerKey());
-		Assert.assertEquals(
 			UnicodePropertiesBuilder.put(
 				"secret", "0123456789"
 			).put(
 				"url", "https://onafterdelete.com"
 			).build(),
-			objectAction.getParametersUnicodeProperties());
-		Assert.assertEquals(
-			ObjectActionConstants.STATUS_NEVER_RAN, objectAction.getStatus());
+			ObjectActionConstants.STATUS_NEVER_RAN);
 	}
 
 	private void _addObjectAction(
@@ -710,6 +555,94 @@ public class ObjectActionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(label), name,
 			ObjectActionExecutorConstants.KEY_GROOVY, objectActionTriggerKey,
 			new UnicodeProperties());
+	}
+
+	private void _assertObjectAction(
+		boolean active, String conditionExpression, String description,
+		Map<Locale, String> errorMessageMap, Map<Locale, String> labelMap,
+		String name, ObjectAction objectAction, String objectActionExecutorKey,
+		String objectActionTriggerKey,
+		UnicodeProperties parametersUnicodeProperties, int status) {
+
+		Assert.assertEquals(active, objectAction.isActive());
+		Assert.assertEquals(
+			conditionExpression, objectAction.getConditionExpression());
+		Assert.assertEquals(description, objectAction.getDescription());
+		Assert.assertEquals(errorMessageMap, objectAction.getErrorMessageMap());
+		Assert.assertEquals(labelMap, objectAction.getLabelMap());
+		Assert.assertEquals(name, objectAction.getName());
+		Assert.assertEquals(
+			objectActionExecutorKey, objectAction.getObjectActionExecutorKey());
+		Assert.assertEquals(
+			objectActionTriggerKey, objectAction.getObjectActionTriggerKey());
+		Assert.assertEquals(
+			parametersUnicodeProperties,
+			objectAction.getParametersUnicodeProperties());
+		Assert.assertEquals(status, objectAction.getStatus());
+	}
+
+	private void _assertWebhookObjectActionExecutorArguments(
+			String firstName, String objectActionTriggerKey,
+			String originalFirstName, int status)
+		throws Exception {
+
+		Assert.assertEquals(1, _argumentsList.size());
+
+		Object[] arguments = _argumentsList.poll();
+
+		Http.Options options = (Http.Options)arguments[0];
+
+		Assert.assertEquals(
+			StringUtil.toLowerCase(objectActionTriggerKey),
+			options.getHeader("x-api-key"));
+		Assert.assertEquals(
+			"https://" + StringUtil.toLowerCase(objectActionTriggerKey) +
+				".com",
+			options.getLocation());
+
+		Http.Body body = options.getBody();
+
+		Assert.assertEquals(StringPool.UTF8, body.getCharset());
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_JSON, body.getContentType());
+
+		JSONObject payloadJSONObject = _jsonFactory.createJSONObject(
+			body.getContent());
+
+		Assert.assertEquals(
+			objectActionTriggerKey,
+			payloadJSONObject.getString("objectActionTriggerKey"));
+		Assert.assertEquals(
+			status,
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+		Assert.assertEquals(
+			firstName,
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/objectEntry",
+				"JSONObject/values", "Object/firstName"));
+		Assert.assertEquals(
+			firstName,
+			JSONUtil.getValue(
+				payloadJSONObject,
+				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
+				"JSONObject/properties", "Object/firstName"));
+
+		if (StringUtil.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE)) {
+
+			Assert.assertEquals(
+				originalFirstName,
+				JSONUtil.getValue(
+					payloadJSONObject, "JSONObject/originalObjectEntry",
+					"JSONObject/values", "Object/firstName"));
+		}
+		else {
+			Assert.assertNull(
+				JSONUtil.getValue(
+					payloadJSONObject, "JSONObject/originalObjectEntry"));
+		}
 	}
 
 	private Object _getAndSetFieldValue(

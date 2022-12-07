@@ -61,8 +61,7 @@ public class CookieKeys {
 		HttpServletResponse httpServletResponse, Cookie cookie) {
 
 		CookiesManagerUtil.addCookie(
-			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie, httpServletRequest,
-			httpServletResponse);
+			cookie, httpServletRequest, httpServletResponse);
 	}
 
 	public static void addCookie(
@@ -71,8 +70,7 @@ public class CookieKeys {
 		boolean secure) {
 
 		CookiesManagerUtil.addCookie(
-			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie, httpServletRequest,
-			httpServletResponse, secure);
+			cookie, httpServletRequest, httpServletResponse, secure);
 	}
 
 	public static void addSupportCookie(

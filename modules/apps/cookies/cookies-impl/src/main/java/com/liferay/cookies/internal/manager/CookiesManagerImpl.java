@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.cookies.CookiesManager;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.UnsupportedCookieException;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.log.Log;
@@ -52,6 +53,54 @@ import org.osgi.service.component.annotations.Reference;
 	service = CookiesManager.class
 )
 public class CookiesManagerImpl implements CookiesManager {
+
+	@Override
+	public boolean addCookie(
+		Cookie cookie, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		boolean isSecure = false;
+
+		if (httpServletRequest != null) {
+			isSecure = _portal.isSecure(httpServletRequest);
+		}
+
+		return addCookie(
+			cookie, httpServletRequest, httpServletResponse,
+			isSecure);
+	}
+
+	@Override
+	public boolean addCookie(
+		Cookie cookie, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, boolean secure) {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"The following cookie is trying to be added without consent type: " +
+					cookie.getName());
+		}
+
+		if (_knownCookies.get(cookie.getName()) != null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"The cookie will be added with the consent type used previously. Use the API with explicitly declared consent type!");
+			}
+
+			return addCookie(
+				_knownCookies.get(cookie.getName()), cookie, httpServletRequest,
+				httpServletResponse, secure);
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"The cookie will be deleted! Use the API with explicitly declared consent type!");
+		}
+
+		return deleteCookies(
+			CookiesManagerUtil.getDomain(httpServletRequest),
+			httpServletRequest, httpServletResponse, cookie.getName());
+	}
 
 	@Override
 	public boolean addCookie(

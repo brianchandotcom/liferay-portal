@@ -28,6 +28,14 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CookiesManager {
 
 	public boolean addCookie(
+		Cookie cookie, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
+
+	public boolean addCookie(
+		Cookie cookie, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, boolean secure);
+
+	public boolean addCookie(
 		int consentType, Cookie cookie, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse);
 

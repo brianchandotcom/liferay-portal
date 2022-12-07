@@ -35,10 +35,12 @@
 		<finder name="NotificationTemplateId" return-type="Collection">
 			<finder-column name="notificationTemplateId" />
 		</finder>
-		<finder name="LtSentDate" return-type="Collection">
+		<finder name="C_LtSentDate" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column comparator="&lt;" name="sentDate" />
 		</finder>
-		<finder name="T_S" return-type="Collection">
+		<finder name="C_T_S" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="type" />
 			<finder-column name="status" />
 		</finder>

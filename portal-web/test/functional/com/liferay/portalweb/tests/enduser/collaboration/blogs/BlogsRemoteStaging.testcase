@@ -181,7 +181,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			increaseMinutes = "2");
+			increaseMinutes = "3");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Blogs Page",
@@ -211,9 +211,9 @@ definition {
 
 		Blogs.viewNoEntryCP();
 
-		// We need to wait for the system time to pass by 2 minutes in order for a scheduled blog entry to be published. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
+		// We need to wait for the system time to pass by 2.5 minutes in order for a scheduled blog entry to be published. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "150000");
 
 		Refresh();
 

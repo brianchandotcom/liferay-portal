@@ -14,6 +14,8 @@
 
 package com.liferay.staging.taglib.internal.servlet;
 
+import com.liferay.layout.util.LayoutsTree;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,8 +31,17 @@ public class ServletContextUtil {
 		return _servletContext.getContextPath();
 	}
 
+	public static LayoutsTree getLayoutsTree() {
+		return _layoutsTree;
+	}
+
 	public static ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutsTree(LayoutsTree layoutsTree) {
+		_layoutsTree = layoutsTree;
 	}
 
 	@Reference(
@@ -41,6 +52,7 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
+	private static LayoutsTree _layoutsTree;
 	private static ServletContext _servletContext;
 
 }

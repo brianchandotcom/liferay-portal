@@ -133,9 +133,15 @@
 						<c:otherwise>
 							<c:choose>
 								<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169001")) %>'>
+
+									<%
+									LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(selectPagesGroup, selectPagesGroupId, request, selectPagesPrivateLayout, renderResponse, selectedLayoutIdsArray, treeId);
+									%>
+
 									<div>
 										<react:component
 											module="js/PagesTree"
+											props="<%= layoutsTreeDisplayContext.getPagesTreeData() %>"
 										/>
 									</div>
 								</c:when>

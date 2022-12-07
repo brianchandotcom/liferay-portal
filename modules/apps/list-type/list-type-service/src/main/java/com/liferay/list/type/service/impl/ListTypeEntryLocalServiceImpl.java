@@ -15,6 +15,7 @@
 package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.exception.DuplicateListTypeEntryException;
+import com.liferay.list.type.exception.DuplicateListTypeEntryExternalReferenceCodeException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.ListTypeEntryNameException;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -26,8 +27,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -53,13 +56,16 @@ public class ListTypeEntryLocalServiceImpl
 			long listTypeDefinitionId, String key, Map<Locale, String> nameMap)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
+
+		_validateExternalReferenceCode(
+			externalReferenceCode, user.getCompanyId(), listTypeDefinitionId);
+
 		_validateKey(listTypeDefinitionId, key);
 		_validateName(nameMap);
 
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.create(
 			counterLocalService.increment());
-
-		User user = _userLocalService.getUser(userId);
 
 		listTypeEntry.setCompanyId(user.getCompanyId());
 		listTypeEntry.setUserId(user.getUserId());
@@ -67,9 +73,6 @@ public class ListTypeEntryLocalServiceImpl
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			listTypeEntry.setExternalReferenceCode(externalReferenceCode);
-		}
-		else {
-			listTypeEntry.setExternalReferenceCode(key);
 		}
 
 		listTypeEntry.setListTypeDefinitionId(listTypeDefinitionId);
@@ -127,12 +130,31 @@ public class ListTypeEntryLocalServiceImpl
 			listTypeEntryId);
 
 		if (Validator.isNotNull(externalReferenceCode)) {
+
+			_validateExternalReferenceCode(
+				externalReferenceCode, listTypeEntry.getCompanyId(),
+				listTypeEntry.getListTypeDefinitionId());
+
 			listTypeEntry.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		listTypeEntry.setNameMap(nameMap);
 
 		return listTypeEntryPersistence.update(listTypeEntry);
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long companyId, long listTypeDefinitionId)
+		throws PortalException {
+
+		ListTypeEntry listTypeEntry =
+			listTypeEntryPersistence.fetchByERC_C_LTDI(
+				externalReferenceCode, companyId, listTypeDefinitionId);
+
+		if (listTypeEntry != null) {
+			throw new DuplicateListTypeEntryExternalReferenceCodeException(
+				externalReferenceCode);
+		}
 	}
 
 	private void _validateKey(long listTypeDefinitionId, String key)

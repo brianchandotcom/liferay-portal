@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.application.resource;
+package com.liferay.oauth2.provider.rest.internal.endpoint.authorize;
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
@@ -75,9 +75,9 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
 	service = {}
 )
-public class AuthorizeResourceRegistrator {
+public class AuthorizationCodeGrantServiceRegistrator {
 
-	public static class AuthorizeResource
+	public static class LiferayAuthorizationCodeGrantService
 		extends AuthorizationCodeGrantService {
 
 		@Override
@@ -342,15 +342,17 @@ public class AuthorizeResourceRegistrator {
 			return;
 		}
 
-		AuthorizeResource authorizeResource = new AuthorizeResource();
+		AuthorizationCodeGrantService authorizationCodeGrantService =
+			new LiferayAuthorizationCodeGrantService();
 
-		authorizeResource.setCanSupportPublicClients(
+		authorizationCodeGrantService.setCanSupportPublicClients(
 			oAuth2ProviderConfiguration.allowAuthorizationCodePKCEGrant());
-		authorizeResource.setDataProvider(_liferayOAuthDataProvider);
-		authorizeResource.setSubjectCreator(_subjectCreator);
+		authorizationCodeGrantService.setDataProvider(
+			_liferayOAuthDataProvider);
+		authorizationCodeGrantService.setSubjectCreator(_subjectCreator);
 
 		_serviceRegistration = bundleContext.registerService(
-			Object.class, authorizeResource,
+			Object.class, authorizationCodeGrantService,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=Liferay.OAuth2.Application)"
@@ -374,7 +376,7 @@ public class AuthorizeResourceRegistrator {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AuthorizeResourceRegistrator.class);
+		AuthorizationCodeGrantServiceRegistrator.class);
 
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;

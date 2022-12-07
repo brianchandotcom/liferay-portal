@@ -271,7 +271,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), "3:3|4:4|2:5|1:6",
+			bucketDisplayContexts.toString(),
+			"categoryId3:3|categoryId4:4|categoryId2:5|categoryId1:6",
 			nameFrequencyString);
 
 		termCollectors = _getTermCollectors(
@@ -288,7 +289,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), "1:4|2:5|4:5|3:6",
+			bucketDisplayContexts.toString(),
+			"categoryId1:4|categoryId2:5|categoryId4:5|categoryId3:6",
 			nameFrequencyString);
 	}
 
@@ -315,7 +317,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), "1:6|2:5|4:4|3:3",
+			bucketDisplayContexts.toString(),
+			"categoryId1:6|categoryId2:5|categoryId4:4|categoryId3:3",
 			nameFrequencyString);
 
 		termCollectors = _getTermCollectors(
@@ -332,7 +335,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), "3:6|2:5|4:5|1:4",
+			bucketDisplayContexts.toString(),
+			"categoryId3:6|categoryId2:5|categoryId4:5|categoryId1:4",
 			nameFrequencyString);
 	}
 
@@ -358,7 +362,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), "1:3|2:1|3:4|4:2",
+			bucketDisplayContexts.toString(),
+			"categoryId1:3|categoryId2:1|categoryId3:4|categoryId4:2",
 			nameFrequencyString);
 
 		termCollectors = _getTermCollectors(2L, 1L, 2L, 3L);
@@ -374,7 +379,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), "1:2|2:3|2:1|3:4",
+			bucketDisplayContexts.toString(),
+			"categoryId1:2|categoryId2:3|categoryId2:1|categoryId3:4",
 			nameFrequencyString);
 	}
 
@@ -400,7 +406,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), "4:2|3:4|2:1|1:3",
+			bucketDisplayContexts.toString(),
+			"categoryId4:2|categoryId3:4|categoryId2:1|categoryId1:3",
 			nameFrequencyString);
 
 		termCollectors = _getTermCollectors(2L, 1L, 2L, 3L);
@@ -416,7 +423,8 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), "3:4|2:3|2:1|1:2",
+			bucketDisplayContexts.toString(),
+			"categoryId3:4|categoryId2:3|categoryId2:1|categoryId1:2",
 			nameFrequencyString);
 	}
 
@@ -652,6 +660,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		for (BucketDisplayContext bucketDisplayContext :
 				bucketDisplayContexts) {
 
+			sb.append("categoryId");
 			sb.append(bucketDisplayContext.getFilterValue());
 			sb.append(StringPool.COLON);
 			sb.append(bucketDisplayContext.getFrequency());

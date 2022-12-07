@@ -479,4 +479,34 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160723 - Verify if as an Administrator I should be able a subtask return to open"
+	@priority = "5"
+	test AdminCanReturnToOpenSubtask {
+		task ("Given that the user Assign and Begin Analysis of the subtask") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestraySubtask.goToSubTask(subTaskName = "sub tasks_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "In Analysis");
+		}
+
+		task ("Then can return to open the subtask") {
+			Button.click(button = "Return to open");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "Open");
+		}
+	}
+
 }

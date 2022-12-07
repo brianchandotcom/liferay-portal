@@ -33,7 +33,7 @@ describe('serializeTableRequestParams', () => {
 				keywords: '',
 				pagination: DEFAULT_PAGINATION,
 			})
-		).toEqual('page=1&pageSize=20&sort=name:asc');
+		).toEqual('keywords=&page=1&pageSize=20&sort=name:asc');
 	});
 });
 

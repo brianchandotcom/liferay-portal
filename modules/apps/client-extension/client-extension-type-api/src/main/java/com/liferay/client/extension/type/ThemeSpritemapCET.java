@@ -26,7 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ThemeSpritemapCET extends CET {
 
-	@CETProperty(defaultValue = "", name = "url", type = "string", url = true)
+	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
 	public String getURL();
 
 }

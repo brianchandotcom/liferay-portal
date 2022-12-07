@@ -269,7 +269,7 @@
 			{
 				"default": "",
 				"name": "url",
-				"type": "string"
+				"type": "CETProperty.Type.URL"
 			}
 		]
 	}

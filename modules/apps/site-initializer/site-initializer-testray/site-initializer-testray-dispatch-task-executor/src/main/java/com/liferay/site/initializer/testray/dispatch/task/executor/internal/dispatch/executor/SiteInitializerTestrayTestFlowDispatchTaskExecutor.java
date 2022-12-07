@@ -17,7 +17,6 @@ package com.liferay.site.initializer.testray.dispatch.task.executor.internal.dis
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -125,16 +124,12 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			long companyId, ObjectEntry testrayCaseResultObjectEntry)
 		throws Exception {
 
-		Page<ObjectEntry> testrayCaseResultsIssuesObjectEntriesPage1 =
-			getObjectEntriesPage(
+		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
+			getObjectEntries(
 				null, companyId,
 				"caseResultId eq '" + testrayCaseResultObjectEntry.getId() +
 					"'",
 				"CaseResultsIssues", null);
-
-		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
-			(List<ObjectEntry>)
-				testrayCaseResultsIssuesObjectEntriesPage1.getItems();
 
 		if (testrayCaseResultsIssuesObjectEntries.isEmpty()) {
 			return StringPool.BLANK;
@@ -233,11 +228,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		List<Facet.FacetValue> testrayCaseResultFacetValues =
 			testrayCaseResultFacet.getFacetValues();
 
-		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = getObjectEntriesPage(
-			null, companyId, sb.toString(), "Case", null);
-
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
-			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);
+			getObjectEntries(null, companyId, sb.toString(), "Case", null),
+			ObjectEntry::getId);
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 
@@ -248,23 +241,16 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				continue;
 			}
 
-			Page<ObjectEntry> testrayCaseResultObjectEntriesPage2 =
-				objectEntryManager.getObjectEntries(
-					companyId, _objectDefinitions.get("CaseResult"), null, null,
-					defaultDTOConverterContext,
-					StringBundler.concat(
-						"buildId eq '", testrayBuildId, "' and errors eq '",
-						StringUtil.removeChar(
-							StringUtil.replace(
-								testrayCaseResultFacetValue.getTerm(), '\'',
-								"''"),
-							'\\'),
-						"'"),
-					null, null, null);
-
-			List<ObjectEntry> testrayCaseResultObjectEntries =
-				(List<ObjectEntry>)
-					testrayCaseResultObjectEntriesPage2.getItems();
+			List<ObjectEntry> testrayCaseResultObjectEntries = getObjectEntries(
+				null, companyId,
+				StringBundler.concat(
+					"buildId eq '", testrayBuildId, "' and errors eq '",
+					StringUtil.removeChar(
+						StringUtil.replace(
+							testrayCaseResultFacetValue.getTerm(), '\'', "''"),
+						'\\'),
+					"'"),
+				"CaseResult", null);
 
 			testrayCaseResultObjectEntries.removeIf(
 				objectEntry -> !testrayCaseObjectEntriesIds.contains(
@@ -371,9 +357,6 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayTestFlowDispatchTaskExecutor.class);
-
-	private final Map<String, ObjectDefinition> _objectDefinitions =
-		new HashMap<>();
 
 	@Reference
 	private UserLocalService _userLocalService;

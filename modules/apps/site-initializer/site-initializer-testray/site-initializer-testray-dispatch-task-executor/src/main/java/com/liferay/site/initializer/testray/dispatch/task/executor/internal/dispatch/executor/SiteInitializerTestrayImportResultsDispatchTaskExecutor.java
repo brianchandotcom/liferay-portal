@@ -371,31 +371,19 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		ObjectEntry sourceTestrayCaseResultObjectEntry = null;
 		List<ObjectEntry> sourceTestrayCaseResultsIssuesObjectEntries = null;
 
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayCaseResultsIssuesObjectEntriesPage1 =
-				objectEntryManager.getObjectEntries(
-					companyId, _objectDefinitions.get("CaseResultsIssues"),
-					null, null, defaultDTOConverterContext,
-					"caseResultId eq '" +
-						testrayCaseResultObjectEntry1.getId() + "'",
-					null, null, null);
-
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries1 =
-			(List<ObjectEntry>)
-				testrayCaseResultsIssuesObjectEntriesPage1.getItems();
-
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayCaseResultsIssuesObjectEntriesPage2 =
-				objectEntryManager.getObjectEntries(
-					companyId, _objectDefinitions.get("CaseResultsIssues"),
-					null, null, defaultDTOConverterContext,
-					"caseResultId eq '" +
-						testrayCaseResultObjectEntry2.getId() + "'",
-					null, null, null);
+			getObjectEntries(
+				null, companyId,
+				"caseResultId eq '" + testrayCaseResultObjectEntry1.getId() +
+					"'",
+				"CaseResultsIssues", null);
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries2 =
-			(List<ObjectEntry>)
-				testrayCaseResultsIssuesObjectEntriesPage2.getItems();
+			getObjectEntries(
+				null, companyId,
+				"caseResultId eq '" + testrayCaseResultObjectEntry2.getId() +
+					"'",
+				"CaseResultsIssues", null);
 
 		if (((Long)getProperty(
 				"r_userToCaseResults_userId", testrayCaseResultObjectEntry1) >
@@ -484,27 +472,16 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			long testrayRunId)
 		throws Exception {
 
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayBuildsObjectEntriesPage =
-				objectEntryManager.getObjectEntries(
-					companyId, _objectDefinitions.get("Build"), null, null,
-					defaultDTOConverterContext,
-					"routineId eq '" + testrayRoutineId + "'", null, null,
-					null);
+		List<ObjectEntry> testrayBuildsObjectEntries = getObjectEntries(
+			null, companyId, "routineId eq '" + testrayRoutineId + "'", "Build",
+			null);
 
-		List<ObjectEntry> testrayBuildsObjectEntries =
-			(List<ObjectEntry>)testrayBuildsObjectEntriesPage.getItems();
-
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayRunsObjectEntriesPage = getObjectEntriesPage(
-				null, companyId,
-				StringBundler.concat(
-					"environmentHash eq '", environmentHash, "' and id ne '",
-					testrayRunId, "'"),
-				"Run", new Sort[] {new Sort("createDate", 3, true)});
-
-		List<ObjectEntry> testrayRunsObjectEntries =
-			(List<ObjectEntry>)testrayRunsObjectEntriesPage.getItems();
+		List<ObjectEntry> testrayRunsObjectEntries = getObjectEntries(
+			null, companyId,
+			StringBundler.concat(
+				"environmentHash eq '", environmentHash, "' and id ne '",
+				testrayRunId, "'"),
+			"Run", new Sort[] {new Sort("createDate", 3, true)});
 
 		for (ObjectEntry testrayRunObjectEntry : testrayRunsObjectEntries) {
 			for (ObjectEntry testrayBuildObjectEntry :
@@ -789,14 +766,12 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries = new HashMap<>();
 
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry> page =
-			objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get("CaseResult"), null, null,
-				defaultDTOConverterContext,
-				"runId eq '" + testrayRunObjectEntry.getId() + "'", null, null,
-				null);
+		for (ObjectEntry objectEntry :
+				getObjectEntries(
+					null, companyId,
+					"runId eq '" + testrayRunObjectEntry.getId() + "'",
+					"CaseResult", null)) {
 
-		for (ObjectEntry objectEntry : page.getItems()) {
 			testrayCaseResultObjectEntries.put(
 				(Long)getProperty("r_caseToCaseResult_c_caseId", objectEntry),
 				objectEntry);
@@ -1194,7 +1169,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 	private void _loadTestrayCaseTypes(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries = getObjectEntries(
-			companyId, "CaseType");
+			null, companyId, null, "CaseType", null);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1209,7 +1184,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 	private void _loadTestrayComponents(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries = getObjectEntries(
-			companyId, "Component");
+			null, companyId, null, "Component", null);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1228,7 +1203,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 	private void _loadTestrayFactorCategories(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries = getObjectEntries(
-			companyId, "FactorCategory");
+			null, companyId, null, "FactorCategory", null);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1243,7 +1218,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 	private void _loadTestrayFactorOptions(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries = getObjectEntries(
-			companyId, "FactorOption");
+			null, companyId, null, "FactorOption", null);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1263,7 +1238,7 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 
 	private void _loadTestrayProjects(long companyId) throws Exception {
 		List<ObjectEntry> objectEntries = getObjectEntries(
-			companyId, "Project");
+			null, companyId, null, "Project", null);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;
@@ -1277,7 +1252,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 	}
 
 	private void _loadTestrayTeams(long companyId) throws Exception {
-		List<ObjectEntry> objectEntries = getObjectEntries(companyId, "Team");
+		List<ObjectEntry> objectEntries = getObjectEntries(
+			null, companyId, null, "Team", null);
 
 		if (ListUtil.isEmpty(objectEntries)) {
 			return;

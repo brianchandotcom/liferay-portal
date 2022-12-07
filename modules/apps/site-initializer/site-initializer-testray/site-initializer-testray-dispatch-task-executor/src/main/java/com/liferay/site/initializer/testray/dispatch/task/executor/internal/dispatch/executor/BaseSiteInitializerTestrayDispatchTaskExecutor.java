@@ -79,14 +79,12 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 	}
 
 	protected List<ObjectEntry> getObjectEntries(
-			long companyId, String objectDefinitionShortName)
+			Aggregation aggregation, long companyId, String filter,
+			String objectDefinitionName, Sort[] sorts)
 		throws Exception {
 
-		Page<ObjectEntry> objectEntriesPage =
-			objectEntryManager.getObjectEntries(
-				companyId, getObjectDefinition(objectDefinitionShortName), null,
-				null, defaultDTOConverterContext, (Filter)null, null, null,
-				null);
+		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+			aggregation, companyId, filter, objectDefinitionName, sorts);
 
 		return (List<ObjectEntry>)objectEntriesPage.getItems();
 	}

@@ -75,7 +75,7 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 					null, serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), 0, name, type,
+					serviceContext.getScopeGroupId(), 0, 0, name, type,
 					masterLayoutPlid);
 
 			JSONObject jsonObject = JSONUtil.put(

@@ -1204,7 +1204,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (layoutUtilityPageEntry == null) {
 				layoutUtilityPageEntry =
 					_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
-						externalReferenceCode, groupId, 0, name, type, 0);
+						externalReferenceCode, groupId, 0, 0, name, type, 0);
 
 				added = true;
 			}

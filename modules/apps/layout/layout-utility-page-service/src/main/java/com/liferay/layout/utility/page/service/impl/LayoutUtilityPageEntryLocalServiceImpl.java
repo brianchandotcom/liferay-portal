@@ -72,7 +72,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long userId, long groupId,
+			String externalReferenceCode, long userId, long groupId, long plid,
 			long previewFileEntryId, String name, String type,
 			long masterLayoutPlid)
 		throws PortalException {
@@ -93,14 +93,14 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		layoutUtilityPageEntry.setExternalReferenceCode(externalReferenceCode);
 
-		long plid = 0;
+		if (plid == 0) {
+			Layout layout = _addLayout(
+				userId, groupId, name, masterLayoutPlid,
+				ServiceContextThreadLocal.getServiceContext());
 
-		Layout layout = _addLayout(
-			userId, groupId, name, masterLayoutPlid,
-			ServiceContextThreadLocal.getServiceContext());
-
-		if (layout != null) {
-			plid = layout.getPlid();
+			if (layout != null) {
+				plid = layout.getPlid();
+			}
 		}
 
 		layoutUtilityPageEntry.setPlid(plid);
@@ -142,8 +142,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			serviceContext);
 
 		return addLayoutUtilityPageEntry(
-			null, userId, serviceContext.getScopeGroupId(), previewFileEntryId,
-			name, sourceLayoutUtilityPageEntry.getType(), 0);
+			null, userId, serviceContext.getScopeGroupId(), 0,
+			previewFileEntryId, name, sourceLayoutUtilityPageEntry.getType(), 0);
 	}
 
 	@Override

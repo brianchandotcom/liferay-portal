@@ -54,6 +54,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CookiesManagerImpl implements CookiesManager {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #addCookie(int, Cookie, HttpServletRequest, HttpServletResponse)}
+	 */
+	@Deprecated
 	@Override
 	public boolean addCookie(
 		Cookie cookie, HttpServletRequest httpServletRequest,
@@ -69,6 +73,10 @@ public class CookiesManagerImpl implements CookiesManager {
 			cookie, httpServletRequest, httpServletResponse, secure);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #addCookie(int, Cookie, HttpServletRequest, HttpServletResponse, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public boolean addCookie(
 		Cookie cookie, HttpServletRequest httpServletRequest,

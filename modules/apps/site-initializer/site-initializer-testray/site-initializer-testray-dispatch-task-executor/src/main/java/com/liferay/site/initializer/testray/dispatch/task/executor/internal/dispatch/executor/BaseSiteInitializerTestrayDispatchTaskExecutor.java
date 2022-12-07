@@ -45,14 +45,8 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 			String objectDefinitionShortName, Map<String, Object> properties)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = objectDefinitionsMap.get(
+		ObjectDefinition objectDefinition = getObjectDefinition(
 			objectDefinitionShortName);
-
-		if (objectDefinition == null) {
-			throw new PortalException(
-				"No object definition found with short name " +
-					objectDefinitionShortName);
-		}
 
 		ObjectEntry objectEntry = new ObjectEntry();
 
@@ -67,9 +61,8 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 			String objectDefinitionName, Sort[] sorts)
 		throws Exception {
 
-		Page<ObjectEntry> objectEntryPage = objectEntryManager.getObjectEntries(
-			companyId, objectDefinitionsMap.get(objectDefinitionName), null,
-			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
+		Page<ObjectEntry> objectEntryPage = getObjectEntriesPage(
+			aggregation, companyId, filter, objectDefinitionName, sorts);
 
 		return objectEntryPage.fetchFirstItem();
 	}
@@ -107,7 +100,7 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 		throws Exception {
 
 		return objectEntryManager.getObjectEntries(
-			companyId, objectDefinitionsMap.get(objectDefinitionName), null,
+			companyId, getObjectDefinition(objectDefinitionName), null,
 			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
 
 import java.io.IOException;
@@ -61,7 +62,7 @@ public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 					Cookie[] cookies = (Cookie[])values;
 
 					for (Cookie cookie : cookies) {
-						httpServletResponse.addCookie(cookie);
+						CookiesManagerUtil.addCookie(cookie, null, httpServletResponse);
 					}
 				}
 				else if (values instanceof Integer[]) {
@@ -189,7 +190,7 @@ public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 				return;
 			}
 
-			_httpServletResponse.addCookie(cookie);
+			CookiesManagerUtil.addCookie(cookie, null, _httpServletResponse);
 		}
 
 		@Override
@@ -278,7 +279,7 @@ public class TransferHeadersHelperImpl implements TransferHeadersHelper {
 						}
 					}
 					else if (value instanceof Cookie) {
-						_httpServletResponse.addCookie((Cookie)value);
+						CookiesManagerUtil.addCookie((Cookie)value, null, _httpServletResponse);
 					}
 					else if (value instanceof Integer) {
 						if (headerAction.isOverride()) {

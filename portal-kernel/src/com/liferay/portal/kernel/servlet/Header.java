@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.util.CookieUtil;
 
 import java.io.Externalizable;
@@ -77,7 +78,7 @@ public class Header implements Externalizable {
 		String key, HttpServletResponse httpServletResponse) {
 
 		if (_type == Type.COOKIE) {
-			httpServletResponse.addCookie(_cookieValue);
+			CookiesManagerUtil.addCookie(_cookieValue, null, httpServletResponse);
 		}
 		else if (_type == Type.DATE) {
 			httpServletResponse.addDateHeader(key, _dateValue);
@@ -181,7 +182,7 @@ public class Header implements Externalizable {
 		String key, HttpServletResponse httpServletResponse) {
 
 		if (_type == Type.COOKIE) {
-			httpServletResponse.addCookie(_cookieValue);
+			CookiesManagerUtil.addCookie(_cookieValue, null, httpServletResponse);
 		}
 		else if (_type == Type.DATE) {
 			httpServletResponse.setDateHeader(key, _dateValue);

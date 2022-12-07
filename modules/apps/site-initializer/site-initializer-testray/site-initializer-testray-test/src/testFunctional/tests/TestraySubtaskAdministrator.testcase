@@ -156,4 +156,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169436 - Verify if as an Administrator I should be able to complete a subtask as Blocked"
+	@priority = "5"
+	test AdminCanCompleteSubtaskAsBlocked {
+		task ("Given the user edit a Subtask as Blocked") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "sub tasks_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "sub tasks_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Blocked");
+		}
+
+		task ("Then the complete status appears of the subtask with details") {
+			TestraySubtask.verifySubtaskDetails(
+				status = "Complete",
+				userName = "Test",
+				updated = "a few seconds ago",
+				issues = "LPS-166191",
+				comment = "None",
+				score = "5");
+		}
+	}
+
 }

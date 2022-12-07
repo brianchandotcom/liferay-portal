@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tamas Molnar
  * @author Brian Wing Shun Chan
+ * @author Olivér Kecskeméty
  */
 @Component(
 	configurationPid = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration",
@@ -283,8 +284,12 @@ public class CookiesManagerImpl implements CookiesManager {
 				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION;
 		}
 
-		String consentCookieValue = getCookieValue(
-			consentCookieName, httpServletRequest);
+		String consentCookieValue = null;
+
+		if (httpServletRequest != null) {
+			consentCookieValue = getCookieValue(
+				consentCookieName, httpServletRequest);
+		}
 
 		if (Validator.isNull(consentCookieValue)) {
 			return true;

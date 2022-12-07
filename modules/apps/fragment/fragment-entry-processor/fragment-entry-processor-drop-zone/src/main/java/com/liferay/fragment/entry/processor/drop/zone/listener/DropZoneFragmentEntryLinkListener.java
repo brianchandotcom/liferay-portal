@@ -60,7 +60,7 @@ public class DropZoneFragmentEntryLinkListener
 	@Override
 	public void onAddFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
 		try {
-			_updateLayoutPageTemplateStructure(fragmentEntryLink);
+			updateLayoutPageTemplateStructure(fragmentEntryLink);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -84,7 +84,7 @@ public class DropZoneFragmentEntryLinkListener
 		FragmentEntryLink fragmentEntryLink) {
 
 		try {
-			_updateLayoutPageTemplateStructure(fragmentEntryLink);
+			updateLayoutPageTemplateStructure(fragmentEntryLink);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -95,119 +95,7 @@ public class DropZoneFragmentEntryLinkListener
 		}
 	}
 
-	private void _addOrRestoreDropZoneLayoutStructureItem(
-		LayoutStructure layoutStructure,
-		LayoutStructureItem parentLayoutStructureItem) {
-
-		LayoutStructureItem existingLayoutStructureItem = null;
-
-		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
-			layoutStructure.getDeletedLayoutStructureItems();
-
-		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
-				deletedLayoutStructureItems) {
-
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(
-					deletedLayoutStructureItem.getItemId());
-
-			if (Objects.equals(
-					layoutStructureItem.getParentItemId(),
-					parentLayoutStructureItem.getItemId())) {
-
-				existingLayoutStructureItem = layoutStructureItem;
-
-				break;
-			}
-		}
-
-		if (existingLayoutStructureItem != null) {
-			layoutStructure.unmarkLayoutStructureItemForDeletion(
-				existingLayoutStructureItem.getItemId());
-		}
-		else {
-			layoutStructure.addFragmentDropZoneLayoutStructureItem(
-				parentLayoutStructureItem.getItemId(), -1);
-		}
-	}
-
-	private FragmentDropZoneLayoutStructureItem
-		_getDeletedFragmentDropZoneStructureItem(
-			String fragmentDropZoneId, LayoutStructure layoutStructure,
-			String parentItemId) {
-
-		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
-			layoutStructure.getDeletedLayoutStructureItems();
-
-		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
-				deletedLayoutStructureItems) {
-
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(
-					deletedLayoutStructureItem.getItemId());
-
-			if (!(layoutStructureItem instanceof
-					FragmentDropZoneLayoutStructureItem)) {
-
-				continue;
-			}
-
-			FragmentDropZoneLayoutStructureItem
-				fragmentDropZoneLayoutStructureItem =
-					(FragmentDropZoneLayoutStructureItem)layoutStructureItem;
-
-			if (Objects.equals(
-					fragmentDropZoneLayoutStructureItem.getParentItemId(),
-					parentItemId) &&
-				(Validator.isBlank(fragmentDropZoneId) ||
-				 Objects.equals(
-					 fragmentDropZoneId,
-					 fragmentDropZoneLayoutStructureItem.
-						 getFragmentDropZoneId()))) {
-
-				return fragmentDropZoneLayoutStructureItem;
-			}
-		}
-
-		return null;
-	}
-
-	private Document _getDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		return document;
-	}
-
-	private LayoutStructure _getLayoutStructure(
-		FragmentEntryLink fragmentEntryLink) {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					fragmentEntryLink.getGroupId(),
-					fragmentEntryLink.getPlid());
-
-		if (layoutPageTemplateStructure == null) {
-			return null;
-		}
-
-		String data = layoutPageTemplateStructure.getData(
-			fragmentEntryLink.getSegmentsExperienceId());
-
-		if (Validator.isNull(data)) {
-			return null;
-		}
-
-		return LayoutStructure.of(data);
-	}
-
-	private void _updateLayoutPageTemplateStructure(
+	protected void updateLayoutPageTemplateStructure(
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
@@ -435,6 +323,118 @@ public class DropZoneFragmentEntryLinkListener
 					fragmentEntryLink.getSegmentsExperienceId(),
 					layoutStructure.toString());
 		}
+	}
+
+	private void _addOrRestoreDropZoneLayoutStructureItem(
+		LayoutStructure layoutStructure,
+		LayoutStructureItem parentLayoutStructureItem) {
+
+		LayoutStructureItem existingLayoutStructureItem = null;
+
+		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
+			layoutStructure.getDeletedLayoutStructureItems();
+
+		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
+				deletedLayoutStructureItems) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					deletedLayoutStructureItem.getItemId());
+
+			if (Objects.equals(
+					layoutStructureItem.getParentItemId(),
+					parentLayoutStructureItem.getItemId())) {
+
+				existingLayoutStructureItem = layoutStructureItem;
+
+				break;
+			}
+		}
+
+		if (existingLayoutStructureItem != null) {
+			layoutStructure.unmarkLayoutStructureItemForDeletion(
+				existingLayoutStructureItem.getItemId());
+		}
+		else {
+			layoutStructure.addFragmentDropZoneLayoutStructureItem(
+				parentLayoutStructureItem.getItemId(), -1);
+		}
+	}
+
+	private FragmentDropZoneLayoutStructureItem
+		_getDeletedFragmentDropZoneStructureItem(
+			String fragmentDropZoneId, LayoutStructure layoutStructure,
+			String parentItemId) {
+
+		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
+			layoutStructure.getDeletedLayoutStructureItems();
+
+		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
+				deletedLayoutStructureItems) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					deletedLayoutStructureItem.getItemId());
+
+			if (!(layoutStructureItem instanceof
+					FragmentDropZoneLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentDropZoneLayoutStructureItem
+				fragmentDropZoneLayoutStructureItem =
+					(FragmentDropZoneLayoutStructureItem)layoutStructureItem;
+
+			if (Objects.equals(
+					fragmentDropZoneLayoutStructureItem.getParentItemId(),
+					parentItemId) &&
+				(Validator.isBlank(fragmentDropZoneId) ||
+				 Objects.equals(
+					 fragmentDropZoneId,
+					 fragmentDropZoneLayoutStructureItem.
+						 getFragmentDropZoneId()))) {
+
+				return fragmentDropZoneLayoutStructureItem;
+			}
+		}
+
+		return null;
+	}
+
+	private Document _getDocument(String html) {
+		Document document = Jsoup.parseBodyFragment(html);
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		return document;
+	}
+
+	private LayoutStructure _getLayoutStructure(
+		FragmentEntryLink fragmentEntryLink) {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					fragmentEntryLink.getGroupId(),
+					fragmentEntryLink.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			return null;
+		}
+
+		String data = layoutPageTemplateStructure.getData(
+			fragmentEntryLink.getSegmentsExperienceId());
+
+		if (Validator.isNull(data)) {
+			return null;
+		}
+
+		return LayoutStructure.of(data);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

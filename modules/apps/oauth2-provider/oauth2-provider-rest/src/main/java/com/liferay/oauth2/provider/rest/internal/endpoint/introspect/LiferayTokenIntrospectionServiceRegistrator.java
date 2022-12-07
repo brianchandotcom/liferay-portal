@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.application.resource;
+package com.liferay.oauth2.provider.rest.internal.endpoint.introspect;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {}
 )
-public class IntrospectResourceRegistrator {
+public class LiferayTokenIntrospectionServiceRegistrator {
 
 	@Activate
 	protected void activate(
@@ -50,22 +51,27 @@ public class IntrospectResourceRegistrator {
 			return;
 		}
 
+		boolean canSupportPublicClients = MapUtil.getBoolean(
+			properties,
+			"oauth2.allow.token.introspection.endpoint.public.clients", true);
+
+		LiferayTokenIntrospectionService liferayTokenIntrospectionService =
+			new LiferayTokenIntrospectionService(
+				_liferayOAuthDataProvider, canSupportPublicClients);
+
+		Dictionary<String, Object> liferayTokenIntrospectionProperties =
+			new Hashtable<>();
+
+		liferayTokenIntrospectionProperties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.OAuth2.Application)");
+		liferayTokenIntrospectionProperties.put(
+			"osgi.jaxrs.name", "Liferay.Token.Introspection.Service");
+		liferayTokenIntrospectionProperties.put("osgi.jaxrs.resource", true);
+
 		_serviceRegistration = bundleContext.registerService(
-			Object.class,
-			new IntrospectResource(
-				_liferayOAuthDataProvider,
-				MapUtil.getBoolean(
-					properties,
-					"oauth2.allow.token.introspection.endpoint.public.clients",
-					true)),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"osgi.jaxrs.application.select",
-				"(osgi.jaxrs.name=Liferay.OAuth2.Application)"
-			).put(
-				"osgi.jaxrs.name", "Liferay.Token.Introspection.Service"
-			).put(
-				"osgi.jaxrs.resource", true
-			).build());
+			Object.class, liferayTokenIntrospectionService,
+			liferayTokenIntrospectionProperties);
 	}
 
 	@Deactivate

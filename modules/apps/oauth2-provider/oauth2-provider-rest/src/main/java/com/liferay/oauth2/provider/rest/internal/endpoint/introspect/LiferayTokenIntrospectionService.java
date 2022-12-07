@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.application.resource;
+package com.liferay.oauth2.provider.rest.internal.endpoint.introspect;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
-import com.liferay.oauth2.provider.rest.internal.endpoint.introspect.TokenIntrospection;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -49,9 +48,9 @@ import org.apache.cxf.rs.security.oauth2.utils.OAuthUtils;
  * @author Tomas Polesovsky
  */
 @Path("introspect")
-public class IntrospectResource extends AbstractTokenService {
+public class LiferayTokenIntrospectionService extends AbstractTokenService {
 
-	public IntrospectResource(
+	public LiferayTokenIntrospectionService(
 		LiferayOAuthDataProvider liferayOAuthDataProvider,
 		boolean canSupportPublicClients) {
 

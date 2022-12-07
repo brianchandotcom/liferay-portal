@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -45,10 +47,14 @@ public class DropZoneFragmentEntryProcessorTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_setUpDropZoneFragmentEntryProcessor();
+
+		_setUpPropsUtil();
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
 	public void testValidateFragmentEntryHTMLDuplicatedId() throws Exception {
+		_setFeatureFlag(true);
+
 		String dropZoneId = RandomTestUtil.randomString();
 
 		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
@@ -57,12 +63,16 @@ public class DropZoneFragmentEntryProcessorTest {
 
 	@Test(expected = FragmentEntryContentException.class)
 	public void testValidateFragmentEntryHTMLMissingId() throws Exception {
+		_setFeatureFlag(true);
+
 		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
 			_getHTML(StringPool.BLANK, RandomTestUtil.randomString()), null);
 	}
 
 	@Test
 	public void testValidateFragmentEntryHTMLValidWithIds() throws Exception {
+		_setFeatureFlag(true);
+
 		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
 			_getHTML(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()),
@@ -72,6 +82,8 @@ public class DropZoneFragmentEntryProcessorTest {
 	@Test
 	public void testValidateFragmentEntryHTMLValidWithoutIds()
 		throws Exception {
+
+		_setFeatureFlag(true);
 
 		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
 			_getHTML(StringPool.BLANK, StringPool.BLANK), null);
@@ -99,6 +111,12 @@ public class DropZoneFragmentEntryProcessorTest {
 			_dropZoneFragmentEntryProcessor, "_portal", _portal);
 	}
 
+	private static void _setUpPropsUtil() {
+		_props = Mockito.mock(Props.class);
+
+		ReflectionTestUtil.setFieldValue(PropsUtil.class, "_props", _props);
+	}
+
 	private String _getHTML(String... dropZoneIds) {
 		StringBundler sb = new StringBundler("<div class=\"fragment_1\">");
 
@@ -119,11 +137,20 @@ public class DropZoneFragmentEntryProcessorTest {
 		return sb.toString();
 	}
 
+	private void _setFeatureFlag(boolean enabled) {
+		Mockito.when(
+			_props.get("feature.flag.LPS-167932")
+		).thenReturn(
+			Boolean.toString(enabled)
+		);
+	}
+
 	private static DropZoneFragmentEntryProcessor
 		_dropZoneFragmentEntryProcessor;
 	private static Language _language;
 	private static LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 	private static Portal _portal;
+	private static Props _props;
 
 }

@@ -131,6 +131,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -966,9 +967,6 @@ public class ObjectEntryLocalServiceImpl
 						return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
 					}
 				).and(
-					_fillAccountEntriesPredicate(
-						companyId, userId, objectDefinitionId)
-				).and(
 					_fillPredicate(objectDefinitionId, predicate, search)
 				).and(
 					_getPermissionWherePredicate(
@@ -1027,9 +1025,6 @@ public class ObjectEntryLocalServiceImpl
 
 					return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
 				}
-			).and(
-				_fillAccountEntriesPredicate(
-					companyId, userId, objectDefinitionId)
 			).and(
 				_fillPredicate(objectDefinitionId, predicate, search)
 			).and(
@@ -2152,22 +2147,37 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Predicate _getPermissionWherePredicate(
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-		long groupId) {
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			long groupId)
+		throws PortalException {
 
 		ObjectDefinition objectDefinition =
 			dynamicObjectDefinitionTable.getObjectDefinition();
 
-		if ((PermissionThreadLocal.getPermissionChecker() == null) ||
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) ||
 			!_inlineSQLHelper.isEnabled(
 				objectDefinition.getCompanyId(), groupId)) {
 
 			return null;
 		}
 
-		return _inlineSQLHelper.getPermissionWherePredicate(
-			objectDefinition.getClassName(),
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn(), groupId);
+		Predicate individualScopePredicate =
+			_inlineSQLHelper.getPermissionWherePredicate(
+				objectDefinition.getClassName(),
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(), groupId);
+
+		if (individualScopePredicate == null) {
+			return null;
+		}
+
+		return individualScopePredicate.or(
+			_fillAccountEntriesPredicate(
+				objectDefinition.getCompanyId(), permissionChecker.getUserId(),
+				objectDefinition.getObjectDefinitionId())
+		).withParentheses();
 	}
 
 	private Object _getResult(

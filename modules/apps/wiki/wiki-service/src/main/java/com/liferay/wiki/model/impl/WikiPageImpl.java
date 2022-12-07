@@ -114,15 +114,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			int start, int end, OrderByComparator<FileEntry> orderByComparator)
 		throws PortalException {
 
-		long attachmentsFolderId = getAttachmentsFolderId();
-
-		if (attachmentsFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return Collections.emptyList();
-		}
-
-		return PortletFileRepositoryUtil.getPortletFileEntries(
-			getGroupId(), attachmentsFolderId,
-			WorkflowConstants.STATUS_APPROVED, start, end, orderByComparator);
+		return getAttachmentsFileEntries(null, start, end, orderByComparator);
 	}
 
 	@Override

@@ -326,7 +326,7 @@ definition {
 
 				AssertTextEquals.assertPartialText(
 					locator1 = "Message#INFO",
-					value1 = "Info:Web Content is disabled for this scope.");
+					value1 = "${errorMessage}");
 			}
 			else {
 				Search.searchCP(searchTerm = "${searchTerm}");

@@ -55,7 +55,7 @@ function refresh_sample_default_workspace {
 
 	cd sample-default-workspace
 
-	${BLADE_PATH} init --liferay-version dxp-7.4-u52
+	${BLADE_PATH} init --liferay-version dxp-7.4-u53
 
 	sed -i'.bak' "s/\"com.liferay.gradle.plugins.workspace\", version: \".*\"/\"com.liferay.gradle.plugins.workspace\", version: \"4.0.30\"/" settings.gradle
 
@@ -86,16 +86,34 @@ function refresh_sample_minimal_workspace {
 	copy_template theme-css sample-minimal-workspace/client-extensions/able-theme-css "Able Theme CSS"
 	copy_template theme-favicon sample-minimal-workspace/client-extensions/able-theme-favicon "Able Theme Favicon"
 
-	../tools/create_remote_app.sh able-remote-app react
+	../tools/create_remote_app.sh fox-remote-app react
+
+	cat << EOF > fox-remote-app/client-extension.yaml
+fox-remote-app:
+    cssURLs:
+        - static/css/main.*.css
+    friendlyURLMapping: fox-remote-app
+    htmlElementName: fox-remote-app
+    instanceable: false
+    name: Fox Remote App
+    portletCategoryName: category.remote-apps
+    type: customElement
+    urls:
+        - static/js/main.*.js
+    useESM: false
+
+assemble:
+    - from: build/
+      include: "static/**/*"
+      into: static/
+EOF
 
 	# remove the "react-scripts test" script
-	sed -i'.bak' "14d" able-remote-app/package.json
+	sed -i'.bak' "14d" fox-remote-app/package.json
 
-	rm -fr sample-minimal-workspace/client-extensions/able-remote-app
+	rm -fr sample-minimal-workspace/client-extensions/fox-remote-app
 
-	mv able-remote-app sample-minimal-workspace/client-extensions
-
-	cp -R refresh-files/sample-minimal-workspace/* sample-minimal-workspace/
+	mv fox-remote-app sample-minimal-workspace/client-extensions
 
 	rm -fr sample-default-workspace/client-extensions
 

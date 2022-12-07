@@ -4016,8 +4016,8 @@ definition {
 		}
 
 		task ("When removing this account through Users Admin") {
-			User.removeAccountCP(
-				accountName = "Account Name",
+			User.unassignMembershipCP(
+				entryName = "Account Name",
 				userScreenName = "usersn");
 		}
 

@@ -155,10 +155,8 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		User.openUsersAdmin();
-
-		User.removeUserAssetLibraryCP(
-			depotName = "Test Depot Name",
+		User.unassignMembershipCP(
+			entryName = "Test Depot Name",
 			userScreenName = "usersn");
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");

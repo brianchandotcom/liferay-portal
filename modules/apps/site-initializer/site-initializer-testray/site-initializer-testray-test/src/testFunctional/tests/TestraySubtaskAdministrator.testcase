@@ -176,10 +176,15 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
 
-			TestrayTestflow.editStatus(selectStatus = "Blocked");
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-166191",
+				selectStatus = "Blocked");
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
+			TestraySubtask.goToSubtask(subtaskName = "sub tasks_1");
+
 			TestraySubtask.verifySubtaskDetails(
 				comment = "None",
 				issues = "LPS-166191",
@@ -217,6 +222,8 @@ definition {
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
+			TestraySubtask.goToSubtask(subtaskName = "sub tasks_1");
+
 			TestraySubtask.verifySubtaskDetails(
 				comment = "None",
 				issues = "LPS-166191",
@@ -265,7 +272,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestraySubtask.goToSubTask(subTaskName = "sub tasks_1");
+			TestraySubtask.goToSubtask(subtaskName = "sub tasks_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -331,7 +338,10 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
 
-			TestrayTestflow.editStatus(selectStatus = "Test Fix");
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-166192",
+				selectStatus = "Test Fix");
 		}
 
 		task ("Then the user merged subtask with status complete") {
@@ -397,7 +407,10 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
 
-			TestrayTestflow.editStatus(selectStatus = "Blocked");
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-166193",
+				selectStatus = "Blocked");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -409,7 +422,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestraySubtask.goToSubTask(subTaskName = "sub tasks_2");
+			TestraySubtask.goToSubtask(subtaskName = "sub tasks_2");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -428,7 +441,7 @@ definition {
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "sub tasks_1,sub tasks_2");
 		}
 
-		TestraySubtask.goToSubTask(subTaskName = "sub tasks_1");
+		TestraySubtask.goToSubtask(subtaskName = "sub tasks_1");
 
 		TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "sub tasks_2, hgf");
 	}
@@ -443,7 +456,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestraySubtask.goToSubTask(subTaskName = "sub tasks_1");
+			TestraySubtask.goToSubtask(subtaskName = "sub tasks_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -461,7 +474,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestraySubtask.goToSubTask(subTaskName = "sub tasks_2");
+			TestraySubtask.goToSubtask(subtaskName = "sub tasks_2");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -489,7 +502,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestraySubtask.goToSubTask(subTaskName = "sub tasks_1");
+			TestraySubtask.goToSubtask(subtaskName = "sub tasks_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 

@@ -8,9 +8,9 @@ definition {
 		}
 	}
 
-	macro goToSubTask {
+	macro goToSubtask {
 		Click(
-			key_projectName = "${subTaskName}",
+			key_projectName = "${subtaskName}",
 			locator1 = "Testray#ITEM_NAME");
 	}
 

@@ -1,0 +1,16 @@
+[
+	{
+		"enabled": true,
+		"entityId": "samlidp",
+		"idp": {
+			"authnRequestSignatureRequired": false,
+			"defaultAssertionLifetime": 0,
+			"sessionMaximumAge": 10000,
+			"sessionTimeout": 0
+		},
+		"keyStoreCredentialPassword": "samlidp",
+		"role": "idp",
+		"signMetadata": true,
+		"sslRequired": false
+	}
+]

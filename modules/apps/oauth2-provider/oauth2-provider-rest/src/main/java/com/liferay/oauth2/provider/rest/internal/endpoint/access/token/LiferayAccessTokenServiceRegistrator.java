@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.application.resource;
+package com.liferay.oauth2.provider.rest.internal.endpoint.access.token;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	},
 	service = {}
 )
-public class TokenResourceRegistrator {
+public class LiferayAccessTokenServiceRegistrator {
 
 	@Activate
 	protected void activate(
@@ -55,17 +55,18 @@ public class TokenResourceRegistrator {
 			return;
 		}
 
-		TokenResource tokenResource = new TokenResource();
+		LiferayAccessTokenService liferayAccessTokenService =
+			new LiferayAccessTokenService();
 
-		tokenResource.setBlockUnsecureRequests(
+		liferayAccessTokenService.setBlockUnsecureRequests(
 			MapUtil.getBoolean(properties, "block.unsecure.requests", true));
-		tokenResource.setCanSupportPublicClients(
+		liferayAccessTokenService.setCanSupportPublicClients(
 			MapUtil.getBoolean(properties, "allow.public.clients", true));
-		tokenResource.setDataProvider(_liferayOAuthDataProvider);
-		tokenResource.setGrantHandlers(_accessTokenGrantHandlers);
+		liferayAccessTokenService.setDataProvider(_liferayOAuthDataProvider);
+		liferayAccessTokenService.setGrantHandlers(_accessTokenGrantHandlers);
 
 		_serviceRegistration = bundleContext.registerService(
-			Object.class, tokenResource,
+			Object.class, liferayAccessTokenService,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=Liferay.OAuth2.Application)"

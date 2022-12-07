@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.application.resource;
+package com.liferay.oauth2.provider.rest.internal.endpoint.access.token;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
@@ -45,7 +45,7 @@ import org.apache.cxf.rs.security.oauth2.services.AccessTokenService;
  * @author Tomas Polesovsky
  */
 @Path("/token")
-public class TokenResource extends AccessTokenService {
+public class LiferayAccessTokenService extends AccessTokenService {
 
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@CORS(allowMethods = "POST")
@@ -134,6 +134,7 @@ public class TokenResource extends AccessTokenService {
 	protected void injectContextIntoOAuthProviders() {
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(TokenResource.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayAccessTokenService.class);
 
 }

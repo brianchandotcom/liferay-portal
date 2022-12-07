@@ -14,14 +14,13 @@
 
 /// <reference types="react" />
 
-import {TNotificationTemplate} from './EditNotificationTemplate';
 interface FreeMarkerTemplateEditorProps {
 	baseResourceURL: string;
 	objectDefinitions: ObjectDefinition[];
 	selectedLocale: Liferay.Language.Locale;
 	setSelectedLocale: (value: Liferay.Language.Locale) => void;
-	setValues: (values: Partial<TNotificationTemplate>) => void;
-	values: TNotificationTemplate;
+	setValues: (values: Partial<NotificationTemplate>) => void;
+	values: NotificationTemplate;
 }
 export declare function FreeMarkerTemplateEditor({
 	baseResourceURL,

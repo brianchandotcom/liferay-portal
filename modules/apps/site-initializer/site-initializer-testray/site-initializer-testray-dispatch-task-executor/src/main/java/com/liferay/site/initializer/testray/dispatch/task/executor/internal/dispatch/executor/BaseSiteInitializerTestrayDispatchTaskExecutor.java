@@ -56,17 +56,6 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 			defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
-	protected ObjectEntry getFirstObjectEntry(
-			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionName, Sort[] sorts)
-		throws Exception {
-
-		Page<ObjectEntry> objectEntryPage = getObjectEntriesPage(
-			aggregation, companyId, filter, objectDefinitionName, sorts);
-
-		return objectEntryPage.fetchFirstItem();
-	}
-
 	protected ObjectDefinition getObjectDefinition(
 			String objectDefinitionShortName)
 		throws Exception {
@@ -102,6 +91,15 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 		return objectEntryManager.getObjectEntries(
 			companyId, getObjectDefinition(objectDefinitionName), null,
 			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
+	}
+
+	protected ObjectEntry getObjectEntry(
+			String objectDefinitionName, long objectEntryId)
+		throws Exception {
+
+		return objectEntryManager.getObjectEntry(
+			defaultDTOConverterContext,
+			getObjectDefinition(objectDefinitionName), objectEntryId);
 	}
 
 	protected Object getProperty(String key, ObjectEntry objectEntry) {

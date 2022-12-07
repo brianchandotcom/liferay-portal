@@ -144,8 +144,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				"r_issueToCaseResultsIssues_c_issueId",
 				testrayCaseResultsIssuesObjectEntry);
 
-			ObjectEntry testrayIssueObjectEntry = getFirstObjectEntry(
-				null, companyId, "id eq '" + issueId + "'", "Issue", null);
+			ObjectEntry testrayIssueObjectEntry = getObjectEntry(
+				"Issue", issueId);
 
 			sb.append(
 				StringUtil.removeSubstring(
@@ -160,8 +160,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		return sb.toString();
 	}
 
-	private int _getTestraySubtaskScore(
-			long companyId, List<ObjectEntry> objectEntries)
+	private int _getTestraySubtaskScore(List<ObjectEntry> objectEntries)
 		throws Exception {
 
 		int score = 0;
@@ -170,8 +169,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			Long testrayCaseId = (Long)getProperty(
 				"r_caseToCaseResult_c_caseId", objectEntry);
 
-			ObjectEntry testrayCaseObjectEntry = getFirstObjectEntry(
-				null, companyId, "id eq '" + testrayCaseId + "'", "Case", null);
+			ObjectEntry testrayCaseObjectEntry = getObjectEntry(
+				"Case", testrayCaseId);
 
 			score += (int)getProperty("priority", testrayCaseObjectEntry);
 		}
@@ -287,10 +286,10 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 					try {
 						testraySubtaskScore1 = _getTestraySubtaskScore(
-							companyId, testrayCaseResultObjectEntries1);
+							testrayCaseResultObjectEntries1);
 
 						testraySubtaskScore2 = _getTestraySubtaskScore(
-							companyId, testrayCaseResultObjectEntries2);
+							testrayCaseResultObjectEntries2);
 					}
 					catch (Exception exception) {
 						throw new RuntimeException(exception);
@@ -314,9 +313,6 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		for (List<ObjectEntry> testrayCaseResultObjectEntry :
 				testrayCaseResultGroups) {
 
-			int testraySubtaskScore = _getTestraySubtaskScore(
-				companyId, testrayCaseResultObjectEntry);
-
 			long testraySubtaskName = incrementTestrayFieldValue(
 				companyId, "name", "taskId eq '" + testrayTaskId + "'",
 				"Subtask", new Sort[] {new Sort("createDate", true)});
@@ -330,7 +326,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				).put(
 					"r_taskToSubtasks_c_taskId", testrayTaskId
 				).put(
-					"score", testraySubtaskScore
+					"score",
+					_getTestraySubtaskScore(testrayCaseResultObjectEntry)
 				).build());
 
 			for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {

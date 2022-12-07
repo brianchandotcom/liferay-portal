@@ -442,14 +442,12 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 		for (ObjectEntry sourceTestrayCaseResultsIssuesObjectEntry :
 				sourceTestrayCaseResultsIssuesObjectEntries) {
 
-			String testrayIssueId = String.valueOf(
-				getProperty(
-					"r_issueToCaseResultsIssues_c_issueId",
-					sourceTestrayCaseResultsIssuesObjectEntry));
+			long testrayIssueId = (long)getProperty(
+				"r_issueToCaseResultsIssues_c_issueId",
+				sourceTestrayCaseResultsIssuesObjectEntry);
 
-			ObjectEntry testrayIssueObjectEntry = getFirstObjectEntry(
-				null, companyId, "id eq '" + testrayIssueId + "'", "Issue",
-				null);
+			ObjectEntry testrayIssueObjectEntry = getObjectEntry(
+				"Issue", testrayIssueId);
 
 			if (testrayIssueObjectEntry == null) {
 				continue;
@@ -522,8 +520,11 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			return objectEntryId;
 		}
 
-		ObjectEntry objectEntry = getFirstObjectEntry(
-			null, companyId, filterString, objectDefinitionShortName, null);
+		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
+			objectEntriesPage = getObjectEntriesPage(
+				null, companyId, filterString, objectDefinitionShortName, null);
+
+		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
 		if (objectEntry == null) {
 			return 0;
@@ -1336,18 +1337,15 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			propertiesMap.get("testray.build.time"), testrayProjectId,
 			testrayRunId);
 
-		ObjectEntry testrayRoutineObjectEntry =
-			objectEntryManager.getObjectEntry(
-				defaultDTOConverterContext, _objectDefinitions.get("Routine"),
-				testrayRoutineId);
+		ObjectEntry testrayRoutineObjectEntry = getObjectEntry(
+			"Routine", testrayRoutineId);
 
 		if (!(Boolean)getProperty("autoanalyze", testrayRoutineObjectEntry)) {
 			return;
 		}
 
-		ObjectEntry testrayRunObjectEntry1 = objectEntryManager.getObjectEntry(
-			defaultDTOConverterContext, _objectDefinitions.get("Run"),
-			testrayRunId);
+		ObjectEntry testrayRunObjectEntry1 = getObjectEntry(
+			"Run", testrayRunId);
 
 		ObjectEntry testrayRunObjectEntry2 = _fetchLatestTestrayRunObjectEntry(
 			companyId,

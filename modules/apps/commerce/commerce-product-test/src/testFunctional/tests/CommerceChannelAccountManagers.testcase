@@ -67,7 +67,7 @@ definition {
 				for (var user : list "1,2") {
 					CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 						channelName = "Minium Portal",
-						userName = "salesagent${user}");
+						userName = "Sales Agent ${user}");
 				}
 			}
 		}
@@ -162,7 +162,7 @@ definition {
 		task ("When the admin user tries to create a new Channel Account Managers entry") {
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
-				userName = "salesagent");
+				userName = "Sales Agent");
 		}
 
 		task ("Then the new entry is successfully created") {
@@ -177,7 +177,7 @@ definition {
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				assertError = "true",
 				channelName = "Minium Portal",
-				userName = "salesagent");
+				userName = "Sales Agent");
 		}
 	}
 
@@ -212,7 +212,7 @@ definition {
 
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
-				userName = "salesagent");
+				userName = "Sales Agent");
 		}
 
 		task ("When the Channel Account Manager goes into the Users tab of the Commerce Account") {
@@ -301,7 +301,7 @@ definition {
 
 				CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 					channelName = "Minium Portal",
-					userName = "salesagent");
+					userName = "Sales Agent");
 			}
 		}
 
@@ -399,7 +399,7 @@ definition {
 
 				CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 					channelName = "Minium Portal",
-					userName = "salesagent");
+					userName = "Sales Agent");
 			}
 		}
 
@@ -526,7 +526,7 @@ definition {
 
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
-				userName = "salesagent");
+				userName = "Sales Agent");
 		}
 
 		task ("And the Channel Account Manager creates a new address") {
@@ -658,7 +658,7 @@ definition {
 
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
-				userName = "salesagent1");
+				userName = "Sales Agent 1");
 		}
 
 		task ("And salesagent1 can see the account") {
@@ -704,7 +704,7 @@ definition {
 
 			CommerceAccountChannelDefaults.editChannelAccountManagersEntry(
 				channelName = "Minium Portal",
-				newUserName = "salesagent2",
+				newUserName = "Sales Agent 2",
 				userFullName = "Sales Agent 1");
 		}
 
@@ -775,7 +775,7 @@ definition {
 
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
-				userName = "salesagent");
+				userName = "Sales Agent");
 		}
 
 		task ("And salesagent can see the account") {

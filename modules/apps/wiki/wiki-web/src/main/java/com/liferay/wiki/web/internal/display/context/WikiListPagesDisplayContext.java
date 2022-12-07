@@ -17,13 +17,13 @@ package com.liferay.wiki.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,11 +38,6 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -52,7 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
-import com.liferay.taglib.search.ResultRow;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -74,6 +68,7 @@ import com.liferay.wiki.web.internal.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -91,6 +86,233 @@ public class WikiListPagesDisplayContext {
 		_wikiNode = wikiNode;
 
 		_wikiRequestHelper = new WikiRequestHelper(httpServletRequest);
+	}
+
+	public List<DropdownItem> getActionDropdownItems(WikiPage wikiPage) {
+		return DropdownItemListBuilder.add(
+			() -> WikiPagePermission.contains(
+				_wikiRequestHelper.getPermissionChecker(), wikiPage,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_wikiRequestHelper.getLiferayPortletResponse()
+					).setMVCRenderCommandName(
+						"/wiki/edit_page"
+					).setParameter(
+						"nodeId", wikiPage.getNodeId()
+					).setParameter(
+						"title", HtmlUtil.unescape(wikiPage.getTitle())
+					).buildString());
+				dropdownItem.setKey(WikiUIItemKeys.EDIT);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "edit"));
+			}
+		).add(
+			() -> WikiPagePermission.contains(
+				_wikiRequestHelper.getPermissionChecker(), wikiPage,
+				ActionKeys.PERMISSIONS),
+			dropdownItem -> {
+				dropdownItem.putData("action", "permissions");
+				dropdownItem.putData(
+					"permissionsURL",
+					PermissionsURLTag.doTag(
+						null, WikiPage.class.getName(), wikiPage.getTitle(),
+						null, String.valueOf(wikiPage.getResourcePrimKey()),
+						LiferayWindowState.POP_UP.toString(), null,
+						_httpServletRequest));
+				dropdownItem.setKey(WikiUIItemKeys.PERMISSIONS);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "permissions"));
+			}
+		).add(
+			() -> _isCopyPasteEnabled(wikiPage),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_wikiRequestHelper.getLiferayPortletResponse()
+					).setMVCRenderCommandName(
+						"/wiki/edit_page"
+					).setRedirect(
+						_wikiRequestHelper.getCurrentURL()
+					).setParameter(
+						"editTitle", "1"
+					).setParameter(
+						"nodeId", wikiPage.getNodeId()
+					).setParameter(
+						"templateNodeId", wikiPage.getNodeId()
+					).setParameter(
+						"templateTitle", HtmlUtil.unescape(wikiPage.getTitle())
+					).setParameter(
+						"title", StringPool.BLANK
+					).buildString());
+				dropdownItem.setKey(WikiUIItemKeys.COPY);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "copy"));
+			}
+		).add(
+			() -> _isCopyPasteEnabled(wikiPage),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_wikiRequestHelper.getLiferayPortletResponse()
+					).setMVCRenderCommandName(
+						"/wiki/move_page"
+					).setRedirect(
+						_wikiRequestHelper.getCurrentURL()
+					).setParameter(
+						"nodeId", wikiPage.getNodeId()
+					).setParameter(
+						"title", HtmlUtil.unescape(wikiPage.getTitle())
+					).buildString());
+				dropdownItem.setKey(WikiUIItemKeys.MOVE);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "move"));
+			}
+		).add(
+			() ->
+				Validator.isNotNull(wikiPage.getContent()) &&
+				WikiNodePermission.contains(
+					_wikiRequestHelper.getPermissionChecker(),
+					wikiPage.getNodeId(), ActionKeys.ADD_PAGE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_wikiRequestHelper.getLiferayPortletResponse()
+					).setMVCRenderCommandName(
+						"/wiki/edit_page"
+					).setRedirect(
+						_wikiRequestHelper.getCurrentURL()
+					).setParameter(
+						"editTitle", "1"
+					).setParameter(
+						"nodeId", wikiPage.getNodeId()
+					).setParameter(
+						"parentTitle", wikiPage.getTitle()
+					).setParameter(
+						"title", StringPool.BLANK
+					).buildString());
+				dropdownItem.setKey(WikiUIItemKeys.ADD_CHILD_PAGE);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "add-child-page"));
+			}
+		).add(
+			() -> _hasSubscribePermission(wikiPage) && _isSubscribed(wikiPage),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createActionURL(
+						_wikiRequestHelper.getLiferayPortletResponse()
+					).setActionName(
+						"/wiki/edit_page"
+					).setCMD(
+						Constants.UNSUBSCRIBE
+					).setRedirect(
+						_wikiRequestHelper.getCurrentURL()
+					).setParameter(
+						"nodeId", wikiPage.getNodeId()
+					).setParameter(
+						"title", HtmlUtil.unescape(wikiPage.getTitle())
+					).buildString());
+				dropdownItem.setKey(WikiUIItemKeys.UNSUBSCRIBE);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "unsubscribe"));
+			}
+		).add(
+			() -> _hasSubscribePermission(wikiPage) && !_isSubscribed(wikiPage),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createActionURL(
+						_wikiRequestHelper.getLiferayPortletResponse()
+					).setActionName(
+						"/wiki/edit_page"
+					).setCMD(
+						Constants.SUBSCRIBE
+					).setRedirect(
+						_wikiRequestHelper.getCurrentURL()
+					).setParameter(
+						"nodeId", wikiPage.getNodeId()
+					).setParameter(
+						"title", HtmlUtil.unescape(wikiPage.getTitle())
+					).buildString());
+				dropdownItem.setKey(WikiUIItemKeys.SUBSCRIBE);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "subscribe"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "print");
+				dropdownItem.putData(
+					"printURL",
+					PortletURLBuilder.createRenderURL(
+						_wikiRequestHelper.getLiferayPortletResponse()
+					).setMVCRenderCommandName(
+						"/wiki/view"
+					).setParameter(
+						"nodeName",
+						() -> {
+							WikiNode wikiNode = wikiPage.getNode();
+
+							return wikiNode.getName();
+						}
+					).setParameter(
+						"title", wikiPage.getTitle()
+					).setParameter(
+						"viewMode", Constants.PRINT
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
+				dropdownItem.setKey(WikiUIItemKeys.PRINT);
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "print"));
+			}
+		).add(
+			() -> WikiPagePermission.contains(
+				_wikiRequestHelper.getPermissionChecker(), wikiPage,
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL",
+					PortletURLBuilder.createActionURL(
+						_wikiRequestHelper.getLiferayPortletResponse()
+					).setActionName(
+						"/wiki/edit_page"
+					).setCMD(
+						() -> {
+							if (!wikiPage.isDraft() &&
+								_trashHelper.isTrashEnabled(
+									_wikiRequestHelper.getScopeGroupId())) {
+
+								return Constants.MOVE_TO_TRASH;
+							}
+
+							return Constants.DELETE;
+						}
+					).setRedirect(
+						_wikiRequestHelper.getCurrentURL()
+					).setParameter(
+						"nodeId", wikiPage.getNodeId()
+					).setParameter(
+						"title", HtmlUtil.unescape(wikiPage.getTitle())
+					).buildString());
+				dropdownItem.putData(
+					"trashEnabled",
+					String.valueOf(
+						!wikiPage.isDraft() &&
+						_trashHelper.isTrashEnabled(
+							_wikiRequestHelper.getScopeGroupId())));
+				dropdownItem.setKey(WikiUIItemKeys.DELETE);
+
+				String label = "delete";
+
+				if (wikiPage.isDraft()) {
+					label = "discard-draft";
+				}
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, label));
+			}
+		).build();
 	}
 
 	public String getEmptyResultsMessage() {
@@ -144,36 +366,6 @@ public class WikiListPagesDisplayContext {
 		}
 
 		return "there-are-no-pages";
-	}
-
-	public Menu getMenu(WikiPage wikiPage) throws PortalException {
-		Menu menu = new Menu();
-
-		menu.setDirection("left-side");
-		menu.setMarkupView("lexicon");
-		menu.setScroll(false);
-
-		List<MenuItem> menuItems = new ArrayList<>();
-
-		_addEditMenuItem(menuItems, wikiPage);
-
-		_addPermissionsMenuItem(menuItems, wikiPage);
-
-		_addCopyMenuItem(menuItems, wikiPage);
-
-		_addMoveMenuItem(menuItems, wikiPage);
-
-		_addChildPageMenuItem(menuItems, wikiPage);
-
-		_addSubscriptionMenuItem(menuItems, wikiPage);
-
-		_addPrintPageMenuItem(menuItems, wikiPage);
-
-		_addDeleteMenuItem(menuItems, wikiPage);
-
-		menu.setMenuItems(menuItems);
-
-		return menu;
 	}
 
 	public void populateResultsAndTotal(
@@ -389,281 +581,14 @@ public class WikiListPagesDisplayContext {
 		}
 	}
 
-	private void _addChildPageMenuItem(
-			List<MenuItem> menuItems, WikiPage wikiPage)
+	private boolean _hasSubscribePermission(WikiPage wikiPage)
 		throws PortalException {
 
-		if (Validator.isNull(wikiPage.getContent()) ||
-			!WikiNodePermission.contains(
-				_wikiRequestHelper.getPermissionChecker(), wikiPage.getNodeId(),
-				ActionKeys.ADD_PAGE)) {
+		if (Objects.isNull(
+				_httpServletRequest.getAttribute(
+					WebKeys.SEARCH_CONTAINER_RESULT_ROW))) {
 
-			return;
-		}
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setKey(WikiUIItemKeys.ADD_CHILD_PAGE);
-		urlMenuItem.setLabel("add-child-page");
-		urlMenuItem.setURL(
-			PortletURLBuilder.createRenderURL(
-				_wikiRequestHelper.getLiferayPortletResponse()
-			).setMVCRenderCommandName(
-				"/wiki/edit_page"
-			).setRedirect(
-				_wikiRequestHelper.getCurrentURL()
-			).setParameter(
-				"editTitle", "1"
-			).setParameter(
-				"nodeId", wikiPage.getNodeId()
-			).setParameter(
-				"parentTitle", wikiPage.getTitle()
-			).setParameter(
-				"title", StringPool.BLANK
-			).buildString());
-
-		menuItems.add(urlMenuItem);
-	}
-
-	private void _addCopyMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
-		throws PortalException {
-
-		if (!_isCopyPasteEnabled(wikiPage)) {
-			return;
-		}
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setKey(WikiUIItemKeys.COPY);
-		urlMenuItem.setLabel("copy");
-		urlMenuItem.setURL(
-			PortletURLBuilder.createRenderURL(
-				_wikiRequestHelper.getLiferayPortletResponse()
-			).setMVCRenderCommandName(
-				"/wiki/edit_page"
-			).setRedirect(
-				_wikiRequestHelper.getCurrentURL()
-			).setParameter(
-				"editTitle", "1"
-			).setParameter(
-				"nodeId", wikiPage.getNodeId()
-			).setParameter(
-				"templateNodeId", wikiPage.getNodeId()
-			).setParameter(
-				"templateTitle", HtmlUtil.unescape(wikiPage.getTitle())
-			).setParameter(
-				"title", StringPool.BLANK
-			).buildString());
-
-		menuItems.add(urlMenuItem);
-	}
-
-	private void _addDeleteMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
-		throws PortalException {
-
-		if (!wikiPage.isDraft() &&
-			WikiPagePermission.contains(
-				_wikiRequestHelper.getPermissionChecker(), wikiPage,
-				ActionKeys.DELETE)) {
-
-			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
-
-			deleteMenuItem.setKey(WikiUIItemKeys.DELETE);
-			deleteMenuItem.setTrash(
-				_trashHelper.isTrashEnabled(
-					_wikiRequestHelper.getScopeGroupId()));
-			deleteMenuItem.setURL(
-				PortletURLBuilder.createActionURL(
-					_wikiRequestHelper.getLiferayPortletResponse()
-				).setActionName(
-					"/wiki/edit_page"
-				).setCMD(
-					() -> {
-						String cmd = Constants.DELETE;
-
-						if (_trashHelper.isTrashEnabled(
-								_wikiRequestHelper.getScopeGroupId())) {
-
-							cmd = Constants.MOVE_TO_TRASH;
-						}
-
-						return cmd;
-					}
-				).setRedirect(
-					_wikiRequestHelper.getCurrentURL()
-				).setParameter(
-					"nodeId", wikiPage.getNodeId()
-				).setParameter(
-					"title", HtmlUtil.unescape(wikiPage.getTitle())
-				).buildString());
-
-			menuItems.add(deleteMenuItem);
-		}
-
-		if (wikiPage.isDraft() &&
-			WikiPagePermission.contains(
-				_wikiRequestHelper.getPermissionChecker(), wikiPage,
-				ActionKeys.DELETE)) {
-
-			URLMenuItem urlMenuItem = new URLMenuItem();
-
-			urlMenuItem.setKey(WikiUIItemKeys.DELETE);
-			urlMenuItem.setLabel("discard-draft");
-			urlMenuItem.setURL(
-				PortletURLBuilder.createActionURL(
-					_wikiRequestHelper.getLiferayPortletResponse()
-				).setActionName(
-					"/wiki/edit_page"
-				).setCMD(
-					Constants.DELETE
-				).setRedirect(
-					_wikiRequestHelper.getCurrentURL()
-				).setParameter(
-					"nodeId", wikiPage.getNodeId()
-				).setParameter(
-					"title", HtmlUtil.unescape(wikiPage.getTitle())
-				).setParameter(
-					"version", wikiPage.getVersion()
-				).buildString());
-
-			menuItems.add(urlMenuItem);
-		}
-	}
-
-	private void _addEditMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
-		throws PortalException {
-
-		if (!WikiPagePermission.contains(
-				_wikiRequestHelper.getPermissionChecker(), wikiPage,
-				ActionKeys.UPDATE)) {
-
-			return;
-		}
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setKey(WikiUIItemKeys.EDIT);
-		urlMenuItem.setLabel("edit");
-		urlMenuItem.setURL(
-			PortletURLBuilder.createRenderURL(
-				_wikiRequestHelper.getLiferayPortletResponse()
-			).setMVCRenderCommandName(
-				"/wiki/edit_page"
-			).setParameter(
-				"nodeId", wikiPage.getNodeId()
-			).setParameter(
-				"title", HtmlUtil.unescape(wikiPage.getTitle())
-			).buildString());
-
-		menuItems.add(urlMenuItem);
-	}
-
-	private void _addMoveMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
-		throws PortalException {
-
-		if (!_isCopyPasteEnabled(wikiPage)) {
-			return;
-		}
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setKey(WikiUIItemKeys.MOVE);
-		urlMenuItem.setLabel("move");
-		urlMenuItem.setURL(
-			PortletURLBuilder.createRenderURL(
-				_wikiRequestHelper.getLiferayPortletResponse()
-			).setMVCRenderCommandName(
-				"/wiki/move_page"
-			).setRedirect(
-				_wikiRequestHelper.getCurrentURL()
-			).setParameter(
-				"nodeId", wikiPage.getNodeId()
-			).setParameter(
-				"title", HtmlUtil.unescape(wikiPage.getTitle())
-			).buildString());
-
-		menuItems.add(urlMenuItem);
-	}
-
-	private void _addPermissionsMenuItem(
-			List<MenuItem> menuItems, WikiPage wikiPage)
-		throws PortalException {
-
-		if (!WikiPagePermission.contains(
-				_wikiRequestHelper.getPermissionChecker(), wikiPage,
-				ActionKeys.PERMISSIONS)) {
-
-			return;
-		}
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setKey(WikiUIItemKeys.PERMISSIONS);
-		urlMenuItem.setLabel("permissions");
-		urlMenuItem.setMethod("get");
-		urlMenuItem.setUseDialog(true);
-
-		try {
-			urlMenuItem.setURL(
-				PermissionsURLTag.doTag(
-					null, WikiPage.class.getName(), wikiPage.getTitle(), null,
-					String.valueOf(wikiPage.getResourcePrimKey()),
-					LiferayWindowState.POP_UP.toString(), null,
-					_httpServletRequest));
-		}
-		catch (Exception exception) {
-			throw new SystemException(
-				"Unable to create permissions URL", exception);
-		}
-
-		menuItems.add(urlMenuItem);
-	}
-
-	private void _addPrintPageMenuItem(
-		List<MenuItem> menuItems, WikiPage wikiPage) {
-
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
-
-		javaScriptMenuItem.setKey(WikiUIItemKeys.PRINT);
-		javaScriptMenuItem.setLabel("print");
-		javaScriptMenuItem.setOnClick(
-			StringBundler.concat(
-				"window.open('",
-				HtmlUtil.escapeJS(
-					PortletURLBuilder.createRenderURL(
-						_wikiRequestHelper.getLiferayPortletResponse()
-					).setMVCRenderCommandName(
-						"/wiki/view"
-					).setParameter(
-						"nodeName",
-						() -> {
-							WikiNode wikiNode = wikiPage.getNode();
-
-							return wikiNode.getName();
-						}
-					).setParameter(
-						"title", wikiPage.getTitle()
-					).setParameter(
-						"viewMode", Constants.PRINT
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString()),
-				"', '', 'directories=0,height=480,left=80,location=1,",
-				"menubar=1,resizable=1,scrollbars=yes,status=0,",
-				"toolbar=0,top=180,width=640');"));
-
-		menuItems.add(javaScriptMenuItem);
-	}
-
-	private void _addSubscriptionMenuItem(
-			List<MenuItem> menuItems, WikiPage wikiPage)
-		throws PortalException {
-
-		ResultRow row = (ResultRow)_httpServletRequest.getAttribute(
-			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-		if (row == null) {
-			return;
+			return false;
 		}
 
 		WikiGroupServiceOverriddenConfiguration
@@ -677,58 +602,10 @@ public class WikiListPagesDisplayContext {
 			 !wikiGroupServiceOverriddenConfiguration.
 				 emailPageUpdatedEnabled())) {
 
-			return;
+			return false;
 		}
 
-		User user = _wikiRequestHelper.getUser();
-
-		if (SubscriptionLocalServiceUtil.isSubscribed(
-				user.getCompanyId(), user.getUserId(), WikiPage.class.getName(),
-				wikiPage.getResourcePrimKey())) {
-
-			URLMenuItem urlMenuItem = new URLMenuItem();
-
-			urlMenuItem.setKey(WikiUIItemKeys.UNSUBSCRIBE);
-			urlMenuItem.setLabel("unsubscribe");
-			urlMenuItem.setURL(
-				PortletURLBuilder.createActionURL(
-					_wikiRequestHelper.getLiferayPortletResponse()
-				).setActionName(
-					"/wiki/edit_page"
-				).setCMD(
-					Constants.UNSUBSCRIBE
-				).setRedirect(
-					_wikiRequestHelper.getCurrentURL()
-				).setParameter(
-					"nodeId", wikiPage.getNodeId()
-				).setParameter(
-					"title", HtmlUtil.unescape(wikiPage.getTitle())
-				).buildString());
-
-			menuItems.add(urlMenuItem);
-		}
-		else {
-			URLMenuItem urlMenuItem = new URLMenuItem();
-
-			urlMenuItem.setKey(WikiUIItemKeys.SUBSCRIBE);
-			urlMenuItem.setLabel("subscribe");
-			urlMenuItem.setURL(
-				PortletURLBuilder.createActionURL(
-					_wikiRequestHelper.getLiferayPortletResponse()
-				).setActionName(
-					"/wiki/edit_page"
-				).setCMD(
-					Constants.SUBSCRIBE
-				).setRedirect(
-					_wikiRequestHelper.getCurrentURL()
-				).setParameter(
-					"nodeId", wikiPage.getNodeId()
-				).setParameter(
-					"title", HtmlUtil.unescape(wikiPage.getTitle())
-				).buildString());
-
-			menuItems.add(urlMenuItem);
-		}
+		return true;
 	}
 
 	private boolean _isCopyPasteEnabled(WikiPage wikiPage)
@@ -745,6 +622,19 @@ public class WikiListPagesDisplayContext {
 		}
 
 		return true;
+	}
+
+	private Boolean _isSubscribed(WikiPage wikiPage) {
+		User user = _wikiRequestHelper.getUser();
+
+		if (SubscriptionLocalServiceUtil.isSubscribed(
+				user.getCompanyId(), user.getUserId(), WikiPage.class.getName(),
+				wikiPage.getResourcePrimKey())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

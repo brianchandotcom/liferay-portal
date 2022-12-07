@@ -509,4 +509,22 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160722 - Verify if as an Administrator I should be able to merge multiple unassigned subtasks"
+	@priority = "5"
+	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
+		task ("Given that the user merged multiple unassigned subtasks") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "sub tasks_1,sub tasks_2");
+		}
+
+		task ("Then the user merged subtask with status complete") {
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "sub tasks_1,sub tasks_2");
+		}
+	}
+
 }

@@ -74,32 +74,32 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 
 	protected List<ObjectEntry> getObjectEntries(
 			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionName, Sort[] sorts)
+			String objectDefinitionShortName, Sort[] sorts)
 		throws Exception {
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			aggregation, companyId, filter, objectDefinitionName, sorts);
+			aggregation, companyId, filter, objectDefinitionShortName, sorts);
 
 		return (List<ObjectEntry>)objectEntriesPage.getItems();
 	}
 
 	protected Page<ObjectEntry> getObjectEntriesPage(
 			Aggregation aggregation, long companyId, String filter,
-			String objectDefinitionName, Sort[] sorts)
+			String objectDefinitionShortName, Sort[] sorts)
 		throws Exception {
 
 		return objectEntryManager.getObjectEntries(
-			companyId, getObjectDefinition(objectDefinitionName), null,
+			companyId, getObjectDefinition(objectDefinitionShortName), null,
 			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
 	}
 
 	protected ObjectEntry getObjectEntry(
-			String objectDefinitionName, long objectEntryId)
+			String objectDefinitionShortName, long objectEntryId)
 		throws Exception {
 
 		return objectEntryManager.getObjectEntry(
 			defaultDTOConverterContext,
-			getObjectDefinition(objectDefinitionName), objectEntryId);
+			getObjectDefinition(objectDefinitionShortName), objectEntryId);
 	}
 
 	protected Object getProperty(String key, ObjectEntry objectEntry) {
@@ -147,13 +147,13 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 	}
 
 	protected void updateObjectEntry(
-			String objectDefinitionName, ObjectEntry objectEntry,
+			String objectDefinitionShortName, ObjectEntry objectEntry,
 			long objectEntryId)
 		throws Exception {
 
 		objectEntryManager.updateObjectEntry(
 			defaultDTOConverterContext,
-			getObjectDefinition(objectDefinitionName), objectEntryId,
+			getObjectDefinition(objectDefinitionShortName), objectEntryId,
 			objectEntry);
 	}
 

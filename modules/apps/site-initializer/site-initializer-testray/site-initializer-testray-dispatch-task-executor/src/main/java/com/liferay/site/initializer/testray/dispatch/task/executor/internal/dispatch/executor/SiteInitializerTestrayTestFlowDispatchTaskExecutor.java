@@ -105,6 +105,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		try {
 			loadObjectDefinitions(dispatchTrigger.getCompanyId());
+
 			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 		}
 		finally {

@@ -450,6 +450,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169310. The tab selection of Add menu should be back to default in a new browser session."
+	@priority = "5"
+	test PersistDefaultAddMenuTabSelectionInTheNewBrowserSession {
+		task ("Given a page designer selects the Content tab on the Add menu") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "ControlMenu#ADD");
+
+			Navigator.gotoNavTab(navTab = "Content");
+		}
+
+		task ("When the page designer accesses to the Add menu in a new browser session") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openInTheNewTab(locator1 = "${baseURL}/web/test-site-name/test-page-name");
+
+			Click(locator1 = "ControlMenu#ADD");
+		}
+
+		task ("Then the Add menu persists the default tab selection") {
+			Navigator.viewActivatedNavTab(navTab = "Widgets");
+		}
+	}
+
 	@description = "This is a use case for LPS-123143. View the languageId shown in configuration page."
 	@priority = "3"
 	test ViewLanguageIdInConfigurationPage {

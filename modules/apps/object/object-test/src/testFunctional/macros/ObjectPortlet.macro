@@ -348,7 +348,9 @@ definition {
 	}
 
 	macro selectCustomObject {
-		WaitForElementPresent(
+		SelectFrame(locator1 = "ObjectPortlet#SELECT_FRAME_OBJECT");
+
+		WaitForVisible(
 			key_label = "${label}",
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
 

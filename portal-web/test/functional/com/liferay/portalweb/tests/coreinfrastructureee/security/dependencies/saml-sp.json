@@ -1,0 +1,18 @@
+[
+	{
+		"enabled": true,
+		"entityId": "samlsp",
+		"keyStoreCredentialPassword": "samlsp",
+		"role": "sp",
+		"signMetadata": true,
+		"sp": {
+			"allowShowingTheLoginPortlet": true,
+			"assertionSignatureRequired": false,
+			"clockSkew": 3500,
+			"keyStoreEncryptionCredentialPassword": "samlsp",
+			"ldapImportEnabled": true,
+			"signAuthnRequest": true
+		},
+		"sslRequired": false
+	}
+]

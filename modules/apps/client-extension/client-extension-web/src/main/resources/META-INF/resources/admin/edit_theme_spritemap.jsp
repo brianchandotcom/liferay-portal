@@ -17,9 +17,9 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditClientExtensionEntryPartDisplayContext<ThemeSpritemapCET> editClientExtensionEntryPartDisplayContext = (EditClientExtensionEntryPartDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_PART_DISPLAY_CONTEXT);
+EditClientExtensionEntryDisplayContext<ThemeSpritemapCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
 
-ThemeSpritemapCET themeSpritemapCET = editClientExtensionEntryPartDisplayContext.getCET();
+ThemeSpritemapCET themeSpritemapCET = editClientExtensionEntryDisplayContext.getCET();
 %>
 
 <aui:input label="url" name="url" required="<%= true %>" type="text" value="<%= themeSpritemapCET.getURL() %>" />

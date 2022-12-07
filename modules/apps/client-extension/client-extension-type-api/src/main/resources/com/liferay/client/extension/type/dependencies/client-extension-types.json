@@ -251,20 +251,20 @@
 		"properties": [
 			{
 				"name": "description",
-				"type": "string"
+				"type": "CETProperty.Type.String"
 			},
 			{
 				"name": "name",
-				"type": "string"
+				"type": "CETProperty.Type.String"
 			},
 			{
 				"default": "https://www.liferay.com",
 				"name": "sourceCodeURL",
-				"type": "string"
+				"type": "CETProperty.Type.String"
 			},
 			{
 				"name": "type",
-				"type": "string"
+				"type": "CETProperty.Type.String"
 			},
 			{
 				"default": "",

@@ -167,6 +167,35 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test ViewAccountAppsAfterUpgrade740 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.4.0";
+
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxId = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
+	}
+
 	@description = "This is a use case for LPS-125389"
 	@priority = "5"
 	test ViewAccountAppsAfterUpgrade7110 {
@@ -233,6 +262,35 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
+
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxId = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
+	}
+
+	@priority = "5"
+	test ViewAccountAppsAfterUpgrade7413 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.4.13";
 
 		task ("Add and view a business account after upgrade") {
 			Upgrade.addAndViewBusinessAccount(

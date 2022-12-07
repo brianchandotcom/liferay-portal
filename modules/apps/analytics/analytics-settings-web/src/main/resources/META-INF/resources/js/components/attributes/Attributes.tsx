@@ -241,12 +241,11 @@ const Attributes: React.FC = () => {
 							closeFn: onOpenChangeProductsAttributes,
 							items,
 							key: EFields.Product,
-							updateFn: () => Promise.resolve(),
+							updateFn: updateProductsFields,
 						})
 					}
 					requestFn={fetchProductsFields}
 					title={Liferay.Language.get('sync-product-attributes')}
-					updateFn={updateProductsFields}
 				/>
 			)}
 		</>

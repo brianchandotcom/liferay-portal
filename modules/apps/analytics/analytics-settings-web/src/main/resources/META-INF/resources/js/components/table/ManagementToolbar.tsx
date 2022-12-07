@@ -35,7 +35,7 @@ interface IManagementToolbarProps {
 }
 
 const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
-	addItemTitle,
+	addItemTitle = Liferay.Language.get('add-item'),
 	columns,
 	disabled,
 	makeRequest,
@@ -178,6 +178,7 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 					<ClayManagementToolbar.ItemList>
 						<ClayManagementToolbar.Item>
 							<ClayButtonWithIcon
+								aria-label={addItemTitle}
 								className="nav-btn nav-btn-monospaced"
 								data-tooltip-align="top"
 								onClick={onAddItem}

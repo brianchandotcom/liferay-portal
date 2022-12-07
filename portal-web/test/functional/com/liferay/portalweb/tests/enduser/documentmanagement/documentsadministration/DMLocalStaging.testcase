@@ -21,10 +21,10 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 	}
 
-	@description = "This test covers LPS-126751. It ensures that a user cannot create empty document types or metadata sets."
+	@description = "This test covers LPS-126751. It ensures that a user cannot create a document type without a field."
 	@priority = "4"
-	@refactorneeded
-	test AddCustomTypeWithoutFields {
+	@refactordone
+	test CannotAddDocumentTypeWithEmptyField {
 		DMNavigator.openToAddDocumentType(siteURLKey = "site-name-staging");
 
 		PortletEntry.inputName(name = "DM Document Type Name");
@@ -34,7 +34,12 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
 			value1 = "Error:At least one field must be added.");
+	}
 
+	@description = "This test covers LPS-126751. It ensures that a user cannot create a metadata set without a field."
+	@priority = "4"
+	@refactordone
+	test CannotAddMetadataSetWithEmptyField {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
 
 		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");

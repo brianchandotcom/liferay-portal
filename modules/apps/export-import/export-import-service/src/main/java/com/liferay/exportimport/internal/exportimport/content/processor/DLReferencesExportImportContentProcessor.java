@@ -63,7 +63,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -267,13 +266,14 @@ public class DLReferencesExportImportContentProcessor
 				if (map.containsKey("friendlyURL")) {
 					String friendlyURL = MapUtil.getString(map, "friendlyURL");
 
-					Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+					fileEntry = _resolveFileEntry(
 						MapUtil.getString(map, "groupName"), friendlyURL);
 
-					fileEntry = fileEntryOptional.orElseThrow(
-						() -> new NoSuchFileEntryException(
+					if (fileEntry == null) {
+						throw new NoSuchFileEntryException(
 							"No file entry found for friendly URL " +
-								friendlyURL));
+								friendlyURL);
+					}
 				}
 				else if (map.containsKey("folderId")) {
 					long folderId = MapUtil.getLong(map, "folderId");
@@ -701,12 +701,11 @@ public class DLReferencesExportImportContentProcessor
 		return content;
 	}
 
-	private Optional<FileEntry> _resolveFileEntry(
-			String groupName, String friendlyURL)
+	private FileEntry _resolveFileEntry(String groupName, String friendlyURL)
 		throws Exception {
 
 		if (_fileEntryFriendlyURLResolver == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		Group group = _getGroup(groupName);

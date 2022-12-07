@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -98,13 +97,15 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 				FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY,
 				matcher.group(7))) {
 
-			Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+			FileEntry fileEntry = _resolveFileEntry(
 				matcher.group(9), matcher.group(8));
 
-			return fileEntryOptional.orElseThrow(
-				() -> new PortalException(
-					"No file entry found for friendly URL " +
-						matcher.group(0)));
+			if (fileEntry == null) {
+				throw new PortalException(
+					"No file entry found for friendly URL " + matcher.group(0));
+			}
+
+			return fileEntry;
 		}
 
 		if (matcher.group(5) != null) {
@@ -185,12 +186,11 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		return bodyNode.childNode(0);
 	}
 
-	private Optional<FileEntry> _resolveFileEntry(
-			String friendlyURL, String groupName)
+	private FileEntry _resolveFileEntry(String friendlyURL, String groupName)
 		throws PortalException {
 
 		if (_fileEntryFriendlyURLResolver == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		Group group = _getGroup(CompanyThreadLocal.getCompanyId(), groupName);

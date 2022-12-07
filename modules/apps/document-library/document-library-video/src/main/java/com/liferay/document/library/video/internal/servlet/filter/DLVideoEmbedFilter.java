@@ -51,7 +51,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -139,12 +138,15 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		throws PortalException {
 
 		if (_PATH_SEPARATOR_FILE_ENTRY.equals(pathParts.get(1))) {
-			Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+			FileEntry fileEntry = _resolveFileEntry(
 				httpServletRequest, pathParts);
 
-			return fileEntryOptional.orElseThrow(
-				() -> new NoSuchFileEntryException(
-					"No file entry found for friendly URL " + pathParts));
+			if (fileEntry == null) {
+				throw new NoSuchFileEntryException(
+					"No file entry found for friendly URL " + pathParts);
+			}
+
+			return fileEntry;
 		}
 
 		long groupId = GetterUtil.getLong(pathParts.get(1));
@@ -247,12 +249,12 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		return company.getDefaultUser();
 	}
 
-	private Optional<FileEntry> _resolveFileEntry(
+	private FileEntry _resolveFileEntry(
 			HttpServletRequest httpServletRequest, List<String> pathParts)
 		throws PortalException {
 
 		if (_fileEntryFriendlyURLResolver == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		User user = _getUser(httpServletRequest);

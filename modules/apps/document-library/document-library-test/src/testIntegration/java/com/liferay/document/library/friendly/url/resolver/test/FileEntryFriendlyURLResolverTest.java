@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -62,16 +60,14 @@ public class FileEntryFriendlyURLResolverTest {
 
 		_addFileEntry(urlTitle);
 
-		Optional<FileEntry> fileEntryOptional =
+		FileEntry fileEntry = _fileEntryFriendlyURLResolver.resolveFriendlyURL(
+			_group.getGroupId(), urlTitle);
+
+		Assert.assertNotNull(fileEntry);
+
+		Assert.assertNull(
 			_fileEntryFriendlyURLResolver.resolveFriendlyURL(
-				_group.getGroupId(), urlTitle);
-
-		Assert.assertTrue(fileEntryOptional.isPresent());
-
-		fileEntryOptional = _fileEntryFriendlyURLResolver.resolveFriendlyURL(
-			_group.getGroupId(), RandomTestUtil.randomString());
-
-		Assert.assertFalse(fileEntryOptional.isPresent());
+				_group.getGroupId(), RandomTestUtil.randomString()));
 	}
 
 	private void _addFileEntry(String urlTitle) throws Exception {

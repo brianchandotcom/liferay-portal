@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,8 +32,7 @@ public class FileEntryFriendlyURLResolverImpl
 	implements FileEntryFriendlyURLResolver {
 
 	@Override
-	public Optional<FileEntry> resolveFriendlyURL(
-			long groupId, String friendlyURL)
+	public FileEntry resolveFriendlyURL(long groupId, String friendlyURL)
 		throws PortalException {
 
 		FriendlyURLEntry friendlyURLEntry =
@@ -43,11 +40,10 @@ public class FileEntryFriendlyURLResolverImpl
 				groupId, FileEntry.class, friendlyURL);
 
 		if (friendlyURLEntry == null) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(
-			_dlAppLocalService.getFileEntry(friendlyURLEntry.getClassPK()));
+		return _dlAppLocalService.getFileEntry(friendlyURLEntry.getClassPK());
 	}
 
 	@Reference

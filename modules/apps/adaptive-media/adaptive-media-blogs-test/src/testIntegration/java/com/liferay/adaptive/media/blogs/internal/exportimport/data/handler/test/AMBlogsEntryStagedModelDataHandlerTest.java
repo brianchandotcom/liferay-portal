@@ -212,7 +212,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(getClass(), "image.jpg"), null, null,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			serviceContext);
 	}
 

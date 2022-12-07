@@ -36,6 +36,8 @@ if (Validator.isNull(backURL)) {
 		"accountEntryId", accountEntryDisplay.getAccountEntryId()
 	).setParameter(
 		"screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS
+	).setWindowState(
+		LiferayWindowState.MAXIMIZED
 	).buildString();
 }
 

@@ -28,6 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
@@ -36,6 +37,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.uuid.PortalUUIDImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -255,6 +259,19 @@ public class DropZoneFragmentEntryProcessorTest {
 			FragmentEntryLink fragmentEntryLink,
 			LayoutStructure layoutStructure, String fragmentDropZoneId) {
 
+		FragmentDropZoneLayoutStructureItem[]
+			fragmentDropZoneLayoutStructureItems =
+				_addFragmentDropZoneLayoutStructureItems(
+					fragmentEntryLink, layoutStructure, fragmentDropZoneId);
+
+		return fragmentDropZoneLayoutStructureItems[0];
+	}
+
+	private FragmentDropZoneLayoutStructureItem[]
+		_addFragmentDropZoneLayoutStructureItems(
+			FragmentEntryLink fragmentEntryLink,
+			LayoutStructure layoutStructure, String... fragmentDropZoneIds) {
+
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
@@ -273,45 +290,68 @@ public class DropZoneFragmentEntryProcessorTest {
 		layoutStructure.addLayoutStructureItem(
 			fragmentStyledLayoutStructureItem);
 
-		FragmentDropZoneLayoutStructureItem
-			fragmentDropZoneLayoutStructureItem =
-				(FragmentDropZoneLayoutStructureItem)
-					layoutStructure.addFragmentDropZoneLayoutStructureItem(
-						fragmentStyledLayoutStructureItem.getItemId(), 0);
+		List<FragmentDropZoneLayoutStructureItem>
+			fragmentDropZoneLayoutStructureItems = new ArrayList<>();
 
-		if (!Validator.isBlank(fragmentDropZoneId)) {
-			fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(
-				fragmentDropZoneId);
+		for (int i = 0; i < fragmentDropZoneIds.length; i++) {
+			String fragmentDropZoneId = fragmentDropZoneIds[i];
+
+			FragmentDropZoneLayoutStructureItem
+				fragmentDropZoneLayoutStructureItem =
+					(FragmentDropZoneLayoutStructureItem)
+						layoutStructure.addFragmentDropZoneLayoutStructureItem(
+							fragmentStyledLayoutStructureItem.getItemId(), i);
+
+			if (!Validator.isBlank(fragmentDropZoneId)) {
+				fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(
+					fragmentDropZoneId);
+			}
+
+			layoutStructure.addLayoutStructureItem(
+				fragmentDropZoneLayoutStructureItem);
+
+			fragmentDropZoneLayoutStructureItems.add(
+				fragmentDropZoneLayoutStructureItem);
 		}
 
-		layoutStructure.addLayoutStructureItem(
-			fragmentDropZoneLayoutStructureItem);
-
-		return fragmentDropZoneLayoutStructureItem;
+		return fragmentDropZoneLayoutStructureItems.toArray(
+			new FragmentDropZoneLayoutStructureItem[0]);
 	}
 
-	private String _getExpectedHTML(String dropZoneId, String itemId) {
+	private String _getExpectedHTML(
+		KeyValuePair... dropZoneIdItemIdKeyValuePairs) {
+
 		StringBundler sb = new StringBundler("<div class=\"fragment_1\">");
 
-		sb.append("<lfr-drop-zone");
+		for (KeyValuePair keyValuePair : dropZoneIdItemIdKeyValuePairs) {
+			sb.append("<lfr-drop-zone");
 
-		if (!Validator.isBlank(dropZoneId)) {
-			sb.append(" data-lfr-drop-zone-id=\"");
-			sb.append(dropZoneId);
-			sb.append(StringPool.QUOTE);
+			String dropZoneId = keyValuePair.getKey();
+
+			if (!Validator.isBlank(dropZoneId)) {
+				sb.append(" data-lfr-drop-zone-id=\"");
+				sb.append(dropZoneId);
+				sb.append(StringPool.QUOTE);
+			}
+
+			String itemId = keyValuePair.getValue();
+
+			if (!Validator.isBlank(itemId)) {
+				sb.append(" uuid=\"");
+				sb.append(itemId);
+				sb.append(StringPool.QUOTE);
+			}
+
+			sb.append("></lfr-drop-zone>");
 		}
-
-		if (!Validator.isBlank(itemId)) {
-			sb.append(" uuid=\"");
-			sb.append(itemId);
-			sb.append(StringPool.QUOTE);
-		}
-
-		sb.append("></lfr-drop-zone>");
 
 		sb.append("</div>");
 
 		return sb.toString();
+	}
+
+	private String _getExpectedHTML(String dropZoneId, String itemId) {
+		return _getExpectedHTML(new KeyValuePair(dropZoneId, itemId));
 	}
 
 	private String _getHTML(String... dropZoneIds) {

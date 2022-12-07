@@ -433,4 +433,50 @@ definition {
 		TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "sub tasks_2, hgf");
 	}
 
+	@description = "This is a test for LPS-169400 - Verify is as an Administrator I should be able to merge an in analysis subtask with an in analysis subtask"
+	@priority = "5"
+	test AdminCanMergeInAnalysisSubtaskWithInAnalysisSubtask {
+		task ("Given that the user in analysis a Subtask") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestraySubtask.goToSubTask(subTaskName = "sub tasks_1");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "In Analysis");
+
+			TestrayHeader.clickBreadcrumbTitle(breadcrumbName = "Task_1");
+		}
+
+		task ("When that the user leave in analysis the other Subtask") {
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestraySubtask.goToSubTask(subTaskName = "sub tasks_2");
+
+			Button.click(button = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtask Details",
+				status = "In Analysis");
+		}
+
+		task ("Then the user merged subtask with status in analysis") {
+			TestrayHeader.clickBreadcrumbTitle(breadcrumbName = "Task_1");
+
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "sub tasks_1,sub tasks_2");
+		}
+	}
+
 }

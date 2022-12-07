@@ -1161,22 +1161,25 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Comment";
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name-staging",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",

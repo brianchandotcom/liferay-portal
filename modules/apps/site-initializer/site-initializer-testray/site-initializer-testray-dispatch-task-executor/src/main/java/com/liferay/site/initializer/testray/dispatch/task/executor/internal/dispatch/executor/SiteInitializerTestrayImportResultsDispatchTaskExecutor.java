@@ -447,15 +447,9 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 					"r_issueToCaseResultsIssues_c_issueId",
 					sourceTestrayCaseResultsIssuesObjectEntry));
 
-			com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-				testrayIssueObjectEntriesPage =
-					objectEntryManager.getObjectEntries(
-						companyId, _objectDefinitions.get("Issue"), null, null,
-						defaultDTOConverterContext,
-						"id eq '" + testrayIssueId + "'", null, null, null);
-
-			ObjectEntry testrayIssueObjectEntry =
-				testrayIssueObjectEntriesPage.fetchFirstItem();
+			ObjectEntry testrayIssueObjectEntry = getFirstObjectEntry(
+				null, companyId, "id eq '" + testrayIssueId + "'", "Issue",
+				null);
 
 			if (testrayIssueObjectEntry == null) {
 				continue;
@@ -528,13 +522,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			return objectEntryId;
 		}
 
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			objectEntriesPage = objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get(objectDefinitionShortName),
-				null, null, defaultDTOConverterContext, filterString, null,
-				null, null);
-
-		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
+		ObjectEntry objectEntry = getFirstObjectEntry(
+			null, companyId, filterString, objectDefinitionShortName, null);
 
 		if (objectEntry == null) {
 			return 0;

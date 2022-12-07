@@ -144,12 +144,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 				"r_issueToCaseResultsIssues_c_issueId",
 				testrayCaseResultsIssuesObjectEntry);
 
-			Page<ObjectEntry> testrayIssueObjectEntriesPage =
-				getObjectEntriesPage(
-					null, companyId, "id eq '" + issueId + "'", "Issue", null);
-
-			ObjectEntry testrayIssueObjectEntry =
-				testrayIssueObjectEntriesPage.fetchFirstItem();
+			ObjectEntry testrayIssueObjectEntry = getFirstObjectEntry(
+				null, companyId, "id eq '" + issueId + "'", "Issue", null);
 
 			sb.append(
 				StringUtil.removeSubstring(
@@ -174,13 +170,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			Long testrayCaseId = (Long)getProperty(
 				"r_caseToCaseResult_c_caseId", objectEntry);
 
-			Page<ObjectEntry> testrayCaseObjectEntriesPage =
-				getObjectEntriesPage(
-					null, companyId, "id eq '" + testrayCaseId + "'", "Case",
-					null);
-
-			ObjectEntry testrayCaseObjectEntry =
-				testrayCaseObjectEntriesPage.fetchFirstItem();
+			ObjectEntry testrayCaseObjectEntry = getFirstObjectEntry(
+				null, companyId, "id eq '" + testrayCaseId + "'", "Case", null);
 
 			score += (int)getProperty("priority", testrayCaseObjectEntry);
 		}

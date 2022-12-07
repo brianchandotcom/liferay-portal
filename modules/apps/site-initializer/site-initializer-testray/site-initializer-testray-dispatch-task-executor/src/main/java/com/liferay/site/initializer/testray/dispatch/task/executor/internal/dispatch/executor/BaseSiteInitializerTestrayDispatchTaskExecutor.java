@@ -62,6 +62,18 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 			defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
+	protected ObjectEntry getFirstObjectEntry(
+			Aggregation aggregation, long companyId, String filter,
+			String objectDefinitionName, Sort[] sorts)
+		throws Exception {
+
+		Page<ObjectEntry> objectEntryPage = objectEntryManager.getObjectEntries(
+			companyId, objectDefinitionsMap.get(objectDefinitionName), null,
+			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
+
+		return objectEntryPage.fetchFirstItem();
+	}
+
 	protected ObjectDefinition getObjectDefinition(
 			String objectDefinitionShortName)
 		throws Exception {

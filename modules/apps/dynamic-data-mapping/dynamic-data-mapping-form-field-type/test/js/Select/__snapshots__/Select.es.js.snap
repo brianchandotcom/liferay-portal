@@ -10,6 +10,7 @@ exports[`Select calls onChange callback when an item is selected using multisele
     <select
       aria-hidden="true"
       class="form-control form-control"
+      data-aria-hidden="true"
       hidden=""
       id="undefined_field"
       multiple=""
@@ -23,7 +24,9 @@ exports[`Select calls onChange callback when an item is selected using multisele
       </option>
     </select>
     <div
+      aria-hidden="true"
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
+      data-aria-hidden="true"
       style=""
     >
       <div
@@ -323,10 +326,14 @@ exports[`Select calls onChange callback when an item is selected using multisele
       </div>
     </div>
     <input
+      aria-hidden="true"
+      data-aria-hidden="true"
       type="hidden"
       value=""
     />
     <input
+      aria-hidden="true"
+      data-aria-hidden="true"
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -346,6 +353,7 @@ exports[`Select filters according to the input and calls onChange callback when 
     <select
       aria-hidden="true"
       class="form-control form-control"
+      data-aria-hidden="true"
       hidden=""
       id="undefined_field"
       multiple=""
@@ -358,7 +366,9 @@ exports[`Select filters according to the input and calls onChange callback when 
       />
     </select>
     <div
+      aria-hidden="true"
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
+      data-aria-hidden="true"
       style=""
     >
       <div
@@ -572,10 +582,14 @@ exports[`Select filters according to the input and calls onChange callback when 
       </div>
     </div>
     <input
+      aria-hidden="true"
+      data-aria-hidden="true"
       type="hidden"
       value=""
     />
     <input
+      aria-hidden="true"
+      data-aria-hidden="true"
       name="undefined_edited"
       type="hidden"
       value="false"
@@ -607,7 +621,6 @@ exports[`Select has a help text 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -641,7 +654,7 @@ exports[`Select has a help text 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -712,7 +725,6 @@ exports[`Select has a key 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -746,7 +758,7 @@ exports[`Select has a key 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -809,7 +821,6 @@ exports[`Select has a label 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -843,7 +854,7 @@ exports[`Select has a label 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -906,7 +917,6 @@ exports[`Select has a placeholder 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -940,7 +950,7 @@ exports[`Select has a placeholder 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -998,7 +1008,6 @@ exports[`Select has a predefinedValue 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1032,7 +1041,7 @@ exports[`Select has a predefinedValue 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1090,7 +1099,6 @@ exports[`Select has a value 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1124,7 +1132,7 @@ exports[`Select has a value 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1182,7 +1190,6 @@ exports[`Select has an id 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1217,7 +1224,7 @@ exports[`Select has an id 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1275,7 +1282,6 @@ exports[`Select has class dropdown-opened when it's opened 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1309,7 +1315,7 @@ exports[`Select has class dropdown-opened when it's opened 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1367,7 +1373,6 @@ exports[`Select is closed by default 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1401,7 +1406,7 @@ exports[`Select is closed by default 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1459,7 +1464,6 @@ exports[`Select is not required 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1493,7 +1497,7 @@ exports[`Select is not required 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1568,7 +1572,6 @@ exports[`Select puts an asterisk when field is required 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1602,7 +1605,7 @@ exports[`Select puts an asterisk when field is required 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1672,7 +1675,6 @@ exports[`Select renders Label if showLabel is true 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1706,7 +1708,7 @@ exports[`Select renders Label if showLabel is true 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1769,7 +1771,6 @@ exports[`Select renders no options when options come empty 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1803,7 +1804,7 @@ exports[`Select renders no options when options come empty 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1861,7 +1862,6 @@ exports[`Select renders options 1`] = `
     </select>
     <div
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
-      style=""
     >
       <div
         class="form-control results-chosen select-field-trigger"
@@ -1895,7 +1895,7 @@ exports[`Select renders options 1`] = `
         aria-hidden="true"
         class="dropdown-menu ddm-btn-full ddm-select-dropdown"
         role="presentation"
-        style="max-width: 500px; width: 100%; left: -1049px; top: -1003px;"
+        style="max-width: 500px; width: 100%;"
       >
         <ul
           class="list-unstyled"
@@ -1954,6 +1954,7 @@ exports[`Select shows a search input when the number of options is more than the
     <select
       aria-hidden="true"
       class="form-control form-control"
+      data-aria-hidden="true"
       hidden=""
       id="undefined_field"
       multiple=""
@@ -1966,7 +1967,9 @@ exports[`Select shows a search input when the number of options is more than the
       />
     </select>
     <div
+      aria-hidden="true"
       class="form-builder-select-field input-group-container lfr__ddm-select-input-trigger"
+      data-aria-hidden="true"
       style=""
     >
       <div
@@ -2444,10 +2447,14 @@ exports[`Select shows a search input when the number of options is more than the
       </div>
     </div>
     <input
+      aria-hidden="true"
+      data-aria-hidden="true"
       type="hidden"
       value=""
     />
     <input
+      aria-hidden="true"
+      data-aria-hidden="true"
       name="undefined_edited"
       type="hidden"
       value="false"

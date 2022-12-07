@@ -30,7 +30,6 @@ exports[`DigitalSignature renders 1`] = `
                   class="dropdown-toggle nav-link btn btn-unstyled"
                   disabled=""
                   id="filter-and-order"
-                  style=""
                   type="button"
                 >
                   <span

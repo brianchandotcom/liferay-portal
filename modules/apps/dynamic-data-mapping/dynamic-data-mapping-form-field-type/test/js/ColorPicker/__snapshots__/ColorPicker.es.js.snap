@@ -18,7 +18,6 @@ exports[`Field Color Picker renders field disabled 1`] = `
     >
       <div
         class="input-group clay-color"
-        style=""
       >
         <div
           class="input-group-item input-group-item-shrink input-group-prepend"
@@ -82,7 +81,6 @@ exports[`Field Color Picker renders field with helptext 1`] = `
     >
       <div
         class="input-group clay-color"
-        style=""
       >
         <div
           class="input-group-item input-group-item-shrink input-group-prepend"
@@ -162,7 +160,6 @@ exports[`Field Color Picker renders field with label 1`] = `
     >
       <div
         class="input-group clay-color"
-        style=""
       >
         <div
           class="input-group-item input-group-item-shrink input-group-prepend"

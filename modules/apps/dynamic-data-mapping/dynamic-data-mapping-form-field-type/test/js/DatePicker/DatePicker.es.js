@@ -57,12 +57,12 @@ describe('DatePicker', () => {
 	});
 
 	it('fills the input with the date selected on Date Picker', () => {
-		render(<DatePicker onChange={() => {}} />);
+		const {getByLabelText} = render(<DatePicker onChange={() => {}} />);
 
 		const [button] = screen.getAllByLabelText('Choose date');
 
 		userEvent.click(button);
-		userEvent.click(screen.getByLabelText('Select current date'));
+		fireEvent.click(getByLabelText('Select current date'));
 
 		expect(screen.getByRole('textbox', {hidden: true})).toHaveValue(
 			moment().format('MM/DD/YYYY')
@@ -77,7 +77,7 @@ describe('DatePicker', () => {
 		const [button] = screen.getAllByLabelText('Choose date');
 
 		userEvent.click(button);
-		userEvent.click(screen.getByLabelText('Select current date'));
+		fireEvent.click(screen.getByLabelText('Select current date'));
 
 		expect(onChange).toHaveBeenCalledWith(
 			{},
@@ -91,7 +91,7 @@ describe('DatePicker', () => {
 		const [button] = screen.getAllByLabelText('Choose date');
 
 		userEvent.click(button);
-		userEvent.click(screen.getByLabelText('Select current date'));
+		fireEvent.click(screen.getByLabelText('Select current date'));
 
 		expect(screen.getByRole('textbox', {hidden: true})).toHaveValue(
 			moment().format('YYYY/MM/DD')

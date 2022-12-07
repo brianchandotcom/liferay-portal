@@ -169,7 +169,6 @@ exports[`TranslationAdminSelector renders a dropdown trigger with the selected l
       aria-expanded="false"
       aria-haspopup="true"
       class="dropdown-toggle btn btn-monospaced btn-secondary"
-      style=""
       title="select-translation-language"
       type="button"
     >

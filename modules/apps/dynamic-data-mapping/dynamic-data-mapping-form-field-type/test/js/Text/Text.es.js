@@ -14,6 +14,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {act, cleanup, fireEvent, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
@@ -302,7 +303,7 @@ describe('Field Text', () => {
 
 		const body = document.body;
 
-		fireEvent.mouseDown(body);
+		userEvent.click(body);
 
 		act(() => {
 			jest.runAllTimers();

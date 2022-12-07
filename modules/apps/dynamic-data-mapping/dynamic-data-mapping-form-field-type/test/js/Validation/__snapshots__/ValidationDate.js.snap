@@ -17,7 +17,6 @@ exports[`ValidationDate shows date range validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -86,7 +85,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
       >
         <div
           class="form-control results-chosen select-field-trigger"
@@ -130,7 +128,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
       >
         <div
           class="form-control results-chosen select-field-trigger"
@@ -171,7 +168,6 @@ exports[`ValidationDate shows date range validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -225,7 +221,6 @@ exports[`ValidationDate shows date range validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -294,7 +289,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
       >
         <div
           class="form-control results-chosen select-field-trigger"
@@ -338,7 +332,6 @@ exports[`ValidationDate shows date range validation 1`] = `
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
       >
         <div
           class="form-control results-chosen select-field-trigger"
@@ -379,7 +372,6 @@ exports[`ValidationDate shows date range validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -433,7 +425,6 @@ exports[`ValidationDate shows date range validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -499,7 +490,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -562,7 +552,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
       >
         <div
           class="form-control results-chosen select-field-trigger"
@@ -606,7 +595,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
       >
         <div
           class="form-control results-chosen select-field-trigger"
@@ -647,7 +635,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -701,7 +688,6 @@ exports[`ValidationDate shows future dates validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -767,7 +753,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -830,7 +815,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
       >
         <div
           class="form-control results-chosen select-field-trigger"
@@ -874,7 +858,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
         aria-expanded="false"
         aria-haspopup="true"
         class="dropdown-toggle form-builder-select-field input-group-container"
-        style=""
       >
         <div
           class="form-control results-chosen select-field-trigger"
@@ -915,7 +898,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"
@@ -969,7 +951,6 @@ exports[`ValidationDate shows past dates validation 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle form-builder-select-field input-group-container"
-          style=""
         >
           <div
             class="form-control results-chosen select-field-trigger"

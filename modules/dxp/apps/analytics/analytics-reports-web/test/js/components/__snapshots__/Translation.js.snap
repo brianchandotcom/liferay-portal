@@ -16,7 +16,6 @@ exports[`Translation renders 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           class="dropdown-toggle btn-monospaced btn btn-sm btn-secondary"
-          style=""
           type="button"
         >
           <svg

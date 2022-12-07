@@ -59,7 +59,6 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
-                    style=""
                     type="button"
                   >
                     <span
@@ -98,7 +97,6 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
-                    style=""
                     type="button"
                   >
                     <span
@@ -633,7 +631,6 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
-                    style=""
                     type="button"
                   >
                     <span
@@ -672,7 +669,6 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
-                    style=""
                     type="button"
                   >
                     <span
@@ -1451,7 +1447,6 @@ exports[`Translate renders with experiences selector 1`] = `
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
-                    style=""
                     type="button"
                   >
                     <span
@@ -1490,7 +1485,6 @@ exports[`Translate renders with experiences selector 1`] = `
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
-                    style=""
                     type="button"
                   >
                     <span

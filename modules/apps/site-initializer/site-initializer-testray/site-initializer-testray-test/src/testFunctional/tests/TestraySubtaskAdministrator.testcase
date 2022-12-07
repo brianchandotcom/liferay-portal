@@ -190,4 +190,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160716 - Verify if as an Administrator I should be able to complete a subtask as failing"
+	@priority = "5"
+	test AdminCanCompleteSubtaskAsFailing {
+		task ("Given the user edit a Subtask as Failed") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "sub tasks_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "sub tasks_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-166191",
+				selectStatus = "Failed");
+		}
+
+		task ("Then the complete status appears of the subtask with details") {
+			TestraySubtask.verifySubtaskDetails(
+				status = "Complete",
+				userName = "Test",
+				updated = "a few seconds ago",
+				issues = "LPS-166191",
+				comment = "None",
+				score = "5");
+		}
+	}
+
 }

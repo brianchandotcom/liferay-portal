@@ -137,6 +137,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro fillInTheProjectId {
+		Type(
+			locator1 = "CustomerPortalSite#FIELD_VALUE",
+			value1 = "${value}");
+	}
+
 	macro onboardingFlow {
 		CustomerPortal.clickOnStartProjectSetup();
 

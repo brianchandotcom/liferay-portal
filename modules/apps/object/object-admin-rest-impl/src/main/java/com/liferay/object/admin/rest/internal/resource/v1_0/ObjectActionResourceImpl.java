@@ -61,6 +61,22 @@ public class ObjectActionResourceImpl
 			_objectActionService.getObjectAction(objectActionId));
 	}
 
+	@Override
+	public Page<ObjectAction>
+			getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+				String externalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return getObjectDefinitionObjectActionsPage(
+			objectDefinition.getObjectDefinitionId(), search, pagination);
+	}
+
 	@NestedField(parentClass = ObjectDefinition.class, value = "objectActions")
 	@Override
 	public Page<ObjectAction> getObjectDefinitionObjectActionsPage(
@@ -115,6 +131,20 @@ public class ObjectActionResourceImpl
 			document -> _toObjectAction(
 				_objectActionService.getObjectAction(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	@Override
+	public ObjectAction postObjectDefinitionByExternalReferenceCodeObjectAction(
+			String externalReferenceCode, ObjectAction objectAction)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return postObjectDefinitionObjectAction(
+			objectDefinition.getObjectDefinitionId(), objectAction);
 	}
 
 	@Override

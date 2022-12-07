@@ -74,6 +74,16 @@ public interface ObjectActionResource {
 	public Response putObjectActionBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public Page<ObjectAction>
+			getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+				String externalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception;
+
+	public ObjectAction postObjectDefinitionByExternalReferenceCodeObjectAction(
+			String externalReferenceCode, ObjectAction objectAction)
+		throws Exception;
+
 	public Page<ObjectAction> getObjectDefinitionObjectActionsPage(
 			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;

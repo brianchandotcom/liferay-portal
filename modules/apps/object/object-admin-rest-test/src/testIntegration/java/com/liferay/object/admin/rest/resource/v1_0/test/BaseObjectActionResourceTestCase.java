@@ -388,6 +388,167 @@ public abstract class BaseObjectActionResourceTestCase {
 	}
 
 	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_getIrrelevantExternalReferenceCode();
+
+		Page<ObjectAction> page =
+			objectActionResource.
+				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+					externalReferenceCode, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantExternalReferenceCode != null) {
+			ObjectAction irrelevantObjectAction =
+				testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantObjectAction());
+
+			page =
+				objectActionResource.
+					getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+						irrelevantExternalReferenceCode, null,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantObjectAction),
+				(List<ObjectAction>)page.getItems());
+			assertValid(page);
+		}
+
+		ObjectAction objectAction1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				externalReferenceCode, randomObjectAction());
+
+		ObjectAction objectAction2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				externalReferenceCode, randomObjectAction());
+
+		page =
+			objectActionResource.
+				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+					externalReferenceCode, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectAction1, objectAction2),
+			(List<ObjectAction>)page.getItems());
+		assertValid(page);
+
+		objectActionResource.deleteObjectAction(objectAction1.getId());
+
+		objectActionResource.deleteObjectAction(objectAction2.getId());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectActionsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_getExternalReferenceCode();
+
+		ObjectAction objectAction1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				externalReferenceCode, randomObjectAction());
+
+		ObjectAction objectAction2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				externalReferenceCode, randomObjectAction());
+
+		ObjectAction objectAction3 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				externalReferenceCode, randomObjectAction());
+
+		Page<ObjectAction> page1 =
+			objectActionResource.
+				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+					externalReferenceCode, null, Pagination.of(1, 2));
+
+		List<ObjectAction> objectActions1 =
+			(List<ObjectAction>)page1.getItems();
+
+		Assert.assertEquals(
+			objectActions1.toString(), 2, objectActions1.size());
+
+		Page<ObjectAction> page2 =
+			objectActionResource.
+				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+					externalReferenceCode, null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ObjectAction> objectActions2 =
+			(List<ObjectAction>)page2.getItems();
+
+		Assert.assertEquals(
+			objectActions2.toString(), 1, objectActions2.size());
+
+		Page<ObjectAction> page3 =
+			objectActionResource.
+				getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+					externalReferenceCode, null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectAction1, objectAction2, objectAction3),
+			(List<ObjectAction>)page3.getItems());
+	}
+
+	protected ObjectAction
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_addObjectAction(
+				String externalReferenceCode, ObjectAction objectAction)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectActionsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectAction()
+		throws Exception {
+
+		ObjectAction randomObjectAction = randomObjectAction();
+
+		ObjectAction postObjectAction =
+			testPostObjectDefinitionByExternalReferenceCodeObjectAction_addObjectAction(
+				randomObjectAction);
+
+		assertEquals(randomObjectAction, postObjectAction);
+		assertValid(postObjectAction);
+	}
+
+	protected ObjectAction
+			testPostObjectDefinitionByExternalReferenceCodeObjectAction_addObjectAction(
+				ObjectAction objectAction)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetObjectDefinitionObjectActionsPage() throws Exception {
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectActionsPage_getObjectDefinitionId();

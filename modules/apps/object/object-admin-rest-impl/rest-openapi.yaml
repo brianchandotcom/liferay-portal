@@ -742,7 +742,7 @@ paths:
             tags: ["ObjectDefinition"]
     "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-actions":
         get:
-            operationId: getObjectDefinitionObjectActionsPage
+            operationId: getObjectDefinitionByExternalReferenceCodeObjectActionsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -776,7 +776,7 @@ paths:
                                 type: array
             tags: ["ObjectAction"]
         post:
-            operationId: postObjectDefinitionObjectAction
+            operationId: postObjectDefinitionByExternalReferenceCodeObjectAction
             parameters:
                 - in: path
                   name: externalReferenceCode

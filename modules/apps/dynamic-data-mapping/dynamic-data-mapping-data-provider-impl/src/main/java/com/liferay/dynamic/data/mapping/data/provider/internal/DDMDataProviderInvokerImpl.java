@@ -36,8 +36,6 @@ import com.netflix.hystrix.exception.HystrixRuntimeException;
 
 import java.lang.reflect.Field;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -133,15 +131,15 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 		String ddmDataProviderId =
 			ddmDataProviderRequest.getDDMDataProviderId();
 
-		Optional<DDMDataProviderInstance> ddmDataProviderInstanceOptional =
-			fetchDDMDataProviderInstanceOptional(ddmDataProviderId);
+		DDMDataProviderInstance ddmDataProviderInstance =
+			fetchDDMDataProviderInstance(ddmDataProviderId);
 
 		DDMDataProvider ddmDataProvider = getDDMDataProvider(
-			ddmDataProviderId, ddmDataProviderInstanceOptional);
+			ddmDataProviderId, ddmDataProviderInstance);
 
-		if (ddmDataProviderInstanceOptional.isPresent()) {
+		if (ddmDataProviderInstance != null) {
 			return doInvokeExternal(
-				ddmDataProviderInstanceOptional.get(), ddmDataProvider,
+				ddmDataProviderInstance, ddmDataProvider,
 				ddmDataProviderRequest);
 		}
 
@@ -164,9 +162,8 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 		return ddmDataProviderInvokeCommand.execute();
 	}
 
-	protected Optional<DDMDataProviderInstance>
-			fetchDDMDataProviderInstanceOptional(
-				String ddmDataProviderInstanceId)
+	protected DDMDataProviderInstance fetchDDMDataProviderInstance(
+			String ddmDataProviderInstanceId)
 		throws PortalException {
 
 		DDMDataProviderInstance ddmDataProviderInstance =
@@ -181,22 +178,20 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 					Long.valueOf(ddmDataProviderInstanceId));
 		}
 
-		return Optional.ofNullable(ddmDataProviderInstance);
+		return ddmDataProviderInstance;
 	}
 
 	protected DDMDataProvider getDDMDataProvider(
 		String ddmDataProviderInstanceId,
-		Optional<DDMDataProviderInstance> ddmDataProviderInstanceOptional) {
+		DDMDataProviderInstance ddmDataProviderInstance) {
 
-		Optional<DDMDataProvider> ddmDataProviderTypeOptional =
-			ddmDataProviderInstanceOptional.map(
-				ddmDataProviderInstance ->
-					ddmDataProviderRegistry.getDDMDataProvider(
-						ddmDataProviderInstance.getType()));
+		if (ddmDataProviderInstance != null) {
+			return ddmDataProviderRegistry.getDDMDataProvider(
+				ddmDataProviderInstance.getType());
+		}
 
-		return ddmDataProviderTypeOptional.orElseGet(
-			() -> ddmDataProviderRegistry.getDDMDataProviderByInstanceId(
-				ddmDataProviderInstanceId));
+		return ddmDataProviderRegistry.getDDMDataProviderByInstanceId(
+			ddmDataProviderInstanceId);
 	}
 
 	protected HystrixRuntimeException.FailureType getHystrixFailureType(

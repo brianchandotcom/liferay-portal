@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Leonardo Barros
@@ -41,20 +40,20 @@ public final class DDMDataProviderRequest {
 		return _locale;
 	}
 
-	public <T> Optional<T> getParameterOptional(String name, Class<?> clazz) {
+	public <T> T getParameter(String name, Class<?> clazz) {
 		Object value = _parameters.get(name);
 
 		if (value == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		Class<?> valueClass = value.getClass();
 
 		if (clazz.isAssignableFrom(valueClass)) {
-			return Optional.of((T)value);
+			return (T)value;
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	public Map<String, Object> getParameters() {

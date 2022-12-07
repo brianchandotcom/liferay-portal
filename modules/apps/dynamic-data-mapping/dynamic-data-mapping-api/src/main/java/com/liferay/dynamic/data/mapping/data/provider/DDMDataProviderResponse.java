@@ -18,27 +18,26 @@ import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Leonardo Barros
  */
 public final class DDMDataProviderResponse implements Serializable {
 
-	public <T> Optional<T> getOutputOptional(String name, Class<?> clazz) {
+	public <T> T getOutput(String name, Class<?> clazz) {
 		Object value = _ddmDataProviderResponseOutputs.get(name);
 
 		if (value == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		Class<?> valueClass = value.getClass();
 
 		if (clazz.isAssignableFrom(valueClass)) {
-			return Optional.of((T)value);
+			return (T)value;
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	public DDMDataProviderResponseStatus getStatus() {

@@ -1001,7 +1001,7 @@ public abstract class PoshiElement
 
 	protected static final Pattern poshiScriptAnnotationPattern =
 		Pattern.compile(
-			"@(?<name>[\\w-]*)[\\s]*?(\n|=[\\s]\"(?<value>.*?)\"(?=\\n))",
+			"@(?<name>[\\w-]*)[\\s]*?(\n|=[\\s]\"(?<value>.*?)\"(?=[ \t]*\\n))",
 			Pattern.DOTALL);
 	protected static final Pattern poshiScriptBlockPattern = Pattern.compile(
 		"^[^{]*\\{[\\s\\S]*\\}$");

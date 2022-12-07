@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_NAME</td>
-	<td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldName}']</td>
+	<td>//div[contains(@class,'field-type')]//span[@class='text-truncate' and text()='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>

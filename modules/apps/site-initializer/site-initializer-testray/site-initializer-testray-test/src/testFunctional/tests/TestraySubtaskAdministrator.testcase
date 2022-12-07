@@ -339,4 +339,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169430 - Verify if as  an Administrator I should be able to merge an Complete subtask with a Open subtask"
+	@priority = "5"
+	test AdminCanMergeCompleteSubtaskWithOpenSubtask {
+		task ("Given that the user complete a Subtask") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "sub tasks_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "sub tasks_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Complete");
+		}
+
+		task ("When that the user leave open the other Subtask") {
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Open");
+		}
+
+		task ("Then the user merged subtask with status complete") {
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "sub tasks_1,sub tasks_2");
+		}
+	}
+
 }

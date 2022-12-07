@@ -42,7 +42,7 @@ portletDisplay.setURLBack(backURL);
 		<c:when test="<%= objectDefinition2.isSystem() %>">
 			<frontend-data-set:classic-display
 				contextParams="<%= objectEntryDisplayContext.getRelationshipContextParams() %>"
-				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu() %>"
+				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu(objectDefinition2) %>"
 				dataProviderKey="<%= ObjectEntriesFDSNames.SYSTEM_RELATED_MODELS %>"
 				formName="fm"
 				id="<%= ObjectEntriesFDSNames.SYSTEM_RELATED_MODELS %>"
@@ -52,7 +52,7 @@ portletDisplay.setURLBack(backURL);
 		<c:otherwise>
 			<frontend-data-set:classic-display
 				contextParams="<%= objectEntryDisplayContext.getRelationshipContextParams() %>"
-				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu() %>"
+				creationMenu="<%= objectEntryDisplayContext.getRelatedModelCreationMenu(objectDefinition2) %>"
 				dataProviderKey="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
 				formName="fm"
 				id="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"

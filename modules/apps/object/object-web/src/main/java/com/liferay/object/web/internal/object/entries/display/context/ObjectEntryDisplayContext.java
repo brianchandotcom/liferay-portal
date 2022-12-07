@@ -39,6 +39,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.NoSuchObjectLayoutException;
@@ -62,6 +63,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -87,11 +89,14 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -111,6 +116,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -329,21 +335,85 @@ public class ObjectEntryDisplayContext {
 		return optional.get();
 	}
 
-	public CreationMenu getRelatedModelCreationMenu() throws PortalException {
+	public CreationMenu getRelatedModelCreationMenu(
+			ObjectDefinition objectDefinition2)
+		throws PortalException {
+
 		if (_readOnly || isDefaultUser()) {
 			return null;
 		}
 
+		ObjectDefinition objectDefinition1 = getObjectDefinition();
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition2.getScope());
+
 		LiferayPortletResponse liferayPortletResponse =
 			_objectRequestHelper.getLiferayPortletResponse();
 
+		if (!ObjectEntryServiceUtil.hasPortletResourcePermission(
+				objectScopeProvider.getGroupId(
+					_objectRequestHelper.getRequest()),
+				objectDefinition2.getObjectDefinitionId(),
+				ObjectActionKeys.ADD_OBJECT_ENTRY) ||
+			objectDefinition1.isSystem() || objectDefinition2.isSystem() ||
+			(StringUtil.equals(
+				objectDefinition1.getScope(),
+				ObjectDefinitionConstants.SCOPE_COMPANY) &&
+			 StringUtil.equals(
+				 objectDefinition2.getScope(),
+				 ObjectDefinitionConstants.SCOPE_SITE))) {
+
+			return CreationMenuBuilder.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						liferayPortletResponse.getNamespace() +
+							"selectRelatedModel");
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							_objectRequestHelper.getRequest(),
+							"select-existing-one"));
+					dropdownItem.setTarget("event");
+				}
+			).build();
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(
+							_objectRequestHelper.getRequest(),
+							serviceContext.getScopeGroup(),
+							objectDefinition2.getPortletId(), 0, 0,
+							PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/object_entries/edit_object_entry"
+					).setBackURL(
+						_objectRequestHelper.getCurrentURL()
+					).setParameter(
+						"objectDefinitionId",
+						objectDefinition2.getObjectDefinitionId()
+					).setWindowState(
+						WindowState.MAXIMIZED
+					).buildString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_objectRequestHelper.getRequest(), "create-new"));
+			}
+		).addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.getNamespace() +
 						"selectRelatedModel");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_objectRequestHelper.getRequest(), "add"));
+					LanguageUtil.get(
+						_objectRequestHelper.getRequest(),
+						"select-existing-one"));
 				dropdownItem.setTarget("event");
 			}
 		).build();

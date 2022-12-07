@@ -82,61 +82,6 @@ public class FragmentEntryProcessorStylesTest {
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 	}
 
-	@Test
-	public void testFragmentWithStylesAttribute() throws Exception {
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.addRootLayoutStructureItem();
-
-		LayoutStructureItem containerStyledLayoutStructureItem =
-			layoutStructure.addContainerStyledLayoutStructureItem(
-				rootLayoutStructureItem.getItemId(), 0);
-
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			defaultSegmentsExperienceId);
-
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
-			(FragmentStyledLayoutStructureItem)
-				layoutStructure.addFragmentStyledLayoutStructureItem(
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					containerStyledLayoutStructureItem.getItemId(), 0);
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), _layout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
-
-		Document document = _getDocument(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink,
-				new DefaultFragmentEntryProcessorContext(
-					null, null, FragmentEntryLinkConstants.EDIT,
-					LocaleUtil.getMostRelevantLocale())));
-
-		String layoutStructureItemUniqueCssClass =
-			fragmentStyledLayoutStructureItem.getUniqueCssClass();
-
-		Elements elements = document.select(
-			StringPool.PERIOD + layoutStructureItemUniqueCssClass);
-
-		Assert.assertEquals(1, elements.size());
-	}
-
-	@Test(expected = FragmentEntryContentException.class)
-	public void testInvalidFragmentThrows() throws Exception {
-		_fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			"fragment-entry", "Fragment Entry", null,
-			_read("invalid_styles_fragment_entry.html"), null, false, null,
-			null, 0, FragmentConstants.TYPE_SECTION, null,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
-	}
-
 	private FragmentEntryLink _addFragmentEntryLink(long segmentsExperienceId)
 		throws Exception {
 

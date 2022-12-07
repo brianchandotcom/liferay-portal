@@ -55,6 +55,22 @@ definition {
 		AssertVisible(locator1 = "CP2Utils#MODAL_TEXT");
 	}
 
+	macro changeCardStatus {
+		var key_text = "${text}";
+
+		Click(locator1 = "CustomerPortalSite#SVG_ACTIVATION_STATUS");
+
+		AssertVisible(locator1 = "CustomerPortalSite#SVG_STATUS_OPTION");
+
+		Click(locator1 = "CustomerPortalSite#SVG_STATUS_OPTION");
+
+		CP2Utils.fillInTheProjectId(
+			label = "${label}",
+			value = "${value}");
+
+		CustomerPortal.clickAtButton(text = "Confirm");
+	}
+
 	macro changeRole {
 		Select(
 			locator1 = "CP2Utils#SELECT_ROLE",

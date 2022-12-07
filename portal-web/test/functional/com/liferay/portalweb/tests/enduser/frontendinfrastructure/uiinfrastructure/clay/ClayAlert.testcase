@@ -79,4 +79,45 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
+	@description = "Verify if the keyword is semi-bold when alert contains status icon and keyword"
+	@priority = "4"
+	test KeywordCanDisplayInSemibold {
+		task ("Given Clay Sample Portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+		
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "1 Column");
+		
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+
+		task ("When alert contains status icon and keyword Then keyword must be semi-bold") {
+			Click(
+				locator1 = "Button#ANY",
+				key_text = "Success Submit");
+
+			AssertCssValue(
+				locator1 = "Message#SUCCESS_DISMISSIBLE",
+				locator2 = "font-weight",
+				value1 = "400");
+			
+			Click(
+				locator1 = "Button#ANY",
+				key_text = "Fail Submit");
+			
+			AssertCssValue(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				locator2 = "font-weight",
+				value1 = "400");
+		}
+	}
 }

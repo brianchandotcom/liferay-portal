@@ -116,7 +116,10 @@ public class ViewFlatUsersDisplayContextFactory {
 		String navigation = ParamUtil.getString(
 			httpServletRequest, "navigation", "active");
 
-		if (navigation.equals("active")) {
+		if (navigation.equals("all")) {
+			status = WorkflowConstants.STATUS_ANY;
+		}
+		else if (navigation.equals("active")) {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 		else if (navigation.equals("inactive")) {

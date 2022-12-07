@@ -112,10 +112,10 @@ public class CompanyLogServlet extends HttpServlet {
 
 				String fileName = pathArray[1];
 
+				File file = _getFile(companyId, fileName);
+
 				String action = ParamUtil.getString(
 					httpServletRequest, "action");
-
-				File file = _getFile(companyId, fileName);
 
 				if (Validator.isNotNull(action) && action.equals("read")) {
 					_read(httpServletResponse, file);

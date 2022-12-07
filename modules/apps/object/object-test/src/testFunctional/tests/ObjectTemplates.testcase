@@ -209,7 +209,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1/1/21");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "01/01/21");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a Decimal field for a template on the content page and view the entries"

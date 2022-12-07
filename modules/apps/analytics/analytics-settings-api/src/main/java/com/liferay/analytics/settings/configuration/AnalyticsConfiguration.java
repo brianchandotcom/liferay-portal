@@ -100,6 +100,9 @@ public interface AnalyticsConfiguration {
 	public String[] syncedOrderFieldNames();
 
 	@Meta.AD(required = false)
+	public String[] syncedOrderItemFieldNames();
+
+	@Meta.AD(required = false)
 	public String[] syncedProductChannelFieldNames();
 
 	@Meta.AD(required = false)

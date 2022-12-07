@@ -311,6 +311,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_VALUE</td>
+	<td>//input[contains(@id,'${label}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FINISH_ACTIVATION</td>
 	<td>//button[contains(@class, 'btn-link') and contains(.,'Finish Activation')]</td>
 	<td></td>

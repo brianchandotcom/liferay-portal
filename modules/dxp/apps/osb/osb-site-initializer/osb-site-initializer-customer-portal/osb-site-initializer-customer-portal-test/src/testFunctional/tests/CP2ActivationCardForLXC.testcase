@@ -1,0 +1,270 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
+	var testUserFirstName = "Test";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "${testAccount}");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I go through onboarding") {
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+
+		task ("Then I click on the Liferay Experience Cloud option on side menu") {
+			CustomerPortal.clickAtButton(text = "Liferay Experience Cloud");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+	@description = "Automation ID: LPS-161274 | Test Summary: Verify that when you have more than one subscription the start date reflected on the card is earliest and the end date furthest"
+	@priority = "4"
+	test AssertThatTheDatesAreCorrectlyReflectedOnTheCard {
+
+		// Needs a project that has more than one subscription
+
+	}
+
+	@description = "Automation ID: LPS-161273 | Test Summary: Verify that after you submit the form and move the status to Active, it is reflected in the card"
+	@ignore = "true"
+	@priority = "4"
+	test AssertTheActiveStatusOnTheCard {
+		task ("And I enter Setup LXC") {
+			CustomerPortal.clickOnFinishActivationButton();
+		}
+
+		task ("Given I fill in all the required fields") {
+			CP2LXCSetup.typeAllSetupLXCInfoFields(
+				email = "test@liferay.com",
+				fullName = "Test Test",
+				github = "testUser",
+				incidentManagementEmail = "test@liferay.com",
+				incidentManagementFullName = "Test User",
+				projectId = "3809080",
+				region = "South America");
+		}
+
+		task ("Then I submit the form") {
+			Button.click(button = "Submit");
+
+			CustomerPortal.viewConfirmationModal(text = "Thank you for submitting this request!");
+
+			Button.click(button = "Done");
+		}
+
+		task ("And I change the card status from In Progress to Active") {
+			CustomerPortal.viewActivationStatusCardChange(
+				status = "In Progress",
+				subtitle = "Your Experience Cloud Project is being set up and will be available soon.");
+
+			CP2Utils.changeCardStatus(
+				label = "basicInputText",
+				text = "Set to Active",
+				value = "3809080");
+		}
+
+		task ("Then I assert that the card status is now Active") {
+			CustomerPortal.viewActivationStatusCardChange(
+				status = "Active",
+				subtitle = "Your Experience Cloud Project is being set up and will be available soon.");
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.showCPObject(title = "Liferay Experience Cloud Environment");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "Liferay Experience Cloud Environments");
+
+			CP2Utils.deleteActivationStatus(
+				position = "30",
+				status = "In Progress");
+		}
+	}
+
+	@description = "Automation ID: LPS-161270 | Test Summary: Verify that when the form has not yet been submitted, the card status is not Activated and the links are properly displayed and visible for the correct users"
+	@ignore = "true"
+	@priority = "4"
+	test AssertTheCardLinkReflectsTheCorrectStatus {
+
+		// TODO LPS-161270 AssertTheCardLinkReflectsTheCorrectStatus pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-161268 | Test Summary: Verify the activation card displays the details (LXC product logo - Project Name - Start and End Date of LXC Subscriptions - Activation form status)"
+	@priority = "3"
+	test AssertTheDetailsOfTheActivationCard {
+		task ("View card details") {
+			CustomerPortal.viewActivationStatusCardValue(
+				dates = "May 23, 2022 - May 23, 2023",
+				productIcon = "dxp_icon",
+				project = "2022 FIFA World Cup Qatar - FAN ID",
+				status = "Not Activated",
+				subtitle = "Almost there! Setup Experience Cloud by finishing the activation form.");
+		}
+	}
+
+	@description = "Automation ID: LPS-161271 | Test Summary: Verify that when the form was submitted, the card status is In Progress"
+	@ignore = "true"
+	@priority = "3"
+	test AssertTheInProgressStatusOnTheCard {
+		task ("And I enter Setup LXC") {
+			CustomerPortal.clickOnFinishActivationButton();
+		}
+
+		task ("Given I fill in all the required fields") {
+			CP2LXCSetup.typeAllSetupLXCInfoFields(
+				email = "test@liferay.com",
+				fullName = "Test Test",
+				github = "testUser",
+				incidentManagementEmail = "test@liferay.com",
+				incidentManagementFullName = "Test User",
+				projectId = "3809080",
+				region = "South America");
+
+			Button.click(button = "Submit");
+		}
+
+		task ("I assert that the form has been submitted") {
+			CustomerPortal.viewConfirmationModal(text = "Thank you for submitting this request!");
+
+			Button.click(button = "Done");
+		}
+
+		task ("Then I assert that the status of the card is now In Progresss") {
+			CustomerPortal.viewActivationStatusCardChange(
+				status = "In Progress",
+				subtitle = "Your Experience Cloud Project is being set up and will be available soon.");
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.showCPObject(title = "Liferay Experience Cloud Environment");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "Liferay Experience Cloud Environments");
+
+			CP2Utils.deleteActivationStatus(
+				position = "30",
+				status = "In Progress");
+		}
+	}
+
+	@description = "Automation ID: LPS-161272 | Test Summary: Verify that when the card is activated, the links are properly displayed"
+	@ignore = "true"
+	@priority = "3"
+	test CanView3LinksAfterCardActivation {
+		task ("And I enter Setup LXC") {
+			CustomerPortal.clickOnFinishActivationButton();
+		}
+
+		task ("Given I fill in all the required fields") {
+			CP2LXCSetup.typeAllSetupLXCInfoFields(
+				email = "test@liferay.com",
+				fullName = "Test Test",
+				github = "testUser",
+				incidentManagementEmail = "test@liferay.com",
+				incidentManagementFullName = "Test User",
+				projectId = "3809080",
+				region = "South America");
+		}
+
+		task ("Then I submit the form") {
+			Button.click(button = "Submit");
+
+			CustomerPortal.viewConfirmationModal(text = "Thank you for submitting this request!");
+
+			Button.click(button = "Done");
+		}
+
+		task ("And I change the card status from In Progress to Active") {
+			CustomerPortal.viewActivationStatusCardChange(
+				status = "In Progress",
+				subtitle = "Your Experience Cloud Project is being set up and will be available soon.");
+
+			CP2Utils.changeCardStatus(
+				label = "basicInputText",
+				text = "Set to Active",
+				value = "3809080");
+		}
+
+		task ("Then I assert the links on the card") {
+			CustomerPortal.assertThatLinkIsVisible(text = "Go to Liferay Experience Cloud");
+
+			CustomerPortal.assertThatLinkIsVisible(text = "Go to UAT");
+
+			CustomerPortal.assertThatLinkIsVisible(text = "Go to Analytics Cloud Workspace");
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.showCPObject(title = "Liferay Experience Cloud Environment");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "Liferay Experience Cloud Environments");
+
+			CP2Utils.deleteActivationStatus(
+				position = "30",
+				status = "In Progress");
+		}
+	}
+
+}

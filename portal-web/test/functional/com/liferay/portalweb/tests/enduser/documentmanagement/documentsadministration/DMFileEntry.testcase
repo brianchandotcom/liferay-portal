@@ -274,6 +274,32 @@ definition {
 			dmDocumentType = "Basic Document");
 	}
 
+	@description = "This case covers LPS-140006. It ensures that a valid file can be uploaded after the invalid file is discarded."
+	@priority = "3"
+	test CanAddValidFileAfterInvalidFileIsDiscardedViaMultipleUpload {
+		property test.name.skip.portal.instance = "DMFileEntry#CanAddValidFileAfterInvalidFileIsDiscardedViaMultipleUpload";
+
+		DMDocument.updateFileExtensions(fieldValue = ".docx");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Multiple Files Upload");
+
+		UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		Click(
+			key_text = "Clear documents already saved.",
+			locator1 = "Link#ANY");
+
+		UploadDependencyFile.uploadFile(fileName = "Document_1.docx");
+
+		Button.clickPublish();
+
+		LexiconEntry.viewEntryName(rowEntry = "Document_1");
+	}
+
 	@description = "This test covers LPS-124959. It ensures that a user can upload documents with a document type via multiple upload."
 	@priority = "4"
 	@refactordone

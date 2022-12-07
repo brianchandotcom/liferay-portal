@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.jaxrs.application;
+package com.liferay.oauth2.provider.rest.internal.endpoint;
 
 import javax.ws.rs.core.Application;
 
@@ -30,5 +30,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Application.class
 )
-public class OAuth2ProviderRESTApplication extends Application {
+public class OAuth2EndpointApplication extends Application {
 }

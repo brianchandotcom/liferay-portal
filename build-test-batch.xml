@@ -3208,67 +3208,6 @@ log.sanitizer.enabled=false</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="database-upgrade-client-jdk8">
-		<run-batch-test>
-			<test-action>
-				<local name="junit.failure.count" />
-				<local name="junit.failure.message" />
-
-				<trycatch property="junit.failure.message">
-					<try>
-						<for keepgoing="true" list="check-upgrade-client-additional-settings,check-upgrade-client-custom-log,check-upgrade-client-gogoshell,check-upgrade-client-gogoshell-command-output,check-upgrade-client-gogoshell-failed-upgrade,check-upgrade-client-gogoshell-help-output,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-second-process,check-upgrade-client-sh-disconnect,check-upgrade-client-upgrade-core-only,check-upgrade-client-zip-content,check-upgrade-properties-app-db-set,check-upgrade-properties-app-ext-set,check-upgrade-properties-db-ext-set,check-upgrade-properties-none-set" param="upgrade.test.target">
-							<sequential>
-								<ant antfile="modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml" target="@{upgrade.test.target}" />
-							</sequential>
-						</for>
-					</try>
-					<finally>
-						<condition else="0" property="junit.failure.count" value="1">
-							<isset property="junit.failure.message" />
-						</condition>
-
-						<get-junit-failure-message-element />
-
-						<generate-backend-batch-junit-report
-							junit.failure.count="${junit.failure.count}"
-							junit.failure.message.element="${junit.failure.message.element}"
-							test.class.name="DatabaseUpgradeClient"
-							test.command.name="databaseUpgradeClient"
-						/>
-					</finally>
-				</trycatch>
-			</test-action>
-
-			<test-set-up>
-				<setup-test-environment />
-
-				<database-test-action database.type="mysql">
-					<action>
-						<if>
-							<isset property="database.docker.image" />
-							<then>
-								<start-docker-database />
-							</then>
-							<else>
-								<exec executable="${database.service.executable}">
-									<arg line="${database.service.cmd.start}" />
-								</exec>
-							</else>
-						</if>
-					</action>
-				</database-test-action>
-
-				<antcall target="rebuild-legacy-database">
-					<param name="portal.version" value="6.2.10.21" />
-					<param name="data.archive.type" value="data-archive-portal" />
-					<param name="skip.get.testcase.database.properties" value="true" />
-				</antcall>
-
-				<prepare-database-upgrade-configuration />
-			</test-set-up>
-		</run-batch-test>
-	</target>
-
 	<target name="dist-jdk7">
 		<parallel threadCount="1" timeout="7200000">
 			<prepare-test-build-dist

@@ -45,14 +45,12 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 	}
 
 	public Issue getJIRAIssue() {
-		String commitMessage = getMessage();
-
-		Matcher matcher = _issuePattern.matcher(commitMessage);
+		Matcher matcher = _messagePattern.matcher(getMessage());
 
 		if (matcher.find()) {
-			String issueId = matcher.group(0);
+			String issueKey = matcher.group("jiraIssueKey");
 
-			return JIRAUtil.getIssue(issueId);
+			return JIRAUtil.getIssue(issueKey);
 		}
 
 		return null;
@@ -217,8 +215,8 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 
 	protected List<String> modifiedFilenames;
 
-	private static final Pattern _issuePattern = Pattern.compile(
-		"^([A-Z]+[-][\\d]+)");
+	private static final Pattern _messagePattern = Pattern.compile(
+		"^(?<jiraIssueKey>[A-Z]+[-][\\d]+)\\s*(?<message>.*)");
 
 	private final String _gitHubUsername;
 

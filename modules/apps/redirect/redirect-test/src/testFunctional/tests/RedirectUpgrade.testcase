@@ -31,7 +31,12 @@ definition {
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
-		PortletEntry.update();
+		if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY")) {
+			PortletEntry.save();
+		}
+		else {
+			PortletEntry.update();
+		}
 
 		Upgrade.viewAndAccessRedirects();
 

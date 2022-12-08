@@ -203,7 +203,7 @@ public class SynonymSearchTest {
 		try {
 			return getResourceAsString(
 				SynonymSearchTest.class,
-				SynonymSearchTest.class.getSimpleName() +
+				"dependencies/" + SynonymSearchTest.class.getSimpleName() +
 					"-additionalIndexConfigurations.json");
 		}
 		catch (Exception exception) {
@@ -215,7 +215,7 @@ public class SynonymSearchTest {
 		try {
 			return getResourceAsString(
 				SynonymSearchTest.class,
-				SynonymSearchTest.class.getSimpleName() +
+				"dependencies/" + SynonymSearchTest.class.getSimpleName() +
 					"-overrideTypeMappings.json");
 		}
 		catch (Exception exception) {

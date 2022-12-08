@@ -16,6 +16,206 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.1.10.3."
+	@priority = "4"
+	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade71103 {
+		property data.archive.type = "data-archive-saml-broken-mapping";
+		property portal.version = "7.1.10.3";
+
+		task ("Given: Add SAP") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
+
+			ServiceAccessPolicy.addServiceAccessPolicy(
+				enabled = "true",
+				methodName = "*",
+				policyName = "SAML_Provider",
+				serviceClass = "com.liferay.saml.admin.rest.internal.resource.v1_0.SamlProviderResourceImpl",
+				title = "Configure SAML provider");
+		}
+
+		task ("When: Import the JSON file via Import/Export Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				fileName = "saml-idp.json");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then: SAML is enabled with IDP role") {
+			SAML.goToSAMLAdmin();
+
+			SAMLRole.viewGeneralConfigurations(
+				samlEntityId = "samlidp",
+				samlRoleType = "Identity Provider");
+		}
+
+		task ("And: All the configurations which defines in saml-idp.json are configured") {
+			SAMLNavigation.gotoIdentityProvider();
+
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+		}
+	}
+
+	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.2.10.1."
+	@priority = "4"
+	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade72101 {
+		property data.archive.type = "data-archive-saml-broken-mapping";
+		property portal.version = "7.2.10.1";
+
+		task ("Given: Add SAP") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
+
+			ServiceAccessPolicy.addServiceAccessPolicy(
+				enabled = "true",
+				methodName = "*",
+				policyName = "SAML_Provider",
+				serviceClass = "com.liferay.saml.admin.rest.internal.resource.v1_0.SamlProviderResourceImpl",
+				title = "Configure SAML provider");
+		}
+
+		task ("When: Import the JSON file via Import/Export Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				fileName = "saml-idp.json");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then: SAML is enabled with IDP role") {
+			SAML.goToSAMLAdmin();
+
+			SAMLRole.viewGeneralConfigurations(
+				samlEntityId = "samlidp",
+				samlRoleType = "Identity Provider");
+		}
+
+		task ("And: All the configurations which defines in saml-idp.json are configured") {
+			SAMLNavigation.gotoIdentityProvider();
+
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+		}
+	}
+
+	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.3.10.1."
+	@priority = "4"
+	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade73101 {
+		property data.archive.type = "data-archive-saml-broken-mapping";
+		property portal.version = "7.3.10.1";
+
+		task ("Given: Add SAP") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
+
+			ServiceAccessPolicy.addServiceAccessPolicy(
+				enabled = "true",
+				methodName = "*",
+				policyName = "SAML_Provider",
+				serviceClass = "com.liferay.saml.admin.rest.internal.resource.v1_0.SamlProviderResourceImpl",
+				title = "Configure SAML provider");
+		}
+
+		task ("When: Import the JSON file via Import/Export Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				fileName = "saml-idp.json");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then: SAML is enabled with IDP role") {
+			SAML.goToSAMLAdmin();
+
+			SAMLRole.viewGeneralConfigurations(
+				samlEntityId = "samlidp",
+				samlRoleType = "Identity Provider");
+		}
+
+		task ("And: All the configurations which defines in saml-idp.json are configured") {
+			SAMLNavigation.gotoIdentityProvider();
+
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+		}
+	}
+
+	@description = "LPS-152122 TC8. Can import JSON file to configure the SAML IdP provider via Import/Export Center after upgrading from 7.0.10.16."
+	@priority = "4"
+	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade701016 {
+		property data.archive.type = "data-archive-saml-broken-mapping";
+		property portal.version = "7.0.10.16";
+
+		task ("Given: Add SAP") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
+
+			ServiceAccessPolicy.addServiceAccessPolicy(
+				enabled = "true",
+				methodName = "*",
+				policyName = "SAML_Provider",
+				serviceClass = "com.liferay.saml.admin.rest.internal.resource.v1_0.SamlProviderResourceImpl",
+				title = "Configure SAML provider");
+		}
+
+		task ("When: Import the JSON file via Import/Export Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				fileName = "saml-idp.json");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then: SAML is enabled with IDP role") {
+			SAML.goToSAMLAdmin();
+
+			SAMLRole.viewGeneralConfigurations(
+				samlEntityId = "samlidp",
+				samlRoleType = "Identity Provider");
+		}
+
+		task ("And: All the configurations which defines in saml-idp.json are configured") {
+			SAMLNavigation.gotoIdentityProvider();
+
+			SAMLPortlet.viewIdentityProviderConfigurations(sessionMaximum = "10000");
+		}
+	}
+
 	@description = "This is a use case for LPS-145635. Can provision new SP user after upgrading from 7.1.10.3."
 	@priority = 4
 	test CanProvisionNewSPUserAfterUpgrade71103 {

@@ -76,12 +76,6 @@ AUI.add(
 			_ioRequest(config) {
 				config.data.p_auth = Liferay.authToken;
 
-				const doAsUserIdEncoded = themeDisplay.getDoAsUserIdEncoded();
-
-				if (doAsUserIdEncoded) {
-					config.data.doAsUserId = doAsUserIdEncoded;
-				}
-
 				const body = new URLSearchParams();
 
 				Object.keys(config.data).forEach((key) => {

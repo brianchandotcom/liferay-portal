@@ -75,7 +75,6 @@ AUI.add(
 					const instance = this;
 
 					const resourceParameters = {
-						doAsUserId: Liferay.ThemeDisplay.getDoAsUserIdEncoded(),
 						p_p_resource_id: config.resourceId,
 					};
 

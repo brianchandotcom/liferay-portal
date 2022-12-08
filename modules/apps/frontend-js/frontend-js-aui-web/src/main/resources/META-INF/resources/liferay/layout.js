@@ -468,7 +468,6 @@ AUI.add(
 			'saveLayout',
 			(options) => {
 				const data = {
-					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					p_auth: Liferay.authToken,
 					p_l_id: themeDisplay.getPlid(),
 				};

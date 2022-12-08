@@ -212,7 +212,6 @@ AUI.add(
 			_updateRevision(cmd, layoutRevisionId, layoutSetBranchId) {
 				const updateLayoutData = {
 					cmd,
-					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					layoutRevisionId,
 					layoutSetBranchId,
 					p_auth: Liferay.authToken,

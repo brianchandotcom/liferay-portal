@@ -258,6 +258,20 @@ definition {
 			searchAssetType = "Document");
 	}
 
+	@description = "This test covers LPS-153892. It ensures that the external video shortcuts can be rendered."
+	@priority = "4"
+	test CanViewExternalVideoShortcut {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.viewPGViaMG(mgDocumentTitle = "Test YouTube Video Name");
+	}
+
 	@description = "This test ensures that a users can view file after configuring a new root folder."
 	@priority = "3"
 	test CanViewFileAfterConfiguringRootFolder {

@@ -215,10 +215,6 @@ if (layout != null) {
 	<%-- User Inputted Layout and LayoutSet JavaScript --%>
 
 	<%
-	LayoutSet layoutSet = themeDisplay.getLayoutSet();
-
-	UnicodeProperties layoutSetSettingsUnicodeProperties = layoutSet.getSettingsProperties();
-
 	UnicodeProperties masterLayoutTypeSettingsUnicodeProperties = new UnicodeProperties();
 
 	if (layout.getMasterLayoutPlid() > 0) {
@@ -228,6 +224,10 @@ if (layout != null) {
 			masterLayoutTypeSettingsUnicodeProperties = masterLayout.getTypeSettingsProperties();
 		}
 	}
+
+	LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+	UnicodeProperties layoutSetSettingsUnicodeProperties = layoutSet.getSettingsProperties();
 
 	UnicodeProperties layoutTypeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
 	%>

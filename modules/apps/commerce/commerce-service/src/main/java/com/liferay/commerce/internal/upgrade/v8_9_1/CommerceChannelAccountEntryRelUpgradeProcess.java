@@ -55,8 +55,7 @@ public class CommerceChannelAccountEntryRelUpgradeProcess
 						ClassNameLocalServiceUtil.getClassNameId(
 							CommercePriceList.class));
 					preparedStatement2.setLong(
-						2,
-						resultSet.getLong("CChannelAccountEntryRelId"));
+						2, resultSet.getLong("CChannelAccountEntryRelId"));
 
 					preparedStatement2.addBatch();
 				}

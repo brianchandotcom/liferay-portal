@@ -258,11 +258,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FACET_PORTLET_ITEMS</td>
-	<td>//button[contains(@class,'facet-term') and contains(text(),'${key_itemName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -589,16 +589,12 @@ definition {
 
 	@priority = "3"
 	test AssertSiteFacetDisplays {
-		JSONGroup.addGroup(groupName = "Community");
+		for (var siteName : list "Community,Engineering,Product") {
+			JSONGroup.addGroup(groupName = "${siteName}");
 
-		JSONGroup.addGroup(groupName = "Engineering");
-
-		JSONGroup.addGroup(groupName = "Product");
-
-		for (var site : list "Community,Engineering,Product") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content",
-				groupName = "${site}",
+				groupName = "${siteName}",
 				title = "Web Content");
 		}
 
@@ -612,10 +608,10 @@ definition {
 
 		Refresh();
 
-		for (var categories : list "Community,Engineering,Product") {
+		for (var siteName : list "Community,Engineering,Product") {
 			AssertElementPresent(
-				key_itemName = "${categories}",
-				locator1 = "SearchResults#FACET_PORTLET_ITEMS");
+				facetValueName = "${siteName}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -624,10 +620,10 @@ definition {
 
 		Refresh();
 
-		for (var categories : list "Community,Engineering,Product") {
+		for (var siteName : list "Community,Engineering,Product") {
 			AssertElementPresent(
-				key_itemName = "${categories}",
-				locator1 = "SearchResults#FACET_PORTLET_ITEMS");
+				facetValueName = "${siteName}",
+				locator1 = "Search#FACET_LABEL_LAYOUT");
 		}
 	}
 

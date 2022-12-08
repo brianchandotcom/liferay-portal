@@ -596,7 +596,11 @@ definition {
 				var webContentNumericFieldLabel = "Numeric";
 			}
 
-			Type(
+			TripleClick(
+				key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+				locator1 = "WCEditWebContent#TEXT_INPUT");
+
+			Type.sendKeys(
 				key_fieldFieldLabel = "${webContentNumericFieldLabel}",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${webContentNumeric}");

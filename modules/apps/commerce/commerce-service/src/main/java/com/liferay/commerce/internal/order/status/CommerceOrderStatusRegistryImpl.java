@@ -44,11 +44,8 @@ public class CommerceOrderStatusRegistryImpl
 
 	@Override
 	public CommerceOrderStatus getCommerceOrderStatus(int key) {
-		ServiceTrackerMap<String, ServiceWrapper<CommerceOrderStatus>>
-			serviceTrackerMap = _getServiceTrackerMap();
-
 		ServiceWrapper<CommerceOrderStatus> commerceOrderStatusServiceWrapper =
-			serviceTrackerMap.getService(String.valueOf(key));
+			_serviceTrackerMap.getService(String.valueOf(key));
 
 		if (commerceOrderStatusServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -65,12 +62,9 @@ public class CommerceOrderStatusRegistryImpl
 	public List<CommerceOrderStatus> getCommerceOrderStatuses() {
 		List<CommerceOrderStatus> commerceOrderStatuses = new ArrayList<>();
 
-		ServiceTrackerMap<String, ServiceWrapper<CommerceOrderStatus>>
-			serviceTrackerMap = _getServiceTrackerMap();
-
 		List<ServiceWrapper<CommerceOrderStatus>>
 			commerceOrderStatusServiceWrappers = ListUtil.fromCollection(
-				serviceTrackerMap.values());
+				_serviceTrackerMap.values());
 
 		Collections.sort(
 			commerceOrderStatusServiceWrappers,
@@ -89,54 +83,25 @@ public class CommerceOrderStatusRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CommerceOrderStatus.class,
+			"commerce.order.status.key",
+			ServiceTrackerCustomizerFactory.<CommerceOrderStatus>serviceWrapper(
+				bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		ServiceTrackerMap<String, ServiceWrapper<CommerceOrderStatus>>
-			serviceTrackerMap = _serviceTrackerMap;
-
-		if (serviceTrackerMap != null) {
-			serviceTrackerMap.close();
-		}
-	}
-
-	private ServiceTrackerMap<String, ServiceWrapper<CommerceOrderStatus>>
-		_getServiceTrackerMap() {
-
-		ServiceTrackerMap<String, ServiceWrapper<CommerceOrderStatus>>
-			serviceTrackerMap = _serviceTrackerMap;
-
-		if (serviceTrackerMap != null) {
-			return serviceTrackerMap;
-		}
-
-		synchronized (this) {
-			if (_serviceTrackerMap == null) {
-				_serviceTrackerMap =
-					ServiceTrackerMapFactory.openSingleValueMap(
-						_bundleContext, CommerceOrderStatus.class,
-						"commerce.order.status.key",
-						ServiceTrackerCustomizerFactory.
-							<CommerceOrderStatus>serviceWrapper(
-								_bundleContext));
-			}
-
-			serviceTrackerMap = _serviceTrackerMap;
-		}
-
-		return serviceTrackerMap;
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderStatusRegistryImpl.class);
 
-	private BundleContext _bundleContext;
 	private final Comparator<ServiceWrapper<CommerceOrderStatus>>
 		_commerceOrderStatusServiceWrapperOrderComparator =
 			new CommerceOrderStatusPriorityComparator();
-	private volatile ServiceTrackerMap
-		<String, ServiceWrapper<CommerceOrderStatus>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, ServiceWrapper<CommerceOrderStatus>>
+		_serviceTrackerMap;
 
 }

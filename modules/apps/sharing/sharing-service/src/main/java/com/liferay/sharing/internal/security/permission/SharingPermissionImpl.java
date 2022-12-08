@@ -121,11 +121,8 @@ public class SharingPermissionImpl implements SharingPermission {
 			long groupId, Collection<SharingEntryAction> sharingEntryActions)
 		throws PortalException {
 
-		ServiceTrackerMap<Long, SharingPermissionChecker> serviceTrackerMap =
-			_getServiceTrackerMap();
-
 		SharingPermissionChecker sharingPermissionChecker =
-			serviceTrackerMap.getService(classNameId);
+			_serviceTrackerMap.getService(classNameId);
 
 		if (sharingPermissionChecker == null) {
 			throw new PrincipalException(
@@ -224,55 +221,26 @@ public class SharingPermissionImpl implements SharingPermission {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, SharingPermissionChecker.class,
+			"(model.class.name=*)",
+			(serviceReference, emitter) -> emitter.emit(
+				_classNameLocalService.getClassNameId(
+					(String)serviceReference.getProperty("model.class.name"))));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		ServiceTrackerMap<Long, SharingPermissionChecker> serviceTrackerMap =
-			_serviceTrackerMap;
-
-		if (serviceTrackerMap != null) {
-			serviceTrackerMap.close();
-		}
-	}
-
-	private ServiceTrackerMap<Long, SharingPermissionChecker>
-		_getServiceTrackerMap() {
-
-		ServiceTrackerMap<Long, SharingPermissionChecker> serviceTrackerMap =
-			_serviceTrackerMap;
-
-		if (serviceTrackerMap == null) {
-			synchronized (this) {
-				if (_serviceTrackerMap != null) {
-					return _serviceTrackerMap;
-				}
-
-				serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-					_bundleContext, SharingPermissionChecker.class,
-					"(model.class.name=*)",
-					(serviceReference, emitter) -> emitter.emit(
-						_classNameLocalService.getClassNameId(
-							(String)serviceReference.getProperty(
-								"model.class.name"))));
-
-				_serviceTrackerMap = serviceTrackerMap;
-			}
-		}
-
-		return serviceTrackerMap;
+		_serviceTrackerMap.close();
 	}
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	private BundleContext _bundleContext;
-
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private volatile ServiceTrackerMap<Long, SharingPermissionChecker>
+	private ServiceTrackerMap<Long, SharingPermissionChecker>
 		_serviceTrackerMap;
 
 	@Reference

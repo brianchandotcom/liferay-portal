@@ -38,29 +38,20 @@ public class ObjectFieldBusinessTypeRegistryImpl
 
 	@Override
 	public ObjectFieldBusinessType getObjectFieldBusinessType(String key) {
-		ServiceTrackerMap<String, ObjectFieldBusinessType> serviceTrackerMap =
-			_getServiceTrackerMap();
-
-		return serviceTrackerMap.getService(key);
+		return _serviceTrackerMap.getService(key);
 	}
 
 	@Override
 	public List<ObjectFieldBusinessType> getObjectFieldBusinessTypes() {
-		ServiceTrackerMap<String, ObjectFieldBusinessType> serviceTrackerMap =
-			_getServiceTrackerMap();
-
-		return new ArrayList(serviceTrackerMap.values());
+		return new ArrayList(_serviceTrackerMap.values());
 	}
 
 	@Override
 	public Set<String> getObjectFieldDBTypes() {
 		Set<String> objectFieldDBTypes = new HashSet<>();
 
-		ServiceTrackerMap<String, ObjectFieldBusinessType> serviceTrackerMap =
-			_getServiceTrackerMap();
-
 		for (ObjectFieldBusinessType objectFieldBusinessType :
-				serviceTrackerMap.values()) {
+				_serviceTrackerMap.values()) {
 
 			objectFieldDBTypes.add(objectFieldBusinessType.getDBType());
 		}
@@ -70,40 +61,17 @@ public class ObjectFieldBusinessTypeRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ObjectFieldBusinessType.class,
+			"object.field.business.type.key");
 	}
 
 	@Deactivate
-	protected synchronized void deactivate() {
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
-		}
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private ServiceTrackerMap<String, ObjectFieldBusinessType>
-		_getServiceTrackerMap() {
-
-		ServiceTrackerMap<String, ObjectFieldBusinessType> serviceTrackerMap =
-			_serviceTrackerMap;
-
-		if (serviceTrackerMap != null) {
-			return serviceTrackerMap;
-		}
-
-		synchronized (this) {
-			if (_serviceTrackerMap == null) {
-				_serviceTrackerMap =
-					ServiceTrackerMapFactory.openSingleValueMap(
-						_bundleContext, ObjectFieldBusinessType.class,
-						"object.field.business.type.key");
-			}
-
-			return _serviceTrackerMap;
-		}
-	}
-
-	private BundleContext _bundleContext;
-	private volatile ServiceTrackerMap<String, ObjectFieldBusinessType>
 		_serviceTrackerMap;
 
 }

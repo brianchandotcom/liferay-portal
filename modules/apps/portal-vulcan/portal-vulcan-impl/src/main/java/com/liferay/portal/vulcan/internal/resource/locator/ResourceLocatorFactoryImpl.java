@@ -49,10 +49,7 @@ public class ResourceLocatorFactoryImpl implements ResourceLocatorFactory {
 
 			@Override
 			public Object locate(String restContextPath, String resourceName) {
-				ServiceTrackerMap<String, Builder> serviceTrackerMap =
-					_getServiceTrackerMap();
-
-				Builder builder = serviceTrackerMap.getService(
+				Builder builder = _serviceTrackerMap.getService(
 					restContextPath + StringPool.SLASH + resourceName);
 
 				if (builder == null) {
@@ -67,95 +64,66 @@ public class ResourceLocatorFactoryImpl implements ResourceLocatorFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, null, "resource.locator.key",
+			new ServiceTrackerCustomizer<Object, Builder>() {
+
+				@Override
+				public Builder addingService(
+					ServiceReference<Object> serviceReference) {
+
+					Object resourceFactoryImpl = bundleContext.getService(
+						serviceReference);
+
+					Class<?> resourceFactoryImplClass =
+						resourceFactoryImpl.getClass();
+
+					try {
+						Method createMethod =
+							resourceFactoryImplClass.getMethod("create");
+
+						Class<?> builderClass = createMethod.getReturnType();
+
+						return new Builder(
+							createMethod, builderClass.getMethod("build"),
+							builderClass.getMethod(
+								"httpServletRequest", HttpServletRequest.class),
+							resourceFactoryImpl,
+							builderClass.getMethod("user", User.class));
+					}
+					catch (NoSuchMethodException noSuchMethodException) {
+						_log.error(noSuchMethodException);
+
+						return null;
+					}
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<Object> serviceReference,
+					Builder builder) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<Object> serviceReference,
+					Builder builder) {
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
 	}
 
 	@Deactivate
-	protected synchronized void deactivate() {
-		ServiceTrackerMap<String, Builder> serviceTrackerMap =
-			_serviceTrackerMap;
-
-		if (serviceTrackerMap != null) {
-			serviceTrackerMap.close();
-		}
-	}
-
-	private ServiceTrackerMap<String, Builder> _getServiceTrackerMap() {
-		ServiceTrackerMap<String, Builder> serviceTrackerMap =
-			_serviceTrackerMap;
-
-		if (serviceTrackerMap != null) {
-			return _serviceTrackerMap;
-		}
-
-		synchronized (this) {
-			if (_serviceTrackerMap != null) {
-				return _serviceTrackerMap;
-			}
-
-			serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, null, "resource.locator.key",
-				new ServiceTrackerCustomizer<Object, Builder>() {
-
-					@Override
-					public Builder addingService(
-						ServiceReference<Object> serviceReference) {
-
-						Object resourceFactoryImpl = _bundleContext.getService(
-							serviceReference);
-
-						Class<?> resourceFactoryImplClass =
-							resourceFactoryImpl.getClass();
-
-						try {
-							Method createMethod =
-								resourceFactoryImplClass.getMethod("create");
-
-							Class<?> builderClass =
-								createMethod.getReturnType();
-
-							return new Builder(
-								createMethod, builderClass.getMethod("build"),
-								builderClass.getMethod(
-									"httpServletRequest",
-									HttpServletRequest.class),
-								resourceFactoryImpl,
-								builderClass.getMethod("user", User.class));
-						}
-						catch (NoSuchMethodException noSuchMethodException) {
-							_log.error(noSuchMethodException);
-
-							return null;
-						}
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<Object> serviceReference,
-						Builder builder) {
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<Object> serviceReference,
-						Builder builder) {
-
-						_bundleContext.ungetService(serviceReference);
-					}
-
-				});
-
-			_serviceTrackerMap = serviceTrackerMap;
-		}
-
-		return serviceTrackerMap;
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourceLocatorFactoryImpl.class);
 
-	private BundleContext _bundleContext;
-	private volatile ServiceTrackerMap<String, Builder> _serviceTrackerMap;
+	private ServiceTrackerMap<String, Builder> _serviceTrackerMap;
 
 	private static class Builder {
 

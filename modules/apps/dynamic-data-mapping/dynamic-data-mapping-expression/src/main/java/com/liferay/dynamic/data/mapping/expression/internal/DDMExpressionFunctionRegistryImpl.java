@@ -44,11 +44,8 @@ public class DDMExpressionFunctionRegistryImpl
 		Map<String, DDMExpressionFunction> customDDMExpressionFunctions =
 			new HashMap<>();
 
-		ServiceTrackerMap<String, DDMExpressionFunctionFactory>
-			serviceTrackerMap = _getServiceTrackerMap();
-
 		for (DDMExpressionFunctionFactory ddmExpressionFunctionFactory :
-				serviceTrackerMap.values()) {
+				_serviceTrackerMap.values()) {
 
 			DDMExpressionFunction ddmExpressionFunction =
 				ddmExpressionFunctionFactory.create();
@@ -69,12 +66,9 @@ public class DDMExpressionFunctionRegistryImpl
 		Map<String, DDMExpressionFunctionFactory>
 			ddmExpressionFunctionFactories = new HashMap<>();
 
-		ServiceTrackerMap<String, DDMExpressionFunctionFactory>
-			serviceTrackerMap = _getServiceTrackerMap();
-
 		for (String functionName : functionNames) {
 			DDMExpressionFunctionFactory ddmExpressionFunctionFactory =
-				serviceTrackerMap.getService(functionName);
+				_serviceTrackerMap.getService(functionName);
 
 			if (ddmExpressionFunctionFactory != null) {
 				ddmExpressionFunctionFactories.put(
@@ -107,30 +101,15 @@ public class DDMExpressionFunctionRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMExpressionFunctionFactory.class, "name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
-		}
+		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, DDMExpressionFunctionFactory>
-		_getServiceTrackerMap() {
-
-		if (_serviceTrackerMap != null) {
-			return _serviceTrackerMap;
-		}
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			_bundleContext, DDMExpressionFunctionFactory.class, "name");
-
-		return _serviceTrackerMap;
-	}
-
-	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, DDMExpressionFunctionFactory>
 		_serviceTrackerMap;
 

@@ -21,6 +21,72 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-168704."
+	test AssertBlacklistedSentenceTransformersAreUnavailable {
+		property custom.properties = "feature.flag.LPS-163688=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
+		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.search.experiences.internal.ml.sentence.embedding.TXTAISentenceTransformer\",\"com.liferay.search.experiences.internal.ml.sentence.embedding.HuggingFaceInferenceAPISentenceTransformer\"]";
+		property test.name.skip.portal.instance = "SemanticSearch#AssertBlacklistedSentenceTransformersAreUnavailable";
+
+		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.sentence.embedding.TXTAISentenceTransformer");
+
+		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.sentence.embedding.HuggingFaceInferenceAPISentenceTransformer");
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+		AssertElementNotPresent(
+			key_fieldLabel = "Sentence Transformer",
+			key_value = "txtai",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+
+		AssertElementNotPresent(
+			key_fieldLabel = "Sentence Transformer",
+			key_value = "Hugging Face Inference API",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+		AssertElementNotPresent(
+			key_fieldLabel = "Sentence Transformer",
+			key_value = "txtai",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+
+		AssertElementNotPresent(
+			key_fieldLabel = "Sentence Transformer",
+			key_value = "Hugging Face Inference API",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
+
+		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.search.experiences.internal.ml.sentence.embedding.TXTAISentenceTransformer");
+
+		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.search.experiences.internal.ml.sentence.embedding.HuggingFaceInferenceAPISentenceTransformer");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_fieldLabel = "Sentence Transformer",
+			key_value = "txtai",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+
+		AssertElementPresent(
+			key_fieldLabel = "Sentence Transformer",
+			key_value = "Hugging Face Inference API",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+		AssertElementPresent(
+			key_fieldLabel = "Sentence Transformer",
+			key_value = "txtai",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+
+		AssertElementPresent(
+			key_fieldLabel = "Sentence Transformer",
+			key_value = "Hugging Face Inference API",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
+	}
+
 	test AssertSearchUsingTxtaiWithTextEmbeddingElementHasNoError {
 		property custom.properties = "feature.flag.LPS-163688=true";
 		property txtai.enabled = "true";

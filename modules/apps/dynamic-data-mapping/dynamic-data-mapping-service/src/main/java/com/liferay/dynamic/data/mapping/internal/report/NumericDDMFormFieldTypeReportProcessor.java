@@ -35,12 +35,12 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -122,42 +122,35 @@ public class NumericDDMFormFieldTypeReportProcessor
 				ddmFormInstanceRecord.getFormInstance();
 
 			List<DDMFormInstanceRecord> ddmFormInstanceRecords =
-				ddmFormInstance.getFormInstanceRecords();
+				new ArrayList<>();
 
-			Supplier<Stream<DDMFormInstanceRecord>> streamSupplier = () -> {
-				Stream<DDMFormInstanceRecord> stream =
-					ddmFormInstanceRecords.stream();
+			for (DDMFormInstanceRecord currentDDMFormInstanceRecord :
+					ddmFormInstance.getFormInstanceRecords()) {
 
-				return stream.filter(
-					currentDDMFormInstanceRecord ->
-						formInstanceRecordId !=
-							currentDDMFormInstanceRecord.
-								getFormInstanceRecordId());
-			};
+				if (formInstanceRecordId !=
+						currentDDMFormInstanceRecord.
+							getFormInstanceRecordId()) {
 
-			Stream<DDMFormInstanceRecord> stream = streamSupplier.get();
+					ddmFormInstanceRecords.add(currentDDMFormInstanceRecord);
+				}
+			}
 
-			if (stream.count() == 0) {
+			if (ddmFormInstanceRecords.isEmpty()) {
 				jsonObject.remove("summary");
 
 				return jsonObject;
 			}
 
-			Comparator<Number> comparator =
-				(number1, number2) -> Double.compare(
-					number1.doubleValue(), number2.doubleValue());
+			List<BigDecimal> valueBigDecimals = _getValueBigDecimals(
+				ddmFormFieldValue.getName(), ddmFormInstanceRecords);
 
-			BigDecimal maxValueBigDecimal = _getValueBigDecimalsStream(
-				ddmFormFieldValue.getName(), streamSupplier.get()
-			).max(
-				comparator
-			).get();
+			BigDecimal maxValueBigDecimal = Collections.max(
+				valueBigDecimals,
+				Comparator.comparingDouble(Number::doubleValue));
 
-			BigDecimal minValueBigDecimal = _getValueBigDecimalsStream(
-				ddmFormFieldValue.getName(), streamSupplier.get()
-			).min(
-				comparator
-			).get();
+			BigDecimal minValueBigDecimal = Collections.min(
+				valueBigDecimals,
+				Comparator.comparingDouble(Number::doubleValue));
 
 			summaryJSONObject.put(
 				"max", maxValueBigDecimal.toString()
@@ -249,42 +242,35 @@ public class NumericDDMFormFieldTypeReportProcessor
 		}
 	}
 
-	private Stream<BigDecimal> _getValueBigDecimalsStream(
+	private List<BigDecimal> _getValueBigDecimals(
 		String ddmFormFieldValueName,
-		Stream<DDMFormInstanceRecord> ddmFormInstanceRecordsStream) {
+		List<DDMFormInstanceRecord> ddmFormInstanceRecords) {
 
-		return ddmFormInstanceRecordsStream.map(
-			ddmFormInstanceRecord -> {
-				try {
-					DDMFormValues ddmFormValues =
-						ddmFormInstanceRecord.getDDMFormValues();
+		List<BigDecimal> values = new ArrayList<>();
 
-					Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-						ddmFormValues.getDDMFormFieldValuesMap(true);
+		for (DDMFormInstanceRecord ddmFormInstanceRecord :
+				ddmFormInstanceRecords) {
 
-					List<DDMFormFieldValue> ddmFormFieldValues =
-						ddmFormFieldValuesMap.get(ddmFormFieldValueName);
+			try {
+				DDMFormValues ddmFormValues =
+					ddmFormInstanceRecord.getDDMFormValues();
 
-					Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
-						ddmFormFieldValues.stream();
+				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+					ddmFormValues.getDDMFormFieldValuesMap(true);
 
-					return ddmFormFieldValuesStream.map(
-						ddmFormFieldValue -> getValueBigDecimal(
-							ddmFormFieldValue)
-					).findFirst(
-					).get();
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(portalException);
-					}
+				List<DDMFormFieldValue> ddmFormFieldValues =
+					ddmFormFieldValuesMap.get(ddmFormFieldValueName);
 
-					return null;
+				values.add(getValueBigDecimal(ddmFormFieldValues.get(0)));
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException);
 				}
 			}
-		).filter(
-			value -> value != null
-		);
+		}
+
+		return values;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

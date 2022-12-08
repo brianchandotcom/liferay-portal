@@ -127,4 +127,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-163074. The XSS shouldn't be executed on preview window."
+	@priority = "4"
+	test PreviewWebContentWithXSS {
+		task ("Given a site designer has a display page template for web content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site designer creates a web content with XSS") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "<script>alert(456);</script>",
+				webContentTitle = "<script>alert(123);</script>");
+		}
+
+		task ("Then the XSS won't be executed on preview window") {
+			Panel.expandPanel(panel = "Display Page");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			ClickNoError(
+				key_text = "Preview",
+				locator1 = "Button#ANY");
+
+			AssertAlertNotPresent();
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "<script>alert(123);</script>");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "<script>alert(456);</script>");
+
+			IFrame.closeFrame();
+		}
+	}
+
 }

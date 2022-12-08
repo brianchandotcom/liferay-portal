@@ -43,6 +43,10 @@ public class JIRAUtil {
 	public static void executeTransition(
 		String comment, Issue issue, Transition transition) {
 
+		if (_issueRestClient == null) {
+			return;
+		}
+
 		TransitionInput transitionInput = new TransitionInput(
 			transition.getId(), Comment.valueOf(comment));
 
@@ -57,13 +61,18 @@ public class JIRAUtil {
 		catch (ExecutionException | InterruptedException | RestClientException
 					exception) {
 
-			throw new RuntimeException(
-				"Unable to execute transition " + transition.getName(),
-				exception);
+			System.err.println(
+				"Unable to execute transition " + transition.getName());
+
+			exception.printStackTrace();
 		}
 	}
 
 	public static Issue getIssue(String issueKey) {
+		if (_issueRestClient == null) {
+			return null;
+		}
+
 		if (_issueMap.containsKey(issueKey)) {
 			CachedIssue cachedIssue = _issueMap.get(issueKey);
 
@@ -74,17 +83,30 @@ public class JIRAUtil {
 			_uncacheIssue(issueKey);
 		}
 
-		Promise<Issue> promise = _issueRestClient.getIssue(issueKey);
+		try {
+			Promise<Issue> promise = _issueRestClient.getIssue(issueKey);
 
-		Issue issue = promise.claim();
+			Issue issue = promise.claim();
 
-		_issueMap.put(issueKey, new CachedIssue(issue));
+			_issueMap.put(issueKey, new CachedIssue(issue));
 
-		return issue;
+			return issue;
+		}
+		catch (Exception exception) {
+			System.err.println("Unable to get issue " + issueKey);
+
+			exception.printStackTrace();
+
+			return null;
+		}
 	}
 
 	public static Transition getTransition(Issue issue, String transitionName) {
 		Map<String, Transition> transitionMap = getTransitions(issue);
+
+		if (transitionMap == null) {
+			return null;
+		}
 
 		return transitionMap.get(transitionName);
 	}
@@ -98,29 +120,42 @@ public class JIRAUtil {
 	}
 
 	private static IssueRestClient _initIssueRestClient() {
-		Properties buildProperties = null;
-
 		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			Properties buildProperties = null;
+
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to get build properties", ioException);
+			}
+
+			JiraRestClientFactory jiraRestClientFactory =
+				new AsynchronousJiraRestClientFactory();
+
+			JiraRestClient jiraRestClient =
+				jiraRestClientFactory.createWithBasicHttpAuthentication(
+					URI.create(buildProperties.getProperty("jira.url")),
+					buildProperties.getProperty("jira.username"),
+					buildProperties.getProperty("jira.password"));
+
+			return jiraRestClient.getIssueClient();
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build properties", ioException);
+		catch (Exception exception) {
+			System.err.println("Unable to create JIRA rest client object.");
+
+			exception.printStackTrace();
+
+			return null;
 		}
-
-		JiraRestClientFactory jiraRestClientFactory =
-			new AsynchronousJiraRestClientFactory();
-
-		JiraRestClient jiraRestClient =
-			jiraRestClientFactory.createWithBasicHttpAuthentication(
-				URI.create(buildProperties.getProperty("jira.url")),
-				buildProperties.getProperty("jira.username"),
-				buildProperties.getProperty("jira.password"));
-
-		return jiraRestClient.getIssueClient();
 	}
 
 	private static void _initTransitions(Issue issue) {
+		if (_issueRestClient == null) {
+			return;
+		}
+
 		Promise<Iterable<Transition>> promise = _issueRestClient.getTransitions(
 			issue);
 

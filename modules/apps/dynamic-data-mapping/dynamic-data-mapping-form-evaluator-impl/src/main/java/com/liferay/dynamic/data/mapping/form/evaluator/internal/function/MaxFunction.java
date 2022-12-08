@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 
 import java.math.BigDecimal;
 
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -35,8 +34,8 @@ public class MaxFunction
 			values
 		).map(
 			value -> new BigDecimal(value.toString())
-		).collect(
-			Collectors.maxBy((num1, num2) -> num1.compareTo(num2))
+		).max(
+			BigDecimal::compareTo
 		).orElse(
 			BigDecimal.ZERO
 		);

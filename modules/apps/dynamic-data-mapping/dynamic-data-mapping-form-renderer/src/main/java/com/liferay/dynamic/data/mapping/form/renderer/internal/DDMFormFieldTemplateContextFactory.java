@@ -64,14 +64,12 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Marcellus Tavares
@@ -261,23 +259,20 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
 			parentDDMFormFieldValue.getNestedDDMFormFieldValuesMap();
 
-		List<DDMFormFieldValue> nestedDDMFormFieldValues =
-			parentDDMFormFieldValue.getNestedDDMFormFieldValues();
+		Set<String> ddmFormFieldValueNames = new HashSet<>();
 
-		Stream<DDMFormFieldValue> nestedDDMFormFieldValuesStream =
-			nestedDDMFormFieldValues.stream();
+		for (DDMFormFieldValue ddmFormFieldValue :
+				parentDDMFormFieldValue.getNestedDDMFormFieldValues()) {
 
-		nestedDDMFormFieldValuesStream.map(
-			DDMFormFieldValue::getName
-		).distinct(
-		).map(
-			nestedDDMFormFieldValuesMap::get
-		).map(
-			ddmFormFieldValues -> _createDDMFormFieldTemplateContexts(
-				ddmFormFieldValues, parentDDMFormFieldParameterName)
-		).forEach(
-			nestedDDMFormFieldTemplateContext::addAll
-		);
+			ddmFormFieldValueNames.add(ddmFormFieldValue.getName());
+		}
+
+		for (String name : ddmFormFieldValueNames) {
+			nestedDDMFormFieldTemplateContext.addAll(
+				_createDDMFormFieldTemplateContexts(
+					nestedDDMFormFieldValuesMap.get(name),
+					parentDDMFormFieldParameterName));
+		}
 
 		return nestedDDMFormFieldTemplateContext;
 	}
@@ -301,13 +296,13 @@ public class DDMFormFieldTemplateContextFactory {
 
 			LocalizedValue localizedValue = entry.getValue();
 
-			option.put(
-				"label",
-				Optional.ofNullable(
-					localizedValue.getString(_locale)
-				).orElseGet(
-					() -> localizedValue.getString(LocaleUtil.getDefault())
-				));
+			String value = localizedValue.getString(_locale);
+
+			if (value == null) {
+				value = localizedValue.getString(LocaleUtil.getDefault());
+			}
+
+			option.put("label", value);
 
 			option.put("reference", optionsReferences.get(entry.getKey()));
 			option.put("value", entry.getKey());
@@ -374,19 +369,6 @@ public class DDMFormFieldTemplateContextFactory {
 		return changedProperties;
 	}
 
-	private Stream<Map<String, Object>> _getColumnsStream(
-		Map<String, Object> row) {
-
-		if (!row.containsKey("columns")) {
-			return Stream.empty();
-		}
-
-		List<Map<String, Object>> columns = (List<Map<String, Object>>)row.get(
-			"columns");
-
-		return columns.stream();
-	}
-
 	private String _getDDMFormFieldParameterName(
 		String ddmFormFieldName, String instanceId, int index,
 		String parentDDMFormFieldParameterName) {
@@ -430,19 +412,6 @@ public class DDMFormFieldTemplateContextFactory {
 		return ddmStructure.getDefaultDDMStructureLayoutId();
 	}
 
-	private Stream<Map<String, Object>> _getFieldsStream(
-		Map<String, Object> column) {
-
-		if (!column.containsKey("fields")) {
-			return Stream.empty();
-		}
-
-		List<Map<String, Object>> fields =
-			(List<Map<String, Object>>)column.get("fields");
-
-		return fields.stream();
-	}
-
 	private List<Map<String, Object>> _getNestedFieldsContext(
 		List<Object> pages) {
 
@@ -450,30 +419,33 @@ public class DDMFormFieldTemplateContextFactory {
 			return new ArrayList<>();
 		}
 
-		Stream<Object> stream = pages.stream();
+		for (Object page : pages) {
+			Map<String, Object> pageContext = (Map<String, Object>)page;
 
-		return stream.flatMap(
-			this::_getRowsStream
-		).flatMap(
-			this::_getColumnsStream
-		).flatMap(
-			this::_getFieldsStream
-		).collect(
-			Collectors.toList()
-		);
-	}
+			if (!pageContext.containsKey("rows")) {
+				return null;
+			}
 
-	private Stream<Map<String, Object>> _getRowsStream(Object page) {
-		Map<String, Object> pageContext = (Map<String, Object>)page;
+			for (Map<String, Object> row :
+					(List<Map<String, Object>>)pageContext.get("rows")) {
 
-		if (!pageContext.containsKey("rows")) {
-			return Stream.empty();
+				if (!row.containsKey("columns")) {
+					return null;
+				}
+
+				for (Map<String, Object> column :
+						(List<Map<String, Object>>)row.get("columns")) {
+
+					if (!column.containsKey("fields")) {
+						return null;
+					}
+
+					return (List<Map<String, Object>>)column.get("fields");
+				}
+			}
 		}
 
-		List<Map<String, Object>> rows =
-			(List<Map<String, Object>>)pageContext.get("rows");
-
-		return rows.stream();
+		return null;
 	}
 
 	private boolean _isFieldSetField(DDMFormField ddmFormField) {

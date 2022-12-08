@@ -150,7 +150,11 @@ AUI.add(
 					const instance = this;
 
 					return instance.items.filter(
-						':not(.' + CSS_SIMPLE_MENU_ITEM_HIDDEN + ')'
+						':not(.' +
+							CSS_SIMPLE_MENU_ITEM_HIDDEN +
+							'):not(.' +
+							CSS_SIMPLE_MENU_SEPARATOR +
+							')'
 					);
 				},
 

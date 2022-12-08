@@ -28,7 +28,7 @@ definition {
 
 	@description = "LPS-168960 - Validates 'client extensions' is available as a selectable portlet category name"
 	@priority = "3"
-	test HasWidgetCategory {
+	test HasPortletCategoryNameClientExtension {
 		task ("When access IFrame type client extension") {
 			RemoteApps.goToRemoteAppsPortlet();
 

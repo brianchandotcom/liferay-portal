@@ -586,7 +586,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 	private byte[] _getImageBytes() throws Exception {
 		return FileUtil.getBytes(
 			FileEntryAMImageURLItemSelectorReturnTypeResolverTest.class,
-			"image.jpg");
+			"dependencies/image.jpg");
 	}
 
 	private static final Pattern _pattern = Pattern.compile("\\?t=\\d+");

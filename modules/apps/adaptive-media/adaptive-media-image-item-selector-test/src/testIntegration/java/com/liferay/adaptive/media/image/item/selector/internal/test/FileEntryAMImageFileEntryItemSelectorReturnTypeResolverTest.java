@@ -96,7 +96,7 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 	private byte[] _getImageBytes() throws Exception {
 		return FileUtil.getBytes(
 			FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest.class,
-			"image.jpg");
+			"dependencies/image.jpg");
 	}
 
 	@Inject

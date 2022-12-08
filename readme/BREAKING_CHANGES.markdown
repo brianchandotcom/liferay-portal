@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `90502b5fc445441164332bdb2317533d1c0c4164`.*
+*This document has been reviewed through the breaking change entry at commit `893cd542d0a557a17542d5e1af14283aa720c400`.*
 
 Each change must have a brief descriptive title and contain the following information:
 
@@ -1219,16 +1219,16 @@ Delete implementations of `ConfigurationBeanDeclaration` and remove references t
 
 ### What changed?
 
-Because <aui:fieldset-group> and <liferay-frontend:fieldset-group> are no longer needed.
+`FieldSetGroupTag` was removed because `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` are no longer needed.
 
 ### Who is affected?
 
-Anyone who has using <aui:fieldset-group> and <liferay-frontend:fieldset-group>.
+Anyone using `<aui:fieldset-group>` or `<liferay-frontend:fieldset-group>`.
 
 ### How should I update my code?
 
-Delete usages of <liferay-frontend:fieldset-group> and replace usages <aui:fieldset-group> with <div class="sheet"><div class="panel-group panel-group-flush">.
+Delete usages of `<liferay-frontend:fieldset-group>` and replace usages of `<aui:fieldset-group>` with `<div class="sheet"><div class="panel-group panel-group-flush">`.
 
 ### Why was this change made?
 
-<aui:fieldset-group> and <liferay-frontend:fieldset-group> were adding unnecessary markup to the page and those were causing accessibility issues.
+The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added unnecessary markup to the page and caused accessibility issues.

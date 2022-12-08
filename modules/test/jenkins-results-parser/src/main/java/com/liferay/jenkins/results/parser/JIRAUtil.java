@@ -48,10 +48,6 @@ public class JIRAUtil {
 			}
 		}
 
-		if (_issueRestClient == null) {
-			_initRestClient();
-		}
-
 		Promise<Issue> promise = _issueRestClient.getIssue(issueKey);
 
 		Issue issue = promise.claim();
@@ -63,10 +59,6 @@ public class JIRAUtil {
 
 	public static void transition(
 		String comment, Issue issue, int transitionId) {
-
-		if (_issueRestClient == null) {
-			_initRestClient();
-		}
 
 		TransitionInput transitionInput = new TransitionInput(
 			transitionId, Comment.valueOf(comment));
@@ -87,10 +79,6 @@ public class JIRAUtil {
 
 	public static void transition(
 		String comment, Issue issue, String transitionName) {
-
-		if (_issueRestClient == null) {
-			_initRestClient();
-		}
 
 		int transitionId = _getTransitions(issue, transitionName);
 
@@ -116,27 +104,7 @@ public class JIRAUtil {
 		}
 	}
 
-	private static void _getProperties() {
-		try {
-			_jenkinsBuildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build properties", ioException);
-		}
-
-		_jiraAdminPassword = _jenkinsBuildProperties.getProperty(
-			"ci.jira.admin.password");
-		_jiraAdminUsername = _jenkinsBuildProperties.getProperty(
-			"ci.jira.admin.username");
-	}
-
 	private static int _getTransitions(Issue issue, String transitionName) {
-		if (_issueRestClient == null) {
-			_initRestClient();
-		}
-
 		if (_transitions == null) {
 			Promise<Iterable<Transition>> promise =
 				_issueRestClient.getTransitions(issue);
@@ -163,28 +131,38 @@ public class JIRAUtil {
 		return transitionId;
 	}
 
-	private static void _initRestClient() {
-		_getProperties();
+	private static IssueRestClient _initIssueRestClient() {
+		Properties buildProperties = null;
 
-		_jiraRestClientFactory = new AsynchronousJiraRestClientFactory();
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
 
-		_jiraRestClient =
-			_jiraRestClientFactory.createWithBasicHttpAuthentication(
-				_URI, _jiraAdminUsername, _jiraAdminPassword);
+		String jiraAdminPassword = buildProperties.getProperty(
+			"ci.jira.admin.password");
+		String jiraAdminUsername = buildProperties.getProperty(
+			"ci.jira.admin.username");
 
-		_issueRestClient = _jiraRestClient.getIssueClient();
+		JiraRestClientFactory jiraRestClientFactory =
+			new AsynchronousJiraRestClientFactory();
+
+		JiraRestClient jiraRestClient =
+			jiraRestClientFactory.createWithBasicHttpAuthentication(
+				_URI, jiraAdminUsername, jiraAdminPassword);
+
+		return jiraRestClient.getIssueClient();
 	}
 
 	private static final URI _URI = URI.create("https://issues.liferay.com");
 
 	private static final Map<String, CachedIssue> _issueMap =
 		new ConcurrentHashMap<>();
-	private static IssueRestClient _issueRestClient;
-	private static Properties _jenkinsBuildProperties;
-	private static String _jiraAdminPassword;
-	private static String _jiraAdminUsername;
-	private static JiraRestClient _jiraRestClient;
-	private static JiraRestClientFactory _jiraRestClientFactory;
+	private static final IssueRestClient _issueRestClient =
+		_initIssueRestClient();
 	private static Iterable<Transition> _transitions;
 
 	private static class CachedIssue {

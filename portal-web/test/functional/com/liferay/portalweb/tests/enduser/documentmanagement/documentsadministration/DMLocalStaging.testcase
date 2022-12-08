@@ -22,6 +22,130 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 	}
 
+	@description = "This ensures that the document using custom document type can be deleted and republished."
+	@priority = "5"
+	@refactordone
+	test CanDeleteDocumentWithCustomType {
+		property portal.acceptance = "true";
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			navTab = "Documents and Media",
+			textField = "Text");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.viewDefault();
+	}
+
+	@description = "This ensures that the document using custom document type can be edited and republished."
+	@priority = "5"
+	@refactordone
+	test CanEditDocumentWithCustomType {
+		property portal.acceptance = "true";
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Image,Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.editCP(
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentFileNameEdit = "Image_2.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title Edit",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Image_2.jpg");
+	}
+
 	@description = "This test covers LPS-126751. It ensures that a user cannot create a document type without a field."
 	@priority = "4"
 	@refactordone
@@ -122,6 +246,65 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-74621."
+	@priority = "3"
+	@refactordone
+	test CanOnlyCommentOnLiveSite {
+		property portal.acceptance = "true";
+		property testray.component.names = "Comment";
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name-staging",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
+
+		Comments.addPG(entryComment = "DM Document Comment");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
+
+		Comments.viewPG(
+			commentCount = "1",
+			entryComment = "DM Document Comment",
+			userFullName = "Test Test (You)");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
+
+		Comments.viewCommentReadOnly();
+	}
+
 	@description = "This is a test for LPS-136819. It checks that a file version can be deleted and published."
 	@priority = "4"
 	test CanPublishDeletedFileVersion {
@@ -213,6 +396,350 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.viewDefault();
+	}
+
+	@description = "This is a use case for LPS-79925."
+	@priority = "5"
+	@refactordone
+	test CanPublishDocumentFromRestrictedFolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name-staging");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMFolder.configureWorkflowCP(
+			dmDocumentTypeName = "DM Document Type Name",
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "No Workflow",
+			workflowRestriction = "Specific Restrictions");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name-staging",
+			siteURLKey = "site-name-staging");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldRequiredEdit = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		AssertConsoleTextNotPresent(value1 = "DDMFormValuesValidationException");
+
+		AssertConsoleTextNotPresent(value1 = "No value defined for field name");
+	}
+
+	@description = "This test covers LPS-119234. It ensures that a document type can be published to live via SAP."
+	@priority = "4"
+	@refactordone
+	test CanPublishDocumentTypeViaSAP {
+		property portal.acceptance = "true";
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish to live?",
+			entry = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoMetadataSets();
+
+		AssertElementNotPresent(
+			key_tableEntry = "DM Document Type Name",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+	}
+
+	@description = "This ensures that the custom document type being used by document can be edited and republished."
+	@priority = "5"
+	@refactordone
+	test CanPublishEditsToDocumentType {
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Image",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = "Image_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			imageField = "Document_1.jpg",
+			navTab = "Documents and Media");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Image_1.jpg");
+
+		DMDocument.viewDocumentTypePG(imageName = "Document_1.jpg");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Photo",
+			dmDocumentTypeName = "DM Document Type Name",
+			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "Photo");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "DM Document Title",
+			fieldFieldLabel = "Photo",
+			imageFieldEdit = "Document_2.jpg",
+			navTab = "Documents and Media");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name Edit",
+			previewImage = "Image_1.jpg");
+
+		DMDocument.viewDocumentTypePG(
+			fieldFieldLabel = "Photo",
+			imageName = "Document_2.jpg");
+	}
+
+	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."
+	@priority = "5"
+	@refactordone
+	test CanPublishEditsToDocumentUsingCustomTypeAndSet {
+		property portal.acceptance = "true";
+
+		task ("Add a metadata set with image field") {
+			DMNavigator.gotoMetadataSets();
+
+			DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			DDLDataDefinition.save();
+		}
+
+		task ("Add a document type with the custom metadata set") {
+			DMNavigator.openToAddDocumentType(siteURLKey = "site-name-staging");
+
+			PortletEntry.inputName(name = "DM Document Type Name");
+
+			DMDocumentType.gotoTab(tabName = "Builder");
+
+			DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
+
+			DMDocumentType.selectPGMetadataSet(key_metadataSetName = "Document Metadata Set Name");
+
+			DDLDataDefinition.save();
+		}
+
+		task ("Add a document with the new document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentFileName = "Document_1.jpg",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.editCP(
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentFileNameEdit = "Image_2.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title Edit",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Image_2.jpg");
+	}
+
+	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
+	@priority = "5"
+	@refactordone
+	test CanPublishEditsToMetadataSet {
+		property custom.properties = "dl.actions.visible=true";
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Documents and Media");
+
+		task ("Add a metadata set with text field") {
+			DMNavigator.gotoMetadataSets();
+
+			DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			DDLDataDefinition.save();
+		}
+
+		task ("Add a document type with a custom metadata set") {
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Numeric",
+				dmDocumentTypeName = "DM Document Type Name",
+				metadataSetName = "DM Metadata Set Name");
+		}
+
+		task ("Add a document with a custom document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.doc",
+				dmDocumentFileName = "Document_1.doc",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTypeName = "DM Document Type Name",
+				numericField = "123",
+				textField = "DM Document Text");
+		}
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Company",
+			dmDocumentTypeFieldRequiredEdit = "Company",
+			dmDocumentTypeName = "DM Metadata Set Name",
+			dmDocumentTypeNameEdit = "DM Metadata Set Name Edit",
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Company");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name");
+
+		DMDocument.viewDocumentTypePG(
+			numericValue = "123",
+			textContent = "DM Document Text",
+			textFieldLabel = "Company");
 	}
 
 	@description = "This is a test for LPS-136818. It checks that a folder with multiple files can be published using the SAP."
@@ -440,6 +967,75 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published."
+	@priority = "5"
+	@refactordone
+	test CanPublishSubfolderWithDocumentsViaSAP {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "StagingDM#PublishSubfolderWithDocumentsViaSAP";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder 1",
+			groupName = "Site Name-staging");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document in Folder 1",
+			folderName = "DM Folder 1",
+			groupName = "Site Name-staging",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder 2",
+			groupName = "Site Name-staging",
+			parentFolderName = "DM Folder 1");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document in Folder 2",
+			dmDocumentTitle = "Document_2.txt",
+			folderName = "DM Folder 2",
+			groupName = "Site Name-staging",
+			mimeType = "text/plain",
+			parentFolderName = "DM Folder 1",
+			sourceFileName = "Document_2.txt");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder 3",
+			groupName = "Site Name-staging",
+			parentFolderName = "DM Folder 2");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document in Folder 3",
+			dmDocumentTitle = "Document_3.txt",
+			folderName = "DM Folder 3",
+			groupName = "Site Name-staging",
+			mimeType = "text/plain",
+			parentFolderName = "DM Folder 2",
+			sourceFileName = "Document_3.txt");
+
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected folder?",
+			entry = "DM Folder 1");
+
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		for (var folderCount : list "1,2,3") {
+			DMFolder.viewCP(dmFolderName = "DM Folder ${folderCount}");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");
+
+			Navigator.gotoBack();
+		}
+	}
+
 	@description = "This is a test for LPS-136822. It checks that a document type can be updated and published using the normal publication process."
 	@priority = "3"
 	test CanPublishUpdatedDocumentType {
@@ -601,6 +1197,85 @@ definition {
 			siteURLKey = "site-name");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
+	}
+
+	@description = "This test covers LPS-99265. It ensures that a staged document file cannot be shared unless it is first published to Live."
+	@priority = "4"
+	@refactordone
+	test CanShareDocumentOnLiveSite {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Documents and Media");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name-staging",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertClick(
+			key_dmDocumentTitle = "DM Document Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "DM Document Title");
+
+		AssertElementNotPresent(locator1 = "Button#SHARE_SIDENAV");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			shareable = "true",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document Title",
+			ownerName = "Test Test");
 	}
 
 	@description = "This test covers LPS-154415. It checks that an external video displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
@@ -1155,821 +1830,6 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@description = "This is a use case for LPS-74621."
-	@priority = "3"
-	@refactordone
-	test CanOnlyCommentOnLiveSite {
-		property portal.acceptance = "true";
-		property testray.component.names = "Comment";
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Site Name (Staging)",
-			layoutName = "Staging DM Page",
-			site = "false",
-			widgetName = "Documents and Media");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name-staging",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
-		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
-
-		Comments.addPG(entryComment = "DM Document Comment");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
-
-		Comments.viewPG(
-			commentCount = "1",
-			entryComment = "DM Document Comment",
-			userFullName = "Test Test (You)");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		DMDocument.gotoEntry(dmDocumentTitle = "DM Document Title");
-
-		Comments.viewCommentReadOnly();
-	}
-
-	@description = "This ensures that the document using custom document type can be deleted and republished."
-	@priority = "5"
-	@refactordone
-	test CanDeleteDocumentWithCustomType {
-		property portal.acceptance = "true";
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			navTab = "Documents and Media",
-			textField = "Text");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.viewDefault();
-	}
-
-	@description = "This ensures that the document using custom document type can be edited and republished."
-	@priority = "5"
-	@refactordone
-	test CanEditDocumentWithCustomType {
-		property portal.acceptance = "true";
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Image,Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Document_1.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.editCP(
-			dmDocumentDescriptionEdit = "DM Document Description Edit",
-			dmDocumentFileEdit = "Document_2.jpg",
-			dmDocumentFileNameEdit = "Image_2.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title Edit",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(
-			dmDocumentDescription = "DM Document Description Edit",
-			dmDocumentTitle = "DM Document Title Edit",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Image_2.jpg");
-	}
-
-	@description = "This test covers LPS-155794. It ensures that an image that was published on a site can still be accessed after local staging is disabled."
-	@priority = "5"
-	test ImageIsStillAccessibleAfterDisablingStaging {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2",
-			groupName = "Site Name-staging",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Document_2",
-			groupName = "Site Name (Staging)",
-			site = "false",
-			siteURLKey = "site-name-staging");
-
-		DMDocument.editFriendlyURL(
-			dmDocumentTitle = "Document_2",
-			friendlyURLEdit = "document_2_edit");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "Document_2",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		var latestVersionURL = DMDocument.getLatestVersionURL();
-
-		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
-
-		Staging.deactivateStagingCP(siteName = "Site Name");
-
-		Navigator.openSpecificURL(url = "${latestVersionURL}");
-
-		AssertVisible(
-			key_imageSourceURL = "${portalURL}/documents/d/site-name/document_2_edit",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
-	}
-
-	@description = "This test covers LPS-82539."
-	@priority = "5"
-	@refactordone
-	test PendingEntryWillNotBePublishedToLive {
-		property portal.acceptance = "true";
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 1",
-			groupName = "Site Name-staging");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMFolder.configureWorkflowCP(
-			dmFolderName = "DM Folder 1",
-			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "DM Folder 1",
-			groupName = "Site Name-staging",
-			siteURLKey = "site-name");
-
-		DMDocument.addWithWorkflowCP(
-			dmDocumentDescription = "DM Document in Folder 1",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document in Folder 1");
-
-		AssertTextEquals(
-			key_dmDocumentTitle = "DM Document in Folder 1",
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
-			value1 = "Pending");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		Staging.publishViaSAP(
-			confirmMessage = "Are you sure you want to publish the selected folder?",
-			entry = "DM Folder 1");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder 1");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder.");
-	}
-
-	@description = "This is a use case for LPS-79925."
-	@priority = "5"
-	@refactordone
-	test CanPublishDocumentFromRestrictedFolder {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Site Name-staging");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMFolder.configureWorkflowCP(
-			dmDocumentTypeName = "DM Document Type Name",
-			dmFolderName = "DM Folder Name",
-			workflowDefinition = "No Workflow",
-			workflowRestriction = "Specific Restrictions");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "DM Folder Name",
-			groupName = "Site Name-staging",
-			siteURLKey = "site-name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldRequiredEdit = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		AssertConsoleTextNotPresent(value1 = "DDMFormValuesValidationException");
-
-		AssertConsoleTextNotPresent(value1 = "No value defined for field name");
-	}
-
-	@description = "This test covers LPS-119234. It ensures that a document type can be published to live via SAP."
-	@priority = "4"
-	@refactordone
-	test CanPublishDocumentTypeViaSAP {
-		property portal.acceptance = "true";
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		Staging.publishViaSAP(
-			confirmMessage = "Are you sure you want to publish to live?",
-			entry = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMNavigator.gotoMetadataSets();
-
-		AssertElementNotPresent(
-			key_tableEntry = "DM Document Type Name",
-			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
-	}
-
-	@description = "This ensures that the custom document type being used by document can be edited and republished."
-	@priority = "5"
-	@refactordone
-	test CanPublishEditsToDocumentType {
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Image",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = "Image_1.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			imageField = "Document_1.jpg",
-			navTab = "Documents and Media");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Image_1.jpg");
-
-		DMDocument.viewDocumentTypePG(imageName = "Document_1.jpg");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-staging");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldNameEdit = "Photo",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
-			fieldFieldLabel = "Image",
-			fieldFieldLabelEdit = "Photo");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.editCP(
-			dmDocumentTitle = "DM Document Title",
-			fieldFieldLabel = "Photo",
-			imageFieldEdit = "Document_2.jpg",
-			navTab = "Documents and Media");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name Edit",
-			previewImage = "Image_1.jpg");
-
-		DMDocument.viewDocumentTypePG(
-			fieldFieldLabel = "Photo",
-			imageName = "Document_2.jpg");
-	}
-
-	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."
-	@priority = "5"
-	@refactordone
-	test CanPublishEditsToDocumentUsingCustomTypeAndSet {
-		property portal.acceptance = "true";
-
-		task ("Add a metadata set with image field") {
-			DMNavigator.gotoMetadataSets();
-
-			DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Image",
-				fieldName = "Image");
-
-			DDLDataDefinition.save();
-		}
-
-		task ("Add a document type with the custom metadata set") {
-			DMNavigator.openToAddDocumentType(siteURLKey = "site-name-staging");
-
-			PortletEntry.inputName(name = "DM Document Type Name");
-
-			DMDocumentType.gotoTab(tabName = "Builder");
-
-			DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
-
-			DMDocumentType.selectPGMetadataSet(key_metadataSetName = "Document Metadata Set Name");
-
-			DDLDataDefinition.save();
-		}
-
-		task ("Add a document with the new document type") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.jpg",
-				dmDocumentFileName = "Document_1.jpg",
-				dmDocumentTitle = "DM Document Title",
-				dmDocumentTypeName = "DM Document Type Name");
-		}
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Document_1.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.editCP(
-			dmDocumentDescriptionEdit = "DM Document Description Edit",
-			dmDocumentFileEdit = "Document_2.jpg",
-			dmDocumentFileNameEdit = "Image_2.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title Edit",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(
-			dmDocumentDescription = "DM Document Description Edit",
-			dmDocumentTitle = "DM Document Title Edit",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Image_2.jpg");
-	}
-
-	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
-	@priority = "5"
-	@refactordone
-	test CanPublishEditsToMetadataSet {
-		property custom.properties = "dl.actions.visible=true";
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Site Name (Staging)",
-			layoutName = "Staging DM Page",
-			site = "false",
-			widgetName = "Documents and Media");
-
-		task ("Add a metadata set with text field") {
-			DMNavigator.gotoMetadataSets();
-
-			DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			DDLDataDefinition.save();
-		}
-
-		task ("Add a document type with a custom metadata set") {
-			DMNavigator.gotoDocumentType();
-
-			DMDocumentType.add(
-				dmDocumentTypeDescription = "DM Document Type Description",
-				dmDocumentTypeFieldNames = "Numeric",
-				dmDocumentTypeName = "DM Document Type Name",
-				metadataSetName = "DM Metadata Set Name");
-		}
-
-		task ("Add a document with a custom document type") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.doc",
-				dmDocumentFileName = "Document_1.doc",
-				dmDocumentTitle = "DM Document Title",
-				dmDocumentTypeName = "DM Document Type Name",
-				numericField = "123",
-				textField = "DM Document Text");
-		}
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldNameEdit = "Company",
-			dmDocumentTypeFieldRequiredEdit = "Company",
-			dmDocumentTypeName = "DM Metadata Set Name",
-			dmDocumentTypeNameEdit = "DM Metadata Set Name Edit",
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Company");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFileName = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name");
-
-		DMDocument.viewDocumentTypePG(
-			numericValue = "123",
-			textContent = "DM Document Text",
-			textFieldLabel = "Company");
-	}
-
-	@description = "This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published."
-	@priority = "5"
-	@refactordone
-	test CanPublishSubfolderWithDocumentsViaSAP {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "StagingDM#PublishSubfolderWithDocumentsViaSAP";
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 1",
-			groupName = "Site Name-staging");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document in Folder 1",
-			folderName = "DM Folder 1",
-			groupName = "Site Name-staging",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 2",
-			groupName = "Site Name-staging",
-			parentFolderName = "DM Folder 1");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document in Folder 2",
-			dmDocumentTitle = "Document_2.txt",
-			folderName = "DM Folder 2",
-			groupName = "Site Name-staging",
-			mimeType = "text/plain",
-			sourceFileName = "Document_2.txt");
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 3",
-			groupName = "Site Name-staging",
-			parentFolderName = "DM Folder 2");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document in Folder 3",
-			dmDocumentTitle = "Document_3.txt",
-			folderName = "DM Folder 3",
-			groupName = "Site Name-staging",
-			mimeType = "text/plain",
-			sourceFileName = "Document_3.txt");
-
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		Staging.publishViaSAP(
-			confirmMessage = "Are you sure you want to publish the selected folder?",
-			entry = "DM Folder 1");
-
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		for (var folderCount : list "1,2,3") {
-			DMFolder.viewCP(dmFolderName = "DM Folder ${folderCount}");
-
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");
-
-			DMDocument.viewCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");
-
-			Navigator.gotoBack();
-		}
-	}
-
-	@description = "This test covers LPS-99265. It ensures that a staged document file cannot be shared unless it is first published to Live."
-	@priority = "4"
-	@refactordone
-	test CanShareDocumentOnLiveSite {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Site Name (Staging)",
-			layoutName = "Staging DM Page",
-			site = "false",
-			widgetName = "Documents and Media");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name-staging",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		AssertClick(
-			key_dmDocumentTitle = "DM Document Title",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "DM Document Title");
-
-		AssertElementNotPresent(locator1 = "Button#SHARE_SIDENAV");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.sharePG(
-			shareable = "true",
-			userEmailAddress = "userea@liferay.com",
-			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Notifications.viewBadgeCount(notificationCount = "1");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedContent(
-			contentSharingPermission = "viewing",
-			contentTitle = "DM Document Title",
-			ownerName = "Test Test");
-	}
-
-	@description = "This test covers LPS-90557. It ensures that a basic document and a shortcut pointing to it can be removed and republished when enabling local staging."
-	@priority = "5"
-	test ShortcutDisppearsAfterTargetDeletionIsPublished {
-		property portal.acceptance = "true";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name-staging",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.addDMShortcutCP(
-			dmDocumentTitle = "DM Document Title",
-			stagingSiteName = "true");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		JSONDocument.deleteFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name (Staging)",
-			site = "false");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.viewDefault();
-
-		AssertConsoleTextNotPresent(value1 = "PortletDataException");
-	}
-
 	@description = "This ensures that the document info is displayed correctly after publishing and republishing."
 	@priority = "5"
 	@refactordone
@@ -1977,7 +1837,7 @@ definition {
 		property custom.properties = "dl.actions.visible=true";
 
 		JSONAssettag.addTag(
-			groupName = "Site Name-staging",
+			groupName = "Site Name (Staging)",
 			tagName = "tag1");
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -2085,6 +1945,148 @@ definition {
 			metadataLabel = "Content Type");
 	}
 
+	@description = "This test covers LPS-155794. It ensures that an image that was published on a site can still be accessed after local staging is disabled."
+	@priority = "5"
+	test ImageIsStillAccessibleAfterDisablingStaging {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_2",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Document_2",
+			friendlyURLEdit = "document_2_edit");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_2",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		var latestVersionURL = DMDocument.getLatestVersionURL();
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.deactivateStagingCP(siteName = "Site Name");
+
+		Navigator.openSpecificURL(url = "${latestVersionURL}");
+
+		AssertVisible(
+			key_imageSourceURL = "${portalURL}/documents/d/site-name/document_2_edit",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+	}
+
+	@description = "This test covers LPS-82539."
+	@priority = "5"
+	@refactordone
+	test PendingEntryWillNotBePublishedToLive {
+		property portal.acceptance = "true";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder 1",
+			groupName = "Site Name-staging");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder 1",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder 1",
+			groupName = "Site Name-staging",
+			siteURLKey = "site-name");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentDescription = "DM Document in Folder 1",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document in Folder 1");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "DM Document in Folder 1",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected folder?",
+			entry = "DM Folder 1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder 1");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no documents or media files in this folder.");
+	}
+
+	@description = "This test covers LPS-90557. It ensures that a basic document and a shortcut pointing to it can be removed and republished when enabling local staging."
+	@priority = "5"
+	test ShortcutDisppearsAfterTargetDeletionIsPublished {
+		property portal.acceptance = "true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "DM Document Title",
+			stagingSiteName = "true");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name (Staging)",
+			site = "false");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.viewDefault();
+
+		AssertConsoleTextNotPresent(value1 = "PortletDataException");
+	}
+
 	@description = "This ensures that the image can be deleted and republished in web content."
 	@priority = "4"
 	@refactordone
@@ -2166,12 +2168,6 @@ definition {
 			dmDocumentTitle = "Document_2.jpg",
 			groupName = "Site Name (Staging)",
 			site = "false");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name-staging");
-
-		RecycleBin.deleteCP(
-			assetName = "Document_2.jpg",
-			assetType = "Document");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

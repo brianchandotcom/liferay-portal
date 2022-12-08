@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.atlassian.jira.rest.client.api.domain.Issue;
+
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.File;
@@ -24,9 +26,11 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -321,6 +325,14 @@ public class PullRequest {
 
 	public String getHtmlURL() {
 		return _jsonObject.getString("html_url");
+	}
+
+	public Set<Issue> getJIRAIssues() {
+		if (_jiraIssues == null) {
+			_initJIRAIssues();
+		}
+
+		return _jiraIssues;
 	}
 
 	public String getJSON() {
@@ -1010,6 +1022,22 @@ public class PullRequest {
 		}
 	}
 
+	private void _initJIRAIssues() {
+		getGitHubRemoteCommits();
+
+		_jiraIssues = new HashSet<>();
+
+		for (GitHubRemoteGitCommit gitHubRemoteGitCommit :
+				_gitHubRemoteGitCommits) {
+
+			Issue issue = gitHubRemoteGitCommit.getJIRAIssue();
+
+			if (!_jiraIssues.contains(issue) && (issue != null)) {
+				_jiraIssues.add(issue);
+			}
+		}
+	}
+
 	private void _refreshJSONObject() {
 		try {
 			_jsonObject = JenkinsResultsParserUtil.toJSONObject(
@@ -1039,6 +1067,7 @@ public class PullRequest {
 	private List<GitHubRemoteGitCommit> _gitHubRemoteGitCommits;
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
 	private final String _gitHubRemoteGitRepositoryName;
+	private Set<Issue> _jiraIssues;
 	private JSONObject _jsonObject;
 	private List<GitHubRemoteGitRepository.Label> _labels;
 	private RemoteGitBranch _liferayRemoteGitBranch;

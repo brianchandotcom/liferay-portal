@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.atlassian.jira.rest.client.api.domain.Issue;
+
 import java.io.IOException;
 
 import java.text.DateFormat;
@@ -43,20 +45,22 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 			"/commit/", getSHA());
 	}
 
-	public void getJIRAIssue() throws IOException {
+	public Issue getJIRAIssue() {
 		String commitMessage = getMessage();
 
 		Matcher matcher = _issuePattern.matcher(commitMessage);
 
 		if (matcher.find()) {
-			String issueNumber = matcher.group(0);
+			String issueId = matcher.group(0);
 
 			for (String project : _allowedProjects) {
-				if (issueNumber.contains(project)) {
-					JIRAUtil.addIssue(issueNumber);
+				if (issueId.contains(project)) {
+					return JIRAUtil.getIssue(issueId);
 				}
 			}
 		}
+
+		return null;
 	}
 
 	public List<String> getModifiedFilenames() {

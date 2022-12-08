@@ -29,72 +29,77 @@ import java.io.IOException;
 
 import java.net.URI;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Charlotte Wong
  */
 public class JIRAUtil {
 
-	public static void addIssue(String issueNumber) {
-		Issue issue = _getIssue(issueNumber);
+	// this class should be statelsss
 
-		if (_issueSet == null) {
-			_issueSet = Collections.emptySet();
+	// move generate comment into job --
+
+	// get issues should be able to be called from PullRequest object
+
+	// cache issues with timestamp maybe -- low prio
+
+	// add JIRAIssue class(?) might make adding timestamp easier -- lowest prio
+
+	//  delete from cache on update -- low prio
+
+	// forced refresh of cache -- low prio
+
+	// issue number should be issueId
+
+	// allowed projects should be a property
+
+	public static Issue getIssue(String issueId) {
+		if (_issueCache == null) {
+			_issueCache = new ArrayList<>();
 		}
 
-		Set<Issue> issueSet = Collections.singleton(issue);
-
-		issueSet.addAll(_issueSet);
-
-		_issueSet = issueSet;
-	}
-
-	public static String generateComment(PullRequest pullRequest) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(
-			"The following tickets were automatically submitted for review:");
-
-		sb.append("\n");
-
-		for (Issue issue : _issueSet) {
-			String issueKey = issue.getKey();
-
-			sb.append("https://issues.liferay.com/browse/");
-
-			sb.append(issueKey);
-
-			sb.append("\n");
+		if (_timestampCache == null) {
+			_timestampCache = new ArrayList<>();
 		}
 
-		sb.append("\n");
+		Date date = new Date();
 
-		sb.append("Pull request: ");
+		long currentTime = date.getTime();
 
-		sb.append(
-			pullRequest.getURL(
-				pullRequest.getOwnerUsername(),
-				pullRequest.getGitHubRemoteGitRepositoryName(),
-				pullRequest.getNumber()));
+		for (int i = 0; i < _issueCache.size(); i++) {
+			Issue issue = _issueCache.get(i);
 
-		return sb.toString();
-	}
+			String id = issue.getKey();
 
-	public static Set<Issue> getIssues() {
-		if (_issueSet == null) {
-			_issueSet = Collections.emptySet();
+			if (id.equals(issueId)) {
+				long timestamp = _timestampCache.get(i);
+
+				if ((currentTime - timestamp) > 300000) {
+					return issue;
+				}
+
+				break;
+			}
 		}
 
-		if (_issueSet.isEmpty()) {
-			throw new IllegalStateException(
-				"Unable to find any valid issues within pull request");
+		if (_issueRestClient == null) {
+			_initRestClient();
 		}
 
-		return _issueSet;
+		Promise<Issue> promise = _issueRestClient.getIssue(issueId);
+
+		Issue issue = promise.claim();
+
+		_issueCache.add(issue);
+
+		_timestampCache.add(currentTime);
+
+		return issue;
 	}
 
 	public static void transition(
@@ -112,11 +117,21 @@ public class JIRAUtil {
 				issue, transitionInput);
 
 			transition.get();
+
+			for (int i = 0; i < _issueCache.size(); i++) {
+				Issue cachedIssue = _issueCache.get(i);
+
+				if (cachedIssue == issue) {
+					_issueCache.remove(i);
+					_timestampCache.remove(i);
+
+					break;
+				}
+			}
 		}
 		catch (Exception exception) {
 			System.out.println(
-				"JIRA rest client process workflow action error. cause: " +
-					exception.getMessage());
+				"Unable to execute transition " + exception.getMessage());
 		}
 	}
 
@@ -131,8 +146,7 @@ public class JIRAUtil {
 
 		if (transitionId == -1) {
 			System.out.println(
-				"No valid transition with provided transitionName:" +
-					transitionName);
+				"Unable to find transition with name: " + transitionName);
 		}
 
 		TransitionInput transitionInput = new TransitionInput(
@@ -143,22 +157,22 @@ public class JIRAUtil {
 				issue, transitionInput);
 
 			transition.get();
+
+			for (int i = 0; i < _issueCache.size(); i++) {
+				Issue cachedIssue = _issueCache.get(i);
+
+				if (cachedIssue == issue) {
+					_issueCache.remove(i);
+					_timestampCache.remove(i);
+
+					break;
+				}
+			}
 		}
 		catch (Exception exception) {
 			System.out.println(
-				"JIRA rest client process workflow action error. cause: " +
-					exception.getMessage());
+				"Unable to execute transition " + exception.getMessage());
 		}
-	}
-
-	private static Issue _getIssue(String issueNumber) {
-		if (_issueRestClient == null) {
-			_initRestClient();
-		}
-
-		Promise<Issue> promise = _issueRestClient.getIssue(issueNumber);
-
-		return promise.claim();
 	}
 
 	private static void _getProperties() {
@@ -188,6 +202,8 @@ public class JIRAUtil {
 
 			_transitions = promise.claim();
 		}
+
+		System.out.println(_transitions);
 
 		int transitionId = -1;
 
@@ -220,13 +236,14 @@ public class JIRAUtil {
 
 	private static final URI _URI = URI.create("https://issues.liferay.com");
 
+	private static List<Issue> _issueCache;
 	private static IssueRestClient _issueRestClient;
-	private static Set<Issue> _issueSet;
 	private static Properties _jenkinsBuildProperties;
 	private static String _jiraAdminPassword;
 	private static String _jiraAdminUsername;
 	private static JiraRestClient _jiraRestClient;
 	private static JiraRestClientFactory _jiraRestClientFactory;
+	private static List<Long> _timestampCache;
 	private static Iterable<Transition> _transitions;
 
 }

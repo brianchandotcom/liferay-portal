@@ -170,19 +170,19 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 								<%
 								userSessionAlive = true;
 
-								HttpSession userSession = PortalSessionContext.get(sessionId);
+								HttpSession userHttpSession = PortalSessionContext.get(sessionId);
 								%>
 
-								<c:if test="<%= userSession != null %>">
+								<c:if test="<%= userHttpSession != null %>">
 
 									<%
 									try {
 										Set<String> sortedAttrNames = new TreeSet<String>();
 
-										Enumeration<String> enu = userSession.getAttributeNames();
+										Enumeration<String> enumeration = userHttpSession.getAttributeNames();
 
-										while (enu.hasMoreElements()) {
-											String attrName = enu.nextElement();
+										while (enumeration.hasMoreElements()) {
+											String attrName = enumeration.nextElement();
 
 											sortedAttrNames.add(attrName);
 										}

@@ -40,13 +40,13 @@
 					<%
 					ValidatorException ve = (ValidatorException)errorException;
 
-					Enumeration<String> enu = ve.getFailedKeys();
+					Enumeration<String> enumeration = ve.getFailedKeys();
 
-					while (enu.hasMoreElements()) {
-						String url = enu.nextElement();
+					while (enumeration.hasMoreElements()) {
+						String url = enumeration.nextElement();
 					%>
 
-						<strong><%= HtmlUtil.escape(url) %></strong><%= enu.hasMoreElements() ? ", " : "." %>
+						<strong><%= HtmlUtil.escape(url) %></strong><%= enumeration.hasMoreElements() ? ", " : "." %>
 
 					<%
 					}

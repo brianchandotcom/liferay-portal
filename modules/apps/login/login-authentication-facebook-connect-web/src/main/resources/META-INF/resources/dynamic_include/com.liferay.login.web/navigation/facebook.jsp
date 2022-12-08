@@ -25,11 +25,11 @@ String facebookAuthRedirectURL = (String)request.getAttribute(FacebookConnectWeb
 String facebookAuthURL = (String)request.getAttribute(FacebookConnectWebKeys.FACEBOOK_AUTH_URL);
 String facebookAppId = (String)request.getAttribute(FacebookConnectWebKeys.FACEBOOK_APP_ID);
 
-HttpSession portalSession = PortalSessionThreadLocal.getHttpSession();
+HttpSession portalHttpSession = PortalSessionThreadLocal.getHttpSession();
 
 String nonce = PwdGenerator.getPassword(GetterUtil.getInteger(PropsUtil.get(PropsKeys.AUTH_TOKEN_LENGTH)));
 
-portalSession.setAttribute(WebKeys.FACEBOOK_NONCE, nonce);
+portalHttpSession.setAttribute(WebKeys.FACEBOOK_NONCE, nonce);
 
 facebookAuthURL = HttpComponentsUtil.addParameter(facebookAuthURL, "client_id", facebookAppId);
 facebookAuthURL = HttpComponentsUtil.addParameter(facebookAuthURL, "redirect_uri", facebookAuthRedirectURL);

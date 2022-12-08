@@ -158,10 +158,10 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 											long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 											long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 
-											UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+											UnicodeProperties liveGroupTypeSettingsUnicodeProperties = liveGroup.getTypeSettingsProperties();
 										%>
 
-											<c:if test="<%= ((exportModelCount > 0) || (modelDeletionCount > 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault()) %>">
+											<c:if test="<%= ((exportModelCount > 0) || (modelDeletionCount > 0)) && GetterUtil.getBoolean(liveGroupTypeSettingsUnicodeProperties.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault()) %>">
 
 												<%
 												displayingChanges = true;

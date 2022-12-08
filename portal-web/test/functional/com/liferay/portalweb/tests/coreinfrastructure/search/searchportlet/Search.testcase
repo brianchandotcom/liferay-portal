@@ -715,10 +715,10 @@ definition {
 
 	@priority = "3"
 	test AssertTagFacetDisplays {
-		for (var tagList : list "engineering,product,2021,2022") {
+		for (var tagName : list "engineering,product,2021,2022") {
 			JSONAssettag.addTag(
 				groupName = "Guest",
-				tagName = "${tagList}");
+				tagName = "${tagName}");
 		}
 
 		JSONWebcontent.addWebContent(
@@ -735,9 +735,9 @@ definition {
 
 		Refresh();
 
-		for (var categories : list "engineering,product,2021,2022") {
+		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetValueName = "${categories}",
+				facetValueName = "${tagName}",
 				locator1 = "Search#FACET_CLOUD_LAYOUT");
 		}
 
@@ -747,9 +747,9 @@ definition {
 
 		Refresh();
 
-		for (var categories : list "engineering,product,2021,2022") {
+		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetValueName = "${categories}",
+				facetValueName = "${tagName}",
 				locator1 = "Search#FACET_COMPACT_LAYOUT");
 		}
 
@@ -759,9 +759,9 @@ definition {
 
 		Refresh();
 
-		for (var categories : list "engineering,product,2021,2022") {
+		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetValueName = "${categories}",
+				facetValueName = "${tagName}",
 				locator1 = "Search#FACET_LABEL_LAYOUT");
 		}
 	}

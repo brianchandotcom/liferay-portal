@@ -29,61 +29,22 @@ import java.io.IOException;
 
 import java.net.URI;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Charlotte Wong
  */
 public class JIRAUtil {
 
-	// this class should be statelsss
-
-	// move generate comment into job --
-
-	// get issues should be able to be called from PullRequest object
-
-	// cache issues with timestamp maybe -- low prio
-
-	// add JIRAIssue class(?) might make adding timestamp easier -- lowest prio
-
-	//  delete from cache on update -- low prio
-
-	// forced refresh of cache -- low prio
-
-	// issue number should be issueId
-
-	// allowed projects should be a property
-
 	public static Issue getIssue(String issueId) {
-		if (_issueCache == null) {
-			_issueCache = new ArrayList<>();
-		}
+		if (_issueMap.containsKey(issueId)) {
+			CachedIssue cachedIssue = _issueMap.get(issueId);
 
-		if (_timestampCache == null) {
-			_timestampCache = new ArrayList<>();
-		}
-
-		Date date = new Date();
-
-		long currentTime = date.getTime();
-
-		for (int i = 0; i < _issueCache.size(); i++) {
-			Issue issue = _issueCache.get(i);
-
-			String id = issue.getKey();
-
-			if (id.equals(issueId)) {
-				long timestamp = _timestampCache.get(i);
-
-				if ((currentTime - timestamp) > 300000) {
-					return issue;
-				}
-
-				break;
+			if (!cachedIssue.isExpired()) {
+				return cachedIssue.issue;
 			}
 		}
 
@@ -95,9 +56,7 @@ public class JIRAUtil {
 
 		Issue issue = promise.claim();
 
-		_issueCache.add(issue);
-
-		_timestampCache.add(currentTime);
+		_issueMap.put(issueId, new CachedIssue(issue));
 
 		return issue;
 	}
@@ -118,16 +77,7 @@ public class JIRAUtil {
 
 			transition.get();
 
-			for (int i = 0; i < _issueCache.size(); i++) {
-				Issue cachedIssue = _issueCache.get(i);
-
-				if (cachedIssue == issue) {
-					_issueCache.remove(i);
-					_timestampCache.remove(i);
-
-					break;
-				}
-			}
+			_issueMap.remove(issue.getKey());
 		}
 		catch (Exception exception) {
 			System.out.println(
@@ -158,16 +108,7 @@ public class JIRAUtil {
 
 			transition.get();
 
-			for (int i = 0; i < _issueCache.size(); i++) {
-				Issue cachedIssue = _issueCache.get(i);
-
-				if (cachedIssue == issue) {
-					_issueCache.remove(i);
-					_timestampCache.remove(i);
-
-					break;
-				}
-			}
+			_issueMap.remove(issue.getKey());
 		}
 		catch (Exception exception) {
 			System.out.println(
@@ -236,14 +177,37 @@ public class JIRAUtil {
 
 	private static final URI _URI = URI.create("https://issues.liferay.com");
 
-	private static List<Issue> _issueCache;
+	private static final Map<String, CachedIssue> _issueMap =
+		new ConcurrentHashMap<>();
 	private static IssueRestClient _issueRestClient;
 	private static Properties _jenkinsBuildProperties;
 	private static String _jiraAdminPassword;
 	private static String _jiraAdminUsername;
 	private static JiraRestClient _jiraRestClient;
 	private static JiraRestClientFactory _jiraRestClientFactory;
-	private static List<Long> _timestampCache;
 	private static Iterable<Transition> _transitions;
+
+	private static class CachedIssue {
+
+		public CachedIssue(Issue issue) {
+			this.issue = issue;
+
+			timestamp = System.currentTimeMillis();
+		}
+
+		public boolean isExpired() {
+			if ((System.currentTimeMillis() - timestamp) > _MAX_ISSUE_AGE) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public final Issue issue;
+		public final Long timestamp;
+
+		private static final long _MAX_ISSUE_AGE = 1000 * 60 * 5;
+
+	}
 
 }

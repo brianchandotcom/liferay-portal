@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.stream.Stream;
-
 /**
  * @author Leonardo Barros
  */
@@ -56,11 +54,13 @@ public class AllFunction
 			values = new Object[] {parameter};
 		}
 
-		return Stream.of(
-			values
-		).allMatch(
-			value -> _accept(expression, value)
-		);
+		for (Object value : values) {
+			if (!_accept(expression, value)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override

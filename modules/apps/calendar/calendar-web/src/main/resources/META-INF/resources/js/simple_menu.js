@@ -126,9 +126,7 @@ AUI.add(
 				_focusItem(index) {
 					const instance = this;
 
-					const visibleItems = instance.items.filter(
-						':not(.' + CSS_SIMPLE_MENU_ITEM_HIDDEN + ')'
-					);
+					const visibleItems = instance._getVisibleItems();
 
 					if (index !== undefined) {
 						index =
@@ -146,6 +144,14 @@ AUI.add(
 							.item(i)
 							.setAttribute('tabindex', i === index ? 0 : -1);
 					}
+				},
+
+				_getVisibleItems() {
+					const instance = this;
+
+					return instance.items.filter(
+						':not(.' + CSS_SIMPLE_MENU_ITEM_HIDDEN + ')'
+					);
 				},
 
 				_onClickItems(event) {
@@ -188,9 +194,7 @@ AUI.add(
 
 					const activeElement = document.activeElement;
 
-					const visibleItems = instance.items.filter(
-						':not(.' + CSS_SIMPLE_MENU_ITEM_HIDDEN + ')'
-					);
+					const visibleItems = instance._getVisibleItems();
 
 					for (let i = 0; i < visibleItems.size(); i++) {
 						const item = visibleItems.item(i);

@@ -108,17 +108,14 @@ public class JIRAUtil {
 				"Unable to get build properties", ioException);
 		}
 
-		String jiraAdminPassword = buildProperties.getProperty(
-			"ci.jira.admin.password");
-		String jiraAdminUsername = buildProperties.getProperty(
-			"ci.jira.admin.username");
-
 		JiraRestClientFactory jiraRestClientFactory =
 			new AsynchronousJiraRestClientFactory();
 
 		JiraRestClient jiraRestClient =
 			jiraRestClientFactory.createWithBasicHttpAuthentication(
-				_URI, jiraAdminUsername, jiraAdminPassword);
+				URI.create(buildProperties.getProperty("jira.server.url")),
+				buildProperties.getProperty("ci.jira.admin.username"),
+				buildProperties.getProperty("ci.jira.admin.password"));
 
 		return jiraRestClient.getIssueClient();
 	}
@@ -142,8 +139,6 @@ public class JIRAUtil {
 		_issueMap.remove(issueKey);
 		_issueTransitionMap.remove(issueKey);
 	}
-
-	private static final URI _URI = URI.create("https://issues.liferay.com");
 
 	private static final Map<String, CachedIssue> _issueMap =
 		new ConcurrentHashMap<>();

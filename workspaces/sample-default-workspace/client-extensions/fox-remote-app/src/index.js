@@ -27,6 +27,20 @@ class WebComponent extends HTMLElement {
 			<App route={this.getAttribute("route")} />,
 			this
 		);
+		if (Liferay.ThemeDisplay.isSignedIn()) {
+			api(
+				'o/headless-admin-user/v1.0/my-user-account'
+			).then(
+				res => res.json()
+			).then(res => {
+				let nameEls = document.getElementsByClassName('hello-world-name');
+				if (nameEls.length > 0){
+					if (res.givenName) {
+						nameEls[0].innerHTML = res.givenName;
+					}
+				}
+			});
+		}
 	}
 }
 

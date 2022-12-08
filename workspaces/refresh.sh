@@ -73,40 +73,71 @@ fox-remote-app:
     useESM: false
 EOF
 
-	sed -i'.bak' "s/Hello World/Hello <span className=\"hello-world-name\">World<\/span>/" fox-remote-app/src/routes/hello-world/pages/HelloWorld.js
+	cat << EOF > fox-remote-app/src/routes/hello-world/pages/HelloWorld.js
+import React from 'react';
 
-	SEARCH="import HelloWorld from '.\/routes\/hello-world\/pages\/HelloWorld';"
-	REPLACE="import HelloWorld from '.\/routes\/hello-world\/pages\/HelloWorld';\n\
-import api from '.\/common\/services\/liferay\/api';\n\
-import { Liferay } from '.\/common\/services\/liferay\/liferay';\n\
-"
-	sed -i'.bak' "s/$SEARCH/$REPLACE/" fox-remote-app/src/index.js
+const HelloWorld = () => (
+	<div className="hello-world">
+		<h1>Hello <span className="hello-world-name">World</span></h1>
+	</div>
+);
 
-	SEARCH="		ReactDOM.render(\n\
-			<App route={this.getAttribute(\"route\")} \/>,\n\
-			this\n\
-		);"
-	REPLACE="		ReactDOM.render(\n\
-			<App route={this.getAttribute(\"route\")} \/>,\n\
-			this\n\
-		);\n\
-		if (Liferay.ThemeDisplay.isSignedIn()) {\n\
-			api(\n\
-				'o\/headless-admin-user\/v1.0\/my-user-account'\n\
-			).then(\n\
-				res => res.json()\n\
-			).then(res => {\n\
-				let nameEls = document.getElementsByClassName('hello-world-name');\n\
-				if (nameEls.length > 0){\n\
-					if (res.givenName) {\n\
-						nameEls[0].innerHTML = res.givenName;\n\
-					}\n\
-				}\n\
-			});\n\
-		}"
+export default HelloWorld;
+EOF
 
-	sed -i'.bak' "s/$SEARCH/$REPLACE/" fox-remote-app/src/index.js
+	cat << EOF > fox-remote-app/src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
 
+import HelloBar from './routes/hello-bar/pages/HelloBar';
+import HelloFoo from './routes/hello-foo/pages/HelloFoo';
+import HelloWorld from './routes/hello-world/pages/HelloWorld';
+import api from './common/services/liferay/api';
+import { Liferay } from './common/services/liferay/liferay';
+
+import './common/styles/index.scss';
+
+const App = ({ route }) => {
+	if (route === "hello-bar") {
+		return <HelloBar />;
+	}
+
+	if (route === "hello-foo") {
+		return <HelloFoo />;
+	}
+
+	return <HelloWorld />;
+};
+
+class WebComponent extends HTMLElement {
+	connectedCallback() {
+		ReactDOM.render(
+			<App route={this.getAttribute("route")} />,
+			this
+		);
+		if (Liferay.ThemeDisplay.isSignedIn()) {
+			api(
+				'o/headless-admin-user/v1.0/my-user-account'
+			).then(
+				res => res.json()
+			).then(res => {
+				let nameEls = document.getElementsByClassName('hello-world-name');
+				if (nameEls.length > 0){
+					if (res.givenName) {
+						nameEls[0].innerHTML = res.givenName;
+					}
+				}
+			});
+		}
+	}
+}
+
+const ELEMENT_ID = 'fox-remote-app';
+
+if (!customElements.get(ELEMENT_ID)) {
+	customElements.define(ELEMENT_ID, WebComponent);
+}
+EOF
 	sed -i'.bak' "s/^.*\"test\": \"react-scripts test\",.*$//" fox-remote-app/package.json
 }
 

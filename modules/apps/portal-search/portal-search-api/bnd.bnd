@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.portal.search.analysis,\
 	com.liferay.portal.search.asset,\
 	com.liferay.portal.search.batch,\
-	com.liferay.portal.search.buffer,\
 	com.liferay.portal.search.ccr,\
 	com.liferay.portal.search.configuration,\
 	com.liferay.portal.search.constants,\

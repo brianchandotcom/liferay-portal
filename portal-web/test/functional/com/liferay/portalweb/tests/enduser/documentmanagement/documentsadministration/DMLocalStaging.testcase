@@ -2087,9 +2087,16 @@ definition {
 
 	@description = "This ensures that the image can be deleted and republished in web content."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test ViewWebContentWithDeletedImage {
 		property portal.acceptance = "true";
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Web Content Display");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2104,36 +2111,38 @@ definition {
 			confirmMessage = "Are you sure you want to publish the selected document?",
 			entry = "Document_2.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		task ("Add a web content structure with image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
-		NavItem.gotoStructures();
+			NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
 
-		Button.clickSave();
+			Button.clickSave();
+		}
 
-		NavItem.click(navItem = "Web Content");
+		task ("Add a web content with custom structure") {
+			NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			imageFileName = "Document_2.jpg",
-			navTab = "Documents and Media",
-			structureName = "WC Structure Name",
-			webContentImage = "Document_2.jpg",
-			webContentTitle = "Web Content Title");
+			WebContent.addWithStructureCP(
+				imageFileName = "Document_2.jpg",
+				navTab = "Documents and Media",
+				structureName = "WC Structure Name",
+				webContentImage = "Document_2.jpg",
+				webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
@@ -2153,9 +2162,10 @@ definition {
 			imageFileName = "Document_2.jpg",
 			webContentTitle = "Web Content Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Site Name (Staging)",
+			site = "false");
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name-staging");
 
@@ -2183,9 +2193,16 @@ definition {
 
 	@description = "This ensures that the image can be edited and republished in web content."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test ViewWebContentWithRepublishedImage {
 		property portal.acceptance = "true";
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Web Content Display");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2200,36 +2217,38 @@ definition {
 			confirmMessage = "Are you sure you want to publish the selected document?",
 			entry = "Document_2.jpg");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		task ("Add a web content structure with image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
-		NavItem.gotoStructures();
+			NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
 
-		Button.clickSave();
+			Button.clickSave();
+		}
 
-		NavItem.click(navItem = "Web Content");
+		task ("Add a web content with custom structure") {
+			NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			imageFileName = "Document_2.jpg",
-			navTab = "Documents and Media",
-			structureName = "WC Structure Name",
-			webContentImage = "Document_2.jpg",
-			webContentTitle = "Web Content Title");
+			WebContent.addWithStructureCP(
+				imageFileName = "Document_2.jpg",
+				navTab = "Documents and Media",
+				structureName = "WC Structure Name",
+				webContentImage = "Document_2.jpg",
+				webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 

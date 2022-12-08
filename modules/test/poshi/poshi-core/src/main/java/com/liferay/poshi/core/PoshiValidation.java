@@ -182,8 +182,9 @@ public class PoshiValidation {
 			poshiElement.elements());
 
 		List<String> possiblePoshiElementNames = Arrays.asList(
-			"description", "echo", "execute", "fail", "for", "if", "property",
-			"return", "take-screenshot", "task", "var", "while");
+			"break", "continue", "description", "echo", "execute", "fail",
+			"for", "if", "property", "return", "take-screenshot", "task", "var",
+			"while");
 
 		String filePath = _getFilePath(poshiElement);
 

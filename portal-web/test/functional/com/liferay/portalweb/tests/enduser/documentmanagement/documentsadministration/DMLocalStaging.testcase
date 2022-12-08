@@ -1696,34 +1696,40 @@ definition {
 	test PublishEditsToMetadataSet {
 		property custom.properties = "dl.actions.visible=true";
 
-		DMNavigator.gotoMetadataSets();
+		task ("Add a metadata set with text field") {
+			DMNavigator.gotoMetadataSets();
 
-		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+			DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
 
-		DDLDataDefinition.save();
+			DDLDataDefinition.save();
+		}
 
-		DMNavigator.gotoDocumentType();
+		task ("Add a document type with a custom metadata set") {
+			DMNavigator.gotoDocumentType();
 
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Numeric",
-			dmDocumentTypeName = "DM Document Type Name",
-			metadataSetName = "DM Metadata Set Name");
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Numeric",
+				dmDocumentTypeName = "DM Document Type Name",
+				metadataSetName = "DM Metadata Set Name");
+		}
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+		task ("Add a document with a custom document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentFileName = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "123",
-			textField = "DM Document Text");
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.doc",
+				dmDocumentFileName = "Document_1.doc",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTypeName = "DM Document Type Name",
+				numericField = "123",
+				textField = "DM Document Text");
+		}
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",

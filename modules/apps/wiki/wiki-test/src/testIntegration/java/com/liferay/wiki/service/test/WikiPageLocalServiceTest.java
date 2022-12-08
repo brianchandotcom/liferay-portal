@@ -27,6 +27,8 @@ import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -422,6 +424,44 @@ public class WikiPageLocalServiceTest {
 		Assert.assertEquals(copyFileEntry.getSize(), fileEntry.getSize());
 	}
 
+	@Test
+	public void testCopyPageWithDraftAttachments() throws Exception {
+		WikiPage approvedPage = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		WikiTestUtil.addWikiAttachment(
+			approvedPage.getUserId(), approvedPage.getNodeId(),
+			approvedPage.getTitle(), getClass());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(approvedPage.getGroupId());
+
+		// Update the page so the modifiedDate comes after attachment
+		// modifiedDate to resemble the /wiki/edit_page action
+
+		approvedPage = WikiTestUtil.updatePage(
+			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
+			approvedPage.getContent(), true, serviceContext);
+
+		WikiTestUtil.addWikiAttachment(
+			approvedPage.getUserId(), approvedPage.getNodeId(),
+			approvedPage.getTitle(), getClass());
+
+		WikiTestUtil.updatePage(
+			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
+			approvedPage.getContent(), false, serviceContext);
+
+		WikiPage copyPage = WikiTestUtil.copyPage(
+			approvedPage, true, serviceContext);
+
+		List<FileEntry> copyAttachmentsFileEntries =
+			copyPage.getAttachmentsFileEntries();
+
+		Assert.assertEquals(
+			copyAttachmentsFileEntries.toString(), 1,
+			copyAttachmentsFileEntries.size());
+	}
+
 	@Test(expected = NoSuchPageResourceException.class)
 	public void testDeletePage() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
@@ -613,6 +653,47 @@ public class WikiPageLocalServiceTest {
 		catch (NoSuchPageResourceException noSuchPageResourceException) {
 			WikiPageLocalServiceUtil.getPage(childPage.getResourcePrimKey());
 		}
+	}
+
+	@Test
+	public void testGetAttachmentsFileEntriesWithDraftPage() throws Exception {
+		WikiPage approvedPage = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		WikiTestUtil.addWikiAttachment(
+			approvedPage.getUserId(), approvedPage.getNodeId(),
+			approvedPage.getTitle(), getClass());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(approvedPage.getGroupId());
+
+		// Update the page so the modifiedDate comes after attachment
+		// modifiedDate to resemble the /wiki/edit_page action
+
+		approvedPage = WikiTestUtil.updatePage(
+			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
+			approvedPage.getContent(), true, serviceContext);
+
+		WikiTestUtil.addWikiAttachment(
+			approvedPage.getUserId(), approvedPage.getNodeId(),
+			approvedPage.getTitle(), getClass());
+
+		WikiPage draftPage = WikiTestUtil.updatePage(
+			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
+			approvedPage.getContent(), false, serviceContext);
+
+		List<FileEntry> attachmentsFileEntries =
+			approvedPage.getAttachmentsFileEntries();
+
+		Assert.assertEquals(
+			attachmentsFileEntries.toString(), 1,
+			attachmentsFileEntries.size());
+
+		attachmentsFileEntries = draftPage.getAttachmentsFileEntries();
+
+		Assert.assertEquals(
+			attachmentsFileEntries.toString(), 2,
+			attachmentsFileEntries.size());
 	}
 
 	@Test

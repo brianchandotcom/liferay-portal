@@ -1,0 +1,26 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Deployment";
+
+	setUp {
+		SignIn.signInTestSetup();
+	}
+
+	@description = "Runs the smoke test with proxy path."
+	@priority = "5"
+	test Smoke {
+		property portal.acceptance = "true";
+		property portal.proxy.path = "liferay";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "PortalProxyPath#Smoke";
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+	}
+
+}

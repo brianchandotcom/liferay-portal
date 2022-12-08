@@ -1811,6 +1811,22 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<var name="test.url" value="${test.url}/${portal.context}" />
 				</then>
 			</if>
+
+			<get-testcase-property property.name="portal.proxy.path" />
+
+			<if>
+				<isset property="portal.proxy.path" />
+				<then>
+					<propertyregex
+						input="${test.url}"
+						property="proxy.url"
+						regexp="(http:\/\/.*)(:[0-9][0-9])([0-9]+)"
+						select="\1\2"
+					/>
+
+					<var name="test.url" value="${proxy.url}/${portal.proxy.path}" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -7463,12 +7479,19 @@ ${docker.start.error}</fail>
 
 									<get-operating-system-property property.name="operating.system.docker.image" />
 									<get-testcase-property property.name="portal.context" />
+									<get-testcase-property property.name="portal.proxy.path" />
 
 									<if>
 										<isset property="portal.context" />
 										<then>
 											<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
 										</then>
+										<elseif>
+											<isset property="portal.proxy.path" />
+											<then>
+												<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}0/${portal.proxy.path}/web/guest" />
+											</then>
+										</elseif>
 										<elseif>
 											<and>
 												<isset property="env.JENKINS_HOME" />
@@ -8072,12 +8095,19 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<get-operating-system-property property.name="operating.system.docker.image" />
 			<get-testcase-property property.name="portal.context" />
+			<get-testcase-property property.name="portal.proxy.path" />
 
 			<if>
 				<isset property="portal.context" />
 				<then>
 					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
 				</then>
+				<elseif>
+					<isset property="portal.proxy.path" />
+					<then>
+						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}0/${portal.proxy.path}/web/guest" />
+					</then>
+				</elseif>
 				<elseif>
 					<isset property="operating.system.docker.image" />
 					<then>
@@ -11595,6 +11625,23 @@ session.cookie.use.full.hostname=true
 			</then>
 		</if>
 
+		<get-testcase-property property.name="portal.proxy.path" />
+
+		<if>
+			<isset property="portal.proxy.path" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+portal.proxy.path=/${portal.proxy.path}</echo>
+
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+					token="web.server.http.port=8080"
+					value=""
+				/>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="setup.wizard.enabled" />
 
 		<if>
@@ -14593,6 +14640,17 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="portal.proxy.path" />
+
+		<if>
+			<isset property="portal.proxy.path" />
+			<then>
+				<ant antfile="build-test-httpd.xml" target="configure-httpd-server" />
+
+				<ant antfile="build-test-httpd.xml" target="start-httpd-server" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="portal.ssl.enabled" />
 
 		<if>
@@ -15402,6 +15460,15 @@ url=${short.hostname}:8080</echo>
 			<equals arg1="${azure.store.enabled}" arg2="true" />
 			<then>
 				<ant antfile="build-test-azure.xml" target="delete-azure-container" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="portal.proxy.path" />
+
+		<if>
+			<isset property="portal.proxy.path" />
+			<then>
+				<ant antfile="build-test-httpd.xml" target="stop-httpd-server" />
 			</then>
 		</if>
 

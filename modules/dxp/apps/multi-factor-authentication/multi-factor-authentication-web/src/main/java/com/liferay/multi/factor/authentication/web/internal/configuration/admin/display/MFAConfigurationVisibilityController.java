@@ -27,17 +27,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marta Medio
  */
-@Component(
-	property = {
-		"configuration.pid=com.liferay.multi.factor.authentication.fido2.web.internal.configuration.MFAFIDO2Configuration",
-		"configuration.pid=com.liferay.multi.factor.authentication.ip.address.internal.configuration.MFAIPAddressConfiguration",
-		"configuration.pid=com.liferay.multi.factor.authentication.sample.internal.configuration.MFASampleConfiguration",
-		"configuration.pid=com.liferay.multi.factor.authentication.timebased.otp.web.internal.configuration.MFATimeBasedOTPConfiguration"
-	},
-	service = ConfigurationVisibilityController.class
-)
+@Component(service = ConfigurationVisibilityController.class)
 public class MFAConfigurationVisibilityController
 	implements ConfigurationVisibilityController {
+
+	@Override
+	public String getKey() {
+		return "multi-factor-authentication";
+	}
 
 	@Override
 	public boolean isVisible(

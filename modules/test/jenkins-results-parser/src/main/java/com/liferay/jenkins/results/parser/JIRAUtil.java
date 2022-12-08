@@ -38,6 +38,26 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class JIRAUtil {
 
+	public static void executeTransition(
+		String comment, Issue issue, Transition transition) {
+
+		TransitionInput transitionInput = new TransitionInput(
+			transition.getId(), Comment.valueOf(comment));
+
+		try {
+			Promise<Void> promise = _issueRestClient.transition(
+				issue, transitionInput);
+
+			promise.get();
+
+			_uncacheIssue(issue.getKey());
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"Unable to execute transition " + exception.getMessage());
+		}
+	}
+
 	public static Issue getIssue(String issueKey) {
 		if (_issueMap.containsKey(issueKey)) {
 			CachedIssue cachedIssue = _issueMap.get(issueKey);
@@ -70,26 +90,6 @@ public class JIRAUtil {
 		}
 
 		return _issueTransitionMap.get(issue.getKey());
-	}
-
-	public static void executeTransition(
-		String comment, Issue issue, Transition transition) {
-
-		TransitionInput transitionInput = new TransitionInput(
-			transition.getId(), Comment.valueOf(comment));
-
-		try {
-			Promise<Void> promise = _issueRestClient.transition(
-				issue, transitionInput);
-
-			promise.get();
-
-			_uncacheIssue(issue.getKey());
-		}
-		catch (Exception exception) {
-			System.out.println(
-				"Unable to execute transition " + exception.getMessage());
-		}
 	}
 
 	private static IssueRestClient _initIssueRestClient() {

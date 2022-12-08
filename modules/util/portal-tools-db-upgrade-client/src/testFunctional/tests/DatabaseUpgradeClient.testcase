@@ -49,6 +49,22 @@ definition {
 			value1 = "check-upgrade-client-gogoshell-command-output");
 	}
 
+	@description = "LPS-158522: Upgrade client can connect to Gogo Shell with a failed upgrade"
+	@priority = "4"
+	test CheckUpgradeClientGogoShellFailedUpgrade {
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.name.skip.portal.instance = "DatabaseUpgradeClient#CheckUpgradeClientGogoShellFailedUpgrade";
+
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-gogoshell-failed-upgrade");
+
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-failed-upgrade-log");
+	}
+
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell and display help commands"
 	@priority = "5"
 	test CheckUpgradeClientGogoShellHelpOutput {
@@ -95,6 +111,28 @@ definition {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-client-sh-disconnect");
+	}
+
+	@description = "LPS-158522: Upgrade client only upgrades core"
+	@priority = "2"
+	test CheckUpgradeClientUpgradeCoreOnly {
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.name.skip.portal.instance = "DatabaseUpgradeClient#CheckUpgradeClientUpgradeCoreOnly";
+
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-upgrade-core-only");
+
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-failed-upgrade-log");
+
+		var schemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName = 'com.liferay.journal.web';");
+
+		if (!(contains("${schemaVersion}", "0.0.1"))) {
+			fail("The upgrade client upgrades core and modules.");
+		}
 	}
 
 	@description = "LPS-158522: Upgrade client contains necessary files"

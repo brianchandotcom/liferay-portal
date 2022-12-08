@@ -235,8 +235,6 @@ definition {
 				key_tableEntry = "Commerce Account",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 
-			Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
-
 			ApplicationsMenu.gotoSite(site = "Minium");
 
 			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");

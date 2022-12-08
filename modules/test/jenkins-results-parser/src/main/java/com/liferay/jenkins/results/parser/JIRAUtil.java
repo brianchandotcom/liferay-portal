@@ -105,7 +105,7 @@ public class JIRAUtil {
 		}
 	}
 
-	private static Transition _getTransition(
+	public static Transition getTransition(
 		Issue issue, String transitionName) {
 
 		if (_issueTransitionMap.containsKey(issue.getKey())) {

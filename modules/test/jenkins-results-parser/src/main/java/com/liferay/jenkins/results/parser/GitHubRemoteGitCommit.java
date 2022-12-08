@@ -22,7 +22,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -53,11 +52,7 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 		if (matcher.find()) {
 			String issueId = matcher.group(0);
 
-			for (String project : _allowedProjects) {
-				if (issueId.contains(project)) {
-					return JIRAUtil.getIssue(issueId);
-				}
-			}
+			return JIRAUtil.getIssue(issueId);
 		}
 
 		return null;
@@ -222,8 +217,6 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 
 	protected List<String> modifiedFilenames;
 
-	private static final List<String> _allowedProjects = new ArrayList<>(
-		Arrays.asList("LPS", "LRCI"));
 	private static final Pattern _issuePattern = Pattern.compile(
 		"^([A-Z]+[-][\\d]+)");
 

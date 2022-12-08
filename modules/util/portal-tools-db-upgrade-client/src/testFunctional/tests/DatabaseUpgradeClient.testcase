@@ -33,12 +33,38 @@ definition {
 			value1 = "check-upgrade-client-custom-log");
 	}
 
+	@description = "LPS-158522: Upgrade client can connect to Gogo Shell"
+	@priority = "3"
+	test CheckUpgradeClientGogoShell {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-gogoshell");
+	}
+
+	@description = "LPS-158522: Upgrade client can connect to Gogo Shell and check upgrade"
+	@priority = "4"
+	test CheckUpgradeClientGogoShellCommandOutput {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-gogoshell-command-output");
+	}
+
+	@description = "LPS-158522: Upgrade client can connect to Gogo Shell and display help commands"
+	@priority = "5"
+	test CheckUpgradeClientGogoShellHelpOutput {
+		property portal.acceptance = "true";
+
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-gogoshell-help-output");
+	}
+
 	@description = "LPS-158522: Upgrade client displays help screen"
 	@priority = "3"
 	test CheckUpgradeClientHelp {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
-		
+
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-client-help");
@@ -55,6 +81,22 @@ definition {
 			value1 = "check-upgrade-client-java-version");
 	}
 
+	@description = "LPS-158522: Upgrade client cannot start a second upgrade process"
+	@priority = "3"
+	test CheckUpgradeClientSecondProcess {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-second-process");
+	}
+
+	@description = "LPS-158522: Upgrade client completes when disconnected"
+	@priority = "4"
+	test CheckUpgradeClientShDisconnect {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-sh-disconnect");
+	}
+
 	@description = "LPS-158522: Upgrade client contains necessary files"
 	@priority = "3"
 	test CheckUpgradeClientZipContents {
@@ -64,6 +106,38 @@ definition {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-client-zip-content");
+	}
+
+	@description = "LPS-158522: Upgrade client can run with app server and database properties set"
+	@priority = "3"
+	test CheckUpgradePropertiesAppDBSet {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-properties-app-db-set");
+	}
+
+	@description = "LPS-158522: Upgrade client can run with app server properties set"
+	@priority = "3"
+	test CheckUpgradePropertiesAppExtSet {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-properties-app-ext-set");
+	}
+
+	@description = "LPS-158522: Upgrade client can run with database properties set"
+	@priority = "3"
+	test CheckUpgradePropertiesDBExtSet {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-properties-db-ext-set");
+	}
+
+	@description = "LPS-158522: Upgrade client can run with no properties set"
+	@priority = "4"
+	test CheckUpgradePropertiesNoneSet {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-properties-none-set");
 	}
 
 	@description = "LPS-168551:  Upgrade client throws error when portal-ext.properties exists in home directory"

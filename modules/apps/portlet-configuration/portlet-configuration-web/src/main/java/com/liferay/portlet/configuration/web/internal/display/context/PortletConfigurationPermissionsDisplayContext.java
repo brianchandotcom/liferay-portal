@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -189,6 +190,13 @@ public class PortletConfigurationPermissionsDisplayContext {
 				resourceActions.remove(ActionKeys.ASSIGN_MEMBERS);
 				resourceActions.remove(ActionKeys.DELETE);
 				resourceActions.remove(ActionKeys.UPDATE);
+			}
+
+			PermissionChecker permissionChecker =
+				_themeDisplay.getPermissionChecker();
+
+			if (!permissionChecker.isCompanyAdmin()) {
+				resourceActions.remove(ActionKeys.DEFINE_PERMISSIONS);
 			}
 		}
 

@@ -39,9 +39,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class JIRAUtil {
 
-	public static Issue getIssue(String issueId) {
-		if (_issueMap.containsKey(issueId)) {
-			CachedIssue cachedIssue = _issueMap.get(issueId);
+	public static Issue getIssue(String issueKey) {
+		if (_issueMap.containsKey(issueKey)) {
+			CachedIssue cachedIssue = _issueMap.get(issueKey);
 
 			if (!cachedIssue.isExpired()) {
 				return cachedIssue.issue;
@@ -52,11 +52,11 @@ public class JIRAUtil {
 			_initRestClient();
 		}
 
-		Promise<Issue> promise = _issueRestClient.getIssue(issueId);
+		Promise<Issue> promise = _issueRestClient.getIssue(issueKey);
 
 		Issue issue = promise.claim();
 
-		_issueMap.put(issueId, new CachedIssue(issue));
+		_issueMap.put(issueKey, new CachedIssue(issue));
 
 		return issue;
 	}

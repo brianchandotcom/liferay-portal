@@ -1780,7 +1780,7 @@ definition {
 	}
 
 	macro getSchemaVersion {
-		var mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';";
+		var mysqlStatement = "${mysqlStatement}";
 
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
 

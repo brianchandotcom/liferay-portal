@@ -232,7 +232,7 @@ definition {
 		}
 
 		task ("Read the final schema version") {
-			var finalSchemaVersion = Upgrade.getSchemaVersion();
+			var finalSchemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
 
 			if (!(contains("${fileContent}", "Final portal schema version: ${finalSchemaVersion}"))) {
 				echo("${fileContent}");
@@ -242,7 +242,7 @@ definition {
 		}
 
 		task ("Read the expected schema version") {
-			var expectedSchemaVersion = Upgrade.getSchemaVersion();
+			var expectedSchemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
 
 			if (!(contains("${fileContent}", "Expected portal schema version: ${expectedSchemaVersion}"))) {
 				echo("${fileContent}");

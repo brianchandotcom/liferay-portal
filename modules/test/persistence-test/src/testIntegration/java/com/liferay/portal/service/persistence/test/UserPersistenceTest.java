@@ -479,6 +479,15 @@ public class UserPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_DU_T() throws Exception {
+		_persistence.countByC_DU_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_DU_T(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
 	public void testCountByC_DU_S() throws Exception {
 		_persistence.countByC_DU_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
@@ -815,17 +824,6 @@ public class UserPersistenceTest {
 				user, "getColumnOriginalValue", new Class<?>[] {String.class},
 				"companyId"));
 		Assert.assertEquals(
-			Boolean.valueOf(user.getDefaultUser()),
-			ReflectionTestUtil.<Boolean>invoke(
-				user, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"defaultUser"));
-
-		Assert.assertEquals(
-			Long.valueOf(user.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				user, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"companyId"));
-		Assert.assertEquals(
 			user.getScreenName(),
 			ReflectionTestUtil.invoke(
 				user, "getColumnOriginalValue", new Class<?>[] {String.class},
@@ -874,6 +872,22 @@ public class UserPersistenceTest {
 			ReflectionTestUtil.invoke(
 				user, "getColumnOriginalValue", new Class<?>[] {String.class},
 				"openId"));
+
+		Assert.assertEquals(
+			Long.valueOf(user.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				user, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
+		Assert.assertEquals(
+			Boolean.valueOf(user.getDefaultUser()),
+			ReflectionTestUtil.<Boolean>invoke(
+				user, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"defaultUser"));
+		Assert.assertEquals(
+			Integer.valueOf(user.getType()),
+			ReflectionTestUtil.<Integer>invoke(
+				user, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"type_"));
 
 		Assert.assertEquals(
 			user.getExternalReferenceCode(),

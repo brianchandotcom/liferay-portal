@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -108,13 +107,12 @@ public class WorkflowDefinitionsDataProviderTest {
 
 		Assert.assertTrue(ddmDataProviderResponse.hasOutput("Default-Output"));
 
-		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutputOptional(
-				"Default-Output", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"Default-Output", List.class);
 
-		Assert.assertTrue(optional.isPresent());
+		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>() {
+		List<KeyValuePair> newKeyValuePairs = new ArrayList<KeyValuePair>() {
 			{
 				add(new KeyValuePair("no-workflow", "No Workflow"));
 				add(new KeyValuePair("definition1", "Definition 1"));
@@ -122,7 +120,7 @@ public class WorkflowDefinitionsDataProviderTest {
 			}
 		};
 
-		Assert.assertEquals(keyValuePairs, optional.get());
+		Assert.assertEquals(keyValuePairs, newKeyValuePairs);
 	}
 
 	@Test
@@ -139,19 +137,18 @@ public class WorkflowDefinitionsDataProviderTest {
 
 		Assert.assertTrue(ddmDataProviderResponse.hasOutput("Default-Output"));
 
-		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutputOptional(
-				"Default-Output", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"Default-Output", List.class);
 
-		Assert.assertTrue(optional.isPresent());
+		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>() {
+		List<KeyValuePair> newKeyValuePairs = new ArrayList<KeyValuePair>() {
 			{
 				add(new KeyValuePair("no-workflow", "No Workflow"));
 			}
 		};
 
-		Assert.assertEquals(keyValuePairs, optional.get());
+		Assert.assertEquals(keyValuePairs, newKeyValuePairs);
 	}
 
 	@Test(expected = DDMDataProviderException.class)

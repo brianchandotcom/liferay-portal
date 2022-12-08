@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -97,20 +96,19 @@ public class DDMDataProviderInstancesDataProviderTest {
 
 		Assert.assertTrue(ddmDataProviderResponse.hasOutput("Default-Output"));
 
-		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutputOptional(
-				"Default-Output", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"Default-Output", List.class);
 
-		Assert.assertTrue(optional.isPresent());
+		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>() {
+		List<KeyValuePair> newKeyValuePairs = new ArrayList<KeyValuePair>() {
 			{
 				add(new KeyValuePair("1", "Data Provider Instance 1"));
 				add(new KeyValuePair("2", "Data Provider Instance 2"));
 			}
 		};
 
-		Assert.assertEquals(keyValuePairs, optional.get());
+		Assert.assertEquals(newKeyValuePairs, keyValuePairs);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -139,13 +137,10 @@ public class DDMDataProviderInstancesDataProviderTest {
 
 		Assert.assertTrue(ddmDataProviderResponse.hasOutput("Default-Output"));
 
-		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutputOptional(
-				"Default-Output", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"Default-Output", List.class);
 
-		Assert.assertTrue(optional.isPresent());
-
-		List<KeyValuePair> keyValuePairs = optional.get();
+		Assert.assertNotNull(keyValuePairs);
 
 		Assert.assertEquals(keyValuePairs.toString(), 0, keyValuePairs.size());
 	}

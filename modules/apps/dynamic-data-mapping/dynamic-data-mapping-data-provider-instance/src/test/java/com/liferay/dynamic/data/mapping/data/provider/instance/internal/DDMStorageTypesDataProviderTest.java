@@ -22,7 +22,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
@@ -109,13 +108,12 @@ public class DDMStorageTypesDataProviderTest {
 
 		Assert.assertTrue(ddmDataProviderResponse.hasOutput("Default-Output"));
 
-		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutputOptional(
-				"Default-Output", List.class);
+		List<KeyValuePair> newKeyValuePairs = ddmDataProviderResponse.getOutput(
+			"Default-Output", List.class);
 
-		Assert.assertTrue(optional.isPresent());
+		Assert.assertNotNull(newKeyValuePairs);
 
-		Assert.assertEquals(keyValuePairs, optional.get());
+		Assert.assertEquals(keyValuePairs, newKeyValuePairs);
 	}
 
 	private static final DDMStorageAdapterRegistry _ddmStorageAdapterRegistry =

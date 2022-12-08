@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,15 +55,11 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 	public DDMDataProviderResponse getData(
 		DDMDataProviderRequest ddmDataProviderRequest) {
 
-		Optional<Long> dataProviderInstanceIdOptional =
-			ddmDataProviderRequest.getParameterOptional(
-				"dataProviderInstanceId", String.class);
+		String dataProviderInstanceId = ddmDataProviderRequest.getParameter(
+			"dataProviderInstanceId", String.class);
 
-		long dataProviderInstanceId = 0;
-
-		if (dataProviderInstanceIdOptional.isPresent()) {
-			dataProviderInstanceId = GetterUtil.getLong(
-				dataProviderInstanceIdOptional.get());
+		if (dataProviderInstanceId == null) {
+			dataProviderInstanceId = "0";
 		}
 
 		DDMDataProviderResponse.Builder builder =
@@ -72,7 +67,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-		if (dataProviderInstanceId == 0) {
+		if (GetterUtil.getLong(dataProviderInstanceId) == 0) {
 			return builder.withOutput(
 				"outputParameterNames", keyValuePairs
 			).build();
@@ -82,7 +77,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 			DDMDataProviderOutputParametersSettings[]
 				ddmDataProviderOutputParametersSettings =
 					_getDDMDataProviderOutputParametersSettings(
-						dataProviderInstanceId);
+						GetterUtil.getLong(dataProviderInstanceId));
 
 			for (DDMDataProviderOutputParametersSettings
 					ddmDataProviderOutputParametersSetting :
@@ -100,7 +95,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 			_log.error(
 				String.format(
 					"Unable to get the output parameters for data provider " +
-						"instance with id '%d'",
+						"instance with id '%s'",
 					dataProviderInstanceId),
 				exception);
 		}

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,12 +49,9 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 		Set<String> storageTypes =
 			ddmStorageAdapterRegistry.getDDMStorageAdapterTypes();
 
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			ddmDataProviderRequest.getParameterOptional(
-				"httpServletRequest", HttpServletRequest.class);
-
 		HttpServletRequest httpServletRequest =
-			httpServletRequestOptional.orElse(null);
+			ddmDataProviderRequest.getParameter(
+				"httpServletRequest", HttpServletRequest.class);
 
 		for (String storageType : storageTypes) {
 			if (storageType.equals(StorageType.JSON.getValue())) {

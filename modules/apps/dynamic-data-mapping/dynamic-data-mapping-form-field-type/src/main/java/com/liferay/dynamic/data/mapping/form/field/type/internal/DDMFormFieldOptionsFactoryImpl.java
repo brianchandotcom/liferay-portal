@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -165,15 +164,15 @@ public class DDMFormFieldOptionsFactoryImpl
 					ddmFormField.getProperty("ddmDataProviderInstanceOutput"),
 					"Default-Output"));
 
-			Optional<List<KeyValuePair>> keyValuesPairsOptional =
-				ddmDataProviderResponse.getOutputOptional(
+			List<KeyValuePair> keyValuesPairs =
+				ddmDataProviderResponse.getOutput(
 					ddmDataProviderInstanceOutput, List.class);
 
-			if (!keyValuesPairsOptional.isPresent()) {
+			if (keyValuesPairs == null) {
 				return ddmFormFieldOptions;
 			}
 
-			for (KeyValuePair keyValuePair : keyValuesPairsOptional.get()) {
+			for (KeyValuePair keyValuePair : keyValuesPairs) {
 				ddmFormFieldOptions.addOptionLabel(
 					keyValuePair.getKey(),
 					ddmFormFieldRenderingContext.getLocale(),

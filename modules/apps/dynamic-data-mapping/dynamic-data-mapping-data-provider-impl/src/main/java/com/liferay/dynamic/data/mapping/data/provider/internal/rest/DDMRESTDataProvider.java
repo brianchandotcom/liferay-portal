@@ -63,7 +63,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -94,11 +93,11 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		throws DDMDataProviderException {
 
 		try {
-			Optional<DDMDataProviderInstance> ddmDataProviderInstanceOptional =
-				_getDDMDataProviderInstanceOptional(
+			DDMDataProviderInstance ddmDataProviderInstance =
+				_getDDMDataProviderInstance(
 					ddmDataProviderRequest.getDDMDataProviderId());
 
-			if (!ddmDataProviderInstanceOptional.isPresent()) {
+			if (ddmDataProviderInstance == null) {
 				DDMDataProviderResponse.Builder builder =
 					DDMDataProviderResponse.Builder.newBuilder();
 
@@ -109,8 +108,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 			DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
 				_ddmDataProviderInstanceSettings.getSettings(
-					ddmDataProviderInstanceOptional.get(),
-					DDMRESTDataProviderSettings.class);
+					ddmDataProviderInstance, DDMRESTDataProviderSettings.class);
 
 			try {
 				return _getData(
@@ -239,19 +237,24 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				}
 
 				if (ddmRESTDataProviderSettings.pagination()) {
-					Optional<String> paginationEndOptional =
-						ddmDataProviderRequest.getParameterOptional(
-							"paginationEnd", String.class);
+					String paginationEnd = ddmDataProviderRequest.getParameter(
+						"paginationEnd", String.class);
 
-					int end = GetterUtil.getInteger(
-						paginationEndOptional.orElse("10"));
+					if (paginationEnd == null) {
+						paginationEnd = "10";
+					}
 
-					Optional<String> paginationStartOptional =
-						ddmDataProviderRequest.getParameterOptional(
+					int end = GetterUtil.getInteger(paginationEnd);
+
+					String paginationStart =
+						ddmDataProviderRequest.getParameter(
 							"paginationStart", String.class);
 
-					int start = GetterUtil.getInteger(
-						paginationStartOptional.orElse("1"));
+					if (paginationStart == null) {
+						paginationStart = "1";
+					}
+
+					int start = GetterUtil.getInteger(paginationStart);
 
 					if (keyValuePairs.size() > (end - start)) {
 						builder = builder.withOutput(
@@ -388,9 +391,8 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return ddmDataProviderResponse;
 	}
 
-	private Optional<DDMDataProviderInstance>
-			_getDDMDataProviderInstanceOptional(
-				String ddmDataProviderInstanceId)
+	private DDMDataProviderInstance _getDDMDataProviderInstance(
+			String ddmDataProviderInstanceId)
 		throws Exception {
 
 		DDMDataProviderInstance ddmDataProviderInstance =
@@ -405,7 +407,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 					Long.valueOf(ddmDataProviderInstanceId));
 		}
 
-		return Optional.ofNullable(ddmDataProviderInstance);
+		return ddmDataProviderInstance;
 	}
 
 	private List<KeyValuePair> _getFilterAndPaginationParameters(
@@ -415,39 +417,39 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		if (ddmRESTDataProviderSettings.filterable()) {
-			Optional<String> filterParameterValueOptional =
-				ddmDataProviderRequest.getParameterOptional(
-					"filterParameterValue", String.class);
+			String filterParameterValue = ddmDataProviderRequest.getParameter(
+				"filterParameterValue", String.class);
 
-			filterParameterValueOptional.ifPresent(
-				filterParameterValueString -> keyValuePairs.add(
+			if (filterParameterValue != null) {
+				keyValuePairs.add(
 					new KeyValuePair(
 						ddmRESTDataProviderSettings.filterParameterName(),
-						filterParameterValueString)));
+						filterParameterValue));
+			}
 		}
 
 		if (ddmRESTDataProviderSettings.pagination()) {
-			Optional<String> paginationEndOptional =
-				ddmDataProviderRequest.getParameterOptional(
-					"paginationEnd", String.class);
+			String paginationEnd = ddmDataProviderRequest.getParameter(
+				"paginationEnd", String.class);
 
-			paginationEndOptional.ifPresent(
-				paginationEndString -> keyValuePairs.add(
+			if (paginationEnd != null) {
+				keyValuePairs.add(
 					new KeyValuePair(
 						ddmRESTDataProviderSettings.
 							paginationEndParameterName(),
-						paginationEndString)));
+						paginationEnd));
+			}
 
-			Optional<String> paginationStartOptional =
-				ddmDataProviderRequest.getParameterOptional(
-					"paginationStart", String.class);
+			String paginationStart = ddmDataProviderRequest.getParameter(
+				"paginationStart", String.class);
 
-			paginationStartOptional.ifPresent(
-				paginationStartString -> keyValuePairs.add(
+			if (paginationStart != null) {
+				keyValuePairs.add(
 					new KeyValuePair(
 						ddmRESTDataProviderSettings.
 							paginationStartParameterName(),
-						paginationStartString)));
+						paginationStart));
+			}
 		}
 
 		return keyValuePairs;

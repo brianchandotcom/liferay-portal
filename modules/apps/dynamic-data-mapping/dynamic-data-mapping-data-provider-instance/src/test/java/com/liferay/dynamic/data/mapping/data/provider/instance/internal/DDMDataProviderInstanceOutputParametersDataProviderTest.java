@@ -44,7 +44,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -193,13 +192,12 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 			_ddmDataProviderInstanceOutputParametersDataProvider.getData(
 				ddmDataProviderRequest);
 
-		Optional<List<KeyValuePair>> outputParameterNamesOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				"outputParameterNames", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"outputParameterNames", List.class);
 
-		Assert.assertTrue(outputParameterNamesOptional.isPresent());
+		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>() {
+		List<KeyValuePair> newKeyValuePairs = new ArrayList<KeyValuePair>() {
 			{
 				add(new KeyValuePair(countryIdOutputParameterId, "Country Id"));
 				add(
@@ -209,8 +207,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 		};
 
 		Assert.assertEquals(
-			keyValuePairs.toString(), keyValuePairs,
-			outputParameterNamesOptional.get());
+			newKeyValuePairs.toString(), newKeyValuePairs, keyValuePairs);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -237,13 +234,10 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 			_ddmDataProviderInstanceOutputParametersDataProvider.getData(
 				ddmDataProviderRequest);
 
-		Optional<List<KeyValuePair>> optional =
-			ddmDataProviderResponse.getOutputOptional(
-				"outputParameterNames", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"outputParameterNames", List.class);
 
-		Assert.assertTrue(optional.isPresent());
-
-		List<KeyValuePair> keyValuePairs = optional.get();
+		Assert.assertNotNull(keyValuePairs);
 
 		Assert.assertEquals(keyValuePairs.toString(), 0, keyValuePairs.size());
 	}
@@ -285,17 +279,12 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 			_ddmDataProviderInstanceOutputParametersDataProvider.getData(
 				ddmDataProviderRequest);
 
-		Optional<List<KeyValuePair>> outputParameterNamesOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				"outputParameterNames", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"outputParameterNames", List.class);
 
-		Assert.assertTrue(outputParameterNamesOptional.isPresent());
+		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> outputParameterNames =
-			outputParameterNamesOptional.get();
-
-		Assert.assertEquals(
-			outputParameterNames.toString(), 0, outputParameterNames.size());
+		Assert.assertEquals(keyValuePairs.toString(), 0, keyValuePairs.size());
 	}
 
 	@Test
@@ -312,17 +301,15 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 		Assert.assertTrue(
 			ddmDataProviderResponse.hasOutput("outputParameterNames"));
 
-		Optional<List<KeyValuePair>> outputParameterNamesOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				"outputParameterNames", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"outputParameterNames", List.class);
 
-		Assert.assertTrue(outputParameterNamesOptional.isPresent());
+		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+		List<KeyValuePair> newKeyValuePairs = new ArrayList<>();
 
 		Assert.assertEquals(
-			keyValuePairs.toString(), keyValuePairs,
-			outputParameterNamesOptional.get());
+			newKeyValuePairs.toString(), newKeyValuePairs, keyValuePairs);
 	}
 
 	private static void _setUpLanguageUtil() {

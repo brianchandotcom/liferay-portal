@@ -58,7 +58,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -127,11 +126,8 @@ public class DDMRESTDataProviderTest {
 				_createDDMDataProviderRequest(
 					ddmDataProviderId, null, null, null, null, null));
 
-		Optional<List<KeyValuePair>> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, List.class);
-
-		List<KeyValuePair> keyValuePairs = outputOptional.get();
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			outputParameterId, List.class);
 
 		Assert.assertTrue(
 			keyValuePairs.containsAll(
@@ -192,11 +188,8 @@ public class DDMRESTDataProviderTest {
 				_createDDMDataProviderRequest(
 					ddmDataProviderId, "brazil", null, null, null, null));
 
-		Optional<List<KeyValuePair>> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, List.class);
-
-		List<KeyValuePair> keyValuePairs = outputOptional.get();
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			outputParameterId, List.class);
 
 		Assert.assertEquals(keyValuePairs.toString(), 1, keyValuePairs.size());
 
@@ -224,11 +217,8 @@ public class DDMRESTDataProviderTest {
 				_createDDMDataProviderRequest(
 					ddmDataProviderId, null, "name", "brazil", null, null));
 
-		Optional<List<KeyValuePair>> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, List.class);
-
-		List<KeyValuePair> keyValuePairs = outputOptional.get();
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			outputParameterId, List.class);
 
 		Assert.assertEquals(keyValuePairs.toString(), 1, keyValuePairs.size());
 
@@ -256,11 +246,8 @@ public class DDMRESTDataProviderTest {
 				_createDDMDataProviderRequest(
 					ddmDataProviderId, null, "name", "brazil", null, null));
 
-		Optional<List<KeyValuePair>> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, List.class);
-
-		List<KeyValuePair> keyValuePairs = outputOptional.get();
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			outputParameterId, List.class);
 
 		Assert.assertEquals(keyValuePairs.toString(), 1, keyValuePairs.size());
 
@@ -287,14 +274,11 @@ public class DDMRESTDataProviderTest {
 				_createDDMDataProviderRequest(
 					ddmDataProviderId, null, null, null, null, null));
 
-		Optional<String> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, Number.class);
-
 		Assert.assertEquals(
 			_countryLocalService.getCompanyCountriesCount(
 				TestPropsValues.getCompanyId()),
-			outputOptional.get());
+			(int)ddmDataProviderResponse.getOutput(
+				outputParameterId, Number.class));
 	}
 
 	@Test
@@ -379,11 +363,8 @@ public class DDMRESTDataProviderTest {
 			DDMDataProviderResponseStatus.OK,
 			ddmDataProviderResponse.getStatus());
 
-		Optional<List<KeyValuePair>> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, List.class);
-
-		List<KeyValuePair> keyValuePairs = outputOptional.get();
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			outputParameterId, List.class);
 
 		Assert.assertEquals(keyValuePairs.toString(), 5, keyValuePairs.size());
 	}
@@ -408,11 +389,9 @@ public class DDMRESTDataProviderTest {
 
 		Assert.assertNotNull(ddmDataProviderResponse);
 
-		Optional<String> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, String.class);
-
-		Assert.assertEquals("Brazil", outputOptional.get());
+		Assert.assertEquals(
+			"Brazil",
+			ddmDataProviderResponse.getOutput(outputParameterId, String.class));
 	}
 
 	@Test
@@ -435,11 +414,8 @@ public class DDMRESTDataProviderTest {
 
 		Assert.assertNotNull(ddmDataProviderResponse);
 
-		Optional<List<KeyValuePair>> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, List.class);
-
-		List<KeyValuePair> keyValuePairs = outputOptional.get();
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			outputParameterId, List.class);
 
 		Assert.assertEquals(keyValuePairs.toString(), 1, keyValuePairs.size());
 
@@ -471,11 +447,8 @@ public class DDMRESTDataProviderTest {
 			DDMDataProviderResponseStatus.SERVICE_UNAVAILABLE,
 			ddmDataProviderResponse.getStatus());
 
-		Optional<List<KeyValuePair>> outputOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				outputParameterId, List.class);
-
-		List<KeyValuePair> keyValuePairs = outputOptional.get();
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			outputParameterId, List.class);
 
 		Assert.assertEquals(keyValuePairs.toString(), 0, keyValuePairs.size());
 	}

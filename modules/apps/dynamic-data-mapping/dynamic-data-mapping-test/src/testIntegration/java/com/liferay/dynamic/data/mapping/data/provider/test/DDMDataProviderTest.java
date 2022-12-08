@@ -27,7 +27,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -84,13 +83,10 @@ public class DDMDataProviderTest {
 		DDMDataProviderResponse ddmDataProviderResponse =
 			testDataProvider.getData(ddmDataProviderRequest);
 
-		Optional<List<KeyValuePair>> keyValuePairsOptional =
-			ddmDataProviderResponse.getOutputOptional(
-				"Default-Output", List.class);
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
+			"Default-Output", List.class);
 
-		Assert.assertTrue(keyValuePairsOptional.isPresent());
-
-		List<KeyValuePair> keyValuePairs = keyValuePairsOptional.get();
+		Assert.assertNotNull(keyValuePairs);
 
 		Assert.assertEquals(keyValuePairs.toString(), 2, keyValuePairs.size());
 	}

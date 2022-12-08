@@ -38,7 +38,6 @@ Import-Package:\
 	\
 	*
 -includeresource:\
-	commons-collections4-[0-9.]*.jar;lib:=true,\
 	commons-compress-[0-9.]*.jar;lib:=true,\
 	commons-math3-[0-9.]*.jar;lib:=true,\
 	xmlbeans-[0-9.]*.jar;lib:=true

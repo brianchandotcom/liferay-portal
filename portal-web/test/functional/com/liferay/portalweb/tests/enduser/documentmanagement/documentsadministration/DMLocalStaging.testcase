@@ -1972,28 +1972,28 @@ definition {
 
 	@description = "This ensures that the document info is displayed correctly after publishing and republishing."
 	@priority = "5"
-	@refactorneeded
-	test ViewRepublishedDocumentInfo {
+	@refactordone
+	test CanViewRepublishedDocumentInfo {
 		property custom.properties = "dl.actions.visible=true";
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
+		JSONAssettag.addTag(
+			groupName = "Site Name-staging",
+			tagName = "tag1");
 
-		Tag.addCP(tagName = "tag1");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Documents and Media");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.addPG(
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "tag1",
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "tag1");
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -2091,10 +2091,12 @@ definition {
 	test ViewWebContentWithDeletedImage {
 		property portal.acceptance = "true";
 
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "Document_2.jpg");
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
@@ -2185,10 +2187,12 @@ definition {
 	test ViewWebContentWithRepublishedImage {
 		property portal.acceptance = "true";
 
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "Document_2.jpg");
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 

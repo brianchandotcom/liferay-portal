@@ -1216,8 +1216,8 @@ definition {
 
 	@description = "This ensures that the document using custom document type can be deleted and republished."
 	@priority = "5"
-	@refactorneeded
-	test DeleteDocumentWithCustomType {
+	@refactordone
+	test CanDeleteDocumentWithCustomType {
 		property portal.acceptance = "true";
 
 		DMNavigator.gotoDocumentType();
@@ -1270,8 +1270,8 @@ definition {
 
 	@description = "This ensures that the document using custom document type can be edited and republished."
 	@priority = "5"
-	@refactorneeded
-	test EditDocumentWithCustomType {
+	@refactordone
+	test CanEditDocumentWithCustomType {
 		property portal.acceptance = "true";
 
 		DMNavigator.gotoDocumentType();
@@ -1437,7 +1437,7 @@ definition {
 	@description = "This is a use case for LPS-79925."
 	@priority = "5"
 	@refactordone
-	test PublishDocumentFromRestrictedFolder {
+	test CanPublishDocumentFromRestrictedFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -1490,7 +1490,7 @@ definition {
 	@description = "This test covers LPS-119234. It ensures that a document type can be published to live via SAP."
 	@priority = "4"
 	@refactordone
-	test PublishDocumentTypeViaSAP {
+	test CanPublishDocumentTypeViaSAP {
 		property portal.acceptance = "true";
 
 		DMNavigator.gotoDocumentType();
@@ -1520,7 +1520,7 @@ definition {
 	@description = "This ensures that the custom document type being used by document can be edited and republished."
 	@priority = "5"
 	@refactordone
-	test PublishEditsToDocumentType {
+	test CanPublishEditsToDocumentType {
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
@@ -1602,7 +1602,7 @@ definition {
 	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."
 	@priority = "5"
 	@refactordone
-	test PublishEditsToDocumentUsingCustomTypeAndSet {
+	test CanPublishEditsToDocumentUsingCustomTypeAndSet {
 		property portal.acceptance = "true";
 
 		task ("Add a metadata set with image field") {
@@ -1693,7 +1693,7 @@ definition {
 	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
 	@priority = "5"
 	@refactordone
-	test PublishEditsToMetadataSet {
+	test CanPublishEditsToMetadataSet {
 		property custom.properties = "dl.actions.visible=true";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -1780,8 +1780,8 @@ definition {
 
 	@description = "This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published."
 	@priority = "5"
-	@refactorneeded
-	test PublishSubfolderWithDocumentsViaSAP {
+	@refactordone
+	test CanPublishSubfolderWithDocumentsViaSAP {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "StagingDM#PublishSubfolderWithDocumentsViaSAP";
 
@@ -1804,39 +1804,27 @@ definition {
 			groupName = "Site Name-staging",
 			parentFolderName = "DM Folder 1");
 
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMFolder.viewCP(
-			dmFolderName = "DM Folder 1",
-			specificNameFolder = "true");
-
-		DMFolder.viewCP(
-			dmFolderName = "DM Folder 2",
-			specificNameFolder = "true");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document in Folder 2",
-			dmDocumentFile = "Document_2.txt",
-			dmDocumentTitle = "DM Document in Folder 2");
+			dmDocumentTitle = "Document_2.txt",
+			folderName = "DM Folder 2",
+			groupName = "Site Name-staging",
+			mimeType = "text/plain",
+			sourceFileName = "Document_2.txt");
 
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder 1");
-
-		DMFolder.viewCP(
-			dmFolderName = "DM Folder 2",
-			specificNameFolder = "true");
-
-		DMFolder.addCP(dmFolderName = "DM Folder 3");
-
-		DMFolder.viewCP(
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder 3",
-			specificNameFolder = "true");
+			groupName = "Site Name-staging",
+			parentFolderName = "DM Folder 2");
 
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document in Folder 3",
-			dmDocumentFile = "Document_3.txt",
-			dmDocumentTitle = "DM Document in Folder 3");
+			dmDocumentTitle = "Document_3.txt",
+			folderName = "DM Folder 3",
+			groupName = "Site Name-staging",
+			mimeType = "text/plain",
+			sourceFileName = "Document_3.txt");
 
 		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
@@ -1844,11 +1832,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish the selected folder?",
 			entry = "DM Folder 1");
 
-		ProductMenu.gotoLiveSite(site = "Guest");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		for (var folderCount : list "1,2,3") {
 			DMFolder.viewCP(dmFolderName = "DM Folder ${folderCount}");
@@ -1863,9 +1847,16 @@ definition {
 
 	@description = "This test covers LPS-99265. It ensures that a staged document file cannot be shared unless it is first published to Live."
 	@priority = "4"
-	@refactorneeded
-	test ShareDMDocumentOnLiveSite {
+	@refactordone
+	test CanShareDocumentOnLiveSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Documents and Media");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1888,8 +1879,6 @@ definition {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

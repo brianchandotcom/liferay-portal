@@ -1696,6 +1696,13 @@ definition {
 	test PublishEditsToMetadataSet {
 		property custom.properties = "dl.actions.visible=true";
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging DM Page",
+			site = "false",
+			widgetName = "Documents and Media");
+
 		task ("Add a metadata set with text field") {
 			DMNavigator.gotoMetadataSets();
 

@@ -56,6 +56,20 @@ public class JIRAUtil {
 		return issue;
 	}
 
+	public static Transition getTransition(Issue issue, String transitionName) {
+		Map<String, Transition> transitionMap = getTransitions(issue);
+
+		return transitionMap.get(transitionName);
+	}
+
+	public static Map<String, Transition> getTransitions(Issue issue) {
+		if (!_issueTransitionMap.containsKey(issue.getKey())) {
+			_initTransitions(issue);
+		}
+
+		return _issueTransitionMap.get(issue.getKey());
+	}
+
 	public static void transition(
 		String comment, Issue issue, int transitionId) {
 
@@ -80,7 +94,7 @@ public class JIRAUtil {
 	public static void transition(
 		String comment, Issue issue, String transitionName) {
 
-		Transition transition = _getTransition(issue, transitionName);
+		Transition transition = getTransition(issue, transitionName);
 
 		if (transition == null) {
 			System.out.println(
@@ -103,32 +117,6 @@ public class JIRAUtil {
 			System.out.println(
 				"Unable to execute transition " + exception.getMessage());
 		}
-	}
-
-	public static Transition getTransition(
-		Issue issue, String transitionName) {
-
-		if (_issueTransitionMap.containsKey(issue.getKey())) {
-			Map<String, Transition> transitionMap = _issueTransitionMap.get(
-				issue.getKey());
-
-			return transitionMap.get(transitionName);
-		}
-
-		Promise<Iterable<Transition>> promise = _issueRestClient.getTransitions(
-			issue);
-
-		Iterable<Transition> iterableTransitions = promise.claim();
-
-		Map<String, Transition> transitionMap = new ConcurrentHashMap<>();
-
-		for (Transition transition : iterableTransitions) {
-			transitionMap.put(transition.getName(), transition);
-		}
-
-		_issueTransitionMap.put(issue.getKey(), transitionMap);
-
-		return transitionMap.get(transitionName);
 	}
 
 	private static IssueRestClient _initIssueRestClient() {
@@ -155,6 +143,21 @@ public class JIRAUtil {
 				_URI, jiraAdminUsername, jiraAdminPassword);
 
 		return jiraRestClient.getIssueClient();
+	}
+
+	private static void _initTransitions(Issue issue) {
+		Promise<Iterable<Transition>> promise = _issueRestClient.getTransitions(
+			issue);
+
+		Iterable<Transition> iterableTransitions = promise.claim();
+
+		Map<String, Transition> transitionMap = new ConcurrentHashMap<>();
+
+		for (Transition transition : iterableTransitions) {
+			transitionMap.put(transition.getName(), transition);
+		}
+
+		_issueTransitionMap.put(issue.getKey(), transitionMap);
 	}
 
 	private static final URI _URI = URI.create("https://issues.liferay.com");

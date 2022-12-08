@@ -710,6 +710,106 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-130607 and LPS-163074. The site designer could preview current version of web content through display page template in site."
+	@priority = "5"
+	test PreviewWebContentThroughTheDisplayPageOfCurrentSite {
+		task ("Given a site designer has display page templates for web content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Default Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Default Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Default Display Page Name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site designer creates a web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Then the site designer could preview the web content on the default display page") {
+			Panel.expandPanel(panel = "Display Page");
+
+			WebContent.viewSelectedDisplayPageTemplateCP(
+				displayPageTemplateName = "Default Display Page Name",
+				displayPageTemplateType = "Default");
+
+			MouseOver(
+				key_text = "Preview",
+				locator1 = "Button#ANY");
+
+			AssertVisible(
+				key_content = "A draft will be saved before displaying the preview.",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+			WebContent.previewDisplayPageTemplate(webContentContent = "Web Content Content");
+		}
+
+		task ("When the site designer navigates to the Web Content admin") {
+			Navigator.gotoBack();
+		}
+
+		task ("Then the site designer sees the draft web content") {
+			WebContentAdmin.viewEntryWorkflowStatus(
+				entry = "Web Content Title",
+				workflowStatus = "Draft");
+		}
+
+		task ("When the site designer mades some changes and selects the non-default display page") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			PortletEntry.inputTitle(title = "Web Content Title Edit");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+		}
+
+		task ("Then the site designer could preview the latest draft on associated display page") {
+			Click(
+				key_text = "Preview",
+				locator1 = "Button#ANY");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Web Content Title Edit");
+
+			IFrame.closeFrame();
+		}
+	}
+
 	@description = "This is a test for LPS-163800. Preview web content in Asset Libraries through sites' display page templates."
 	@priority = "4"
 	test PreviewWebContentThroughTheDisplayPageOfSpecificSiteInAssetLibrary {

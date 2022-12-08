@@ -185,52 +185,6 @@ definition {
 			webContentTitle = "WC Contenido de la web Titulo");
 	}
 
-	@description = "This is a test for LPS-130607. Preview the web content displayed on display page template in web content editor."
-	@priority = "4"
-	test PreviewWebContentDisplayedOnDisplayPageTemplateInWebContentEditor {
-		task ("Add a display page template") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-		}
-
-		task ("Add a Display Page Content fragment to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Display Page Content");
-
-			PageEditor.publish();
-		}
-
-		task ("Add a web content based on Basic Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
-		}
-
-		task ("Preview the web content in web content editor") {
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.previewDisplayPageTemplate(webContentContent = "Web Content Content");
-		}
-	}
-
 	@description = "This is a test for LPS-151948. The Filter by Status is available to the Versions tab."
 	@priority = "4"
 	test ViewFilterByStatusAvailableToVersionsTab {

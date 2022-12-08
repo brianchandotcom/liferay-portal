@@ -16,6 +16,7 @@ package com.liferay.portal.verify.extender.internal.osgi.commands;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.gogo.shell.logging.TeeLoggingUtil;
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -48,7 +49,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Miguel Pastor
@@ -170,7 +170,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, VerifyProcess.class, "verify.process.name",
-			new ServiceTrackerCustomizer<VerifyProcess, VerifyProcess>() {
+			new EagerServiceTrackerCustomizer<VerifyProcess, VerifyProcess>() {
 
 				@Override
 				public VerifyProcess addingService(

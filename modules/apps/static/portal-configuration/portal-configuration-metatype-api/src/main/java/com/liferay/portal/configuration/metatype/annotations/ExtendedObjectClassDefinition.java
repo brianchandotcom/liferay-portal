@@ -74,6 +74,8 @@ public @interface ExtendedObjectClassDefinition {
 	 */
 	public boolean strictScope() default false;
 
+	public String visibilityControllerKey() default StringPool.BLANK;
+
 	public enum Scope {
 
 		COMPANY("companyWebId", "companyId", "company"),

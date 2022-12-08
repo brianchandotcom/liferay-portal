@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -39,19 +38,17 @@ import com.liferay.segments.asah.connector.internal.client.util.OrderByField;
 import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.model.SegmentsEntryModel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -99,20 +96,21 @@ public class IndividualSegmentsChecker {
 
 		ServiceContext serviceContext = _getServiceContext(companyId);
 
-		Stream<String> stream = individualSegmentIds.stream();
+		List<Long> segmentsEntryIds = new ArrayList<>();
+
+		for (String individualSegmentId : individualSegmentIds) {
+			SegmentsEntry segmentsEntry =
+				_segmentsEntryLocalService.fetchSegmentsEntry(
+					serviceContext.getScopeGroupId(), individualSegmentId,
+					true);
+
+			if (segmentsEntry != null) {
+				segmentsEntryIds.add(segmentsEntry.getSegmentsEntryId());
+			}
+		}
 
 		_asahSegmentsEntryCache.putSegmentsEntryIds(
-			individualPK,
-			stream.map(
-				segmentsEntryKey ->
-					_segmentsEntryLocalService.fetchSegmentsEntry(
-						serviceContext.getScopeGroupId(), segmentsEntryKey,
-						true)
-			).filter(
-				Objects::nonNull
-			).mapToLong(
-				SegmentsEntryModel::getSegmentsEntryId
-			).toArray());
+			individualPK, ArrayUtil.toLongArray(segmentsEntryIds));
 	}
 
 	@Activate
@@ -320,52 +318,40 @@ public class IndividualSegmentsChecker {
 	}
 
 	private Long _getUserId(long companyId, Individual individual) {
-		Long userId = null;
+		List<String> individualUuids = new ArrayList<>();
 
-		List<Individual.DataSourceIndividualPK> dataSourceIndividualPKs =
-			individual.getDataSourceIndividualPKs();
+		for (Individual.DataSourceIndividualPK dataSourceIndividualPK :
+				individual.getDataSourceIndividualPKs()) {
 
-		Stream<Individual.DataSourceIndividualPK>
-			dataSourceIndividualPKsStream = dataSourceIndividualPKs.stream();
+			if (Objects.equals(
+					_asahFaroBackendClient.getDataSourceId(companyId),
+					dataSourceIndividualPK.getDataSourceId())) {
 
-		List<String> individualUuids = dataSourceIndividualPKsStream.filter(
-			dataSourceIndividualPK -> Objects.equals(
-				_asahFaroBackendClient.getDataSourceId(companyId),
-				dataSourceIndividualPK.getDataSourceId())
-		).findFirst(
-		).map(
-			Individual.DataSourceIndividualPK::getIndividualPKs
-		).orElse(
-			Collections.emptyList()
-		);
+				individualUuids.addAll(
+					dataSourceIndividualPK.getIndividualPKs());
+
+				break;
+			}
+		}
 
 		if (ListUtil.isNotEmpty(individualUuids)) {
-			Stream<String> individualUuidsStream = individualUuids.stream();
+			for (String individualUuid : individualUuids) {
+				User user = _userLocalService.fetchUserByUuidAndCompanyId(
+					individualUuid, companyId);
 
-			Optional<Long> userIdOptional = individualUuidsStream.map(
-				individualUuid -> _userLocalService.fetchUserByUuidAndCompanyId(
-					individualUuid, companyId)
-			).filter(
-				Objects::nonNull
-			).findFirst(
-			).map(
-				UserModel::getUserId
-			);
-
-			if (userIdOptional.isPresent()) {
-				userId = userIdOptional.get();
+				if (user != null) {
+					return user.getUserId();
+				}
 			}
 		}
 
-		if (userId == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find a user corresponding to individual " +
-						individual.getId());
-			}
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Unable to find a user corresponding to individual " +
+					individual.getId());
 		}
 
-		return userId;
+		return null;
 	}
 
 	private static final int _DELTA = 100;

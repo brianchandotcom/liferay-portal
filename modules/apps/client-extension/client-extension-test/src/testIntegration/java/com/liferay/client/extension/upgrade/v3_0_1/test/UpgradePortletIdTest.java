@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersisten
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -178,9 +177,7 @@ public class UpgradePortletIdTest {
 		return upgradeProcesses[0];
 	}
 
-	private ServiceRegistration<Portlet> _register(
-		String oldPortletId) {
-
+	private ServiceRegistration<Portlet> _register(String oldPortletId) {
 		Bundle bundle = FrameworkUtil.getBundle(UpgradePortletIdTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();

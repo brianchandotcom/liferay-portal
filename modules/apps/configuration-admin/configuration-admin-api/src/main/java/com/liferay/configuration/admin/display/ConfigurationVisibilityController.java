@@ -23,6 +23,10 @@ import java.io.Serializable;
  */
 public interface ConfigurationVisibilityController {
 
+	public default String getKey() {
+		return null;
+	}
+
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK);
 

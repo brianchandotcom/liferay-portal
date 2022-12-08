@@ -29,7 +29,6 @@ import java.io.IOException;
 
 import java.net.URI;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -70,6 +69,7 @@ public class JIRAUtil {
 			transition.get();
 
 			_issueMap.remove(issue.getKey());
+			_issueTransitionMap.remove(issue.getKey());
 		}
 		catch (Exception exception) {
 			System.out.println(
@@ -80,23 +80,24 @@ public class JIRAUtil {
 	public static void transition(
 		String comment, Issue issue, String transitionName) {
 
-		int transitionId = _getTransitions(issue, transitionName);
+		Transition transition = _getTransitions(issue, transitionName);
 
-		if (transitionId == -1) {
+		if (transition == null) {
 			System.out.println(
 				"Unable to find transition with name: " + transitionName);
 		}
 
 		TransitionInput transitionInput = new TransitionInput(
-			transitionId, Comment.valueOf(comment));
+			transition.getId(), Comment.valueOf(comment));
 
 		try {
-			Promise<Void> transition = _issueRestClient.transition(
+			Promise<Void> promise = _issueRestClient.transition(
 				issue, transitionInput);
 
-			transition.get();
+			promise.get();
 
 			_issueMap.remove(issue.getKey());
+			_issueTransitionMap.remove(issue.getKey());
 		}
 		catch (Exception exception) {
 			System.out.println(
@@ -104,31 +105,30 @@ public class JIRAUtil {
 		}
 	}
 
-	private static int _getTransitions(Issue issue, String transitionName) {
-		if (_transitions == null) {
-			Promise<Iterable<Transition>> promise =
-				_issueRestClient.getTransitions(issue);
+	private static Transition _getTransitions(
+		Issue issue, String transitionName) {
 
-			_transitions = promise.claim();
+		if (_issueTransitionMap.containsKey(issue.getKey())) {
+			Map<String, Transition> transitionMap = _issueTransitionMap.get(
+				issue.getKey());
+
+			return transitionMap.get(transitionName);
 		}
 
-		System.out.println(_transitions);
+		Promise<Iterable<Transition>> promise = _issueRestClient.getTransitions(
+			issue);
 
-		int transitionId = -1;
+		Iterable<Transition> iterableTransitions = promise.claim();
 
-		for (Iterator<Transition> iterator = _transitions.iterator();
-			 iterator.hasNext();) {
+		Map<String, Transition> transitionMap = new ConcurrentHashMap<>();
 
-			Transition transition = iterator.next();
-
-			String name = transition.getName();
-
-			if (name.equals(transitionName)) {
-				transitionId = transition.getId();
-			}
+		for (Transition transition : iterableTransitions) {
+			transitionMap.put(transition.getName(), transition);
 		}
 
-		return transitionId;
+		_issueTransitionMap.put(issue.getKey(), transitionMap);
+
+		return transitionMap.get(transitionName);
 	}
 
 	private static IssueRestClient _initIssueRestClient() {
@@ -163,7 +163,8 @@ public class JIRAUtil {
 		new ConcurrentHashMap<>();
 	private static final IssueRestClient _issueRestClient =
 		_initIssueRestClient();
-	private static Iterable<Transition> _transitions;
+	private static final Map<String, Map<String, Transition>>
+		_issueTransitionMap = new ConcurrentHashMap<>();
 
 	private static class CachedIssue {
 

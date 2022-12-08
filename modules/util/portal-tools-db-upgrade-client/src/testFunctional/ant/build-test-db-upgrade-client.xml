@@ -25,16 +25,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="rebuild-upgrade-database">
-		<sequential>
-			<antcall target="rebuild-legacy-database">
-				<param name="portal.version" value="6.2.10.21" />
-				<param name="data.archive.type" value="data-archive-portal" />
-				<param name="skip.get.testcase.database.properties" value="true" />
-			</antcall>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="send-sighup-to-upgrade-process">
 		<sequential>
 			<exec executable="/bin/bash" logError="true" output="true">
@@ -171,8 +161,6 @@
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-command-output">
-		<rebuild-upgrade-database />
-
 		<get-database-upgrade-client-paths />
 
 		<run-expect
@@ -196,8 +184,6 @@
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-failed-upgrade">
-		<rebuild-upgrade-database />
-
 		<get-database-upgrade-client-paths />
 
 		<parallel>
@@ -249,14 +235,10 @@
 			</sequential>
 		</parallel>
 
-		<rebuild-upgrade-database />
-
 		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-client-gogoshell-help-output">
-		<rebuild-upgrade-database />
-
 		<get-database-upgrade-client-paths />
 
 		<run-expect
@@ -456,8 +438,6 @@
 	</target>
 
 	<target name="check-upgrade-client-upgrade-core-only">
-		<rebuild-upgrade-database />
-
 		<get-database-upgrade-client-paths />
 
 		<echo append="true" file="${db.upgrade.client.home}/portal-upgrade-ext.properties">

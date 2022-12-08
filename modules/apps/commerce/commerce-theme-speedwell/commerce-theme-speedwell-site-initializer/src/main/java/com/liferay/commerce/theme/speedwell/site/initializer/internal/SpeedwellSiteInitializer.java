@@ -101,6 +101,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -267,6 +268,10 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 	@Override
 	public boolean isActive(long companyId) {
+		if (!_searchCapabilities.isCommerceSupported()) {
+			return false;
+		}
+
 		Theme theme = _themeLocalService.fetchTheme(
 			companyId, _SPEEDWELL_THEME_ID);
 
@@ -1116,6 +1121,9 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SearchCapabilities _searchCapabilities;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.theme.speedwell.site.initializer)"

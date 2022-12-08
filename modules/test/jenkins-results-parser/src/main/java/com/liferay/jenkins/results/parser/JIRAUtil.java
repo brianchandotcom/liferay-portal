@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import com.atlassian.jira.rest.client.api.IssueRestClient;
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.JiraRestClientFactory;
+import com.atlassian.jira.rest.client.api.RestClientException;
 import com.atlassian.jira.rest.client.api.domain.Comment;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.Transition;
@@ -32,6 +33,7 @@ import java.net.URI;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Charlotte Wong
@@ -52,9 +54,12 @@ public class JIRAUtil {
 
 			_uncacheIssue(issue.getKey());
 		}
-		catch (Exception exception) {
-			System.out.println(
-				"Unable to execute transition " + exception.getMessage());
+		catch (ExecutionException | InterruptedException | RestClientException
+					exception) {
+
+			throw new RuntimeException(
+				"Unable to execute transition " + transition.getName(),
+				exception);
 		}
 	}
 

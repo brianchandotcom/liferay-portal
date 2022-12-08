@@ -72,7 +72,7 @@ public class JIRAUtil {
 		return _issueTransitionMap.get(issue.getKey());
 	}
 
-	public static void transition(
+	public static void executeTransition(
 		String comment, Issue issue, Transition transition) {
 
 		TransitionInput transitionInput = new TransitionInput(

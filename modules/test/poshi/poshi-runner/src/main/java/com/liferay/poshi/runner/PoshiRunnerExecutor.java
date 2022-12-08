@@ -204,6 +204,11 @@ public class PoshiRunnerExecutor {
 					runMethodExecuteElement(childElement);
 				}
 			}
+			else if (childElementName.equals("break") ||
+					 childElementName.equals("continue")) {
+
+				runLoopElement(childElement);
+			}
 			else if (childElementName.equals("if")) {
 				runIfElement(childElement);
 			}
@@ -660,6 +665,19 @@ public class PoshiRunnerExecutor {
 			parseElement(elseElement);
 
 			_poshiLogger.updateStatus(elseElement, "pass");
+		}
+	}
+
+	public void runLoopElement(Element element) {
+		if (_inLoop) {
+			String elementName = element.getName();
+
+			if (elementName.equals("break")) {
+				_hasBreak = true;
+			}
+			else {
+				_hasContinue = true;
+			}
 		}
 	}
 
@@ -1326,6 +1344,9 @@ public class PoshiRunnerExecutor {
 
 	private Element _functionExecuteElement;
 	private String _functionWarningMessage;
+	private boolean _hasBreak;
+	private boolean _hasContinue;
+	private boolean _inLoop;
 	private Object _macroReturnValue;
 	private final PoshiLogger _poshiLogger;
 	private Object _returnObject;

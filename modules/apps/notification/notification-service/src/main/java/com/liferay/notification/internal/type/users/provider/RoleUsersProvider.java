@@ -23,6 +23,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -68,7 +69,8 @@ public class RoleUsersProvider
 				notificationRecipientSetting.getValue());
 
 			for (long userId :
-					_userLocalService.getRoleUserIds(role.getRoleId())) {
+					_userLocalService.getRoleUserIds(
+						role.getRoleId(), UserConstants.TYPE_REGULAR)) {
 
 				userIds.add(userId);
 			}

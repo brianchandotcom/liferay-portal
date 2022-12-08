@@ -41,6 +41,18 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="wait-for-upgrade-start">
+		<sequential>
+			<get-database-upgrade-client-paths />
+
+			<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.startfailed">
+				<available file="${db.upgrade.client.log}" />
+			</waitfor>
+
+			<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
+		</sequential>
+	</macrodef>
+
 	<target name="check-upgrade-client-additional-settings">
 		<get-database-upgrade-client-paths />
 
@@ -49,9 +61,7 @@
 				db_upgrade${file.suffix.bat} -j "-Dfile.encoding=UTF8 -Duser.country=US -Duser.language=en -Duser.timezone=GMT -Xmx4096m"
 			</execute>
 			<sequential>
-				<waitfor maxwait="60000">
-					<available file="${db.upgrade.client.log}" />
-				</waitfor>
+				<wait-for-upgrade-start />
 
 				<sleep seconds="5" />
 
@@ -196,11 +206,7 @@
 			</java>
 
 			<sequential>
-				<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="upgrade.startfailed">
-					<available file="${db.upgrade.client.log}" />
-				</waitfor>
-
-				<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
+				<wait-for-upgrade-start />
 
 				<sql classpath="${app.server.shielded-container-lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="output.txt" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
 					<![CDATA[
@@ -365,11 +371,7 @@
 			</exec>
 
 			<sequential>
-				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.startfailed">
-					<available file="${db.upgrade.client.log}" />
-				</waitfor>
-
-				<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
+				<wait-for-upgrade-start />
 
 				<exec executable="/bin/bash">
 					<arg value="-c" />
@@ -408,11 +410,7 @@
 			</exec>
 
 			<sequential>
-				<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="upgrade.startfailed">
-					<available file="${db.upgrade.client.log}" />
-				</waitfor>
-
-				<fail if="upgrade.startfailed" message="Upgrade has failed to start." />
+				<wait-for-upgrade-start />
 
 				<send-sighup-to-upgrade-process />
 

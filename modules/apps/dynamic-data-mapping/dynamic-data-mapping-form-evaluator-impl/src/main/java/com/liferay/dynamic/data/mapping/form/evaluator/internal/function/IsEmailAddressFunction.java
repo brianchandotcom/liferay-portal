@@ -19,8 +19,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.stream.Stream;
-
 /**
  * @author Leonardo Barros
  */
@@ -31,13 +29,13 @@ public class IsEmailAddressFunction
 
 	@Override
 	public Boolean apply(String parameter) {
-		return Stream.of(
-			StringUtil.split(parameter, CharPool.COMMA)
-		).map(
-			String::trim
-		).allMatch(
-			Validator::isEmailAddress
-		);
+		for (String str : StringUtil.split(parameter, CharPool.COMMA)) {
+			if (!Validator.isEmailAddress(str.trim())) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override

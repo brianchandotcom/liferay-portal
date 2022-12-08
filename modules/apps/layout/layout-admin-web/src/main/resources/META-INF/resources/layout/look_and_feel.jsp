@@ -151,25 +151,27 @@ else {
 	<liferay-util:include page="/look_and_feel_theme_css.jsp" servletContext="<%= application %>" />
 </div>
 
-<clay:sheet-section>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="theme-spritemap-client-extension" /></h3>
+<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166479")) %>'>
+	<clay:sheet-section>
+		<h3 class="sheet-subtitle"><liferay-ui:message key="theme-spritemap-client-extension" /></h3>
 
-	<clay:alert
-		displayType="info"
-		message='<%= LanguageUtil.get(request, "to-add-or-edit-the-existing-spritemap-simply-copy-paste-and-make-changes-as-needed-to-your-registered-extension") %>'
-	/>
-
-	<p>
-		<liferay-ui:message key="use-this-client-extension-to-fully-replace-the-default-spritemap-contained-in-the-theme" />
-	</p>
-
-	<div>
-		<react:component
-			module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
+		<clay:alert
+			displayType="info"
+			message='<%= LanguageUtil.get(request, "to-add-or-edit-the-existing-spritemap-simply-copy-paste-and-make-changes-as-needed-to-your-registered-extension") %>'
 		/>
-	</div>
-</clay:sheet-section>
+
+		<p>
+			<liferay-ui:message key="use-this-client-extension-to-fully-replace-the-default-spritemap-contained-in-the-theme" />
+		</p>
+
+		<div>
+			<react:component
+				module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
+				props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
+			/>
+		</div>
+	</clay:sheet-section>
+</c:if>
 
 <clay:sheet-section
 	cssClass="mt-5"

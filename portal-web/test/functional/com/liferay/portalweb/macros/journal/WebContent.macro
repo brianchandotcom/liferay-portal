@@ -596,18 +596,10 @@ definition {
 				var webContentNumericFieldLabel = "Numeric";
 			}
 
-			if ("${numericType}" == "Decimal") {
-				Type(
-					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
-					locator1 = "WCEditWebContent#TEXT_INPUT",
-					value1 = "${webContentNumeric}");
-			}
-			else {
-				Type(
-					key_fieldFieldLabel = "${webContentNumericFieldLabel}",
-					locator1 = "WCEditWebContent#TEXT_INPUT",
-					value1 = "${webContentNumeric}");
-			}
+			Type(
+				key_fieldFieldLabel = "${webContentNumericFieldLabel}",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "${webContentNumeric}");
 		}
 
 		if (isSet(webContentRichText)) {

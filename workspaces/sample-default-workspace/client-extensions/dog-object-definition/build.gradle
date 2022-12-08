@@ -1,0 +1,7 @@
+liferay {
+	deployDir = file("${liferayHome}/deploy")
+}
+
+dockerDeploy {
+	destinationDir = file("${gradle.liferayWorkspace.dockerDir}/deploy")
+}

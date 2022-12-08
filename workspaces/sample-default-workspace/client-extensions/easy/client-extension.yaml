@@ -1,0 +1,16 @@
+easy-oauth-application-user-agent:
+    homePageURL: http://localhost:58081
+    name: Easy OAuth Application User Agent
+    type: oAuthApplicationUserAgent
+
+easy-object-action-1:
+    name: Easy Object Action 1
+    oAuth2ApplicationExternalReferenceCode: easy-oauth-application-user-agent
+    resourcePath: /easy-object/action/1
+    type: objectAction
+
+easy-object-action-2:
+    name: Easy Object Action 2
+    oAuth2ApplicationExternalReferenceCode: easy-oauth-application-user-agent
+    resourcePath: /easy-object/action/2
+    type: objectAction

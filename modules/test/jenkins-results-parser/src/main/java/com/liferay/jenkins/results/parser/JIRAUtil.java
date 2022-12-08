@@ -80,7 +80,7 @@ public class JIRAUtil {
 	public static void transition(
 		String comment, Issue issue, String transitionName) {
 
-		Transition transition = _getTransitions(issue, transitionName);
+		Transition transition = _getTransition(issue, transitionName);
 
 		if (transition == null) {
 			System.out.println(
@@ -105,7 +105,7 @@ public class JIRAUtil {
 		}
 	}
 
-	private static Transition _getTransitions(
+	private static Transition _getTransition(
 		Issue issue, String transitionName) {
 
 		if (_issueTransitionMap.containsKey(issue.getKey())) {

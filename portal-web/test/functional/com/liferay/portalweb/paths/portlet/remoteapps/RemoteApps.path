@@ -80,11 +80,6 @@
 	<td>//vanilla-counter</td>
 	<td></td>
 </tr>
-<tr>
-	<td>PORTLET_CATEGORY_NAME</td>
-	<td>//select[@class='form-control']//option[@value='category.remote-apps']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

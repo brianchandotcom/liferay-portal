@@ -1692,7 +1692,7 @@ definition {
 
 	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test PublishEditsToMetadataSet {
 		property custom.properties = "dl.actions.visible=true";
 
@@ -1738,18 +1738,6 @@ definition {
 				textField = "DM Document Text");
 		}
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFileName = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name");
-
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		Navigator.gotoStagedView();
@@ -1757,18 +1745,6 @@ definition {
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFileName = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name");
-
-		DMDocument.viewDocumentTypePG(
-			numericValue = "123",
-			textContent = "DM Document Text");
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name-staging");
 

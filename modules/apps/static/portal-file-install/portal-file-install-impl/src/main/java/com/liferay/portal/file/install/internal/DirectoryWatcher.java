@@ -31,6 +31,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
@@ -152,7 +153,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		_scanner = new Scanner(
-			_watchedDirs, _filenameFilter,
+			_canononize(_watchedDirs), _filenameFilter,
 			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE);
 
 		_bundleContext.addBundleListener(this);
@@ -293,6 +294,25 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		super.start();
+	}
+
+	private List<File> _canononize(List<File> files) {
+		List<File> canonicalFiles = new ArrayList<>(files.size());
+
+		for (File file : files) {
+			try {
+				canonicalFiles.add(file.getCanonicalFile());
+			}
+			catch (IOException ioException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException);
+				}
+
+				canonicalFiles.add(file);
+			}
+		}
+
+		return canonicalFiles;
 	}
 
 	private boolean _contains(String path, List<String> dirPaths) {

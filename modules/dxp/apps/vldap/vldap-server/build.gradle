@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
-	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.3"
+	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.4"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.9"
 	compileInclude group: "org.apache.commons", name: "commons-pool2", version: "2.6.2"
 	compileInclude group: "org.apache.directory.api", name: "api-all", version: "2.0.0.AM4"

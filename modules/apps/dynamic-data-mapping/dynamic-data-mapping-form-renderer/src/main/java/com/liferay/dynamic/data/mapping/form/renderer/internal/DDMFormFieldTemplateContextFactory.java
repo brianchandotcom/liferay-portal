@@ -378,7 +378,7 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, Object> row) {
 
 		if (!row.containsKey("columns")) {
-			Stream.empty();
+			return Stream.empty();
 		}
 
 		List<Map<String, Object>> columns = (List<Map<String, Object>>)row.get(
@@ -434,7 +434,7 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, Object> column) {
 
 		if (!column.containsKey("fields")) {
-			Stream.empty();
+			return Stream.empty();
 		}
 
 		List<Map<String, Object>> fields =
@@ -467,7 +467,7 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, Object> pageContext = (Map<String, Object>)page;
 
 		if (!pageContext.containsKey("rows")) {
-			Stream.empty();
+			return Stream.empty();
 		}
 
 		List<Map<String, Object>> rows =

@@ -106,7 +106,7 @@ if (Validator.isNotNull(tempFileName)) {
 		CertificateTool certificateTool = (CertificateTool)request.getAttribute(SamlWebKeys.SAML_CERTIFICATE_TOOL);
 		int otherEntriesCount = 0;
 
-		Enumeration<String> enu = keyStore.aliases();
+		Enumeration<String> enumeration = keyStore.aliases();
 		%>
 
 		<liferay-util:buffer
@@ -115,8 +115,8 @@ if (Validator.isNotNull(tempFileName)) {
 			<div data-keyStoreEntryAlias=""><liferay-ui:message key="select-a-keystore-entry-to-see-a-preview" /></div>
 
 			<%
-			while (enu.hasMoreElements()) {
-				String alias = enu.nextElement();
+			while (enumeration.hasMoreElements()) {
+				String alias = enumeration.nextElement();
 
 				if (!keyStore.entryInstanceOf(alias, KeyStore.PrivateKeyEntry.class)) {
 					otherEntriesCount++;

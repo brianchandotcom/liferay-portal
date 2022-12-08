@@ -135,8 +135,9 @@ public class DLAudioFFMPEGAudioConverterTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			MimeTypesUtil.getContentType(fileName), "audio",
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), FileUtil.getBytes(getClass(), fileName),
-			null, null, _serviceContext);
+			StringUtil.randomString(),
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
+			null, _serviceContext);
 	}
 
 	private void _withDLAudioFFMPEGAudioConverterConfiguration(

@@ -30,6 +30,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.InputStream;
 
 import java.net.URI;
@@ -129,8 +130,29 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			});
 
+		if (!Validator.isBlank(
+				PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER)) {
+
+			_filenameFilter = new FilenameFilter() {
+
+				@Override
+				public boolean accept(File dir, String name) {
+					Matcher matcher = _pattern.matcher(name);
+
+					return matcher.matches();
+				}
+
+				private final Pattern _pattern = Pattern.compile(
+					PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER);
+
+			};
+		}
+		else {
+			_filenameFilter = (dir, name) -> true;
+		}
+
 		_scanner = new Scanner(
-			_watchedDirs, PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER,
+			_watchedDirs, _filenameFilter,
 			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE);
 
 		_bundleContext.addBundleListener(this);
@@ -1367,6 +1389,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		new HashMap<>();
 	private final Set<Bundle> _delayedStart = new HashSet<>();
 	private final ServiceTrackerList<FileInstaller> _fileInstallers;
+	private final FilenameFilter _filenameFilter;
 	private int _frameworkStartLevel;
 	private final Map<File, Artifact> _installationFailures = new HashMap<>();
 	private final Set<File> _processingFailures = new HashSet<>();

@@ -20,6 +20,7 @@ package com.liferay.portal.company.log.web.internal.constants;
 public class PortalCompanyLogPortletKeys {
 
 	public static final String PORTAL_COMPANY_LOG =
-		"com_liferay_portal_company_log_web_internal_portlet_PortalCompanyLogPortlet";
+		"com_liferay_portal_company_log_web_internal_portlet_" +
+			"PortalCompanyLogPortlet";
 
 }

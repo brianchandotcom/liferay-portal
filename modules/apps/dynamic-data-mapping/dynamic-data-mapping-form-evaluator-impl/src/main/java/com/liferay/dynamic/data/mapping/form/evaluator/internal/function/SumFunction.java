@@ -18,9 +18,6 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 
 import java.math.BigDecimal;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 /**
  * @author Leonardo Barros
  */
@@ -31,13 +28,17 @@ public class SumFunction
 
 	@Override
 	public BigDecimal apply(Object[] values) {
-		return Stream.of(
-			values
-		).map(
-			value -> new BigDecimal(value.toString())
-		).collect(
-			Collectors.reducing(BigDecimal.ZERO, (num1, num2) -> num1.add(num2))
-		);
+		if (values.length == 0) {
+			return BigDecimal.ZERO;
+		}
+
+		BigDecimal result = new BigDecimal(0);
+
+		for (Object value : values) {
+			result = result.add(new BigDecimal(value.toString()));
+		}
+
+		return result;
 	}
 
 	@Override

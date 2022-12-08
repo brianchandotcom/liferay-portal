@@ -556,15 +556,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		Map<File, Long> checksums = new HashMap<>();
 
-		Pattern filePattern = null;
-
-		if (!Validator.isBlank(
-				PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER)) {
-
-			filePattern = Pattern.compile(
-				PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_FILTER);
-		}
-
 		List<String> watchedDirPaths = _getWatchedDirPaths();
 
 		for (Bundle bundle : bundles) {
@@ -636,14 +627,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			int index = path.lastIndexOf(CharPool.SLASH);
 
 			if ((index != -1) && _startWith(path, watchedDirPaths)) {
-				String fileName = path.substring(index + 1);
+				if (!_filenameFilter.accept(
+						new File(path.substring(0, index)),
+						path.substring(index + 1))) {
 
-				if (filePattern != null) {
-					Matcher matcher = filePattern.matcher(fileName);
-
-					if (!matcher.matches()) {
-						continue;
-					}
+					continue;
 				}
 
 				Artifact artifact = new Artifact();

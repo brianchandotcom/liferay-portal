@@ -7,9 +7,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property portal.version = "6.2.10.21";
-	property skip.get.testcase.database.properties = "true";
 	property skip.start.app.server = "true";
-	property skip.upgrade-legacy-database = "true";
 	property testcase.url = "http://www.example.com";
 	property testray.main.component.name = "Database Upgrade Tool";
 
@@ -38,6 +36,9 @@ definition {
 	@description = "LPS-158522: Upgrade client displays help screen"
 	@priority = "3"
 	test CheckUpgradeClientHelp {
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-client-help");
@@ -46,6 +47,9 @@ definition {
 	@description = "LPS-158522: Upgrade client should not be able to run on versions greater than Java SE 8 "
 	@priority = "3"
 	test CheckUpgradeClientJavaVersion {
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-client-java-version");
@@ -54,6 +58,9 @@ definition {
 	@description = "LPS-158522: Upgrade client contains necessary files"
 	@priority = "3"
 	test CheckUpgradeClientZipContents {
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-client-zip-content");

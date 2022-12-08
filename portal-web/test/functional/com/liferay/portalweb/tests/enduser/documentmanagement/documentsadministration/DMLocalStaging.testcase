@@ -1436,8 +1436,13 @@ definition {
 
 	@description = "This is a use case for LPS-79925."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test PublishDocumentFromRestrictedFolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name-staging");
+
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
@@ -1445,14 +1450,7 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Site Name-staging");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		DMFolder.configureWorkflowCP(
 			dmDocumentTypeName = "DM Document Type Name",
@@ -1460,11 +1458,10 @@ definition {
 			workflowDefinition = "No Workflow",
 			workflowRestriction = "Specific Restrictions");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name-staging",
+			siteURLKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -1492,7 +1489,7 @@ definition {
 
 	@description = "This test covers LPS-119234. It ensures that a document type can be published to live via SAP."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test PublishDocumentTypeViaSAP {
 		property portal.acceptance = "true";
 
@@ -1507,11 +1504,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish to live?",
 			entry = "DM Document Type Name");
 
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoMetadataSets();
 
@@ -1526,7 +1519,7 @@ definition {
 
 	@description = "This ensures that the custom document type being used by document can be edited and republished."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test PublishEditsToDocumentType {
 		DMNavigator.gotoDocumentType();
 

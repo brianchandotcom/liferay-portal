@@ -48,6 +48,17 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	public static final String PROPERTY_VALUE_COMPANY_ID_DEFAULT = "0";
 
 	public ConfigurationModel(
+		Configuration configuration, ConfigurationModel configurationModel) {
+
+		this(
+			configurationModel.getBundleLocation(),
+			configurationModel.getBundleSymbolicName(),
+			configurationModel.getClassLoader(), configuration,
+			configurationModel.getExtendedObjectClassDefinition(),
+			configurationModel.isFactory());
+	}
+
+	public ConfigurationModel(
 		String bundleLocation, String bundleSymbolicName,
 		ClassLoader classLoader, Configuration configuration,
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,

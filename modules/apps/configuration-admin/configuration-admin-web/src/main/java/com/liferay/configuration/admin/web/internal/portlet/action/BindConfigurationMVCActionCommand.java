@@ -115,7 +115,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 			configurationModel = configurationModels.get(pid);
 		}
 
-		configurationModel = _getConfigurationModel(
+		configurationModel = new ConfigurationModel(
 			_configurationModelRetriever.getConfiguration(
 				pid, configurationScopeDisplayContext.getScope(),
 				configurationScopeDisplayContext.getScopePK()),
@@ -126,7 +126,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 				_log.debug("Writing a new factory instance for service " + pid);
 			}
 
-			configurationModel = _getConfigurationModel(
+			configurationModel = new ConfigurationModel(
 				null, configurationModel);
 		}
 
@@ -143,7 +143,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 						configurationScopeDisplayContext.getScopePK()));
 			}
 
-			configurationModel = _getConfigurationModel(
+			configurationModel = new ConfigurationModel(
 				null, configurationModel);
 		}
 
@@ -296,17 +296,6 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		catch (IOException ioException) {
 			throw new PortletException(ioException);
 		}
-	}
-
-	private ConfigurationModel _getConfigurationModel(
-		Configuration configuration, ConfigurationModel configurationModel) {
-
-		return new ConfigurationModel(
-			configurationModel.getBundleLocation(),
-			configurationModel.getBundleSymbolicName(),
-			configurationModel.getClassLoader(), configuration,
-			configurationModel.getExtendedObjectClassDefinition(),
-			configurationModel.isFactory());
 	}
 
 	private DDMFormValues _getDDMFormValues(

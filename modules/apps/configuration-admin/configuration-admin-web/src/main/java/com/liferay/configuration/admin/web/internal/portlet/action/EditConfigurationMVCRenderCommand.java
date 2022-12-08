@@ -108,11 +108,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			configurationModel = new ConfigurationModel(
-				configurationModel.getBundleLocation(),
-				configurationModel.getBundleSymbolicName(),
-				configurationModel.getClassLoader(), configuration,
-				configurationModel.getExtendedObjectClassDefinition(),
-				configurationModel.isFactory());
+				configuration, configurationModel);
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,

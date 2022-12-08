@@ -4522,104 +4522,150 @@ public class UserPersistenceImpl
 	private static final String _FINDER_COLUMN_C_MD_MODIFIEDDATE_2 =
 		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
 
-	private FinderPath _finderPathFetchByC_DU;
+	private FinderPath _finderPathWithPaginationFindByC_DU;
+	private FinderPath _finderPathWithoutPaginationFindByC_DU;
 	private FinderPath _finderPathCountByC_DU;
 
 	/**
-	 * Returns the user where companyId = &#63; and defaultUser = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
+	 * Returns all the users where companyId = &#63; and defaultUser = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
-	 * @return the matching user
-	 * @throws NoSuchUserException if a matching user could not be found
+	 * @return the matching users
 	 */
 	@Override
-	public User findByC_DU(long companyId, boolean defaultUser)
-		throws NoSuchUserException {
-
-		User user = fetchByC_DU(companyId, defaultUser);
-
-		if (user == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", defaultUser=");
-			sb.append(defaultUser);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchUserException(sb.toString());
-		}
-
-		return user;
+	public List<User> findByC_DU(long companyId, boolean defaultUser) {
+		return findByC_DU(
+			companyId, defaultUser, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and defaultUser = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the users where companyId = &#63; and defaultUser = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @return the range of matching users
 	 */
 	@Override
-	public User fetchByC_DU(long companyId, boolean defaultUser) {
-		return fetchByC_DU(companyId, defaultUser, true);
+	public List<User> findByC_DU(
+		long companyId, boolean defaultUser, int start, int end) {
+
+		return findByC_DU(companyId, defaultUser, start, end, null);
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and defaultUser = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the users where companyId = &#63; and defaultUser = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching users
+	 */
+	@Override
+	public List<User> findByC_DU(
+		long companyId, boolean defaultUser, int start, int end,
+		OrderByComparator<User> orderByComparator) {
+
+		return findByC_DU(
+			companyId, defaultUser, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the users where companyId = &#63; and defaultUser = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 * @return the ordered range of matching users
 	 */
 	@Override
-	public User fetchByC_DU(
-		long companyId, boolean defaultUser, boolean useFinderCache) {
+	public List<User> findByC_DU(
+		long companyId, boolean defaultUser, int start, int end,
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			User.class);
 
+		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {companyId, defaultUser};
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache && productionMode) {
+				finderPath = _finderPathWithoutPaginationFindByC_DU;
+				finderArgs = new Object[] {companyId, defaultUser};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderPath = _finderPathWithPaginationFindByC_DU;
+			finderArgs = new Object[] {
+				companyId, defaultUser, start, end, orderByComparator
+			};
 		}
 
-		Object result = null;
+		List<User> list = null;
 
 		if (useFinderCache && productionMode) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_DU, finderArgs, this);
-		}
+			list = (List<User>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-		if (result instanceof User) {
-			User user = (User)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (User user : list) {
+					if ((companyId != user.getCompanyId()) ||
+						(defaultUser != user.isDefaultUser())) {
 
-			if ((companyId != user.getCompanyId()) ||
-				(defaultUser != user.isDefaultUser())) {
+						list = null;
 
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
 
 			sb.append(_SQL_SELECT_USER_WHERE);
 
 			sb.append(_FINDER_COLUMN_C_DU_COMPANYID_2);
 
 			sb.append(_FINDER_COLUMN_C_DU_DEFAULTUSER_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(UserModelImpl.ORDER_BY_JPQL);
+			}
 
 			String sql = sb.toString();
 
@@ -4636,37 +4682,13 @@ public class UserPersistenceImpl
 
 				queryPos.add(defaultUser);
 
-				List<User> list = query.list();
+				list = (List<User>)QueryUtil.list(
+					query, getDialect(), start, end);
 
-				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_DU, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
+				cacheResult(list);
 
-						if (_log.isWarnEnabled()) {
-							if (!productionMode || !useFinderCache) {
-								finderArgs = new Object[] {
-									companyId, defaultUser
-								};
-							}
-
-							_log.warn(
-								"UserPersistenceImpl.fetchByC_DU(long, boolean, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					User user = list.get(0);
-
-					result = user;
-
-					cacheResult(user);
+				if (useFinderCache && productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -4677,28 +4699,305 @@ public class UserPersistenceImpl
 			}
 		}
 
-		if (result instanceof List<?>) {
+		return list;
+	}
+
+	/**
+	 * Returns the first user in the ordered set where companyId = &#63; and defaultUser = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	@Override
+	public User findByC_DU_First(
+			long companyId, boolean defaultUser,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
+		User user = fetchByC_DU_First(
+			companyId, defaultUser, orderByComparator);
+
+		if (user != null) {
+			return user;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", defaultUser=");
+		sb.append(defaultUser);
+
+		sb.append("}");
+
+		throw new NoSuchUserException(sb.toString());
+	}
+
+	/**
+	 * Returns the first user in the ordered set where companyId = &#63; and defaultUser = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByC_DU_First(
+		long companyId, boolean defaultUser,
+		OrderByComparator<User> orderByComparator) {
+
+		List<User> list = findByC_DU(
+			companyId, defaultUser, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user in the ordered set where companyId = &#63; and defaultUser = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	@Override
+	public User findByC_DU_Last(
+			long companyId, boolean defaultUser,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
+		User user = fetchByC_DU_Last(companyId, defaultUser, orderByComparator);
+
+		if (user != null) {
+			return user;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", defaultUser=");
+		sb.append(defaultUser);
+
+		sb.append("}");
+
+		throw new NoSuchUserException(sb.toString());
+	}
+
+	/**
+	 * Returns the last user in the ordered set where companyId = &#63; and defaultUser = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByC_DU_Last(
+		long companyId, boolean defaultUser,
+		OrderByComparator<User> orderByComparator) {
+
+		int count = countByC_DU(companyId, defaultUser);
+
+		if (count == 0) {
 			return null;
 		}
+
+		List<User> list = findByC_DU(
+			companyId, defaultUser, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and defaultUser = &#63;.
+	 *
+	 * @param userId the primary key of the current user
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user
+	 * @throws NoSuchUserException if a user with the primary key could not be found
+	 */
+	@Override
+	public User[] findByC_DU_PrevAndNext(
+			long userId, long companyId, boolean defaultUser,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
+		User user = findByPrimaryKey(userId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			User[] array = new UserImpl[3];
+
+			array[0] = getByC_DU_PrevAndNext(
+				session, user, companyId, defaultUser, orderByComparator, true);
+
+			array[1] = user;
+
+			array[2] = getByC_DU_PrevAndNext(
+				session, user, companyId, defaultUser, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected User getByC_DU_PrevAndNext(
+		Session session, User user, long companyId, boolean defaultUser,
+		OrderByComparator<User> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
 		else {
-			return (User)result;
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_USER_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_DU_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_DU_DEFAULTUSER_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(UserModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		queryPos.add(defaultUser);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<User> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
 		}
 	}
 
 	/**
-	 * Removes the user where companyId = &#63; and defaultUser = &#63; from the database.
+	 * Removes all the users where companyId = &#63; and defaultUser = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
-	 * @return the user that was removed
 	 */
 	@Override
-	public User removeByC_DU(long companyId, boolean defaultUser)
-		throws NoSuchUserException {
+	public void removeByC_DU(long companyId, boolean defaultUser) {
+		for (User user :
+				findByC_DU(
+					companyId, defaultUser, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
 
-		User user = findByC_DU(companyId, defaultUser);
-
-		return remove(user);
+			remove(user);
+		}
 	}
 
 	/**
@@ -7334,6 +7633,277 @@ public class UserPersistenceImpl
 	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_2 =
 		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
 
+	private FinderPath _finderPathFetchByC_DU_T;
+	private FinderPath _finderPathCountByC_DU_T;
+
+	/**
+	 * Returns the user where companyId = &#63; and defaultUser = &#63; and type = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param type the type
+	 * @return the matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	@Override
+	public User findByC_DU_T(long companyId, boolean defaultUser, int type)
+		throws NoSuchUserException {
+
+		User user = fetchByC_DU_T(companyId, defaultUser, type);
+
+		if (user == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", defaultUser=");
+			sb.append(defaultUser);
+
+			sb.append(", type=");
+			sb.append(type);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchUserException(sb.toString());
+		}
+
+		return user;
+	}
+
+	/**
+	 * Returns the user where companyId = &#63; and defaultUser = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param type the type
+	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByC_DU_T(long companyId, boolean defaultUser, int type) {
+		return fetchByC_DU_T(companyId, defaultUser, type, true);
+	}
+
+	/**
+	 * Returns the user where companyId = &#63; and defaultUser = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param type the type
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByC_DU_T(
+		long companyId, boolean defaultUser, int type, boolean useFinderCache) {
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache && productionMode) {
+			finderArgs = new Object[] {companyId, defaultUser, type};
+		}
+
+		Object result = null;
+
+		if (useFinderCache && productionMode) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_DU_T, finderArgs, this);
+		}
+
+		if (result instanceof User) {
+			User user = (User)result;
+
+			if ((companyId != user.getCompanyId()) ||
+				(defaultUser != user.isDefaultUser()) ||
+				(type != user.getType())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_SELECT_USER_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_DU_T_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_DU_T_DEFAULTUSER_2);
+
+			sb.append(_FINDER_COLUMN_C_DU_T_TYPE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(defaultUser);
+
+				queryPos.add(type);
+
+				List<User> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_DU_T, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!productionMode || !useFinderCache) {
+								finderArgs = new Object[] {
+									companyId, defaultUser, type
+								};
+							}
+
+							_log.warn(
+								"UserPersistenceImpl.fetchByC_DU_T(long, boolean, int, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					User user = list.get(0);
+
+					result = user;
+
+					cacheResult(user);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (User)result;
+		}
+	}
+
+	/**
+	 * Removes the user where companyId = &#63; and defaultUser = &#63; and type = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param type the type
+	 * @return the user that was removed
+	 */
+	@Override
+	public User removeByC_DU_T(long companyId, boolean defaultUser, int type)
+		throws NoSuchUserException {
+
+		User user = findByC_DU_T(companyId, defaultUser, type);
+
+		return remove(user);
+	}
+
+	/**
+	 * Returns the number of users where companyId = &#63; and defaultUser = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultUser the default user
+	 * @param type the type
+	 * @return the number of matching users
+	 */
+	@Override
+	public int countByC_DU_T(long companyId, boolean defaultUser, int type) {
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_DU_T;
+
+			finderArgs = new Object[] {companyId, defaultUser, type};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_USER_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_DU_T_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_DU_T_DEFAULTUSER_2);
+
+			sb.append(_FINDER_COLUMN_C_DU_T_TYPE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(defaultUser);
+
+				queryPos.add(type);
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_DU_T_COMPANYID_2 =
+		"user.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_DU_T_DEFAULTUSER_2 =
+		"user.defaultUser = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_DU_T_TYPE_2 = "user.type = ?";
+
 	private FinderPath _finderPathWithPaginationFindByC_DU_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_DU_S;
 	private FinderPath _finderPathCountByC_DU_S;
@@ -8237,10 +8807,6 @@ public class UserPersistenceImpl
 			new Object[] {user.getCompanyId(), user.getUserId()}, user);
 
 		FinderCacheUtil.putResult(
-			_finderPathFetchByC_DU,
-			new Object[] {user.getCompanyId(), user.isDefaultUser()}, user);
-
-		FinderCacheUtil.putResult(
 			_finderPathFetchByC_SN,
 			new Object[] {user.getCompanyId(), user.getScreenName()}, user);
 
@@ -8259,6 +8825,13 @@ public class UserPersistenceImpl
 		FinderCacheUtil.putResult(
 			_finderPathFetchByC_O,
 			new Object[] {user.getCompanyId(), user.getOpenId()}, user);
+
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_DU_T,
+			new Object[] {
+				user.getCompanyId(), user.isDefaultUser(), user.getType()
+			},
+			user);
 
 		FinderCacheUtil.putResult(
 			_finderPathFetchByERC_C,
@@ -8360,14 +8933,6 @@ public class UserPersistenceImpl
 		FinderCacheUtil.putResult(_finderPathFetchByC_U, args, userModelImpl);
 
 		args = new Object[] {
-			userModelImpl.getCompanyId(), userModelImpl.isDefaultUser()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathCountByC_DU, args, Long.valueOf(1));
-		FinderCacheUtil.putResult(_finderPathFetchByC_DU, args, userModelImpl);
-
-		args = new Object[] {
 			userModelImpl.getCompanyId(), userModelImpl.getScreenName()
 		};
 
@@ -8406,6 +8971,16 @@ public class UserPersistenceImpl
 
 		FinderCacheUtil.putResult(_finderPathCountByC_O, args, Long.valueOf(1));
 		FinderCacheUtil.putResult(_finderPathFetchByC_O, args, userModelImpl);
+
+		args = new Object[] {
+			userModelImpl.getCompanyId(), userModelImpl.isDefaultUser(),
+			userModelImpl.getType()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByC_DU_T, args, Long.valueOf(1));
+		FinderCacheUtil.putResult(
+			_finderPathFetchByC_DU_T, args, userModelImpl);
 
 		args = new Object[] {
 			userModelImpl.getExternalReferenceCode(),
@@ -10921,8 +11496,17 @@ public class UserPersistenceImpl
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"companyId", "modifiedDate"}, false);
 
-		_finderPathFetchByC_DU = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_DU",
+		_finderPathWithPaginationFindByC_DU = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DU",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "defaultUser"}, true);
+
+		_finderPathWithoutPaginationFindByC_DU = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_DU",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"companyId", "defaultUser"}, true);
 
@@ -11022,6 +11606,22 @@ public class UserPersistenceImpl
 				Long.class.getName(), Date.class.getName(), Date.class.getName()
 			},
 			new String[] {"companyId", "createDate", "modifiedDate"}, false);
+
+		_finderPathFetchByC_DU_T = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_DU_T",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"companyId", "defaultUser", "type_"}, true);
+
+		_finderPathCountByC_DU_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DU_T",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"companyId", "defaultUser", "type_"}, false);
 
 		_finderPathWithPaginationFindByC_DU_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DU_S",

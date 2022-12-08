@@ -1736,7 +1736,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Attachments
 
-		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+		WikiPage latestPage = getLatestPage(
+			page.getResourcePrimKey(), WorkflowConstants.STATUS_ANY, false);
+
+		for (FileEntry fileEntry : latestPage.getAttachmentsFileEntries()) {
 			_portletFileRepository.movePortletFileEntryToTrash(
 				userId, fileEntry.getFileEntryId());
 		}

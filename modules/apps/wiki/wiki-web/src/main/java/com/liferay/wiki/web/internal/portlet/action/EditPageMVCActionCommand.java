@@ -343,6 +343,8 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 		WikiPage page = null;
 
+		_wikiAttachmentsHelper.addAttachments(actionRequest);
+
 		if (cmd.equals(Constants.UPDATE)) {
 			double version = ParamUtil.getDouble(actionRequest, "version");
 
@@ -369,8 +371,6 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 					page.getTitle());
 			}
 		}
-
-		_wikiAttachmentsHelper.addAttachments(actionRequest);
 
 		return page;
 	}

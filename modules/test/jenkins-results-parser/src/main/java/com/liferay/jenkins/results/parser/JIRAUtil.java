@@ -113,9 +113,9 @@ public class JIRAUtil {
 
 		JiraRestClient jiraRestClient =
 			jiraRestClientFactory.createWithBasicHttpAuthentication(
-				URI.create(buildProperties.getProperty("jira.server.url")),
-				buildProperties.getProperty("ci.jira.admin.username"),
-				buildProperties.getProperty("ci.jira.admin.password"));
+				URI.create(buildProperties.getProperty("jira.url")),
+				buildProperties.getProperty("jira.username"),
+				buildProperties.getProperty("jira.password"));
 
 		return jiraRestClient.getIssueClient();
 	}

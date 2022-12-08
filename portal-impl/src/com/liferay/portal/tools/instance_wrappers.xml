@@ -15,6 +15,10 @@
 	/>
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"
+		src-file="com/liferay/portal/kernel/util/CalendarFactory.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/DateUtil.java"
 	/>
 	<instance-wrapper

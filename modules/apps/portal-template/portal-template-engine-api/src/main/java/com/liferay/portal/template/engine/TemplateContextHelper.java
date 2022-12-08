@@ -63,7 +63,7 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil_IW;
 import com.liferay.portal.kernel.util.DateUtil_IW;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -400,13 +400,7 @@ public class TemplateContextHelper {
 
 		// Calendar factory
 
-		try {
-			variables.put(
-				"calendarFactory", CalendarFactoryUtil.getCalendarFactory());
-		}
-		catch (SecurityException securityException) {
-			_log.error(securityException);
-		}
+		variables.put("calendarFactory", CalendarFactoryUtil_IW.getInstance());
 
 		// Date format
 

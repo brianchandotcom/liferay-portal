@@ -26,10 +26,10 @@ String refererRequest = (String)request.getAttribute(WebKeys.REFERER);
 
 String refererSession = null;
 
-HttpSession session = request.getSession(false);
+HttpSession httpSession = request.getSession(false);
 
-if (session != null) {
-	refererSession = (String)session.getAttribute(WebKeys.REFERER);
+if (httpSession != null) {
+	refererSession = (String)httpSession.getAttribute(WebKeys.REFERER);
 }
 
 if (Validator.isNotNull(refererParam)) {
@@ -48,7 +48,7 @@ else {
 	referer = PortalUtil.getPathMain();
 }
 
-if ((session != null) && !CookiesManagerUtil.hasSessionId(request) && Validator.isNotNull(referer)) {
-	referer = PortalUtil.getURLWithSessionId(referer, session.getId());
+if ((httpSession != null) && !CookiesManagerUtil.hasSessionId(request) && Validator.isNotNull(referer)) {
+	referer = PortalUtil.getURLWithSessionId(referer, httpSession.getId());
 }
 %>

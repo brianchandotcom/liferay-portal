@@ -461,7 +461,7 @@
 <%-- Analytics --%>
 
 <%
-UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+UnicodeProperties groupTypeSettingsUnicodeProperties = group.getTypeSettingsProperties();
 
 String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
 
@@ -472,7 +472,7 @@ for (String analyticsType : analyticsTypes) {
 		<c:when test='<%= StringUtil.equalsIgnoreCase(analyticsType, "google") %>'>
 
 			<%
-			String googleAnalyticsId = groupTypeSettings.getProperty("googleAnalyticsId");
+			String googleAnalyticsId = groupTypeSettingsUnicodeProperties.getProperty("googleAnalyticsId");
 			%>
 
 			<c:if test="<%= Validator.isNotNull(googleAnalyticsId) %>">
@@ -498,7 +498,7 @@ for (String analyticsType : analyticsTypes) {
 					})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
 					<%
-					String googleAnalyticsCreateCustomConfiguration = groupTypeSettings.getProperty("googleAnalyticsCreateCustomConfiguration");
+					String googleAnalyticsCreateCustomConfiguration = groupTypeSettingsUnicodeProperties.getProperty("googleAnalyticsCreateCustomConfiguration");
 					%>
 
 					<c:choose>
@@ -511,7 +511,7 @@ for (String analyticsType : analyticsTypes) {
 					</c:choose>
 
 					<%
-					String googleAnalyticsCustomConfiguration = groupTypeSettings.getProperty("googleAnalyticsCustomConfiguration");
+					String googleAnalyticsCustomConfiguration = groupTypeSettingsUnicodeProperties.getProperty("googleAnalyticsCustomConfiguration");
 					%>
 
 					<c:if test="<%= Validator.isNotNull(googleAnalyticsCustomConfiguration) %>">
@@ -537,7 +537,7 @@ for (String analyticsType : analyticsTypes) {
 		<c:otherwise>
 
 			<%
-			String analyticsScript = groupTypeSettings.getProperty(Sites.ANALYTICS_PREFIX + analyticsType);
+			String analyticsScript = groupTypeSettingsUnicodeProperties.getProperty(Sites.ANALYTICS_PREFIX + analyticsType);
 			%>
 
 			<c:if test="<%= Validator.isNotNull(analyticsScript) %>">

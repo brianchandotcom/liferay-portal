@@ -217,29 +217,29 @@ if (layout != null) {
 	<%
 	LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
-	UnicodeProperties layoutSetSettings = layoutSet.getSettingsProperties();
+	UnicodeProperties layoutSetSettingsUnicodeProperties = layoutSet.getSettingsProperties();
 
-	UnicodeProperties masterLayoutTypeSettings = new UnicodeProperties();
+	UnicodeProperties masterLayoutTypeSettingsUnicodeProperties = new UnicodeProperties();
 
 	if (layout.getMasterLayoutPlid() > 0) {
 		Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(layout.getMasterLayoutPlid());
 
 		if (masterLayout != null) {
-			masterLayoutTypeSettings = masterLayout.getTypeSettingsProperties();
+			masterLayoutTypeSettingsUnicodeProperties = masterLayout.getTypeSettingsProperties();
 		}
 	}
 
-	UnicodeProperties layoutTypeSettings = layout.getTypeSettingsProperties();
+	UnicodeProperties layoutTypeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
 	%>
 
 	<script type="text/javascript">
 		// <![CDATA[
 			<c:if test="<%= !layout.isTypeControlPanel() %>">
-				<%= GetterUtil.getString(layoutSetSettings.getProperty("javascript")) %>
+				<%= GetterUtil.getString(layoutSetSettingsUnicodeProperties.getProperty("javascript")) %>
 
-				<%= GetterUtil.getString(masterLayoutTypeSettings.getProperty("javascript")) %>
+				<%= GetterUtil.getString(masterLayoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>
 
-				<%= GetterUtil.getString(layoutTypeSettings.getProperty("javascript")) %>
+				<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>
 			</c:if>
 		// ]]>
 	</script>

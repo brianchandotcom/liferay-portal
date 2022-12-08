@@ -21,23 +21,23 @@ List<String> finalCSS = new ArrayList<>();
 
 // Background data
 
-JSONObject bgData = jsonObject.getJSONObject("bgData");
+JSONObject bgDataJSONObject = jsonObject.getJSONObject("bgData");
 
-if (bgData != null) {
-	String bgColor = bgData.getString("backgroundColor");
-	String bgImage = bgData.getString("backgroundImage");
+if (bgDataJSONObject != null) {
+	String bgColor = bgDataJSONObject.getString("backgroundColor");
+	String bgImage = bgDataJSONObject.getString("backgroundImage");
 
-	JSONObject bgPos = bgData.getJSONObject("backgroundPosition");
+	JSONObject bgPosJSONObject = bgDataJSONObject.getJSONObject("backgroundPosition");
 
-	JSONObject bgPosLeft = bgPos.getJSONObject(_LEFT_KEY);
-	JSONObject bgPosTop = bgPos.getJSONObject(_TOP_KEY);
+	JSONObject bgPosLeftJSONObject = bgPosJSONObject.getJSONObject(_LEFT_KEY);
+	JSONObject bgPosTopJSONObject = bgPosJSONObject.getJSONObject(_TOP_KEY);
 
-	String bgPosLeftValue = bgPosLeft.getString(_VALUE_KEY) + bgPosLeft.getString(_UNIT_KEY);
-	String bgPosTopValue = bgPosTop.getString(_VALUE_KEY) + bgPosTop.getString(_UNIT_KEY);
+	String bgPosLeftValue = bgPosLeftJSONObject.getString(_VALUE_KEY) + bgPosLeftJSONObject.getString(_UNIT_KEY);
+	String bgPosTopValue = bgPosTopJSONObject.getString(_VALUE_KEY) + bgPosTopJSONObject.getString(_UNIT_KEY);
 
 	String bgPosValue = bgPosLeftValue + " " + bgPosTopValue;
 
-	boolean useBgImage = bgData.getBoolean("useBgImage");
+	boolean useBgImage = bgDataJSONObject.getBoolean("useBgImage");
 
 	if (Validator.isNotNull(bgColor)) {
 		finalCSS.add("background-color: " + bgColor);
@@ -54,42 +54,42 @@ if (bgData != null) {
 
 // Border data
 
-JSONObject borderData = jsonObject.getJSONObject("borderData");
+JSONObject borderDataJSONObject = jsonObject.getJSONObject("borderData");
 
-if (borderData != null) {
-	JSONObject borderWidth = borderData.getJSONObject("borderWidth");
-	JSONObject borderStyle = borderData.getJSONObject("borderStyle");
-	JSONObject borderColor = borderData.getJSONObject("borderColor");
+if (borderDataJSONObject != null) {
+	JSONObject borderWidthJSONObject = borderDataJSONObject.getJSONObject("borderWidth");
+	JSONObject borderStyleJSONObject = borderDataJSONObject.getJSONObject("borderStyle");
+	JSONObject borderColorJSONObject = borderDataJSONObject.getJSONObject("borderColor");
 
-	boolean ufaBorderWidth = borderWidth.getBoolean(_SAME_FOR_ALL_KEY);
-	boolean ufaBorderStyle = borderStyle.getBoolean(_SAME_FOR_ALL_KEY);
-	boolean ufaBorderColor = borderColor.getBoolean(_SAME_FOR_ALL_KEY);
+	boolean ufaBorderWidth = borderWidthJSONObject.getBoolean(_SAME_FOR_ALL_KEY);
+	boolean ufaBorderStyle = borderStyleJSONObject.getBoolean(_SAME_FOR_ALL_KEY);
+	boolean ufaBorderColor = borderColorJSONObject.getBoolean(_SAME_FOR_ALL_KEY);
 
 	// Width
 
-	JSONObject borderWidthTop = borderWidth.getJSONObject(_TOP_KEY);
-	JSONObject borderWidthRight = borderWidth.getJSONObject(_RIGHT_KEY);
-	JSONObject borderWidthBottom = borderWidth.getJSONObject(_BOTTOM_KEY);
-	JSONObject borderWidthLeft = borderWidth.getJSONObject(_LEFT_KEY);
+	JSONObject borderWidthTopJSONObject = borderWidthJSONObject.getJSONObject(_TOP_KEY);
+	JSONObject borderWidthRightJSONObject = borderWidthJSONObject.getJSONObject(_RIGHT_KEY);
+	JSONObject borderWidthBottomJSONObject = borderWidthJSONObject.getJSONObject(_BOTTOM_KEY);
+	JSONObject borderWidthLeftJSONObject = borderWidthJSONObject.getJSONObject(_LEFT_KEY);
 
-	String borderTopWidthValue = borderWidthTop.getString(_VALUE_KEY) + borderWidthTop.getString(_UNIT_KEY);
-	String borderRightWidthValue = borderWidthRight.getString(_VALUE_KEY) + borderWidthRight.getString(_UNIT_KEY);
-	String borderBottomWidthValue = borderWidthBottom.getString(_VALUE_KEY) + borderWidthBottom.getString(_UNIT_KEY);
-	String borderLeftWidthValue = borderWidthLeft.getString(_VALUE_KEY) + borderWidthLeft.getString(_UNIT_KEY);
+	String borderTopWidthValue = borderWidthTopJSONObject.getString(_VALUE_KEY) + borderWidthTopJSONObject.getString(_UNIT_KEY);
+	String borderRightWidthValue = borderWidthRightJSONObject.getString(_VALUE_KEY) + borderWidthRightJSONObject.getString(_UNIT_KEY);
+	String borderBottomWidthValue = borderWidthBottomJSONObject.getString(_VALUE_KEY) + borderWidthBottomJSONObject.getString(_UNIT_KEY);
+	String borderLeftWidthValue = borderWidthLeftJSONObject.getString(_VALUE_KEY) + borderWidthLeftJSONObject.getString(_UNIT_KEY);
 
 	// Style
 
-	String borderTopStyleValue = borderStyle.getString(_TOP_KEY);
-	String borderRightStyleValue = borderStyle.getString(_RIGHT_KEY);
-	String borderBottomStyleValue = borderStyle.getString(_BOTTOM_KEY);
-	String borderLeftStyleValue = borderStyle.getString(_LEFT_KEY);
+	String borderTopStyleValue = borderStyleJSONObject.getString(_TOP_KEY);
+	String borderRightStyleValue = borderStyleJSONObject.getString(_RIGHT_KEY);
+	String borderBottomStyleValue = borderStyleJSONObject.getString(_BOTTOM_KEY);
+	String borderLeftStyleValue = borderStyleJSONObject.getString(_LEFT_KEY);
 
 	// Color
 
-	String borderTopColorValue = borderColor.getString(_TOP_KEY);
-	String borderRightColorValue = borderColor.getString(_RIGHT_KEY);
-	String borderBottomColorValue = borderColor.getString(_BOTTOM_KEY);
-	String borderLeftColorValue = borderColor.getString(_LEFT_KEY);
+	String borderTopColorValue = borderColorJSONObject.getString(_TOP_KEY);
+	String borderRightColorValue = borderColorJSONObject.getString(_RIGHT_KEY);
+	String borderBottomColorValue = borderColorJSONObject.getString(_BOTTOM_KEY);
+	String borderLeftColorValue = borderColorJSONObject.getString(_LEFT_KEY);
 
 	if (ufaBorderWidth) {
 		if (!_unitSet.contains(borderTopWidthValue)) {
@@ -163,26 +163,26 @@ if (borderData != null) {
 
 // Spacing data
 
-JSONObject spacingData = jsonObject.getJSONObject("spacingData");
+JSONObject spacingDataJSONObject = jsonObject.getJSONObject("spacingData");
 
-if (spacingData != null) {
-	JSONObject margin = spacingData.getJSONObject("margin");
-	JSONObject padding = spacingData.getJSONObject("padding");
+if (spacingDataJSONObject != null) {
+	JSONObject marginJSONObject = spacingDataJSONObject.getJSONObject("margin");
+	JSONObject paddingJSONObject = spacingDataJSONObject.getJSONObject("padding");
 
-	boolean ufaMargin = margin.getBoolean(_SAME_FOR_ALL_KEY);
-	boolean ufaPadding = padding.getBoolean(_SAME_FOR_ALL_KEY);
+	boolean ufaMargin = marginJSONObject.getBoolean(_SAME_FOR_ALL_KEY);
+	boolean ufaPadding = paddingJSONObject.getBoolean(_SAME_FOR_ALL_KEY);
 
 	// Margin
 
-	JSONObject marginTop = margin.getJSONObject(_TOP_KEY);
-	JSONObject marginRight = margin.getJSONObject(_RIGHT_KEY);
-	JSONObject marginBottom = margin.getJSONObject(_BOTTOM_KEY);
-	JSONObject marginLeft = margin.getJSONObject(_LEFT_KEY);
+	JSONObject marginTopJSONObject = marginJSONObject.getJSONObject(_TOP_KEY);
+	JSONObject marginRightJSONObject = marginJSONObject.getJSONObject(_RIGHT_KEY);
+	JSONObject marginBottomJSONObject = marginJSONObject.getJSONObject(_BOTTOM_KEY);
+	JSONObject marginLeftJSONObject = marginJSONObject.getJSONObject(_LEFT_KEY);
 
-	String marginTopValue = marginTop.getString(_VALUE_KEY) + marginTop.getString(_UNIT_KEY);
-	String marginRightValue = marginRight.getString(_VALUE_KEY) + marginRight.getString(_UNIT_KEY);
-	String marginBottomValue = marginBottom.getString(_VALUE_KEY) + marginBottom.getString(_UNIT_KEY);
-	String marginLeftValue = marginLeft.getString(_VALUE_KEY) + marginLeft.getString(_UNIT_KEY);
+	String marginTopValue = marginTopJSONObject.getString(_VALUE_KEY) + marginTopJSONObject.getString(_UNIT_KEY);
+	String marginRightValue = marginRightJSONObject.getString(_VALUE_KEY) + marginRightJSONObject.getString(_UNIT_KEY);
+	String marginBottomValue = marginBottomJSONObject.getString(_VALUE_KEY) + marginBottomJSONObject.getString(_UNIT_KEY);
+	String marginLeftValue = marginLeftJSONObject.getString(_VALUE_KEY) + marginLeftJSONObject.getString(_UNIT_KEY);
 
 	if (ufaMargin) {
 		if (!_unitSet.contains(marginTopValue)) {
@@ -209,15 +209,15 @@ if (spacingData != null) {
 
 	// Padding
 
-	JSONObject paddingTop = padding.getJSONObject(_TOP_KEY);
-	JSONObject paddingRight = padding.getJSONObject(_RIGHT_KEY);
-	JSONObject paddingBottom = padding.getJSONObject(_BOTTOM_KEY);
-	JSONObject paddingLeft = padding.getJSONObject(_LEFT_KEY);
+	JSONObject paddingTopJSONObject = paddingJSONObject.getJSONObject(_TOP_KEY);
+	JSONObject paddingRightJSONObject = paddingJSONObject.getJSONObject(_RIGHT_KEY);
+	JSONObject paddingBottomJSONObject = paddingJSONObject.getJSONObject(_BOTTOM_KEY);
+	JSONObject paddingLeftJSONObject = paddingJSONObject.getJSONObject(_LEFT_KEY);
 
-	String paddingTopValue = paddingTop.getString(_VALUE_KEY) + paddingTop.getString(_UNIT_KEY);
-	String paddingRightValue = paddingRight.getString(_VALUE_KEY) + paddingRight.getString(_UNIT_KEY);
-	String paddingBottomValue = paddingBottom.getString(_VALUE_KEY) + paddingBottom.getString(_UNIT_KEY);
-	String paddingLeftValue = paddingLeft.getString(_VALUE_KEY) + paddingLeft.getString(_UNIT_KEY);
+	String paddingTopValue = paddingTopJSONObject.getString(_VALUE_KEY) + paddingTopJSONObject.getString(_UNIT_KEY);
+	String paddingRightValue = paddingRightJSONObject.getString(_VALUE_KEY) + paddingRightJSONObject.getString(_UNIT_KEY);
+	String paddingBottomValue = paddingBottomJSONObject.getString(_VALUE_KEY) + paddingBottomJSONObject.getString(_UNIT_KEY);
+	String paddingLeftValue = paddingLeftJSONObject.getString(_VALUE_KEY) + paddingLeftJSONObject.getString(_UNIT_KEY);
 
 	if (ufaPadding) {
 		if (!_unitSet.contains(paddingTopValue)) {
@@ -245,19 +245,19 @@ if (spacingData != null) {
 
 // Text data
 
-JSONObject textData = jsonObject.getJSONObject("textData");
+JSONObject textDataJSONObject = jsonObject.getJSONObject("textData");
 
-if (textData != null) {
-	String color = textData.getString("color");
-	String fontFamily = textData.getString("fontFamily");
-	String fontSize = textData.getString("fontSize");
-	String fontStyle = textData.getString("fontStyle");
-	String fontWeight = textData.getString("fontWeight");
-	String letterSpacing = textData.getString("letterSpacing");
-	String lineHeight = textData.getString("lineHeight");
-	String textAlign = textData.getString("textAlign");
-	String textDecoration = textData.getString("textDecoration");
-	String wordSpacing = textData.getString("wordSpacing");
+if (textDataJSONObject != null) {
+	String color = textDataJSONObject.getString("color");
+	String fontFamily = textDataJSONObject.getString("fontFamily");
+	String fontSize = textDataJSONObject.getString("fontSize");
+	String fontStyle = textDataJSONObject.getString("fontStyle");
+	String fontWeight = textDataJSONObject.getString("fontWeight");
+	String letterSpacing = textDataJSONObject.getString("letterSpacing");
+	String lineHeight = textDataJSONObject.getString("lineHeight");
+	String textAlign = textDataJSONObject.getString("textAlign");
+	String textDecoration = textDataJSONObject.getString("textDecoration");
+	String wordSpacing = textDataJSONObject.getString("wordSpacing");
 
 	if (Validator.isNotNull(color)) {
 		finalCSS.add("color: " + color);
@@ -302,9 +302,9 @@ if (textData != null) {
 
 // Advanced styling
 
-JSONObject advancedData = jsonObject.getJSONObject("advancedData");
+JSONObject advancedDataJSONObject = jsonObject.getJSONObject("advancedData");
 
-String customCSS = (advancedData != null) ? advancedData.getString("customCSS") : null;
+String customCSS = (advancedDataJSONObject != null) ? advancedDataJSONObject.getString("customCSS") : null;
 
 // Generated CSS
 

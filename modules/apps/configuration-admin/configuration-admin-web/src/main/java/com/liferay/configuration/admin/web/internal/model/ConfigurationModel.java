@@ -243,6 +243,17 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			_extensionAttributes.get("scope"), Scope.SYSTEM.toString());
 	}
 
+	public String getVisibilityControllerKey() {
+		String visibilityControllerKey = _extensionAttributes.get(
+			"visibilityControllerKey");
+
+		if (!Validator.isBlank(visibilityControllerKey)) {
+			return visibilityControllerKey;
+		}
+
+		return getBaseID();
+	}
+
 	public boolean hasConfiguration() {
 		if (getConfiguration() == null) {
 			return false;

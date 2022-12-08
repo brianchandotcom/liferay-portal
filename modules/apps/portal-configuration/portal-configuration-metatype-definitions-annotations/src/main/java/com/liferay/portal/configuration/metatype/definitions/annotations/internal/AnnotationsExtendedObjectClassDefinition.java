@@ -218,6 +218,9 @@ public class AnnotationsExtendedObjectClassDefinition
 		).put(
 			"strictScope",
 			Boolean.toString(extendedObjectClassDefinition.strictScope())
+		).put(
+			"visibilityControllerKey",
+			extendedObjectClassDefinition.visibilityControllerKey()
 		).build();
 
 		ExtendedObjectClassDefinition.Scope scope =

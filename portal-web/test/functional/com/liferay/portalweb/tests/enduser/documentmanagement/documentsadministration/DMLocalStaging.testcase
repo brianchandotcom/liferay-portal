@@ -1601,7 +1601,7 @@ definition {
 
 	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test PublishEditsToDocumentUsingCustomTypeAndSet {
 		property portal.acceptance = "true";
 
@@ -1660,10 +1660,6 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentType = "DM Document Type Name",
 			previewImage = "Document_1.jpg");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
-
-		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 

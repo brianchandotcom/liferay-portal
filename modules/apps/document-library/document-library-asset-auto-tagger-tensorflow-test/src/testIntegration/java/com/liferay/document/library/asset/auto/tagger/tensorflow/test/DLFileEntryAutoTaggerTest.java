@@ -80,8 +80,9 @@ public class DLFileEntryAutoTaggerTest {
 					"indigobunting.bmp", ContentTypes.IMAGE_BMP,
 					"indigobunting", StringUtil.randomString(),
 					StringUtil.randomString(), StringUtil.randomString(),
-					FileUtil.getBytes(getClass(), "indigobunting.bmp"), null,
-					null, _serviceContext);
+					FileUtil.getBytes(
+						getClass(), "dependencies/indigobunting.bmp"),
+					null, null, _serviceContext);
 
 				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 					DLFileEntryConstants.getClassName(),
@@ -101,8 +102,8 @@ public class DLFileEntryAutoTaggerTest {
 					ContentTypes.IMAGE_JPEG, "goldfinch",
 					StringUtil.randomString(), StringUtil.randomString(),
 					StringUtil.randomString(),
-					FileUtil.getBytes(getClass(), "goldfinch.jpg"), null, null,
-					_serviceContext);
+					FileUtil.getBytes(getClass(), "dependencies/goldfinch.jpg"),
+					null, null, _serviceContext);
 
 				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 					DLFileEntryConstants.getClassName(),
@@ -122,8 +123,9 @@ public class DLFileEntryAutoTaggerTest {
 					"hummingbird.png", ContentTypes.IMAGE_PNG, "hummingbird",
 					StringUtil.randomString(), StringUtil.randomString(),
 					StringUtil.randomString(),
-					FileUtil.getBytes(getClass(), "hummingbird.png"), null,
-					null, _serviceContext);
+					FileUtil.getBytes(
+						getClass(), "dependencies/hummingbird.png"),
+					null, null, _serviceContext);
 
 				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 					DLFileEntryConstants.getClassName(),

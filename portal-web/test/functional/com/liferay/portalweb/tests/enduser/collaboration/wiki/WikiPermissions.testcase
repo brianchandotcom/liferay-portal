@@ -400,4 +400,71 @@ definition {
 		WikiPortlet.viewNoPermissionCP();
 	}
 
+	@description = "This is a test for LPS-162742. It checks that configured permissions will remain after renaming the wiki page."
+	@priority = "3"
+	test ConfiguredPermissionsWillRemainAfterRenamingPage {
+		WikiNavigator.openToAddPage(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.addPageContent(wikiPageContent = "Wiki Page Content");
+
+		Panel.expandPanel(panel = "Permissions");
+
+		Select(
+			locator1 = "AssetPermissions#VIEWABLE_AS_SELECT",
+			value1 = "Site Members");
+
+		PermissionsInline.addOrRemoveEntryPermissionsFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			key_roleTitle = "Guest",
+			permissionDefinitionKeyList = "ADD_DISCUSSION");
+
+		PortletEntry.publish();
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.renameWikiPageCP(
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageTitleRename = "Rename Page Title");
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "Wiki Page Title");
+
+		IFrame.selectPermissionsFrame();
+
+		PermissionsInline.viewPermissionsRemoved(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest");
+
+		SelectFrameTop();
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "Rename Page Title");
+
+		IFrame.selectPermissionsFrame();
+
+		PermissionsInline.viewPermissionsRemoved(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest");
+	}
+
 }

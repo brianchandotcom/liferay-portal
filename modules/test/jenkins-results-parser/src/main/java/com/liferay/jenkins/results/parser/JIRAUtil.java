@@ -71,35 +71,7 @@ public class JIRAUtil {
 	}
 
 	public static void transition(
-		String comment, Issue issue, int transitionId) {
-
-		TransitionInput transitionInput = new TransitionInput(
-			transitionId, Comment.valueOf(comment));
-
-		try {
-			Promise<Void> transition = _issueRestClient.transition(
-				issue, transitionInput);
-
-			transition.get();
-
-			_issueMap.remove(issue.getKey());
-			_issueTransitionMap.remove(issue.getKey());
-		}
-		catch (Exception exception) {
-			System.out.println(
-				"Unable to execute transition " + exception.getMessage());
-		}
-	}
-
-	public static void transition(
-		String comment, Issue issue, String transitionName) {
-
-		Transition transition = getTransition(issue, transitionName);
-
-		if (transition == null) {
-			System.out.println(
-				"Unable to find transition with name: " + transitionName);
-		}
+		String comment, Issue issue, Transition transition) {
 
 		TransitionInput transitionInput = new TransitionInput(
 			transition.getId(), Comment.valueOf(comment));

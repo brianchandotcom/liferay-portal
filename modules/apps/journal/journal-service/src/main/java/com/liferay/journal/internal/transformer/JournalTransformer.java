@@ -188,6 +188,12 @@ public class JournalTransformer {
 
 		// Transform
 
+		String templateKey = "DEFAULT_TEMPLATE";
+
+		if (ddmTemplate != null) {
+			templateKey = ddmTemplate.getTemplateKey();
+		}
+
 		long companyId = article.getCompanyId();
 		long companyGroupId = 0;
 		long articleGroupId = article.getGroupId();
@@ -211,8 +217,7 @@ public class JournalTransformer {
 
 		Template template = _getTemplate(
 			_getTemplateId(
-				ddmTemplate.getTemplateKey(), companyId, companyGroupId,
-				articleGroupId),
+				templateKey, companyId, companyGroupId, articleGroupId),
 			script);
 
 		PortletRequest originalPortletRequest = null;

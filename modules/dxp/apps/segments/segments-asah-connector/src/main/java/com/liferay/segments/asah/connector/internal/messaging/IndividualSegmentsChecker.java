@@ -215,10 +215,12 @@ public class IndividualSegmentsChecker {
 
 				individuals.forEach(
 					individual -> {
-						Optional<Long> userIdOptional = _getUserIdOptional(
+						Long userId = _getUserId(
 							segmentsEntry.getCompanyId(), individual);
 
-						userIdOptional.ifPresent(userIds::add);
+						if (userId != null) {
+							userIds.add(userId);
+						}
 					});
 
 				curPage++;
@@ -317,10 +319,8 @@ public class IndividualSegmentsChecker {
 		return serviceContext;
 	}
 
-	private Optional<Long> _getUserIdOptional(
-		long companyId, Individual individual) {
-
-		Optional<Long> userIdOptional = Optional.empty();
+	private Long _getUserId(long companyId, Individual individual) {
+		Long userId = null;
 
 		List<Individual.DataSourceIndividualPK> dataSourceIndividualPKs =
 			individual.getDataSourceIndividualPKs();
@@ -342,7 +342,7 @@ public class IndividualSegmentsChecker {
 		if (ListUtil.isNotEmpty(individualUuids)) {
 			Stream<String> individualUuidsStream = individualUuids.stream();
 
-			userIdOptional = individualUuidsStream.map(
+			Optional<Long> userIdOptional = individualUuidsStream.map(
 				individualUuid -> _userLocalService.fetchUserByUuidAndCompanyId(
 					individualUuid, companyId)
 			).filter(
@@ -351,9 +351,13 @@ public class IndividualSegmentsChecker {
 			).map(
 				UserModel::getUserId
 			);
+
+			if (userIdOptional.isPresent()) {
+				userId = userIdOptional.get();
+			}
 		}
 
-		if (!userIdOptional.isPresent()) {
+		if (userId == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to find a user corresponding to individual " +
@@ -361,7 +365,7 @@ public class IndividualSegmentsChecker {
 			}
 		}
 
-		return userIdOptional;
+		return userId;
 	}
 
 	private static final int _DELTA = 100;

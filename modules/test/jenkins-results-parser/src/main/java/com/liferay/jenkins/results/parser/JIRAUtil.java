@@ -45,6 +45,8 @@ public class JIRAUtil {
 			if (!cachedIssue.isExpired()) {
 				return cachedIssue.issue;
 			}
+
+			_uncacheIssue(issueKey);
 		}
 
 		Promise<Issue> promise = _issueRestClient.getIssue(issueKey);
@@ -82,8 +84,7 @@ public class JIRAUtil {
 
 			promise.get();
 
-			_issueMap.remove(issue.getKey());
-			_issueTransitionMap.remove(issue.getKey());
+			_uncacheIssue(issue.getKey());
 		}
 		catch (Exception exception) {
 			System.out.println(
@@ -130,6 +131,11 @@ public class JIRAUtil {
 		}
 
 		_issueTransitionMap.put(issue.getKey(), transitionMap);
+	}
+
+	private static void _uncacheIssue(String issueKey) {
+		_issueMap.remove(issueKey);
+		_issueTransitionMap.remove(issueKey);
 	}
 
 	private static final URI _URI = URI.create("https://issues.liferay.com");

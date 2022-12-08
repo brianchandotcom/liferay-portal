@@ -70,6 +70,10 @@ definition {
 
 		Navigator.openURL();
 
+		WaitForConsoleTextPresent(value1 = "1 theme for classic-theme was unregistered");
+
+		WaitForConsoleTextPresent(value1 = "No theme found for specified theme id classic_WAR_classictheme. Returning the default theme.");
+
 		AssertConsoleTextPresent(value1 = "No theme found for specified theme id classic_WAR_classictheme. Returning the default theme.");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");

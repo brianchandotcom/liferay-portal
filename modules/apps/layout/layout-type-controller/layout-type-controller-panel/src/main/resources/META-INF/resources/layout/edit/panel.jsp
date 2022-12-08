@@ -23,10 +23,10 @@ String description = StringPool.BLANK;
 String panelSelectedPortlets = StringPool.BLANK;
 
 if (selLayout != null) {
-	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
+	UnicodeProperties typeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
 
-	description = typeSettingsProperties.getProperty("panelLayoutDescription", StringPool.BLANK);
-	panelSelectedPortlets = typeSettingsProperties.getProperty("panelSelectedPortlets", StringPool.BLANK);
+	description = typeSettingsUnicodeProperties.getProperty("panelLayoutDescription", StringPool.BLANK);
+	panelSelectedPortlets = typeSettingsUnicodeProperties.getProperty("panelSelectedPortlets", StringPool.BLANK);
 }
 %>
 

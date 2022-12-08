@@ -21,10 +21,10 @@
 <div id="iframe">
 
 	<%
-	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
+	UnicodeProperties typeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
 	%>
 
-	<iframe frameborder="0" id="embeddedIframe" src="<%= HtmlUtil.escapeHREF(typeSettingsProperties.getProperty("embeddedLayoutURL")) %>" width="100%"></iframe>
+	<iframe frameborder="0" id="embeddedIframe" src="<%= HtmlUtil.escapeHREF(typeSettingsUnicodeProperties.getProperty("embeddedLayoutURL")) %>" width="100%"></iframe>
 </div>
 
 <liferay-layout:layout-common />

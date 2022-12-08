@@ -101,9 +101,9 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 			String customJspServletContextName = StringPool.BLANK;
 
 			if (layoutSetPrototype != null) {
-				UnicodeProperties settingsProperties = layoutSetPrototype.getSettingsProperties();
+				UnicodeProperties settingsUnicodeProperties = layoutSetPrototype.getSettingsProperties();
 
-				customJspServletContextName = GetterUtil.getString(settingsProperties.get("customJspServletContextName"));
+				customJspServletContextName = GetterUtil.getString(settingsUnicodeProperties.get("customJspServletContextName"));
 			}
 			%>
 

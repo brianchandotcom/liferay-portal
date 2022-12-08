@@ -19,10 +19,10 @@
 <%
 String ppid = ParamUtil.getString(request, "p_p_id");
 
-UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
+UnicodeProperties typeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
 
 if (Validator.isNull(ppid)) {
-	ppid = typeSettingsProperties.getProperty("fullPageApplicationPortlet");
+	ppid = typeSettingsUnicodeProperties.getProperty("fullPageApplicationPortlet");
 }
 
 String velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";

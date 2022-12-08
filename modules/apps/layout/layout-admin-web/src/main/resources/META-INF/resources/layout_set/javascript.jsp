@@ -19,7 +19,7 @@
 <%
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
-UnicodeProperties layoutSetTypeSettings = selLayoutSet.getSettingsProperties();
+UnicodeProperties layoutSetTypeSettingsUnicodeProperties = selLayoutSet.getSettingsProperties();
 %>
 
 <liferay-ui:error-marker
@@ -27,7 +27,7 @@ UnicodeProperties layoutSetTypeSettings = selLayoutSet.getSettingsProperties();
 	value="javascript"
 />
 
-<aui:input label="paste-javascript-code-that-is-executed-at-the-bottom-of-every-page" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutSetTypeSettings.getProperty("javascript") %>' wrap="soft" />
+<aui:input label="paste-javascript-code-that-is-executed-at-the-bottom-of-every-page" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutSetTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" />
 
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);

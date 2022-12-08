@@ -20,9 +20,9 @@
 String url = StringPool.BLANK;
 
 if (selLayout != null) {
-	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
+	UnicodeProperties typeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
 
-	url = typeSettingsProperties.getProperty("embeddedLayoutURL", StringPool.BLANK);
+	url = typeSettingsUnicodeProperties.getProperty("embeddedLayoutURL", StringPool.BLANK);
 }
 %>
 

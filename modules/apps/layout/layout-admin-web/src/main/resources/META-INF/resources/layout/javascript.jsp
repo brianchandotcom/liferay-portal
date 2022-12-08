@@ -19,10 +19,10 @@
 <%
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-UnicodeProperties layoutTypeSettings = null;
+UnicodeProperties layoutTypeSettingsUnicodeProperties = null;
 
 if (selLayout != null) {
-	layoutTypeSettings = selLayout.getTypeSettingsProperties();
+	layoutTypeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
 }
 %>
 
@@ -33,7 +33,7 @@ if (selLayout != null) {
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="paste-javascript-code-that-is-executed-at-the-bottom-of-the-page" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettings.getProperty("javascript") %>' wrap="soft" />
+<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="paste-javascript-code-that-is-executed-at-the-bottom-of-the-page" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" />
 
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);

@@ -40,9 +40,9 @@
 		}
 
 		if (Validator.isNotNull(templateContent)) {
-			HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttribute(PortletLayoutTypeControllerWebKeys.ORIGINAL_HTTP_SERVLET_REQUEST);
+			HttpServletRequest originalHttpServletRequest = (HttpServletRequest)request.getAttribute(PortletLayoutTypeControllerWebKeys.ORIGINAL_HTTP_SERVLET_REQUEST);
 
-			RuntimePageUtil.processTemplate(originalServletRequest, response, ppid, new StringTemplateResource(templateId, templateContent), langType);
+			RuntimePageUtil.processTemplate(originalHttpServletRequest, response, ppid, new StringTemplateResource(templateId, templateContent), langType);
 		}
 		%>
 

@@ -40,9 +40,9 @@ if (themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax()) {
 	}
 }
 else {
-	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
+	UnicodeProperties typeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
 
-	String description = typeSettingsProperties.getProperty("panelLayoutDescription");
+	String description = typeSettingsUnicodeProperties.getProperty("panelLayoutDescription");
 
 	if (Validator.isNull(description)) {
 		description = LanguageUtil.get(request, "please-select-a-tool-from-the-left-menu");

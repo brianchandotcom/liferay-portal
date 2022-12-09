@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Jürgen Kappler
@@ -66,10 +65,8 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return false;
 	}
 
-	public <V> Optional<V> getAttributeOptional(
-		InfoFieldType.Attribute<T, V> attribute) {
-
-		return Optional.ofNullable((V)_builder._attributes.get(attribute));
+	public <V> V getAttribute(InfoFieldType.Attribute<T, V> attribute) {
+		return (V)_builder._attributes.get(attribute);
 	}
 
 	public InfoFieldType getInfoFieldType() {

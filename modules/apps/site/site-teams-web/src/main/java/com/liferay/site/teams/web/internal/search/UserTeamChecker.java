@@ -12,37 +12,44 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin.search;
+package com.liferay.site.teams.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
- * @author Charles May
+ * @author Brian Wing Shun Chan
  */
-public class UserGroupSiteMembershipChecker extends EmptyOnClickRowChecker {
+public class UserTeamChecker extends EmptyOnClickRowChecker {
 
-	public UserGroupSiteMembershipChecker(
-		RenderResponse renderResponse, Group group) {
-
+	public UserTeamChecker(RenderResponse renderResponse, Team team) {
 		super(renderResponse);
 
-		_group = group;
+		_team = team;
 	}
 
 	@Override
 	public boolean isChecked(Object object) {
-		UserGroup userGroup = (UserGroup)object;
+		return hasTeamUser(object);
+	}
+
+	@Override
+	public boolean isDisabled(Object object) {
+		return hasTeamUser(object);
+	}
+
+	protected boolean hasTeamUser(Object object) {
+		User user = (User)object;
 
 		try {
-			return UserGroupLocalServiceUtil.hasGroupUserGroup(
-				_group.getGroupId(), userGroup.getUserGroupId());
+			return UserLocalServiceUtil.hasTeamUser(
+				_team.getTeamId(), user.getUserId());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -51,14 +58,9 @@ public class UserGroupSiteMembershipChecker extends EmptyOnClickRowChecker {
 		}
 	}
 
-	@Override
-	public boolean isDisabled(Object object) {
-		return isChecked(object);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserGroupSiteMembershipChecker.class);
+		UserTeamChecker.class);
 
-	private final Group _group;
+	private final Team _team;
 
 }

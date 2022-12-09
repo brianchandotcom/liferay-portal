@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.sitesadmin.search.UserGroupSiteMembershipChecker;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
+import com.liferay.site.memberships.web.internal.search.UserGroupSiteMembershipChecker;
 
 import java.util.LinkedHashMap;
 

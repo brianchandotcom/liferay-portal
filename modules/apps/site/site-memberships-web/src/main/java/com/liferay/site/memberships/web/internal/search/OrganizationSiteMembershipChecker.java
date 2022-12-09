@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin.search;
+package com.liferay.site.memberships.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Charles May
  */
-public class UserSiteMembershipChecker extends EmptyOnClickRowChecker {
+public class OrganizationSiteMembershipChecker extends EmptyOnClickRowChecker {
 
-	public UserSiteMembershipChecker(
+	public OrganizationSiteMembershipChecker(
 		RenderResponse renderResponse, Group group) {
 
 		super(renderResponse);
@@ -39,37 +38,13 @@ public class UserSiteMembershipChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isChecked(Object object) {
-		User user = null;
-
-		if (object instanceof User) {
-			user = (User)object;
-		}
-		else if (object instanceof Object[]) {
-			user = (User)((Object[])object)[0];
-		}
-		else {
-			throw new IllegalArgumentException(object + " is not a user");
-		}
+		Organization organization = (Organization)object;
 
 		try {
-			return UserLocalServiceUtil.hasGroupUser(
-				_group.getGroupId(), user.getUserId());
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isDisabled(Object object) {
-		User user = (User)object;
-
-		try {
-			if (isChecked(user) ||
-				!SiteMembershipPolicyUtil.isMembershipAllowed(
-					user.getUserId(), _group.getGroupId())) {
+			if (OrganizationLocalServiceUtil.hasGroupOrganization(
+					_group.getGroupId(), organization.getOrganizationId()) ||
+				(_group.getOrganizationId() ==
+					organization.getOrganizationId())) {
 
 				return true;
 			}
@@ -78,11 +53,22 @@ public class UserSiteMembershipChecker extends EmptyOnClickRowChecker {
 			_log.error(exception);
 		}
 
-		return super.isDisabled(object);
+		return false;
+	}
+
+	@Override
+	public boolean isDisabled(Object object) {
+		Organization organization = (Organization)object;
+
+		if (_group.getOrganizationId() == organization.getOrganizationId()) {
+			return true;
+		}
+
+		return isChecked(object);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserSiteMembershipChecker.class);
+		OrganizationSiteMembershipChecker.class);
 
 	private final Group _group;
 

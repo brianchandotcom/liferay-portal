@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -86,7 +87,9 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -104,6 +107,16 @@ public class AccountEntryLocalServiceTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_name = PrincipalThreadLocal.getName();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PrincipalThreadLocal.setName(_name);
+	}
 
 	@Test
 	public void testAccountEntryAssetTags() throws Exception {
@@ -1340,6 +1353,8 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private String _name;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -10,7 +10,7 @@ definition {
 				site = "${site}");
 		}
 		else {
-			Variables.assertDefined(parameterList = "${groupkey},${tagName}");
+			Variables.assertDefined(parameterList = "${groupKey},${tagName}");
 
 			var groupId = JSONStagingSetter.setGroupId(
 				groupKey = "${groupKey}",

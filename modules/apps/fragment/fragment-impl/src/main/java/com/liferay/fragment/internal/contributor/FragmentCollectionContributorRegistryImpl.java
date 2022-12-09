@@ -26,6 +26,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -166,18 +169,33 @@ public class FragmentCollectionContributorRegistryImpl
 	protected FragmentEntryValidator fragmentEntryValidator;
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				fragmentEntry.getFragmentEntryKey());
+		ActionableDynamicQuery actionableDynamicQuery =
+			_fragmentEntryLinkLocalService.getActionableDynamicQuery();
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			try {
-				_fragmentEntryLinkLocalService.updateLatestChanges(
-					fragmentEntry, fragmentEntryLink);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName("rendererKey");
+
+				dynamicQuery.add(
+					property.eq(fragmentEntry.getFragmentEntryKey()));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<FragmentEntryLink>)
+				fragmentEntryLink -> {
+					try {
+						_fragmentEntryLinkLocalService.updateLatestChanges(
+							fragmentEntry, fragmentEntryLink);
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException);
+					}
+				});
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
 		}
 	}
 

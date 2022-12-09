@@ -8,6 +8,7 @@
 }
 
 nav.public-sites-navigation {
+	font-size: var(--font-size-base);
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -130,10 +131,6 @@ nav.public-sites-navigation {
 				transition-property: fill;
 				transition-timing-function: ease;
 				width: 1rem;
-			}
-
-			.language-selector-text {
-				font-size: var(--font-size-base);
 			}
 
 			&:hover {
@@ -263,10 +260,6 @@ nav.public-sites-navigation {
 	.account {
 		cursor: pointer;
 
-		.account-text {
-			font-size: var(--font-size-base);
-		}
-
 		.user-icon {
 			height: 1rem;
 			margin-top: -5px;
@@ -316,10 +309,6 @@ nav.public-sites-navigation {
 		cursor: pointer;
 
 		.liferay-sites {
-			.liferay-sites-text {
-				font-size: var(--font-size-base);
-			}
-
 			.caret-bottom-icon {
 				margin-top: 1px;
 			}
@@ -375,16 +364,6 @@ nav.public-sites-navigation {
 		&:active,
 		&:focus {
 			background-color: var(--color-action-primary-hover-lighten);
-		}
-	}
-
-	.language {
-		.language-text {
-			font-size: var(--font-size-base);
-		}
-
-		.language-dropdown-icon svg {
-			margin-top: -6px;
 		}
 	}
 
@@ -694,7 +673,6 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 
 					.adt-nav-title {
 						cursor: pointer;
-						font-size: 1rem;
 						padding: 0.875rem 0.25rem 0.875rem 1.125rem;
 						position: relative;
 

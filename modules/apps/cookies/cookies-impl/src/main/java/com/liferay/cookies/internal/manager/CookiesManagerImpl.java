@@ -168,21 +168,18 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 
 		if ((_knownCookies.get(cookie.getName()) != null) &&
-			(_knownCookies.get(cookie.getName()) != consentType)) {
+			(_knownCookies.get(cookie.getName()) != consentType) &&
+			_log.isWarnEnabled()) {
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"This cookie has been previously added with different " +
-						"consent type " + cookie.getName());
-				_log.warn("Known consent type: " + consentType);
-				_log.warn(
-					"Current consent type: " +
-						_knownCookies.get(cookie.getName()));
-			}
+			_log.warn(
+				"This cookie has been previously added with different " +
+					"consent type " + cookie.getName());
+			_log.warn("Known consent type: " + consentType);
+			_log.warn(
+				"Current consent type: " + _knownCookies.get(cookie.getName()));
 		}
-		else {
-			_knownCookies.put(cookie.getName(), consentType);
-		}
+
+		_knownCookies.put(cookie.getName(), consentType);
 
 		return true;
 	}

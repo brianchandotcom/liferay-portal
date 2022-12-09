@@ -878,12 +878,12 @@ public class AssetPublisherDisplayContext {
 				continue;
 			}
 
-			long curGroupId = group.getGroupId();
+			Group curGroup = group;
 
 			if (group.isStagingGroup() &&
 				!group.isStagedPortlet(assetRendererFactory.getPortletId())) {
 
-				curGroupId = group.getLiveGroupId();
+				curGroup = group.getLiveGroup();
 			}
 
 			if (!assetRendererFactory.isSupportsClassTypes()) {
@@ -892,7 +892,7 @@ public class AssetPublisherDisplayContext {
 						dropdownItem.putData(
 							"href",
 							_getAssetEntryItemSelectorPortletURL(
-								assetRendererFactory,
+								assetRendererFactory, curGroup,
 								_DEFAULT_SUBTYPE_SELECTION_ID));
 						dropdownItem.putData(
 							"title",
@@ -914,7 +914,8 @@ public class AssetPublisherDisplayContext {
 
 			List<ClassType> assetAvailableClassTypes =
 				classTypeReader.getAvailableClassTypes(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(curGroupId),
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(
+						curGroup.getGroupId()),
 					_themeDisplay.getLocale());
 
 			for (ClassType classType : assetAvailableClassTypes) {
@@ -923,7 +924,7 @@ public class AssetPublisherDisplayContext {
 						dropdownItem.putData(
 							"href",
 							_getAssetEntryItemSelectorPortletURL(
-								assetRendererFactory,
+								assetRendererFactory, curGroup,
 								classType.getClassTypeId()));
 						dropdownItem.putData(
 							"title",
@@ -2236,7 +2237,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	private String _getAssetEntryItemSelectorPortletURL(
-		AssetRendererFactory<?> assetRendererFactory, long subtypeSelectionId) {
+		AssetRendererFactory<?> assetRendererFactory, Group scopeGroup,
+		long subtypeSelectionId) {
 
 		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
 			new AssetEntryItemSelectorCriterion();
@@ -2255,6 +2257,7 @@ public class AssetPublisherDisplayContext {
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+				scopeGroup, _themeDisplay.getScopeGroupId(),
 				_portletResponse.getNamespace() + "selectAsset",
 				assetEntryItemSelectorCriterion));
 	}

@@ -132,6 +132,10 @@ nav.public-sites-navigation {
 				width: 1rem;
 			}
 
+			.language-selector-text {
+				font-size: var(--font-size-base);
+			}
+
 			&:hover {
 				background-color: var(--color-action-primary-hover-lighten);
 				color: var(--color-action-primary-active);

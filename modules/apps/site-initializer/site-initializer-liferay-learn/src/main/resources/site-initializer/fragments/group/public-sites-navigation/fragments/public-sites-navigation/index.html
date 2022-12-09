@@ -32,9 +32,9 @@
 				</div>
 				[#if configuration.showLanguageMenu]
 					<div class="language-selector-container">
-						<div class="font-size-paragraph-xsmall language language-selector p-2 utility-nav-link">
+						<div class="language language-selector p-2 utility-nav-link">
 							<div class="language-selector-globe-icon">[@clay["icon"] symbol="globe-lines"/]</div>
-							<div>
+							<div class="language-selector-text">
 								[#assign current_locale = locale ]
 
 								[#if current_locale?has_content]

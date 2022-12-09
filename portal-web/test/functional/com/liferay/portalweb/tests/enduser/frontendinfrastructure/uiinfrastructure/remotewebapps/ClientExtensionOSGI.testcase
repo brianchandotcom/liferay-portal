@@ -11,13 +11,9 @@ definition {
 
 		User.firstLoginPG();
 
-		//task ("Given config file for client extension of type custom element created") {
-		//	ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
-		//	ClientExtension.checkConfigFileCreatedProperly();
-		//}
-
-		task ("Go to Remote Apps Portlet") {
-			RemoteApps.goToRemoteAppsPortlet();
+		task ("Given config file for client extension of type custom element created") {
+			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			ClientExtension.checkConfigFileCreatedProperly();
 		}
 	}
 
@@ -27,19 +23,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
-		//else {
-		//	Navigator.gotoPage(pageName = "Home");
-		//	while (IsElementPresent(locator1 = "Navigation#ANY_SITE_NAV_BUT_HOME")) {
-		//		var layoutName = selenium.getText("Navigation#ANY_SITE_NAV_BUT_HOME");
-		//		JSONLayout.deletePublicLayout(
-		//			groupName = "Guest",
-		//			layoutName = "${layoutName}");
-		//		Navigator.gotoPage(pageName = "Home");
-		//		PortalInstances.tearDownCP();
-		//}
-		//	ClientExtension.tearDownConfig();
-		//}
 
 	}
 
@@ -53,7 +36,7 @@ definition {
 
 	}
 
-	@description = "LPS-169551"
+	@description = "LPS-169551: Verify that view button is visible"
 	@priority = "3"
 	test HasViewAction {
 		property custom.element.client.extension.created = "true";

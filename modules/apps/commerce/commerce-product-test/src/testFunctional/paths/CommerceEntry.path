@@ -481,8 +481,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIX_ISSUE_BUTTON_N</td>
-	<td>//tr[contains (@data-qa-id,'row')]//td/button[contains (@id,'fixIssueButton${key_buttonRowNumber}')and contains(@class,'${key_buttonStatus}')]</td>
+	<td>FIX_ISSUE_BUTTON_NAME</td>
+	<td>//tr/td[contains(@class,'lfr-name-column') and contains(.,'${key_buttonRowName}')]//../td[contains(@class,'lfr-entry-action') and contains(.,'Fix Issue')]/button[(contains(@class,'${key_buttonStatus}'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1142,8 +1142,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HEALTH_CHECK_ICON_CHECK_N</td>
-	<td>//div[contains(@class,'commerce-health-status-check-row-icon-check${key_value}')][not(contains(@class,'hide'))]</td>
+	<td>HEALTH_CHECK_ICON_CHECK_NAME</td>
+	<td>//tr/td[contains(@class,'lfr-name-column') and contains(.,'${key_value}')]//..//div[contains(@class,'commerce-health-status-check-row-icon-check')][not(contains(@class,'hide'))]</td>
 	<td></td>
 </tr>
 <tr>

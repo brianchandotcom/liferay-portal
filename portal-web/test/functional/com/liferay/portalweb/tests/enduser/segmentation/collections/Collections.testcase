@@ -3829,6 +3829,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166046. The site designer could see the tooltip when hover on the icon of collection."
+	@priority = "3"
+	test ViewTooltipWhenHoverOnCollectionIcon {
+		task ("Given a site designer has collections") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("When the site designer hovers on the dynamic collection icon under table style") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			MouseOver(
+				key_tableEntry = "Dynamic Collection",
+				key_text = "bolt",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
+		}
+
+		task ("Then the site designer sees the tooltip") {
+			AssertAttributeValue(
+				attribute1 = "title",
+				key_tableEntry = "Dynamic Collection",
+				key_text = "bolt",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON_TOOLTIP",
+				value1 = "Dynamic Collection");
+		}
+
+		task ("When the site designer hovers on the manual collection icon under table style") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			MouseOver(
+				key_tableEntry = "Manual Collection",
+				key_text = "list",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
+		}
+
+		task ("Then the site designer sees the tooltip") {
+			AssertAttributeValue(
+				attribute1 = "title",
+				key_tableEntry = "Manual Collection",
+				key_text = "list",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON_TOOLTIP",
+				value1 = "Manual Collection");
+		}
+
+		task ("When the site designer hovers on the dynamic collection icon under list style") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			MouseOver(
+				key_listEntry = "Dynamic Collection",
+				key_text = "bolt",
+				locator1 = "LexiconList#ANY_ICON");
+		}
+
+		task ("Then the site designer sees the tooltip") {
+			AssertAttributeValue(
+				attribute1 = "title",
+				key_listEntry = "Dynamic Collection",
+				key_text = "bolt",
+				locator1 = "LexiconList#LIST_ENTRY_ICON_TOOLTIP",
+				value1 = "Dynamic Collection");
+		}
+
+		task ("When the site designer hovers on the dynamic collection icon under list style") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			MouseOver(
+				key_listEntry = "Manual Collection",
+				key_text = "list",
+				locator1 = "LexiconList#ANY_ICON");
+		}
+
+		task ("Then the site designer sees the tooltip") {
+			AssertAttributeValue(
+				attribute1 = "title",
+				key_listEntry = "Manual Collection",
+				key_text = "list",
+				locator1 = "LexiconList#LIST_ENTRY_ICON_TOOLTIP",
+				value1 = "Manual Collection");
+		}
+	}
+
 	@description = "This is a test for LPS-166045. The site designer could see the usages of Collections from asset library."
 	@priority = "5"
 	test ViewUsagesOfCollectionFromAssetLibrary {

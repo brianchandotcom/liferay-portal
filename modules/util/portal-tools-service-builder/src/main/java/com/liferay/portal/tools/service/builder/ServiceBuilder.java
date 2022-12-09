@@ -2676,7 +2676,8 @@ public class ServiceBuilder {
 					exception.endsWith("ExternalReferenceCode")) {
 
 					content = StringUtil.replace(
-						content, "PortalException", "SystemException");
+						content, "PortalException",
+						"DuplicateExternalReferenceCodeException");
 				}
 				else if (exception.startsWith("NoSuch")) {
 					content = StringUtil.replace(

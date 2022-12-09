@@ -16,6 +16,10 @@
 
 <%@ include file="/html/taglib/ui/input_localized/init.jsp" %>
 
+<%
+Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMap<String, Map<String, String>>();
+%>
+
 <c:if test="<%= Validator.isNotNull(inputAddon) %>">
 	<div class="form-text">
 		<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(inputAddon) %>">
@@ -121,6 +125,12 @@
 
 		<%
 		}
+
+		String selectedLanguageName = LanguageUtil.get(request, "language." + selectedLanguageId.substring(0, 2));
+
+		if (selectedLanguageName.contains("language.")) {
+			selectedLanguageName = LanguageUtil.get(request, "language." + selectedLanguageId);
+		}
 		%>
 
 		<div class="input-group-item input-group-item-shrink input-localized-content">
@@ -136,6 +146,7 @@
 				markupView="lexicon"
 				message="<%= StringPool.BLANK %>"
 				showWhenSingleIcon="<%= true %>"
+				triggerAriaLabel='<%= LanguageUtil.format(request, "current-translation-is-x-press-enter-to-navigate", new String[] {selectedLanguageName}, false) %>'
 				triggerCssClass="input-localized-trigger"
 				triggerLabel="<%= normalizedSelectedLanguageId %>"
 				triggerType="button"
@@ -175,15 +186,39 @@
 								"value", curLanguageId
 							).build();
 
+							String languageName = LanguageUtil.get(request, "language." + curLanguageId.substring(0, 2));
+
+							if (languageName.contains("language.")) {
+								languageName = LanguageUtil.get(request, "language." + curLanguageId);
+							}
+
+							String translationInstructionAnnouncement = LanguageUtil.format(request, "press-enter-to-edit-x-translation", new String[] {languageName}, false);
+
+							Map<String, String> languageTranslationAriaLabelsMap = HashMapBuilder.put(
+								"currentlySelected", LanguageUtil.format(request, "current-translation-is-x-press-enter-to-navigate", new String[] {languageName}, false)
+							).put(
+								"defaultStatus", LanguageUtil.format(request, "default-translation-is-x", new String[] {languageName}, false) + StringPool.SPACE + translationInstructionAnnouncement
+							).put(
+								"notTranslatedStatus", LanguageUtil.format(request, "not-translated-into-x", new String[] {languageName}, false) + StringPool.SPACE + translationInstructionAnnouncement
+							).put(
+								"translatedStatus", LanguageUtil.format(request, "translated-into-x", new String[] {languageName}, false) + StringPool.SPACE + translationInstructionAnnouncement
+							).build();
+
+							languagesTranslationsAriaLabelsMap.put(curLanguageId, languageTranslationAriaLabelsMap);
+
+							String translationAriaLabel = languageTranslationAriaLabelsMap.get("notTranslatedStatus");
+
 							String translationStatus = LanguageUtil.get(request, "not-translated");
 							String translationStatusCssClass = "warning";
 
 							if (languageIds.contains(curLanguageId)) {
+								translationAriaLabel = languageTranslationAriaLabelsMap.get("translatedStatus");
 								translationStatus = LanguageUtil.get(request, "translated");
 								translationStatusCssClass = "success";
 							}
 
 							if (defaultLanguageId.equals(curLanguageId)) {
+								translationAriaLabel = languageTranslationAriaLabelsMap.get("defaultStatus");
 								translationStatus = LanguageUtil.get(request, "default");
 								translationStatusCssClass = "info";
 							}
@@ -192,10 +227,12 @@
 							<liferay-util:buffer
 								var="linkContent"
 							>
-								<%= StringUtil.replace(curLanguageId, '_', '-') %>
+								<span aria-label="<%= translationAriaLabel %>" role="button" tabindex="0">
+									<%= StringUtil.replace(curLanguageId, '_', '-') %>
 
-								<span class="dropdown-item-indicator-end w-auto">
-									<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>
+									<span class="dropdown-item-indicator-end w-auto">
+										<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>
+									</span>
 								</span>
 							</liferay-util:buffer>
 
@@ -319,12 +356,13 @@
 				inputBox: '#<%= namespace + id %>BoundingBox',
 				items: availableLanguageIds,
 				itemsError: errorLanguageIds,
+				languagesTranslationsAriaLabels: <%= JSONFactoryUtil.looseSerializeDeep(languagesTranslationsAriaLabelsMap) %>,
 				lazy: <%= !type.equals("editor") %>,
 				name: '<%= HtmlUtil.escapeJS(name) %>',
 				namespace: '<%= namespace %>',
 				selectedLanguageId: '<%= selectedLanguageId %>',
 				toggleSelection: false,
-				translatedLanguages: '<%= StringUtil.merge(languageIds) %>'
+				translatedLanguages: '<%= StringUtil.merge(languageIds) %>',
 			};
 
 			<c:choose>

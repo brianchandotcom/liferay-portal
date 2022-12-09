@@ -15,7 +15,6 @@
 package com.liferay.fragment.renderer.menu.display.internal;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Víctor Galán
@@ -40,12 +39,12 @@ public class MenuDisplayFragmentConfiguration {
 		return _displayStyle;
 	}
 
-	public Optional<String> getHoveredItemColorOptional() {
-		return Optional.ofNullable(_hoveredItemColor);
+	public String getHoveredItemColor() {
+		return _hoveredItemColor;
 	}
 
-	public Optional<String> getSelectedItemColorOptional() {
-		return Optional.ofNullable(_selectedItemColor);
+	public String getSelectedItemColor() {
+		return _selectedItemColor;
 	}
 
 	public Source getSource() {

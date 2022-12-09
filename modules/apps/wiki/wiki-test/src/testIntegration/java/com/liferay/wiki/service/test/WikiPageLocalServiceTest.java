@@ -426,33 +426,12 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testCopyPageWithDraftAttachments() throws Exception {
-		WikiPage approvedPage = WikiTestUtil.addPage(
-			_group.getGroupId(), _node.getNodeId(), true);
-
-		WikiTestUtil.addWikiAttachment(
-			approvedPage.getUserId(), approvedPage.getNodeId(),
-			approvedPage.getTitle(), getClass());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(approvedPage.getGroupId());
-
-		// Update the page so the modifiedDate comes after attachment
-		// modifiedDate to resemble the /wiki/edit_page action
-
-		approvedPage = WikiTestUtil.updatePage(
-			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
-			approvedPage.getContent(), true, serviceContext);
-
-		WikiTestUtil.addWikiAttachment(
-			approvedPage.getUserId(), approvedPage.getNodeId(),
-			approvedPage.getTitle(), getClass());
-
-		WikiTestUtil.updatePage(
-			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
-			approvedPage.getContent(), false, serviceContext);
+		WikiPage approvedPage = _createPageWithDraftAttachments();
 
 		WikiPage copyPage = WikiTestUtil.copyPage(
-			approvedPage, true, serviceContext);
+			approvedPage, true,
+			ServiceContextTestUtil.getServiceContext(
+				approvedPage.getGroupId()));
 
 		List<FileEntry> copyAttachmentsFileEntries =
 			copyPage.getAttachmentsFileEntries();
@@ -657,30 +636,11 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testGetAttachmentsFileEntriesWithDraftPage() throws Exception {
-		WikiPage approvedPage = WikiTestUtil.addPage(
-			_group.getGroupId(), _node.getNodeId(), true);
+		WikiPage approvedPage = _createPageWithDraftAttachments();
 
-		WikiTestUtil.addWikiAttachment(
-			approvedPage.getUserId(), approvedPage.getNodeId(),
-			approvedPage.getTitle(), getClass());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(approvedPage.getGroupId());
-
-		// Update the page so the modifiedDate comes after attachment
-		// modifiedDate to resemble the /wiki/edit_page action
-
-		approvedPage = WikiTestUtil.updatePage(
-			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
-			approvedPage.getContent(), true, serviceContext);
-
-		WikiTestUtil.addWikiAttachment(
-			approvedPage.getUserId(), approvedPage.getNodeId(),
-			approvedPage.getTitle(), getClass());
-
-		WikiPage draftPage = WikiTestUtil.updatePage(
-			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
-			approvedPage.getContent(), false, serviceContext);
+		WikiPage draftPage = WikiPageLocalServiceUtil.getLatestPage(
+			approvedPage.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
+			false);
 
 		List<FileEntry> attachmentsFileEntries =
 			approvedPage.getAttachmentsFileEntries();
@@ -778,30 +738,11 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testMovePageToTrashWithDraftAttachments() throws Exception {
-		WikiPage approvedPage = WikiTestUtil.addPage(
-			_group.getGroupId(), _node.getNodeId(), true);
+		WikiPage approvedPage = _createPageWithDraftAttachments();
 
-		WikiTestUtil.addWikiAttachment(
-			approvedPage.getUserId(), approvedPage.getNodeId(),
-			approvedPage.getTitle(), getClass());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(approvedPage.getGroupId());
-
-		// Update the page so the modifiedDate comes after attachment
-		// modifiedDate to resemble the /wiki/edit_page action
-
-		approvedPage = WikiTestUtil.updatePage(
-			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
-			approvedPage.getContent(), true, serviceContext);
-
-		WikiTestUtil.addWikiAttachment(
-			approvedPage.getUserId(), approvedPage.getNodeId(),
-			approvedPage.getTitle(), getClass());
-
-		WikiPage draftPage = WikiTestUtil.updatePage(
-			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
-			approvedPage.getContent(), false, serviceContext);
+		WikiPage draftPage = WikiPageLocalServiceUtil.getLatestPage(
+			approvedPage.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
+			false);
 
 		List<FileEntry> attachmentsFileEntries =
 			draftPage.getAttachmentsFileEntries();
@@ -1442,6 +1383,35 @@ public class WikiPageLocalServiceTest {
 		Arrays.sort(actualArray);
 
 		Assert.assertArrayEquals(expectedArray, actualArray);
+	}
+
+	private WikiPage _createPageWithDraftAttachments() throws Exception {
+		WikiPage approvedPage = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		WikiTestUtil.addWikiAttachment(
+			approvedPage.getUserId(), approvedPage.getNodeId(),
+			approvedPage.getTitle(), getClass());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(approvedPage.getGroupId());
+
+		// Update the page so the modifiedDate comes after attachment
+		// modifiedDate to resemble the /wiki/edit_page action
+
+		approvedPage = WikiTestUtil.updatePage(
+			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
+			approvedPage.getContent(), true, serviceContext);
+
+		WikiTestUtil.addWikiAttachment(
+			approvedPage.getUserId(), approvedPage.getNodeId(),
+			approvedPage.getTitle(), getClass());
+
+		WikiTestUtil.updatePage(
+			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
+			approvedPage.getContent(), false, serviceContext);
+
+		return approvedPage;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

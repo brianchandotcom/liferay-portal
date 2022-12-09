@@ -17,6 +17,7 @@ definition {
 		property custom.startup.timeout = "300";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
+		property portal.release = "false";
 		property portal.upstream = "false";
 		property portal.version = "7.4.13.u47";
 		property skip.upgrade-legacy-database = "true";

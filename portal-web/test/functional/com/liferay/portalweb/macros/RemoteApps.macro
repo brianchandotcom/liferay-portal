@@ -248,7 +248,7 @@ definition {
 		RemoteApps.goToRemoteAppsPortlet();
 
 		while (IsElementNotPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE")) {
-			RemoteApps.deleteRemoteAppAPI();
+			RemoteApps.deleteRemoteApp();
 		}
 
 		RemoteApps.viewEmptyRemoteTable();

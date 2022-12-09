@@ -18,8 +18,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			RemoteApps.tearDown();
-
 			Navigator.gotoPage(pageName = "Home");
 
 			while (IsElementPresent(locator1 = "Navigation#ANY_SITE_NAV_BUT_HOME")) {
@@ -33,6 +31,8 @@ definition {
 
 				PortalInstances.tearDownCP();
 			}
+
+			RemoteApps.tearDown();
 		}
 	}
 

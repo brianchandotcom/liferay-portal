@@ -543,21 +543,6 @@ definition {
 		ClickNoError(locator1 = "Icon#DELETE");
 	}
 
-	macro removePermissionCP {
-		Role.editPermissionCmdCP(
-			permissionDefinitionKey = "${permissionDefinitionKey}",
-			permissionDefinitionKeyChange = "${permissionDefinitionKeyChange}",
-			permissionDefinitionKeys = "${permissionDefinitionKeys}",
-			permissionDefinitionKeySiteScope = "${permissionDefinitionKeySiteScope}",
-			permissionNavigationKey = "${permissionNavigationKey}",
-			permissionNavigationValue = "${permissionNavigationValue}",
-			remove = "true",
-			roleTitle = "${roleTitle}",
-			roleType = "${roleType}",
-			roleUser = "${roleUser}",
-			siteNameScope = "${siteNameScope}");
-	}
-
 	macro removePermissionPG {
 		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
 

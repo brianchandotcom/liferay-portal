@@ -15,10 +15,10 @@
 package com.liferay.oauth2.provider.scope.internal.liferay;
 
 import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
-import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMap;
-import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMapFactory;
 import com.liferay.oauth2.provider.scope.liferay.spi.ScopeDescriptorLocator;
 import com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -73,7 +73,7 @@ public class ScopeDescriptorLocatorImpl implements ScopeDescriptorLocator {
 				(serviceReference, emitter) -> emitter.emit(
 					GetterUtil.getLong(
 						serviceReference.getProperty("companyId"))));
-		_scopedServiceTrackerMap = _scopedServiceTrackerMapFactory.create(
+		_scopedServiceTrackerMap = ScopedServiceTrackerMapFactory.create(
 			bundleContext, ScopeDescriptor.class,
 			OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 			() -> _defaultScopeDescriptor);
@@ -91,8 +91,5 @@ public class ScopeDescriptorLocatorImpl implements ScopeDescriptorLocator {
 	private ServiceTrackerMap<Long, ScopeDescriptor>
 		_scopeDescriptorServiceTrackerMap;
 	private ScopedServiceTrackerMap<ScopeDescriptor> _scopedServiceTrackerMap;
-
-	@Reference
-	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;
 
 }

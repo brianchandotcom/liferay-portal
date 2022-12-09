@@ -16,8 +16,8 @@ package com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider;
 
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProviderAccessor;
-import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMap;
-import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMapFactory;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -42,7 +42,7 @@ public class DefaultBearerTokenProviderAccessor
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_scopedServiceTrackerMap = _scopedServiceTrackerMapFactory.create(
+		_scopedServiceTrackerMap = ScopedServiceTrackerMapFactory.create(
 			bundleContext, BearerTokenProvider.class,
 			"liferay.oauth2.client.id", () -> _defaultBearerTokenProvider);
 	}
@@ -55,8 +55,5 @@ public class DefaultBearerTokenProviderAccessor
 
 	private ScopedServiceTrackerMap<BearerTokenProvider>
 		_scopedServiceTrackerMap;
-
-	@Reference
-	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;
 
 }

@@ -18,8 +18,6 @@ import com.liferay.oauth2.provider.scope.internal.configuration.ScopeLocatorConf
 import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
-import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMap;
-import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMapFactory;
 import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandler;
 import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandlerFactory;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
@@ -27,6 +25,8 @@ import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.oauth2.provider.scope.spi.scope.matcher.ScopeMatcher;
 import com.liferay.oauth2.provider.scope.spi.scope.matcher.ScopeMatcherFactory;
 import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -302,7 +302,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		_bundleContext = bundleContext;
 
 		setPrefixHandlerFactoriesScopedServiceTrackerMap(
-			_scopedServiceTrackerMapFactory.create(
+			ScopedServiceTrackerMapFactory.create(
 				bundleContext, PrefixHandlerFactory.class,
 				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 				() -> {
@@ -317,12 +317,12 @@ public class ScopeLocatorImpl implements ScopeLocator {
 						PrefixHandler.PASS_THROUGH_PREFIX_HANDLER;
 				}));
 		setScopeFindersScopedServiceTrackerMap(
-			_scopedServiceTrackerMapFactory.create(
+			ScopedServiceTrackerMapFactory.create(
 				bundleContext, ScopeFinder.class,
 				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 				() -> Collections::emptySet));
 		setScopeLocatorConfigurationProvidersScopedServiceTrackerMap(
-			_scopedServiceTrackerMapFactory.create(
+			ScopedServiceTrackerMapFactory.create(
 				bundleContext, ScopeLocatorConfigurationProvider.class,
 				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 				() -> {
@@ -333,7 +333,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 					return () -> _defaultScopeLocatorConfiguration;
 				}));
 		setScopeMappersScopedServiceTrackerMap(
-			_scopedServiceTrackerMapFactory.create(
+			ScopedServiceTrackerMapFactory.create(
 				bundleContext, ScopeMapper.class,
 				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 				() -> {
@@ -508,10 +508,6 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 	private ScopedServiceTrackerMap<PrefixHandlerFactory>
 		_prefixHandlerFactoriesScopedServiceTrackerMap;
-
-	@Reference
-	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;
-
 	private ServiceTrackerMap
 		<String, ServiceReferenceServiceTuple<?, ScopeFinder>>
 			_scopeFinderByNameServiceTrackerMap;

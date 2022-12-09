@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_ICON</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'name-column')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_INFO</td>
 	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'${key_columnName}-column')]</td>
 	<td></td>

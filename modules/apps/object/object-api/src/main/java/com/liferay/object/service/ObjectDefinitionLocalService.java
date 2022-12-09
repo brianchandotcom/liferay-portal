@@ -71,8 +71,8 @@ public interface ObjectDefinitionLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition addCustomObjectDefinition(
-			long userId, Map<Locale, String> labelMap, String name,
-			String panelAppOrder, String panelCategoryKey,
+			long userId, boolean enableComments, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
 			Map<Locale, String> pluralLabelMap, String scope,
 			String storageType, List<ObjectField> objectFields)
 		throws PortalException;

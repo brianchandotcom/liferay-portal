@@ -40,16 +40,16 @@ public class ObjectDefinitionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
-			Map<java.util.Locale, String> labelMap, String name,
-			String panelAppOrder, String panelCategoryKey,
+			boolean enableComments, Map<java.util.Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
 			Map<java.util.Locale, String> pluralLabelMap, String scope,
 			String storageType,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addCustomObjectDefinition(
-			labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
-			scope, storageType, objectFields);
+			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
+			pluralLabelMap, scope, storageType, objectFields);
 	}
 
 	public static ObjectDefinition addObjectDefinition(

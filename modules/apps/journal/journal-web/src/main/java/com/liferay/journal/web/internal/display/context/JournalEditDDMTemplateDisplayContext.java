@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -215,8 +216,12 @@ public class JournalEditDDMTemplateDisplayContext {
 			return _script;
 		}
 
-		_script = BeanParamUtil.getString(
+		String script = BeanParamUtil.getString(
 			getDDMTemplate(), _httpServletRequest, "script");
+
+		if (Validator.isNotNull(script)) {
+			_script = new String(Base64.decode(script));
+		}
 
 		if (Validator.isNull(_script)) {
 			TemplateHandler templateHandler =
@@ -231,7 +236,7 @@ public class JournalEditDDMTemplateDisplayContext {
 			_httpServletRequest, "scriptContent");
 
 		if (Validator.isNotNull(scriptContent)) {
-			_script = scriptContent;
+			_script = new String(Base64.decode(scriptContent));
 		}
 
 		return _script;

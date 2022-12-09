@@ -1007,6 +1007,35 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testGetTitleObjectField() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList());
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getObjectDefinitionId(), "id");
+
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			objectDefinition.getTitleObjectFieldId());
+
+		_assertSystemObjectTitleField("AccountEntry", "name");
+		_assertSystemObjectTitleField("Address", "name");
+		_assertSystemObjectTitleField("CommerceOrder", "id");
+		_assertSystemObjectTitleField("CommercePricingClass", "title");
+		_assertSystemObjectTitleField("CPDefinition", "name");
+		_assertSystemObjectTitleField("User", "givenName");
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
 	public void testSystemObjectFields() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -1300,6 +1329,22 @@ public class ObjectDefinitionLocalServiceTest {
 			expectedObjectField.isRequired(), objectField.isRequired());
 		Assert.assertEquals(
 			expectedObjectField.isState(), objectField.isState());
+	}
+
+	private void _assertSystemObjectTitleField(
+			String objectDefinitionName, String objectFieldName)
+		throws Exception {
+
+		ObjectDefinition systemObjectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				objectDefinitionName);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			systemObjectDefinition.getObjectDefinitionId(), objectFieldName);
+
+		Assert.assertEquals(
+			objectField.getObjectFieldId(),
+			systemObjectDefinition.getTitleObjectFieldId());
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.site.api
 Bundle-Version: 16.0.2
 Export-Package:\
 	com.liferay.site.constants,\
+	com.liferay.site.display.context,\
 	com.liferay.site.exception,\
 	com.liferay.site.initializer,\
 	com.liferay.site.model,\

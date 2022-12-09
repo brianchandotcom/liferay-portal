@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.scope.liferay;
+package com.liferay.osgi.service.tracker.collections.map;
 
 /**
  * Represents a {@code ServiceTrackerMap} that also checks for portal instance

@@ -14,31 +14,17 @@ import ClassNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
-const items = [
-	{
-		name: 'Rent-A-Centre Texas, L.P',
-		status: 30,
-	},
-	{
-		name: 'Advance Stores Co, INC',
-		status: 60,
-	},
-	{
-		name: 'Mission of Hope Haiti',
-		status: 60,
-	},
-	{
-		name: 'Rite Aid',
-		status: 90,
-	},
-];
+
 const status = {
-	30: 'bg-accent-1',
-	60: 'bg-warning',
-	90: 'bg-success',
+	5: 'bg-accent-1',
+	15: 'bg-warning',
+	30: 'bg-success',
 };
+
 export default function () {
 	const [data, setData] = useState();
+	const currentDate = new Date();
+
 	useEffect(() => {
 		const getRenewalsData = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -58,8 +44,6 @@ export default function () {
 		};
 		getRenewalsData();
 	}, []);
-	// eslint-disable-next-line no-console
-	console.log(data);
 
 	return (
 		<Container
@@ -78,33 +62,74 @@ export default function () {
 			title="Renewals"
 		>
 			<div className="align-items-start d-flex flex-column mt-3">
-				{items.map((item, index) => {
-					return (
-						<div
-							className="align-items-center d-flex flex-row justify-content-center mb-4"
-							key={index}
-						>
-							<div
-								className={ClassNames(
-									'mr-3 status-bar-vertical',
-									status[item.status]
-								)}
-							></div>
+				{data?.items?.map((item, index) => {
+					const expirationInTime =
+						new Date(item.closeDate) - currentDate;
 
-							<div>
-								<div className="font-weight-semi-bold">
-									{item.name}
-								</div>
+					const expirationInDays =
+						Math.floor(expirationInTime / (1000 * 3600 * 24)) + 1;
 
-								<div>
+					const currentStatusColor = () => {
+						if (expirationInDays <= 5) {
+							return status[5];
+						} else if (expirationInDays <= 15) {
+							return status[15];
+						} else if (expirationInDays <= 30) {
+							return status[30];
+						}
+					};
+
+					// eslint-disable-next-line no-console
+					console.log(expirationInDays);
+
+					const closeDateText = () => {
+						if (expirationInDays > 0) {
+							return (
+								<>
 									Expires in &nbsp;
 									<span className="font-weight-semi-bold">
-										{item.status} days
+										{expirationInDays} days.
+									</span>
+									<span className="ml-2">
+										{item.closeDate}
+									</span>
+								</>
+							);
+						} else {
+							return (
+								<div>
+									Expired.
+									<span className="ml-2">
+										{item.closeDate}
 									</span>
 								</div>
+							);
+						}
+					};
+
+					if (expirationInDays <= 30) {
+						return (
+							<div
+								className="align-items-center d-flex flex-row justify-content-center mb-4"
+								key={index}
+							>
+								<div
+									className={ClassNames(
+										'mr-3 status-bar-vertical',
+										currentStatusColor()
+									)}
+								></div>
+
+								<div>
+									<div className="font-weight-semi-bold">
+										{item.opportunityName}
+									</div>
+
+									<div>{closeDateText()}</div>
+								</div>
 							</div>
-						</div>
-					);
+						);
+					}
 				})}
 			</div>
 		</Container>

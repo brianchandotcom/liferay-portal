@@ -61,6 +61,7 @@ public class LayoutUtilityPageEntryStagedModelRepository
 			layoutUtilityPageEntry.getGroupId(),
 			layoutUtilityPageEntry.getPlid(),
 			layoutUtilityPageEntry.getPreviewFileEntryId(),
+			layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry(),
 			layoutUtilityPageEntry.getName(), layoutUtilityPageEntry.getType(),
 			0);
 	}

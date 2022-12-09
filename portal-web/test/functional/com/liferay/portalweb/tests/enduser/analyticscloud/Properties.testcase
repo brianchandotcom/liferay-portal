@@ -378,6 +378,11 @@ definition {
 	@description = "Bug ID: LRAC-8093 | Automation ID: LRAC-11533 | Test Summary: Able to clear property data"
 	@priority = "4"
 	test ClearPropertyData {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Temporarily disable Total Individuals Card LRAC-12523
+		// AC Refactor ticket: LRAC-12526
+
 		task ("Connect the DXP to Analytics Cloud") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

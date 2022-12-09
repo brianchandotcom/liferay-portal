@@ -219,6 +219,11 @@ definition {
 	@description = "Total Individuals increase by one when a new individual is added via event"
 	@priority = "5"
 	test CanViewTotalIndividualsIncreaseByOne {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Temporarily disable Total Individuals Card LRAC-12523
+		// AC Refactor ticket: LRAC-12526
+
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");

@@ -53,6 +53,10 @@ definition {
 		property analytics.cloud.upstream = "false";
 		property portal.acceptance = "false";
 		property portal.release = "false";
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Temporarily disable Total Individuals Card LRAC-12523
+		// AC Refactor ticket: LRAC-12526
 
 		task ("Add a new user") {
 			JSONUser.addUser(

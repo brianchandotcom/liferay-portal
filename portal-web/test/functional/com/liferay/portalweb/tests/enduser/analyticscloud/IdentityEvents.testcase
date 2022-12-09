@@ -56,7 +56,11 @@ definition {
 	@priority = "3"
 	test CheckDeleteBrowserStorageChangesUserId {
 		property analytics.cloud.upstream = "false";
+		property portal.upstream = "quarantine";
 		property proxy.server.enabled = "true";
+		
+		// AC Quarantine Reason: Temporarily disable Total Individuals Card LRAC-12523
+		// AC Refactor ticket: LRAC-12526
 
 		task ("Add a new user") {
 			JSONUser.addUser(

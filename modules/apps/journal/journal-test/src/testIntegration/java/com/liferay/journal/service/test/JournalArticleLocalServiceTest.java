@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
@@ -354,11 +355,11 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testCopyArticleWithImages() throws Exception {
-		DataDefinition dataDefinition = _addDataDefinition(
-			"ddm_form_with_images.json",
-			HashMapBuilder.<String, Object>put(
-				String.valueOf(LocaleUtil.US), "Image"
-			).build());
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString("ddm_form_with_images.json"),
+				TestPropsValues.getUser());
 
 		JournalArticle oldArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
@@ -386,11 +387,12 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testCopyArticleWithImagesAndNestedFields() throws Exception {
-		DataDefinition dataDefinition = _addDataDefinition(
-			"ddm_form_with_images_and_nested_fields.json",
-			HashMapBuilder.<String, Object>put(
-				String.valueOf(LocaleUtil.US), "Image"
-			).build());
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString(
+					"ddm_form_with_images_and_nested_fields.json"),
+				TestPropsValues.getUser());
 
 		JournalArticle oldArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
@@ -421,11 +423,12 @@ public class JournalArticleLocalServiceTest {
 	public void testCopyArticleWithImagesAndRepeatableFields()
 		throws Exception {
 
-		DataDefinition dataDefinition = _addDataDefinition(
-			"ddm_form_with_images_and_repeatable_fields.json",
-			HashMapBuilder.<String, Object>put(
-				String.valueOf(LocaleUtil.US), "Image"
-			).build());
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString(
+					"ddm_form_with_images_and_repeatable_fields.json"),
+				TestPropsValues.getUser());
 
 		JournalArticle oldArticle = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
@@ -650,11 +653,11 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testGetArticleDisplayWithComplexData() throws Exception {
-		DataDefinition dataDefinition = _addDataDefinition(
-			"complex_data_definition.json",
-			HashMapBuilder.<String, Object>put(
-				String.valueOf(LocaleUtil.SPAIN), "TMX_Main_Menu"
-			).build());
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString("complex_data_definition.json"),
+				TestPropsValues.getUser());
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -778,13 +781,10 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testRemoveArticleLocale() throws Exception {
-		DataDefinition dataDefinition = _addDataDefinition(
-			"ddm_form.json",
-			HashMapBuilder.<String, Object>put(
-				String.valueOf(LocaleUtil.SPAIN), "data-definition-es"
-			).put(
-				String.valueOf(LocaleUtil.US), "data-definition"
-			).build());
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString("ddm_form.json"), TestPropsValues.getUser());
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -849,13 +849,11 @@ public class JournalArticleLocalServiceTest {
 
 	@Test
 	public void testRemoveArticleLocaleWithNestedFields() throws Exception {
-		DataDefinition dataDefinition = _addDataDefinition(
-			"ddm_form_nested_fields.json",
-			HashMapBuilder.<String, Object>put(
-				String.valueOf(LocaleUtil.SPAIN), "data-definition-es"
-			).put(
-				String.valueOf(LocaleUtil.US), "data-definition"
-			).build());
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString("ddm_form_nested_fields.json"),
+				TestPropsValues.getUser());
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -1046,27 +1044,6 @@ public class JournalArticleLocalServiceTest {
 
 		Assert.assertEquals(
 			"Predefined Value", field.getValue(unavailableLocale));
-	}
-
-	private DataDefinition _addDataDefinition(
-			String fileName, Map<String, Object> nameMap)
-		throws Exception {
-
-		DataDefinition dataDefinition = DataDefinition.toDTO(
-			_readFileToString(fileName));
-
-		dataDefinition.setName(nameMap);
-
-		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
-			_dataDefinitionResourceFactory.create();
-
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourcedBuilder.user(
-				TestPropsValues.getUser()
-			).build();
-
-		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			_group.getGroupId(), "journal", dataDefinition);
 	}
 
 	private FileEntry _addTempFileEntry(String fileName) throws Exception {

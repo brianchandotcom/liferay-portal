@@ -250,7 +250,7 @@ definition {
 				accountUserName = "Test Test");
 		}
 
-			task ("Go to CP2.0 and join a project") {
+		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 			Refresh();
@@ -266,7 +266,6 @@ definition {
 
 		task ("Click in the Action button and assert if the user with the right role can see the options") {
 			CustomerPortal.clickAtButton(text = "Actions");
-
 
 			AssertElementNotPresent(
 				key_text = "Generate New",
@@ -341,7 +340,6 @@ definition {
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Requester",
 				accountUserName = "Test Test");
-
 		}
 
 		task ("Go to CP2.0 and join a project") {

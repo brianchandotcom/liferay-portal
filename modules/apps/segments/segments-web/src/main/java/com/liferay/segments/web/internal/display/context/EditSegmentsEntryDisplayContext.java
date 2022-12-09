@@ -451,6 +451,8 @@ public class EditSegmentsEntryDisplayContext {
 		).put(
 			"formId", _renderResponse.getNamespace() + "editSegmentFm"
 		).put(
+			"groupId", _getGroupId()
+		).put(
 			"hasUpdatePermission", _hasUpdatePermission()
 		).put(
 			"initialMembersCount", _getSegmentsEntryClassPKsCount()

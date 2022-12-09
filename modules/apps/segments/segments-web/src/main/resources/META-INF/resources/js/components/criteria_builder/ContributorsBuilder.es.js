@@ -50,6 +50,7 @@ class ContributorBuilder extends React.Component {
 		onConjunctionChange: PropTypes.func,
 		onPreviewMembers: PropTypes.func,
 		onQueryChange: PropTypes.func,
+		portletNamespace: PropTypes.string.isRequired,
 		previewMembersURL: PropTypes.string,
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 		renderEmptyValuesErrors: PropTypes.bool,
@@ -74,7 +75,7 @@ class ContributorBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {contributors, propertyGroups, scopeName} = props;
+		const {contributors, groupId, propertyGroups, scopeName} = props;
 
 		const firstContributorNotEmpty = contributors.find(
 			(contributor) => contributor.query !== ''
@@ -86,6 +87,7 @@ class ContributorBuilder extends React.Component {
 
 		this.state = {
 			editingId: propertyKey,
+			groupId,
 			scopeName,
 		};
 	}
@@ -104,8 +106,11 @@ class ContributorBuilder extends React.Component {
 
 	_handleScopeChange = () => {
 		openSelectionModal({
-			onSelect: (selectedItems) => {
-				this.setState({scopeName: selectedItems.groupscopelabel});
+			onSelect: (selectedItem) => {
+				this.setState({
+					groupId: selectedItem.groupid,
+					scopeName: selectedItem.groupscopelabel,
+				});
 			},
 			selectEventName: 'selectSegmentScope',
 			title: Liferay.Language.get('select-site'),
@@ -125,6 +130,7 @@ class ContributorBuilder extends React.Component {
 			onAlertClose,
 			onConjunctionChange,
 			onPreviewMembers,
+			portletNamespace,
 			propertyGroups,
 			renderEmptyValuesErrors,
 			supportedConjunctions,
@@ -132,7 +138,7 @@ class ContributorBuilder extends React.Component {
 			supportedPropertyTypes,
 		} = this.props;
 
-		const {editingId, scopeName} = this.state;
+		const {editingId, groupId, scopeName} = this.state;
 
 		const rootClasses = getCN('contributor-builder-root', {
 			editing,
@@ -202,6 +208,12 @@ class ContributorBuilder extends React.Component {
 												showCollapseIcon
 											>
 												<ClayPanel.Body className="align-items-center d-flex justify-content-between p-4">
+													<input
+														name={`${portletNamespace}groupId`}
+														type="hidden"
+														value={groupId}
+													/>
+
 													<p className="mb-0 mr-6">
 														{scopeName}
 													</p>

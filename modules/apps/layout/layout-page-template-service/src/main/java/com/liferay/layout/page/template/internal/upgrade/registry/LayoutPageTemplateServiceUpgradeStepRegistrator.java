@@ -23,7 +23,7 @@ import com.liferay.layout.page.template.internal.upgrade.v1_2_0.LayoutPageTempla
 import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateCollectionTable;
 import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.internal.upgrade.v2_1_0.LayoutUpgradeProcess;
-import com.liferay.layout.page.template.internal.upgrade.v3_1_3.ResourcePermissionUpgradeProcess;
+import com.liferay.layout.page.template.internal.upgrade.v3_1_4.ResourcePermissionUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v3_3_0.LayoutPageTemplateStructureRelUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v3_4_1.FragmentEntryLinkEditableValuesUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -113,11 +113,13 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 
 		registry.register("3.1.1", "3.1.2", new DummyUpgradeStep());
 
-		registry.register(
-			"3.1.2", "3.1.3", new ResourcePermissionUpgradeProcess());
+		registry.register("3.1.2", "3.1.3", new DummyUpgradeStep());
 
 		registry.register(
-			"3.1.3", "3.2.0",
+			"3.1.3", "3.1.4", new ResourcePermissionUpgradeProcess());
+
+		registry.register(
+			"3.1.4", "3.2.0",
 			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.
 				LayoutPageTemplateCollectionUpgradeProcess(),
 			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.
@@ -162,8 +164,10 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 				ResourcePermissionUpgradeProcess(
 					_resourcePermissionLocalService));
 
+		registry.register("3.4.3", "3.4.4", new DummyUpgradeStep());
+
 		registry.register(
-			"3.4.3", "3.5.0",
+			"3.4.4", "3.5.0",
 			new com.liferay.layout.page.template.internal.upgrade.v3_5_0.
 				LayoutPageTemplateStructureRelUpgradeProcess());
 

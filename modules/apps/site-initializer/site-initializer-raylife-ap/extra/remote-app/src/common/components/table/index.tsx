@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayTable from '@clayui/table';
 import classnames from 'classnames';
 
@@ -24,6 +25,8 @@ type TableProps = {
 	data: {[keys: string]: string}[];
 	headers: TableHeaders[];
 	onClickRules?: (item: any, rowContent: any) => void;
+	setSortByDate?: () => void;
+	sortByDate?: string;
 };
 
 type TableHeaders = {
@@ -42,6 +45,8 @@ const Table: React.FC<TableProps> = ({
 	data,
 	headers,
 	actions,
+	sortByDate,
+	setSortByDate,
 	onClickRules = () => null,
 }) => {
 	return (
@@ -55,6 +60,18 @@ const Table: React.FC<TableProps> = ({
 							key={index}
 						>
 							{header.value}
+
+							{index === 0 && (
+								<ClayButtonWithIcon
+									className="bg-neutral-0 btn-sm text-brand-primary-darken-1"
+									onClick={setSortByDate}
+									symbol={
+										sortByDate === 'desc'
+											? 'order-arrow-down'
+											: 'order-arrow-up'
+									}
+								/>
+							)}
 						</Cell>
 					))}
 

@@ -3,8 +3,6 @@
 <project basedir="." name="portal-test-httpd" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<property name="httpd.dir" value="/etc/httpd" />
-
 	<target name="configure-httpd-server">
 		<get-test-url />
 
@@ -18,12 +16,12 @@
 		<if>
 			<not>
 				<resourcecontains
-					resource="${httpd.dir}/conf/httpd.conf"
+					resource="${apache.http.dir}/conf/httpd.conf"
 					substring="VirtualHost *:80"
 				/>
 			</not>
 			<then>
-				<echo append="true" file="${httpd.dir}/conf/httpd.conf"><![CDATA[
+				<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
 
 <VirtualHost *:80>
 	ServerName ${hostname}
@@ -49,12 +47,12 @@
 					<if>
 						<not>
 							<resourcecontains
-								resource="${httpd.dir}/conf/httpd.conf"
+								resource="${apache.http.dir}/conf/httpd.conf"
 								substring="Listen ${test.app.server.leading.port.number}0"
 							/>
 						</not>
 						<then>
-							<echo append="true" file="${httpd.dir}/conf/httpd.conf"><![CDATA[
+							<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
 
 Listen ${test.app.server.leading.port.number}0]]></echo>
 						</then>
@@ -63,12 +61,12 @@ Listen ${test.app.server.leading.port.number}0]]></echo>
 					<if>
 						<not>
 							<resourcecontains
-								resource="${httpd.dir}/conf/httpd.conf"
+								resource="${apache.http.dir}/conf/httpd.conf"
 								substring="VirtualHost *:${test.app.server.leading.port.number}0"
 							/>
 						</not>
 						<then>
-							<echo append="true" file="${httpd.dir}/conf/httpd.conf"><![CDATA[
+							<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
 
 <VirtualHost *:${test.app.server.leading.port.number}0>
 	ServerName ${hostname}
@@ -92,7 +90,7 @@ Listen ${test.app.server.leading.port.number}0]]></echo>
 			</then>
 		</if>
 
-		<print-file file.name="${httpd.dir}/conf/httpd.conf" />
+		<print-file file.name="${apache.http.dir}/conf/httpd.conf" />
 	</target>
 
 	<target name="start-httpd-server">

@@ -26,6 +26,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,12 +50,18 @@ public class RenderFragmentEntryDisplayContext {
 	public DefaultFragmentRendererContext getDefaultFragmentRendererContext() {
 		FragmentEntry fragmentEntry = _getFragmentEntry();
 
-		String css = BeanParamUtil.getString(
-			fragmentEntry, _httpServletRequest, "css");
-		String html = BeanParamUtil.getString(
-			fragmentEntry, _httpServletRequest, "html");
-		String js = BeanParamUtil.getString(
-			fragmentEntry, _httpServletRequest, "js");
+		String css = new String(
+			Base64.decode(
+				BeanParamUtil.getString(
+					fragmentEntry, _httpServletRequest, "css")));
+		String html = new String(
+			Base64.decode(
+				BeanParamUtil.getString(
+					fragmentEntry, _httpServletRequest, "html")));
+		String js = new String(
+			Base64.decode(
+				BeanParamUtil.getString(
+					fragmentEntry, _httpServletRequest, "js")));
 		String configuration = BeanParamUtil.getString(
 			fragmentEntry, _httpServletRequest, "configuration");
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -84,9 +85,12 @@ public class EditFragmentEntryMVCActionCommand
 		}
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		String css = ParamUtil.getString(actionRequest, "cssContent");
-		String html = ParamUtil.getString(actionRequest, "htmlContent");
-		String js = ParamUtil.getString(actionRequest, "jsContent");
+		String css = new String(
+			Base64.decode(ParamUtil.getString(actionRequest, "cssContent")));
+		String html = new String(
+			Base64.decode(ParamUtil.getString(actionRequest, "htmlContent")));
+		String js = new String(
+			Base64.decode(ParamUtil.getString(actionRequest, "jsContent")));
 		String configuration = ParamUtil.getString(
 			actionRequest, "configurationContent");
 		int status = ParamUtil.getInteger(actionRequest, "status");

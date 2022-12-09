@@ -466,6 +466,14 @@ AUI.add(
 				});
 
 				listNode.setAttribute('aria-labelledby', trigger.guid());
+
+				if (
+					trigger._stateProxy?.classList?.contains(
+						'input-localized-trigger'
+					)
+				) {
+					listNode.removeAttribute('aria-labelledby', trigger.guid());
+				}
 			},
 		};
 

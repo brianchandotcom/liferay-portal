@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.object.constants,\
 	com.liferay.object.definition.notification.term.util,\
 	com.liferay.object.deployer,\
-	com.liferay.object.entry.permission.util,\
 	com.liferay.object.entry.util,\
 	com.liferay.object.exception,\
 	com.liferay.object.field.builder,\

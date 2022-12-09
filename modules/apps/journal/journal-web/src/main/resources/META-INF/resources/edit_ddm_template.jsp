@@ -21,6 +21,12 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 
 DDMTemplate ddmTemplate = journalEditDDMTemplateDisplayContext.getDDMTemplate();
 
+if (ddmTemplate != null) {
+	String script = ddmTemplate.getScript();
+
+	ddmTemplate.setScript(Base64.encode(script.getBytes(StringPool.UTF8)));
+}
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(journalEditDDMTemplateDisplayContext.getRedirect());
 

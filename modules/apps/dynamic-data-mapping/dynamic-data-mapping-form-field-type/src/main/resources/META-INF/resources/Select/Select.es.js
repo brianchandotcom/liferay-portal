@@ -20,6 +20,7 @@ import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import {normalizeOptions, normalizeValue} from '../util/options';
+import {getTooltipTitle} from '../util/tooltip';
 import HiddenSelectInput from './HiddenSelectInput.es';
 import VisibleSelectInput from './VisibleSelectInput.es';
 
@@ -372,7 +373,13 @@ const Select = ({
 
 	return (
 		<ClayTooltipProvider>
-			<div data-tooltip-align="top" title={selectedLabel}>
+			<div
+				data-tooltip-align="top"
+				{...getTooltipTitle({
+					placeholder: Liferay.Language.get('choose-an-option'),
+					value: selectedLabel,
+				})}
+			>
 				<Trigger
 					multiple={multiple}
 					onCloseButtonClicked={({event, value}) => {

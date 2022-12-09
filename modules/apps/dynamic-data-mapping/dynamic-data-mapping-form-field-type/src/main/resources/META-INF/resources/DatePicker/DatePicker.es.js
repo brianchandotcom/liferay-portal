@@ -13,11 +13,13 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import moment from 'moment/min/moment-with-locales';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import {getTooltipTitle} from '../util/tooltip';
 import {createAutoCorrectedDatePipe} from './createAutoCorrectedDatePipe';
 
 const DIGIT_REGEX = /\d/;
@@ -265,29 +267,36 @@ export default function DatePicker({
 			readOnly={readOnly}
 			{...otherProps}
 		>
-			<ClayDatePicker
-				dateFormat={clayFormat}
-				dir={dir}
-				disabled={readOnly}
-				expanded={expanded}
-				firstDayOfWeek={firstDayOfWeek}
-				months={months}
-				onBlur={onBlur}
-				onExpandedChange={handleExpandedChange}
-				onFocus={onFocus}
-				onInput={onInputMask}
-				onValueChange={handleValueChange}
-				placeholder={placeholder}
-				ref={inputRef}
-				time={isDateTime}
-				use12Hours={use12Hours}
-				value={formattedDate}
-				weekdaysShort={weekdaysShort}
-				years={years}
-				yearsCheck={false}
-			/>
+			<ClayTooltipProvider autoAlign>
+				<div
+					data-tooltip-align="top"
+					{...getTooltipTitle({placeholder, value: formattedDate})}
+				>
+					<ClayDatePicker
+						dateFormat={clayFormat}
+						dir={dir}
+						disabled={readOnly}
+						expanded={expanded}
+						firstDayOfWeek={firstDayOfWeek}
+						months={months}
+						onBlur={onBlur}
+						onExpandedChange={handleExpandedChange}
+						onFocus={onFocus}
+						onInput={onInputMask}
+						onValueChange={handleValueChange}
+						placeholder={placeholder}
+						ref={inputRef}
+						time={isDateTime}
+						use12Hours={use12Hours}
+						value={formattedDate}
+						weekdaysShort={weekdaysShort}
+						years={years}
+						yearsCheck={false}
+					/>
 
-			<input name={name} type="hidden" value={rawDate} />
+					<input name={name} type="hidden" value={rawDate} />
+				</div>
+			</ClayTooltipProvider>
 		</FieldBase>
 	);
 }

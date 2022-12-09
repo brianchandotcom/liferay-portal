@@ -23,6 +23,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
+import {getTooltipTitle} from '../util/tooltip';
 import withConfirmationField from '../util/withConfirmationField.es';
 
 const CounterContainer = ({
@@ -161,7 +162,10 @@ const Text = ({
 	return (
 		<>
 			<ClayTooltipProvider autoAlign>
-				<div data-tooltip-align="top" title={value}>
+				<div
+					data-tooltip-align="top"
+					{...getTooltipTitle({placeholder, value})}
+				>
 					<ClayInput
 						className="ddm-field-text"
 						dir={Liferay.Language.direction[editingLanguageId]}
@@ -220,7 +224,10 @@ const Textarea = ({
 	return (
 		<>
 			<ClayTooltipProvider autoAlign>
-				<div data-tooltip-align="top" title={value}>
+				<div
+					data-tooltip-align="top"
+					{...getTooltipTitle({placeholder, value})}
+				>
 					<textarea
 						className="ddm-field-text form-control"
 						dir={Liferay.Language.direction[editingLanguageId]}

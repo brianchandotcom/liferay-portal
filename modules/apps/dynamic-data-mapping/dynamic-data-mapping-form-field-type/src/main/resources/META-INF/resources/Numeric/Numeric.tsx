@@ -13,6 +13,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
 // @ts-ignore
@@ -31,9 +32,9 @@ import {trimLeftZero} from '../util/numericalOperations';
 import withConfirmationField from '../util/withConfirmationField.es';
 
 import './Numeric.scss';
+import {getTooltipTitle} from '../util/tooltip';
 
 import type {FieldChangeEventHandler, Locale, LocalizedValue} from '../types';
-
 const NON_NUMERIC_REGEX = /[\D]/g;
 
 const adaptiveMask = (rawValue: string, inputMaskFormat: string) => {
@@ -289,21 +290,32 @@ const Numeric: React.FC<IProps> = ({
 	};
 
 	const input = (
-		<ClayInput
-			className={classNames({
-				'ddm-form-field-type__numeric--rtl':
-					Liferay.Language.direction[editingLanguageId] === 'rtl',
-			})}
-			disabled={readOnly}
-			id={id ?? name}
-			name={`${name}${inputMask ? '_masked' : ''}`}
-			onBlur={onBlur}
-			onChange={handleChange}
-			onFocus={onFocus}
-			placeholder={inputValue.placeholder}
-			type="text"
-			value={inputValue.masked}
-		/>
+		<ClayTooltipProvider>
+			<div
+				data-tooltip-align="top"
+				{...getTooltipTitle({
+					placeholder: inputValue.placeholder!,
+					value: inputValue.masked,
+				})}
+			>
+				<ClayInput
+					className={classNames({
+						'ddm-form-field-type__numeric--rtl':
+							Liferay.Language.direction[editingLanguageId] ===
+							'rtl',
+					})}
+					disabled={readOnly}
+					id={id ?? name}
+					name={`${name}${inputMask ? '_masked' : ''}`}
+					onBlur={onBlur}
+					onChange={handleChange}
+					onFocus={onFocus}
+					placeholder={inputValue.placeholder}
+					type="text"
+					value={inputValue.masked}
+				/>
+			</div>
+		</ClayTooltipProvider>
 	);
 
 	return (

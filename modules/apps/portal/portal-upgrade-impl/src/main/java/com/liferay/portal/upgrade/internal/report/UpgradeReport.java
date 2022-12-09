@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.util.PropsValues;
@@ -64,7 +65,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.time.StopWatch;
 import org.apache.felix.cm.PersistenceManager;
 
 /**
@@ -73,8 +73,6 @@ import org.apache.felix.cm.PersistenceManager;
 public class UpgradeReport {
 
 	public UpgradeReport() {
-		_stopWatch.start();
-
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
 		_initialTableCounts = _getTableCounts();
@@ -112,8 +110,6 @@ public class UpgradeReport {
 	public void generateReport(
 		PersistenceManager persistenceManager,
 		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
-
-		_stopWatch.stop();
 
 		_persistenceManager = persistenceManager;
 
@@ -619,7 +615,7 @@ public class UpgradeReport {
 	private String _getUpgradeTimeInfo() {
 		return String.format(
 			"Upgrade completed in %s seconds",
-			_stopWatch.getTime() / Time.SECOND);
+			DBUpgrader.getUpgradeTime() / Time.SECOND);
 	}
 
 	private Map<String, Integer> _sort(Map<String, Integer> map) {
@@ -668,7 +664,6 @@ public class UpgradeReport {
 	private final Map<String, Integer> _initialTableCounts;
 	private PersistenceManager _persistenceManager;
 	private String _rootDir;
-	private final StopWatch _stopWatch = new StopWatch();
 	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 

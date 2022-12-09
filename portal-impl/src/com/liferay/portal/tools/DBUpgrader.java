@@ -114,11 +114,21 @@ public class DBUpgrader {
 		}
 	}
 
-	public static void main(String[] args) {
-		try {
-			StopWatch stopWatch = new StopWatch();
+	public static long getUpgradeTime() {
+		if (_stopWatch == null) {
+			return 0;
+		}
 
-			stopWatch.start();
+		return _stopWatch.getTime();
+	}
+
+	public static void main(String[] args) {
+		String result = "Completed";
+
+		try {
+			_stopWatch = new StopWatch();
+
+			_stopWatch.start();
 
 			PortalClassPathUtil.initializeClassPaths(null);
 
@@ -139,15 +149,20 @@ public class DBUpgrader {
 			upgradeModules();
 
 			StoreFactory.getStore();
-
-			System.out.println(
-				"\nCompleted Liferay core upgrade process in " +
-					(stopWatch.getTime() / Time.SECOND) + " seconds");
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+
+			result = "Failed";
 		}
 		finally {
+			_stopWatch.stop();
+
+			System.out.println(
+				StringBundler.concat(
+					"\n", result, " Liferay upgrade process in ",
+					_stopWatch.getTime() / Time.SECOND, " seconds"));
+
 			if (PropsValues.UPGRADE_REPORT_ENABLED) {
 				_stopUpgradeReportLogAppender();
 			}
@@ -399,5 +414,6 @@ public class DBUpgrader {
 	private static volatile Appender _appender;
 	private static volatile ServiceReference<Appender>
 		_appenderServiceReference;
+	private static volatile StopWatch _stopWatch;
 
 }

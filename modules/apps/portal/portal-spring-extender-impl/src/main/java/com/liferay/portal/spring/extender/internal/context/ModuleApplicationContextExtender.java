@@ -52,7 +52,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Miguel Pastor
  */
-@Component(service = {})
+@Component(enabled = false, service = {})
 public class ModuleApplicationContextExtender
 	implements BundleTrackerCustomizer
 		<ModuleApplicationContextExtender.ModuleApplicationContextExtension> {

@@ -1039,18 +1039,11 @@ definition {
 				userEmailAddress = "${userScreenName}ea@liferay.com");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
-			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
-			permissionNavigationValue = "Blogs",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
 			roleTitle = "Site Member",
-			roleType = "Site");
+			roleType = "site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

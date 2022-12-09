@@ -249,18 +249,13 @@ definition {
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
-			permissionDefinitionValue = "",
-			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-			permissionNavigationValue = "Custom Objects",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
 			roleTitle = "Regular Role",
-			roleType = "Regular");
+			roleType = "regular");
 
 		Navigator.openURL();
 
@@ -430,20 +425,19 @@ definition {
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
 
-		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-			Role.definePermissionCP(
-				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
-				permissionDefinitionValue = "",
-				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-				permissionNavigationValue = "Custom Objects",
-				roleTitle = "Regular Role",
-				roleType = "Regular");
-		}
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_ENTRY",
+			resourceName = "com.liferay.object#${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -618,20 +612,19 @@ definition {
 
 		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
-		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-			Role.definePermissionCP(
-				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
-				permissionDefinitionValue = "",
-				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-				permissionNavigationValue = "Custom Objects",
-				roleTitle = "Regular Role",
-				roleType = "Regular");
-		}
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_ENTRY",
+			resourceName = "com.liferay.object#${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -879,20 +872,19 @@ definition {
 
 		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
-		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-			Role.definePermissionCP(
-				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
-				permissionDefinitionValue = "",
-				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-				permissionNavigationValue = "Custom Objects",
-				roleTitle = "Regular Role",
-				roleType = "Regular");
-		}
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_ENTRY",
+			resourceName = "com.liferay.object#${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -958,20 +950,19 @@ definition {
 
 		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
-		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-			Role.definePermissionCP(
-				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
-				permissionDefinitionValue = "",
-				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-				permissionNavigationValue = "Custom Objects",
-				roleTitle = "Regular Role",
-				roleType = "Regular");
-		}
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_ENTRY",
+			resourceName = "com.liferay.object#${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1308,20 +1299,19 @@ definition {
 
 		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
-		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-			Role.definePermissionCP(
-				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
-				permissionDefinitionValue = "",
-				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-				permissionNavigationValue = "Custom Objects",
-				roleTitle = "Regular Role",
-				roleType = "Regular");
-		}
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_ENTRY",
+			resourceName = "com.liferay.object#${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1614,18 +1604,13 @@ definition {
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
-			permissionDefinitionValue = "",
-			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-			permissionNavigationValue = "Custom Objects",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
 			roleTitle = "Regular Role",
-			roleType = "Regular");
+			roleType = "regular");
 
 		Navigator.openURL();
 
@@ -1701,18 +1686,13 @@ definition {
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
-			permissionDefinitionValue = "",
-			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-			permissionNavigationValue = "Custom Objects",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
 			roleTitle = "Regular Role",
-			roleType = "Regular");
+			roleType = "regular");
 
 		Navigator.openURL();
 
@@ -2016,20 +1996,19 @@ definition {
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
 
-		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-			Role.definePermissionCP(
-				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
-				permissionDefinitionValue = "",
-				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-				permissionNavigationValue = "Custom Objects",
-				roleTitle = "Regular Role",
-				roleType = "Regular");
-		}
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_ENTRY",
+			resourceName = "com.liferay.object#${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2128,18 +2107,13 @@ definition {
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
-			permissionDefinitionValue = "",
-			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-			permissionNavigationValue = "Custom Objects",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
 			roleTitle = "Regular Role",
-			roleType = "Regular");
+			roleType = "regular");
 
 		Navigator.openURL();
 
@@ -2337,27 +2311,19 @@ definition {
 			permissionFlagged = "true",
 			roleTitle = "Guest");
 
-		Navigator.openURL();
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_ENTRY",
+			resourceName = "com.liferay.object#${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
 
-		for (var resourceActionIndex : list "RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX,RESOURCE_PERMISSIONS_VIEW_CHECKBOX") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
-			Role.definePermissionCP(
-				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
-				permissionDefinitionValue = "",
-				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-				permissionNavigationValue = "Custom Objects",
-				roleTitle = "Guest",
-				roleType = "Regular");
-		}
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
+			roleTitle = "Regular Role",
+			roleType = "regular");
 
 		Navigator.openURL();
 
@@ -2563,20 +2529,13 @@ definition {
 			permissionFlagged = "true",
 			roleTitle = "Guest");
 
-		Navigator.openURL();
+		var objectId = JSONObject.getObjectId(objectName = "CustomObject");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_RESOURCE_PERMISSIONS_VIEW_CHECKBOX",
-			permissionDefinitionValue = "",
-			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
-			permissionNavigationValue = "Custom Objects",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
 			roleTitle = "Guest",
-			roleType = "Regular");
+			roleType = "regular");
 
 		Navigator.openURL();
 

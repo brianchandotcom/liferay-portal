@@ -74,14 +74,12 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 	public InputTemplateNode toInputTemplateNode(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest,
-		Optional<InfoForm> infoFormOptional, Locale locale) {
+		HttpServletRequest httpServletRequest, InfoForm infoForm,
+		Locale locale) {
 
 		String errorMessage = StringPool.BLANK;
 
 		InfoField infoField = null;
-
-		InfoForm infoForm = infoFormOptional.orElse(null);
 
 		if (infoForm != null) {
 			String fieldName = GetterUtil.getString(

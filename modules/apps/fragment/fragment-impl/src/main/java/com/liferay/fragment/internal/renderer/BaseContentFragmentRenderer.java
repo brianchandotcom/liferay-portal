@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.Serializable;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,13 +67,10 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 				jsonObject.getLong("classPK"));
 		}
 
-		Optional<InfoItemReference> contextInfoItemReferenceOptional =
-			fragmentRendererContext.getContextInfoItemReferenceOptional();
+		InfoItemReference infoItemReference =
+			fragmentRendererContext.getContextInfoItemReference();
 
-		if (contextInfoItemReferenceOptional.isPresent()) {
-			InfoItemReference infoItemReference =
-				contextInfoItemReferenceOptional.get();
-
+		if (infoItemReference != null) {
 			InfoItemIdentifier infoItemIdentifier =
 				infoItemReference.getInfoItemIdentifier();
 

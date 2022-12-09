@@ -48,7 +48,6 @@ import java.io.PrintWriter;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -236,13 +235,10 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 					WorkflowConstants.STATUS_ANY);
 			}
 
-			Optional<InfoItemReference> contextInfoItemReferenceOptional =
-				fragmentRendererContext.getContextInfoItemReferenceOptional();
+			InfoItemReference infoItemReference =
+				fragmentRendererContext.getContextInfoItemReference();
 
-			if (contextInfoItemReferenceOptional.isPresent()) {
-				InfoItemReference infoItemReference =
-					contextInfoItemReferenceOptional.get();
-
+			if (infoItemReference != null) {
 				if (Objects.equals(
 						infoItemReference.getClassName(),
 						KBArticle.class.getName())) {

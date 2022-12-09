@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Jorge Ferrer
@@ -36,8 +35,8 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	}
 
 	@Override
-	public Optional<InfoItemReference> getContextInfoItemReferenceOptional() {
-		return Optional.ofNullable(_infoItemReference);
+	public InfoItemReference getContextInfoItemReference() {
+		return _infoItemReference;
 	}
 
 	@Override
@@ -51,8 +50,8 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 	}
 
 	@Override
-	public Optional<InfoForm> getInfoFormOptional() {
-		return Optional.ofNullable(_infoForm);
+	public InfoForm getInfoForm() {
+		return _infoForm;
 	}
 
 	@Override

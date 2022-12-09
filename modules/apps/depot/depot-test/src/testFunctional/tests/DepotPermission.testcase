@@ -235,10 +235,17 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.editPermissionCmdCP(
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
 			assetLibrariesScope = "true",
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX",
-			roleTitle = "Depot Regrole Name",
+			define = "true",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Web Content",
+			permissionSheetSubtitle = "Web Content",
+			permissionValues = "Add Web Content",
 			siteNameScope = "Test Depot Name");
 
 		User.logoutAndLoginPG(
@@ -1197,10 +1204,17 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.editPermissionCmdCP(
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
 			assetLibrariesScope = "true",
-			permissionDefinitionKey = "SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX",
-			roleTitle = "Depot Regrole Name",
+			define = "true",
+			permissionNavHeader = "Site Builder",
+			permissionNavItem = "Collections",
+			permissionSheetSubtitle = "Asset List Entry",
+			permissionValues = "Delete",
 			siteNameScope = "Test Depot Name");
 
 		Role.viewPermissionCP(
@@ -1210,10 +1224,16 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_BUILDER_COLLECTIONS_ASSET_LIST_ENTRY_DELETE_CHECKBOX",
-			removeSiteScope = "Test Depot Name",
-			roleTitle = "Depot Regrole Name");
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
+			permissionNavHeader = "Site Builder",
+			permissionNavItem = "Collections",
+			permissionSheetSubtitle = "Asset List Entry",
+			permissionValues = "Delete",
+			removeSiteScope = "Test Depot Name");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "Delete",
@@ -1234,10 +1254,17 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.editPermissionCmdCP(
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
 			assetLibrariesScope = "true",
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX",
-			roleTitle = "Depot Regrole Name",
+			define = "true",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "Documents",
+			permissionValues = "Add Document",
 			siteNameScope = "Test Depot Name");
 
 		Role.viewPermissionCP(
@@ -1247,10 +1274,16 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX",
-			removeSiteScope = "Test Depot Name",
-			roleTitle = "Depot Regrole Name");
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "Documents",
+			permissionValues = "Add Document",
+			removeSiteScope = "Test Depot Name");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "Add Document",
@@ -1271,10 +1304,17 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.editPermissionCmdCP(
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
 			assetLibrariesScope = "true",
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Depot Regrole Name",
+			define = "true",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Web Content",
+			permissionSheetSubtitle = "General Permissions",
+			permissionValues = "View",
 			siteNameScope = "Test Depot Name");
 
 		Role.viewPermissionCP(
@@ -1284,10 +1324,16 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX",
-			removeSiteScope = "Test Depot Name",
-			roleTitle = "Depot Regrole Name");
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Web Content",
+			permissionSheetSubtitle = "General Permissions",
+			permissionValues = "View",
+			removeSiteScope = "Test Depot Name");
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",
@@ -1521,10 +1567,17 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.editPermissionCmdCP(
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
 			assetLibrariesScope = "true",
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			roleTitle = "Depot Regrole Name",
+			define = "true",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "General Permissions",
+			permissionValues = "Access in Site and Asset Library Administration",
 			siteNameScope = "Test Depot Name");
 
 		User.logoutAndLoginPG(
@@ -1550,10 +1603,16 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			removeSiteScope = "Test Depot Name",
-			roleTitle = "Depot Regrole Name");
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "General Permissions",
+			permissionValues = "Access in Site and Asset Library Administration",
+			removeSiteScope = "Test Depot Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
@@ -1562,10 +1621,17 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.editPermissionCmdCP(
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Depot Regrole Name");
+
+		Role.editPermissionCmdCPUI(
 			assetLibrariesScope = "true",
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			roleTitle = "Depot Regrole Name",
+			define = "true",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "General Permissions",
+			permissionValues = "Access in Site and Asset Library Administration",
 			siteNameScope = "Test Depot Name2");
 
 		User.logoutAndLoginPG(

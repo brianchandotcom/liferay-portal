@@ -7,11 +7,6 @@
 </#function>
 
 <style>
-	.arrow-hover-icon {
-		display: none;
-		transform: rotate(-45deg);
-	}
-
 	.account-menu-item {
 		border-radius: 4px;
 		width: 100%;
@@ -31,12 +26,6 @@
 	.account-menu-item:focus {
 		background: var(--color-action-primary-hover-lighten);
 		color: var(--color-action-primary-default);
-	}
-
-	.account-menu-item:hover .arrow-hover-icon,
-	.account-menu-item:active .arrow-hover-icon,
-	.account-menu-item:focus .arrow-hover-icon {
-		display: block;
 	}
 </style>
 

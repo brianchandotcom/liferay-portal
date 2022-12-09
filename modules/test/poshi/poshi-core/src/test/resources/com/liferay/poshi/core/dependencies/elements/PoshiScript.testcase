@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "Ensure that a user can add multiple Blogs Entries."
-	@priority = "4"	
+	@priority = "4"
 	@simple-annotation
 	test AddBlogsEntries {
 		property testray.component.names = "Blogs";

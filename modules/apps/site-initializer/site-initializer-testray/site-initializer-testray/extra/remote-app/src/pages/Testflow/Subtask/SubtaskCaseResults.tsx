@@ -12,22 +12,38 @@
  * details.
  */
 
-import {useParams} from 'react-router-dom';
+import {Dispatch} from 'react';
+import {useOutletContext, useParams} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import FloatingBox from '../../../components/FloatingBox';
 import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import {ListViewTypes} from '../../../context/ListViewContext';
+import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
+import fetcher from '../../../services/fetcher';
 import {Liferay} from '../../../services/liferay';
-import {TestraySubTaskCaseResult} from '../../../services/rest';
+import {
+	TestraySubTask,
+	TestraySubTaskCaseResult,
+	testraySubTaskImpl,
+} from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
 import {searchUtil} from '../../../util/search';
 import {SubTaskStatuses} from '../../../util/statuses';
 
+type OutletContext = {
+	subtasksItems: TestraySubTask[];
+};
+
 const SubtasksCaseResults = () => {
 	const {subtaskId} = useParams();
+
+	const {updateItemFromList} = useMutate();
+
+	const {subtasksItems} = useOutletContext<OutletContext>();
 
 	const getFloatingBoxAlerts = (
 		subtasksCaseResults: TestraySubTaskCaseResult[],
@@ -91,6 +107,45 @@ const SubtasksCaseResults = () => {
 		const statusOpen = subtaskStatusCheck() || [];
 
 		return [...alerts, ...alreadyAssigned, ...statusOpen];
+	};
+
+	const onSplitSubtasks = async (
+		dispatch: Dispatch<any>,
+		mutate: KeyedMutator<TestraySubTaskCaseResult>,
+		subTaskId: string,
+		selectedCaseResults: TestraySubTaskCaseResult[]
+	) => {
+		const data = await fetcher(
+			`${testraySubtaskCaseResultImpl.resource}&filter=${searchUtil.eq(
+				'subtaskId',
+				subTaskId as string
+			)}&pageSize=1000`
+		);
+
+		const allCaseResults =
+			testraySubtaskCaseResultImpl.transformDataFromList(data).items ||
+			[];
+
+		await testraySubTaskImpl.splitToSubtask(
+			allCaseResults,
+			selectedCaseResults,
+			subTaskId,
+			subtasksItems
+		);
+
+		updateItemFromList(
+			mutate,
+			0,
+			{},
+			{
+				revalidate: true,
+			}
+		);
+
+		dispatch({
+			payload: [],
+			type: ListViewTypes.SET_CHECKED_ROW,
+		});
 	};
 
 	return (
@@ -191,8 +246,12 @@ const SubtasksCaseResults = () => {
 				filter: searchUtil.eq('subtaskId', subtaskId as string),
 			}}
 		>
-			{({items}, {dispatch, listViewContext: {selectedRows}}) => {
+			{({items}, {dispatch, listViewContext: {selectedRows}, mutate}) => {
 				const alerts = getFloatingBoxAlerts(items, selectedRows);
+
+				const selectedCaseResults: TestraySubTaskCaseResult[] = selectedRows.map(
+					(rowId) => items.find(({id}) => rowId === id)
+				);
 
 				return (
 					<FloatingBox
@@ -204,6 +263,14 @@ const SubtasksCaseResults = () => {
 							})
 						}
 						isVisible={!!selectedRows.length}
+						onSubmit={() =>
+							onSplitSubtasks(
+								dispatch,
+								mutate,
+								subtaskId as string,
+								selectedCaseResults
+							)
+						}
 						primaryButtonProps={{
 							disabled: !!alerts.length,
 							title: i18n.translate('split-tests'),
@@ -218,4 +285,5 @@ const SubtasksCaseResults = () => {
 		</ListView>
 	);
 };
+
 export default SubtasksCaseResults;

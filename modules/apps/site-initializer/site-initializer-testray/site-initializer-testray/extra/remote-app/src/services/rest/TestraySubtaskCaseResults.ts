@@ -88,7 +88,10 @@ class TestraySubtaskCaseResultImpl extends Rest<
 				subTask: subtaskCaseResult?.r_subtaskToSubtasksCasesResults_c_subtask
 					? {
 							...subtaskCaseResult?.r_subtaskToSubtasksCasesResults_c_subtask,
-
+							task:
+								subtaskCaseResult
+									.r_subtaskToSubtasksCasesResults_c_subtask
+									?.r_taskToSubtasks_c_task,
 							user:
 								subtaskCaseResult
 									.r_subtaskToSubtasksCasesResults_c_subtask

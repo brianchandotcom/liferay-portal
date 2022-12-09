@@ -42,6 +42,7 @@ type OutletContext = {
 	mergedSubtaskNames: string;
 	mutateSubtask: KeyedMutator<TestraySubTask>;
 	mutateSubtaskIssues: KeyedMutator<TestraySubTask>;
+	splitSubtaskNames: string;
 	subtaskIssues: TestraySubTaskIssue[];
 	testraySubtask: TestraySubTask;
 	testrayTask: TestrayTask;
@@ -54,6 +55,7 @@ const Subtasks = () => {
 		mbMessage,
 		mergedSubtaskNames,
 		mutateSubtask,
+		splitSubtaskNames,
 		subtaskIssues,
 		testraySubtask,
 	} = useOutletContext<OutletContext>();
@@ -172,6 +174,16 @@ const Subtasks = () => {
 									title: i18n.translate('merged-with'),
 									value: mergedSubtaskNames,
 									visible: !!mergedSubtaskNames.length,
+								},
+								{
+									title: i18n.translate('split-from'),
+									value: `${testraySubtask.splitFromSubtask?.name}`,
+									visible: !!testraySubtask?.splitFromSubtask,
+								},
+								{
+									title: i18n.translate('split-to'),
+									value: splitSubtaskNames,
+									visible: !!splitSubtaskNames.length,
 								},
 							]}
 						/>

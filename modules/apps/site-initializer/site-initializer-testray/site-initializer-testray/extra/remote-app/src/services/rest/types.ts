@@ -244,14 +244,17 @@ export type TestraySubTask = {
 	dueStatus: PickList;
 	errors: string;
 	id: number;
+	index: number;
 	mbMessageId: number;
 	mbThreadId: number;
 	mergedToSubtaskId: TestraySubTask;
 	name: string;
 	r_mergedToTestraySubtask_c_subtaskId: TestraySubTask;
+	r_splitFromTestraySubtask_c_subtask: TestraySubTask;
 	r_taskToSubtasks_c_task: TestrayTask;
 	r_userToSubtasks_user: UserAccount;
 	score: number;
+	splitFromSubtask: TestraySubTask;
 	statusUpdateDate: string;
 	task: TestrayTask;
 	user: UserAccount;

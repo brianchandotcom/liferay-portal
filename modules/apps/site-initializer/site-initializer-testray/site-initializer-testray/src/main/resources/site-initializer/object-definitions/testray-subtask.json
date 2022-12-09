@@ -53,6 +53,17 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
+				"en_US": "Index"
+			},
+			"name": "index",
+			"required": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Integer",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
 				"en_US": "Score"
 			},
 			"name": "score",

@@ -18,9 +18,10 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeTable;
-import com.liferay.wiki.service.persistence.WikiNodePersistence;
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.model.WikiPageTable;
+import com.liferay.wiki.service.persistence.WikiPagePersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,40 +30,44 @@ import org.osgi.service.component.annotations.Reference;
  * @author Noor Najjar
  */
 @Component(service = TableReferenceDefinition.class)
-public class WikiNodeTableReferenceDefinition
-	implements TableReferenceDefinition<WikiNodeTable> {
+public class WikiPageTableReferenceDefinition
+	implements TableReferenceDefinition<WikiPageTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<WikiNodeTable>
+		ChildTableReferenceInfoBuilder<WikiPageTable>
 			childTableReferenceInfoBuilder) {
 
 		childTableReferenceInfoBuilder.assetEntryReference(
-			WikiNodeTable.INSTANCE.nodeId, WikiNode.class
+			WikiPageTable.INSTANCE.resourcePrimKey, WikiPage.class
 		).resourcePermissionReference(
-			WikiNodeTable.INSTANCE.nodeId, WikiNode.class
+			WikiPageTable.INSTANCE.resourcePrimKey, WikiPage.class
 		);
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<WikiNodeTable>
+		ParentTableReferenceInfoBuilder<WikiPageTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(WikiNodeTable.INSTANCE);
+		parentTableReferenceInfoBuilder.groupedModel(
+			WikiPageTable.INSTANCE
+		).singleColumnReference(
+			WikiPageTable.INSTANCE.nodeId, WikiNodeTable.INSTANCE.nodeId
+		);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _wikiNodePersistence;
+		return _wikiPagePersistence;
 	}
 
 	@Override
-	public WikiNodeTable getTable() {
-		return WikiNodeTable.INSTANCE;
+	public WikiPageTable getTable() {
+		return WikiPageTable.INSTANCE;
 	}
 
 	@Reference
-	private WikiNodePersistence _wikiNodePersistence;
+	private WikiPagePersistence _wikiPagePersistence;
 
 }

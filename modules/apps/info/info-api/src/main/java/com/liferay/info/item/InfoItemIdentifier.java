@@ -16,8 +16,6 @@ package com.liferay.info.item;
 
 import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 
-import java.util.Optional;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -33,7 +31,7 @@ public interface InfoItemIdentifier {
 
 	public InfoItemServiceFilter getInfoItemServiceFilter();
 
-	public Optional<String> getVersionOptional();
+	public String getVersion();
 
 	public void setVersion(String version);
 

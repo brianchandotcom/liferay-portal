@@ -1002,21 +1002,6 @@ definition {
 			parentFolderName = "DM Folder 1",
 			sourceFileName = "Document_2.txt");
 
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 3",
-			groupName = "Site Name-staging",
-			parentFolderName = "DM Folder 2");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document in Folder 3",
-			dmDocumentTitle = "Document_3.txt",
-			folderName = "DM Folder 3",
-			groupName = "Site Name-staging",
-			mimeType = "text/plain",
-			parentFolderName = "DM Folder 2",
-			sourceFileName = "Document_3.txt");
-
 		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		Staging.publishViaSAP(
@@ -1025,7 +1010,7 @@ definition {
 
 		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
-		for (var folderCount : list "1,2,3") {
+		for (var folderCount : list "1,2") {
 			DMFolder.viewCP(dmFolderName = "DM Folder ${folderCount}");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");

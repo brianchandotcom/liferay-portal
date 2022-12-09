@@ -1,0 +1,65 @@
+definition {
+
+    property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Remote Apps";
+	property testray.main.component.name = "Remote Apps";
+
+    setUp{
+        TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+    }
+
+    tearDown{
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			RemoteApps.tearDown();
+
+			Navigator.gotoPage(pageName = "Home");
+        }
+    }
+
+    @description = "LPS-170678 - Assert if 'Custom Element' can be categorized as 'Client Extension'"
+    @priority = "3"
+    test CanBeCategorizedInAddWidgetList {
+
+        property app.server.types = "tomcat";
+		property database.types = "mysql";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		task("When client extension has portal category 'Client Extensions'"){
+        	RemoteApps.goToRemoteAppsPortlet();
+
+			RemoteApps.addCustomElementAllFields(
+			entryCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
+			entryHtmlName = "vanilla-counter",
+			entryName = "Vanilla Counter",
+			entryProperties = "test-data-user=QAuser",
+			entryURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
+
+		task("And When on Content Page"){
+			Navigator.openURL();
+
+			Click(locator1 = "//span[@title='Edit']");
+		}
+
+		task("And When access add widget list"){
+			Type(
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+				value1 = "Client Extensions");
+		}
+
+		task("Then custom element is available under category 'Client Extensions'"){
+			AssertTextEquals(
+				locator1 = "//span[@class='c-inner text-truncate']",
+				value1 = "Client Extensions");
+		}
+    }
+}

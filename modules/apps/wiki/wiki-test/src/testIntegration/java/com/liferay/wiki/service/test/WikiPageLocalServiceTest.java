@@ -777,6 +777,47 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
+	public void testMovePageToTrashWithDraftAttachments() throws Exception {
+		WikiPage approvedPage = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		WikiTestUtil.addWikiAttachment(
+			approvedPage.getUserId(), approvedPage.getNodeId(),
+			approvedPage.getTitle(), getClass());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(approvedPage.getGroupId());
+
+		// Update the page so the modifiedDate comes after attachment
+		// modifiedDate to resemble the /wiki/edit_page action
+
+		approvedPage = WikiTestUtil.updatePage(
+			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
+			approvedPage.getContent(), true, serviceContext);
+
+		WikiTestUtil.addWikiAttachment(
+			approvedPage.getUserId(), approvedPage.getNodeId(),
+			approvedPage.getTitle(), getClass());
+
+		WikiPage draftPage = WikiTestUtil.updatePage(
+			approvedPage, approvedPage.getUserId(), approvedPage.getTitle(),
+			approvedPage.getContent(), false, serviceContext);
+
+		List<FileEntry> attachmentsFileEntries =
+			draftPage.getAttachmentsFileEntries();
+
+		WikiPageLocalServiceUtil.movePageToTrash(
+			approvedPage.getUserId(), approvedPage);
+
+		FileEntry draftFileEntry = attachmentsFileEntries.get(1);
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+			draftFileEntry.getFileEntryId());
+
+		Assert.assertTrue(dlFileEntry.isInTrash());
+	}
+
+	@Test
 	public void testOrderByModifiedDate() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());

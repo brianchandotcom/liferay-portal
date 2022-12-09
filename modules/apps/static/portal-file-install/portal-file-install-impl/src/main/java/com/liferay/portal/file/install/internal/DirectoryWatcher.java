@@ -92,15 +92,21 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			File file = new File(dir);
 
 			try {
-				_watchedDirs.add(file.getCanonicalFile());
+				file = file.getCanonicalFile();
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(ioException);
 				}
-
-				_watchedDirs.add(file);
 			}
+
+			_watchedDirs.add(file);
+
+			URI uri = file.toURI();
+
+			uri = uri.normalize();
+
+			_watchedDirPaths.add(uri.getPath());
 		}
 
 		_fileInstallers = ServiceTrackerListFactory.open(
@@ -549,26 +555,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		return fragmentHost;
 	}
 
-	private List<String> _getWatchedDirPaths() {
-		List<String> watchedDirPaths = new ArrayList<>();
-
-		for (File watchedDir : _watchedDirs) {
-			URI uri = watchedDir.toURI();
-
-			uri = uri.normalize();
-
-			watchedDirPaths.add(uri.getPath());
-		}
-
-		return watchedDirPaths;
-	}
-
 	private void _initializeCurrentManagedBundles() {
 		Bundle[] bundles = _bundleContext.getBundles();
 
 		Map<File, Long> checksums = new HashMap<>();
-
-		List<String> watchedDirPaths = _getWatchedDirPaths();
 
 		for (Bundle bundle : bundles) {
 			String location = bundle.getLocation();
@@ -600,7 +590,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			String path = null;
 
 			if ((location != null) &&
-				_contains(locationPath, watchedDirPaths)) {
+				_contains(locationPath, _watchedDirPaths)) {
 
 				String schemeSpecificPart = uri.getSchemeSpecificPart();
 
@@ -638,7 +628,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			int index = path.lastIndexOf(CharPool.SLASH);
 
-			if ((index != -1) && _startWith(path, watchedDirPaths)) {
+			if ((index != -1) && _startWith(path, _watchedDirPaths)) {
 				if (!_filenameFilter.accept(
 						new File(path.substring(0, index)),
 						path.substring(index + 1))) {
@@ -1396,6 +1386,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final Scanner _scanner;
 	private final AtomicBoolean _stateChanged = new AtomicBoolean();
 	private final Bundle _systemBundle;
+	private final List<String> _watchedDirPaths = new ArrayList<>();
 	private final List<File> _watchedDirs = new ArrayList<>();
 
 }

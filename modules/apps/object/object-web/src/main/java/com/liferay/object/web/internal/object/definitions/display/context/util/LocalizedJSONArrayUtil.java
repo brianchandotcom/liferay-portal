@@ -40,12 +40,12 @@ public class LocalizedJSONArrayUtil {
 			"numericOperators",
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"label", LanguageUtil.get(locale, "equals-to")
+					"label", LanguageUtil.get(locale, "is-equal-to")
 				).put(
 					"value", "eq"
 				),
 				JSONUtil.put(
-					"label", LanguageUtil.get(locale, "not-equals-to")
+					"label", LanguageUtil.get(locale, "is-not-equal-to")
 				).put(
 					"value", "ne"
 				))

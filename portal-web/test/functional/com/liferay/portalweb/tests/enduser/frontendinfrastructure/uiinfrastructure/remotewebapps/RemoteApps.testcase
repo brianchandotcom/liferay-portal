@@ -491,13 +491,7 @@ definition {
 	test CustomElementCanInjectHTMLProperties {
 		property portal.acceptance = "true";
 
-		task ("Add a public page with JSON") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page");
-		}
-
-		task ("Create Vanilla Counter as a Custom Element") {
+		task ("When create custom element remote application with property QAuser") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
 				customElementCssurl = "http://remote-component-test.wincent.com/index.css",
 				customElementHtmlName = "vanilla-counter",
@@ -506,17 +500,13 @@ definition {
 				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
-		task ("Add Vanilla Counter to Test Page") {
-			var remoteAppEntryId = RemoteApps.getRemoteAppEntryId();
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page",
-				remoteAppEntryId = "${remoteAppEntryId}",
-				widgetName = "Vanilla Counter");
+		task ("When adding created portlet to a widget page") {
+			ClientExtension.addPortletToWidgetPage(
+				portletName = "Vanilla Counter",
+				widgetPageName = "Test Page");
 		}
 
-		task ("Assert Vanilla Counter's property is present") {
+		task ("Then custom element property is present on DOM") {
 			Navigator.gotoPage(pageName = "Test Page");
 
 			AssertElementPresent(

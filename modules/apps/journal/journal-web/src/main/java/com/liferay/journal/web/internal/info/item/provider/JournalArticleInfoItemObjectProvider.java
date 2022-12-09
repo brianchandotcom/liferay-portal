@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,14 +72,7 @@ public class JournalArticleInfoItemObjectProvider
 
 		JournalArticle article = null;
 
-		String version = null;
-
-		Optional<String> versionOptional =
-			infoItemIdentifier.getVersionOptional();
-
-		if (versionOptional.isPresent()) {
-			version = versionOptional.get();
-		}
+		String version = infoItemIdentifier.getVersion();
 
 		try {
 			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {

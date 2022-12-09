@@ -18,8 +18,6 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.info.item.provider.filter.OptionalPropertyInfoItemServiceFilter;
 
-import java.util.Optional;
-
 /**
  * @author Cristina González
  */
@@ -46,8 +44,8 @@ public class ClassNameClassPKInfoItemIdentifier implements InfoItemIdentifier {
 	}
 
 	@Override
-	public Optional<String> getVersionOptional() {
-		return Optional.ofNullable(_version);
+	public String getVersion() {
+		return _version;
 	}
 
 	@Override

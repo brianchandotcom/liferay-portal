@@ -1676,6 +1676,103 @@ definition {
 			position = "3");
 	}
 
+	@description = "LPS-166589 - Verify that it’s possible to view the object entries with the default filter applied"
+	@priority = "5"
+	test CanSeeEntriesWithFilterApplied {
+		task ("Given: An object with text field related to another object in a One-to-Many relationship") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 166589",
+				objectName = "CustomObject166589",
+				pluralLabelName = "Custom Objects 166589");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject166589");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject166589",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject166589");
+		}
+
+		task ("And: The user creates a custom view") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 166589");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
+
+			Button.clickSave();
+		}
+
+		task ("And: The user creates a custom filter using relationship") {
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(
+				filterBy = "Relationship",
+				filterType = "Includes",
+				filterValue = "Test");
+
+			Button.clickSave();
+		}
+
+		task ("And: The user creates an Entry with relationship field (via UI)") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject166589");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Text A");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject166589");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Text A");
+
+			ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "Test");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And: The user marks the custom view as a Default") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 166589");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			Button.clickSave();
+		}
+
+		task ("When: The user navigates to Custom Object") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject166589");
+		}
+
+		task ("Then: Assert that the filter was been applied") {
+			ObjectPortlet.viewEntry(entry = "Entry Text A");
+		}
+	}
+
 	@description = "LPS-147792 - Verify that the new column name will be displayed on the entries list"
 	@priority = "4"
 	test CanSeeRenamedColumnNameOnObjectView {

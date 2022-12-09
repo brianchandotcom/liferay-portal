@@ -17,6 +17,7 @@ package com.liferay.dispatch.internal.executor;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -25,17 +26,19 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Matija Petanjek
@@ -83,61 +86,16 @@ public class DispatchTaskExecutorRegistryImpl
 		return false;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDispatchTaskExecutor(
-		DispatchTaskExecutor dispatchTaskExecutor,
-		Map<String, Object> properties) {
-
-		String dispatchTaskFeatureFlag = (String)properties.get(
-			_KEY_DISPATCH_TASK_FEATURE_FLAG);
-
-		if (Validator.isNotNull(dispatchTaskFeatureFlag) &&
-			!GetterUtil.getBoolean(
-				PropsUtil.get("feature.flag." + dispatchTaskFeatureFlag))) {
-
-			return;
-		}
-
-		String dispatchTaskExecutorType = (String)properties.get(
-			_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
-
-		_validateDispatchTaskExecutorProperties(
-			dispatchTaskExecutor, dispatchTaskExecutorType);
-
-		if (!GetterUtil.getBoolean(
-				properties.get(_KEY_DISPATCH_TASK_EXECUTOR_HIDDEN_IN_UI))) {
-
-			_dispatchTaskExecutorNames.put(
-				dispatchTaskExecutorType,
-				(String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_NAME));
-		}
-
-		String label = GetterUtil.getString(
-			properties.get(_KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE),
-			DispatchTaskClusterMode.ALL_NODES.getLabel());
-
-		if (label.startsWith("single-node")) {
-			_clusterModeSingleNodeDispatchTaskExecutors.add(
-				dispatchTaskExecutorType);
-		}
-
-		_dispatchTaskExecutors.put(
-			dispatchTaskExecutorType, dispatchTaskExecutor);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, DispatchTaskExecutor.class,
+			new DispatchTaskExecutorServiceTrackerCustomizer(bundleContext));
 	}
 
-	protected void removeDispatchTaskExecutor(
-		DispatchTaskExecutor dispatchTaskExecutor,
-		Map<String, Object> properties) {
-
-		String dispatchTaskExecutorType = (String)properties.get(
-			_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
-
-		_dispatchTaskExecutorNames.remove(dispatchTaskExecutorType);
-		_dispatchTaskExecutors.remove(dispatchTaskExecutorType);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
 	}
 
 	private void _validateDispatchTaskExecutorProperties(
@@ -181,10 +139,98 @@ public class DispatchTaskExecutorRegistryImpl
 		DispatchTaskExecutorRegistryImpl.class);
 
 	private final List<String> _clusterModeSingleNodeDispatchTaskExecutors =
-		new ArrayList<>();
+		new CopyOnWriteArrayList<>();
 	private final Map<String, String> _dispatchTaskExecutorNames =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private final Map<String, DispatchTaskExecutor> _dispatchTaskExecutors =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
+	private ServiceTracker<DispatchTaskExecutor, DispatchTaskExecutor>
+		_serviceTracker;
+
+	private class DispatchTaskExecutorServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<DispatchTaskExecutor, DispatchTaskExecutor> {
+
+		public DispatchTaskExecutorServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public DispatchTaskExecutor addingService(
+			ServiceReference<DispatchTaskExecutor> serviceReference) {
+
+			DispatchTaskExecutor dispatchTaskExecutor =
+				_bundleContext.getService(serviceReference);
+
+			String dispatchTaskFeatureFlag =
+				(String)serviceReference.getProperty(
+					_KEY_DISPATCH_TASK_FEATURE_FLAG);
+
+			if (Validator.isNotNull(dispatchTaskFeatureFlag) &&
+				!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag." + dispatchTaskFeatureFlag))) {
+
+				return dispatchTaskExecutor;
+			}
+
+			String dispatchTaskExecutorType =
+				(String)serviceReference.getProperty(
+					_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
+
+			_validateDispatchTaskExecutorProperties(
+				dispatchTaskExecutor, dispatchTaskExecutorType);
+
+			if (!GetterUtil.getBoolean(
+					serviceReference.getProperty(
+						_KEY_DISPATCH_TASK_EXECUTOR_HIDDEN_IN_UI))) {
+
+				_dispatchTaskExecutorNames.put(
+					dispatchTaskExecutorType,
+					(String)serviceReference.getProperty(
+						_KEY_DISPATCH_TASK_EXECUTOR_NAME));
+			}
+
+			String label = GetterUtil.getString(
+				serviceReference.getProperty(
+					_KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE),
+				DispatchTaskClusterMode.ALL_NODES.getLabel());
+
+			if (label.startsWith("single-node")) {
+				_clusterModeSingleNodeDispatchTaskExecutors.add(
+					dispatchTaskExecutorType);
+			}
+
+			_dispatchTaskExecutors.put(
+				dispatchTaskExecutorType, dispatchTaskExecutor);
+
+			return dispatchTaskExecutor;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<DispatchTaskExecutor> serviceReference,
+			DispatchTaskExecutor dispatchTaskExecutor) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<DispatchTaskExecutor> serviceReference,
+			DispatchTaskExecutor dispatchTaskExecutor) {
+
+			String dispatchTaskExecutorType =
+				(String)serviceReference.getProperty(
+					_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
+
+			_dispatchTaskExecutorNames.remove(dispatchTaskExecutorType);
+			_dispatchTaskExecutors.remove(dispatchTaskExecutorType);
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+
+	}
 
 }

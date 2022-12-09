@@ -22,6 +22,8 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutUtilityPageThumbnailConfiguration;
+import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutUtilityPageEntryPermission;
+import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -31,7 +33,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -81,8 +85,14 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() -> LayoutUtilityPageEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutUtilityPageEntry, ActionKeys.UPDATE),
 						_getEditLayoutUtilityPageEntryActionUnsafeConsumer()
 					).add(
+						() -> LayoutUtilityPageEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutUtilityPageEntry, ActionKeys.VIEW),
 						_getViewLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -91,10 +101,19 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() -> LayoutUtilityPageEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutUtilityPageEntry, ActionKeys.UPDATE),
 						_getMarkAsDefaultLayoutUtilityPageEntryActionUnsafeConsumer()
 					).add(
+						() -> LayoutUtilityPageEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutUtilityPageEntry, ActionKeys.UPDATE),
 						_getRenameLayoutUtilityPageEntryActionUnsafeConsumer()
 					).add(
+						() -> LayoutUtilityPageEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutUtilityPageEntry, ActionKeys.UPDATE),
 						_getUpdateLayoutUtilityPageEntryPreviewActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -111,6 +130,11 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() -> GroupPermissionUtil.contains(
+							_themeDisplay.getPermissionChecker(),
+							_themeDisplay.getScopeGroup(),
+							LayoutUtilityPageActionKeys.
+								ADD_LAYOUT_UTILITY_PAGE_ENTRY),
 						_getCopyLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -119,6 +143,9 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() -> LayoutUtilityPageEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutUtilityPageEntry, ActionKeys.PERMISSIONS),
 						_getPermissionsLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -127,6 +154,9 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() -> LayoutUtilityPageEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutUtilityPageEntry, ActionKeys.DELETE),
 						_getDeleteLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);

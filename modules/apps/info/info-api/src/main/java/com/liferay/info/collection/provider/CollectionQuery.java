@@ -20,7 +20,6 @@ import com.liferay.info.sort.Sort;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Jorge Ferrer
@@ -28,25 +27,23 @@ import java.util.Optional;
  */
 public class CollectionQuery {
 
-	public Optional<Map<String, String[]>> getConfigurationOptional() {
-		return Optional.ofNullable(_configuration);
+	public Map<String, String[]> getConfiguration() {
+		return _configuration;
 	}
 
-	public <T> Optional<T> getInfoFilterOptional(
-		Class<? extends InfoFilter> clazz) {
-
+	public <T> T getInfoFilter(Class<? extends InfoFilter> clazz) {
 		if (MapUtil.isEmpty(_infoFilters)) {
-			return Optional.empty();
+			return null;
 		}
 
 		InfoFilter infoFilter = _infoFilters.getOrDefault(
 			clazz.getName(), null);
 
 		if (infoFilter != null) {
-			return Optional.of((T)infoFilter);
+			return (T)infoFilter;
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	public Pagination getPagination() {
@@ -57,12 +54,12 @@ public class CollectionQuery {
 		return _pagination;
 	}
 
-	public Optional<Object> getRelatedItemObjectOptional() {
-		return Optional.ofNullable(_relatedItemObject);
+	public Object getRelatedItemObject() {
+		return _relatedItemObject;
 	}
 
-	public Optional<Sort> getSortOptional() {
-		return Optional.ofNullable(_sort);
+	public Sort getSort() {
+		return _sort;
 	}
 
 	public void setConfiguration(Map<String, String[]> configuration) {

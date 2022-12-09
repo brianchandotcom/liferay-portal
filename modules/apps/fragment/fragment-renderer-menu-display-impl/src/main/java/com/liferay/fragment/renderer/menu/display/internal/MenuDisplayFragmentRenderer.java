@@ -49,7 +49,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -277,20 +276,26 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			).put(
 				"hoveredItemColor",
 				() -> {
-					Optional<String> hoveredItemColorOptional =
-						menuDisplayFragmentConfiguration.
-							getHoveredItemColorOptional();
+					String hoveredItemColor =
+						menuDisplayFragmentConfiguration.getHoveredItemColor();
 
-					return hoveredItemColorOptional.orElse("inherit");
+					if (hoveredItemColor != null) {
+						return hoveredItemColor;
+					}
+
+					return "inherit";
 				}
 			).put(
 				"selectedItemColor",
 				() -> {
-					Optional<String> selectedItemColorOptional =
-						menuDisplayFragmentConfiguration.
-							getSelectedItemColorOptional();
+					String selectedItemColor =
+						menuDisplayFragmentConfiguration.getSelectedItemColor();
 
-					return selectedItemColorOptional.orElse("inherit");
+					if (selectedItemColor != null) {
+						return selectedItemColor;
+					}
+
+					return "inherit";
 				}
 			).build());
 

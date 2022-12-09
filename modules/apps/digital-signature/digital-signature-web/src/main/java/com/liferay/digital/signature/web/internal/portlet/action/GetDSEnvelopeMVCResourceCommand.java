@@ -19,7 +19,6 @@ import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.util.DLURLHelperUtil;
@@ -85,15 +84,6 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 			));
 	}
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")",
-		unbind = "-"
-	)
-	protected void setDLProcessor(DLProcessor dlProcessor) {
-		_imageProcessor = (ImageProcessor)dlProcessor;
-	}
-
 	private JSONObject _toJSONObject(
 			String dsDocumentId, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -141,6 +131,10 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private DSEnvelopeManager _dsEnvelopeManager;
 
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
+	)
 	private ImageProcessor _imageProcessor;
 
 }

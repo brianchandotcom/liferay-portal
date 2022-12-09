@@ -94,18 +94,14 @@ Listen ${test.app.server.leading.port.number}0]]></echo>
 	</target>
 
 	<target name="start-httpd-server">
-		<exec executable="systemctl" output="${liferay.home}/start-httpd.txt">
+		<exec executable="systemctl">
 			<arg line="start httpd.service" />
 		</exec>
-
-		<print-file file.name="${liferay.home}/start-httpd.txt" />
 	</target>
 
 	<target name="stop-httpd-server">
-		<exec executable="systemctl" output="${liferay.home}/stop-httpd.txt">
+		<exec executable="systemctl">
 			<arg line="stop httpd.service" />
 		</exec>
-
-		<print-file file.name="${liferay.home}/stop-httpd.txt" />
 	</target>
 </project>

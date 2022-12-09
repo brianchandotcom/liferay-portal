@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
+import com.liferay.site.display.context.GroupDisplayContextHelper;
 
 import java.io.Serializable;
 

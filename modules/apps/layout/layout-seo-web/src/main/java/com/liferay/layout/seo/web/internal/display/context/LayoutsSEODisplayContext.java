@@ -68,7 +68,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
+import com.liferay.site.display.context.GroupDisplayContextHelper;
 
 import java.util.HashMap;
 import java.util.Locale;

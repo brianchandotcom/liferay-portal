@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
+import com.liferay.site.display.context.GroupDisplayContextHelper;
 
 import java.util.Objects;
 

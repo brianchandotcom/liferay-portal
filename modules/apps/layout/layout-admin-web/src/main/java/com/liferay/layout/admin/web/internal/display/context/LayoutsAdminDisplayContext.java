@@ -102,7 +102,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
-import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
+import com.liferay.site.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.staging.StagingGroupHelper;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.display.context;
+package com.liferay.site.display.context;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.model.Group;

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.RenderParametersPool;
-import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
+import com.liferay.site.display.context.GroupDisplayContextHelper;
 
 import java.io.IOException;
 

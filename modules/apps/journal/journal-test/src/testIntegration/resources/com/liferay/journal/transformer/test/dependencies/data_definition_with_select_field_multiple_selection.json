@@ -1,0 +1,105 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"dataType": "string",
+				"fieldNamespace": "",
+				"fieldReference": "CheckboxMultiple94681127",
+				"inline": false,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+					"en_US": [
+						{
+							"label": "Option1",
+							"reference": "Option81316201",
+							"value": "Option81316201"
+						},
+						{
+							"label": "Option2",
+							"reference": "Option25867365",
+							"value": "Option25867365"
+						},
+						{
+							"label": "Option3",
+							"reference": "Option22055968",
+							"value": "Option22055968"
+						}
+					]
+				},
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"showAsSwitcher": false,
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": [
+				]
+			},
+			"fieldType": "checkbox_multiple",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Multiple Selection"
+			},
+			"localizable": true,
+			"name": "CheckboxMultiple94681127",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"CheckboxMultiple94681127"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Select Multiple Selection"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "Select Multiple Selection"
+	},
+	"storageType": "default"
+}

@@ -18,10 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
-import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -39,7 +35,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
@@ -54,7 +49,6 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
@@ -185,53 +179,46 @@ public class JournalTransformerTest {
 
 	@Test
 	public void testTransformSelectDDMFormFieldType() throws Exception {
-		Locale locale = _portal.getSiteDefaultLocale(
-			TestPropsValues.getGroupId());
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_read(
+					"data_definition_with_select_field_single_selection.json"),
+				TestPropsValues.getUser());
 
-		DDMFormField ddmFormField = new DDMFormField(
-			RandomTestUtil.randomString(10), DDMFormFieldTypeConstants.SELECT);
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(),
+				_read("journal_content_with_select_field_single_selection.xml"),
+				dataDefinition.getDataDefinitionKey(), null);
 
-		ddmFormField.setDataType("text");
-		ddmFormField.setIndexType("text");
-		ddmFormField.setLocalizable(true);
+		Assert.assertEquals(
+			"Option71814087",
+			_transformMethod.invoke(
+				null, journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${Radio80408512.getData()}", null, Constants.VIEW));
 
-		LocalizedValue localizedValue = new LocalizedValue(locale);
+		dataDefinition = DataDefinitionTestUtil.addDataDefinition(
+			"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+			_read("data_definition_with_select_field_multiple_selection.json"),
+			TestPropsValues.getUser());
 
-		localizedValue.addString(locale, RandomTestUtil.randomString(10));
+		journalArticle = JournalTestUtil.addArticleWithXMLContent(
+			_group.getGroupId(),
+			_read("journal_content_with_select_field_multiple_selection.xml"),
+			dataDefinition.getDataDefinitionKey(), null);
 
-		ddmFormField.setLabel(localizedValue);
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			ddmFormField.getDDMFormFieldOptions();
-
-		String expectedKey1 = RandomTestUtil.randomString(10);
-
-		ddmFormFieldOptions.addOptionLabel(
-			expectedKey1, locale, RandomTestUtil.randomString());
-
-		String expectedKey2 = RandomTestUtil.randomString(10);
-
-		ddmFormFieldOptions.addOptionLabel(
-			expectedKey2, locale, RandomTestUtil.randomString());
-
-		_testTransformDDMFormField(
-			ddmFormField, expectedKey1,
-			JSONUtil.put(
-				expectedKey1
-			).toString(),
-			locale);
-
-		ddmFormField.setMultiple(true);
-
-		_testTransformDDMFormField(
-			ddmFormField,
+		Assert.assertEquals(
 			JSONUtil.putAll(
-				expectedKey1, expectedKey2
+				"Option81316201", "Option25867365"
 			).toString(),
-			JSONUtil.putAll(
-				expectedKey1, expectedKey2
-			).toString(),
-			locale);
+			_transformMethod.invoke(
+				null, journalArticle, null, _journalHelper,
+				LocaleUtil.toLanguageId(LocaleUtil.US),
+				_layoutDisplayPageProviderRegistry, null, false,
+				"${CheckboxMultiple94681127.getData()}", null, Constants.VIEW));
 	}
 
 	@Test
@@ -284,25 +271,6 @@ public class JournalTransformerTest {
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
-	}
-
-	private void _testTransformDDMFormField(
-			DDMFormField ddmFormField, String expected, String fieldValue,
-			Locale locale)
-		throws Exception {
-
-		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-			ddmFormField, _ddmFormValuesToFieldsConverter, fieldValue,
-			TestPropsValues.getGroupId(), _journalConverter);
-
-		Assert.assertEquals(
-			expected,
-			_transformMethod.invoke(
-				null, journalArticle, null, _journalHelper,
-				LocaleUtil.toLanguageId(locale),
-				_layoutDisplayPageProviderRegistry, null, false,
-				"${" + ddmFormField.getName() + ".getData()}", null,
-				Constants.VIEW));
 	}
 
 	@Inject

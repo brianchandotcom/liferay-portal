@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="CheckboxMultiple94681127" index-type="keyword" instance-id="jq6xk2iy" name="CheckboxMultiple94681127" type="checkbox_multiple">
+		<dynamic-content language-id="en_US"><![CDATA[["Option81316201","Option25867365"]]]></dynamic-content>
+	</dynamic-element>
+</root>

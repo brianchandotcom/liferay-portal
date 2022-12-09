@@ -1,0 +1,99 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"dataType": "string",
+				"fieldNamespace": "",
+				"fieldReference": "Radio80408512",
+				"inline": true,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"objectFieldName": "",
+				"options": {
+					"en_US": [
+						{
+							"label": "Option1",
+							"reference": "Option71814087",
+							"value": "Option71814087"
+						},
+						{
+							"label": "Option2",
+							"reference": "Option38525682",
+							"value": "Option38525682"
+						}
+					]
+				},
+				"requiredErrorMessage": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": [
+				]
+			},
+			"fieldType": "radio",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Single Selection"
+			},
+			"localizable": true,
+			"name": "Radio80408512",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutFields": {
+		},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Radio80408512"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"description": {
+		},
+		"name": {
+			"en_US": "Select Single Selection"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+	},
+	"name": {
+		"en_US": "Select Single Selection"
+	},
+	"storageType": "default"
+}

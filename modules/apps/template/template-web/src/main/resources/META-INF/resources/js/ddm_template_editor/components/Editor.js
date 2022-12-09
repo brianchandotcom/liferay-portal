@@ -106,7 +106,7 @@ export function Editor({autocompleteData, initialScript, mode}) {
 				id={`${portletNamespace}scriptContent`}
 				name={`${portletNamespace}scriptContent`}
 				type="hidden"
-				value={script}
+				value={btoa(script)}
 			/>
 		</>
 	);

@@ -1,6 +1,6 @@
 dependencies {
 	compileIncludePlatform group: "com.google.cloud", name: "google-cloud-translate"
-	compileIncludePlatform platform("com.google.cloud:libraries-bom:20.0.0")
+	compileIncludePlatform platform("com.google.cloud:libraries-bom:26.1.5")
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

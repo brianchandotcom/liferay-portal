@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.dispatch.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Matija Petanjek
  */
-public class DuplicateDispatchTriggerExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateDispatchTriggerExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateDispatchTriggerExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateDispatchTriggerExternalReferenceCodeException extends Dupl
 		super(msg);
 	}
 
-	public DuplicateDispatchTriggerExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateDispatchTriggerExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateDispatchTriggerExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateDispatchTriggerExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.blogs.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateBlogsEntryExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateBlogsEntryExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateBlogsEntryExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateBlogsEntryExternalReferenceCodeException extends Duplicate
 		super(msg);
 	}
 
-	public DuplicateBlogsEntryExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateBlogsEntryExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateBlogsEntryExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateBlogsEntryExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

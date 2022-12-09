@@ -11,14 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.portal.kernel.exception;
 
-import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
+package com.liferay.portal.kernel.exception;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateAddressExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateAddressExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateAddressExternalReferenceCodeException() {
 	}
@@ -27,7 +27,9 @@ public class DuplicateAddressExternalReferenceCodeException extends DuplicateExt
 		super(msg);
 	}
 
-	public DuplicateAddressExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateAddressExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

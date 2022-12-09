@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.product.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Marco Leo
  */
-public class DuplicateCommerceChannelExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateCommerceChannelExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateCommerceChannelExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateCommerceChannelExternalReferenceCodeException extends Dupl
 		super(msg);
 	}
 
-	public DuplicateCommerceChannelExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateCommerceChannelExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateCommerceChannelExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateCommerceChannelExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

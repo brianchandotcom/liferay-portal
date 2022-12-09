@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.price.list.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,20 +19,27 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Alessio Antonio Rendina
  */
-public class DuplicateCommercePriceListExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateCommercePriceListExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateCommercePriceListExternalReferenceCodeException() {
 	}
 
-	public DuplicateCommercePriceListExternalReferenceCodeException(String msg) {
+	public DuplicateCommercePriceListExternalReferenceCodeException(
+		String msg) {
+
 		super(msg);
 	}
 
-	public DuplicateCommercePriceListExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateCommercePriceListExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateCommercePriceListExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateCommercePriceListExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

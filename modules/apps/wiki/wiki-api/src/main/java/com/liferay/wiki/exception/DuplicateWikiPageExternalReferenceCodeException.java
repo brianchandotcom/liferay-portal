@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.wiki.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateWikiPageExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateWikiPageExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateWikiPageExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateWikiPageExternalReferenceCodeException extends DuplicateEx
 		super(msg);
 	}
 
-	public DuplicateWikiPageExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateWikiPageExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateWikiPageExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateWikiPageExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

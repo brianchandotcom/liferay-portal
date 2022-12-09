@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.document.library.kernel.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateDLFolderExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateDLFolderExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateDLFolderExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateDLFolderExternalReferenceCodeException extends DuplicateEx
 		super(msg);
 	}
 
-	public DuplicateDLFolderExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateDLFolderExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateDLFolderExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateDLFolderExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

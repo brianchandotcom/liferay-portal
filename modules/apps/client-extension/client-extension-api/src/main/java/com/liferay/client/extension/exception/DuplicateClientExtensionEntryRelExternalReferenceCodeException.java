@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.client.extension.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,20 +19,27 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateClientExtensionEntryRelExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateClientExtensionEntryRelExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateClientExtensionEntryRelExternalReferenceCodeException() {
 	}
 
-	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(String msg) {
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
+		String msg) {
+
 		super(msg);
 	}
 
-	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateClientExtensionEntryRelExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

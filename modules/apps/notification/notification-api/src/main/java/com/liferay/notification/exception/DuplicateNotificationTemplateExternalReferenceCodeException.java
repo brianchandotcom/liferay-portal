@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.notification.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,20 +19,27 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Gabriel Albuquerque
  */
-public class DuplicateNotificationTemplateExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateNotificationTemplateExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateNotificationTemplateExternalReferenceCodeException() {
 	}
 
-	public DuplicateNotificationTemplateExternalReferenceCodeException(String msg) {
+	public DuplicateNotificationTemplateExternalReferenceCodeException(
+		String msg) {
+
 		super(msg);
 	}
 
-	public DuplicateNotificationTemplateExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateNotificationTemplateExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateNotificationTemplateExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateNotificationTemplateExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

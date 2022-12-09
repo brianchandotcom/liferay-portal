@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.batch.engine.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,20 +19,27 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Shuyang Zhou
  */
-public class DuplicateBatchEngineImportTaskExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateBatchEngineImportTaskExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateBatchEngineImportTaskExternalReferenceCodeException() {
 	}
 
-	public DuplicateBatchEngineImportTaskExternalReferenceCodeException(String msg) {
+	public DuplicateBatchEngineImportTaskExternalReferenceCodeException(
+		String msg) {
+
 		super(msg);
 	}
 
-	public DuplicateBatchEngineImportTaskExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateBatchEngineImportTaskExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateBatchEngineImportTaskExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateBatchEngineImportTaskExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

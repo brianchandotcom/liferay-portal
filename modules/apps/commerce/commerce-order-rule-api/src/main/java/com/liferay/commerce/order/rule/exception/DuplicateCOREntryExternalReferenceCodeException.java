@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.order.rule.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Luca Pellizzon
  */
-public class DuplicateCOREntryExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateCOREntryExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateCOREntryExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateCOREntryExternalReferenceCodeException extends DuplicateEx
 		super(msg);
 	}
 
-	public DuplicateCOREntryExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateCOREntryExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateCOREntryExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateCOREntryExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

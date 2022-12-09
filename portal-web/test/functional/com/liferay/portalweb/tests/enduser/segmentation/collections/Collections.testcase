@@ -4123,6 +4123,127 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166046. The site designer could see the variations indicator of collection on the Select modal."
+	@priority = "5"
+	test ViewVariationsIndicatorOnSelectModal {
+		task ("Given a site designer has collections") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("When the site designer opens the Select modal of Collection Display") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			Click(
+				key_fieldLabel = "Collection",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then the site designer see the No Variations label shown on collections") {
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconCard.viewCardLabel(
+					card = "${collectionName}",
+					cardLabel = "No Variations");
+			}
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconList.viewListEntryLabel(
+					listEntry = "${collectionName}",
+					listEntryLabel = "No Variations");
+			}
+		}
+
+		task ("When the site designer adds personalized variations to collections") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "By Email Address",
+				text = "liferay.com");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "Job Title",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "By Job Title",
+				text = "Manager");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "By Email Address");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "By Email Address");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "By Job Title");
+		}
+
+		task ("Then the site designer sees the variations indicator updated") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			Click(
+				key_fieldLabel = "Collection",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			LexiconCard.viewCardLabel(
+				card = "Dynamic Collection",
+				cardLabel = "2 Variations");
+
+			LexiconCard.viewCardLabel(
+				card = "Manual Collection",
+				cardLabel = "3 Variations");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			LexiconList.viewListEntryLabel(
+				listEntry = "Dynamic Collection",
+				listEntryLabel = "2 Variations");
+
+			LexiconList.viewListEntryLabel(
+				listEntry = "Manual Collection",
+				listEntryLabel = "3 Variations");
+		}
+	}
+
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
 	@priority = "4"
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {

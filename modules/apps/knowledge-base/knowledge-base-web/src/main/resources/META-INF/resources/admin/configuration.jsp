@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String tabsNames = "email-from,article-added-email,article-updated-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email";
+String tabsNames = "email-from,article-added-email,article-updated-email,article-review-email,suggestion-received-email,suggestion-in-progress-email,suggestion-resolved-email";
 
 if (PortalUtil.isRSSFeedsEnabled()) {
 	tabsNames += ",rss";
@@ -42,6 +42,8 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 	<liferay-ui:error key="emailKBArticleAddedSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailKBArticleUpdatedBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailKBArticleUpdatedSubject" message="please-enter-a-valid-subject" />
+	<liferay-ui:error key="emailKBArticleReviewBody" message="please-enter-a-valid-body" />
+	<liferay-ui:error key="emailKBArticleReviewSubject" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
@@ -143,6 +145,8 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 			).put(
 				"[$PORTAL_URL$]", PortalUtil.getPortalURL(themeDisplay)
 			).put(
+				"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle())
+			).put(
 				"[$SITE_NAME$]", LanguageUtil.get(resourceBundle, "the-site-name-associated-with-the-article")
 			).put(
 				"[$TO_ADDRESS$]", LanguageUtil.get(resourceBundle, "the-address-of-the-email-recipient")
@@ -168,6 +172,16 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 					emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled() %>"
 					emailParam="emailKBArticleUpdated"
 					emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedSubject() %>"
+				/>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= kbGroupServiceConfiguration.emailKBArticleReviewBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= kbGroupServiceConfiguration.emailKBArticleReviewEnabled() %>"
+					emailParam="emailKBArticleReview"
+					emailSubject="<%= kbGroupServiceConfiguration.emailKBArticleReviewSubject() %>"
 				/>
 			</liferay-ui:section>
 
@@ -250,6 +264,7 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 			var emailKBArticleSuggestionInProgressEditor = window.<portlet:namespace />emailKBArticleSuggestionInProgress.getHTML();
 			var emailKBArticleSuggestionReceivedEditor = window.<portlet:namespace />emailKBArticleSuggestionReceived.getHTML();
 			var emailKBArticleSuggestionResolvedEditor = window.<portlet:namespace />emailKBArticleSuggestionResolved.getHTML();
+			var emailKBArticleReviewEditor = window.<portlet:namespace />emailKBArticleReview.getHTML();
 			var emailKBArticleUpdatedEditor = window.<portlet:namespace />emailKBArticleUpdated.getHTML();
 
 			document.getElementById(
@@ -258,6 +273,9 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 			document.getElementById(
 				'<portlet:namespace />emailKBArticleUpdatedBody'
 			).value = emailKBArticleUpdatedEditor;
+			document.getElementById(
+				'<portlet:namespace />emailKBArticleReviewBody'
+			).value = emailKBArticleReviewEditor;
 			document.getElementById(
 				'<portlet:namespace />emailKBArticleSuggestionReceivedBody'
 			).value = emailKBArticleSuggestionReceivedEditor;

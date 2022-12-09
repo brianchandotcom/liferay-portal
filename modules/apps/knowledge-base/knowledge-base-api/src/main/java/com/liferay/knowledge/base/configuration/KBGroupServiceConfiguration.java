@@ -123,6 +123,24 @@ public interface KBGroupServiceConfiguration {
 	public String emailKBArticleUpdatedBody();
 
 	@Meta.AD(
+		deflt = "true", name = "email-kb-article-review-enabled",
+		required = false
+	)
+	public boolean emailKBArticleReviewEnabled();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_review_subject.tmpl}",
+		name = "email-kb-article-review-subject", required = false
+	)
+	public String emailKBArticleReviewSubject();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/knowledge/base/dependencies/email_kb_article_review_body.tmpl}",
+		name = "email-kb-article-review-body", required = false
+	)
+	public String emailKBArticleReviewBody();
+
+	@Meta.AD(
 		deflt = "true",
 		name = "email-kb-article-suggestion-in-progress-enabled",
 		required = false

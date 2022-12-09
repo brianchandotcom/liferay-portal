@@ -15,10 +15,11 @@
 import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
+import CartQuickAdd from './CartQuickAdd';
 import MiniCartContext from './MiniCartContext';
 import {ADD_PRODUCT} from './util/constants';
 
-function CartItemsList() {
+export default function CartItemsList() {
 	const {
 		CartViews,
 		cartState,
@@ -28,11 +29,13 @@ function CartItemsList() {
 		summaryDataMapper,
 	} = useContext(MiniCartContext);
 
-	const {cartItems = [], summary = {}} = cartState;
+	const {cartItems = [], id, summary = {}} = cartState;
 
 	return (
 		<div className="mini-cart-items-list">
 			<CartViews.ItemsListActions />
+
+			{cartState.accountId && id && <CartQuickAdd />}
 
 			{cartItems.length ? (
 				<>
@@ -82,5 +85,3 @@ function CartItemsList() {
 		</div>
 	);
 }
-
-export default CartItemsList;

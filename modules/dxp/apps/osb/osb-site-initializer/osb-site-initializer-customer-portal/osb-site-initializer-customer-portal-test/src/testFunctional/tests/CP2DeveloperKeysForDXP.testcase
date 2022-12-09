@@ -157,6 +157,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -221,6 +223,51 @@ definition {
 		task ("Click in the Action button and assert the user with the right role can see the option") {
 			CustomerPortal.clickAtButton(text = "Actions");
 
+			AssertVisible(
+				key_action = "Export All Key Details (csv)",
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+		}
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "NASA ICE");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Member",
+				accountUserName = "Test Test");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Requester",
+				accountUserName = "Test Test");
+		}
+
+			task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			Refresh();
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("Click in the Action button and assert if the user with the right role can see the options") {
+			CustomerPortal.clickAtButton(text = "Actions");
+
+
 			AssertElementNotPresent(
 				key_text = "Generate New",
 				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
@@ -230,6 +277,20 @@ definition {
 			AssertElementNotPresent(
 				key_text = "Deactivate",
 				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "NASA ICE");
+
+			Account.unassignUserRole(
+				accountRoleTitle = "Requester",
+				accountUserName = "Test Test");
+
+			Account.unassignUserRole(
+				accountRoleTitle = "Partner Member",
+				accountUserName = "Test Test");
 		}
 	}
 
@@ -280,10 +341,13 @@ definition {
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Requester",
 				accountUserName = "Test Test");
+
 		}
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}

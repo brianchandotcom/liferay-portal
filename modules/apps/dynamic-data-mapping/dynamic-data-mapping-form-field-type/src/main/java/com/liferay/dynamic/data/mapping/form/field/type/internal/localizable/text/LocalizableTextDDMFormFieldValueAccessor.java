@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
-import java.util.function.IntFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,8 +44,8 @@ public class LocalizableTextDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONObject> {
 
 	@Override
-	public IntFunction<JSONObject[]> getArrayGeneratorIntFunction() {
-		return JSONObject[]::new;
+	public JSONObject[] getArrayGenericType() {
+		return new JSONObject[0];
 	}
 
 	@Override

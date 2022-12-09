@@ -29,12 +29,13 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Rafael Praxedes
@@ -248,17 +249,19 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
 				fieldName);
 
-		Stream<DDMFormEvaluatorFieldContextKey> stream =
-			ddmFormFieldContextKeys.stream();
-
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			_getDDMFormFieldValueAccessor(fieldName);
 
-		Object[] values = stream.map(
-			this::getFieldValue
-		).toArray(
-			ddmFormFieldValueAccessor.getArrayGeneratorIntFunction()
-		);
+		List<Object> list = new ArrayList<>();
+
+		for (DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey :
+				ddmFormFieldContextKeys) {
+
+			list.add(getFieldValue(ddmFormEvaluatorFieldContextKey));
+		}
+
+		Object[] values = list.toArray(
+			ddmFormFieldValueAccessor.getArrayGenericType());
 
 		if (ArrayUtil.isNotEmpty(values) && (values.length == 1)) {
 			return values[0];

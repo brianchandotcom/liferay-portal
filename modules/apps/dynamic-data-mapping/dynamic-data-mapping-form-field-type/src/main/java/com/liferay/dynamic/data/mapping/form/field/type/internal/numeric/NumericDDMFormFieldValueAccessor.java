@@ -28,7 +28,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 
 import java.util.Locale;
-import java.util.function.IntFunction;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -45,8 +44,8 @@ public class NumericDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<BigDecimal> {
 
 	@Override
-	public IntFunction<BigDecimal[]> getArrayGeneratorIntFunction() {
-		return BigDecimal[]::new;
+	public BigDecimal[] getArrayGenericType() {
+		return new BigDecimal[0];
 	}
 
 	@Override

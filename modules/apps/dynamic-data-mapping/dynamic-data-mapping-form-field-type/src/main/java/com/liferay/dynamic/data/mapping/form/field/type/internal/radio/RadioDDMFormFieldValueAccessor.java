@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
-import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,8 +41,8 @@ public class RadioDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<String> {
 
 	@Override
-	public IntFunction<String[]> getArrayGeneratorIntFunction() {
-		return String[]::new;
+	public String[] getArrayGenericType() {
+		return new String[0];
 	}
 
 	@Override

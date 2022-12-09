@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,8 +52,8 @@ public class SelectDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONArray> {
 
 	@Override
-	public IntFunction<JSONArray[]> getArrayGeneratorIntFunction() {
-		return JSONArray[]::new;
+	public JSONArray[] getArrayGenericType() {
+		return new JSONArray[0];
 	}
 
 	@Override

@@ -11,20 +11,10 @@
 
 import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
 import {currencyFormat} from '../../common/utils';
-
-const newdata = [
-	['Requested', 3000],
-	['Approved', 1500],
-	['Claimed', 2000],
-	['Claim Approved', 1000],
-	['Expiring Soon', 1000],
-	['Expired', 1000],
-	['Paid', 500],
-];
 
 const colors = {
 	'Approved': '#003EB3',
@@ -37,27 +27,121 @@ const colors = {
 };
 
 export default function () {
-	const mdfRequestTotal = newdata.reduce(
-		(prevValue, currValue) => prevValue + currValue[1],
-		0
-	);
+	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
+
+	const getMDFRequests = async () => {
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		const response = await fetch(
+			`/o/c/mdfrequests?nestedFields=accountEntry,mdfRequestToActivities,activityToBudgets,mdfRequestToMdfClaims&nestedFieldsDepth=2&pageSize=9999`,
+			{
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			}
+		);
+
+		const chartColumns = [];
+
+		if (response.ok) {
+			const mdfRequests = await response.json();
+
+			const totalMDFActivitiesAmount = mdfRequests?.items?.reduce(
+				(prevValue, currValue) =>
+					prevValue +
+					(parseFloat(currValue.totalMDFRequestAmount) || 0),
+				0
+			);
+			chartColumns.push(['Requested', totalMDFActivitiesAmount]);
+
+			const mdfApprovedRequests = mdfRequests?.items?.filter(
+				(request) => request.requestStatus === 'Approved'
+			);
+			const totalMDFApprovedRequestsAmount = mdfApprovedRequests?.reduce(
+				(acc, value) => acc + parseFloat(value.totalMDFRequestAmount),
+				0
+			);
+			chartColumns.push(['Approved', totalMDFApprovedRequestsAmount]);
+
+			const totalClaimedRequestsAmount = mdfRequests?.items?.reduce(
+				(acc, value) => acc + parseFloat(value.totalClaimedRequest),
+				0
+			);
+			chartColumns.push(['Claimed', totalClaimedRequestsAmount]);
+
+			const claimedRequests = mdfRequests?.items
+				?.map((claim) =>
+					claim.mdfRequestToMdfClaims.filter(
+						(request) => request.claimStatus === 'Approved'
+					)
+				)
+				.flat();
+
+			const totalClaimedApprovedRequestsAmount = claimedRequests?.reduce(
+				(acc, value) => acc + value?.amountClaimed || 0,
+				0
+			);
+			chartColumns.push([
+				'Claim Approved',
+				totalClaimedApprovedRequestsAmount,
+			]);
+
+			const expiringSoonActivitiesDate = mdfRequests?.items
+				?.map((activity) =>
+					activity.mdfRequestToActivities.filter((request) =>
+						Math.round(
+							new Date(request.endDate).getTime() + 30 >
+								new Date()
+						)
+					)
+				)
+				.flat();
+
+			const totalExpiringSoonActivites = expiringSoonActivitiesDate?.reduce(
+				(acc, value) => acc + parseFloat(value.mdfRequestAmount),
+				0
+			);
+			chartColumns.push(['Expiring Soon', totalExpiringSoonActivites]);
+
+			const expiredActivities = mdfRequests?.items
+				?.map((activity) =>
+					activity?.mdfRequestToActivities?.filter(
+						(request) => new Date(request.endDate) < new Date()
+					)
+				)
+				.flat();
+			const totalExpiredActivities = expiredActivities?.reduce(
+				(acc, value) => acc + parseFloat(value.mdfRequestAmount),
+				0
+			);
+			chartColumns.push(['Expired', totalExpiredActivities]);
+		}
+
+		setColumnsMDFChart(chartColumns);
+	};
+
+	useEffect(() => {
+		getMDFRequests();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const chart = {
 		data: {
 			colors,
-			columns: newdata,
+			columns: columnsMDFChart,
 			type: 'donut',
 		},
 		donut: {
 			expand: false,
 			label: {
 				ratio: 1,
-				show: true,
+				show: false,
 			},
 			legend: {
 				show: false,
 			},
-			title: `USD ${currencyFormat(mdfRequestTotal)}\nTotal MDF`,
+
 			width: 65,
 		},
 		legend: {show: false},
@@ -65,9 +149,8 @@ export default function () {
 			height: 400,
 			width: 300,
 		},
-		tooltip: {
-			show: true,
-		},
+
+		// title: `USD ${currencyFormat(totalMDFActivitiesAmount)}\nTotal MDF`,
 	};
 
 	const legendTransformData = useCallback((newItems, colors) => {
@@ -78,7 +161,7 @@ export default function () {
 		}));
 	}, []);
 
-	const legendItems = legendTransformData(newdata, colors);
+	const legendItems = legendTransformData(columnsMDFChart, colors);
 
 	return (
 		<Container
@@ -86,7 +169,7 @@ export default function () {
 			footer={
 				<>
 					<ClayButton className="mr-4 mt-2" displayType="primary">
-						New MDF TESTE
+						New MDF Request
 					</ClayButton>
 					<ClayButton
 						className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
@@ -108,6 +191,16 @@ export default function () {
 							legend={chart.legend}
 							size={chart.size}
 							title={chart.donut.title}
+							tooltip={{
+								contents: (data) => {
+									const title = data[0].id;
+									const value = data[0].value;
+
+									return `<div class="donut-chart-tooltip bg-neutral-0 d-flex font-weight-bold p-2 rounded-sm text-capitalize"><span class="d-flex mr-2 w-100 text-capitalize">${title}</span> $${currencyFormat(
+										value
+									)}</div>`;
+								},
+							}}
 						/>
 					</div>
 				</div>
@@ -128,9 +221,7 @@ export default function () {
 										<div className="mr-1">{item.name}</div>
 
 										<div className="font-weight-semi-bold">
-											{`USD ${currencyFormat(
-												item.value
-											)}`}
+											{`$${currencyFormat(item.value)}`}
 										</div>
 									</div>
 								</div>

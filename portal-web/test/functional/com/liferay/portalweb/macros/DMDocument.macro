@@ -3203,6 +3203,14 @@ definition {
 		Panel.expandPanel(panel = "Automatically Extracted Metadata");
 	}
 
+	macro viewDocumentInfoTitleCmdPG {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
+			value1 = "${dmDocumentTitle}");
+	}
+
 	macro viewDocumentMetadataCP {
 		var key_metadataData = "${metadataData}";
 		var key_metadataLabel = "${metadataLabel}";
@@ -3240,7 +3248,7 @@ definition {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
 		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");
 	}
 
@@ -3650,11 +3658,9 @@ definition {
 		var key_dmDocumentDescription = "${dmDocumentDescription}";
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		DMDocument.expandInfo();
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle} (Version ${dmDocumentVersionNumber})");
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
-			value1 = "${dmDocumentTitle} (Version ${dmDocumentVersionNumber})");
+		DMDocument.expandInfo();
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION",
@@ -3685,7 +3691,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
+		DMDocument.viewDocumentInfoTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
 		if (isSet(dmDocumentDescription)) {
 			var key_dmDocumentDescription = "${dmDocumentDescription}";
@@ -4121,9 +4127,7 @@ definition {
 
 			DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitle}");
 
-			AssertTextEquals(
-				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
-				value1 = "${dmDocumentTitle}");
+			DMDocument.viewDocumentInfoTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 		}
 	}
 

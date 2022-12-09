@@ -245,7 +245,7 @@ definition {
 
 		DMDocument.expandInfo();
 
-		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${videoShortcutTitle}");
+		DMDocument.viewDocumentInfoTitleCmdPG(dmDocumentTitle = "${videoShortcutTitle}");
 
 		if (isSet(videoShortcutDescription)) {
 			var key_dmDocumentDescription = "${videoShortcutDescription}";

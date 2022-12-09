@@ -116,7 +116,14 @@ public class DispatchTaskExecutorRegistryImpl
 				(String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_NAME));
 		}
 
-		_checkDispatchTaskClusterMode(dispatchTaskExecutorType, properties);
+		String label = GetterUtil.getString(
+			properties.get(_KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE),
+			DispatchTaskClusterMode.ALL_NODES.getLabel());
+
+		if (label.startsWith("single-node")) {
+			_clusterModeSingleNodeDispatchTaskExecutors.add(
+				dispatchTaskExecutorType);
+		}
 
 		_dispatchTaskExecutors.put(
 			dispatchTaskExecutorType, dispatchTaskExecutor);
@@ -131,19 +138,6 @@ public class DispatchTaskExecutorRegistryImpl
 
 		_dispatchTaskExecutorNames.remove(dispatchTaskExecutorType);
 		_dispatchTaskExecutors.remove(dispatchTaskExecutorType);
-	}
-
-	private void _checkDispatchTaskClusterMode(
-		String dispatchTaskExecutorType, Map<String, Object> properties) {
-
-		String label = GetterUtil.getString(
-			properties.get(_KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE),
-			DispatchTaskClusterMode.ALL_NODES.getLabel());
-
-		if (label.startsWith("single-node")) {
-			_clusterModeSingleNodeDispatchTaskExecutors.add(
-				dispatchTaskExecutorType);
-		}
 	}
 
 	private void _validateDispatchTaskExecutorProperties(

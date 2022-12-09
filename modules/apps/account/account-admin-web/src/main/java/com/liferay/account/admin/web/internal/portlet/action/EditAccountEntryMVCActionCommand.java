@@ -118,6 +118,7 @@ public class EditAccountEntryMVCActionCommand
 						 DuplicateAccountEntryExternalReferenceCodeException) {
 
 				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
 
 				sendRedirect(actionRequest, actionResponse);
 			}

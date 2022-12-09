@@ -184,16 +184,16 @@ definition {
 			category = "Settings",
 			portlet = "Health Check");
 
-		for (var buttonRowNumber : list "1,2,3,4,5,6") {
-			if (!(IsElementPresent(key_buttonStatus = "disabled", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N"))) {
+		for (var buttonRowName : list "Service Access Policy,Commerce Countries,Commerce Currencies,Commerce Product Measurement Units,Account Roles,Catalog Base Price Lists/Promotions") {
+			if (!(IsElementPresent(key_buttonRowName = "${buttonRowName}", key_buttonStatus = "disabled", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME"))) {
 				Click(
-					key_buttonRowNumber = "${buttonRowNumber}",
+					key_buttonRowName = "${buttonRowName}",
 					key_buttonStatus = "",
-					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_N");
+					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 				WaitForElementPresent(
-					key_value = "${buttonRowNumber}",
-					locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_N");
+					key_value = "${buttonRowName}",
+					locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 			}
 		}
 

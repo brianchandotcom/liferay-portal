@@ -45,7 +45,7 @@
 		<#list entries as menuItem>
 			<#assign
 				menuItemCustomFields = menuItem.getExpandoAttributes()!{}
-				iconURL = getLocalizedExpandoValue(menuItemCustomFields["Menu Item Image Url"])!""
+				iconURL = getLocalizedExpandoValue(menuItemCustomFields["Menu Item Image Url"]!{})!""
 			/>
 
 			<a class="account-menu-item d-flex justify-content-between p-3 text-decoration-none" href="${menuItem.getURL()}">

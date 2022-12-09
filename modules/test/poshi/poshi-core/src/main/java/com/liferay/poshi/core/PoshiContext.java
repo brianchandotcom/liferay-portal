@@ -736,14 +736,14 @@ public class PoshiContext {
 		List<Element> rootPropertyElements = rootElement.elements("property");
 
 		for (Element propertyElement : rootPropertyElements) {
-			PropertyPoshiElement propertyPoshiElement =
-				(PropertyPoshiElement)propertyElement;
+			String propertyName = propertyElement.attributeValue("name");
 
-			String propertyName = propertyPoshiElement.attributeValue("name");
-
-			String propertyValue = propertyPoshiElement.attributeValue("value");
+			String propertyValue = propertyElement.attributeValue("value");
 
 			if (Validator.isNull(propertyValue)) {
+				PropertyPoshiElement propertyPoshiElement =
+					(PropertyPoshiElement)propertyElement;
+
 				propertyValue = propertyPoshiElement.getVarValue();
 			}
 
@@ -754,13 +754,14 @@ public class PoshiContext {
 			"property");
 
 		for (Element propertyElement : commandPropertyElements) {
-			PropertyPoshiElement propertyPoshiElement =
-				(PropertyPoshiElement)propertyElement;
 			String propertyName = propertyElement.attributeValue("name");
 
 			String propertyValue = propertyElement.attributeValue("value");
 
 			if (Validator.isNull(propertyValue)) {
+				PropertyPoshiElement propertyPoshiElement =
+					(PropertyPoshiElement)propertyElement;
+
 				propertyValue = propertyPoshiElement.getVarValue();
 			}
 

@@ -2,6 +2,7 @@
 definition {
 
 	property marketplace.app.acceptance = "true";
+	property portal.upstream = "true";
 	property testray.main.component.name = "Marketplace";
 
 	setUp {

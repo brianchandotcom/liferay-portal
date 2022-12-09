@@ -1,6 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
+	property portal.upstream = "true";
 	property testray.main.component.name = "Headless";
 
 	setUp {

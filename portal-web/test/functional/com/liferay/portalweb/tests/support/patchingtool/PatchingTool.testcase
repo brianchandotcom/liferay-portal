@@ -3,6 +3,7 @@ definition {
 
 	property deploy.latest.marketplace.app.disabled = "true";
 	property portal.fixpack.release = "true";
+	property portal.upstream = "false";
 	property test.ignore.tomcat.ext.environment = "true";
 	property testray.main.component.name = "Patching Tool";
 

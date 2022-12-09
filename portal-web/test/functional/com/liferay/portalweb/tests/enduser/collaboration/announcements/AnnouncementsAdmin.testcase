@@ -1,5 +1,6 @@
 definition {
 
+	property portal.upstream = "true";
 	property testray.main.component.name = "Announcements";
 
 	setUp {

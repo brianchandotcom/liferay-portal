@@ -26,6 +26,7 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
@@ -178,6 +179,39 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		return GraphUtil.getNodeMap(nodes, edgeMap);
 	}
 
+	private Predicate _getChildPKColumnPredicate(
+		Column<?, Long> childPKColumn, Long[] childPrimaryKeysArray) {
+
+		Predicate predicate = null;
+
+		int i = 0;
+
+		while (i < childPrimaryKeysArray.length) {
+			int batchSize = 1000;
+
+			if ((i + batchSize) > childPrimaryKeysArray.length) {
+				batchSize = childPrimaryKeysArray.length - i;
+			}
+
+			Long[] batchChildPrimaryKeys = new Long[batchSize];
+
+			System.arraycopy(
+				childPrimaryKeysArray, i, batchChildPrimaryKeys, 0, batchSize);
+
+			if (predicate == null) {
+				predicate = childPKColumn.in(batchChildPrimaryKeys);
+			}
+			else {
+				predicate = predicate.or(
+					childPKColumn.in(batchChildPrimaryKeys));
+			}
+
+			i += batchSize;
+		}
+
+		return predicate.withParentheses();
+	}
+
 	private Connection _getConnection(TableReferenceInfo<?> tableReferenceInfo)
 		throws SQLException {
 
@@ -212,8 +246,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			JoinStep joinStep = joinFunction.apply(fromStep);
 
 			GroupByStep groupByStep = joinStep.where(
-				() -> childPKColumn.in(
-					childPrimaryKeysArray
+				() -> _getChildPKColumnPredicate(
+					childPKColumn, childPrimaryKeysArray
 				).and(
 					() -> {
 						Table<?> parentTable = parentPKColumn.getTable();

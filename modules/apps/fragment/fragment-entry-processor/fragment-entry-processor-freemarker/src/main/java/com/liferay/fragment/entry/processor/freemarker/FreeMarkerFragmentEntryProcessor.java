@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -140,9 +139,6 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getLocale());
 
-		Optional<InfoItemReference> contextInfoItemReferenceOptional =
-			fragmentEntryProcessorContext.getContextInfoItemReferenceOptional();
-
 		template.putAll(
 			HashMapBuilder.<String, Object>put(
 				"configuration", configurationValuesJSONObject
@@ -159,7 +155,9 @@ public class FreeMarkerFragmentEntryProcessor
 				_fragmentEntryConfigurationParser.getContextObjects(
 					configurationValuesJSONObject,
 					fragmentEntryLink.getConfiguration(),
-					_getInfoItem(contextInfoItemReferenceOptional.orElse(null)),
+					_getInfoItem(
+						fragmentEntryProcessorContext.
+							getContextInfoItemReference()),
 					fragmentEntryProcessorContext.getSegmentsEntryIds())
 			).build());
 
@@ -178,7 +176,7 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
 					fragmentEntryLink,
 					fragmentEntryProcessorContext.getHttpServletRequest(),
-					fragmentEntryProcessorContext.getInfoFormOptional(),
+					fragmentEntryProcessorContext.getInfoForm(),
 					fragmentEntryProcessorContext.getLocale()));
 		}
 

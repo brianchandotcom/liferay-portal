@@ -20,7 +20,6 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,8 +41,8 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
-	public Optional<InfoItemReference> getContextInfoItemReferenceOptional() {
-		return Optional.ofNullable(_infoItemReference);
+	public InfoItemReference getContextInfoItemReference() {
+		return _infoItemReference;
 	}
 
 	@Override
@@ -62,8 +61,8 @@ public class DefaultFragmentEntryProcessorContext
 	}
 
 	@Override
-	public Optional<InfoForm> getInfoFormOptional() {
-		return Optional.ofNullable(_infoForm);
+	public InfoForm getInfoForm() {
+		return _infoForm;
 	}
 
 	@Override

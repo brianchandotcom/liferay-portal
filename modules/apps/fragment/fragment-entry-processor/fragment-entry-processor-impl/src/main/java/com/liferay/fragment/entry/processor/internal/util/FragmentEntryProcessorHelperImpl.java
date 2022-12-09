@@ -131,16 +131,12 @@ public class FragmentEntryProcessorHelperImpl
 			object = _getInfoItem(className, infoItemIdentifier);
 		}
 		else if (isMappedCollection(editableValueJSONObject)) {
-			Optional<InfoItemReference> infoItemReferenceOptional =
-				fragmentEntryProcessorContext.
-					getContextInfoItemReferenceOptional();
+			InfoItemReference infoItemReference =
+				fragmentEntryProcessorContext.getContextInfoItemReference();
 
-			if (!infoItemReferenceOptional.isPresent()) {
+			if (infoItemReference == null) {
 				return null;
 			}
-
-			InfoItemReference infoItemReference =
-				infoItemReferenceOptional.get();
 
 			className = infoItemReference.getClassName();
 			classPK = infoItemReference.getClassPK();

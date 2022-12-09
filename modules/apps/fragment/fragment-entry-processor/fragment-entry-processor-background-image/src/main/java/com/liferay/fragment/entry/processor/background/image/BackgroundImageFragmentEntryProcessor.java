@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -162,26 +161,23 @@ public class BackgroundImageFragmentEntryProcessor
 						fragmentEntryProcessorContext.getLocale());
 				}
 
-				Optional<InfoItemReference> contextInfoItemReferenceOptional =
-					fragmentEntryProcessorContext.
-						getContextInfoItemReferenceOptional();
+				InfoItemReference contextInfoItemReference =
+					fragmentEntryProcessorContext.getContextInfoItemReference();
 
-				if ((fileEntryId == 0) &&
-					contextInfoItemReferenceOptional.isPresent()) {
-
+				if ((fileEntryId == 0) && (contextInfoItemReference != null)) {
 					fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-						contextInfoItemReferenceOptional.get(),
+						contextInfoItemReference,
 						editableValueJSONObject.getString("collectionFieldId"),
 						fragmentEntryProcessorContext.getLocale());
-				}
 
-				if ((fileEntryId == 0) &&
-					contextInfoItemReferenceOptional.isPresent()) {
-
-					fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-						contextInfoItemReferenceOptional.get(),
-						editableValueJSONObject.getString("mappedField"),
-						fragmentEntryProcessorContext.getLocale());
+					if (fileEntryId == 0) {
+						fileEntryId =
+							_fragmentEntryProcessorHelper.getFileEntryId(
+								contextInfoItemReference,
+								editableValueJSONObject.getString(
+									"mappedField"),
+								fragmentEntryProcessorContext.getLocale());
+					}
 				}
 
 				if (fileEntryId > 0) {

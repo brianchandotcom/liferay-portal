@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,10 +111,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		JSONObject jsonObject = _getFieldValueJSONObject(
 			fragmentRendererContext);
 
-		Optional<InfoItemReference> contextInfoItemReferenceOptional =
-			fragmentRendererContext.getContextInfoItemReferenceOptional();
+		InfoItemReference infoItemReference =
+			fragmentRendererContext.getContextInfoItemReference();
 
-		if (!contextInfoItemReferenceOptional.isPresent() &&
+		if ((infoItemReference == null) &&
 			((jsonObject == null) || (jsonObject.length() == 0))) {
 
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
@@ -134,13 +133,9 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			className = jsonObject.getString("className");
 
 			displayObject = _getDisplayObject(
-				className, jsonObject.getLong("classPK"),
-				contextInfoItemReferenceOptional);
+				className, jsonObject.getLong("classPK"), infoItemReference);
 		}
 		else {
-			InfoItemReference infoItemReference =
-				contextInfoItemReferenceOptional.orElse(null);
-
 			displayObject = _getInfoItem(infoItemReference);
 		}
 
@@ -201,15 +196,11 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Object _getDisplayObject(
-		String className, long classPK,
-		Optional<InfoItemReference> infoItemReferenceOptional) {
+		String className, long classPK, InfoItemReference infoItemReference) {
 
 		InfoItemObjectProvider<?> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
-
-		InfoItemReference infoItemReference = infoItemReferenceOptional.orElse(
-			null);
 
 		if (infoItemObjectProvider == null) {
 			return _getInfoItem(infoItemReference);

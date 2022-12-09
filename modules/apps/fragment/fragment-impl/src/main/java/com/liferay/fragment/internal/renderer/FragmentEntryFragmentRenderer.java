@@ -30,7 +30,6 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
@@ -58,7 +57,6 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -171,8 +169,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	private JSONObject _getInputJSONObject(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest,
-		Optional<InfoForm> infoFormOptional, Locale locale) {
+		HttpServletRequest httpServletRequest, InfoForm infoForm,
+		Locale locale) {
 
 		FragmentEntryInputTemplateNodeContextHelper
 			fragmentEntryInputTemplateNodeContextHelper =
@@ -183,8 +181,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		InputTemplateNode inputTemplateNode =
 			fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
-				fragmentEntryLink, httpServletRequest, infoFormOptional,
-				locale);
+				fragmentEntryLink, httpServletRequest, infoForm, locale);
 
 		return inputTemplateNode.toJSONObject();
 	}
@@ -326,7 +323,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					JSONUtil.toString(
 						_getInputJSONObject(
 							fragmentEntryLink, httpServletRequest,
-							fragmentRendererContext.getInfoFormOptional(),
+							fragmentRendererContext.getInfoForm(),
 							fragmentRendererContext.getLocale())));
 			}
 
@@ -382,20 +379,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext.getMode(),
 					fragmentRendererContext.getLocale());
 
-		Optional<InfoItemReference> contextInfoItemReferenceOptional =
-			fragmentRendererContext.getContextInfoItemReferenceOptional();
-
 		defaultFragmentEntryProcessorContext.setContextInfoItemReference(
-			contextInfoItemReferenceOptional.orElse(null));
+			fragmentRendererContext.getContextInfoItemReference());
 
 		defaultFragmentEntryProcessorContext.setFragmentElementId(
 			fragmentRendererContext.getFragmentElementId());
 
-		Optional<InfoForm> infoFormOptional =
-			fragmentRendererContext.getInfoFormOptional();
-
 		defaultFragmentEntryProcessorContext.setInfoForm(
-			infoFormOptional.orElse(null));
+			fragmentRendererContext.getInfoForm());
 
 		defaultFragmentEntryProcessorContext.setPreviewClassNameId(
 			fragmentRendererContext.getPreviewClassNameId());

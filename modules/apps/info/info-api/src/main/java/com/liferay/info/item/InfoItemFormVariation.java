@@ -19,7 +19,6 @@ import com.liferay.petra.lang.HashUtil;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Jorge Ferrer
@@ -32,7 +31,7 @@ public class InfoItemFormVariation {
 
 		this(key, labelInfoLocalizedValue);
 
-		_groupIdOptional = Optional.of(groupId);
+		_groupId = groupId;
 	}
 
 	public InfoItemFormVariation(
@@ -62,8 +61,8 @@ public class InfoItemFormVariation {
 		return false;
 	}
 
-	public Optional<Long> getGroupIdOptional() {
-		return _groupIdOptional;
+	public Long getGroupId() {
+		return _groupId;
 	}
 
 	public String getKey() {
@@ -83,7 +82,7 @@ public class InfoItemFormVariation {
 		return HashUtil.hash(0, _key);
 	}
 
-	private Optional<Long> _groupIdOptional = Optional.empty();
+	private Long _groupId;
 	private final String _key;
 	private final InfoLocalizedValue<String> _labelInfoLocalizedValue;
 

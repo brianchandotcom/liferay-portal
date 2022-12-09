@@ -29,6 +29,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -44,6 +45,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
@@ -130,11 +133,13 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> GroupPermissionUtil.contains(
-							_themeDisplay.getPermissionChecker(),
-							_themeDisplay.getScopeGroup(),
-							LayoutUtilityPageActionKeys.
-								ADD_LAYOUT_UTILITY_PAGE_ENTRY),
+						() ->
+							!_isLiveGroup() &&
+							GroupPermissionUtil.contains(
+								_themeDisplay.getPermissionChecker(),
+								_themeDisplay.getScopeGroup(),
+								LayoutUtilityPageActionKeys.
+									ADD_LAYOUT_UTILITY_PAGE_ENTRY),
 						_getCopyLayoutUtilityPageEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -445,6 +450,19 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "preview"));
 		};
+	}
+
+	private boolean _isLiveGroup() {
+		Group group = _themeDisplay.getScopeGroup();
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (stagingGroupHelper.isLiveGroup(group)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final Layout _draftLayout;

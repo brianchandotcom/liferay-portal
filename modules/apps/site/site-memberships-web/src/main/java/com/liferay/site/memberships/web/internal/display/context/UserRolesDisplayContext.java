@@ -33,9 +33,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
-import com.liferay.portlet.sites.search.UserGroupRoleRoleChecker;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.util.DepotRolesUtil;
+import com.liferay.site.search.UserGroupRoleRoleChecker;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.List;

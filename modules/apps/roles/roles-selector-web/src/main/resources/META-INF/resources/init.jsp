@@ -45,10 +45,10 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.service.persistence.constants.UserGroupFinderConstants" %><%@
-page import="com.liferay.portlet.sites.search.UserGroupGroupRoleUserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.roles.selector.web.internal.display.context.EditRolesDisplayContext" %><%@
-page import="com.liferay.roles.selector.web.internal.display.context.EditRolesUsersDisplayContext" %>
+page import="com.liferay.roles.selector.web.internal.display.context.EditRolesUsersDisplayContext" %><%@
+page import="com.liferay.site.search.UserGroupGroupRoleUserGroupChecker" %>
 
 <%@ page import="java.util.LinkedHashMap" %>
 

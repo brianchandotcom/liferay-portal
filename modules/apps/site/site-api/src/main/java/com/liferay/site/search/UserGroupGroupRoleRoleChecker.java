@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.sites.search;
+package com.liferay.site.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -27,25 +27,25 @@ import javax.portlet.RenderResponse;
 /**
  * @author Brett Swaim
  */
-public class UserGroupGroupRoleUserGroupChecker extends RowChecker {
+public class UserGroupGroupRoleRoleChecker extends EmptyOnClickRowChecker {
 
-	public UserGroupGroupRoleUserGroupChecker(
-		RenderResponse renderResponse, Group group, Role role) {
+	public UserGroupGroupRoleRoleChecker(
+		RenderResponse renderResponse, UserGroup userGroup, Group group) {
 
 		super(renderResponse);
 
+		_userGroup = userGroup;
 		_group = group;
-		_role = role;
 	}
 
 	@Override
 	public boolean isChecked(Object object) {
-		UserGroup userGroup = (UserGroup)object;
+		Role role = (Role)object;
 
 		try {
 			return UserGroupGroupRoleLocalServiceUtil.hasUserGroupGroupRole(
-				userGroup.getUserGroupId(), _group.getGroupId(),
-				_role.getRoleId());
+				_userGroup.getUserGroupId(), _group.getGroupId(),
+				role.getRoleId());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -55,9 +55,9 @@ public class UserGroupGroupRoleUserGroupChecker extends RowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserGroupGroupRoleUserGroupChecker.class);
+		UserGroupGroupRoleRoleChecker.class);
 
 	private final Group _group;
-	private final Role _role;
+	private final UserGroup _userGroup;
 
 }

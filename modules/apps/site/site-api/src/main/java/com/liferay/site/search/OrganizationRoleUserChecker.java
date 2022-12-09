@@ -12,41 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.sites.search;
+package com.liferay.site.search;
 
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
+import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
- * @author Jorge Ferrer
+ * @author Roberto Díaz
  */
-public class UserGroupRoleRoleChecker extends EmptyOnClickRowChecker {
+public class OrganizationRoleUserChecker extends RowChecker {
 
-	public UserGroupRoleRoleChecker(
-		RenderResponse renderResponse, User user, Group group) {
+	public OrganizationRoleUserChecker(
+		RenderResponse renderResponse, Organization organization, Role role) {
 
 		super(renderResponse);
 
-		_user = user;
-		_group = group;
+		_organization = organization;
+		_role = role;
 	}
 
 	@Override
 	public boolean isChecked(Object object) {
-		Role role = (Role)object;
+		User user = (User)object;
 
 		try {
 			return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				_user.getUserId(), _group.getGroupId(), role.getRoleId());
+				user.getUserId(), _organization.getGroupId(),
+				_role.getRoleId());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -57,25 +58,25 @@ public class UserGroupRoleRoleChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isDisabled(Object object) {
-		Role role = (Role)object;
+		User user = (User)object;
 
 		try {
-			if (isChecked(role)) {
-				if (SiteMembershipPolicyUtil.isRoleProtected(
+			if (isChecked(user)) {
+				if (OrganizationMembershipPolicyUtil.isRoleProtected(
 						PermissionThreadLocal.getPermissionChecker(),
-						_user.getUserId(), _group.getGroupId(),
-						role.getRoleId()) ||
-					SiteMembershipPolicyUtil.isRoleRequired(
-						_user.getUserId(), _group.getGroupId(),
-						role.getRoleId())) {
+						user.getUserId(), _organization.getOrganizationId(),
+						_role.getRoleId()) ||
+					OrganizationMembershipPolicyUtil.isRoleRequired(
+						user.getUserId(), _organization.getOrganizationId(),
+						_role.getRoleId())) {
 
 					return true;
 				}
 			}
 			else {
-				if (!SiteMembershipPolicyUtil.isRoleAllowed(
-						_user.getUserId(), _group.getGroupId(),
-						role.getRoleId())) {
+				if (!OrganizationMembershipPolicyUtil.isRoleAllowed(
+						user.getUserId(), _organization.getOrganizationId(),
+						_role.getRoleId())) {
 
 					return true;
 				}
@@ -89,9 +90,9 @@ public class UserGroupRoleRoleChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserGroupRoleRoleChecker.class);
+		OrganizationRoleUserChecker.class);
 
-	private final Group _group;
-	private final User _user;
+	private final Organization _organization;
+	private final Role _role;
 
 }

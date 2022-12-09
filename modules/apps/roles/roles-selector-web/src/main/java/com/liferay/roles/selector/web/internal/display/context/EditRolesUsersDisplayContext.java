@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.sites.search.OrganizationRoleUserChecker;
-import com.liferay.portlet.sites.search.UserGroupRoleUserChecker;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.site.search.OrganizationRoleUserChecker;
+import com.liferay.site.search.UserGroupRoleUserChecker;
 
 import java.util.LinkedHashMap;
 import java.util.Objects;

@@ -3,6 +3,8 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.jvm.max.retries = "0";
+	property test.testcase.max.retries = "0";
 	property testray.main.component.name = "Login";
 
 	@description = "This is a use case for LPS-39744 and LPS-78508. Default landing page could be set by property and user is redirected to the changed landing page."

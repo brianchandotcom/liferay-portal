@@ -6940,21 +6940,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 					<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
 
-					<get-testcase-property property.name="ext.plugins.includes" />
-
 					<get-operating-system-property property.name="operating.system.docker.image" />
 
 					<parallel>
-						<if>
-							<not>
-								<isset property="ext.plugins.includes" />
-							</not>
-							<then>
-								<sequential>
-									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
-								</sequential>
-							</then>
-						</if>
+						<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
 
 						<daemons>
 							<if>
@@ -10085,18 +10074,6 @@ virtualHostname="localhost"
 		<!--
 		Deploy plugin files to the deploy directory.
 		-->
-
-		<get-testcase-property property.name="ext.plugins.includes" />
-
-		<if>
-			<isset property="ext.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="ext" />
-					<property name="plugins.includes" value="${ext.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
 
 		<get-testcase-property property.name="hook.plugins.includes" />
 

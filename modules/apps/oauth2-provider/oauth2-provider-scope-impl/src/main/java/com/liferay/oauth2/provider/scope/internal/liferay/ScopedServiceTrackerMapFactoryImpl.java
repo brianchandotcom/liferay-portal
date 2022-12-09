@@ -40,11 +40,12 @@ public class ScopedServiceTrackerMapFactoryImpl
 	@Override
 	public <T> ScopedServiceTrackerMap<T> create(
 		BundleContext bundleContext, Class<T> clazz, String property,
-		Supplier<T> defaultServiceSupplier, Runnable onChangeRunnable) {
+		String filterString, Supplier<T> defaultServiceSupplier,
+		Runnable onChangeRunnable) {
 
 		return new ScopedServiceTrackerMapImpl<>(
-			bundleContext, clazz, property, defaultServiceSupplier,
-			onChangeRunnable);
+			bundleContext, clazz, property, filterString,
+			defaultServiceSupplier, onChangeRunnable);
 	}
 
 	private static class ScopedServiceTrackerMapImpl<T>
@@ -85,20 +86,23 @@ public class ScopedServiceTrackerMapFactoryImpl
 
 		private ScopedServiceTrackerMapImpl(
 			BundleContext bundleContext, Class<T> clazz, String property,
-			Supplier<T> defaultServiceSupplier, Runnable onChangeRunnable) {
+			String filterString, Supplier<T> defaultServiceSupplier,
+			Runnable onChangeRunnable) {
 
 			_defaultServiceSupplier = defaultServiceSupplier;
 			_onChangeRunnable = onChangeRunnable;
 
 			_servicesByCompany = ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, clazz,
-				StringBundler.concat("(&(companyId=*)(!(", property, "=*)))"),
+				StringBundler.concat(
+					"(&(companyId=*)(!(", property, "=*))", filterString, ")"),
 				new PropertyServiceReferenceMapper<>("companyId"),
 				new ServiceTrackerMapListenerImpl());
 			_servicesByCompanyAndKey =
 				ServiceTrackerMapFactory.openMultiValueMap(
 					bundleContext, clazz,
-					StringBundler.concat("(&(companyId=*)(", property, "=*))"),
+					StringBundler.concat(
+						"(&(companyId=*)(", property, "=*)", filterString, ")"),
 					(serviceReference, emitter) -> {
 						ServiceReferenceMapper<String, T> companyMapper =
 							new PropertyServiceReferenceMapper<>("companyId");
@@ -116,7 +120,8 @@ public class ScopedServiceTrackerMapFactoryImpl
 			_servicesByKey = ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, clazz,
 				StringBundler.concat(
-					"(&(", property, "=*)(|(!(companyId=*))(companyId=0)))"),
+					"(&(", property, "=*)(|(!(companyId=*))(companyId=0))",
+					filterString, ")"),
 				new PropertyServiceReferenceMapper<>(property),
 				new ServiceTrackerMapListenerImpl());
 		}

@@ -25,16 +25,28 @@ public interface ScopedServiceTrackerMapFactory {
 
 	public default <T> ScopedServiceTrackerMap<T> create(
 		BundleContext bundleContext, Class<T> clazz, String property,
-		Supplier<T> defaultServiceSupplier) {
+		String filterString, Supplier<T> defaultServiceSupplier) {
 
 		return create(
-			bundleContext, clazz, property, defaultServiceSupplier,
+			bundleContext, clazz, property, filterString,
+			defaultServiceSupplier,
 			() -> {
 			});
 	}
 
 	public <T> ScopedServiceTrackerMap<T> create(
 		BundleContext bundleContext, Class<T> clazz, String property,
-		Supplier<T> defaultServiceSupplier, Runnable onChangeRunnable);
+		String filterString, Supplier<T> defaultServiceSupplier,
+		Runnable onChangeRunnable);
+
+	public default <T> ScopedServiceTrackerMap<T> create(
+		BundleContext bundleContext, Class<T> clazz, String property,
+		Supplier<T> defaultServiceSupplier) {
+
+		return create(
+			bundleContext, clazz, property, "", defaultServiceSupplier,
+			() -> {
+			});
+	}
 
 }

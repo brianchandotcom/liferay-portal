@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.site.initializer,\
 	com.liferay.site.model,\
 	com.liferay.site.model.adapter,\
+	com.liferay.site.search,\
 	com.liferay.site.service,\
 	com.liferay.site.service.persistence,\
 	com.liferay.site.settings.configuration.admin.display,\

@@ -55,7 +55,9 @@ renderResponse.setTitle(group.getDescriptiveName(locale));
 			</c:if>
 		</clay:sheet-header>
 
-		<clay:sheet-section>
+		<clay:sheet-section
+			cssClass="lfr-depot-sheet-section"
+		>
 			<liferay-util:include page="<%= jspPath %>" servletContext="<%= application %>" />
 		</clay:sheet-section>
 

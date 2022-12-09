@@ -24,20 +24,17 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
@@ -98,13 +95,8 @@ public class ObjectEntryResourceTest {
 				"feature.flag.LPS-161364", "true"
 			).build());
 
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		ObjectRelationshipTestUtil.relateObjectEntries(
-			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			_objectRelationship, TestPropsValues.getUserId());
 
 		_testGetNestedFieldDetailsInOneToManyRelationships(
 			StringBundler.concat(
@@ -137,15 +129,8 @@ public class ObjectEntryResourceTest {
 				"feature.flag.LPS-161364", "true"
 			).build());
 
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			_objectRelationship.getObjectRelationshipId(),
-			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ServiceContextTestUtil.getServiceContext());
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null, _objectDefinition2.getRESTContextPath(), Http.Method.GET);
@@ -221,6 +206,22 @@ public class ObjectEntryResourceTest {
 			CoreMatchers.containsString("No ObjectEntry exists with the key"));
 	}
 
+	private ObjectRelationship _addObjectRelationshipAndRelateObjectsEntries(
+			String type)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, _objectDefinition2,
+				TestPropsValues.getUserId(), type);
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			objectRelationship, TestPropsValues.getUserId());
+
+		return objectRelationship;
+	}
+
 	private void _testGetNestedFieldDetailsInOneToManyRelationships(
 			String endpoint, String expectedFieldName)
 		throws Exception {
@@ -272,8 +273,5 @@ public class ObjectEntryResourceTest {
 
 	@DeleteAfterTestRun
 	private ObjectRelationship _objectRelationship;
-
-	@Inject
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

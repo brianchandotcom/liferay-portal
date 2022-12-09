@@ -1,0 +1,14 @@
+@component-name = "portal-verify-properties"
+definition {
+
+	property app.server.types = "tomcat";
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Verify Properties";
+
+	setUp {
+		User.firstLoginPG();
+	}
+
+}

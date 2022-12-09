@@ -135,6 +135,8 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 				PortletRequest.ACTION_PHASE)
 		).setMVCRenderCommandName(
 			"/object_entries/edit_object_entry"
+		).setBackURL(
+			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
 			"externalReferenceCode", objectEntry.getExternalReferenceCode()
 		).buildPortletURL();

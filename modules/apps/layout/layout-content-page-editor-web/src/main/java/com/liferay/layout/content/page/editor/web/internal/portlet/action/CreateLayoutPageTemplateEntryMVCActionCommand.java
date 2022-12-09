@@ -16,10 +16,12 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -43,6 +45,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -74,12 +78,14 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
+
 		Layout sourceLayout = _layoutLocalService.getLayout(
 			themeDisplay.getPlid());
 
-		String name = StringBundler.concat(
-			sourceName, " - ",
-			_language.get(themeDisplay.getLocale(), "page-template"));
+		String name = _getUniqueName(
+			sourceLayout.getGroupId(),
+			sourceLayout.getName(themeDisplay.getLocale()),
+			themeDisplay.getLocale());
 
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
@@ -198,6 +204,31 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private String _getUniqueName(
+		long groupId, String sourceName, Locale locale) {
+
+		String name = StringBundler.concat(
+			sourceName, " - ", _language.get(locale, "page-template"));
+
+		for (int i = 2;; i++) {
+			LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						groupId, name,
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+
+			if (targetLayoutPageTemplateEntry == null) {
+				break;
+			}
+
+			name = StringBundler.concat(
+				sourceName, " - ", _language.get(locale, "page-template"), " ",
+				i);
+		}
+
+		return name;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateLayoutPageTemplateEntryMVCActionCommand.class);
 
@@ -213,6 +244,10 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 	@Reference
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

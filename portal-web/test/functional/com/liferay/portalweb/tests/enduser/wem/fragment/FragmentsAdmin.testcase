@@ -65,6 +65,118 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-159235. Add folders to fragment resource and check hints."
+	@priority = "4"
+	test AddFoldersToResourceAndCheckHints {
+		property custom.properties = "feature.flag.LPS-158675=true";
+
+		task ("When user is in resources tab") {
+			task ("Add a fragment collection") {
+				JSONFragment.addFragmentCollection(
+					groupName = "Test Site Name",
+					name = "Collection Name");
+			}
+
+			task ("Navigate to the fragment collection") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+			}
+
+			task ("Navigate to the resources tab") {
+				Navigator.gotoNavItem(navItem = "Resources");
+			}
+		}
+
+		task ("Then the user could add folders to fragment resource and see the hints for resources in folders") {
+			task ("Add 2 folders in root") {
+				FragmentsAdmin.addFolder(folderName = "Folder 1");
+
+				FragmentsAdmin.addFolder(folderName = "Folder 2");
+			}
+
+			task ("View 2 folders") {
+				FragmentsAdmin.viewEntryPresent(entry = "Folder 1");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Folder 2");
+			}
+
+			task ("Add a sub folder for one of the created folders") {
+				FragmentsAdmin.addSubfolder(
+					folderName = "Folder 1",
+					subfolderName = "Subfolder 1");
+			}
+
+			task ("View sub folder") {
+				FragmentsAdmin.viewEntryPresent(entry = "Subfolder 1");
+			}
+
+			task ("Add a resource to one of the folders in root") {
+				Navigator.gotoNavItem(navItem = "Resources");
+
+				FragmentsAdmin.addResourceToFolder(
+					folderName = "Folder 1",
+					resourceFile = "Document_1.png");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Document_1.png");
+			}
+
+			task ("Add a fragment and type to invoke hint") {
+				Navigator.gotoNavItem(navItem = "Fragments");
+
+				FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+				AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+				var htmlSnippet = '''[resources:''';
+
+				FragmentsEditor.typeHtmlEditor(content = "");
+
+				Type.sendKeysAceEditor(
+					locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+					value1 = "${htmlSnippet}");
+			}
+
+			task ("Assert there is a hint for resources with path") {
+				AssertElementPresent(
+					autocompleteField = "Folder 1/Document_1.png",
+					locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
+			}
+
+			task ("Add a resource to sub folder") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+				Navigator.gotoNavItem(navItem = "Resources");
+
+				LexiconCard.clickCardTitleLink(card = "Folder 1");
+
+				FragmentsAdmin.addResourceToFolder(
+					folderName = "Subfolder 1",
+					resourceFile = "Document_2.png");
+			}
+
+			task ("Add a fragment and type to invoke hint") {
+				Navigator.gotoNavItem(navItem = "Fragments");
+
+				FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
+
+				FragmentsEditor.typeHtmlEditor(content = "");
+
+				Type.sendKeysAceEditor(
+					locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+					value1 = "${htmlSnippet}");
+			}
+
+			task ("Assert there is a hint for resources with path") {
+				AssertElementPresent(
+					autocompleteField = "Folder 1/Subfolder 1/Document_2.png",
+					locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-97184. The user could add a fragment via UI."
 	@priority = "5"
 	@uitest

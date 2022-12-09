@@ -10,6 +10,20 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addFolder {
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Folder");
+
+		IFrame.selectConfigurationFrame();
+
+		PortletEntry.inputName(name = "${folderName}");
+
+		IFrame.selectConfigurationFrame();
+
+		Button.clickSave();
+	}
+
 	macro addFragment {
 		LexiconEntry.gotoAdd();
 
@@ -72,6 +86,30 @@ definition {
 		IFrame.selectConfigurationFrame();
 
 		Button.clickAdd();
+	}
+
+	macro addResourceToFolder {
+		LexiconCard.clickCardTitleLink(card = "${folderName}");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "${resourceFile}");
+	}
+
+	macro addSubfolder {
+		LexiconCard.clickCardTitleLink(card = "${folderName}");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Folder");
+
+		IFrame.selectConfigurationFrame();
+
+		PortletEntry.inputName(name = "${subfolderName}");
+
+		IFrame.selectConfigurationFrame();
+
+		Button.clickSave();
 	}
 
 	macro deleteEntry {

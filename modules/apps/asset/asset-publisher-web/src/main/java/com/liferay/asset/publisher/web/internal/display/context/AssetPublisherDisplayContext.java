@@ -878,12 +878,15 @@ public class AssetPublisherDisplayContext {
 				continue;
 			}
 
-			Group curGroup = group;
+			Group curGroup;
 
 			if (group.isStagingGroup() &&
 				!group.isStagedPortlet(assetRendererFactory.getPortletId())) {
 
 				curGroup = group.getLiveGroup();
+			}
+			else {
+				curGroup = group;
 			}
 
 			if (!assetRendererFactory.isSupportsClassTypes()) {

@@ -21,7 +21,6 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Cristina González
@@ -73,8 +72,8 @@ public class ClassNameClassPKInfoItemIdentifier implements InfoItemIdentifier {
 	}
 
 	@Override
-	public Optional<String> getVersionOptional() {
-		return Optional.ofNullable(_version);
+	public String getVersion() {
+		return _version;
 	}
 
 	@Override

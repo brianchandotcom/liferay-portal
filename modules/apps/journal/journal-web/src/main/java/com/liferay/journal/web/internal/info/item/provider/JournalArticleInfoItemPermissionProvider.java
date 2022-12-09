@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,7 +54,7 @@ public class JournalArticleInfoItemPermissionProvider
 			permissionChecker,
 			_getArticle(
 				infoItemReference.getClassPK(),
-				infoItemIdentifier.getVersionOptional()),
+				infoItemIdentifier.getVersion()),
 			actionId);
 	}
 
@@ -69,15 +68,8 @@ public class JournalArticleInfoItemPermissionProvider
 			permissionChecker, journalArticle.getId(), actionId);
 	}
 
-	private JournalArticle _getArticle(
-			long classPK, Optional<String> versionOptional)
+	private JournalArticle _getArticle(long classPK, String version)
 		throws InfoItemPermissionException {
-
-		String version = null;
-
-		if (versionOptional.isPresent()) {
-			version = versionOptional.get();
-		}
 
 		try {
 			if (Validator.isNull(version) ||

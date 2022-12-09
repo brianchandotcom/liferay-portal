@@ -7173,6 +7173,7 @@ ${docker.start.error}</fail>
 			<property name="database.docker.database.options" value="" />
 			<property name="database.docker.run.options" value="" />
 
+			<get-testcase-property property.name="data.archive.type" />
 			<get-testcase-property property.name="database.lowercase.enabled" />
 
 			<if>
@@ -7183,6 +7184,12 @@ ${docker.start.error}</fail>
 				<then>
 					<var name="database.docker.database.options.new" value="${database.docker.database.options} --lower_case_table_names=1" />
 				</then>
+				<elseif>
+					<contains string="${data.archive.type}" substring="partition-large" />
+					<then>
+						<var name="database.docker.database.options.new" value="${database.docker.database.options} --character-set-server=utf8mb4 --innodb_buffer_pool_size=4G --innodb_log_buffer_size=256M --innodb_log_file_size=1G --innodb_write_io_threads=16 --innodb_flush_log_at_trx_commit=0 --innodb-doublewrite=0" />
+					</then>
+				</elseif>
 				<else>
 					<var name="database.docker.database.options.new" value="${database.docker.database.options}" />
 				</else>
@@ -8163,6 +8170,18 @@ war.path=${app.server.portal.dir}/</echo>
 				<then>
 					<local name="wait.for.app.server.log.timed.out.message" />
 
+					<get-testcase-property property.name="custom.startup.timeout" />
+
+					<if>
+						<isset property="custom.startup.timeout" />
+						<then>
+							<property name="timeout.app.server.wait.final" value="${custom.startup.timeout}" />
+						</then>
+						<else>
+							<property name="timeout.app.server.wait.final" value="${timeout.app.server.wait}" />
+						</else>
+					</if>
+
 					<beanshell>
 						<![CDATA[
 							import java.nio.file.Files;
@@ -8209,7 +8228,7 @@ war.path=${app.server.portal.dir}/</echo>
 
 							System.out.println("Waiting for server startup message");
 
-							int timeout = Integer.parseInt(project.getProperty("timeout.app.server.wait"));
+							int timeout = Integer.parseInt(project.getProperty("timeout.app.server.wait.final"));
 
 							int second = 0;
 
@@ -11415,8 +11434,23 @@ cluster.link.bind.addr["cluster-link-udp"]=${ip.address}</echo>
 			<equals arg1="${database.partition.enabled}" arg2="true" />
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
 database.partition.enabled=true</echo>
+
+				<get-testcase-property property.name="data.archive.type" />
+
+				<if>
+					<contains string="${data.archive.type}" substring="partition-large" />
+					<then>
+						<echo append="true" file="portal-impl/src/portal-ext.properties">
+locales=es_ES,en_US,en_GB
+locales.enabled=es_ES,en_US,en_GB
+admin.default.role.names=User
+layout.user.public.layouts.power.user.required=true
+layout.user.private.layouts.power.user.required=true
+passwords.encryption.algorithm.legacy=SHA
+company.default.web.id=www.able.com</echo>
+					</then>
+				</if>
 			</then>
 		</if>
 
@@ -13382,10 +13416,26 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 		<delete dir="${liferay.home}/data/elasticsearch7" />
 
-		<unzip
-			dest="${liferay.home}"
-			src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
-		/>
+		<if>
+			<contains string="${data.archive.type}" substring="partition-large" />
+			<then>
+				<mirrors-get
+					dest="${liferay.home}"
+					src="http://files.liferay.com/mirrors/data-archive-portal-partition-large.zip"
+				/>
+
+				<unzip
+					dest="${liferay.home}"
+					src="${liferay.home}/data-archive-portal-partition-large.zip"
+				/>
+			</then>
+			<else>
+				<unzip
+					dest="${liferay.home}"
+					src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
+				/>
+			</else>
+		</if>
 
 		<get-testcase-property property.name="database.partition.enabled" />
 
@@ -13394,6 +13444,22 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<then>
 				<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
 database.partition.enabled=true</echo>
+
+				<get-testcase-property property.name="data.archive.type" />
+
+				<if>
+					<contains string="${data.archive.type}" substring="partition-large" />
+					<then>
+						<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+locales=es_ES,en_US,en_GB
+locales.enabled=es_ES,en_US,en_GB
+admin.default.role.names=User
+layout.user.public.layouts.power.user.required=true
+layout.user.private.layouts.power.user.required=true
+passwords.encryption.algorithm.legacy=SHA
+company.default.web.id=www.able.com</echo>
+					</then>
+				</if>
 			</then>
 		</if>
 

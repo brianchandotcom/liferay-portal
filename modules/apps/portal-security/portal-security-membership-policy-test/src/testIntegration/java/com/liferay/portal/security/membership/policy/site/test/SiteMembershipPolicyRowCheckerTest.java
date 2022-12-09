@@ -15,10 +15,8 @@
 package com.liferay.portal.security.membership.policy.site.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,7 +28,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.portlet.sites.search.UserGroupRoleRoleChecker;
 import com.liferay.portlet.sites.search.UserGroupRoleUserChecker;
-import com.liferay.portlet.sitesadmin.search.SiteMembershipChecker;
 
 import javax.portlet.RenderResponse;
 import javax.portlet.filter.RenderResponseWrapper;
@@ -56,22 +53,6 @@ public class SiteMembershipPolicyRowCheckerTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testIsCheckerDisabledWhenSettingForbiddenGroupToUser()
-		throws Exception {
-
-		long forbiddenGroupId = addForbiddenGroups()[0];
-
-		Group forbiddenGroup = GroupLocalServiceUtil.getGroup(forbiddenGroupId);
-
-		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
-			_renderResponse, forbiddenGroup);
-
-		User user = UserTestUtil.addUser();
-
-		Assert.assertTrue(siteMembershipChecker.isDisabled(user));
-	}
-
-	@Test
 	public void testIsCheckerDisabledWhenSettingForbiddenRoleToUser()
 		throws Exception {
 
@@ -85,22 +66,6 @@ public class SiteMembershipPolicyRowCheckerTest
 		User user = UserTestUtil.addUser();
 
 		Assert.assertTrue(userGroupRoleUserChecker.isDisabled(user));
-	}
-
-	@Test
-	public void testIsCheckerDisabledWhenSettingRequiredGroupToUser()
-		throws Exception {
-
-		long requiredGroupId = addRequiredGroups()[0];
-
-		Group requiredGroup = GroupLocalServiceUtil.getGroup(requiredGroupId);
-
-		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
-			_renderResponse, requiredGroup);
-
-		User user = UserTestUtil.addUser();
-
-		Assert.assertFalse(siteMembershipChecker.isDisabled(user));
 	}
 
 	@Test
@@ -148,22 +113,6 @@ public class SiteMembershipPolicyRowCheckerTest
 	}
 
 	@Test
-	public void testIsCheckerDisabledWhenUnsettingForbiddenGroupFromUser()
-		throws Exception {
-
-		long forbiddenGroupId = addForbiddenGroups()[0];
-
-		Group forbiddenGroup = GroupLocalServiceUtil.getGroup(forbiddenGroupId);
-
-		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
-			_renderResponse, forbiddenGroup);
-
-		User user = UserTestUtil.addUser(forbiddenGroupId);
-
-		Assert.assertFalse(siteMembershipChecker.isDisabled(user));
-	}
-
-	@Test
 	public void testIsCheckerDisabledWhenUnsettingForbiddenRoleFromUser()
 		throws Exception {
 
@@ -180,22 +129,6 @@ public class SiteMembershipPolicyRowCheckerTest
 			user.getUserId(), group.getGroupId(), new long[] {forbiddenRoleId});
 
 		Assert.assertFalse(userGroupRoleUserChecker.isDisabled(user));
-	}
-
-	@Test
-	public void testIsCheckerDisabledWhenUnsettingRequiredGroupFromUser()
-		throws Exception {
-
-		long requiredGroupId = addRequiredGroups()[0];
-
-		Group requiredGroup = GroupLocalServiceUtil.getGroup(requiredGroupId);
-
-		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
-			_renderResponse, requiredGroup);
-
-		User user = UserTestUtil.addUser(requiredGroupId);
-
-		Assert.assertTrue(siteMembershipChecker.isDisabled(user));
 	}
 
 	@Test

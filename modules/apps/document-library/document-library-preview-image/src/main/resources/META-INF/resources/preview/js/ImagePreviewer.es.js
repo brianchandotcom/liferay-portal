@@ -182,6 +182,7 @@ const ImagePreviewer = ({alt, imageURL}) => {
 			<div className="preview-toolbar-container">
 				<ClayButton.Group className="floating-bar">
 					<ClayButton
+						aria-label={Liferay.Language.get('zoom-out')}
 						className="btn-floating-bar"
 						disabled={zoomOutDisabled}
 						displayType={null}
@@ -199,6 +200,11 @@ const ImagePreviewer = ({alt, imageURL}) => {
 					</ClayButton>
 
 					<ClayButton
+						aria-label={
+							currentZoom === 1
+								? Liferay.Language.get('zoom-to-fit')
+								: Liferay.Language.get('real-size')
+						}
 						className="btn-floating-bar btn-floating-bar-text"
 						displayType={null}
 						onClick={handlePercentButtonClick}
@@ -214,6 +220,7 @@ const ImagePreviewer = ({alt, imageURL}) => {
 					</ClayButton>
 
 					<ClayButton
+						aria-label={Liferay.Language.get('zoom-in')}
 						className="btn-floating-bar"
 						disabled={zoomInDisabled}
 						displayType={null}

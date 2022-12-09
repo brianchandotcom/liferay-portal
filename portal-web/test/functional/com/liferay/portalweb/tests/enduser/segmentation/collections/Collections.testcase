@@ -4027,6 +4027,102 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166046. The site designer could see the variations indicator of collection in the Collections admin."
+	@priority = "5"
+	test ViewVariationsIndicatorInCollectionsAdmin {
+		task ("Given a site designer has collections") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("When the site designer changes the display style to cards in the Collections admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		}
+
+		task ("Then the site designer see the No Variations label shown in collections") {
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconCard.viewCardLabel(
+					card = "${collectionName}",
+					cardLabel = "No Variations");
+			}
+		}
+
+		task ("When the site designer changes the display style to list") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		}
+
+		task ("Then the site designer see the No Variations label shown in collections") {
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconList.viewListEntryLabel(
+					listEntry = "${collectionName}",
+					listEntryLabel = "No Variations");
+			}
+		}
+
+		task ("When the site designer adds personalized variations to collections") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "By Email Address",
+				text = "liferay.com");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "Job Title",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "By Job Title",
+				text = "Manager");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "By Email Address");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "By Email Address");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "By Job Title");
+		}
+
+		task ("Then the site designer sees the variations indicator updated") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconList.viewListEntryLabel(
+				listEntry = "Dynamic Collection",
+				listEntryLabel = "2 Variations");
+
+			LexiconList.viewListEntryLabel(
+				listEntry = "Manual Collection",
+				listEntryLabel = "3 Variations");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.viewCardLabel(
+				card = "Dynamic Collection",
+				cardLabel = "2 Variations");
+
+			LexiconCard.viewCardLabel(
+				card = "Manual Collection",
+				cardLabel = "3 Variations");
+		}
+	}
+
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
 	@priority = "4"
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {

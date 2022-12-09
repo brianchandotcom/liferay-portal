@@ -14,12 +14,9 @@
 
 package com.liferay.account.internal.model.listener;
 
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
-import com.liferay.object.entry.permission.util.ObjectEntryPermissionUtil;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -39,16 +36,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		try {
-			ObjectEntryPermissionUtil.checkAccountEntryPermission(
-				_accountEntryLocalService, ObjectActionKeys.ADD_OBJECT_ENTRY,
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId()),
-				objectEntry, _objectFieldLocalService, objectEntry.getUserId());
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+		_checkAccountEntryPermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, objectEntry);
 	}
 
 	@Override
@@ -56,12 +45,16 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
+		_checkAccountEntryPermission(ActionKeys.UPDATE, objectEntry);
+	}
+
+	private void _checkAccountEntryPermission(
+			String actionId, ObjectEntry objectEntry)
+		throws ModelListenerException {
+
 		try {
-			ObjectEntryPermissionUtil.checkAccountEntryPermission(
-				_accountEntryLocalService, ActionKeys.UPDATE,
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId()),
-				objectEntry, _objectFieldLocalService, objectEntry.getUserId());
+			_objectEntryService.checkPermission(
+				actionId, objectEntry, objectEntry.getUserId());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -69,12 +62,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
+	private ObjectEntryService _objectEntryService;
 
 }

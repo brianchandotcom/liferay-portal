@@ -90,50 +90,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetNestedFieldDetailsInOneToManyRelationship1()
-		throws Exception {
-
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			_objectRelationship.getObjectRelationshipId(),
-			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ServiceContextTestUtil.getServiceContext());
-
-		JSONObject jsonObject = HTTPTestUtil.invoke(
-			null,
-			StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), "?nestedFields=r_",
-				_objectRelationship.getName(), "_",
-				_objectDefinition1.getPKObjectFieldName()),
-			Http.Method.GET);
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(1, itemsJSONArray.length());
-
-		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
-
-		Assert.assertEquals(
-			_OBJECT_FIELD_VALUE_2,
-			itemJSONObject.getString(_OBJECT_FIELD_NAME_2));
-
-		JSONObject relatedObjectJSONObject = itemJSONObject.getJSONObject(
-			StringBundler.concat(
-				"r_", _objectRelationship.getName(), "_",
-				StringUtil.replaceLast(
-					_objectDefinition1.getPKObjectFieldName(), "Id", "")));
-
-		Assert.assertEquals(
-			_OBJECT_FIELD_VALUE_1,
-			relatedObjectJSONObject.getString(_OBJECT_FIELD_NAME_1));
-	}
-
-	@Test
-	public void testGetNestedFieldDetailsInOneToManyRelationships2()
+	public void testGetNestedFieldDetailsInOneToManyRelationships()
 		throws Exception {
 
 		PropsUtil.addProperties(
@@ -145,35 +102,25 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			_objectRelationship.getObjectRelationshipId(),
+		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			ServiceContextTestUtil.getServiceContext());
+			_objectRelationship, TestPropsValues.getUserId());
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
-			null,
+		_testGetNestedFieldDetailsInOneToManyRelationships(
+			StringBundler.concat(
+				_objectDefinition2.getRESTContextPath(), "?nestedFields=r_",
+				_objectRelationship.getName(), "_",
+				_objectDefinition1.getPKObjectFieldName()),
+			StringBundler.concat(
+				"r_", _objectRelationship.getName(), "_",
+				StringUtil.replaceLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id", "")));
+
+		_testGetNestedFieldDetailsInOneToManyRelationships(
 			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(), "?nestedFields=",
 				_objectRelationship.getName()),
-			Http.Method.GET);
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(1, itemsJSONArray.length());
-
-		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
-
-		Assert.assertEquals(
-			_OBJECT_FIELD_VALUE_2,
-			itemJSONObject.getString(_OBJECT_FIELD_NAME_2));
-
-		JSONObject relatedObjectJSONObject = itemJSONObject.getJSONObject(
 			_objectRelationship.getName());
-
-		Assert.assertEquals(
-			_OBJECT_FIELD_VALUE_1,
-			relatedObjectJSONObject.getString(_OBJECT_FIELD_NAME_1));
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
@@ -274,6 +221,31 @@ public class ObjectEntryResourceTest {
 			CoreMatchers.containsString("No ObjectEntry exists with the key"));
 	}
 
+	private void _testGetNestedFieldDetailsInOneToManyRelationships(
+			String endpoint, String expectedFieldName)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			_OBJECT_FIELD_VALUE_2,
+			itemJSONObject.getString(_OBJECT_FIELD_NAME_2));
+
+		JSONObject relatedObjectJSONObject = itemJSONObject.getJSONObject(
+			expectedFieldName);
+
+		Assert.assertEquals(
+			_OBJECT_FIELD_VALUE_1,
+			relatedObjectJSONObject.getString(_OBJECT_FIELD_NAME_1));
+	}
+
 	private static final String _OBJECT_FIELD_NAME_1 =
 		"x" + RandomTestUtil.randomString();
 
@@ -292,7 +264,10 @@ public class ObjectEntryResourceTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
 
+	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry1;
+
+	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry2;
 
 	@DeleteAfterTestRun

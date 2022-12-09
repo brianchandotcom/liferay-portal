@@ -167,10 +167,12 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 
 			setLoading(true);
 
-			LayoutService.createLayoutPageTemplateEntry(
-				templateSetId,
-				segmentsExperienceId
-			)
+			LayoutService.createLayoutPageTemplateEntry({
+				segmentsExperienceId,
+				templateSetDescription,
+				templateSetId: templateSetId || null,
+				templateSetName,
+			})
 				.then((response) => {
 					openToast({
 						message: sub(
@@ -199,10 +201,12 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 		},
 		[
 			onClose,
-			segmentsExperienceId,
-			validateForm,
-			templateSetId,
 			resetErrors,
+			segmentsExperienceId,
+			templateSetDescription,
+			templateSetId,
+			templateSetName,
+			validateForm,
 		]
 	);
 

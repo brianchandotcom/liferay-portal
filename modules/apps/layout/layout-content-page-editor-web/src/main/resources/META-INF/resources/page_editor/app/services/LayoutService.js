@@ -95,13 +95,17 @@ export default {
 	createLayoutPageTemplateEntry({
 		segmentsExperienceId,
 		templateName,
-		templateSet,
+		templateSetDescription,
+		templateSetId,
+		templateSetName,
 	}) {
 		return layoutServiceFetch(
 			config.createLayoutPageTemplateEntryURL,
 			{
 				body: {
-					layoutPageTemplateCollectionId: templateSet,
+					layoutPageTemplateCollectionDescription: templateSetDescription,
+					layoutPageTemplateCollectionId: templateSetId,
+					layoutPageTemplateCollectionName: templateSetName,
 					name: templateName,
 					segmentsExperienceId,
 				},

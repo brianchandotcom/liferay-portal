@@ -17,8 +17,11 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -34,8 +37,10 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -71,9 +76,38 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		Layout sourceLayout = _layoutLocalService.getLayout(
 			themeDisplay.getPlid());
-		String name = ParamUtil.getString(actionRequest, "name");
+
+		String name = StringBundler.concat(
+			sourceName, " - ",
+			_language.get(themeDisplay.getLocale(), "page-template"));
+
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166201"))) {
+			if (layoutPageTemplateCollectionId <= 0) {
+				String collectionName = ParamUtil.getString(
+					actionRequest, "layoutPageTemplateCollectionName");
+				String collectionDescription = ParamUtil.getString(
+					actionRequest, "layoutPageTemplateCollectionDescription");
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
+
+				LayoutPageTemplateCollection layoutPageTemplateCollection =
+					_layoutPageTemplateCollectionService.
+						addLayoutPageTemplateCollection(
+							serviceContext.getScopeGroupId(), collectionName,
+							collectionDescription, serviceContext);
+
+				layoutPageTemplateCollectionId =
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId();
+			}
+		}
+		else {
+			name = ParamUtil.getString(actionRequest, "name");
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			LayoutPageTemplateEntry.class.getName(), actionRequest);
@@ -175,6 +209,10 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

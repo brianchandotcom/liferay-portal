@@ -117,6 +117,7 @@ if (portletTitleBasedNavigation) {
 							<clay:dropdown-actions
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= dlViewFileEntryDisplayContext.getActionDropdownItems() %>"
+								propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
 							/>
 						</li>
 					</ul>

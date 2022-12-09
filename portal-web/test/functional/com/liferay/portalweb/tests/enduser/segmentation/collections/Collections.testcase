@@ -3698,6 +3698,27 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166046. The site designer could see the icon of collection provider is bolt."
+	@priority = "3"
+	test ViewCollectionProviderIcon {
+		task ("Given a site designer has default collection providers") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the site designer navigates to the Collections admin") {
+			Navigator.gotoNavTab(navTab = "Collection Providers");
+		}
+
+		task ("Then the site designer sees the collection provider icon") {
+			for (var collectionProviderName : list "Most Viewed Assets,Highest Rated Assets,Recent Content") {
+				AssertVisible(
+					key_listEntry = "${collectionProviderName}",
+					key_text = "bolt",
+					locator1 = "LexiconList#ANY_ICON");
+			}
+		}
+	}
+
 	@description = "LPS-86283: Validate if, is possible to preview the content of a dynamic content set variation in a modal window	"
 	@priority = "4"
 	test ViewContentOfAVariant {

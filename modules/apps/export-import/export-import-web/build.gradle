@@ -18,6 +18,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:site-navigation:site-navigation-taglib")
+	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:staging:staging-taglib")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":apps:trash:trash-api")

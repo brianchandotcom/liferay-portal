@@ -85,9 +85,9 @@ const FragmentPreview = ({
 				const formData = new FormData();
 
 				formData.append(`${namespace}configuration`, configuration);
-				formData.append(`${namespace}css`, css);
-				formData.append(`${namespace}html`, html);
-				formData.append(`${namespace}js`, js);
+				formData.append(`${namespace}css`, btoa(css));
+				formData.append(`${namespace}html`, btoa(html));
+				formData.append(`${namespace}js`, btoa(js));
 
 				fetch(urls.render, {
 					body: formData,

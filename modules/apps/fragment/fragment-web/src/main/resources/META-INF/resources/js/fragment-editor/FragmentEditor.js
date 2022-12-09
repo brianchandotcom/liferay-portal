@@ -152,12 +152,12 @@ const FragmentEditor = ({
 			const data = {
 				cacheable: isCacheable,
 				configurationContent: configuration,
-				cssContent: css,
+				cssContent: btoa(css),
 				fieldTypes,
 				fragmentCollectionId,
 				fragmentEntryId,
-				htmlContent: html,
-				jsContent: js,
+				htmlContent: btoa(html),
+				jsContent: btoa(js),
 				name,
 				status: allowedStatus.draft,
 			};

@@ -59,6 +59,8 @@ definition {
 		task ("Given I go to the test account") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
+			Refresh();
+
 			CustomerPortal.search(searchItem = "${testAccount}");
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
@@ -119,6 +121,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -153,6 +157,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -196,6 +202,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -217,6 +225,8 @@ definition {
 	test YouCanSeeTheActivationLinkIfYouAreAdmin {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}

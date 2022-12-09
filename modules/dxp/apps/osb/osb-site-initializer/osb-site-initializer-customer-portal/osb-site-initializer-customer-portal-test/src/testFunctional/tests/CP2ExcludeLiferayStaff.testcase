@@ -53,6 +53,8 @@ definition {
 		task ("Navigate to the Customer Portal 2.0 and assert the number of projects displayed on the homepage") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
+			Refresh();
+
 			CustomerPortal.tableListInHomepage(projectList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account QA 7.0,Test Account QA 7.1,Test Account QA 7.2,Test Account QA 7.3,Test Account QA 7.4");
 		}
 	}
@@ -72,6 +74,8 @@ definition {
 
 		task ("Assert that when the user is Liferay Staff and administrator of the project has gone through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 
@@ -96,6 +100,8 @@ definition {
 
 		task ("Assert that the Liferay Staff user has not gone through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 

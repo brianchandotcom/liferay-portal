@@ -47,6 +47,8 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
+			Refresh();
+
 			CustomerPortal.search(searchItem = "${testAccount}");
 
 			CustomerPortal.enterOnProject(
@@ -99,6 +101,8 @@ definition {
 			CP2AnalyticsCloudSetup.assertFieldExtraIsNotVisible(
 				field = "email",
 				position = "2");
+
+			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
@@ -117,6 +121,8 @@ definition {
 			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
+
+			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
@@ -135,6 +141,8 @@ definition {
 
 		task ("Then The Submit button should be active") {
 			CustomerPortal.assertButtonIsActive(text = "Submit");
+
+			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
@@ -153,6 +161,8 @@ definition {
 			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
+
+			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
@@ -171,6 +181,8 @@ definition {
 			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
+
+			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
@@ -201,14 +213,6 @@ definition {
 				email = "test@liferay.com",
 				portlet = "Incident Report Contacts Analytics Cloud");
 		}
-	}
-
-	@description = "Automation ID: LPS-150651 | Test Summary: Verify if the user can remove additional contacts from the incident report"
-	@priority = "3"
-	test RemovingAdditionalContactsFromTheIncidentReport {
-
-		// TODO LPS-150651 RemovingAdditionalContactsFromTheIncidentReport was implemented in the test AddingAdditionalIncidentReportContacts
-
 	}
 
 }

@@ -58,6 +58,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
@@ -91,6 +93,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -132,6 +136,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
@@ -172,6 +178,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
@@ -205,6 +213,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -251,6 +261,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
@@ -294,6 +306,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
@@ -336,6 +350,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
@@ -366,6 +382,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -402,6 +420,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}

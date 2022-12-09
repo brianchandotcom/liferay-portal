@@ -63,6 +63,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -90,6 +92,8 @@ definition {
 	test IfWithOneProjectUserIsRedirectedToProjectOverview {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -119,6 +123,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -146,6 +152,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -175,6 +183,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -192,6 +202,8 @@ definition {
 	test WithMoreThanOneProjectIsRedirectedToAllProjects {
 		task ("Go to CP2.0") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 		}
 
 		task ("Assert the list of projects on the homepage") {

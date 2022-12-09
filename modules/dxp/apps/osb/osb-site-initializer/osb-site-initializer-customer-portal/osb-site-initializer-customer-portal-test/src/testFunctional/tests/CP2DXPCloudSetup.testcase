@@ -59,6 +59,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CustomerPortal.clickOnStartProjectSetup();
@@ -97,6 +99,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -131,6 +135,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -161,6 +167,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -190,6 +198,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -222,6 +232,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -269,6 +281,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -310,6 +324,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -355,6 +371,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -394,6 +412,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -439,6 +459,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -482,6 +504,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -527,6 +551,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -571,6 +597,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -614,6 +642,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
@@ -655,6 +685,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}

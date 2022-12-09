@@ -58,6 +58,8 @@ definition {
 		task ("Go to CP2.0 and join a project and Going through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
@@ -75,6 +77,8 @@ definition {
 
 		task ("Go to CP 2.0 then go to Project and the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -136,6 +140,8 @@ definition {
 
 		task ("Go to CP2.0 and join a project and Going through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			Refresh();
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",

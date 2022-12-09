@@ -89,7 +89,18 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			Constants.SYSTEM_BUNDLE_LOCATION);
 
 		for (String dir : PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS) {
-			_watchedDirs.add(new File(dir));
+			File file = new File(dir);
+
+			try {
+				_watchedDirs.add(file.getCanonicalFile());
+			}
+			catch (IOException ioException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException);
+				}
+
+				_watchedDirs.add(file);
+			}
 		}
 
 		_fileInstallers = ServiceTrackerListFactory.open(
@@ -153,7 +164,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		_scanner = new Scanner(
-			_canononize(_watchedDirs), _filenameFilter,
+			_watchedDirs, _filenameFilter,
 			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_SUBDIR_MODE);
 
 		_bundleContext.addBundleListener(this);
@@ -294,25 +305,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		super.start();
-	}
-
-	private List<File> _canononize(List<File> files) {
-		List<File> canonicalFiles = new ArrayList<>(files.size());
-
-		for (File file : files) {
-			try {
-				canonicalFiles.add(file.getCanonicalFile());
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
-
-				canonicalFiles.add(file);
-			}
-		}
-
-		return canonicalFiles;
 	}
 
 	private boolean _contains(String path, List<String> dirPaths) {

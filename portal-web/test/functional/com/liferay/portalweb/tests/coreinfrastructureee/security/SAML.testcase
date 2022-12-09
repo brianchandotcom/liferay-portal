@@ -1963,6 +1963,7 @@ definition {
 	@priority = "3"
 	test CreateAndSyncUserAfterSAMLSetupWithMultipleIdPs {
 		property app.server.bundles.size = "0";
+		property test.name.skip.portal.instance = "SAML#CreateAndSyncUserAfterSAMLSetupWithMultipleIdPs";
 
 		task ("Add virtual instance able.com and baker.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2102,7 +2103,7 @@ definition {
 	@priority = "5"
 	test CustomFieldsCanBeConfiguredForSAML {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#ConfigureCustomFieldsForSAMLConnection";
+		property test.name.skip.portal.instance = "SAML#CustomFieldsCanBeConfiguredForSAML";
 
 		task ("Given: User adds 1 virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2264,7 +2265,7 @@ definition {
 	@priority = "5"
 	test CustomFieldsCanBeConfiguredForSAMLWithMultipleIdPs {
 		property app.server.bundles.size = "0";
-		property test.name.skip.portal.instance = "SAML#ConfigureCustomFieldsForSAMLConnectionWithMultipleIdPs";
+		property test.name.skip.portal.instance = "SAML#CustomFieldsCanBeConfiguredForSAMLWithMultipleIdPs";
 
 		task ("Given: User adds 2 virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

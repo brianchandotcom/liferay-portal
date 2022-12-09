@@ -74,6 +74,7 @@ definition {
 	@priority = "4"
 	test RememberMeChecked {
 		property custom.properties = "session.timeout=2";
+		property test.name.skip.portal.instance = "SessionTimeout#RememberMeChecked";
 		property web.xml.timeout = "2";
 
 		task ("Assert session not expired and user sign in not present") {

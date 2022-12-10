@@ -25,7 +25,7 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prevent-exit-code">
+	<macrodef name="modify-script-exit-code">
 		<sequential>
 			<get-database-upgrade-client-paths />
 
@@ -364,7 +364,7 @@
 	<target name="check-upgrade-client-second-process">
 		<get-database-upgrade-client-paths />
 
-		<prevent-exit-code />
+		<modify-script-exit-code />
 
 		<parallel failonany="true">
 			<exec executable="/bin/bash" spawn="true">

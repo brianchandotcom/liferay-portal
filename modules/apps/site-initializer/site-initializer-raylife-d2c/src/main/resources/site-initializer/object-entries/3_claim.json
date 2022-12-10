@@ -5,48 +5,552 @@
 			"claimCreateDate": "2022-03-17",
 			"claimStatus": "inInvestigation",
 			"externalReferenceCode": "RAYCLAIM-001",
-			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-015",
-			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-015$]"
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-001",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-001$]"
 		},
 		{
 			"claimAmount": 4000,
 			"claimCreateDate": "2022-03-04",
 			"claimStatus": "approved",
 			"externalReferenceCode": "RAYCLAIM-002",
-			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-024",
-			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-024$]"
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-001",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-001$]"
 		},
 		{
-			"claimAmount": 5000,
-			"claimCreateDate": "2022-08-08",
-			"claimStatus": "inEstimation",
+			"claimAmount": 1300,
+			"claimCreateDate": "2021-01-20",
+			"claimStatus": "claimSubmitted",
 			"externalReferenceCode": "RAYCLAIM-003",
 			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-001",
 			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-001$]"
 		},
 		{
-			"claimAmount": 1500,
-			"claimCreateDate": "2022-10-17",
-			"claimStatus": "claimSubmitted",
+			"claimAmount": 1800,
+			"claimCreateDate": "2021-01-15",
+			"claimStatus": "settled",
 			"externalReferenceCode": "RAYCLAIM-004",
 			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-002",
 			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-002$]"
 		},
 		{
-			"claimAmount": 3000,
-			"claimCreateDate": "2022-11-04",
-			"claimStatus": "settled",
+			"claimAmount": 2500,
+			"claimCreateDate": "2021-01-10",
+			"claimStatus": "approved",
 			"externalReferenceCode": "RAYCLAIM-005",
-			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-032",
-			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-032$]"
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-002",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-002$]"
 		},
 		{
 			"claimAmount": 1000,
-			"claimCreateDate": "2022-12-04",
-			"claimStatus": "approved",
+			"claimCreateDate": "2021-02-20",
+			"claimStatus": "claimSubmitted",
 			"externalReferenceCode": "RAYCLAIM-006",
-			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-034",
-			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-034$]"
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-002",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-002$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2021-02-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-007",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-003",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-003$]"
+		},
+		{
+			"claimAmount": 2500,
+			"claimCreateDate": "2021-02-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-008",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-003",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-003$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2021-03-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-009",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-003",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-003$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2021-03-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-010",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-004",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-004$]"
+		},
+		{
+			"claimAmount": 2500,
+			"claimCreateDate": "2021-03-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-011",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-004",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-004$]"
+		},
+		{
+			"claimAmount": 7000,
+			"claimCreateDate": "2021-04-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-012",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-004",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-004$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2021-04-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-013",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-005",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-005$]"
+		},
+		{
+			"claimAmount": 4500,
+			"claimCreateDate": "2021-04-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-014",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-005",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-005$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2021-05-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-015",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-005",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-005$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2021-05-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-016",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-006",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-006$]"
+		},
+		{
+			"claimAmount": 7500,
+			"claimCreateDate": "2021-05-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-017",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-006",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-006$]"
+		},
+		{
+			"claimAmount": 5500,
+			"claimCreateDate": "2021-06-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-018",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-006",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-006$]"
+		},
+		{
+			"claimAmount": 3500,
+			"claimCreateDate": "2021-06-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-019",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-007",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-007$]"
+		},
+		{
+			"claimAmount": 2200,
+			"claimCreateDate": "2021-06-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-020",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-007",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-007$]"
+		},
+		{
+			"claimAmount": 5000,
+			"claimCreateDate": "2021-07-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-021",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-007",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-007$]"
+		},
+		{
+			"claimAmount": 3000,
+			"claimCreateDate": "2021-07-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-022",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-008",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-008$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2021-07-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-023",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-008",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-008$]"
+		},
+		{
+			"claimAmount": 5000,
+			"claimCreateDate": "2021-08-20",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "RAYCLAIM-024",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-008",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-008$]"
+		},
+		{
+			"claimAmount": 3000,
+			"claimCreateDate": "2021-08-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-025",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-009",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-009$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2021-08-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-026",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-009",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-009$]"
+		},
+		{
+			"claimAmount": 5000,
+			"claimCreateDate": "2021-09-20",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "RAYCLAIM-027",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-009",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-009$]"
+		},
+		{
+			"claimAmount": 3000,
+			"claimCreateDate": "2021-09-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-028",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-010",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-010$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2021-09-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-029",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-011",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-011$]"
+		},
+		{
+			"claimAmount": 1500,
+			"claimCreateDate": "2021-10-17",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-030",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-011",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-011$]"
+		},
+		{
+			"claimAmount": 3500,
+			"claimCreateDate": "2021-10-20",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-031",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-011",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-011$]"
+		},
+		{
+			"claimAmount": 5000,
+			"claimCreateDate": "2021-11-04",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-032",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-012",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-012$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2021-11-03",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-033",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-012",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-012$]"
+		},
+		{
+			"claimAmount": 7000,
+			"claimCreateDate": "2021-12-01",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-034",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-012",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-012$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2021-12-02",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-035",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-013",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-013$]"
+		},
+		{
+			"claimAmount": 1300,
+			"claimCreateDate": "2022-01-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-036",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-013",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-013$]"
+		},
+		{
+			"claimAmount": 1800,
+			"claimCreateDate": "2022-01-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-037",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-013",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-013$]"
+		},
+		{
+			"claimAmount": 2500,
+			"claimCreateDate": "2022-01-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-038",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-014",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-014$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2022-02-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-039",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-014",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-014$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-02-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-040",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-014",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-014$]"
+		},
+		{
+			"claimAmount": 2500,
+			"claimCreateDate": "2022-02-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-041",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-015",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-015$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2022-03-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-042",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-015",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-015$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-03-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-043",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-015",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-015$]"
+		},
+		{
+			"claimAmount": 2500,
+			"claimCreateDate": "2022-03-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-044",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-016",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-016$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2022-04-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-045",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-016",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-016$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-04-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-046",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-016",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-016$]"
+		},
+		{
+			"claimAmount": 2500,
+			"claimCreateDate": "2022-04-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-047",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-017",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-017$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2022-05-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-048",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-017",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-017$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-05-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-049",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-017",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-017$]"
+		},
+		{
+			"claimAmount": 2500,
+			"claimCreateDate": "2022-05-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-050",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-021",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-021$]"
+		},
+		{
+			"claimAmount": 5500,
+			"claimCreateDate": "2022-06-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-051",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-021",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-021$]"
+		},
+		{
+			"claimAmount": 3500,
+			"claimCreateDate": "2022-06-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-052",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-022",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-022$]"
+		},
+		{
+			"claimAmount": 2200,
+			"claimCreateDate": "2022-06-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-053",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-022",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-023$]"
+		},
+		{
+			"claimAmount": 5000,
+			"claimCreateDate": "2022-07-20",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-054",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-023",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-023$]"
+		},
+		{
+			"claimAmount": 3000,
+			"claimCreateDate": "2022-07-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-055",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-023",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-023$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-07-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-056",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-024",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-024$]"
+		},
+		{
+			"claimAmount": 5000,
+			"claimCreateDate": "2022-08-20",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "RAYCLAIM-057",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-024",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-024$]"
+		},
+		{
+			"claimAmount": 3000,
+			"claimCreateDate": "2022-08-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-058",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-025",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-025$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-08-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-059",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-025",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-025$]"
+		},
+		{
+			"claimAmount": 5000,
+			"claimCreateDate": "2022-09-20",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "RAYCLAIM-060",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-026",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-026$]"
+		},
+		{
+			"claimAmount": 3000,
+			"claimCreateDate": "2022-09-15",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-061",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-026",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-026$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-09-10",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-062",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-027",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-027$]"
+		},
+		{
+			"claimAmount": 1500,
+			"claimCreateDate": "2022-10-17",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-063",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-027",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-027$]"
+		},
+		{
+			"claimAmount": 2500,
+			"claimCreateDate": "2022-10-20",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-064",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-028",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-028$]"
+		},
+		{
+			"claimAmount": 3000,
+			"claimCreateDate": "2022-11-04",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-065",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-028",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-028$]"
+		},
+		{
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-11-03",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-066",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-029",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-029$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2022-12-01",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-067",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-029",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-029$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2022-12-02",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-068",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-030",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-030$]"
+		},
+		{
+			"claimAmount": 1500,
+			"claimCreateDate": "2022-12-05",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-069",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-031",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-031$]"
 		}
 	],
 	"objectDefinitionName": "RaylifeClaim"

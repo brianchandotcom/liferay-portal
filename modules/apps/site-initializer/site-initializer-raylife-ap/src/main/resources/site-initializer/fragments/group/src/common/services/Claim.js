@@ -19,3 +19,22 @@ const DeliveryAPI = 'o/c/raylifeclaims';
 export function getClaimsStatus(status) {
 	return axios.get(`${DeliveryAPI}/?filter=claimStatus eq '${status}'`);
 }
+
+export function getClaimsByPeriod(
+	currentYear,
+	currentMonth,
+	currentDay,
+	periodYear,
+	periodMonth,
+	periodDay
+) {
+	return axios.get(
+		`${DeliveryAPI}/?fields=claimStatus,claimCreateDate,claimAmount&pageSize=200&filter=claimCreateDate ge ${currentYear}-${currentMonth}-${currentDay} and claimCreateDate le ${periodYear}-${periodMonth}-${periodDay}`
+	);
+}
+
+export function getClaims() {
+	return axios.get(
+		`${DeliveryAPI}/?fields=claimStatus,claimCreateDate,claimAmount&pageSize=200`
+	);
+}

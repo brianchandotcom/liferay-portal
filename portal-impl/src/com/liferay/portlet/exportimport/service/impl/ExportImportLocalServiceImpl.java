@@ -25,8 +25,10 @@ import com.liferay.exportimport.kernel.exception.LARFileNameException;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -107,7 +109,7 @@ public class ExportImportLocalServiceImpl
 
 		return exportLayoutsAsFileInBackground(
 			userId,
-			exportImportConfigurationLocalService.getExportImportConfiguration(
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId));
 	}
 
@@ -172,7 +174,7 @@ public class ExportImportLocalServiceImpl
 
 		return exportPortletInfoAsFileInBackground(
 			userId,
-			exportImportConfigurationLocalService.getExportImportConfiguration(
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId));
 	}
 
@@ -377,7 +379,7 @@ public class ExportImportLocalServiceImpl
 
 		return importPortletInfoInBackground(
 			userId,
-			exportImportConfigurationLocalService.getExportImportConfiguration(
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId),
 			file);
 	}
@@ -390,7 +392,7 @@ public class ExportImportLocalServiceImpl
 
 		return importLayoutsInBackground(
 			userId,
-			exportImportConfigurationLocalService.getExportImportConfiguration(
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId),
 			inputStream);
 	}
@@ -586,7 +588,7 @@ public class ExportImportLocalServiceImpl
 
 		return importPortletInfoInBackground(
 			userId,
-			exportImportConfigurationLocalService.getExportImportConfiguration(
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId),
 			file);
 	}
@@ -599,7 +601,7 @@ public class ExportImportLocalServiceImpl
 
 		return importPortletInfoInBackground(
 			userId,
-			exportImportConfigurationLocalService.getExportImportConfiguration(
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId),
 			inputStream);
 	}
@@ -751,5 +753,9 @@ public class ExportImportLocalServiceImpl
 			FileUtil.delete(file);
 		}
 	}
+
+	@BeanReference(type = ExportImportConfigurationLocalService.class)
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
 
 }

@@ -17,7 +17,12 @@ package com.liferay.portlet.expando.service.impl;
 import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portlet.expando.service.base.ExpandoRowLocalServiceBaseImpl;
 
 import java.util.Collections;
@@ -33,7 +38,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	public ExpandoRow addRow(long tableId, long classPK)
 		throws PortalException {
 
-		ExpandoTable table = expandoTablePersistence.findByPrimaryKey(tableId);
+		ExpandoTable table = _expandoTablePersistence.findByPrimaryKey(tableId);
 
 		long rowId = counterLocalService.increment();
 
@@ -55,7 +60,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		// Values
 
-		expandoValueLocalService.deleteRowValues(row.getRowId());
+		_expandoValueLocalService.deleteRowValues(row.getRowId());
 	}
 
 	@Override
@@ -77,7 +82,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 			long companyId, long classNameId, String tableName, long classPK)
 		throws PortalException {
 
-		ExpandoTable table = expandoTableLocalService.getTable(
+		ExpandoTable table = _expandoTableLocalService.getTable(
 			companyId, classNameId, tableName);
 
 		expandoRowLocalService.deleteRow(table.getTableId(), classPK);
@@ -89,7 +94,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 		throws PortalException {
 
 		expandoRowLocalService.deleteRow(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			tableName, classPK);
 	}
 
@@ -104,7 +109,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 	@Override
 	public void deleteRows(long companyId, long classNameId, long classPK) {
-		List<ExpandoTable> tables = expandoTableLocalService.getTables(
+		List<ExpandoTable> tables = _expandoTableLocalService.getTables(
 			companyId, classNameId);
 
 		for (ExpandoTable table : tables) {
@@ -138,7 +143,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 		long companyId, String className, int start, int end) {
 
 		return expandoRowLocalService.getDefaultTableRows(
-			companyId, classNameLocalService.getClassNameId(className), start,
+			companyId, _classNameLocalService.getClassNameId(className), start,
 			end);
 	}
 
@@ -151,7 +156,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	@Override
 	public int getDefaultTableRowsCount(long companyId, String className) {
 		return expandoRowLocalService.getDefaultTableRowsCount(
-			companyId, classNameLocalService.getClassNameId(className));
+			companyId, _classNameLocalService.getClassNameId(className));
 	}
 
 	@Override
@@ -170,7 +175,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	public ExpandoRow getRow(
 		long companyId, long classNameId, String tableName, long classPK) {
 
-		ExpandoTable table = expandoTablePersistence.fetchByC_C_N(
+		ExpandoTable table = _expandoTablePersistence.fetchByC_C_N(
 			companyId, classNameId, tableName);
 
 		if (table == null) {
@@ -185,7 +190,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 		long companyId, String className, String tableName, long classPK) {
 
 		return expandoRowLocalService.getRow(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			tableName, classPK);
 	}
 
@@ -199,7 +204,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 		long companyId, long classNameId, String tableName, int start,
 		int end) {
 
-		ExpandoTable table = expandoTablePersistence.fetchByC_C_N(
+		ExpandoTable table = _expandoTablePersistence.fetchByC_C_N(
 			companyId, classNameId, tableName);
 
 		if (table == null) {
@@ -216,7 +221,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 		int end) {
 
 		return expandoRowLocalService.getRows(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			tableName, start, end);
 	}
 
@@ -229,7 +234,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	public int getRowsCount(
 		long companyId, long classNameId, String tableName) {
 
-		ExpandoTable table = expandoTablePersistence.fetchByC_C_N(
+		ExpandoTable table = _expandoTablePersistence.fetchByC_C_N(
 			companyId, classNameId, tableName);
 
 		if (table == null) {
@@ -244,8 +249,20 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 		long companyId, String className, String tableName) {
 
 		return expandoRowLocalService.getRowsCount(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = ExpandoTableLocalService.class)
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@BeanReference(type = ExpandoTablePersistence.class)
+	private ExpandoTablePersistence _expandoTablePersistence;
+
+	@BeanReference(type = ExpandoValueLocalService.class)
+	private ExpandoValueLocalService _expandoValueLocalService;
 
 }

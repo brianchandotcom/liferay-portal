@@ -18,7 +18,12 @@ import com.liferay.expando.kernel.exception.DuplicateTableNameException;
 import com.liferay.expando.kernel.exception.TableNameException;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
+import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.expando.service.base.ExpandoTableLocalServiceBaseImpl;
 
@@ -76,7 +81,7 @@ public class ExpandoTableLocalServiceImpl
 		throws PortalException {
 
 		return addTable(
-			companyId, classNameLocalService.getClassNameId(className), name);
+			companyId, _classNameLocalService.getClassNameId(className), name);
 	}
 
 	@Override
@@ -93,15 +98,15 @@ public class ExpandoTableLocalServiceImpl
 
 		// Values
 
-		expandoValuePersistence.removeByTableId(table.getTableId());
+		_expandoValuePersistence.removeByTableId(table.getTableId());
 
 		// Rows
 
-		expandoRowPersistence.removeByTableId(table.getTableId());
+		_expandoRowPersistence.removeByTableId(table.getTableId());
 
 		// Columns
 
-		expandoColumnLocalService.deleteColumns(table.getTableId());
+		_expandoColumnLocalService.deleteColumns(table.getTableId());
 
 		// Table
 
@@ -130,7 +135,7 @@ public class ExpandoTableLocalServiceImpl
 		throws PortalException {
 
 		deleteTable(
-			companyId, classNameLocalService.getClassNameId(className), name);
+			companyId, _classNameLocalService.getClassNameId(className), name);
 	}
 
 	@Override
@@ -150,7 +155,7 @@ public class ExpandoTableLocalServiceImpl
 		throws PortalException {
 
 		deleteTables(
-			companyId, classNameLocalService.getClassNameId(className));
+			companyId, _classNameLocalService.getClassNameId(className));
 	}
 
 	@Override
@@ -162,7 +167,7 @@ public class ExpandoTableLocalServiceImpl
 	@Override
 	public ExpandoTable fetchDefaultTable(long companyId, String className) {
 		return fetchTable(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
@@ -187,7 +192,7 @@ public class ExpandoTableLocalServiceImpl
 		throws PortalException {
 
 		return getTable(
-			companyId, classNameLocalService.getClassNameId(className),
+			companyId, _classNameLocalService.getClassNameId(className),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
@@ -209,7 +214,7 @@ public class ExpandoTableLocalServiceImpl
 		throws PortalException {
 
 		return getTable(
-			companyId, classNameLocalService.getClassNameId(className), name);
+			companyId, _classNameLocalService.getClassNameId(className), name);
 	}
 
 	@Override
@@ -220,7 +225,7 @@ public class ExpandoTableLocalServiceImpl
 	@Override
 	public List<ExpandoTable> getTables(long companyId, String className) {
 		return getTables(
-			companyId, classNameLocalService.getClassNameId(className));
+			companyId, _classNameLocalService.getClassNameId(className));
 	}
 
 	@Override
@@ -258,5 +263,17 @@ public class ExpandoTableLocalServiceImpl
 			throw new DuplicateTableNameException("{tableId=" + tableId + "}");
 		}
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = ExpandoColumnLocalService.class)
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@BeanReference(type = ExpandoRowPersistence.class)
+	private ExpandoRowPersistence _expandoRowPersistence;
+
+	@BeanReference(type = ExpandoValuePersistence.class)
+	private ExpandoValuePersistence _expandoValuePersistence;
 
 }

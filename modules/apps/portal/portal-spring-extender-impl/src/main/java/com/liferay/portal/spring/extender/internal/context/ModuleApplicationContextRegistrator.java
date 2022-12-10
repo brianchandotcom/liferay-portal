@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
 import com.liferay.portal.spring.extender.internal.loader.ModuleAggregareClassLoader;
+import com.liferay.portal.spring.extender.internal.upgrade.InitialUpgradeStep;
 
 import java.beans.Introspector;
 
@@ -83,11 +85,19 @@ public class ModuleApplicationContextRegistrator {
 			_moduleApplicationContext);
 
 		_registerDataSource();
+
+		_registerInitialUpgradeStep();
 	}
 
 	public void stop() {
 		ApplicationContextServicePublisherUtil.unregisterContext(
 			_serviceRegistrations);
+
+		if (_initialUpgradeStepServiceRegistration != null) {
+			_initialUpgradeStepServiceRegistration.unregister();
+
+			_initialUpgradeStepServiceRegistration = null;
+		}
 
 		if (_dataSourceServiceRegistration != null) {
 			_dataSourceServiceRegistration.unregister();
@@ -111,6 +121,8 @@ public class ModuleApplicationContextRegistrator {
 			_moduleApplicationContext.refresh();
 
 			_registerDataSource();
+
+			_registerInitialUpgradeStep();
 
 			BundleWiring bundleWiring = _extendeeBundle.adapt(
 				BundleWiring.class);
@@ -159,6 +171,20 @@ public class ModuleApplicationContextRegistrator {
 		}
 	}
 
+	private void _registerInitialUpgradeStep() {
+		if (_initialUpgradeStepServiceRegistration == null) {
+			InitialUpgradeStep initialUpgradeStep = new InitialUpgradeStep(
+				_extendeeBundle, _moduleApplicationContext.getDataSource());
+
+			BundleContext bundleContext = _extendeeBundle.getBundleContext();
+
+			_initialUpgradeStepServiceRegistration =
+				bundleContext.registerService(
+					UpgradeStep.class, initialUpgradeStep,
+					initialUpgradeStep.buildServiceProperties());
+		}
+	}
+
 	private final ClassLoader _classLoader;
 	private final ConfigurableApplicationContextConfigurator
 		_configurableApplicationContextConfigurator;
@@ -167,6 +193,8 @@ public class ModuleApplicationContextRegistrator {
 	private final Bundle _extendeeBundle;
 	private final ClassLoader _extendeeClassLoader;
 	private final Bundle _extenderBundle;
+	private volatile ServiceRegistration<?>
+		_initialUpgradeStepServiceRegistration;
 	private final ModuleApplicationContext _moduleApplicationContext;
 	private List<ServiceRegistration<?>> _serviceRegistrations;
 

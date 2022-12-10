@@ -1,0 +1,23 @@
+@default = "dragAndDropPortletToObject"
+@summary = "Drag and drop portlet to an object"
+definition {
+
+	function dragAndDropPortletToObject {
+		WaitForSPARefresh();
+
+		Pause(locator1 = "1000");
+
+		selenium.waitForText("${locator1}", "${value1}");
+
+		selenium.mouseDown("${locator1}");
+
+		selenium.mouseMoveAt("${locator2}", "0,50");
+
+		selenium.mouseRelease("${locator2}");
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+}

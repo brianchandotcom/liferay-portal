@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder api-package-path="com.liferay.ratings.kernel" change-tracking-enabled="true" mvcc-enabled="true" package-path="com.liferay.portlet.ratings">
+<service-builder api-package-path="com.liferay.ratings.kernel" auto-import-default-references="false" change-tracking-enabled="true" mvcc-enabled="true" package-path="com.liferay.portlet.ratings">
 	<namespace>Ratings</namespace>
 	<entity local-service="true" name="RatingsEntry" remote-service="true" uuid="true">
 

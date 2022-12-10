@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.module.util.BundleUtil;
@@ -28,7 +27,6 @@ import com.liferay.portal.util.PropsValues;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -83,19 +81,9 @@ public class PortletConfigurationExtender
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
 		PortletConfigurationExtension portletConfigurationExtension) {
-
-		portletConfigurationExtension.destroy();
 	}
 
 	public class PortletConfigurationExtension {
-
-		public void destroy() {
-			if (_configurationServiceRegistration != null) {
-				_configurationServiceRegistration.unregister();
-
-				_configurationServiceRegistration = null;
-			}
-		}
 
 		public void start() {
 			try {
@@ -119,16 +107,6 @@ public class PortletConfigurationExtender
 						PropsKeys.RESOURCE_ACTIONS_CONFIGS,
 					exception);
 			}
-
-			BundleContext bundleContext = _bundle.getBundleContext();
-
-			_configurationServiceRegistration = bundleContext.registerService(
-				Configuration.class, _portletConfiguration,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"name", "portlet"
-				).put(
-					"origin.bundle.symbolic.name", _bundle.getSymbolicName()
-				).build());
 		}
 
 		private PortletConfigurationExtension(
@@ -142,8 +120,6 @@ public class PortletConfigurationExtender
 
 		private final Bundle _bundle;
 		private final ClassLoader _classLoader;
-		private ServiceRegistration<Configuration>
-			_configurationServiceRegistration;
 		private final Configuration _portletConfiguration;
 
 	}

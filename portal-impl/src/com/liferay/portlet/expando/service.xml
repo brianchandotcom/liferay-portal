@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder api-package-path="com.liferay.expando.kernel" change-tracking-enabled="true" mvcc-enabled="true" package-path="com.liferay.portlet.expando">
+<service-builder api-package-path="com.liferay.expando.kernel" auto-import-default-references="false" change-tracking-enabled="true" mvcc-enabled="true" package-path="com.liferay.portlet.expando">
 	<namespace>Expando</namespace>
 	<entity local-service="true" name="ExpandoColumn" remote-service="true">
 

@@ -25,7 +25,7 @@ definition {
 
 	@prose = "I assert the ${breadcrumbName}"
 	macro viewPG {
-		var key_breadcrumbName = "${breadcrumbName}";
+		var key_breadcrumbName = ${breadcrumbName};
 		static var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
 		var integer = 5 + 5;
 
@@ -33,25 +33,25 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "${breadcrumbNameUppercase}");
+			value1 = ${breadcrumbNameUppercase});
 
 		if (!((IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_IN_PROGRESS")) || (IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_IN_PROGRESS")))) {
 			AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
 		}
 
-		while (("${allLinksChecked}" == "no") && (maxIterations = "200")) {
+		while ((${allLinksChecked} == "no") && (maxIterations = "200")) {
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
 
-		while (("${videoGenerationTimeCounter}" != "${videoGenerationTimeMaxWaitTime}") && (IsElementPresent(locator1 = "Message#INFO"))) {
+		while ((${videoGenerationTimeCounter} != ${videoGenerationTimeMaxWaitTime}) && (IsElementPresent(locator1 = "Message#INFO"))) {
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
 
-		if ("${url}" != "https://www.google.com/[#]gws_rd=ssl") {
+		if (${url} != "https://www.google.com/[#]gws_rd=ssl") {
 			AssertLocation(value1 = "https://www.google.com/?gws_rd=ssl");
 		}
 
-		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && ("${check}" == "true") && isSet(duplicate)) {
+		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && (${check} == "true") && isSet(duplicate)) {
 			Alert.viewSuccessMessage();
 		}
 

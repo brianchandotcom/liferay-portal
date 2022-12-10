@@ -103,6 +103,19 @@ public class PoshiElementFactoryTest {
 	}
 
 	@Test
+	public void testPoshiScriptFunctionFormat() throws Exception {
+		String actualFileName = "UnformattedPoshiScript.function";
+		String expectedFileName = "PoshiScriptFunction.function";
+
+		PoshiElement actualElement = _getPoshiElement(actualFileName);
+
+		_assertEqualStrings(
+			actualFileName, actualElement.toPoshiScript(), expectedFileName,
+			FileUtil.read(_getFile(expectedFileName)),
+			"Poshi script was not formatted correctly");
+	}
+
+	@Test
 	public void testPoshiScriptFunctionToXML() throws Exception {
 		String actualFileName = "PoshiScriptFunction.function";
 		String expectedFileName = "PoshiSyntaxFunction.function";
@@ -149,6 +162,19 @@ public class PoshiElementFactoryTest {
 	}
 
 	@Test
+	public void testPoshiScriptMacroFormat() throws Exception {
+		String actualFileName = "UnformattedPoshiScript.macro";
+		String expectedFileName = "PoshiScriptMacro.macro";
+
+		PoshiElement actualElement = _getPoshiElement(actualFileName);
+
+		_assertEqualStrings(
+			actualFileName, actualElement.toPoshiScript(), expectedFileName,
+			FileUtil.read(_getFile(expectedFileName)),
+			"Poshi script was not formatted correctly");
+	}
+
+	@Test
 	public void testPoshiScriptMacroToXML() throws Exception {
 		String actualFileName = "PoshiScriptMacro.macro";
 		String expectedFileName = "PoshiSyntaxMacro.macro";
@@ -159,6 +185,19 @@ public class PoshiElementFactoryTest {
 		_assertEqualElements(
 			actualFileName, actualElement, expectedFileName, expectedElement,
 			"Poshi script syntax does not translate to Poshi XML");
+	}
+
+	@Test
+	public void testPoshiScriptTestFormat() throws Exception {
+		String actualFileName = "UnformattedPoshiScript.testcase";
+		String expectedFileName = "PoshiScript.testcase";
+
+		PoshiElement actualElement = _getPoshiElement(actualFileName);
+
+		_assertEqualStrings(
+			actualFileName, actualElement.toPoshiScript(), expectedFileName,
+			FileUtil.read(_getFile(expectedFileName)),
+			"Poshi script was not formatted correctly");
 	}
 
 	@Test

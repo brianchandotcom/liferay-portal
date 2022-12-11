@@ -29,6 +29,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.asset.SearchableAssetClassNamesProvider" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.type.facet.configuration.TypeFacetPortletInstanceConfiguration" %><%@
+page import="com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortlet" %><%@
 page import="com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
 
@@ -69,7 +70,7 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 		>
 			<div class="display-template">
 				<liferay-template:template-selector
-					className="<%= AssetEntriesSearchFacetDisplayContext.class.getName() %>"
+					className="<%= TypeFacetPortlet.class.getName() %>"
 					displayStyle="<%= typeFacetPortletInstanceConfiguration.displayStyle() %>"
 					displayStyleGroupId="<%= assetEntriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"

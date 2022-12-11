@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet;
+package com.liferay.layout.internal.portlet;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,20 +20,23 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
  * @author Marco Leo
  */
-@OSGiBeanProperties(service = FriendlyURLResolver.class)
+@Component(service = FriendlyURLResolver.class)
 public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Override
@@ -57,7 +60,7 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 			return mainPath;
 		}
 
-		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
 			companyId, groupFriendlyURL);
 
 		if (group == null) {
@@ -78,7 +81,7 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 
 		return HttpComponentsUtil.addParameter(
 			HttpComponentsUtil.removeParameter(
-				PortalUtil.getActualURL(
+				_portal.getActualURL(
 					group.getGroupId(), privateLayout, mainPath,
 					layoutFriendlyURL, params, requestContext),
 				"p_v_l_s_g_id"),
@@ -102,7 +105,7 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 			groupFriendlyURL = friendlyURL.substring(2, pos);
 		}
 
-		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
 			companyId, groupFriendlyURL);
 
 		// Layout friendly URL
@@ -114,7 +117,7 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 		}
 
 		LayoutQueryStringComposite layoutQueryStringComposite =
-			PortalUtil.getActualLayoutQueryStringComposite(
+			_portal.getActualLayoutQueryStringComposite(
 				group.getGroupId(), privateLayout, layoutFriendlyURL, params,
 				requestContext);
 
@@ -143,5 +146,11 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 	public String getURLSeparator() {
 		return VirtualLayoutConstants.CANONICAL_URL_SEPARATOR;
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -30,7 +30,8 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetCalendarDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetTermDisplayContext" %>
+page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetTermDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortlet" %>
 
 <portlet:defineObjects />
 
@@ -53,7 +54,7 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 		<aui:input name="start-parameter-name" type="hidden" value="<%= modifiedFacetDisplayContext.getPaginationStartParameterName() %>" />
 
 		<liferay-ddm:template-renderer
-			className="<%= ModifiedFacetTermDisplayContext.class.getName() %>"
+			className="<%= ModifiedFacetPortlet.class.getName() %>"
 			contextObjects='<%=
 				HashMapBuilder.<String, Object>put(
 					"customRangeModifiedFacetTermDisplayContext", customRangeModifiedFacetTermDisplayContext

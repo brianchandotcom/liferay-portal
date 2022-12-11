@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.folder.facet.configuration.FolderFacetPortletInstanceConfiguration" %><%@
+page import="com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortlet" %><%@
 page import="com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortletPreferencesImpl" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
@@ -58,7 +59,7 @@ FolderFacetPortletPreferences folderFacetPortletPreferences = new FolderFacetPor
 		>
 			<div class="display-template">
 				<liferay-template:template-selector
-					className="<%= FolderSearchFacetDisplayContext.class.getName() %>"
+					className="<%= FolderFacetPortlet.class.getName() %>"
 					displayStyle="<%= folderFacetPortletInstanceConfiguration.displayStyle() %>"
 					displayStyleGroupId="<%= folderSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"

@@ -28,7 +28,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration" %>
+page import="com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration" %><%@
+page import="com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortlet" %>
 
 <portlet:defineObjects />
 
@@ -53,7 +54,7 @@ TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = asse
 			<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= assetTagsSearchFacetDisplayContext.getPaginationStartParameterName() %>" />
 
 			<liferay-ddm:template-renderer
-				className="<%= AssetTagsSearchFacetDisplayContext.class.getName() %>"
+				className="<%= TagFacetPortlet.class.getName() %>"
 				contextObjects='<%=
 					HashMapBuilder.<String, Object>put(
 						"assetTagsSearchFacetDisplayContext", assetTagsSearchFacetDisplayContext

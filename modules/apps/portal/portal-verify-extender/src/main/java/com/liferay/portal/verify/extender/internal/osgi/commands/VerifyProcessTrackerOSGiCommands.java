@@ -188,7 +188,11 @@ public class VerifyProcessTrackerOSGiCommands {
 						verifyProcessName);
 
 					if (((release != null) && !release.isVerified()) ||
-						_isInitialDeployment(serviceReference, verifyProcess)) {
+						_isInitialDeployment(serviceReference, verifyProcess) ||
+						(upgrading &&
+						 GetterUtil.getBoolean(
+							 serviceReference.getProperty(
+								 "run.on.portal.upgrade")))) {
 
 						_executeVerifyProcesses(
 							Collections.singletonList(verifyProcess),

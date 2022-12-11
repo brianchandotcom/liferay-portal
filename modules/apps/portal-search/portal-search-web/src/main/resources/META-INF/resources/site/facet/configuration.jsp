@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration" %><%@
+page import="com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortlet" %><%@
 page import="com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortletPreferencesImpl" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
@@ -58,7 +59,7 @@ SiteFacetPortletPreferences siteFacetPortletPreferences = new SiteFacetPortletPr
 		>
 			<div class="display-template">
 				<liferay-template:template-selector
-					className="<%= ScopeSearchFacetDisplayContext.class.getName() %>"
+					className="<%= SiteFacetPortlet.class.getName() %>"
 					displayStyle="<%= siteFacetPortletInstanceConfiguration.displayStyle() %>"
 					displayStyleGroupId="<%= scopeSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"

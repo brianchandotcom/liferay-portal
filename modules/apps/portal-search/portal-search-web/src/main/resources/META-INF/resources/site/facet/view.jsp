@@ -28,7 +28,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration" %>
+page import="com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration" %><%@
+page import="com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortlet" %>
 
 <portlet:defineObjects />
 
@@ -53,7 +54,7 @@ SiteFacetPortletInstanceConfiguration siteFacetPortletInstanceConfiguration = sc
 			<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= scopeSearchFacetDisplayContext.getPaginationStartParameterName() %>" />
 
 			<liferay-ddm:template-renderer
-				className="<%= ScopeSearchFacetDisplayContext.class.getName() %>"
+				className="<%= SiteFacetPortlet.class.getName() %>"
 				contextObjects='<%=
 					HashMapBuilder.<String, Object>put(
 						"namespace", liferayPortletResponse.getNamespace()

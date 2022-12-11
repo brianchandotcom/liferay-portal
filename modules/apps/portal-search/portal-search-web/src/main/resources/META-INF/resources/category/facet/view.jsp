@@ -27,6 +27,7 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration" %><%@
+page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortlet" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext" %>
 
@@ -53,7 +54,7 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 			<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getPaginationStartParameterName() %>" />
 
 			<liferay-ddm:template-renderer
-				className="<%= AssetCategoriesSearchFacetDisplayContext.class.getName() %>"
+				className="<%= CategoryFacetPortlet.class.getName() %>"
 				contextObjects='<%=
 					HashMapBuilder.<String, Object>put(
 						"assetCategoriesSearchFacetDisplayContext", assetCategoriesSearchFacetDisplayContext

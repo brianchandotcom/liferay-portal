@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
+import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortlet;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
@@ -47,7 +48,7 @@ public class CategoryFacetPortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return AssetCategoriesSearchFacetDisplayContext.class.getName();
+		return CategoryFacetPortlet.class.getName();
 	}
 
 	@Override

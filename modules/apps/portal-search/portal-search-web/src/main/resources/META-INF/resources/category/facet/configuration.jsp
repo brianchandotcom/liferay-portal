@@ -31,6 +31,7 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration" %><%@
+page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortlet" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferencesImpl" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
@@ -65,7 +66,7 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 		>
 			<div class="display-template">
 				<liferay-template:template-selector
-					className="<%= AssetCategoriesSearchFacetDisplayContext.class.getName() %>"
+					className="<%= CategoryFacetPortlet.class.getName() %>"
 					displayStyle="<%= categoryFacetPortletInstanceConfiguration.displayStyle() %>"
 					displayStyleGroupId="<%= assetCategoriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"

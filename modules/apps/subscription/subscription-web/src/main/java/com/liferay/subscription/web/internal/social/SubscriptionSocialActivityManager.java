@@ -12,19 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.subscription.social;
+package com.liferay.subscription.web.internal.social;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
+@Component(
 	property = "model.class.name=com.liferay.portal.kernel.model.Subscription",
 	service = SocialActivityManager.class
 )
@@ -43,10 +44,10 @@ public class SubscriptionSocialActivityManager
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return socialActivityLocalService;
+		return _socialActivityLocalService;
 	}
 
-	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService socialActivityLocalService;
+	@Reference
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

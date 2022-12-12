@@ -64,6 +64,36 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		});
 	}
 
+	private async getTaskUserIds(taskId: number) {
+		const response = await testrayTaskUsersImpl.getAll(
+			searchUtil.eq('taskId', taskId)
+		);
+
+		return (response?.items ?? [])?.map(({id}) => id);
+	}
+
+	public async assignTo(task: TestrayTask, userId: number) {
+		const taskUserIds = await this.getTaskUserIds(task.id);
+
+		await testrayTaskUsersImpl.update(taskUserIds[0], {
+			name: `${task.id}-${userId}`,
+			taskId: task.id,
+			userId,
+		});
+
+		return this.update(task.id, {
+			dueStatus: TaskStatuses.IN_ANALYSIS,
+			name: task.name,
+		});
+	}
+
+	public async abandon(task: TestrayTask) {
+		return this.update(task.id, {
+			dueStatus: TaskStatuses.ABANDONED,
+			name: task.name,
+		});
+	}
+
 	public getTasksByBuildId(buildId: number) {
 		return this.fetcher<APIResponse<TestrayTask>>(
 			`/tasks?filter=${searchUtil.eq('buildId', buildId)}`

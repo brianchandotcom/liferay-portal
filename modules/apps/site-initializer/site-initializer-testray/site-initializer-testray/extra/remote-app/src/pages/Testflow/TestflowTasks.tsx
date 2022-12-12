@@ -53,9 +53,10 @@ import {SearchBuilder} from '../../util/search';
 import {SubTaskStatuses} from '../../util/statuses';
 import SubtaskCompleteModal from './Subtask/SubtaskCompleteModal';
 import useSubtasksActions from './Subtask/useSubtasksActions';
+import TaskHeaderActions from './TaskHeaderActions';
 
 type OutletContext = {
-	mutateTask?: KeyedMutator<TestrayTask>;
+	mutateTask: KeyedMutator<TestrayTask>;
 	testrayTask: TestrayTask;
 };
 
@@ -155,6 +156,11 @@ const TestFlowTasks = () => {
 
 	return (
 		<>
+			<TaskHeaderActions
+				TestrayTask={testrayTask}
+				mutateTask={mutateTask}
+			/>
+
 			<Container collapsable title={i18n.translate('task-details')}>
 				<div className="d-flex flex-wrap">
 					<div className="col-4 col-lg-4 col-md-12 p-0">

@@ -15,6 +15,7 @@
 export default {
 	'a-task-for-this-build-already-exists':
 		'A task for this build already exists.',
+	'abandon': 'Abandon',
 	'activate': 'Activate',
 	'active': 'Active',
 	'add': 'Add',

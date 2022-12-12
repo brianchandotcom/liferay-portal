@@ -51,10 +51,10 @@ const TestFlow = () => {
 							render: (dueStatus: PickList) => (
 								<StatusBadge
 									type={
-										dueStatus.key.toLowerCase() as StatusBadgeType
+										dueStatus?.key.toLowerCase() as StatusBadgeType
 									}
 								>
-									{dueStatus.name}
+									{dueStatus?.name}
 								</StatusBadge>
 							),
 							value: i18n.translate('status'),

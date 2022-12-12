@@ -295,6 +295,8 @@ const TestrayRoute = () => (
 						<Route element={<OutletBridge />} path=":taskId">
 							<Route element={<TestFlowTasks />} index />
 
+							<Route element={<TestflowForm />} path="update" />
+
 							<Route
 								element={<SubtaskOutlet />}
 								path="subtasks/:subtaskId"

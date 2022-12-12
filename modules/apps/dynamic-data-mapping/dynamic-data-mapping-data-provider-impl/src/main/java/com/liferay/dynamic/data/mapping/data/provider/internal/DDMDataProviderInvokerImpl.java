@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.netflix.hystrix.Hystrix;
@@ -175,7 +176,7 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 
 			ddmDataProviderInstance =
 				ddmDataProviderInstanceService.fetchDataProviderInstance(
-					Long.valueOf(ddmDataProviderInstanceId));
+					GetterUtil.getLong(ddmDataProviderInstanceId));
 		}
 
 		return ddmDataProviderInstance;

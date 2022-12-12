@@ -404,7 +404,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 			ddmDataProviderInstance =
 				_ddmDataProviderInstanceService.fetchDataProviderInstance(
-					Long.valueOf(ddmDataProviderInstanceId));
+					GetterUtil.getLong(ddmDataProviderInstanceId));
 		}
 
 		return ddmDataProviderInstance;

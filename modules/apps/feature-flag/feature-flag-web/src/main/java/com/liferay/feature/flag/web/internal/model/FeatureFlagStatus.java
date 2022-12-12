@@ -52,7 +52,7 @@ public enum FeatureFlagStatus {
 	}
 
 	public Predicate<FeatureFlag> getPredicate() {
-		return featureFlag -> equals(featureFlag.getStatus());
+		return featureFlag -> equals(featureFlag.getFeatureFlagStatus());
 	}
 
 	public String getTitle(Locale locale) {

@@ -253,7 +253,6 @@ definition {
 	}
 
 	@description = "LPS-154683: The Upgrade Report logs total upgrade runtime."
-	@ignore = "true"
 	@priority = "4"
 	test TotalRuntimeLogged {
 		property test.name.skip.portal.instance = "UpgradeReport#TotalRuntimeLogged";
@@ -269,7 +268,7 @@ definition {
 		}
 
 		task ("Capture the upgrade runtime in upgrade logs") {
-			var upgradeRunTimeLog = RegexUtil.replace("${fileContentLog}", "Completed Liferay core upgrade process i\"?n \"?(.*[0-9])", "1");
+			var upgradeRunTimeLog = RegexUtil.replace("${fileContentLog}", "Completed Liferay upgrade process i\"?n \"?(.*[0-9])", "1");
 
 			echo("Upgrade runtime reported by upgrade.log is ${upgradeRunTimeLog}");
 		}

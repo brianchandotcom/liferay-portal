@@ -63,7 +63,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
@@ -333,14 +332,14 @@ public class BlogEntriesDisplayContext {
 					List<BlogsEntry> blogsEntry = new ArrayList<>();
 
 					for (SearchResult searchResult : searchResults) {
-						Optional<BlogsEntry> blogsEntryOptional =
-							_toBlogsEntryOptional(searchResult);
+						BlogsEntry blogsEntryOptional = _toBlogsEntryOptional(
+							searchResult);
 
-						if (!blogsEntryOptional.isPresent()) {
+						if (blogsEntryOptional == null) {
 							continue;
 						}
 
-						blogsEntry.add(blogsEntryOptional.get());
+						blogsEntry.add(blogsEntryOptional);
 					}
 
 					return blogsEntry;
@@ -349,12 +348,9 @@ public class BlogEntriesDisplayContext {
 		}
 	}
 
-	private Optional<BlogsEntry> _toBlogsEntryOptional(
-		SearchResult searchResult) {
-
+	private BlogsEntry _toBlogsEntryOptional(SearchResult searchResult) {
 		try {
-			return Optional.of(
-				BlogsEntryServiceUtil.getEntry(searchResult.getClassPK()));
+			return BlogsEntryServiceUtil.getEntry(searchResult.getClassPK());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -364,7 +360,7 @@ public class BlogEntriesDisplayContext {
 					exception);
 			}
 
-			return Optional.empty();
+			return null;
 		}
 	}
 

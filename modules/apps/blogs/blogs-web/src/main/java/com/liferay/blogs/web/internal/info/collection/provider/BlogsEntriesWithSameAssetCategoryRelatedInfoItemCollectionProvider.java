@@ -94,14 +94,14 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			List<BlogsEntry> blogsEntry = new ArrayList<>();
 
 			for (SearchResult searchResult : searchResults) {
-				Optional<BlogsEntry> blogsEntryOptional = _toBlogsEntryOptional(
+				BlogsEntry blogsEntryOptional = _toBlogsEntryOptional(
 					searchResult);
 
-				if (!blogsEntryOptional.isPresent()) {
+				if (blogsEntryOptional == null) {
 					continue;
 				}
 
-				blogsEntry.add(blogsEntryOptional.get());
+				blogsEntry.add(blogsEntryOptional);
 			}
 
 			return InfoPage.of(
@@ -179,12 +179,9 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
 	}
 
-	private Optional<BlogsEntry> _toBlogsEntryOptional(
-		SearchResult searchResult) {
-
+	private BlogsEntry _toBlogsEntryOptional(SearchResult searchResult) {
 		try {
-			return Optional.of(
-				_blogsEntryService.getEntry(searchResult.getClassPK()));
+			return _blogsEntryService.getEntry(searchResult.getClassPK());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -194,7 +191,7 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 					exception);
 			}
 
-			return Optional.empty();
+			return null;
 		}
 	}
 

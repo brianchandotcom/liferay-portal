@@ -392,8 +392,8 @@ definition {
 
 		task ("Then a warning message appears") {
 			AssertElementPresent(
-					key_text = "There are no linked cases.",
-					locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
+				key_text = "There are no linked cases.",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
 		}
 	}
 

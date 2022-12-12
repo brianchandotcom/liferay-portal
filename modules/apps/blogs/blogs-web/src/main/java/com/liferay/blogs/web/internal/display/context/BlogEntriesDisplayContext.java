@@ -65,8 +65,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -332,17 +330,20 @@ public class BlogEntriesDisplayContext {
 						SearchResultUtil.getSearchResults(
 							hits, LocaleUtil.getDefault());
 
-					Stream<SearchResult> stream = searchResults.stream();
+					List<BlogsEntry> blogsEntry = new ArrayList<>();
 
-					return stream.map(
-						this::_toBlogsEntryOptional
-					).filter(
-						Optional::isPresent
-					).map(
-						Optional::get
-					).collect(
-						Collectors.toList()
-					);
+					for (SearchResult searchResult : searchResults) {
+						Optional<BlogsEntry> blogsEntryOptional =
+							_toBlogsEntryOptional(searchResult);
+
+						if (!blogsEntryOptional.isPresent()) {
+							continue;
+						}
+
+						blogsEntry.add(blogsEntryOptional.get());
+					}
+
+					return blogsEntry;
 				},
 				hits.getLength());
 		}

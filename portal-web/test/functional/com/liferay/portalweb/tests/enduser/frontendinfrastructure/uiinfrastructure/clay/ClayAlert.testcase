@@ -25,6 +25,100 @@ definition {
 		}
 	}
 
+	@description = "Verify if alert contains all attributes: icon, type text, description and close icon"
+	@priority = "5"
+	test CanDisplayAllAttributes {
+		task ("Given Clay Sample Portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+
+		task ("When the alert contains all attributes then the alert displays status icon, type text, description text, close icon") {
+			Click(
+				key_text = "Success Submit",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-check-circle-full']");
+
+			AssertTextEquals(
+				locator1 = "Message#SUCCESS_DISMISSIBLE",
+				value1 = "Success:Your request completed successfully.");
+
+			AssertElementPresent(
+				locator1 = "Message#SUCCESS_DISMISSIBLE",
+				value1 = "Icon#CLOSE_ALERT");
+
+			Click(
+				key_text = "Fail Submit",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-exclamation-full']");
+
+			AssertTextEquals(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Error:An unexpected error occurred.");
+
+			AssertElementPresent(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Icon#CLOSE_ALERT");
+		}
+	}
+
+	@description = "Verify if the keyword is semi-bold when alert contains status icon and keyword"
+	@priority = "4"
+	test KeywordCanDisplayInSemibold {
+		task ("Given Clay Sample Portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+
+		task ("When alert contains status icon and keyword Then keyword must be semi-bold") {
+			Click(
+				key_text = "Success Submit",
+				locator1 = "Button#ANY");
+
+			AssertCssValue(
+				locator1 = "Message#SUCCESS_DISMISSIBLE",
+				locator2 = "font-weight",
+				value1 = "400");
+
+			Click(
+				key_text = "Fail Submit",
+				locator1 = "Button#ANY");
+
+			AssertCssValue(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				locator2 = "font-weight",
+				value1 = "400");
+		}
+	}
+
 	@description = "Verify toast message popup can be closed manually"
 	@priority = "3"
 	@refactordone
@@ -84,97 +178,4 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
-	@description = "Verify if the keyword is semi-bold when alert contains status icon and keyword"
-	@priority = "4"
-	test KeywordCanDisplayInSemibold {
-		task ("Given Clay Sample Portlet") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page");
-		
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				layoutTemplate = "1 Column");
-		
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				widgetName = "Clay Sample");
-
-			Navigator.gotoPage(pageName = "Clay Sample Test Page");
-		}
-
-		task ("When alert contains status icon and keyword Then keyword must be semi-bold") {
-			Click(
-				locator1 = "Button#ANY",
-				key_text = "Success Submit");
-
-			AssertCssValue(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				locator2 = "font-weight",
-				value1 = "400");
-			
-			Click(
-				locator1 = "Button#ANY",
-				key_text = "Fail Submit");
-			
-			AssertCssValue(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				locator2 = "font-weight",
-				value1 = "400");
-		}
-	}
-
-	@description = "Verify if alert contains all attributes: icon, type text, description and close icon"
-	@priority = "5"
-	test CanDisplayAllAttributes {
-		task ("Given Clay Sample Portlet") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page");
-		
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				layoutTemplate = "1 Column");
-		
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				widgetName = "Clay Sample");
-
-			Navigator.gotoPage(pageName = "Clay Sample Test Page");
-		}
-
-		task ("When the alert contains all attributes then the alert displays status icon, type text, description text, close icon") {
-			Click(
-				locator1 = "Button#ANY",
-				key_text = "Success Submit");
-			
-			AssertElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-check-circle-full']");
-			
-			AssertTextEquals(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				value1 = "Success:Your request completed successfully.");
-
-			AssertElementPresent(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				value1 = "Icon#CLOSE_ALERT");
-
-			Click(
-				locator1 = "Button#ANY",
-				key_text = "Fail Submit");
-
-			AssertElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-exclamation-full']");
-
-			AssertTextEquals(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Error:An unexpected error occurred.");
-
-			AssertElementPresent(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Icon#CLOSE_ALERT");
-		}
-	}
 }

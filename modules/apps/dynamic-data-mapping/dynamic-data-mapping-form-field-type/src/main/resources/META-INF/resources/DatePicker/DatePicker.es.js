@@ -249,6 +249,14 @@ export default function DatePicker({
 			}
 		}
 	};
+	const onInputMask = ({target: {value}}) => {
+		try {
+			maskRef.current.update(value);
+		}
+		catch (error) {
+			maskRef.current.update('');
+		}
+	};
 
 	return (
 		<FieldBase
@@ -267,7 +275,7 @@ export default function DatePicker({
 				onBlur={onBlur}
 				onExpandedChange={handleExpandedChange}
 				onFocus={onFocus}
-				onInput={({target: {value}}) => maskRef.current.update(value)}
+				onInput={onInputMask}
 				onValueChange={handleValueChange}
 				placeholder={placeholder}
 				ref={inputRef}

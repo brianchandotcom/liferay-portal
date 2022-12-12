@@ -90,10 +90,10 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 
 			long repositoryId = ParamUtil.getLong(
 				uploadPortletRequest, "repositoryId");
+
 			String uniqueFileName = _uniqueFileNameProvider.provide(
 				fileName,
-				curFileName -> _exists(
-					themeDisplay.getScopeGroupId(), folderId, curFileName));
+				curFileName -> _exists(repositoryId, folderId, curFileName));
 
 			return _dlAppService.addFileEntry(
 				null, repositoryId, folderId, uniqueFileName,
@@ -105,9 +105,9 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 		}
 	}
 
-	private boolean _exists(long groupId, long folderId, String fileName) {
+	private boolean _exists(long repositoryId, long folderId, String fileName) {
 		try {
-			if (_dlAppService.getFileEntry(groupId, folderId, fileName) !=
+			if (_dlAppService.getFileEntry(repositoryId, folderId, fileName) !=
 					null) {
 
 				return true;

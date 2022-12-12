@@ -14,18 +14,27 @@
 
 import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
 
-export default function hasSubmitChild(itemId) {
-	const element = document.querySelector(
-		`.${getLayoutDataItemUniqueClassName(itemId)}`
+export default function isEditableSubmit(editableId, parentItemId) {
+	const parentElement = document.querySelector(
+		`.${getLayoutDataItemUniqueClassName(parentItemId)}`
 	);
 
-	if (!element) {
+	if (!parentElement) {
 		return false;
 	}
 
-	return Boolean(
-		element.querySelectorAll(
-			'input[type=submit], button[type=submit], button:not([type])'
-		).length
+	const editableElement = parentElement.querySelector(
+		`[data-lfr-editable-id='${editableId}']`
+	);
+
+	if (!editableElement) {
+		return false;
+	}
+
+	const type = editableElement.getAttribute('type');
+
+	return (
+		(editableElement.tagName === 'INPUT' && type === 'submit') ||
+		(editableElement.tagName === 'BUTTON' && (!type || type === 'submit'))
 	);
 }

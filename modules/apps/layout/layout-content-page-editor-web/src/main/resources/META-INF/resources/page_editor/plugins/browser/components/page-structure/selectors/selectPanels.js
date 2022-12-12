@@ -25,7 +25,7 @@ import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpda
 import selectCanUpdateItemAdvancedConfiguration from '../../../../../app/selectors/selectCanUpdateItemAdvancedConfiguration';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
 import getFragmentItem from '../../../../../app/utils/getFragmentItem';
-import hasSubmitChild from '../../../../../app/utils/hasSubmitChild';
+import isEditableSubmit from '../../../../../app/utils/isEditableSubmit';
 import {CollectionAppliedFiltersGeneralPanel} from '../components/item-configuration-panels/CollectionAppliedFiltersGeneralPanel';
 import {CollectionFilterGeneralPanel} from '../components/item-configuration-panels/CollectionFilterGeneralPanel';
 import ContainerAdvancedPanel from '../components/item-configuration-panels/ContainerAdvancedPanel';
@@ -239,7 +239,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 					EDITABLE_TYPES.link,
 				].includes(activeItem.type) &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				!hasSubmitChild(activeItem.parentId),
+				!isEditableSubmit(activeItem.editableId, activeItem.parentId),
 			[PANEL_IDS.imageSource]:
 				activeItem.type === EDITABLE_TYPES.image ||
 				activeItem.type === EDITABLE_TYPES.backgroundImage,

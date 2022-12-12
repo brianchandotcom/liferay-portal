@@ -25,11 +25,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Víctor Galán
@@ -138,17 +135,11 @@ public abstract class
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
 			getFragmentEntryConfigurationParser();
 
-		return Stream.of(
+		return ListUtil.filter(
 			fragmentEntryConfigurationParser.getFragmentConfigurationFields(
-				fragmentEntryLink.getConfiguration())
-		).flatMap(
-			Collection::stream
-		).filter(
+				fragmentEntryLink.getConfiguration()),
 			fragmentConfigurationField -> Objects.equals(
-				fragmentConfigurationField.getType(), getConfigurationType())
-		).collect(
-			Collectors.toList()
-		);
+				fragmentConfigurationField.getType(), getConfigurationType()));
 	}
 
 }

@@ -49,7 +49,11 @@ const STATUS: TStatus = {
 	[Status.MultipleChoices]: error(Message.Error),
 };
 
-async function request(path: string, config: RequestInit) {
+async function request(
+	path: string,
+	config: RequestInit,
+	message: string = ERROR_MESSAGE
+) {
 	const endpoint = `/o/analytics-settings-rest/v1.0${path}`;
 
 	const response = await fetch(endpoint, {
@@ -67,7 +71,7 @@ async function request(path: string, config: RequestInit) {
 	}
 	else if (response.status >= Status.MultipleChoices || status) {
 		Liferay.Util.openToast({
-			message: ERROR_MESSAGE,
+			message,
 			type: 'danger',
 		});
 

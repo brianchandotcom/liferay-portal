@@ -46,12 +46,18 @@ export function fetchChannels(params: TTableRequestParams) {
 }
 
 export function fetchConnection(token: string) {
-	return request('/data-sources', {
-		body: JSON.stringify({
-			token,
-		}),
-		method: 'POST',
-	});
+	return request(
+		'/data-sources',
+		{
+			body: JSON.stringify({
+				token,
+			}),
+			method: 'POST',
+		},
+		Liferay.Language.get(
+			'token-not-valid.-please-insert-a-valid-analytics-cloud-token'
+		)
+	);
 }
 
 export function fetchContactsOrganization(params: TTableRequestParams) {

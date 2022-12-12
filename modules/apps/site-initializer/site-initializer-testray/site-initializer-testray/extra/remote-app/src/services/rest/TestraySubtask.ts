@@ -274,32 +274,18 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 
 	public async split(
 		selectedSubTaskCaseResults: TestraySubTaskCaseResult[],
-		subTaskId: string,
+		subTaskId: number,
 		taskId: number
 	) {
-		const [subtaskCaseResultResponse, subtaskResponse] = await Promise.all([
+		const [subtaskResponse, currentSubtask] = await Promise.all([
 			this.fetcher(
-				`${
-					testraySubtaskCaseResultImpl.resource
-				}&filter=${searchUtil.eq(
-					'subtaskId',
-					subTaskId as string
-				)}&pageSize=1000`
-			),
-			this.fetcher(
-				`${this.uri}?filter=${searchUtil.eq(
+				`/${this.uri}?filter=${searchUtil.eq(
 					'taskId',
 					taskId
 				)}&fields=number&pageSize=1&sort=number:desc`
 			),
+			this.getOne(subTaskId),
 		]);
-
-		const subtaskCaseResults =
-			testraySubtaskCaseResultImpl.transformDataFromList(
-				subtaskCaseResultResponse as APIResponse<
-					TestraySubTaskCaseResult
-				>
-			)?.items || [];
 
 		const [{number: subtaskIndex}] = (subtaskResponse as APIResponse<
 			TestraySubTask
@@ -333,19 +319,11 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			});
 		}
 
-		const score = subtaskCaseResults
-			.filter(
-				(subtaskCaseResult) =>
-					!selectedSubTaskCaseResults.find(
-						(selected) => subtaskCaseResult === selected
-					)
-			)
-			.map((filtered) => filtered?.caseResult?.case?.priority ?? 0)
-			.reduce((prev, next) => prev + next);
-
-		await this.update(Number(subTaskId), {
-			score,
+		const updatedSubtask = await this.update(subTaskId, {
+			score: (currentSubtask as TestraySubTask).score - newSubtaskScore,
 		});
+
+		return {currentSubtask: updatedSubtask, newSubtask};
 	}
 }
 

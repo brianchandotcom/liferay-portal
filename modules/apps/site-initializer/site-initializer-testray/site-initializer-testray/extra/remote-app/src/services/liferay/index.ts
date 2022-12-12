@@ -25,7 +25,10 @@ interface IThemeDisplay {
 }
 
 interface LiferayUtil {
-	openToast: (options?: any) => void;
+	openToast: (options?: {
+		message: string;
+		onClick?: ({event}: {event: any}) => void;
+	}) => void;
 }
 
 interface ILiferay {

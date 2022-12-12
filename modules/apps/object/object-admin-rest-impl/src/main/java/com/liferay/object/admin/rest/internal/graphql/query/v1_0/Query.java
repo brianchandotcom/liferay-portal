@@ -463,6 +463,31 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCodeObjectValidationRules(externalReferenceCode: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectValidationRulePage
+			objectDefinitionByExternalReferenceCodeObjectValidationRules(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource -> new ObjectValidationRulePage(
+				objectValidationRuleResource.
+					getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
+						externalReferenceCode, search,
+						Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectValidationRules(objectDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -486,7 +511,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectValidationRule(objectValidationRuleId: ___){actions, active, dateCreated, dateModified, engine, engineLabel, errorLabel, id, name, objectDefinitionId, script}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectValidationRule(objectValidationRuleId: ___){actions, active, dateCreated, dateModified, engine, engineLabel, errorLabel, id, name, objectDefinitionExternalReferenceCode, objectDefinitionId, script}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectValidationRule objectValidationRule(
@@ -817,6 +842,38 @@ public class Query {
 				objectLayoutResource -> new ObjectLayoutPage(
 					objectLayoutResource.
 						getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage(
+							_objectDefinition.getExternalReferenceCode(),
+							search, Pagination.of(page, pageSize))));
+		}
+
+		private ObjectDefinition _objectDefinition;
+
+	}
+
+	@GraphQLTypeExtension(ObjectDefinition.class)
+	public class
+		GetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPageTypeExtension {
+
+		public GetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPageTypeExtension(
+			ObjectDefinition objectDefinition) {
+
+			_objectDefinition = objectDefinition;
+		}
+
+		@GraphQLField
+		public ObjectValidationRulePage
+				byExternalReferenceCodeObjectValidationRules(
+					@GraphQLName("search") String search,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_objectValidationRuleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectValidationRuleResource -> new ObjectValidationRulePage(
+					objectValidationRuleResource.
+						getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 							_objectDefinition.getExternalReferenceCode(),
 							search, Pagination.of(page, pageSize))));
 		}

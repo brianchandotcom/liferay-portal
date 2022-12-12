@@ -12,8 +12,9 @@
 import Button, {ClayButtonWithIcon} from '@clayui/button';
 import ClayModal from '@clayui/modal';
 
+import ModalFormatedInformation from '../../../../common/components/ModalFormatedInformation';
+import {DealRegistrationColumnKey} from '../../../../common/enums/dealRegistrationColumnKey';
 import {DealRegistrationItem} from '../../DealRegistrationList';
-import ModalFormatedInformation from '../ModalFormatedInformation';
 
 interface ModalContentProps {
 	content: DealRegistrationItem;
@@ -24,7 +25,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 	return (
 		<ClayModal.Body>
 			<div className="align-items-center d-flex justify-content-between mb-4">
-				<h3 className="col-6 mb-0">Opportunities Details</h3>
+				<h3 className="col-6 mb-0">Partner Deal Registration</h3>
 
 				<ClayButtonWithIcon
 					displayType={null}
@@ -34,51 +35,61 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 			</div>
 
 			<div className="mb-4">
-				<div className="align-items-center d-flex justify-content-between mb-4">
-					<div className="col-8">
-						<ModalFormatedInformation
-							className="mb-4"
-							information={content['ACCOUNT-NAME']}
-							label="Account Name"
-						/>
+				<div className="d-flex mb-3">
+					<ModalFormatedInformation
+						className="col"
+						information={
+							content[DealRegistrationColumnKey.ACCOUNT_NAME]
+						}
+						label="Account Name"
+					/>
 
-						<ModalFormatedInformation
-							information={content['STAGE']}
-							label="Stage"
-						/>
-					</div>
-
-					<div className="col-4 d-flex flex-column">
-						<ModalFormatedInformation
-							className="mb-4"
-							information={content['START-DATE']}
-							label="Start Date"
-						/>
-
-						<ModalFormatedInformation
-							information={content['END-DATE']}
-							label="End Date"
-						/>
-					</div>
+					<ModalFormatedInformation
+						className="col"
+						information={
+							content[
+								DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME
+							]
+						}
+						label="Primary Prospect Name"
+					/>
 				</div>
 
-				<div className="d-flex">
+				<div className="d-flex mb-3">
 					<ModalFormatedInformation
 						className="col"
-						information={content['DEAL-AMOUNT']}
-						label="Amount"
+						information={content[DealRegistrationColumnKey.STATUS]}
+						label="Status"
 					/>
 
 					<ModalFormatedInformation
 						className="col"
-						information={content['PARTNER-REP']}
-						label="Partner Rep"
+						information={
+							content[
+								DealRegistrationColumnKey.PRIMARY_PROSPECT_EMAIL
+							]
+						}
+						label="Primary Prospect Email"
+					/>
+				</div>
+
+				<div className="d-flex mb-3">
+					<ModalFormatedInformation
+						className="col"
+						information={
+							content[DealRegistrationColumnKey.DATE_SUBMITTED]
+						}
+						label="Date Submitted"
 					/>
 
 					<ModalFormatedInformation
 						className="col"
-						information={content['LIFERAY-REP']}
-						label="Liferay Rep"
+						information={
+							content[
+								DealRegistrationColumnKey.PRIMARY_PROSPECT_PHONE
+							]
+						}
+						label="Primary Prospect Phone"
 					/>
 				</div>
 			</div>

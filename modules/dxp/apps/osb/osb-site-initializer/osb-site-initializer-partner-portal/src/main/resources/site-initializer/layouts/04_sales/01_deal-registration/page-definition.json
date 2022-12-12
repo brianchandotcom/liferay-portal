@@ -20,6 +20,19 @@
 				"pageElements": [
 					{
 						"definition": {
+							"fragment": {
+								"key": "change-deals-listing-pages"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
 							"widgetInstance": {
 								"widgetConfig": {
 									"properties": "route=deal-registration-list"

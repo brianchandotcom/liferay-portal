@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
-
 interface ModalFormatedInformationProps {
 	className?: string;
 	information: string;

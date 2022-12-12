@@ -15,9 +15,7 @@ import {DealRegistrationColumnKey} from '../../../common/enums/dealRegistrationC
 import {Liferay} from '../../../common/services/liferay';
 import useGetDealRegistration from '../../../common/services/liferay/object/deal-registration/useGetDealRegistration';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
-import getDealAmount from '../utils/getDealAmount';
 import getDealDates from '../utils/getDealDates';
-import getDoubleParagraph from '../utils/getDoubleParagraph';
 
 export default function useGetListItemsFromDealRegistration(
 	page: number,
@@ -25,7 +23,7 @@ export default function useGetListItemsFromDealRegistration(
 	filtersTerm: string
 ) {
 	const apiOption = Liferay.FeatureFlags['LPS-164528']
-		? ResourceName.OPPORTUNITIES_SALESFORCE
+		? ResourceName.LEADS_SALESFORCE
 		: ResourceName.DEAL_REGISTRATION_DXP;
 
 	const swrResponse = useGetDealRegistration(
@@ -38,20 +36,22 @@ export default function useGetListItemsFromDealRegistration(
 		() =>
 			swrResponse.data?.items.map((item) => ({
 				[DealRegistrationColumnKey.ACCOUNT_NAME]:
-					item.partnerAccountName,
-				...getDealDates(
-					item.projectSubscriptionStartDate,
-					item.projectSubscriptionEndDate
-				),
-				...getDealAmount(item.amount),
-				[DealRegistrationColumnKey.STAGE]: item.stage,
-				[DealRegistrationColumnKey.PARTNER_REP]: getDoubleParagraph(
-					`${item.partnerFirstName ? item.partnerFirstName : ''} ${
-						item.partnerLastName ? item.partnerLastName : ''
-					}`,
-					item.partnerEmail && item.partnerEmail
-				),
-				[DealRegistrationColumnKey.LIFERAY_REP]: item.ownerName,
+					item.prospectAccountName,
+				...getDealDates(item.dateCreated),
+				[DealRegistrationColumnKey.STATUS]: item.leadStatus,
+				[DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME]: `${
+					item.primaryProspectFirstName
+						? item.primaryProspectFirstName
+						: ''
+				} ${
+					item.primaryProspectLastName
+						? item.primaryProspectLastName
+						: ''
+				}`,
+				[DealRegistrationColumnKey.PRIMARY_PROSPECT_EMAIL]:
+					item.primaryProspectEmailAddress,
+				[DealRegistrationColumnKey.PRIMARY_PROSPECT_PHONE]:
+					item.primaryProspectPhone,
 			})),
 		[swrResponse.data?.items]
 	);

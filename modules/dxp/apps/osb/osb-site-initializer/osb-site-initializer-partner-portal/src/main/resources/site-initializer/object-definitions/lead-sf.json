@@ -173,6 +173,19 @@
 			"name": "primaryProspectPhone",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Status",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead Status"
+			},
+			"name": "leadStatus",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

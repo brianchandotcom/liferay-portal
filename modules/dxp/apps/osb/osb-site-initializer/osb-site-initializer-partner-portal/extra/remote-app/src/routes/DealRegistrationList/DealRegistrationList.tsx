@@ -27,10 +27,10 @@ import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import {DealRegistrationListItem} from '../../common/interfaces/dealRegistrationListItem';
 import {Liferay} from '../../common/services/liferay';
+import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDealRegistration';
-import getDoubleParagraph from './utils/getDoubleParagraph';
 
 export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
@@ -59,28 +59,24 @@ const DealRegistrationList = () => {
 			label: 'Account Name',
 		},
 		{
-			columnKey: DealRegistrationColumnKey.START_DATE,
-			label: 'Start Date',
+			columnKey: DealRegistrationColumnKey.DATE_SUBMITTED,
+			label: 'Date Submitted',
 		},
 		{
-			columnKey: DealRegistrationColumnKey.END_DATE,
-			label: 'End Date',
+			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME,
+			label: getDoubleParagraph('Primary Prospect', 'Name'),
 		},
 		{
-			columnKey: DealRegistrationColumnKey.DEAL_AMOUNT,
-			label: 'Deal Amount',
+			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_EMAIL,
+			label: getDoubleParagraph('Primary Prospect', 'Email'),
 		},
 		{
-			columnKey: DealRegistrationColumnKey.PARTNER_REP,
-			label: getDoubleParagraph('Partner Rep', 'Partner Email'),
+			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_PHONE,
+			label: getDoubleParagraph('Primary Prospect', 'Phone'),
 		},
 		{
-			columnKey: DealRegistrationColumnKey.LIFERAY_REP,
-			label: 'Liferay Rep',
-		},
-		{
-			columnKey: DealRegistrationColumnKey.STAGE,
-			label: 'Stage',
+			columnKey: DealRegistrationColumnKey.STATUS,
+			label: 'Status',
 		},
 	];
 
@@ -163,18 +159,19 @@ const DealRegistrationList = () => {
 					</div>
 				</div>
 
-				<div className="mb-2 mb-lg-0">
+				<div>
 					{!!data.items?.length && (
 						<CSVLink
-							className="btn btn-secondary mr-2"
+							className="btn btn-secondary mb-2 mb-lg-0 mr-2"
 							data={data.items}
 							filename="deal-registration.csv"
 						>
-							Export All
+							Export Deal Registrations
 						</CSVLink>
 					)}
 
 					<ClayButton
+						className="mb-2 mb-lg-0 mr-2"
 						onClick={() =>
 							Liferay.Util.navigate(
 								`${siteURL}/${PRMPageRoute.CREATE_DEAL_REGISTRATION}`

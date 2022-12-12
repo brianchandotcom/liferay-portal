@@ -32,6 +32,7 @@ export default interface DealRegistrationDTO
 	additionalInformationAboutTheOpportunity?: string;
 	amount?: number;
 	leadExternalReferenceCode?: string;
+	leadStatus?: string;
 	mdfActivityExternalReferenceCodeSF?: string;
 	opportunityOwner?: string;
 	ownerName?: string;

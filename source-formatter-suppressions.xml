@@ -233,7 +233,6 @@
 		<suppress checks="XMLIndentationCheck" files="modules/apps/calendar/calendar-web-test/src/testFunctional/macros/Calendar\.macro" />
 		<suppress checks="XMLIndentationCheck" files="tools/jalopy\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/counter/service\.xml" />
-		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/mail/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portal/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portlet/exportimport/service\.xml" />
 		<suppress checks="XMLSpringFileCheck" files="portal-impl/src/META-INF/portal-spring\.xml" />

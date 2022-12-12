@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.membership.requests.kernel.util.comparator;
+package com.liferay.site.memberships.web.internal.util.comparator;
 
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.util.DateUtil;

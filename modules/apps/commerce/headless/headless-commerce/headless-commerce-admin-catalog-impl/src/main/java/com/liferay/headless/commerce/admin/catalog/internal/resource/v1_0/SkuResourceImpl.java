@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -53,7 +52,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
-import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -126,21 +124,9 @@ public class SkuResourceImpl
 					externalReferenceCode);
 		}
 
-		List<CPInstance> cpInstances =
-			_cpInstanceService.getCPDefinitionInstances(
-				cpDefinition.getCPDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
-
-		int totalItems = _cpInstanceService.getCPDefinitionInstancesCount(
-			cpDefinition.getCPDefinitionId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		return Page.of(
-			_skuHelper.toSKUs(
-				cpInstances, contextAcceptLanguage.getPreferredLocale()),
-			pagination, totalItems);
+		return _skuHelper.getSkusPage(
+			cpDefinition.getCProductId(),
+			contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
 	@NestedField(parentClass = Product.class, value = "skus")

@@ -59,14 +59,12 @@ public class SkuHelper {
 
 		List<CPInstance> cpInstances =
 			_cpInstanceService.getCPDefinitionInstances(
-				cpDefinition.getCPDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED,
+				cpDefinition.getCPDefinitionId(), WorkflowConstants.STATUS_ANY,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 
 		int totalItems = _cpInstanceService.getCPDefinitionInstancesCount(
-			cpDefinition.getCPDefinitionId(),
-			WorkflowConstants.STATUS_APPROVED);
+			cpDefinition.getCPDefinitionId(), WorkflowConstants.STATUS_ANY);
 
 		return Page.of(toSKUs(cpInstances, locale), pagination, totalItems);
 	}

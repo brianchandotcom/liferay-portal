@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldReference;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetAvailableLocales;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetDefaultLocale;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetDefaultLocaleAsAvailableLocale;
@@ -168,6 +169,27 @@ public class DDMFormValidatorTest {
 			new DDMFormField("Name1", DDMFormFieldType.TEXT));
 
 		ddmForm.addDDMFormField(name2DDMFormField);
+
+		_ddmFormValidatorImpl.validate(ddmForm);
+	}
+
+	@Test(expected = MustNotDuplicateFieldReference.class)
+	public void testDuplicateFieldReference() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(
+			_createDDMFormField(
+				"FieldReference1", "Name1", DDMFormFieldType.TEXT));
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			"FieldReference2", "Name2", DDMFormFieldType.TEXT);
+
+		ddmFormField.addNestedDDMFormField(
+			_createDDMFormField(
+				"fieldReference1", "Name3", DDMFormFieldType.TEXT));
+
+		ddmForm.addDDMFormField(ddmFormField);
 
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
@@ -567,6 +589,16 @@ public class DDMFormValidatorTest {
 
 	protected Set<Locale> createAvailableLocales(Locale... locales) {
 		return DDMFormTestUtil.createAvailableLocales(locales);
+	}
+
+	private DDMFormField _createDDMFormField(
+		String fieldReference, String name, String type) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, type);
+
+		ddmFormField.setFieldReference(fieldReference);
+
+		return ddmFormField;
 	}
 
 	private void _setUpBeanPropertiesUtil() {

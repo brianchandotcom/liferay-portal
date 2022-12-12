@@ -1929,6 +1929,24 @@ definition {
 						locator1 = "Button#ANY");
 				}
 
+				if (isSet(itemTypeList)) {
+					if (IsElementPresent(key_text = "Clear", locator1 = "Button#ANY")) {
+						Click(
+							key_text = "Clear",
+							locator1 = "Button#ANY");
+					}
+
+					Click(
+						key_text = "Select",
+						locator1 = "Button#ANY");
+
+					for (var itemType : list "${itemTypeList}") {
+						Check.checkNotVisible(
+							checkboxName = "${itemType}",
+							locator1 = "Checkbox#ANY_CHECKBOX");
+					}
+				}
+
 				if (isSet(tagNameList)) {
 					Click(
 						key_text = "Select",

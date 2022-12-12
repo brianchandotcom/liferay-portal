@@ -123,6 +123,26 @@ public class ObjectValidationRuleResourceTest
 	}
 
 	@Override
+	protected ObjectValidationRule
+			testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage_addObjectValidationRule(
+				String objectDefinitionExternalReferenceCode,
+				ObjectValidationRule objectValidationRule)
+		throws Exception {
+
+		return objectValidationRuleResource.
+			postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				objectDefinitionExternalReferenceCode, objectValidationRule);
+	}
+
+	@Override
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _objectDefinition.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Long
 		testGetObjectDefinitionObjectValidationRulesPage_getObjectDefinitionId() {
 
@@ -160,6 +180,18 @@ public class ObjectValidationRuleResourceTest
 			postObjectDefinitionObjectValidationRule(
 				_objectDefinition.getObjectDefinitionId(),
 				randomObjectValidationRule());
+	}
+
+	@Override
+	protected ObjectValidationRule
+			testPostObjectDefinitionByExternalReferenceCodeObjectValidationRule_addObjectValidationRule(
+				ObjectValidationRule objectValidationRule)
+		throws Exception {
+
+		return objectValidationRuleResource.
+			postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				_objectDefinition.getExternalReferenceCode(),
+				objectValidationRule);
 	}
 
 	@Override

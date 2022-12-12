@@ -1351,6 +1351,63 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-170111. When configuring the Folder Facet, facet terms are present with different display templates"
+	@priority = "3"
+	test FacetTermsArePresentWithDifferentDisplayTemplates {
+		task ("Add the folders and populate them with files") {
+			for (var folder : list "Product,Engineering,Company") {
+				JSONFolder.addFolder(
+					dmFolderName = "${folder}",
+					groupName = "Guest");
+			}
+
+			for (var folder : list "Product,Engineering,Company") {
+				JSONDocument.addFile(
+					dmDocumentTitle = "DM Document Title 1",
+					folderName = "${folder}",
+					groupName = "Guest");
+			}
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		task ("Assert that the three folders are present in Default Template") {
+			for (var folders : list "Company,Engineering,Product") {
+				AssertElementPresent(
+					key_itemName = "${folders}",
+					locator1 = "SearchResults#FACET_PORTLET_GENERIC_ITEM");
+			}
+		}
+
+		task ("Assert that the three folders are present in Compact Layout Template") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				displayTemplate = "Compact Layout",
+				portletName = "Folder Facet");
+
+			Refresh();
+
+			for (var folders : list "Company,Engineering,Product") {
+				AssertElementPresent(
+					key_itemName = "${folders}",
+					locator1 = "SearchResults#FACET_PORTLET_GENERIC_ITEM");
+			}
+		}
+
+		task ("Assert that the three folders are present in Label Layout Template") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				displayTemplate = "Label Layout",
+				portletName = "Folder Facet");
+
+			Refresh();
+
+			for (var folders : list "Company,Engineering,Product") {
+				AssertElementPresent(
+					key_itemName = "${folders}",
+					locator1 = "SearchResults#FACET_PORTLET_GENERIC_ITEM");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-140643."
 	@priority = "4"
 	test FederatedSearchPopulatesWidgetsWithRespectiveKey {

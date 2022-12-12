@@ -99,7 +99,6 @@ export type TestrayBuild = {
 };
 
 export type TestrayCase = {
-	caseNumber: number;
 	caseType?: TestrayCaseType;
 	component?: TestrayComponent;
 	dateCreated: string;
@@ -109,6 +108,7 @@ export type TestrayCase = {
 	estimatedDuration: number;
 	id: number;
 	name: string;
+	number: number;
 	originationKey: string;
 	priority: number;
 	project?: TestrayProject;

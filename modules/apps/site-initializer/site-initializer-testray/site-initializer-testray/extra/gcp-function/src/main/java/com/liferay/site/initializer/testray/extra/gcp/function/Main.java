@@ -228,7 +228,7 @@ public class Main {
 
 		long testrayCaseId = _postObjectEntry(
 			HashMapBuilder.<String, Object>put(
-				"caseNumber",
+				"number",
 				_increment("projectId eq " + testrayProjectId, "cases")
 			).put(
 				"description",

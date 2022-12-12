@@ -31,11 +31,14 @@ import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.util.AdminHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -50,10 +53,8 @@ import com.liferay.rss.util.RSSUtil;
 
 import java.io.IOException;
 
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -131,6 +132,8 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			if (resourceID.equals("compareVersions")) {
 				try {
+					StringBundler sb = new StringBundler(3);
+
 					long resourcePrimKey = ParamUtil.getLong(
 						resourceRequest, "resourcePrimKey");
 					double sourceVersion = ParamUtil.getDouble(
@@ -142,18 +145,23 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 						resourcePrimKey, GetterUtil.getInteger(sourceVersion),
 						GetterUtil.getInteger(targetVersion), "content");
 
-					resourceRequest.setAttribute(
-						WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
+					if (Validator.isNotNull(diffHtmlResults)) {
+						sb.append("<div class=\"taglib-diff-html\">");
+						sb.append(diffHtmlResults);
+						sb.append("</div>");
+					}
+					else {
+						sb.append("<div class=\"alert alert-info\">");
+						sb.append(
+							language.get(
+								portal.getHttpServletRequest(resourceRequest),
+								"these-versions-are-not-comparable"));
+						sb.append("</div>");
+					}
 
-					PortletContext portletContext =
-						resourceRequest.getPortletContext();
-
-					PortletRequestDispatcher portletRequestDispatcher =
-						portletContext.getRequestDispatcher(
-							"/admin/common/compare_versions_diff_html.jsp");
-
-					portletRequestDispatcher.include(
-						resourceRequest, resourceResponse);
+					ServletResponseUtil.write(
+						portal.getHttpServletResponse(resourceResponse),
+						sb.toString());
 				}
 				catch (Exception exception) {
 					PortalUtil.sendError(
@@ -217,6 +225,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 	@Reference
 	protected KBTemplateService kbTemplateService;
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected Portal portal;

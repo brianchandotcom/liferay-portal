@@ -14,6 +14,7 @@
 
 package com.liferay.headless.discovery.internal.jaxrs.application;
 
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
@@ -52,7 +53,6 @@ import org.osgi.service.jaxrs.runtime.dto.ResourceDTO;
 import org.osgi.service.jaxrs.runtime.dto.ResourceMethodInfoDTO;
 import org.osgi.service.jaxrs.runtime.dto.RuntimeDTO;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Javier Gamarra
@@ -122,7 +122,7 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, Application.class, "companyId",
-			new ServiceTrackerCustomizer<Application, Application>() {
+			new EagerServiceTrackerCustomizer<Application, Application>() {
 
 				@Override
 				public Application addingService(

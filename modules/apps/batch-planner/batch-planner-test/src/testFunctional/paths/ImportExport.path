@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMPORT_MAPPING_HEADER</td>
+	<td>//div[contains(@class,'import-mapping-table')]//*[contains(.,'Import Mappings')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMPORT_MAPPING_SELECT</td>
 	<td>//div[contains(@class,'import-mapping-table')]//select[contains(@id,'input-field-${key_destinationField}')]</td>
 	<td></td>

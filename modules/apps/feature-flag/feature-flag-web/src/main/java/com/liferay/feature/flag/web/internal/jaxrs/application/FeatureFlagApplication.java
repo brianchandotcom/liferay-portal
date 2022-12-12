@@ -40,7 +40,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 @Component(
 	property = {
 		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/com-liferay-feature-flag-web",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=com.liferay.enterprise.product.notification.web.internal.jaxrs.application.FeatureFlagApplication",
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=com.liferay.feature.flag.web.internal.jaxrs.application.FeatureFlagApplication",
 		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
 		"auth.verifier.guest.allowed=false", "liferay.oauth2=false"
 	},

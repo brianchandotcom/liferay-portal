@@ -161,6 +161,32 @@ public class ObjectView implements Cloneable, Serializable {
 
 	protected Map<String, String> name;
 
+	public String getObjectDefinitionExternalReferenceCode() {
+		return objectDefinitionExternalReferenceCode;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode(
+		String objectDefinitionExternalReferenceCode) {
+
+		this.objectDefinitionExternalReferenceCode =
+			objectDefinitionExternalReferenceCode;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			objectDefinitionExternalReferenceCode =
+				objectDefinitionExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectDefinitionExternalReferenceCode;
+
 	public Long getObjectDefinitionId() {
 		return objectDefinitionId;
 	}

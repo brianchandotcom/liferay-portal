@@ -134,21 +134,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>diff-html</name>
-		<tag-class>com.liferay.taglib.ui.DiffHtmlTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>diffHtmlResults</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>infoMessage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>drop-here-info</name>
 		<tag-class>com.liferay.taglib.ui.DropHereInfoTag</tag-class>
 		<body-content>JSP</body-content>

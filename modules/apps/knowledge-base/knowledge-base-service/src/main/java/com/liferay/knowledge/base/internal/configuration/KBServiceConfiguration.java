@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Alicia García
  */
 @ExtendedObjectClassDefinition(
-	category = "knowledge-base",
+	category = "knowledge-base", generateUI = false,
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
@@ -34,5 +34,12 @@ public interface KBServiceConfiguration {
 
 	@Meta.AD(deflt = "15", name = "check-interval", required = false)
 	public int checkInterval();
+
+	@Meta.AD(
+		deflt = "1",
+		description = "expiration-date-notification-date-weeks-help",
+		name = "expiration-date-notification-date-weeks", required = false
+	)
+	public int expirationDateNotificationDateWeeks();
 
 }

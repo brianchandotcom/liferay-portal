@@ -15,6 +15,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:diff:diff-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:export-import:export-import-api")

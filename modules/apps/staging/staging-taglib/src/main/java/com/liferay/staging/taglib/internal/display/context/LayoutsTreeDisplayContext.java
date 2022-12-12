@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,7 +31,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -74,6 +78,8 @@ public class LayoutsTreeDisplayContext {
 			"items", _getLayoutsJSONArray()
 		).put(
 			"privateLayout", _privateLayout
+		).put(
+			"selectedPlids", _getSelectedPlids()
 		).build();
 	}
 
@@ -124,6 +130,27 @@ public class LayoutsTreeDisplayContext {
 					return false;
 				}
 			));
+	}
+
+	private Set<Long> _getSelectedPlids() {
+		Set<Long> plids = new HashSet<>();
+
+		for (long layoutId : _selectedLayoutIds) {
+			if (layoutId == 0) {
+				plids.add(layoutId);
+
+				continue;
+			}
+
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				_groupId, false, layoutId);
+
+			if (layout != null) {
+				plids.add(layout.getPlid());
+			}
+		}
+
+		return plids;
 	}
 
 	private final Group _group;

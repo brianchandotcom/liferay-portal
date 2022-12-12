@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpRequest;
 import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpResponse;
@@ -30,7 +29,6 @@ import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,22 +48,13 @@ public class RESTClientTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)contextObjects.get(
-			"themeDisplay");
-
-		contextObjects.put(
-			"restClient",
-			new RESTClient(httpServletRequest, themeDisplay.getResponse()));
+		contextObjects.put("restClient", new RESTClient(httpServletRequest));
 	}
 
 	public class RESTClient {
 
-		public RESTClient(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) {
-
+		public RESTClient(HttpServletRequest httpServletRequest) {
 			_httpServletRequest = httpServletRequest;
-			_httpServletResponse = httpServletResponse;
 		}
 
 		public Object get(String path) throws Exception {
@@ -78,15 +67,13 @@ public class RESTClientTemplateContextContributor
 
 			requestDispatcher.forward(
 				new RESTClientHttpRequest(_httpServletRequest),
-				new RESTClientHttpResponse(
-					new PipingServletResponse(
-						_httpServletResponse, unsyncStringWriter)));
+				new PipingServletResponse(
+					new RESTClientHttpResponse(), unsyncStringWriter));
 
 			return _jsonFactory.looseDeserialize(unsyncStringWriter.toString());
 		}
 
 		private final HttpServletRequest _httpServletRequest;
-		private final HttpServletResponse _httpServletResponse;
 
 	}
 

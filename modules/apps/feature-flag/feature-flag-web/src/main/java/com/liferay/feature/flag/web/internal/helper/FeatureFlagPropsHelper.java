@@ -59,7 +59,7 @@ public class FeatureFlagPropsHelper {
 	}
 
 	public FeatureFlagStatus getStatus(String key) {
-		return FeatureFlagStatus.fromString(
+		return FeatureFlagStatus.toFeatureFlagStatus(
 			_get(key, "status", StringPool.BLANK));
 	}
 

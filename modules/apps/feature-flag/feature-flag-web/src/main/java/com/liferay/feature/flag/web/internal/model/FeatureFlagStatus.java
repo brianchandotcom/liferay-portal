@@ -33,17 +33,15 @@ public enum FeatureFlagStatus {
 
 	BETA("beta"), DEV("dev"), RELEASE("release");
 
-	public static FeatureFlagStatus fromString(String propertyValue) {
-		for (FeatureFlagStatus status : values()) {
-			if (StringUtil.equalsIgnoreCase(status._value, propertyValue)) {
-				return status;
+	public static FeatureFlagStatus toFeatureFlagStatus(String string) {
+		for (FeatureFlagStatus featureFlagStatus : values()) {
+			if (StringUtil.equalsIgnoreCase(featureFlagStatus._value, string)) {
+				return featureFlagStatus;
 			}
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Property value did not match a known feature flag status. " +
-					"Returning the default value.");
+			_log.debug("String did not match a known feature flag status");
 		}
 
 		return DEV;

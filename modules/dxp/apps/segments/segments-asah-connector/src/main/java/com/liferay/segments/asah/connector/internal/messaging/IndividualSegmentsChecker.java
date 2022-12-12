@@ -166,7 +166,7 @@ public class IndividualSegmentsChecker {
 		try {
 			_segmentsEntryLocalService.addSegmentsEntryClassPKs(
 				segmentsEntry.getSegmentsEntryId(),
-				ArrayUtil.toArray(userIds.toArray(new Long[0])),
+				ArrayUtil.toLongArray(userIds),
 				_getServiceContext(segmentsEntry.getCompanyId()));
 		}
 		catch (PortalException portalException) {
@@ -318,8 +318,6 @@ public class IndividualSegmentsChecker {
 	}
 
 	private Long _getUserId(long companyId, Individual individual) {
-		List<String> individualUuids = new ArrayList<>();
-
 		for (Individual.DataSourceIndividualPK dataSourceIndividualPK :
 				individual.getDataSourceIndividualPKs()) {
 
@@ -327,21 +325,18 @@ public class IndividualSegmentsChecker {
 					_asahFaroBackendClient.getDataSourceId(companyId),
 					dataSourceIndividualPK.getDataSourceId())) {
 
-				individualUuids.addAll(
-					dataSourceIndividualPK.getIndividualPKs());
+				for (String individualUuid :
+						dataSourceIndividualPK.getIndividualPKs()) {
+
+					User user = _userLocalService.fetchUserByUuidAndCompanyId(
+						individualUuid, companyId);
+
+					if (user != null) {
+						return user.getUserId();
+					}
+				}
 
 				break;
-			}
-		}
-
-		if (ListUtil.isNotEmpty(individualUuids)) {
-			for (String individualUuid : individualUuids) {
-				User user = _userLocalService.fetchUserByUuidAndCompanyId(
-					individualUuid, companyId);
-
-				if (user != null) {
-					return user.getUserId();
-				}
 			}
 		}
 

@@ -120,4 +120,56 @@ definition {
 				value1 = "400");
 		}
 	}
+
+	@description = "Verify if alert contains all attributes: icon, type text, description and close icon"
+	@priority = "5"
+	test CanDisplayAllAttributes {
+		task ("Given Clay Sample Portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+		
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "1 Column");
+		
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+
+		task ("When the alert contains all attributes then the alert displays status icon, type text, description text, close icon") {
+			Click(
+				locator1 = "Button#ANY",
+				key_text = "Success Submit");
+			
+			AssertElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-check-circle-full']");
+			
+			AssertTextEquals(
+				locator1 = "Message#SUCCESS_DISMISSIBLE",
+				value1 = "Success:Your request completed successfully.");
+
+			AssertElementPresent(
+				locator1 = "Message#SUCCESS_DISMISSIBLE",
+				value1 = "Icon#CLOSE_ALERT");
+
+			Click(
+				locator1 = "Button#ANY",
+				key_text = "Fail Submit");
+
+			AssertElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-exclamation-full']");
+
+			AssertTextEquals(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Error:An unexpected error occurred.");
+
+			AssertElementPresent(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Icon#CLOSE_ALERT");
+		}
+	}
 }

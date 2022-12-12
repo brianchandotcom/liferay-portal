@@ -43,14 +43,6 @@ const SubtaskOutlet = () => {
 		testraySubTaskImpl.transformData(response)
 	);
 
-	const {data: testraySubtasks} = useFetch<APIResponse<TestraySubTask>>(
-		`${testraySubTaskImpl.resource}&filter=${searchUtil.eq(
-			'taskId',
-			testrayTask.id
-		)}&fields=number`,
-		(response) => testraySubTaskImpl.transformDataFromList(response)
-	);
-
 	const {data: testraySubtaskToMerged} = useFetch<
 		APIResponse<TestraySubTask>
 	>(
@@ -87,8 +79,6 @@ const SubtaskOutlet = () => {
 
 	const subtaskIssues = data?.items || [];
 
-	const subtasksItems = testraySubtasks?.items || [];
-
 	const mergedSubtaskNames = (testraySubtaskToMerged?.items || [])
 		.map(({name}) => name)
 		.join(', ');
@@ -124,7 +114,6 @@ const SubtaskOutlet = () => {
 				mutateSubtaskIssues,
 				splitSubtaskNames,
 				subtaskIssues,
-				subtasksItems,
 				testraySubtask,
 				testrayTask,
 			}}

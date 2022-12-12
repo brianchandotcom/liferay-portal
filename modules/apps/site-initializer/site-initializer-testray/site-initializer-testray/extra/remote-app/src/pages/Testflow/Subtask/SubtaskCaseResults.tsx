@@ -13,7 +13,7 @@
  */
 
 import {Dispatch} from 'react';
-import {useOutletContext, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import FloatingBox from '../../../components/FloatingBox';
@@ -23,10 +23,8 @@ import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import {ListViewTypes} from '../../../context/ListViewContext';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import fetcher from '../../../services/fetcher';
 import {Liferay} from '../../../services/liferay';
 import {
-	TestraySubTask,
 	TestraySubTaskCaseResult,
 	testraySubTaskImpl,
 } from '../../../services/rest';
@@ -34,16 +32,10 @@ import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtas
 import {searchUtil} from '../../../util/search';
 import {SubTaskStatuses} from '../../../util/statuses';
 
-type OutletContext = {
-	subtasksItems: TestraySubTask[];
-};
-
 const SubtasksCaseResults = () => {
-	const {subtaskId} = useParams();
+	const {subtaskId, taskId} = useParams();
 
 	const {updateItemFromList} = useMutate();
-
-	const {subtasksItems} = useOutletContext<OutletContext>();
 
 	const getFloatingBoxAlerts = (
 		subtasksCaseResults: TestraySubTaskCaseResult[],
@@ -64,9 +56,7 @@ const SubtasksCaseResults = () => {
 
 		const subtaskStatusCheck = () => {
 			const subtasksOpenStatus = selectedRows.filter(
-				({subTask}) =>
-					subTask?.dueStatus &&
-					subTask?.dueStatus.key === SubTaskStatuses.OPEN
+				({subTask}) => subTask?.dueStatus?.key === SubTaskStatuses.OPEN
 			);
 
 			if (subtasksOpenStatus.length) {
@@ -115,22 +105,10 @@ const SubtasksCaseResults = () => {
 		subTaskId: string,
 		selectedCaseResults: TestraySubTaskCaseResult[]
 	) => {
-		const data = await fetcher(
-			`${testraySubtaskCaseResultImpl.resource}&filter=${searchUtil.eq(
-				'subtaskId',
-				subTaskId as string
-			)}&pageSize=1000`
-		);
-
-		const allCaseResults =
-			testraySubtaskCaseResultImpl.transformDataFromList(data).items ||
-			[];
-
-		await testraySubTaskImpl.splitToSubtask(
-			allCaseResults,
+		await testraySubTaskImpl.split(
 			selectedCaseResults,
 			subTaskId,
-			subtasksItems
+			Number(taskId)
 		);
 
 		updateItemFromList(

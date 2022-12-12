@@ -23,13 +23,14 @@ import {testrayCaseResultImpl} from './TestrayCaseResult';
 import {testrayIssueImpl} from './TestrayIssues';
 import {testraySubtaskCaseResultImpl} from './TestraySubtaskCaseResults';
 import {testraySubtaskIssuesImpl} from './TestraySubtaskIssues';
-import {TestraySubTask, TestraySubTaskCaseResult} from './types';
+import {APIResponse, TestraySubTask, TestraySubTaskCaseResult} from './types';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType & {
 	projectId: number;
 };
 
 class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
+	public PREFIX = 'ST';
 	public UNASSIGNED_USER_ID = 0;
 
 	constructor() {
@@ -37,11 +38,11 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			adapter: ({
 				dueStatus,
 				errors,
-				index,
 				mbMessageId,
 				mbThreadId,
 				mergedToSubtaskId: r_mergedToTestraySubtask_c_subtaskId,
 				name,
+				number,
 				score,
 				splitFromSubtaskId: r_splitFromTestraySubtask_c_subtaskId,
 				taskId: r_taskToSubtasks_c_taskId,
@@ -49,10 +50,10 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			}) => ({
 				dueStatus,
 				errors,
-				index,
 				mbMessageId,
 				mbThreadId,
 				name,
+				number,
 				r_mergedToTestraySubtask_c_subtaskId,
 				r_splitFromTestraySubtask_c_subtaskId,
 				r_taskToSubtasks_c_taskId,
@@ -149,8 +150,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}
@@ -247,7 +247,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		let sumScore = parentTestraySubtask.score ?? 0;
 
 		for (const testraySubTask of childTestraySubtasks) {
-			await this.update(Number(testraySubTask.id), {
+			await this.update(testraySubTask.id, {
 				dueStatus: SubTaskStatuses.MERGED,
 				mergedToSubtaskId: parentTestraySubtask.id,
 				score: 0,
@@ -260,78 +260,91 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			for (const caseResult of caseResults) {
 				sumScore += caseResult?.caseResult?.case?.priority || 0;
 
-				await testraySubtaskCaseResultImpl.update(
-					Number(caseResult.id),
-					{
-						name: `${parentTestraySubtask.id}`,
-						subtaskId: parentTestraySubtask.id,
-					}
-				);
+				await testraySubtaskCaseResultImpl.update(caseResult.id, {
+					name: `${parentTestraySubtask.id}`,
+					subtaskId: parentTestraySubtask.id,
+				});
 			}
 		}
 
-		await this.update(Number(parentTestraySubtask.id), {
+		await this.update(parentTestraySubtask.id, {
 			score: sumScore,
 		});
 	}
 
-	public async splitToSubtask(
-		allSubtaskCaseResults: TestraySubTaskCaseResult[],
+	public async split(
 		selectedSubTaskCaseResults: TestraySubTaskCaseResult[],
 		subTaskId: string,
-		subTasks: TestraySubTask[]
+		taskId: number
 	) {
+		const [subtaskCaseResultResponse, subtaskResponse] = await Promise.all([
+			this.fetcher(
+				`${
+					testraySubtaskCaseResultImpl.resource
+				}&filter=${searchUtil.eq(
+					'subtaskId',
+					subTaskId as string
+				)}&pageSize=1000`
+			),
+			this.fetcher(
+				`${this.uri}?filter=${searchUtil.eq(
+					'taskId',
+					taskId
+				)}&fields=number&pageSize=1&sort=number:desc`
+			),
+		]);
+
+		const subtaskCaseResults =
+			testraySubtaskCaseResultImpl.transformDataFromList(
+				subtaskCaseResultResponse as APIResponse<
+					TestraySubTaskCaseResult
+				>
+			)?.items || [];
+
+		const [{number: subtaskIndex}] = (subtaskResponse as APIResponse<
+			TestraySubTask
+		>)?.items || [{number: 1}];
+
 		const [selectedSubTask] = selectedSubTaskCaseResults.map(
-			({subTask}) => subTask
+			({subTask}) => subTask as TestraySubTask
 		);
 
-		const caseResultIds = selectedSubTaskCaseResults.map(({id}) => id);
-
-		const sumPriority = selectedSubTaskCaseResults
+		const newSubtaskScore = selectedSubTaskCaseResults
 			.map(({caseResult}) => caseResult?.case?.priority ?? 0)
 			.reduce((prev, next) => prev + next);
 
-		const subtaskIndex = subTasks
-			.map(({index}) => index)
-			.reduce((prev, next) => Math.max(prev, next));
-
 		const newSubtaskIndex = subtaskIndex + 1;
 
-		const numSplitUpdate = allSubtaskCaseResults
+		const newSubtask = await super.create({
+			dueStatus: selectedSubTask.dueStatus.key,
+			errors: selectedSubTaskCaseResults[0]?.caseResult?.errors || ' ',
+			name: `${this.PREFIX}-${newSubtaskIndex}`,
+			number: newSubtaskIndex,
+			score: newSubtaskScore,
+			splitFromSubtaskId: selectedSubTask.id,
+			taskId,
+			userId: selectedSubTask.user.id,
+		} as SubtaskForm);
+
+		for (const {id} of selectedSubTaskCaseResults) {
+			await testraySubtaskCaseResultImpl.update(id, {
+				name: `${id}-${newSubtask.id}`,
+				subtaskId: newSubtask.id,
+			});
+		}
+
+		const score = subtaskCaseResults
 			.filter(
 				(subtaskCaseResult) =>
 					!selectedSubTaskCaseResults.find(
 						(selected) => subtaskCaseResult === selected
 					)
 			)
-			.map((filtered) => filtered?.caseResult?.case?.priority ?? 0);
-
-		const sumNewPriority = numSplitUpdate.reduce(
-			(prev, next) => prev + next
-		);
-
-		const createSubtask = {
-			dueStatus: selectedSubTask?.dueStatus.key,
-			errors: selectedSubTaskCaseResults[0]?.caseResult?.errors || ' ',
-			index: newSubtaskIndex,
-			name: `ST-${newSubtaskIndex}`,
-			score: sumPriority,
-			splitFromSubtaskId: selectedSubTask?.id,
-			taskId: selectedSubTask?.task.id,
-			userId: selectedSubTask?.user.id,
-		};
-
-		const newSubtask = await super.create(createSubtask as SubtaskForm);
-
-		for (const caseResultId of caseResultIds) {
-			await testraySubtaskCaseResultImpl.update(Number(caseResultId), {
-				name: `${caseResultId}-${newSubtask.id}`,
-				subtaskId: newSubtask.id,
-			});
-		}
+			.map((filtered) => filtered?.caseResult?.case?.priority ?? 0)
+			.reduce((prev, next) => prev + next);
 
 		await this.update(Number(subTaskId), {
-			score: sumNewPriority,
+			score,
 		});
 	}
 }

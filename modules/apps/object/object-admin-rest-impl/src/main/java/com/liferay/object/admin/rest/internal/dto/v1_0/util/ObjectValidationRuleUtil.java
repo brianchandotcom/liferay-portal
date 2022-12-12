@@ -15,6 +15,10 @@
 package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -27,13 +31,19 @@ import java.util.Map;
 public class ObjectValidationRuleUtil {
 
 	public static ObjectValidationRule toObjectValidationRule(
-		Map<String, Map<String, String>> actions, Locale locale,
-		com.liferay.object.model.ObjectValidationRule
-			serviceBuilderObjectValidationRule) {
+			Map<String, Map<String, String>> actions, Locale locale,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			com.liferay.object.model.ObjectValidationRule
+				serviceBuilderObjectValidationRule)
+		throws PortalException {
 
 		if (serviceBuilderObjectValidationRule == null) {
 			return null;
 		}
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.getObjectDefinition(
+				serviceBuilderObjectValidationRule.getObjectDefinitionId());
 
 		ObjectValidationRule objectValidationRule = new ObjectValidationRule() {
 			{
@@ -52,6 +62,8 @@ public class ObjectValidationRuleUtil {
 						getObjectValidationRuleId();
 				name = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectValidationRule.getNameMap());
+				objectDefinitionExternalReferenceCode =
+					objectDefinition.getExternalReferenceCode();
 				objectDefinitionId =
 					serviceBuilderObjectValidationRule.getObjectDefinitionId();
 				script = serviceBuilderObjectValidationRule.getScript();

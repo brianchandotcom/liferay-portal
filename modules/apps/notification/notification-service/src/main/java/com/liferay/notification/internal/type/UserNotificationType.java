@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Feliphe Marinho
  */
-@Component(immediate = true, service = NotificationType.class)
+@Component(service = NotificationType.class)
 public class UserNotificationType extends BaseNotificationType {
 
 	@Override

@@ -31,6 +31,7 @@ definition {
 	@description = "This test covers LPS-164469. It ensures that the Not Found message is shown when a guest user access the manage URL."
 	@priority = "3"
 	test CanViewNotFoundWhenGuestAccessManageURL {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.name.skip.portal.instance = "Personalmenu#CanViewNotFoundWhenGuestAccessManageURL";
 
 		var portalURL = PropsUtil.get("portal.url");

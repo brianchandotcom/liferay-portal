@@ -400,6 +400,8 @@ export default {
 	'x-items-cannot-be-deleted': '{0} items cannot be deleted',
 	'x-minutes': '{0} Minutes',
 	'x-results-for-x': '{0} Results for {1}',
+	'x-tests-were-split-into-x-successfully-view-x':
+		'{0} tests were split into {1} successfully. <u><a class="font-weight-bold" id="testray-link">View {2}</a></u>',
 	'you-are-not-the-assigned-user': 'You are not the assigned user.',
 	'you-cannot-split-all-case-results-from-a-subtask':
 		'You cannot split all case results from a subtask.',

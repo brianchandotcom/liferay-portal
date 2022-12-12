@@ -129,7 +129,8 @@ public class ListTypeEntryLocalServiceImpl
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
 			listTypeEntryId);
 
-		if (Validator.isNotNull(externalReferenceCode)) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886")) &&
+			Validator.isNotNull(externalReferenceCode)) {
 
 			_validateExternalReferenceCode(
 				externalReferenceCode, listTypeEntry.getCompanyId(),
@@ -144,7 +145,8 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long companyId, long listTypeDefinitionId)
+			String externalReferenceCode, long companyId,
+			long listTypeDefinitionId)
 		throws PortalException {
 
 		ListTypeEntry listTypeEntry =

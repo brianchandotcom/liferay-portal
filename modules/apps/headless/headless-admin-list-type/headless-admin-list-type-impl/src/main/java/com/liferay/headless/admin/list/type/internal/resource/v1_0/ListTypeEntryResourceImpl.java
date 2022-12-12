@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -127,6 +128,16 @@ public class ListTypeEntryResourceImpl
 	public ListTypeEntry postListTypeDefinitionListTypeEntry(
 			Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886"))) {
+			return ListTypeEntryUtil.toListTypeEntry(
+				null, contextAcceptLanguage.getPreferredLocale(),
+				_listTypeEntryService.addListTypeEntry(
+					listTypeEntry.getKey(), listTypeDefinitionId,
+					listTypeEntry.getKey(),
+					LocalizedMapUtil.getLocalizedMap(
+						listTypeEntry.getName_i18n())));
+		}
 
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),

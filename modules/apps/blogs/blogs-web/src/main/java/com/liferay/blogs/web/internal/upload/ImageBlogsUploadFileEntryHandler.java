@@ -165,24 +165,18 @@ public class ImageBlogsUploadFileEntryHandler
 
 		Set<String> extensions = MimeTypesUtil.getExtensions(contentType);
 
-		boolean validContentType = false;
-
 		for (String extension :
 				_blogsFileUploadsConfiguration.imageExtensions()) {
 
 			if (extension.equals(StringPool.STAR) ||
 				extensions.contains(extension)) {
 
-				validContentType = true;
-
-				break;
+				return;
 			}
 		}
 
-		if (!validContentType) {
-			throw new EntryImageNameException(
-				"Invalid image for file name " + fileName);
-		}
+		throw new EntryImageNameException(
+			"Invalid image for file name " + fileName);
 	}
 
 	private volatile BlogsFileUploadsConfiguration

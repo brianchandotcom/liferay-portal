@@ -94,14 +94,13 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			List<BlogsEntry> blogsEntry = new ArrayList<>();
 
 			for (SearchResult searchResult : searchResults) {
-				BlogsEntry blogsEntryOptional = _toBlogsEntryOptional(
-					searchResult);
+				BlogsEntry entry = _toBlogsEntry(searchResult);
 
-				if (blogsEntryOptional == null) {
+				if (entry == null) {
 					continue;
 				}
 
-				blogsEntry.add(blogsEntryOptional);
+				blogsEntry.add(entry);
 			}
 
 			return InfoPage.of(
@@ -179,7 +178,7 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
 	}
 
-	private BlogsEntry _toBlogsEntryOptional(SearchResult searchResult) {
+	private BlogsEntry _toBlogsEntry(SearchResult searchResult) {
 		try {
 			return _blogsEntryService.getEntry(searchResult.getClassPK());
 		}

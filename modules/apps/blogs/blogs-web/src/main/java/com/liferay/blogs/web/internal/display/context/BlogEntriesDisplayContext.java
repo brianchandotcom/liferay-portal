@@ -332,14 +332,13 @@ public class BlogEntriesDisplayContext {
 					List<BlogsEntry> blogsEntry = new ArrayList<>();
 
 					for (SearchResult searchResult : searchResults) {
-						BlogsEntry blogsEntryOptional = _toBlogsEntryOptional(
-							searchResult);
+						BlogsEntry entry = _toBlogsEntry(searchResult);
 
-						if (blogsEntryOptional == null) {
+						if (entry == null) {
 							continue;
 						}
 
-						blogsEntry.add(blogsEntryOptional);
+						blogsEntry.add(entry);
 					}
 
 					return blogsEntry;
@@ -348,7 +347,7 @@ public class BlogEntriesDisplayContext {
 		}
 	}
 
-	private BlogsEntry _toBlogsEntryOptional(SearchResult searchResult) {
+	private BlogsEntry _toBlogsEntry(SearchResult searchResult) {
 		try {
 			return BlogsEntryServiceUtil.getEntry(searchResult.getClassPK());
 		}

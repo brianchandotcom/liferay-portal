@@ -10,11 +10,11 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayChart from '@clayui/charts';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
-import {currencyFormat} from '../../common/utils';
+import DonutChart from '../../common/components/donut-chart';
+import getChartColumns from '../../common/utils/getChartColumns';
 
 const colors = {
 	'Approved': '#003EB3',
@@ -30,9 +30,6 @@ export default function () {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
 
 	const [titleChart, setTitleChart] = useState('');
-	const chartRef = useRef();
-
-	const chartColumns = [];
 
 	const getMDFRequests = async () => {
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -49,30 +46,8 @@ export default function () {
 		if (response.ok) {
 			const mdfRequests = await response.json();
 
-			getChartColumns(mdfRequests);
+			getChartColumns(mdfRequests, setColumnsMDFChart, setTitleChart);
 		}
-	};
-
-	const getChartColumns = (mdfRequests) => {
-		const totalMDFActivitiesAmount = totalMDFActivities(
-			mdfRequests,
-			chartColumns
-		);
-
-		totalClaimedRequests(mdfRequests, chartColumns);
-
-		totalMDFRequestToClaims(mdfRequests, chartColumns);
-
-		totalApprovedMDFToClaims(mdfRequests, chartColumns);
-
-		expiringSoonTotalActivities(mdfRequests, chartColumns);
-
-		expiredTotalActivites(mdfRequests, chartColumns);
-
-		chartColumns.push(['Paid', 0]);
-
-		setTitleChart(`$${currencyFormat(totalMDFActivitiesAmount)} Total MDF`);
-		setColumnsMDFChart(chartColumns);
 	};
 
 	useEffect(() => {
@@ -81,50 +56,11 @@ export default function () {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	useEffect(() => {
-		if (titleChart) {
-			const titleElement = chartRef?.current?.element?.querySelector(
-				'.bb-chart-arcs-title'
-			);
-
-			titleElement.textContent = titleChart;
-		}
-	}, [titleChart]);
-
-	const chart = {
-		data: {
-			colors,
-			columns: columnsMDFChart,
-			type: 'donut',
-		},
-		donut: {
-			expand: false,
-			label: {
-				ratio: 1,
-				show: false,
-			},
-			legend: {
-				show: false,
-			},
-			title: '0',
-			width: 65,
-		},
-		legend: {show: false},
-		size: {
-			height: 400,
-			width: 300,
-		},
+	const chartData = {
+		colors,
+		columns: columnsMDFChart,
+		type: 'donut',
 	};
-
-	const legendTransformData = useCallback((newItems, colors) => {
-		return newItems.map((item, index) => ({
-			color: Object.entries(colors)[index][1],
-			name: item[0],
-			value: item[1],
-		}));
-	}, []);
-
-	const legendItems = legendTransformData(columnsMDFChart, colors);
 
 	return (
 		<Container
@@ -144,135 +80,7 @@ export default function () {
 			}
 			title="Market Development Funds"
 		>
-			<div className="align-items-stretch d-flex">
-				<div className="d-flex px-4">
-					<div className="d-flex justify-content-start mdf-request-chart">
-						<ClayChart
-							className="d-flex justify-content-center"
-							data={chart.data}
-							donut={chart.donut}
-							legend={chart.legend}
-							ref={chartRef}
-							size={chart.size}
-							title={chart.donut.title}
-							tooltip={{
-								contents: (data) => {
-									const title = data[0].id;
-									const value = data[0].value;
-
-									return `<div class="donut-chart-tooltip bg-neutral-0 d-flex font-weight-bold p-2 rounded-sm text-capitalize"><span class="d-flex mr-2 w-100 text-capitalize">${title}</span> $${currencyFormat(
-										value
-									)}</div>`;
-								},
-							}}
-						/>
-					</div>
-				</div>
-
-				<div className="d-flex flex-column justify-content-between pb-4 pl-4">
-					<div className="d-flex flex-column flex-wrap h-100 justify-content-between mb-1">
-						{legendItems.map((item, index) => {
-							return (
-								<div key={index}>
-									<div className="align-items-center d-flex">
-										<span
-											className="mr-2 rounded-xs square-status-legend"
-											style={{
-												backgroundColor: item.color,
-											}}
-										></span>
-
-										<div className="mr-1">{item.name}</div>
-
-										<div className="font-weight-semi-bold">
-											{`$${currencyFormat(item.value)}`}
-										</div>
-									</div>
-								</div>
-							);
-						})}
-					</div>
-				</div>
-			</div>
+			<DonutChart chartData={chartData} titleChart={titleChart} />
 		</Container>
 	);
-}
-
-function expiredTotalActivites(mdfRequests, chartColumns) {
-	const expiredActivities = mdfRequests?.items
-		?.map((activity) =>
-			activity?.mdfRequestToActivities?.filter(
-				(request) => new Date(request.endDate) < new Date()
-			)
-		)
-		.flat();
-	const totalExpiredActivities = expiredActivities?.reduce(
-		(acc, value) => acc + parseFloat(value.mdfRequestAmount),
-		0
-	);
-	chartColumns.push(['Expired', totalExpiredActivities]);
-}
-
-function expiringSoonTotalActivities(mdfRequests, chartColumns) {
-	const expiringSoonActivitiesDate = mdfRequests?.items
-		?.map((activity) =>
-			activity.mdfRequestToActivities.filter((request) =>
-				Math.round(
-					new Date(request.endDate).getTime() + 30 > new Date()
-				)
-			)
-		)
-		.flat();
-
-	const totalExpiringSoonActivites = expiringSoonActivitiesDate?.reduce(
-		(acc, value) => acc + parseFloat(value.mdfRequestAmount),
-		0
-	);
-	chartColumns.push(['Expiring Soon', totalExpiringSoonActivites]);
-}
-
-function totalApprovedMDFToClaims(mdfRequests, chartColumns) {
-	const claimedRequests = mdfRequests?.items
-		?.map((claim) =>
-			claim.mdfRequestToMdfClaims.filter(
-				(request) => request.claimStatus === 'Approved'
-			)
-		)
-		.flat();
-
-	const totalClaimedApprovedRequestsAmount = claimedRequests?.reduce(
-		(acc, value) => acc + value?.amountClaimed || 0,
-		0
-	);
-	chartColumns.push(['Claim Approved', totalClaimedApprovedRequestsAmount]);
-}
-
-function totalMDFRequestToClaims(mdfRequests, chartColumns) {
-	const totalClaimedRequestsAmount = mdfRequests?.items?.reduce(
-		(acc, value) => acc + parseFloat(value.totalClaimedRequest || 0),
-		0
-	);
-	chartColumns.push(['Claimed', totalClaimedRequestsAmount]);
-}
-
-function totalMDFActivities(mdfRequests, chartColumns) {
-	const totalMDFActivitiesAmount = mdfRequests?.items?.reduce(
-		(prevValue, currValue) =>
-			prevValue + (parseFloat(currValue.totalMDFRequestAmount) || 0),
-		0
-	);
-	chartColumns.push(['Requested', totalMDFActivitiesAmount]);
-
-	return totalMDFActivitiesAmount;
-}
-
-function totalClaimedRequests(mdfRequests, chartColumns) {
-	const mdfApprovedRequests = mdfRequests?.items?.filter(
-		(request) => request.requestStatus === 'Approved'
-	);
-	const totalMDFApprovedRequestsAmount = mdfApprovedRequests?.reduce(
-		(acc, value) => acc + parseFloat(value.totalMDFRequestAmount),
-		0
-	);
-	chartColumns.push(['Approved', totalMDFApprovedRequestsAmount]);
 }

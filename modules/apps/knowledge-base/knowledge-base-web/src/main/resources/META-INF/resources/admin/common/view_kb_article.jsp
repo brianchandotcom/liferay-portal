@@ -61,9 +61,10 @@ if (portletTitleBasedNavigation) {
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
 			<ul class="navbar-nav navbar-nav-expand">
+				<li class="nav-item nav-item-expand"></li>
 				<li class="nav-item">
 					<liferay-frontend:sidebar-toggler-button
-						cssClass="btn btn-monospaced btn-sm btn-unstyled"
+						cssClass="btn btn-monospaced btn-secondary btn-sm btn-unstyled"
 						icon="info-circle-open"
 					/>
 				</li>

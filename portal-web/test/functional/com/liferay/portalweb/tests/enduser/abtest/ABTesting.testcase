@@ -457,9 +457,7 @@ definition {
 	@priority = "3"
 	test CheckABTestPanelAtContentPages {
 		task ("Click on the A/B Test icon and Assert the A/B Test panel is opened") {
-			if (IsNotVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
-				Click(locator1 = "ABTest#AB_TEST_BUTTON");
-			}
+			ABTest.openABTestPanel();
 		}
 
 		task ("Assert the A/B Test panel is opened") {

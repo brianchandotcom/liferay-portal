@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -51,6 +52,11 @@ public class RESTClientHttpRequest extends HttpServletRequestWrapper {
 	}
 
 	@Override
+	public Object getAttribute(String name) {
+		return _attributes.getOrDefault(name, super.getAttribute(name));
+	}
+
+	@Override
 	public String getHeader(String name) {
 		return _headers.get(name);
 	}
@@ -71,6 +77,12 @@ public class RESTClientHttpRequest extends HttpServletRequestWrapper {
 		return HttpMethods.GET;
 	}
 
+	@Override
+	public void setAttribute(String name, Object object) {
+		_attributes.put(name, object);
+	}
+
+	private final Map<String, Object> _attributes = new HashMap<>();
 	private final Map<String, String> _headers;
 
 }

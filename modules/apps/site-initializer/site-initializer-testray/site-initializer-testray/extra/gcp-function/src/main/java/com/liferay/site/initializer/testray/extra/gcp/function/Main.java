@@ -228,11 +228,11 @@ public class Main {
 
 		long testrayCaseId = _postObjectEntry(
 			HashMapBuilder.<String, Object>put(
-				"number",
-				_increment("projectId eq " + testrayProjectId, "cases")
-			).put(
 				"description",
 				testrayCasePropertiesMap.get("testray.testcase.description")
+			).put(
+				"number",
+				_increment("projectId eq " + testrayProjectId, "cases")
 			).put(
 				"priority",
 				testrayCasePropertiesMap.get("testray.testcase.priority")

@@ -28,6 +28,7 @@ interface LiferayUtil {
 	openToast: (options?: {
 		message: string;
 		onClick?: ({event}: {event: any}) => void;
+		type?: 'danger' | 'success';
 	}) => void;
 }
 

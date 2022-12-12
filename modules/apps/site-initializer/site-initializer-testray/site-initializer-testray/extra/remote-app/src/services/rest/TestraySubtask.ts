@@ -150,7 +150,8 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			);
 
 			return {mbMessage, mbThreadId};
-		} catch {
+		}
+		catch {
 			return {};
 		}
 	}

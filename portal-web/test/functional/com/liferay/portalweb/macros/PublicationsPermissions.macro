@@ -16,6 +16,7 @@ definition {
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Publications.inviteUsers(
+			gotoReviewChanges = "true",
 			publicationName = "New ${publicationName}",
 			userInvite = "userea2@liferay.com");
 

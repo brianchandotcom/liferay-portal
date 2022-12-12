@@ -673,6 +673,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ObjectValidationRule
+			createObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("objectValidationRule") ObjectValidationRule
+					objectValidationRule)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.
+					postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+						externalReferenceCode, objectValidationRule));
+	}
+
+	@GraphQLField
 	public ObjectValidationRule createObjectDefinitionObjectValidationRule(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
 			@GraphQLName("objectValidationRule") ObjectValidationRule

@@ -171,6 +171,25 @@ public class ObjectValidationRuleSerDes {
 			sb.append(_toJSON(objectValidationRule.getName()));
 		}
 
+		if (objectValidationRule.getObjectDefinitionExternalReferenceCode() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					objectValidationRule.
+						getObjectDefinitionExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectValidationRule.getObjectDefinitionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -293,6 +312,19 @@ public class ObjectValidationRuleSerDes {
 			map.put("name", String.valueOf(objectValidationRule.getName()));
 		}
 
+		if (objectValidationRule.getObjectDefinitionExternalReferenceCode() ==
+				null) {
+
+			map.put("objectDefinitionExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"objectDefinitionExternalReferenceCode",
+				String.valueOf(
+					objectValidationRule.
+						getObjectDefinitionExternalReferenceCode()));
+		}
+
 		if (objectValidationRule.getObjectDefinitionId() == null) {
 			map.put("objectDefinitionId", null);
 		}
@@ -385,6 +417,16 @@ public class ObjectValidationRuleSerDes {
 					objectValidationRule.setName(
 						(Map)ObjectValidationRuleSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectDefinitionExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectValidationRule.
+						setObjectDefinitionExternalReferenceCode(
+							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

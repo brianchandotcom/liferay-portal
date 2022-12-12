@@ -1006,7 +1006,7 @@ paths:
             tags: ["ObjectRelationship"]
     "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-validation-rules":
         get:
-            operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectValidationRulesPage
+            operationId: getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -1043,7 +1043,7 @@ paths:
                                 type: array
             tags: ["ObjectValidationRule"]
         post:
-            operationId: postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectValidationRule
+            operationId: postObjectDefinitionByExternalReferenceCodeObjectValidationRule
             parameters:
                 - in: path
                   name: externalReferenceCode

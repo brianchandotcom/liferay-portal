@@ -57,6 +57,18 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ObjectValidationRuleResource {
 
 	public Page<ObjectValidationRule>
+			getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
+				String externalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception;
+
+	public ObjectValidationRule
+			postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				String externalReferenceCode,
+				ObjectValidationRule objectValidationRule)
+		throws Exception;
+
+	public Page<ObjectValidationRule>
 			getObjectDefinitionObjectValidationRulesPage(
 				Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;

@@ -16,6 +16,8 @@ package com.liferay.object.rest.internal.jaxrs.context.provider;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.internal.deployer.ObjectDefinitionDeployerImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -55,9 +57,21 @@ public class ObjectDefinitionContextProvider
 		restContextPath = StringUtil.removeFirst(restContextPath, "/o");
 		restContextPath = StringUtil.replaceLast(restContextPath, '/', "");
 
-		return _objectDefinitionDeployerImpl.getObjectDefinition(
-			companyId, restContextPath);
+		try {
+			return _objectDefinitionDeployerImpl.getObjectDefinition(
+				companyId, restContextPath);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			throw new RuntimeException(exception);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionContextProvider.class);
 
 	private final ObjectDefinitionDeployerImpl _objectDefinitionDeployerImpl;
 	private final Portal _portal;

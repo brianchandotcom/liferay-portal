@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.deployer;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -73,7 +74,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -147,7 +147,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	public ObjectDefinition getObjectDefinition(
-		long companyId, String restContextPath) {
+			long companyId, String restContextPath)
+		throws Exception {
 
 		ObjectDefinition objectDefinition = null;
 
@@ -159,7 +160,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		if (objectDefinition == null) {
-			throw new NotFoundException();
+			throw new NoSuchObjectDefinitionException();
 		}
 
 		return objectDefinition;

@@ -31,6 +31,7 @@ export default function AccountCreationModalBody({
 	accountTypes,
 	setAccountData,
 }) {
+	const [availableOrganizations, setAvailableOrganizations] = useState([]);
 	const [organizationQuery, setOrganizationQuery] = useState('');
 	const [organizationData, setOrganizationData] = useState([]);
 	const [organizationError, setOrganizationError] = useState(false);
@@ -49,17 +50,15 @@ export default function AccountCreationModalBody({
 		[organizationData]
 	);
 
-	const filterOrganizations = (organizations, accountOrganizations) => {
-		if (!accountOrganizations.length) {
-			return organizations;
-		}
-
-		const accountValues = accountOrganizations.map((item) => item.value);
-
-		return organizations.filter(
-			(org) => !accountValues.includes(org.value)
+	useEffect(() => {
+		const accountValues = accountData.organizations.map(
+			(item) => item.value
 		);
-	};
+
+		setAvailableOrganizations(
+			organizations.filter((org) => !accountValues.includes(org.value))
+		);
+	}, [accountData.organizations, organizations]);
 
 	return (
 		<ClayModal.Body>
@@ -126,9 +125,10 @@ export default function AccountCreationModalBody({
 							organizations: validItems,
 						});
 					}}
-					sourceItems={filterOrganizations(
-						organizations,
-						accountData.organizations
+					sourceItems={availableOrganizations.filter((organization) =>
+						organization.label
+							.toLowerCase()
+							.match(organizationQuery.toLowerCase())
 					)}
 					value={organizationQuery}
 				/>

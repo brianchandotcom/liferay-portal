@@ -85,6 +85,132 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-151314 | Test Summary: Verify if Environment Type has the followings options: (Production - Backup - Unlimited - Non-Production - Subscription - Complimentary)."
+	@ignore = "true"
+	@priority = "3"
+	test AssertTheErroMessage{
+		// Needs refactor since it depends on example Avangrid Portals account
+		
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+		task ("Open Environment Type tab and Assert the nodes field is disable") {
+			CustomerPortal.clickAtButton(text = "Filter");
+
+			Click.pauseClickAt(
+				locator1 = "CustomerPortalSite#ANY_BUTTON",
+				key_text= "Key Type");
+		}
+		task ("Open Environment Type tab and Assert the nodes field is enable") {
+			Click.clickNoWaitForVisible(
+				key_checkbox = "Virtual Cluster",
+				key_menu = "Key Type",
+				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
+		}
+		task("Type a invalid value in the field and assert the erro message") {
+			Type(
+				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
+				value1 = "0");
+
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#NODES_ERRO",
+				key_erro = "enter-a-minimum-node-value-greater-than-0");
+			
+			Type(
+				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
+				value1 = "1");
+
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#NODES_ERRO",
+				key_erro = "max-nodes-must-be-greater-than-min-nodes");
+
+			CustomerPortal.clickAtButton(text = "Filter");
+
+		}
+
+		task("Type a invalid value on search bar and assert the erro message") {
+			Click(locator1 = "CP2NavigationMenu#SEARCH_FILTER");
+
+		Type(
+			locator1 = "CP2NavigationMenu#SEARCH_FILTER",
+			value1 = "NothingAreFound");
+
+		KeyPress(
+			locator1 = "CP2NavigationMenu#SEARCH_FILTER",
+			value1 = "\ENTER");
+
+		AssertElementPresent(locator1 ="CP2NavigationMenu#SEARCH_NO_RESULT");
+
+		}
+	}
+
+	@description = "Automation ID: LPS-151312 | Test Summary: Verify if Environment Type and if the User can Search for a Environment Type."
+	@ignore = "true"
+	@priority = " 4"
+	test CanViewAndSearchForEnvironmentType {
+		// Needs refactor since it depends on example Avangrid Portals account
+		
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+		task ("Open Environment Type tab and Assert the environment type options") {
+			CustomerPortal.clickAtButton(text = "Filter");
+
+			Click.pauseClickAt(
+				locator1 = "CustomerPortalSite#ANY_BUTTON",
+				key_text= "Environment Type");
+
+			for (var environmentName : list "Non-Production,Production,Subscription" ) {
+	
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX",
+				key_menu = "Environment Type",
+				key_checkbox = "${environmentName}");
+			}
+
+		}
+		task("Search for a key and assert the result of the search"){
+			Click(locator1 = "CP2NavigationMenu#SEARCH_FILTER");
+
+			Type(
+				locator1 = "CP2NavigationMenu#SEARCH_FILTER",
+				value1 = "test");
+
+			KeyPress(
+				locator1 = "CP2NavigationMenu#SEARCH_FILTER",
+				value1 = "\ENTER");
+			
+			AssertElementPresent(
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE",
+				key_text = "test");
+		}
+
+	}
+
 	@description = "Automation ID: LPS-146199 | Test Summary: Verify that when clicking on the Deploying Activation Keys article link, the user is redirected to another page."
 	@ignore = "true"
 	@priority = "3"

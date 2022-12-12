@@ -20,15 +20,18 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpRequest;
 import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpResponse;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,12 +68,23 @@ public class RESTClientTemplateContextContributor
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(Portal.PATH_MODULE + path);
 
+			HttpServletResponse httpServletResponse = new PipingServletResponse(
+				new RESTClientHttpResponse(), unsyncStringWriter);
+
 			requestDispatcher.forward(
 				new RESTClientHttpRequest(_httpServletRequest),
-				new PipingServletResponse(
-					new RESTClientHttpResponse(), unsyncStringWriter));
+				httpServletResponse);
 
-			return _jsonFactory.looseDeserialize(unsyncStringWriter.toString());
+			String responseString = unsyncStringWriter.toString();
+
+			if (Objects.equals(
+					httpServletResponse.getContentType(),
+					ContentTypes.APPLICATION_JSON)) {
+
+				return _jsonFactory.looseDeserialize(responseString);
+			}
+
+			return responseString;
 		}
 
 		private final HttpServletRequest _httpServletRequest;

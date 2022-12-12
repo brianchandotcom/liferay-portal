@@ -329,19 +329,19 @@ public class BlogEntriesDisplayContext {
 						SearchResultUtil.getSearchResults(
 							hits, LocaleUtil.getDefault());
 
-					List<BlogsEntry> blogsEntry = new ArrayList<>();
+					List<BlogsEntry> blogsEntries = new ArrayList<>();
 
 					for (SearchResult searchResult : searchResults) {
-						BlogsEntry entry = _toBlogsEntry(searchResult);
+						BlogsEntry blogsEntry = _toBlogsEntry(searchResult);
 
-						if (entry == null) {
+						if (blogsEntry == null) {
 							continue;
 						}
 
-						blogsEntry.add(entry);
+						blogsEntries.add(blogsEntry);
 					}
 
-					return blogsEntry;
+					return blogsEntries;
 				},
 				hits.getLength());
 		}

@@ -236,11 +236,7 @@ function FragmentSetForm({
 	setErrors,
 	showNoFragmentCollectionMessage,
 }) {
-	const [name, setName] = useState(
-		showNoFragmentCollectionMessage
-			? Liferay.Language.get('untitled-set')
-			: ''
-	);
+	const [name, setName] = useState(Liferay.Language.get('untitled-set'));
 	const [description, setDescription] = useState('');
 
 	const handleSubmit = (event) => {

@@ -45,14 +45,19 @@ exports[`Options shows the options 1`] = `
               data-field-name="keyValueLabeloption0"
               tabindex="0"
             >
-              <input
-                class="form-control ddm-field-text"
-                id="keyValueLabeloption0"
-                name="keyValueLabeloption0"
-                placeholder="enter-an-option"
-                type="text"
-                value="Option 1"
-              />
+              <div
+                data-tooltip-align="top"
+                title="Option 1"
+              >
+                <input
+                  class="form-control ddm-field-text"
+                  id="keyValueLabeloption0"
+                  name="keyValueLabeloption0"
+                  placeholder="enter-an-option"
+                  type="text"
+                  value="Option 1"
+                />
+              </div>
               <input
                 name="keyValueLabeloption0_edited"
                 type="hidden"
@@ -148,14 +153,19 @@ exports[`Options shows the options 1`] = `
               data-field-name="keyValueLabeloption1"
               tabindex="0"
             >
-              <input
-                class="form-control ddm-field-text"
-                id="keyValueLabeloption1"
-                name="keyValueLabeloption1"
-                placeholder="enter-an-option"
-                type="text"
-                value="Option 2"
-              />
+              <div
+                data-tooltip-align="top"
+                title="Option 2"
+              >
+                <input
+                  class="form-control ddm-field-text"
+                  id="keyValueLabeloption1"
+                  name="keyValueLabeloption1"
+                  placeholder="enter-an-option"
+                  type="text"
+                  value="Option 2"
+                />
+              </div>
               <input
                 name="keyValueLabeloption1_edited"
                 type="hidden"
@@ -251,14 +261,19 @@ exports[`Options shows the options 1`] = `
               data-field-name="keyValueLabeloption2"
               tabindex="0"
             >
-              <input
-                class="form-control ddm-field-text"
-                id="keyValueLabeloption2"
-                name="keyValueLabeloption2"
-                placeholder="enter-an-option"
-                type="text"
-                value=""
-              />
+              <div
+                data-tooltip-align="top"
+                title="enter-an-option"
+              >
+                <input
+                  class="form-control ddm-field-text"
+                  id="keyValueLabeloption2"
+                  name="keyValueLabeloption2"
+                  placeholder="enter-an-option"
+                  type="text"
+                  value=""
+                />
+              </div>
               <input
                 name="keyValueLabeloption2_edited"
                 type="hidden"

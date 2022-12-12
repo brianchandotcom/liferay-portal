@@ -37,10 +37,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -155,8 +156,8 @@ public class AMImageRequestHandler
 			properties.get("max-height"));
 
 		try {
-			Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-				_amImageFinder.getAdaptiveMediaStream(
+			List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+				_amImageFinder.getAdaptiveMediaList(
 					amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 						fileVersion
 					).with(
@@ -167,9 +168,14 @@ public class AMImageRequestHandler
 						configurationHeight
 					).done());
 
-			return adaptiveMediaStream.sorted(
-				_getComparator(configurationWidth)
-			).findFirst();
+			if (adaptiveMediaList.isEmpty()) {
+				return Optional.empty();
+			}
+
+			Collections.sort(
+				adaptiveMediaList, _getComparator(configurationWidth));
+
+			return Optional.of(adaptiveMediaList.get(0));
 		}
 		catch (PortalException portalException) {
 			throw new AMRuntimeException(portalException);
@@ -181,15 +187,19 @@ public class AMImageRequestHandler
 			AMImageConfigurationEntry amImageConfigurationEntry)
 		throws PortalException {
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinder.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinder.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					fileVersion
 				).forConfiguration(
 					amImageConfigurationEntry.getUUID()
 				).done());
 
-		return adaptiveMediaStream.findFirst();
+		if (adaptiveMediaList.isEmpty()) {
+			return Optional.empty();
+		}
+
+		return Optional.of(adaptiveMediaList.get(0));
 	}
 
 	private Comparator<AdaptiveMedia<AMImageProcessor>> _getComparator(

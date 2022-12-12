@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,15 +83,19 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		try {
-			Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-				_amImageFinder.getAdaptiveMediaStream(
+			List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+				_amImageFinder.getAdaptiveMediaList(
 					amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 						fileEntry
 					).forConfiguration(
 						amImageConfigurationEntry.getUUID()
 					).done());
 
-			return adaptiveMediaStream.findFirst();
+			if (adaptiveMediaList.isEmpty()) {
+				return Optional.empty();
+			}
+
+			return Optional.of(adaptiveMediaList.get(0));
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

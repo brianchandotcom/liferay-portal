@@ -46,8 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -112,13 +110,13 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					_fileEntry
 				).done());
 
-		adaptiveMediaStream.count();
+		adaptiveMediaList.size();
 	}
 
 	@Test
@@ -173,13 +171,14 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					_fileEntry
 				).done());
 
-		Assert.assertEquals(1, adaptiveMediaStream.count());
+		Assert.assertEquals(
+			adaptiveMediaList.toString(), 1, adaptiveMediaList.size());
 	}
 
 	@Test
@@ -228,19 +227,17 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 1, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 1, adaptiveMediaList.size());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMediaList.get(
+			0);
 
 		Assert.assertEquals(
 			adaptiveMedia.getValueOptional(
@@ -332,8 +329,8 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).orderBy(
@@ -341,27 +338,27 @@ public class AMImageFinderImplTest {
 					AMImageQueryBuilder.SortOrder.ASC
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 3, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 3, adaptiveMediaList.size());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMediaList.get(
+			0);
 
 		Assert.assertEquals(
 			adaptiveMedia1.getValueOptional(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH),
 			Optional.of(199));
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia2 = adaptiveMedias.get(1);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia2 = adaptiveMediaList.get(
+			1);
 
 		Assert.assertEquals(
 			adaptiveMedia2.getValueOptional(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH),
 			Optional.of(399));
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia3 = adaptiveMedias.get(2);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia3 = adaptiveMediaList.get(
+			2);
 
 		Assert.assertEquals(
 			adaptiveMedia3.getValueOptional(
@@ -448,8 +445,8 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).orderBy(
@@ -457,27 +454,27 @@ public class AMImageFinderImplTest {
 					AMImageQueryBuilder.SortOrder.DESC
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 3, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 3, adaptiveMediaList.size());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMediaList.get(
+			0);
 
 		Assert.assertEquals(
 			adaptiveMedia1.getValueOptional(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH),
 			Optional.of(799));
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia2 = adaptiveMedias.get(1);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia2 = adaptiveMediaList.get(
+			1);
 
 		Assert.assertEquals(
 			adaptiveMedia2.getValueOptional(
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH),
 			Optional.of(399));
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia3 = adaptiveMedias.get(2);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia3 = adaptiveMediaList.get(
+			2);
 
 		Assert.assertEquals(
 			adaptiveMedia3.getValueOptional(
@@ -487,7 +484,7 @@ public class AMImageFinderImplTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetMediaAttributesWithNonbuilderQuery() throws Exception {
-		_amImageFinderImpl.getAdaptiveMediaStream(
+		_amImageFinderImpl.getAdaptiveMediaList(
 			amImageQueryBuilder ->
 				new AMQuery<FileVersion, AMImageProcessor>() {
 				});
@@ -495,7 +492,7 @@ public class AMImageFinderImplTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetMediaAttributesWithNullQuery() throws Exception {
-		_amImageFinderImpl.getAdaptiveMediaStream(amImageQueryBuilder -> null);
+		_amImageFinderImpl.getAdaptiveMediaList(amImageQueryBuilder -> null);
 	}
 
 	@Test(expected = AMRuntimeException.InvalidConfiguration.class)
@@ -519,7 +516,7 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		_amImageFinderImpl.getAdaptiveMediaStream(
+		_amImageFinderImpl.getAdaptiveMediaList(
 			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 				_fileVersion
 			).done());
@@ -580,19 +577,17 @@ public class AMImageFinderImplTest {
 			inputStream
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 1, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 1, adaptiveMediaList.size());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMediaList.get(
+			0);
 
 		Assert.assertSame(inputStream, adaptiveMedia.getInputStream());
 	}
@@ -643,19 +638,17 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 1, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 1, adaptiveMediaList.size());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMediaList.get(
+			0);
 
 		Assert.assertEquals(
 			adaptiveMedia.getValueOptional(
@@ -730,18 +723,16 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).with(
 					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, 100
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMediaList.get(
+			0);
 
 		Optional<Integer> adaptiveMedia0HeightOptional =
 			adaptiveMedia0.getValueOptional(
@@ -749,7 +740,8 @@ public class AMImageFinderImplTest {
 
 		Assert.assertEquals(99, (int)adaptiveMedia0HeightOptional.get());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMedias.get(1);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMediaList.get(
+			1);
 
 		Optional<Integer> adaptiveMedia1HeightOptional =
 			adaptiveMedia1.getValueOptional(
@@ -820,18 +812,16 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).with(
 					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, 200
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMediaList.get(
+			0);
 
 		Optional<Integer> adaptiveMedia0HeightOptional =
 			adaptiveMedia0.getValueOptional(
@@ -839,7 +829,8 @@ public class AMImageFinderImplTest {
 
 		Assert.assertEquals(199, (int)adaptiveMedia0HeightOptional.get());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMedias.get(1);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMediaList.get(
+			1);
 
 		Optional<Integer> adaptiveMedia1HeightOptional =
 			adaptiveMedia1.getValueOptional(
@@ -910,18 +901,16 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).with(
 					AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, 200
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMediaList.get(
+			0);
 
 		Optional<Integer> adaptiveMedia0HeightOptional =
 			adaptiveMedia0.getValueOptional(
@@ -929,7 +918,8 @@ public class AMImageFinderImplTest {
 
 		Assert.assertEquals(99, (int)adaptiveMedia0HeightOptional.get());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMedias.get(1);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMediaList.get(
+			1);
 
 		Optional<Integer> adaptiveMedia1HeightOptional =
 			adaptiveMedia1.getValueOptional(
@@ -1000,21 +990,19 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).forConfiguration(
 					"small"
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 1, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 1, adaptiveMediaList.size());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMediaList.get(
+			0);
 
 		Optional<String> adaptiveMedia0Optional =
 			adaptiveMedia0.getValueOptional(
@@ -1102,8 +1090,8 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).withConfigurationStatus(
@@ -1112,13 +1100,11 @@ public class AMImageFinderImplTest {
 					"small"
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 1, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 1, adaptiveMediaList.size());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMediaList.get(
+			0);
 
 		Optional<String> adaptiveMedia0Optional =
 			adaptiveMedia0.getValueOptional(
@@ -1126,7 +1112,7 @@ public class AMImageFinderImplTest {
 
 		Assert.assertEquals("small", adaptiveMedia0Optional.get());
 
-		adaptiveMediaStream = _amImageFinderImpl.getAdaptiveMediaStream(
+		adaptiveMediaList = _amImageFinderImpl.getAdaptiveMediaList(
 			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 				_fileVersion
 			).withConfigurationStatus(
@@ -1135,19 +1121,17 @@ public class AMImageFinderImplTest {
 				"small"
 			).done());
 
-		adaptiveMedias = adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 1, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 1, adaptiveMediaList.size());
 
-		adaptiveMedia0 = adaptiveMedias.get(0);
+		adaptiveMedia0 = adaptiveMediaList.get(0);
 
 		adaptiveMedia0Optional = adaptiveMedia0.getValueOptional(
 			AMAttribute.getConfigurationUuidAMAttribute());
 
 		Assert.assertEquals("small", adaptiveMedia0Optional.get());
 
-		adaptiveMediaStream = _amImageFinderImpl.getAdaptiveMediaStream(
+		adaptiveMediaList = _amImageFinderImpl.getAdaptiveMediaList(
 			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 				_fileVersion
 			).withConfigurationStatus(
@@ -1156,10 +1140,8 @@ public class AMImageFinderImplTest {
 				"small"
 			).done());
 
-		adaptiveMedias = adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 0, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 0, adaptiveMediaList.size());
 	}
 
 	@Test
@@ -1248,8 +1230,8 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).withConfigurationStatus(
@@ -1258,10 +1240,8 @@ public class AMImageFinderImplTest {
 					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, 100
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMediaList.get(
+			0);
 
 		Optional<String> adaptiveMedia0ConfigurationUuidOptional =
 			adaptiveMedia0.getValueOptional(
@@ -1269,7 +1249,7 @@ public class AMImageFinderImplTest {
 
 		Assert.assertEquals("1", adaptiveMedia0ConfigurationUuidOptional.get());
 
-		adaptiveMediaStream = _amImageFinderImpl.getAdaptiveMediaStream(
+		adaptiveMediaList = _amImageFinderImpl.getAdaptiveMediaList(
 			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 				_fileVersion
 			).withConfigurationStatus(
@@ -1278,9 +1258,7 @@ public class AMImageFinderImplTest {
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, 100
 			).done());
 
-		adaptiveMedias = adaptiveMediaStream.collect(Collectors.toList());
-
-		adaptiveMedia0 = adaptiveMedias.get(0);
+		adaptiveMedia0 = adaptiveMediaList.get(0);
 
 		adaptiveMedia0ConfigurationUuidOptional =
 			adaptiveMedia0.getValueOptional(
@@ -1288,7 +1266,7 @@ public class AMImageFinderImplTest {
 
 		Assert.assertEquals("2", adaptiveMedia0ConfigurationUuidOptional.get());
 
-		adaptiveMediaStream = _amImageFinderImpl.getAdaptiveMediaStream(
+		adaptiveMediaList = _amImageFinderImpl.getAdaptiveMediaList(
 			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 				_fileVersion
 			).withConfigurationStatus(
@@ -1297,9 +1275,7 @@ public class AMImageFinderImplTest {
 				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, 100
 			).done());
 
-		adaptiveMedias = adaptiveMediaStream.collect(Collectors.toList());
-
-		adaptiveMedia0 = adaptiveMedias.get(0);
+		adaptiveMedia0 = adaptiveMediaList.get(0);
 
 		adaptiveMedia0ConfigurationUuidOptional =
 			adaptiveMedia0.getValueOptional(
@@ -1307,7 +1283,8 @@ public class AMImageFinderImplTest {
 
 		Assert.assertEquals("1", adaptiveMedia0ConfigurationUuidOptional.get());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMedias.get(1);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMediaList.get(
+			1);
 
 		Optional<String> adaptiveMedia1ConfigurationUuidOptional =
 			adaptiveMedia1.getValueOptional(
@@ -1378,18 +1355,16 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).with(
 					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, 100
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia0 = adaptiveMediaList.get(
+			0);
 
 		Optional<Integer> adaptiveMedia0HeightOptional =
 			adaptiveMedia0.getValueOptional(
@@ -1397,7 +1372,8 @@ public class AMImageFinderImplTest {
 
 		Assert.assertEquals(99, (int)adaptiveMedia0HeightOptional.get());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMedias.get(1);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMediaList.get(
+			1);
 
 		Optional<Integer> adaptiveMedia1HeightOptional =
 			adaptiveMedia1.getValueOptional(
@@ -1414,13 +1390,13 @@ public class AMImageFinderImplTest {
 			false
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).done());
 
-		Object[] adaptiveMediaArray = adaptiveMediaStream.toArray();
+		Object[] adaptiveMediaArray = adaptiveMediaList.toArray();
 
 		Assert.assertEquals(
 			Arrays.toString(adaptiveMediaArray), 0, adaptiveMediaArray.length);
@@ -1428,7 +1404,7 @@ public class AMImageFinderImplTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetMediaWithNullFunction() throws Exception {
-		_amImageFinderImpl.getAdaptiveMediaStream(null);
+		_amImageFinderImpl.getAdaptiveMediaList(null);
 	}
 
 	@Test
@@ -1466,19 +1442,17 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
 		Assert.assertEquals(
-			adaptiveMedias.toString(), 1, adaptiveMedias.size());
+			adaptiveMediaList.toString(), 1, adaptiveMediaList.size());
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMediaList.get(
+			0);
 
 		Assert.assertSame(inputStream, adaptiveMedia.getInputStream());
 
@@ -1537,16 +1511,14 @@ public class AMImageFinderImplTest {
 			true
 		);
 
-		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
-			_amImageFinderImpl.getAdaptiveMediaStream(
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_amImageFinderImpl.getAdaptiveMediaList(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					_fileVersion
 				).done());
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
-			adaptiveMediaStream.collect(Collectors.toList());
-
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMediaList.get(
+			0);
 
 		adaptiveMedia.getInputStream();
 

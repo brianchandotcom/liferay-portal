@@ -162,7 +162,7 @@ definition {
 
 			TestrayCases.typeCasesField(
 				caseName = "ATF_Requirements Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "ATF_Requirements Case Description",
 				duration = "10",

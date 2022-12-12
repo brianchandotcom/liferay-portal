@@ -76,7 +76,7 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				caseType = "Automated Functional Test",
+				caseType = "Manual Test",
 				mainComponent = "Tags",
 				priorityNumber = "3",
 				smartSuite = "true",
@@ -135,7 +135,7 @@ definition {
 
 			TestrayCases.typeCasesField(
 				caseName = "ATF_Suites Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project",
 				description = "ATF_Suites Case Description",
 				duration = "10",
@@ -189,12 +189,12 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				caseType = "Automated Functional Test",
-				mainComponent = "Analytics Cloud",
+				caseType = "Unit Test",
+				mainComponent = "Components_1 Project",
 				priorityNumber = "1",
 				requirementName = "ATF_Requirements Summary",
 				smartSuite = "true",
-				subComponent = "Analytics Cloud",
+				subComponent = "Components_1 Project",
 				suiteDescription = "ATF_Suites_1 Suite Description",
 				suiteName = "ATF_Suites_1 Suite");
 		}
@@ -203,11 +203,11 @@ definition {
 			TestraySuites.goToSuiteDetails(suiteName = "ATF_Suites_1 Suite");
 
 			TestraySuites.verifyCaseParametersInSuite(
-				caseType = "Automated Functional Test",
-				components = "Analytics Cloud",
+				caseType = "Unit Test",
+				components = "Components_1 Project",
 				priority = "1",
 				requirements = "ATF_Requirements Summary",
-				subComponents = "Analytics Cloud");
+				subComponents = "Components_1 Project");
 		}
 
 		task ("When the user edits the created smart suite") {

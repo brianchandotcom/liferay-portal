@@ -335,7 +335,7 @@ definition {
 
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
+				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "40",

@@ -388,12 +388,12 @@ definition {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Export Cases");
-
-			Button.click(button = "Export");
 		}
 
-		task ("Then an error message is displayed") {
-			Alert.viewErrorMessage(errorMessage = "Mark at least one case to export.");
+		task ("Then a warning message appears") {
+			AssertElementPresent(
+					key_text = "There are no linked cases.",
+					locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
 		}
 	}
 

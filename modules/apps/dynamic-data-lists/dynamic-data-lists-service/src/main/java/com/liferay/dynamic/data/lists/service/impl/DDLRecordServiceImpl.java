@@ -209,6 +209,38 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * Updates a record, replacing its display index and values.
+	 *
+	 * @param      recordId the primary key of the record
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheet view
+	 * @param      fieldsMap the record values. The fieldsMap is a map of field
+	 *             names and its Serializable values.
+	 * @param      mergeFields whether to merge the new fields with the existing
+	 *             ones; otherwise replace the existing fields
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the record modified date.
+	 * @return     the record
+	 * @throws     PortalException if a portal exception occurred
+	 */
+	@Override
+	public DDLRecord updateRecord(
+			long recordId, int displayIndex,
+			Map<String, Serializable> fieldsMap, boolean mergeFields,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
+
+		_ddlRecordSetModelResourcePermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
+
+		return ddlRecordLocalService.updateRecord(
+			getUserId(), recordId, displayIndex, fieldsMap, mergeFields,
+			serviceContext);
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)"
 	)

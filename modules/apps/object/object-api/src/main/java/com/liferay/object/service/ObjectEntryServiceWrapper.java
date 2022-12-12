@@ -171,6 +171,15 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
+	public boolean hasPortletResourcePermission(
+			long groupId, long objectDefinitionId, String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.hasPortletResourcePermission(
+			groupId, objectDefinitionId, actionId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry updateObjectEntry(
 			long objectEntryId,
 			java.util.Map<String, java.io.Serializable> values,

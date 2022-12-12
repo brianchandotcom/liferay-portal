@@ -157,6 +157,14 @@ public class ObjectEntryServiceUtil {
 		return getService().hasModelResourcePermission(objectEntry, actionId);
 	}
 
+	public static boolean hasPortletResourcePermission(
+			long groupId, long objectDefinitionId, String actionId)
+		throws PortalException {
+
+		return getService().hasPortletResourcePermission(
+			groupId, objectDefinitionId, actionId);
+	}
+
 	public static ObjectEntry updateObjectEntry(
 			long objectEntryId, Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

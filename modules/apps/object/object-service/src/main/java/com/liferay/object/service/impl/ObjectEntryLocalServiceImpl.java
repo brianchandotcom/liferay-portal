@@ -15,6 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.model.AccountEntryUserRelTable;
@@ -89,7 +90,10 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
+import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.sql.dsl.spi.query.QueryExpression;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -113,12 +117,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermissionTable;
+import com.liferay.portal.kernel.model.RoleTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRoleTable;
 import com.liferay.portal.kernel.model.Users_OrgsTable;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -1527,111 +1535,6 @@ public class ObjectEntryLocalServiceImpl
 		FinderCacheUtil.clearDSLQueryCache(dbTableName);
 	}
 
-	private Predicate _fillAccountEntriesPredicate(
-			long companyId, long userId, long objectDefinitionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		if (!objectDefinition.isAccountEntryRestricted()) {
-			return null;
-		}
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-		Table<?> table = _objectFieldLocalService.getTable(
-			objectDefinition.getObjectDefinitionId(), objectField.getName());
-
-		Column<?, Long> column = (Column<?, Long>)table.getColumn(
-			objectField.getDBColumnName());
-
-		JoinStep joinStep = DSLQueryFactoryUtil.select(
-			AccountEntryTable.INSTANCE.accountEntryId
-		).from(
-			AccountEntryTable.INSTANCE
-		);
-
-		if (_roleLocalService.hasUserRole(
-				userId, companyId, RoleConstants.ADMINISTRATOR, true)) {
-
-			return column.in(
-				joinStep.where(
-					AccountEntryTable.INSTANCE.companyId.eq(
-						companyId
-					).and(
-						AccountEntryTable.INSTANCE.status.eq(
-							WorkflowConstants.STATUS_APPROVED)
-					)));
-		}
-
-		Table<OrganizationTable> tempOrganizationTable =
-			DSLQueryFactoryUtil.select(
-				OrganizationTable.INSTANCE.companyId,
-				OrganizationTable.INSTANCE.treePath
-			).from(
-				OrganizationTable.INSTANCE
-			).innerJoinON(
-				Users_OrgsTable.INSTANCE,
-				Users_OrgsTable.INSTANCE.organizationId.eq(
-					OrganizationTable.INSTANCE.organizationId)
-			).where(
-				Users_OrgsTable.INSTANCE.userId.eq(userId)
-			).as(
-				"tempOrganizationTable", OrganizationTable.INSTANCE
-			);
-
-		return column.in(
-			joinStep.innerJoinON(
-				AccountEntryOrganizationRelTable.INSTANCE,
-				AccountEntryOrganizationRelTable.INSTANCE.accountEntryId.eq(
-					AccountEntryTable.INSTANCE.accountEntryId)
-			).where(
-				AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
-					DSLQueryFactoryUtil.selectDistinct(
-						OrganizationTable.INSTANCE.organizationId
-					).from(
-						OrganizationTable.INSTANCE
-					).innerJoinON(
-						tempOrganizationTable,
-						OrganizationTable.INSTANCE.companyId.eq(
-							tempOrganizationTable.getColumn(
-								"companyId", Long.class)
-						).and(
-							OrganizationTable.INSTANCE.treePath.like(
-								DSLFunctionFactoryUtil.concat(
-									DSLFunctionFactoryUtil.castText(
-										tempOrganizationTable.getColumn(
-											"treePath", String.class)),
-									new Scalar<>(StringPool.PERCENT)))
-						)
-					)
-				).and(
-					_getAccountEntryWherePredicate()
-				)
-			).union(
-				joinStep.where(
-					AccountEntryTable.INSTANCE.userId.eq(
-						userId
-					).and(
-						_getAccountEntryWherePredicate()
-					))
-			).union(
-				joinStep.innerJoinON(
-					AccountEntryUserRelTable.INSTANCE,
-					AccountEntryUserRelTable.INSTANCE.accountEntryId.eq(
-						AccountEntryTable.INSTANCE.accountEntryId)
-				).where(
-					AccountEntryUserRelTable.INSTANCE.accountUserId.eq(
-						userId
-					).and(
-						_getAccountEntryWherePredicate()
-					)
-				)
-			));
-	}
-
 	private void _fillBusinessTypePicklistDefaultValue(
 		List<ObjectField> objectFields, Map<String, Serializable> values) {
 
@@ -1735,6 +1638,110 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return predicate.and(searchPredicate.withParentheses());
+	}
+
+	private DSLQuery _getAccountEntriesDSLQuery(long companyId, long userId)
+		throws PortalException {
+
+		JoinStep joinStep = DSLQueryFactoryUtil.select(
+			AccountEntryTable.INSTANCE.accountEntryId
+		).from(
+			AccountEntryTable.INSTANCE
+		);
+
+		if (_roleLocalService.hasUserRole(
+				userId, companyId, RoleConstants.ADMINISTRATOR, true)) {
+
+			return joinStep.where(
+				AccountEntryTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					AccountEntryTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				));
+		}
+
+		Table<OrganizationTable> tempOrganizationTable =
+			DSLQueryFactoryUtil.select(
+				OrganizationTable.INSTANCE.companyId,
+				OrganizationTable.INSTANCE.treePath
+			).from(
+				OrganizationTable.INSTANCE
+			).innerJoinON(
+				Users_OrgsTable.INSTANCE,
+				Users_OrgsTable.INSTANCE.organizationId.eq(
+					OrganizationTable.INSTANCE.organizationId)
+			).where(
+				Users_OrgsTable.INSTANCE.userId.eq(userId)
+			).as(
+				"tempOrganizationTable", OrganizationTable.INSTANCE
+			);
+
+		return joinStep.innerJoinON(
+			AccountEntryOrganizationRelTable.INSTANCE,
+			AccountEntryOrganizationRelTable.INSTANCE.accountEntryId.eq(
+				AccountEntryTable.INSTANCE.accountEntryId)
+		).where(
+			AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
+				DSLQueryFactoryUtil.selectDistinct(
+					OrganizationTable.INSTANCE.organizationId
+				).from(
+					OrganizationTable.INSTANCE
+				).innerJoinON(
+					tempOrganizationTable,
+					OrganizationTable.INSTANCE.companyId.eq(
+						tempOrganizationTable.getColumn("companyId", Long.class)
+					).and(
+						OrganizationTable.INSTANCE.treePath.like(
+							DSLFunctionFactoryUtil.concat(
+								DSLFunctionFactoryUtil.castText(
+									tempOrganizationTable.getColumn(
+										"treePath", String.class)),
+								new Scalar<>(StringPool.PERCENT)))
+					)
+				)
+			).and(
+				_getAccountEntryWherePredicate()
+			)
+		).union(
+			joinStep.where(
+				AccountEntryTable.INSTANCE.userId.eq(
+					userId
+				).and(
+					_getAccountEntryWherePredicate()
+				))
+		).union(
+			joinStep.innerJoinON(
+				AccountEntryUserRelTable.INSTANCE,
+				AccountEntryUserRelTable.INSTANCE.accountEntryId.eq(
+					AccountEntryTable.INSTANCE.accountEntryId)
+			).where(
+				AccountEntryUserRelTable.INSTANCE.accountUserId.eq(
+					userId
+				).and(
+					_getAccountEntryWherePredicate()
+				)
+			)
+		);
+	}
+
+	private Predicate _getAccountEntriesPredicate(
+			long companyId, long userId, long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getAccountEntryRestrictedObjectFieldId());
+
+		Table<?> table = _objectFieldLocalService.getTable(
+			objectDefinitionId, objectField.getName());
+
+		Column<?, Long> column = (Column<?, Long>)table.getColumn(
+			objectField.getDBColumnName());
+
+		return column.in(_getAccountEntriesDSLQuery(companyId, userId));
 	}
 
 	private Predicate _getAccountEntryWherePredicate() {
@@ -2173,10 +2180,75 @@ public class ObjectEntryLocalServiceImpl
 			return null;
 		}
 
+		if (!objectDefinition.isAccountEntryRestricted()) {
+			return individualScopePredicate;
+		}
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
+			RoleTable.INSTANCE.roleId
+		).from(
+			UserGroupRoleTable.INSTANCE
+		).innerJoinON(
+			GroupTable.INSTANCE,
+			GroupTable.INSTANCE.groupId.eq(UserGroupRoleTable.INSTANCE.groupId)
+		).innerJoinON(
+			RoleTable.INSTANCE,
+			RoleTable.INSTANCE.roleId.eq(UserGroupRoleTable.INSTANCE.roleId)
+		).where(
+			UserGroupRoleTable.INSTANCE.userId.eq(
+				permissionChecker.getUserId()
+			).and(
+				UserGroupRoleTable.INSTANCE.companyId.eq(
+					permissionChecker.getCompanyId())
+			).and(
+				GroupTable.INSTANCE.classPK.in(
+					_getAccountEntriesDSLQuery(
+						permissionChecker.getCompanyId(),
+						permissionChecker.getUserId()))
+			)
+		).union(
+			DSLQueryFactoryUtil.select(
+				RoleTable.INSTANCE.roleId
+			).from(
+				RoleTable.INSTANCE
+			).where(
+				RoleTable.INSTANCE.name.eq(
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)
+			)
+		);
+
+		Predicate accountEntriesPredicate = _getAccountEntriesPredicate(
+			objectDefinition.getCompanyId(), permissionChecker.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
 		return individualScopePredicate.or(
-			_fillAccountEntriesPredicate(
-				objectDefinition.getCompanyId(), permissionChecker.getUserId(),
-				objectDefinition.getObjectDefinitionId())
+			accountEntriesPredicate.and(
+				new DefaultPredicate(
+					new QueryExpression<>(
+						DSLQueryFactoryUtil.count(
+						).from(
+							ResourcePermissionTable.INSTANCE
+						).where(
+							ResourcePermissionTable.INSTANCE.companyId.eq(
+								permissionChecker.getCompanyId()
+							).and(
+								ResourcePermissionTable.INSTANCE.name.eq(
+									objectDefinition.getClassName())
+							).and(
+								ResourcePermissionTable.INSTANCE.primKey.eq("0")
+							).and(
+								ResourcePermissionTable.INSTANCE.roleId.in(
+									dslQuery)
+							).and(
+								ResourcePermissionTable.INSTANCE.scope.eq(
+									ResourceConstants.SCOPE_GROUP_TEMPLATE)
+							).and(
+								ResourcePermissionTable.INSTANCE.viewActionId.
+									eq(true)
+							)
+						)),
+					Operand.GREATER_THAN, new Scalar<>(0))
+			).withParentheses()
 		).withParentheses();
 	}
 

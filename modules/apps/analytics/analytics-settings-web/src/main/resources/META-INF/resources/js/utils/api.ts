@@ -164,20 +164,29 @@ export function fetchSelectedFields() {
 	return request('/fields', {method: 'GET'});
 }
 
-export function fetchPeopleFields(params: TTableRequestParams) {
-	const queryString = serializeTableRequestParams(params);
-
-	return request(
-		`/fields/people?${queryString.replace('keywords', 'keyword')}`,
-		{method: 'GET'}
-	);
-}
-
 export function fetchAccountsFields(params: TTableRequestParams) {
 	const queryString = serializeTableRequestParams(params);
 
 	return request(
 		`/fields/accounts?${queryString.replace('keywords', 'keyword')}`,
+		{method: 'GET'}
+	);
+}
+
+export function fetchOrdersFields(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
+
+	return request(
+		`/fields/orders?${queryString.replace('keywords', 'keyword')}`,
+		{method: 'GET'}
+	);
+}
+
+export function fetchPeopleFields(params: TTableRequestParams) {
+	const queryString = serializeTableRequestParams(params);
+
+	return request(
+		`/fields/people?${queryString.replace('keywords', 'keyword')}`,
 		{method: 'GET'}
 	);
 }
@@ -200,15 +209,22 @@ type TField = {
 	type: string;
 };
 
-export function updatePeopleFields(fields: TField[]) {
-	return request('/fields/people', {
+export function updateAccountsFields(fields: TField[]) {
+	return request('/fields/accounts', {
 		body: JSON.stringify(fields),
 		method: 'PATCH',
 	});
 }
 
-export function updateAccountsFields(fields: TField[]) {
-	return request('/fields/accounts', {
+export function updateOrdersFields(fields: TField[]) {
+	return request('/fields/orders', {
+		body: JSON.stringify(fields),
+		method: 'PATCH',
+	});
+}
+
+export function updatePeopleFields(fields: TField[]) {
+	return request('/fields/people', {
 		body: JSON.stringify(fields),
 		method: 'PATCH',
 	});

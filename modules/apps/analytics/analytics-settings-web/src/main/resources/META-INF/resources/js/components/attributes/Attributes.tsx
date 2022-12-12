@@ -20,10 +20,12 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {
 	fetchAccountsFields,
+	fetchOrdersFields,
 	fetchPeopleFields,
 	fetchProductsFields,
 	fetchSelectedFields,
 	updateAccountsFields,
+	updateOrdersFields,
 	updatePeopleFields,
 	updateProductsFields,
 } from '../../utils/api';
@@ -207,10 +209,10 @@ const Attributes: React.FC = () => {
 							closeFn: onOpenChangeOrderAttributes,
 							items,
 							key: EFields.Order,
-							updateFn: () => Promise.resolve(),
+							updateFn: updateOrdersFields,
 						})
 					}
-					requestFn={() => Promise.resolve()}
+					requestFn={fetchOrdersFields}
 					title={Liferay.Language.get('sync-order-attributes')}
 				/>
 			)}

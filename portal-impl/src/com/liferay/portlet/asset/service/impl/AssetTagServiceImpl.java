@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -260,6 +261,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		return search(new long[] {groupId}, name, start, end);
 	}
 
+	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public JSONArray search(long[] groupIds, String name, int start, int end) {
 		return Autocomplete.arrayToJSONArray(

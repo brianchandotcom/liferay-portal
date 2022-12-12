@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Correa
  */
-@Component(immediate = true, service = ExtensionProvider.class)
+@Component(service = ExtensionProvider.class)
 public class ObjectRelationshipExtensionProvider
 	extends BaseObjectExtensionProvider {
 

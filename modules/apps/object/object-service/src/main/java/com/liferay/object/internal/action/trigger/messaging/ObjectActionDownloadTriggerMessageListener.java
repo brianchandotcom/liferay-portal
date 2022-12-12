@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leov
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD,
 	service = MessageListener.class
 )

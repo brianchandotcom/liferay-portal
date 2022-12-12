@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Feliphe Marinho
  */
-@Component(immediate = true, service = SystemObjectDefinitionMetadata.class)
+@Component(service = SystemObjectDefinitionMetadata.class)
 public class TestSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 

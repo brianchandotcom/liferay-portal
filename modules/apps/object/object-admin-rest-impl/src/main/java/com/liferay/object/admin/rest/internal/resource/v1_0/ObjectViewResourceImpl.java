@@ -22,6 +22,7 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectViewDTOCo
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.admin.rest.resource.v1_0.util.NameMapUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
@@ -56,6 +57,22 @@ public class ObjectViewResourceImpl
 	@Override
 	public void deleteObjectView(Long objectViewId) throws Exception {
 		_objectViewService.deleteObjectView(objectViewId);
+	}
+
+	@Override
+	public Page<ObjectView>
+			getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+				String externalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextUser.getCompanyId());
+
+		return getObjectDefinitionObjectViewsPage(
+			objectDefinition.getObjectDefinitionId(), search, pagination);
 	}
 
 	@NestedField(
@@ -115,6 +132,20 @@ public class ObjectViewResourceImpl
 	@Override
 	public ObjectView getObjectView(Long objectViewId) throws Exception {
 		return _toObjectView(_objectViewService.getObjectView(objectViewId));
+	}
+
+	@Override
+	public ObjectView postObjectDefinitionByExternalReferenceCodeObjectView(
+			String externalReferenceCode, ObjectView objectView)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return postObjectDefinitionObjectView(
+			objectDefinition.getObjectDefinitionId(), objectView);
 	}
 
 	@Override
@@ -259,6 +290,9 @@ public class ObjectViewResourceImpl
 
 		return serviceBuilderObjectViewSortColumn;
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectViewColumnPersistence _objectViewColumnPersistence;

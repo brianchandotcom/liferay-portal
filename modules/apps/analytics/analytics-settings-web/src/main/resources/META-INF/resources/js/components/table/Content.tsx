@@ -81,7 +81,6 @@ const Content: React.FC<IContentProps> = ({
 						checked = false,
 						columns,
 						disabled: disabledItem = false,
-						id,
 					} = formattedItems[rowId];
 
 					return (
@@ -91,18 +90,18 @@ const Content: React.FC<IContentProps> = ({
 								'text-muted': disabled,
 							})}
 							data-testid={columns[0].value}
-							key={id}
+							key={rowId}
 						>
 							{showCheckbox && (
 								<ClayTable.Cell>
 									<ClayCheckbox
 										checked={checked}
 										disabled={disabled || disabledItem}
-										id={id}
+										id={rowId}
 										onChange={() => {
 											if (!disabled && !disabledItem) {
 												dispatch({
-													payload: id,
+													payload: rowId,
 													type: Events.ChangeItems,
 												});
 											}
@@ -122,6 +121,7 @@ const Content: React.FC<IContentProps> = ({
 										<ClayTable.Cell
 											columnTextAlignment={align}
 											key={id}
+											role={rowId}
 										>
 											{cellRenderer
 												? cellRenderer(

@@ -31,6 +31,7 @@ const Loading: React.FC<ILoadingProps> = ({
 			className={classNames(className, {
 				'inline-item inline-item-before': inline,
 			})}
+			data-testid="loading"
 			style={style}
 		>
 			<span

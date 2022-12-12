@@ -102,6 +102,7 @@ const ToggleSwitch = ({
 					return !toggle;
 				});
 			}}
+			role="toggle-switch"
 			toggled={toggle}
 			value={EColumn.ToggleSwitch}
 		/>
@@ -198,6 +199,7 @@ const Properties: React.FC = () => {
 				});
 				onAssignModalOpenChange(true);
 			}}
+			role="assign-button"
 		>
 			{Liferay.Language.get('assign')}
 		</ClayButton>

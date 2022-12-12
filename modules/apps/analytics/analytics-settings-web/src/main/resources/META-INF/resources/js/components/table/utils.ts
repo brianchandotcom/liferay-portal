@@ -75,7 +75,8 @@ export function updateFormattedItems(
 	Object.entries(formattedItems).forEach(([id, item]) => {
 		if (item.disabled) {
 			updatedItems[id] = item;
-		} else {
+		}
+		else {
 			updatedItems[id] = {
 				...item,
 				checked,
@@ -104,7 +105,8 @@ export function getIds(items: TFormattedItems, initialIds: number[]): number[] {
 	Object.values(items).forEach(({checked, id}) => {
 		if (checked) {
 			ids.add(Number(id));
-		} else {
+		}
+		else {
 			ids.delete(Number(id));
 		}
 	});

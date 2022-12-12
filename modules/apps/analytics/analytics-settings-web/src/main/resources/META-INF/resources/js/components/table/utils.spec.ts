@@ -14,6 +14,7 @@
 
 import {DEFAULT_FILTER, OrderBy} from '../../utils/filter';
 import {DEFAULT_PAGINATION} from '../../utils/pagination';
+import {TFormattedItems, TTableRequestParams} from './types';
 import {
 	getFormattedItems,
 	getGlobalChecked,
@@ -26,14 +27,40 @@ import {
 } from './utils';
 
 describe('serializeTableRequestParams', () => {
-	it('returns a serialized table request params', () => {
-		expect(
-			serializeTableRequestParams({
-				filter: DEFAULT_FILTER,
-				keywords: '',
-				pagination: DEFAULT_PAGINATION,
-			})
-		).toEqual('keywords=&page=1&pageSize=20&sort=name:asc');
+	it('serialize the table request parameters correctly with default values', () => {
+		const tableRequestParams: TTableRequestParams = {
+			filter: DEFAULT_FILTER,
+			keywords: 'keyword',
+			pagination: DEFAULT_PAGINATION,
+		};
+		const expected = 'keywords=keyword&page=1&pageSize=20&sort=name:asc';
+		const result = serializeTableRequestParams(tableRequestParams);
+
+		expect(result).toEqual(expected);
+	});
+
+	it('serialize the table request parameters correctly', () => {
+		const tableRequestParams: TTableRequestParams = {
+			filter: {type: OrderBy.Asc, value: 'name'},
+			keywords: 'keyword',
+			pagination: {page: 1, pageSize: 10},
+		};
+		const expected = 'keywords=keyword&page=1&pageSize=10&sort=name:asc';
+		const result = serializeTableRequestParams(tableRequestParams);
+
+		expect(result).toEqual(expected);
+	});
+
+	it('serialize the table request parameters correctly with empty values', () => {
+		const tableRequestParams: TTableRequestParams = {
+			filter: {type: OrderBy.Asc, value: ''},
+			keywords: '',
+			pagination: {page: 0, pageSize: 0},
+		};
+		const expected = 'keywords=&page=0&pageSize=0&sort=:asc';
+		const result = serializeTableRequestParams(tableRequestParams);
+
+		expect(result).toEqual(expected);
 	});
 });
 
@@ -84,90 +111,32 @@ describe('getResultsLanguage', () => {
 });
 
 describe('getGlobalChecked', () => {
-	it('returns true if all items have checked value as true', () => {
-		const items = {
-			123: {
-				checked: true,
-				columns: [
-					{
-						id: 'SiteA',
-						value: 'Site A',
-					},
-				],
-				disabled: false,
-				id: '123',
-			},
-			456: {
-				checked: true,
-				columns: [
-					{
-						id: 'SiteB',
-						value: 'Site B',
-					},
-				],
-				disabled: false,
-				id: '456',
-			},
-			789: {
-				checked: true,
-				columns: [
-					{
-						id: 'SiteC',
-						value: 'Site C',
-					},
-				],
-				disabled: false,
-				id: '789',
-			},
-		};
-
-		expect(getGlobalChecked(items)).toBeTruthy();
-	});
-
-	it('returns false if at least one item has value checked as false', () => {
-		const items = {
-			123: {
-				checked: true,
-				columns: [
-					{
-						id: 'SiteA',
-						value: 'Site A',
-					},
-				],
-				disabled: false,
-				id: '123',
-			},
-			456: {
-				checked: true,
-				columns: [
-					{
-						id: 'SiteB',
-						value: 'Site B',
-					},
-				],
-				disabled: false,
-				id: '456',
-			},
-			789: {
-				checked: false,
-				columns: [
-					{
-						id: 'SiteC',
-						value: 'Site C',
-					},
-				],
-				disabled: false,
-				id: '789',
-			},
-		};
-
-		expect(getGlobalChecked(items)).toBeFalsy();
-	});
-
 	it('returns false if there are no items', () => {
-		const items = {};
+		expect(getGlobalChecked({})).toBe(false);
+	});
 
-		expect(getGlobalChecked(items)).toBeFalsy();
+	it('returns false if all items are disabled', () => {
+		const formattedItems: TFormattedItems = {
+			item1: {checked: false, columns: [], disabled: true, id: 'item1'},
+			item2: {checked: false, columns: [], disabled: true, id: 'item2'},
+		};
+		expect(getGlobalChecked(formattedItems)).toBe(false);
+	});
+
+	it('returns true if all items are checked', () => {
+		const formattedItems: TFormattedItems = {
+			item1: {checked: true, columns: [], disabled: false, id: 'item1'},
+			item2: {checked: true, columns: [], disabled: false, id: 'item2'},
+		};
+		expect(getGlobalChecked(formattedItems)).toBe(true);
+	});
+
+	it('returns false if some items are checked and some are not', () => {
+		const formattedItems: TFormattedItems = {
+			item1: {checked: true, columns: [], disabled: false, id: 'item1'},
+			item2: {checked: false, columns: [], disabled: false, id: 'item2'},
+		};
+		expect(getGlobalChecked(formattedItems)).toBe(false);
 	});
 });
 
@@ -607,9 +576,9 @@ describe('getIds', () => {
 						id: '789',
 					},
 				},
-				[111, 222, 333]
+				[111, 222, 333, 789]
 			)
-		).toEqual([111, 222, 333, 123, 456, 789]);
+		).toEqual([111, 222, 333, 789, 123, 456]);
 
 		expect(
 			getIds(

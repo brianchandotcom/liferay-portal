@@ -98,7 +98,7 @@ definition {
 
 		PortletEntry.inputName(name = "${testSiteName}");
 
-		Click(locator1 = "Button#ADD");
+		Click(locator1 = "Raylife#BUTTON_ADD");
 
 		Site.openSitesAdmin();
 

@@ -220,6 +220,15 @@ public class CatalogResourceImpl
 					externalReferenceCode);
 		}
 
+		_commerceCatalogService.updateCommerceCatalog(
+			commerceCatalog.getCommerceCatalogId(), catalog.getName(),
+			GetterUtil.get(
+				catalog.getCurrencyCode(),
+				commerceCatalog.getCommerceCurrencyCode()),
+			GetterUtil.get(
+				catalog.getDefaultLanguageId(),
+				commerceCatalog.getCatalogDefaultLanguageId()));
+
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();

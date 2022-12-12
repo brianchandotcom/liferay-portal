@@ -14,19 +14,25 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
+import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
-import com.liferay.feature.flag.web.internal.manager.FeatureFlagPropsManager;
 import com.liferay.feature.flag.web.internal.model.FeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,40 +44,44 @@ import org.osgi.service.component.annotations.Reference;
 public class CompanyFeatureFlagsFactory {
 
 	public CompanyFeatureFlags create(long companyId) {
-		FeatureFlagPropsManager featureFlagPropsManager;
-
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-			featureFlagPropsManager = new FeatureFlagPropsManager();
-		}
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get(FeatureFlagConstants.getKey("LPS-167698")))) {
 
-		Map<String, FeatureFlag> featureFlagMap = new HashMap<>();
+				return new CompanyFeatureFlags(Collections.emptyMap());
+			}
 
-		boolean featureFlagUIEnabled = featureFlagPropsManager.isEnabled(
-			"LPS-167698");
+			Map<String, FeatureFlag> featureFlagMap = new HashMap<>();
 
-		for (String key : featureFlagPropsManager.getKeySet()) {
-			FeatureFlag featureFlag = new FeatureFlagImpl(
-				featureFlagPropsManager.getDescription(key),
-				featureFlagPropsManager.isEnabled(key),
-				featureFlagPropsManager.getStatus(key), key,
-				featureFlagPropsManager.getTitle(key));
+			Properties properties = PropsUtil.getProperties(
+				FeatureFlagConstants.FEATURE_FLAG + StringPool.PERIOD, true);
 
-			if (featureFlagUIEnabled) {
+			for (String stringPropertyName : properties.stringPropertyNames()) {
+				Matcher matcher = _pattern.matcher(stringPropertyName);
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				FeatureFlag featureFlag = new FeatureFlagImpl(
+					stringPropertyName);
+
 				featureFlag = new LanguageAwareFeatureFlag(
 					featureFlag, _language);
 				featureFlag = new PreferenceAwareFeatureFlag(
 					companyId, featureFlag, _featureFlagPreferencesManager);
+
+				featureFlagMap.put(featureFlag.getKey(), featureFlag);
 			}
 
-			featureFlagMap.put(featureFlag.getKey(), featureFlag);
+			return new CompanyFeatureFlags(
+				Collections.unmodifiableMap(featureFlagMap));
 		}
-
-		return new CompanyFeatureFlags(
-			Collections.unmodifiableMap(featureFlagMap),
-			featureFlagPropsManager, featureFlagUIEnabled);
 	}
+
+	private static final Pattern _pattern = Pattern.compile("^([A-Z\\-0-9]+)$");
 
 	@Reference
 	private FeatureFlagPreferencesManager _featureFlagPreferencesManager;

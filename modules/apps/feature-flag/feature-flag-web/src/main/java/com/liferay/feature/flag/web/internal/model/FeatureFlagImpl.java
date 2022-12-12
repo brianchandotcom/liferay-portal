@@ -14,12 +14,29 @@
 
 package com.liferay.feature.flag.web.internal.model;
 
+import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 import java.util.Locale;
 
 /**
  * @author Drew Brokke
  */
 public class FeatureFlagImpl implements FeatureFlag {
+
+	public FeatureFlagImpl(String key) {
+		this(
+			GetterUtil.getString(
+				PropsUtil.get(FeatureFlagConstants.getKey(key, "description"))),
+			GetterUtil.getBoolean(
+				PropsUtil.get(FeatureFlagConstants.getKey(key))),
+			FeatureFlagStatus.toFeatureFlagStatus(
+				PropsUtil.get(FeatureFlagConstants.getKey(key, "status"))),
+			key,
+			GetterUtil.getString(
+				PropsUtil.get(FeatureFlagConstants.getKey(key, "title")), key));
+	}
 
 	public FeatureFlagImpl(
 		String description, boolean enabled,

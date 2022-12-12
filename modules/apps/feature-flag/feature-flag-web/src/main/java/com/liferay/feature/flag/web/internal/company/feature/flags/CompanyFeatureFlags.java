@@ -14,17 +14,18 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
-import com.liferay.feature.flag.web.internal.manager.FeatureFlagPropsManager;
+import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.model.FeatureFlag;
-import com.liferay.feature.flag.web.internal.util.FeatureFlagJSONUtil;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -32,14 +33,8 @@ import java.util.function.Predicate;
  */
 public class CompanyFeatureFlags {
 
-	public CompanyFeatureFlags(
-		Map<String, FeatureFlag> featureFlagMap,
-		FeatureFlagPropsManager featureFlagPropsManager,
-		boolean featureFlagUIEnabled) {
-
+	public CompanyFeatureFlags(Map<String, FeatureFlag> featureFlagMap) {
 		_featureFlagMap = featureFlagMap;
-		_featureFlagPropsManager = featureFlagPropsManager;
-		_featureFlagUIEnabled = featureFlagUIEnabled;
 	}
 
 	public List<FeatureFlag> getFeatureFlags(Predicate<FeatureFlag> predicate) {
@@ -61,32 +56,30 @@ public class CompanyFeatureFlags {
 	}
 
 	public String getJSON() {
-		if (_featureFlagUIEnabled) {
-			Collection<FeatureFlag> featureFlags = _featureFlagMap.values();
-
-			return FeatureFlagJSONUtil.toJSON(
-				featureFlags.toArray(new FeatureFlag[0]));
+		if (_featureFlagMap.isEmpty()) {
+			return PropsValues.FEATURE_FLAGS_JSON;
 		}
 
-		return PropsValues.FEATURE_FLAGS_JSON;
+		JSONObject jsonObject = new JSONObjectImpl();
+
+		for (FeatureFlag featureFlag : _featureFlagMap.values()) {
+			jsonObject.put(featureFlag.getKey(), featureFlag.isEnabled());
+		}
+
+		return jsonObject.toString();
 	}
 
 	public boolean isEnabled(String key) {
-		if (Objects.equals("LPS-167698", key)) {
-			return _featureFlagUIEnabled;
-		}
+		if (_featureFlagMap.containsKey(key)) {
+			FeatureFlag featureFlag = _featureFlagMap.get(key);
 
-		FeatureFlag featureFlag = _featureFlagMap.get(key);
-
-		if (featureFlag != null) {
 			return featureFlag.isEnabled();
 		}
 
-		return _featureFlagPropsManager.isEnabled(key);
+		return GetterUtil.getBoolean(
+			PropsUtil.get(FeatureFlagConstants.getKey(key)));
 	}
 
 	private final Map<String, FeatureFlag> _featureFlagMap;
-	private final FeatureFlagPropsManager _featureFlagPropsManager;
-	private final boolean _featureFlagUIEnabled;
 
 }

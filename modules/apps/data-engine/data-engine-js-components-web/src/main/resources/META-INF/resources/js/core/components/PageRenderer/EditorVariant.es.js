@@ -131,10 +131,6 @@ export function Column({
 		>
 			<DefaultVariant.Column
 				className={classNames({
-					'active-drop-child':
-						isFieldSetOrGroup &&
-						overTarget &&
-						!rootParentField.ddmStructureId,
 					'dragging': resizing || isDragging,
 					'hovered': editable && firstField.fieldName === hoveredId,
 					'selected': editable && firstField.fieldName === activeId,

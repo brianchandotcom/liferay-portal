@@ -12,9 +12,21 @@
  * details.
  */
 
-declare function request(
-	path: string,
-	config: RequestInit,
-	message?: string
-): Promise<any>;
-export default request;
+export declare const fetchPropertiesResponse: {
+	actions: {};
+	facets: never[];
+	items: {
+		channelId: string;
+		commerceSyncEnabled: boolean;
+		dataSources: {
+			commerceChannelIds: never[];
+			dataSourceId: string;
+			siteIds: number[];
+		}[];
+		name: string;
+	}[];
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};

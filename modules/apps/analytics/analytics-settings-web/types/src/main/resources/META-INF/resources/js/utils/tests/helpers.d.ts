@@ -12,9 +12,4 @@
  * details.
  */
 
-declare function request(
-	path: string,
-	config: RequestInit,
-	message?: string
-): Promise<any>;
-export default request;
+export declare function loadingElement(): Promise<void>;

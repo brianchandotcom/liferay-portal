@@ -109,7 +109,8 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 					/>
 
 					<ClayManagementToolbar.Item>
-						<ClayButton
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('sort')}
 							className="nav-link nav-link-monospaced"
 							disabled={disabled}
 							displayType="unstyled"
@@ -119,9 +120,8 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 									type: Events.ChangeFilter,
 								});
 							}}
-						>
-							<ClayIcon symbol={getOrderBySymbol(filter)} />
-						</ClayButton>
+							symbol={getOrderBySymbol(filter)}
+						/>
 					</ClayManagementToolbar.Item>
 				</ClayManagementToolbar.ItemList>
 

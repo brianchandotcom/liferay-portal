@@ -98,7 +98,6 @@ export default function CopyFragmentModal({
 				<ClayModal.Body>
 					{errors.error && (
 						<ClayAlert
-							className="mb-0"
 							displayType="danger"
 							title={Liferay.Language.get('error')}
 						>
@@ -216,9 +215,10 @@ function FragmentSetSelector({
 			>
 				<ClaySelectWithOption
 					id={`${portletNamespace}fragment-sets`}
-					onChange={(event) =>
-						setSelectedFragmentCollection(event.target.value)
-					}
+					onChange={(event) => {
+						setErrors({...errors, fragmentSets: null});
+						setSelectedFragmentCollection(event.target.value);
+					}}
 					options={items}
 					value={selectedFragmentCollection}
 				/>
@@ -294,7 +294,10 @@ function FragmentSetForm({
 				<ClayInput
 					id={`${portletNamespace}name`}
 					name={`${portletNamespace}name`}
-					onChange={(event) => setName(event.target.value)}
+					onChange={(event) => {
+						setErrors({...errors, name: null});
+						setName(event.target.value);
+					}}
 					required
 					type="text"
 					value={name}

@@ -225,7 +225,8 @@ public class ObjectValidationRuleLocalServiceImpl
 				variables, objectValidationRule.getScript());
 
 			if (GetterUtil.getBoolean(results.get("invalidScript"))) {
-				throw new ObjectValidationRuleEngineException();
+				throw new ObjectValidationRuleEngineException(
+					"There was an error with the validation of your data. ");
 			}
 
 			if (GetterUtil.getBoolean(results.get("invalidFields"))) {

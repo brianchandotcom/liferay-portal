@@ -662,6 +662,7 @@ definition {
 		PublicationsNavigator.openPublicationsAdmin();
 
 		Publications.inviteUsers(
+			gotoReviewChanges = "true",
 			publicationName = "Publication Name",
 			publicationRole = "Editor",
 			userInvite = "userea@liferay.com",

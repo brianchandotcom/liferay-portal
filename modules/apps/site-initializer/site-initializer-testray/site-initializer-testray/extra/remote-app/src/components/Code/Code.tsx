@@ -20,15 +20,21 @@ type CodeProps = {
 	className?: string;
 };
 
-const Code: React.FC<CodeProps> = ({children, className}) => (
-	<code
-		className={classNames(
-			'bg-light break-text font-italic p-2 text-secondary w-100',
-			className
-		)}
-	>
-		{children}
-	</code>
-);
+const Code: React.FC<CodeProps> = ({children, className}) => {
+	if (!children) {
+		return null;
+	}
+
+	return (
+		<code
+			className={classNames(
+				'bg-light break-text font-italic p-2 text-secondary w-100',
+				className
+			)}
+		>
+			{children}
+		</code>
+	);
+};
 
 export default Code;

@@ -258,6 +258,18 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
+	public boolean hasPortletResourcePermission(
+			long groupId, long objectDefinitionId, String actionId)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_getPortletResourcePermission(objectDefinitionId);
+
+		return portletResourcePermission.contains(
+			getPermissionChecker(), groupId, actionId);
+	}
+
+	@Override
 	public ObjectEntry updateObjectEntry(
 			long objectEntryId, Map<String, Serializable> values,
 			ServiceContext serviceContext)
@@ -336,15 +348,22 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			long groupId, long objectDefinitionId, String actionId)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
 		PortletResourcePermission portletResourcePermission =
-			_portletResourcePermissionsServiceTrackerMap.getService(
-				objectDefinition.getResourceName());
+			_getPortletResourcePermission(objectDefinitionId);
 
 		portletResourcePermission.check(
 			getPermissionChecker(), groupId, actionId);
+	}
+
+	private PortletResourcePermission _getPortletResourcePermission(
+			long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		return _portletResourcePermissionsServiceTrackerMap.getService(
+			objectDefinition.getResourceName());
 	}
 
 	private void _validateSubmissionLimit(long objectDefinitionId, User user)

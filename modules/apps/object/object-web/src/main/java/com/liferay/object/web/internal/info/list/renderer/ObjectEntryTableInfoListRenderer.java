@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,14 +102,11 @@ public class ObjectEntryTableInfoListRenderer
 
 		infoListBasicTableTag.setInfoListObjects(objectEntries);
 
-		Optional<String> infoListItemRendererKeyOptional =
-			infoListRendererContext.getListItemRendererKeyOptional();
+		String infoListItemRendererKey =
+			infoListRendererContext.getListItemRendererKey();
 
-		if (infoListItemRendererKeyOptional.isPresent() &&
-			Validator.isNotNull(infoListItemRendererKeyOptional.get())) {
-
-			infoListBasicTableTag.setItemRendererKey(
-				infoListItemRendererKeyOptional.get());
+		if (Validator.isNotNull(infoListItemRendererKey)) {
+			infoListBasicTableTag.setItemRendererKey(infoListItemRendererKey);
 		}
 		else {
 			infoListBasicTableTag.setItemRendererKey(

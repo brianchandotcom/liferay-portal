@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,14 +70,11 @@ public abstract class
 		infoListBasicListTag.setInfoListObjects(
 			cpDefinitionSpecificationOptionValues);
 
-		Optional<String> infoListItemRendererKeyOptional =
-			infoListRendererContext.getListItemRendererKeyOptional();
+		String infoListItemRendererKey =
+			infoListRendererContext.getListItemRendererKey();
 
-		if (infoListItemRendererKeyOptional.isPresent() &&
-			Validator.isNotNull(infoListItemRendererKeyOptional.get())) {
-
-			infoListBasicListTag.setItemRendererKey(
-				infoListItemRendererKeyOptional.get());
+		if (Validator.isNotNull(infoListItemRendererKey)) {
+			infoListBasicListTag.setItemRendererKey(infoListItemRendererKey);
 		}
 		else {
 			infoListBasicListTag.setItemRendererKey(

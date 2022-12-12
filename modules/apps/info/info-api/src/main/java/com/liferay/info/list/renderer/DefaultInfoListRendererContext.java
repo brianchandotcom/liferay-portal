@@ -14,8 +14,6 @@
 
 package com.liferay.info.list.renderer;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,13 +41,13 @@ public class DefaultInfoListRendererContext implements InfoListRendererContext {
 	}
 
 	@Override
-	public Optional<String> getListItemRendererKeyOptional() {
-		return Optional.ofNullable(_listItemRendererKey);
+	public String getListItemRendererKey() {
+		return _listItemRendererKey;
 	}
 
 	@Override
-	public Optional<String> getTemplateKeyOptional() {
-		return Optional.ofNullable(_templateKey);
+	public String getTemplateKey() {
+		return _templateKey;
 	}
 
 	public void setListItemRendererKey(String listItemRendererKey) {

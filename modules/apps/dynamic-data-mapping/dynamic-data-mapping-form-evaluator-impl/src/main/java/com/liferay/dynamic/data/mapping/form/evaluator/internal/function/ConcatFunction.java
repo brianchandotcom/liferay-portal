@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
  * @author Leonardo Barros
@@ -28,19 +27,13 @@ public class ConcatFunction
 
 	@Override
 	public String apply(Object[] values) {
-		values = ArrayUtil.filter(
-			values,
-			value -> {
-				if (value == null) {
-					return false;
-				}
-
-				return true;
-			});
-
 		StringBundler sb = new StringBundler(values.length);
 
 		for (Object value : values) {
+			if (value == null) {
+				continue;
+			}
+
 			sb.append(value.toString());
 		}
 

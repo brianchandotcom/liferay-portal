@@ -65,6 +65,9 @@ public class LayoutsTreeDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
+				"changeItemSelectionURL",
+				_themeDisplay.getPathMain() + "/portal/session_tree_js_click"
+			).put(
 				"loadMoreItemsURL",
 				_themeDisplay.getPathMain() + "/portal/get_layouts_tree"
 			).put(
@@ -75,11 +78,15 @@ public class LayoutsTreeDisplayContext {
 				"namespace", _renderResponse.getNamespace()
 			).build()
 		).put(
+			"groupId", _groupId
+		).put(
 			"items", _getLayoutsJSONArray()
 		).put(
 			"privateLayout", _privateLayout
 		).put(
 			"selectedPlids", _getSelectedPlids()
+		).put(
+			"treeId", _treeId
 		).build();
 	}
 

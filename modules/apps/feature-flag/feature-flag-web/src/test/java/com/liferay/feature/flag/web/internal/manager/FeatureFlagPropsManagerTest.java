@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.feature.flag.web.internal.helper;
+package com.liferay.feature.flag.web.internal.manager;
 
 import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagStatus;
@@ -43,7 +43,7 @@ import org.junit.Test;
  * @author Drew Brokke
  */
 @NewEnv(type = NewEnv.Type.JVM)
-public class FeatureFlagPropsHelperTest {
+public class FeatureFlagPropsManagerTest {
 
 	@ClassRule
 	@Rule
@@ -66,12 +66,12 @@ public class FeatureFlagPropsHelperTest {
 		PropsUtil.set(FeatureFlagConstants.getKey(key, "description"), value);
 
 		withFeatureFlagPropsHelper(
-			featureFlagPropsHelper -> {
+			featureFlagPropsManager -> {
 				Assert.assertEquals(
-					value, featureFlagPropsHelper.getDescription(key));
+					value, featureFlagPropsManager.getDescription(key));
 				Assert.assertEquals(
 					StringPool.BLANK,
-					featureFlagPropsHelper.getDescription("XYZ-123"));
+					featureFlagPropsManager.getDescription("XYZ-123"));
 			});
 	}
 
@@ -87,8 +87,8 @@ public class FeatureFlagPropsHelperTest {
 			FeatureFlagConstants.getKey(invalidKey), Boolean.TRUE.toString());
 
 		withFeatureFlagPropsHelper(
-			featureFlagPropsHelper -> {
-				Set<String> keySet = featureFlagPropsHelper.getKeySet();
+			featureFlagPropsManager -> {
+				Set<String> keySet = featureFlagPropsManager.getKeySet();
 
 				Assert.assertTrue(keySet.contains(validKey));
 				Assert.assertFalse(keySet.contains(invalidKey));
@@ -107,20 +107,20 @@ public class FeatureFlagPropsHelperTest {
 		_setStatus(releaseKey, FeatureFlagStatus.RELEASE);
 
 		withFeatureFlagPropsHelper(
-			featureFlagPropsHelper -> {
+			featureFlagPropsManager -> {
 				Assert.assertEquals(
 					FeatureFlagStatus.BETA,
-					featureFlagPropsHelper.getStatus(betaKey));
+					featureFlagPropsManager.getStatus(betaKey));
 				Assert.assertEquals(
 					FeatureFlagStatus.DEV,
-					featureFlagPropsHelper.getStatus(devKey));
+					featureFlagPropsManager.getStatus(devKey));
 				Assert.assertEquals(
 					FeatureFlagStatus.RELEASE,
-					featureFlagPropsHelper.getStatus(releaseKey));
+					featureFlagPropsManager.getStatus(releaseKey));
 
 				Assert.assertEquals(
 					FeatureFlagStatus.DEV,
-					featureFlagPropsHelper.getStatus("ABC-123"));
+					featureFlagPropsManager.getStatus("ABC-123"));
 			});
 	}
 
@@ -132,14 +132,14 @@ public class FeatureFlagPropsHelperTest {
 		PropsUtil.set(FeatureFlagConstants.getKey(key1, "title"), value);
 
 		withFeatureFlagPropsHelper(
-			featureFlagPropsHelper -> {
+			featureFlagPropsManager -> {
 				Assert.assertEquals(
-					value, featureFlagPropsHelper.getTitle(key1));
+					value, featureFlagPropsManager.getTitle(key1));
 
 				String key2 = "XYZ-123";
 
 				Assert.assertEquals(
-					key2, featureFlagPropsHelper.getTitle(key2));
+					key2, featureFlagPropsManager.getTitle(key2));
 			});
 	}
 
@@ -177,24 +177,25 @@ public class FeatureFlagPropsHelperTest {
 
 		withFeatureFlagPropsHelper(
 			CompanyConstants.SYSTEM,
-			featureFlagPropsHelper -> {
-				Set<String> keySet = featureFlagPropsHelper.getKeySet();
+			featureFlagPropsManager -> {
+				Set<String> keySet = featureFlagPropsManager.getKeySet();
 
 				Assert.assertTrue(keySet.contains(systemKey1));
 				Assert.assertTrue(keySet.contains(systemKey2));
 				Assert.assertFalse(keySet.contains(company1key1));
 
-				Assert.assertTrue(featureFlagPropsHelper.isEnabled(systemKey1));
+				Assert.assertTrue(
+					featureFlagPropsManager.isEnabled(systemKey1));
 				Assert.assertFalse(
-					featureFlagPropsHelper.isEnabled(systemKey2));
+					featureFlagPropsManager.isEnabled(systemKey2));
 				Assert.assertFalse(
-					featureFlagPropsHelper.isEnabled(company1key1));
+					featureFlagPropsManager.isEnabled(company1key1));
 			});
 
 		withFeatureFlagPropsHelper(
 			company1.getCompanyId(),
-			featureFlagPropsHelper -> {
-				Set<String> keySet = featureFlagPropsHelper.getKeySet();
+			featureFlagPropsManager -> {
+				Set<String> keySet = featureFlagPropsManager.getKeySet();
 
 				Assert.assertFalse(keySet.contains(systemKey1));
 				Assert.assertTrue(keySet.contains(company1key1));
@@ -202,38 +203,38 @@ public class FeatureFlagPropsHelperTest {
 				Assert.assertFalse(keySet.contains(company2key1));
 
 				Assert.assertFalse(
-					featureFlagPropsHelper.isEnabled(systemKey1));
+					featureFlagPropsManager.isEnabled(systemKey1));
 				Assert.assertTrue(
-					featureFlagPropsHelper.isEnabled(company1key1));
+					featureFlagPropsManager.isEnabled(company1key1));
 				Assert.assertFalse(
-					featureFlagPropsHelper.isEnabled(company1key2));
+					featureFlagPropsManager.isEnabled(company1key2));
 			});
 
 		withFeatureFlagPropsHelper(
 			company2.getCompanyId(),
-			featureFlagPropsHelper -> {
-				Set<String> keySet = featureFlagPropsHelper.getKeySet();
+			featureFlagPropsManager -> {
+				Set<String> keySet = featureFlagPropsManager.getKeySet();
 
 				Assert.assertTrue(keySet.contains(systemKey1));
 				Assert.assertTrue(keySet.contains(company2key1));
 				Assert.assertFalse(keySet.contains(company1key1));
 
 				Assert.assertFalse(
-					featureFlagPropsHelper.isEnabled(systemKey1));
+					featureFlagPropsManager.isEnabled(systemKey1));
 				Assert.assertTrue(
-					featureFlagPropsHelper.isEnabled(company2key1));
+					featureFlagPropsManager.isEnabled(company2key1));
 			});
 	}
 
 	protected void withFeatureFlagPropsHelper(
-		Consumer<FeatureFlagPropsHelper> featureFlagPropsHelperConsumer) {
+		Consumer<FeatureFlagPropsManager> featureFlagPropsHelperConsumer) {
 
-		featureFlagPropsHelperConsumer.accept(new FeatureFlagPropsHelper());
+		featureFlagPropsHelperConsumer.accept(new FeatureFlagPropsManager());
 	}
 
 	protected void withFeatureFlagPropsHelper(
 		long companyId,
-		Consumer<FeatureFlagPropsHelper> featureFlagPropsHelperConsumer) {
+		Consumer<FeatureFlagPropsManager> featureFlagPropsHelperConsumer) {
 
 		try (SafeCloseable safeCloseable =
 				_companyIdThreadLocal.setWithSafeCloseable(companyId)) {

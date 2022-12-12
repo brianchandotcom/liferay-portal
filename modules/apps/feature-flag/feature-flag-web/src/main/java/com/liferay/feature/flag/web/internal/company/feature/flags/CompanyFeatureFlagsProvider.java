@@ -14,7 +14,7 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
-import com.liferay.feature.flag.web.internal.helper.FeatureFlagPreferencesHelper;
+import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -44,7 +44,7 @@ public class CompanyFeatureFlagsProvider
 		_companyFeatureFlagsMap.put(
 			company.getCompanyId(),
 			new CompanyFeatureFlags(
-				company.getCompanyId(), _featureFlagPreferencesHelper,
+				company.getCompanyId(), _featureFlagPreferencesManager,
 				_language));
 	}
 
@@ -66,7 +66,7 @@ public class CompanyFeatureFlagsProvider
 		_companyFeatureFlagsMap.put(
 			CompanyConstants.SYSTEM,
 			new CompanyFeatureFlags(
-				CompanyConstants.SYSTEM, _featureFlagPreferencesHelper,
+				CompanyConstants.SYSTEM, _featureFlagPreferencesManager,
 				_language));
 	}
 
@@ -74,7 +74,7 @@ public class CompanyFeatureFlagsProvider
 		new ConcurrentHashMap<>();
 
 	@Reference
-	private FeatureFlagPreferencesHelper _featureFlagPreferencesHelper;
+	private FeatureFlagPreferencesManager _featureFlagPreferencesManager;
 
 	@Reference
 	private Language _language;

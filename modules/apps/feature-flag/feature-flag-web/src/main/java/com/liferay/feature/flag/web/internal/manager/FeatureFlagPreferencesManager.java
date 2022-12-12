@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.feature.flag.web.internal.helper;
+package com.liferay.feature.flag.web.internal.manager;
 
 import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(service = FeatureFlagPreferencesHelper.class)
-public class FeatureFlagPreferencesHelper {
+@Component(service = FeatureFlagPreferencesManager.class)
+public class FeatureFlagPreferencesManager {
 
 	public Boolean isEnabled(long companyId, String key) {
 		PortalPreferences portalPreferences = _getPortalPreferences(companyId);

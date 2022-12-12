@@ -14,7 +14,7 @@
 
 package com.liferay.feature.flag.web.internal.model;
 
-import com.liferay.feature.flag.web.internal.helper.FeatureFlagPreferencesHelper;
+import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -74,14 +74,14 @@ public class PreferenceAwareFeatureFlagTest {
 		long companyId = RandomTestUtil.randomLong();
 
 		Mockito.when(
-			_featureFlagPreferencesHelper.isEnabled(
+			_featureFlagPreferencesManager.isEnabled(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			null
 		);
 
 		Mockito.when(
-			_featureFlagPreferencesHelper.isEnabled(
+			_featureFlagPreferencesManager.isEnabled(
 				Mockito.eq(companyId), Mockito.anyString())
 		).thenReturn(
 			!_featureFlag.isEnabled()
@@ -106,11 +106,11 @@ public class PreferenceAwareFeatureFlagTest {
 
 		preferenceAwareFeatureFlagConsumer.accept(
 			new PreferenceAwareFeatureFlag(
-				companyId, _featureFlag, _featureFlagPreferencesHelper));
+				companyId, _featureFlag, _featureFlagPreferencesManager));
 	}
 
 	private FeatureFlag _featureFlag;
-	private final FeatureFlagPreferencesHelper _featureFlagPreferencesHelper =
-		Mockito.mock(FeatureFlagPreferencesHelper.class);
+	private final FeatureFlagPreferencesManager _featureFlagPreferencesManager =
+		Mockito.mock(FeatureFlagPreferencesManager.class);
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.feature.flag.web.internal.helper;
+package com.liferay.feature.flag.web.internal.manager;
 
 import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagStatus;
@@ -34,9 +34,9 @@ import java.util.regex.Pattern;
 /**
  * @author Drew Brokke
  */
-public class FeatureFlagPropsHelper {
+public class FeatureFlagPropsManager {
 
-	public FeatureFlagPropsHelper() {
+	public FeatureFlagPropsManager() {
 		Set<String> keySet = new HashSet<>();
 
 		for (String stringPropertyName : _properties.stringPropertyNames()) {

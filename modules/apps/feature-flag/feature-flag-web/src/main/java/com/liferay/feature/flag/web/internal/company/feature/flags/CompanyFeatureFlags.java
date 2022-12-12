@@ -14,8 +14,8 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
-import com.liferay.feature.flag.web.internal.helper.FeatureFlagPreferencesHelper;
-import com.liferay.feature.flag.web.internal.helper.FeatureFlagPropsHelper;
+import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
+import com.liferay.feature.flag.web.internal.manager.FeatureFlagPropsManager;
 import com.liferay.feature.flag.web.internal.model.FeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
@@ -43,31 +43,32 @@ public class CompanyFeatureFlags {
 
 	public CompanyFeatureFlags(
 		long companyId,
-		FeatureFlagPreferencesHelper featureFlagPreferencesHelper,
+		FeatureFlagPreferencesManager featureFlagPreferencesManager,
 		Language language) {
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-			_featureFlagPropsHelper = new FeatureFlagPropsHelper();
+			_featureFlagPropsManager = new FeatureFlagPropsManager();
 		}
 
 		Map<String, FeatureFlag> featureFlagMap = new HashMap<>();
 
-		_featureFlagUIEnabled = _featureFlagPropsHelper.isEnabled("LPS-167698");
+		_featureFlagUIEnabled = _featureFlagPropsManager.isEnabled(
+			"LPS-167698");
 
-		for (String key : _featureFlagPropsHelper.getKeySet()) {
+		for (String key : _featureFlagPropsManager.getKeySet()) {
 			FeatureFlag featureFlag = new FeatureFlagImpl(
-				_featureFlagPropsHelper.getDescription(key),
-				_featureFlagPropsHelper.isEnabled(key),
-				_featureFlagPropsHelper.getStatus(key), key,
-				_featureFlagPropsHelper.getTitle(key));
+				_featureFlagPropsManager.getDescription(key),
+				_featureFlagPropsManager.isEnabled(key),
+				_featureFlagPropsManager.getStatus(key), key,
+				_featureFlagPropsManager.getTitle(key));
 
 			if (_featureFlagUIEnabled) {
 				featureFlag = new LanguageAwareFeatureFlag(
 					featureFlag, language);
 				featureFlag = new PreferenceAwareFeatureFlag(
-					companyId, featureFlag, featureFlagPreferencesHelper);
+					companyId, featureFlag, featureFlagPreferencesManager);
 			}
 
 			featureFlagMap.put(featureFlag.getKey(), featureFlag);
@@ -116,11 +117,11 @@ public class CompanyFeatureFlags {
 			return featureFlag.isEnabled();
 		}
 
-		return _featureFlagPropsHelper.isEnabled(key);
+		return _featureFlagPropsManager.isEnabled(key);
 	}
 
 	private final Map<String, FeatureFlag> _featureFlagMap;
-	private final FeatureFlagPropsHelper _featureFlagPropsHelper;
+	private final FeatureFlagPropsManager _featureFlagPropsManager;
 	private final boolean _featureFlagUIEnabled;
 
 }

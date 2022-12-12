@@ -57,9 +57,7 @@ definition {
 		}
 
 		task ("Given I go to the test account") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.search(searchItem = "${testAccount}");
 
@@ -119,9 +117,7 @@ definition {
 	@priority = "4"
 	test AssertTheCardDetails {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -156,9 +152,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -200,9 +194,7 @@ definition {
 	@priority = "5"
 	test NoLinkIsDisplayedWhenYouAreARequesterOrUserRoles {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -224,9 +216,7 @@ definition {
 	@priority = "5"
 	test YouCanSeeTheActivationLinkIfYouAreAdmin {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -254,9 +244,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}

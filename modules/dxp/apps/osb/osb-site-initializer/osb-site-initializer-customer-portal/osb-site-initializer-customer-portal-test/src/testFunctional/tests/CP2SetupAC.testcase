@@ -198,7 +198,7 @@ definition {
 		}
 
 		task ("I assert that the form has been submitted") {
-			CP2Utils.assertTextVisible(text = "Thank you for submitting this request!");
+			CustomerPortal.viewConfirmationModal(text = "Thank you for submitting this request!");
 
 			CustomerPortal.clickAtButton(text = "Done");
 		}

@@ -56,9 +56,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project and Going through onboarding") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -76,9 +74,7 @@ definition {
 		}
 
 		task ("Go to CP 2.0 then go to Project and the product activation page") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -139,9 +135,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project and Going through onboarding") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -173,9 +167,7 @@ definition {
 		task ("Delete account flag and go to CP2.0 and join a project") {
 			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",

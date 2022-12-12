@@ -61,9 +61,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -77,7 +75,7 @@ definition {
 		}
 
 		task ("Go back to Homepage and join a project again") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -91,9 +89,7 @@ definition {
 	@priority = "4"
 	test IfWithOneProjectUserIsRedirectedToProjectOverview {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -121,9 +117,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -151,9 +145,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -181,9 +173,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
@@ -201,9 +191,7 @@ definition {
 	@priority = "4"
 	test WithMoreThanOneProjectIsRedirectedToAllProjects {
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 		}
 
 		task ("Assert the list of projects on the homepage") {

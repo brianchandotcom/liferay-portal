@@ -46,9 +46,7 @@ definition {
 	@priority = "3"
 	test ClickProjectGoesToProjectPage {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -68,9 +66,7 @@ definition {
 		var key_project = "Test Account Analytics Cloud";
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}

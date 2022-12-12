@@ -40,7 +40,7 @@ definition {
 		}
 
 		task ("Go to Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
 			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
 		}

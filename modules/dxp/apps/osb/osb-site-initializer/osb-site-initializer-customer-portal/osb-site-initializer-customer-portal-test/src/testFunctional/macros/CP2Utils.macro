@@ -143,6 +143,14 @@ definition {
 			value1 = "${value}");
 	}
 
+	// Workaround for LPS-168369
+
+	macro goToCustomerPortalSiteWithRefresh {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+		Refresh();
+	}
+
 	macro onboardingFlow {
 		CustomerPortal.clickOnStartProjectSetup();
 

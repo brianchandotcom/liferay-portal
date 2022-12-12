@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,6 +46,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 import com.liferay.template.test.util.TemplateTestUtil;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Date;
 
@@ -113,7 +116,9 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 
 		String script = "<#-- Modified script content -->";
 
-		mockLiferayPortletActionRequest.addParameter("scriptContent", script);
+		mockLiferayPortletActionRequest.addParameter(
+			"scriptContent",
+			Base64.encode(script.getBytes(StandardCharsets.UTF_8)));
 
 		mockLiferayPortletActionRequest.addParameter(
 			"templateEntryId",

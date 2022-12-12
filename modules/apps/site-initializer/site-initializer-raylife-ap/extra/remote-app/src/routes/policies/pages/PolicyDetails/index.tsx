@@ -101,7 +101,10 @@ const PolicyDetails = () => {
 				)}
 			</div>
 
-			<PolicyActiveClaims />
+			<PolicyActiveClaims
+				dataJSON={policy?.data?.dataJSON}
+				id={policy?.data?.id}
+			/>
 		</div>
 	);
 };

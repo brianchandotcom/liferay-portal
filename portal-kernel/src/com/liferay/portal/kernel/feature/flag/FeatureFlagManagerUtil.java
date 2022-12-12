@@ -35,7 +35,7 @@ public class FeatureFlagManagerUtil {
 	public static String getJSON(long companyId) {
 		return _withFeatureFlagManager(
 			featureFlagManager -> featureFlagManager.getJSON(companyId),
-			() -> _FEATURE_FLAGS_JSON);
+			() -> _JSON);
 	}
 
 	public static boolean isEnabled(long companyId, String key) {
@@ -69,7 +69,7 @@ public class FeatureFlagManagerUtil {
 		return supplier.get();
 	}
 
-	private static final String _FEATURE_FLAGS_JSON = String.valueOf(
+	private static final String _JSON = String.valueOf(
 		JSONFactoryUtil.createJSONObject(
 			PropsUtil.getProperties("feature.flag.", true)));
 

@@ -39,11 +39,16 @@ definition {
 
 		AnalyticsCloud.teardownAnalyticsCloud();
 
-		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+
+		JSONUser.tearDownNonAdminUsers();
+
+		JSONRole.deleteTestRoles();
 	}
 
 	@description = "LPS-136512 Given The Content Performance panel of a document is opened
@@ -292,14 +297,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "Test Role Name");
-		}
-
-		task ("Delete User created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 

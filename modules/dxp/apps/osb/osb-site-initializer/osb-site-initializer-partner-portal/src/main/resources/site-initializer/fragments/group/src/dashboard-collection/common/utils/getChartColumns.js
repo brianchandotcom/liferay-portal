@@ -33,8 +33,6 @@ export default function getChartColumns(
 
 	expiredTotalActivites(mdfRequests, chartColumns);
 
-	chartColumns.push(['Paid', 0]);
-
 	setTitleChart(`$${currencyFormat(totalMDFActivitiesAmount)} Total MDF`);
 	setColumnsMDFChart(chartColumns);
 }

@@ -22,7 +22,6 @@ const colors = {
 	'Claimed': '#0053F0',
 	'Expired': '#BBD2FF',
 	'Expiring Soon': '#8FB5FF',
-	'Paid': '#E7EFFF',
 	'Requested': '#00256C',
 };
 

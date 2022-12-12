@@ -151,8 +151,6 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 						getExportActionableDynamicQuery(portletDataContext);
 
 			layoutPageTemplateEntryActionableDynamicQuery.performActions();
-
-			return getExportDataRootElementString(rootElement);
 		}
 
 		if (portletDataContext.getBooleanParameter(
@@ -171,8 +169,6 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 						getExportActionableDynamicQuery(portletDataContext);
 
 			layoutUtilityPageEntryActionableDynamicQuery.performActions();
-
-			return getExportDataRootElementString(rootElement);
 		}
 
 		return getExportDataRootElementString(rootElement);

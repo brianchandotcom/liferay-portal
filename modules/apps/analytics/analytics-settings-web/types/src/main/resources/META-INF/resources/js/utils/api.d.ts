@@ -67,10 +67,13 @@ export declare function updateAttributesConfiguration({
 	syncedUserGroupIds?: string[];
 }): Promise<any>;
 export declare function fetchSelectedFields(): Promise<any>;
-export declare function fetchPeopleFields(
+export declare function fetchAccountsFields(
 	params: TTableRequestParams
 ): Promise<any>;
-export declare function fetchAccountsFields(
+export declare function fetchOrdersFields(
+	params: TTableRequestParams
+): Promise<any>;
+export declare function fetchPeopleFields(
 	params: TTableRequestParams
 ): Promise<any>;
 export declare function fetchProductsFields(
@@ -84,7 +87,8 @@ declare type TField = {
 	source: string;
 	type: string;
 };
-export declare function updatePeopleFields(fields: TField[]): Promise<any>;
 export declare function updateAccountsFields(fields: TField[]): Promise<any>;
+export declare function updateOrdersFields(fields: TField[]): Promise<any>;
+export declare function updatePeopleFields(fields: TField[]): Promise<any>;
 export declare function updateProductsFields(fields: TField[]): Promise<any>;
 export {};

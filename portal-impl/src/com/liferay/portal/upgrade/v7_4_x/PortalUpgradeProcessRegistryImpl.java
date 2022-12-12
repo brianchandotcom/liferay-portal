@@ -251,6 +251,11 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(25, 1, 0), new CTModelUpgradeProcess("EmailAddress"));
+
+		upgradeVersionTreeMap.put(
+			new Version(25, 1, 1),
+			UpgradeModulesFactory.create(
+				new String[] {"com.liferay.questions.web"}, null));
 	}
 
 }

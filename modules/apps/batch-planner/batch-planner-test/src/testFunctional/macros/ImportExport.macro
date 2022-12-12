@@ -232,6 +232,8 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
+		WaitForElementPresent(locator1 = "ImportExport#IMPORT_MAPPING_HEADER");
+
 		if (isSet(fieldMappings)) {
 			ImportExport.mapImport(fieldMappings = ${fieldMappings});
 		}

@@ -21,6 +21,8 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectViewSortColumn;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContext;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorRegistry;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -58,6 +60,10 @@ public class ObjectViewDTOConverter
 			return null;
 		}
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectView.getObjectDefinitionId());
+
 		return new ObjectView() {
 			{
 				actions = dtoConverterContext.getActions();
@@ -67,6 +73,8 @@ public class ObjectViewDTOConverter
 				id = objectView.getObjectViewId();
 				name = LocalizedMapUtil.getLanguageIdMap(
 					objectView.getNameMap());
+				objectDefinitionExternalReferenceCode =
+					objectDefinition.getExternalReferenceCode();
 				objectDefinitionId = objectView.getObjectDefinitionId();
 				objectViewColumns = TransformUtil.transformToArray(
 					objectView.getObjectViewColumns(),
@@ -170,6 +178,9 @@ public class ObjectViewDTOConverter
 			}
 		};
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectFieldFilterContributorRegistry

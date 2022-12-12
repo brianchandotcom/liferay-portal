@@ -22,8 +22,8 @@ import java.util.Locale;
 public class FeatureFlagImpl implements FeatureFlag {
 
 	public FeatureFlagImpl(
-		String key, boolean enabled, FeatureFlagStatus featureFlagStatus, String title,
-		String description) {
+		String key, boolean enabled, FeatureFlagStatus featureFlagStatus,
+		String title, String description) {
 
 		_key = key;
 		_enabled = enabled;
@@ -38,13 +38,13 @@ public class FeatureFlagImpl implements FeatureFlag {
 	}
 
 	@Override
-	public String getKey() {
-		return _key;
+	public FeatureFlagStatus getFeatureFlagStatus() {
+		return _featureFlagStatus;
 	}
 
 	@Override
-	public FeatureFlagStatus getFeatureFlagStatus() {
-		return _featureFlagStatus;
+	public String getKey() {
+		return _key;
 	}
 
 	@Override
@@ -59,8 +59,8 @@ public class FeatureFlagImpl implements FeatureFlag {
 
 	private final String _description;
 	private final boolean _enabled;
-	private final String _key;
 	private final FeatureFlagStatus _featureFlagStatus;
+	private final String _key;
 	private final String _title;
 
 }

@@ -31,13 +31,13 @@ public class FeatureFlagWrapper implements FeatureFlag {
 	}
 
 	@Override
-	public String getKey() {
-		return _featureFlag.getKey();
+	public FeatureFlagStatus getFeatureFlagStatus() {
+		return _featureFlag.getFeatureFlagStatus();
 	}
 
 	@Override
-	public FeatureFlagStatus getFeatureFlagStatus() {
-		return _featureFlag.getFeatureFlagStatus();
+	public String getKey() {
+		return _featureFlag.getKey();
 	}
 
 	@Override

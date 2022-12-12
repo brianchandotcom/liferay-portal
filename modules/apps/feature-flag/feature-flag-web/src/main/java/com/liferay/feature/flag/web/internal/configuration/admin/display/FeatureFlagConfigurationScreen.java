@@ -105,7 +105,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 	private final FeatureFlagManager _featureFlagManager;
 	private final FeatureFlagsDisplayContextFactory
 		_featureFlagsDisplayContextFactory;
-	private final ServletContext _servletContext;
 	private final FeatureFlagStatus _featureFlagStatus;
+	private final ServletContext _servletContext;
 
 }

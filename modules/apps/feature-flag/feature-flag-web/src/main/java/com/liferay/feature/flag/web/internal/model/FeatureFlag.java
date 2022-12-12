@@ -23,9 +23,9 @@ public interface FeatureFlag {
 
 	public String getDescription(Locale locale);
 
-	public String getKey();
-
 	public FeatureFlagStatus getFeatureFlagStatus();
+
+	public String getKey();
 
 	public String getTitle(Locale locale);
 

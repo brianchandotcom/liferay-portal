@@ -74,7 +74,8 @@ public class LanguageAwareFeatureFlagTest {
 		Assert.assertEquals(
 			_featureFlag.getKey(), _languageAwareFeatureFlag.getKey());
 		Assert.assertEquals(
-			_featureFlag.getFeatureFlagStatus(), _languageAwareFeatureFlag.getFeatureFlagStatus());
+			_featureFlag.getFeatureFlagStatus(),
+			_languageAwareFeatureFlag.getFeatureFlagStatus());
 		Assert.assertEquals(
 			_featureFlag.isEnabled(), _languageAwareFeatureFlag.isEnabled());
 	}

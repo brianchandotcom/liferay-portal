@@ -3029,6 +3029,7 @@ definition {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property keystore.enabled = "true";
 		property portal.release = "false";
+		property test.name.skip.portal.instance = "SAML#ImportJSONFileToConfigureSAMLIDP";
 
 		task ("Given: Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -3081,6 +3082,7 @@ definition {
 		property custom.properties = "feature.flag.COMMERCE-8087=true";
 		property keystore.enabled = "true";
 		property portal.release = "false";
+		property test.name.skip.portal.instance = "SAML#ImportJSONFileToConfigureSAMLSP";
 
 		task ("Given: Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");

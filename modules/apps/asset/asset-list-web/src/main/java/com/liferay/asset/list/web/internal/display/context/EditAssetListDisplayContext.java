@@ -1184,6 +1184,16 @@ public class EditAssetListDisplayContext {
 	private PortletURL _getAssetEntryItemSelectorPortletURL(
 		AssetRendererFactory<?> assetRendererFactory, long subtypeSelectionId) {
 
+		PortletURL portletURL = assetRendererFactory.getItemSelectorURL(
+			PortalUtil.getLiferayPortletRequest(_portletRequest),
+			PortalUtil.getLiferayPortletResponse(_portletResponse),
+			subtypeSelectionId, _portletResponse.getNamespace() + "selectAsset",
+			_themeDisplay.getScopeGroup(), true, 0);
+
+		if (portletURL != null) {
+			return portletURL;
+		}
+
 		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
 			new AssetEntryItemSelectorCriterion();
 

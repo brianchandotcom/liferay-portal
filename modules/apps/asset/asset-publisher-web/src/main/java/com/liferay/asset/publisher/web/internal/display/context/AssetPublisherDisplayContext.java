@@ -2249,6 +2249,16 @@ public class AssetPublisherDisplayContext {
 		AssetRendererFactory<?> assetRendererFactory, Group scopeGroup,
 		long subtypeSelectionId) {
 
+		PortletURL portletURL = assetRendererFactory.getItemSelectorURL(
+			PortalUtil.getLiferayPortletRequest(_portletRequest),
+			PortalUtil.getLiferayPortletResponse(_portletResponse),
+			subtypeSelectionId, _portletResponse.getNamespace() + "selectAsset",
+			scopeGroup, true, 0);
+
+		if (portletURL != null) {
+			return portletURL.toString();
+		}
+
 		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
 			new AssetEntryItemSelectorCriterion();
 

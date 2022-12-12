@@ -348,31 +348,47 @@ public class InputAssetLinksDisplayContext {
 	private PortletURL _getAssetEntryItemSelectorPortletURL(
 		AssetRendererFactory<?> assetRendererFactory, long subtypeSelectionId) {
 
-		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
-			new AssetEntryItemSelectorCriterion();
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new AssetEntryItemSelectorReturnType());
-		assetEntryItemSelectorCriterion.setGroupId(
-			_themeDisplay.getScopeGroupId());
-		assetEntryItemSelectorCriterion.setSelectedGroupIds(
-			new long[] {_themeDisplay.getScopeGroupId()});
-		assetEntryItemSelectorCriterion.setShowNonindexable(true);
-		assetEntryItemSelectorCriterion.setShowScheduled(true);
-		assetEntryItemSelectorCriterion.setSubtypeSelectionId(
-			subtypeSelectionId);
-		assetEntryItemSelectorCriterion.setTypeSelection(
-			assetRendererFactory.getClassName());
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
+		PortletURL portletURL = assetRendererFactory.getItemSelectorURL(
+			PortalUtil.getLiferayPortletRequest(portletRequest),
+			PortalUtil.getLiferayPortletResponse(portletResponse),
+			subtypeSelectionId, portletResponse.getNamespace() + "selectAsset",
+			_themeDisplay.getScopeGroup(), true, _assetEntryId);
 
-		PortletURL portletURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-			getEventName(), assetEntryItemSelectorCriterion);
+		if (portletURL == null) {
+			AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
+				new AssetEntryItemSelectorCriterion();
 
-		if (_assetEntryId > 0) {
-			portletURL.setParameter(
-				"refererAssetEntryId", String.valueOf(_assetEntryId));
+			assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				new AssetEntryItemSelectorReturnType());
+			assetEntryItemSelectorCriterion.setGroupId(
+				_themeDisplay.getScopeGroupId());
+			assetEntryItemSelectorCriterion.setSelectedGroupIds(
+				new long[] {_themeDisplay.getScopeGroupId()});
+			assetEntryItemSelectorCriterion.setShowNonindexable(true);
+			assetEntryItemSelectorCriterion.setShowScheduled(true);
+			assetEntryItemSelectorCriterion.setSubtypeSelectionId(
+				subtypeSelectionId);
+			assetEntryItemSelectorCriterion.setTypeSelection(
+				assetRendererFactory.getClassName());
+
+			ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
+
+			portletURL = itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+				getEventName(), assetEntryItemSelectorCriterion);
+
+			if (_assetEntryId > 0) {
+				portletURL.setParameter(
+					"refererAssetEntryId", String.valueOf(_assetEntryId));
+			}
 		}
 
 		return portletURL;

@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import Container from '../../common/components/container';
 import {currencyFormat} from '../../common/utils';
@@ -29,6 +29,11 @@ const colors = {
 export default function () {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
 
+	const [titleChart, setTitleChart] = useState('');
+	const chartRef = useRef();
+
+	const chartColumns = [];
+
 	const getMDFRequests = async () => {
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(
@@ -41,82 +46,32 @@ export default function () {
 			}
 		);
 
-		const chartColumns = [];
-
 		if (response.ok) {
 			const mdfRequests = await response.json();
 
-			const totalMDFActivitiesAmount = mdfRequests?.items?.reduce(
-				(prevValue, currValue) =>
-					prevValue +
-					(parseFloat(currValue.totalMDFRequestAmount) || 0),
-				0
-			);
-			chartColumns.push(['Requested', totalMDFActivitiesAmount]);
-
-			const mdfApprovedRequests = mdfRequests?.items?.filter(
-				(request) => request.requestStatus === 'Approved'
-			);
-			const totalMDFApprovedRequestsAmount = mdfApprovedRequests?.reduce(
-				(acc, value) => acc + parseFloat(value.totalMDFRequestAmount),
-				0
-			);
-			chartColumns.push(['Approved', totalMDFApprovedRequestsAmount]);
-
-			const totalClaimedRequestsAmount = mdfRequests?.items?.reduce(
-				(acc, value) => acc + parseFloat(value.totalClaimedRequest),
-				0
-			);
-			chartColumns.push(['Claimed', totalClaimedRequestsAmount]);
-
-			const claimedRequests = mdfRequests?.items
-				?.map((claim) =>
-					claim.mdfRequestToMdfClaims.filter(
-						(request) => request.claimStatus === 'Approved'
-					)
-				)
-				.flat();
-
-			const totalClaimedApprovedRequestsAmount = claimedRequests?.reduce(
-				(acc, value) => acc + value?.amountClaimed || 0,
-				0
-			);
-			chartColumns.push([
-				'Claim Approved',
-				totalClaimedApprovedRequestsAmount,
-			]);
-
-			const expiringSoonActivitiesDate = mdfRequests?.items
-				?.map((activity) =>
-					activity.mdfRequestToActivities.filter((request) =>
-						Math.round(
-							new Date(request.endDate).getTime() + 30 >
-								new Date()
-						)
-					)
-				)
-				.flat();
-
-			const totalExpiringSoonActivites = expiringSoonActivitiesDate?.reduce(
-				(acc, value) => acc + parseFloat(value.mdfRequestAmount),
-				0
-			);
-			chartColumns.push(['Expiring Soon', totalExpiringSoonActivites]);
-
-			const expiredActivities = mdfRequests?.items
-				?.map((activity) =>
-					activity?.mdfRequestToActivities?.filter(
-						(request) => new Date(request.endDate) < new Date()
-					)
-				)
-				.flat();
-			const totalExpiredActivities = expiredActivities?.reduce(
-				(acc, value) => acc + parseFloat(value.mdfRequestAmount),
-				0
-			);
-			chartColumns.push(['Expired', totalExpiredActivities]);
+			getChartColumns(mdfRequests);
 		}
+	};
 
+	const getChartColumns = (mdfRequests) => {
+		const totalMDFActivitiesAmount = totalMDFActivities(
+			mdfRequests,
+			chartColumns
+		);
+
+		totalClaimedRequests(mdfRequests, chartColumns);
+
+		totalMDFRequestToClaims(mdfRequests, chartColumns);
+
+		totalApprovedMDFToClaims(mdfRequests, chartColumns);
+
+		expiringSoonTotalActivities(mdfRequests, chartColumns);
+
+		expiredTotalActivites(mdfRequests, chartColumns);
+
+		chartColumns.push(['Paid', 0]);
+
+		setTitleChart(`$${currencyFormat(totalMDFActivitiesAmount)} Total MDF`);
 		setColumnsMDFChart(chartColumns);
 	};
 
@@ -125,6 +80,16 @@ export default function () {
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (titleChart) {
+			const titleElement = chartRef?.current?.element?.querySelector(
+				'.bb-chart-arcs-title'
+			);
+
+			titleElement.textContent = titleChart;
+		}
+	}, [titleChart]);
 
 	const chart = {
 		data: {
@@ -141,7 +106,7 @@ export default function () {
 			legend: {
 				show: false,
 			},
-
+			title: '0',
 			width: 65,
 		},
 		legend: {show: false},
@@ -149,8 +114,6 @@ export default function () {
 			height: 400,
 			width: 300,
 		},
-
-		// title: `USD ${currencyFormat(totalMDFActivitiesAmount)}\nTotal MDF`,
 	};
 
 	const legendTransformData = useCallback((newItems, colors) => {
@@ -189,6 +152,7 @@ export default function () {
 							data={chart.data}
 							donut={chart.donut}
 							legend={chart.legend}
+							ref={chartRef}
 							size={chart.size}
 							title={chart.donut.title}
 							tooltip={{
@@ -206,7 +170,7 @@ export default function () {
 				</div>
 
 				<div className="d-flex flex-column justify-content-between pb-4 pl-4">
-					<div className="d-flex flex-wrap h-100 justify-content-between mb-1">
+					<div className="d-flex flex-column flex-wrap h-100 justify-content-between mb-1">
 						{legendItems.map((item, index) => {
 							return (
 								<div key={index}>
@@ -232,4 +196,83 @@ export default function () {
 			</div>
 		</Container>
 	);
+}
+
+function expiredTotalActivites(mdfRequests, chartColumns) {
+	const expiredActivities = mdfRequests?.items
+		?.map((activity) =>
+			activity?.mdfRequestToActivities?.filter(
+				(request) => new Date(request.endDate) < new Date()
+			)
+		)
+		.flat();
+	const totalExpiredActivities = expiredActivities?.reduce(
+		(acc, value) => acc + parseFloat(value.mdfRequestAmount),
+		0
+	);
+	chartColumns.push(['Expired', totalExpiredActivities]);
+}
+
+function expiringSoonTotalActivities(mdfRequests, chartColumns) {
+	const expiringSoonActivitiesDate = mdfRequests?.items
+		?.map((activity) =>
+			activity.mdfRequestToActivities.filter((request) =>
+				Math.round(
+					new Date(request.endDate).getTime() + 30 > new Date()
+				)
+			)
+		)
+		.flat();
+
+	const totalExpiringSoonActivites = expiringSoonActivitiesDate?.reduce(
+		(acc, value) => acc + parseFloat(value.mdfRequestAmount),
+		0
+	);
+	chartColumns.push(['Expiring Soon', totalExpiringSoonActivites]);
+}
+
+function totalApprovedMDFToClaims(mdfRequests, chartColumns) {
+	const claimedRequests = mdfRequests?.items
+		?.map((claim) =>
+			claim.mdfRequestToMdfClaims.filter(
+				(request) => request.claimStatus === 'Approved'
+			)
+		)
+		.flat();
+
+	const totalClaimedApprovedRequestsAmount = claimedRequests?.reduce(
+		(acc, value) => acc + value?.amountClaimed || 0,
+		0
+	);
+	chartColumns.push(['Claim Approved', totalClaimedApprovedRequestsAmount]);
+}
+
+function totalMDFRequestToClaims(mdfRequests, chartColumns) {
+	const totalClaimedRequestsAmount = mdfRequests?.items?.reduce(
+		(acc, value) => acc + parseFloat(value.totalClaimedRequest || 0),
+		0
+	);
+	chartColumns.push(['Claimed', totalClaimedRequestsAmount]);
+}
+
+function totalMDFActivities(mdfRequests, chartColumns) {
+	const totalMDFActivitiesAmount = mdfRequests?.items?.reduce(
+		(prevValue, currValue) =>
+			prevValue + (parseFloat(currValue.totalMDFRequestAmount) || 0),
+		0
+	);
+	chartColumns.push(['Requested', totalMDFActivitiesAmount]);
+
+	return totalMDFActivitiesAmount;
+}
+
+function totalClaimedRequests(mdfRequests, chartColumns) {
+	const mdfApprovedRequests = mdfRequests?.items?.filter(
+		(request) => request.requestStatus === 'Approved'
+	);
+	const totalMDFApprovedRequestsAmount = mdfApprovedRequests?.reduce(
+		(acc, value) => acc + parseFloat(value.totalMDFRequestAmount),
+		0
+	);
+	chartColumns.push(['Approved', totalMDFApprovedRequestsAmount]);
 }

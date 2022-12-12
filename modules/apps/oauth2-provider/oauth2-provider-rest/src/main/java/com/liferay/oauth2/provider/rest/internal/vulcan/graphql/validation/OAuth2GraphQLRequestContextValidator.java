@@ -85,7 +85,7 @@ public class OAuth2GraphQLRequestContextValidator
 			_checkScope(graphQLRequestContext, serviceReference);
 		}
 
-		Method method = graphQLRequestContext.getMethod();
+		Method method = graphQLRequestContext.getResourceMethod();
 
 		if (method != null) {
 			_setServiceDepth();

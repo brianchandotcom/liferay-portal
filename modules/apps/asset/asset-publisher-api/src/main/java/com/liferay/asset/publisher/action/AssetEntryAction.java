@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.kernel.action;
+package com.liferay.asset.publisher.action;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;

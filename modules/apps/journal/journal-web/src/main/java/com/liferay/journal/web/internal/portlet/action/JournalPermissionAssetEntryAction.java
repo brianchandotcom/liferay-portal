@@ -14,8 +14,8 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.action.AssetEntryAction;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.publisher.action.AssetEntryAction;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;

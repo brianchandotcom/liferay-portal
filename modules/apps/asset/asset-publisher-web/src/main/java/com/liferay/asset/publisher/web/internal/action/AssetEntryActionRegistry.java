@@ -14,7 +14,7 @@
 
 package com.liferay.asset.publisher.web.internal.action;
 
-import com.liferay.asset.kernel.action.AssetEntryAction;
+import com.liferay.asset.publisher.action.AssetEntryAction;
 import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

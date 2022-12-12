@@ -14,8 +14,8 @@
 
 package com.liferay.asset.publisher.web.internal.servlet.taglib.util;
 
-import com.liferay.asset.kernel.action.AssetEntryAction;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.publisher.action.AssetEntryAction;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;

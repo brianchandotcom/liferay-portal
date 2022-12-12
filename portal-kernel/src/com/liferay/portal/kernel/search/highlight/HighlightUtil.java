@@ -36,7 +36,7 @@ public class HighlightUtil {
 	public static final String HIGHLIGHT_TAG_OPEN = "<liferay-hl>";
 
 	public static final String[] HIGHLIGHTS = {
-		"<span class=\"highlight\">", "</span>"
+		"<span class=\"highlight mark\">", "</span>"
 	};
 
 	public static void addSnippet(

@@ -90,28 +90,11 @@ const DealRegistrationForm = () => {
 			<General
 				onCancel={onCancel}
 				onContinue={onContinue}
-				onSaveAsDraft={(
-					values: DealRegistration,
-					formikHelpers: Omit<
-						FormikHelpers<DealRegistration>,
-						'setFieldValue'
-					>
-				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 				validationSchema={generalSchema}
 			/>
 		),
 		[StepType.REVIEW]: (
-			<Review
-				onCancel={onCancel}
-				onPrevious={onPrevious}
-				onSaveAsDraft={(
-					values: DealRegistration,
-					formikHelpers: Omit<
-						FormikHelpers<DealRegistration>,
-						'setFieldValue'
-					>
-				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
-			/>
+			<Review onCancel={onCancel} onPrevious={onPrevious} />
 		),
 	};
 

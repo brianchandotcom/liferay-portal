@@ -29,14 +29,10 @@ import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProp
 const General = ({
 	onCancel,
 	onContinue,
-	onSaveAsDraft,
 }: PRMFormikPageProps & DealRegistrationStepProps) => {
-	const {
-		isSubmitting,
-		setFieldValue,
-		values,
-		...formikHelpers
-	} = useFormikContext<DealRegistration>();
+	const {setFieldValue, values, ...formikHelpers} = useFormikContext<
+		DealRegistration
+	>();
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
@@ -313,17 +309,7 @@ const General = ({
 			</PRMForm.Section>
 
 			<PRMForm.Footer>
-				<div className="d-flex justify-content-end mr-auto">
-					<Button
-						disabled={isSubmitting}
-						displayType={null}
-						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
-					>
-						Save as Draft
-					</Button>
-				</div>
-
-				<div className="d-flex justify-content-between px-2 px-md-0">
+				<div className="d-flex justify-content-between mr-auto">
 					<Button
 						className="mr-4"
 						displayType="secondary"
@@ -331,7 +317,9 @@ const General = ({
 					>
 						Cancel
 					</Button>
+				</div>
 
+				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
 						onClick={() =>
 							onContinue?.(formikHelpers, StepType.REVIEW)

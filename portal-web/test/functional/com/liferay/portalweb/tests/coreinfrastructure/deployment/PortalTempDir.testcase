@@ -6,7 +6,7 @@ definition {
 	property testray.main.component.name = "Deployment";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		SignIn.signInTestSetup();
 	}
 
 	@description = "Check the temp folder after portal shutdown."

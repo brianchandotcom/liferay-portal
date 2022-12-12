@@ -185,6 +185,26 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 	}
 
 	@Override
+	protected ObjectView
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewsPage_addObjectView(
+				String objectDefinitionExternalReferenceCode,
+				ObjectView objectView)
+		throws Exception {
+
+		return objectViewResource.
+			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectView(
+				objectDefinitionExternalReferenceCode, objectView);
+	}
+
+	@Override
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewsPage_getObjectDefinitionExternalReferenceCode()
+		throws Exception {
+
+		return _objectDefinition.getExternalReferenceCode();
+	}
+
+	@Override
 	protected Long
 		testGetObjectDefinitionObjectViewsPage_getObjectDefinitionId() {
 
@@ -203,6 +223,18 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 
 		return objectViewResource.postObjectDefinitionObjectView(
 			_objectDefinition.getObjectDefinitionId(), randomObjectView());
+	}
+
+	@Override
+	protected ObjectView
+			testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectView_addObjectView(
+				ObjectView objectView)
+		throws Exception {
+
+		return objectViewResource.
+			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectView(
+				testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewsPage_getObjectDefinitionExternalReferenceCode(),
+				objectView);
 	}
 
 	@Override

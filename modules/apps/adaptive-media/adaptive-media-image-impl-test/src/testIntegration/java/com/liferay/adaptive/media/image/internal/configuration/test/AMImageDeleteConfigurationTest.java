@@ -716,7 +716,7 @@ public class AMImageDeleteConfigurationTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
-				AMImageDeleteConfigurationTest.class, "image.jpg"),
+				AMImageDeleteConfigurationTest.class, "dependencies/image.jpg"),
 			null, null, new ServiceContext());
 	}
 

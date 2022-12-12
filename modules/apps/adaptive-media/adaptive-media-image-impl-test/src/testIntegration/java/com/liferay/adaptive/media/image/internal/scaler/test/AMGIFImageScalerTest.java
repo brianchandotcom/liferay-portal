@@ -93,7 +93,8 @@ public class AMGIFImageScalerTest {
 		Assert.assertEquals(100, amImageScaledImage.getWidth());
 
 		Assert.assertArrayEquals(
-			FileUtil.getBytes(AMGIFImageScalerTest.class, "scaled.gif"),
+			FileUtil.getBytes(
+				AMGIFImageScalerTest.class, "dependencies/scaled.gif"),
 			FileUtil.getBytes(amImageScaledImage.getInputStream()));
 	}
 
@@ -102,8 +103,9 @@ public class AMGIFImageScalerTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".gif", ContentTypes.IMAGE_GIF,
-			FileUtil.getBytes(AMGIFImageScalerTest.class, "image.gif"), null,
-			null, new ServiceContext());
+			FileUtil.getBytes(
+				AMGIFImageScalerTest.class, "dependencies/image.gif"),
+			null, null, new ServiceContext());
 	}
 
 	private AMImageConfigurationEntry _addTestVariant() throws Exception {

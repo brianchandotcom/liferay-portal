@@ -14,8 +14,6 @@
 
 package com.liferay.info.list.renderer;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,8 +29,8 @@ public interface InfoListRendererContext {
 
 	public HttpServletResponse getHttpServletResponse();
 
-	public Optional<String> getListItemRendererKeyOptional();
+	public String getListItemRendererKey();
 
-	public Optional<String> getTemplateKeyOptional();
+	public String getTemplateKey();
 
 }

@@ -22,7 +22,7 @@ export function serializeTableRequestParams({
 	keywords,
 	pagination: {page, pageSize},
 }: TTableRequestParams): string {
-	const params: any = {
+	const params: Record<string, string | number> = {
 		keywords,
 		page,
 		pageSize,
@@ -70,54 +70,44 @@ export function updateFormattedItems(
 	formattedItems: TFormattedItems,
 	checked: boolean
 ): TFormattedItems {
-	return Object.values(formattedItems).reduce(
-		(accumulator: TFormattedItems, item) => {
-			if (item.disabled) {
-				return {
-					...accumulator,
-					[item.id]: item,
-				};
-			}
+	const updatedItems: TFormattedItems = {};
 
-			return {
-				...accumulator,
-				[item.id]: {
-					...item,
-					checked,
-				},
+	Object.entries(formattedItems).forEach(([id, item]) => {
+		if (item.disabled) {
+			updatedItems[id] = item;
+		} else {
+			updatedItems[id] = {
+				...item,
+				checked,
 			};
-		},
-		{}
-	);
-}
-
-export function getFormattedItems(items: TItem[]): TFormattedItems {
-	return items.reduce((accumulator: TFormattedItems, item) => {
-		return {
-			...accumulator,
-			[item.id]: item,
-		};
-	}, {});
-}
-
-export function getIds(items: TFormattedItems, initialIds: number[]): number[] {
-	const ids = [...initialIds];
-
-	Object.values(items).forEach((item) => {
-		if (ids.length) {
-			ids.forEach((id, index) => {
-				if (id === Number(item.id) && !item.checked) {
-					ids.splice(index, 1);
-				}
-				else if (id !== Number(item.id) && item.checked) {
-					ids.push(Number(item.id));
-				}
-			});
-		}
-		else if (item.checked) {
-			ids.push(Number(item.id));
 		}
 	});
 
-	return [...new Set(ids)];
+	return updatedItems;
+}
+
+export function getFormattedItems(items: TItem[]): TFormattedItems {
+	const formattedItems: TFormattedItems = {};
+
+	for (let i = 0; i < items.length; i++) {
+		const item = items[i];
+
+		formattedItems[item.id] = item;
+	}
+
+	return formattedItems;
+}
+
+export function getIds(items: TFormattedItems, initialIds: number[]): number[] {
+	const ids = new Set(initialIds);
+
+	Object.values(items).forEach(({checked, id}) => {
+		if (checked) {
+			ids.add(Number(id));
+		} else {
+			ids.delete(Number(id));
+		}
+	});
+
+	return [...ids];
 }

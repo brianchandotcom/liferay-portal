@@ -16,7 +16,9 @@
 
 <%@ include file="/select_pages/init.jsp" %>
 
-<aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(selectPagesGroupId, selectPagesPrivateLayout, selectedLayoutIds) %>" />
+<c:if test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169001")) %>'>
+	<aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(selectPagesGroupId, selectPagesPrivateLayout, selectedLayoutIds) %>" />
+</c:if>
 
 <aui:fieldset cssClass="options-group" id="pages-fieldset" markupView="lexicon">
 	<clay:sheet-section>

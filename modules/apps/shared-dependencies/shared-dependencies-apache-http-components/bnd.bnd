@@ -13,18 +13,36 @@ Bundle-Version: 1.0.2
 	org.apache.http.concurrent,\
 	org.apache.http.config,\
 	org.apache.http.conn,\
+	org.apache.http.conn.params,\
 	org.apache.http.conn.routing,\
+	org.apache.http.conn.scheme,\
 	org.apache.http.conn.socket,\
 	org.apache.http.conn.ssl,\
 	org.apache.http.cookie,\
 	org.apache.http.entity,\
 	org.apache.http.entity.mime,\
 	org.apache.http.entity.mime.content,\
+	org.apache.http.impl.auth,\
 	org.apache.http.impl.client,\
 	org.apache.http.impl.conn,\
+	org.apache.http.impl.conn.tsccm,\
 	org.apache.http.impl.cookie,\
+	org.apache.http.impl.execchain,\
+	org.apache.http.impl.io,\
+	org.apache.http.impl.nio.client,\
+	org.apache.http.impl.nio.conn,\
+	org.apache.http.impl.nio.reactor,\
 	org.apache.http.message,\
+	org.apache.http.nio,\
+	org.apache.http.nio.client.methods,\
+	org.apache.http.nio.conn,\
+	org.apache.http.nio.conn.ssl,\
+	org.apache.http.nio.entity,\
+	org.apache.http.nio.protocol,\
+	org.apache.http.nio.reactor,\
+	org.apache.http.nio.util,\
 	org.apache.http.params,\
 	org.apache.http.pool,\
 	org.apache.http.protocol,\
+	org.apache.http.ssl,\
 	org.apache.http.util

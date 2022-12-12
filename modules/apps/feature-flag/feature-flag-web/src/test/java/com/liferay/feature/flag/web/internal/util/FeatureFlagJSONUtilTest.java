@@ -61,8 +61,8 @@ public class FeatureFlagJSONUtilTest {
 
 	protected FeatureFlag create(boolean enabled) {
 		return new FeatureFlagImpl(
-			"ABC-" + RandomTestUtil.randomInt(1, 999), enabled,
-			FeatureFlagStatus.DEV, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), enabled, FeatureFlagStatus.DEV,
+			"ABC-" + RandomTestUtil.randomInt(1, 999),
 			RandomTestUtil.randomString());
 	}
 

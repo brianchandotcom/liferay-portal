@@ -22,14 +22,14 @@ import java.util.Locale;
 public class FeatureFlagImpl implements FeatureFlag {
 
 	public FeatureFlagImpl(
-		String key, boolean enabled, FeatureFlagStatus featureFlagStatus,
-		String title, String description) {
+		String description, boolean enabled,
+		FeatureFlagStatus featureFlagStatus, String key, String title) {
 
-		_key = key;
+		_description = description;
 		_enabled = enabled;
 		_featureFlagStatus = featureFlagStatus;
+		_key = key;
 		_title = title;
-		_description = description;
 	}
 
 	@Override

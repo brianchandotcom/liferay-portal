@@ -58,10 +58,10 @@ public class CompanyFeatureFlags {
 
 		for (String key : _featureFlagPropsHelper.getKeySet()) {
 			FeatureFlag featureFlag = new FeatureFlagImpl(
-				key, _featureFlagPropsHelper.isEnabled(key),
-				_featureFlagPropsHelper.getStatus(key),
-				_featureFlagPropsHelper.getTitle(key),
-				_featureFlagPropsHelper.getDescription(key));
+				_featureFlagPropsHelper.getDescription(key),
+				_featureFlagPropsHelper.isEnabled(key),
+				_featureFlagPropsHelper.getStatus(key), key,
+				_featureFlagPropsHelper.getTitle(key));
 
 			if (_featureFlagUIEnabled) {
 				featureFlag = new LanguageAwareFeatureFlag(

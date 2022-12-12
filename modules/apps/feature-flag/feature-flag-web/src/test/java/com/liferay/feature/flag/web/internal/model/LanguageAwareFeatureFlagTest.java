@@ -43,8 +43,8 @@ public class LanguageAwareFeatureFlagTest {
 	@Before
 	public void setUp() {
 		_featureFlag = new FeatureFlagImpl(
-			"ABC-123", RandomTestUtil.randomBoolean(), FeatureFlagStatus.BETA,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
+			FeatureFlagStatus.BETA, "ABC-123", RandomTestUtil.randomString());
 
 		_languageAwareFeatureFlag = new LanguageAwareFeatureFlag(
 			_featureFlag, _language);

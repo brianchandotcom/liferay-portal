@@ -67,7 +67,7 @@ public class CompanyFeatureFlags {
 				featureFlag = new LanguageAwareFeatureFlag(
 					featureFlag, language);
 				featureFlag = new PreferenceAwareFeatureFlag(
-					featureFlag, companyId, featureFlagPreferencesHelper);
+					companyId, featureFlag, featureFlagPreferencesHelper);
 			}
 
 			featureFlagMap.put(featureFlag.getKey(), featureFlag);

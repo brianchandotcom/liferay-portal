@@ -56,6 +56,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectViewResource {
 
+	public Page<ObjectView>
+			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewsPage(
+				String objectDefinitionExternalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception;
+
+	public ObjectView
+			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectView(
+				String objectDefinitionExternalReferenceCode,
+				ObjectView objectView)
+		throws Exception;
+
 	public Page<ObjectView> getObjectDefinitionObjectViewsPage(
 			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception;

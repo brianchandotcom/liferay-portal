@@ -156,7 +156,14 @@ const SubtasksCaseResults = () => {
 						size: 'md',
 						value: i18n.translate('case'),
 					},
-					{key: 'issues', value: i18n.translate('issues')},
+					{
+						key: 'issues',
+						render: (
+							_,
+							testraySubTaskCaseResult: TestraySubTaskCaseResult
+						) => testraySubTaskCaseResult.caseResult?.issues,
+						value: i18n.translate('issues'),
+					},
 					{
 						key: 'dueStatus',
 						render: (

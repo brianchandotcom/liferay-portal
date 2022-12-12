@@ -26,9 +26,11 @@ class TestraySubtaskCaseResultImpl extends Rest<
 		super({
 			adapter: ({
 				caseResultId: r_caseResultToSubtasksCasesResults_c_caseResultId,
+				issues,
 				name,
 				subtaskId: r_subtaskToSubtasksCasesResults_c_subtaskId,
 			}) => ({
+				issues,
 				name,
 				r_caseResultToSubtasksCasesResults_c_caseResultId,
 				r_subtaskToSubtasksCasesResults_c_subtaskId,

@@ -131,7 +131,7 @@ export type TestrayCaseResult = {
 	dueStatus: PickList;
 	errors: string;
 	id: number;
-	issue: string;
+	issues: string;
 	key: string;
 	mbMessageId: number;
 	mbThreadId: number;

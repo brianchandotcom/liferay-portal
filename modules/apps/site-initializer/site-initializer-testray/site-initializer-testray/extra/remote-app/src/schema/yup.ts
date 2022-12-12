@@ -227,6 +227,7 @@ const yupSchema = {
 	}),
 	subtaskToCaseResult: yup.object({
 		caseResultId: yup.number(),
+		issues: yup.string(),
 		name: yup.string(),
 		subtaskId: yup.number(),
 	}),

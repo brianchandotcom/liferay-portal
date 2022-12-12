@@ -64,14 +64,17 @@ public class EditableValuesMappingExportImportContentProcessor
 			boolean exportReferencedContent, boolean escapeContent)
 		throws Exception {
 
-		JSONObject editableProcessorJSONObject =
+		_replaceAllEditableExportContentReferences(
 			editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR),
+			exportReferencedContent, portletDataContext, stagedModel);
 
 		_replaceAllEditableExportContentReferences(
-			editableProcessorJSONObject, exportReferencedContent,
-			portletDataContext, stagedModel);
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR),
+			exportReferencedContent, portletDataContext, stagedModel);
 
 		return editableValuesJSONObject;
 	}
@@ -82,13 +85,17 @@ public class EditableValuesMappingExportImportContentProcessor
 			JSONObject editableValuesJSONObject)
 		throws Exception {
 
-		JSONObject editableProcessorJSONObject =
+		_replaceAllEditableImportContentReferences(
 			editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR),
+			portletDataContext);
 
 		_replaceAllEditableImportContentReferences(
-			editableProcessorJSONObject, portletDataContext);
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR),
+			portletDataContext);
 
 		return editableValuesJSONObject;
 	}

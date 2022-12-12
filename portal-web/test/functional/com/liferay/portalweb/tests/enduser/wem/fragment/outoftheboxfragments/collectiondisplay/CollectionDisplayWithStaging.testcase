@@ -373,6 +373,171 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-166039. The page creator can see Items with same categories from a staging site."
+	@priority = "4"
+	test ViewItemsWithSameCategoriesInStagingSite {
+		property custom.properties = "feature.flag.LPS-166036=true";
+
+		task ("Given a page creator has a Collection Display on a content page") {
+			for (var vocabularyName : list "Release Date,Company,Engine") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name (Staging)",
+					site = "false",
+					title = "${vocabularyName}");
+			}
+
+			var firstId = JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "2020",
+				vocabularyName = "Release Date");
+			var secondId = JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "2021",
+				vocabularyName = "Release Date");
+			var thirdId = JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "2022",
+				vocabularyName = "Release Date");
+			var teslaId = JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Tesla",
+				vocabularyName = "Company");
+			var gacId = JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "GAC Group",
+				vocabularyName = "Company");
+			var hybridId = JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Hybrid",
+				vocabularyName = "Engine");
+			var electricId = JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Electric",
+				vocabularyName = "Engine");
+			var petrolId = JSONCategory.addCategory(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Petrol",
+				vocabularyName = "Engine");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${thirdId},${teslaId},${electricId}",
+				content = "Model 3",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Model 3");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${firstId},${gacId},${petrolId}",
+				content = "GA8",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "GA8");
+
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${teslaId}",
+				content = "Telsa Motors Club",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Telsa Motors Club");
+
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = "${gacId}",
+				content = "GA8 Intelligent System",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "GA8 Intelligent System");
+
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${thirdId}",
+				dmDocumentTitle = "Model 3 Interior",
+				groupName = "Test Site Name-staging",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${firstId}",
+				dmDocumentTitle = "GA8 Interior",
+				groupName = "Test Site Name-staging",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				site = "false",
+				title = "Automobile");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Content Page Name",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Automobile",
+				fragmentName = "Collection Display");
+		}
+
+		task ("When the page designer add another Collection Display with Items With Same Categories inside the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Model 3",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = "2",
+				infoItemRelatedListProviderName = "Items With Same Categories");
+		}
+
+		task ("Then the page designer sees the items with same categories on inner Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "GA8 Interior",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "GA8 Intelligent System",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Model 3 Interior",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Telsa Motors Club",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+	}
+
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed normally when enable local staging."
 	@priority = "4"
 	test ViewWebContentInContentDisplay {

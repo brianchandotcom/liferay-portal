@@ -530,7 +530,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.object.admin.rest.client', and version '1.0.43'."
+        'com.liferay.object.admin.rest.client', and version '1.0.44'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -876,7 +876,7 @@ paths:
             tags: ["ObjectRelationship"]
     "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-views":
         get:
-            operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewsPage
+            operationId: getObjectDefinitionByExternalReferenceCodeObjectViewsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -914,7 +914,7 @@ paths:
                                 type: array
             tags: ["ObjectView"]
         post:
-            operationId: postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectView
+            operationId: postObjectDefinitionByExternalReferenceCodeObjectView
             parameters:
                 - in: path
                   name: externalReferenceCode

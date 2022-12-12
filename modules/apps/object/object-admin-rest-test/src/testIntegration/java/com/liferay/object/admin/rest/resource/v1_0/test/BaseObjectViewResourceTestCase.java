@@ -182,11 +182,173 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		ObjectView objectView = randomObjectView();
 
+		objectView.setObjectDefinitionExternalReferenceCode(regex);
+
 		String json = ObjectViewSerDes.toJSON(objectView);
 
 		Assert.assertFalse(json.contains(regex));
 
 		objectView = ObjectViewSerDes.toDTO(json);
+
+		Assert.assertEquals(
+			regex, objectView.getObjectDefinitionExternalReferenceCode());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_getIrrelevantExternalReferenceCode();
+
+		Page<ObjectView> page =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+					externalReferenceCode, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantExternalReferenceCode != null) {
+			ObjectView irrelevantObjectView =
+				testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantObjectView());
+
+			page =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						irrelevantExternalReferenceCode, null,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantObjectView),
+				(List<ObjectView>)page.getItems());
+			assertValid(page);
+		}
+
+		ObjectView objectView1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+				externalReferenceCode, randomObjectView());
+
+		ObjectView objectView2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+				externalReferenceCode, randomObjectView());
+
+		page =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+					externalReferenceCode, null, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectView1, objectView2),
+			(List<ObjectView>)page.getItems());
+		assertValid(page);
+
+		objectViewResource.deleteObjectView(objectView1.getId());
+
+		objectViewResource.deleteObjectView(objectView2.getId());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_getExternalReferenceCode();
+
+		ObjectView objectView1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+				externalReferenceCode, randomObjectView());
+
+		ObjectView objectView2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+				externalReferenceCode, randomObjectView());
+
+		ObjectView objectView3 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+				externalReferenceCode, randomObjectView());
+
+		Page<ObjectView> page1 =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+					externalReferenceCode, null, Pagination.of(1, 2));
+
+		List<ObjectView> objectViews1 = (List<ObjectView>)page1.getItems();
+
+		Assert.assertEquals(objectViews1.toString(), 2, objectViews1.size());
+
+		Page<ObjectView> page2 =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+					externalReferenceCode, null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ObjectView> objectViews2 = (List<ObjectView>)page2.getItems();
+
+		Assert.assertEquals(objectViews2.toString(), 1, objectViews2.size());
+
+		Page<ObjectView> page3 =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+					externalReferenceCode, null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectView1, objectView2, objectView3),
+			(List<ObjectView>)page3.getItems());
+	}
+
+	protected ObjectView
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+				String externalReferenceCode, ObjectView objectView)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectView()
+		throws Exception {
+
+		ObjectView randomObjectView = randomObjectView();
+
+		ObjectView postObjectView =
+			testPostObjectDefinitionByExternalReferenceCodeObjectView_addObjectView(
+				randomObjectView);
+
+		assertEquals(randomObjectView, postObjectView);
+		assertValid(postObjectView);
+	}
+
+	protected ObjectView
+			testPostObjectDefinitionByExternalReferenceCodeObjectView_addObjectView(
+				ObjectView objectView)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -614,6 +776,19 @@ public abstract class BaseObjectViewResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (objectView.getObjectDefinitionExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectDefinitionId", additionalAssertFieldName)) {
 
 				if (objectView.getObjectDefinitionId() == null) {
@@ -803,6 +978,21 @@ public abstract class BaseObjectViewResourceTestCase {
 				if (!equals(
 						(Map)objectView1.getName(),
 						(Map)objectView2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectView1.getObjectDefinitionExternalReferenceCode(),
+						objectView2.
+							getObjectDefinitionExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1042,6 +1232,16 @@ public abstract class BaseObjectViewResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("objectDefinitionExternalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					objectView.getObjectDefinitionExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("objectDefinitionId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1110,6 +1310,8 @@ public abstract class BaseObjectViewResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				defaultObjectView = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
+				objectDefinitionExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				objectDefinitionId = RandomTestUtil.randomLong();
 			}
 		};

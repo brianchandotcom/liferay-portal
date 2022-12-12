@@ -232,6 +232,39 @@ public class ObjectView implements Serializable {
 	protected Map<String, String> name;
 
 	@Schema
+	public String getObjectDefinitionExternalReferenceCode() {
+		return objectDefinitionExternalReferenceCode;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode(
+		String objectDefinitionExternalReferenceCode) {
+
+		this.objectDefinitionExternalReferenceCode =
+			objectDefinitionExternalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setObjectDefinitionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			objectDefinitionExternalReferenceCode =
+				objectDefinitionExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectDefinitionExternalReferenceCode;
+
+	@Schema
 	public Long getObjectDefinitionId() {
 		return objectDefinitionId;
 	}
@@ -450,6 +483,20 @@ public class ObjectView implements Serializable {
 			sb.append("\"name\": ");
 
 			sb.append(_toJSON(name));
+		}
+
+		if (objectDefinitionExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinitionExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		if (objectDefinitionId != null) {

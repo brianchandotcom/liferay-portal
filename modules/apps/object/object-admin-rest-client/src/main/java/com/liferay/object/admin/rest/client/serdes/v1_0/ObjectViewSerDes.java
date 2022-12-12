@@ -133,6 +133,21 @@ public class ObjectViewSerDes {
 			sb.append(_toJSON(objectView.getName()));
 		}
 
+		if (objectView.getObjectDefinitionExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(objectView.getObjectDefinitionExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectView.getObjectDefinitionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -278,6 +293,16 @@ public class ObjectViewSerDes {
 			map.put("name", String.valueOf(objectView.getName()));
 		}
 
+		if (objectView.getObjectDefinitionExternalReferenceCode() == null) {
+			map.put("objectDefinitionExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"objectDefinitionExternalReferenceCode",
+				String.valueOf(
+					objectView.getObjectDefinitionExternalReferenceCode()));
+		}
+
 		if (objectView.getObjectDefinitionId() == null) {
 			map.put("objectDefinitionId", null);
 		}
@@ -371,6 +396,15 @@ public class ObjectViewSerDes {
 					objectView.setName(
 						(Map)ObjectViewSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectDefinitionExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectView.setObjectDefinitionExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

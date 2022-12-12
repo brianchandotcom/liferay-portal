@@ -337,6 +337,11 @@ public class ServletDataImpl implements ServletData {
 							ObjectValidationRuleResourceImpl.class,
 							"putObjectValidationRuleBatch"));
 					put(
+						"mutation#createObjectDefinitionByExternalReferenceCodeObjectView",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class,
+							"postObjectDefinitionByExternalReferenceCodeObjectView"));
+					put(
 						"mutation#createObjectDefinitionObjectView",
 						new ObjectValuePair<>(
 							ObjectViewResourceImpl.class,
@@ -442,6 +447,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectValidationRuleResourceImpl.class,
 							"getObjectValidationRule"));
+					put(
+						"query#objectDefinitionByExternalReferenceCodeObjectViews",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectViewsPage"));
 					put(
 						"query#objectDefinitionObjectViews",
 						new ObjectValuePair<>(

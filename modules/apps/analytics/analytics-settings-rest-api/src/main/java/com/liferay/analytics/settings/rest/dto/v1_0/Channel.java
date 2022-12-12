@@ -41,6 +41,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -176,6 +177,7 @@ public class Channel implements Serializable {
 	protected DataSource[] dataSources;
 
 	@Schema
+	@Size(min = 3)
 	public String getName() {
 		return name;
 	}

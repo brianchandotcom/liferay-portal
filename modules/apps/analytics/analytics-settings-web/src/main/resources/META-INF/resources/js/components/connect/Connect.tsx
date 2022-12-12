@@ -57,7 +57,7 @@ const Connect: React.FC<IConnectProps> = ({onConnect, title}) => {
 				/>
 			)}
 
-			<ClayForm>
+			<ClayForm onSubmit={(event) => event.preventDefault()}>
 				<ClayForm.Group>
 					<label
 						className={classNames({

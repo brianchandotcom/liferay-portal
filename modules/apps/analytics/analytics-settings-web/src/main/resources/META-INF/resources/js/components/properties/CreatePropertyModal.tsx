@@ -41,7 +41,7 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 
 	return (
 		<ClayModal center observer={observer}>
-			<ClayForm>
+			<ClayForm onSubmit={(event) => event.preventDefault()}>
 				<ClayModal.Header>
 					{Liferay.Language.get('new-property')}
 				</ClayModal.Header>

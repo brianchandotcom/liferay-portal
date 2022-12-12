@@ -85,6 +85,13 @@ public class CustomFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public String getOrder() {
+		return _portletPreferencesHelper.getString(
+			CustomFacetPortletPreferencesImpl.PREFERENCE_KEY_ORDER,
+			"count:desc");
+	}
+
+	@Override
 	public Optional<String> getParameterNameOptional() {
 		return _portletPreferencesHelper.getString(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME);

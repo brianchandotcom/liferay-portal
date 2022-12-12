@@ -58,16 +58,15 @@ public class FeatureFlagManagerUtil {
 	}
 
 	private static <T> T _withFeatureFlagManager(
-		Function<FeatureFlagManager, T> featureFlagManagerFunction,
-		Supplier<T> defaultValueSupplier) {
+		Function<FeatureFlagManager, T> function, Supplier<T> supplier) {
 
 		FeatureFlagManager featureFlagManager = _serviceTracker.getService();
 
 		if (featureFlagManager != null) {
-			return featureFlagManagerFunction.apply(featureFlagManager);
+			return function.apply(featureFlagManager);
 		}
 
-		return defaultValueSupplier.get();
+		return supplier.get();
 	}
 
 	private static final String _FEATURE_FLAGS_JSON = String.valueOf(

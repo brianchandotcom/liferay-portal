@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Noor Najjar
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class CTCollectionHistoryProviderRegistry {
 
 	public static CTCollectionHistoryProvider getCTCollectionHistoryProvider(

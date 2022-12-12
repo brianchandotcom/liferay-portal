@@ -25,8 +25,6 @@ public interface GraphQLRequestContext {
 
 	public long getCompanyId();
 
-	public Method getMethod();
-
 	public String getNamespace();
 
 	public Class<?> getResourceClass();

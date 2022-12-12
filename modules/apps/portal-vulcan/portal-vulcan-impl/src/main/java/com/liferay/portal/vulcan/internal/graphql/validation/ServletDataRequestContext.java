@@ -34,7 +34,6 @@ public class ServletDataRequestContext implements GraphQLRequestContext {
 		ServletData servletData) {
 
 		_companyId = companyId;
-		_method = method;
 		_servletData = servletData;
 
 		_namespace = _getNamespace(servletData);
@@ -50,11 +49,6 @@ public class ServletDataRequestContext implements GraphQLRequestContext {
 	@Override
 	public long getCompanyId() {
 		return _companyId;
-	}
-
-	@Override
-	public Method getMethod() {
-		return _method;
 	}
 
 	@Override
@@ -142,7 +136,6 @@ public class ServletDataRequestContext implements GraphQLRequestContext {
 	}
 
 	private final long _companyId;
-	private final Method _method;
 	private final String _namespace;
 	private final Class<?> _resourceClass;
 	private final Method _resourceMethod;

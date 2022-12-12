@@ -45,11 +45,6 @@ public class GraphQLDTOContributorRequestContext
 	}
 
 	@Override
-	public Method getMethod() {
-		return null;
-	}
-
-	@Override
 	public String getNamespace() {
 		return null;
 	}

@@ -35,6 +35,13 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FragmentServiceConfiguration {
 
 	@Meta.AD(
+		deflt = "500",
+		description = "fragment-entry-link-batch-size-description",
+		name = "fragment-entry-link-batch-size", required = false
+	)
+	public int fragmentEntryLinkBatchSize();
+
+	@Meta.AD(
 		deflt = "false",
 		description = "propagate-fragment-changes-automatically-description",
 		name = "propagate-fragment-changes-automatically", required = false

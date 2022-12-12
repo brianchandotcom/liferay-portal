@@ -53,9 +53,9 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Index"
+				"en_US": "Number"
 			},
-			"name": "index",
+			"name": "number",
 			"required": false,
 			"type": "Integer"
 		},

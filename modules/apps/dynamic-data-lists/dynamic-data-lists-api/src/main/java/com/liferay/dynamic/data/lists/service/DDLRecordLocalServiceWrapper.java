@@ -829,6 +829,19 @@ public class DDLRecordLocalServiceWrapper
 
 	@Override
 	public DDLRecord updateRecord(
+			long userId, long recordId, int displayIndex,
+			java.util.Map<String, java.io.Serializable> fieldsMap,
+			boolean mergeFields,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddlRecordLocalService.updateRecord(
+			userId, recordId, displayIndex, fieldsMap, mergeFields,
+			serviceContext);
+	}
+
+	@Override
+	public DDLRecord updateRecord(
 			long userId, long recordId, long ddmStorageId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -660,6 +660,13 @@ public interface DDLRecordLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecord updateRecord(
+			long userId, long recordId, int displayIndex,
+			Map<String, Serializable> fieldsMap, boolean mergeFields,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DDLRecord updateRecord(
 			long userId, long recordId, long ddmStorageId,
 			ServiceContext serviceContext)
 		throws PortalException;

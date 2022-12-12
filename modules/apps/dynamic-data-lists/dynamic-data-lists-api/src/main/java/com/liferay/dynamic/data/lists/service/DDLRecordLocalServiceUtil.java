@@ -756,6 +756,17 @@ public class DDLRecordLocalServiceUtil {
 	}
 
 	public static DDLRecord updateRecord(
+			long userId, long recordId, int displayIndex,
+			Map<String, Serializable> fieldsMap, boolean mergeFields,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateRecord(
+			userId, recordId, displayIndex, fieldsMap, mergeFields,
+			serviceContext);
+	}
+
+	public static DDLRecord updateRecord(
 			long userId, long recordId, long ddmStorageId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {

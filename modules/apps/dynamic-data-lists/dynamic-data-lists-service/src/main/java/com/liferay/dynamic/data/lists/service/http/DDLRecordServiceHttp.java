@@ -337,6 +337,50 @@ public class DDLRecordServiceHttp {
 		}
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
+			HttpPrincipal httpPrincipal, long recordId, int displayIndex,
+			java.util.Map<String, java.io.Serializable> fieldsMap,
+			boolean mergeFields,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DDLRecordServiceUtil.class, "updateRecord",
+				_updateRecordParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, recordId, displayIndex, fieldsMap, mergeFields,
+				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.dynamic.data.lists.model.DDLRecord)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DDLRecordServiceHttp.class);
 
 	private static final Class<?>[] _addRecordParameterTypes0 = new Class[] {
@@ -364,6 +408,10 @@ public class DDLRecordServiceHttp {
 	private static final Class<?>[] _updateRecordParameterTypes6 = new Class[] {
 		long.class, boolean.class, int.class,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
+	};
+	private static final Class<?>[] _updateRecordParameterTypes7 = new Class[] {
+		long.class, int.class, java.util.Map.class, boolean.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 

@@ -1,0 +1,76 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToAllAccounts();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @descriprion = "Automation ID: LPS-150204 | Test Summary: Verify if the user can change an administrator role already selected to requester, or the requester role to administrator"
+    @priority = "4"
+    test ChangesToAlreadySelectedFunctions {
+
+        // TODO LPS-150204 ChangesToAlreadySelectedFunctions pending implementation
+
+    }
+
+    @descriprion = "Automation ID: LPS-150206 | Test Summary: Verify that below the number of seats the modal displays an explanation of the support tickets"
+    @priority = "3"
+    test CanViewTipMessage {
+        
+        // TODO LPS-150206 CanViewTipMessage pending implementation
+
+    }
+
+    @descriprion = "Automation ID: LPS-158568 | Test Summary: Verify that when the project reaches zero available support seats the administrator and requester roles are disabled in the drop-down list"
+    @priority = "4"
+    test AssertThatTheDropdownOptionsAreDisabled {
+        
+        // TODO LPS-158568 AssertThatTheDropdownOptionsAreDisabled pending implementation
+
+    }
+
+    @descriprion = "Automation ID: LPS-170211 | Test Summary: Assert that when the user reaches the limit of available support seats the User function becomes default for the next invited"
+    @priority = "3"
+    test AssertThatTheUserFunctionBecomesDefault {
+        
+        // TODO LPS-170211 AssertThatTheUserFunctionBecomesDefault pending implementation
+
+    }
+
+}

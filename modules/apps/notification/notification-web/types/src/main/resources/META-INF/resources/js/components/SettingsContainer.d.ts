@@ -14,35 +14,19 @@
 
 /// <reference types="react" />
 
+import {FormError} from '@liferay/object-js-components-web';
+import {NotificationTemplateError} from './EditNotificationTemplate';
 import './EditNotificationTemplate.scss';
-export declare type NotificationTemplateError = {
-	bcc?: string;
-	body?: string;
-	cc?: string;
-	description?: string;
-	from?: string;
-	fromName?: string;
-	name?: string;
-	subject?: string;
-	to?: string;
-	type?: string;
-};
-interface IProps {
-	backURL: string;
-	baseResourceURL: string;
-	editorConfig: object;
-	externalReferenceCode: string;
-	notificationTemplateId: number;
-	notificationTemplateType: string;
-	portletNamespace: string;
+interface SettingsContainerProps {
+	errors: FormError<NotificationTemplate & NotificationTemplateError>;
+	selectedLocale: Locale;
+	setValues: (values: Partial<NotificationTemplate>) => void;
+	values: NotificationTemplate;
 }
-export default function EditNotificationTemplate({
-	backURL,
-	baseResourceURL,
-	editorConfig,
-	externalReferenceCode,
-	notificationTemplateId,
-	notificationTemplateType,
-	portletNamespace,
-}: IProps): JSX.Element;
+export declare function SettingsContainer({
+	errors,
+	selectedLocale,
+	setValues,
+	values,
+}: SettingsContainerProps): JSX.Element;
 export {};

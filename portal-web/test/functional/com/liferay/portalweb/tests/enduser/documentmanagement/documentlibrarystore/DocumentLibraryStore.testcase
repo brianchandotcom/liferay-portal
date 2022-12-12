@@ -153,7 +153,6 @@ definition {
 			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AzureStoreSmoke {
 		property azure.store.enabled = "true";

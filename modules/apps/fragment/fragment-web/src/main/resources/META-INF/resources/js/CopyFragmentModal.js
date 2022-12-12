@@ -111,6 +111,7 @@ export default function CopyFragmentModal({
 							copyFragments={copyFragments}
 							errors={errors}
 							formId={formId}
+							fragmentCollections={fragmentCollections}
 							portletNamespace={portletNamespace}
 							setErrors={setErrors}
 							showNoFragmentCollectionMessage={
@@ -232,11 +233,14 @@ function FragmentSetForm({
 	copyFragments,
 	errors,
 	formId,
+	fragmentCollections,
 	portletNamespace,
 	setErrors,
 	showNoFragmentCollectionMessage,
 }) {
-	const [name, setName] = useState(Liferay.Language.get('untitled-set'));
+	const [name, setName] = useState(() =>
+		getDefaultFragmentSetName(fragmentCollections)
+	);
 	const [description, setDescription] = useState('');
 
 	const handleSubmit = (event) => {
@@ -314,4 +318,14 @@ function FragmentSetForm({
 			</FormField>
 		</ClayForm>
 	);
+}
+
+function getDefaultFragmentSetName(fragmentCollections) {
+	const untitledSets = fragmentCollections.filter((fragmentCollection) =>
+		fragmentCollection.name?.startsWith(
+			Liferay.Language.get('untitled-set')
+		)
+	);
+
+	return `${Liferay.Language.get('untitled-set')} ${untitledSets.length + 1}`;
 }

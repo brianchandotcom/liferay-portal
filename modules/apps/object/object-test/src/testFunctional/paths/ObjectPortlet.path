@@ -142,7 +142,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_FRAME_OBJECT</td>
-		<td>//div[(@class='data-set-content-wrapper')]</td>
+		<td>//div[(@class='data-set-content-wrapper') and contains (.,'${key_frame}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -160,15 +160,17 @@ public class DDMFormValidatorTest {
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		ddmForm.addDDMFormField(
-			new DDMFormField("Name1", DDMFormFieldType.TEXT));
+			_createDDMFormField(
+				"FieldReference1", "Name1", DDMFormFieldType.TEXT));
 
-		DDMFormField name2DDMFormField = new DDMFormField(
-			"Name2", DDMFormFieldType.TEXT);
+		DDMFormField ddmFormField = _createDDMFormField(
+			"FieldReference2", "Name2", DDMFormFieldType.TEXT);
 
-		name2DDMFormField.addNestedDDMFormField(
-			new DDMFormField("Name1", DDMFormFieldType.TEXT));
+		ddmFormField.addNestedDDMFormField(
+			_createDDMFormField(
+				"FieldReference3", "Name1", DDMFormFieldType.TEXT));
 
-		ddmForm.addDDMFormField(name2DDMFormField);
+		ddmForm.addDDMFormField(ddmFormField);
 
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}

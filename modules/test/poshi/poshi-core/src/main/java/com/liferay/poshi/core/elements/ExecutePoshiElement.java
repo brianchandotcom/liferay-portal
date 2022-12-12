@@ -110,7 +110,7 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			String namespace = executeCommandName.substring(0, index);
 
-			executeCommandName = StringUtil.replace(
+			executeCommandName = StringUtil.replaceFirst(
 				executeCommandName, namespace + ".", "");
 
 			executeCommandName = StringUtil.replace(

@@ -18,7 +18,9 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectValidationRuleUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,6 +50,22 @@ public class ObjectValidationRuleResourceImpl
 
 		_objectValidationRuleService.deleteObjectValidationRule(
 			objectValidationRuleId);
+	}
+
+	@Override
+	public Page<ObjectValidationRule>
+			getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
+				String externalReferenceCode, String search,
+				Pagination pagination)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return getObjectDefinitionObjectValidationRulesPage(
+			objectDefinition.getObjectDefinitionId(), search, pagination);
 	}
 
 	@Override
@@ -115,6 +133,22 @@ public class ObjectValidationRuleResourceImpl
 	}
 
 	@Override
+	public ObjectValidationRule
+			postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				String externalReferenceCode,
+				ObjectValidationRule objectValidationRule)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		return postObjectDefinitionObjectValidationRule(
+			objectDefinition.getObjectDefinitionId(), objectValidationRule);
+	}
+
+	@Override
 	public ObjectValidationRule postObjectDefinitionObjectValidationRule(
 			Long objectDefinitionId, ObjectValidationRule objectValidationRule)
 		throws Exception {
@@ -149,8 +183,9 @@ public class ObjectValidationRuleResourceImpl
 	}
 
 	private ObjectValidationRule _toObjectValidationRule(
-		com.liferay.object.model.ObjectValidationRule
-			serviceBuilderObjectValidationRule) {
+			com.liferay.object.model.ObjectValidationRule
+				serviceBuilderObjectValidationRule)
+		throws PortalException {
 
 		return ObjectValidationRuleUtil.toObjectValidationRule(
 			HashMapBuilder.put(
@@ -173,8 +208,11 @@ public class ObjectValidationRuleResourceImpl
 					serviceBuilderObjectValidationRule.getObjectDefinitionId())
 			).build(),
 			contextAcceptLanguage.getPreferredLocale(),
-			serviceBuilderObjectValidationRule);
+			_objectDefinitionLocalService, serviceBuilderObjectValidationRule);
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectValidationRuleService _objectValidationRuleService;

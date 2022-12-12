@@ -36,20 +36,28 @@ definition {
 
 	@priority = "3"
 	test CreateNewPublicationWithLongName {
-		Publications.createNewPublication(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
+		PublicationsNavigator.openPublicationsAdmin();
 
-		Alert.viewLengthValidationField();
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "Publications#PUBLICATION_NAME",
+			value1 = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
+
+		AssertElementPresent(
+			key_text = "Create",
+			locator1 = "Button#ANY_DISABLED");
 	}
 
 	@priority = "3"
 	test CreateNewPublicationWithoutName {
-		Publications.createNewPublication(gotoPublicationsAdmin = "true");
+		PublicationsNavigator.openPublicationsAdmin();
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "The Name field is required.");
+		Click(locator1 = "Button#PLUS");
+
+		AssertElementPresent(
+			key_text = "Create",
+			locator1 = "Button#ANY_DISABLED");
 	}
 
 	@priority = "5"

@@ -106,7 +106,7 @@ public class PreferenceAwareFeatureFlagTest {
 
 		preferenceAwareFeatureFlagConsumer.accept(
 			new PreferenceAwareFeatureFlag(
-				_featureFlag, companyId, _featureFlagPreferencesHelper));
+				companyId, _featureFlag, _featureFlagPreferencesHelper));
 	}
 
 	private FeatureFlag _featureFlag;

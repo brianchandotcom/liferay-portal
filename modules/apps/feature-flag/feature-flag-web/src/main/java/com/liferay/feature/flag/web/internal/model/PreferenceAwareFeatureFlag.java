@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 public class PreferenceAwareFeatureFlag extends FeatureFlagWrapper {
 
 	public PreferenceAwareFeatureFlag(
-		FeatureFlag featureFlag, long companyId,
+		long companyId, FeatureFlag featureFlag,
 		FeatureFlagPreferencesHelper featureFlagPreferencesHelper) {
 
 		super(featureFlag);

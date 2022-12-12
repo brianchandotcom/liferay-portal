@@ -760,8 +760,8 @@ definition {
 
 		for (var users : list "userfn userln,userfn2 userln2,userfn3 userln3") {
 			AssertElementPresent(
-				key_itemName = "${users}",
-				locator1 = "SearchResults#FACET_PORTLET_ITEMS");
+				facetValueName = "${users}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT");
 		}
 
 		SearchFacetPortlet.updateFacetConfiguration(
@@ -772,8 +772,8 @@ definition {
 
 		for (var users : list "userfn userln,userfn2 userln2,userfn3 userln3") {
 			AssertElementPresent(
-				key_itemName = "${users}",
-				locator1 = "SearchResults#FACET_PORTLET_ITEMS");
+				facetValueName = "${users}",
+				locator1 = "Search#FACET_LABEL_LAYOUT");
 		}
 	}
 

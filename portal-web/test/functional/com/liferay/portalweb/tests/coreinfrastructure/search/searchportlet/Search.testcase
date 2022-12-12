@@ -726,6 +726,57 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test AssertUserFacetDisplays {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		for (var count : list "2,3") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${count}@liferay.com",
+				userFirstName = "userfn${count}",
+				userLastName = "userln${count}",
+				userScreenName = "usersn${count}");
+
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "userea${count}@liferay.com");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "user");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Compact Layout",
+			portletName = "User Facet");
+
+		Refresh();
+
+		for (var users : list "userfn userln,userfn2 userln2,userfn3 userln3") {
+			AssertElementPresent(
+				key_itemName = "${users}",
+				locator1 = "SearchResults#FACET_PORTLET_ITEMS");
+		}
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Label Layout",
+			portletName = "User Facet");
+
+		Refresh();
+
+		for (var users : list "userfn userln,userfn2 userln2,userfn3 userln3") {
+			AssertElementPresent(
+				key_itemName = "${users}",
+				locator1 = "SearchResults#FACET_PORTLET_ITEMS");
+		}
+	}
+
 	@description = "This is a use case for LPS-165397."
 	@priority = "3"
 	test CanDisableDisplaySelectedResultWithContentPages {

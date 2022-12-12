@@ -146,22 +146,36 @@ public class QuestionsConfigurationModelListener
 			_sapEntryService.deleteSAPEntry(sapEntry);
 		}
 		else if (enableAnonymousRead && (sapEntry == null)) {
-			String mbPackage = "com.liferay.message.boards.service.";
+			String headlessDeliveryPackage =
+				"com.liferay.headless.delivery.internal.resource.v1_0.";
 
 			_sapEntryService.addSAPEntry(
 				StringBundler.concat(
-					"com.liferay.commerce.product.service.",
-					"CommerceCatalogService#getCommerceCatalogs\n",
-					"com.liferay.expando.kernel.service.",
-					"ExpandoValueService#getData\n", mbPackage,
-					"MBCategoryService#getCategory\n", mbPackage,
-					"MBCategoryService#getCategoriesCount\n", mbPackage,
-					"MBMessageService#fetchMBMessageByUrlSubject\n", mbPackage,
-					"MBMessageService#getChildMessages\n", mbPackage,
-					"MBMessageService#getChildMessagesCount\n", mbPackage,
-					"MBMessageService#getMessage\n", mbPackage,
-					"MBThreadService#getThreads\n", mbPackage,
-					"MBThreadService#getThreadsCount\n"),
+					"com.liferay.headless.admin.taxonomy.internal.resource.",
+					"v1_0.KeywordResourceImpl#getKeywordsRankedPage\n",
+					"com.liferay.headless.admin.user.internal.resource.v1_0.",
+					"SubscriptionResourceImpl#",
+					"getMyUserAccountSubscriptionsPage\n",
+					headlessDeliveryPackage,
+					"MessageBoardMessageResourceImpl#getMessageBoardMessage\n",
+					headlessDeliveryPackage, "MessageBoardMessageResourceImpl#",
+					"getMessageBoardThreadMessageBoardMessagesPage\n",
+					headlessDeliveryPackage, "MessageBoardMessageResourceImpl#",
+					"getSiteMessageBoardMessageByFriendlyUrlPath\n",
+					headlessDeliveryPackage, "MessageBoardMessageResourceImpl#",
+					"getSiteMessageBoardMessagesPage\n",
+					headlessDeliveryPackage, "MessageBoardSectionResourceImpl#",
+					"getMessageBoardSection\n", headlessDeliveryPackage,
+					"MessageBoardSectionResourceImpl#",
+					"getSiteMessageBoardSectionsPage\n",
+					headlessDeliveryPackage, "MessageBoardThreadResourceImpl#",
+					"getMessageBoardSectionMessageBoardThreadsPage\n",
+					headlessDeliveryPackage, "MessageBoardThreadResourceImpl#",
+					"getMessageBoardThreadsRankedPage\n",
+					headlessDeliveryPackage, "MessageBoardThreadResourceImpl#",
+					"getSiteMessageBoardThreadByFriendlyUrlPath\n",
+					headlessDeliveryPackage, "MessageBoardThreadResourceImpl#",
+					"getSiteMessageBoardThreadsPage\n"),
 				true, true, name,
 				Collections.singletonMap(
 					LocaleThreadLocal.getDefaultLocale(), name),

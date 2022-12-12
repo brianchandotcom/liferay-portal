@@ -422,24 +422,22 @@ public class DDMFormFieldTemplateContextFactory {
 		for (Object page : pages) {
 			Map<String, Object> pageContext = (Map<String, Object>)page;
 
-			if (!pageContext.containsKey("rows")) {
+			List<Map<String, Object>> rows =
+				(List<Map<String, Object>>)pageContext.get("rows");
+
+			if (rows == null) {
 				return null;
 			}
 
-			for (Map<String, Object> row :
-					(List<Map<String, Object>>)pageContext.get("rows")) {
+			for (Map<String, Object> row : rows) {
+				List<Map<String, Object>> columns =
+					(List<Map<String, Object>>)row.get("columns");
 
-				if (!row.containsKey("columns")) {
+				if (columns == null) {
 					return null;
 				}
 
-				for (Map<String, Object> column :
-						(List<Map<String, Object>>)row.get("columns")) {
-
-					if (!column.containsKey("fields")) {
-						return null;
-					}
-
+				for (Map<String, Object> column : columns) {
 					return (List<Map<String, Object>>)column.get("fields");
 				}
 			}

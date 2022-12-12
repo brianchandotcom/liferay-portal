@@ -23,6 +23,7 @@ import MDFClaimForm from './routes/MDFClaimForm';
 import MDFClaimList from './routes/MDFClaimList';
 import MDFRequestForm from './routes/MDFRequestForm';
 import MDFRequestList from './routes/MDFRequestList';
+import PartnerOpportunitiesList from './routes/PartnerOpportunitiesList';
 
 interface IProps {
 	liferayWebDAV: string;
@@ -40,6 +41,7 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.MDF_CLAIM_LIST]: <MDFClaimList />,
 	[AppRouteType.DEAL_REGISTRATION_FORM]: <DealRegistrationForm />,
 	[AppRouteType.DEAL_REGISTRATION_LIST]: <DealRegistrationList />,
+	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: <PartnerOpportunitiesList />,
 };
 
 const PartnerPortalApp = ({liferayWebDAV, route}: IProps) => {

@@ -9,12 +9,6 @@
  * distribution rights of the Software.
  */
 
-export enum PRMPageRoute {
-	CREATE_MDF_REQUEST = 'marketing/mdf-requests/new',
-	MDF_REQUESTS_LISTING = 'marketing/mdf-requests',
-	CREATE_DEAL_REGISTRATION = 'sales/deal-registrations/new',
-	DEAL_REGISTRATION_LISTING = 'sales/deal-registrations',
-	PARTNER_OPPORTUNITIES_LISTING = 'sales/partner-opportunities',
-	CREATE_MDF_CLAIM = 'marketing/mdf-claim/new',
-	MDF_CLAIM_LISTING = 'marketing/mdf-claim',
-}
+import ModalContent from './ModalContent';
+
+export default ModalContent;

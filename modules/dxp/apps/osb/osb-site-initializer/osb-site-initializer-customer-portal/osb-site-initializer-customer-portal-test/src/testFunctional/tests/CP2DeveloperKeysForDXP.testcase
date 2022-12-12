@@ -247,6 +247,56 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-151315 | Test Summary: Verify that the Fields Min and Max are enabled and disabled based on the filter selection.S"
+	@ignore = "true"
+	@priority = "3"
+	test TheMinAndMaxFieldsCanBeDisableAndEnable{
+
+		// Needs refactor since it depends on example Avangrid Portals account
+		
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+		task ("Open Environment Type tab and Assert the nodes field is disable") {
+			CustomerPortal.clickAtButton(text = "Filter");
+
+			Click.pauseClickAt(
+				locator1 = "CustomerPortalSite#ANY_BUTTON",
+				key_text= "Key Type");
+			
+			Click.clickNoWaitForVisible(
+				key_checkbox = "On-Premise",
+				key_menu = "Key Type",
+				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
+			
+			AssertElementPresent(locator1 = "CP2NavigationMenu#NODES_CLUSTER_DISABLE");
+		}
+		task ("Open Environment Type tab and Assert the nodes field is enable") {
+			Uncheck.uncheckToggleSwitch(
+			checkboxName = "On-Premise",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+						
+			Click.clickNoWaitForVisible(
+				key_checkbox = "Virtual Cluster",
+				key_menu = "Key Type",
+				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
+			
+			AssertElementPresent(locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE");
+		}
+	}
+
 	@description = "Automation ID: LPS-166936 | Test Summary: Verify that the user with the Admin and Partner Manager roles can see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)"
 	@ignore = "true"
 	@priority = "4"

@@ -37,14 +37,15 @@ import javax.servlet.http.HttpServletResponse;
 public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	public FeatureFlagConfigurationScreen(
+		FeatureFlagManager featureFlagManager,
+		FeatureFlagStatus featureFlagStatus,
 		FeatureFlagsDisplayContextFactory featureFlagsDisplayContextFactory,
-		ServletContext servletContext, FeatureFlagManager featureFlagManager,
-		FeatureFlagStatus status) {
+		ServletContext servletContext) {
 
+		_featureFlagManager = featureFlagManager;
+		_featureFlagStatus = featureFlagStatus;
 		_featureFlagsDisplayContextFactory = featureFlagsDisplayContextFactory;
 		_servletContext = servletContext;
-		_featureFlagManager = featureFlagManager;
-		_status = status;
 	}
 
 	@Override
@@ -54,12 +55,12 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getKey() {
-		return FeatureFlagConstants.getKey(_status.toString());
+		return FeatureFlagConstants.getKey(_featureFlagStatus.toString());
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return _status.getTitle(locale);
+		return _featureFlagStatus.getTitle(locale);
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 	@Override
 	public boolean isVisible() {
 		if (_featureFlagManager.isEnabled("LPS-167698") &&
-			_status.isUIEnabled()) {
+			_featureFlagStatus.isUIEnabled()) {
 
 			return true;
 		}
@@ -87,7 +88,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			_featureFlagsDisplayContextFactory.create(
-				httpServletRequest, _status));
+				httpServletRequest, _featureFlagStatus));
 
 		try {
 			RequestDispatcher requestDispatcher =
@@ -105,6 +106,6 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 	private final FeatureFlagsDisplayContextFactory
 		_featureFlagsDisplayContextFactory;
 	private final ServletContext _servletContext;
-	private final FeatureFlagStatus _status;
+	private final FeatureFlagStatus _featureFlagStatus;
 
 }

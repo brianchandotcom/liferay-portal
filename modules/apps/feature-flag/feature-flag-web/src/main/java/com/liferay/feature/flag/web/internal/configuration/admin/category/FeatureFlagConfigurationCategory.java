@@ -59,13 +59,13 @@ public class FeatureFlagConfigurationCategory implements ConfigurationCategory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		for (FeatureFlagStatus status : FeatureFlagStatus.values()) {
+		for (FeatureFlagStatus featureFlagStatus : FeatureFlagStatus.values()) {
 			_serviceRegistrations.add(
 				bundleContext.registerService(
 					ConfigurationScreen.class,
 					new FeatureFlagConfigurationScreen(
-						_featureFlagsDisplayContextFactory, _servletContext,
-						_featureFlagManager, status),
+						_featureFlagManager, featureFlagStatus,
+						_featureFlagsDisplayContextFactory, _servletContext),
 					new HashMapDictionary<>()));
 		}
 	}

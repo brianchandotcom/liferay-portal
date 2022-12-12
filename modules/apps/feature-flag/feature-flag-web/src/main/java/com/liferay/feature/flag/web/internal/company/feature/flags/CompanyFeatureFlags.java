@@ -14,23 +14,14 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
-import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
 import com.liferay.feature.flag.web.internal.manager.FeatureFlagPropsManager;
 import com.liferay.feature.flag.web.internal.model.FeatureFlag;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
-import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
-import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.util.FeatureFlagJSONUtil;
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -42,39 +33,13 @@ import java.util.function.Predicate;
 public class CompanyFeatureFlags {
 
 	public CompanyFeatureFlags(
-		long companyId,
-		FeatureFlagPreferencesManager featureFlagPreferencesManager,
-		Language language) {
+		Map<String, FeatureFlag> featureFlagMap,
+		FeatureFlagPropsManager featureFlagPropsManager,
+		boolean featureFlagUIEnabled) {
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
-
-			_featureFlagPropsManager = new FeatureFlagPropsManager();
-		}
-
-		Map<String, FeatureFlag> featureFlagMap = new HashMap<>();
-
-		_featureFlagUIEnabled = _featureFlagPropsManager.isEnabled(
-			"LPS-167698");
-
-		for (String key : _featureFlagPropsManager.getKeySet()) {
-			FeatureFlag featureFlag = new FeatureFlagImpl(
-				_featureFlagPropsManager.getDescription(key),
-				_featureFlagPropsManager.isEnabled(key),
-				_featureFlagPropsManager.getStatus(key), key,
-				_featureFlagPropsManager.getTitle(key));
-
-			if (_featureFlagUIEnabled) {
-				featureFlag = new LanguageAwareFeatureFlag(
-					featureFlag, language);
-				featureFlag = new PreferenceAwareFeatureFlag(
-					companyId, featureFlag, featureFlagPreferencesManager);
-			}
-
-			featureFlagMap.put(featureFlag.getKey(), featureFlag);
-		}
-
-		_featureFlagMap = Collections.unmodifiableMap(featureFlagMap);
+		_featureFlagMap = featureFlagMap;
+		_featureFlagPropsManager = featureFlagPropsManager;
+		_featureFlagUIEnabled = featureFlagUIEnabled;
 	}
 
 	public List<FeatureFlag> getFeatureFlags(Predicate<FeatureFlag> predicate) {

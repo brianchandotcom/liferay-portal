@@ -43,9 +43,7 @@ public class CompanyFeatureFlagsProvider
 	public void portalInstanceRegistered(Company company) {
 		_companyFeatureFlagsMap.put(
 			company.getCompanyId(),
-			new CompanyFeatureFlags(
-				company.getCompanyId(), _featureFlagPreferencesManager,
-				_language));
+			_companyFeatureFlagsFactory.create(company.getCompanyId()));
 	}
 
 	@Override
@@ -65,10 +63,11 @@ public class CompanyFeatureFlagsProvider
 	protected void activate() {
 		_companyFeatureFlagsMap.put(
 			CompanyConstants.SYSTEM,
-			new CompanyFeatureFlags(
-				CompanyConstants.SYSTEM, _featureFlagPreferencesManager,
-				_language));
+			_companyFeatureFlagsFactory.create(CompanyConstants.SYSTEM));
 	}
+
+	@Reference
+	private CompanyFeatureFlagsFactory _companyFeatureFlagsFactory;
 
 	private final Map<Long, CompanyFeatureFlags> _companyFeatureFlagsMap =
 		new ConcurrentHashMap<>();

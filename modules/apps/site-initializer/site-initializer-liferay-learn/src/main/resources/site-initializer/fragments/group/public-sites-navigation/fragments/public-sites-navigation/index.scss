@@ -145,9 +145,9 @@ nav.public-sites-navigation {
 
 			&.list-open {
 				.language-caret-icon {
-					transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-					rotateX(180deg) rotateY(0deg) rotateZ(0deg)
-					skew(0deg, 0deg);
+					transform: translate3d(0, 0, 0) scale3d(1, 1, 1)
+						rotateX(180deg) rotateY(0deg) rotateZ(0deg)
+						skew(0deg, 0deg);
 				}
 			}
 		}
@@ -176,7 +176,7 @@ nav.public-sites-navigation {
 				box-shadow: var(--elevation-fluffy-1);
 				display: flex;
 				flex-direction: column;
-				padding: 0.5rem 0.25rem 0 0.25rem;
+				padding: 0.5rem 0.25rem 0;
 				width: 15rem;
 
 				ul {
@@ -190,8 +190,12 @@ nav.public-sites-navigation {
 					font-weight: var(--font-weight-semi-bold);
 					text-align: left;
 
-					&:active, &:focus, &:hover {
-						background-color: var(--color-action-primary-hover-lighten);
+					&:active,
+					&:focus,
+					&:hover {
+						background-color: var(
+							--color-action-primary-hover-lighten
+						);
 					}
 
 					.language-entry-long-text {
@@ -199,7 +203,9 @@ nav.public-sites-navigation {
 						padding: 0.75rem 0.75rem 0.75rem 3rem;
 						width: 100%;
 
-						&:active, &:focus, &:hover  {
+						&:active,
+						&:focus,
+						&:hover {
 							color: var(--black);
 							text-decoration: none;
 						}

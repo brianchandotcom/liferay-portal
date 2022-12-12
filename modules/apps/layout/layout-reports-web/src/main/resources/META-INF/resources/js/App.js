@@ -24,22 +24,39 @@ import SidebarHeader from './components/SidebarHeader';
 import {ConstantsContextProvider} from './context/ConstantsContext';
 
 export default function App(props) {
-	const {portletNamespace} = props;
+	const {isPanelStateOpen, portletNamespace} = props;
 
 	const layoutReportsPanelToggle = document.getElementById(
 		`${portletNamespace}layoutReportsPanelToggleId`
 	);
 
-	useEffect(() => {
-		const sidenavInstance = Liferay.SideNavigation.instance(
-			layoutReportsPanelToggle
-		);
+	const layoutReportsPanelId = document.getElementById(
+		`${portletNamespace}layoutReportsPanelId`
+	);
 
+	const sidenavInstance = Liferay.SideNavigation.instance(
+		layoutReportsPanelToggle
+	);
+
+	if (isPanelStateOpen) {
+		layoutReportsPanelToggle.setAttribute('aria-pressed', true);
+	}
+
+	const handleKeydownPanel = (event) => {
+		if (event.key === 'Escape') {
+			sidenavInstance.toggle();
+		}
+	};
+
+	useEffect(() => {
 		sidenavInstance.on('open.lexicon.sidenav', () => {
 			setSessionValue(
 				'com.liferay.layout.reports.web_layoutReportsPanelState',
 				'open'
 			);
+
+			layoutReportsPanelToggle.setAttribute('aria-pressed', true);
+			layoutReportsPanelId.focus();
 		});
 
 		sidenavInstance.on('closed.lexicon.sidenav', () => {
@@ -47,14 +64,29 @@ export default function App(props) {
 				'com.liferay.layout.reports.web_layoutReportsPanelState',
 				'closed'
 			);
+
+			layoutReportsPanelToggle.setAttribute('aria-pressed', false);
+			layoutReportsPanelToggle.focus();
 		});
 
 		Liferay.once('screenLoad', () => {
 			Liferay.SideNavigation.destroy(layoutReportsPanelToggle);
 		});
-	}, [layoutReportsPanelToggle, portletNamespace]);
+	}, [
+		layoutReportsPanelToggle,
+		portletNamespace,
+		layoutReportsPanelId,
+		sidenavInstance,
+	]);
 
 	const [eventTriggered, setEventTriggered] = useState(false);
+
+	useEventListener(
+		'keydown',
+		handleKeydownPanel,
+		false,
+		layoutReportsPanelId
+	);
 
 	useEventListener(
 		'mouseenter',

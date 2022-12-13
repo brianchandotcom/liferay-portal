@@ -12,16 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.model.adapter.builder;
+package com.liferay.staging.internal.model.adapter.builder;
 
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.portal.model.adapter.impl.StagedThemeImpl;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Máté Thurzó
  */
+@Component(service = ModelAdapterBuilder.class)
 public class StagedThemeModelAdapterBuilder
 	implements ModelAdapterBuilder<Theme, StagedTheme> {
 

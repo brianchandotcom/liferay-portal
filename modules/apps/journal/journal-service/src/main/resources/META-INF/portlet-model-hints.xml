@@ -59,7 +59,7 @@
 		<field name="companyId" type="long" />
 		<field name="articlePK" type="long" />
 		<field name="title" type="String">
-			<hint name="max-length">400</hint>
+			<hint name="max-length">800</hint>
 		</field>
 		<field name="description" type="String">
 			<hint name="max-length">4000</hint>

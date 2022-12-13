@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -759,24 +758,18 @@ public class MainServlet extends HttpServlet {
 
 		ServletContext servletContext = getServletContext();
 
-		try {
-			String[] webIds = PortalInstances.getWebIds();
+		String[] webIds = PortalInstances.getWebIds();
 
-			for (String webId : webIds) {
-				boolean skipCheck = false;
+		for (String webId : webIds) {
+			boolean skipCheck = false;
 
-				if (StartupHelperUtil.isDBNew() &&
-					webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+			if (StartupHelperUtil.isDBNew() &&
+				webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 
-					skipCheck = true;
-				}
-
-				PortalInstances.initCompany(servletContext, webId, skipCheck);
+				skipCheck = true;
 			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(
-				PortalInstances.getDefaultCompanyId());
+
+			PortalInstances.initCompany(servletContext, webId, skipCheck);
 		}
 	}
 

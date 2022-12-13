@@ -125,6 +125,7 @@ export type TestrayCaseResult = {
 	build?: TestrayBuild;
 	case?: TestrayCase;
 	closedDate: string;
+	comment: string;
 	component?: TestrayComponent;
 	dateCreated: string;
 	dateModified: string;

@@ -73,6 +73,28 @@
 			"type": "String"
 		},
 		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Issues"
+			},
+			"name": "issues",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Comment"
+			},
+			"name": "comment",
+			"required": false,
+			"type": "Clob"
+		},
+		{
 			"DBType": "Clob",
 			"indexed": false,
 			"indexedAsKeyword": false,

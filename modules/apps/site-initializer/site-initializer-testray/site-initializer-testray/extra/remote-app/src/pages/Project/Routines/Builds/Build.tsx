@@ -138,6 +138,7 @@ const Build = () => {
 						},
 						{
 							key: 'issues',
+							size: 'lg',
 							value: i18n.translate('issues'),
 						},
 						{
@@ -149,8 +150,14 @@ const Build = () => {
 							size: 'xl',
 							value: i18n.translate('errors'),
 						},
+						{
+							key: 'comment',
+							size: 'lg',
+							value: i18n.translate('comment'),
+						},
 					],
 					navigateTo: ({id}) => `case-result/${id}`,
+					rowWrap: true,
 				}}
 				transformData={(response) =>
 					testrayCaseResultImpl.transformDataFromList(response)

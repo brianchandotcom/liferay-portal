@@ -35,12 +35,14 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				mbThreadId,
 				buildId: r_buildToCaseResult_c_buildId,
 				caseId: r_caseToCaseResult_c_caseId,
+				comment,
 				dueStatus,
 				issues,
 				runId: r_runToCaseResult_c_runId,
 				startDate,
 				userId: r_userToCaseResults_userId = Liferay.ThemeDisplay.getUserId(),
 			}) => ({
+				comment,
 				dueStatus,
 				issues,
 				mbMessageId,
@@ -203,7 +205,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			data.mbMessageId = data.defaultMessageId ?? 0;
 		}
 
-		return super.update(id, data);
+		return super.update(id, {...data, issues: issues.join(', ')});
 	}
 }
 

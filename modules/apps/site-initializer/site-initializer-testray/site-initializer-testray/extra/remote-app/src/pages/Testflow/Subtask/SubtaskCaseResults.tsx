@@ -178,6 +178,14 @@ const SubtasksCaseResults = () => {
 
 						value: i18n.translate('status'),
 					},
+					{
+						key: 'comment',
+						render: (
+							_,
+							testraySubTaskCaseResult: TestraySubTaskCaseResult
+						) => testraySubTaskCaseResult.caseResult?.comment,
+						value: i18n.translate('comment'),
+					},
 				],
 				navigateTo: ({caseResult}) =>
 					`/project/${caseResult.build?.project.id}/routines/${caseResult.build?.routine.id}/build/${caseResult.build?.id}/case-result/${caseResult.id}`,

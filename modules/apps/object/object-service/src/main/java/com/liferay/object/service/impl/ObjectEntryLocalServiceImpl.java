@@ -2201,10 +2201,20 @@ public class ObjectEntryLocalServiceImpl
 				UserGroupRoleTable.INSTANCE.companyId.eq(
 					permissionChecker.getCompanyId())
 			).and(
-				GroupTable.INSTANCE.classPK.in(
-					_getAccountEntriesDSLQuery(
-						permissionChecker.getCompanyId(),
-						permissionChecker.getUserId()))
+				() -> {
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							objectDefinition.
+								getAccountEntryRestrictedObjectFieldId());
+
+					Table<?> table = _objectFieldLocalService.getTable(
+						objectDefinition.getObjectDefinitionId(),
+						objectField.getName());
+
+					return GroupTable.INSTANCE.classPK.eq(
+						(Column<?, Long>)table.getColumn(
+							objectField.getDBColumnName()));
+				}
 			)
 		).union(
 			DSLQueryFactoryUtil.select(

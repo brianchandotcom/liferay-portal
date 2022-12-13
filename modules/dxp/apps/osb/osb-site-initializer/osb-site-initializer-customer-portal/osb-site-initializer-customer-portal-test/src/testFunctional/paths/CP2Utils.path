@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>ROLE</td>
-	<td>//p[contains(@class, 'text-truncate') and contains(text(), '${key_role}')]</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(), '${key_email}')]/following::p[contains(text(), '${key_role}')]</td>
 	<td></td>
 </tr>
 <tr>

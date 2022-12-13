@@ -99,14 +99,10 @@ public class UpdateMembershipsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private long[] _getGroupIds(PortletRequest portletRequest, User user) {
-		long[] values = user.getGroupIds();
-
 		Set<Long> groupIds = new HashSet<>();
 
-		if (values != null) {
-			for (long groupId : values) {
-				groupIds.add(groupId);
-			}
+		for (long groupId : user.getGroupIds()) {
+			groupIds.add(groupId);
 		}
 
 		long[] addDepotGroupIds = StringUtil.split(

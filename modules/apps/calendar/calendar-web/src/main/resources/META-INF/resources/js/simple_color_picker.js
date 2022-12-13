@@ -16,6 +16,7 @@ AUI.add(
 	'liferay-calendar-simple-color-picker',
 	(A) => {
 		const AArray = A.Array;
+		const KeyMap = A.Event.KeyMap;
 		const Lang = A.Lang;
 
 		const STR_BLANK = '';
@@ -103,6 +104,22 @@ AUI.add(
 			UI_ATTRS: ['color', 'pallete'],
 
 			prototype: {
+				_focusItem(index) {
+					const instance = this;
+
+					const items = instance.items;
+
+					const size = items.size();
+
+					if (index !== undefined) {
+						index = (index + size) % size;
+
+						const item = items.item(index);
+
+						item.getDOMNode().focus();
+					}
+				},
+
 				_onClickColor(event) {
 					const instance = this;
 
@@ -112,6 +129,62 @@ AUI.add(
 						'color',
 						pallete[instance.items.indexOf(event.currentTarget)]
 					);
+				},
+
+				_onKeyDownColor(event) {
+					const instance = this;
+
+					const items = instance.items;
+
+					const currentIndex = items.indexOf(event.currentTarget);
+
+					const {keyCode} = event;
+
+					if (keyCode === KeyMap.ESC) {
+						event.preventDefault();
+						event.stopPropagation();
+
+						const trigger = instance.trigger;
+
+						if (trigger) {
+							trigger.focus();
+						}
+					}
+					else if (
+						keyCode === KeyMap.DOWN ||
+						keyCode === KeyMap.RIGHT
+					) {
+						event.preventDefault();
+
+						instance._focusItem(currentIndex + 1);
+					}
+					else if (
+						keyCode === KeyMap.UP ||
+						keyCode === KeyMap.LEFT
+					) {
+						event.preventDefault();
+
+						instance._focusItem(currentIndex - 1);
+					}
+					else if (
+						keyCode === KeyMap.SPACE ||
+						keyCode === KeyMap.ENTER
+					) {
+						event.preventDefault();
+						event.stopPropagation();
+
+						instance._onClickColor(event);
+					}
+				},
+
+				_renderColorAlert() {
+					const instance = this;
+
+					instance.colorAlert = A.Node.create(TPL_COLOR_ALERT);
+
+					const contentBox = instance.get('contentBox');
+
+					contentBox.prepend(instance.colorAlert);
 				},
 
 				_renderPallete() {
@@ -171,6 +244,12 @@ AUI.add(
 					contentBox.delegate(
 						'click',
 						instance._onClickColor,
+						STR_DOT + CSS_SIMPLE_COLOR_PICKER_ITEM,
+						instance
+					);
+					contentBox.delegate(
+						'keydown',
+						instance._onKeyDownColor,
 						STR_DOT + CSS_SIMPLE_COLOR_PICKER_ITEM,
 						instance
 					);

@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,22 +35,17 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-
 /**
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
+public class LayoutSetLocalServiceStagingAdvice {
 
 	public void afterPropertiesSet() {
 		AopInvocationHandler aopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
-				_beanFactory.getBean(LayoutSetLocalService.class.getName()),
-				AopInvocationHandler.class);
+				_layoutSetLocalService, AopInvocationHandler.class);
 
 		aopInvocationHandler.setTarget(
 			ProxyUtil.newProxyInstance(
@@ -60,11 +56,6 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 				},
 				new LayoutSetLocalServiceStagingInvocationHandler(
 					aopInvocationHandler.getTarget())));
-	}
-
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-		_beanFactory = beanFactory;
 	}
 
 	protected LayoutSet wrapLayoutSet(LayoutSet layoutSet) {
@@ -107,7 +98,8 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetLocalServiceStagingAdvice.class);
 
-	private BeanFactory _beanFactory;
+	@BeanReference(type = LayoutSetLocalService.class)
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	private class LayoutSetLocalServiceStagingInvocationHandler
 		implements InvocationHandler {

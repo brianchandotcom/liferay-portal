@@ -995,7 +995,7 @@ definition {
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document in Folder 2",
-			dmDocumentTitle = "Document_2.txt",
+			dmDocumentTitle = "DM Document in Folder 2",
 			folderName = "DM Folder 2",
 			groupName = "Site Name-staging",
 			mimeType = "text/plain",
@@ -1010,15 +1010,19 @@ definition {
 
 		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
-		for (var folderCount : list "1,2") {
-			DMFolder.viewCP(dmFolderName = "DM Folder ${folderCount}");
+		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document in Folder 1");
 
-			DMDocument.viewCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");
+		DMDocument.viewCP(dmDocumentTitle = "DM Document in Folder 1");
 
-			Navigator.gotoBack();
-		}
+		Navigator.gotoBack();
+
+		DMFolder.viewCP(dmFolderName = "DM Folder 2");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document in Folder 2");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document in Folder 2");
 	}
 
 	@description = "This is a test for LPS-136822. It checks that a document type can be updated and published using the normal publication process."

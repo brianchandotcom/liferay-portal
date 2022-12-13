@@ -47,7 +47,7 @@ export default function FragmentComments({fragmentEntryLink}) {
 						<ClayButton
 							aria-label={Liferay.Language.get('back')}
 							borderless
-							className="mr-3 p-0 text-dark"
+							className="mr-3 p-0"
 							displayType="secondary"
 							onClick={() => selectItem(null)}
 							small

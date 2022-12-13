@@ -2858,7 +2858,7 @@ definition {
 
 	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
 		property test.name.skip.portal.instance = "DMFileEntry#GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM";
 
@@ -2875,9 +2875,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 

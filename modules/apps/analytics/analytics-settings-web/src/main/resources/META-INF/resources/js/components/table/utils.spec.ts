@@ -73,11 +73,11 @@ describe('getOrderBySymbol', () => {
 
 describe('getResultsLanguage', () => {
 	it('returns results language on singular', () => {
-		expect(getResultsLanguage(['Site A'])).toEqual('x-result-for');
+		expect(getResultsLanguage(1)).toEqual('x-result-for');
 	});
 
 	it('returns results language on plural', () => {
-		expect(getResultsLanguage(['Site A', 'Site B'])).toEqual(
+		expect(getResultsLanguage(2)).toEqual(
 			'x-results-for'
 		);
 	});

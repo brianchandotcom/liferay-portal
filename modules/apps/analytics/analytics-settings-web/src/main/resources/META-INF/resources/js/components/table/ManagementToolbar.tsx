@@ -42,7 +42,12 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 	onAddItem,
 	showCheckbox,
 }) => {
-	const {filter, globalChecked, keywords: storedKeywords, rows} = useData();
+	const {
+		filter,
+		globalChecked,
+		keywords: storedKeywords,
+		pagination: {totalCount},
+	} = useData();
 	const dispatch = useDispatch();
 
 	const [keywords, setKeywords] = useState('');
@@ -195,7 +200,7 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 					<ClayResultsBar.Item expand>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
-								<span>{getResultsLanguage(rows)}</span>
+								<span>{getResultsLanguage(totalCount)}</span>
 
 								<strong>{` "${storedKeywords}"`}</strong>
 							</span>

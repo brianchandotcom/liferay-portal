@@ -43,15 +43,15 @@ export function getOrderBySymbol({type}: TFilter): string {
 	return type === OrderBy.Asc ? 'order-list-up' : 'order-list-down';
 }
 
-export function getResultsLanguage(rows: string[]) {
-	if (rows.length > 1) {
+export function getResultsLanguage(totalCount: number) {
+	if (totalCount > 1) {
 		return sub(
 			Liferay.Language.get('x-results-for').toLowerCase(),
-			rows.length
+			totalCount
 		);
 	}
 
-	return sub(Liferay.Language.get('x-result-for').toLowerCase(), rows.length);
+	return sub(Liferay.Language.get('x-result-for').toLowerCase(), totalCount);
 }
 
 export function getGlobalChecked(formattedItems: TFormattedItems): boolean {

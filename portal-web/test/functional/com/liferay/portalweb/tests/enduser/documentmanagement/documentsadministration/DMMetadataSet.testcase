@@ -23,8 +23,6 @@ definition {
 			DMDocumentType.tearDownCP();
 
 			DMMetadataSet.tearDownCP();
-
-			User.logoutPG();
 		}
 	}
 

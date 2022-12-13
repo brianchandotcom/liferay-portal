@@ -30,6 +30,12 @@ definition {
 			Click(locator1 = "CP2TeamMembers#ADD_MORE_MEMBERS");
 		}
 	}
+	macro assertThatFunctionIsDisabled {
+		AssertElementPresent(
+			key_index = "${positionNumber}",
+			locator1 = "CP2TeamMembers#ROLE_DISABLED",
+			role = "${role}");
+	}
 
 	macro assertInvitedUserIsNotVisible {
 		AssertNotVisible(

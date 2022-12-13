@@ -73,6 +73,7 @@ export default function StructureTreeNodeActions({
 			<ClayButton
 				aria-expanded={active}
 				aria-haspopup="true"
+				aria-label={Liferay.Language.get('options')}
 				className={classNames(
 					'page-editor__page-structure__tree-node__actions-button',
 					{

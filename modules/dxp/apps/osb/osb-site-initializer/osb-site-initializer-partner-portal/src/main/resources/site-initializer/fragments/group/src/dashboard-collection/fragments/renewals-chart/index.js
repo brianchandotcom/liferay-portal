@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/empty-line-between-elements */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -10,6 +11,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClassNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
@@ -28,7 +30,7 @@ export default function () {
 	useEffect(() => {
 		const getRenewalsData = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			await fetch('/o/c/opportunitysfs', {
+			await fetch('/o/c/opportunitysfs?&sort=closeDate:asc', {
 				headers: {
 					'accept': 'application/json',
 					'x-csrf-token': Liferay.authToken,
@@ -47,7 +49,6 @@ export default function () {
 
 	return (
 		<Container
-			className="renewals-chart-card-height"
 			footer={
 				<ClayButton
 					displayType="secondary"
@@ -61,6 +62,8 @@ export default function () {
 			}
 			title="Renewals"
 		>
+			{!data && <ClayLoadingIndicator />}
+
 			<div className="align-items-start d-flex flex-column mt-3">
 				{data?.items?.map((item, index) => {
 					const expirationInTime =
@@ -79,35 +82,7 @@ export default function () {
 						}
 					};
 
-					// eslint-disable-next-line no-console
-					console.log(expirationInDays);
-
-					const closeDateText = () => {
-						if (expirationInDays > 0) {
-							return (
-								<>
-									Expires in &nbsp;
-									<span className="font-weight-semi-bold">
-										{expirationInDays} days.
-									</span>
-									<span className="ml-2">
-										{item.closeDate}
-									</span>
-								</>
-							);
-						} else {
-							return (
-								<div>
-									Expired.
-									<span className="ml-2">
-										{item.closeDate}
-									</span>
-								</div>
-							);
-						}
-					};
-
-					if (expirationInDays <= 30) {
+					if (expirationInDays > 0 && expirationInDays <= 30) {
 						return (
 							<div
 								className="align-items-center d-flex flex-row justify-content-center mb-4"
@@ -125,7 +100,15 @@ export default function () {
 										{item.opportunityName}
 									</div>
 
-									<div>{closeDateText()}</div>
+									<div>
+										Expires in &nbsp;
+										<span className="font-weight-semi-bold">
+											{expirationInDays} days.
+										</span>
+										<span className="ml-2">
+											{item.closeDate}
+										</span>
+									</div>
 								</div>
 							</div>
 						);

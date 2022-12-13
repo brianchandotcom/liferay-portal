@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
+import uid from '../../utils/uid';
 import Table from '../table/Table';
 import {TColumn, TFormattedItems, TTableRequestParams} from '../table/types';
 
@@ -63,7 +64,6 @@ const columns: TColumn[] = [
 		expanded: false,
 		id: EColumn.Source,
 		label: Liferay.Language.get('source'),
-		show: false,
 		sortable: false,
 	},
 ];
@@ -108,7 +108,7 @@ const Modal: React.FC<IModalProps> = ({
 									{id: EColumn.Source, value: source},
 								],
 								disabled: required,
-								id: name,
+								id: uid(),
 							})
 						)
 					}

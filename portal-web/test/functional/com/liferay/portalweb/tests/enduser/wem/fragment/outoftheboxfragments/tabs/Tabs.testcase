@@ -95,6 +95,7 @@ definition {
 	@description = "This is for LPS-109298. Each tab of Tabs fragment is able to contain any elements in custom master."
 	@priority = "4"
 	test AddElementToEachPanelInMasterPageTemplate {
+		property test.name.skip.portal.instance = "Tabs#AddElementToEachPanelInMasterPageTemplate";
 		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {

@@ -38,10 +38,10 @@ definition {
 
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
 	@priority = "5"
-	@refactorneeded
-	test AddAutoAssertionCategoryViaDMDocument {
+	@refactordone
+	test CanAutocompleteCategory {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMFileEntry#AddAutoAssertionCategoryViaDMDocument";
+		property test.name.skip.portal.instance = "DMFileEntry#CanAutocompleteCategory";
 
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -91,13 +91,10 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCategories(categoryNameList = "category");
 	}

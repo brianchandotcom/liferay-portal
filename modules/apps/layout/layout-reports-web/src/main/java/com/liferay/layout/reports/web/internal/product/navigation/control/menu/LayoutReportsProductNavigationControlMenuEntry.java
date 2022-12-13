@@ -352,9 +352,11 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("<div class=\"");
+		sb.append("<div aria-label=\"");
+		sb.append(_html.escape(_language.get(resourceBundle, "page-audit")));
+		sb.append("\" class=\"");
 
 		if (isPanelStateOpen(httpServletRequest)) {
 			sb.append("lfr-has-layout-reports-panel open-admin-panel ");
@@ -364,7 +366,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		sb.append("lfr-product-menu-panel lfr-layout-reports-panel ");
 		sb.append("sidenav-fixed sidenav-menu-slider sidenav-right\" id=\"");
 		sb.append(_portletNamespace);
-		sb.append("layoutReportsPanelId\"><div class=\"sidebar sidebar-light ");
+		sb.append("layoutReportsPanelId\" tabindex=\"0\">");
+		sb.append("<div class=\"sidebar sidebar-light ");
 		sb.append("sidenav-menu sidebar-sm\"><div class=\"sidebar-header\">");
 		sb.append("<div class=\"autofit-row autofit-row-center\"><div ");
 		sb.append("class=\"autofit-col autofit-col-expand\">");

@@ -24,6 +24,11 @@ const status = {
 	30: 'bg-success',
 };
 
+const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
+	.split('/')
+	.slice(0, 3)
+	.join('/');
+
 export default function () {
 	const [data, setData] = useState();
 	const currentDate = new Date();
@@ -57,7 +62,9 @@ export default function () {
 				<ClayButton
 					displayType="secondary"
 					onClick={() =>
-						Liferay.Util.navigate('https://www.liferay.com/pt/home')
+						Liferay.Util.navigate(
+							`${siteURL}/sales/renewal-opportunities`
+						)
 					}
 					type="button"
 				>
@@ -79,11 +86,9 @@ export default function () {
 					const currentStatusColor = () => {
 						if (expirationInDays <= 5) {
 							return status[5];
-						}
-						else if (expirationInDays <= 15) {
+						} else if (expirationInDays <= 15) {
 							return status[15];
-						}
-						else if (expirationInDays <= 30) {
+						} else if (expirationInDays <= 30) {
 							return status[30];
 						}
 					};

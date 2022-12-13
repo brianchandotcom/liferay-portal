@@ -16,7 +16,7 @@
 
 <liferay-ui:search-container-column-text>
 	<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="iconURL" value='<%= FrontendIconsUtil.getSpritemap(themeDisplay) + "#modules" %>' />
+		<liferay-util:param name="iconURL" value='<%= themeDisplay.getPathThemeSpritemap() + "#modules" %>' />
 	</liferay-util:include>
 </liferay-ui:search-container-column-text>
 

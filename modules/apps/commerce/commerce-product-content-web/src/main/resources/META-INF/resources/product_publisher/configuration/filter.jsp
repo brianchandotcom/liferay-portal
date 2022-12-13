@@ -59,7 +59,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 		).put(
 			"rules", cpPublisherConfigurationDisplayContext.getAutoFieldRulesJSONArray()
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemap(themeDisplay)
+			"spritemap", themeDisplay.getPathThemeSpritemap()
 		).put(
 			"tagSelectorURL", cpPublisherConfigurationDisplayContext.getTagSelectorURL()
 		).put(

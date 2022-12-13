@@ -14,17 +14,19 @@
 
 /// <reference types="react" />
 
-import type {IIconPacks} from '../../types';
-interface IProps {
-	allIconResourcePacks: IIconPacks;
-	portletNamespace: string;
-	saveSiteIconPacksURL: string;
-	siteIconResourcePacks: string[];
-}
-export default function SiteIconPackConfiguration({
-	allIconResourcePacks: icons,
+export default function ThemeSpritemapCETsConfiguration({
 	portletNamespace,
-	saveSiteIconPacksURL,
-	siteIconResourcePacks,
+	selectThemeSpritemapCETEventName,
+	themeSpritemapCET,
+	themeSpritemapCETSelectorURL,
 }: IProps): JSX.Element;
+interface IProps {
+	portletNamespace: string;
+	selectThemeSpritemapCETEventName: string;
+	themeSpritemapCET: {
+		cetExternalReferenceCode?: string;
+		name?: string;
+	};
+	themeSpritemapCETSelectorURL: string;
+}
 export {};

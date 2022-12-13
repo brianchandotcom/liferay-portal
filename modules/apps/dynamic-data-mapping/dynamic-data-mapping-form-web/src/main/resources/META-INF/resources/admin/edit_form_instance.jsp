@@ -209,7 +209,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					).put(
 						"showPublishAlert", ddmFormAdminDisplayContext.isShowPublishAlert()
 					).put(
-						"spritemap", FrontendIconsUtil.getSpritemap(themeDisplay)
+						"spritemap", themeDisplay.getPathThemeSpritemap()
 					).put(
 						"view", "formBuilder"
 					).build()

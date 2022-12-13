@@ -169,7 +169,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 											<div class="alert alert-info">
 												<span class="alert-indicator">
 													<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
-														<use xlink:href="<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>#info-circle" />
+														<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#info-circle" />
 													</svg>
 												</span>
 

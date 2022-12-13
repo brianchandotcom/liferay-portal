@@ -146,6 +146,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
 page import="com.liferay.portal.kernel.util.PropertiesParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@

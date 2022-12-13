@@ -14,13 +14,12 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ include file="/admin/init.jsp" %>
 
-<%@ page import="com.liferay.frontend.icons.web.internal.display.context.FrontendIconsConfigurationDisplayContext" %><%@
-page import="com.liferay.frontend.icons.web.internal.display.context.FrontendIconsSiteSettingsConfigurationDisplayContext" %>
+<%
+EditClientExtensionEntryDisplayContext<ThemeSpritemapCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
 
-<liferay-frontend:defineObjects />
+ThemeSpritemapCET themeSpritemapCET = editClientExtensionEntryDisplayContext.getCET();
+%>
 
-<liferay-theme:defineObjects />
+<aui:input label="url" name="url" required="<%= true %>" type="text" value="<%= themeSpritemapCET.getURL() %>" />

@@ -87,7 +87,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 							fieldName: 'productId',
 						},
 					],
-					spritemap: '<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>',
+					spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',
 					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>',
 				});
 			</aui:script>

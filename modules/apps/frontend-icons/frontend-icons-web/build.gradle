@@ -10,6 +10,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:client-extension:client-extension-api")
+	compileOnly project(":apps:client-extension:client-extension-type-api")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")

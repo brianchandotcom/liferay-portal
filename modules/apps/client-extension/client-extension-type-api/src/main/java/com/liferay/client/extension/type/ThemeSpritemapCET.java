@@ -12,27 +12,21 @@
  * details.
  */
 
-/// <reference types="react" />
+package com.liferay.client.extension.type;
 
-import type {IIconPacks} from '../../types';
-interface IProps {
-	deleteIconsPackResourceURL: string;
-	iconPackName: string;
-	icons: IIconPacks;
-	onIconsChange: (newIcons: IIconPacks) => void;
-	onVisibleChange: (visible: boolean) => void;
-	portletNamespace: string;
-	selectedIcon: string;
-	visible: boolean;
+import com.liferay.client.extension.type.annotation.CETProperty;
+import com.liferay.client.extension.type.annotation.CETType;
+
+import org.osgi.annotation.versioning.ProviderType;
+
+/**
+ * @author Iván Zaera Avellón
+ */
+@CETType(description = "This is a description.", name = "themeSpritemap")
+@ProviderType
+public interface ThemeSpritemapCET extends CET {
+
+	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
+	public String getURL();
+
 }
-export default function DeleteIconModal({
-	deleteIconsPackResourceURL,
-	iconPackName,
-	icons,
-	onIconsChange,
-	onVisibleChange,
-	portletNamespace,
-	selectedIcon,
-	visible,
-}: IProps): JSX.Element | null;
-export {};

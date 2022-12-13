@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Frontend Icons Set Clay
-Bundle-SymbolicName: com.liferay.frontend.icons.set.clay
-Bundle-Version: 1.0.2
-Liferay-Icons-Pack-Name: clay
-Liferay-Icons-Path: /images
-Web-ContextPath: /frontend-icons-set-clay

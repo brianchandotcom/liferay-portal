@@ -116,6 +116,8 @@ public class ComponentTagTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setPathThemeSpritemap("/clay/icons.svg");
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		portletDisplay.setNamespace("namespace");

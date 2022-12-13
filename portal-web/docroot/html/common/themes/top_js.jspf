@@ -272,6 +272,9 @@
 			getPathThemeRoot: function() {
 				return '<%= themeDisplay.getPathThemeRoot() %>';
 			},
+			getPathThemeSpritemap: function() {
+				return '<%= themeDisplay.getPathThemeSpritemap() %>';
+			},
 			getPlid: function() {
 				return '<%= themeDisplay.getPlid() %>';
 			},

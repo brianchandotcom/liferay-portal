@@ -87,6 +87,13 @@ definition {
 				value1 = "${customParameterName}");
 		}
 
+		if (isSet(customHeading)) {
+			Type(
+				key_fieldLabel = "Custom Heading",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${customHeading}");
+		}
+
 		PortletEntry.save();
 
 		IFrame.closeFrame();

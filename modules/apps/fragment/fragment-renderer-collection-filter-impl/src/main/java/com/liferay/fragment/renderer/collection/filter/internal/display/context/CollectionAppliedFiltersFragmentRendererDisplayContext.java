@@ -169,10 +169,10 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 	}
 
 	public boolean showClearFiltersButton() {
-		return (boolean)
+		return GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getConfigurationFieldValue(
 				_fragmentEntryLink.getEditableValues(), "showClearFilters",
-				FragmentConfigurationFieldDataType.BOOLEAN);
+				FragmentConfigurationFieldDataType.BOOLEAN));
 	}
 
 	private Set<String> _getTargetCollections() {

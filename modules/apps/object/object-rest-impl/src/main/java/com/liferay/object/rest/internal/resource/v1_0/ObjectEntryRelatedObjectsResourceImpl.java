@@ -23,6 +23,8 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,13 +47,16 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
-		ObjectRelationshipService objectRelationshipService) {
+		ObjectRelationshipService objectRelationshipService,
+		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
 		_objectRelationshipService = objectRelationshipService;
+		_persistedModelLocalServiceRegistry =
+			persistedModelLocalServiceRegistry;
 	}
 
 	@Override
@@ -65,17 +70,36 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				_objectDefinition.getStorageType());
 
 		_checkCurrentObjectEntry(objectEntryManager, currentObjectEntryId);
-		_checkRelatedObjectEntry(
-			objectEntryManager, objectRelationshipName, relatedObjectEntryId);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName);
 
+		ObjectDefinition relatedObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		if (relatedObjectDefinition.isSystem()) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-162966"))) {
+
+				throw new NotFoundException();
+			}
+
+			_checkSystemObjectEntry(
+				relatedObjectEntryId, relatedObjectDefinition);
+		}
+		else {
+			_checkRelatedObjectEntry(
+				objectEntryManager, objectRelationshipName,
+				relatedObjectEntryId);
+		}
+
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				_objectDefinition.getClassName(), objectRelationship.getType());
+				relatedObjectDefinition.getClassName(),
+				objectRelationship.getType());
 
 		objectRelatedModelsProvider.disassociateRelatedModels(
 			contextUser.getUserId(),
@@ -191,6 +215,17 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			relatedObjectEntryId);
 	}
 
+	private void _checkSystemObjectEntry(
+			long objectEntryId, ObjectDefinition systemObjectDefinition)
+		throws Exception {
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				systemObjectDefinition.getClassName());
+
+		persistedModelLocalService.getPersistedModel(objectEntryId);
+	}
+
 	private DefaultDTOConverterContext _getDTOConverterContext(
 		Long objectEntryId) {
 
@@ -255,5 +290,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	private final ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
 	private final ObjectRelationshipService _objectRelationshipService;
+	private final PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 }

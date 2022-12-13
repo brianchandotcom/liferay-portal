@@ -127,11 +127,70 @@ definition {
 
     }
 
-    @descriprion = "Automation ID: LPS-158568 | Test Summary: Verify that when the project reaches zero available support seats the administrator and requester roles are disabled in the drop-down list"
-    @priority = "4"
+    @description = "Automation ID: LPS-158568 | Test Summary: Verify that when the project reaches zero available support seats the administrator and requester roles are disabled in the drop-down list"
+    @ignore = "true"
+	@priority = "4"
     test AssertThatTheDropdownOptionsAreDisabled {
-        
-        // TODO LPS-158568 AssertThatTheDropdownOptionsAreDisabled pending implementation
+
+		// Needs refactor since it depends on example Avangrid Portals account
+
+		var testAccount = "Avangrid Portals";
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "${testAccount}");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+		}
+
+		task ("Then I go to the Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
+		}
+
+		task ("And I enter the test account and go to Team Members page") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CP2TeamMembers.teamMembersFlow(testAccount = "${testAccount}");
+		}
+
+        task ("Then I assert that when the project reaches zero available support seats, the administrator and requester roles are disabled") {
+			CustomerPortal.clickAtButton(text = "Invite");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = "1",
+				positionNumber = "1",
+				rowEmail = "test02@project.com",
+				rowRole = "Requester");
+
+			CP2TeamMembers.assertThatFunctionIsDisabled(
+				positionNumber = "2",
+				role = "Administrator");
+
+			CP2TeamMembers.assertThatFunctionIsDisabled(
+				positionNumber = "2",
+				role = "Requester");
+
+			CustomerPortal.clickAtButton(text = "Cancel");
+		}
 
     }
 

@@ -15,30 +15,20 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export function NotificationQueueEntryStatusDataRenderer({value}: IProps) {
-	const getStatusInfo = (status: number) => {
-		switch (status) {
-			case 0:
-				return {
-					className: 'label-danger',
-					label: Liferay.Language.get('failed'),
-				};
-			case 1:
-				return {
-					className: 'label-success',
-					label: Liferay.Language.get('sent'),
-				};
-			case 2:
-				return {
-					className: 'label-warning',
-					label: Liferay.Language.get('unsent'),
-				};
-			default:
-				return null;
-		}
-	};
+const statusMap = new Map([
+	[0, {className: 'label-danger', label: Liferay.Language.get('failed')}],
+	[1, {className: 'label-success', label: Liferay.Language.get('sent')}],
+	[2, {className: 'label-warning', label: Liferay.Language.get('unsent')}],
+]);
 
-	const statusInfo = typeof value === 'number' ? getStatusInfo(value) : null;
+interface NotificationQueueEntryStatusDataRendererProps {
+	value: boolean | number | string;
+}
+
+export function NotificationQueueEntryStatusDataRenderer({
+	value,
+}: NotificationQueueEntryStatusDataRendererProps) {
+	const statusInfo = typeof value === 'number' ? statusMap.get(value) : null;
 
 	return statusInfo ? (
 		<strong className={`label ${statusInfo.className}`}>
@@ -56,8 +46,4 @@ export function NotificationQueueEntryStatusDataRenderer({value}: IProps) {
 				: Liferay.Language.get('unsent')}
 		</strong>
 	);
-}
-
-interface IProps {
-	value: boolean | number | string;
 }

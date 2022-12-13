@@ -79,13 +79,13 @@ public abstract class BaseObjectRelationshipResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-relationships'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionExternalReferenceCode"
+				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -112,16 +112,16 @@ public abstract class BaseObjectRelationshipResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-relationships"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<ObjectRelationship>
-			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
+			getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("objectDefinitionExternalReferenceCode")
-				String objectDefinitionExternalReferenceCode,
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.ws.rs.QueryParam("search")
 				String search,
@@ -135,13 +135,13 @@ public abstract class BaseObjectRelationshipResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-relationships' -d $'{"deletionType": ___, "label": ___, "name": ___, "objectDefinitionExternalReferenceCode1": ___, "objectDefinitionExternalReferenceCode2": ___, "objectDefinitionId1": ___, "objectDefinitionId2": ___, "objectDefinitionName2": ___, "parameterObjectFieldId": ___, "parameterObjectFieldName": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships' -d $'{"deletionType": ___, "label": ___, "name": ___, "objectDefinitionExternalReferenceCode1": ___, "objectDefinitionExternalReferenceCode2": ___, "objectDefinitionId1": ___, "objectDefinitionId2": ___, "objectDefinitionName2": ___, "parameterObjectFieldId": ___, "parameterObjectFieldName": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionExternalReferenceCode"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -152,17 +152,17 @@ public abstract class BaseObjectRelationshipResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-relationships"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public ObjectRelationship
-			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
+			postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("objectDefinitionExternalReferenceCode")
-				String objectDefinitionExternalReferenceCode,
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
 				ObjectRelationship objectRelationship)
 		throws Exception {
 

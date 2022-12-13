@@ -742,7 +742,7 @@ paths:
             tags: ["ObjectDefinition"]
     "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields":
         get:
-            operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage
+            operationId: getObjectDefinitionByExternalReferenceCodeObjectFieldsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -784,7 +784,7 @@ paths:
                                 type: array
             tags: ["ObjectField"]
         post:
-            operationId: postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField
+            operationId: postObjectDefinitionByExternalReferenceCodeObjectField
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -811,7 +811,7 @@ paths:
             tags: ["ObjectField"]
     "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships":
         get:
-            operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage
+            operationId: getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -849,7 +849,7 @@ paths:
                                 type: array
             tags: ["ObjectRelationship"]
         post:
-            operationId: postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship
+            operationId: postObjectDefinitionByExternalReferenceCodeObjectRelationship
             parameters:
                 - in: path
                   name: externalReferenceCode

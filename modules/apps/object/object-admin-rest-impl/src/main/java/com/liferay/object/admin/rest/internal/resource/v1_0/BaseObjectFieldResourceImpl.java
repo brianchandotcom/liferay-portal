@@ -79,13 +79,13 @@ public abstract class BaseObjectFieldResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionExternalReferenceCode"
+				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -114,16 +114,16 @@ public abstract class BaseObjectFieldResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<ObjectField>
-			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
+			getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("objectDefinitionExternalReferenceCode")
-				String objectDefinitionExternalReferenceCode,
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.ws.rs.QueryParam("search")
 				String search,
@@ -138,13 +138,13 @@ public abstract class BaseObjectFieldResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields' -d $'{"DBType": ___, "businessType": ___, "defaultValue": ___, "externalReferenceCode": ___, "indexed": ___, "indexedAsKeyword": ___, "indexedLanguageId": ___, "label": ___, "listTypeDefinitionExternalReferenceCode": ___, "listTypeDefinitionId": ___, "name": ___, "objectFieldSettings": ___, "required": ___, "state": ___, "system": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields' -d $'{"DBType": ___, "businessType": ___, "defaultValue": ___, "externalReferenceCode": ___, "indexed": ___, "indexedAsKeyword": ___, "indexedLanguageId": ___, "label": ___, "listTypeDefinitionExternalReferenceCode": ___, "listTypeDefinitionId": ___, "name": ___, "objectFieldSettings": ___, "required": ___, "state": ___, "system": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionExternalReferenceCode"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -153,18 +153,17 @@ public abstract class BaseObjectFieldResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectField
-			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("objectDefinitionExternalReferenceCode")
-				String objectDefinitionExternalReferenceCode,
-				ObjectField objectField)
+	public ObjectField postObjectDefinitionByExternalReferenceCodeObjectField(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ObjectField objectField)
 		throws Exception {
 
 		return new ObjectField();

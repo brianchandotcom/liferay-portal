@@ -41,27 +41,24 @@ public interface ObjectFieldResource {
 	}
 
 	public Page<ObjectField>
-			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
-				String objectDefinitionExternalReferenceCode, String search,
+			getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+				String externalReferenceCode, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageHttpResponse(
-				String objectDefinitionExternalReferenceCode, String search,
+			getObjectDefinitionByExternalReferenceCodeObjectFieldsPageHttpResponse(
+				String externalReferenceCode, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public ObjectField
-			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
-				String objectDefinitionExternalReferenceCode,
-				ObjectField objectField)
+	public ObjectField postObjectDefinitionByExternalReferenceCodeObjectField(
+			String externalReferenceCode, ObjectField objectField)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldHttpResponse(
-				String objectDefinitionExternalReferenceCode,
-				ObjectField objectField)
+			postObjectDefinitionByExternalReferenceCodeObjectFieldHttpResponse(
+				String externalReferenceCode, ObjectField objectField)
 		throws Exception;
 
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
@@ -213,16 +210,16 @@ public interface ObjectFieldResource {
 	public static class ObjectFieldResourceImpl implements ObjectFieldResource {
 
 		public Page<ObjectField>
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
-					String objectDefinitionExternalReferenceCode, String search,
+				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+					String externalReferenceCode, String search,
 					String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageHttpResponse(
-					objectDefinitionExternalReferenceCode, search, filterString,
-					pagination, sortString);
+				getObjectDefinitionByExternalReferenceCodeObjectFieldsPageHttpResponse(
+					externalReferenceCode, search, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -262,8 +259,8 @@ public interface ObjectFieldResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPageHttpResponse(
-					String objectDefinitionExternalReferenceCode, String search,
+				getObjectDefinitionByExternalReferenceCodeObjectFieldsPageHttpResponse(
+					String externalReferenceCode, String search,
 					String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
@@ -311,11 +308,9 @@ public interface ObjectFieldResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields");
+						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields");
 
-			httpInvoker.path(
-				"objectDefinitionExternalReferenceCode",
-				objectDefinitionExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -324,14 +319,13 @@ public interface ObjectFieldResource {
 		}
 
 		public ObjectField
-				postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
-					String objectDefinitionExternalReferenceCode,
-					ObjectField objectField)
+				postObjectDefinitionByExternalReferenceCodeObjectField(
+					String externalReferenceCode, ObjectField objectField)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldHttpResponse(
-					objectDefinitionExternalReferenceCode, objectField);
+				postObjectDefinitionByExternalReferenceCodeObjectFieldHttpResponse(
+					externalReferenceCode, objectField);
 
 			String content = httpResponse.getContent();
 
@@ -371,9 +365,8 @@ public interface ObjectFieldResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldHttpResponse(
-					String objectDefinitionExternalReferenceCode,
-					ObjectField objectField)
+				postObjectDefinitionByExternalReferenceCodeObjectFieldHttpResponse(
+					String externalReferenceCode, ObjectField objectField)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -402,11 +395,9 @@ public interface ObjectFieldResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields");
+						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields");
 
-			httpInvoker.path(
-				"objectDefinitionExternalReferenceCode",
-				objectDefinitionExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

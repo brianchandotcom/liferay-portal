@@ -57,14 +57,14 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ObjectRelationshipResource {
 
 	public Page<ObjectRelationship>
-			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-				String objectDefinitionExternalReferenceCode, String search,
-				Filter filter, Pagination pagination)
+			getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+				String externalReferenceCode, String search, Filter filter,
+				Pagination pagination)
 		throws Exception;
 
 	public ObjectRelationship
-			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
-				String objectDefinitionExternalReferenceCode,
+			postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				String externalReferenceCode,
 				ObjectRelationship objectRelationship)
 		throws Exception;
 

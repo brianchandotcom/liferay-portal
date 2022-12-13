@@ -338,11 +338,9 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public ObjectField
-			createObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
-				@GraphQLName("objectDefinitionExternalReferenceCode") String
-					objectDefinitionExternalReferenceCode,
-				@GraphQLName("objectField") ObjectField objectField)
+	public ObjectField createObjectDefinitionByExternalReferenceCodeObjectField(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("objectField") ObjectField objectField)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -350,8 +348,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			objectFieldResource ->
 				objectFieldResource.
-					postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField(
-						objectDefinitionExternalReferenceCode, objectField));
+					postObjectDefinitionByExternalReferenceCodeObjectField(
+						externalReferenceCode, objectField));
 	}
 
 	@GraphQLField
@@ -534,9 +532,9 @@ public class Mutation {
 
 	@GraphQLField
 	public ObjectRelationship
-			createObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
-				@GraphQLName("objectDefinitionExternalReferenceCode") String
-					objectDefinitionExternalReferenceCode,
+			createObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
 				@GraphQLName("objectRelationship") ObjectRelationship
 					objectRelationship)
 		throws Exception {
@@ -546,9 +544,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			objectRelationshipResource ->
 				objectRelationshipResource.
-					postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
-						objectDefinitionExternalReferenceCode,
-						objectRelationship));
+					postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+						externalReferenceCode, objectRelationship));
 	}
 
 	@GraphQLField

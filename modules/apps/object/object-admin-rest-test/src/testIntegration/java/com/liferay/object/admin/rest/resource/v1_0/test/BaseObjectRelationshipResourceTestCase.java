@@ -210,33 +210,32 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	@Test
-	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage()
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage()
 		throws Exception {
 
-		String objectDefinitionExternalReferenceCode =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
-		String irrelevantObjectDefinitionExternalReferenceCode =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getIrrelevantObjectDefinitionExternalReferenceCode();
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getIrrelevantExternalReferenceCode();
 
 		Page<ObjectRelationship> page =
 			objectRelationshipResource.
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-					objectDefinitionExternalReferenceCode, null, null,
-					Pagination.of(1, 10));
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+					externalReferenceCode, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		if (irrelevantObjectDefinitionExternalReferenceCode != null) {
+		if (irrelevantExternalReferenceCode != null) {
 			ObjectRelationship irrelevantObjectRelationship =
-				testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-					irrelevantObjectDefinitionExternalReferenceCode,
+				testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+					irrelevantExternalReferenceCode,
 					randomIrrelevantObjectRelationship());
 
 			page =
 				objectRelationshipResource.
-					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-						irrelevantObjectDefinitionExternalReferenceCode, null,
-						null, Pagination.of(1, 2));
+					getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+						irrelevantExternalReferenceCode, null, null,
+						Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -247,20 +246,17 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		}
 
 		ObjectRelationship objectRelationship1 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		ObjectRelationship objectRelationship2 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		page =
 			objectRelationshipResource.
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-					objectDefinitionExternalReferenceCode, null, null,
-					Pagination.of(1, 10));
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+					externalReferenceCode, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -277,7 +273,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	@Test
-	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageWithFilterDateTimeEquals()
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -287,20 +283,20 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			return;
 		}
 
-		String objectDefinitionExternalReferenceCode =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExternalReferenceCode();
 
 		ObjectRelationship objectRelationship1 = randomObjectRelationship();
 
 		objectRelationship1 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode, objectRelationship1);
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, objectRelationship1);
 
 		for (EntityField entityField : entityFields) {
 			Page<ObjectRelationship> page =
 				objectRelationshipResource.
-					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-						objectDefinitionExternalReferenceCode, null,
+					getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+						externalReferenceCode, null,
 						getFilterString(
 							entityField, "between", objectRelationship1),
 						Pagination.of(1, 2));
@@ -312,7 +308,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	@Test
-	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageWithFilterDoubleEquals()
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageWithFilterDoubleEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -322,25 +318,23 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			return;
 		}
 
-		String objectDefinitionExternalReferenceCode =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExternalReferenceCode();
 
 		ObjectRelationship objectRelationship1 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectRelationship objectRelationship2 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		for (EntityField entityField : entityFields) {
 			Page<ObjectRelationship> page =
 				objectRelationshipResource.
-					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-						objectDefinitionExternalReferenceCode, null,
+					getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+						externalReferenceCode, null,
 						getFilterString(entityField, "eq", objectRelationship1),
 						Pagination.of(1, 2));
 
@@ -351,7 +345,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	@Test
-	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageWithFilterStringEquals()
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageWithFilterStringEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -361,25 +355,23 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			return;
 		}
 
-		String objectDefinitionExternalReferenceCode =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExternalReferenceCode();
 
 		ObjectRelationship objectRelationship1 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectRelationship objectRelationship2 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		for (EntityField entityField : entityFields) {
 			Page<ObjectRelationship> page =
 				objectRelationshipResource.
-					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-						objectDefinitionExternalReferenceCode, null,
+					getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+						externalReferenceCode, null,
 						getFilterString(entityField, "eq", objectRelationship1),
 						Pagination.of(1, 2));
 
@@ -390,32 +382,28 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	@Test
-	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageWithPagination()
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageWithPagination()
 		throws Exception {
 
-		String objectDefinitionExternalReferenceCode =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode();
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExternalReferenceCode();
 
 		ObjectRelationship objectRelationship1 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		ObjectRelationship objectRelationship2 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		ObjectRelationship objectRelationship3 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				objectDefinitionExternalReferenceCode,
-				randomObjectRelationship());
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				externalReferenceCode, randomObjectRelationship());
 
 		Page<ObjectRelationship> page1 =
 			objectRelationshipResource.
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-					objectDefinitionExternalReferenceCode, null, null,
-					Pagination.of(1, 2));
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+					externalReferenceCode, null, null, Pagination.of(1, 2));
 
 		List<ObjectRelationship> objectRelationships1 =
 			(List<ObjectRelationship>)page1.getItems();
@@ -425,9 +413,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 		Page<ObjectRelationship> page2 =
 			objectRelationshipResource.
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-					objectDefinitionExternalReferenceCode, null, null,
-					Pagination.of(2, 2));
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+					externalReferenceCode, null, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -439,9 +426,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 		Page<ObjectRelationship> page3 =
 			objectRelationshipResource.
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-					objectDefinitionExternalReferenceCode, null, null,
-					Pagination.of(1, 3));
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+					externalReferenceCode, null, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -450,8 +436,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	protected ObjectRelationship
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
-				String objectDefinitionExternalReferenceCode,
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_addObjectRelationship(
+				String externalReferenceCode,
 				ObjectRelationship objectRelationship)
 		throws Exception {
 
@@ -460,7 +446,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	protected String
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getObjectDefinitionExternalReferenceCode()
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -468,21 +454,21 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	protected String
-			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage_getIrrelevantObjectDefinitionExternalReferenceCode()
+			testGetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage_getIrrelevantExternalReferenceCode()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship()
+	public void testPostObjectDefinitionByExternalReferenceCodeObjectRelationship()
 		throws Exception {
 
 		ObjectRelationship randomObjectRelationship =
 			randomObjectRelationship();
 
 		ObjectRelationship postObjectRelationship =
-			testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship_addObjectRelationship(
+			testPostObjectDefinitionByExternalReferenceCodeObjectRelationship_addObjectRelationship(
 				randomObjectRelationship);
 
 		assertEquals(randomObjectRelationship, postObjectRelationship);
@@ -490,7 +476,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	protected ObjectRelationship
-			testPostObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship_addObjectRelationship(
+			testPostObjectDefinitionByExternalReferenceCodeObjectRelationship_addObjectRelationship(
 				ObjectRelationship objectRelationship)
 		throws Exception {
 

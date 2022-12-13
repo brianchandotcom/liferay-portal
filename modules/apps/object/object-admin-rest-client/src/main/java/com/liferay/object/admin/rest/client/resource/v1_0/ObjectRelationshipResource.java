@@ -41,26 +41,26 @@ public interface ObjectRelationshipResource {
 	}
 
 	public Page<ObjectRelationship>
-			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-				String objectDefinitionExternalReferenceCode, String search,
+			getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+				String externalReferenceCode, String search,
 				String filterString, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageHttpResponse(
-				String objectDefinitionExternalReferenceCode, String search,
+			getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageHttpResponse(
+				String externalReferenceCode, String search,
 				String filterString, Pagination pagination)
 		throws Exception;
 
 	public ObjectRelationship
-			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
-				String objectDefinitionExternalReferenceCode,
+			postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				String externalReferenceCode,
 				ObjectRelationship objectRelationship)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipHttpResponse(
-				String objectDefinitionExternalReferenceCode,
+			postObjectDefinitionByExternalReferenceCodeObjectRelationshipHttpResponse(
+				String externalReferenceCode,
 				ObjectRelationship objectRelationship)
 		throws Exception;
 
@@ -209,15 +209,14 @@ public interface ObjectRelationshipResource {
 		implements ObjectRelationshipResource {
 
 		public Page<ObjectRelationship>
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-					String objectDefinitionExternalReferenceCode, String search,
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+					String externalReferenceCode, String search,
 					String filterString, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageHttpResponse(
-					objectDefinitionExternalReferenceCode, search, filterString,
-					pagination);
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageHttpResponse(
+					externalReferenceCode, search, filterString, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -257,8 +256,8 @@ public interface ObjectRelationshipResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPageHttpResponse(
-					String objectDefinitionExternalReferenceCode, String search,
+				getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageHttpResponse(
+					String externalReferenceCode, String search,
 					String filterString, Pagination pagination)
 			throws Exception {
 
@@ -301,11 +300,9 @@ public interface ObjectRelationshipResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-relationships");
+						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships");
 
-			httpInvoker.path(
-				"objectDefinitionExternalReferenceCode",
-				objectDefinitionExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -314,14 +311,14 @@ public interface ObjectRelationshipResource {
 		}
 
 		public ObjectRelationship
-				postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
-					String objectDefinitionExternalReferenceCode,
+				postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					String externalReferenceCode,
 					ObjectRelationship objectRelationship)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipHttpResponse(
-					objectDefinitionExternalReferenceCode, objectRelationship);
+				postObjectDefinitionByExternalReferenceCodeObjectRelationshipHttpResponse(
+					externalReferenceCode, objectRelationship);
 
 			String content = httpResponse.getContent();
 
@@ -361,8 +358,8 @@ public interface ObjectRelationshipResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipHttpResponse(
-					String objectDefinitionExternalReferenceCode,
+				postObjectDefinitionByExternalReferenceCodeObjectRelationshipHttpResponse(
+					String externalReferenceCode,
 					ObjectRelationship objectRelationship)
 			throws Exception {
 
@@ -392,11 +389,9 @@ public interface ObjectRelationshipResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-relationships");
+						"/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships");
 
-			httpInvoker.path(
-				"objectDefinitionExternalReferenceCode",
-				objectDefinitionExternalReferenceCode);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

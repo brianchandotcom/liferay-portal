@@ -230,18 +230,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFields(filter: ___, objectDefinitionExternalReferenceCode: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCodeObjectFields(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public ObjectFieldPage
-			objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFields(
-				@GraphQLName("objectDefinitionExternalReferenceCode") String
-					objectDefinitionExternalReferenceCode,
-				@GraphQLName("search") String search,
-				@GraphQLName("filter") String filterString,
-				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
+	public ObjectFieldPage objectDefinitionByExternalReferenceCodeObjectFields(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -249,8 +247,8 @@ public class Query {
 			this::_populateResourceContext,
 			objectFieldResource -> new ObjectFieldPage(
 				objectFieldResource.
-					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage(
-						objectDefinitionExternalReferenceCode, search,
+					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+						externalReferenceCode, search,
 						_filterBiFunction.apply(
 							objectFieldResource, filterString),
 						Pagination.of(page, pageSize),
@@ -343,13 +341,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationships(filter: ___, objectDefinitionExternalReferenceCode: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionByExternalReferenceCodeObjectRelationships(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectRelationshipPage
-			objectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationships(
-				@GraphQLName("objectDefinitionExternalReferenceCode") String
-					objectDefinitionExternalReferenceCode,
+			objectDefinitionByExternalReferenceCodeObjectRelationships(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -361,8 +359,8 @@ public class Query {
 			this::_populateResourceContext,
 			objectRelationshipResource -> new ObjectRelationshipPage(
 				objectRelationshipResource.
-					getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-						objectDefinitionExternalReferenceCode, search,
+					getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+						externalReferenceCode, search,
 						_filterBiFunction.apply(
 							objectRelationshipResource, filterString),
 						Pagination.of(page, pageSize))));
@@ -608,6 +606,80 @@ public class Query {
 		}
 
 		private ObjectFieldSetting _objectFieldSetting;
+
+	}
+
+	@GraphQLTypeExtension(ObjectDefinition.class)
+	public class
+		GetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageTypeExtension {
+
+		public GetObjectDefinitionByExternalReferenceCodeObjectRelationshipsPageTypeExtension(
+			ObjectDefinition objectDefinition) {
+
+			_objectDefinition = objectDefinition;
+		}
+
+		@GraphQLField
+		public ObjectRelationshipPage
+				byExternalReferenceCodeObjectRelationships(
+					@GraphQLName("search") String search,
+					@GraphQLName("filter") String filterString,
+					@GraphQLName("pageSize") int pageSize,
+					@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_objectRelationshipResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectRelationshipResource -> new ObjectRelationshipPage(
+					objectRelationshipResource.
+						getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+							_objectDefinition.getExternalReferenceCode(),
+							search,
+							_filterBiFunction.apply(
+								objectRelationshipResource, filterString),
+							Pagination.of(page, pageSize))));
+		}
+
+		private ObjectDefinition _objectDefinition;
+
+	}
+
+	@GraphQLTypeExtension(ObjectDefinition.class)
+	public class
+		GetObjectDefinitionByExternalReferenceCodeObjectFieldsPageTypeExtension {
+
+		public GetObjectDefinitionByExternalReferenceCodeObjectFieldsPageTypeExtension(
+			ObjectDefinition objectDefinition) {
+
+			_objectDefinition = objectDefinition;
+		}
+
+		@GraphQLField
+		public ObjectFieldPage byExternalReferenceCodeObjectFields(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_objectFieldResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectFieldResource -> new ObjectFieldPage(
+					objectFieldResource.
+						getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+							_objectDefinition.getExternalReferenceCode(),
+							search,
+							_filterBiFunction.apply(
+								objectFieldResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								objectFieldResource, sortsString))));
+		}
+
+		private ObjectDefinition _objectDefinition;
 
 	}
 

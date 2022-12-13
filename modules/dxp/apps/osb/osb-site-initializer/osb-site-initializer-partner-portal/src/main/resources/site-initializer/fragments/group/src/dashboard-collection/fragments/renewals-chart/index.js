@@ -85,11 +85,9 @@ export default function () {
 					const currentStatusColor = () => {
 						if (expirationInDays <= 5) {
 							return status[5];
-						}
-						else if (expirationInDays <= 15) {
+						} else if (expirationInDays <= 15) {
 							return status[15];
-						}
-						else if (expirationInDays <= 30) {
+						} else if (expirationInDays <= 30) {
 							return status[30];
 						}
 					};
@@ -116,9 +114,11 @@ export default function () {
 										Expires in &nbsp;
 										<span className="font-weight-semi-bold">
 											{expirationInDays} days.
-										</span>{' '}
-
-										{item.closeDate}
+										</span>
+										&nbsp;
+										<span className="ml-2">
+											{item.closeDate}
+										</span>
 									</div>
 								</div>
 							</div>

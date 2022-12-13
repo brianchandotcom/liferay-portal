@@ -132,13 +132,10 @@
 			<finder-column name="samlNameIdNameQualifier" />
 			<finder-column name="samlPeerEntityId" />
 		</finder>
-		<finder name="C_D_SNIF_SNINQ_SNIV_SPEI" return-type="Collection">
+		<finder name="C_D_SNIV" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="deleted" />
-			<finder-column name="samlNameIdFormat" />
-			<finder-column name="samlNameIdNameQualifier" />
 			<finder-column name="samlNameIdValue" />
-			<finder-column name="samlPeerEntityId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="SamlSpAuthRequest" remote-service="false">

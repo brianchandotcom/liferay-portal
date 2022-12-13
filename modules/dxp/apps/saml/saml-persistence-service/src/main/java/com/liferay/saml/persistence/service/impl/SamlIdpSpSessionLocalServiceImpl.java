@@ -26,6 +26,7 @@ import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.base.SamlIdpSpSessionLocalServiceBaseImpl;
+import com.liferay.saml.persistence.service.persistence.SamlPeerBindingFinder;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
 
 import java.util.Date;
@@ -67,7 +68,7 @@ public class SamlIdpSpSessionLocalServiceImpl
 		User user = _userLocalService.getUserById(serviceContext.getUserId());
 
 		SamlPeerBinding samlPeerBinding =
-			_samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+			_samlPeerBindingFinder.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, null, nameIdValue,
 				samlSpEntityId, null);
 
@@ -152,6 +153,9 @@ public class SamlIdpSpSessionLocalServiceImpl
 			null
 		);
 	}
+
+	@Reference
+	private SamlPeerBindingFinder _samlPeerBindingFinder;
 
 	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;

@@ -25,6 +25,7 @@ import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.base.SamlSpSessionLocalServiceBaseImpl;
+import com.liferay.saml.persistence.service.persistence.SamlPeerBindingFinder;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class SamlSpSessionLocalServiceImpl
 		User user = _userLocalService.getUserById(serviceContext.getUserId());
 
 		SamlPeerBinding samlPeerBinding =
-			_samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+			_samlPeerBindingFinder.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId, null);
 
@@ -163,11 +164,11 @@ public class SamlSpSessionLocalServiceImpl
 		List<SamlPeerBinding> samlPeerBindings = new ArrayList<>();
 
 		samlPeerBindings.addAll(
-			_samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			_samlPeerBindingFinder.findByC_D_SNIF_SNINQ_SNIV_SPEI(
 				companyId, false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId));
 		samlPeerBindings.addAll(
-			_samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SPEI(
+			_samlPeerBindingFinder.findByC_D_SNIF_SNINQ_SNIV_SPEI(
 				companyId, true, nameIdFormat, nameIdNameQualifier, nameIdValue,
 				samlIdpEntityId));
 
@@ -214,7 +215,7 @@ public class SamlSpSessionLocalServiceImpl
 		User user = _userLocalService.getUserById(serviceContext.getUserId());
 
 		SamlPeerBinding samlPeerBinding =
-			_samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
+			_samlPeerBindingFinder.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				user.getCompanyId(), false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId, null);
 
@@ -250,6 +251,9 @@ public class SamlSpSessionLocalServiceImpl
 			_samlPeerBindingPersistence.update(samlPeerBinding);
 		}
 	}
+
+	@Reference
+	private SamlPeerBindingFinder _samlPeerBindingFinder;
 
 	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;

@@ -847,7 +847,7 @@ definition {
 
 			Click(
 				key_text = "${fieldFieldLabel}",
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 		else if (isSet(fieldsetLabel)) {
 			Click(
@@ -856,7 +856,7 @@ definition {
 
 			Click(
 				key_text = "${fieldsetLabel}",
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 		else if (isSet(fieldsGroupLabel)) {
 			Click(
@@ -865,7 +865,7 @@ definition {
 
 			Click(
 				key_text = "${fieldsGroupLabel}",
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 
 		MenuItem.click(menuItem = "Delete");
@@ -895,7 +895,7 @@ definition {
 
 			Click(
 				key_text = "${fieldFieldLabel}",
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 		else if (isSet(fieldsetLabel)) {
 			Click(
@@ -904,7 +904,7 @@ definition {
 
 			Click(
 				key_text = "${fieldsetLabel}",
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 		else if (isSet(fieldsGroupLabel)) {
 			Click(
@@ -913,7 +913,7 @@ definition {
 
 			Click(
 				key_text = "${fieldsGroupLabel}",
-				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 
 		MenuItem.click(menuItem = "Duplicate");

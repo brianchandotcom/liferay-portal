@@ -35,6 +35,10 @@
 
 // New CSS - Commerce Connections
 
+.c-empty-state-animation {
+	max-width: none;
+}
+
 .empty-state-border {
 	border: 1px solid #e7e7ed;
 	margin: 20px 0;
@@ -59,8 +63,4 @@
 	position: absolute;
 	right: 0;
 	top: 0;
-}
-
-.c-empty-state-animation {
-	max-width: none;
 }

@@ -33,8 +33,6 @@ definition {
 			PagesAdmin.tearDownCP();
 
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
-
-			User.logoutPG();
 		}
 	}
 

@@ -29,7 +29,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
@@ -37,7 +36,6 @@ import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.item.selector.JournalArticleItemSelectorView;
-import com.liferay.journal.web.internal.util.JournalPortletUtil;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -298,34 +296,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			return _articleSearchContainer;
 		}
 
-		if (Validator.isNotNull(getDDMStructureKey()) && !isSearch()) {
-			SearchContainer<JournalArticle> articleSearchContainer =
-				new SearchContainer<>(
-					_portletRequest, getPortletURL(), null, null);
-
-			articleSearchContainer.setOrderByCol(_getOrderByCol());
-			articleSearchContainer.setOrderByComparator(
-				JournalPortletUtil.getArticleOrderByComparator(
-					_getOrderByCol(), _getOrderByType()));
-			articleSearchContainer.setOrderByType(_getOrderByType());
-			articleSearchContainer.setResultsAndTotal(
-				() -> JournalArticleServiceUtil.getArticlesByStructureId(
-					_getGroupId(), _getFolderId(),
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-					getDDMStructureKey(), WorkflowConstants.STATUS_APPROVED,
-					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(),
-					articleSearchContainer.getOrderByComparator()),
-				JournalArticleServiceUtil.getArticlesCountByStructureId(
-					_getGroupId(), _getFolderId(),
-					JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-					getDDMStructureKey(), WorkflowConstants.STATUS_APPROVED));
-
-			_articleSearchContainer = articleSearchContainer;
-
-			return _articleSearchContainer;
-		}
-
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
@@ -392,7 +362,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					}
 
 					return JournalFolderServiceUtil.getFoldersAndArticles(
-						_getGroupId(), 0, _getFolderId(),
+						_getGroupId(), 0, _getFolderId(), getDDMStructureKey(),
 						_infoItemItemSelectorCriterion.getStatus(),
 						_themeDisplay.getLocale(),
 						articleAndFolderSearchContainer.getStart(),
@@ -400,7 +370,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 						folderOrderByComparator);
 				},
 				JournalFolderServiceUtil.getFoldersAndArticlesCount(
-					_getGroupId(), 0, _getFolderId(),
+					_getGroupId(), 0, _getFolderId(), getDDMStructureKey(),
 					_infoItemItemSelectorCriterion.getStatus()));
 		}
 

@@ -899,6 +899,50 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test AssertTypeFacetDisplays {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title 1");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Title",
+			groupName = "Guest",
+			mimeType = "application/docx",
+			sourceFileName = "Document_1.docx");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		SearchPortlets.searchEmbedded(searchTerm = "title");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Compact Layout",
+			portletName = "Type Facet");
+
+		Refresh();
+
+		for (var Document : list "Web Content Article,Document,Blogs Entry") {
+			AssertElementPresent(
+				facetValueName = "${Document}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT");
+		}
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Label Layout",
+			portletName = "Type Facet");
+
+		Refresh();
+
+		for (var Document : list "Web Content Article,Document,Blogs Entry") {
+			AssertElementPresent(
+				facetValueName = "${Document}",
+				locator1 = "Search#FACET_LABEL_LAYOUT");
+		}
+	}
+
 	@description = "This is a use case for LPS-165397."
 	@priority = "3"
 	test CanDisableDisplaySelectedResultWithContentPages {

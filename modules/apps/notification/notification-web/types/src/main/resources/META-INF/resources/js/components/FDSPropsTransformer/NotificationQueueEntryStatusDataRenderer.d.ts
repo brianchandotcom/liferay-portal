@@ -14,10 +14,10 @@
 
 /// <reference types="react" />
 
-export declare function NotificationQueueEntryStatusDataRenderer({
-	value,
-}: IProps): JSX.Element;
-interface IProps {
+interface NotificationQueueEntryStatusDataRendererProps {
 	value: boolean | number | string;
 }
+export declare function NotificationQueueEntryStatusDataRenderer({
+	value,
+}: NotificationQueueEntryStatusDataRendererProps): JSX.Element;
 export {};

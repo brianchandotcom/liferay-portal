@@ -328,8 +328,7 @@ const PoliciesTable = () => {
 					);
 				})
 			);
-		}
-		else {
+		} else {
 			setFilterProductCheck(
 				filterProductCheck.filter((productName: string) => {
 					return productName !== `'${currentFilterName}'`;
@@ -508,8 +507,7 @@ const PoliciesTable = () => {
 						}
 						if (renewalDue === 0) {
 							return 'Due Today';
-						}
-						else {
+						} else {
 							return renewalDue;
 						}
 					};
@@ -521,8 +519,10 @@ const PoliciesTable = () => {
 
 					const monthlyPremium = termPremium / 12;
 
+					const commissionValue = Number(commission);
+
 					policiesList.push({
-						commission: `$${commission.toFixed(2)}`,
+						commission: `$${commissionValue.toFixed(2)}`,
 						externalReferenceCode,
 						isExpiring: (renewalDue < 0).toString(),
 						isRedLine: (

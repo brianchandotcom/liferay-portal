@@ -19,3 +19,7 @@ const DeliveryAPI = 'o/c/raylifeclaims';
 export function getClaimsStatus(status) {
 	return axios.get(`${DeliveryAPI}/?filter=claimStatus eq '${status}'`);
 }
+
+export function getClaims() {
+	return axios.get(`${DeliveryAPI}/`);
+}

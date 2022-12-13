@@ -667,7 +667,7 @@
 </tr>
 <tr>
 	<td>REMOVE_REPEATABLE</td>
-	<td>//*[contains(@id,"RedirectPortlet")]//div[2]/div/div[${key_index}]/div[2]/button[1]</td>
+	<td>//*[contains(@class,'sheet-section')]/div[${key_index}]//button[contains(@class,'repeatable-delete-button')]</td>
 	<td></td>
 </tr>
 <tr>

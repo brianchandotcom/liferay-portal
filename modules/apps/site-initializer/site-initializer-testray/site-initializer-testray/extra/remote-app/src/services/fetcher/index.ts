@@ -33,6 +33,10 @@ function changeResource(resource: RequestInfo) {
 		return resource;
 	}
 
+	if (resource.toString().startsWith('/dispatch-triggers')) {
+		return `${liferayHost}/o/dispatch-rest/v1.0${resource}`;
+	}
+
 	if (getIsResourceFromAPI(headlessDeliveryAPIs)) {
 		return `${liferayHost}/o/headless-delivery/v1.0${resource}`;
 	}
@@ -84,8 +88,12 @@ fetcher.patch = (resource: RequestInfo, data: unknown, options?: RequestInit) =>
 		method: 'PATCH',
 	});
 
-fetcher.post = (resource: RequestInfo, data?: unknown, options?: RequestInit) =>
-	fetcher(resource, {
+fetcher.post = <T = any>(
+	resource: RequestInfo,
+	data?: unknown,
+	options?: RequestInit
+) =>
+	fetcher<T>(resource, {
 		...options,
 		body: data ? JSON.stringify(data) : null,
 		method: 'POST',

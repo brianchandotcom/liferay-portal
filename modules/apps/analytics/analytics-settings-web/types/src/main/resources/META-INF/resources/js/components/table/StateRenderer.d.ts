@@ -13,12 +13,17 @@
  */
 
 import React from 'react';
+export declare type TEmptyState = {
+	contentRenderer?: () => JSX.Element;
+	description?: string;
+	noResultsTitle: string;
+	title: string;
+};
 interface ITableStateRendererProps extends React.HTMLAttributes<HTMLElement> {
 	empty: boolean;
-	emptyStateTitle: string;
+	emptyState: TEmptyState;
 	error: boolean;
 	loading: boolean;
-	noResultsTitle: string;
 	refetch: () => void;
 }
 declare const TableStateRenderer: React.FC<ITableStateRendererProps>;

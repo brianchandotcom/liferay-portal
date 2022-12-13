@@ -13,6 +13,7 @@
  */
 
 import React from 'react';
+import {TEmptyState} from '../table/StateRenderer';
 import {TColumn, TTableRequestParams} from '../table/types';
 import {TProperty} from './Properties';
 export declare type TRawItem = {
@@ -25,11 +26,10 @@ export declare type TRawItem = {
 interface ITabProps {
 	columns: Array<keyof TRawItem>;
 	description?: string;
-	emptyStateTitle: string;
+	emptyState: TEmptyState;
 	enableCheckboxs?: boolean;
 	header: TColumn[];
 	initialIds: number[];
-	noResultsTitle: string;
 	onItemsChange: (ids: number[]) => void;
 	property: TProperty;
 	requestFn: (params: TTableRequestParams) => Promise<any>;

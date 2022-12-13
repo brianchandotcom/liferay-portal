@@ -252,6 +252,9 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 						) : (
 							<React.Fragment key={index}>
 								<ClayDropDown.Item
+									aria-label={Liferay.Language.get(
+										dropdownItem.label
+									)}
 									onClick={() => {
 										setActive(false);
 

@@ -39,6 +39,7 @@ export function ButtonGroupField({field, onValueSelect, value}) {
 
 			{field.typeOptions?.validValues.map((validValue) => (
 				<ClayButtonWithIcon
+					aria-label={validValue.label}
 					aria-pressed={nextValue === validValue.value}
 					className={
 						nextValue === validValue.value

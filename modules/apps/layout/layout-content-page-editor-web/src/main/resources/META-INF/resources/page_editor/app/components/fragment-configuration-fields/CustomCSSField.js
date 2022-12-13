@@ -73,6 +73,7 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 					</label>
 
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('expand')}
 						className="mb-2 p-0 page-editor__custom-css-field__expand-button text-secondary"
 						displayType="unstyled"
 						monospaced

@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true,
 	property = {"osgi.command.function=dc", "osgi.command.scope=system"},
 	service = DependencyClosureOSGiCommands.class
 )

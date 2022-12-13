@@ -125,7 +125,7 @@ definition {
 	}
 
 	@priority = "3"
-	test AssertCategoryFacetLayouts {
+	test AssertCategoryFacetTermsWithDifferentDisplayTemplates {
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
 			title = "Vocabulary");
@@ -200,8 +200,26 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-138720."
+	@priority = "4"
+	test AssertCustomFacetNoXSS {
+		Search.openSearchPage();
+
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		SearchFacetPortlet.configureCustomFacet(
+			aggregationField = "title_sortable",
+			customParameterName = "title");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search?title=test1%22()%26%25%3Cacx%3E%3CScRiPt%20%3Ealert(%27XSS%27)%3C%2FScRiPt%3E");
+
+		AssertAlertNotPresent();
+	}
+
 	@priority = "3"
-	test AssertCustomFacetDisplays {
+	test AssertCustomFacetTermsWithDifferentDisplayTemplates {
 		for (var count : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "dm title ${count}",
@@ -241,24 +259,6 @@ definition {
 				facetValueName = "${Document}",
 				locator1 = "Search#FACET_LABEL_LAYOUT");
 		}
-	}
-
-	@description = "This is a use case for LPS-138720."
-	@priority = "4"
-	test AssertCustomFacetNoXSS {
-		Search.openSearchPage();
-
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
-
-		SearchFacetPortlet.configureCustomFacet(
-			aggregationField = "title_sortable",
-			customParameterName = "title");
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search?title=test1%22()%26%25%3Cacx%3E%3CScRiPt%20%3Ealert(%27XSS%27)%3C%2FScRiPt%3E");
-
-		AssertAlertNotPresent();
 	}
 
 	@description = "This is a use case for LPS-160922."
@@ -680,7 +680,7 @@ definition {
 	}
 
 	@priority = "3"
-	test AssertSiteFacetDisplays {
+	test AssertSiteFacetTermsWithDifferentDisplayTemplates {
 		for (var siteName : list "Community,Engineering,Product") {
 			JSONGroup.addGroup(groupName = "${siteName}");
 
@@ -806,7 +806,7 @@ definition {
 	}
 
 	@priority = "3"
-	test AssertTagFacetDisplays {
+	test AssertTagFacetTermsWithDifferentDisplayTemplates {
 		for (var tagName : list "engineering,product,2021,2022") {
 			JSONAssettag.addTag(
 				groupName = "Guest",
@@ -859,48 +859,7 @@ definition {
 	}
 
 	@priority = "3"
-	test AssertUserFacetDisplays {
-		for (var count : list "1,2,3") {
-			JSONUser.addUser(
-				userEmailAddress = "userea${count}@liferay.com",
-				userFirstName = "userfn${count}",
-				userLastName = "userln${count}",
-				userScreenName = "usersn${count}");
-
-			JSONUser.addUserToSite(
-				groupName = "Guest",
-				userEmailAddress = "userea${count}@liferay.com");
-		}
-
-		SearchPortlets.searchEmbedded(searchTerm = "user");
-
-		SearchFacetPortlet.updateFacetConfiguration(
-			displayTemplate = "Compact Layout",
-			portletName = "User Facet");
-
-		Refresh();
-
-		for (var users : list "userfn1 userln1,userfn2 userln2,userfn3 userln3") {
-			AssertElementPresent(
-				facetValueName = "${users}",
-				locator1 = "Search#FACET_COMPACT_LAYOUT");
-		}
-
-		SearchFacetPortlet.updateFacetConfiguration(
-			displayTemplate = "Label Layout",
-			portletName = "User Facet");
-
-		Refresh();
-
-		for (var users : list "userfn1 userln1,userfn2 userln2,userfn3 userln3") {
-			AssertElementPresent(
-				facetValueName = "${users}",
-				locator1 = "Search#FACET_LABEL_LAYOUT");
-		}
-	}
-
-	@priority = "3"
-	test AssertTypeFacetDisplays {
+	test AssertTypeFacetTermsWithDifferentDisplayTemplates {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",
@@ -939,6 +898,47 @@ definition {
 		for (var Document : list "Web Content Article,Document,Blogs Entry") {
 			AssertElementPresent(
 				facetValueName = "${Document}",
+				locator1 = "Search#FACET_LABEL_LAYOUT");
+		}
+	}
+
+	@priority = "3"
+	test AssertUserFacetTermsWithDifferentDisplayTemplates {
+		for (var count : list "1,2,3") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${count}@liferay.com",
+				userFirstName = "userfn${count}",
+				userLastName = "userln${count}",
+				userScreenName = "usersn${count}");
+
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "userea${count}@liferay.com");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "user");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Compact Layout",
+			portletName = "User Facet");
+
+		Refresh();
+
+		for (var users : list "userfn1 userln1,userfn2 userln2,userfn3 userln3") {
+			AssertElementPresent(
+				facetValueName = "${users}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT");
+		}
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Label Layout",
+			portletName = "User Facet");
+
+		Refresh();
+
+		for (var users : list "userfn1 userln1,userfn2 userln2,userfn3 userln3") {
+			AssertElementPresent(
+				facetValueName = "${users}",
 				locator1 = "Search#FACET_LABEL_LAYOUT");
 		}
 	}

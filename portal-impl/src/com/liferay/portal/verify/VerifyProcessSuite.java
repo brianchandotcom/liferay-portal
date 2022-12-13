@@ -36,6 +36,7 @@ public class VerifyProcessSuite extends VerifyProcess {
 		}
 		else {
 			verify(new VerifyGroup());
+			verify(new VerifyLayout());
 
 			verify(new VerifyResourcePermissions());
 		}

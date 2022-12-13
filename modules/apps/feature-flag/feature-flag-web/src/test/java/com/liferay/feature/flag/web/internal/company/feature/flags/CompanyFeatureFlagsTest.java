@@ -1,0 +1,142 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.feature.flag.web.internal.company.feature.flags;
+
+import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
+import com.liferay.feature.flag.web.internal.model.FeatureFlag;
+import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
+import com.liferay.feature.flag.web.internal.model.FeatureFlagStatus;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
+import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsImpl;
+import com.liferay.portal.util.PropsUtil;
+
+import java.util.List;
+import java.util.Set;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+/**
+ * @author Drew Brokke
+ */
+public class CompanyFeatureFlagsTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() throws Exception {
+		_expectedFeatureFlags = new FeatureFlag[] {
+			_betaFeatureFlag, _devFeatureFlag, _releaseFeatureFlag
+		};
+
+		_companyFeatureFlags = new CompanyFeatureFlags(_expectedFeatureFlags);
+	}
+
+	@Test
+	public void testGetFeatureFlags() {
+		List<FeatureFlag> actualFeatureFlags =
+			_companyFeatureFlags.getFeatureFlags(null);
+
+		Assert.assertEquals(
+			actualFeatureFlags.toString(), _expectedFeatureFlags.length,
+			actualFeatureFlags.size());
+
+		actualFeatureFlags = _companyFeatureFlags.getFeatureFlags(
+			FeatureFlagStatus.BETA.getPredicate());
+
+		Assert.assertEquals(
+			actualFeatureFlags.toString(), 1, actualFeatureFlags.size());
+
+		FeatureFlag featureFlag = actualFeatureFlags.get(0);
+
+		Assert.assertEquals(_betaFeatureFlag.getKey(), featureFlag.getKey());
+	}
+
+	@Test
+	public void testGetJSON() throws JSONException {
+		String json = _companyFeatureFlags.getJSON();
+
+		JSONObject jsonObject = new JSONObjectImpl(json);
+
+		Set<String> keySet = jsonObject.keySet();
+
+		Assert.assertEquals(
+			keySet.toString(), _expectedFeatureFlags.length, keySet.size());
+
+		for (FeatureFlag featureFlag : _expectedFeatureFlags) {
+			Assert.assertEquals(
+				featureFlag.isEnabled(),
+				jsonObject.getBoolean(featureFlag.getKey()));
+		}
+	}
+
+	@NewEnv(type = NewEnv.Type.JVM)
+	@Test
+	public void testIsEnabled() {
+		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+
+		for (FeatureFlag expectedFeatureFlag : _expectedFeatureFlags) {
+			Assert.assertEquals(
+				expectedFeatureFlag.isEnabled(),
+				_companyFeatureFlags.isEnabled(expectedFeatureFlag.getKey()));
+		}
+
+		String randomKey = _createKey();
+
+		Assert.assertFalse(_companyFeatureFlags.isEnabled(randomKey));
+
+		PropsUtil.set(
+			FeatureFlagConstants.getKey(randomKey), Boolean.TRUE.toString());
+
+		Assert.assertTrue(_companyFeatureFlags.isEnabled(randomKey));
+	}
+
+	private FeatureFlag _createFeatureFlag(
+		FeatureFlagStatus featureFlagStatus) {
+
+		return new FeatureFlagImpl(
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
+			featureFlagStatus, _createKey(), RandomTestUtil.randomString());
+	}
+
+	private String _createKey() {
+		return RandomTestUtil.randomString(
+			5, NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
+	}
+
+	private final FeatureFlag _betaFeatureFlag = _createFeatureFlag(
+		FeatureFlagStatus.BETA);
+	private CompanyFeatureFlags _companyFeatureFlags;
+	private final FeatureFlag _devFeatureFlag = _createFeatureFlag(
+		FeatureFlagStatus.DEV);
+	private FeatureFlag[] _expectedFeatureFlags;
+	private final FeatureFlag _releaseFeatureFlag = _createFeatureFlag(
+		FeatureFlagStatus.RELEASE);
+
+}

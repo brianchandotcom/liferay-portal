@@ -289,6 +289,7 @@ interface PickList {
 }
 
 interface PickListItem {
+	externalReferenceCode: string;
 	id: number;
 	key: string;
 	name: string;

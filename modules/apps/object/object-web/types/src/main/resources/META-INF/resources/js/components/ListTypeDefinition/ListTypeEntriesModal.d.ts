@@ -16,6 +16,7 @@
 
 export interface IModalState extends Partial<PickListItem> {
 	header?: string;
+	itemExternalReferenceCode?: string;
 	itemId?: number;
 	itemKey?: string;
 	modalType?: 'add' | 'edit';

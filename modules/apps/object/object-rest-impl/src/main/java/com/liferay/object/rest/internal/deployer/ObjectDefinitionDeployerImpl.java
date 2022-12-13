@@ -26,16 +26,19 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryManage
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValuesExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectValidationRuleEngineExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
+import com.liferay.object.rest.internal.openapi.v1_0.ObjectEntryOpenAPIResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactoryImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -63,7 +66,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
+import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import java.lang.reflect.Method;
 
@@ -182,6 +187,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			}
 		}
 
+		boolean unregisterApplication = true;
+
 		List<String> companyIds = _restContextPathCompanyIds.get(
 			restContextPath);
 
@@ -195,8 +202,35 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				serviceRegistration.setProperties(
 					_applicationProperties.get(restContextPath));
 
-				return;
+				unregisterApplication = false;
 			}
+		}
+
+		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
+			_scopedServiceRegistrationsMap.get(restContextPath);
+
+		if (serviceRegistrationsMap != null) {
+			List<ServiceRegistration<?>> serviceRegistrations =
+				serviceRegistrationsMap.remove(objectDefinition.getCompanyId());
+
+			if (serviceRegistrations != null) {
+				for (ServiceRegistration<?> serviceRegistration :
+						serviceRegistrations) {
+
+					serviceRegistration.unregister();
+				}
+			}
+
+			if (serviceRegistrationsMap.isEmpty()) {
+				_scopedServiceRegistrationsMap.remove(restContextPath);
+			}
+			else {
+				unregisterApplication = false;
+			}
+		}
+
+		if (!unregisterApplication) {
+			return;
 		}
 
 		List<ComponentInstance> componentInstances =
@@ -334,12 +368,49 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				restContextPath,
 				_bundleContext.registerService(
 					Application.class,
-					new ObjectEntryApplication(_objectEntryOpenAPIResource),
+					new ObjectEntryApplication(
+						_objectEntryOpenAPIResourceProvider),
 					properties));
 		}
 		else {
 			applicationServiceRegistration.setProperties(properties);
 		}
+
+		_scopedServiceRegistrationsMap.compute(
+			restContextPath,
+			(key1, serviceRegistrationsMap) -> {
+				if (serviceRegistrationsMap == null) {
+					serviceRegistrationsMap = new HashMap<>();
+				}
+
+				serviceRegistrationsMap.computeIfAbsent(
+					objectDefinition.getCompanyId(),
+					key2 -> Arrays.asList(
+						_bundleContext.registerService(
+							ObjectEntryOpenAPIResource.class,
+							new ObjectEntryOpenAPIResourceImpl(
+								_bundleContext, _dtoConverterRegistry,
+								_objectActionLocalService, objectDefinition,
+								_objectDefinitionLocalService,
+								_objectFieldLocalService,
+								_objectRelationshipLocalService,
+								_openAPIResource,
+								_systemObjectDefinitionMetadataRegistry),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"companyId", objectDefinition.getCompanyId()
+							).put(
+								"openapi.resource", "true"
+							).put(
+								"openapi.resource.key",
+								objectDefinition.getOSGiJaxRsName(
+									"ObjectEntryOpenAPIResource")
+							).put(
+								"openapi.resource.path",
+								objectDefinition.getRESTContextPath()
+							).build())));
+
+				return serviceRegistrationsMap;
+			});
 
 		_serviceRegistrationsMap.computeIfAbsent(
 			restContextPath,
@@ -565,6 +636,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
 
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
 	)
@@ -580,6 +654,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private ObjectActionLocalService _objectActionLocalService;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private final Map<String, Map<Long, ObjectDefinition>>
@@ -592,7 +669,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 	@Reference
-	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
+	private ObjectEntryOpenAPIResourceProvider
+		_objectEntryOpenAPIResourceProvider;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
@@ -609,6 +687,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private OpenAPIResource _openAPIResource;
 
 	@Reference
 	private PersistedModelLocalServiceRegistry
@@ -634,6 +715,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private RoleLocalService _roleLocalService;
 
+	private final Map<String, Map<Long, List<ServiceRegistration<?>>>>
+		_scopedServiceRegistrationsMap = new HashMap<>();
 	private final Map<String, List<ServiceRegistration<?>>>
 		_serviceRegistrationsMap = new HashMap<>();
 

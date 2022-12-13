@@ -109,14 +109,16 @@ export default function CartQuickAdd() {
 
 		products.forEach((product) => {
 			if (itemSKUs.includes(product.skus[0].sku)) {
+				const {productConfiguration, skus, urls} = product;
+
 				readyProducts.push({
 					...product,
-					price: product.skus[0].price,
-					productURLs: product.urls,
-					quantity: 1,
-					settings: product.productConfiguration,
-					sku: product.skus[0].sku,
-					skuId: product.skus[0].id,
+					price: skus[0].price,
+					productURLs: urls,
+					quantity: productConfiguration.minOrderQuantity,
+					settings: productConfiguration,
+					sku: skus[0].sku,
+					skuId: skus[0].id,
 				});
 			}
 		});

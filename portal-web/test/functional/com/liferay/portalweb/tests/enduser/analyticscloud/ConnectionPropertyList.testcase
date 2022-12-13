@@ -1,0 +1,69 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12570 | Test Summary: Check that a property is created automatically after connection"
+	@priority = "5"
+	test CheckIfPropertyCreatedAutomaticallyAfterConnection {
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			var propertyName1 = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Copy the token from AC again") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP") {
+			ACUtils.launchDXP();
+		}
+
+		task ("Connect DXP to AC again to create a new property automatically") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			var propertyName2 = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Check that other property was automatically created at the top of the list") {
+			TestUtils.assertNotEquals(
+				actual = "${propertyName2}",
+				expected = "${propertyName1}");
+		}
+	}
+
+}

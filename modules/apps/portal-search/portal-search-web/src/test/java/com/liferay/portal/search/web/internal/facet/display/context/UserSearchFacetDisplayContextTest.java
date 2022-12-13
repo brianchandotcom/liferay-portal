@@ -100,9 +100,9 @@ public class UserSearchFacetDisplayContextTest {
 			userSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			0, userSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			userName, userSearchFacetTermDisplayContext.getBucketText());
+		Assert.assertEquals(
+			0, userSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertTrue(userSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			userSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -138,9 +138,9 @@ public class UserSearchFacetDisplayContextTest {
 			userSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			count, userSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			userName, userSearchFacetTermDisplayContext.getBucketText());
+		Assert.assertEquals(
+			count, userSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertFalse(userSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			userSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -176,9 +176,9 @@ public class UserSearchFacetDisplayContextTest {
 			userSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			count, userSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			userName, userSearchFacetTermDisplayContext.getBucketText());
+		Assert.assertEquals(
+			count, userSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertTrue(userSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			userSearchFacetTermDisplayContext.isFrequencyVisible());

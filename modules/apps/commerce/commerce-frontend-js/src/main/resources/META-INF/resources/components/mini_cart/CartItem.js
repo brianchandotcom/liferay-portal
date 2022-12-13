@@ -44,8 +44,20 @@ const deboncedUpdateItemQuantity = debouncePromise(
 
 		return CartResource.updateItemById(cartItemId, {
 			quantity,
-		}).catch(() => {
-			throw UNEXPECTED_ERROR;
+		}).catch((error) => {
+			let errorMessage;
+
+			if (error.message) {
+				errorMessage = error.message;
+			}
+			else if (error.detail) {
+				errorMessage = error.detail;
+			}
+			else {
+				errorMessage = UNEXPECTED_ERROR;
+			}
+
+			throw errorMessage;
 		});
 	},
 	1000

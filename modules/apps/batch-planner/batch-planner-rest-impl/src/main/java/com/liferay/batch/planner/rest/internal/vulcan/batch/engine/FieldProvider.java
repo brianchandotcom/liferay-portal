@@ -17,6 +17,7 @@ package com.liferay.batch.planner.rest.internal.vulcan.batch.engine;
 import com.liferay.batch.planner.rest.internal.vulcan.yaml.openapi.OpenAPIYAMLProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -67,8 +68,12 @@ public class FieldProvider {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				companyId, objectDefinitionName);
 
-		Map<String, Field> fields = _objectEntryOpenAPIResource.getFields(
-			objectDefinition, uriInfo);
+		ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
+			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(
+				objectDefinition);
+
+		Map<String, Field> fields = objectEntryOpenAPIResource.getFields(
+			uriInfo);
 
 		return new ArrayList<>(fields.values());
 	}
@@ -89,7 +94,8 @@ public class FieldProvider {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
+	private ObjectEntryOpenAPIResourceProvider
+		_objectEntryOpenAPIResourceProvider;
 
 	@Reference
 	private OpenAPIYAMLProvider _openAPIYAMLProvider;

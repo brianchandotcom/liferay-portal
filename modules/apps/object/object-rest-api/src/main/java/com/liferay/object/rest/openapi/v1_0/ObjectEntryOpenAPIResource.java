@@ -14,7 +14,6 @@
 
 package com.liferay.object.rest.openapi.v1_0;
 
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.vulcan.batch.engine.Field;
 
 import java.util.Map;
@@ -27,10 +26,8 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface ObjectEntryOpenAPIResource {
 
-	public Map<String, Field> getFields(UriInfo uriInfo)
-		throws Exception;
+	public Map<String, Field> getFields(UriInfo uriInfo) throws Exception;
 
-	public Response getOpenAPI(String type, UriInfo uriInfo)
-		throws Exception;
+	public Response getOpenAPI(String type, UriInfo uriInfo) throws Exception;
 
 }

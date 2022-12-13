@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -49,6 +49,7 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {buildId, projectId, routineId, ...otherParams} = useParams();
 	const {pathname} = useLocation();
 	const {testrayProject, testrayRoutine}: OutletContext = useOutletContext();
+	const [runId, setRunId] = useState<Number>();
 
 	const {
 		data: testrayBuild,
@@ -158,6 +159,8 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 				<Outlet
 					context={{
 						mutateBuild,
+						runId,
+						setRunId,
 						testrayBuild,
 						testrayProject,
 						testrayRoutine,

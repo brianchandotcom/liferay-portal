@@ -9,7 +9,14 @@
 	padding: 0;
 }
 
+.popover {
+	max-width: 900px !important;
+	width: 480px !important;
+	z-index: 99;
+}
+
 .compare-runs-popover {
+	top: 210px !important;
 	z-index: 98;
 }
 

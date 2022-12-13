@@ -12,10 +12,12 @@
  * details.
  */
 
-import {useParams} from 'react-router-dom';
+import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../../../../components/Layout/Container';
 import ListViewRest from '../../../../../../components/ListView';
+
+import {} from '../../../../../../context/AccountContext';
 import i18n from '../../../../../../i18n';
 import {filters} from '../../../../../../schema/filter';
 import {testrayRunImpl} from '../../../../../../services/rest';
@@ -23,9 +25,17 @@ import {searchUtil} from '../../../../../../util/search';
 import RunFormModal from './RunFormModal';
 import useRunActions from './useRunActions';
 
+interface BuildOutlet {
+	runId: Number | undefined;
+	setRunId: React.Dispatch<React.SetStateAction<Number | undefined>>;
+}
+
 const Runs = () => {
 	const {actions, formModal} = useRunActions();
 	const {buildId} = useParams();
+	const navigate = useNavigate();
+
+	const {setRunId} = useOutletContext<BuildOutlet>();
 
 	return (
 		<Container className="mt-4">
@@ -41,13 +51,28 @@ const Runs = () => {
 					actions,
 					columns: [
 						{
+							clickable: true,
 							key: 'number',
 							render: (number) =>
 								number?.toString().padStart(2, '0'),
 							value: i18n.translate('run'),
 						},
 						{
+							clickable: true,
 							key: 'applicationServer',
+							render: (applicationServer, item) => {
+								return (
+									<div
+										onClick={() => {
+											setRunId(item.id);
+
+											return navigate('..');
+										}}
+									>
+										{applicationServer}
+									</div>
+								);
+							},
 							value: i18n.translate('application-server'),
 						},
 						{

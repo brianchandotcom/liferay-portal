@@ -19,12 +19,12 @@ import {TestrayCaseResult} from '../../../../../../services/rest';
 import {searchUtil} from '../../../../../../util/search';
 import CaseResultHistory from '../../../../Cases/CaseResultHistory';
 
-type CaseResultOutlet = {
+type OutletContext = {
 	caseResult: TestrayCaseResult;
 };
 
 const History = () => {
-	const {caseResult} = useOutletContext<CaseResultOutlet>();
+	const {caseResult} = useOutletContext<OutletContext>();
 
 	const {projectId} = useParams();
 

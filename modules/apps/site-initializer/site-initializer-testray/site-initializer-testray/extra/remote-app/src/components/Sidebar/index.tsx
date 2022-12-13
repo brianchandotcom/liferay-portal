@@ -74,23 +74,26 @@ const Sidebar = () => {
 				>
 					<ClayPopover
 						alignPosition="right"
-						className={classNames('compare-runs-popover', {
+						className={classNames('compare-runs-popover popover', {
 							'testray-sidebar-text': expanded,
 							'testray-sidebar-text-expanded': !expanded,
 						})}
 						closeOnClickOutside
 						disableScroll
 						header={i18n.translate('compare-runs')}
-						size="lg"
 						trigger={
 							<div>
-								<Tooltip
-									position="right"
-									ref={tooltipRef}
-									title={i18n.translate('compare-runs')}
-								>
-									{CompareRunsContent}
-								</Tooltip>
+								{!expanded ? (
+									<Tooltip
+										position="right"
+										ref={tooltipRef}
+										title={i18n.translate('compare-runs')}
+									>
+										{CompareRunsContent}
+									</Tooltip>
+								) : (
+									CompareRunsContent
+								)}
 							</div>
 						}
 					>

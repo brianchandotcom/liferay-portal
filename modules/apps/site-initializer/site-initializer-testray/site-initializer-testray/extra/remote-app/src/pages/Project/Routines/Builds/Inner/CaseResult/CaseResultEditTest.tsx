@@ -140,7 +140,7 @@ const CaseResultEditTest = () => {
 	const inputProps = {
 		errors,
 		register,
-		required: true,
+		required: false,
 	};
 
 	return (

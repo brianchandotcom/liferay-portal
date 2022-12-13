@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useParams} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Avatar from '../../../../components/Avatar';
 import AssignToMe from '../../../../components/Avatar/AssigneToMe';
@@ -29,13 +29,28 @@ import {
 	TestrayCaseResult,
 	testrayCaseResultImpl,
 } from '../../../../services/rest';
-import {searchUtil} from '../../../../util/search';
+import {SearchBuilder} from '../../../../util/search';
 import useBuildTestActions from './useBuildTestActions';
+
+interface OutletContext {
+	runId: number | undefined;
+}
 
 const Build = () => {
 	const {buildId} = useParams();
 	const {updateItemFromList} = useMutate();
 	const {actions, form} = useBuildTestActions();
+	const {runId} = useOutletContext<OutletContext>();
+
+	const caseResultFilter = new SearchBuilder();
+
+	const filtersTest = runId
+		? caseResultFilter
+				.eq('buildId', buildId as string)
+				.and()
+				.eq('runId', runId)
+				.build()
+		: caseResultFilter.eq('buildId', buildId as string).build();
 
 	return (
 		<Container className="mt-4">
@@ -156,7 +171,7 @@ const Build = () => {
 					testrayCaseResultImpl.transformDataFromList(response)
 				}
 				variables={{
-					filter: searchUtil.eq('buildId', buildId as string),
+					filter: filtersTest,
 				}}
 			/>
 		</Container>

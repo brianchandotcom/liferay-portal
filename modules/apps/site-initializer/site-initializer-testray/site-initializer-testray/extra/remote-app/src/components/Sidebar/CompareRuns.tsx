@@ -20,44 +20,45 @@ const CompareRun = () => {
 	const navigate = useNavigate();
 
 	return (
-		<div style={{width: '380px'}}>
+		<div>
 			<ClayLayout.Row>
 				<ClayLayout.Col>
 					<label htmlFor="runA">Run A</label>
 
-					<ClayButton block displayType="secondary">
-						Add Run
+					<ClayButton block disabled displayType="secondary">
+						Add Run A
 					</ClayButton>
 				</ClayLayout.Col>
 
 				<ClayLayout.Col>
 					<label htmlFor="runB">Run B</label>
 
-					<ClayButton block displayType="secondary">
-						Add Run
+					<ClayButton block disabled displayType="secondary">
+						Add Run B
 					</ClayButton>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 
-			<div className="mb-3 mt-4">
-				<ClayButton
-					className="mr-2"
-					displayType="secondary"
-					onClick={() => navigate('compare-runs')}
-				>
-					Compare Runs
-				</ClayButton>
+			<ClayLayout.Row className="mb-3 mt-4">
+				<ClayLayout.Col className="d-flex justify-content-between">
+					<ClayButton
+						displayType="secondary"
+						onClick={() => navigate('compare-runs')}
+					>
+						Compare Runs
+					</ClayButton>
 
-				<ClayButton disabled displayType="secondary">
-					Auto Fill
-				</ClayButton>
-			</div>
+					<ClayButton disabled displayType="secondary">
+						Auto Fill Runs
+					</ClayButton>
 
-			<div>
-				<ClayButton className="mr-2" disabled displayType="secondary">
-					Auto Fill Builds
-				</ClayButton>
+					<ClayButton disabled displayType="secondary">
+						Auto Fill Builds
+					</ClayButton>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
 
+			<div className="d-flex justify-content-end">
 				<ClayButton displayType="secondary">Clear</ClayButton>
 			</div>
 		</div>

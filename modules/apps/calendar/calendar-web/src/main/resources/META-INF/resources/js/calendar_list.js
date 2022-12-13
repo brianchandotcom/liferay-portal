@@ -171,7 +171,10 @@ AUI.add(
 				},
 
 				_onEvents(event) {
-					if (event.keyCode === 13 || event.type === 'click') {
+					if (
+						event.keyCode === A.Event.KeyMap.ENTER ||
+						event.type === 'click'
+					) {
 						const instance = this;
 
 						const target = event.target.ancestor(

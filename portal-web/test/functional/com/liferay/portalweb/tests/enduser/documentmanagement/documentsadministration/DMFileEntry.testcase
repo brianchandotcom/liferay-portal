@@ -2957,8 +2957,8 @@ definition {
 
 	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
 	@priority = "5"
-	@refactorneeded
-	test ValidateFileNameRestrictions {
+	@refactordone
+	test WillRejectForbiddenCharactersInFileName {
 		property portal.acceptance = "true";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

@@ -67,6 +67,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					}
 
 					row.setData(journalArticleItemSelectorViewDisplayContext.getJournalArticleContext(curArticle));
+					row.setPrimaryKey(curArticle.getArticleId());
 					%>
 
 					<c:choose>
@@ -125,7 +126,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
 									disabled="<%= journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle) %>"
-									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest) %>"
+									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest, journalArticleItemSelectorViewDisplayContext.isMultiSelection()) %>"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>

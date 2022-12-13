@@ -42,9 +42,11 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalArticleItemSelectorVerticalCard implements VerticalCard {
 
 	public JournalArticleItemSelectorVerticalCard(
-		JournalArticle article, RenderRequest renderRequest) {
+		JournalArticle article, RenderRequest renderRequest,
+		boolean selectable) {
 
 		_article = article;
+		_selectable = selectable;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
@@ -102,11 +104,12 @@ public class JournalArticleItemSelectorVerticalCard implements VerticalCard {
 
 	@Override
 	public boolean isSelectable() {
-		return false;
+		return _selectable;
 	}
 
 	private final JournalArticle _article;
 	private final HttpServletRequest _httpServletRequest;
+	private final boolean _selectable;
 	private final ThemeDisplay _themeDisplay;
 
 }

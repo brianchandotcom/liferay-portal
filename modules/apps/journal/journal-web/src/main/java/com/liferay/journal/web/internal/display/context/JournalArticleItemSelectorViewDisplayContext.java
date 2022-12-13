@@ -35,8 +35,10 @@ import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.dao.search.JournalRowChecker;
 import com.liferay.journal.web.internal.item.selector.JournalArticleItemSelectorView;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -305,6 +307,18 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		SearchContainer<Object> articleAndFolderSearchContainer =
 			new SearchContainer<>(_portletRequest, portletURL, null, null);
 
+		if (_infoItemItemSelectorCriterion.isMultiSelection()) {
+			JournalRowChecker journalRowChecker = new JournalRowChecker(
+				_portletResponse);
+
+			journalRowChecker.setRememberCheckBoxStateURLRegex(
+				StringBundler.concat(
+					"^(?!.*", _portletResponse.getNamespace(),
+					"redirect).*(folderId=", _getFolderId(), ")"));
+
+			articleAndFolderSearchContainer.setRowChecker(journalRowChecker);
+		}
+
 		articleAndFolderSearchContainer.setOrderByCol(_getOrderByCol());
 		articleAndFolderSearchContainer.setOrderByType(_getOrderByType());
 
@@ -377,6 +391,10 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		_articleSearchContainer = articleAndFolderSearchContainer;
 
 		return _articleSearchContainer;
+	}
+
+	public boolean isMultiSelection() {
+		return _infoItemItemSelectorCriterion.isMultiSelection();
 	}
 
 	public boolean isRefererArticle(JournalArticle journalArticle) {

@@ -135,6 +135,11 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getSearchContainerId() {
+		return "articles";
+	}
+
+	@Override
 	public String getSortingOrder() {
 		if (Objects.equals(getOrderByCol(), "relevance")) {
 			return null;
@@ -145,7 +150,7 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isSelectable() {
-		return false;
+		return _journalArticleItemSelectorViewDisplayContext.isMultiSelection();
 	}
 
 	@Override

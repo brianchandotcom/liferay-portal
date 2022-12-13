@@ -1636,7 +1636,7 @@ definition {
 				fieldId = "JsonWebKey",
 				text = "${jwk}");
 
-			PortletEntry.save();
+			SystemSettings.saveConfiguration();
 		}
 
 		task ("When: Visit URI where can obtain a JWKS") {

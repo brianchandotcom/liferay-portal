@@ -615,7 +615,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return false;
 	}
 
-	private SearchContext _populateSearchContext(
+	private void _populateSearchContext(
 			List<Long> folderIds, int start, int end,
 			SearchContext searchContext)
 		throws PortalException {
@@ -683,8 +683,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		}
 
 		searchContext.setStart(start);
-
-		return searchContext;
 	}
 
 	private SearchContainer<?> _articleSearchContainer;

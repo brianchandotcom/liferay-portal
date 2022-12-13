@@ -424,6 +424,7 @@
 				(JournalArticle.classNameId = 0) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 				[$ARTICLE_FOLDER_ID$]
+				[$DDM_STRUCTURE_KEY$]
 		]]>
 	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countF_ByG_F">
@@ -453,6 +454,7 @@
 						(JournalArticle.classNameId = 0) AND
 						([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 						[$ARTICLE_FOLDER_ID$]
+						[$DDM_STRUCTURE_KEY$]
 					GROUP BY
 						JournalArticle.groupId, JournalArticle.folderId, JournalArticle.articleId
 				) TEMP_TABLE
@@ -478,6 +480,7 @@
 						(JournalArticle.classNameId = 0) AND
 						([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 						[$ARTICLE_FOLDER_ID$]
+						[$DDM_STRUCTURE_KEY$]
 					GROUP BY
 						JournalArticle.groupId, JournalArticle.folderId, JournalArticle.articleId
 				) TEMP_TABLE

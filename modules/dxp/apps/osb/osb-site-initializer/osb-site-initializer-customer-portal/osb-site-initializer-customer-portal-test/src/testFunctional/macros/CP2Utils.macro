@@ -2,6 +2,7 @@ definition {
 
 	macro assertChangeRole {
 		AssertElementPresent(
+			key_email = "${email}",
 			key_role = "${role}",
 			locator1 = "CP2Utils#ROLE");
 	}

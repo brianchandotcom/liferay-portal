@@ -142,6 +142,10 @@ definition {
 			var groupPermissions = "true";
 		}
 
+		if (!(isSet(dmFriendlyURL))) {
+			var dmFriendlyURL = "";
+		}
+
 		if (!(isSet(guestPermissions))) {
 			var guestPermissions = "true";
 		}
@@ -170,7 +174,7 @@ definition {
 				-F sourceFileName=${sourceFileName} \
 				-F mimeType=${mimeType} \
 				-F title=${dmDocumentTitle} \
-				-F urlTitle= \
+				-F urlTitle=${dmFriendlyURL} \
 			 	-F description=${description} \
 				-F changeLog= \
 				-F <CURL_DATA[expirationDate=${expirationDate}]CURL_DATA> \

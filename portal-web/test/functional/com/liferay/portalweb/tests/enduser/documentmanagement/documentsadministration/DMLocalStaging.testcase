@@ -1837,8 +1837,11 @@ definition {
 			assetTagNames = "tag1",
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
+			dmFriendlyURL = "Document_1",
 			groupName = "Site Name-staging",
+			increaseMinutes = "0",
 			mimeType = "image/jpeg",
+			reviewDate = "true",
 			sourceFileName = "Document_1.jpg");
 
 		Navigator.openSiteURL(siteName = "Site Name");

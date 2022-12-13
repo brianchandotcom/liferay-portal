@@ -45,15 +45,32 @@ const Activities = ({
 	const [currentActivityIndex, setCurrentActivityIndex] = useState<number>(
 		values.activities.length
 	);
+	const [fromOnEdit, setFromOnEdit] = useState(false);
+
+	const [activityFormEmpty, setActivityFormEmpty] = useState(false);
 
 	const onAdd = () => {
 		setCurrentActivityIndex(values.activities.length);
+		setIsForm(true);
+		setFromOnEdit(false);
+
+		if (activityFormEmpty) {
+			arrayHelpers.remove(currentActivityIndex);
+			setActivityFormEmpty(true);
+		}
+	};
+
+	const onEdit = (index: number) => {
+		setCurrentActivityIndex(index);
+		setFromOnEdit(true);
 
 		setIsForm(true);
 	};
 
 	const onPreviousForm = () => {
-		arrayHelpers.remove(currentActivityIndex);
+		!fromOnEdit
+			? arrayHelpers.remove(currentActivityIndex)
+			: currentActivityIndex;
 
 		setIsForm(false);
 	};
@@ -79,6 +96,7 @@ const Activities = ({
 					{...arrayHelpers}
 					activities={values.activities}
 					onAdd={onAdd}
+					onEdit={onEdit}
 					overallCampaignName={values.overallCampaignName}
 				/>
 			)}

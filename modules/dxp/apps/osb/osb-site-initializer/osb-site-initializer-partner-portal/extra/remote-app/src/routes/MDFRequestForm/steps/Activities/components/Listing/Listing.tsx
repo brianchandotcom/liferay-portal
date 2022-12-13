@@ -21,12 +21,14 @@ import getNewActivity from '../../utils/getNewActivity';
 interface IProps {
 	activities: MDFRequestActivity[];
 	onAdd: () => void;
+	onEdit: (index: number) => void;
 	overallCampaignName: string;
 }
 
 const Listing = ({
 	activities,
 	onAdd,
+	onEdit,
 	overallCampaignName,
 	push,
 	remove,
@@ -45,6 +47,7 @@ const Listing = ({
 						<ActivityPanel
 							activity={activity}
 							key={index}
+							onEdit={() => onEdit(index)}
 							onRemove={() => remove(index)}
 							overallCampaignName={overallCampaignName}
 						/>

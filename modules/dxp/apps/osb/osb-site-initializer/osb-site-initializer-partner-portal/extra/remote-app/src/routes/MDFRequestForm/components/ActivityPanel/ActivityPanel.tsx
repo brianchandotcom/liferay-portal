@@ -20,6 +20,7 @@ interface IProps {
 	activity: MDFRequestActivity;
 	children?: React.ReactNode;
 	detail?: boolean;
+	onEdit?: () => void;
 	onRemove?: () => void;
 	overallCampaignName: string;
 }
@@ -28,6 +29,7 @@ const ActivityPanel = ({
 	activity,
 	children,
 	detail,
+	onEdit,
 	onRemove,
 	overallCampaignName,
 }: IProps) => {
@@ -55,12 +57,21 @@ const ActivityPanel = ({
 
 						<div className="ml-5">
 							{!detail && (
-								<ClayButtonWithIcon
-									displayType={null}
-									onClick={onRemove}
-									small
-									symbol="trash"
-								/>
+								<div className="d-flex">
+									<ClayButtonWithIcon
+										displayType={null}
+										onClick={onEdit}
+										small
+										symbol="pencil"
+									/>
+
+									<ClayButtonWithIcon
+										displayType={null}
+										onClick={onRemove}
+										small
+										symbol="trash"
+									/>
+								</div>
 							)}
 						</div>
 					</div>

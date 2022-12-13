@@ -176,10 +176,10 @@ AUI.add(
 					const handler = getClickItemHandler(id, items);
 
 					if (handler) {
-						instance._closeMenu();
-
 						handler.apply(instance, arguments);
 					}
+
+					instance._closeMenu();
 				},
 
 				_onClickOutside(event) {

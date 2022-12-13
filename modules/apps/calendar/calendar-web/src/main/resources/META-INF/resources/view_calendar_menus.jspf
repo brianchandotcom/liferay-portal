@@ -507,8 +507,6 @@
 					calendarList.activeItem.set('color', event.newVal, {
 						silent: true,
 					});
-
-					simpleMenu.set('visible', false);
 				}
 			},
 		},

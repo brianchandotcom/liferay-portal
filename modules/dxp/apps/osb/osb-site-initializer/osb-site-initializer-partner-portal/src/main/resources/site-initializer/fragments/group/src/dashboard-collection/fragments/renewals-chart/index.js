@@ -117,7 +117,7 @@ export default function () {
 										<span className="font-weight-semi-bold">
 											{expirationInDays} days.
 										</span>
-										
+
 										<span className="ml-2">
 											{item.closeDate}
 										</span>

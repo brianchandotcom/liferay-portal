@@ -53,6 +53,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -89,7 +91,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	@Override
 	public Map<String, Field> getFields(UriInfo uriInfo) throws Exception {
-		Response response = getOpenAPI("json", uriInfo);
+		Response response = getOpenAPI(null, "json", uriInfo);
 
 		OpenAPI openAPI = (OpenAPI)response.getEntity();
 
@@ -136,7 +138,10 @@ public class ObjectEntryOpenAPIResourceImpl
 	}
 
 	@Override
-	public Response getOpenAPI(String type, UriInfo uriInfo) throws Exception {
+	public Response getOpenAPI(
+			HttpServletRequest httpServletRequest, String type, UriInfo uriInfo)
+		throws Exception {
+
 		return _openAPIResource.getOpenAPI(
 			new ObjectEntryOpenAPIContributor(
 				_bundleContext, _dtoConverterRegistry,

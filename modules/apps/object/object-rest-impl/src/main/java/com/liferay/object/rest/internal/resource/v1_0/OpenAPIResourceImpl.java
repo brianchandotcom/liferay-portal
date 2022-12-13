@@ -21,6 +21,8 @@ import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -53,8 +55,12 @@ public class OpenAPIResourceImpl {
 			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(
 				_objectDefinition);
 
-		return objectEntryOpenAPIResource.getOpenAPI(type, _uriInfo);
+		return objectEntryOpenAPIResource.getOpenAPI(
+			_httpServletRequest, type, _uriInfo);
 	}
+
+	@Context
+	private HttpServletRequest _httpServletRequest;
 
 	@Context
 	private ObjectDefinition _objectDefinition;

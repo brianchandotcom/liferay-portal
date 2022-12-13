@@ -283,6 +283,55 @@ definition {
 			value1 = "Search Results Test ADT");
 	}
 
+	@description = "This is a use case for LPS-170111. When configuring the Folder Facet, facet terms are present with different display templates"
+	@priority = "3"
+	test AssertFolderFacetTermsWithDifferentDisplayTemplates {
+		task ("Add the folders and populate them with files") {
+			for (var folder : list "Product,Engineering,Company") {
+				JSONFolder.addFolder(
+					dmFolderName = "${folder}",
+					groupName = "Guest");
+			}
+
+			for (var folder : list "Product,Engineering,Company") {
+				JSONDocument.addFile(
+					dmDocumentTitle = "DM Document Title 1",
+					folderName = "${folder}",
+					groupName = "Guest");
+			}
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		task ("Assert that the three folders are present in Compact Layout Template") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				displayTemplate = "Compact Layout",
+				portletName = "Folder Facet");
+
+			Refresh();
+
+			for (var folders : list "Company,Engineering,Product") {
+				AssertElementPresent(
+					facetValueName = "${folders}",
+					locator1 = "Search#FACET_COMPACT_LAYOUT");
+			}
+		}
+
+		task ("Assert that the three folders are present in Label Layout Template") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				displayTemplate = "Label Layout",
+				portletName = "Folder Facet");
+
+			Refresh();
+
+			for (var folders : list "Company,Engineering,Product") {
+				AssertElementPresent(
+					facetValueName = "${folders}",
+					locator1 = "Search#FACET_LABEL_LAYOUT");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-92008."
 	@priority = "3"
 	test AssertGuestCannotSeeEmptySearchWidgets {
@@ -1348,55 +1397,6 @@ definition {
 			SearchResultPortlet.viewMultipleSearchResults(
 				resultsList = "wc2/Web Content Article,wc4/Web Content Article,wc6/Web Content Article",
 				searchTerm = "wc");
-		}
-	}
-
-	@description = "This is a use case for LPS-170111. When configuring the Folder Facet, facet terms are present with different display templates"
-	@priority = "3"
-	test FacetTermsArePresentWithDifferentDisplayTemplates {
-		task ("Add the folders and populate them with files") {
-			for (var folder : list "Product,Engineering,Company") {
-				JSONFolder.addFolder(
-					dmFolderName = "${folder}",
-					groupName = "Guest");
-			}
-
-			for (var folder : list "Product,Engineering,Company") {
-				JSONDocument.addFile(
-					dmDocumentTitle = "DM Document Title 1",
-					folderName = "${folder}",
-					groupName = "Guest");
-			}
-		}
-
-		SearchPortlets.searchEmbedded(searchTerm = "test");
-
-		task ("Assert that the three folders are present in Compact Layout Template") {
-			SearchFacetPortlet.updateFacetConfiguration(
-				displayTemplate = "Compact Layout",
-				portletName = "Folder Facet");
-
-			Refresh();
-
-			for (var folders : list "Company,Engineering,Product") {
-				AssertElementPresent(
-					facetValueName = "${folders}",
-					locator1 = "Search#FACET_COMPACT_LAYOUT");
-			}
-		}
-
-		task ("Assert that the three folders are present in Label Layout Template") {
-			SearchFacetPortlet.updateFacetConfiguration(
-				displayTemplate = "Label Layout",
-				portletName = "Folder Facet");
-
-			Refresh();
-
-			for (var folders : list "Company,Engineering,Product") {
-				AssertElementPresent(
-					facetValueName = "${folders}",
-					locator1 = "Search#FACET_LABEL_LAYOUT");
-			}
 		}
 	}
 

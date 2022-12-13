@@ -240,11 +240,13 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 				<ClayForm onSubmit={handleSubmit}>
 					{openAddTemplateSetModal ? (
 						<>
-							<div className="mb-3 text-secondary">
-								{Liferay.Language.get(
-									'a-page-template-set-must-first-be-created-before-you-can-create-your-page-template'
-								)}
-							</div>
+							{!availableSets.length ? (
+								<div className="mb-3 text-secondary">
+									{Liferay.Language.get(
+										'a-page-template-set-must-first-be-created-before-you-can-create-your-page-template'
+									)}
+								</div>
+							) : null}
 							<FormField
 								error={formErrors.templateSetName}
 								id={`${config.portletNamespace}templateSetName`}

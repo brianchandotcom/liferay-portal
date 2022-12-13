@@ -36,6 +36,9 @@ AUI.add(
 			'selected'
 		);
 
+		const TPL_COLOR_ALERT =
+			'<span aria-live="assertive" class="sr-only" role="alert"></span>';
+
 		const TPL_SIMPLE_COLOR_PICKER_ITEM = new A.Template(
 			'<tpl for="pallete">',
 			'<button aria-label="{.}" class="',
@@ -125,9 +128,15 @@ AUI.add(
 
 					const pallete = instance.get('pallete');
 
-					instance.set(
-						'color',
-						pallete[instance.items.indexOf(event.currentTarget)]
+					const color =
+						pallete[instance.items.indexOf(event.currentTarget)];
+
+					instance.set('color', color);
+
+					instance.colorAlert.setContent(
+						Lang.sub(Liferay.Language.get('color-x-selected'), [
+							color,
+						])
 					);
 				},
 
@@ -267,6 +276,8 @@ AUI.add(
 					const instance = this;
 
 					instance._renderPallete();
+
+					instance._renderColorAlert();
 				},
 			},
 		});

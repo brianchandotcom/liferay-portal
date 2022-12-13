@@ -1648,6 +1648,10 @@
 					"store": true,
 					"type": "keyword"
 				},
+				"userGroupRoleIds": {
+					"store": true,
+					"type": "keyword"
+				},
 				"userGroupRoleNames": {
 					"normalizer": "lowercase",
 					"store": true,

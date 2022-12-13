@@ -57,23 +57,39 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Miguel Barcos
  */
-@Component(service = ObjectEntryOpenAPIResource.class)
 public class ObjectEntryOpenAPIResourceImpl
 	implements ObjectEntryOpenAPIResource {
 
-	@Override
-	public Map<String, Field> getFields(
-			ObjectDefinition objectDefinition, UriInfo uriInfo)
-		throws Exception {
+	public ObjectEntryOpenAPIResourceImpl(
+		BundleContext bundleContext, DTOConverterRegistry dtoConverterRegistry,
+		ObjectActionLocalService objectActionLocalService,
+		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
+		OpenAPIResource openAPIResource,
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
-		Response response = getOpenAPI(objectDefinition, "json", uriInfo);
+		_bundleContext = bundleContext;
+		_dtoConverterRegistry = dtoConverterRegistry;
+		_objectActionLocalService = objectActionLocalService;
+		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
+		_openAPIResource = openAPIResource;
+		_systemObjectDefinitionMetadataRegistry =
+			systemObjectDefinitionMetadataRegistry;
+	}
+
+	@Override
+	public Map<String, Field> getFields(UriInfo uriInfo) throws Exception {
+		Response response = getOpenAPI("json", uriInfo);
 
 		OpenAPI openAPI = (OpenAPI)response.getEntity();
 
@@ -134,12 +150,7 @@ public class ObjectEntryOpenAPIResourceImpl
 	}
 
 	@Override
-	public Response getOpenAPI(
-			ObjectDefinition objectDefinition, String type, UriInfo uriInfo)
-		throws Exception {
-
-		_objectDefinition = objectDefinition;
-
+	public Response getOpenAPI(String type, UriInfo uriInfo) throws Exception {
 		return _openAPIResource.getOpenAPI(
 			new ObjectEntryOpenAPIContributor(
 				_bundleContext, _dtoConverterRegistry,
@@ -156,11 +167,6 @@ public class ObjectEntryOpenAPIResourceImpl
 				}
 			},
 			type, uriInfo);
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
 	}
 
 	private DTOProperty _getDTOProperty(ObjectField objectField) {
@@ -294,30 +300,16 @@ public class ObjectEntryOpenAPIResourceImpl
 		return requiredPropertySchemaNames;
 	}
 
-	private BundleContext _bundleContext;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private ObjectActionLocalService _objectActionLocalService;
-
-	private ObjectDefinition _objectDefinition;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Reference
-	private OpenAPIResource _openAPIResource;
-
-	@Reference
-	private SystemObjectDefinitionMetadataRegistry
+	private final BundleContext _bundleContext;
+	private final DTOConverterRegistry _dtoConverterRegistry;
+	private final ObjectActionLocalService _objectActionLocalService;
+	private final ObjectDefinition _objectDefinition;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
+	private final OpenAPIResource _openAPIResource;
+	private final SystemObjectDefinitionMetadataRegistry
 		_systemObjectDefinitionMetadataRegistry;
 
 }

@@ -216,7 +216,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 		else {
 			sourceOpenAPI = OpenAPIContributorUtil.getObjectEntryOpenAPI(
-				objectDefinition, _objectEntryOpenAPIResource);
+				_objectEntryOpenAPIResource);
 		}
 
 		OpenAPIContributorUtil.copySchemas(

@@ -21,7 +21,7 @@ export declare function serializeTableRequestParams({
 }: TTableRequestParams): string;
 export declare function getOrderBy({type}: TFilter): OrderBy;
 export declare function getOrderBySymbol({type}: TFilter): string;
-export declare function getResultsLanguage(rows: string[]): string;
+export declare function getResultsLanguage(totalCount: number): string;
 export declare function getGlobalChecked(
 	formattedItems: TFormattedItems
 ): boolean;

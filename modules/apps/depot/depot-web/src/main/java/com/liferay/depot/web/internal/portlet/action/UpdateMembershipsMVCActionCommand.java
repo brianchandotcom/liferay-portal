@@ -31,12 +31,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Optional;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -102,16 +99,15 @@ public class UpdateMembershipsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private long[] _getGroupIds(PortletRequest portletRequest, User user) {
-		Set<Long> groupIds = Optional.of(
-			user.getGroupIds()
-		).map(
-			Arrays::stream
-		).orElseGet(
-			LongStream::empty
-		).boxed(
-		).collect(
-			Collectors.toSet()
-		);
+		long[] values = user.getGroupIds();
+
+		Set<Long> groupIds = new HashSet<>();
+
+		if (values != null) {
+			for (long groupId : values) {
+				groupIds.add(groupId);
+			}
+		}
 
 		long[] addDepotGroupIds = StringUtil.split(
 			ParamUtil.getString(portletRequest, "addDepotGroupIds"), 0L);

@@ -35,6 +35,7 @@ const columns: TColumn[] = [
 		expanded: true,
 		id: EColumn.SiteName,
 		label: Liferay.Language.get('related-site'),
+		sortable: false,
 	},
 	{
 		expanded: true,

@@ -95,6 +95,11 @@
 	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_ROLE_FIELD</td>
+	<td>//button[contains(@class,'dropdown-toggle')]/following::div[contains(@class, 'text-truncate') and contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

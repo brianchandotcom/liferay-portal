@@ -71,16 +71,15 @@ public class ObjectRelationshipResourceImpl
 
 	@Override
 	public Page<ObjectRelationship>
-			getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage(
-				String objectDefinitionExternalReferenceCode, String search,
-				Filter filter, Pagination pagination)
+			getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
+				String externalReferenceCode, String search, Filter filter,
+				Pagination pagination)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode,
-					contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		return getObjectDefinitionObjectRelationshipsPage(
 			objectDefinition.getObjectDefinitionId(), search, filter,
@@ -146,16 +145,15 @@ public class ObjectRelationshipResourceImpl
 
 	@Override
 	public ObjectRelationship
-			postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship(
-				String objectDefinitionExternalReferenceCode,
+			postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				String externalReferenceCode,
 				ObjectRelationship objectRelationship)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode,
-					contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		com.liferay.object.model.ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.

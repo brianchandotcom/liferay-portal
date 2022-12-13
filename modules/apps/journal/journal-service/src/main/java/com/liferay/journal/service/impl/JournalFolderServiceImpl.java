@@ -243,6 +243,20 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	@Override
+	public List<Object> getFoldersAndArticles(
+		long groupId, long userId, long folderId, String ddmStructureKey,
+		int status, Locale locale, int start, int end,
+		OrderByComparator<?> orderByComparator) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, userId, true, start, end,
+			(OrderByComparator<Object>)orderByComparator);
+
+		return journalFolderFinder.filterFindF_A_ByG_F_L(
+			groupId, folderId, ddmStructureKey, locale, queryDefinition);
+	}
+
+	@Override
 	public int getFoldersAndArticlesCount(
 		long groupId, List<Long> folderIds, int status) {
 
@@ -291,6 +305,18 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 		return journalFolderFinder.filterCountF_A_ByG_F(
 			groupId, folderId, StringPool.BLANK, queryDefinition);
+	}
+
+	@Override
+	public int getFoldersAndArticlesCount(
+		long groupId, long userId, long folderId, String ddmStructureKey,
+		int status) {
+
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
+			status, userId, true);
+
+		return journalFolderFinder.filterCountF_A_ByG_F(
+			groupId, folderId, ddmStructureKey, queryDefinition);
 	}
 
 	@Override

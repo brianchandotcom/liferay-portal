@@ -93,6 +93,8 @@ function create_react_app {
 
 	rm -f public/favicon.ico public/logo* public/manifest.json public/robots.txt
 
+	write_client_extension
+
 	cd src
 
 	rm -f App* index* logo.svg reportWebVitals.js setupTests.js
@@ -166,6 +168,30 @@ function random_digit {
 
 function random_letter {
 	echo cat /dev/urandom | tr -cd 'a-z' | head -c 1
+}
+
+function write_client_extension {
+	cat <<EOF > client-extension.yaml
+assemble:
+    - from: build/
+      include: "static/**/*"
+      into: static/
+fox-remote-app:
+    cssURLs:
+        - static/css/main.*.css
+    friendlyURLMapping: fox-remote-app
+    htmlElementName: fox-remote-app
+    instanceable: false
+    name: Fox Remote App
+    portletCategoryName: category.remote-apps
+    type: customElement
+    urls:
+        - static/js/main.*.js
+        # To enable dev mode uncomment following url
+        # Run gradle deploy && yarn start
+        #- http://localhost:3000/static/js/bundle.js
+    useESM: false
+EOF
 }
 
 function write_gitignore {
@@ -255,6 +281,8 @@ import HelloBar from './routes/hello-bar/pages/HelloBar';
 import HelloFoo from './routes/hello-foo/pages/HelloFoo';
 import HelloWorld from './routes/hello-world/pages/HelloWorld';
 import './common/styles/index.scss';
+import api from './common/services/liferay/api';
+import { Liferay } from './common/services/liferay/liferay';
 
 const App = ({ route }) => {
 	if (route === "hello-bar") {
@@ -274,6 +302,20 @@ class WebComponent extends HTMLElement {
 			<App route={this.getAttribute("route")} />,
 			this
 		);
+		if (Liferay.ThemeDisplay.isSignedIn()) {
+			api(
+				'o/headless-admin-user/v1.0/my-user-account'
+			).then(
+				res => res.json()
+			).then(res => {
+				let nameEls = document.getElementsByClassName('hello-world-name');
+				if (nameEls.length > 0){
+					if (res.givenName) {
+						nameEls[0].innerHTML = res.givenName;
+					}
+				}
+			});
+		}
 	}
 }
 
@@ -325,7 +367,7 @@ import React from 'react';
 
 const HelloWorld = () => (
 	<div className="hello-world">
-		<h1>Hello World</h1>
+		<h1>Hello <span className="hello-world-name">World</span></h1>
 	</div>
 );
 

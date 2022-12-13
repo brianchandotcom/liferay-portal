@@ -57,6 +57,7 @@ interface ObjectRelationship {
 	type: ObjectRelationshipType;
 }
 interface PickListItem {
+	externalReferenceCode: string;
 	id: number;
 	key: string;
 	name: string;
@@ -151,6 +152,7 @@ export declare function addPickListItem({
 }: Partial<PickListItem>): Promise<void>;
 export declare function deletePickListItem(id: number): Promise<void>;
 export declare function updatePickListItem({
+	externalReferenceCode,
 	id,
 	name_i18n,
 }: Partial<PickListItem>): Promise<void>;

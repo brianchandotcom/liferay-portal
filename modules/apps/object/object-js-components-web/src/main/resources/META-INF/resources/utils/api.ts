@@ -71,6 +71,7 @@ interface ObjectRelationship {
 	type: ObjectRelationshipType;
 }
 interface PickListItem {
+	externalReferenceCode: string;
 	id: number;
 	key: string;
 	name: string;
@@ -341,12 +342,13 @@ export async function deletePickListItem(id: number) {
 }
 
 export async function updatePickListItem({
+	externalReferenceCode,
 	id,
 	name_i18n,
 }: Partial<PickListItem>) {
 	return await save(
 		`/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
-		{name_i18n},
+		{externalReferenceCode, name_i18n},
 		'PUT'
 	);
 }

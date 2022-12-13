@@ -11653,6 +11653,27 @@ portal.proxy.path=/${portal.proxy.path}</echo>
 			</then>
 		</if>
 
+		<if>
+			<or>
+				<equals arg1="spring.extender.enabled" arg2="" />
+				<not>
+					<isset property="spring.extender.enabled" />
+				</not>
+			</or>
+			<then>
+				<get-testcase-property property.name="spring.extender.enabled" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${spring.extender.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+spring.extender.enabled=true</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="setup.wizard.enabled" />
 
 		<if>

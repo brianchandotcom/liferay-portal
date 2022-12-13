@@ -2332,6 +2332,7 @@ log.sanitizer.enabled=false</echo>
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="" name="refreshdependencies" />
+		<attribute default="" name="spring.extender.enabled" />
 		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="subrepository.name" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
@@ -2362,6 +2363,7 @@ log.sanitizer.enabled=false</echo>
 							<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
 								<param name="aws.store.enabled" value="@{aws.store.enabled}" />
 								<param name="database.type" value="@{database.type}" />
+								<param name="spring.extender.enabled" value="@{spring.extender.enabled}" />
 							</antcall>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
@@ -6176,6 +6178,14 @@ log.sanitizer.enabled=false</echo>
 			<param name="project.templates.test" value="true" />
 			<param name="project.templates.test.builds" value="true" />
 		</antcall>
+	</target>
+
+	<target name="modules-integration-service-builder-jdk8">
+		<run-modules-integration-test
+			spring.extender.enabled="true"
+			database.type="mysql"
+			database.version="5.7"
+		/>
 	</target>
 
 	<target name="modules-integration-sqlserver2017-jdk8">

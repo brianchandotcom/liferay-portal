@@ -61,6 +61,28 @@ public class DataDefinitionValidationException extends RuntimeException {
 
 	}
 
+	public static class MustNotDuplicateFieldReference
+		extends DataDefinitionValidationException {
+
+		public MustNotDuplicateFieldReference(
+			Set<String> duplicatedFieldReferences) {
+
+			super(
+				String.format(
+					"Field references %s were defined more than once",
+					duplicatedFieldReferences));
+
+			_duplicatedFieldReferences = duplicatedFieldReferences;
+		}
+
+		public Set<String> getDuplicatedFieldReferences() {
+			return _duplicatedFieldReferences;
+		}
+
+		private final Set<String> _duplicatedFieldReferences;
+
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */

@@ -5,6 +5,8 @@ import HelloBar from './routes/hello-bar/pages/HelloBar';
 import HelloFoo from './routes/hello-foo/pages/HelloFoo';
 import HelloWorld from './routes/hello-world/pages/HelloWorld';
 import './common/styles/index.scss';
+import api from './common/services/liferay/api';
+import { Liferay } from './common/services/liferay/liferay';
 
 const App = ({ route }) => {
 	if (route === "hello-bar") {
@@ -24,6 +26,20 @@ class WebComponent extends HTMLElement {
 			<App route={this.getAttribute("route")} />,
 			this
 		);
+		if (Liferay.ThemeDisplay.isSignedIn()) {
+			api(
+				'o/headless-admin-user/v1.0/my-user-account'
+			).then(
+				res => res.json()
+			).then(res => {
+				let nameEls = document.getElementsByClassName('hello-world-name');
+				if (nameEls.length > 0){
+					if (res.givenName) {
+						nameEls[0].innerHTML = res.givenName;
+					}
+				}
+			});
+		}
 	}
 }
 

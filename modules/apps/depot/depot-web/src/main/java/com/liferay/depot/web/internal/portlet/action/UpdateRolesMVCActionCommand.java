@@ -129,7 +129,7 @@ public class UpdateRolesMVCActionCommand extends BaseMVCActionCommand {
 		Set<UserGroupRole> userGroupRoles = new HashSet<>(
 			_userGroupRoleLocalService.getUserGroupRoles(user.getUserId()));
 
-		long userId = _getUserId(user);
+		long userId = user.getUserId();
 
 		userGroupRoles.addAll(
 			_getUserGroupRoles(
@@ -166,16 +166,6 @@ public class UpdateRolesMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return userGroupRoles;
-	}
-
-	private long _getUserId(User user) {
-		Long userId = user.getUserId();
-
-		if (userId == null) {
-			userId = 0L;
-		}
-
-		return userId;
 	}
 
 	@Reference

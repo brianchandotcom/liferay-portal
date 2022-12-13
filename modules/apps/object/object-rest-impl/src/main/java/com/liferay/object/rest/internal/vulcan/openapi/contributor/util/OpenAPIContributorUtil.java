@@ -14,7 +14,6 @@
 
 package com.liferay.object.rest.internal.vulcan.openapi.contributor.util;
 
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -59,12 +58,10 @@ public class OpenAPIContributorUtil {
 	}
 
 	public static OpenAPI getObjectEntryOpenAPI(
-			ObjectDefinition objectDefinition,
 			ObjectEntryOpenAPIResource objectEntryOpenAPIResource)
 		throws Exception {
 
-		Response response = objectEntryOpenAPIResource.getOpenAPI(
-			objectDefinition, "json", null);
+		Response response = objectEntryOpenAPIResource.getOpenAPI("json", null);
 
 		return (OpenAPI)response.getEntity();
 	}

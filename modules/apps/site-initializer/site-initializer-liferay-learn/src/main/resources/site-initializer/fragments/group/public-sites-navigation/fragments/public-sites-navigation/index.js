@@ -28,11 +28,15 @@ const accountMenus = fragmentElement.querySelectorAll('.account');
 
 const sites = fragmentElement.querySelector('.sites');
 
-const languageSelectorContainer = fragmentElement.querySelector('.language-selector-container');
+const languageSelectorContainer = fragmentElement.querySelector(
+	'.language-selector-container'
+);
 
 const languageSelector = fragmentElement.querySelector('.language-selector');
 
-const languageDropdownList = fragmentElement.querySelector('.language-dropdown-list-container');
+const languageDropdownList = fragmentElement.querySelector(
+	'.language-dropdown-list-container'
+);
 
 menuBtn.addEventListener('click', () => {
 	menuButtonGroup.classList.toggle('menu-open');

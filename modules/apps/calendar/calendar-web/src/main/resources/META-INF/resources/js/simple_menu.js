@@ -256,7 +256,9 @@ AUI.add(
 				_onVisibleChange(event) {
 					const instance = this;
 
-					if (event.newVal) {
+					const visible = event.newVal;
+
+					if (visible) {
 						const contentBox = instance.get('contentBox');
 
 						instance._insideHandler = contentBox.on(
@@ -276,12 +278,7 @@ AUI.add(
 
 					const toggler = instance.get('toggler');
 
-					if (!event.newVal) {
-						toggler.setAttribute('aria-expanded', false);
-					}
-					else {
-						toggler.setAttribute('aria-expanded', true);
-					}
+					toggler.setAttribute('aria-expanded', visible);
 				},
 
 				_positionMenu() {

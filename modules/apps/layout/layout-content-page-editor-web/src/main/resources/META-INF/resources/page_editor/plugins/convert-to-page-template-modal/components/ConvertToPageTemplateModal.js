@@ -29,7 +29,7 @@ import LayoutService from '../../../app/services/LayoutService';
 import getUniqueName from '../../../app/utils/getUniqueName';
 import FormField from './FormField';
 
-export default function ModalWrapper() {
+export default function ConvertToPageTemplateModal() {
 	const isMounted = useIsMounted();
 
 	const [openModal, setOpenModal] = useState(false);
@@ -57,10 +57,10 @@ export default function ModalWrapper() {
 		return null;
 	}
 
-	return <ConvertToPageTemplateModal observer={observer} onClose={onClose} />;
+	return <PageTemplateModal observer={observer} onClose={onClose} />;
 }
 
-const ConvertToPageTemplateModal = ({observer, onClose}) => {
+export function PageTemplateModal({observer, onClose}) {
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const hasMultipleSegmentsExperienceIds = useSelector(
 		(state) => Object.keys(state.availableSegmentsExperiences).length > 1
@@ -356,9 +356,9 @@ const ConvertToPageTemplateModal = ({observer, onClose}) => {
 			/>
 		</ClayModal>
 	);
-};
+}
 
-ConvertToPageTemplateModal.propTypes = {
+PageTemplateModal.propTypes = {
 	observer: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired,
 };

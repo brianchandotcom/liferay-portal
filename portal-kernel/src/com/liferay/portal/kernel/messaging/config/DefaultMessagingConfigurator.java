@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -121,15 +120,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 
 		_destinations.clear();
 		_messageBusEventListeners.clear();
-
-		String servletContextName =
-			ServletContextClassLoaderPool.getServletContextName(
-				getOperatingClassLoader());
-
-		if (servletContextName != null) {
-			MessagingConfiguratorRegistry.unregisterMessagingConfigurator(
-				servletContextName, this);
-		}
 	}
 
 	@Override
@@ -195,15 +185,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		registerDestinationEventListeners();
 
 		connect();
-
-		String servletContextName =
-			ServletContextClassLoaderPool.getServletContextName(
-				getOperatingClassLoader());
-
-		if (servletContextName != null) {
-			MessagingConfiguratorRegistry.registerMessagingConfigurator(
-				servletContextName, this);
-		}
 	}
 
 	protected void registerDestinationEventListeners() {

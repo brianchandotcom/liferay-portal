@@ -200,6 +200,49 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test AssertCustomFacetDisplays {
+		for (var count : list "1,2,3") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "dm title ${count}",
+				groupName = "Guest",
+				mimeType = "application/docx",
+				sourceFileName = "Document_${count}.docx");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "title");
+
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		SearchFacetPortlet.configureCustomFacet(
+			aggregationField = "title_sortable",
+			customHeading = "Title");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Compact Layout",
+			portletName = "Custom Facet");
+
+		Refresh();
+
+		for (var Document : list "dm title 1,dm title 2,dm title 3") {
+			AssertElementPresent(
+				facetValueName = "${Document}",
+				locator1 = "Search#FACET_COMPACT_LAYOUT");
+		}
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Label Layout",
+			portletName = "Custom Facet");
+
+		Refresh();
+
+		for (var Document : list "dm title 1,dm title 2,dm title 3") {
+			AssertElementPresent(
+				facetValueName = "${Document}",
+				locator1 = "Search#FACET_LABEL_LAYOUT");
+		}
+	}
+
 	@description = "This is a use case for LPS-138720."
 	@priority = "4"
 	test AssertCustomFacetNoXSS {

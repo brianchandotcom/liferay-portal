@@ -415,8 +415,21 @@
 				id: 'separator1',
 			},
 			{
-				caption: '<div class="calendar-portlet-color-picker"></div>',
+				caption:
+					'<div aria-label="<liferay-ui:message key="calendar-item-color-picker-press-space-to-enter-the-color-picker" />" class="calendar-portlet-color-picker"></div>',
 				id: 'colorPicker',
+				onKeyDown: (event) => {
+					if (
+						event.keyCode === A.Event.KeyMap.SPACE ||
+						event.keyCode === A.Event.KeyMap.ENTER
+					) {
+						event.preventDefault();
+
+						window.<portlet:namespace />colorPicker.focus(
+							event.currentTarget
+						);
+					}
+				},
 			},
 		],
 		on: {

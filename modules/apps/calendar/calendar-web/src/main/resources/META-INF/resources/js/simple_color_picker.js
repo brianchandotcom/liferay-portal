@@ -92,6 +92,10 @@ AUI.add(
 						'#c244ab',
 					],
 				},
+
+				trigger: {
+					value: null,
+				},
 			},
 
 			NAME: 'simple-color-picker',
@@ -170,6 +174,14 @@ AUI.add(
 						STR_DOT + CSS_SIMPLE_COLOR_PICKER_ITEM,
 						instance
 					);
+				},
+
+				focus(trigger) {
+					const instance = this;
+
+					instance.trigger = trigger;
+
+					instance.items.first().focus();
 				},
 
 				renderUI() {

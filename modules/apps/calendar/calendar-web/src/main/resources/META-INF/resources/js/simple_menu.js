@@ -52,7 +52,7 @@ AUI.add(
 		const TPL_SIMPLE_MENU_ITEM =
 			'<li class="{cssClass}" data-id="{id}" role="{role}" tabindex="-1"></li>';
 
-		const getItemHandler = A.cached((id, items) => {
+		const getItemHandler = A.cached((id, items, key) => {
 			let found = null;
 
 			items.some((item) => {
@@ -63,7 +63,15 @@ AUI.add(
 				return !!found;
 			});
 
-			return found && found.fn;
+			return found && found[key];
+		});
+
+		const getClickItemHandler = A.cached((id, items) => {
+			return getItemHandler(id, items, 'fn');
+		});
+
+		const getKeyDownItemHandler = A.cached((id, items) => {
+			return getItemHandler(id, items, 'onKeyDown');
 		});
 
 		const SimpleMenu = A.Component.create({
@@ -165,7 +173,7 @@ AUI.add(
 
 					const id = event.currentTarget.attr('data-id');
 
-					const handler = getItemHandler(id, items);
+					const handler = getClickItemHandler(id, items);
 
 					if (handler) {
 						instance._closeMenu();
@@ -218,6 +226,20 @@ AUI.add(
 						}
 
 						break;
+					}
+				},
+
+				_onKeyDownItems(event) {
+					const instance = this;
+
+					const items = instance.get('items');
+
+					const id = event.currentTarget.attr('data-id');
+
+					const handler = getKeyDownItemHandler(id, items);
+
+					if (handler) {
+						handler.apply(instance, arguments);
 					}
 				},
 
@@ -391,6 +413,12 @@ AUI.add(
 						contentBox.delegate(
 							'click',
 							instance._onClickItems,
+							STR_DOT + CSS_SIMPLE_MENU_ITEM,
+							instance
+						),
+						contentBox.delegate(
+							'keydown',
+							instance._onKeyDownItems,
 							STR_DOT + CSS_SIMPLE_MENU_ITEM,
 							instance
 						),

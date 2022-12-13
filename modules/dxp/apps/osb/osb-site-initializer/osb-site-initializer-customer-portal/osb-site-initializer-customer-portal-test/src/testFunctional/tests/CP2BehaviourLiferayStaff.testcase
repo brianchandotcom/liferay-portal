@@ -1,0 +1,55 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testUserFirstName = "Test";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+	@description = "Automation ID: LPS-157645 | Test Summary: Verify that when the user is a Liferay Staff all projects are visible to him"
+	@priority = "4"
+	test LiferayStaffCanSeeAllProjects {
+
+		// TODO LPS-157645 LiferayStaffCanSeeAllProjects pending implementation
+
+	}
+
+    @description = "Automation ID: LPS-157646 | Test Summary: Verify that when the user is not a Liferay Staff only the project he is associated with is displayed to him"
+	@priority = "4"
+	test NonStaffUsersJustSeeTheAssociatedProject {
+
+		// TODO LPS-157646 NonStaffUsersJustSeeTheAssociatedProject pending implementation
+
+	}
+
+}

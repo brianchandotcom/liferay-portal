@@ -161,7 +161,11 @@ function ListTypeEntriesModal() {
 			);
 		}
 
-		if (modalType === 'edit' && invalidateRequired(externalReferenceCode)) {
+		if (
+			Liferay.FeatureFlags['LPS-168886'] &&
+			modalType === 'edit' &&
+			invalidateRequired(externalReferenceCode)
+		) {
 			errors.externalReferenceCode = REQUIRED_MSG;
 		}
 
@@ -247,7 +251,7 @@ function ListTypeEntriesModal() {
 					value={itemKey ?? ''}
 				/>
 
-				{modalType === 'edit' && (
+				{Liferay.FeatureFlags['LPS-168886'] && modalType === 'edit' && (
 					<Input
 						error={errors.externalReferenceCode}
 						label={Liferay.Language.get('external-reference-code')}

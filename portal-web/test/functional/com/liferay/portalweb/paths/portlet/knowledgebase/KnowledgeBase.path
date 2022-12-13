@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDE_PANEL_INFO</td>
+	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'${key_sectionTitle}')]/following-sibling::dd[contains(.,'${key_sectionContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

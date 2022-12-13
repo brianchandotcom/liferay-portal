@@ -20,16 +20,15 @@ import Content from './Content';
 import TableContext, {Events, useData, useDispatch} from './Context';
 import ManagementToolbar from './ManagementToolbar';
 import PaginationBar from './PaginationBar';
-import StateRenderer from './StateRenderer';
+import StateRenderer, {TEmptyState} from './StateRenderer';
 import {TColumn, TFormattedItems, TItem, TTableRequestParams} from './types';
 
 interface ITableProps<TRawItem> {
 	addItemTitle?: string;
 	columns: TColumn[];
 	disabled?: boolean;
-	emptyStateTitle: string;
+	emptyState: TEmptyState;
 	mapperItems: (items: TRawItem[]) => TItem[];
-	noResultsTitle: string;
 	onAddItem?: () => void;
 	onItemsChange?: (items: TFormattedItems) => void;
 	requestFn: (params: TTableRequestParams) => Promise<any>;
@@ -44,9 +43,8 @@ export function Table<TRawItem>({
 	addItemTitle,
 	columns,
 	disabled = false,
-	emptyStateTitle,
+	emptyState,
 	mapperItems,
-	noResultsTitle,
 	onAddItem,
 	onItemsChange,
 	requestFn,
@@ -145,10 +143,9 @@ export function Table<TRawItem>({
 
 			<StateRenderer
 				empty={empty}
-				emptyStateTitle={emptyStateTitle}
+				emptyState={emptyState}
 				error={error || lazyResult.error}
 				loading={loading || lazyResult.loading}
-				noResultsTitle={noResultsTitle}
 				refetch={refetch}
 			>
 				<Content

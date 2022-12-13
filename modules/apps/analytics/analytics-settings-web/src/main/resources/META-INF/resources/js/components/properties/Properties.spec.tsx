@@ -167,7 +167,7 @@ describe('Properties', () => {
 		await loadingElement();
 
 		const addProperyButton = screen.getByRole('button', {
-			name: /create-new-property/i,
+			name: /create-a-new-property/i,
 		});
 
 		expect(addProperyButton).toBeInTheDocument();

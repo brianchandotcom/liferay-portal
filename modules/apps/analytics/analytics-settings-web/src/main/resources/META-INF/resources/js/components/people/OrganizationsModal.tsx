@@ -33,9 +33,11 @@ const ModalOrganizations: React.FC<ICommonModalProps> = ({
 				label: Liferay.Language.get('organizations'),
 			},
 		]}
-		emptyStateTitle={Liferay.Language.get('there-are-no-organizations')}
+		emptyState={{
+			noResultsTitle: Liferay.Language.get('no-organizations-were-found'),
+			title: Liferay.Language.get('there-are-no-organizations'),
+		}}
 		name={EPeople.OrganizationIds}
-		noResultsTitle={Liferay.Language.get('no-organizations-were-found')}
 		observer={observer}
 		onCloseModal={onCloseModal}
 		requestFn={fetchContactsOrganization}

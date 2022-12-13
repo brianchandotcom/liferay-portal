@@ -33,9 +33,11 @@ const ModalUserGroups: React.FC<ICommonModalProps> = ({
 				label: Liferay.Language.get('user-groups'),
 			},
 		]}
-		emptyStateTitle={Liferay.Language.get('there-are-no-user-groups')}
+		emptyState={{
+			noResultsTitle: Liferay.Language.get('no-user-groups-were-found'),
+			title: Liferay.Language.get('there-are-no-user-groups'),
+		}}
 		name={EPeople.UserGroupIds}
-		noResultsTitle={Liferay.Language.get('no-user-groups-were-found')}
 		observer={observer}
 		onCloseModal={onCloseModal}
 		requestFn={fetchContactsUsersGroup}

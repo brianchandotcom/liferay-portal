@@ -140,7 +140,6 @@ definition {
 	@description = "This is a test for LPS-151826 related with LPS-135077. Raylife AP initializer is not deployed and is not shown on inicializer list"
 	@priority = "4"
 	test CannotSelectInitializerWithoutDeployRaylifeAP {
-		property osgi.app.includes = "gogo-shell";
 		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeployRaylifeAP";
 
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
@@ -187,7 +186,6 @@ definition {
 	@description = "This is a test for LPS-135077. Raylife D2C initializer is not deployed and is not shown on inicializer list"
 	@priority = "4"
 	test CannotSelectInitializerWithoutDeployRaylifeD2C {
-		property osgi.app.includes = "gogo-shell";
 		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeployRaylifeD2C";
 
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {

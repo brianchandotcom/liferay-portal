@@ -19,6 +19,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -225,7 +226,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			(OrderByComparator<Object>)orderByComparator);
 
 		return journalFolderFinder.filterFindF_A_ByG_F(
-			groupId, folderId, queryDefinition);
+			groupId, folderId, StringPool.BLANK, queryDefinition);
 	}
 
 	@Override
@@ -238,7 +239,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			(OrderByComparator<Object>)orderByComparator);
 
 		return journalFolderFinder.filterFindF_A_ByG_F_L(
-			groupId, folderId, locale, queryDefinition);
+			groupId, folderId, StringPool.BLANK, locale, queryDefinition);
 	}
 
 	@Override
@@ -289,7 +290,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			status, userId, true);
 
 		return journalFolderFinder.filterCountF_A_ByG_F(
-			groupId, folderId, queryDefinition);
+			groupId, folderId, StringPool.BLANK, queryDefinition);
 	}
 
 	@Override

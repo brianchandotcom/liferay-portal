@@ -28,7 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.constants.ItemSelectorCriteriaConstants;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.constants.JournalContentPortletKeys;
@@ -521,7 +521,7 @@ public class JournalContentDisplayContext {
 
 		itemSelectorCriterion.setItemType(JournalArticle.class.getName());
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new InfoItemItemSelectorReturnType());
+			new JournalArticleItemSelectorReturnType());
 		itemSelectorCriterion.setStatus(WorkflowConstants.STATUS_ANY);
 
 		return _itemSelector.getItemSelectorURL(

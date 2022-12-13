@@ -16,6 +16,7 @@ import ClayForm from '@clayui/form';
 import {
 	API,
 	ManagementToolbar,
+	invalidateRequired,
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -25,9 +26,9 @@ import React, {useEffect, useState} from 'react';
 import {defaultLanguageId} from '../util/constants';
 
 import './EditNotificationTemplate.scss';
-import {BasicInfoContainer} from './BasicInfoContainer';
-import ContentContainer from './ContentContainer';
-import {SettingsContainer} from './SettingsContainer';
+import {BasicInfoContainer} from './BasicInfoContainer/BasicInfoContainer';
+import ContentContainer from './ContentContainer/ContentContainer';
+import {SettingsContainer} from './SettingsContainer/SettingsContainer';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -47,7 +48,7 @@ export type NotificationTemplateError = {
 	type?: string;
 };
 
-interface IProps {
+interface EditNotificationTemplateProps {
 	backURL: string;
 	baseResourceURL: string;
 	editorConfig: object;
@@ -65,7 +66,7 @@ export default function EditNotificationTemplate({
 	notificationTemplateId = 0,
 	notificationTemplateType,
 	portletNamespace,
-}: IProps) {
+}: EditNotificationTemplateProps) {
 	notificationTemplateId = Number(notificationTemplateId);
 
 	const [isSubmitted, setIsSubmitted] = useState(false);

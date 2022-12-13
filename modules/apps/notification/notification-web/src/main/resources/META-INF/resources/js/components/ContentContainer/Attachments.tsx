@@ -22,7 +22,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {defaultLanguageId} from '../util/constants';
+import {defaultLanguageId} from '../../util/constants';
 
 import './Attachments.scss';
 

@@ -21,7 +21,7 @@ import {
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
-import {defaultLanguageId} from '../util/constants';
+import {defaultLanguageId} from '../../util/constants';
 
 interface FreeMarkerTemplateEditorProps {
 	baseResourceURL: string;

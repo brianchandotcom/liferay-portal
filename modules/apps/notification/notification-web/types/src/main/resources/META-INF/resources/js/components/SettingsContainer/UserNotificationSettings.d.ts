@@ -14,7 +14,6 @@
 
 /// <reference types="react" />
 
-import './EditNotificationTemplate.scss';
 interface UserNotificationSettingsProps {
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;

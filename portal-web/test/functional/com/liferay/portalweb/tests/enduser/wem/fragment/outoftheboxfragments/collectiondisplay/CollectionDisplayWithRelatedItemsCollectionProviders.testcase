@@ -2288,6 +2288,83 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-166039. The page creator can see Items with same categories from a Commerce Product Display Page Template."
+	@priority = "3"
+	test ViewCommerceProductWithSameCategoriesOnDisplayPageTemplateForCommerceProduct {
+		property custom.properties = "feature.flag.LPS-166036=true${line.separator}feature.flag.COMMERCE-5898=true";
+
+		task ("Given a page creator has a Collection Display on a display page template for Commerce Product") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Minium");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addWithCategoryCP(
+				categoryName = "Brake System",
+				vocabularyName = "Site Name",
+				webContentContent = "Model 3",
+				webContentTitle = "Model 3");
+
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Automobile");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Automobile",
+				fragmentName = "Collection Display");
+		}
+
+		task ("When the page designer add another Collection Display with Items With Same Categories inside the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Model 3",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = "2",
+				infoItemRelatedListProviderName = "Items With Same Categories");
+		}
+
+		task ("Then the page designer sees the commerce products with same categories on inner Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "ABS Sensor",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Brake Fluid",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-166039. The page creator can see items with same categories from a content page."
 	@priority = "4"
 	test ViewItemsWithSameCategoriesOnContentPage {

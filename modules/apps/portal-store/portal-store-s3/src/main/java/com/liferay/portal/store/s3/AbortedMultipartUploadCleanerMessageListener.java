@@ -44,7 +44,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.s3.configuration.S3StoreConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
+	immediate = true,
 	service = AbortedMultipartUploadCleanerMessageListener.class
 )
 public class AbortedMultipartUploadCleanerMessageListener

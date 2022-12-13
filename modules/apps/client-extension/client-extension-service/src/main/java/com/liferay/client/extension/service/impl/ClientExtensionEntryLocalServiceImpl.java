@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.service.impl;
 
+import com.liferay.client.extension.exception.ClientExtensionEntryNameException;
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
@@ -86,20 +87,21 @@ public class ClientExtensionEntryLocalServiceImpl
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException {
 
+		_validateName(nameMap);
+		_validateTypeSettings(typeSettings, null, type);
+
 		ClientExtensionEntry clientExtensionEntry =
 			clientExtensionEntryPersistence.create(
 				counterLocalService.increment());
 
+		clientExtensionEntry.setExternalReferenceCode(externalReferenceCode);
+
 		User user = _userLocalService.getUser(userId);
 
-		_validateName(nameMap);
-
-		_validateTypeSettings(typeSettings, null, type);
-
-		clientExtensionEntry.setExternalReferenceCode(externalReferenceCode);
 		clientExtensionEntry.setCompanyId(user.getCompanyId());
 		clientExtensionEntry.setUserId(user.getUserId());
 		clientExtensionEntry.setUserName(user.getFullName());
+
 		clientExtensionEntry.setDescription(description);
 		clientExtensionEntry.setNameMap(nameMap);
 		clientExtensionEntry.setProperties(properties);
@@ -463,11 +465,10 @@ public class ClientExtensionEntryLocalServiceImpl
 	}
 
 	private void _validateName(Map<Locale, String> nameMap)
-		throws ClientExtensionEntryTypeSettingsException {
+		throws PortalException {
 
 		if (Validator.isBlank(nameMap.get(LocaleUtil.getDefault()))) {
-			throw new ClientExtensionEntryTypeSettingsException(
-				"name-is-required");
+			throw new ClientExtensionEntryNameException();
 		}
 	}
 

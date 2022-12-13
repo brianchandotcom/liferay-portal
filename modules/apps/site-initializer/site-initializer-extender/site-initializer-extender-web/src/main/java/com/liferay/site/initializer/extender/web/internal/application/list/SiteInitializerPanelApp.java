@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author José Abelenda
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.app.order:Integer=600",
 		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING

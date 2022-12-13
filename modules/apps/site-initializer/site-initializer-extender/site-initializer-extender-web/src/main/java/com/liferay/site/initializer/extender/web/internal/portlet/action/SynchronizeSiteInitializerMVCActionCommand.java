@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author José Abelenda
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteInitializerExtenderPortletKeys.SITE_INITIALIZER,
 		"mvc.command.name=/site_initializer/synchronize_site_initializer"

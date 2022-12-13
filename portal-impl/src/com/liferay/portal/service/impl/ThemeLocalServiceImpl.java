@@ -850,9 +850,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			_readPortletDecorators(
 				themeElement, theme.getPortletDecoratorsMap(),
 				themeContextReplace);
-			_readPortletDecorators(
-				themeElement, theme.getPortletDecoratorsMap(),
-				themeContextReplace);
 
 			themes.add(theme);
 		}

@@ -34,6 +34,42 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12571 | Test Summary: Check that the user can put any name in the property"
+	@priority = "5"
+	test CanPutAnyNameInNewProperty {
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Create a new property from the list of available properties") {
+			ACDXPSettings.createNewProperty(newPropertyName = "AC Property");
+		}
+
+		task ("Check that the new property appears in the list") {
+			ACDXPSettings.viewGenericListItem(itemValue = "AC Property");
+		}
+
+		task ("Create a new property from the list of available properties") {
+			ACDXPSettings.createNewProperty(newPropertyName = "DXP");
+		}
+
+		task ("Check that the new property appears in the list") {
+			ACDXPSettings.viewGenericListItem(itemValue = "DXP");
+		}
+
+		task ("Try to create a property with less than 3 letters (limit)") {
+			ACDXPSettings.createNewProperty(newPropertyName = "AC");
+		}
+
+		task ("Check that an error alert appears in the modal") {
+			ACUtils.viewGenericText(textValueList = "Property name does not meet minimum length required.");
+		}
+
+		task ("Check that the property creation button is disabled") {
+			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
+		}
+	}
+
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12570 | Test Summary: Check that a property is created automatically after connection"
 	@priority = "5"
 	test CheckIfPropertyCreatedAutomaticallyAfterConnection {

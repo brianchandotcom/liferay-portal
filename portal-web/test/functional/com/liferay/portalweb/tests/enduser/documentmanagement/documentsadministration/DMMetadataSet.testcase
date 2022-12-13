@@ -86,8 +86,8 @@ definition {
 	@description = "This ensures that a metadata set can be removed from the entry Menu."
 	@e2etest
 	@priority = "5"
-	@refactorneeded
-	test DeleteEntry {
+	@refactordone
+	test CanDeleteEntry {
 		property portal.acceptance = "true";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
@@ -113,8 +113,8 @@ definition {
 
 	@description = "This test covers LPS-128046. It ensures that a metadata set can be removed from the management bar."
 	@priority = "4"
-	@refactorneeded
-	test DeleteEntryViaManagementBar {
+	@refactordone
+	test CanDeleteEntryViaManagementBar {
 		property portal.acceptance = "true";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
@@ -134,10 +134,10 @@ definition {
 			metadataSetName = "DM Metadata Set Name");
 	}
 
-	@description = "This ensures that the user can delete fields within a metadata set."
+	@description = "This ensures that when a metadata field deletions in document type will be reflected when adding a new doc type."
 	@priority = "3"
-	@refactorneeded
-	test DeleteFields {
+	@refactordone
+	test DeletedFieldsAreReflectedWhenAddingNewDocType {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
@@ -190,8 +190,8 @@ definition {
 	@description = "This ensures that the user can create a document using edited image field inside metadata set."
 	@e2etest
 	@priority = "4"
-	@refactorneeded
-	test ViewDocumentwithEditedImageField {
+	@refactordone
+	test CanViewDocumentwithEditedImageField {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
@@ -270,8 +270,8 @@ definition {
 	@description = "This ensures that the user can create a document using edited text field inside metadata set."
 	@e2etest
 	@priority = "4"
-	@refactorneeded
-	test ViewDocumentwithEditedTextField {
+	@refactordone
+	test CanViewDocumentwithEditedTextField {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");

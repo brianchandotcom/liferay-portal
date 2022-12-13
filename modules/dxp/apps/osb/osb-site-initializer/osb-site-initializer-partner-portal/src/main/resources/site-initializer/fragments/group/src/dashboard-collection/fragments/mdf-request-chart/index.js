@@ -51,8 +51,6 @@ export default function () {
 
 	useEffect(() => {
 		getMDFRequests();
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const chartData = {

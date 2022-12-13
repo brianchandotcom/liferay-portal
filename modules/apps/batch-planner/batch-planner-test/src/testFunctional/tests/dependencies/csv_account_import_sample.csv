@@ -1,2 +1,2 @@
-description,domains,type,externalReferenceCode,parentAccountId,organizationIds,name,accountUserAccounts,status
-string,array,string,string,integer,array,string,array,integer
+customFields,description,domains,type,externalReferenceCode,parentAccountId,organizationIds,name,accountUserAccounts,status
+array,string,array,string,string,integer,array,string,array,integer

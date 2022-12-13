@@ -349,9 +349,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			Object attachmentValue = values.get(objectField.getName());
-
-			long attachmentLong = GetterUtil.getLong(attachmentValue);
+			long attachmentLong = GetterUtil.getLong(
+				values.get(objectField.getName()));
 
 			if (attachmentLong == GetterUtil.DEFAULT_LONG) {
 				return StringPool.BLANK;

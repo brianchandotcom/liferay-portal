@@ -71,6 +71,8 @@ function ItemConfigurationContent({
 		deepEqual
 	);
 
+	const [previousPanel, setPreviousPanel] = useState({});
+
 	const panels = useMemo(
 		() =>
 			Object.entries(panelsIds)
@@ -85,6 +87,12 @@ function ItemConfigurationContent({
 			!panels.length ||
 			panels.some((panel) => panel.panelId === activePanel.id)
 		) {
+			return;
+		}
+
+		if (panels.some((panel) => panel.panelId === previousPanel.id)) {
+			setActivePanel(previousPanel);
+
 			return;
 		}
 
@@ -103,8 +111,9 @@ function ItemConfigurationContent({
 			nextActivePanelType = panels[0]?.type;
 		}
 
+		setPreviousPanel(activePanel);
 		setActivePanel({id: nextActivePanelId, type: nextActivePanelType});
-	}, [panels, activePanel, setActivePanel]);
+	}, [panels, activePanel, setActivePanel, previousPanel]);
 
 	return (
 		<div className="page-editor__page-structure__item-configuration">

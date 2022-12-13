@@ -1372,6 +1372,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return kbArticle;
 		}
 
+		String action = "add";
+
 		if (!kbArticle.isFirstVersion()) {
 			KBArticle oldKBArticle = kbArticlePersistence.findByR_V(
 				resourcePrimKey, kbArticle.getVersion() - 1);
@@ -1380,6 +1382,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			oldKBArticle.setMain(false);
 
 			kbArticlePersistence.update(oldKBArticle);
+
+			action = "update";
 		}
 
 		// Asset
@@ -1448,7 +1452,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Subscriptions
 
-		_notifySubscribers(userId, kbArticle, serviceContext);
+		_notifySubscribers(userId, kbArticle, action, serviceContext);
 
 		return kbArticle;
 	}
@@ -1697,6 +1701,17 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return Collections.unmodifiableList(kbArticles);
 	}
 
+	private String _getBody(
+		String action,
+		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
+
+		if (action.equals("add")) {
+			return kbGroupServiceConfiguration.emailKBArticleAddedBody();
+		}
+
+		return kbGroupServiceConfiguration.emailKBArticleUpdatedBody();
+	}
+
 	private Map<String, String> _getEmailKBArticleDiffs(KBArticle kbArticle) {
 		Map<String, String> emailKBArticleDiffs = new HashMap<>();
 
@@ -1773,8 +1788,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			new GroupServiceSettingsLocator(groupId, KBConstants.SERVICE_NAME));
 	}
 
-	private int _getNotificationType(ServiceContext serviceContext) {
-		if (serviceContext.isCommandAdd()) {
+	private int _getNotificationType(String action) {
+		if (action.equals("add")) {
 			return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 		}
 
@@ -1826,6 +1841,17 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		return resourcePrimKey;
+	}
+
+	private String _getSubject(
+		String action,
+		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
+
+		if (action.equals("add")) {
+			return kbGroupServiceConfiguration.emailKBArticleAddedSubject();
+		}
+
+		return kbGroupServiceConfiguration.emailKBArticleUpdatedSubject();
 	}
 
 	private String _getUniqueUrlTitle(
@@ -1911,7 +1937,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	private void _notifySubscribers(
-			long userId, KBArticle kbArticle, ServiceContext serviceContext)
+			long userId, KBArticle kbArticle, String action,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(serviceContext.getLayoutFullURL())) {
@@ -1921,19 +1948,18 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
 			_getKBGroupServiceConfiguration(kbArticle.getGroupId());
 
-		if (serviceContext.isCommandAdd() &&
+		if (action.equals("add") &&
 			!kbGroupServiceConfiguration.emailKBArticleAddedEnabled()) {
 
 			return;
 		}
 
-		if (serviceContext.isCommandUpdate() &&
+		if (action.equals("update") &&
 			!kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled()) {
 
 			return;
 		}
 
-		String fromName = kbGroupServiceConfiguration.emailFromName();
 		String fromAddress = kbGroupServiceConfiguration.emailFromAddress();
 
 		String kbArticleContent = StringUtil.replace(
@@ -1956,24 +1982,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticleDiffs.put(entry.getKey(), value);
 		}
 
-		String subject = null;
-		String body = null;
-
-		if (serviceContext.isCommandAdd()) {
-			subject = kbGroupServiceConfiguration.emailKBArticleAddedSubject();
-			body = kbGroupServiceConfiguration.emailKBArticleAddedBody();
-		}
-		else {
-			subject =
-				kbGroupServiceConfiguration.emailKBArticleUpdatedSubject();
-			body = kbGroupServiceConfiguration.emailKBArticleUpdatedBody();
-		}
-
 		SubscriptionSender subscriptionSender =
 			AdminSubscriptionSenderFactory.createSubscriptionSender(
 				kbArticle, serviceContext);
 
-		subscriptionSender.setBody(body);
+		subscriptionSender.setBody(
+			_getBody(action, kbGroupServiceConfiguration));
 		subscriptionSender.setClassName(kbArticle.getModelClassName());
 		subscriptionSender.setClassPK(kbArticle.getClassPK());
 		subscriptionSender.setCompanyId(kbArticle.getCompanyId());
@@ -1990,16 +2004,17 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(kbArticle.getTitle());
 		subscriptionSender.setEntryURL(_getEntryURL(kbArticle, serviceContext));
-		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setFrom(
+			fromAddress, kbGroupServiceConfiguration.emailFromName());
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("kb_article", kbArticle.getKbArticleId());
-		subscriptionSender.setNotificationType(
-			_getNotificationType(serviceContext));
+		subscriptionSender.setNotificationType(_getNotificationType(action));
 		subscriptionSender.setPortletId(serviceContext.getPortletId());
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(kbArticle.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-		subscriptionSender.setSubject(subject);
+		subscriptionSender.setSubject(
+			_getSubject(action, kbGroupServiceConfiguration));
 
 		subscriptionSender.addAssetEntryPersistedSubscribers(
 			KBArticle.class.getName(), kbArticle.getResourcePrimKey());

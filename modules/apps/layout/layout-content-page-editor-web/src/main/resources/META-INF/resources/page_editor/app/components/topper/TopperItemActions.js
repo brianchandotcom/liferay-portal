@@ -164,6 +164,7 @@ export default function TopperItemActions({item}) {
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
+						aria-label={Liferay.Language.get('options')}
 						displayType="unstyled"
 						small
 						title={Liferay.Language.get('options')}

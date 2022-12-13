@@ -55,7 +55,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -290,11 +289,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		Locale locale = LocaleUtil.fromLanguageId(
 			currentTypeSettingsUnicodeProperties.getProperty("languageId"));
 
-		Optional<String> defaultNameOptional = _getDefaultNameOptional(
-			nameMap, locale);
+		String defaultName = _getDefaultName(nameMap, locale);
 
-		defaultNameOptional.ifPresent(
-			defaultName -> nameMap.put(locale, defaultName));
+		if (defaultName != null) {
+			nameMap.put(locale, defaultName);
+		}
 
 		group = _groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,
@@ -309,15 +308,14 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		return depotEntry;
 	}
 
-	private Optional<String> _getDefaultNameOptional(
+	private String _getDefaultName(
 		Map<Locale, String> nameMap, Locale defaultLocale) {
 
 		if (Validator.isNotNull(nameMap.get(defaultLocale))) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(
-			_language.get(defaultLocale, "unnamed-asset-library"));
+		return _language.get(defaultLocale, "unnamed-asset-library");
 	}
 
 	private boolean _isStaged(DepotEntry depotEntry) throws PortalException {

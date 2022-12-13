@@ -85,7 +85,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-151314 | Test Summary: Verify if Environment Type has the followings options: (Production - Backup - Unlimited - Non-Production - Subscription - Complimentary)."
+	@description = "Automation ID: LPS-151318 | Test Summary: Verify that when you insert a not valid value, a erro message appear."
 	@ignore = "true"
 	@priority = "3"
 	test AssertTheErroMessage{

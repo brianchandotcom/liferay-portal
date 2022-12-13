@@ -163,6 +163,10 @@ public class DBPartitionUtil {
 		return companyId;
 	}
 
+	public static boolean isCompanyInDeletion(long companyId) {
+		return _inDeletionCompanyIds.contains(companyId);
+	}
+
 	public static boolean isPartitionEnabled() {
 		return _DATABASE_PARTITION_ENABLED;
 	}
@@ -202,6 +206,17 @@ public class DBPartitionUtil {
 		if (_DATABASE_PARTITION_ENABLED) {
 			_defaultCompanyId = companyId;
 		}
+	}
+
+	public static SafeCloseable setInDeletionCompany(long companyId) {
+		if (_inDeletionCompanyIds.contains(companyId)) {
+			throw new UnsupportedOperationException(
+				companyId + " is already in deletion");
+		}
+
+		_inDeletionCompanyIds.add(companyId);
+
+		return () -> _inDeletionCompanyIds.remove(companyId);
 	}
 
 	public static DataSource wrapDataSource(DataSource dataSource)
@@ -794,5 +809,7 @@ public class DBPartitionUtil {
 		Arrays.asList("company", "virtualhost"));
 	private static volatile long _defaultCompanyId;
 	private static String _defaultSchemaName;
+	private static final List<Long> _inDeletionCompanyIds =
+		new CopyOnWriteArrayList<>();
 
 }

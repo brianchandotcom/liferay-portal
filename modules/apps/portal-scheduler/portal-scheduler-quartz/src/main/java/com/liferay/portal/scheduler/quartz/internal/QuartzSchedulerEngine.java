@@ -292,7 +292,9 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
-	public void run(String jobName, String groupName, StorageType storageType)
+	public void run(
+			long companyId, String jobName, String groupName,
+			StorageType storageType)
 		throws SchedulerException {
 
 		SchedulerResponse schedulerResponse = getScheduledJob(
@@ -305,6 +307,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			schedulerResponse.getDestinationName());
 		message.put(SchedulerEngine.GROUP_NAME, groupName);
 		message.put(SchedulerEngine.JOB_NAME, jobName);
+		message.put("companyId", companyId);
 
 		_messageBus.sendMessage(
 			schedulerResponse.getDestinationName(), message);

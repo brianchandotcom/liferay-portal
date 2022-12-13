@@ -248,10 +248,12 @@ public class ClusterSchedulerEngine
 	}
 
 	@Override
-	public void run(String jobName, String groupName, StorageType storageType)
+	public void run(
+			long companyId, String jobName, String groupName,
+			StorageType storageType)
 		throws SchedulerException {
 
-		_schedulerEngine.run(jobName, groupName, storageType);
+		_schedulerEngine.run(companyId, jobName, groupName, storageType);
 	}
 
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)

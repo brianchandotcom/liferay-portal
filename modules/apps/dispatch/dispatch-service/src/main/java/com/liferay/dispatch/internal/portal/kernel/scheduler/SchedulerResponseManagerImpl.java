@@ -147,10 +147,12 @@ public class SchedulerResponseManagerImpl implements SchedulerResponseManager {
 	}
 
 	@Override
-	public void run(String jobName, String groupName, StorageType storageType)
+	public void run(
+			long companyId, String jobName, String groupName,
+			StorageType storageType)
 		throws SchedulerException {
 
-		_schedulerEngineHelper.run(jobName, groupName, storageType);
+		_schedulerEngineHelper.run(companyId, jobName, groupName, storageType);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

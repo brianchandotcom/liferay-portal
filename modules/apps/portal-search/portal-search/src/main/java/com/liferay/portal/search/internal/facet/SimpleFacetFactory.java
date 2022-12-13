@@ -12,24 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet;
+package com.liferay.portal.search.internal.facet;
 
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
  */
-public class MultiValueFacetFactory implements FacetFactory {
+@Component(service = FacetFactory.class)
+public class SimpleFacetFactory implements FacetFactory {
 
 	@Override
 	public String getFacetClassName() {
-		return MultiValueFacet.class.getName();
+		return SimpleFacet.class.getName();
 	}
 
 	@Override
 	public Facet newInstance(SearchContext searchContext) {
-		return new MultiValueFacet(searchContext);
+		return new SimpleFacet(searchContext);
 	}
 
 }

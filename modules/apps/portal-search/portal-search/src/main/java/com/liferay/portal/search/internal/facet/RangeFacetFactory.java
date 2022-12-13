@@ -12,24 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet;
+package com.liferay.portal.search.internal.facet;
 
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 
 /**
  * @author Raymond Augé
  */
-public class SimpleFacetFactory implements FacetFactory {
+public class RangeFacetFactory implements FacetFactory {
 
 	@Override
 	public String getFacetClassName() {
-		return SimpleFacet.class.getName();
+		return RangeFacet.class.getName();
 	}
 
 	@Override
 	public Facet newInstance(SearchContext searchContext) {
-		return new SimpleFacet(searchContext);
+		return new RangeFacet(searchContext);
 	}
 
 }

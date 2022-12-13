@@ -7434,6 +7434,11 @@ sass@^1.56.2:
     immutable "^4.0.0"
     source-map-js ">=0.6.2 <2.0.0"
 
+sassy-inputs@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/sassy-inputs/-/sassy-inputs-1.0.6.tgz#3316feac511e414e6ad18913f76c181fe1f6d052"
+  integrity sha512-eIurZutXlJEx1veR7LKTI2PQFN5DY/rDHoZCOpKWe/xavXYFeZ1BniFO8V9+AR3gYb4LgOHWPjlbtkX+obVzcA==
+
 sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"

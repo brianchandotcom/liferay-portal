@@ -37,12 +37,12 @@ AUI.add(
 
 		const TPL_SIMPLE_COLOR_PICKER_ITEM = new A.Template(
 			'<tpl for="pallete">',
-			'<div class="',
+			'<button aria-label="{.}" class="',
 			CSS_SIMPLE_COLOR_PICKER_ITEM,
 			'" style="background-color: {.}',
 			'; border-color:',
 			'{.};',
-			'"></div>',
+			'" role="radio"></button>',
 			'</tpl>'
 		);
 
@@ -119,7 +119,17 @@ AUI.add(
 						})
 					);
 
-					instance.get('contentBox').setContent(instance.items);
+					const contentBox = instance.get('contentBox');
+
+					contentBox.setAttribute(
+						'aria-label',
+						Liferay.Language.get(
+							'color-picker-use-arrow-keys-to-move-to-different-colors-press-enter-or-space-to-select-a-color-press-escape-to-leave-the-color-picker'
+						)
+					);
+					contentBox.setAttribute('role', 'radiogroup');
+
+					contentBox.setContent(instance.items);
 				},
 
 				_uiSetColor(val) {
@@ -131,10 +141,13 @@ AUI.add(
 						CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED
 					);
 
+					instance.items.setAttribute('aria-checked', 'false');
+
 					const newNode = instance.items.item(pallete.indexOf(val));
 
 					if (newNode) {
 						newNode.addClass(CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED);
+						newNode.setAttribute('aria-checked', 'true');
 					}
 				},
 

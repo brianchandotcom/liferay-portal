@@ -81,7 +81,6 @@ login.form.navigation.post
 login.form.navigation.pre
 logout.events.post
 logout.events.pre
-mail.hook.impl
 my.sites.show.private.sites.with.no.layouts
 my.sites.show.public.sites.with.no.layouts
 my.sites.show.user.private.sites.with.no.layouts

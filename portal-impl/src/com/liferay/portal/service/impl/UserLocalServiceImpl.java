@@ -1735,9 +1735,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		boolean autoPassword = ParamUtil.getBoolean(
 			serviceContext, "autoPassword");
 
-		String password = StringPool.BLANK;
-
 		if (autoPassword) {
+			String password = StringPool.BLANK;
+
 			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
@@ -1772,13 +1772,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = userPersistence.update(user);
 
 			user.setPasswordModified(false);
-		}
-
-		if (user.hasCompanyMx()) {
-			mailService.addUser(
-				user.getCompanyId(), user.getUserId(), password,
-				user.getFirstName(), user.getMiddleName(), user.getLastName(),
-				user.getEmailAddress());
 		}
 
 		boolean adminEmailUserAddedEnabled = PrefsPropsUtil.getBoolean(
@@ -1999,10 +1992,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		_ticketLocalService.deleteTickets(
 			user.getCompanyId(), User.class.getName(), user.getUserId());
-
-		// Mail
-
-		mailService.deleteUser(user.getCompanyId(), user.getUserId());
 
 		// Contact
 
@@ -4824,10 +4813,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			trackPassword(user);
 		}
 
-		if (user.hasCompanyMx()) {
-			mailService.updatePassword(user.getCompanyId(), userId, password1);
-		}
-
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -6374,31 +6359,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (StringUtil.equalsIgnoreCase(emailAddress, user.getEmailAddress())) {
 			return;
-		}
-
-		long userId = user.getUserId();
-
-		if (!user.hasCompanyMx() && user.hasCompanyMx(emailAddress) &&
-			Validator.isNotNull(password)) {
-
-			// test@test.com -> test@liferay.com
-
-			mailService.addUser(
-				user.getCompanyId(), userId, password, firstName, middleName,
-				lastName, emailAddress);
-		}
-		else if (user.hasCompanyMx() && user.hasCompanyMx(emailAddress)) {
-
-			// test@liferay.com -> bob@liferay.com
-
-			mailService.updateEmailAddress(
-				user.getCompanyId(), userId, emailAddress);
-		}
-		else if (user.hasCompanyMx() && !user.hasCompanyMx(emailAddress)) {
-
-			// test@liferay.com -> test@test.com
-
-			mailService.deleteEmailAddress(user.getCompanyId(), userId);
 		}
 
 		user.setDigest(StringPool.BLANK);

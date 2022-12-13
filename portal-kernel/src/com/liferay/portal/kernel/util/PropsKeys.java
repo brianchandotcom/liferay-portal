@@ -1488,46 +1488,6 @@ public interface PropsKeys {
 
 	public static final String MAIL_BATCH_SIZE = "mail.batch.size";
 
-	public static final String MAIL_HOOK_CYRUS_HOME = "mail.hook.cyrus.home";
-
-	public static final String MAIL_HOOK_FUSEMAIL_ACCOUNT_TYPE =
-		"mail.hook.fusemail.account.type";
-
-	public static final String MAIL_HOOK_FUSEMAIL_GROUP_PARENT =
-		"mail.hook.fusemail.group.parent";
-
-	public static final String MAIL_HOOK_FUSEMAIL_PASSWORD =
-		"mail.hook.fusemail.password";
-
-	public static final String MAIL_HOOK_FUSEMAIL_URL =
-		"mail.hook.fusemail.url";
-
-	public static final String MAIL_HOOK_FUSEMAIL_USERNAME =
-		"mail.hook.fusemail.username";
-
-	public static final String MAIL_HOOK_IMPL = "mail.hook.impl";
-
-	public static final String MAIL_HOOK_SENDMAIL_ADD_USER =
-		"mail.hook.sendmail.add.user";
-
-	public static final String MAIL_HOOK_SENDMAIL_CHANGE_PASSWORD =
-		"mail.hook.sendmail.change.password";
-
-	public static final String MAIL_HOOK_SENDMAIL_DELETE_USER =
-		"mail.hook.sendmail.delete.user";
-
-	public static final String MAIL_HOOK_SENDMAIL_HOME =
-		"mail.hook.sendmail.home";
-
-	public static final String MAIL_HOOK_SENDMAIL_VIRTUSERTABLE =
-		"mail.hook.sendmail.virtusertable";
-
-	public static final String MAIL_HOOK_SENDMAIL_VIRTUSERTABLE_REFRESH =
-		"mail.hook.sendmail.virtusertable.refresh";
-
-	public static final String MAIL_HOOK_SHELL_SCRIPT =
-		"mail.hook.shell.script";
-
 	public static final String MAIL_MX_UPDATE = "mail.mx.update";
 
 	public static final String MAIL_SEND_BLACKLIST = "mail.send.blacklist";

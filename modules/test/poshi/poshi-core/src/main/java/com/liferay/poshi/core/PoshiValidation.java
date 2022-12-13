@@ -1500,9 +1500,6 @@ public class PoshiValidation {
 
 		List<String> attributeNames = Arrays.asList("line-number", "name");
 
-		validateHasNoChildElements(poshiElement);
-		validatePossibleAttributeNames(poshiElement, attributeNames);
-
 		if (Validator.isNotNull(poshiElement.attributeValue("value"))) {
 			attributeNames.add("value");
 		}
@@ -1523,6 +1520,8 @@ public class PoshiValidation {
 			}
 		}
 
+		validateHasNoChildElements(poshiElement);
+		validatePossibleAttributeNames(poshiElement, attributeNames);
 		validateRequiredAttributeNames(poshiElement, attributeNames, filePath);
 		validatePossiblePropertyValues(poshiElement);
 	}

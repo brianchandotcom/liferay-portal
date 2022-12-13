@@ -43,7 +43,7 @@ create table JournalArticleLocalization (
 	articleLocalizationId LONG not null,
 	companyId LONG,
 	articlePK LONG,
-	title VARCHAR(400) null,
+	title VARCHAR(800) null,
 	description STRING null,
 	languageId VARCHAR(75) null,
 	primary key (articleLocalizationId, ctCollectionId)

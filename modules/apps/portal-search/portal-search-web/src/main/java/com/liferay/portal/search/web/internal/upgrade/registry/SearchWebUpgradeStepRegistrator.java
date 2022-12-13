@@ -14,15 +14,12 @@
 
 package com.liferay.portal.search.web.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.portal.search.web.internal.upgrade.v2_0_0.SearchPortletUpgradeProcess;
-import com.liferay.portal.search.web.internal.upgrade.v3_0_0.FacetTemplateUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -39,13 +36,6 @@ public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			new UpgradePortletPreferences());
 
 		registry.register("1.0.0", "2.0.0", new SearchPortletUpgradeProcess());
-
-		registry.register(
-			"2.0.0", "3.0.0",
-			new FacetTemplateUpgradeProcess(_classNameLocalService));
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 }

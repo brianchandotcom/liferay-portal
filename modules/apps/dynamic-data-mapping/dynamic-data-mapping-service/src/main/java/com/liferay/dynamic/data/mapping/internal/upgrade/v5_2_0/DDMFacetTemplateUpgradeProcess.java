@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.upgrade.v3_0_0;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -20,32 +20,15 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortlet;
-import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
-import com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortlet;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext;
-import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortlet;
-import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetTermDisplayContext;
-import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortlet;
-import com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortlet;
-import com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortlet;
-import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortlet;
-import com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetPortlet;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Map;
 
 /**
  * @author Bryan Engler
  */
-public class FacetTemplateUpgradeProcess extends UpgradeProcess {
+public class DDMFacetTemplateUpgradeProcess extends UpgradeProcess {
 
-	public FacetTemplateUpgradeProcess(
+	public DDMFacetTemplateUpgradeProcess(
 		ClassNameLocalService classNameLocalService) {
 
 		_classNameLocalService = classNameLocalService;
@@ -60,7 +43,7 @@ public class FacetTemplateUpgradeProcess extends UpgradeProcess {
 
 	private void _deleteOrphanedDefaultFacetTemplates() throws Exception {
 		long resourceClassNameId = _classNameLocalService.getClassNameId(
-			PortletDisplayTemplate.class);
+			"com.liferay.portlet.display.template.PortletDisplayTemplate");
 
 		String[] defaultTemplateKeys = {
 			"'CATEGORY-FACET-CLOUD-FTL'", "'CATEGORY-FACET-COMPACT-FTL'",
@@ -102,7 +85,7 @@ public class FacetTemplateUpgradeProcess extends UpgradeProcess {
 
 	private void _updateFacetTemplates() throws Exception {
 		long resourceClassNameId = _classNameLocalService.getClassNameId(
-			PortletDisplayTemplate.class);
+			"com.liferay.portlet.display.template.PortletDisplayTemplate");
 
 		for (Map.Entry<String, String> entry :
 				_newFacetTemplateClassNames.entrySet()) {
@@ -124,52 +107,74 @@ public class FacetTemplateUpgradeProcess extends UpgradeProcess {
 	private final Map<String, String> _newFacetTemplateClassNames =
 		HashMapBuilder.put(
 			"com.liferay.portal.search.web.internal.custom.facet.display." +
+				"context.CustomFacetDisplayContext",
+			"com.liferay.portal.search.web.internal.custom.facet.portlet." +
+				"CustomFacetPortlet"
+		).put(
+			"com.liferay.portal.search.web.internal.custom.facet.display." +
 				"context.CustomFacetTermDisplayContext",
-			CustomFacetPortlet.class.getName()
+			"com.liferay.portal.search.web.internal.custom.facet.portlet." +
+				"CustomFacetPortlet"
+		).put(
+			"com.liferay.portal.search.web.internal.facet.display.context." +
+				"AssetCategoriesSearchFacetDisplayContext",
+			"com.liferay.portal.search.web.internal.category.facet.portlet." +
+				"CategoryFacetPortlet"
 		).put(
 			"com.liferay.portal.search.web.internal.facet.display.context." +
 				"AssetCategoriesSearchFacetTermDisplayContext",
-			CategoryFacetPortlet.class.getName()
+			"com.liferay.portal.search.web.internal.category.facet.portlet." +
+				"CategoryFacetPortlet"
+		).put(
+			"com.liferay.portal.search.web.internal.facet.display.context." +
+				"AssetEntriesSearchFacetDisplayContext",
+			"com.liferay.portal.search.web.internal.type.facet.portlet." +
+				"TypeFacetPortlet"
 		).put(
 			"com.liferay.portal.search.web.internal.facet.display.context." +
 				"AssetEntriesSearchFacetTermDisplayContext",
-			TypeFacetPortlet.class.getName()
+			"com.liferay.portal.search.web.internal.type.facet.portlet." +
+				"TypeFacetPortlet"
+		).put(
+			"com.liferay.portal.search.web.internal.facet.display.context." +
+				"AssetTagsSearchFacetDisplayContext",
+			"com.liferay.portal.search.web.internal.tag.facet.portlet." +
+				"TagFacetPortlet"
 		).put(
 			"com.liferay.portal.search.web.internal.facet.display.context." +
 				"AssetTagsSearchFacetTermDisplayContext",
-			TagFacetPortlet.class.getName()
+			"com.liferay.portal.search.web.internal.tag.facet.portlet." +
+				"TagFacetPortlet"
+		).put(
+			"com.liferay.portal.search.web.internal.facet.display.context." +
+				"FolderSearchFacetDisplayContext",
+			"com.liferay.portal.search.web.internal.folder.facet.portlet." +
+				"FolderFacetPortlet"
 		).put(
 			"com.liferay.portal.search.web.internal.facet.display.context." +
 				"FolderSearchFacetTermDisplayContext",
-			FolderFacetPortlet.class.getName()
+			"com.liferay.portal.search.web.internal.folder.facet.portlet." +
+				"FolderFacetPortlet"
+		).put(
+			"com.liferay.portal.search.web.internal.facet.display.context." +
+				"ScopeSearchFacetDisplayContext",
+			"com.liferay.portal.search.web.internal.site.facet.portlet." +
+				"SiteFacetPortlet"
 		).put(
 			"com.liferay.portal.search.web.internal.facet.display.context." +
 				"ScopeSearchFacetTermDisplayContext",
-			SiteFacetPortlet.class.getName()
+			"com.liferay.portal.search.web.internal.site.facet.portlet." +
+				"SiteFacetPortlet"
 		).put(
-			AssetCategoriesSearchFacetDisplayContext.class.getName(),
-			CategoryFacetPortlet.class.getName()
+			"com.liferay.portal.search.web.internal.facet.display.context." +
+				"UserSearchFacetTermDisplayContext",
+			"com.liferay.portal.search.web.internal.user.facet.portlet." +
+				"UserFacetPortlet"
 		).put(
-			CustomFacetDisplayContext.class.getName(),
-			CustomFacetPortlet.class.getName()
-		).put(
-			FolderSearchFacetDisplayContext.class.getName(),
-			FolderFacetPortlet.class.getName()
-		).put(
-			ModifiedFacetTermDisplayContext.class.getName(),
-			ModifiedFacetPortlet.class.getName()
-		).put(
-			ScopeSearchFacetDisplayContext.class.getName(),
-			SiteFacetPortlet.class.getName()
-		).put(
-			AssetTagsSearchFacetDisplayContext.class.getName(),
-			TagFacetPortlet.class.getName()
-		).put(
-			AssetEntriesSearchFacetDisplayContext.class.getName(),
-			TypeFacetPortlet.class.getName()
-		).put(
-			UserSearchFacetTermDisplayContext.class.getName(),
-			UserFacetPortlet.class.getName()
+			"com.liferay.portal.search.web.internal.modified.facet.display." +
+				"context.ModifiedFacetTermDisplayContext",
+			"com.liferay.portal.search.web.internal.modified.facet.portlet." +
+				"ModifiedFacetPortlet"
 		).build();
 
 }

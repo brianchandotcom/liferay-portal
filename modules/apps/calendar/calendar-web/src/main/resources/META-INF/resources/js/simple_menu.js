@@ -216,9 +216,13 @@ AUI.add(
 						}
 
 						if (event.keyCode === A.Event.KeyMap.UP) {
+							event.preventDefault();
+
 							instance._focusItem(i - 1);
 						}
 						else if (event.keyCode === A.Event.KeyMap.DOWN) {
+							event.preventDefault();
+
 							instance._focusItem(i + 1);
 						}
 						else if (event.keyCode === A.Event.KeyMap.ENTER) {

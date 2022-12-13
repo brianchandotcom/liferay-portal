@@ -29,6 +29,7 @@ interface IProps {
 }
 
 interface ItemData {
+	externalReferenceCode: string;
 	id: number;
 	key: string;
 	name: {props: {id: number}};
@@ -201,6 +202,15 @@ function getDataSetProps(
 							expand: false,
 							fieldName: 'key',
 							label: Liferay.Language.get('key'),
+							localizeLabel: true,
+							sortable: false,
+						},
+						{
+							expand: false,
+							fieldName: 'externalReferenceCode',
+							label: Liferay.Language.get(
+								'external-reference-code'
+							),
 							localizeLabel: true,
 							sortable: false,
 						},

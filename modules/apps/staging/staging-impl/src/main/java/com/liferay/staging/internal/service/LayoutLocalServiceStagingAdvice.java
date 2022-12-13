@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
@@ -143,6 +144,12 @@ public class LayoutLocalServiceStagingAdvice {
 			groupId, privateLayout, layoutId);
 
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
+
+		if (Validator.isNull(name)) {
+			List<String> values = new ArrayList<>(nameMap.values());
+
+			name = values.get(0);
+		}
 
 		Map<Locale, String> layoutFriendlyURLMap =
 			_layoutLocalServiceHelper.getFriendlyURLMap(

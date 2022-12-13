@@ -2692,6 +2692,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
+		if (Validator.isNull(name)) {
+			List<String> values = new ArrayList<>(nameMap.values());
+
+			name = values.get(0);
+		}
+
 		friendlyURLMap = layoutLocalServiceHelper.getFriendlyURLMap(
 			groupId, privateLayout, layoutId, name, friendlyURLMap);
 

@@ -15,8 +15,12 @@
 package com.liferay.object.rest.internal.manager.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -62,21 +66,27 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -125,7 +135,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -172,13 +182,6 @@ public class DefaultObjectEntryManagerImplTest {
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-164801", "true"
 			).build());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
-		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Before
@@ -327,6 +330,13 @@ public class DefaultObjectEntryManagerImplTest {
 				NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
 			objectField);
 		_objectRelationshipFieldName = objectField.getName();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -800,7 +810,15 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testGetObjectEntriesAccountRestrictions() throws Exception {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null, null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		AccountEntry accountEntry2 = _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, null, null,
 			RandomTestUtil.randomString(),
@@ -831,15 +849,13 @@ public class DefaultObjectEntryManagerImplTest {
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition1);
 
-		_user = UserTestUtil.addUser();
-
-		_objectEntryManager.addObjectEntry(
+		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition1,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"r_oneToManyRelationshipName_accountEntryId",
-						accountEntry.getAccountEntryId()
+						accountEntry1.getAccountEntryId()
 					).put(
 						"textObjectFieldName", RandomTestUtil.randomString()
 					).build();
@@ -847,37 +863,93 @@ public class DefaultObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
-			_companyId, _objectDefinition1, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			null,
-			_filterPredicateFactory.create(
-				null, _objectDefinition2.getObjectDefinitionId()),
-			null, null);
+		_objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry2.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Collection<ObjectEntry> objectEntries = page.getItems();
+		_user = UserTestUtil.addUser();
 
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
 
-		Role role = _roleLocalService.getRole(_companyId, "Administrator");
+		_assertObjectEntriesSize(0);
 
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		Role randomRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		page = _objectEntryManager.getObjectEntries(
-			_companyId, _objectDefinition1, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			null,
-			_filterPredicateFactory.create(
-				null, _objectDefinition2.getObjectDefinitionId()),
-			null, null);
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.VIEW);
 
-		objectEntries = page.getItems();
+		_userLocalService.addRoleUser(randomRole.getRoleId(), _user);
 
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_assertObjectEntriesSize(2);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
+			randomRole.getRoleId(), ActionKeys.VIEW);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry1.getId()), randomRole.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		_assertObjectEntriesSize(1);
+
+		_userLocalService.deleteRoleUser(randomRole.getRoleId(), _user);
+
+		_assertObjectEntriesSize(0);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry1.getAccountEntryId(), _user.getUserId());
+
+		Role accountMemberRole = _roleLocalService.getRole(
+			_companyId, AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountMemberRole.getRoleId(), ActionKeys.VIEW);
+
+		_assertObjectEntriesSize(1);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountMemberRole.getRoleId(), ActionKeys.VIEW);
+
+		_assertObjectEntriesSize(0);
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			_user.getUserId(), accountEntry2.getAccountEntryId(),
+			RandomTestUtil.randomString(), Collections.emptyMap(),
+			Collections.emptyMap());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry2.getAccountEntryGroupId(),
+			accountRole.getRoleId());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountRole.getRoleId(), ActionKeys.VIEW);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry2.getAccountEntryId(), _user.getUserId());
+
+		_assertObjectEntriesSize(1);
 	}
 
 	private void _addAggregationObjectField(
@@ -1099,6 +1171,23 @@ public class DefaultObjectEntryManagerImplTest {
 		}
 	}
 
+	private void _assertObjectEntriesSize(long expectedSize) throws Exception {
+		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
+			_companyId, _objectDefinition1, null, null,
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, _user),
+			null,
+			_filterPredicateFactory.create(
+				null, _objectDefinition2.getObjectDefinitionId()),
+			null, null);
+
+		Collection<ObjectEntry> objectEntries = page.getItems();
+
+		Assert.assertEquals(
+			objectEntries.toString(), expectedSize, objectEntries.size());
+	}
+
 	private String _buildEqualsExpressionFilterString(
 		String fieldName, String value) {
 
@@ -1283,6 +1372,12 @@ public class DefaultObjectEntryManagerImplTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Inject
+	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Inject
 	private DLAppService _dlAppService;
 
 	@Inject
@@ -1335,10 +1430,16 @@ public class DefaultObjectEntryManagerImplTest {
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
 	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

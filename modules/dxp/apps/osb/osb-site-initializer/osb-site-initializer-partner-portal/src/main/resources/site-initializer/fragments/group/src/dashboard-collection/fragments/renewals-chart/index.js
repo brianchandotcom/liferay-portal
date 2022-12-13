@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/portal/no-global-fetch */
 /* eslint-disable @liferay/empty-line-between-elements */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -26,10 +27,10 @@ const status = {
 export default function () {
 	const [data, setData] = useState();
 	const currentDate = new Date();
+	const milisecondsPerDay = 1000 * 3600 * 24;
 
 	useEffect(() => {
 		const getRenewalsData = async () => {
-			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			await fetch('/o/c/opportunitysfs?&sort=closeDate:asc', {
 				headers: {
 					'accept': 'application/json',
@@ -40,8 +41,11 @@ export default function () {
 				.then((data) => {
 					setData(data);
 				})
-				.catch((error) => {
-					console.error('Error:', error);
+				.catch(() => {
+					Liferay.Util.openToast({
+						message: 'An unexpected error occured.',
+						type: 'danger',
+					});
 				});
 		};
 		getRenewalsData();
@@ -70,16 +74,14 @@ export default function () {
 						new Date(item.closeDate) - currentDate;
 
 					const expirationInDays =
-						Math.floor(expirationInTime / (1000 * 3600 * 24)) + 1;
+						Math.floor(expirationInTime / milisecondsPerDay) + 1;
 
 					const currentStatusColor = () => {
 						if (expirationInDays <= 5) {
 							return status[5];
-						}
-						else if (expirationInDays <= 15) {
+						} else if (expirationInDays <= 15) {
 							return status[15];
-						}
-						else if (expirationInDays <= 30) {
+						} else if (expirationInDays <= 30) {
 							return status[30];
 						}
 					};

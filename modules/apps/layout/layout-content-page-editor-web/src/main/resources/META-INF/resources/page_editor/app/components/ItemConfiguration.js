@@ -13,17 +13,23 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import SidebarPanelHeader from '../../common/components/SidebarPanelHeader';
 import {useId} from '../../core/hooks/useId';
 import {
 	PANELS,
 	selectPanels,
 } from '../../plugins/browser/components/page-structure/selectors/selectPanels';
+import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {useCollectionActiveItemContext} from '../contexts/CollectionActiveItemContext';
 import {CollectionItemContext} from '../contexts/CollectionItemContext';
+import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector, useSelectorCallback} from '../contexts/StoreContext';
 import selectCanViewItemConfiguration from '../selectors/selectCanViewItemConfiguration';
 import {deepEqual} from '../utils/checkDeepEqual';
@@ -57,6 +63,7 @@ function ItemConfigurationContent({
 }) {
 	const tabIdPrefix = useId();
 	const panelIdPrefix = useId();
+	const selectItem = useSelectItem();
 
 	const {activeItem, panelsIds} = useSelectorCallback(
 		(state) => selectPanels(activeItemId, activeItemType, state),
@@ -113,12 +120,41 @@ function ItemConfigurationContent({
 				</ClayAlert>
 			) : (
 				<>
+					{activeItemType === ITEM_TYPES.editable && (
+						<SidebarPanelHeader
+							iconLeft={
+								<ClayButton
+									aria-label={Liferay.Language.get(
+										'back-to-parent-configuration'
+									)}
+									borderless
+									className="mb-0 mr-3 p-0"
+									displayType="secondary"
+									onClick={() =>
+										selectItem(activeItem.parentId)
+									}
+									size="sm"
+									title={Liferay.Language.get(
+										'back-to-parent-configuration'
+									)}
+								>
+									<ClayIcon symbol="angle-left" />
+								</ClayButton>
+							}
+							showCloseButton={false}
+						>
+							{activeItem.editableId}
+						</SidebarPanelHeader>
+					)}
+
 					<ClayTabs
 						activation="automatic"
 						active={panels.findIndex(
 							(panel) => panel.panelId === activePanel.id
 						)}
-						className="flex-nowrap pt-2 px-3"
+						className={classNames('flex-nowrap px-3', {
+							'pt-2': activeItemType !== ITEM_TYPES.editable,
+						})}
 						onActiveChange={(activeIndex) => {
 							const panel = panels[activeIndex];
 

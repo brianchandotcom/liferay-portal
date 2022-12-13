@@ -36,11 +36,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INVITE_BUTTON</td>
-	<td>//button[contains(@class,'invite-button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROLE_DISABLED</td>
 	<td>//select[contains(@name, 'invites[${key_index}]')]//option[contains(text(), '${role}')][@disabled]</td>
 	<td></td>
@@ -93,6 +88,11 @@
 <tr>
 	<td>MODAL_TM</td>
 	<td>//h2[contains(., '${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_CHANGE</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>
 </tbody>

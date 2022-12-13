@@ -160,6 +160,7 @@ export function DropdownColorPicker({
 				</ClayButton>
 			) : (
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('value-from-stylebook')}
 					className="border-0 flex-shrink-0"
 					displayType="secondary"
 					onClick={() => onSetActive(!active)}

@@ -115,13 +115,10 @@ export default function () {
 									<div>
 										Expires in &nbsp;
 										<span className="font-weight-semi-bold">
-											{expirationInDays} days. 
-										</span>
+											{expirationInDays} days.
+										</span>{' '}
 
-											{" "}
-
-											{item.closeDate}
-										
+										{item.closeDate}
 									</div>
 								</div>
 							</div>

@@ -211,94 +211,8 @@ public class LayoutsTreeDisplayContext {
 		return _groupId;
 	}
 
-	public Map<String, Object> getLayoutFinderData() {
-		return HashMapBuilder.<String, Object>put(
-			"administrationPortletNamespace",
-			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
-		).put(
-			"administrationPortletURL", getAdministrationPortletURL()
-		).put(
-			"findLayoutsURL",
-			() -> {
-				LiferayPortletURL findLayoutsURL = PortletURLFactoryUtil.create(
-					_liferayPortletRequest,
-					ProductNavigationProductMenuPortletKeys.
-						PRODUCT_NAVIGATION_PRODUCT_MENU,
-					PortletRequest.RESOURCE_PHASE);
-
-				findLayoutsURL.setResourceID(
-					"/product_navigation_product_menu/find_layouts");
-
-				return findLayoutsURL.toString();
-			}
-		).put(
-			"namespace", getNamespace()
-		).put(
-			"productMenuPortletURL", getProductMenuPortletURL()
-		).put(
-			"spritemap", _themeDisplay.getPathThemeSpritemap()
-		).build();
-	}
-
 	public String getNamespace() {
 		return _namespace;
-	}
-
-	public Map<String, Object> getPagesTreeData() throws Exception {
-		return HashMapBuilder.<String, Object>put(
-			"config",
-			HashMapBuilder.<String, Object>put(
-				"loadMoreItemsURL",
-				() -> {
-					LiferayPortletURL liferayPortletURL =
-						(LiferayPortletURL)ResourceURLBuilder.createResourceURL(
-							_renderResponse
-						).setResourceID(
-							"/product_navigation_product_menu/get_layouts"
-						).buildResourceURL();
-
-					liferayPortletURL.setCopyCurrentRenderParameters(false);
-
-					return liferayPortletURL.toString();
-				}
-			).put(
-				"maxPageSize",
-				GetterUtil.getInteger(
-					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)
-			).put(
-				"moveItemURL",
-				() -> {
-					StringBundler sb = new StringBundler(3);
-
-					sb.append(PortalUtil.getPortalURL(_httpServletRequest));
-					sb.append(_themeDisplay.getPathMain());
-					sb.append("/portal/edit_layout?cmd=parent_layout_id");
-
-					return sb.toString();
-				}
-			).put(
-				"namespace", getNamespace()
-			).put(
-				"stagingEnabled",
-				() -> {
-					Group scopeGroup = _themeDisplay.getScopeGroup();
-
-					if (scopeGroup.hasLocalOrRemoteStagingGroup()) {
-						return true;
-					}
-
-					return false;
-				}
-			).build()
-		).put(
-			"isPrivateLayoutsTree", isPrivateLayout()
-		).put(
-			"items", _getLayoutsJSONArray()
-		).put(
-			"selectedLayoutId", getSelPlid()
-		).put(
-			"selectedLayoutPath", _getSelectedLayoutPath()
-		).build();
 	}
 
 	public String getPagesTreeURL() {
@@ -321,35 +235,6 @@ public class LayoutsTreeDisplayContext {
 		).buildString();
 	}
 
-	public Map<String, Object> getPageTypeSelectorData() {
-		return HashMapBuilder.<String, Object>put(
-			"addCollectionLayoutURL", _setSelPlid(getAddCollectionLayoutURL())
-		).put(
-			"addLayoutURL", _setSelPlid(getAddLayoutURL())
-		).put(
-			"configureLayoutSetURL",
-			() -> {
-				if (!isShowConfigureLayout()) {
-					return StringPool.BLANK;
-				}
-
-				return _setSelPlid(getConfigureLayoutSetURL());
-			}
-		).put(
-			"namespace", getNamespace()
-		).put(
-			"pagesTreeURL", getPagesTreeURL()
-		).put(
-			"pageTypeOptions", _getPageTypeOptionsJSONArray()
-		).put(
-			"pageTypeSelectedOption", _getPageTypeSelectedOption()
-		).put(
-			"pageTypeSelectedOptionLabel", _getPageTypeSelectedOptionLabel()
-		).put(
-			"showAddIcon", this::_isShowAddIcon
-		).build();
-	}
-
 	public String getProductMenuPortletURL() {
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
@@ -366,6 +251,132 @@ public class LayoutsTreeDisplayContext {
 		).setWindowState(
 			LiferayWindowState.EXCLUSIVE
 		).buildString();
+	}
+
+	public Map<String, Object> getProductMenuTreeData() throws Exception {
+		Map<String, Object> config = HashMapBuilder.<String, Object>put(
+			"addCollectionLayoutURL", _setSelPlid(getAddCollectionLayoutURL())
+		).put(
+			"addLayoutURL", _setSelPlid(getAddLayoutURL())
+		).put(
+			"administrationPortletNamespace",
+			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
+		).put(
+			"administrationPortletURL", getAdministrationPortletURL()
+		).put(
+			"configureLayoutSetURL",
+			() -> {
+				if (!isShowConfigureLayout()) {
+					return StringPool.BLANK;
+				}
+
+				return _setSelPlid(getConfigureLayoutSetURL());
+			}
+		).put(
+			"findLayoutsURL",
+			() -> {
+				LiferayPortletURL findLayoutsURL = PortletURLFactoryUtil.create(
+					_liferayPortletRequest,
+					ProductNavigationProductMenuPortletKeys.
+						PRODUCT_NAVIGATION_PRODUCT_MENU,
+					PortletRequest.RESOURCE_PHASE);
+
+				findLayoutsURL.setResourceID(
+					"/product_navigation_product_menu/find_layouts");
+
+				return findLayoutsURL.toString();
+			}
+		).put(
+			"pagesTreeURL", getPagesTreeURL()
+		).put(
+			"productMenuPortletURL", getProductMenuPortletURL()
+		).build();
+
+		Map<String, Object> treeDate = HashMapBuilder.<String, Object>put(
+			"isSiteNavigationMenu", isSiteNavigationMenu()
+		).put(
+			"pageTypeOptions", _getPageTypeOptionsJSONArray()
+		).put(
+			"pageTypeSelectedOption", _getPageTypeSelectedOption()
+		).put(
+			"pageTypeSelectedOptionLabel", _getPageTypeSelectedOptionLabel()
+		).put(
+			"showAddIcon", this::_isShowAddIcon
+		).put(
+			"spritemap", _themeDisplay.getPathThemeSpritemap()
+		).build();
+
+		if (isSiteNavigationMenu()) {
+			treeDate.putAll(
+				HashMapBuilder.<String, Object>put(
+					"selectedSiteNavigationMenuItemId",
+					String.valueOf(getSelectedSiteNavigationMenuItemId())
+				).put(
+					"siteNavigationMenuItems",
+					_getSiteNavigationMenuItemsJSONArray()
+				).build());
+		}
+		else {
+			config.putAll(
+				HashMapBuilder.<String, Object>put(
+					"loadMoreItemsURL",
+					() -> {
+						LiferayPortletURL liferayPortletURL =
+							(LiferayPortletURL)
+								ResourceURLBuilder.createResourceURL(
+									_renderResponse
+								).setResourceID(
+									"/product_navigation_product_menu" +
+										"/get_layouts"
+								).buildResourceURL();
+
+						liferayPortletURL.setCopyCurrentRenderParameters(false);
+
+						return liferayPortletURL.toString();
+					}
+				).put(
+					"maxPageSize",
+					GetterUtil.getInteger(
+						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)
+				).put(
+					"moveItemURL",
+					() -> {
+						StringBundler sb = new StringBundler(3);
+
+						sb.append(PortalUtil.getPortalURL(_httpServletRequest));
+						sb.append(_themeDisplay.getPathMain());
+						sb.append("/portal/edit_layout?cmd=parent_layout_id");
+
+						return sb.toString();
+					}
+				).put(
+					"stagingEnabled",
+					() -> {
+						Group scopeGroup = _themeDisplay.getScopeGroup();
+
+						if (scopeGroup.hasLocalOrRemoteStagingGroup()) {
+							return true;
+						}
+
+						return false;
+					}
+				).build());
+
+			treeDate.putAll(
+				HashMapBuilder.<String, Object>put(
+					"isPrivateLayoutsTree", isPrivateLayout()
+				).put(
+					"items", _getLayoutsJSONArray()
+				).put(
+					"selectedLayoutId", getSelPlid()
+				).put(
+					"selectedLayoutPath", _getSelectedLayoutPath()
+				).build());
+		}
+
+		treeDate.put("config", config);
+
+		return treeDate;
 	}
 
 	public long getSelectedSiteNavigationMenuItemId() {
@@ -394,15 +405,6 @@ public class LayoutsTreeDisplayContext {
 		}
 
 		return layout.getPlid();
-	}
-
-	public Map<String, Object> getSiteNavigationMenuData() {
-		return HashMapBuilder.<String, Object>put(
-			"selectedSiteNavigationMenuItemId",
-			String.valueOf(getSelectedSiteNavigationMenuItemId())
-		).put(
-			"siteNavigationMenuItems", _getSiteNavigationMenuItemsJSONArray()
-		).build();
 	}
 
 	public boolean hasAddLayoutPermission() throws PortalException {

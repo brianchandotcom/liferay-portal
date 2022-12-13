@@ -20,49 +20,12 @@
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext)request.getAttribute(ProductNavigationProductMenuWebKeys.LAYOUTS_TREE_DISPLAY_CONTEXT);
 %>
 
-<div id="<%= liferayPortletResponse.getNamespace() %>-layout-finder">
-	<react:component
-		module="js/LayoutFinder"
-		props="<%= layoutsTreeDisplayContext.getLayoutFinderData() %>"
-		servletContext="<%= application %>"
-	/>
-</div>
-
-<div id="<portlet:namespace />layoutsTree">
-	<div id="<%= liferayPortletResponse.getNamespace() %>-page-type">
-		<react:component
-			module="js/PageTypeSelector"
-			props="<%= layoutsTreeDisplayContext.getPageTypeSelectorData() %>"
-			servletContext="<%= application %>"
-		/>
-	</div>
-
-	<c:choose>
-		<c:when test="<%= layoutsTreeDisplayContext.isSiteNavigationMenu() %>">
-			<div>
-				<react:component
-					module="js/NavigationMenuItemsTree"
-					props="<%= layoutsTreeDisplayContext.getSiteNavigationMenuData() %>"
-					servletContext="<%= application %>"
-				/>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div>
-				<react:component
-					module="js/PagesTree"
-					props="<%= layoutsTreeDisplayContext.getPagesTreeData() %>"
-					servletContext="<%= application %>"
-				/>
-			</div>
-
-			<c:if test="<%= layoutsTreeDisplayContext.hasAdministrationPortletPermission() %>">
-				<div class="pages-administration-link">
-					<aui:a cssClass="ml-2" href="<%= layoutsTreeDisplayContext.getAdministrationPortletURL() %>">
-						<liferay-ui:message key="go-to-pages-administration" />
-					</aui:a>
-				</div>
-			</c:if>
-		</c:otherwise>
-	</c:choose>
-</div>
+<react:component
+	module="js/ProductMenuTree"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"productMenuTreeData", layoutsTreeDisplayContext.getProductMenuTreeData()
+		).build()
+	%>'
+	servletContext="<%= application %>"
+/>

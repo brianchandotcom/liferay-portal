@@ -45,8 +45,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-170536. Request Invalid IP Can Return Error Connection Refused."
-	@priority = "4"
+	@description = "LPS-170537. Request Non Existing Resource Can Return Error Not Found."
+	@priority = "3"
 	test RequestNonExistingResourceCanReturnErrorNotFound {
 		task ("When open action list dropdown menu in 1st row item") {
 			Click(

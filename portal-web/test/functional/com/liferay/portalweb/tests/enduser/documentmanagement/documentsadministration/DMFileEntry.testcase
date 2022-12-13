@@ -36,69 +36,6 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
-	@priority = "5"
-	@refactordone
-	test CanAutocompleteCategory {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMFileEntry#CanAutocompleteCategory";
-
-		JSONCategory.addVocabulary(
-			groupName = "Guest",
-			title = "Topic");
-
-		JSONCategory.addCategory(
-			groupName = "Guest",
-			title = "category",
-			vocabularyName = "Topic");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title");
-
-		Click(locator1 = "Icon#EDIT_CATEGORIES");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Edit Categories");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Modal#BODY",
-			value1 = "You are editing the categories for the selected item.");
-
-		Type.sendKeys(
-			locator1 = "AssetCategorization#TAGS_FIELD",
-			value1 = "cat");
-
-		AssertClick(
-			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER",
-			value1 = "category");
-
-		Button.clickSave();
-
-		SelectFrame(value1 = "relative=top");
-
-		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
-
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewCategories(categoryNameList = "category");
-	}
-
 	@description = "This ensures that an old image friendlyURL redirects properly after document is reverted."
 	@priority = "5"
 	test CanAccessOldFriendlyURLAfterRevert {
@@ -322,6 +259,69 @@ definition {
 
 			DMDocument.viewDocumentTypePG(dateValue = "01/01/2022");
 		}
+	}
+
+	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
+	@priority = "5"
+	@refactordone
+	test CanAutocompleteCategory {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "DMFileEntry#CanAutocompleteCategory";
+
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Topic");
+
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "category",
+			vocabularyName = "Topic");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title");
+
+		Click(locator1 = "Icon#EDIT_CATEGORIES");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Edit Categories");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "You are editing the categories for the selected item.");
+
+		Type.sendKeys(
+			locator1 = "AssetCategorization#TAGS_FIELD",
+			value1 = "cat");
+
+		AssertClick(
+			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER",
+			value1 = "category");
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCategories(categoryNameList = "category");
 	}
 
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
@@ -2955,6 +2955,52 @@ definition {
 			dmDocumentVersionNumber = "2.0");
 	}
 
+	@description = "This a ticket for LPS-154955. Verify tree image is available when Liferay is deployed"
+	@priority = "4"
+	test VerifyTreeImageIsAvailable {
+		task ("Go to Documents and Media Settings") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		task ("Verify tree image is available and selectable") {
+			AssertElementPresent(
+				key_dmDocumentTitle = "tree.png",
+				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+		}
+	}
+
+	@description = "This is a test for LPS-94829. It ensures that the wildcard can be defined with other file extensions."
+	@priority = "4"
+	test WildcardCanBeDefinedWithOtherFileExtensions {
+		property test.name.skip.portal.instance = "DMFileEntry#WildcardCanBeDefinedWithOtherFileExtensions";
+
+		DMDocument.updateFileExtensions(
+			fieldValue = ".doc",
+			indexNumber = "2");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var dmDocumentTitleList : list "Document_2.jpg,Document_1.doc") {
+			DMDocument.viewStatus(
+				dmDocumentStatus = "Approved",
+				dmDocumentTitle = "${dmDocumentTitleList}");
+		}
+	}
+
 	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
 	@priority = "5"
 	@refactordone
@@ -3005,52 +3051,6 @@ definition {
 			dmDocumentFileName = ''':"?.doc''',
 			dmDocumentTitle = "DM Document Title",
 			validateFileNameRestriction = "true");
-	}
-
-	@description = "This a ticket for LPS-154955. Verify tree image is available when Liferay is deployed"
-	@priority = "4"
-	test VerifyTreeImageIsAvailable {
-		task ("Go to Documents and Media Settings") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-		}
-
-		task ("Verify tree image is available and selectable") {
-			AssertElementPresent(
-				key_dmDocumentTitle = "tree.png",
-				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
-		}
-	}
-
-	@description = "This is a test for LPS-94829. It ensures that the wildcard can be defined with other file extensions."
-	@priority = "4"
-	test WildcardCanBeDefinedWithOtherFileExtensions {
-		property test.name.skip.portal.instance = "DMFileEntry#WildcardCanBeDefinedWithOtherFileExtensions";
-
-		DMDocument.updateFileExtensions(
-			fieldValue = ".doc",
-			indexNumber = "2");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.doc",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		for (var dmDocumentTitleList : list "Document_2.jpg,Document_1.doc") {
-			DMDocument.viewStatus(
-				dmDocumentStatus = "Approved",
-				dmDocumentTitle = "${dmDocumentTitleList}");
-		}
 	}
 
 }

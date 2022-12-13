@@ -20,6 +20,6 @@
 String portletTitle = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.PORTLET_TITLE);
 %>
 
-<li class="control-menu-nav-item control-menu-nav-item-content">
+<div class="control-menu-nav-item control-menu-nav-item-content">
 	<h1 class="control-menu-level-1-heading mb-0 text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletTitle) %></h1>
-</li>
+</div>

@@ -283,7 +283,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;
 
-	private static final int _MAX_LENGTH_TITLE = 400;
+	private static final int _MAX_LENGTH_TITLE = 800;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleLocalizedValuesUpgradeProcess.class);

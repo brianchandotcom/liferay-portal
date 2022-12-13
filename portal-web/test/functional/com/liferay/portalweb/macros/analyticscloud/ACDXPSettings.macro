@@ -319,4 +319,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro viewGenericListItem {
+		var key_itemValue = "${itemValue}";
+
+		AssertElementPresent(locator1 = "ACDXPSettings#VIEW_LIST_ITEM");
+	}
+
 }

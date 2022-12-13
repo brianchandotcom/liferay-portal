@@ -100,6 +100,14 @@
 	<td></td>
 </tr>
 
+<!-- LIST ITEM -->
+
+<tr>
+	<td>VIEW_LIST_ITEM</td>
+	<td>//tr[@data-testid='${key_itemValue}']</td>
+	<td></td>
+</tr>
+
 <!-- NEW PROPERTY SCREEN -->
 
 <tr>

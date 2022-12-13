@@ -37,7 +37,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -170,13 +169,13 @@ public class UpdateRolesMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private long _getUserId(User user) {
-		return Optional.of(
-			user
-		).map(
-			User::getUserId
-		).orElse(
-			0L
-		);
+		Long userId = user.getUserId();
+
+		if (userId == null) {
+			userId = 0L;
+		}
+
+		return userId;
 	}
 
 	@Reference

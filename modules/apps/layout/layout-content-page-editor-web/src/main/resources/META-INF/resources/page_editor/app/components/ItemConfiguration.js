@@ -83,6 +83,9 @@ function ItemConfigurationContent({
 	);
 
 	useEffect(() => {
+
+		// Keep current panel if it's available
+
 		if (
 			!panels.length ||
 			panels.some((panel) => panel.panelId === activePanel.id)
@@ -90,11 +93,15 @@ function ItemConfigurationContent({
 			return;
 		}
 
+		// Restore previous panel if it's available
+
 		if (panels.some((panel) => panel.panelId === previousPanel.id)) {
 			setActivePanel(previousPanel);
 
 			return;
 		}
+
+		// Look for a panel of the same type than the current one
 
 		let nextActivePanelId = activePanel.id;
 		let nextActivePanelType = activePanel.type;
@@ -106,6 +113,9 @@ function ItemConfigurationContent({
 		if (sameTypePanel) {
 			nextActivePanelId = sameTypePanel.panelId;
 		}
+
+		// Select the first of available panels
+
 		else {
 			nextActivePanelId = panels[0]?.panelId;
 			nextActivePanelType = panels[0]?.type;

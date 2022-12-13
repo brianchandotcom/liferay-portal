@@ -83,7 +83,7 @@ public class PropertyPoshiElement extends VarPoshiElement {
 		"(", "\".*\"", "|", "'''.*?'''", ")");
 
 	private static final Pattern _statementPattern = Pattern.compile(
-		"^" + _POSHI_SCRIPT_KEYWORD + "[\\s]*[\\w\\.-]*" + ASSIGNMENT_REGEX +
+		"^" + _POSHI_SCRIPT_KEYWORD + "[\\s]+[\\w\\.-]+" + ASSIGNMENT_REGEX +
 			_PROPERTY_VALUE_REGEX + "(;|)$",
 		Pattern.DOTALL);
 

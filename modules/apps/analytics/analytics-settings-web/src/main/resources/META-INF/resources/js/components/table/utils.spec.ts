@@ -77,9 +77,7 @@ describe('getResultsLanguage', () => {
 	});
 
 	it('returns results language on plural', () => {
-		expect(getResultsLanguage(2)).toEqual(
-			'x-results-for'
-		);
+		expect(getResultsLanguage(2)).toEqual('x-results-for');
 	});
 });
 

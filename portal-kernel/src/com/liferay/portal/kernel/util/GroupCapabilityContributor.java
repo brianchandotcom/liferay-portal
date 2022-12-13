@@ -17,13 +17,11 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.group.capability.GroupCapability;
 import com.liferay.portal.kernel.model.Group;
 
-import java.util.Optional;
-
 /**
  * @author Alejandro Tardín
  */
 public interface GroupCapabilityContributor {
 
-	public Optional<GroupCapability> getGroupCapabilityOptional(Group group);
+	public GroupCapability getGroupCapability(Group group);
 
 }

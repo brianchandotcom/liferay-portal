@@ -129,6 +129,12 @@ AUI.add(
 					instance._outsideHandler.detach();
 
 					instance._outsideHandler = null;
+
+					const toggler = instance.get('toggler');
+
+					if (toggler) {
+						toggler.focus();
+					}
 				},
 
 				_focusItem(index) {

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -125,6 +126,15 @@ public class CETDeployerImpl implements CETDeployer {
 				cet.getExternalReferenceCode()));
 	}
 
+	private String[] _prepareURLs(long lastModified, String[] urls) {
+		for (int i = 0; i < urls.length; i++) {
+			urls[i] = HttpComponentsUtil.addParameter(
+				urls[i], "t", lastModified);
+		}
+
+		return urls;
+	}
+
 	private ServiceRegistration<ConfigurationAction>
 		_registerConfigurationAction(CET cet) {
 
@@ -172,13 +182,16 @@ public class CETDeployerImpl implements CETDeployer {
 				"javax.portlet.version", "3.0"
 			).build();
 
+		long lastModified = System.currentTimeMillis();
+
 		if (customElementCET != null) {
 			String cssURLs = customElementCET.getCSSURLs();
 
 			if (Validator.isNotNull(cssURLs)) {
 				dictionary.put(
 					"com.liferay.portlet.header-portal-css",
-					cssURLs.split(StringPool.NEW_LINE));
+					_prepareURLs(
+						lastModified, cssURLs.split(StringPool.NEW_LINE)));
 			}
 
 			String urls = customElementCET.getURLs();
@@ -192,7 +205,8 @@ public class CETDeployerImpl implements CETDeployer {
 			}
 
 			dictionary.put(
-				"com.liferay.portlet.header-portal-javascript", urlsArray);
+				"com.liferay.portlet.header-portal-javascript",
+				_prepareURLs(lastModified, urlsArray));
 		}
 		else if (iFrameCET != null) {
 			dictionary.put(

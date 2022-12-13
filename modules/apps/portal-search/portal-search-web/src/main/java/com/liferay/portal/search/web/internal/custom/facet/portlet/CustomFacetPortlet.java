@@ -135,6 +135,8 @@ public class CustomFacetPortlet extends MVCPortlet {
 			customFacetPortletPreferences.getFrequencyThreshold()
 		).setMaxTerms(
 			customFacetPortletPreferences.getMaxTerms()
+		).setOrder(
+			customFacetPortletPreferences.getOrder()
 		).setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse)
 		).setParameterName(

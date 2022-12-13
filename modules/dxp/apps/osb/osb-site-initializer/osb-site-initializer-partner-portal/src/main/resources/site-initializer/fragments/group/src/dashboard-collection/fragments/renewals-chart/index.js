@@ -1,5 +1,3 @@
-/* eslint-disable @liferay/portal/no-global-fetch */
-/* eslint-disable @liferay/empty-line-between-elements */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -36,6 +34,7 @@ export default function () {
 
 	useEffect(() => {
 		const getRenewalsData = async () => {
+			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			await fetch('/o/c/opportunitysfs?&sort=closeDate:asc', {
 				headers: {
 					'accept': 'application/json',
@@ -86,11 +85,9 @@ export default function () {
 					const currentStatusColor = () => {
 						if (expirationInDays <= 5) {
 							return status[5];
-						}
-						else if (expirationInDays <= 15) {
+						} else if (expirationInDays <= 15) {
 							return status[15];
-						}
-						else if (expirationInDays <= 30) {
+						} else if (expirationInDays <= 30) {
 							return status[30];
 						}
 					};
@@ -118,6 +115,7 @@ export default function () {
 										<span className="font-weight-semi-bold">
 											{expirationInDays} days.
 										</span>
+										
 										<span className="ml-2">
 											{item.closeDate}
 										</span>

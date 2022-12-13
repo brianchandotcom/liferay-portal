@@ -84,6 +84,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>ClientExtensionEntryName</exception>
 		<exception>ClientExtensionEntryType</exception>
 		<exception>ClientExtensionEntryTypeSettings</exception>
 	</exceptions>

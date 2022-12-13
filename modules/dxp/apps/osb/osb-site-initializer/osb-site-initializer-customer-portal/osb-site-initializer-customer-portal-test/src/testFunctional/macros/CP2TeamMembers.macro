@@ -57,10 +57,6 @@ definition {
 			locator1 = "CP2TeamMembers#TEAM_MEMBERS_TABLE");
 	}
 
-	macro clickInviteMembers {
-		Click(locator1 = "CP2TeamMembers#INVITE_BUTTON");
-	}
-
 	macro clickTeamMembersSendInvitation {
 		Click(locator1 = "CP2TeamMembers#SEND_INVITATIONS_BUTTON");
 	}
@@ -87,8 +83,18 @@ definition {
 			value1 = "${search}");
 	}
 
+	macro tableChangeRole {
+		Click(
+			locator1 = "CP2TeamMembers#TABLE_ROLE_FIELD",
+			key_text = "${roleDefault}");
+
+		Click(
+			locator1 = "CP2TeamMembers#ROLE_CHANGE",
+			key_text = "${changeRole}");
+	}
+
 	macro teamMembersFlow {
-		CustomerPortal.enterOnProject(title = "Test Account DXP");
+		CustomerPortal.enterOnProject(title = "${testAccount}");
 
 		CustomerPortal.clickOnStartProjectSetup();
 

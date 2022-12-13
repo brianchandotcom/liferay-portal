@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.GroupCapabilityContributor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Alejandro Tardín
@@ -60,10 +59,12 @@ public class GroupCapabilityUtil {
 		for (GroupCapabilityContributor groupCapabilityContributor :
 				_groupCapabilityContributors) {
 
-			Optional<GroupCapability> capabilityOptional =
-				groupCapabilityContributor.getGroupCapabilityOptional(group);
+			GroupCapability capability =
+				groupCapabilityContributor.getGroupCapability(group);
 
-			capabilityOptional.ifPresent(groupCapabilities::add);
+			if (capability != null) {
+				groupCapabilities.add(capability);
+			}
 		}
 
 		return groupCapabilities;

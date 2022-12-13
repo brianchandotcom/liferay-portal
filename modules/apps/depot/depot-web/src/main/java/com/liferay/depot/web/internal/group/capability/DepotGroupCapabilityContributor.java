@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.GroupCapabilityContributor;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,26 +31,25 @@ public class DepotGroupCapabilityContributor
 	implements GroupCapabilityContributor {
 
 	@Override
-	public Optional<GroupCapability> getGroupCapabilityOptional(Group group) {
+	public GroupCapability getGroupCapability(Group group) {
 		if (!group.isDepot()) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(
-			new GroupCapability() {
+		return new GroupCapability() {
 
-				@Override
-				public boolean isSupportPortlet(Portlet portlet) {
-					return _depotApplicationController.isEnabled(
-						portlet.getPortletId(), group.getGroupId());
-				}
+			@Override
+			public boolean isSupportPortlet(Portlet portlet) {
+				return _depotApplicationController.isEnabled(
+					portlet.getPortletId(), group.getGroupId());
+			}
 
-				@Override
-				public boolean isSupportsPages() {
-					return false;
-				}
+			@Override
+			public boolean isSupportsPages() {
+				return false;
+			}
 
-			});
+		};
 	}
 
 	@Reference

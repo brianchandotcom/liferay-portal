@@ -1285,6 +1285,20 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		}
 
 		if (ddmFormValidationException instanceof
+				DDMFormValidationException.MustNotDuplicateFieldReference) {
+
+			DDMFormValidationException.MustNotDuplicateFieldReference
+				mustNotDuplicateFieldReference =
+					(DDMFormValidationException.MustNotDuplicateFieldReference)
+						ddmFormValidationException;
+
+			return new DataDefinitionValidationException.
+				MustNotDuplicateFieldReference(
+					mustNotDuplicateFieldReference.
+						getDuplicatedFieldReferences());
+		}
+
+		if (ddmFormValidationException instanceof
 				DDMFormValidationException.MustSetAvailableLocales) {
 
 			return new DataDefinitionValidationException.

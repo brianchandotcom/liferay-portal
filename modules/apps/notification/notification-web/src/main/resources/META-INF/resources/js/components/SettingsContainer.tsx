@@ -13,18 +13,14 @@
  */
 
 import {Text} from '@clayui/core';
-import {
-	Card,
-	FormError,
-	Input,
-	InputLocalized,
-} from '@liferay/object-js-components-web';
+import {Card, FormError} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {NotificationTemplateError} from './EditNotificationTemplate';
+import {EmailNotificationSettings} from './EmailNotificationSettings';
+import {UserNotificationSettings} from './UserNotificationSettings';
 
 import './EditNotificationTemplate.scss';
-import {UserNotificationSettings} from './UserNotificationSettings';
 
 interface SettingsContainerProps {
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
@@ -54,128 +50,12 @@ export function SettingsContainer({
 					values={values}
 				/>
 			) : (
-				<>
-					<InputLocalized
-						label={Liferay.Language.get('to')}
-						name="to"
-						onChange={(translation) => {
-							setValues({
-								...values,
-								recipients: [
-									{
-										...values.recipients[0],
-										to: translation,
-									},
-								],
-							});
-						}}
-						placeholder=""
-						selectedLocale={selectedLocale}
-						translations={
-							(values.recipients[0] as EmailRecipients).to
-						}
-					/>
-
-					<div className="row">
-						<div className="col-lg-6">
-							<Input
-								label={Liferay.Language.get('cc')}
-								name="cc"
-								onChange={({target}) =>
-									setValues({
-										...values,
-
-										recipients: [
-											{
-												...values.recipients[0],
-												cc: target.value,
-											},
-										],
-									})
-								}
-								value={
-									(values.recipients[0] as EmailRecipients).cc
-								}
-							/>
-						</div>
-
-						<div className="col-lg-6">
-							<Input
-								label={Liferay.Language.get('bcc')}
-								name="bcc"
-								onChange={({target}) =>
-									setValues({
-										...values,
-
-										recipients: [
-											{
-												...values.recipients[0],
-												bcc: target.value,
-											},
-										],
-									})
-								}
-								value={
-									(values.recipients[0] as EmailRecipients)
-										.bcc
-								}
-							/>
-						</div>
-					</div>
-
-					<div className="row">
-						<div className="col-lg-6">
-							<Input
-								error={errors.from}
-								label={Liferay.Language.get('from-address')}
-								name="fromAddress"
-								onChange={({target}) =>
-									setValues({
-										...values,
-										recipients: [
-											{
-												...values.recipients[0],
-												from: target.value,
-											},
-										],
-									})
-								}
-								required
-								value={
-									(values.recipients[0] as EmailRecipients)
-										.from
-								}
-							/>
-						</div>
-
-						<div className="col-lg-6">
-							<InputLocalized
-								error={errors.fromName}
-								label={Liferay.Language.get('from-name')}
-								name="fromName"
-								onChange={(translation) => {
-									setValues({
-										...values,
-
-										recipients: [
-											{
-												...values.recipients[0],
-												fromName: translation,
-											},
-										],
-									});
-								}}
-								placeholder=""
-								required
-								selectedLocale={selectedLocale}
-								translations={
-									(values.recipients[0] as EmailRecipients)
-										.fromName
-								}
-							/>
-						</div>
-					</div>
-				</>
+				<EmailNotificationSettings
+					errors={errors}
+					selectedLocale={selectedLocale}
+					setValues={setValues}
+					values={values}
+				/>
 			)}
 		</Card>
 	);

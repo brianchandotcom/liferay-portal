@@ -111,6 +111,7 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
  * @author David Truong
  * @author Simon Jiang
  * @author Seiphon Wang
+ * @author Kevin Lee
  */
 @SuppressWarnings("deprecation")
 public class RootProjectConfigurator implements Plugin<Project> {
@@ -1112,10 +1113,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, FORMAT_SOURCE_UPGRADE_TASK_NAME, FormatSourceTask.class);
 
 		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
+		formatSourceTask.setCheckCategoryNames("Upgrade");
 		formatSourceTask.setDescription(
 			"Runs Liferay Source Formatter to perform Upgrade SF checks.");
 		formatSourceTask.setGroup("formatting");
-		formatSourceTask.setCheckCategoryNames("Upgrade");
 
 		return formatSourceTask;
 	}

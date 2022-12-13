@@ -113,6 +113,12 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationshipPersistence.findByPrimaryKey(
 				objectRelationshipId);
 
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
+
+		_validateObjectEntryId(objectDefinition1, primaryKey1);
+
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
@@ -120,10 +126,6 @@ public class ObjectRelationshipLocalServiceImpl
 		if (Objects.equals(
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
-
-			ObjectDefinition objectDefinition1 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId1());
 
 			if (_hasManyToManyObjectRelationshipMappingTableValues(
 					objectDefinition1, objectDefinition2, objectRelationship,
@@ -866,6 +868,23 @@ public class ObjectRelationshipLocalServiceImpl
 		_validateParameterObjectFieldId(
 			objectDefinitionId1, objectDefinitionId2, parameterObjectFieldId,
 			type);
+	}
+
+	private void _validateObjectEntryId(
+			ObjectDefinition objectDefinition, long primaryKey)
+		throws PortalException {
+
+		if (objectDefinition.isSystem()) {
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataRegistry.
+					getSystemObjectDefinitionMetadata(
+						objectDefinition.getName());
+
+			systemObjectDefinitionMetadata.getExternalReferenceCode(primaryKey);
+		}
+		else {
+			_objectEntryLocalService.getObjectEntry(primaryKey);
+		}
 	}
 
 	private void _validateParameterObjectFieldId(

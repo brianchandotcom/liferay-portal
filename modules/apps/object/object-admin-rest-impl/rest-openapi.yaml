@@ -740,12 +740,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectDefinition"
             tags: ["ObjectDefinition"]
-    "/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-fields":
+    "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields":
         get:
             operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectFieldsPage
             parameters:
                 - in: path
-                  name: objectDefinitionExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -787,7 +787,7 @@ paths:
             operationId: postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectField
             parameters:
                 - in: path
-                  name: objectDefinitionExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -809,12 +809,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectField"
             tags: ["ObjectField"]
-    "/object-definitions/by-external-reference-code/{objectDefinitionExternalReferenceCode}/object-relationships":
+    "/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships":
         get:
             operationId: getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationshipsPage
             parameters:
                 - in: path
-                  name: objectDefinitionExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -852,7 +852,7 @@ paths:
             operationId: postObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectRelationship
             parameters:
                 - in: path
-                  name: objectDefinitionExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string

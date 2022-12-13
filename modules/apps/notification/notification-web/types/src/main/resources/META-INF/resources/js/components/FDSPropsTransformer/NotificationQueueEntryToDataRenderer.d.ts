@@ -12,15 +12,10 @@
  * details.
  */
 
-import {NotificationQueueEntryStatusDataRenderer} from './NotificationQueueEntryStatusDataRenderer';
-import {NotificationQueueEntryToDataRenderer} from './NotificationQueueEntryToDataRenderer';
+/// <reference types="react" />
 
-export default function propsTransformer({...otherProps}) {
-	return {
-		...otherProps,
-		customDataRenderers: {
-			notificationQueueEntryStatusDataRenderer: NotificationQueueEntryStatusDataRenderer,
-			notificationQueueEntryToDataRenderer: NotificationQueueEntryToDataRenderer,
-		},
-	};
-}
+export declare function NotificationQueueEntryToDataRenderer({
+	value,
+}: {
+	value: string;
+}): JSX.Element;

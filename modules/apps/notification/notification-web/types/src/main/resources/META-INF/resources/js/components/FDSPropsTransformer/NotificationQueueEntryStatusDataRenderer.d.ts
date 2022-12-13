@@ -14,11 +14,6 @@
 
 /// <reference types="react" />
 
-export declare function NotificationQueueEntryToDataRenderer({
-	value,
-}: {
-	value: string;
-}): JSX.Element;
 export declare function NotificationQueueEntryStatusDataRenderer({
 	value,
 }: IProps): JSX.Element;

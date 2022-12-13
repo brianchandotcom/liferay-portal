@@ -12,10 +12,8 @@
  * details.
  */
 
-import {
-	NotificationQueueEntryStatusDataRenderer,
-	NotificationQueueEntryToDataRenderer,
-} from './NotificationQueueEntryStatusDataRenderer';
+import {NotificationQueueEntryStatusDataRenderer} from './NotificationQueueEntryStatusDataRenderer';
+import {NotificationQueueEntryToDataRenderer} from './NotificationQueueEntryToDataRenderer';
 export default function propsTransformer({
 	...otherProps
 }: {

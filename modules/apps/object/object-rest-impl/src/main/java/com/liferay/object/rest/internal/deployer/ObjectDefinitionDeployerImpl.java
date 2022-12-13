@@ -39,6 +39,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
@@ -237,8 +238,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return new ObjectEntryResourceImpl(
 			_filterPredicateFactory, _jsonFactory, _objectActionEngine,
 			_objectDefinitionLocalService, _objectEntryLocalService,
-			_objectEntryManagerRegistry, _objectFieldLocalService,
-			_objectRelationshipService, _objectScopeProviderRegistry,
+			_objectEntryManagerRegistry, _objectEntryService,
+			_objectFieldLocalService, _objectRelationshipService,
+			_objectScopeProviderRegistry,
 			_systemObjectDefinitionMetadataRegistry);
 	}
 
@@ -599,6 +601,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

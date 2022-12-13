@@ -23,6 +23,7 @@ export default function SidebarPanelHeader({
 	children,
 	iconLeft = null,
 	iconRight = null,
+	showCloseButton = true,
 }) {
 	const dispatch = useDispatch();
 
@@ -40,19 +41,23 @@ export default function SidebarPanelHeader({
 
 			{iconRight}
 
-			<ClayButtonWithIcon
-				displayType="unstyled"
-				onClick={() => {
-					dispatch(switchSidebarPanel({sidebarOpen: false}));
+			{showCloseButton && (
+				<ClayButtonWithIcon
+					displayType="unstyled"
+					onClick={() => {
+						dispatch(switchSidebarPanel({sidebarOpen: false}));
 
-					document
-						.querySelector(`[data-panel-id="${sidebarPanelId}"]`)
-						?.focus();
-				}}
-				small
-				symbol="times"
-				title={Liferay.Language.get('close')}
-			/>
+						document
+							.querySelector(
+								`[data-panel-id="${sidebarPanelId}"]`
+							)
+							?.focus();
+					}}
+					small
+					symbol="times"
+					title={Liferay.Language.get('close')}
+				/>
+			)}
 		</header>
 	);
 }

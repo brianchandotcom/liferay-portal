@@ -735,7 +735,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141773. Able to land in the experience selected at view mode in page editor."
-	@ignore = "true"
 	@priority = "5"
 	test ViewExperienceInViewMode {
 		property portal.acceptance = "true";
@@ -801,7 +800,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141773. Able to land in the experience selected at preview draft page in page editor."
-	@ignore = "true"
 	@priority = "5"
 	test ViewExperienceSelectedInPreviewDraftPage {
 		property portal.acceptance = "true";
@@ -895,7 +893,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122148. Only the inline text items from current experience shown in Page Content panel."
-	@ignore = "true"
 	@priority = "5"
 	test ViewInlineTextItemsFromCurrentExperienceInPageContentPanel {
 		property portal.acceptance = "true";

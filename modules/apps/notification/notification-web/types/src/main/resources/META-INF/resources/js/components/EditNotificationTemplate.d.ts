@@ -27,7 +27,7 @@ export declare type NotificationTemplateError = {
 	to?: string;
 	type?: string;
 };
-interface IProps {
+interface EditNotificationTemplateProps {
 	backURL: string;
 	baseResourceURL: string;
 	editorConfig: object;
@@ -44,5 +44,5 @@ export default function EditNotificationTemplate({
 	notificationTemplateId,
 	notificationTemplateType,
 	portletNamespace,
-}: IProps): JSX.Element;
+}: EditNotificationTemplateProps): JSX.Element;
 export {};

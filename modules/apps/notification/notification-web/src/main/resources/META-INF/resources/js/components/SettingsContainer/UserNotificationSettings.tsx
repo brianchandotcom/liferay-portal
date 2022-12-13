@@ -18,8 +18,6 @@ import {Input, SingleSelect} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import './EditNotificationTemplate.scss';
-
 interface Role {
 	description: string;
 	id: number;

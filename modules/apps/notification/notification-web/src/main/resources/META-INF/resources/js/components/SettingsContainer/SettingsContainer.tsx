@@ -16,11 +16,9 @@ import {Text} from '@clayui/core';
 import {Card, FormError} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import {NotificationTemplateError} from './EditNotificationTemplate';
+import {NotificationTemplateError} from '../EditNotificationTemplate';
 import {EmailNotificationSettings} from './EmailNotificationSettings';
 import {UserNotificationSettings} from './UserNotificationSettings';
-
-import './EditNotificationTemplate.scss';
 
 interface SettingsContainerProps {
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;

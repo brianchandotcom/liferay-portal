@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -188,23 +190,13 @@ public class CTCollectionTemplateLocalServiceImpl
 				return user.getScreenName();
 			}
 		).put(
-			"${RANDOM_NUMBER}",
+			"${RANDOM_HASH}",
 			() -> {
 				Instant now = Instant.now();
 
-				return String.valueOf(now.getEpochSecond());
-			}
-		).put(
-			"${TEMPLATE_CREATOR}",
-			() -> {
-				if (ctCollectionTemplateId == 0) {
-					return StringPool.BLANK;
-				}
-
-				CTCollectionTemplate ctCollectionTemplate =
-					getCTCollectionTemplate(ctCollectionTemplateId);
-
-				return ctCollectionTemplate.getUserName();
+				return DigesterUtil.digestHex(
+					Digester.MD5, String.valueOf(ctCollectionTemplateId),
+					String.valueOf(now.getEpochSecond()));
 			}
 		).put(
 			"${TODAY_DATE}", String.valueOf(LocalDate.now())

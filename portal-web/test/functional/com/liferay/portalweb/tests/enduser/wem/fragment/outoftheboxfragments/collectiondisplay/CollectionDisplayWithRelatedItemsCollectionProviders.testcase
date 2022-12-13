@@ -2433,6 +2433,135 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-166039. The page creator can see Items with same categories from a Knowledge Base Article Display Page Template."
+	@priority = "3"
+	test ViewKBArticleWithSameCategoriesOnDisplayPageTemplateForKBArticle {
+		property custom.properties = "feature.flag.LPS-166036=true";
+
+		task ("Given a page creator has a Collection Display on a display page template for Knowledge Base Article") {
+			for (var vocabularyName : list "Release Date,Company,Engine") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "${vocabularyName}");
+			}
+
+			var firstId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "2020",
+				vocabularyName = "Release Date");
+			var secondId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "2021",
+				vocabularyName = "Release Date");
+			var thirdId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "2022",
+				vocabularyName = "Release Date");
+			var teslaId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Tesla",
+				vocabularyName = "Company");
+			var gacId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "GAC Group",
+				vocabularyName = "Company");
+			var hybridId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Hybrid",
+				vocabularyName = "Engine");
+			var electricId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Electric",
+				vocabularyName = "Engine");
+			var petrolId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Petrol",
+				vocabularyName = "Engine");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${thirdId},${teslaId},${electricId}",
+				content = "Model 3",
+				groupName = "Test Site Name",
+				title = "Model 3");
+
+			JSONKnowledgeBase.addkBArticle(
+				assetCategoryIds = "${thirdId}",
+				groupName = "Test Site Name",
+				kbArticleContent = "Model 3 Interior",
+				kbArticleTitle = "Model 3 Interior");
+
+			JSONKnowledgeBase.addkBArticle(
+				assetCategoryIds = "${gacId}",
+				groupName = "Test Site Name",
+				kbArticleContent = "GA8 Intelligent System",
+				kbArticleTitle = "GA8 Intelligent System");
+
+			JSONKnowledgeBase.addkBArticle(
+				assetCategoryIds = "${teslaId}",
+				groupName = "Test Site Name",
+				kbArticleContent = "Telsa Motors Club",
+				kbArticleTitle = "Telsa Motors Club");
+
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Automobile");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Knowledge Base Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Automobile",
+				fragmentName = "Collection Display");
+		}
+
+		task ("When the page designer add another Collection Display with Items With Same Categories inside the Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Model 3",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = "2",
+				infoItemRelatedListProviderName = "Items With Same Categories");
+		}
+
+		task ("Then the page designer sees the knowledge base articles with same categories on inner Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Telsa Motors Club",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Model 3 Interior",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_entryTitle = "GA8 Intelligent System",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+	}
+
 	@description = "This is a use case for LPS-127023 and LPS-112360. The related assets should be in Collection Display when select Related Assets from Related Items Collection Provider."
 	@priority = "5"
 	test ViewRelatedAssetsInCollectionDisplay {

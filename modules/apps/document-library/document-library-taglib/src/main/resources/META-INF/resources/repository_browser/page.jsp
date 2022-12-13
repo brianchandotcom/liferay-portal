@@ -27,6 +27,9 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 />
 
 <clay:container-fluid>
+	<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="please-enter-a-unique-name" />
+	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-name" />
+
 	<liferay-site-navigation:breadcrumb
 		breadcrumbEntries="<%= repositoryBrowserTagDisplayContext.getBreadcrumbEntries() %>"
 	/>

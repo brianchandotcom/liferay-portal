@@ -31,7 +31,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
@@ -343,69 +342,59 @@ public class ObjectEntryDisplayContext {
 			return null;
 		}
 
+		CreationMenu creationMenu = new CreationMenu();
+
 		ObjectDefinition objectDefinition1 = getObjectDefinition();
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition2.getScope());
 
-		LiferayPortletResponse liferayPortletResponse =
-			_objectRequestHelper.getLiferayPortletResponse();
-
-		if (!ObjectEntryServiceUtil.hasPortletResourcePermission(
+		if (ObjectEntryServiceUtil.hasPortletResourcePermission(
 				objectScopeProvider.getGroupId(
 					_objectRequestHelper.getRequest()),
 				objectDefinition2.getObjectDefinitionId(),
-				ObjectActionKeys.ADD_OBJECT_ENTRY) ||
-			objectDefinition1.isSystem() || objectDefinition2.isSystem() ||
-			(StringUtil.equals(
+				ObjectActionKeys.ADD_OBJECT_ENTRY) &&
+			!objectDefinition1.isSystem() && !objectDefinition2.isSystem() &&
+			!(StringUtil.equals(
 				objectDefinition1.getScope(),
 				ObjectDefinitionConstants.SCOPE_COMPANY) &&
-			 StringUtil.equals(
-				 objectDefinition2.getScope(),
-				 ObjectDefinitionConstants.SCOPE_SITE))) {
+			  StringUtil.equals(
+				  objectDefinition2.getScope(),
+				  ObjectDefinitionConstants.SCOPE_SITE))) {
 
-			return CreationMenuBuilder.addDropdownItem(
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(
-						liferayPortletResponse.getNamespace() +
-							"selectRelatedModel");
+						PortletURLBuilder.create(
+							PortalUtil.getControlPanelPortletURL(
+								_objectRequestHelper.getRequest(),
+								serviceContext.getScopeGroup(),
+								objectDefinition2.getPortletId(), 0, 0,
+								PortletRequest.RENDER_PHASE)
+						).setMVCRenderCommandName(
+							"/object_entries/edit_object_entry"
+						).setBackURL(
+							_objectRequestHelper.getCurrentURL()
+						).setParameter(
+							"objectDefinitionId",
+							objectDefinition2.getObjectDefinitionId()
+						).setWindowState(
+							WindowState.MAXIMIZED
+						).buildString());
 					dropdownItem.setLabel(
 						LanguageUtil.get(
-							_objectRequestHelper.getRequest(),
-							"select-existing-one"));
-					dropdownItem.setTarget("event");
-				}
-			).build();
+							_objectRequestHelper.getRequest(), "create-new"));
+				});
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		LiferayPortletResponse liferayPortletResponse =
+			_objectRequestHelper.getLiferayPortletResponse();
 
-		return CreationMenuBuilder.addDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.create(
-						PortalUtil.getControlPanelPortletURL(
-							_objectRequestHelper.getRequest(),
-							serviceContext.getScopeGroup(),
-							objectDefinition2.getPortletId(), 0, 0,
-							PortletRequest.RENDER_PHASE)
-					).setMVCRenderCommandName(
-						"/object_entries/edit_object_entry"
-					).setBackURL(
-						_objectRequestHelper.getCurrentURL()
-					).setParameter(
-						"objectDefinitionId",
-						objectDefinition2.getObjectDefinitionId()
-					).setWindowState(
-						WindowState.MAXIMIZED
-					).buildString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_objectRequestHelper.getRequest(), "create-new"));
-			}
-		).addDropdownItem(
+		creationMenu.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.getNamespace() +
@@ -415,8 +404,9 @@ public class ObjectEntryDisplayContext {
 						_objectRequestHelper.getRequest(),
 						"select-existing-one"));
 				dropdownItem.setTarget("event");
-			}
-		).build();
+			});
+
+		return creationMenu;
 	}
 
 	public String getRelatedObjectEntryItemSelectorURL()

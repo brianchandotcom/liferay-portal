@@ -118,8 +118,6 @@ export default function () {
 											{expirationInDays} days.
 										</span>
 
-										{" "}
-
 										<span className="ml-2">
 											{item.closeDate}
 										</span>

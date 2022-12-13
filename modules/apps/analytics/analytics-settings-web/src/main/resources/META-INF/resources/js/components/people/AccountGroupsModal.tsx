@@ -33,9 +33,13 @@ const ModalAccountGroups: React.FC<ICommonModalProps> = ({
 				label: Liferay.Language.get('account-group'),
 			},
 		]}
-		emptyStateTitle={Liferay.Language.get('there-are-no-account-groups')}
+		emptyState={{
+			noResultsTitle: Liferay.Language.get(
+				'no-account-groups-were-found'
+			),
+			title: Liferay.Language.get('there-are-no-account-groups'),
+		}}
 		name={EPeople.AccountGroupIds}
-		noResultsTitle={Liferay.Language.get('no-account-groups-were-found')}
 		observer={observer}
 		onCloseModal={onCloseModal}
 		requestFn={fetchAccountGroups}

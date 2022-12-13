@@ -57,10 +57,12 @@ const SitesTab: React.FC<ISiteTabProps> = ({
 }) => (
 	<Tab
 		columns={columns.map(({id}) => id) as Array<keyof TRawItem>}
-		emptyStateTitle={Liferay.Language.get('there-are-no-sites')}
+		emptyState={{
+			noResultsTitle: Liferay.Language.get('no-sites-were-found'),
+			title: Liferay.Language.get('there-are-no-sites'),
+		}}
 		header={columns}
 		initialIds={initialIds}
-		noResultsTitle={Liferay.Language.get('no-sites-were-found')}
 		onItemsChange={onSitesChange}
 		property={property}
 		requestFn={fetchSites}

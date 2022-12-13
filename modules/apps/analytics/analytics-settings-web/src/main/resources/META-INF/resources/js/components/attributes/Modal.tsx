@@ -84,9 +84,12 @@ const Modal: React.FC<IModalProps> = ({
 			<ClayModal.Body>
 				<Table<TRawItem>
 					columns={columns}
-					emptyStateTitle={Liferay.Language.get(
-						'there-are-no-attributes'
-					)}
+					emptyState={{
+						noResultsTitle: Liferay.Language.get(
+							'no-attributes-were-found'
+						),
+						title: Liferay.Language.get('there-are-no-attributes'),
+					}}
 					mapperItems={(items) =>
 						items.map(
 							({
@@ -112,9 +115,6 @@ const Modal: React.FC<IModalProps> = ({
 							})
 						)
 					}
-					noResultsTitle={Liferay.Language.get(
-						'no-attributes-were-found'
-					)}
 					onItemsChange={setItems}
 					requestFn={requestFn}
 				/>

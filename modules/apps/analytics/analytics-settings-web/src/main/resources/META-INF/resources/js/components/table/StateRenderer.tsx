@@ -21,22 +21,27 @@ import StateRenderer, {
 } from '../StateRenderer';
 import {useData} from './Context';
 
+export type TEmptyState = {
+	contentRenderer?: () => JSX.Element;
+	description?: string;
+	noResultsTitle: string;
+	title: string;
+};
+
 interface ITableStateRendererProps extends React.HTMLAttributes<HTMLElement> {
 	empty: boolean;
-	emptyStateTitle: string;
+	emptyState: TEmptyState;
 	error: boolean;
 	loading: boolean;
-	noResultsTitle: string;
 	refetch: () => void;
 }
 
 const TableStateRenderer: React.FC<ITableStateRendererProps> = ({
 	children,
 	empty,
-	emptyStateTitle,
+	emptyState: {contentRenderer, description = '', noResultsTitle, title},
 	error,
 	loading,
-	noResultsTitle,
 	refetch,
 }) => {
 	const {keywords} = useData();
@@ -55,10 +60,12 @@ const TableStateRenderer: React.FC<ITableStateRendererProps> = ({
 				<StateRenderer.Empty>
 					<EmptyStateComponent
 						className="empty-state-border"
-						description=""
+						description={description}
 						imgSrc={EMPTY_STATE_GIF}
-						title={emptyStateTitle}
-					/>
+						title={title}
+					>
+						{contentRenderer && contentRenderer()}
+					</EmptyStateComponent>
 				</StateRenderer.Empty>
 			)}
 

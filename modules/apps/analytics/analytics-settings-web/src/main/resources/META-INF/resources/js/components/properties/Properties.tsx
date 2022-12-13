@@ -208,11 +208,27 @@ const Properties: React.FC = () => {
 	return (
 		<>
 			<Table<TProperty>
-				addItemTitle={Liferay.Language.get('create-new-property')}
+				addItemTitle={Liferay.Language.get('create-a-new-property')}
 				columns={columns}
-				emptyStateTitle={Liferay.Language.get(
-					'there-are-no-properties'
-				)}
+				emptyState={{
+					contentRenderer: () => (
+						<ClayButton
+							displayType="secondary"
+							onClick={() =>
+								onCreatePropertyModalOpenChange(true)
+							}
+						>
+							{Liferay.Language.get('new-property')}
+						</ClayButton>
+					),
+					description: Liferay.Language.get(
+						'create-a-property-to-add-sites-and-channels'
+					),
+					noResultsTitle: Liferay.Language.get(
+						'no-properties-were-found'
+					),
+					title: Liferay.Language.get('create-a-new-property'),
+				}}
 				mapperItems={(items) =>
 					items.map((property) => {
 						const safeProperty = getSafeProperty(property);
@@ -264,9 +280,6 @@ const Properties: React.FC = () => {
 						};
 					})
 				}
-				noResultsTitle={Liferay.Language.get(
-					'no-properties-were-found'
-				)}
 				onAddItem={() => onCreatePropertyModalOpenChange(true)}
 				requestFn={fetchProperties}
 				showCheckbox={false}

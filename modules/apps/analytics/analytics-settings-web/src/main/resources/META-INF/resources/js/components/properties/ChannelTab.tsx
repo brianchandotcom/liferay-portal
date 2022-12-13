@@ -61,11 +61,13 @@ const ChannelTab: React.FC<IChannelTabProps> = ({
 		description={Liferay.Language.get(
 			'analytics-cloud-assign-commerce-channel-help'
 		)}
-		emptyStateTitle={Liferay.Language.get('there-are-no-channels')}
+		emptyState={{
+			noResultsTitle: Liferay.Language.get('no-channels-were-found'),
+			title: Liferay.Language.get('there-are-no-channels'),
+		}}
 		enableCheckboxs={!!property.commerceSyncEnabled}
 		header={columns}
 		initialIds={initialIds}
-		noResultsTitle={Liferay.Language.get('no-channels-were-found')}
 		onItemsChange={onChannelsChange}
 		property={property}
 		requestFn={fetchChannels}

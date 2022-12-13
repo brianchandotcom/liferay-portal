@@ -27,8 +27,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddToAndRemoveFromDocumentType {
+	@refactordone
+	test CannotDeleteIfReferencedByDocType {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
@@ -52,6 +52,28 @@ definition {
 		DMMetadataSet.delete(
 			metadataSetHasReference = "true",
 			metadataSetName = "DM Metadata Set Name");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanRemoveFromDocType {
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
+
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
@@ -59,10 +81,6 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name",
 			removeMetadataSet = "true");
-
-		DMNavigator.gotoMetadataSets();
-
-		DMMetadataSet.delete(metadataSetName = "DM Metadata Set Name");
 	}
 
 	@description = "This ensures that a metadata set can be removed from the entry Menu."

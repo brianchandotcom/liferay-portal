@@ -17,6 +17,7 @@ package com.liferay.object.web.internal.deployer;
 import com.liferay.application.list.PanelApp;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.info.item.creator.InfoItemCreator;
@@ -192,6 +193,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				InfoItemFieldValuesProvider.class,
 				new ObjectEntryInfoItemFieldValuesProvider(
 					_assetDisplayPageFriendlyURLProvider,
+					_dlFileEntryLocalService,
 					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
 					_listTypeEntryLocalService, objectDefinition,
 					_objectEntryLocalService, _objectEntryManagerRegistry,
@@ -437,6 +439,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private EditPageInfoItemCapability _editPageInfoItemCapability;

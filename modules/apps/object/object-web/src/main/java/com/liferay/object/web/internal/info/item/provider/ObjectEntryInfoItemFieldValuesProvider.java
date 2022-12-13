@@ -15,6 +15,8 @@
 package com.liferay.object.web.internal.info.item.provider;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.ImageInfoFieldType;
@@ -73,6 +75,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	public ObjectEntryInfoItemFieldValuesProvider(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		DLFileEntryLocalService dlFileEntryLocalService,
 		InfoItemFieldReaderFieldSetProvider infoItemFieldReaderFieldSetProvider,
 		JSONFactory jsonFactory,
 		ListTypeEntryLocalService listTypeEntryLocalService,
@@ -85,6 +88,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
+		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_infoItemFieldReaderFieldSetProvider =
 			infoItemFieldReaderFieldSetProvider;
 		_jsonFactory = jsonFactory;
@@ -342,6 +346,27 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			}
 		}
 		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			Object attachmentValue = values.get(objectField.getName());
+
+			long attachmentLong = GetterUtil.getLong(attachmentValue);
+
+			if (attachmentLong == GetterUtil.DEFAULT_LONG) {
+				return StringPool.BLANK;
+			}
+
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+				attachmentLong);
+
+			if (dlFileEntry == null) {
+				return StringPool.BLANK;
+			}
+
+			return dlFileEntry.getFileName();
+		}
+		else if (Objects.equals(
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_DATE)) {
 
@@ -381,6 +406,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
 	private final JSONFactory _jsonFactory;

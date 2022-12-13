@@ -18,7 +18,7 @@ import ClayTooltip from '@clayui/tooltip';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import {useSelector} from '../../app/contexts/StoreContext';
@@ -186,6 +186,11 @@ function SpacingSelectorButton({
 		(state) => state.selectedViewportSize
 	);
 
+	const resetButtonLabel = useMemo(
+		() => getResetLabelByViewport(selectedViewportSize),
+		[selectedViewportSize]
+	);
+
 	useEffect(() => {
 		if (active && itemListRef.current) {
 			setTimeout(
@@ -273,6 +278,7 @@ function SpacingSelectorButton({
 
 								{value && (
 									<ClayButtonWithIcon
+										aria-label={resetButtonLabel}
 										borderless
 										className="lfr-portal-tooltip text-3"
 										displayType="secondary"
@@ -285,9 +291,7 @@ function SpacingSelectorButton({
 										}}
 										small
 										symbol="restore"
-										title={getResetLabelByViewport(
-											selectedViewportSize
-										)}
+										title={resetButtonLabel}
 									/>
 								)}
 							</li>

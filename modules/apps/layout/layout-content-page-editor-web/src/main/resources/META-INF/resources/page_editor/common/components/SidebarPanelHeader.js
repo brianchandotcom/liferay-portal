@@ -41,6 +41,7 @@ export default function SidebarPanelHeader({
 			{iconRight}
 
 			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('close')}
 				displayType="unstyled"
 				onClick={() => {
 					dispatch(switchSidebarPanel({sidebarOpen: false}));

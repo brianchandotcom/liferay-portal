@@ -52,6 +52,9 @@ export default function SearchForm({className, label, onChange}) {
 					<ClayInput.GroupInsetItem after tag="span">
 						{searchValue ? (
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'clear-search'
+								)}
 								borderless
 								displayType="secondary"
 								monospaced={false}

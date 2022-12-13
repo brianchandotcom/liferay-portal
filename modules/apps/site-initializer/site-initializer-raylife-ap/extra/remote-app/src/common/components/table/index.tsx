@@ -34,6 +34,7 @@ type TableHeaders = {
 	centered?: boolean;
 	clickable?: boolean;
 	greyColor?: boolean;
+	hasSort?: boolean;
 	icon?: boolean;
 	key: string;
 	redColor?: boolean;
@@ -52,7 +53,7 @@ const Table: React.FC<TableProps> = ({
 	return (
 		<table className="border-0 ray-table show-quick-actions-on-hover table table-autofit table-list table-responsive">
 			<Head>
-				<Row>
+				<Row className="ray-table-head">
 					{headers.map((header, index) => (
 						<Cell
 							className="py-0 text-paragraph-sm"
@@ -61,14 +62,14 @@ const Table: React.FC<TableProps> = ({
 						>
 							{header.value}
 
-							{index === 0 && (
+							{header.hasSort && (
 								<ClayButtonWithIcon
 									className="bg-neutral-0 btn-sm text-brand-primary-darken-1"
 									onClick={setSortByDate}
 									symbol={
-										sortByDate === 'desc'
-											? 'order-arrow-down'
-											: 'order-arrow-up'
+										sortByDate === 'asc'
+											? 'order-arrow-up'
+											: 'order-arrow-down'
 									}
 								/>
 							)}

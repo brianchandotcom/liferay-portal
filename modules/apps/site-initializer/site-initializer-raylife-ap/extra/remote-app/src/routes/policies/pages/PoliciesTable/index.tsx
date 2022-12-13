@@ -101,6 +101,9 @@ const PoliciesTable = () => {
 		[]
 	);
 	const [checkedStateStatus, setCheckedStateStatus] = useState<boolean[]>([]);
+	const [sortPolicyByEndDate, setSortPolicyByEndDate] = useState<string>(
+		'asc'
+	);
 
 	const filterSearch = `contains(policyOwnerName,'${searchInput}') or contains(policyOwnerEmail, '${searchInput}') or contains(externalReferenceCode, '${searchInput}')`;
 
@@ -115,12 +118,16 @@ const PoliciesTable = () => {
 	const generateParameters = (filtered?: string) => {
 		const parameters: Parameters =
 			filtered === undefined
-				? {page: '0', pageSize: '0', sort: 'endDate:asc'}
+				? {
+						page: '0',
+						pageSize: '0',
+						sort: `endDate:${sortPolicyByEndDate}`,
+				  }
 				: {
 						filter: filtered,
 						page: '0',
 						pageSize: '0',
-						sort: 'endDate:asc',
+						sort: `endDate:${sortPolicyByEndDate}`,
 				  };
 
 		return parameters;
@@ -376,6 +383,7 @@ const PoliciesTable = () => {
 		{
 			bold: false,
 			centered: true,
+			hasSort: true,
 			key: 'renewalDue',
 			redColor: hasRedLine,
 			value: 'Renewal Due',
@@ -403,6 +411,7 @@ const PoliciesTable = () => {
 		},
 		{
 			greyColor: true,
+			hasSort: true,
 			key: 'policyPeriod',
 			value: 'Policy Period',
 		},
@@ -540,16 +549,6 @@ const PoliciesTable = () => {
 							renewalDue >= 0 ? renewalDue : null
 						}`,
 					});
-
-					policiesList.sort((firstPolicy, secondPolicy) =>
-						Number(firstPolicy.renewalDueCalculation) >
-						Number(secondPolicy.renewalDueCalculation)
-							? 1
-							: Number(secondPolicy.renewalDueCalculation) >
-							  Number(firstPolicy.renewalDueCalculation)
-							? -1
-							: 0
-					);
 				}
 			);
 			setPolicies(policiesList);
@@ -569,6 +568,20 @@ const PoliciesTable = () => {
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pageSize, page, searchInput, filterCheckedLabel, parameterDebounce]);
+
+	const handleParametersChange = (filter: string) => {
+		setSortPolicyByEndDate(filter);
+		setParameters((previous) => ({
+			...previous,
+			sort: `endDate:${filter}`,
+		}));
+	};
+
+	const setSortRule = () => {
+		sortPolicyByEndDate === 'desc'
+			? handleParametersChange('asc')
+			: handleParametersChange('desc');
+	};
 
 	const title = `Policies (${totalCount})`;
 
@@ -806,6 +819,8 @@ const PoliciesTable = () => {
 				data={policies}
 				headers={HEADERS}
 				onClickRules={onClickRules}
+				setSortByDate={setSortRule}
+				sortByDate={sortPolicyByEndDate}
 			/>
 
 			<div className="d-flex justify-content-between mt-3">

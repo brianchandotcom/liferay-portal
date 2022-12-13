@@ -68,7 +68,7 @@ const ClaimsTable = () => {
 		1
 	);
 	const [searchInput, setSearchInput] = useState('');
-	const [sortByDate, setSortByDate] = useState('desc');
+	const [sortByDate, setSortByDate] = useState<string>('desc');
 	const [activeFilter, setActiveFilter] = useState(true);
 	const [productFilterItems, setProductFilterItems] = useState<string[]>([]);
 	const [statusFilterItems, setStatusFilterItems] = useState<string[]>([]);
@@ -208,6 +208,7 @@ const ClaimsTable = () => {
 	const HEADERS = [
 		{
 			greyColor: true,
+			hasSort: true,
 			key: 'claimCreateDate',
 			value: 'Date Field',
 		},

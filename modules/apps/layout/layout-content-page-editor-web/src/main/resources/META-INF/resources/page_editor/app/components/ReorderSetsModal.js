@@ -21,6 +21,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
@@ -267,7 +268,7 @@ function Items({items: initialItems, listId, updateLists}) {
 
 Items.propTypes = {
 	items: PropTypes.array,
-	listId: PropTypes.string.isRequired,
+	listId: PropTypes.number.isRequired,
 	updateLists: PropTypes.func.isRequired,
 };
 
@@ -346,6 +347,7 @@ function ReorderDropdown({index, item, numberOfItems, onChangeItemPosition}) {
 			items={items}
 			trigger={
 				<ClayButtonWithIcon
+					aria-label={sub(Liferay.Language.get('move-x'), item.name)}
 					className="text-secondary"
 					displayType="unstyled"
 					small

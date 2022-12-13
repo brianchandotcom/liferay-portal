@@ -1412,8 +1412,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			SystemEventHierarchyEntryThreadLocal.pop(KBArticle.class);
 		}
 
+		boolean visible = false;
+
+		if (kbArticle.isApproved()) {
+			visible = true;
+		}
+
 		_assetEntryLocalService.updateVisible(
-			KBArticle.class.getName(), kbArticle.getResourcePrimKey(), true);
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey(), visible);
 
 		// Social
 

@@ -18,7 +18,16 @@ import {Outlet, useLocation, useParams} from 'react-router-dom';
 import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {TestrayTask, testrayTaskImpl} from '../../services/rest';
+import {
+	APIResponse,
+	TestrayTask,
+	TestrayTaskCaseTypes,
+	TestrayTaskUser,
+	testrayTaskImpl,
+	testrayTaskUsersImpl,
+} from '../../services/rest';
+import {testrayTaskCaseTypesImpl} from '../../services/rest/TestrayTaskCaseTypes';
+import {searchUtil} from '../../util/search';
 
 const TestflowOutlet = () => {
 	const {pathname} = useLocation();
@@ -31,6 +40,36 @@ const TestflowOutlet = () => {
 		taskId ? testrayTaskImpl.getResource(taskId) : null,
 		(response) => testrayTaskImpl.transformData(response)
 	);
+
+	const {data: taskCaseTypesResponse} = useFetch<
+		APIResponse<TestrayTaskCaseTypes>
+	>(
+		taskId
+			? `${testrayTaskCaseTypesImpl.resource}&filter=${searchUtil.eq(
+					'taskId',
+					taskId as string
+			  )}`
+			: null,
+		(response) => testrayTaskCaseTypesImpl.transformDataFromList(response)
+	);
+
+	const taskCaseTypes = (taskCaseTypesResponse?.items || []).map(
+		({caseType}) => caseType?.id
+	);
+
+	const {data: taskUserResponse, mutate: mutateTaskUsers} = useFetch<
+		APIResponse<TestrayTaskUser>
+	>(
+		taskId
+			? `${testrayTaskUsersImpl.resource}&filter=${searchUtil.eq(
+					'taskId',
+					taskId as string
+			  )}`
+			: null,
+		(response) => testrayTaskUsersImpl.transformDataFromList(response)
+	);
+
+	const taskUser = (taskUserResponse?.items || []).map(({user}) => user?.id);
 
 	const {setDropdownIcon, setHeading, setTabs} = useHeader({
 		shouldUpdate: currentPathIsActive || archivedPathIsActive,
@@ -76,9 +115,13 @@ const TestflowOutlet = () => {
 		<Outlet
 			context={{
 				mutateTask,
+				mutateTaskUsers,
 				setDropdownIcon,
 				setHeading,
 				setTabs,
+				taskCaseTypes,
+				taskUser,
+				taskUserResponse,
 				testrayTask,
 			}}
 		/>

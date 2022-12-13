@@ -15,9 +15,10 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {useParams} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import Form from '../../components/Form';
 import Container from '../../components/Layout/Container';
@@ -28,26 +29,46 @@ import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import yupSchema, {yupResolver} from '../../schema/yup';
 import {Liferay} from '../../services/liferay';
-import {TestrayCaseType, testrayTaskImpl} from '../../services/rest';
+import {
+	TestrayCaseType,
+	TestrayTask,
+	TestrayTaskUser,
+	testrayTaskImpl,
+} from '../../services/rest';
 import {searchUtil} from '../../util/search';
+import {TaskStatuses} from '../../util/statuses';
 import {UserListView} from '../Manage/User';
 import useTestFlowAssign from './TestflowFormAssignUserActions';
 import TestflowAssignUserModal from './modal';
 
 type TestflowFormType = typeof yupSchema.task.__outputType;
 
+type OutletContext = {
+	mutateTask: KeyedMutator<TestrayTask>;
+	mutateTaskUsers: KeyedMutator<TestrayTaskUser>;
+	taskCaseTypes: number[];
+	taskUser: number[];
+	testrayTask: TestrayTask;
+};
+
 const TestflowForm = () => {
 	const {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
-
 	const [modalType, setModalType] = useState('assign-users');
 	const [users, setUsers] = useState<number[]>([]);
 	const {modal} = useFormModal({
 		onSave: setUsers,
 	});
-	const {buildId} = useParams();
+	const {buildId, taskId} = useParams();
 	const {actions} = useTestFlowAssign({setUsers});
+	const {
+		mutateTask,
+		mutateTaskUsers,
+		taskCaseTypes,
+		taskUser,
+		testrayTask,
+	} = useOutletContext<OutletContext>();
 
 	const {data} = useFetch('/casetypes?pageSize=100&fields=id,name');
 
@@ -59,10 +80,14 @@ const TestflowForm = () => {
 		watch,
 	} = useForm<TestflowFormType>({
 		defaultValues: {
-			buildId: Number(buildId ?? 0),
-			caseTypes: [],
+			buildId: Number(testrayTask?.build?.id ?? buildId),
+			caseTypes: taskCaseTypes ?? [],
+			dueStatus: TaskStatuses.IN_ANALYSIS,
+			id: Number(taskId ?? 0),
+			name: testrayTask?.name,
 			userIds: [],
 		},
+
 		resolver: yupResolver(yupSchema.task),
 	});
 
@@ -75,7 +100,9 @@ const TestflowForm = () => {
 		],
 	});
 
-	const caseTypes = data?.items || [];
+	const caseTypes = useMemo(() => data?.items || [], [
+		data?.items,
+	]) as TestrayCaseType[];
 
 	const onOpenModal = (option: 'select-users' | 'select-user-groups') => {
 		setModalType(option);
@@ -116,6 +143,8 @@ const TestflowForm = () => {
 			create: (data) => testrayTaskImpl.create(data),
 			update: (id, data) => testrayTaskImpl.update(id, data),
 		})
+			.then(mutateTask)
+			.then(mutateTaskUsers)
 			.then(onSave)
 			.catch(onError);
 	};
@@ -136,6 +165,10 @@ const TestflowForm = () => {
 
 		setValue('caseTypes', caseTypesFiltered);
 	};
+
+	useEffect(() => {
+		setUsers(taskUser);
+	}, [setUsers, taskUser]);
 
 	useEffect(() => {
 		setValue('userIds', users);
@@ -159,21 +192,18 @@ const TestflowForm = () => {
 				</label>
 
 				<div className="d-flex flex-wrap">
-					{caseTypes.map(
-						(caseType: TestrayCaseType, index: number) => (
-							<div className="col-4" key={index}>
-								<Form.Checkbox
-									checked={caseTypesWatch.includes(
-										caseType.id
-									)}
-									label={caseType.name}
-									name={caseType.name}
-									onChange={onClickCaseType}
-									value={caseType.id}
-								/>
-							</div>
-						)
-					)}
+					{caseTypes.map((caseType, index: number) => (
+						<div className="col-4" key={index}>
+							<Form.Checkbox
+								checked={caseTypesWatch.includes(caseType.id)}
+								disabled={!!taskId}
+								label={caseType.name}
+								name={caseType.name}
+								onChange={onClickCaseType}
+								value={caseType.id}
+							/>
+						</div>
+					))}
 				</div>
 			</Form.Clay.Group>
 

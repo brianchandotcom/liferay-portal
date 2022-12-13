@@ -126,6 +126,10 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return fetcher.patch(`/${this.uri}/${id}`, this.adapter(data));
 	}
 
+	public async removeBatch(ids: number[]): Promise<void> {
+		await Promise.allSettled(ids.map((id) => this.remove(id)));
+	}
+
 	public async updateBatch(
 		ids: number[],
 		data: Partial<YupModel>[]

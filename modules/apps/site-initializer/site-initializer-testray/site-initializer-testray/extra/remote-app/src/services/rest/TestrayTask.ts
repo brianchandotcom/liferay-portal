@@ -18,8 +18,9 @@ import yupSchema from '../../schema/yup';
 import {SearchBuilder, searchUtil} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
 import Rest from './Rest';
+import {testrayTaskCaseTypesImpl} from './TestrayTaskCaseTypes';
 import {testrayTaskUsersImpl} from './TestrayTaskUsers';
-import {APIResponse, TestrayTask} from './types';
+import {APIResponse, TestrayTask, TestrayTaskUser} from './types';
 
 type TaskForm = typeof yupSchema.task.__outputType & {projectId: number};
 
@@ -34,7 +35,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			adapter: ({
 				buildId: r_buildToTasks_c_buildId,
 				caseTypes: taskToTasksCaseTypes,
-				dueStatus = TaskStatuses.IN_ANALYSIS,
+				dueStatus,
 				name,
 			}) => ({
 				dueStatus,
@@ -42,7 +43,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 				r_buildToTasks_c_buildId,
 				taskToTasksCaseTypes,
 			}),
-			nestedFields: 'build.project,build.routine',
+			nestedFields: 'build.project,build.routine,taskToTasksCaseTypes',
 			transformData: (testrayTask) => ({
 				...testrayTask,
 				build: testrayTask.r_buildToTasks_c_build
@@ -64,27 +65,52 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		});
 	}
 
-	private async getTaskUserIds(taskId: number) {
-		const response = await testrayTaskUsersImpl.getAll(
+	private async assignUsers(taskId: number, userIds: number[]) {
+		let response = await testrayTaskUsersImpl.getAll(
 			searchUtil.eq('taskId', taskId)
 		);
 
-		return (response?.items ?? [])?.map(({id}) => id);
+		response = testrayTaskUsersImpl.transformDataFromList(
+			response as APIResponse<TestrayTaskUser>
+		);
+
+		const currentTaskUserIds = (userIds || []) as number[];
+
+		const taskUsers = response.items;
+
+		const taskUserIds = taskUsers.map(({user}) => user?.id as number);
+
+		const userIdsToAdd = currentTaskUserIds.filter(
+			(currentTaskUserId) => !taskUserIds.includes(currentTaskUserId)
+		);
+
+		const userIdsToRemove = taskUsers.filter(
+			({user}) => !currentTaskUserIds.includes(user?.id as number)
+		);
+
+		if (userIdsToRemove.length) {
+			await testrayTaskUsersImpl.removeBatch(
+				userIdsToRemove.map(({id}) => id)
+			);
+		}
+
+		if (userIdsToAdd.length) {
+			await testrayTaskUsersImpl.createBatch(
+				userIdsToAdd.map((userId) => ({
+					name: `${taskId}-${userId}`,
+					taskId,
+					userId,
+				}))
+			);
+		}
 	}
 
-	public async assignTo(task: TestrayTask, userId: number) {
-		const taskUserIds = await this.getTaskUserIds(task.id);
-
-		await testrayTaskUsersImpl.update(taskUserIds[0], {
-			name: `${task.id}-${userId}`,
-			taskId: task.id,
-			userId,
-		});
-
-		return this.update(task.id, {
+	public async assignTo(task: TestrayTask, userIds: number[]) {
+		await this.update(task.id, {
 			dueStatus: TaskStatuses.IN_ANALYSIS,
-			name: task.name,
+			name: task.name as string,
 		});
+		await this.assignUsers(task.id, userIds);
 	}
 
 	public async abandon(task: TestrayTask) {
@@ -125,6 +151,8 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 
 		const userIds = data.userIds || [];
 
+		const caseTypeIds = data.caseTypes || [];
+
 		if (userIds.length) {
 			await testrayTaskUsersImpl.createBatch(
 				userIds.map((userId) => ({
@@ -133,6 +161,29 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 					userId,
 				}))
 			);
+		}
+
+		if (caseTypeIds.length) {
+			await testrayTaskCaseTypesImpl.createBatch(
+				caseTypeIds.map((caseTypeId) => ({
+					caseTypeId,
+					name: `${task.id}-${caseTypeId}`,
+					taskId: task.id,
+				}))
+			);
+		}
+
+		return task;
+	}
+
+	public async update(
+		id: number,
+		data: Partial<TaskForm>
+	): Promise<TestrayTask> {
+		const task = await super.update(id, data);
+
+		if (data.dueStatus === TaskStatuses.IN_ANALYSIS) {
+			await this.assignUsers(id, data.userIds as number[]);
 		}
 
 		return task;
@@ -146,4 +197,5 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		await this.validate(task, id);
 	}
 }
+
 export const testrayTaskImpl = new TestrayTaskImpl();

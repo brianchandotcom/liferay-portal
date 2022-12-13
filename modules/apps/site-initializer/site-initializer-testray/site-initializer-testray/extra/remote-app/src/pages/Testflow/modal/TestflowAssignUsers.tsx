@@ -14,7 +14,6 @@
 
 import React from 'react';
 
-import {getUniqueList} from '../../../util';
 import {UserListView} from '../../Manage/User';
 
 type TestflowAssignUsersProps = {
@@ -32,10 +31,7 @@ const TestflowAssignUsers: React.FC<TestflowAssignUsersProps> = ({
 				selectedRows: modalState,
 			},
 			managementToolbarProps: {title: ''},
-			onContextChange: ({selectedRows}) =>
-				setState((state: any) =>
-					getUniqueList([...state, ...selectedRows])
-				),
+			onContextChange: ({selectedRows}) => setState(selectedRows),
 		}}
 		tableProps={{rowSelectable: true}}
 	/>

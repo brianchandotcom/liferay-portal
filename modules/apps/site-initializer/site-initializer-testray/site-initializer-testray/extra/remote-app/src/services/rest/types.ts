@@ -312,6 +312,15 @@ export type TestrayTask = {
 	subtaskScoreIncomplete: string;
 };
 
+export type TestrayTaskCaseTypes = {
+	caseType?: TestrayCaseType;
+	id: number;
+	name: string;
+	r_caseTypeToTasksCaseTypes_c_caseType?: TestrayCaseType;
+	r_taskToTasksCaseTypes_c_taskId?: TestrayTask;
+	task?: TestrayTask;
+};
+
 export type TestrayTaskUser = {
 	id: number;
 	name: string;

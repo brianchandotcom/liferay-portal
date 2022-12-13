@@ -156,10 +156,7 @@ const TestFlowTasks = () => {
 
 	return (
 		<>
-			<TaskHeaderActions
-				TestrayTask={testrayTask}
-				mutateTask={mutateTask}
-			/>
+			<TaskHeaderActions />
 
 			<Container collapsable title={i18n.translate('task-details')}>
 				<div className="d-flex flex-wrap">

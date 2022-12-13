@@ -13,37 +13,62 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useNavigate} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate, useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
-import AssignModal from '../../components/AssignModal';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
-import {TestrayTask, UserAccount, testrayTaskImpl} from '../../services/rest';
+import {
+	TestrayTask,
+	TestrayTaskUser,
+	testrayTaskImpl,
+} from '../../services/rest';
+import TestflowAssignUserModal from './modal';
 
-type TaskHeaderActionsProps = {
-	TestrayTask: TestrayTask;
-	mutateTask: KeyedMutator<TestrayTask>;
+type OutletContext = {
+	mutateTask: KeyedMutator<any>;
+	mutateTaskUsers: KeyedMutator<TestrayTaskUser>;
+	taskUser: number[];
+	testrayTask: TestrayTask;
 };
 
-const TaskHeaderActions: React.FC<TaskHeaderActionsProps> = ({
-	TestrayTask,
-	mutateTask,
-}) => {
-	const navigate = useNavigate();
-	const {modal: assignUserModal} = useFormModal({
-		onSave: (user: UserAccount) =>
-			testrayTaskImpl.assignTo(TestrayTask, user.id).then(mutateTask),
+const TaskHeaderActions = () => {
+	const {
+		mutateTask,
+		mutateTaskUsers,
+		taskUser,
+		testrayTask,
+	} = useOutletContext<OutletContext>();
+
+	const [modalType, setModalType] = useState('assign-users');
+	const [users, setUsers] = useState<number[]>([]);
+	const {modal} = useFormModal({
+		onSave: (userIds: number[]) =>
+			testrayTaskImpl
+				.assignTo(testrayTask, userIds)
+				.then(mutateTask)
+				.then(mutateTaskUsers),
 	});
+
+	const navigate = useNavigate();
+
+	const onOpenModal = (option: 'select-users') => {
+		setModalType(option);
+
+		modal.open(users);
+	};
+
+	useEffect(() => {
+		setUsers(taskUser);
+	}, [setUsers, taskUser]);
 
 	return (
 		<>
-			<AssignModal modal={assignUserModal} />
-
 			<ClayButton
 				className="mb-3 ml-3"
 				displayType="secondary"
-				onClick={() => assignUserModal.open()}
+				onClick={() => onOpenModal('select-users')}
 			>
 				{i18n.translate('assign-users')}
 			</ClayButton>
@@ -59,12 +84,14 @@ const TaskHeaderActions: React.FC<TaskHeaderActionsProps> = ({
 				<ClayButton
 					displayType="secondary"
 					onClick={() =>
-						testrayTaskImpl.abandon(TestrayTask).then(mutateTask)
+						testrayTaskImpl.abandon(testrayTask).then(mutateTask)
 					}
 				>
 					{i18n.translate('abandon')}
 				</ClayButton>
 			</ClayButton.Group>
+
+			<TestflowAssignUserModal modal={modal} type={modalType as any} />
 		</>
 	);
 };

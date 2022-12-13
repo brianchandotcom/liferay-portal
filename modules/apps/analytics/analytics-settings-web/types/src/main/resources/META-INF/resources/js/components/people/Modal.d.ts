@@ -13,6 +13,7 @@
  */
 
 import React from 'react';
+import {TEmptyState} from '../table/StateRenderer';
 import {TColumn, TTableRequestParams} from '../table/types';
 import {EPeople} from './People';
 export interface ICommonModalProps {
@@ -26,9 +27,8 @@ export interface ICommonModalProps {
 }
 interface IModalProps {
 	columns: TColumn[];
-	emptyStateTitle: string;
+	emptyState: TEmptyState;
 	name: EPeople;
-	noResultsTitle: string;
 	observer: any;
 	onCloseModal: () => void;
 	requestFn: (params: TTableRequestParams) => Promise<any>;

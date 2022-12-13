@@ -14,14 +14,14 @@
 
 /// <reference types="react" />
 
+import {TEmptyState} from './StateRenderer';
 import {TColumn, TFormattedItems, TItem, TTableRequestParams} from './types';
 interface ITableProps<TRawItem> {
 	addItemTitle?: string;
 	columns: TColumn[];
 	disabled?: boolean;
-	emptyStateTitle: string;
+	emptyState: TEmptyState;
 	mapperItems: (items: TRawItem[]) => TItem[];
-	noResultsTitle: string;
 	onAddItem?: () => void;
 	onItemsChange?: (items: TFormattedItems) => void;
 	requestFn: (params: TTableRequestParams) => Promise<any>;
@@ -31,9 +31,8 @@ export declare function Table<TRawItem>({
 	addItemTitle,
 	columns,
 	disabled,
-	emptyStateTitle,
+	emptyState,
 	mapperItems,
-	noResultsTitle,
 	onAddItem,
 	onItemsChange,
 	requestFn,

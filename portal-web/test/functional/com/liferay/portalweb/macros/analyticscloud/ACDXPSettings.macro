@@ -159,12 +159,11 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 		else {
-
-			//if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-			//	Check.checkToggleSwitch(
-			//		key_syncFieldName = "Sync All Accounts",
-			//		locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
-			//}
+			if (IsElementPresent(index = "3", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
+				Check.checkToggleSwitch(
+					key_syncFieldName = "Sync All Accounts",
+					locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
+			}
 
 			Check.checkToggleSwitch(
 				key_syncFieldName = "Sync All Accounts",
@@ -193,11 +192,10 @@ definition {
 	}
 
 	macro syncContactsAndAccountstData {
-
-		//if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-		//	Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
-		//}
-
+		if (IsElementPresent(index = "1", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
+			Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+		}
+		
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 	}
 
@@ -237,12 +235,11 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 		else {
-
-			//if (IsElementPresent(locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
-			//	Check.checkToggleSwitch(
-			//		key_syncFieldName = "Sync All Contacts",
-			//		locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
-			//}
+			if (IsElementPresent(index = "2", locator1 = "ACDXPSettings#TOGGLE_ICON_ENABLE")) {
+				Check.checkToggleSwitch(
+					key_syncFieldName = "Sync All Contacts",
+					locator1 = "ACDXPSettings#SYNC_TOGGLE_ICON");
+			}
 
 			Check.checkToggleSwitch(
 				key_syncFieldName = "Sync All Contacts",

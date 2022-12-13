@@ -166,6 +166,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOGGLE_ICON_ENABLE</td>
+	<td>xpath=(//input[contains(@data-testid,'true')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SYNC_TOGGLE_ICON</td>
 	<td>//*[contains(@class, 'toggle-switch-check')]/..//span[text()='${key_syncFieldName}']</td>
 	<td></td>

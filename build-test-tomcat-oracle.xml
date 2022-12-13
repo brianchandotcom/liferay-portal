@@ -4,6 +4,8 @@
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-tomcat-oracle">
+		<antcall target="record-test-generated-properties" />
+
 		<get-database-property property.name="database.host" />
 
 		<antcall inheritAll="false" target="start-docker-database-oracle">

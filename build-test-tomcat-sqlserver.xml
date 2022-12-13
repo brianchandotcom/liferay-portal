@@ -5,6 +5,8 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-tomcat-sqlserver">
+		<antcall target="record-test-generated-properties" />
+
 		<if>
 			<not>
 				<isset property="database.version" />

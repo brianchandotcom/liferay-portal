@@ -4,6 +4,8 @@
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-tomcat-db2">
+		<antcall target="record-test-generated-properties" />
+
 		<if>
 			<or>
 				<not>

@@ -81,7 +81,10 @@ const CaseResultHeaderActions: React.FC<{
 				</ClayButton>
 
 				<ClayButton
-					displayType="secondary"
+					disabled={isCaseResultAssignedToMe}
+					displayType={
+						isCaseResultAssignedToMe ? 'unstyled' : 'secondary'
+					}
 					onClick={() =>
 						(isCaseResultAssignedToMe
 							? testrayCaseResultImpl.removeAssign(caseResult)
@@ -130,9 +133,13 @@ const CaseResultHeaderActions: React.FC<{
 				</ClayButton>
 
 				<ClayButton
-					disabled={buttonValidations.editValidation}
+					disabled={
+						buttonValidations.editValidation ||
+						isCaseResultAssignedToMe
+					}
 					displayType={
-						buttonValidations.editValidation
+						buttonValidations.editValidation ||
+						isCaseResultAssignedToMe
 							? 'unstyled'
 							: 'secondary'
 					}

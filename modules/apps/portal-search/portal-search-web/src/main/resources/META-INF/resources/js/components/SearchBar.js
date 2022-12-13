@@ -20,7 +20,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import {addParams, fetch, navigate} from 'frontend-js-web';
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 import useDebounceCallback from '../hooks/useDebounceCallback';
 
@@ -56,16 +56,22 @@ export default function SearchBar({
 	const alignElementRef = useRef();
 	const dropdownRef = useRef();
 
-	const characterThresholds = JSON.parse(suggestionsContributorConfiguration)
-		.filter((config) => config.attributes?.characterThreshold)
-		.map((config) => parseInt(config.attributes.characterThreshold, 10));
-
 	// If the blueprint suggestions contributor does not set its own threshold,
 	// the suggestions display threshold will default to the global one.
 
-	const finalSuggestionsDisplayThreshold = characterThresholds.length
-		? Math.min(...characterThresholds)
-		: parseInt(suggestionsDisplayThreshold, 10);
+	const _getLowestSuggestionsDisplayThreshold = useCallback(() => {
+		const characterThresholds = JSON.parse(
+			suggestionsContributorConfiguration
+		)
+			.filter((config) => config.attributes?.characterThreshold)
+			.map((config) =>
+				parseInt(config.attributes.characterThreshold, 10)
+			);
+
+		return characterThresholds.length
+			? Math.min(...characterThresholds)
+			: parseInt(suggestionsDisplayThreshold, 10);
+	}, [suggestionsContributorConfiguration, suggestionsDisplayThreshold]);
 
 	const _fetchSuggestions = (searchValue, scopeValue) => {
 		fetch(
@@ -120,7 +126,10 @@ export default function SearchBar({
 	};
 
 	const _handleFocus = () => {
-		if (finalSuggestionsDisplayThreshold === 0 && inputValue === '') {
+		if (
+			_getLowestSuggestionsDisplayThreshold() === 0 &&
+			inputValue === ''
+		) {
 			setLoading(true);
 
 			_fetchSuggestions(inputValue, scope);
@@ -145,7 +154,7 @@ export default function SearchBar({
 
 		setInputValue(value);
 
-		if (value.trim().length >= finalSuggestionsDisplayThreshold) {
+		if (value.trim().length >= _getLowestSuggestionsDisplayThreshold()) {
 
 			// Immediately show loading spinner unless the value hasn't changed.
 			// If the value hasn't changed, no new request will be made and the

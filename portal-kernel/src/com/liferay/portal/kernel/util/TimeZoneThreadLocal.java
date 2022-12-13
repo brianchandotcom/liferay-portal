@@ -15,6 +15,10 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.TimeZone;
 
@@ -24,6 +28,17 @@ import java.util.TimeZone;
 public class TimeZoneThreadLocal {
 
 	public static TimeZone getDefaultTimeZone() {
+		if ((_defaultTimeZone.get() == null) &&
+			(CompanyThreadLocal.getCompanyId() != CompanyConstants.SYSTEM)) {
+
+			User defaultUser = UserLocalServiceUtil.fetchDefaultUser(
+				CompanyThreadLocal.getCompanyId());
+
+			if (defaultUser != null) {
+				_defaultTimeZone.set(defaultUser.getTimeZone());
+			}
+		}
+
 		return _defaultTimeZone.get();
 	}
 

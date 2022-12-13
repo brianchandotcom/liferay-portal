@@ -17,18 +17,11 @@ package com.liferay.portal.kernel.security.auth;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -126,50 +119,6 @@ public class CompanyThreadLocal {
 		};
 	}
 
-	private static User _fetchDefaultUser(long companyId) throws Exception {
-		User defaultUser = null;
-
-		try {
-			defaultUser = UserLocalServiceUtil.fetchDefaultUser(companyId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		if (defaultUser != null) {
-			return defaultUser;
-		}
-
-		try (Connection connection = DataAccess.getConnection()) {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select userId, languageId, timeZoneId from User_ " +
-							"where companyId = ? and defaultUser = ?")) {
-
-				preparedStatement.setLong(1, companyId);
-				preparedStatement.setBoolean(2, true);
-
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					if (!resultSet.next()) {
-						return null;
-					}
-
-					defaultUser = UserLocalServiceUtil.createUser(
-						resultSet.getLong("userId"));
-
-					defaultUser.setLanguageId(
-						resultSet.getString("languageId"));
-					defaultUser.setTimeZoneId(
-						resultSet.getString("timeZoneId"));
-				}
-			}
-		}
-
-		return defaultUser;
-	}
-
 	private static boolean _setCompanyId(Long companyId) {
 		if (companyId.equals(_companyId.get())) {
 			return false;
@@ -186,33 +135,13 @@ public class CompanyThreadLocal {
 
 		if (companyId > 0) {
 			_companyId.set(companyId);
-
-			try {
-				User defaultUser = _fetchDefaultUser(companyId);
-
-				if (defaultUser == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"No default user was found for company " +
-								companyId);
-					}
-				}
-				else {
-					LocaleThreadLocal.setDefaultLocale(defaultUser.getLocale());
-					TimeZoneThreadLocal.setDefaultTimeZone(
-						defaultUser.getTimeZone());
-				}
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
 		}
 		else {
 			_companyId.set(CompanyConstants.SYSTEM);
-
-			LocaleThreadLocal.setDefaultLocale(null);
-			TimeZoneThreadLocal.setDefaultTimeZone(null);
 		}
+
+		LocaleThreadLocal.setDefaultLocale(null);
+		TimeZoneThreadLocal.setDefaultTimeZone(null);
 
 		return true;
 	}

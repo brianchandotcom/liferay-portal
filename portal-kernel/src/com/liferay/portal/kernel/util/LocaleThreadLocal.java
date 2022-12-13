@@ -15,6 +15,10 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.Locale;
 
@@ -24,6 +28,17 @@ import java.util.Locale;
 public class LocaleThreadLocal {
 
 	public static Locale getDefaultLocale() {
+		if ((_defaultLocale.get() == null) &&
+			(CompanyThreadLocal.getCompanyId() != CompanyConstants.SYSTEM)) {
+
+			User defaultUser = UserLocalServiceUtil.fetchDefaultUser(
+				CompanyThreadLocal.getCompanyId());
+
+			if (defaultUser != null) {
+				_defaultLocale.set(defaultUser.getLocale());
+			}
+		}
+
 		return _defaultLocale.get();
 	}
 

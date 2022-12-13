@@ -73,7 +73,7 @@ definition {
 		task ("Go to the Team Members page and open the invitation modal") {
 			CP2NavigationMenu.goToTeamMembers();
 
-			CP2TeamMembers.clickInviteMembers();
+			CustomerPortal.clickAtButton(text = "Invite");
 		}
 
 		task ("Click the Cancel button and assert that the user has returned to the Team Members page") {
@@ -114,7 +114,7 @@ definition {
 		task ("Go to the invite modal and invite a member to the project") {
 			CP2NavigationMenu.goToTeamMembers();
 
-			CP2TeamMembers.clickInviteMembers();
+			CustomerPortal.clickAtButton(text = "Invite");
 
 			CP2TeamMembers.addFieldsTeamMembersExtra(
 				position = "0",

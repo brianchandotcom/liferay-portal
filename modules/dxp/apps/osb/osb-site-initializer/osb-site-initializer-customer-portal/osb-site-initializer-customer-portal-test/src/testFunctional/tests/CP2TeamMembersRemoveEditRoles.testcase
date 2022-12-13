@@ -70,7 +70,7 @@ definition {
 		}
 
 		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
 		}
 
 		task ("Open the action menu and click the Remove option") {
@@ -135,7 +135,7 @@ definition {
 		}
 
 		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
 		}
 
 		task ("Open the action menu and click the Edit option") {
@@ -206,7 +206,7 @@ definition {
 		}
 
 		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
 		}
 
 		task ("Close the confirmation modal") {
@@ -279,7 +279,7 @@ definition {
 		}
 
 		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
 		}
 
 		task ("Open the action menu and click the Edit option") {
@@ -295,7 +295,9 @@ definition {
 		}
 
 		task ("Assert that the role really has changed") {
-			CP2Utils.assertChangeRole(role = "User");
+			CP2Utils.assertChangeRole(
+				email = "test.user@liferay.com",
+				role = "User");
 		}
 
 		task ("Delete user created") {

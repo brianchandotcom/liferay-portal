@@ -80,7 +80,7 @@ definition {
 		task ("Go to the Team Members page and click on the Invite button") {
 			CP2NavigationMenu.goToTeamMembers();
 
-			CP2TeamMembers.clickInviteMembers();
+			CustomerPortal.clickAtButton(text = "Invite");
 		}
 
 		task ("Assert the 'Invite Your Team Members' modal") {

@@ -72,7 +72,7 @@ definition {
 		}
 
 		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
 		}
 
 		task ("Assert the details of the table and page") {
@@ -84,7 +84,9 @@ definition {
 
 			CP2TeamMembers.viewSupportSeatsAvailable(available = "2 of 3 available");
 
-			AssertElementPresent(locator1 = "CP2TeamMembers#INVITE_BUTTON");
+			AssertElementPresent(
+				key_text = "Invite",
+				locator1 = "CustomerPortalSite#ANY_BUTTON");
 
 			Tooltip.viewHelpInfo(info = "The limit of support seats available counts the total of Administrators & Requesters roles assigned due to both have role permissions to open support tickets.");
 		}
@@ -141,7 +143,7 @@ definition {
 		}
 
 		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
 		}
 
 		task ("Assert the users and their respective statuses") {

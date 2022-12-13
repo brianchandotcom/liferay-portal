@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccounts = "2022 FIFA World Cup Qatar - FAN ID,Avangrid Portals";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToAllAccounts(accountsList = "${testAccounts}");
 		}
 	}
 
@@ -41,10 +42,92 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-150204 | Test Summary: Verify if the user can change an administrator role already selected to requester, or the requester role to administrator"
-    @ignore = "true"
+	@description = "Automation ID: LPS-158568 | Test Summary: Verify that when the project reaches zero available support seats the administrator and requester roles are disabled in the drop-down list"
+	@ignore = "true"
 	@priority = "4"
-    test ChangesToAlreadySelectedFunctions {
+	test AssertThatTheDropdownOptionsAreDisabled {
+
+		// Needs refactor since it depends on example Avangrid Portals account
+
+		var testAccount = "Avangrid Portals";
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "${testAccount}");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+		}
+
+		task ("Then I go to the Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			Refresh();
+		}
+
+		task ("And I enter the test account and go to Team Members page") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CP2TeamMembers.teamMembersFlow(testAccount = "${testAccount}");
+		}
+
+		task ("Then I assert that when the project reaches zero available support seats, the administrator and requester roles are disabled") {
+			CustomerPortal.clickAtButton(text = "Invite");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = "0",
+				positionNumber = "0",
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = "1",
+				positionNumber = "1",
+				rowEmail = "test02@project.com",
+				rowRole = "Requester");
+
+			CP2TeamMembers.assertThatFunctionIsDisabled(
+				positionNumber = "2",
+				role = "Administrator");
+
+			CP2TeamMembers.assertThatFunctionIsDisabled(
+				positionNumber = "2",
+				role = "Requester");
+
+			CustomerPortal.clickAtButton(text = "Cancel");
+		}
+	}
+
+	@description = "Automation ID: LPS-170211 | Test Summary: Assert that when the user reaches the limit of available support seats the User function becomes default for the next invited"
+	@priority = "3"
+	test AssertThatTheUserFunctionBecomesDefault {
+
+		// TODO LPS-170211 AssertThatTheUserFunctionBecomesDefault pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150206 | Test Summary: Verify that below the number of seats the modal displays an explanation of the support tickets"
+	@priority = "3"
+	test CanViewTipMessage {
+
+		// TODO LPS-150206 CanViewTipMessage pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150204 | Test Summary: Verify if the user can change an administrator role already selected to requester, or the requester role to administrator"
+	@ignore = "true"
+	@priority = "4"
+	test ChangesToAlreadySelectedFunctions {
 
 		// Needs refactor since it depends on example FIFA account
 
@@ -100,8 +183,8 @@ definition {
 				openUser = "test01@project.com");
 
 			CP2TeamMembers.tableChangeRole(
-				roleDefault = "Administrator",
-				changeRole = "Requester");
+				changeRole = "Requester",
+				roleDefault = "Administrator");
 
 			CustomerPortal.clickAtButton(text = "Save");
 		}
@@ -117,89 +200,6 @@ definition {
 				email = "test01@project.com",
 				portlet = "Team Members Invitation");
 		}
-    }
-
-    @descriprion = "Automation ID: LPS-150206 | Test Summary: Verify that below the number of seats the modal displays an explanation of the support tickets"
-    @priority = "3"
-    test CanViewTipMessage {
-        
-        // TODO LPS-150206 CanViewTipMessage pending implementation
-
-    }
-
-    @description = "Automation ID: LPS-158568 | Test Summary: Verify that when the project reaches zero available support seats the administrator and requester roles are disabled in the drop-down list"
-    @ignore = "true"
-	@priority = "4"
-    test AssertThatTheDropdownOptionsAreDisabled {
-
-		// Needs refactor since it depends on example Avangrid Portals account
-
-		var testAccount = "Avangrid Portals";
-
-		task ("Change the user role in the project") {
-			Account.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "${testAccount}");
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-		}
-
-		task ("Then I go to the Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
-		}
-
-		task ("And I enter the test account and go to Team Members page") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CP2TeamMembers.teamMembersFlow(testAccount = "${testAccount}");
-		}
-
-        task ("Then I assert that when the project reaches zero available support seats, the administrator and requester roles are disabled") {
-			CustomerPortal.clickAtButton(text = "Invite");
-
-			CP2TeamMembers.addFieldsTeamMembersExtra(
-				addMembers = "true",
-				position = "0",
-				positionNumber = "0",
-				rowEmail = "test01@project.com",
-				rowRole = "Administrator");
-
-			CP2TeamMembers.addFieldsTeamMembersExtra(
-				addMembers = "true",
-				position = "1",
-				positionNumber = "1",
-				rowEmail = "test02@project.com",
-				rowRole = "Requester");
-
-			CP2TeamMembers.assertThatFunctionIsDisabled(
-				positionNumber = "2",
-				role = "Administrator");
-
-			CP2TeamMembers.assertThatFunctionIsDisabled(
-				positionNumber = "2",
-				role = "Requester");
-
-			CustomerPortal.clickAtButton(text = "Cancel");
-		}
-
-    }
-
-    @descriprion = "Automation ID: LPS-170211 | Test Summary: Assert that when the user reaches the limit of available support seats the User function becomes default for the next invited"
-    @priority = "3"
-    test AssertThatTheUserFunctionBecomesDefault {
-        
-        // TODO LPS-170211 AssertThatTheUserFunctionBecomesDefault pending implementation
-
-    }
+	}
 
 }

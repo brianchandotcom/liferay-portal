@@ -110,40 +110,36 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		TripleClick(
-			key_suggestionContributorOrder = "1",
-			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME");
-
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + c");
-
 		Click.javaScriptClick(
 			key_text = "Add Contributor",
 			locator1 = "Button#ANY");
 
-		Click(
-			key_suggestionContributorOrder = "2",
+		Click.clickAt(
+			key_suggestionContributorOrder = "1",
 			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME");
 
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
+		SearchBarSuggestions.copyConfiguration(
+			contributorOrder = "1",
+			suggestionContributor = "Display Group Name");
 
-		AssertTextEquals(
+		SearchBarSuggestions.pasteConfiguration(
+			contributorOrder = "2",
+			suggestionContributor = "Display Group Name");
+
+		AssertVisible(
 			key_suggestionContributorOrder = "2",
 			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
 			value1 = "suggestions");
 
-		TripleClick(
-			key_suggestionContributorOrder = "1",
-			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE");
+		SearchBarSuggestions.copyConfiguration(
+			contributorOrder = "1",
+			suggestionContributor = "Size");
 
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + c");
+		SearchBarSuggestions.pasteConfiguration(
+			contributorOrder = "2",
+			suggestionContributor = "Size");
 
-		Click(
-			key_suggestionContributorOrder = "2",
-			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE");
-
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
-
-		AssertTextEquals(
+		AssertVisible(
 			key_suggestionContributorOrder = "2",
 			locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
 			value1 = "5");

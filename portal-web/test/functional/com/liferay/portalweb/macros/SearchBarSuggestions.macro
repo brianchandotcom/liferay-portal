@@ -61,6 +61,39 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro copyConfiguration {
+		if ("${suggestionContributor}" == "Display Group Name") {
+			Click.clickAt(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME");
+
+			Type.sendKeys(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
+				value1 = "keys=CONTROL,a");
+
+			Type.sendKeys(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
+				value1 = "keys=CONTROL,c");
+		}
+		else if ("${suggestionContributor}" == "Size") {
+			Click.clickAt(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE");
+
+			Type.sendKeys(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
+				value1 = "keys=CONTROL,a");
+
+			Type.sendKeys(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
+				value1 = "keys=CONTROL,c");
+		}
+	}
+
 	macro gotoSuggestionResultDetails {
 		if (!(isSet(suggestionContributorDisplayGroupName))) {
 			var suggestionContributorDisplayGroupName = "Suggestions";
@@ -70,6 +103,34 @@ definition {
 			key_searchAssetTitle = "${searchAssetTitle}",
 			key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE");
+	}
+
+	macro pasteConfiguration {
+		if ("${suggestionContributor}" == "Display Group Name") {
+			Click.clickAt(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME");
+
+			Type.sendKeys(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
+				value1 = "keys=CONTROL,v");
+		}
+		else if ("${suggestionContributor}" == "Size") {
+			Click.clickAt(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE");
+
+			Type.sendKeys(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
+				value1 = "keys=CONTROL,a");
+
+			Type.sendKeys(
+				key_suggestionContributorOrder = "${contributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
+				value1 = "keys=CONTROL,c");
+		}
 	}
 
 	macro showMoreSuggestions {

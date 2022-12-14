@@ -42,9 +42,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Navigator.openURL();
+		ACUtils.tearDownAC();
 
-		AnalyticsCloud.teardownAnalyticsCloud();
+		ACUtils.tearDownDXP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -54,6 +54,8 @@ definition {
 		}
 
 		JSONUser.tearDownNonAdminUsers();
+
+		JSONRole.deleteTestRoles();
 	}
 
 	@description = "LPS-144031: When the user accesses to the content performance panel of a blog's display page, the author's field is NOT shown in the content performance panel"
@@ -803,18 +805,18 @@ definition {
 
 		task ("Create a Role with permissios to access Content Dashboard") {
 			JSONRole.addRegularRole(
-				roleKey = "Content Dashboard Viewer",
-				roleTitle = "Content Dashboard Viewer");
+				roleKey = "Content Dashboard Viewer Test",
+				roleTitle = "Content Dashboard Viewer Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "Content Dashboard Viewer");
+				roleTitle = "Content Dashboard Viewer Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Content Dashboard Viewer");
+				roleTitle = "Content Dashboard Viewer Test");
 		}
 
 		task ("Create an User and assign to the role created") {
@@ -831,7 +833,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Content Dashboard Viewer",
+				roleTitle = "Content Dashboard Viewer Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -876,10 +878,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-		}
-
-		task ("Delete role via JSONWS") {
-			JSONRole.deleteRole(roleTitle = "Content Dashboard Viewer");
 		}
 	}
 
@@ -932,26 +930,26 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "Content Dashboard Permissions",
-				roleTitle = "Content Dashboard Permissions");
+				roleKey = "Content Dashboard Permissions Test",
+				roleTitle = "Content Dashboard Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "Content Dashboard Permissions");
+				roleTitle = "Content Dashboard Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Content Dashboard Permissions");
+				roleTitle = "Content Dashboard Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Content Dashboard Permissions");
+				roleTitle = "Content Dashboard Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Content Dashboard Permissions",
+				roleTitle = "Content Dashboard Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -989,8 +987,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-
-			JSONRole.deleteRole(roleTitle = "Content Dashboard Permissions");
 		}
 	}
 
@@ -1022,31 +1018,31 @@ definition {
 
 		task ("Crete a Role with proper permissons") {
 			JSONRole.addRegularRole(
-				roleKey = "Web Content Creator Edit Permissions",
-				roleTitle = "Web Content Creator Edit Permissions");
+				roleKey = "Web Content Creator Edit Permissions Test",
+				roleTitle = "Web Content Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Web Content Creator Edit Permissions");
+				roleTitle = "Web Content Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-				roleTitle = "Web Content Creator Edit Permissions");
+				roleTitle = "Web Content Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "Web Content Creator Edit Permissions");
+				roleTitle = "Web Content Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "Web Content Creator Edit Permissions");
+				roleTitle = "Web Content Creator Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Web Content Creator Edit Permissions",
+				roleTitle = "Web Content Creator Edit Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1084,8 +1080,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-
-			JSONRole.deleteRole(roleTitle = "Web Content Creator Edit Permissions");
 		}
 	}
 
@@ -1115,21 +1109,21 @@ definition {
 
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
-				roleKey = "Content Dashboard Permissions",
-				roleTitle = "Content Dashboard Permissions");
+				roleKey = "Content Dashboard Permissions Test",
+				roleTitle = "Content Dashboard Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "Content Dashboard Permissions");
+				roleTitle = "Content Dashboard Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Content Dashboard Permissions");
+				roleTitle = "Content Dashboard Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Content Dashboard Permissions",
+				roleTitle = "Content Dashboard Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1167,8 +1161,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-
-			JSONRole.deleteRole(roleTitle = "Content Dashboard Permissions");
 		}
 	}
 
@@ -1200,26 +1192,26 @@ definition {
 
 		task ("Create role and assign to user") {
 			JSONRole.addRegularRole(
-				roleKey = "Content Dashboard Permissions",
-				roleTitle = "Content Dashboard Permissions");
+				roleKey = "Content Dashboard Permissions Test",
+				roleTitle = "Content Dashboard Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "Content Dashboard Permissions");
+				roleTitle = "Content Dashboard Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Content Dashboard Permissions");
+				roleTitle = "Content Dashboard Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Content Dashboard Permissions");
+				roleTitle = "Content Dashboard Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Content Dashboard Permissions",
+				roleTitle = "Content Dashboard Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1257,8 +1249,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
-
-			JSONRole.deleteRole(roleTitle = "Content Dashboard Permissions");
 		}
 	}
 

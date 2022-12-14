@@ -261,7 +261,12 @@ public class NumericDDMFormFieldTypeReportProcessor
 				List<DDMFormFieldValue> ddmFormFieldValues =
 					ddmFormFieldValuesMap.get(ddmFormFieldValueName);
 
-				values.add(getValueBigDecimal(ddmFormFieldValues.get(0)));
+				BigDecimal value = getValueBigDecimal(
+					ddmFormFieldValues.get(0));
+
+				if (value != null) {
+					values.add(value);
+				}
 			}
 			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {

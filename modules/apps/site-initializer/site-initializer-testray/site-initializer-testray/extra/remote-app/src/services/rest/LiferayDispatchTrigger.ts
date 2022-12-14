@@ -22,6 +22,7 @@ type DispatchTrigger = {
 	dispatchTaskExecutorType: string;
 	dispatchTaskSettings: Object;
 	externalReferenceCode: string;
+	id: number;
 	name: string;
 	overlapAllowed: boolean;
 	userId: number;

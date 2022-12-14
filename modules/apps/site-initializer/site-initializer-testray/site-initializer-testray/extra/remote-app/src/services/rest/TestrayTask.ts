@@ -17,11 +17,15 @@ import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder, searchUtil} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
+import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
 import Rest from './Rest';
 import {testrayTaskUsersImpl} from './TestrayTaskUsers';
 import {APIResponse, TestrayTask} from './types';
 
-type TaskForm = typeof yupSchema.task.__outputType & {projectId: number};
+type TaskForm = typeof yupSchema.task.__outputType & {
+	dispatchTriggerId: number;
+	projectId: number;
+};
 
 type NestedObjectOptions =
 	| 'taskToSubtasks'
@@ -32,11 +36,13 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	constructor() {
 		super({
 			adapter: ({
+				dispatchTriggerId,
 				buildId: r_buildToTasks_c_buildId,
 				caseTypes: taskToTasksCaseTypes,
-				dueStatus = TaskStatuses.IN_ANALYSIS,
+				dueStatus = TaskStatuses.OPEN,
 				name,
 			}) => ({
+				dispatchTriggerId,
 				dueStatus,
 				name,
 				r_buildToTasks_c_buildId,
@@ -105,7 +111,30 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			);
 		}
 
-		return task;
+		const dispatchTrigger = await liferayDispatchTriggerImpl.create({
+			active: true,
+			dispatchTaskExecutorType: 'testray-testflow',
+			dispatchTaskSettings: {
+				testrayBuildId: data.buildId,
+				testrayCaseTypesId: data.caseTypes,
+				testrayTaskId: task.id,
+			},
+			externalReferenceCode: `T-${task.id}`,
+			name: `T-${task.id} / ${data.name}`,
+			overlapAllowed: false,
+		});
+
+		const dispatchTriggerId = dispatchTrigger?.id as number;
+
+		await Promise.allSettled([
+			super.update(task.id, {
+				...data,
+				dispatchTriggerId,
+			}),
+			liferayDispatchTriggerImpl.run(dispatchTriggerId),
+		]);
+
+		return {...task, dispatchTriggerId};
 	}
 
 	protected async beforeCreate(task: TaskForm): Promise<void> {

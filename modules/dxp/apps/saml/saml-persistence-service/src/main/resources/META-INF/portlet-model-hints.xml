@@ -64,7 +64,7 @@
 		<field name="userName" type="String" />
 		<field name="deleted" type="boolean" />
 		<field name="samlNameIdFormat" type="String">
-			<hint-collection name="ENTITY-ID" />
+			<hint name="max-length">128</hint>
 		</field>
 		<field name="samlNameIdNameQualifier" type="String" />
 		<field name="samlNameIdSpNameQualifier" type="String" />

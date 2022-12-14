@@ -151,13 +151,26 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Name",
+			"externalReferenceCode": "Growth_ARR__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Opportunity Name"
+				"en_US": "Growth ARR"
 			},
-			"name": "opportunityName",
+			"name": "growthArr",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Renewal_ARR__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Renewal ARR"
+			},
+			"name": "renewalArr",
 			"required": false,
 			"type": "String"
 		}

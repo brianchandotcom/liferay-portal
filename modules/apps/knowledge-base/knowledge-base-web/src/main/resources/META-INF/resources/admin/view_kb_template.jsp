@@ -46,6 +46,36 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
+<c:if test="<%= portletTitleBasedNavigation %>">
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<clay:container-fluid>
+			<ul class="navbar-nav navbar-nav-expand">
+				<li class="nav-item nav-item-expand"></li>
+				<li class="nav-item">
+					<clay:link
+						aria-label='<%= LanguageUtil.get(request, "edit") %>'
+						cssClass="btn-monospaced btn-secondary btn-sm"
+						href='<%=
+							PortletURLBuilder.createRenderURL(
+								liferayPortletResponse
+							).setMVCPath(
+								"/admin/common/edit_kb_template.jsp"
+							).setRedirect(
+								currentURL
+							).setParameter(
+								"kbTemplateId", kbTemplate.getKbTemplateId()
+							).buildRenderURL(
+							).toString()
+						%>'
+						icon="pencil"
+						title='<%= LanguageUtil.get(request, "edit") %>'
+					/>
+				</li>
+			</ul>
+		</clay:container-fluid>
+	</div>
+</c:if>
+
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="kb-article sheet">
 		<div class="kb-entity-body">

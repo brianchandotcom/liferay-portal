@@ -50,6 +50,7 @@ export default function CSSClassSelectorField({
 	const alignElementRef = useRef();
 	const firstOptionRef = useRef();
 	const multiSelectRef = useRef();
+	const dropdownRef = useRef();
 
 	const onKeyDown = (event) => {
 		if (event.key === 'Escape') {
@@ -101,10 +102,16 @@ export default function CSSClassSelectorField({
 						id={cssClassesInputId}
 						items={items}
 						onBlur={() => {
-							if (!dropDownActive) {
-								addItem(value);
-								setValue('');
-							}
+							requestAnimationFrame(() => {
+								if (
+									!dropdownRef.current.contains(
+										document.activeElement
+									)
+								) {
+									addItem(value);
+									setValue('');
+								}
+							});
 						}}
 						onChange={(value) => {
 							setValue(value);
@@ -160,6 +167,7 @@ export default function CSSClassSelectorField({
 				active={dropDownActive}
 				alignElementRef={alignElementRef}
 				cssClass={value}
+				dropdownRef={dropdownRef}
 				firstOptionRef={firstOptionRef}
 				onItemClick={onItemClick}
 				onKeyDown={onKeyDown}
@@ -173,13 +181,12 @@ function CSSClassSelectorDropDown({
 	active,
 	alignElementRef,
 	cssClass,
+	dropdownRef,
 	firstOptionRef,
 	onItemClick,
 	onKeyDown,
 	onSetActive,
 }) {
-	const dropdownRef = useRef();
-
 	const availableCssClasses = useSelector((state) => {
 		const layoutData = state.layoutData;
 

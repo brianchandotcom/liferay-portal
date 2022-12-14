@@ -142,22 +142,18 @@ public class ObjectEntryOpenAPIResourceImpl
 			HttpServletRequest httpServletRequest, String type, UriInfo uriInfo)
 		throws Exception {
 
-		return _openAPIResource.getOpenAPI(
-			new ObjectEntryOpenAPIContributor(
-				_bundleContext, _dtoConverterRegistry,
-				_objectActionLocalService, _objectDefinition,
-				_objectDefinitionLocalService, this,
-				_objectRelationshipLocalService, _openAPIResource,
-				_systemObjectDefinitionMetadataRegistry),
-			_getOpenAPISchemaFilter(_objectDefinition),
-			new HashSet<Class<?>>() {
-				{
-					add(ObjectEntryRelatedObjectsResourceImpl.class);
-					add(ObjectEntryResourceImpl.class);
-					add(OpenAPIResourceImpl.class);
-				}
-			},
-			type, uriInfo);
+		return _getOpenAPI(true, type, uriInfo);
+	}
+
+	@Override
+	public Map<String, Schema> getSchemas() throws Exception {
+		Response response = _getOpenAPI(false, "json", null);
+
+		OpenAPI openAPI = (OpenAPI)response.getEntity();
+
+		Components components = openAPI.getComponents();
+
+		return components.getSchemas();
 	}
 
 	private DTOProperty _getDTOProperty(ObjectField objectField) {
@@ -208,6 +204,28 @@ public class ObjectEntryOpenAPIResourceImpl
 				setRequired(objectField.isRequired());
 			}
 		};
+	}
+
+	private Response _getOpenAPI(
+			boolean addRelatedSchemas, String type, UriInfo uriInfo)
+		throws Exception {
+
+		return _openAPIResource.getOpenAPI(
+			new ObjectEntryOpenAPIContributor(
+				addRelatedSchemas, _bundleContext, _dtoConverterRegistry,
+				_objectActionLocalService, _objectDefinition,
+				_objectDefinitionLocalService, this,
+				_objectRelationshipLocalService, _openAPIResource,
+				_systemObjectDefinitionMetadataRegistry),
+			_getOpenAPISchemaFilter(_objectDefinition),
+			new HashSet<Class<?>>() {
+				{
+					add(ObjectEntryRelatedObjectsResourceImpl.class);
+					add(ObjectEntryResourceImpl.class);
+					add(OpenAPIResourceImpl.class);
+				}
+			},
+			type, uriInfo);
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(

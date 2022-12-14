@@ -59,7 +59,8 @@ import org.osgi.framework.BundleContext;
 public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 	public ObjectEntryOpenAPIContributor(
-		BundleContext bundleContext, DTOConverterRegistry dtoConverterRegistry,
+		boolean addRelatedSchemas, BundleContext bundleContext,
+		DTOConverterRegistry dtoConverterRegistry,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -69,6 +70,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		SystemObjectDefinitionMetadataRegistry
 			systemObjectDefinitionMetadataRegistry) {
 
+		_addRelatedSchemas = addRelatedSchemas;
 		_bundleContext = bundleContext;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinition = objectDefinition;
@@ -121,7 +123,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 						String relatedSchemaName = getSchemaName(
 							relatedObjectDefinition);
 
-						if (uriInfo != null) {
+						if (_addRelatedSchemas) {
 							_addObjectRelationshipSchema(
 								relatedObjectDefinition, openAPI,
 								relatedSchemaName);
@@ -204,20 +206,19 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			return;
 		}
 
-		OpenAPI sourceOpenAPI;
+		Map<String, Schema> sourceSchemas;
 
 		if (objectDefinition.isSystem()) {
-			sourceOpenAPI = OpenAPIContributorUtil.getSystemObjectOpenAPI(
+			sourceSchemas = OpenAPIContributorUtil.getSystemObjectSchemas(
 				_bundleContext, getExternalDTOClassName(objectDefinition),
 				_openAPIResource);
 		}
 		else {
-			sourceOpenAPI = OpenAPIContributorUtil.getObjectEntryOpenAPI(
-				_objectEntryOpenAPIResource);
+			sourceSchemas = _objectEntryOpenAPIResource.getSchemas();
 		}
 
 		OpenAPIContributorUtil.copySchemas(
-			schemaName, sourceOpenAPI, objectDefinition.isSystem(), openAPI);
+			schemaName, sourceSchemas, objectDefinition.isSystem(), openAPI);
 	}
 
 	private PathItem _createObjectActionPathItem(
@@ -459,6 +460,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return relatedObjectDefinitionsMap;
 	}
 
+	private final boolean _addRelatedSchemas;
 	private final BundleContext _bundleContext;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinition _objectDefinition;

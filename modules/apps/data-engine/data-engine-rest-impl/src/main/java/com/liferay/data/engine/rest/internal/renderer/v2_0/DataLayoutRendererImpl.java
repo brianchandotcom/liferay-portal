@@ -65,11 +65,14 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
+		long groupId = ParamUtil.getLong(
+			dataLayoutRendererContext.getHttpServletRequest(), "groupId",
+			ddmStructure.getGroupId());
+
 		return _ddmFormRenderer.render(
 			ddmForm, ddmStructureLayout.getDDMFormLayout(),
 			_toDDMFormRenderingContext(
-				dataLayoutId, dataLayoutRendererContext, ddmForm,
-				ddmStructure.getGroupId()));
+				dataLayoutId, dataLayoutRendererContext, ddmForm, groupId));
 	}
 
 	private DDMFormRenderingContext _toDDMFormRenderingContext(

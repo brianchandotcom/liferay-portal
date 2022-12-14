@@ -16,7 +16,6 @@ package com.liferay.fragment.internal.contributor;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistration;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
@@ -43,7 +42,6 @@ import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -273,20 +271,17 @@ public class FragmentCollectionContributorRegistryImpl
 		private FragmentCollectionBag(
 			FragmentCollectionContributor fragmentCollectionContributor,
 			Map<String, FragmentComposition> fragmentCompostions,
-			Map<String, FragmentEntry> fragmentEntries,
-			ServiceRegistration<?> serviceRegistration) {
+			Map<String, FragmentEntry> fragmentEntries) {
 
 			_fragmentCollectionContributor = fragmentCollectionContributor;
 			_fragmentCompostions = fragmentCompostions;
 			_fragmentEntries = fragmentEntries;
-			_serviceRegistration = serviceRegistration;
 		}
 
 		private final FragmentCollectionContributor
 			_fragmentCollectionContributor;
 		private final Map<String, FragmentComposition> _fragmentCompostions;
 		private final Map<String, FragmentEntry> _fragmentEntries;
-		private final ServiceRegistration<?> _serviceRegistration;
 
 	}
 
@@ -331,15 +326,7 @@ public class FragmentCollectionContributorRegistryImpl
 
 			return new FragmentCollectionBag(
 				fragmentCollectionContributor, fragmentCompositions,
-				fragmentEntries,
-				_bundleContext.registerService(
-					FragmentCollectionContributorRegistration.class,
-					new FragmentCollectionContributorRegistration() {
-					},
-					MapUtil.singletonDictionary(
-						"fragment.collection.key",
-						serviceReference.getProperty(
-							"fragment.collection.key"))));
+				fragmentEntries);
 		}
 
 		@Override
@@ -352,11 +339,6 @@ public class FragmentCollectionContributorRegistryImpl
 		public void removedService(
 			ServiceReference<FragmentCollectionContributor> serviceReference,
 			FragmentCollectionBag fragmentCollectionBag) {
-
-			ServiceRegistration<?> serviceRegistration =
-				fragmentCollectionBag._serviceRegistration;
-
-			serviceRegistration.unregister();
 
 			_bundleContext.ungetService(serviceReference);
 		}

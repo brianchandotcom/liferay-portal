@@ -1618,8 +1618,15 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<property name="functional.test.type" value="@{functional.test.type}" />
 
+			<get-testcase-property property.name="ci.retries.disabled" />
+
 			<condition else="0" property="functional.batch.retry.count" value="1">
-				<matches pattern="^[\w\.]+#[\w]+$" string="${test.class}" />
+				<and>
+					<matches pattern="^[\w\.]+#[\w]+$" string="${test.class}" />
+					<not>
+						<equals arg1="${ci.retries.disabled}" arg2="true" />
+					</not>
+				</and>
 			</condition>
 
 			<retry retrycount="${functional.batch.retry.count}">

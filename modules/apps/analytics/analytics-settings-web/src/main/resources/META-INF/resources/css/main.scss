@@ -64,3 +64,12 @@
 	right: 0;
 	top: 0;
 }
+
+.table-autofit td,
+.table-autofit th {
+	width: auto;
+}
+
+.table thead tr td {
+	width: 40px;
+}

@@ -3839,6 +3839,15 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
+		if (!(contains("${testName}", "74"))) {
+			AssertClick(
+				key_pageName = "Documents and Media",
+				locator1 = "Home#PAGE",
+				value1 = "Documents and Media");
+		}
+
+		LiferayEvent.waitForPortletReady();
+
 		DMDocument.viewPG(dmDocumentTitle = "Document doc Title");
 
 		User.logoutAndLoginPG(

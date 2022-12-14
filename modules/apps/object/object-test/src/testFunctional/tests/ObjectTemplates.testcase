@@ -469,7 +469,8 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Field Picklist",
 			fieldPicklist = "Custom Picklist",
-			fieldType = "Picklist");
+			fieldType = "Picklist",
+			isMandatory = "true");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject149243");
 
@@ -478,6 +479,8 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject149243");
 
 		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Item Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject149243");
 
 		InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "guest");
 

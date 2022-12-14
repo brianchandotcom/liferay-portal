@@ -66,6 +66,18 @@ public class ListTypeDefinitionResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLGetListTypeDefinitionByExternalReferenceCode() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeDefinitionByExternalReferenceCodeNotFound() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLGetListTypeDefinitionNotFound() {
 	}
 
@@ -113,6 +125,14 @@ public class ListTypeDefinitionResourceTest
 
 	@Override
 	protected ListTypeDefinition
+			testGetListTypeDefinitionByExternalReferenceCode_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
+	protected ListTypeDefinition
 			testGetListTypeDefinitionsPage_addListTypeDefinition(
 				ListTypeDefinition listTypeDefinition)
 		throws Exception {
@@ -148,6 +168,22 @@ public class ListTypeDefinitionResourceTest
 	@Override
 	protected ListTypeDefinition
 			testPutListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testPutListTypeDefinitionByExternalReferenceCode_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
+	protected ListTypeDefinition
+			testPutListTypeDefinitionByExternalReferenceCode_createListTypeDefinition()
 		throws Exception {
 
 		return _addListTypeDefinition(randomListTypeDefinition());

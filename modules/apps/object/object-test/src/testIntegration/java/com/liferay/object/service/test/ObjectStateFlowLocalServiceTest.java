@@ -285,12 +285,12 @@ public class ObjectStateFlowLocalServiceTest {
 					RandomTestUtil.randomString()));
 
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			listTypeDefinition.getListTypeDefinitionId(),
 			RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			listTypeDefinition.getListTypeDefinitionId(),
 			RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
@@ -363,7 +363,7 @@ public class ObjectStateFlowLocalServiceTest {
 
 	private ListTypeEntry _addListTypeEntry(String key) throws Exception {
 		return _listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), key,
 			LocalizedMapUtil.getLocalizedMap(key));
 	}

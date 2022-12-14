@@ -17,12 +17,10 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import normalizeDropdownItems from '../utils/normalizeDropdownItems';
-
 export default function ActionsDropdown({actions}) {
 	return actions?.length ? (
 		<ClayDropDownWithItems
-			items={normalizeDropdownItems(actions)}
+			items={actions}
 			trigger={
 				<ClayButtonWithIcon
 					displayType="unstyled"

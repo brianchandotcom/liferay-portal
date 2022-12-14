@@ -127,6 +127,31 @@ function ItemConfigurationContent({
 
 	return (
 		<div className="page-editor__page-structure__item-configuration">
+			{activeItemType === ITEM_TYPES.editable && (
+				<SidebarPanelHeader
+					iconLeft={
+						<ClayButton
+							aria-label={Liferay.Language.get(
+								'back-to-parent-configuration'
+							)}
+							borderless
+							className="mb-0 mr-3 p-0"
+							displayType="secondary"
+							onClick={() => selectItem(activeItem.parentId)}
+							size="sm"
+							title={Liferay.Language.get(
+								'back-to-parent-configuration'
+							)}
+						>
+							<ClayIcon symbol="angle-left" />
+						</ClayButton>
+					}
+					showCloseButton={false}
+				>
+					{activeItem.editableId}
+				</SidebarPanelHeader>
+			)}
+
 			{!panels.length ? (
 				<ClayAlert
 					className="m-3"
@@ -139,33 +164,6 @@ function ItemConfigurationContent({
 				</ClayAlert>
 			) : (
 				<>
-					{activeItemType === ITEM_TYPES.editable && (
-						<SidebarPanelHeader
-							iconLeft={
-								<ClayButton
-									aria-label={Liferay.Language.get(
-										'back-to-parent-configuration'
-									)}
-									borderless
-									className="mb-0 mr-3 p-0"
-									displayType="secondary"
-									onClick={() =>
-										selectItem(activeItem.parentId)
-									}
-									size="sm"
-									title={Liferay.Language.get(
-										'back-to-parent-configuration'
-									)}
-								>
-									<ClayIcon symbol="angle-left" />
-								</ClayButton>
-							}
-							showCloseButton={false}
-						>
-							{activeItem.editableId}
-						</SidebarPanelHeader>
-					)}
-
 					<ClayTabs
 						activation="automatic"
 						active={panels.findIndex(

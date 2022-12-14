@@ -21,14 +21,14 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualHost;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Truong
@@ -52,24 +53,24 @@ public class RobotsStrutsAction implements StrutsAction {
 
 		try {
 			String host = GetterUtil.getString(
-				PortalUtil.getForwardedHost(httpServletRequest));
+				_portal.getForwardedHost(httpServletRequest));
 
 			LayoutSet layoutSet = null;
 
-			VirtualHost virtualHost =
-				VirtualHostLocalServiceUtil.fetchVirtualHost(host);
+			VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
+				host);
 
 			if ((virtualHost != null) && (virtualHost.getLayoutSetId() > 0)) {
-				layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(host);
+				layoutSet = _layoutSetLocalService.fetchLayoutSet(host);
 			}
 			else {
-				Company company = PortalUtil.getCompany(httpServletRequest);
+				Company company = _portal.getCompany(httpServletRequest);
 
 				if (host.equals(company.getVirtualHostname()) &&
 					Validator.isNotNull(
 						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
 
-					Group defaultGroup = GroupLocalServiceUtil.getGroup(
+					Group defaultGroup = _groupLocalService.getGroup(
 						company.getCompanyId(),
 						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
@@ -89,7 +90,7 @@ public class RobotsStrutsAction implements StrutsAction {
 				_log.warn(exception);
 			}
 
-			PortalUtil.sendError(
+			_portal.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception,
 				httpServletRequest, httpServletResponse);
 		}
@@ -99,5 +100,17 @@ public class RobotsStrutsAction implements StrutsAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RobotsStrutsAction.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

@@ -98,24 +98,25 @@ definition {
 			Navigator.gotoPage(pageName = "Clay Sample Test Page");
 		}
 
-		task ("When alert contains status icon and keyword Then keyword must be semi-bold") {
-			Click(
-				key_text = "Success Submit",
-				locator1 = "Button#ANY");
+		task ("When alert contains status icon and keyword") {
+			AssertTextEquals(
+				locator1 = "ClayAlertToast#ALERT_STATIC",
+				key_alertType = "success",
+				value1 = "Success:This is a success message.");
 
+			AssertElementPresent(
+				locator1 = "ClayAlertToast#ALERT_STATIC_ICON",
+				key_alertType = "success",
+				key_icon = "check-circle-full");
+		}
+
+		task ("Then keyword must be semi-bold") {
 			AssertCssValue(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
+				locator1 = "ClayAlertToast#ALERT_STATIC",
+				key_alertType = "success",
 				locator2 = "font-weight",
-				value1 = "400");
-
-			Click(
-				key_text = "Fail Submit",
-				locator1 = "Button#ANY");
-
-			AssertCssValue(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				locator2 = "font-weight",
-				value1 = "400");
+				value1 = "400"
+			);
 		}
 	}
 

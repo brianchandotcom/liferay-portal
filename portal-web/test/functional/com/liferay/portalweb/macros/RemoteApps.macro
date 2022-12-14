@@ -240,7 +240,7 @@ definition {
 			ApplicationsMenu.gotoPortlet(
 				category = "Custom Apps",
 				panel = "Applications",
-				portlet = "Remote Apps");
+				portlet = "Client Extensions");
 		}
 	}
 

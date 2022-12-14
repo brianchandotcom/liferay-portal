@@ -102,7 +102,7 @@ public class ListTypeEntryLocalServiceTest {
 
 		ListTypeEntry listTypeEntry =
 			ListTypeEntryLocalServiceUtil.addListTypeEntry(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				listTypeDefinition.getListTypeDefinitionId(), "test",
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
@@ -129,7 +129,7 @@ public class ListTypeEntryLocalServiceTest {
 
 		try {
 			listTypeEntry = ListTypeEntryLocalServiceUtil.addListTypeEntry(
-				TestPropsValues.getUserId(), listTypeDefinitionId, key,
+				null, TestPropsValues.getUserId(), listTypeDefinitionId, key,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 		}

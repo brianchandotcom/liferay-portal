@@ -95,7 +95,7 @@ public class ListTypeDefinitionLocalServiceTest {
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				listTypeDefinition.getListTypeDefinitionId(),
 				StringUtil.randomId(),
 				Collections.singletonMap(

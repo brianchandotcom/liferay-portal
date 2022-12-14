@@ -328,7 +328,8 @@ const PoliciesTable = () => {
 					);
 				})
 			);
-		} else {
+		}
+		else {
 			setFilterProductCheck(
 				filterProductCheck.filter((productName: string) => {
 					return productName !== `'${currentFilterName}'`;
@@ -507,7 +508,8 @@ const PoliciesTable = () => {
 						}
 						if (renewalDue === 0) {
 							return 'Due Today';
-						} else {
+						}
+						else {
 							return renewalDue;
 						}
 					};

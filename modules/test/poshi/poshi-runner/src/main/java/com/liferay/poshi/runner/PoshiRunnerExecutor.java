@@ -158,6 +158,20 @@ public class PoshiRunnerExecutor {
 		return conditionalValue;
 	}
 
+	public void evaluateLoopElement(Element element) {
+		if (_inLoop) {
+			String elementName = element.getName();
+
+			if (elementName.equals("break")) {
+				_hasBreak = true;
+			}
+
+			if (elementName.equals("continue")) {
+				_hasContinue = true;
+			}
+		}
+	}
+
 	public boolean isOcularFunction(Element functionCommandElement) {
 		List<Element> executeElements = functionCommandElement.elements(
 			"execute");
@@ -217,7 +231,7 @@ public class PoshiRunnerExecutor {
 			else if (childElementName.equals("break") ||
 					 childElementName.equals("continue")) {
 
-				runLoopElement(childElement);
+				evaluateLoopElement(childElement);
 			}
 			else if (childElementName.equals("if")) {
 				runIfElement(childElement);
@@ -691,20 +705,6 @@ public class PoshiRunnerExecutor {
 			parseElement(elseElement);
 
 			_poshiLogger.updateStatus(elseElement, "pass");
-		}
-	}
-
-	public void runLoopElement(Element element) {
-		if (_inLoop) {
-			String elementName = element.getName();
-
-			if (elementName.equals("break")) {
-				_hasBreak = true;
-			}
-
-			if (elementName.equals("continue")) {
-				_hasContinue = true;
-			}
 		}
 	}
 

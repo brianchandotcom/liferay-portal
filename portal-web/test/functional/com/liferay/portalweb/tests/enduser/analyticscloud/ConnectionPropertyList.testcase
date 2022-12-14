@@ -102,4 +102,58 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-12019 | Automation ID: LRAC-12583 | Test Summary: Check that the property list is sorted by creation date by default"
+	@priority = "3"
+	test CheckPropertyListSortedByCreationDateByDefault {
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			var autoGeneratePropertyName = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Create a new property from the list of available properties") {
+			ACDXPSettings.createNewProperty(newPropertyName = "AC Property Sort Default 1");
+
+			var propertyName1 = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Check that the property appears at the top of the list") {
+			TestUtils.assertNotEquals(
+				actual = "${propertyName1}",
+				expected = "${autoGeneratePropertyName}");
+		}
+
+		task ("Create a new property from the list of available properties") {
+			ACDXPSettings.createNewProperty(newPropertyName = "AC Property Sort Default 2");
+
+			var propertyName2 = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Check that the property appears at the top of the list") {
+			TestUtils.assertNotEquals(
+				actual = "${propertyName2}",
+				expected = "${propertyName1}");
+		}
+
+		task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Create a new property from the list of available properties") {
+			ACDXPSettings.createNewProperty(newPropertyName = "AC Property Sort Default 3");
+
+			var propertyName3 = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Check that the property appears at the top of the list") {
+			TestUtils.assertNotEquals(
+				actual = "${propertyName3}",
+				expected = "${propertyName2}");
+		}
+	}
+
 }

@@ -33,6 +33,8 @@ const DonutChart = ({
 			);
 
 			titleElement.textContent = titleChart;
+			titleElement.classList.add('font-weight-bold');
+			titleElement.style.fontSize = '16px';
 		}
 	}, [titleChart]);
 
@@ -52,13 +54,14 @@ const DonutChart = ({
 	return (
 		<div className="align-items-stretch d-flex">
 			<div className="d-flex px-4">
-				<div className="d-flex justify-content-start mdf-request-chart">
+				<div className="d-flex justify-content-start">
 					<ClayChart
+						className="dashboard-donut-chart"
 						data={chartData}
 						donut={{
 							label: {show: showLabel},
 							title: '0',
-							width: 65,
+							width: 35,
 						}}
 						legend={{show: showLegend}}
 						ref={chartRef}
@@ -68,7 +71,7 @@ const DonutChart = ({
 								const title = data[0].id;
 								const value = data[0].value;
 
-								return `<div class="donut-chart-tooltip bg-neutral-0 d-flex font-weight-bold p-2 rounded-sm text-capitalize"><span class="d-flex mr-2 w-100 text-capitalize">${title}</span> $${currencyFormat(
+								return `<div class="bg-neutral-0 d-flex font-weight-bold p-2 rounded-sm text-capitalize"><span class="d-flex mr-2 w-100 text-capitalize">${title}</span> $${currencyFormat(
 									value
 								)}</div>`;
 							},
@@ -78,8 +81,8 @@ const DonutChart = ({
 					<LegendElement />
 
 					{!hasLegend && (
-						<div className="d-flex flex-column justify-content-between pb-4 pl-4">
-							<div className="d-flex flex-column flex-wrap h-100 justify-content-between mb-1">
+						<div className="d-flex flex-column justify-content-around pb-4 pl-4">
+							<div className="d-flex flex-column flex-wrap h-100 justify-content-around mb-1">
 								{legendItems?.map((item, index) => {
 									return (
 										<div key={index}>

@@ -27,7 +27,6 @@ const colors = {
 
 export default function () {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
-
 	const [titleChart, setTitleChart] = useState('');
 
 	const getMDFRequests = async () => {
@@ -46,7 +45,14 @@ export default function () {
 			const mdfRequests = await response.json();
 
 			getChartColumns(mdfRequests, setColumnsMDFChart, setTitleChart);
+
+			return;
 		}
+
+		Liferay.Util.openToast({
+			message: 'An unexpected error occured.',
+			type: 'danger',
+		});
 	};
 
 	useEffect(() => {

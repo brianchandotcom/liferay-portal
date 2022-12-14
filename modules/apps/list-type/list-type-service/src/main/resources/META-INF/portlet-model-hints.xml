@@ -16,6 +16,7 @@
 	<model name="com.liferay.list.type.model.ListTypeEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="listTypeEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

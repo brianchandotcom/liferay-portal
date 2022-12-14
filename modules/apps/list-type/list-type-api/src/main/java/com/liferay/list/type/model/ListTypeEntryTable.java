@@ -36,6 +36,10 @@ public class ListTypeEntryTable extends BaseTable<ListTypeEntryTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ListTypeEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ListTypeEntryTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ListTypeEntryTable, Long> listTypeEntryId =
 		createColumn(
 			"listTypeEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

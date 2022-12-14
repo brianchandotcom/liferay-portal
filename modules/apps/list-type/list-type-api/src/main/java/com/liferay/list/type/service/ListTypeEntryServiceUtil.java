@@ -40,12 +40,12 @@ public class ListTypeEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.list.type.service.impl.ListTypeEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ListTypeEntry addListTypeEntry(
-			long listTypeDefinitionId, String key,
+			String externalReferenceCode, long listTypeDefinitionId, String key,
 			Map<java.util.Locale, String> nameMap)
 		throws PortalException {
 
 		return getService().addListTypeEntry(
-			listTypeDefinitionId, key, nameMap);
+			externalReferenceCode, listTypeDefinitionId, key, nameMap);
 	}
 
 	public static ListTypeEntry deleteListTypeEntry(long listTypeEntryId)
@@ -84,10 +84,12 @@ public class ListTypeEntryServiceUtil {
 	}
 
 	public static ListTypeEntry updateListTypeEntry(
-			long listTypeEntryId, Map<java.util.Locale, String> nameMap)
+			String externalReferenceCode, long listTypeEntryId,
+			Map<java.util.Locale, String> nameMap)
 		throws PortalException {
 
-		return getService().updateListTypeEntry(listTypeEntryId, nameMap);
+		return getService().updateListTypeEntry(
+			externalReferenceCode, listTypeEntryId, nameMap);
 	}
 
 	public static ListTypeEntryService getService() {

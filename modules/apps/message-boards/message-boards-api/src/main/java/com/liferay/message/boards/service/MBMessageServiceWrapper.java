@@ -336,6 +336,15 @@ public class MBMessageServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBMessage> getSiteUserMessageBoardMessagesActivity(
+			long userId, long siteId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageService.getSiteUserMessageBoardMessagesActivity(
+			userId, siteId, start, end);
+	}
+
+	@Override
 	public String[] getTempAttachmentNames(long groupId, String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

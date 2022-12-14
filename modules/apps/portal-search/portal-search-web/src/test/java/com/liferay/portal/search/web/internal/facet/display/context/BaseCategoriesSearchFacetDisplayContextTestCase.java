@@ -250,11 +250,10 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
-		long[] assetCategoryIds = {1L, 2L, 4L, 3L};
-		int[] frequencies = {6, 5, 4, 3};
+		long[] assetCategoryIds = {3L, 4L, 2L, 1L};
 
 		List<TermCollector> termCollectors = _getTermCollectors(
-			assetCategoryIds, frequencies);
+			assetCategoryIds, new int[] {6, 5, 5, 4});
 
 		_setUpMultipleAssetCategory(assetCategoryIds);
 
@@ -271,34 +270,16 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			"categoryId3:3|categoryId4:4|categoryId2:5|categoryId1:6",
-			nameFrequencyString);
-
-		termCollectors = _getTermCollectors(
-			new long[] {3L, 4L, 2L, 1L}, new int[] {6, 5, 5, 4});
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-			StringPool.BLANK, "count:asc");
-
-		bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
-
-		Assert.assertEquals(
 			"categoryId1:4|categoryId2:5|categoryId4:5|categoryId3:6",
 			nameFrequencyString);
 	}
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
-		long[] assetCategoryIds = {1L, 2L, 4L, 3L};
-		int[] frequencies = {6, 5, 4, 3};
+		long[] assetCategoryIds = {3L, 4L, 2L, 1L};
 
 		List<TermCollector> termCollectors = _getTermCollectors(
-			assetCategoryIds, frequencies);
+			assetCategoryIds, new int[] {6, 5, 5, 4});
 
 		_setUpMultipleAssetCategory(assetCategoryIds);
 
@@ -315,30 +296,13 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			"categoryId1:6|categoryId2:5|categoryId4:4|categoryId3:3",
-			nameFrequencyString);
-
-		termCollectors = _getTermCollectors(
-			new long[] {3L, 4L, 2L, 1L}, new int[] {6, 5, 5, 4});
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-			StringPool.BLANK, "count:desc");
-
-		bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
-
-		Assert.assertEquals(
 			"categoryId3:6|categoryId2:5|categoryId4:5|categoryId1:4",
 			nameFrequencyString);
 	}
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
-		long[] assetCategoryIds = {2L, 4L, 1L, 3L};
+		long[] assetCategoryIds = {2L, 1L, 2L, 3L};
 
 		List<TermCollector> termCollectors = _getTermCollectors(
 			assetCategoryIds);
@@ -358,29 +322,13 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			"categoryId1:3|categoryId2:1|categoryId3:4|categoryId4:2",
-			nameFrequencyString);
-
-		termCollectors = _getTermCollectors(2L, 1L, 2L, 3L);
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-			StringPool.BLANK, "key:asc");
-
-		bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
-
-		Assert.assertEquals(
 			"categoryId1:2|categoryId2:3|categoryId2:1|categoryId3:4",
 			nameFrequencyString);
 	}
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
-		long[] assetCategoryIds = {2L, 4L, 1L, 3L};
+		long[] assetCategoryIds = {2L, 1L, 2L, 3L};
 
 		List<TermCollector> termCollectors = _getTermCollectors(
 			assetCategoryIds);
@@ -398,22 +346,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 		String nameFrequencyString = _buildNameFrequencyString(
 			bucketDisplayContexts);
-
-		Assert.assertEquals(
-			"categoryId4:2|categoryId3:4|categoryId2:1|categoryId1:3",
-			nameFrequencyString);
-
-		termCollectors = _getTermCollectors(2L, 1L, 2L, 3L);
-
-		_setUpMultipleTermCollectors(termCollectors);
-
-		assetCategoriesSearchFacetDisplayContext = createDisplayContext(
-			StringPool.BLANK, "key:desc");
-
-		bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
 			"categoryId3:4|categoryId2:3|categoryId2:1|categoryId1:2",

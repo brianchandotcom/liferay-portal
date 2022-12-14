@@ -14,6 +14,7 @@
 
 package com.liferay.cookies.internal.manager;
 
+import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.UnsupportedCookieException;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -51,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Olivér Kecskeméty
  */
 @Component(
-	configurationPid = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration",
+	configurationPid = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration",
 	property = {
 		"cookies.functional=" + CookiesConstants.NAME_GUEST_LANGUAGE_ID,
 		"cookies.necessary=" + CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
@@ -378,7 +381,41 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 
 		if (Validator.isNull(consentCookieValue)) {
-			return true;
+			try {
+				CookiesPreferenceHandlingConfiguration
+					cookiesPreferenceHandlingConfiguration =
+						_configurationProvider.getSystemConfiguration(
+							CookiesPreferenceHandlingConfiguration.class);
+
+				if (httpServletRequest != null) {
+					long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+					if (groupId > 0) {
+						cookiesPreferenceHandlingConfiguration =
+							_configurationProvider.getGroupConfiguration(
+								CookiesPreferenceHandlingConfiguration.class,
+								groupId);
+					}
+					else {
+						long companyId = _portal.getCompanyId(
+							httpServletRequest);
+
+						if (companyId > 0) {
+							cookiesPreferenceHandlingConfiguration =
+								_configurationProvider.getCompanyConfiguration(
+									CookiesPreferenceHandlingConfiguration.
+										class,
+									companyId);
+						}
+					}
+				}
+
+				return !cookiesPreferenceHandlingConfiguration.
+					explicitConsentMode();
+			}
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
+			}
 		}
 
 		return GetterUtil.getBoolean(consentCookieValue);

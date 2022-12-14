@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.layoutconfiguration.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.LayoutTemplate;
-import com.liferay.portal.kernel.template.TemplateResource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,12 +34,12 @@ public class RuntimePageUtil {
 	public static StringBundler getProcessedTemplate(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId,
-			TemplateResource templateResource)
+			String templateId, String content)
 		throws Exception {
 
 		return _runtimePage.getProcessedTemplate(
-			httpServletRequest, httpServletResponse, portletId,
-			templateResource);
+			httpServletRequest, httpServletResponse, portletId, templateId,
+			content);
 	}
 
 	public static RuntimePage getRuntimePage() {
@@ -50,23 +49,23 @@ public class RuntimePageUtil {
 	public static void processTemplate(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId,
-			TemplateResource templateResource)
+			String templateId, String content)
 		throws Exception {
 
 		_runtimePage.processTemplate(
-			httpServletRequest, httpServletResponse, portletId,
-			templateResource);
+			httpServletRequest, httpServletResponse, portletId, templateId,
+			content);
 	}
 
 	public static void processTemplate(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId,
-			TemplateResource templateResource, String langType)
+			String templateId, String content, String langType)
 		throws Exception {
 
 		_runtimePage.processTemplate(
-			httpServletRequest, httpServletResponse, portletId,
-			templateResource, langType);
+			httpServletRequest, httpServletResponse, portletId, templateId,
+			content, langType);
 	}
 
 	public void setRuntimePage(RuntimePage runtimePage) {

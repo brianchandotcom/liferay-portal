@@ -195,6 +195,10 @@ definition {
 			checkboxName = "Limit to One Submission per User",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
+		AssertChecked.assertCheckedNotVisible(
+			checkboxName = "Limit to One Submission per User",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
 		Button.clickDone();
 	}
 

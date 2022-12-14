@@ -327,5 +327,11 @@ function getDefaultFragmentSetName(fragmentCollections) {
 		)
 	);
 
-	return `${Liferay.Language.get('untitled-set')} ${untitledSets.length + 1}`;
+	if (untitledSets.length) {
+		return `${Liferay.Language.get('untitled-set')} ${
+			untitledSets.length + 1
+		}`;
+	}
+
+	return Liferay.Language.get('untitled-set');
 }

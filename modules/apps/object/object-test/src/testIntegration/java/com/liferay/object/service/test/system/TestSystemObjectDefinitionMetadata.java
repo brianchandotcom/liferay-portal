@@ -17,7 +17,6 @@ package com.liferay.object.service.test.system;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
-import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.CharPool;
@@ -30,12 +29,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Feliphe Marinho
  */
-@Component(service = SystemObjectDefinitionMetadata.class)
 public class TestSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 

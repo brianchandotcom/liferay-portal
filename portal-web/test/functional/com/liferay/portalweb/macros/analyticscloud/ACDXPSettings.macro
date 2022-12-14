@@ -80,7 +80,7 @@ definition {
 
 	macro createNewProperty {
 		Click(
-			ariaLabel = "Create New Property",
+			ariaLabel = "Create a New Property",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		Type(
@@ -323,6 +323,10 @@ definition {
 		var key_itemValue = "${itemValue}";
 
 		AssertElementPresent(locator1 = "ACDXPSettings#VIEW_LIST_ITEM");
+	}
+
+	macro cancelWizardConfiguration {
+		Click(locator1 = "Button#CANCEL");
 	}
 
 }

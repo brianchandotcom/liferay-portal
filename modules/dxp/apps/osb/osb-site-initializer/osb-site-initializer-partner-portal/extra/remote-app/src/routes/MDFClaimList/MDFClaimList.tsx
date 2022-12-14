@@ -231,9 +231,9 @@ const MDFClaimList = () => {
 						<CSVLink
 							className="btn btn-secondary mr-2"
 							data={data.items}
-							filename="mdf-claim.csv"
+							filename="MDF Claim.csv"
 						>
-							Export Claim Report
+							Export MDF Claim
 						</CSVLink>
 					)}
 				</div>

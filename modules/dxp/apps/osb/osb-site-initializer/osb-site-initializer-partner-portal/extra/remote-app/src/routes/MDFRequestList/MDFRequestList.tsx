@@ -179,7 +179,7 @@ const MDFRequestList = () => {
 						<CSVLink
 							className="btn btn-secondary mr-2"
 							data={data.listItems.items}
-							filename="mdf-request.csv"
+							filename="MDF Requests.csv"
 						>
 							Export MDF Report
 						</CSVLink>

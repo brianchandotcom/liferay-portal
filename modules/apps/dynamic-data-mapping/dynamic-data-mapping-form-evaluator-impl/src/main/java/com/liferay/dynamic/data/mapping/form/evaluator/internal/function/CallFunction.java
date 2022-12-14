@@ -218,7 +218,11 @@ public class CallFunction
 						value -> new BigDecimal(value.toString()));
 				}
 
-				_setDDMFormFieldValue(ddmFormFieldName, valueOptional.get());
+				Object value = valueOptional.get();
+
+				if (Validator.isNotNull(value)) {
+					_setDDMFormFieldValue(ddmFormFieldName, value);
+				}
 			}
 		}
 	}

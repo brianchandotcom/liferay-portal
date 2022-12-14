@@ -1,7 +1,6 @@
 @component-name = "portal-web-forms-and-data-lists"
 definition {
 
-	property custom.properties = "minifier.enabled=true";
 	property osgi.module.configuration.file.names = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details.config";
 	property osgi.module.configurations = "waitTimeout=\"15\"";
 	property portal.release = "true";

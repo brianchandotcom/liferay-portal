@@ -18,6 +18,8 @@ import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 
+import io.swagger.v3.oas.models.media.Schema;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -58,6 +60,9 @@ public interface OpenAPIResource {
 
 		return null;
 	}
+
+	public Map<String, Schema> getSchemas(Set<Class<?>> resourceClasses)
+		throws Exception;
 
 	public Response mergeOpenAPIs(
 		String path, String description,

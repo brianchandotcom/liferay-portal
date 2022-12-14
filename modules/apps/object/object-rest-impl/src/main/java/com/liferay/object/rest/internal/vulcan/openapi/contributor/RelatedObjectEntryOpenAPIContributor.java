@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -129,12 +130,16 @@ public class RelatedObjectEntryOpenAPIContributor
 			systemObjectDefinition, systemObjectRelationship);
 
 		String relatedSchemaName = getSchemaName(relatedObjectDefinition);
-		OpenAPI relatedOpenAPI = OpenAPIContributorUtil.getObjectEntryOpenAPI(
+
+		ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
 			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(
-				relatedObjectDefinition));
+				relatedObjectDefinition);
+
+		Map<String, Schema> relatedSchemas =
+			objectEntryOpenAPIResource.getSchemas();
 
 		OpenAPIContributorUtil.copySchemas(
-			relatedSchemaName, relatedOpenAPI,
+			relatedSchemaName, relatedSchemas,
 			relatedObjectDefinition.isSystem(), openAPI);
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =

@@ -124,16 +124,16 @@
 
 		<!-- Finder methods -->
 
+		<finder name="C_D_SNIV" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="deleted" />
+			<finder-column name="samlNameIdValue" />
+		</finder>
 		<finder name="C_U_D_SPEI" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 			<finder-column name="deleted" />
 			<finder-column name="samlPeerEntityId" />
-		</finder>
-		<finder name="C_D_SNIV" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="deleted" />
-			<finder-column name="samlNameIdValue" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="SamlSpAuthRequest" remote-service="false">

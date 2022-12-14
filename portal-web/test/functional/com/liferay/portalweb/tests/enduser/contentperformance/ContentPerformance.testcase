@@ -348,25 +348,25 @@ definition {
 		}
 
 		task ("Assert Title is present") {
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
 				pageName = "Content Page");
 		}
 
 		task ("Assert URL is present") {
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
 				value1 = "http://");
 		}
 
 		task ("Assert View Graph is present") {
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TOTAL_VIEWS",
 				value1 = "Total Views");
 		}
 
 		task ("Assert View Graph is present") {
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
 				value1 = "Traffic Channels");
 		}
@@ -397,7 +397,7 @@ definition {
 		task ("Open Content Performance and Assert") {
 			ContentPerformance.openContentPerformance();
 
-			AssertElementPresent(locator1 = "ContentPerformance#SELECT_DATE_RANGE");
+			AssertVisible(locator1 = "ContentPerformance#SELECT_DATE_RANGE");
 		}
 	}
 
@@ -418,7 +418,7 @@ definition {
 		}
 
 		task ("Check that graph is empty (grey/gray)") {
-			AssertElementPresent(
+			AssertVisible(
 				colorHex = "f1f2f5",
 				locator1 = "ContentPerformance#PIE_CHART_WITH_COLOR");
 		}
@@ -444,7 +444,7 @@ definition {
 		}
 
 		task ("Assert line equal 0") {
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentPerformance#NUMBER_VIEWS",
 				value1 = "0");
 		}
@@ -550,7 +550,7 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
 				value1 = "/pt/web/test-site-name");
 
-			AssertElementPresent(
+			AssertVisible(
 				locator1 = "ContentPerformance#NUMBER_VIEWS",
 				value1 = "0");
 		}

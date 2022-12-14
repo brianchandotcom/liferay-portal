@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tamas Molnar
  */
-@Component(immediate = true, service = CTDisplayRenderer.class)
+@Component(service = CTDisplayRenderer.class)
 public class EmailAddressCTDisplayRenderer
 	extends BaseCTDisplayRenderer<EmailAddress> {
 

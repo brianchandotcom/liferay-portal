@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UserTrackerUADTestHelper.class)
+@Component(service = UserTrackerUADTestHelper.class)
 public class UserTrackerUADTestHelper {
 
 	public UserTracker addUserTracker(long userId) throws Exception {

@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Víctor Galán Grande
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES,
 		"mvc.command.name=/portal_instances/add_instance"

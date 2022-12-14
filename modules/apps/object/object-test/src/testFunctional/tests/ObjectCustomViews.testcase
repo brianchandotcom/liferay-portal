@@ -386,6 +386,56 @@ definition {
 		}
 	}
 
+	@description = "LPS-166585 - Verify that it's possible to create a filter using the relationship field of the object"
+	@priority = "5"
+	test CanCreateFilterUsingRelationshipField {
+		property portal.acceptance = "true";
+
+		task ("Given: An object related to another object, in a One-to-Many relationship") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 166585",
+				objectName = "CustomObject166585",
+				pluralLabelName = "Custom Objects 166585");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject166585",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject166585");
+		}
+
+		task ("When: The user creates a filter") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 166585");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(filterBy = "Relationship");
+
+			Button.clickSave();
+
+			Refresh();
+		}
+
+		task ("Then: The relationship field can be selected as the filter") {
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.assertColumnPresent(columnName = "Relationship");
+		}
+	}
+
 	@description = "LPS-135394 - Verify it is possible to create a View"
 	@priority = "5"
 	test CanCreateView {
@@ -914,6 +964,68 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156800");
 
 			ObjectPortlet.viewEntry(entry = "Entry Test");
+		}
+	}
+
+	@description = "LPS-166587 - Verify that it's possible to edit a default filter column with the relationship field in the custom view"
+	@priority = "3"
+	test CanEditFilterWithRelationshipField {
+		task ("Given: An object related to another object, in a One-to-Many relationship and the relationship field as a Default Filter") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 166587",
+				objectName = "CustomObject166587",
+				pluralLabelName = "Custom Objects 166587");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject166587",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject166587");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 166587");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+		}
+
+		task ("When: The user selects the relationship field as a Column, on View Builder") {
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Relationship");
+
+			Button.clickSave();
+
+			Refresh();
+		}
+
+		task ("Then: The user is able to edit the Column Label") {
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.editSpecificColumn(columnName = "Relationship");
+
+			CreateObject.editLabel(labelName = "Relationship Edit");
+
+			Button.clickEdit();
+
+			Button.clickSave();
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.assertColumnLabelPresent(columnLabel = "Relationship Edit");
 		}
 	}
 
@@ -2518,56 +2630,6 @@ definition {
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No Results Found");
 
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "Sorry, no results were found.");
-	}
-
-	@description = "LPS-166585 - Verify that it's possible to create a filter using the relationship field of the object"
-	@priority = "5"
-	test CanCreateFilterUsingRelationshipField {
-		property portal.acceptance = "true";
-
-		task ("Given: An object related to another object, in a One-to-Many relationship") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 166585",
-				objectName = "CustomObject166585",
-				pluralLabelName = "Custom Objects 166585");
-
-			ObjectAdmin.addObjectRelationshipViaAPI(
-				objectName_1 = "User",
-				objectName_2 = "CustomObject166585",
-				relationshipLabel = "Relationship",
-				relationshipName = "relationship",
-				relationshipType = "oneToMany");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject166585");
-		}
-
-		task ("When: The user creates a filter") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 166585");
-
-			ObjectCustomViews.goToViewsTab();
-
-			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
-
-			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
-
-			ObjectCustomViews.goToFiltersTab();
-
-			ObjectCustomViews.addNewFilterViaUI(filterBy = "Relationship");
-
-			Button.clickSave();
-
-			Refresh();
-		}
-
-		task ("Then: The relationship field can be selected as the filter") {
-			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
-
-			ObjectCustomViews.goToFiltersTab();
-
-			ObjectCustomViews.assertColumnPresent(columnName = "Relationship");
-		}
 	}
 
 }

@@ -1,0 +1,24 @@
+{
+	"DBType": "String",
+	"businessType": "Aggregation",
+	"indexed": true,
+	"indexedAsKeyword": false,
+	"label": {
+		"en_US": "Total Claimed Request"
+	},
+	"name": "totalClaimedRequest",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]",
+	"objectFieldSettings": [
+		{
+			"name": "mdfRequestToMdfClaims",
+			"value": "totalClaimedRequest"
+		},
+		{
+			"name": "function",
+			"value": "SUM"
+		}
+	],
+	"required": false,
+	"state": false,
+	"system": false
+}

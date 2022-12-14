@@ -174,18 +174,6 @@
 			"name": "requestStatus",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Aggregation",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Total Claimed Request"
-			},
-			"name": "totalClaimedRequest",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"pluralLabel": {

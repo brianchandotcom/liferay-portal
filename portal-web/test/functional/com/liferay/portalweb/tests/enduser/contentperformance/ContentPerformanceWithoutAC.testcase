@@ -57,7 +57,9 @@ definition {
 		}
 
 		task ("Assert that 'Dont show me this again' button is displayed") {
-			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+			AssertVisible(
+				key_textValue = "Do not show me this again",
+				locator1 = "Sidebar#LINK");
 		}
 	}
 
@@ -69,7 +71,9 @@ definition {
 		}
 
 		task ("Assert that Dismiss buttons are displayed") {
-			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+			AssertVisible(
+				key_textValue = "Do not show me this again",
+				locator1 = "Sidebar#LINK");
 		}
 	}
 
@@ -81,7 +85,7 @@ definition {
 		}
 
 		task ("Click on the button") {
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+			ContentPerformance.clickDoNotShowMeThisAgain();
 		}
 
 		task ("Assert that the Content Performance panel button disappears") {
@@ -228,7 +232,9 @@ definition {
 		}
 
 		task ("Check if elements present") {
-			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+			AssertVisible(
+				key_textValue = "Do not show me this again",
+				locator1 = "Sidebar#LINK");
 		}
 	}
 
@@ -258,7 +264,9 @@ definition {
 		}
 
 		task ("Assert if button is not present and instructions are present") {
-			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+			AssertElementNotPresent(
+				key_textValue = "Do not show me this again",
+				locator1 = "Sidebar#LINK");
 
 			AssertElementPresent(locator1 = "ContentPerformance#INSTRUCTIONS_SYNC_AC");
 		}

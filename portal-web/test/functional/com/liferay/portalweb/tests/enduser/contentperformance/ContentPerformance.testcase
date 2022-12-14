@@ -430,7 +430,9 @@ definition {
 		task ("Open Content Performance and Assert if element is not present") {
 			ContentPerformance.openContentPerformance();
 
-			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
+			AssertElementNotPresent(
+				key_textValue = "Do not show me this again",
+				locator1 = "Sidebar#LINK");
 		}
 	}
 

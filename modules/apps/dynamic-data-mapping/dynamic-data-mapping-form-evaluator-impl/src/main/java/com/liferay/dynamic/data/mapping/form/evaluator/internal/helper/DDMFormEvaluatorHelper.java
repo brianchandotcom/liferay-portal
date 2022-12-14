@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -328,10 +327,9 @@ public class DDMFormEvaluatorHelper {
 		List<DDMFormRule> ddmFormRules,
 		Boolean ddmFormRuleConditionEvaluationResult) {
 
-		for (DDMFormRule ddmFormRule :
-				ListUtil.filter(ddmFormRules, DDMFormRule::isEnabled)) {
-
-			if (Validator.isNotNull(ddmFormRule.getCondition()) &&
+		for (DDMFormRule ddmFormRule : ddmFormRules) {
+			if (ddmFormRule.isEnabled() &&
+				Validator.isNotNull(ddmFormRule.getCondition()) &&
 				Objects.equals(
 					ddmFormRuleConditionEvaluationResult,
 					_evaluateDDMFormRuleCondition(
@@ -723,15 +721,13 @@ public class DDMFormEvaluatorHelper {
 	private void _localizeNumericDDMFormFieldValues() {
 		for (DDMFormField ddmFormField : _ddmFormFieldsMap.values()) {
 			if (_isNumericField(ddmFormField)) {
-				Set<DDMFormEvaluatorFieldContextKey>
-					ddmFormEvaluatorFieldContextKeys =
-						_getDDMFormEvaluatorFieldContextKeys(
-							ddmFormField.getName());
+				for (DDMFormEvaluatorFieldContextKey
+						ddmFormEvaluatorFieldContextKey :
+							_getDDMFormEvaluatorFieldContextKeys(
+								ddmFormField.getName())) {
 
-				Iterator<DDMFormEvaluatorFieldContextKey> iterator =
-					ddmFormEvaluatorFieldContextKeys.iterator();
-
-				iterator.forEachRemaining(this::_localizeDDMFormFieldValue);
+					_localizeDDMFormFieldValue(ddmFormEvaluatorFieldContextKey);
+				}
 			}
 		}
 	}

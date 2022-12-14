@@ -185,6 +185,45 @@ definition {
 		GogoShell.viewOutput(outputContent = "Liferay Portal");
 	}
 
+	@description = "This is a use case for LPS-171011."
+	@priority = "5"
+	test CanCreateVirtualInstanceWithClustering {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "Clustering#CanCreateVirtualInstanceWithClustering";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		Log.viewLogFileContentNotPresent(logContent = "No default user was found for company");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "test@www.able.com");
+	}
+
 	@priority = "4"
 	test CanInvokeMethods {
 		property test.name.skip.portal.instance = "Clustering#CanInvokeMethods";

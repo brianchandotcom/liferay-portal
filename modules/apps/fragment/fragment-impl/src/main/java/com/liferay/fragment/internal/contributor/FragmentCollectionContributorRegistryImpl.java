@@ -27,6 +27,7 @@ import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,7 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -60,7 +60,14 @@ public class FragmentCollectionContributorRegistryImpl
 	public FragmentCollectionContributor getFragmentCollectionContributor(
 		String fragmentCollectionKey) {
 
-		return _serviceTrackerMap.getService(fragmentCollectionKey);
+		FragmentCollectionBag fragmentCollectionBag =
+			_serviceTrackerMap.getService(fragmentCollectionKey);
+
+		if (fragmentCollectionBag == null) {
+			return null;
+		}
+
+		return fragmentCollectionBag._fragmentCollectionContributor;
 	}
 
 	@Override
@@ -70,8 +77,11 @@ public class FragmentCollectionContributorRegistryImpl
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
 			new ArrayList<>();
 
-		for (FragmentCollectionContributor fragmentCollectionContributor :
+		for (FragmentCollectionBag fragmentCollectionBag :
 				_serviceTrackerMap.values()) {
+
+			FragmentCollectionContributor fragmentCollectionContributor =
+				fragmentCollectionBag._fragmentCollectionContributor;
 
 			if (MapUtil.isNotEmpty(fragmentCollectionContributor.getNames())) {
 				fragmentCollectionContributors.add(
@@ -86,20 +96,48 @@ public class FragmentCollectionContributorRegistryImpl
 	public FragmentComposition getFragmentComposition(
 		String fragmentCompositionKey) {
 
-		return _fragmentCompositions.get(fragmentCompositionKey);
+		int index = fragmentCompositionKey.indexOf("-composition-");
+
+		if (index == -1) {
+			return null;
+		}
+
+		FragmentCollectionBag fragmentCollectionBag =
+			_serviceTrackerMap.getService(
+				fragmentCompositionKey.substring(0, index));
+
+		if (fragmentCollectionBag == null) {
+			return null;
+		}
+
+		Map<String, FragmentComposition> fragmentCompostions =
+			fragmentCollectionBag._fragmentCompostions;
+
+		return fragmentCompostions.get(fragmentCompositionKey);
 	}
 
 	@Override
 	public Map<String, FragmentEntry> getFragmentEntries() {
-		return new HashMap<>(_fragmentEntries);
+		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
+
+		for (FragmentCollectionBag fragmentCollectionBag :
+				_serviceTrackerMap.values()) {
+
+			fragmentEntries.putAll(fragmentCollectionBag._fragmentEntries);
+		}
+
+		return fragmentEntries;
 	}
 
 	@Override
 	public Map<String, FragmentEntry> getFragmentEntries(Locale locale) {
 		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
 
-		for (FragmentCollectionContributor fragmentCollectionContributor :
+		for (FragmentCollectionBag fragmentCollectionBag :
 				_serviceTrackerMap.values()) {
+
+			FragmentCollectionContributor fragmentCollectionContributor =
+				fragmentCollectionBag._fragmentCollectionContributor;
 
 			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
 				for (FragmentEntry fragmentEntry :
@@ -121,15 +159,34 @@ public class FragmentCollectionContributorRegistryImpl
 			return null;
 		}
 
-		return _fragmentEntries.get(fragmentEntryKey);
+		int index = fragmentEntryKey.indexOf(CharPool.DASH);
+
+		if (index == -1) {
+			return null;
+		}
+
+		FragmentCollectionBag fragmentCollectionBag =
+			_serviceTrackerMap.getService(fragmentEntryKey.substring(0, index));
+
+		if (fragmentCollectionBag == null) {
+			return null;
+		}
+
+		Map<String, FragmentEntry> fragmentEntries =
+			fragmentCollectionBag._fragmentEntries;
+
+		return fragmentEntries.get(fragmentEntryKey);
 	}
 
 	@Override
 	public ResourceBundleLoader getResourceBundleLoader() {
 		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
 
-		for (FragmentCollectionContributor fragmentCollectionContributor :
+		for (FragmentCollectionBag fragmentCollectionBag :
 				_serviceTrackerMap.values()) {
+
+			FragmentCollectionContributor fragmentCollectionContributor =
+				fragmentCollectionBag._fragmentCollectionContributor;
 
 			ResourceBundleLoader resourceBundleLoader =
 				fragmentCollectionContributor.getResourceBundleLoader();
@@ -206,34 +263,52 @@ public class FragmentCollectionContributorRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCollectionContributorRegistryImpl.class);
 
-	private final Map<String, FragmentComposition> _fragmentCompositions =
-		new ConcurrentHashMap<>();
-	private final Map<String, FragmentEntry> _fragmentEntries =
-		new ConcurrentHashMap<>();
-
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
-	private final Map<FragmentCollectionContributor, ServiceRegistration<?>>
-		_serviceRegistrations = new HashMap<>();
-	private ServiceTrackerMap<String, FragmentCollectionContributor>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, FragmentCollectionBag> _serviceTrackerMap;
+
+	private static class FragmentCollectionBag {
+
+		private FragmentCollectionBag(
+			FragmentCollectionContributor fragmentCollectionContributor,
+			Map<String, FragmentComposition> fragmentCompostions,
+			Map<String, FragmentEntry> fragmentEntries,
+			ServiceRegistration<?> serviceRegistration) {
+
+			_fragmentCollectionContributor = fragmentCollectionContributor;
+			_fragmentCompostions = fragmentCompostions;
+			_fragmentEntries = fragmentEntries;
+			_serviceRegistration = serviceRegistration;
+		}
+
+		private final FragmentCollectionContributor
+			_fragmentCollectionContributor;
+		private final Map<String, FragmentComposition> _fragmentCompostions;
+		private final Map<String, FragmentEntry> _fragmentEntries;
+		private final ServiceRegistration<?> _serviceRegistration;
+
+	}
 
 	private class FragmentCollectionContributorEagerServiceTrackerCustomizer
 		implements EagerServiceTrackerCustomizer
-			<FragmentCollectionContributor, FragmentCollectionContributor> {
+			<FragmentCollectionContributor, FragmentCollectionBag> {
 
 		@Override
-		public FragmentCollectionContributor addingService(
+		public FragmentCollectionBag addingService(
 			ServiceReference<FragmentCollectionContributor> serviceReference) {
 
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_bundleContext.getService(serviceReference);
 
+			Map<String, FragmentComposition> fragmentCompositions =
+				new HashMap<>();
+			Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
+
 			for (FragmentComposition fragmentComposition :
 					fragmentCollectionContributor.getFragmentCompositions()) {
 
-				_fragmentCompositions.put(
+				fragmentCompositions.put(
 					fragmentComposition.getFragmentCompositionKey(),
 					fragmentComposition);
 			}
@@ -247,15 +322,16 @@ public class FragmentCollectionContributorRegistryImpl
 						continue;
 					}
 
-					_fragmentEntries.put(
+					fragmentEntries.put(
 						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
 
 					_updateFragmentEntryLinks(fragmentEntry);
 				}
 			}
 
-			_serviceRegistrations.put(
-				fragmentCollectionContributor,
+			return new FragmentCollectionBag(
+				fragmentCollectionContributor, fragmentCompositions,
+				fragmentEntries,
 				_bundleContext.registerService(
 					FragmentCollectionContributorRegistration.class,
 					new FragmentCollectionContributorRegistration() {
@@ -264,42 +340,23 @@ public class FragmentCollectionContributorRegistryImpl
 						"fragment.collection.key",
 						serviceReference.getProperty(
 							"fragment.collection.key"))));
-
-			return fragmentCollectionContributor;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<FragmentCollectionContributor> serviceReference,
-			FragmentCollectionContributor fragmentCollectionContributor) {
+			FragmentCollectionBag fragmentCollectionBag) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<FragmentCollectionContributor> serviceReference,
-			FragmentCollectionContributor fragmentCollectionContributor) {
+			FragmentCollectionBag fragmentCollectionBag) {
 
 			ServiceRegistration<?> serviceRegistration =
-				_serviceRegistrations.remove(fragmentCollectionContributor);
+				fragmentCollectionBag._serviceRegistration;
 
 			serviceRegistration.unregister();
-
-			for (FragmentComposition fragmentComposition :
-					fragmentCollectionContributor.getFragmentCompositions()) {
-
-				_fragmentCompositions.remove(
-					fragmentComposition.getFragmentCompositionKey());
-			}
-
-			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-				for (FragmentEntry fragmentEntry :
-						fragmentCollectionContributor.getFragmentEntries(
-							type)) {
-
-					_fragmentEntries.remove(
-						fragmentEntry.getFragmentEntryKey());
-				}
-			}
 
 			_bundleContext.ungetService(serviceReference);
 		}

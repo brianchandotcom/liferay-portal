@@ -16,16 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN</td>
-	<td>//div[contains(@class,'sidebar') and descendant::*[contains(.,'Content Performance')]] //a[contains(.,'Do not show me this again')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_PERFORMANCE_PANEL</td>
-	<td>//*[contains(@class, 'sidebar sidebar-light sidenav-menu sidebar-sm')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_PERFORMANCE_TITLE</td>
 	<td>//*[contains(@class, 'font-weight-semi-bold text-truncate-inline')]//span[contains(text(),'${pageName}')]</td>
 	<td></td>
@@ -61,8 +51,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_AUTHOR</td>
-	<td>//div[contains(@class,'text-secondary') and contains (text(),'Authored by ${key_author}')]</td>
+	<td>GRAPH_ENGAGEMENT</td>
+	<td>//div[contains(@class,'recharts-wrapper')]//*[name()='svg'][contains(@class,'recharts-surface')]//*[name()='g'][contains(@class,'recharts-cartesian-grid')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,23 +76,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PIE_CHART_WITH_COLOR</td>
-	<td>//*[contains(@fill, '${colorHex}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NUMBER_VIEWS</td>
 	<td>//*[contains(@class, 'recharts-legend-item-text')] //span[contains(@class, 'font-weight-bold')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_DATE_RANGE</td>
-	<td>//select[contains(@class,'form-control')]</td>
+	<td>PAGE_AUTHOR</td>
+	<td>//div[contains(@class,'text-secondary') and contains (text(),'Authored by ${key_author}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>GRAPH_ENGAGEMENT</td>
-	<td>//div[contains(@class,'recharts-wrapper')]//*[name()='svg'][contains(@class,'recharts-surface')]//*[name()='g'][contains(@class,'recharts-cartesian-grid')]</td>
+	<td>PIE_CHART_WITH_COLOR</td>
+	<td>//*[contains(@fill, '${colorHex}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_DATE_RANGE</td>
+	<td>//select[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>

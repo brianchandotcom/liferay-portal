@@ -67,6 +67,7 @@ definition {
 						"contentFieldValue": {
 							"data": "${content}"
 						},
+						"contentFieldValue_i18n": ${contentMap},
 						"name": "content"
 					}
 				],
@@ -74,7 +75,9 @@ definition {
 				"description": "${description}",
 				"keywords": [${assetTagNames}],
 				"taxonomyCategoryIds": [${assetCategoryIds}],
+				"description_i18n": ${descriptionMap},
 				"title": "${title}",
+				"title_i18n": ${titleMap},
 				"viewableBy": "${viewableBy}"
 			}
 		''';

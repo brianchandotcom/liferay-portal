@@ -28,15 +28,22 @@ definition {
 			var content = '''<p>${content}</p>''';
 		}
 
+		var titleMap = HeadlessWebcontentSetter.setTitleMap(titleMap = "${titleMap}");
+		var contentMap = HeadlessWebcontentSetter.setContentMap(contentMap = "${contentMap}");
+		var descriptionMap = HeadlessWebcontentSetter.setDescriptionMap(descriptionMap = "${descriptionMap}");
+
 		var articleId = HeadlessWebcontentAPI._addWebContent(
 			assetCategoryIds = "${assetCategoryIds}",
 			assetTagNames = "${assetTagNames}",
 			content = "${content}",
+			contentMap = "${contentMap}",
 			description = "${description}",
+			descriptionMap = "${descriptionMap}",
 			folderId = "${folderId}",
 			groupId = "${groupId}",
 			structureId = "${structureId}",
 			title = "${title}",
+			titleMap = "${titleMap}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}",
 			viewableBy = "${viewableBy}");

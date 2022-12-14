@@ -136,29 +136,6 @@ public class RuntimePageImpl implements RuntimePage {
 		sb.writeTo(httpServletResponse.getWriter());
 	}
 
-	@Override
-	public void processTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource)
-		throws Exception {
-
-		processTemplate(
-			httpServletRequest, httpServletResponse, null, templateResource);
-	}
-
-	@Override
-	public void processTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource, String langType)
-		throws Exception {
-
-		processTemplate(
-			httpServletRequest, httpServletResponse, null, templateResource,
-			langType);
-	}
-
 	protected StringBundler doDispatch(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId,

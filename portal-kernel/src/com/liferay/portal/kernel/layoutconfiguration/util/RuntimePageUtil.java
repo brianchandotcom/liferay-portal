@@ -69,27 +69,6 @@ public class RuntimePageUtil {
 			templateResource, langType);
 	}
 
-	public static void processTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource)
-		throws Exception {
-
-		_runtimePage.processTemplate(
-			httpServletRequest, httpServletResponse, templateResource);
-	}
-
-	public static void processTemplate(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource, String langType)
-		throws Exception {
-
-		_runtimePage.processTemplate(
-			httpServletRequest, httpServletResponse, templateResource,
-			langType);
-	}
-
 	public void setRuntimePage(RuntimePage runtimePage) {
 		_runtimePage = runtimePage;
 	}

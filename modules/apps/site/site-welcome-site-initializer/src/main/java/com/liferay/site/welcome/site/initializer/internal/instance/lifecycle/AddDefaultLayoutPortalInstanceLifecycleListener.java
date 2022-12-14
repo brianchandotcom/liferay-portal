@@ -17,7 +17,7 @@ package com.liferay.site.welcome.site.initializer.internal.instance.lifecycle;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistration;
+import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -111,8 +111,7 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 	}
 
 	@Reference(target = "(fragment.collection.key=BASIC_COMPONENT)")
-	private FragmentCollectionContributorRegistration
-		_fragmentCollectionContributorRegistration;
+	private FragmentCollectionContributor _fragmentCollectionContributor;
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;

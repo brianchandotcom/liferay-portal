@@ -68,9 +68,7 @@ definition {
 		}
 
 		task ("Then I go to the Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 		}
 
 		task ("And I enter the test account and go to Team Members page") {
@@ -150,9 +148,7 @@ definition {
 		}
 
 		task ("Then I go to the Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			Refresh();
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 		}
 
 		task ("And I enter the test account") {

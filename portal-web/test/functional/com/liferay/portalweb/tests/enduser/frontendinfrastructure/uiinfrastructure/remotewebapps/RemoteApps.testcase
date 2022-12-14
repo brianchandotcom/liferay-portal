@@ -99,7 +99,7 @@ definition {
 	@description = "This is a test for LPS-162031. The site administrator could add a CSS remote app."
 	@priority = "3"
 	test CSSCanBeCreated {
-		task ("Given a site administrator accesses to the Remote Apps admin") {
+		task ("Given a site administrator accesses to the Client Extensions admin") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 
 			JSONDocument.addFileWithUploadedFile(
@@ -589,7 +589,7 @@ definition {
 	@description = "LPS-165425. Validate that HTML eror is thrown if left empty."
 	@priority = "3"
 	test ErrorAppearsWhenHTMLBlank {
-		task ("Given Add Custom Element Remote Apps admin page") {
+		task ("Given Add Custom Element Client Extensions admin page") {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addType(type = "Custom Element");
@@ -614,14 +614,14 @@ definition {
 		}
 	}
 
-	@description = "LPS-163525. Validate Remote Apps UI has an understandable error message when user inputs an invalid URL."
+	@description = "LPS-163525. Validate Client Extensions UI has an understandable error message when user inputs an invalid URL."
 	@priority = "4"
 	test HasAnUnderstandableErrorMessageWhenURLInvalid {
-		task ("Given Add IFrame Remote Apps") {
+		task ("Given Add IFrame Client Extensions") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Custom Apps",
 				panel = "Applications",
-				portlet = "Remote Apps");
+				portlet = "Client Extensions");
 
 			RemoteApps.addType(type = "IFrame");
 		}
@@ -643,14 +643,14 @@ definition {
 		}
 	}
 
-	@description = "LPS-163525. Validate Remote apps UI has a clear error message when all the mandatory fields are empty."
+	@description = "LPS-163525. Validate Client Extensions UI has a clear error message when all the mandatory fields are empty."
 	@priority = "4"
 	test HasMandatoryFieldErrorMessagesWhenEmpty {
-		task ("Given Add IFrame Remote Apps admin page") {
+		task ("Given Add IFrame Client Extensions admin page") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Custom Apps",
 				panel = "Applications",
-				portlet = "Remote Apps");
+				portlet = "Client Extensions");
 
 			RemoteApps.addType(type = "IFrame");
 		}
@@ -677,7 +677,7 @@ definition {
 	@description = "LPS-165745. Error thrown when HTML Element contains empty/white space."
 	@priority = "3"
 	test HTMLElementConatinsInvlaidCharacters {
-		task ("Given Add Custom Element Remote Apps") {
+		task ("Given Add Custom Element Client Extensions") {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addType(type = "Custom Element");
@@ -704,7 +704,7 @@ definition {
 	@description = "LPS-165835. Error thrown when HTML Element doesn't have at least one hyphen."
 	@priority = "3"
 	test HTMLElementMustHaveOneHyphen {
-		task ("Given Add Custom Element Remote Apps") {
+		task ("Given Add Custom Element Client Extensions") {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addType(type = "Custom Element");
@@ -731,7 +731,7 @@ definition {
 	@description = "LPS-165834. Error thrown when HTML Element doesn't start with a lowercase letter."
 	@priority = "3"
 	test HTMLElementMustStartWithLowercase {
-		task ("Given Add Custom Element Remote Apps") {
+		task ("Given Add Custom Element Client Extensions") {
 			RemoteApps.goToRemoteAppsPortlet();
 
 			RemoteApps.addType(type = "Custom Element");

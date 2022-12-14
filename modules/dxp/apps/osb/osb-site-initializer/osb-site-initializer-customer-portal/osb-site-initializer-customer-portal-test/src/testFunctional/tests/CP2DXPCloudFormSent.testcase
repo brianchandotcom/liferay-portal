@@ -56,83 +56,80 @@ definition {
 	@priority = "4"
 	test CanViewAUsefulMessage {
 		task ("Change the user role in the project") {
-            Account.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
-            CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
-            Account.addAssigneeToRoleViaUsersTab(
-                accountRoleTitle = "Account Administrator",
-                accountUserName = "Test Test");
-        }
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
 
-        task ("Go to Customer Portal Site") {
-            CP2Utils.goToCustomerPortalSiteWithRefresh();
+		task ("Go to Customer Portal Site") {
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-            CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
-        }
+			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+		}
 
-        task ("Given I go to the test account") {
-            CustomerPortal.search(searchItem = "${testAccount}");
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
-        }
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
 
-        task ("And I go through onboarding") {
-            CP2Utils.onboardingFlow();
-        }
+		task ("And I go through onboarding") {
+			CP2Utils.onboardingFlow();
+		}
 
-        task ("Then I click on the LXC - SM product") {
-            CP2NavigationMenu.goToProductActivation();
+		task ("Then I click on the LXC - SM product") {
+			CP2NavigationMenu.goToProductActivation();
 
-            CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-        }
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
 
-        task ("Then I open a new browser tab and send the card activation form") {
-            Open.openInTheNewTab(locator1 = "http://localhost:8080");
+		task ("Then I open a new browser tab and send the card activation form") {
+			Open.openInTheNewTab(locator1 = "http://localhost:8080");
 
-            ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-            Refresh();
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
-            CustomerPortal.enterOnProject(title = "${testAccount}");
+			CP2NavigationMenu.goToProductActivation();
 
-            CP2NavigationMenu.goToProductActivation();
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
-            CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CustomerPortal.clickOnFinishActivationButton();
 
-            CustomerPortal.clickOnFinishActivationButton();
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-            CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			CustomerPortal.clickAtButton(text = "Submit");
 
-            CustomerPortal.clickAtButton(text = "Submit");
+			Navigator.closeWindow();
+		}
 
-            Navigator.closeWindow();
-        }
+		task ("And I go back to my first tab, fill in the form again and send it") {
+			CustomerPortal.clickOnFinishActivationButton();
 
-        task ("And I go back to my first tab, fill in the form again and send it") {
-            CustomerPortal.clickOnFinishActivationButton();
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-            CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			CustomerPortal.clickAtButton(text = "Submit");
+		}
 
-            CustomerPortal.clickAtButton(text = "Submit");
-        }
+		task ("Then I assert that the form has already been sent") {
+			CustomerPortal.viewConfirmationModal(text = "Another user already submitted the LXC - SM activation request.");
 
-        task ("Then I assert that the form has already been sent") {
-            CustomerPortal.viewConfirmationModal(text = "Another user already submitted the LXC - SM activation request.");
+			CustomerPortal.clickAtButton(text = "Done");
+		}
 
-            CustomerPortal.clickAtButton(text = "Done");
-        }
+		task ("Delete the entries and objects created") {
+			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
+				position = "1",
+				status = "In-Progress");
 
-        task ("Delete the entries and objects created") {
-            CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
-                position = "1",
-                status = "In-Progress");
-
-            CP2Utils.deleteSpecificObjectEntry(
-                email = "test@liferay.com",
-                portlet = "Admins DXP Cloud");
-        }
-
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "Admins DXP Cloud");
+		}
 	}
 
 }

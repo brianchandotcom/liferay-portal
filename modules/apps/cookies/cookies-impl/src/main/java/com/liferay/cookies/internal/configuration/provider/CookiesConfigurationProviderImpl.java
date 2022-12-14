@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Sanz
  */
-@Component(immediate = true, service = CookiesConfigurationProvider.class)
+@Component(service = CookiesConfigurationProvider.class)
 public class CookiesConfigurationProviderImpl
 	implements CookiesConfigurationProvider {
 

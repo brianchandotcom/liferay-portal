@@ -11,7 +11,7 @@
 
 interface ModalFormatedInformationProps {
 	className?: string;
-	information: string;
+	information?: string;
 	label: string;
 }
 
@@ -23,9 +23,11 @@ const ModalFormatedInformation = ({
 	<div className={className}>
 		<h2 className="text-paragraph">{label}</h2>
 
-		<p className="align-items-center bg-neutral-1 m-0 p-3 rounded text-paragraph-lg">
-			{information}
-		</p>
+		{information && (
+			<p className="align-items-center bg-neutral-1 m-0 p-3 rounded text-paragraph-lg">
+				{information}
+			</p>
+		)}
 	</div>
 );
 

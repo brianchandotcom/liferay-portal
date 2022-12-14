@@ -36,7 +36,11 @@ export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
 };
 
-const DealRegistrationList = () => {
+interface IProps {
+	sort: string;
+}
+
+const DealRegistrationList = ({sort}: IProps) => {
 	const {filters, filtersTerm, onFilter} = useFilters();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<DealRegistrationItem>({});
@@ -49,7 +53,8 @@ const DealRegistrationList = () => {
 	const {data, isValidating} = useGetListItemsFromDealRegistration(
 		pagination.activePage,
 		pagination.activeDelta,
-		filtersTerm
+		filtersTerm,
+		sort
 	);
 
 	const siteURL = useLiferayNavigate();
@@ -164,7 +169,7 @@ const DealRegistrationList = () => {
 						<CSVLink
 							className="btn btn-secondary mb-2 mb-lg-0 mr-2"
 							data={data.items}
-							filename="deal-registration.csv"
+							filename="Partner Deal Registration.csv"
 						>
 							Export Deal Registrations
 						</CSVLink>

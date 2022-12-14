@@ -15,6 +15,7 @@ import {SWRConfig} from 'swr';
 
 import {WebDAV} from './common/context/WebDAV';
 import {AppRouteType} from './common/enums/appRouteType';
+import {PartnerOpportunitiesColumnKey} from './common/enums/partnerOpportunitiesColumnKey';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import handleError from './common/utils/handleError';
 import DealRegistrationForm from './routes/DealRegistrationForm';
@@ -24,6 +25,8 @@ import MDFClaimList from './routes/MDFClaimList';
 import MDFRequestForm from './routes/MDFRequestForm';
 import MDFRequestList from './routes/MDFRequestList';
 import PartnerOpportunitiesList from './routes/PartnerOpportunitiesList';
+import getOpportunityDates from './routes/PartnerOpportunitiesList/utils/getOpportunityDates';
+import getRenewalsDates from './routes/PartnerOpportunitiesList/utils/getRenewalsDates';
 
 interface IProps {
 	liferayWebDAV: string;
@@ -40,8 +43,48 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.MDF_CLAIM_FORM]: <MDFClaimForm />,
 	[AppRouteType.MDF_CLAIM_LIST]: <MDFClaimList />,
 	[AppRouteType.DEAL_REGISTRATION_FORM]: <DealRegistrationForm />,
-	[AppRouteType.DEAL_REGISTRATION_LIST]: <DealRegistrationList />,
-	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: <PartnerOpportunitiesList />,
+	[AppRouteType.DEAL_REGISTRATION_LIST]: (
+		<DealRegistrationList sort="dateCreated:desc" />
+	),
+	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: (
+		<PartnerOpportunitiesList
+			columnsDates={[
+				{
+					columnKey: PartnerOpportunitiesColumnKey.START_DATE,
+					label: 'Start Date',
+				},
+				{
+					columnKey: PartnerOpportunitiesColumnKey.END_DATE,
+					label: 'End Date',
+				},
+			]}
+			getDates={(item) =>
+				getOpportunityDates(
+					item.projectSubscriptionStartDate,
+					item.projectSubscriptionStartDate
+				)
+			}
+			getFilteredItems={(items) => items}
+			name="Partner Opportunities"
+			sort="dateCreated:desc"
+		/>
+	),
+	[AppRouteType.RENEWALS_OPPORTUNITIES_LIST]: (
+		<PartnerOpportunitiesList
+			columnsDates={[
+				{
+					columnKey: PartnerOpportunitiesColumnKey.CLOSE_DATE,
+					label: 'Close Date',
+				},
+			]}
+			getDates={(item) => getRenewalsDates(item.closeDate)}
+			getFilteredItems={(items) =>
+				items.filter((item) => item.STAGE !== 'Closed Lost')
+			}
+			name="Renewal Opportunities"
+			sort="closeDate:asc"
+		/>
+	),
 };
 
 const PartnerPortalApp = ({liferayWebDAV, route}: IProps) => {

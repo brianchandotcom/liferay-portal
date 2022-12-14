@@ -23,7 +23,6 @@
 
 		<!-- Portal -->
 
-		<action path="/portal/edit_layout" type="com.liferay.portal.action.EditLayoutAction" />
 		<action forward="portal.error" path="/portal/error" />
 		<action forward="/portal/expire_session.jsp" path="/portal/expire_session" />
 		<action forward="/portal/extend_session.jsp" path="/portal/extend_session" />

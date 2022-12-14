@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.action;
+package com.liferay.layout.internal.struts;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -40,20 +42,22 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.JSONAction;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ming-Gih Lam
  * @author Hugo Huijser
  */
-public class EditLayoutAction extends JSONAction {
+@Component(property = "path=/portal/edit_layout", service = StrutsAction.class)
+public class EditLayoutStrutsAction implements StrutsAction {
 
 	@Override
-	public String getJSON(
+	public String execute(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -133,7 +137,9 @@ public class EditLayoutAction extends JSONAction {
 			}
 		}
 
-		return jsonObject.toString();
+		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
+
+		return null;
 	}
 
 	protected String[] addPage(

@@ -221,7 +221,9 @@ public class FragmentCollectionContributorRegistryImpl
 	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;
 
-	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
+	private List<FragmentEntryLink> _getFragmentEntryLinks(
+		FragmentEntry fragmentEntry) {
+
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 			FragmentEntryLinkTable.INSTANCE
 		).from(
@@ -231,8 +233,12 @@ public class FragmentCollectionContributorRegistryImpl
 				fragmentEntry.getFragmentEntryKey())
 		);
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.dslQuery(dslQuery);
+		return _fragmentEntryLinkLocalService.dslQuery(dslQuery);
+	}
+
+	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
+		List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(
+			fragmentEntry);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			try {

@@ -46,6 +46,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -312,6 +313,10 @@ public class VulcanBatchEngineTaskItemDelegateRegistryTest {
 
 		@Override
 		public void setContextCompany(Company contextCompany) {
+		}
+
+		@Override
+		public void setContextUriInfo(UriInfo uriInfo) {
 		}
 
 		@Override

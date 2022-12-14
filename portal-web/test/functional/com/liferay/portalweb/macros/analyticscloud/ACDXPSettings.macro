@@ -28,6 +28,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro cancelWizardConfiguration {
+		Click(locator1 = "Button#CANCEL");
+	}
+
 	macro clickToAssignSitesAndChannel {
 		Click(
 			key_text = "Assign",
@@ -323,10 +327,6 @@ definition {
 		var key_itemValue = "${itemValue}";
 
 		AssertElementPresent(locator1 = "ACDXPSettings#VIEW_LIST_ITEM");
-	}
-
-	macro cancelWizardConfiguration {
-		Click(locator1 = "Button#CANCEL");
 	}
 
 }

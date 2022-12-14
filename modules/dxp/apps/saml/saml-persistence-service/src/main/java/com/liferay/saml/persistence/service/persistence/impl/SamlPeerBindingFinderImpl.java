@@ -15,9 +15,9 @@
 package com.liferay.saml.persistence.service.persistence.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingFinder;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
@@ -76,9 +76,16 @@ public class SamlPeerBindingFinderImpl implements SamlPeerBindingFinder {
 
 		return ListUtil.filter(
 			samlPeerBindings,
-			samlPeerBinding -> _validateFieldsSNIF_SNINQ_SPEI(
-				samlPeerBinding, samlNameIdFormat, samlNameIdNameQualifier,
-				samlPeerEntityId));
+			samlPeerBinding ->
+				Objects.equals(
+					GetterUtil.getString(samlNameIdFormat),
+					samlPeerBinding.getSamlNameIdFormat()) &&
+				Objects.equals(
+					GetterUtil.getString(samlPeerEntityId),
+					samlPeerBinding.getSamlPeerEntityId()) &&
+				Objects.equals(
+					GetterUtil.getString(samlNameIdNameQualifier),
+					samlPeerBinding.getSamlNameIdNameQualifier()));
 	}
 
 	public List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
@@ -92,50 +99,13 @@ public class SamlPeerBindingFinderImpl implements SamlPeerBindingFinder {
 
 		return ListUtil.filter(
 			samlPeerBindings,
-			samlPeerBinding -> _validateFieldsSNIF_SNINQ(
-				samlPeerBinding, samlNameIdFormat, samlNameIdNameQualifier));
-	}
-
-	private boolean _validateFieldsSNIF_SNINQ(
-		SamlPeerBinding samlPeerBinding, String samlNameIdFormat,
-		String samlNameIdNameQualifier) {
-
-		if (Validator.isNull(samlNameIdNameQualifier)) {
-			samlNameIdNameQualifier = "";
-		}
-
-		if (Objects.equals(
-				samlNameIdFormat, samlPeerBinding.getSamlNameIdFormat()) &&
-			Objects.equals(
-				samlNameIdNameQualifier,
-				samlPeerBinding.getSamlNameIdNameQualifier())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _validateFieldsSNIF_SNINQ_SPEI(
-		SamlPeerBinding samlPeerBinding, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlPeerEntityId) {
-
-		if (Validator.isNull(samlNameIdNameQualifier)) {
-			samlNameIdNameQualifier = "";
-		}
-
-		if (Objects.equals(
-				samlNameIdFormat, samlPeerBinding.getSamlNameIdFormat()) &&
-			Objects.equals(
-				samlPeerEntityId, samlPeerBinding.getSamlPeerEntityId()) &&
-			Objects.equals(
-				samlNameIdNameQualifier,
-				samlPeerBinding.getSamlNameIdNameQualifier())) {
-
-			return true;
-		}
-
-		return false;
+			samlPeerBinding ->
+				Objects.equals(
+					GetterUtil.getString(samlNameIdFormat),
+					samlPeerBinding.getSamlNameIdFormat()) &&
+				Objects.equals(
+					GetterUtil.getString(samlNameIdNameQualifier),
+					samlPeerBinding.getSamlNameIdNameQualifier()));
 	}
 
 	@Reference

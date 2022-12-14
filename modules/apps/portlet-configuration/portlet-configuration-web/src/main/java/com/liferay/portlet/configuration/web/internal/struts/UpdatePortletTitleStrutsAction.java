@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.action;
+package com.liferay.portlet.configuration.web.internal.struts;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.JSONAction;
 import com.liferay.portlet.InvokerPortletUtil;
 
 import javax.portlet.PortletPreferences;
@@ -29,13 +29,18 @@ import javax.portlet.PortletPreferences;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ming-Gih Lam
  */
-public class UpdatePortletTitleAction extends JSONAction {
+@Component(
+	property = "path=/portal/update_portlet_title", service = StrutsAction.class
+)
+public class UpdatePortletTitleStrutsAction implements StrutsAction {
 
 	@Override
-	public String getJSON(
+	public String execute(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {

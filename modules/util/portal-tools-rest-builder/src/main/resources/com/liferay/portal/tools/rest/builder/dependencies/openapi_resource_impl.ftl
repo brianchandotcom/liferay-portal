@@ -58,19 +58,19 @@ public class OpenAPIResourceImpl {
 	@GET
 	@Path("/openapi.{type:json|yaml}")
 	@Produces({MediaType.APPLICATION_JSON, "application/yaml"})
-	public Response getOpenAPI(@PathParam("type") String type) throws Exception {
+	public Response getOpenAPI(@Context HttpServletRequest httpServletRequest, @PathParam("type") String type, @Context UriInfo uriInfo) throws Exception {
 		Class<? extends OpenAPIResource> clazz = _openAPIResource.getClass();
 
 		try {
 			Method method = clazz.getMethod("getOpenAPI", HttpServletRequest.class, Set.class, String.class, UriInfo.class);
 
-			return (Response)method.invoke(_openAPIResource, _httpServletRequest, _resourceClasses, type, _uriInfo);
+			return (Response)method.invoke(_openAPIResource, httpServletRequest, _resourceClasses, type, uriInfo);
 		}
 		catch (NoSuchMethodException noSuchMethodException1) {
 			try {
 				Method method = clazz.getMethod("getOpenAPI", Set.class, String.class, UriInfo.class);
 
-				return (Response)method.invoke(_openAPIResource, _resourceClasses, type, _uriInfo);
+				return (Response)method.invoke(_openAPIResource, _resourceClasses, type, uriInfo);
 			}
 			catch (NoSuchMethodException noSuchMethodException2) {
 				return _openAPIResource.getOpenAPI(_resourceClasses, type);
@@ -78,14 +78,8 @@ public class OpenAPIResourceImpl {
 		}
 	}
 
-	@Context
-	private HttpServletRequest _httpServletRequest;
-
 	@Reference
 	private OpenAPIResource _openAPIResource;
-
-	@Context
-	private UriInfo _uriInfo;
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{

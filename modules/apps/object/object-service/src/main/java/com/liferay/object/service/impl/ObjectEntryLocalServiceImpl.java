@@ -1725,25 +1725,6 @@ public class ObjectEntryLocalServiceImpl
 		);
 	}
 
-	private Predicate _getAccountEntriesPredicate(
-			long companyId, long userId, long objectDefinitionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-		Table<?> table = _objectFieldLocalService.getTable(
-			objectDefinitionId, objectField.getName());
-
-		Column<?, Long> column = (Column<?, Long>)table.getColumn(
-			objectField.getDBColumnName());
-
-		return column.in(_getAccountEntriesDSLQuery(companyId, userId));
-	}
-
 	private Predicate _getAccountEntryWherePredicate() {
 		return AccountEntryTable.INSTANCE.parentAccountEntryId.eq(
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT
@@ -2184,6 +2165,15 @@ public class ObjectEntryLocalServiceImpl
 			return individualScopePredicate;
 		}
 
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getAccountEntryRestrictedObjectFieldId());
+
+		Table<?> table = _objectFieldLocalService.getTable(
+			objectDefinition.getObjectDefinitionId(), objectField.getName());
+
+		Column<?, Long> column = (Column<?, Long>)table.getColumn(
+			objectField.getDBColumnName());
+
 		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
 			RoleTable.INSTANCE.roleId
 		).from(
@@ -2201,20 +2191,7 @@ public class ObjectEntryLocalServiceImpl
 				UserGroupRoleTable.INSTANCE.companyId.eq(
 					permissionChecker.getCompanyId())
 			).and(
-				() -> {
-					ObjectField objectField =
-						_objectFieldLocalService.getObjectField(
-							objectDefinition.
-								getAccountEntryRestrictedObjectFieldId());
-
-					Table<?> table = _objectFieldLocalService.getTable(
-						objectDefinition.getObjectDefinitionId(),
-						objectField.getName());
-
-					return GroupTable.INSTANCE.classPK.eq(
-						(Column<?, Long>)table.getColumn(
-							objectField.getDBColumnName()));
-				}
+				GroupTable.INSTANCE.classPK.eq(column)
 			)
 		).union(
 			DSLQueryFactoryUtil.select(
@@ -2227,12 +2204,12 @@ public class ObjectEntryLocalServiceImpl
 			)
 		);
 
-		Predicate accountEntriesPredicate = _getAccountEntriesPredicate(
-			objectDefinition.getCompanyId(), permissionChecker.getUserId(),
-			objectDefinition.getObjectDefinitionId());
-
 		return individualScopePredicate.or(
-			accountEntriesPredicate.and(
+			column.in(
+				_getAccountEntriesDSLQuery(
+					objectDefinition.getCompanyId(),
+					permissionChecker.getUserId())
+			).and(
 				new DefaultPredicate(
 					new QueryExpression<>(
 						DSLQueryFactoryUtil.count(

@@ -42,7 +42,6 @@ import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageModifiedDateComparator;
 import com.liferay.message.boards.util.comparator.MessageSubjectComparator;
 import com.liferay.message.boards.util.comparator.MessageURLSubjectComparator;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -80,7 +79,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -358,8 +356,8 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	public Page<MessageBoardMessage>
-	getSiteUserMessageBoardMessagesActivityPage(
-		Long siteId, Long userId, Pagination pagination)
+			getSiteUserMessageBoardMessagesActivityPage(
+				Long siteId, Long userId, Pagination pagination)
 		throws Exception {
 
 		int start = QueryUtil.ALL_POS;
@@ -371,9 +369,13 @@ public class MessageBoardMessageResourceImpl
 		}
 
 		return Page.of(
-			transform(_mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(siteId,userId,start,end),
-				this::_toMessageBoardMessage), pagination,
-			_mbMessageLocalService.getSiteUserMessageBoardMessagesActivityCount(siteId,userId));
+			transform(
+				_mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(
+					siteId, userId, start, end),
+				this::_toMessageBoardMessage),
+			pagination,
+			_mbMessageLocalService.getSiteUserMessageBoardMessagesActivityCount(
+				siteId, userId));
 	}
 
 	@Override

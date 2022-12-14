@@ -247,13 +247,13 @@ definition {
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "App");
+			value1 = "Ap");
 
 		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "Appl");
+			value1 = "App");
 
 		SearchBarSuggestions.viewSuggestions(
 			searchAssetDescription = "DM Document Description",

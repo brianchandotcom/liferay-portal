@@ -66,7 +66,7 @@ public class SamlPeerBindingLocalServiceImpl
 
 		return samlPeerBindingFinder.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 			companyId, false, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlSpEntityId, null);
+			samlNameIdValue, samlSpEntityId);
 	}
 
 	@Reference

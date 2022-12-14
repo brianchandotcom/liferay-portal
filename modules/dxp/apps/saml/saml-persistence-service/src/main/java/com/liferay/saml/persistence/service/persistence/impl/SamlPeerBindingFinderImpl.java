@@ -17,7 +17,6 @@ package com.liferay.saml.persistence.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingFinder;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
@@ -34,16 +33,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = SamlPeerBindingFinder.class)
 public class SamlPeerBindingFinderImpl implements SamlPeerBindingFinder {
 
+	@Override
 	public SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId,
-		OrderByComparator<SamlPeerBinding> orderByComparator) {
+		String samlPeerEntityId) {
 
 		List<SamlPeerBinding> list = findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, orderByComparator);
+			samlNameIdValue, samlPeerEntityId);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -52,27 +50,16 @@ public class SamlPeerBindingFinderImpl implements SamlPeerBindingFinder {
 		return null;
 	}
 
+	@Override
 	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId) {
 
-		return findByC_D_SNIF_SNINQ_SNIV_SPEI(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId, int start, int end,
-		OrderByComparator<SamlPeerBinding> orderByComparator) {
-
 		List<SamlPeerBinding> samlPeerBindings =
 			_samlPeerBindingPersistence.findByC_D_SNIV(
-				companyId, deleted, samlNameIdValue, start, end,
-				orderByComparator);
+				companyId, deleted, samlNameIdValue, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		return ListUtil.filter(
 			samlPeerBindings,
@@ -88,6 +75,7 @@ public class SamlPeerBindingFinderImpl implements SamlPeerBindingFinder {
 					samlPeerBinding.getSamlNameIdNameQualifier()));
 	}
 
+	@Override
 	public List<SamlPeerBinding> findByC_U_D_SNIF_SNINQ_SPEI(
 		long companyId, long userId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlPeerEntityId) {

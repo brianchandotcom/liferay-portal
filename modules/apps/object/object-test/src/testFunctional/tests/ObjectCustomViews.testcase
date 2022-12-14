@@ -2520,4 +2520,54 @@ definition {
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "Sorry, no results were found.");
 	}
 
+	@description = "LPS-166585 - Verify that it's possible to create a filter using the relationship field of the object"
+	@priority = "5"
+	test CanCreateFilterUsingRelationshipField {
+		property portal.acceptance = "true";
+
+		task ("Given: An object related to another object, in a One-to-Many relationship") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 166585",
+				objectName = "CustomObject166585",
+				pluralLabelName = "Custom Objects 166585");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject166585",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject166585");
+		}
+
+		task ("When: The user creates a filter") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 166585");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(filterBy = "Relationship");
+
+			Button.clickSave();
+
+			Refresh();
+		}
+
+		task ("Then: The relationship field can be selected as the filter") {
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.assertColumnPresent(columnName = "Relationship");
+		}
+	}
+
 }

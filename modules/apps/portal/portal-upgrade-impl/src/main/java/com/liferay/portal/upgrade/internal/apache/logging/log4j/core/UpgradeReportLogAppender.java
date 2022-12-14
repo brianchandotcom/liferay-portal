@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.internal.apache.logging.log4j.core;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
@@ -49,13 +50,19 @@ public class UpgradeReportLogAppender implements Appender {
 	public void append(LogEvent logEvent) {
 		Message message = logEvent.getMessage();
 
+		String formattedMessage = message.getFormattedMessage();
+
+		if (formattedMessage.equals(StringPool.NULL)) {
+			Throwable throwable = logEvent.getThrown();
+
+			formattedMessage = throwable.getMessage();
+		}
+
 		if (logEvent.getLevel() == Level.ERROR) {
 			_upgradeReport.addErrorMessage(
-				logEvent.getLoggerName(), message.getFormattedMessage());
+				logEvent.getLoggerName(), formattedMessage);
 		}
 		else if (logEvent.getLevel() == Level.INFO) {
-			String formattedMessage = message.getFormattedMessage();
-
 			if (Objects.equals(
 					logEvent.getLoggerName(), UpgradeProcess.class.getName()) &&
 				formattedMessage.startsWith("Completed upgrade process ")) {

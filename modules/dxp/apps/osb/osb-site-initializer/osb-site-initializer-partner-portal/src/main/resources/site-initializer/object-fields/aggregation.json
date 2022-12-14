@@ -10,12 +10,16 @@
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]",
 	"objectFieldSettings": [
 		{
-			"name": "mdfRequestToMdfClaims",
-			"value": "totalClaimedRequest"
+			"name": "objectRelationshipName",
+			"value": "mdfRequestToMdfClaims"
 		},
 		{
 			"name": "function",
 			"value": "SUM"
+		},
+		{
+			"name": "objectFieldName",
+			"value": "amountClaimed"
 		}
 	],
 	"required": false,

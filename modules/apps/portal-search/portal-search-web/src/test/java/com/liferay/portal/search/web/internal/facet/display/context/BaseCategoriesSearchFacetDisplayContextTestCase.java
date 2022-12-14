@@ -263,11 +263,9 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				StringPool.BLANK, "count:asc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
 		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+			assetCategoriesSearchFacetDisplayContext.
+				getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"categoryId1:4|categoryId2:5|categoryId4:5|categoryId3:6",
@@ -289,11 +287,9 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				StringPool.BLANK, "count:desc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
 		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+			assetCategoriesSearchFacetDisplayContext.
+				getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"categoryId3:6|categoryId2:5|categoryId4:5|categoryId1:4",
@@ -315,11 +311,9 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				StringPool.BLANK, "key:asc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
 		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+			assetCategoriesSearchFacetDisplayContext.
+				getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"categoryId1:2|categoryId2:3|categoryId2:1|categoryId3:4",
@@ -341,11 +335,9 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			assetCategoriesSearchFacetDisplayContext = createDisplayContext(
 				StringPool.BLANK, "key:desc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts();
-
 		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+			assetCategoriesSearchFacetDisplayContext.
+				getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"categoryId3:4|categoryId2:3|categoryId2:1|categoryId1:2",

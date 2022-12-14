@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.configuration.web.internal.struts;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ming-Gih Lam
@@ -60,7 +61,7 @@ public class UpdatePortletTitleStrutsAction implements StrutsAction {
 			return null;
 		}
 
-		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
+		String languageId = _language.getLanguageId(httpServletRequest);
 		String title = ParamUtil.getString(httpServletRequest, "title");
 
 		PortletPreferences portletSetup =
@@ -90,9 +91,12 @@ public class UpdatePortletTitleStrutsAction implements StrutsAction {
 
 		InvokerPortletUtil.clearResponse(
 			httpServletRequest.getSession(), layout.getPrimaryKey(), portletId,
-			LanguageUtil.getLanguageId(httpServletRequest));
+			_language.getLanguageId(httpServletRequest));
 
 		return null;
 	}
+
+	@Reference
+	private Language _language;
 
 }

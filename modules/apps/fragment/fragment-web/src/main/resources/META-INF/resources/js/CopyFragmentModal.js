@@ -25,7 +25,7 @@ export default function CopyFragmentModal({
 	addFragmentCollectionURL,
 	contributedEntryKeys,
 	copyFragmentEntriesURL,
-	fragmentCollections,
+	fragmentCollections = [],
 	fragmentEntryIds,
 	portletNamespace,
 }) {

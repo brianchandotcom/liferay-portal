@@ -1221,6 +1221,8 @@ public class DDMFormEvaluatorHelperTest {
 
 			if (Objects.equals("field2", ddmFormFieldValue.getName())) {
 				actualValue = ddmFormFieldValue.getValue();
+
+				break;
 			}
 		}
 

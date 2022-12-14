@@ -4324,4 +4324,73 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	test AssertModifiedFacetTermsWithDifferentDisplayTemplates {
+		task("Create the Web Contents") {
+			for (var count : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Content",
+					groupName = "Guest",
+					title = "Web Content ${count}");
+			}
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "web content");
+
+		task("Change Display Template to 'Radio Layout' and assert the Web Contents are present") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				portletName = "Modified Facet",
+				displayTemplate = "Radio Layout");
+
+			Refresh();
+
+			for (var count : list "1,2,3") {
+				SearchResultPortlet.viewSearchResults(
+					searchAssetTitle = "Web Content ${count}",
+					searchAssetType = "Content");
+			}
+		}
+		task("Click on 'Past Hour' radio and assert the Web Contents are present") {
+			Click(
+				range = "Past Hour",
+				locator1 = "Search#MODIFIED_FACET_SELECTION");
+
+			for (var count : list "1,2,3") {
+				SearchResultPortlet.viewSearchResults(
+					searchAssetTitle = "Web Content ${count}",
+					searchAssetType = "Content");
+			}
+		}
+		
+		task("Add and enable a new modified facet label and assert there are no web contents present") {
+			Portlet.gotoPortletOptions(
+				portletName = "Modified Facet",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			Click(locator1 = "Button#ADD_ROW");
+
+			Type(
+				key_fieldLabel = "Label",
+				locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
+				value1 = "Past 23 Hours");
+
+			Type(
+				key_fieldLabel = "Range",
+				locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
+				value1 = "[past-24-hours TO past-hour]");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+
+			Refresh();
+
+			Click(
+				range = "Past 23 Hours",
+				locator1 = "Search#MODIFIED_FACET_SELECTION");
+
+			Questions.viewNoSearchResults(questionsList = "Web Content 1,Web Content 2,Web Content 3");
+		}
+	}
 }

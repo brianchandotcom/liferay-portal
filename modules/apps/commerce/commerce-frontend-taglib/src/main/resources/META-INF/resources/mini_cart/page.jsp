@@ -26,6 +26,11 @@
 			productURLSeparator: '<%= HtmlUtil.escapeJS(productURLSeparator) %>',
 			siteDefaultURL: '<%= HtmlUtil.escapeJS(siteDefaultURL) %>',
 		},
+		channel: {
+			currencyCode: '<%= commerceCurrencyCode %>',
+			groupId: <%= commerceChannelGroupId %>,
+			id: <%= commerceChannelId %>,
+		},
 		displayDiscountLevels: <%= displayDiscountLevels %>,
 		displayTotalItemsQuantity: <%= displayTotalItemsQuantity %>,
 		itemsQuantity: <%= itemsQuantity %>,

@@ -19,6 +19,7 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -76,6 +77,15 @@ public class MiniCartTag extends IncludeTag {
 		_siteDefaultURL = _getSiteDefaultURL(themeDisplay);
 
 		try {
+			CommerceCurrency commerceCurrency =
+				commerceContext.getCommerceCurrency();
+
+			_commerceCurrencyCode = commerceCurrency.getCode();
+
+			_commerceChannelGroupId =
+				commerceContext.getCommerceChannelGroupId();
+			_commerceChannelId = commerceContext.getCommerceChannelId();
+
 			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 			if (commerceOrder != null) {
@@ -182,6 +192,9 @@ public class MiniCartTag extends IncludeTag {
 		super.cleanUp();
 
 		_checkoutURL = null;
+		_commerceChannelGroupId = 0;
+		_commerceChannelId = 0;
+		_commerceCurrencyCode = null;
 		_commerceOrderHttpHelper = null;
 		_configurationProvider = null;
 		_displayTotalItemsQuantity = false;
@@ -206,6 +219,14 @@ public class MiniCartTag extends IncludeTag {
 			"liferay-commerce:cart:cartViews", _views);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:checkoutURL", _checkoutURL);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:commerceChannelGroupId",
+			_commerceChannelGroupId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:commerceChannelId", _commerceChannelId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:commerceCurrencyCode",
+			_commerceCurrencyCode);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:displayDiscountLevels",
 			_isDisplayDiscountLevels());
@@ -274,6 +295,9 @@ public class MiniCartTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(MiniCartTag.class);
 
 	private String _checkoutURL;
+	private long _commerceChannelGroupId;
+	private long _commerceChannelId;
+	private String _commerceCurrencyCode;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private ConfigurationProvider _configurationProvider;
 	private boolean _displayTotalItemsQuantity;

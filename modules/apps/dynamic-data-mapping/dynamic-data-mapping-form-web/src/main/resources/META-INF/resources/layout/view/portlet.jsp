@@ -22,7 +22,7 @@ String velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDAR
 String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
 
 if (Validator.isNotNull(velocityTemplateContent)) {
-	RuntimePageUtil.processTemplate(request, response, ppid, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+	RuntimePageUtil.processTemplate(request, response, ppid, velocityTemplateId, velocityTemplateContent);
 }
 %>
 

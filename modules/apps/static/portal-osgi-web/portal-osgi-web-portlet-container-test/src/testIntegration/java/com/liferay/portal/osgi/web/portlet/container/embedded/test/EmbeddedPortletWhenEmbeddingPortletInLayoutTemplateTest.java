@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -147,8 +146,7 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 
 		RuntimePageUtil.processTemplate(
 			mockHttpServletRequest, new MockHttpServletResponse(), null,
-			new StringTemplateResource(_TEMPLATE_ID, templateContent),
-			TemplateConstants.LANG_TYPE_FTL);
+			_TEMPLATE_ID, templateContent, TemplateConstants.LANG_TYPE_FTL);
 	}
 
 	private void _setUpPortletWithRenderWeight(

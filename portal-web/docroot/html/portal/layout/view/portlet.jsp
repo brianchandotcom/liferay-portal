@@ -38,7 +38,7 @@ if (themeDisplay.isStatePopUp() || themeDisplay.isWidget() || layoutTypePortlet.
 	}
 
 	if (Validator.isNotNull(templateContent)) {
-		RuntimePageUtil.processTemplate(request, response, ppid, new StringTemplateResource(templateId, templateContent), langType);
+		RuntimePageUtil.processTemplate(request, response, ppid, templateId, templateContent, langType);
 	}
 }
 else {
@@ -60,7 +60,7 @@ else {
 	String templateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
 
 	if (Validator.isNotNull(templateContent)) {
-		RuntimePageUtil.processTemplate(request, response, null, new StringTemplateResource(templateId, templateContent), LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId()));
+		RuntimePageUtil.processTemplate(request, response, null, templateId, templateContent, LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId()));
 	}
 }
 %>

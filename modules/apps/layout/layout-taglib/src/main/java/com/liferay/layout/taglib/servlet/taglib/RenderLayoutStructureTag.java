@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -752,7 +751,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				RuntimePageUtil.processTemplate(
 					originalHttpServletRequest,
 					(HttpServletResponse)pageContext.getResponse(), null,
-					new StringTemplateResource(templateId, templateContent),
+					templateId, templateContent,
 					LayoutTemplateLocalServiceUtil.getLangType(
 						layoutTypePortlet.getLayoutTemplateId(), false,
 						themeDisplay.getThemeId()));

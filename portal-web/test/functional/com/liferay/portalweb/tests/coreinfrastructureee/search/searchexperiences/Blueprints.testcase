@@ -1224,13 +1224,13 @@ definition {
 			key_searchAssetTitle = "WC",
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
-			value1 = "rgba(255, 255, 204, 1)");
+			value1 = "rgba(252, 248, 227, 1)");
 
 		AssertCssValue(
 			key_searchAssetTitle = "Title",
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
-			value1 = "rgba(255, 255, 204, 1)");
+			value1 = "rgba(252, 248, 227, 1)");
 	}
 
 	test DefineBlueprintsRolePermissions {

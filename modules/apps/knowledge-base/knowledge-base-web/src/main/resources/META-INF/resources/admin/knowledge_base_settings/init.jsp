@@ -15,4 +15,5 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-<%@ page import="com.liferay.knowledge.base.web.internal.display.context.KBArticleCompanyConfigurationDisplayContext" %>
+<%@ page import="com.liferay.knowledge.base.web.internal.display.context.KBArticleCompanyConfigurationDisplayContext" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationException" %>

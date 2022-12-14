@@ -18,6 +18,10 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.knowledge.base.configuration.KBServiceConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -43,6 +47,25 @@ public class EditKBArticleExpirationDateConfigurationMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_kbServiceConfigurationProvider.updateExpirationDateConfiguration(
+				ParamUtil.getInteger(actionRequest, "checkInterval"),
+				themeDisplay.getCompanyId(),
+				ParamUtil.getInteger(
+					actionRequest, "expirationDateNotificationDateWeeks"));
+		}
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
+
+			actionResponse.sendRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+		}
 	}
+
+	@Reference
+	private KBServiceConfigurationProvider _kbServiceConfigurationProvider;
 
 }

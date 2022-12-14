@@ -26,6 +26,8 @@ KBArticleCompanyConfigurationDisplayContext kbArticleCompanyConfigurationDisplay
 			<h2>
 				<liferay-ui:message key="knowledge-base-service-configuration-name" />
 			</h2>
+
+			<liferay-ui:error exception="<%= ConfigurationException.class %>" message="there-was-an-error-processing-one-or-more-of-the-configurations" />
 		</clay:sheet-header>
 
 		<clay:sheet-section>

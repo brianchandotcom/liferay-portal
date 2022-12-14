@@ -309,31 +309,41 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	private String _getDateValue(
-		JSONObject editableValueJSONObject, Date date, Locale locale) {
+		JSONObject editableValueJSONObject, Date date, Locale locale,
+		String type) {
+
+		String defaultDateFormat;
+
+		if (type.equals("dateType")) {
+			defaultDateFormat = _DATE_FORMAT.format(date);
+		}
+		else {
+			defaultDateFormat = _DDM_DATE_FORMAT.format(date);
+		}
 
 		if (editableValueJSONObject == null) {
-			return _DATE_FORMAT.format(date);
+			return defaultDateFormat;
 		}
 
 		JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
 			"config");
 
 		if (configJSONObject == null) {
-			return _DATE_FORMAT.format(date);
+			return defaultDateFormat;
 		}
 
 		JSONObject dateFormatJSONObject = configJSONObject.getJSONObject(
 			"dateFormat");
 
 		if (dateFormatJSONObject == null) {
-			return _DATE_FORMAT.format(date);
+			return defaultDateFormat;
 		}
 
 		String pattern = dateFormatJSONObject.getString(
 			_language.getLanguageId(locale), null);
 
 		if (Validator.isNull(pattern)) {
-			return _DATE_FORMAT.format(date);
+			return defaultDateFormat;
 		}
 
 		try {
@@ -346,7 +356,7 @@ public class FragmentEntryProcessorHelperImpl
 				_log.debug(exception);
 			}
 
-			return _DATE_FORMAT.format(date);
+			return defaultDateFormat;
 		}
 	}
 
@@ -511,9 +521,11 @@ public class FragmentEntryProcessorHelperImpl
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 						"MM/dd/yy hh:mm a", locale);
 
+					Date date = simpleDateFormat.parse(value.toString());
+
 					return _getDateValue(
-						editableValueJSONObject,
-						simpleDateFormat.parse(value.toString()), locale);
+						editableValueJSONObject, date, locale,
+						"dateInfoFieldType");
 				}
 				catch (ParseException parseException1) {
 					if (_log.isDebugEnabled()) {
@@ -526,7 +538,8 @@ public class FragmentEntryProcessorHelperImpl
 
 						return _getDateValue(
 							editableValueJSONObject,
-							simpleDateFormat.parse(value.toString()), locale);
+							simpleDateFormat.parse(value.toString()), locale,
+							"dateInfoFieldType");
 					}
 					catch (ParseException parseException2) {
 						if (_log.isDebugEnabled()) {
@@ -560,7 +573,8 @@ public class FragmentEntryProcessorHelperImpl
 		if (value instanceof Date) {
 			Date date = (Date)value;
 
-			return _getDateValue(editableValueJSONObject, date, locale);
+			return _getDateValue(
+				editableValueJSONObject, date, locale, "dateType");
 		}
 
 		Class<?> fieldValueClass = value.getClass();
@@ -579,6 +593,9 @@ public class FragmentEntryProcessorHelperImpl
 
 	private static final DateFormat _DATE_FORMAT = new SimpleDateFormat(
 		"MM/dd/yy hh:mm a", LocaleUtil.US);
+
+	private static final DateFormat _DDM_DATE_FORMAT = new SimpleDateFormat(
+		"MM/dd/yy", LocaleUtil.US);
 
 	private static final InfoCollectionTextFormatter<Object>
 		_INFO_COLLECTION_TEXT_FORMATTER =

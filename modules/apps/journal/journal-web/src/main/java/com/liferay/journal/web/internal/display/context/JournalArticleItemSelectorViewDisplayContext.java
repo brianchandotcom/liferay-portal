@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -76,7 +75,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
@@ -163,84 +161,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
-	public Map<String, Object> getJournalArticleContext(
-		JournalArticle journalArticle) {
-
-		return HashMapBuilder.<String, Object>put(
-			"returnType", InfoItemItemSelectorReturnType.class.getName()
-		).put(
-			"value",
-			() -> {
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					JournalArticle.class.getName(),
-					JournalArticleAssetRenderer.getClassPK(journalArticle));
-
-				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.fetchStructure(
-						journalArticle.getGroupId(),
-						PortalUtil.getClassNameId(JournalArticle.class),
-						journalArticle.getDDMStructureKey(), true);
-
-				return JSONUtil.put(
-					"assetEntryId", String.valueOf(assetEntry.getEntryId())
-				).put(
-					"assetType",
-					() -> {
-						AssetRendererFactory<?> assetRendererFactory =
-							AssetRendererFactoryRegistryUtil.
-								getAssetRendererFactoryByClassName(
-									JournalArticle.class.getName());
-
-						if (!assetRendererFactory.isSupportsClassTypes()) {
-							return assetRendererFactory.getTypeName(
-								_themeDisplay.getLocale(),
-								assetEntry.getClassTypeId());
-						}
-
-						ClassTypeReader classTypeReader =
-							assetRendererFactory.getClassTypeReader();
-
-						ClassType classType = classTypeReader.getClassType(
-							assetEntry.getClassTypeId(),
-							_themeDisplay.getLocale());
-
-						return classType.getName();
-					}
-				).put(
-					"className", JournalArticle.class.getName()
-				).put(
-					"classNameId",
-					PortalUtil.getClassNameId(JournalArticle.class.getName())
-				).put(
-					"classPK", journalArticle.getResourcePrimKey()
-				).put(
-					"classTypeId", _getClassTypeId(ddmStructure)
-				).put(
-					"groupDescriptiveName",
-					() -> {
-						Group group = GroupLocalServiceUtil.fetchGroup(
-							assetEntry.getGroupId());
-
-						return group.getDescriptiveName(
-							_themeDisplay.getLocale());
-					}
-				).put(
-					"subtype", _getSubtype(ddmStructure)
-				).put(
-					"title",
-					journalArticle.getTitle(_themeDisplay.getLocale(), true)
-				).put(
-					"titleMap", journalArticle.getTitleMap()
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						_themeDisplay.getLocale(),
-						JournalArticle.class.getName())
-				).toString();
-			}
-		).build();
-	}
-
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -262,6 +182,71 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		}
 
 		return journalArticle;
+	}
+
+	public String getPayload(JournalArticle journalArticle)
+		throws PortalException {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			JournalArticle.class.getName(),
+			JournalArticleAssetRenderer.getClassPK(journalArticle));
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+			journalArticle.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			journalArticle.getDDMStructureKey(), true);
+
+		return JSONUtil.put(
+			"assetEntryId", String.valueOf(assetEntry.getEntryId())
+		).put(
+			"assetType",
+			() -> {
+				AssetRendererFactory<?> assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							JournalArticle.class.getName());
+
+				if (!assetRendererFactory.isSupportsClassTypes()) {
+					return assetRendererFactory.getTypeName(
+						_themeDisplay.getLocale(), assetEntry.getClassTypeId());
+				}
+
+				ClassTypeReader classTypeReader =
+					assetRendererFactory.getClassTypeReader();
+
+				ClassType classType = classTypeReader.getClassType(
+					assetEntry.getClassTypeId(), _themeDisplay.getLocale());
+
+				return classType.getName();
+			}
+		).put(
+			"className", JournalArticle.class.getName()
+		).put(
+			"classNameId",
+			PortalUtil.getClassNameId(JournalArticle.class.getName())
+		).put(
+			"classPK", journalArticle.getResourcePrimKey()
+		).put(
+			"classTypeId", _getClassTypeId(ddmStructure)
+		).put(
+			"groupDescriptiveName",
+			() -> {
+				Group group = GroupLocalServiceUtil.fetchGroup(
+					assetEntry.getGroupId());
+
+				return group.getDescriptiveName(_themeDisplay.getLocale());
+			}
+		).put(
+			"subtype", _getSubtype(ddmStructure)
+		).put(
+			"title", journalArticle.getTitle(_themeDisplay.getLocale(), true)
+		).put(
+			"titleMap", journalArticle.getTitleMap()
+		).put(
+			"type",
+			ResourceActionsUtil.getModelResource(
+				_themeDisplay.getLocale(), JournalArticle.class.getName())
+		).toString();
 	}
 
 	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
@@ -332,6 +317,10 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		).setParameter(
 			"selectedTab", _getTitle(_httpServletRequest.getLocale())
 		).buildPortletURL();
+	}
+
+	public String getReturnType() {
+		return InfoItemItemSelectorReturnType.class.getName();
 	}
 
 	public SearchContainer<?> getSearchContainer() throws Exception {

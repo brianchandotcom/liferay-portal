@@ -70,6 +70,24 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		});
 	}
 
+	public abandon(task: TestrayTask) {
+		return this.update(task.id, {
+			dueStatus: TaskStatuses.ABANDONED,
+			name: task.name,
+		});
+	}
+
+	public async assignTo(task: TestrayTask, userIds: number[]) {
+		const response = await this.update(task.id, {
+			dueStatus: TaskStatuses.IN_ANALYSIS,
+			name: task.name as string,
+		});
+
+		await this.assignUsers(task.id, userIds);
+
+		return response;
+	}
+
 	private async assignUsers(taskId: number, userIds: number[]) {
 		let response = await testrayTaskUsersImpl.getAll(
 			searchUtil.eq('taskId', taskId)
@@ -110,22 +128,12 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		}
 	}
 
-	public async assignTo(task: TestrayTask, userIds: number[]) {
-		const response = await this.update(task.id, {
-			dueStatus: TaskStatuses.IN_ANALYSIS,
-			name: task.name as string,
-		});
-
-		await this.assignUsers(task.id, userIds);
-
-		return response;
+	protected async beforeCreate(task: TaskForm): Promise<void> {
+		await this.validate(task);
 	}
 
-	public abandon(task: TestrayTask) {
-		return this.update(task.id, {
-			dueStatus: TaskStatuses.ABANDONED,
-			name: task.name,
-		});
+	protected async beforeUpdate(id: number, task: TaskForm): Promise<void> {
+		await this.validate(task, id);
 	}
 
 	public complete(task: TestrayTask) {
@@ -133,32 +141,6 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			dueStatus: TaskStatuses.COMPLETE,
 			name: task.name,
 		});
-	}
-
-	public getTasksByBuildId(buildId: number) {
-		return this.fetcher<APIResponse<TestrayTask>>(
-			`/tasks?filter=${searchUtil.eq('buildId', buildId)}`
-		);
-	}
-
-	protected async validate(task: TaskForm, id?: number) {
-		const searchBuilder = new SearchBuilder();
-
-		if (id) {
-			searchBuilder.ne('id', id).and();
-		}
-
-		const filter = searchBuilder.eq('name', task.name).build();
-
-		const response = await this.fetcher<APIResponse<TestrayTask>>(
-			`/tasks?filter=${filter}`
-		);
-
-		if (response?.totalCount) {
-			throw new TestrayError(
-				i18n.sub('the-x-name-already-exists', 'tasks')
-			);
-		}
 	}
 
 	public async create(data: TaskForm): Promise<TestrayTask> {
@@ -202,12 +184,43 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		return {...task, dispatchTriggerId};
 	}
 
-	protected async beforeCreate(task: TaskForm): Promise<void> {
-		await this.validate(task);
+	public getTasksByBuildId(buildId: number) {
+		return this.fetcher<APIResponse<TestrayTask>>(
+			`/tasks?filter=${searchUtil.eq('buildId', buildId)}`
+		);
 	}
 
-	protected async beforeUpdate(id: number, task: TaskForm): Promise<void> {
-		await this.validate(task, id);
+	public async update(
+		id: number,
+		data: Partial<TaskForm>
+	): Promise<TestrayTask> {
+		const task = await super.update(id, data);
+
+		if (data.dueStatus === TaskStatuses.IN_ANALYSIS) {
+			await this.assignUsers(id, data.userIds as number[]);
+		}
+
+		return task;
+	}
+
+	protected async validate(task: TaskForm, id?: number) {
+		const searchBuilder = new SearchBuilder();
+
+		if (id) {
+			searchBuilder.ne('id', id).and();
+		}
+
+		const filter = searchBuilder.eq('name', task.name).build();
+
+		const response = await this.fetcher<APIResponse<TestrayTask>>(
+			`/tasks?filter=${filter}`
+		);
+
+		if (response?.totalCount) {
+			throw new TestrayError(
+				i18n.sub('the-x-name-already-exists', 'tasks')
+			);
+		}
 	}
 }
 

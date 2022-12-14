@@ -14,16 +14,14 @@
 
 package com.liferay.portal.search.internal.reindexer;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.search.spi.reindexer.BulkReindexer;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author André de Oliveira
@@ -33,49 +31,20 @@ public class BulkReindexersRegistryImpl implements BulkReindexersRegistry {
 
 	@Override
 	public BulkReindexer getBulkReindexer(String className) {
-		return _get(className);
+		return _serviceTrackerMap.getService(className);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		service = BulkReindexer.class
-	)
-	protected void addBulkReindexer(
-		BulkReindexer bulkReindexer, Map<?, ?> properties) {
-
-		Object object = properties.get("indexer.class.name");
-
-		if (object != null) {
-			_put(object.toString(), bulkReindexer);
-		}
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, BulkReindexer.class, "indexer.class.name");
 	}
 
-	protected void removeBulkReindexer(
-		BulkReindexer bulkReindexer, Map<?, ?> properties) {
-
-		Object object = properties.get("indexer.class.name");
-
-		if (object != null) {
-			_remove(object.toString());
-		}
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private synchronized BulkReindexer _get(String className) {
-		return _map.get(className);
-	}
-
-	private synchronized void _put(
-		String className, BulkReindexer bulkReindexer) {
-
-		_map.put(className, bulkReindexer);
-	}
-
-	private synchronized void _remove(String className) {
-		_map.remove(className);
-	}
-
-	private final Map<String, BulkReindexer> _map = new HashMap<>();
+	private ServiceTrackerMap<String, BulkReindexer> _serviceTrackerMap;
 
 }

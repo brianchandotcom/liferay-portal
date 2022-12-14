@@ -77,7 +77,6 @@
 		</action>
 
 		<action path="/portal/update_language" type="com.liferay.portal.action.UpdateLanguageAction" />
-		<action path="/portal/update_layout" type="com.liferay.portal.action.UpdateLayoutAction" />
 
 		<action path="/portal/update_password" type="com.liferay.portal.action.UpdatePasswordAction">
 			<forward name="portal.update_password" path="portal.update_password" />

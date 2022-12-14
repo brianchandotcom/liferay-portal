@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.action;
+package com.liferay.layout.internal.struts;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.action.RenderPortletAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -55,7 +57,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.struts.Action;
-import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
 
@@ -64,13 +65,18 @@ import javax.portlet.PortletPreferences;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class UpdateLayoutAction extends JSONAction {
+@Component(
+	property = "path=/portal/update_layout", service = StrutsAction.class
+)
+public class UpdateLayoutStrutsAction implements StrutsAction {
 
 	@Override
-	public String getJSON(
+	public String execute(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {

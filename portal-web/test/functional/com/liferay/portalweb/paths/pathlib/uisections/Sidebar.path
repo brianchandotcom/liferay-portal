@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>LINK</td>
-	<td>//div[contains(@class,'sidenav-menu-slider') and not(contains(@class,'closed'))] //a[not(contains(@class,'btn')) and contains(text(),'${key_textValue}')]</td>
+	<td>//div[(contains(@class,'sidenav-menu-slider') or contains(@class,'sidebar-sm')) and not(contains(@class,'closed'))] //a[not(contains(@class,'btn')) and contains(text(),'${key_textValue}')]</td>
 	<td></td>
 </tr>
 <tr>

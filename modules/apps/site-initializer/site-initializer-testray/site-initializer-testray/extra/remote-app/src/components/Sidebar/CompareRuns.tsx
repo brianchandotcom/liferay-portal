@@ -16,6 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {useNavigate} from 'react-router-dom';
 
+import i18n from '../../i18n';
+
 const CompareRun = () => {
 	const navigate = useNavigate();
 
@@ -23,18 +25,18 @@ const CompareRun = () => {
 		<div>
 			<ClayLayout.Row>
 				<ClayLayout.Col>
-					<label htmlFor="runA">Run A</label>
+					<label>{i18n.translate('run-a')}</label>
 
 					<ClayButton block disabled displayType="secondary">
-						Add Run A
+						{i18n.translate('add-run-a')}
 					</ClayButton>
 				</ClayLayout.Col>
 
 				<ClayLayout.Col>
-					<label htmlFor="runB">Run B</label>
+					<label>{i18n.translate('run-b')}</label>
 
 					<ClayButton block disabled displayType="secondary">
-						Add Run B
+						{i18n.translate('add-run-b')}
 					</ClayButton>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
@@ -45,21 +47,23 @@ const CompareRun = () => {
 						displayType="secondary"
 						onClick={() => navigate('compare-runs')}
 					>
-						Compare Runs
+						{i18n.translate('compare-runs')}
 					</ClayButton>
 
 					<ClayButton disabled displayType="secondary">
-						Auto Fill Runs
+						{i18n.sub('auto-fill-x', 'runs')}
 					</ClayButton>
 
 					<ClayButton disabled displayType="secondary">
-						Auto Fill Builds
+						{i18n.sub('auto-fill-x', 'builds')}
 					</ClayButton>
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 
 			<div className="d-flex justify-content-end">
-				<ClayButton displayType="secondary">Clear</ClayButton>
+				<ClayButton displayType="secondary">
+					{i18n.translate('clear')}
+				</ClayButton>
 			</div>
 		</div>
 	);

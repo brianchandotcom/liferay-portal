@@ -16,8 +16,6 @@ import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../../../../components/Layout/Container';
 import ListViewRest from '../../../../../../components/ListView';
-
-import {} from '../../../../../../context/AccountContext';
 import i18n from '../../../../../../i18n';
 import {filters} from '../../../../../../schema/filter';
 import {testrayRunImpl} from '../../../../../../services/rest';
@@ -26,8 +24,8 @@ import RunFormModal from './RunFormModal';
 import useRunActions from './useRunActions';
 
 interface BuildOutlet {
-	runId: Number | undefined;
-	setRunId: React.Dispatch<React.SetStateAction<Number | undefined>>;
+	runId?: number;
+	setRunId: React.Dispatch<React.SetStateAction<Number>>;
 }
 
 const Runs = () => {
@@ -60,19 +58,17 @@ const Runs = () => {
 						{
 							clickable: true,
 							key: 'applicationServer',
-							render: (applicationServer, item) => {
-								return (
-									<div
-										onClick={() => {
-											setRunId(item.id);
+							render: (applicationServer, run) => (
+								<div
+									onClick={() => {
+										setRunId(run.id);
 
-											return navigate('..');
-										}}
-									>
-										{applicationServer}
-									</div>
-								);
-							},
+										navigate('..');
+									}}
+								>
+									{applicationServer}
+								</div>
+							),
 							value: i18n.translate('application-server'),
 						},
 						{

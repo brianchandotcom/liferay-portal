@@ -83,7 +83,9 @@ const Sidebar = () => {
 						header={i18n.translate('compare-runs')}
 						trigger={
 							<div>
-								{!expanded ? (
+								{expanded ? (
+									CompareRunsContent
+								) : (
 									<Tooltip
 										position="right"
 										ref={tooltipRef}
@@ -91,8 +93,6 @@ const Sidebar = () => {
 									>
 										{CompareRunsContent}
 									</Tooltip>
-								) : (
-									CompareRunsContent
 								)}
 							</div>
 						}

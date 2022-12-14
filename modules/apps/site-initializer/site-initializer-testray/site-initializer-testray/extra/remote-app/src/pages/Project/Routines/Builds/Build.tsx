@@ -32,9 +32,9 @@ import {
 import {SearchBuilder} from '../../../../util/search';
 import useBuildTestActions from './useBuildTestActions';
 
-interface OutletContext {
+type OutletContext = {
 	runId: number | undefined;
-}
+};
 
 const Build = () => {
 	const {buildId} = useParams();
@@ -44,7 +44,7 @@ const Build = () => {
 
 	const caseResultFilter = new SearchBuilder();
 
-	const filtersTest = runId
+	const filter = runId
 		? caseResultFilter
 				.eq('buildId', buildId as string)
 				.and()
@@ -171,7 +171,7 @@ const Build = () => {
 					testrayCaseResultImpl.transformDataFromList(response)
 				}
 				variables={{
-					filter: filtersTest,
+					filter,
 				}}
 			/>
 		</Container>

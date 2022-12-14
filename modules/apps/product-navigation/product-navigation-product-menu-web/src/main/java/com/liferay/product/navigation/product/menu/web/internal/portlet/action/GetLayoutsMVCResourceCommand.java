@@ -14,6 +14,7 @@
 
 package com.liferay.product.navigation.product.menu.web.internal.portlet.action;
 
+import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 
@@ -104,7 +104,7 @@ public class GetLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 			).put(
 				"items",
 				_jsonFactory.createJSONArray(
-					LayoutsTreeUtil.getLayoutsJSON(
+					_layoutsTree.getLayoutsJSON(
 						httpServletRequest, themeDisplay.getScopeGroupId(),
 						privateLayout, parentLayoutId, incomplete,
 						"productMenuPagesTree"))
@@ -116,6 +116,9 @@ public class GetLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutsTree _layoutsTree;
 
 	@Reference
 	private Portal _portal;

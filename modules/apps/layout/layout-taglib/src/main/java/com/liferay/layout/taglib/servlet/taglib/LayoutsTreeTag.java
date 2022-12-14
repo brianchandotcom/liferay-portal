@@ -15,9 +15,12 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
@@ -359,6 +362,26 @@ public class LayoutsTreeTag extends IncludeTag {
 			String.valueOf(_incomplete));
 		httpServletRequest.setAttribute(
 			"liferay-layout:layouts-tree:layoutSetBranch", _layoutSetBranch);
+
+		LayoutsTree layoutsTree = ServletContextUtil.getLayoutsTree();
+
+		long[] openNodes = StringUtil.split(
+			SessionTreeJSClicks.getOpenNodes(httpServletRequest, _treeId), 0L);
+
+		try {
+			httpServletRequest.setAttribute(
+				"liferay-layout:layouts-tree:layouts",
+				layoutsTree.getLayoutsJSON(
+					httpServletRequest, _groupId, _privateLayout,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true,
+					_treeId, _layoutSetBranch));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
 		httpServletRequest.setAttribute(
 			"liferay-layout:layouts-tree:linkTemplate",
 			String.valueOf(_linkTemplate));
@@ -408,6 +431,8 @@ public class LayoutsTreeTag extends IncludeTag {
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private static final String _PAGE = "/layouts_tree/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(LayoutsTreeTag.class);
 
 	private boolean _checkContentDisplayPage;
 	private boolean _defaultStateChecked;

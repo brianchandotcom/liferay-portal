@@ -14,16 +14,17 @@
 
 package com.liferay.layout.internal.struts;
 
+import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -52,7 +53,7 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 		else if (cmd.equals("getAll")) {
 			ServletResponseUtil.write(
 				httpServletResponse,
-				LayoutsTreeUtil.getLayoutsJSON(
+				_layoutsTree.getLayoutsJSON(
 					httpServletRequest, groupId, treeId));
 		}
 		else if (cmd.equals("getSiblingLayoutsJSON")) {
@@ -75,7 +76,7 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 		boolean incomplete = ParamUtil.getBoolean(
 			httpServletRequest, "incomplete", true);
 
-		return LayoutsTreeUtil.getLayoutsJSON(
+		return _layoutsTree.getLayoutsJSON(
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
 			incomplete, treeId);
 	}
@@ -89,8 +90,11 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 		long layoutId = ParamUtil.getLong(httpServletRequest, "layoutId");
 		int max = ParamUtil.getInteger(httpServletRequest, "max");
 
-		return LayoutsTreeUtil.getLayoutsJSON(
+		return _layoutsTree.getLayoutsJSON(
 			httpServletRequest, groupId, privateLayout, layoutId, max);
 	}
+
+	@Reference
+	private LayoutsTree _layoutsTree;
 
 }

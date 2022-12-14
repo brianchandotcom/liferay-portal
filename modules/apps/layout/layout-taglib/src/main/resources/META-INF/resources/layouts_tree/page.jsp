@@ -20,11 +20,8 @@
 String namespace = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse);
 
 boolean draggableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:draggableTree"));
-long groupId = GetterUtil.getLong((String)request.getAttribute("liferay-layout:layouts-tree:groupId"));
-LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("liferay-layout:layouts-tree:layoutSetBranch");
 String linkTemplate = (String)request.getAttribute("liferay-layout:layouts-tree:linkTemplate");
 JSONArray portletURLsJSONArray = (JSONArray)request.getAttribute("liferay-layout:layouts-tree:portletURLsJSONArray");
-boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:privateLayout"));
 String rootLinkTemplate = (String)request.getAttribute("liferay-layout:layouts-tree:rootLinkTemplate");
 String rootNodeName = (String)request.getAttribute("liferay-layout:layouts-tree:rootNodeName");
 Long selPlid = (Long)request.getAttribute("liferay-layout:layouts-tree:selPlid");
@@ -70,12 +67,7 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 	var treeview = new TreeViewType({
 		boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
 		incomplete: <%= GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:incomplete")) %>,
-
-		<%
-		long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
-		%>
-
-		layouts: <%= LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId, layoutSetBranch) %>,
+		layouts: <%= (String)request.getAttribute("liferay-layout:layouts-tree:layouts") %>,
 
 		<c:if test="<%= Validator.isNotNull(linkTemplate) %>">
 			linkTemplate: '<%= HtmlUtil.escapeJS(linkTemplate) %>',
@@ -97,14 +89,14 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 		root: {
 			defaultParentLayoutId: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
 			expand: <%= GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:expandFirstNode")) %>,
-			groupId: <%= groupId %>,
+			groupId: <%= GetterUtil.getLong((String)request.getAttribute("liferay-layout:layouts-tree:groupId")) %>,
 			label: '<%= HtmlUtil.escapeJS(rootNodeName) %>',
 
 			<c:if test="<%= Validator.isNotNull(rootLinkTemplate) %>">
 				linkTemplate: '<%= HtmlUtil.escapeJS(rootLinkTemplate) %>',
 			</c:if>
 
-			privateLayout: <%= privateLayout %>,
+			privateLayout: <%= GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:privateLayout")) %>,
 		},
 
 		<c:if test="<%= selPlid != null %>">

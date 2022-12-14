@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutService;
@@ -113,8 +114,9 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 
 		LayoutsTreeDisplayContext layoutsTreeDisplayContext =
 			new LayoutsTreeDisplayContext(
-				httpServletRequest, _language, _layoutService, renderRequest,
-				renderResponse, _siteNavigationMenuItemLocalService,
+				httpServletRequest, _language, _layoutService, _layoutsTree,
+				renderRequest, renderResponse,
+				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService);
 
@@ -131,6 +133,9 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutsTree _layoutsTree;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

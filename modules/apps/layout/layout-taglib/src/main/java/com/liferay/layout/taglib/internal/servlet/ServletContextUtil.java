@@ -28,6 +28,7 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
+import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.SegmentsEntryRetriever;
@@ -109,6 +110,10 @@ public class ServletContextUtil {
 
 	public static LayoutListRetrieverRegistry getLayoutListRetrieverRegistry() {
 		return _layoutListRetrieverRegistry;
+	}
+
+	public static LayoutsTree getLayoutsTree() {
+		return _layoutsTree;
 	}
 
 	public static LayoutStructureProvider getLayoutStructureHelper() {
@@ -251,6 +256,11 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setLayoutsTree(LayoutsTree layoutsTree) {
+		_layoutsTree = layoutsTree;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutStructureHelper(
 		LayoutStructureProvider layoutStructureProvider) {
 
@@ -310,6 +320,7 @@ public class ServletContextUtil {
 	private static LayoutDisplayPageProviderRegistry
 		_layoutDisplayPageProviderRegistry;
 	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
+	private static LayoutsTree _layoutsTree;
 	private static LayoutStructureProvider _layoutStructureProvider;
 	private static ListObjectReferenceFactoryRegistry
 		_listObjectReferenceFactoryRegistry;

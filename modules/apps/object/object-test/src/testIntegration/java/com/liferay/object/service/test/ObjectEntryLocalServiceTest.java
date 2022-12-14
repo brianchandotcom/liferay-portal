@@ -173,49 +173,49 @@ public class ObjectEntryLocalServiceTest {
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()));
 
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey1",
 			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 1"));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey2",
 			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 2"));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey3",
 			Collections.singletonMap(LocaleUtil.US, "List Type Entry Key 3"));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			"multipleListTypeEntryKey1",
 			Collections.singletonMap(
 				LocaleUtil.US, "Multiple List Type Entry Key 1"));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			"multipleListTypeEntryKey2",
 			Collections.singletonMap(
 				LocaleUtil.US, "Multiple List Type Entry Key 2"));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			"multipleListTypeEntryKey3",
 			Collections.singletonMap(
 				LocaleUtil.US, "Multiple List Type Entry Key 3"));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			"multipleListTypeEntryKey4",
 			Collections.singletonMap(
 				LocaleUtil.US, "Multiple List Type Entry Key 4"));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			"multipleListTypeEntryKey5",
 			Collections.singletonMap(
 				LocaleUtil.US, "Multiple List Type Entry Key 5"));
 		_listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			"multipleListTypeEntryKey6",
 			Collections.singletonMap(

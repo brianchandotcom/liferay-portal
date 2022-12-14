@@ -82,6 +82,18 @@ public class ListTypeEntryResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLGetListTypeEntryByExternalReferenceCode() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetListTypeEntryByExternalReferenceCodeNotFound() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLGetListTypeEntryNotFound() throws Exception {
 	}
 
@@ -117,6 +129,14 @@ public class ListTypeEntryResourceTest
 	}
 
 	@Override
+	protected ListTypeEntry
+			testGetListTypeEntryByExternalReferenceCode_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
+	@Override
 	protected ListTypeEntry testGraphQLListTypeEntry_addListTypeEntry()
 		throws Exception {
 
@@ -125,6 +145,22 @@ public class ListTypeEntryResourceTest
 
 	@Override
 	protected ListTypeEntry testPutListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
+	@Override
+	protected ListTypeEntry
+			testPutListTypeEntryByExternalReferenceCode_addListTypeEntry()
+		throws Exception {
+
+		return _addListTypeEntry();
+	}
+
+	@Override
+	protected ListTypeEntry
+			testPutListTypeEntryByExternalReferenceCode_createListTypeEntry()
 		throws Exception {
 
 		return _addListTypeEntry();

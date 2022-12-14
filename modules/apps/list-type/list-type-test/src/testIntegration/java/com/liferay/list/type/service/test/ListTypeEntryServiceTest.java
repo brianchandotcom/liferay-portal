@@ -154,7 +154,7 @@ public class ListTypeEntryServiceTest {
 
 	private ListTypeEntry _addListTypeEntry(User user) throws Exception {
 		return _listTypeEntryLocalService.addListTypeEntry(
-			RandomTestUtil.randomString(), user.getUserId(),
+			null, user.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(

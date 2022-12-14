@@ -50,8 +50,6 @@ definition {
 	test CheckABTestingClosedAfterLogout {
 		task ("Open Content Performance panel") {
 			ABTest.openABTestPanel();
-
-			WaitForElementPresent(locator1 = "ABTest#AB_TEST_SIDE_BAR");
 		}
 
 		task ("Logout and login") {

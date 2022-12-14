@@ -1,0 +1,49 @@
+definition {
+
+	macro setContentMap {
+		if (isSet(contentMap)) {
+			var localizedMap = "{";
+
+			for (var i : list "${contentMap}") {
+				var locale = StringUtil.extractFirst("${i}", ":");
+				var translated = StringUtil.extractLast("${i}", ":");
+
+				var localizedMap = "${localizedMap}\"${locale}\":{\"data\":\"${translated}\"},";
+			}
+
+			// Replace last comma with }
+
+			var localizedMap = RegexUtil.replace("${localizedMap}", "(.*)(?=,)", "1");
+
+			var contentMap = "${localizedMap}}";
+		}
+		else {
+			var contentMap = "{}";
+		}
+
+		return "${contentMap}";
+	}
+
+	macro setDescriptionMap {
+		if (isSet(descriptionMap)) {
+			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");
+		}
+		else {
+			var descriptionMap = "{}";
+		}
+
+		return "${descriptionMap}";
+	}
+
+	macro setTitleMap {
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+			var titleMap = "{}";
+		}
+
+		return "${titleMap}";
+	}
+
+}

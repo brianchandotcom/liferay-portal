@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>ClayAlertToast</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ClayAlertToast</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ALERT_STATIC</td>
+	<td>//div[@class='alert alert-${key_alertType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_STATIC_ICON</td>
+	<td>//div[@class='alert alert-${key_alertType}']//*[@class='lexicon-icon lexicon-icon-${key_icon}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_STATIC_BOLD</td>
+	<td>//div[@class='alert alert-${key_alertType}']//strong[contains(@class,'lead') and contains(text(), '${key_alertBold}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_TOAST_ICON</td>
+	<td>//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-${key_icon}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

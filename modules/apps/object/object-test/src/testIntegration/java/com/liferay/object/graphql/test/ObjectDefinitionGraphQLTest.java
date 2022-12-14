@@ -408,7 +408,7 @@ public class ObjectDefinitionGraphQLTest {
 		throws Exception {
 
 		ListTypeEntryLocalServiceUtil.addListTypeEntry(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			listTypeDefinition.getListTypeDefinitionId(), key,
 			LocalizedMapUtil.getLocalizedMap(key));
 	}

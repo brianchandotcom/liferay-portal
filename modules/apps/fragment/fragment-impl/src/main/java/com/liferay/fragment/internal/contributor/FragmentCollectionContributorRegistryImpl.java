@@ -24,7 +24,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
-import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
@@ -51,6 +50,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Jürgen Kappler
@@ -208,7 +208,7 @@ public class FragmentCollectionContributorRegistryImpl
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, FragmentCollectionContributor.class,
 			"fragment.collection.key",
-			new FragmentCollectionContributorEagerServiceTrackerCustomizer(
+			new FragmentCollectionContributorServiceTrackerCustomizer(
 				bundleContext));
 	}
 
@@ -321,8 +321,8 @@ public class FragmentCollectionContributorRegistryImpl
 
 	}
 
-	private class FragmentCollectionContributorEagerServiceTrackerCustomizer
-		implements EagerServiceTrackerCustomizer
+	private class FragmentCollectionContributorServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
 			<FragmentCollectionContributor, FragmentCollectionBag> {
 
 		@Override
@@ -379,7 +379,7 @@ public class FragmentCollectionContributorRegistryImpl
 			_bundleContext.ungetService(serviceReference);
 		}
 
-		private FragmentCollectionContributorEagerServiceTrackerCustomizer(
+		private FragmentCollectionContributorServiceTrackerCustomizer(
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;

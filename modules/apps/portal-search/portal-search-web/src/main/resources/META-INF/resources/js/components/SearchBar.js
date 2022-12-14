@@ -56,11 +56,14 @@ export default function SearchBar({
 	const alignElementRef = useRef();
 	const dropdownRef = useRef();
 
-	// If the blueprint suggestions contributor does not set its own threshold,
-	// the suggestions display threshold will default to the global one.
+	/**
+	 * Returns the lowest suggestions display threshold available.
+	 * If no blueprint suggestions contributor sets its own threshold,
+	 * this value will default to the global one.
+	 */
 
 	const _getLowestSuggestionsDisplayThreshold = useCallback(() => {
-		const characterThresholds = JSON.parse(
+		const characterThresholdArray = JSON.parse(
 			suggestionsContributorConfiguration
 		)
 			.filter((config) => config.attributes?.characterThreshold)
@@ -68,8 +71,8 @@ export default function SearchBar({
 				parseInt(config.attributes.characterThreshold, 10)
 			);
 
-		return characterThresholds.length
-			? Math.min(...characterThresholds)
+		return characterThresholdArray.length
+			? Math.min(...characterThresholdArray)
 			: parseInt(suggestionsDisplayThreshold, 10);
 	}, [suggestionsContributorConfiguration, suggestionsDisplayThreshold]);
 

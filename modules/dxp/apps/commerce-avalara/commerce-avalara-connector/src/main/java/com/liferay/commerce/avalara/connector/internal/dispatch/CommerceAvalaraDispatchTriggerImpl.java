@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Katie Nesterovich
  */
-@Component(immediate = true, service = CommerceAvalaraDispatchTrigger.class)
+@Component(service = CommerceAvalaraDispatchTrigger.class)
 public class CommerceAvalaraDispatchTriggerImpl
 	implements CommerceAvalaraDispatchTrigger {
 

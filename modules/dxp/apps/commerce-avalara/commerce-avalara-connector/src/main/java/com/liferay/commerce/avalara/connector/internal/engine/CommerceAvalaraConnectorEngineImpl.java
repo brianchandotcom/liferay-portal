@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  * @author Katie Nesterovich
  */
-@Component(immediate = true, service = CommerceAvalaraConnectorEngine.class)
+@Component(service = CommerceAvalaraConnectorEngine.class)
 public class CommerceAvalaraConnectorEngineImpl
 	implements CommerceAvalaraConnectorEngine {
 

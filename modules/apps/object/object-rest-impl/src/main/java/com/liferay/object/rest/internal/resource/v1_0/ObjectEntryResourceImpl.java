@@ -462,6 +462,26 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectDefinition.getObjectDefinitionId();
 	}
 
+	@Override
+	protected void preparePatch(
+		ObjectEntry objectEntry, ObjectEntry existingObjectEntry) {
+
+		if (objectEntry.getProperties() != null) {
+			existingObjectEntry.setProperties(
+				() -> {
+					ObjectEntry getObjectEntry = getObjectEntry(
+						existingObjectEntry.getId());
+
+					Map<String, Object> properties =
+						getObjectEntry.getProperties();
+
+					properties.putAll(objectEntry.getProperties());
+
+					return properties;
+				});
+		}
+	}
+
 	private void _executeObjectAction(
 			String objectActionName, ObjectEntry objectEntry)
 		throws Exception {

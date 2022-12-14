@@ -12,25 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.action;
+package com.liferay.layout.internal.struts;
 
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.struts.JSONAction;
 import com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Lundgren
  * @author Zsolt Szabó
  * @author Tibor Lipusz
  */
-public class GetLayoutsAction extends JSONAction {
+@Component(property = "path=/portal/get_layouts", service = StrutsAction.class)
+public class GetLayoutsStrutsAction implements StrutsAction {
 
 	@Override
-	public String getJSON(
+	public String execute(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -41,14 +45,20 @@ public class GetLayoutsAction extends JSONAction {
 		String treeId = ParamUtil.getString(httpServletRequest, "treeId");
 
 		if (cmd.equals("get")) {
-			return getLayoutsJSON(httpServletRequest, groupId, treeId);
+			ServletResponseUtil.write(
+				httpServletResponse,
+				getLayoutsJSON(httpServletRequest, groupId, treeId));
 		}
 		else if (cmd.equals("getAll")) {
-			return LayoutsTreeUtil.getLayoutsJSON(
-				httpServletRequest, groupId, treeId);
+			ServletResponseUtil.write(
+				httpServletResponse,
+				LayoutsTreeUtil.getLayoutsJSON(
+					httpServletRequest, groupId, treeId));
 		}
 		else if (cmd.equals("getSiblingLayoutsJSON")) {
-			return getSiblingLayoutsJSON(httpServletRequest, groupId);
+			ServletResponseUtil.write(
+				httpServletResponse,
+				getSiblingLayoutsJSON(httpServletRequest, groupId));
 		}
 
 		return null;

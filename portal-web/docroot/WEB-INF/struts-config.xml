@@ -27,7 +27,6 @@
 		<action forward="portal.error" path="/portal/error" />
 		<action forward="/portal/expire_session.jsp" path="/portal/expire_session" />
 		<action forward="/portal/extend_session.jsp" path="/portal/extend_session" />
-		<action path="/portal/get_layouts" type="com.liferay.portal.action.GetLayoutsAction" />
 		<action forward="/portal/j_login.jsp" path="/portal/j_login" />
 		<action forward="portal.j_login_error" path="/portal/j_login_error" />
 		<action path="/portal/json_service" type="com.liferay.portal.action.JSONServiceAction" />

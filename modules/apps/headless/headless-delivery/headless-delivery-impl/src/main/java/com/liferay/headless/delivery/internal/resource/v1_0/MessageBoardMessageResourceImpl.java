@@ -34,6 +34,7 @@ import com.liferay.message.boards.util.comparator.MessageSubjectComparator;
 import com.liferay.message.boards.util.comparator.MessageURLSubjectComparator;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -70,6 +71,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -343,6 +345,25 @@ public class MessageBoardMessageResourceImpl
 			).build(),
 			null, siteId, flatten, search, aggregation, filter, pagination,
 			sorts);
+	}
+
+	public Page<MessageBoardMessage>
+	getSiteUserMessageBoardMessagesActivityPage(
+		Long siteId, Long userId, Pagination pagination)
+		throws Exception {
+
+		int start = QueryUtil.ALL_POS;
+		int end = QueryUtil.ALL_POS;
+
+		if (pagination != null) {
+			start = pagination.getStartPosition();
+			end = pagination.getEndPosition();
+		}
+
+		return Page.of(
+			transform(_mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(siteId,userId,start,end),
+				this::_toMessageBoardMessage), pagination,
+			_mbMessageLocalService.getSiteUserMessageBoardMessagesActivityCount(siteId,userId));
 	}
 
 	@Override

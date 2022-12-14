@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.action;
+package com.liferay.layout.internal.struts;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -25,27 +25,28 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.struts.Action;
-import com.liferay.portal.struts.model.ActionForward;
-import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author David Truong
  */
-public class RobotsAction implements Action {
+@Component(property = "path=/portal/robots", service = StrutsAction.class)
+public class RobotsStrutsAction implements StrutsAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+	public String execute(
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
@@ -96,6 +97,7 @@ public class RobotsAction implements Action {
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(RobotsAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		RobotsStrutsAction.class);
 
 }

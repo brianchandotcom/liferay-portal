@@ -50,7 +50,6 @@
 		</action>
 
 		<action path="/portal/rest_proxy" type="com.liferay.portal.action.RESTProxyAction" />
-		<action path="/portal/robots" type="com.liferay.portal.action.RobotsAction" />
 		<action path="/portal/session_click" type="com.liferay.portal.action.SessionClickAction" />
 
 		<action path="/portal/setup_wizard" type="com.liferay.portal.action.SetupWizardAction">

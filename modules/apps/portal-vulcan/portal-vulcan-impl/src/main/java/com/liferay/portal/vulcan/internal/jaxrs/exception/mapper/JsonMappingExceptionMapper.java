@@ -48,9 +48,7 @@ public class JsonMappingExceptionMapper
 		);
 
 		return new Problem(
-			jsonMappingException.getLocalizedMessage(),
-			Response.Status.BAD_REQUEST, "Unable to map JSON path: " + path,
-			"JsonMappingException");
+			Response.Status.BAD_REQUEST, "Unable to map JSON path: " + path);
 	}
 
 }

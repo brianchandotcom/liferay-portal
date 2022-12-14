@@ -254,7 +254,7 @@ definition {
 			Button.clickSave();
 		}
 
-		WaitForSPARefresh();
+		Alert.viewSuccessMessage();
 	}
 
 	macro addObjectRelationshipViaAPI {

@@ -106,6 +106,52 @@ function refresh_sample_minimal_workspace {
 
 	../tools/create_remote_app.sh fox-remote-app react
 
+	#
+	# fox-remote-app/src/common/components/Joke.js
+	#
+
+	mkdir -p fox-remote-app/src/common/components
+
+	cat <<EOF > fox-remote-app/src/common/components/Joke.js
+import React from 'react';
+
+class Joke extends React.Component {
+	constructor(props) {
+		super(props);
+		this.oAuth2Client = props.oAuth2Client;
+		this.state = {
+			joke: ""
+		};
+	}
+
+	componentDidMount() {
+		this._jokeRequest = this.oAuth2Client.fetch(
+			'/dadjoke'
+		).then(res => res.text()
+		).then(text => {
+			this._jokeRequest = null;
+			this.setState({joke: text});
+		});
+	}
+
+	componentWillUnmount() {
+		if (this._jokeRequest) {
+			this._jokeRequest.cancel();
+		}
+	}
+
+	render() {
+		if (this.state.joke === null) {
+			return <div>Loading...</div>
+		} else {
+			return <div>{this.state.joke}</div>
+		}
+	}
+}
+
+export default Joke;
+EOF
+
 	mv fox-remote-app sample-minimal-workspace/client-extensions
 
 	#

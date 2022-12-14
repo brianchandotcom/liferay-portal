@@ -15,9 +15,19 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
+import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -47,13 +57,46 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "ctCollectionId");
 
 		renderRequest.setAttribute(
-			"ctCollection",
+			CTWebKeys.CT_COLLECTION,
 			_ctCollectionLocalService.fetchCTCollection(ctCollectionId));
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<CTCollectionTemplate> ctCollectionTemplates =
+			_ctCollectionTemplateLocalService.getCTCollectionTemplates(
+				themeDisplay.getCompanyId(), 0, 100);
+
+		renderRequest.setAttribute(
+			"ctCollectionTemplates", ctCollectionTemplates);
+
+		Map<Long, JSONObject> templatesJsonMap = new HashMap<>();
+
+		for (CTCollectionTemplate ctCollectionTemplate :
+				ctCollectionTemplates) {
+
+			JSONObject jsonObject = ctCollectionTemplate.getJSONObject();
+
+			jsonObject.put(
+				"description",
+				ctCollectionTemplate.getParsedPublicationDescription()
+			).put(
+				"name", ctCollectionTemplate.getParsedPublicationName()
+			);
+
+			templatesJsonMap.put(
+				ctCollectionTemplate.getCtCollectionTemplateId(), jsonObject);
+		}
+
+		renderRequest.setAttribute("templatesJsonMap", templatesJsonMap);
 
 		return "/publications/edit_ct_collection.jsp";
 	}
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;
 
 }

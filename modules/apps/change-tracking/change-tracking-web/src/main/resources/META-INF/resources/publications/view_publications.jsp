@@ -141,7 +141,7 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 					</div>
 
 					<react:component
-						module="publications/js/ViewPublicationsDropdownMenu"
+						module="publications/js/components/ViewPublicationsDropdownMenu"
 						props="<%= publicationsDisplayContext.getDropdownReactData(ctCollection, permissionChecker) %>"
 					/>
 				</div>

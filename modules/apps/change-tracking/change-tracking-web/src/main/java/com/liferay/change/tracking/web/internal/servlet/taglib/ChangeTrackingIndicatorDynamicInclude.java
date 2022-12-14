@@ -157,7 +157,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"IndicatorComponent";
 			String module =
 				_npmResolver.resolveModuleName("change-tracking-web") +
-					"/publications/js/ChangeTrackingIndicator";
+					"/publications/js/components/ChangeTrackingIndicator";
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(module, componentId),

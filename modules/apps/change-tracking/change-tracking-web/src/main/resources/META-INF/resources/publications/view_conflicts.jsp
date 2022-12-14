@@ -33,7 +33,7 @@ portletDisplay.setURLBack(viewConflictsDisplayContext.getRedirect());
 	cssClass="container-form-lg publications-conflicts-container"
 >
 	<react:component
-		module="publications/js/ChangeTrackingConflictsView"
+		module="publications/js/views/ChangeTrackingConflictsView"
 		props="<%= viewConflictsDisplayContext.getReactData() %>"
 	/>
 </clay:container-fluid>

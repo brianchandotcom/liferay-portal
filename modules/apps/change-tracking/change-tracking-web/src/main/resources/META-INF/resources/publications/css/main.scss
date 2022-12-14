@@ -163,6 +163,15 @@
 	}
 }
 
+.edit-publication-template-container,
+.edit-publication-container {
+	.button-group {
+		button {
+			margin-right: 5px;
+		}
+	}
+}
+
 .publications-filter-dropdown-menu.drilldown.dropdown-menu {
 	.drilldown-inner {
 		min-height: 0;

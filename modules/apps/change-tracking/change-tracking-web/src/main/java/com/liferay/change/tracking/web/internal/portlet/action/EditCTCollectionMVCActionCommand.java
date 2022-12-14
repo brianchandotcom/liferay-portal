@@ -21,6 +21,8 @@ import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -86,7 +88,19 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 					CTCollectionThreadLocal.getCTCollectionId());
 
 				_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
+
+				ctCollectionId = ctCollection.getCtCollectionId();
 			}
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"ctCollectionId", String.valueOf(ctCollectionId)
+				).put(
+					"redirect", true
+				));
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(actionRequest, portalException.getClass());

@@ -19,7 +19,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-CTCollection ctCollection = (CTCollection)request.getAttribute("ctCollection");
+CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLLECTION);
+
+List<CTCollectionTemplate> ctCollectionTemplates = (List<CTCollectionTemplate>)request.getAttribute("ctCollectionTemplates");
+Map<Long, JSONObject> templatesJsonMap = (Map<Long, JSONObject>)request.getAttribute("templatesJsonMap");
 
 String actionName = "/change_tracking/edit_ct_collection";
 long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
@@ -28,6 +31,7 @@ String name = StringPool.BLANK;
 String saveButtonLabel = "create";
 
 boolean revert = ParamUtil.getBoolean(request, "revert");
+boolean showTemplates = false;
 
 if (revert) {
 	actionName = "/change_tracking/undo_ct_collection";
@@ -46,111 +50,60 @@ else if (ctCollection != null) {
 	renderResponse.setTitle(StringBundler.concat(LanguageUtil.format(resourceBundle, "edit-x", new Object[] {ctCollection.getName()})));
 }
 else {
+	showTemplates = true;
 	renderResponse.setTitle(LanguageUtil.get(request, "create-new-publication"));
+}
+
+if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161313"))) {
+	showTemplates = false;
 }
 
 portletDisplay.setURLBack(redirect);
 portletDisplay.setShowBackIcon(true);
 %>
 
-<liferay-portlet:actionURL name="<%= actionName %>" var="actionURL">
-	<liferay-portlet:param name="mvcRenderCommandName" value="/change_tracking/view_publications" />
-	<liferay-portlet:param name="redirect" value="<%= redirect %>" />
-</liferay-portlet:actionURL>
-
-<liferay-ui:error exception="<%= CTCollectionDescriptionException.class %>" message="the-publication-description-is-too-long" />
-<liferay-ui:error exception="<%= CTCollectionNameException.class %>" message="the-publication-name-is-too-long" />
-
 <clay:container-fluid
-	cssClass="container-form-lg"
+	cssClass="container-form-lg edit-publication-container"
 >
-	<clay:sheet>
-		<aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="editPublicationFm">
-			<aui:input name="ctCollectionId" type="hidden" value="<%= ctCollectionId %>" />
+	<liferay-portlet:actionURL name="<%= actionName %>" var="actionURL">
+		<liferay-portlet:param name="mvcRenderCommandName" value="/change_tracking/view_publications" />
+		<liferay-portlet:param name="redirect" value="<%= redirect %>" />
+	</liferay-portlet:actionURL>
 
-			<c:if test="<%= revert %>">
-				<p class="sheet-text"><liferay-ui:message key="reverting-creates-a-new-publication-with-the-reverted-changes" /></p>
+	<liferay-portlet:resourceURL id="/change_tracking/invite_users" var="inviteUsersURL" />
 
-				<div class="sheet-section">
-					<h3 class="sheet-subtitle">
-						<liferay-ui:message key="publication-with-reverted-changes" />
-					</h3>
-			</c:if>
-
-				<aui:input label="name" name="name" placeholder="publication-name-placeholder" value="<%= name %>">
-					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "name") %></aui:validator>
-					<aui:validator name="required" />
-				</aui:input>
-
-				<aui:input label="description" name="description" placeholder="publication-description-placeholder" type="textarea" value="<%= description %>">
-					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description") %></aui:validator>
-				</aui:input>
-
-			<c:if test="<%= revert %>">
-					<aui:fieldset cssClass="publications-fieldset" label="when-do-you-want-to-publish" markupView="lexicon">
-						<div class="col-10 row">
-							<div class="col-5">
-								<div class="autofit-row">
-									<div class="autofit-col">
-										<input class="field" id="<portlet:namespace />publishTimeNow" name="<portlet:namespace />publishTime" onchange="<portlet:namespace />onPublishTimeChange(event);" type="radio" value="now" />
-									</div>
-
-									<div class="autofit-col autofit-col-expand">
-										<label class="radio-inline" for="<portlet:namespace />publishTimeNow">
-											<div class="publications-radio-label">
-												<liferay-ui:message key="now" />
-											</div>
-
-											<div class="publications-radio-help">
-												<liferay-ui:message key="revert-your-changes-to-production-immediately" />
-											</div>
-										</label>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-6">
-								<div class="autofit-row">
-									<div class="autofit-col">
-										<input class="field" id="<portlet:namespace />publishTimeLater" name="<portlet:namespace />publishTime" onchange="<portlet:namespace />onPublishTimeChange(event);" type="radio" value="later" />
-									</div>
-
-									<div class="autofit-col autofit-col-expand">
-										<label class="radio-inline" for="<portlet:namespace />publishTimeLater">
-											<div class="publications-radio-label">
-												<liferay-ui:message key="later" />
-											</div>
-
-											<div class="publications-radio-help">
-												<liferay-ui:message key="make-additional-changes-and-publish-them-when-you-are-ready" />
-											</div>
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
-					</aui:fieldset>
-				</div>
-
-				<aui:script>
-					function <portlet:namespace />onPublishTimeChange(event) {
-						var form = event.currentTarget.form;
-
-						var elements = form.getElementsByTagName('button');
-
-						Liferay.Util.toggleDisabled(
-							elements['<portlet:namespace />saveButton'],
-							false
-						);
-					}
-				</aui:script>
-			</c:if>
-
-			<aui:button-row>
-				<aui:button disabled="<%= revert %>" id="saveButton" type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />
-
-				<aui:button href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:form>
-	</clay:sheet>
+	<react:component
+		module="publications/js/views/ChangeTrackingCollectionEditView"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"actionUrl", actionURL
+			).put(
+				"ctCollectionId", ctCollectionId
+			).put(
+				"ctCollectionTemplates", jsonSerializer.serializeDeep(ctCollectionTemplates)
+			).put(
+				"descriptionFieldMaxLength", ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description")
+			).put(
+				"inviteUsersURL", inviteUsersURL
+			).put(
+				"nameFieldMaxLength", ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "name")
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"publicationDescription", description
+			).put(
+				"publicationName", name
+			).put(
+				"redirect", redirect
+			).put(
+				"revertingPublication", revert
+			).put(
+				"saveButtonLabel", LanguageUtil.get(request, saveButtonLabel)
+			).put(
+				"showTemplates", showTemplates
+			).put(
+				"templatesJsonMap", JSONFactoryUtil.looseSerializeDeep(templatesJsonMap)
+			).build()
+		%>'
+	/>
 </clay:container-fluid>

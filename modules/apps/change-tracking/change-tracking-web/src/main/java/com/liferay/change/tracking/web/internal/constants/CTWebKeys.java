@@ -21,6 +21,8 @@ public interface CTWebKeys {
 
 	public static final String CT_COLLECTION = "CT_COLLECTION";
 
+	public static final String CT_COLLECTION_TEMPLATE = "CT_COLLECTION_TEMPLATE";
+
 	public static final String CT_ENTRY_DIFF_DISPLAY = "CT_ENTRY_DIFF_DISPLAY";
 
 	public static final String PUBLICATIONS_CONFIGURATION_DISPLAY_CONTEXT =
@@ -52,5 +54,8 @@ public interface CTWebKeys {
 
 	public static final String VIEW_SCHEDULED_DISPLAY_CONTEXT =
 		"VIEW_SCHEDULED_DISPLAY_CONTEXT";
+
+	public static final String VIEW_TEMPLATES_DISPLAY_CONTEXT =
+		"VIEW_TEMPLATES_DISPLAY_CONTEXT";
 
 }

@@ -16,6 +16,8 @@ package com.liferay.object.rest.openapi.v1_0;
 
 import com.liferay.portal.vulcan.batch.engine.Field;
 
+import io.swagger.v3.oas.models.media.Schema;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,5 +35,7 @@ public interface ObjectEntryOpenAPIResource {
 	public Response getOpenAPI(
 			HttpServletRequest httpServletRequest, String type, UriInfo uriInfo)
 		throws Exception;
+
+	public Map<String, Schema> getSchemas() throws Exception;
 
 }

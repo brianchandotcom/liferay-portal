@@ -31,7 +31,7 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 			"select alEntrySegmentsEntryRelId, assetListEntryId from " +
 			"AssetListEntrySegmentsEntryRel order by assetListEntryId asc, " +
-			"priority desc, createDate desc");
+			"priority asc, createDate desc");
 
 			 PreparedStatement preparedStatement2 =
 				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(

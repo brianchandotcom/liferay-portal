@@ -43,11 +43,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/edit_template"
+		"mvc.command.name=/change_tracking/edit_ct_collection_template"
 	},
 	service = MVCActionCommand.class
 )
-public class EditTemplateMVCActionCommand extends BaseMVCActionCommand {
+public class EditCTCollectionTemplateMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -105,7 +106,8 @@ public class EditTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 			_portal.copyRequestParameters(actionRequest, actionResponse);
 
-			actionResponse.setRenderParameter("mvcPath", "/edit_template.jsp");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/edit_ct_collection_template.jsp");
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

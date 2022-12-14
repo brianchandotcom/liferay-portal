@@ -34,11 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/delete_template"
+		"mvc.command.name=/change_tracking/delete_ct_collection_template"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteTemplateMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteCTCollectionTemplateMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

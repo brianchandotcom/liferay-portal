@@ -58,7 +58,7 @@ public class TemplatesPortletConfigurationIcon
 				portletRequest, CTPortletKeys.PUBLICATIONS,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/change_tracking/view_templates"
+			"/change_tracking/view_ct_collection_templates"
 		).buildString();
 	}
 

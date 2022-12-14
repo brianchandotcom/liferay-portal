@@ -125,7 +125,7 @@ SearchContainer<CTCollectionTemplate> searchContainer = viewTemplatesDisplayCont
 					<div class="dropdown">
 						<button class="btn btn-monospaced btn-sm btn-unstyled dropdown-toggle hidden" type="button">
 							<svg class="lexicon-icon lexicon-icon-ellipsis-v publications-hidden" role="presentation">
-								<use xlink:href="<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>#ellipsis-v" />
+								<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#ellipsis-v" />
 							</svg>
 						</button>
 					</div>

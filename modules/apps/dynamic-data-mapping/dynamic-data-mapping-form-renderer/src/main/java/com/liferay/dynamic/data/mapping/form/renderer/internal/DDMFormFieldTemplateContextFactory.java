@@ -254,7 +254,7 @@ public class DDMFormFieldTemplateContextFactory {
 		DDMFormFieldValue parentDDMFormFieldValue,
 		String parentDDMFormFieldParameterName) {
 
-		List<Object> nestedDDMFormFieldTemplateContext = new ArrayList<>();
+		List<Object> nestedDDMFormFieldTemplateContexts = new ArrayList<>();
 
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
 			parentDDMFormFieldValue.getNestedDDMFormFieldValuesMap();
@@ -268,13 +268,13 @@ public class DDMFormFieldTemplateContextFactory {
 		}
 
 		for (String name : ddmFormFieldValueNames) {
-			nestedDDMFormFieldTemplateContext.addAll(
+			nestedDDMFormFieldTemplateContexts.addAll(
 				_createDDMFormFieldTemplateContexts(
 					nestedDDMFormFieldValuesMap.get(name),
 					parentDDMFormFieldParameterName));
 		}
 
-		return nestedDDMFormFieldTemplateContext;
+		return nestedDDMFormFieldTemplateContexts;
 	}
 
 	private List<Map<String, String>> _createOptions(

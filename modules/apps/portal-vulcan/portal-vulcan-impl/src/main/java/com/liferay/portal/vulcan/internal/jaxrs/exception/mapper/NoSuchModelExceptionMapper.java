@@ -36,9 +36,4 @@ public class NoSuchModelExceptionMapper
 			Response.Status.NOT_FOUND, noSuchModelException.getMessage());
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 }

@@ -36,9 +36,4 @@ public class ObjectValidationRuleEngineExceptionMapper
 			objectValidationRuleEngineException.getMessage());
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 }

@@ -37,9 +37,4 @@ public class ObjectEntryManagerHttpExceptionMapper
 			objectEntryManagerHttpException.getMessage());
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 }

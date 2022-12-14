@@ -37,9 +37,4 @@ public class ObjectEntryValuesExceptionMapper
 			objectEntryValuesException.getMessage());
 	}
 
-	@Override
-	protected boolean isSanitize() {
-		return false;
-	}
-
 }

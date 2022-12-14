@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	immediate = true, service = CommerceInventoryEngineContributorRegistry.class
-)
+@Component(service = CommerceInventoryEngineContributorRegistry.class)
 public class CommerceInventoryEngineContributorRegistryImpl
 	implements CommerceInventoryEngineContributorRegistry {
 

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -442,10 +443,24 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		_getViewLayoutUtilityPageEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.setHref(
-				HttpComponentsUtil.setParameter(
-					PortalUtil.getLayoutFullURL(_draftLayout, _themeDisplay),
-					"p_l_back_url", _themeDisplay.getURLCurrent()));
+			String layoutFullURL = PortalUtil.getLayoutFullURL(
+				_draftLayout, _themeDisplay);
+
+			if (_isLiveGroup()) {
+				layoutFullURL = PortalUtil.getLayoutFullURL(
+					_layout, _themeDisplay);
+			}
+
+			layoutFullURL = HttpComponentsUtil.setParameter(
+				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
+			layoutFullURL = HttpComponentsUtil.setParameter(
+				layoutFullURL, "p_l_mode", Constants.PREVIEW);
+			layoutFullURL = HttpComponentsUtil.addParameter(
+				layoutFullURL, "p_p_auth",
+				AuthTokenUtil.getToken(_httpServletRequest));
+
+			dropdownItem.setHref(layoutFullURL);
+
 			dropdownItem.setIcon("shortcut");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "preview"));

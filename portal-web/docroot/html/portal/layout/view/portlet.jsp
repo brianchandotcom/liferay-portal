@@ -60,7 +60,7 @@ else {
 	String templateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
 
 	if (Validator.isNotNull(templateContent)) {
-		RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(templateId, templateContent), LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId()));
+		RuntimePageUtil.processTemplate(request, response, null, new StringTemplateResource(templateId, templateContent), LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId()));
 	}
 }
 %>

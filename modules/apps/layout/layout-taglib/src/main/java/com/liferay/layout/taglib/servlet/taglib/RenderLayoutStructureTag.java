@@ -751,7 +751,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 				RuntimePageUtil.processTemplate(
 					originalHttpServletRequest,
-					(HttpServletResponse)pageContext.getResponse(),
+					(HttpServletResponse)pageContext.getResponse(), null,
 					new StringTemplateResource(templateId, templateContent),
 					LayoutTemplateLocalServiceUtil.getLangType(
 						layoutTypePortlet.getLayoutTemplateId(), false,

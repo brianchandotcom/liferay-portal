@@ -443,13 +443,14 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		_getViewLayoutUtilityPageEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				_draftLayout, _themeDisplay);
+			Layout previewLayout = _draftLayout;
 
 			if (_isLiveGroup()) {
-				layoutFullURL = PortalUtil.getLayoutFullURL(
-					_layout, _themeDisplay);
+				previewLayout = _layout;
 			}
+
+			String layoutFullURL = PortalUtil.getLayoutFullURL(
+				previewLayout, _themeDisplay);
 
 			layoutFullURL = HttpComponentsUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());

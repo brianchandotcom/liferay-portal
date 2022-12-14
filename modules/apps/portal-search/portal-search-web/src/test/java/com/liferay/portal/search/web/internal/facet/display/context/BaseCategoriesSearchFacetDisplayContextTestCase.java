@@ -271,7 +271,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"categoryId3:3|categoryId4:4|categoryId2:5|categoryId1:6",
 			nameFrequencyString);
 
@@ -289,7 +288,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"categoryId1:4|categoryId2:5|categoryId4:5|categoryId3:6",
 			nameFrequencyString);
 	}
@@ -317,7 +315,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"categoryId1:6|categoryId2:5|categoryId4:4|categoryId3:3",
 			nameFrequencyString);
 
@@ -335,7 +332,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"categoryId3:6|categoryId2:5|categoryId4:5|categoryId1:4",
 			nameFrequencyString);
 	}
@@ -362,7 +358,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"categoryId1:3|categoryId2:1|categoryId3:4|categoryId4:2",
 			nameFrequencyString);
 
@@ -379,7 +374,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"categoryId1:2|categoryId2:3|categoryId2:1|categoryId3:4",
 			nameFrequencyString);
 	}
@@ -406,7 +400,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"categoryId4:2|categoryId3:4|categoryId2:1|categoryId1:3",
 			nameFrequencyString);
 
@@ -423,7 +416,6 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"categoryId3:4|categoryId2:3|categoryId2:1|categoryId1:2",
 			nameFrequencyString);
 	}

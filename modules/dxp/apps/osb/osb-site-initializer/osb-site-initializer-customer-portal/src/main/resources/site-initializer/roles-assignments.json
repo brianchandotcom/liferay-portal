@@ -1,0 +1,11 @@
+[
+	{
+		"groups": [
+			{
+				"groupName": "Systems - Provisioning",
+				"groupType": "Organization"
+			}
+		],
+		"roleName": "Provisioning Admin"
+	}
+]

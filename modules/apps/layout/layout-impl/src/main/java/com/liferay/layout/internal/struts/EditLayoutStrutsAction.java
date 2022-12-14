@@ -17,19 +17,19 @@ package com.liferay.layout.internal.struts;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
-import com.liferay.portal.kernel.service.LayoutServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -37,17 +37,18 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ming-Gih Lam
@@ -68,7 +69,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
 			if (cmd.equals("add")) {
@@ -88,7 +89,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 				);
 			}
 			else if (cmd.equals("delete")) {
-				SitesUtil.deleteLayout(httpServletRequest, httpServletResponse);
+				_sites.deleteLayout(httpServletRequest, httpServletResponse);
 			}
 			else if (cmd.equals("display_order")) {
 				updateDisplayOrder(httpServletRequest);
@@ -117,7 +118,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 					LayoutTypeException.FIRST_LAYOUT) &&
 				(plid > 0)) {
 
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+				Layout layout = _layoutLocalService.getLayout(plid);
 
 				jsonObject.put(
 					"groupId", layout.getGroupId()
@@ -172,19 +173,18 @@ public class EditLayoutStrutsAction implements StrutsAction {
 
 		if (layoutPrototypeId > 0) {
 			LayoutPrototype layoutPrototype =
-				LayoutPrototypeServiceUtil.getLayoutPrototype(
-					layoutPrototypeId);
+				_layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
 
 			serviceContext.setAttribute(
 				"layoutPrototypeUuid", layoutPrototype.getUuid());
 
-			layout = LayoutServiceUtil.addLayout(
+			layout = _layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, name, title,
 				description, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 				serviceContext);
 		}
 		else {
-			layout = LayoutServiceUtil.addLayout(
+			layout = _layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, name, title,
 				description, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 				serviceContext);
@@ -197,7 +197,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 			layoutType.getConfigurationActionUpdate(), httpServletRequest,
 			httpServletResponse);
 
-		String layoutURL = PortalUtil.getLayoutURL(layout, themeDisplay);
+		String layoutURL = _portal.getLayoutURL(layout, themeDisplay);
 
 		if (Validator.isNotNull(doAsUserId)) {
 			layoutURL = HttpComponentsUtil.addParameter(
@@ -213,10 +213,10 @@ public class EditLayoutStrutsAction implements StrutsAction {
 		boolean deleteable = LayoutPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout, ActionKeys.DELETE);
 		boolean sortable =
-			GroupPermissionUtil.contains(
+			_groupPermission.contains(
 				themeDisplay.getPermissionChecker(), layout.getGroupId(),
 				ActionKeys.MANAGE_LAYOUTS) &&
-			SitesUtil.isLayoutSortable(layout);
+			_sites.isLayoutSortable(layout);
 		boolean updateable = LayoutPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 
@@ -303,7 +303,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		LayoutServiceUtil.setLayouts(
+		_layoutService.setLayouts(
 			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
@@ -322,11 +322,11 @@ public class EditLayoutStrutsAction implements StrutsAction {
 				httpServletRequest, "privateLayout");
 			long layoutId = ParamUtil.getLong(httpServletRequest, "layoutId");
 
-			LayoutServiceUtil.updateName(
+			_layoutService.updateName(
 				groupId, privateLayout, layoutId, name, languageId);
 		}
 		else {
-			LayoutServiceUtil.updateName(plid, name, languageId);
+			_layoutService.updateName(plid, name, languageId);
 		}
 	}
 
@@ -337,7 +337,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 		long parentPlid = ParamUtil.getLong(httpServletRequest, "parentPlid");
 		int priority = ParamUtil.getInteger(httpServletRequest, "priority");
 
-		LayoutServiceUtil.updateParentLayoutIdAndPriority(
+		_layoutService.updateParentLayoutIdAndPriority(
 			plid, parentPlid, priority);
 	}
 
@@ -356,15 +356,36 @@ public class EditLayoutStrutsAction implements StrutsAction {
 			long previousLayoutId = ParamUtil.getLong(
 				httpServletRequest, "previousLayoutId");
 
-			LayoutServiceUtil.updatePriority(
+			_layoutService.updatePriority(
 				groupId, privateLayout, layoutId, nextLayoutId,
 				previousLayoutId);
 		}
 		else {
 			int priority = ParamUtil.getInteger(httpServletRequest, "priority");
 
-			LayoutServiceUtil.updatePriority(plid, priority);
+			_layoutService.updatePriority(plid, priority);
 		}
 	}
+
+	@Reference
+	private GroupPermission _groupPermission;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPrototypeService _layoutPrototypeService;
+
+	@Reference
+	private LayoutService _layoutService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private Sites _sites;
 
 }

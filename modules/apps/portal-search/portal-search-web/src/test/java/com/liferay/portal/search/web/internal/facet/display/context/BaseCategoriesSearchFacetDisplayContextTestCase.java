@@ -754,15 +754,13 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 	}
 
 	private List<TermCollector> _getTermCollectors(
-			Long[] assetCategoryIds, int[] frequencies)
-		throws Exception {
+			Long[] assetCategoryIds, int[] frequencies) {
 
 		List<TermCollector> termCollectors = new ArrayList<>();
 
-		for (int i = 1; i <= assetCategoryIds.length; i++) {
+		for (int i = 0; i < assetCategoryIds.length; i++) {
 			termCollectors.add(
-				createTermCollector(
-					assetCategoryIds[i - 1], frequencies[i - 1]));
+				createTermCollector(assetCategoryIds[i], frequencies[i]));
 		}
 
 		return termCollectors;

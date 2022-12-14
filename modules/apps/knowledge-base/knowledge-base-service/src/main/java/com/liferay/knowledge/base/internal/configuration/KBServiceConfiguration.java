@@ -36,9 +36,10 @@ public interface KBServiceConfiguration {
 	public int checkInterval();
 
 	@Meta.AD(
-		deflt = "1", description = "expiration-date-notification-help",
-		name = "expiration-date-notification", required = false
+		deflt = "1",
+		description = "expiration-date-notification-date-weeks-help",
+		name = "expiration-date-notification-date-weeks", required = false
 	)
-	public int expirationDateNotification();
+	public int expirationDateNotificationDateWeeks();
 
 }

@@ -26,11 +26,12 @@ public interface KBServiceConfigurationProvider {
 
 	public int getCheckInterval(long companyId) throws ConfigurationException;
 
-	public int getExpirationDateNotification(long companyId)
+	public int getExpirationDateNotificationDateWeeks(long companyId)
 		throws ConfigurationException;
 
 	public void updateExpirationDateConfiguration(
-			int checkInterval, long companyId, int expirationDateNotification)
+			int checkInterval, long companyId,
+			int expirationDateNotificationDateWeeks)
 		throws Exception;
 
 }

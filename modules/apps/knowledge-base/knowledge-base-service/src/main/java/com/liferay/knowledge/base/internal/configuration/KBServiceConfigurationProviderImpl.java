@@ -45,19 +45,20 @@ public class KBServiceConfigurationProviderImpl
 	}
 
 	@Override
-	public int getExpirationDateNotification(long companyId)
+	public int getExpirationDateNotificationDateWeeks(long companyId)
 		throws ConfigurationException {
 
 		KBServiceConfiguration kbServiceConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				KBServiceConfiguration.class, companyId);
 
-		return kbServiceConfiguration.expirationDateNotification();
+		return kbServiceConfiguration.expirationDateNotificationDateWeeks();
 	}
 
 	@Override
 	public void updateExpirationDateConfiguration(
-			int checkInterval, long companyId, int expirationDateNotification)
+			int checkInterval, long companyId,
+			int expirationDateNotificationDateWeeks)
 		throws Exception {
 
 		Dictionary<String, Object> properties = null;
@@ -82,7 +83,8 @@ public class KBServiceConfigurationProviderImpl
 		properties.put("checkInterval", checkInterval);
 
 		properties.put(
-			"expirationDateNotification", expirationDateNotification);
+			"expirationDateNotificationDateWeeks",
+			expirationDateNotificationDateWeeks);
 
 		configuration.update(properties);
 	}

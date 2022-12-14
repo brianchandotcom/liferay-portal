@@ -55,7 +55,7 @@ public class EditKBArticleExpirationDateConfigurationMVCActionCommand
 				ParamUtil.getInteger(actionRequest, "checkInterval"),
 				themeDisplay.getCompanyId(),
 				ParamUtil.getInteger(
-					actionRequest, "expirationDateNotification"));
+					actionRequest, "expirationDateNotificationDateWeeks"));
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass());

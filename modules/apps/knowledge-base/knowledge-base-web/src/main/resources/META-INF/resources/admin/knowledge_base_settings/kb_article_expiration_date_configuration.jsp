@@ -33,14 +33,14 @@ KBArticleCompanyConfigurationDisplayContext kbArticleCompanyConfigurationDisplay
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<h3 class="sheet-subtitle"><liferay-ui:message key="expiration-date-notification" /></h3>
+			<h3 class="sheet-subtitle"><liferay-ui:message key="article-expiration-date-notification" /></h3>
+
+			<p class="text-muted">
+				<liferay-ui:message key="expiration-date-notification-date-weeks-description" />
+			</p>
 
 			<div>
-				<aui:input helpMessage="expiration-date-notification-help" label="expiration-date-notification" name="expirationDateNotification" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getExpirationDateNotification() %>" />
-
-				<p class="text-muted">
-					<liferay-ui:message key="expiration-date-notification-description" />
-				</p>
+				<aui:input helpMessage="expiration-date-notification-date-weeks-help" label="notification-date-weeks" name="expirationDateNotificationDateWeeks" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getExpirationDateNotificationDateWeeks() %>" />
 			</div>
 		</clay:sheet-section>
 

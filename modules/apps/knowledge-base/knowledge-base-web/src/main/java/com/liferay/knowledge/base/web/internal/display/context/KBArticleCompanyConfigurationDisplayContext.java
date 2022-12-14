@@ -58,13 +58,15 @@ public class KBArticleCompanyConfigurationDisplayContext {
 		).buildString();
 	}
 
-	public int getExpirationDateNotification() throws ConfigurationException {
+	public int getExpirationDateNotificationDateWeeks()
+		throws ConfigurationException {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _kbServiceConfigurationProvider.getExpirationDateNotification(
-			themeDisplay.getCompanyId());
+		return _kbServiceConfigurationProvider.
+			getExpirationDateNotificationDateWeeks(themeDisplay.getCompanyId());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

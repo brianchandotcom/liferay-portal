@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 export declare type TDataSource = {
 	commerceChannelIds: number[];
 	dataSourceId?: string;

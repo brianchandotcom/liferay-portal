@@ -58,8 +58,6 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -183,12 +181,8 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 				return getExportDataRootElementString(rootElement);
 			}
 
-			Stream<StagedModel> stream = changeset.stream();
-
-			stream.filter(
-				Objects::nonNull
-			).forEach(
-				stagedModel -> {
+			for (StagedModel stagedModel : changeset.getStagedModels()) {
+				if (stagedModel != null) {
 					try {
 						StagedModelDataHandlerUtil.exportStagedModel(
 							portletDataContext, stagedModel);
@@ -198,7 +192,7 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 							portletDataException);
 					}
 				}
-			);
+			}
 		}
 
 		_exportAssetLinks(portletDataContext);

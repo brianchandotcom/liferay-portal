@@ -16,9 +16,9 @@ import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import LayoutService from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/LayoutService';
 import {PageTemplateModal} from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/convert-to-page-template-modal/components/ConvertToPageTemplateModal';
+import StoreMother from '../../../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -43,12 +43,7 @@ jest.mock(
 
 function renderConvertToPageTemplateModal() {
 	return render(
-		<StoreContextProvider
-			initialState={{
-				availableSegmentsExperiences: {},
-				segmentsExperienceId: '0',
-			}}
-		>
+		<StoreMother.Component>
 			<PageTemplateModal
 				observer={{
 					dispatch: () => {},
@@ -56,7 +51,7 @@ function renderConvertToPageTemplateModal() {
 				}}
 				onClose={jest.fn()}
 			/>
-		</StoreContextProvider>
+		</StoreMother.Component>
 	);
 }
 

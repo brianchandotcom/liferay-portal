@@ -15,20 +15,20 @@
 package com.liferay.layout.internal.struts;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionTreeJSClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -85,7 +86,7 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 					boolean recursive = ParamUtil.getBoolean(
 						httpServletRequest, "recursive");
 
-					Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+					Layout layout = _layoutLocalService.getLayout(plid);
 
 					SessionTreeJSClicks.openLayoutNodes(
 						httpServletRequest, treeId, layout.isPrivateLayout(),
@@ -104,7 +105,7 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 					boolean recursive = ParamUtil.getBoolean(
 						httpServletRequest, "recursive");
 
-					Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+					Layout layout = _layoutLocalService.getLayout(plid);
 
 					SessionTreeJSClicks.closeLayoutNodes(
 						httpServletRequest, treeId, layout.isPrivateLayout(),
@@ -147,7 +148,7 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 			}
 		}
 		catch (Exception exception) {
-			PortalUtil.sendError(
+			_portal.sendError(
 				exception, httpServletRequest, httpServletResponse);
 		}
 
@@ -161,7 +162,7 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 		boolean privateLayout = ParamUtil.getBoolean(
 			httpServletRequest, "privateLayout");
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		while (true) {
 			try {
@@ -180,7 +181,7 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 							String.valueOf(LayoutConstants.DEFAULT_PLID));
 					}
 
-					Layout checkedLayout = LayoutLocalServiceUtil.fetchLayout(
+					Layout checkedLayout = _layoutLocalService.fetchLayout(
 						groupId, privateLayout, checkedLayoutId);
 
 					if (checkedLayout == null) {
@@ -208,5 +209,14 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SessionTreeJSClickStrutsAction.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

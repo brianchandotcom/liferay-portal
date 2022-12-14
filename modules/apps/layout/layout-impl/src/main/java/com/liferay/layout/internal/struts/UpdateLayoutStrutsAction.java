@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.render.PortletRenderParts;
@@ -65,7 +64,10 @@ import javax.portlet.PortletPreferences;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -262,6 +264,12 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		return StringPool.BLANK;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, AddPortletProvider.class, "model.class.name");
+	}
+
 	protected void addPortlet(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId)
@@ -338,6 +346,11 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		}
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	protected void storeAddContentPortletPreferences(
 			HttpServletRequest httpServletRequest, Layout layout,
 			String portletId, ThemeDisplay themeDisplay)
@@ -381,11 +394,6 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		portletSetup.store();
 	}
 
-	private static final ServiceTrackerMap<String, AddPortletProvider>
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			SystemBundleUtil.getBundleContext(), AddPortletProvider.class,
-			"model.class.name");
-
 	@Reference
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
@@ -397,6 +405,8 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	private ServiceTrackerMap<String, AddPortletProvider> _serviceTrackerMap;
 
 	@Reference
 	private Staging _staging;

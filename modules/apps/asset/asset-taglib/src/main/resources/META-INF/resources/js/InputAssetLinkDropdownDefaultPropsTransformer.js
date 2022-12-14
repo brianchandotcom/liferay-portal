@@ -44,38 +44,53 @@ export default function propsTransformer({
 
 				openSelectionModal({
 					buttonAddLabel: Liferay.Language.get('done'),
+					customSelectEvent: true,
 					multiple: true,
-					onSelect(selectedItems) {
-						Array.from(selectedItems).forEach((selectedItem) => {
-							const assetEntry = JSON.parse(selectedItem.value);
+					onSelect(data) {
+						if (data.value && data.value.length) {
+							const selectedItems = data.value;
 
-							const entityId = assetEntry.assetEntryId;
+							Array.from(selectedItems).forEach(
+								(selectedItem) => {
+									const assetEntry = JSON.parse(selectedItem);
 
-							if (searchContainerData.indexOf(entityId) === -1) {
-								const rowColumns = [];
+									const entityId = assetEntry.assetEntryId;
 
-								rowColumns.push(`<h4 class="list-group-title">
-									${Liferay.Util.escapeHTML(assetEntry.title)}
-								</h4>
-								<p class="list-group-subtitle">
-									${Liferay.Util.escapeHTML(assetEntry.assetType)}
-								</p>
-								<p class="list-group-subtitle">
-									${Liferay.Language.get('scope')}: ${Liferay.Util.escapeHTML(
-									assetEntry.groupDescriptiveName
-								)}
-								</p>`);
+									if (
+										searchContainerData.indexOf(
+											entityId
+										) === -1
+									) {
+										const rowColumns = [];
 
-								rowColumns.push(
-									`<a class="float-right modify-link" data-rowId="${entityId}" href="javascript:void(0);">${additionalProps.removeIcon}</a>`
-								);
+										rowColumns.push(`<h4 class="list-group-title">
+												${Liferay.Util.escapeHTML(assetEntry.title)}
+											</h4>
+											<p class="list-group-subtitle">
+												${Liferay.Util.escapeHTML(assetEntry.assetType)}
+											</p>
+											<p class="list-group-subtitle">
+												${Liferay.Language.get('scope')}: ${Liferay.Util.escapeHTML(
+											assetEntry.groupDescriptiveName
+										)}
+											</p>`);
 
-								searchContainer.addRow(rowColumns, entityId);
+										rowColumns.push(
+											`<a class="float-right modify-link" data-rowId="${entityId}" href="javascript:void(0);">${additionalProps.removeIcon}</a>`
+										);
 
-								searchContainer.updateDataStore();
-							}
-						});
+										searchContainer.addRow(
+											rowColumns,
+											entityId
+										);
+
+										searchContainer.updateDataStore();
+									}
+								}
+							);
+						}
 					},
+					selectEventName: `${portletNamespace}selectAsset`,
 					title: item.data.title,
 					url: item.data.href,
 				});

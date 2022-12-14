@@ -71,7 +71,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -348,8 +347,8 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	public Page<MessageBoardMessage>
-	getSiteUserMessageBoardMessagesActivityPage(
-		Long siteId, Long userId, Pagination pagination)
+			getSiteUserMessageBoardMessagesActivityPage(
+				Long siteId, Long userId, Pagination pagination)
 		throws Exception {
 
 		int start = QueryUtil.ALL_POS;
@@ -361,9 +360,13 @@ public class MessageBoardMessageResourceImpl
 		}
 
 		return Page.of(
-			transform(_mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(siteId,userId,start,end),
-				this::_toMessageBoardMessage), pagination,
-			_mbMessageLocalService.getSiteUserMessageBoardMessagesActivityCount(siteId,userId));
+			transform(
+				_mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(
+					siteId, userId, start, end),
+				this::_toMessageBoardMessage),
+			pagination,
+			_mbMessageLocalService.getSiteUserMessageBoardMessagesActivityCount(
+				siteId, userId));
 	}
 
 	@Override

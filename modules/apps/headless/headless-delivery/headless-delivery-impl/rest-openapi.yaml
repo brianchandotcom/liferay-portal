@@ -13592,47 +13592,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardMessage"
             tags: ["MessageBoardMessage"]
-    "/sites/{siteId}/{userId}/message-board-messages/activity":
-        # @review
-        get:
-            description:
-                Retrieves the site's message board messages user activity.
-            operationId: getSiteUserMessageBoardMessagesActivityPage
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: userId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/MessageBoardMessage"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/MessageBoardMessage"
-                                type: array
-            tags: ["MessageBoardMessage"]
     "/sites/{siteId}/message-board-messages/permissions":
         get:
             operationId: getSiteMessageBoardMessagePermissionsPage
@@ -15538,6 +15497,47 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/WikiPageAttachment"
             tags: ["WikiPageAttachment"]
+    "/sites/{siteId}/{userId}/message-board-messages/activity":
+        # @review
+        get:
+            description:
+                Retrieves the site's message board messages user activity.
+            operationId: getSiteUserMessageBoardMessagesActivityPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
+            tags: ["MessageBoardMessage"]
     "/structured-content-folder/{structuredContentFolderId}/permissions":
         get:
             operationId: getStructuredContentFolderPermissionsPage

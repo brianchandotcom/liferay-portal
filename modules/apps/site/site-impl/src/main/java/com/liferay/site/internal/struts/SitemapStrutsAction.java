@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.action;
+package com.liferay.site.internal.struts;
 
 import com.liferay.layout.admin.kernel.util.SitemapUtil;
 import com.liferay.petra.string.StringPool;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -36,22 +37,22 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.Action;
-import com.liferay.portal.struts.model.ActionForward;
-import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
-public class SitemapAction implements Action {
+@Component(property = "path=/portal/sitemap", service = StrutsAction.class)
+public class SitemapStrutsAction implements StrutsAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+	public String execute(
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
@@ -144,6 +145,7 @@ public class SitemapAction implements Action {
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(SitemapAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SitemapStrutsAction.class);
 
 }

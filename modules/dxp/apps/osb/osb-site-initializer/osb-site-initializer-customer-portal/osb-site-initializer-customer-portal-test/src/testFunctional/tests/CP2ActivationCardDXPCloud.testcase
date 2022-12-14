@@ -114,8 +114,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146843 | Test Summary: Verify that the Activation Form Card - DXP Cloud displays (Product logo - Subscription - Start Date - End Date - Page Subtitleis/Not Activated)"
+	@ignore = "true"
 	@priority = "4"
 	test AssertTheCardDetails {
+
+		// Needs refactor
+
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 

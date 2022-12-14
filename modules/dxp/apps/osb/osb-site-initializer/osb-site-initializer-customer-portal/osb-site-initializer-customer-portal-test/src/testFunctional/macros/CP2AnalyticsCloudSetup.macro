@@ -44,13 +44,13 @@ definition {
 	}
 
 	macro clearAndDeleteCloudEntries {
-		CustomerPortal.clearActivationStatus(
-			position = "${position}",
-			status = "${status}");
-
 		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
 			entry = "${entry}",
 			portlet = "Analytics Cloud Workspaces");
+			
+		CustomerPortal.clearActivationStatus(
+			position = "${position}",
+			status = "${status}");
 	}
 
 	macro clickOnWorkspaceLink {

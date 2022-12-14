@@ -87,6 +87,9 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test AssertTheActiveStatusOnTheCard {
+
+		// Needs refactor since it depends on example FIFA account
+
 		task ("And I enter Setup LXC") {
 			CustomerPortal.clickOnFinishActivationButton();
 		}
@@ -141,7 +144,6 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-161270 | Test Summary: Verify that when the form has not yet been submitted, the card status is not Activated and the links are properly displayed and visible for the correct users"
-	@ignore = "true"
 	@priority = "4"
 	test AssertTheCardLinkReflectsTheCorrectStatus {
 
@@ -150,8 +152,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-161268 | Test Summary: Verify the activation card displays the details (LXC product logo - Project Name - Start and End Date of LXC Subscriptions - Activation form status)"
+	@ignore = "true"
 	@priority = "3"
 	test AssertTheDetailsOfTheActivationCard {
+
+		// Needs refactor since it depends on example FIFA account
+
 		task ("View card details") {
 			CustomerPortal.viewActivationStatusCardValue(
 				dates = "May 23, 2022 - May 23, 2023",
@@ -166,6 +172,9 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertTheInProgressStatusOnTheCard {
+
+		// Needs refactor since it depends on example FIFA account
+
 		task ("And I enter Setup LXC") {
 			CustomerPortal.clickOnFinishActivationButton();
 		}
@@ -212,6 +221,9 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanView3LinksAfterCardActivation {
+
+		// Needs refactor since it depends on example FIFA account
+
 		task ("And I enter Setup LXC") {
 			CustomerPortal.clickOnFinishActivationButton();
 		}

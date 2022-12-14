@@ -107,7 +107,7 @@ definition {
 		}
 
 		task ("Assert the region options from the drop-down") {
-			CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Dubai, UAE,Frankfurt, Germany,Hamina, Finland,Iowa, USA,jurong-west-singapore,London, England,Montreal, Canada,Mumbai, India,Oregon, USA,Sao Paulo, Brazil,Sydney, Australia,Tokyo, Japan");
+			CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Dubai, UAE,Frankfurt, Germany,Hamina, Finland,Iowa, USA,Jurong West, Singapore,London, England,Montreal, Canada,Mumbai, India,Oregon, USA,Sao Paulo, Brazil,Sydney, Australia,Tokyo, Japan");
 		}
 
 		task ("Deactivating object for the disaster data center region") {
@@ -141,7 +141,7 @@ definition {
 		}
 
 		task ("Assert the drop-down options in primary data center region") {
-			CP2DXPCloudSetup.viewRegionList(regionList = "Dubai, UAE,Frankfurt, Germany,Hamina, Finland,Iowa, USA,jurong-west-singapore,London, England,Montreal, Canada,Mumbai, India,Oregon, USA,Sao Paulo, Brazil,Sydney, Australia,Tokyo, Japan");
+			CP2DXPCloudSetup.viewRegionList(regionList = "Dubai, UAE,Frankfurt, Germany,Hamina, Finland,Iowa, USA,Jurong West, Singapore,London, England,Montreal, Canada,Mumbai, India,Oregon, USA,Sao Paulo, Brazil,Sydney, Australia,Tokyo, Japan");
 		}
 	}
 

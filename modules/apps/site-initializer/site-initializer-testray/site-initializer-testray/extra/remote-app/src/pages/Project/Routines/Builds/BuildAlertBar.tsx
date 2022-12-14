@@ -22,10 +22,6 @@ import i18n from '../../../../i18n';
 import {TestrayTask} from '../../../../services/rest';
 import {TaskStatuses} from '../../../../util/statuses';
 
-type BuildAlertBarProps = {
-	testrayTask: TestrayTask;
-};
-
 type AlertProperties = {
 	[key: string]: {
 		color: string;
@@ -35,13 +31,11 @@ type AlertProperties = {
 	};
 };
 
+type BuildAlertBarProps = {
+	testrayTask: TestrayTask;
+};
+
 const alertProperties: AlertProperties = {
-	[TaskStatuses.IN_ANALYSIS]: {
-		color: 'label-chart-in-analysis',
-		displayType: 'warning',
-		label: i18n.translate('in-analysis'),
-		text: i18n.translate('this-build-is-currently-in-analysis'),
-	},
 	[TaskStatuses.ABANDONED]: {
 		color: 'label-secondary',
 		displayType: 'secondary',
@@ -53,6 +47,24 @@ const alertProperties: AlertProperties = {
 		displayType: 'primary',
 		label: i18n.translate('complete'),
 		text: i18n.translate('this-build-has-been-analyzed'),
+	},
+	[TaskStatuses.IN_ANALYSIS]: {
+		color: 'label-chart-in-analysis',
+		displayType: 'warning',
+		label: i18n.translate('in-analysis'),
+		text: i18n.translate('this-build-is-currently-in-analysis'),
+	},
+	[TaskStatuses.OPEN]: {
+		color: 'label-secondary',
+		displayType: 'secondary',
+		label: i18n.translate('open'),
+		text: i18n.translate('this-build-is-currently-in-open'),
+	},
+	[TaskStatuses.PROCESSING]: {
+		color: 'label-info',
+		displayType: 'info',
+		label: i18n.translate('processing'),
+		text: i18n.translate('this-build-is-currently-in-processing'),
 	},
 };
 

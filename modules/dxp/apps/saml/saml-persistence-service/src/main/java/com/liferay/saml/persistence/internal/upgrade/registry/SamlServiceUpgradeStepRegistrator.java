@@ -140,7 +140,7 @@ public class SamlServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				"SamlPeerBinding", "samlPeerEntityId", "VARCHAR(1024) null"),
 			UpgradeProcessFactory.alterColumnType(
-				"SamlPeerBinding", "samlNameIdFormat", "VARCHAR(1024) null"),
+				"SamlPeerBinding", "samlNameIdFormat", "VARCHAR(128) null"),
 			UpgradeProcessFactory.alterColumnType(
 				"SamlPeerBinding", "samlNameIdValue", "VARCHAR(1024) null"));
 	}

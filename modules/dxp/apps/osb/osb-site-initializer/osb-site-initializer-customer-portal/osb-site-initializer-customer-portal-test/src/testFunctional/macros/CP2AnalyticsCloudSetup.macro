@@ -47,7 +47,7 @@ definition {
 		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
 			entry = "${entry}",
 			portlet = "Analytics Cloud Workspaces");
-			
+
 		CustomerPortal.clearActivationStatus(
 			position = "${position}",
 			status = "${status}");

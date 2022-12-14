@@ -250,7 +250,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
-		Long[] assetCategoryIds = {1L, 2L, 4L, 3L};
+		long[] assetCategoryIds = {1L, 2L, 4L, 3L};
 		int[] frequencies = {6, 5, 4, 3};
 
 		List<TermCollector> termCollectors = _getTermCollectors(
@@ -276,7 +276,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			nameFrequencyString);
 
 		termCollectors = _getTermCollectors(
-			new Long[] {3L, 4L, 2L, 1L}, new int[] {6, 5, 5, 4});
+			new long[] {3L, 4L, 2L, 1L}, new int[] {6, 5, 5, 4});
 
 		_setUpMultipleTermCollectors(termCollectors);
 
@@ -296,7 +296,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
-		Long[] assetCategoryIds = {1L, 2L, 4L, 3L};
+		long[] assetCategoryIds = {1L, 2L, 4L, 3L};
 		int[] frequencies = {6, 5, 4, 3};
 
 		List<TermCollector> termCollectors = _getTermCollectors(
@@ -322,7 +322,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 			nameFrequencyString);
 
 		termCollectors = _getTermCollectors(
-			new Long[] {3L, 4L, 2L, 1L}, new int[] {6, 5, 5, 4});
+			new long[] {3L, 4L, 2L, 1L}, new int[] {6, 5, 5, 4});
 
 		_setUpMultipleTermCollectors(termCollectors);
 
@@ -342,7 +342,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
-		Long[] assetCategoryIds = {2L, 4L, 1L, 3L};
+		long[] assetCategoryIds = {2L, 4L, 1L, 3L};
 
 		List<TermCollector> termCollectors = _getTermCollectors(
 			assetCategoryIds);
@@ -386,7 +386,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
-		Long[] assetCategoryIds = {2L, 4L, 1L, 3L};
+		long[] assetCategoryIds = {2L, 4L, 1L, 3L};
 
 		List<TermCollector> termCollectors = _getTermCollectors(
 			assetCategoryIds);
@@ -737,14 +737,14 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		return portal;
 	}
 
-	private List<TermCollector> _getTermCollectors(Long... assetCategoryIds)
+	private List<TermCollector> _getTermCollectors(long... assetCategoryIds)
 		throws Exception {
 
 		List<TermCollector> termCollectors = new ArrayList<>();
 
 		int frequency = 1;
 
-		for (Long assetCategoryId : assetCategoryIds) {
+		for (long assetCategoryId : assetCategoryIds) {
 			termCollectors.add(createTermCollector(assetCategoryId, frequency));
 
 			frequency++;
@@ -754,7 +754,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 	}
 
 	private List<TermCollector> _getTermCollectors(
-			Long[] assetCategoryIds, int[] frequencies) {
+		long[] assetCategoryIds, int[] frequencies) {
 
 		List<TermCollector> termCollectors = new ArrayList<>();
 
@@ -797,7 +797,7 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		);
 	}
 
-	private void _setUpMultipleAssetCategory(Long[] assetCategoryId) {
+	private void _setUpMultipleAssetCategory(long[] assetCategoryId) {
 		for (int i = 0; i < assetCategoryId.length; i++) {
 			AssetCategory assetCategory = _createAssetCategory(
 				assetCategoryId[i], i);

@@ -25,34 +25,53 @@ import {PartnerOpportunitiesColumnKey} from '../../common/enums/partnerOpportuni
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
-import {PartnerOpportunitiesListItem} from '../../common/interfaces/partnerOpportunitiesListItem';
+import DealRegistrationDTO from '../../common/interfaces/dto/dealRegistrationDTO';
+import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFromPartnerOpportunities';
+import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
 
-export type PartnerOpportunitiesItem = {
-	[key in PartnerOpportunitiesColumnKey]?: any;
-};
+interface IProps {
+	columnsDates: TableColumn<PartnerOpportunitiesItem>[];
+	getDates: (
+		items: DealRegistrationDTO
+	) => PartnerOpportunitiesItem | undefined;
+	getFilteredItems: (
+		items: PartnerOpportunitiesItem[]
+	) => PartnerOpportunitiesItem[];
+	name: string;
+	sort: string;
+}
 
-const PartnerOpportunitiesList = () => {
+const PartnerOpportunitiesList = ({
+	columnsDates,
+	getDates,
+	getFilteredItems,
+	name,
+	sort,
+}: IProps) => {
 	const {filters, filtersTerm, onFilter} = useFilters();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
-	const [modalContent, setModalContent] = useState<PartnerOpportunitiesItem>(
-		{}
-	);
-
+	const [modalContent, setModalContent] = useState<
+		PartnerOpportunitiesItem
+	>();
 	const {observer, onClose} = useModal({
 		onClose: () => setIsVisibleModal(false),
 	});
 
 	const pagination = usePagination();
 	const {data, isValidating} = useGetListItemsFromPartnerOpportunities(
+		getDates,
 		pagination.activePage,
 		pagination.activeDelta,
-		filtersTerm
+		filtersTerm,
+		sort
 	);
+
+	const filteredData = data.items && getFilteredItems(data.items);
 
 	const siteURL = useLiferayNavigate();
 	const columns = [
@@ -60,14 +79,7 @@ const PartnerOpportunitiesList = () => {
 			columnKey: PartnerOpportunitiesColumnKey.ACCOUNT_NAME,
 			label: 'Account Name',
 		},
-		{
-			columnKey: PartnerOpportunitiesColumnKey.START_DATE,
-			label: 'Start Date',
-		},
-		{
-			columnKey: PartnerOpportunitiesColumnKey.END_DATE,
-			label: 'End Date',
-		},
+		...columnsDates,
 		{
 			columnKey: PartnerOpportunitiesColumnKey.DEAL_AMOUNT,
 			label: 'Deal Amount',
@@ -90,9 +102,9 @@ const PartnerOpportunitiesList = () => {
 		},
 	];
 
-	const handleCustomClickOnRow = (item: PartnerOpportunitiesItem) => {
+	const handleCustomClickOnRow = (row: PartnerOpportunitiesItem) => {
 		setIsVisibleModal(true);
-		setModalContent(item);
+		setModalContent(row);
 	};
 
 	const getModal = () => {
@@ -124,7 +136,7 @@ const PartnerOpportunitiesList = () => {
 
 			return (
 				<div className="mt-3">
-					<Table<PartnerOpportunitiesListItem>
+					<Table<PartnerOpportunitiesItem>
 						borderless
 						columns={columns}
 						customClickOnRow={handleCustomClickOnRow}
@@ -143,7 +155,7 @@ const PartnerOpportunitiesList = () => {
 
 	return (
 		<div className="border-0 my-4">
-			<h1>Partner Opportunities</h1>
+			<h1>{name}</h1>
 
 			<TableHeader>
 				<div className="d-flex">
@@ -158,13 +170,13 @@ const PartnerOpportunitiesList = () => {
 
 						<div className="bd-highlight flex-shrink-2 mt-1">
 							{!!filters.searchTerm &&
-								!!data.items?.length &&
+								!!filteredData?.length &&
 								!isValidating && (
 									<div>
 										<p className="font-weight-semi-bold m-0 ml-1 mt-3 text-paragraph-sm">
-											{data.items?.length > 1
-												? `${data.items?.length} results for ${filters.searchTerm}`
-												: `${data.items?.length} result for ${filters.searchTerm}`}
+											{filteredData?.length > 1
+												? `${filteredData?.length} results for ${filters.searchTerm}`
+												: `${filteredData?.length} result for ${filters.searchTerm}`}
 										</p>
 									</div>
 								)}
@@ -173,13 +185,13 @@ const PartnerOpportunitiesList = () => {
 				</div>
 
 				<div>
-					{!!data.items?.length && (
+					{!!filteredData?.length && (
 						<CSVLink
 							className="btn btn-secondary mb-2 mb-lg-0 mr-2"
-							data={data.items}
-							filename="partner-opportunities.csv"
+							data={filteredData}
+							filename={`${name}.csv`}
 						>
-							Export Partner Opportunities
+							Export {name}
 						</CSVLink>
 					)}
 
@@ -200,7 +212,7 @@ const PartnerOpportunitiesList = () => {
 
 			{isValidating && <ClayLoadingIndicator />}
 
-			{!isValidating && getTable(data?.totalCount || 0, data?.items)}
+			{!isValidating && getTable(filteredData?.length || 0, filteredData)}
 		</div>
 	);
 };

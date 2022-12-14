@@ -12,46 +12,47 @@
 import {useMemo} from 'react';
 
 import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpportunitiesColumnKey';
-import {Liferay} from '../../../common/services/liferay';
+import DealRegistrationDTO from '../../../common/interfaces/dto/dealRegistrationDTO';
 import useGetDealRegistration from '../../../common/services/liferay/object/deal-registration/useGetDealRegistration';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
-import getDealAmount from '../utils/getDealAmount';
-import getDealDates from '../utils/getDealDates';
+import getDealAmount from '../utils/getOpportunityAmount';
 
 export default function useGetListItemsFromPartnerOpportunities(
+	getDates: (
+		items: DealRegistrationDTO
+	) =>
+		| {
+				[key in PartnerOpportunitiesColumnKey]?: string;
+		  }
+		| undefined,
 	page: number,
 	pageSize: number,
-	filtersTerm: string
+	filtersTerm: string,
+	sort: string
 ) {
-	const apiOption = Liferay.FeatureFlags['LPS-164528']
-		? ResourceName.OPPORTUNITIES_SALESFORCE
-		: ResourceName.DEAL_REGISTRATION_DXP;
-
 	const swrResponse = useGetDealRegistration(
-		apiOption,
+		ResourceName.OPPORTUNITIES_SALESFORCE,
 		page,
 		pageSize,
-		filtersTerm
+		filtersTerm,
+		sort
 	);
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
 				[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]:
 					item.partnerAccountName,
-				...getDealDates(
-					item.projectSubscriptionStartDate,
-					item.projectSubscriptionEndDate
-				),
+				...getDates(item),
 				...getDealAmount(item.amount),
 				[PartnerOpportunitiesColumnKey.STAGE]: item.stage,
 				[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
 					item.partnerFirstName ? item.partnerFirstName : ''
-				} ${item.partnerLastName ? item.partnerLastName : ''}`,
+				}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
 				[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]:
 					item.partnerEmail,
 				[PartnerOpportunitiesColumnKey.LIFERAY_REP]: item.ownerName,
 			})),
-		[swrResponse.data?.items]
+		[getDates, swrResponse.data?.items]
 	);
 
 	return {

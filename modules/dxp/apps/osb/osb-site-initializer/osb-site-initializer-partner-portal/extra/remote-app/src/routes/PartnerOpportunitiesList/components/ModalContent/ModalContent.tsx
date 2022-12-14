@@ -14,14 +14,14 @@ import ClayModal from '@clayui/modal';
 
 import ModalFormatedInformation from '../../../../common/components/ModalFormatedInformation';
 import {PartnerOpportunitiesColumnKey} from '../../../../common/enums/partnerOpportunitiesColumnKey';
-import {PartnerOpportunitiesItem} from '../../PartnerOpportunitiesList';
+import PartnerOpportunitiesItem from '../../interfaces/partnerOpportunitiesItem';
 
-interface ModalContentProps {
-	content: PartnerOpportunitiesItem;
+interface IProps {
+	content: PartnerOpportunitiesItem | undefined;
 	onClose: () => void;
 }
 
-export default function ModalContent({content, onClose}: ModalContentProps) {
+export default function ModalContent({content, onClose}: IProps) {
 	return (
 		<ClayModal.Body>
 			<div className="align-items-center d-flex justify-content-between mb-4">
@@ -34,83 +34,121 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 				/>
 			</div>
 
-			<div className="mb-4">
-				<div className="d-flex mb-3">
-					<ModalFormatedInformation
-						className="col"
-						information={
-							content[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]
-						}
-						label="Account Name"
-					/>
+			<div className="d-flex">
+				<div className="col">
+					{content?.[PartnerOpportunitiesColumnKey.ACCOUNT_NAME] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.ACCOUNT_NAME
+								]
+							}
+							label="Account Name"
+						/>
+					)}
 
-					<ModalFormatedInformation
-						className="col"
-						information={
-							content[
-								PartnerOpportunitiesColumnKey.PARTNER_REP_NAME
-							]
-						}
-						label="Partner Rep Name"
-					/>
+					{content?.[PartnerOpportunitiesColumnKey.DEAL_AMOUNT] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.DEAL_AMOUNT
+								]
+							}
+							label="Deal Amount"
+						/>
+					)}
+
+					{content?.[PartnerOpportunitiesColumnKey.START_DATE] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.START_DATE
+								]
+							}
+							label="Start Date"
+						/>
+					)}
+
+					{content?.[PartnerOpportunitiesColumnKey.END_DATE] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.END_DATE
+								]
+							}
+							label="End Date"
+						/>
+					)}
+
+					{content?.[PartnerOpportunitiesColumnKey.CLOSE_DATE] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.CLOSE_DATE
+								]
+							}
+							label="Close Date"
+						/>
+					)}
 				</div>
 
-				<div className="d-flex mb-3">
-					<ModalFormatedInformation
-						className="col"
-						information={
-							content[PartnerOpportunitiesColumnKey.START_DATE]
-						}
-						label="Start Date"
-					/>
+				<div className="col">
+					{content?.[
+						PartnerOpportunitiesColumnKey.PARTNER_REP_NAME
+					] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey
+										.PARTNER_REP_NAME
+								]
+							}
+							label="Partner Rep Name"
+						/>
+					)}
 
-					<ModalFormatedInformation
-						className="col"
-						information={
-							content[
-								PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL
-							]
-						}
-						label="Partner Rep Email"
-					/>
-				</div>
+					{content?.[
+						PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL
+					] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey
+										.PARTNER_REP_EMAIL
+								]
+							}
+							label="Partner Rep Email"
+						/>
+					)}
 
-				<div className="d-flex mb-3">
-					<ModalFormatedInformation
-						className="col"
-						information={
-							content[PartnerOpportunitiesColumnKey.END_DATE]
-						}
-						label="End Date
+					{content?.[PartnerOpportunitiesColumnKey.LIFERAY_REP] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.LIFERAY_REP
+								]
+							}
+							label="Liferay Rep"
+						/>
+					)}
 
-						"
-					/>
-
-					<ModalFormatedInformation
-						className="col"
-						information={
-							content[PartnerOpportunitiesColumnKey.LIFERAY_REP]
-						}
-						label="Liferay Rep"
-					/>
-				</div>
-
-				<div className="d-flex mb-3">
-					<ModalFormatedInformation
-						className="col"
-						information={
-							content[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]
-						}
-						label="Deal Amount"
-					/>
-
-					<ModalFormatedInformation
-						className="col"
-						information={
-							content[PartnerOpportunitiesColumnKey.STAGE]
-						}
-						label="Stage"
-					/>
+					{content?.[PartnerOpportunitiesColumnKey.STAGE] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content?.[PartnerOpportunitiesColumnKey.STAGE]
+							}
+							label="Stage"
+						/>
+					)}
 				</div>
 			</div>
 

@@ -12,7 +12,7 @@
 import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpportunitiesColumnKey';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
-export default function getDealAmount(amount?: number) {
+export default function getOpportunityAmount(amount?: number) {
 	if (amount) {
 		return {
 			[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: getIntlNumberFormat().format(

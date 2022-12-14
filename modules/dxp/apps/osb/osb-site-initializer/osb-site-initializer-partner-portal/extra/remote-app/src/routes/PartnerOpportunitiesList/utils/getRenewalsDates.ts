@@ -13,24 +13,15 @@ import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpport
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 
-export default function getDealDates(
-	projectSubscriptionStartDate?: Date,
-	projectSubscriptionEndDate?: Date
-) {
-	if (projectSubscriptionStartDate && projectSubscriptionEndDate) {
-		const startDate = getDateCustomFormat(
-			projectSubscriptionStartDate,
-			customFormatDateOptions.SHORT_MONTH
-		);
-
-		const endDate = getDateCustomFormat(
-			projectSubscriptionEndDate,
+export default function getRenewalsDates(closeDate?: Date) {
+	if (closeDate) {
+		const closeDateCustomFormat = getDateCustomFormat(
+			closeDate,
 			customFormatDateOptions.SHORT_MONTH
 		);
 
 		return {
-			[PartnerOpportunitiesColumnKey.START_DATE]: startDate,
-			[PartnerOpportunitiesColumnKey.END_DATE]: endDate,
+			[PartnerOpportunitiesColumnKey.CLOSE_DATE]: closeDateCustomFormat,
 		};
 	}
 }

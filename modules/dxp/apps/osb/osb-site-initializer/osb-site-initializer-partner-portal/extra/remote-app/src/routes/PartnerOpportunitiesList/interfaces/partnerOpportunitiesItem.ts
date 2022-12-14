@@ -9,8 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {PartnerOpportunitiesColumnKey} from '../enums/partnerOpportunitiesColumnKey';
+import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpportunitiesColumnKey';
 
-export type PartnerOpportunitiesListItem = {
+type PartnerOpportunitiesItem = {
 	[key in PartnerOpportunitiesColumnKey]?: string;
 };
+export default PartnerOpportunitiesItem;

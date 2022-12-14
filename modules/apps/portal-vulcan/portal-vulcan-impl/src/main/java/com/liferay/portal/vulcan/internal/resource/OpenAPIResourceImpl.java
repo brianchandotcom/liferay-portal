@@ -17,8 +17,11 @@ package com.liferay.portal.vulcan.internal.resource;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -54,6 +57,11 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.callbacks.Callback;
+import io.swagger.v3.oas.models.examples.Example;
+import io.swagger.v3.oas.models.headers.Header;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.links.Link;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.Schema;
@@ -61,7 +69,11 @@ import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.parameters.RequestBody;
 import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.responses.ApiResponses;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import io.swagger.v3.oas.models.tags.Tag;
 
 import java.net.URI;
 
@@ -75,6 +87,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -133,6 +147,204 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		return getOpenAPI(null, null, resourceClasses, type, uriInfo);
 	}
 
+	@Override
+	public Response mergeOpenAPIs(
+		String path, String description,
+		Map<OpenAPIContext, Response> openAPIResponses, String title,
+		String type) {
+
+		if (openAPIResponses.isEmpty()) {
+			return null;
+		}
+
+		Map<String, Callback> callbacks = new HashMap<>();
+		Map<String, Object> componentExtensions = new HashMap<>();
+		Map<String, Example> examples = new HashMap<>();
+		Map<String, Object> extensions = new HashMap<>();
+		Map<String, Header> headers = new HashMap<>();
+		Map<String, Link> links = new HashMap<>();
+		Paths paths = new Paths();
+		Map<String, Parameter> parameters = new HashMap<>();
+		Map<String, RequestBody> requestBodies = new HashMap<>();
+		Map<String, ApiResponse> responses = new HashMap<>();
+		List<SecurityRequirement> securityRequirements = new ArrayList<>();
+		Map<String, SecurityScheme> securitySchemes = new HashMap<>();
+		Map<String, Schema> schemas = new HashMap<>();
+		List<Tag> tags = new ArrayList<>();
+
+		for (Map.Entry<OpenAPIContext, Response> entry :
+				openAPIResponses.entrySet()) {
+
+			OpenAPIContext openAPIContext = entry.getKey();
+
+			Response response = entry.getValue();
+
+			OpenAPI openAPI = (OpenAPI)response.getEntity();
+
+			_updateOpenAPIReferences(openAPI, openAPIContext);
+
+			if (openAPI.getComponents() != null) {
+				Components components = openAPI.getComponents();
+
+				if (components.getCallbacks() != null) {
+					callbacks.putAll(components.getCallbacks());
+				}
+
+				if (components.getExamples() != null) {
+					examples.putAll(components.getExamples());
+				}
+
+				if (components.getExtensions() != null) {
+					componentExtensions.putAll(components.getExtensions());
+				}
+
+				if (components.getHeaders() != null) {
+					headers.putAll(components.getHeaders());
+				}
+
+				if (components.getLinks() != null) {
+					links.putAll(components.getLinks());
+				}
+
+				if (components.getParameters() != null) {
+					parameters.putAll(components.getParameters());
+				}
+
+				if (components.getRequestBodies() != null) {
+					requestBodies.putAll(components.getRequestBodies());
+				}
+
+				if (components.getResponses() != null) {
+					responses.putAll(components.getResponses());
+				}
+
+				if (components.getSchemas() != null) {
+					schemas.putAll(components.getSchemas());
+				}
+
+				if (components.getSecuritySchemes() != null) {
+					securitySchemes.putAll(components.getSecuritySchemes());
+				}
+			}
+
+			if (openAPI.getExtensions() != null) {
+				extensions.putAll(openAPI.getExtensions());
+			}
+
+			if (openAPI.getPaths() != null) {
+				paths.putAll(openAPI.getPaths());
+			}
+
+			if (openAPI.getSecurity() != null) {
+				securityRequirements.addAll(openAPI.getSecurity());
+			}
+
+			if (openAPI.getTags() != null) {
+				tags.addAll(openAPI.getTags());
+			}
+		}
+
+		OpenAPI openAPI1 = new OpenAPI();
+
+		if (!callbacks.isEmpty() || !componentExtensions.isEmpty() ||
+			!examples.isEmpty() || !headers.isEmpty() || !links.isEmpty() ||
+			!parameters.isEmpty() || !requestBodies.isEmpty() ||
+			!responses.isEmpty() || !schemas.isEmpty() ||
+			!securitySchemes.isEmpty()) {
+
+			Components components = new Components();
+
+			if (!callbacks.isEmpty()) {
+				components.setCallbacks(callbacks);
+			}
+
+			if (!componentExtensions.isEmpty()) {
+				components.setExtensions(componentExtensions);
+			}
+
+			if (!examples.isEmpty()) {
+				components.setExamples(examples);
+			}
+
+			if (!headers.isEmpty()) {
+				components.setHeaders(headers);
+			}
+
+			if (!links.isEmpty()) {
+				components.setLinks(links);
+			}
+
+			if (!parameters.isEmpty()) {
+				components.setParameters(parameters);
+			}
+
+			if (!requestBodies.isEmpty()) {
+				components.setRequestBodies(requestBodies);
+			}
+
+			if (!responses.isEmpty()) {
+				components.setResponses(responses);
+			}
+
+			if (!schemas.isEmpty()) {
+				components.setSchemas(schemas);
+			}
+
+			if (!securitySchemes.isEmpty()) {
+				components.setSecuritySchemes(securitySchemes);
+			}
+
+			openAPI1.setComponents(components);
+		}
+
+		if (!extensions.isEmpty()) {
+			openAPI1.setExtensions(extensions);
+		}
+
+		openAPI1.setInfo(
+			new Info() {
+				{
+					setDescription(description);
+
+					for (Response response : openAPIResponses.values()) {
+						OpenAPI openAPI2 = (OpenAPI)response.getEntity();
+
+						Info info = openAPI2.getInfo();
+
+						if ((info != null) && (info.getLicense() != null)) {
+							setLicense(info.getLicense());
+
+							break;
+						}
+					}
+
+					setTitle(title);
+				}
+			});
+
+		if (!paths.isEmpty()) {
+			openAPI1.setPaths(paths);
+		}
+
+		if (!securityRequirements.isEmpty()) {
+			openAPI1.setSecurity(securityRequirements);
+		}
+
+		openAPI1.setServers(
+			Collections.singletonList(
+				new Server() {
+					{
+						setUrl(path);
+					}
+				}));
+
+		if (!tags.isEmpty()) {
+			openAPI1.setTags(tags);
+		}
+
+		return _toResponse(openAPI1, type);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_trackedOpenAPIContributors = ServiceTrackerListFactory.open(
@@ -142,6 +354,126 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Deactivate
 	protected void deactivate() {
 		_trackedOpenAPIContributors.close();
+	}
+
+	private static String _getUpdatedReference(
+		String schemaName, String schemaPrefix) {
+
+		return schemaPrefix + "." + schemaName;
+	}
+
+	private static String _getUpdatedSchemaReference(
+		String ref, String schemaPrefix) {
+
+		if ((ref != null) && ref.startsWith("#/components/schemas/") &&
+			!ref.startsWith("#/components/schemas/" + schemaPrefix)) {
+
+			String updatedReference = _getUpdatedReference(
+				StringUtil.extractLast(ref, "#/components/schemas/"),
+				schemaPrefix);
+
+			return "#/components/schemas/" + updatedReference;
+		}
+
+		return ref;
+	}
+
+	private static void _updateSchemaReferences(
+		Operation operation, String schemaPrefix) {
+
+		if (operation == null) {
+			return;
+		}
+
+		RequestBody requestBody = operation.getRequestBody();
+
+		if (requestBody != null) {
+			requestBody.set$ref(
+				_getUpdatedSchemaReference(
+					requestBody.get$ref(), schemaPrefix));
+
+			Content content = requestBody.getContent();
+
+			if (content != null) {
+				for (io.swagger.v3.oas.models.media.MediaType mediaType :
+						content.values()) {
+
+					_updateSchemaReferences(
+						mediaType.getSchema(), schemaPrefix);
+				}
+			}
+		}
+
+		ApiResponses apiResponses = operation.getResponses();
+
+		if (apiResponses != null) {
+			for (ApiResponse apiResponse : apiResponses.values()) {
+				apiResponse.set$ref(
+					_getUpdatedSchemaReference(
+						apiResponse.get$ref(), schemaPrefix));
+
+				Content content = apiResponse.getContent();
+
+				if (content == null) {
+					continue;
+				}
+
+				for (io.swagger.v3.oas.models.media.MediaType mediaType :
+						content.values()) {
+
+					_updateSchemaReferences(
+						mediaType.getSchema(), schemaPrefix);
+				}
+			}
+		}
+
+		if (operation.getTags() != null) {
+			List<String> tags = operation.getTags();
+
+			for (int i = 0; i < tags.size(); i++) {
+				tags.set(i, _getUpdatedReference(tags.get(i), schemaPrefix));
+			}
+		}
+
+		if (operation.getOperationId() != null) {
+			operation.setOperationId(
+				_getUpdatedReference(operation.getOperationId(), schemaPrefix));
+		}
+	}
+
+	private static void _updateSchemaReferences(
+		Schema schema, String schemaPrefix) {
+
+		if (schema == null) {
+			return;
+		}
+
+		schema.set$ref(
+			_getUpdatedSchemaReference(schema.get$ref(), schemaPrefix));
+
+		if (schema instanceof ArraySchema) {
+			ArraySchema arraySchema = (ArraySchema)schema;
+
+			_updateSchemaReferences(arraySchema.getItems(), schemaPrefix);
+		}
+
+		Map<String, Schema> properties = schema.getProperties();
+
+		if (properties != null) {
+			for (Map.Entry<String, Schema> schemaEntry :
+					properties.entrySet()) {
+
+				_updateSchemaReferences(schemaEntry.getValue(), schemaPrefix);
+			}
+		}
+
+		Object additionalProperties = schema.getAdditionalProperties();
+
+		if (additionalProperties instanceof Schema) {
+			Schema additionalPropertiesSchema = (Schema)additionalProperties;
+
+			_updateSchemaReferences(additionalPropertiesSchema, schemaPrefix);
+		}
 	}
 
 	private String _getBasePath(
@@ -389,23 +721,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			trackedOpenAPIContributor.contribute(openAPI, openAPIContext);
 		}
 
-		if (StringUtil.equalsIgnoreCase("yaml", type)) {
-			return Response.status(
-				Response.Status.OK
-			).entity(
-				Yaml.pretty(openAPI)
-			).type(
-				"application/yaml"
-			).build();
-		}
-
-		return Response.status(
-			Response.Status.OK
-		).entity(
-			openAPI
-		).type(
-			MediaType.APPLICATION_JSON_TYPE
-		).build();
+		return _toResponse(openAPI, type);
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
@@ -938,8 +1254,8 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 					PathItem pathItem = paths.get(path);
 
 					paths.put(
-						path.replace(
-							parameterName,
+						StringUtil.replace(
+							path, parameterName,
 							StringUtil.lowerCaseFirstLetter(
 								schemaMappings.get(key))),
 						pathItem);
@@ -967,6 +1283,95 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 		};
 	}
+
+	private Response _toResponse(OpenAPI openAPI, String type) {
+		if (StringUtil.equalsIgnoreCase("yaml", type)) {
+			return Response.status(
+				Response.Status.OK
+			).entity(
+				Yaml.pretty(openAPI)
+			).type(
+				"application/yaml"
+			).build();
+		}
+
+		return Response.status(
+			Response.Status.OK
+		).entity(
+			openAPI
+		).type(
+			MediaType.APPLICATION_JSON_TYPE
+		).build();
+	}
+
+	private void _updateOpenAPIReferences(
+		OpenAPI openAPI, OpenAPIContext openAPIContext) {
+
+		String version = GetterUtil.get(
+			StringUtil.insert(
+				openAPIContext.getVersion(), StringPool.PERIOD, 0),
+			StringPool.BLANK);
+
+		String schemaPrefix = StringUtil.upperCaseFirstLetter(
+			CamelCaseUtil.toCamelCase(
+				StringUtil.replace(
+					StringUtil.removeFirst(
+						openAPIContext.getPath() + version,
+						StringPool.FORWARD_SLASH),
+					CharPool.FORWARD_SLASH, CharPool.DASH)));
+
+		Components components = openAPI.getComponents();
+
+		if ((components != null) && (components.getSchemas() != null)) {
+			Map<String, Schema> schemas = components.getSchemas();
+
+			for (Map.Entry<String, Schema> entry :
+					new HashSet<>(schemas.entrySet())) {
+
+				_updateSchemaReferences(entry.getValue(), schemaPrefix);
+
+				String newSchemaName = _getUpdatedReference(
+					entry.getKey(), schemaPrefix);
+
+				schemas.put(newSchemaName, schemas.remove(entry.getKey()));
+			}
+		}
+
+		Paths paths = openAPI.getPaths();
+
+		if (paths != null) {
+			for (Map.Entry<String, PathItem> entry :
+					new HashSet<>(paths.entrySet())) {
+
+				PathItem pathItem = entry.getValue();
+
+				Matcher matcher = _pathParamValuePattern.matcher(
+					entry.getKey());
+
+				String path = matcher.replaceAll("{$1}");
+
+				String key = openAPIContext.getPath() + path;
+
+				if (key.endsWith(StringPool.SLASH)) {
+					key = key.substring(0, key.length() - 1);
+				}
+
+				paths.put(key, paths.remove(path));
+
+				_updateSchemaReferences(pathItem.getDelete(), schemaPrefix);
+				_updateSchemaReferences(pathItem.getGet(), schemaPrefix);
+				_updateSchemaReferences(pathItem.getHead(), schemaPrefix);
+				_updateSchemaReferences(pathItem.getOptions(), schemaPrefix);
+				_updateSchemaReferences(pathItem.getPatch(), schemaPrefix);
+				_updateSchemaReferences(pathItem.getPost(), schemaPrefix);
+				_updateSchemaReferences(pathItem.getPut(), schemaPrefix);
+				_updateSchemaReferences(pathItem.getTrace(), schemaPrefix);
+			}
+		}
+	}
+
+	private static final Pattern _pathParamValuePattern = Pattern.compile(
+		"\\{(.*)(:.*)(/?)\\}");
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

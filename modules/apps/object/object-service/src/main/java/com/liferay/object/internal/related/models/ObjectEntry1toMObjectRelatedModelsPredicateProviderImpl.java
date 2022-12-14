@@ -15,15 +15,14 @@
 package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -63,13 +62,13 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 					_objectDefinition.getObjectDefinitionId(),
 					objectRelationship));
 
-		ObjectField relatedObjectDefinitionObjectField =
-			_objectFieldLocalService.getObjectField(
-				relatedObjectDefinition.getTitleObjectFieldId());
-
-		Table<?> relatedObjectTable = _objectFieldLocalService.getTable(
-			relatedObjectDefinition.getObjectDefinitionId(),
-			relatedObjectDefinitionObjectField.getName());
+		DynamicObjectDefinitionTable relatedObjectTable =
+			new DynamicObjectDefinitionTable(
+				relatedObjectDefinition,
+				_objectFieldLocalService.getObjectFields(
+					relatedObjectDefinition.getObjectDefinitionId(),
+					relatedObjectDefinition.getDBTableName()),
+				relatedObjectDefinition.getDBTableName());
 
 		Column<?, ?> relatedObjectDefinitionTableColumn =
 			relatedObjectTable.getColumn(
@@ -77,13 +76,13 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 					"r_", objectRelationship.getName(), "_",
 					_objectDefinition.getPKObjectFieldName()));
 
-		ObjectField objectDefinitionField =
-			_objectFieldLocalService.getObjectField(
-				_objectDefinition.getTitleObjectFieldId());
-
-		Table<?> objectTable = _objectFieldLocalService.getTable(
-			_objectDefinition.getObjectDefinitionId(),
-			objectDefinitionField.getName());
+		DynamicObjectDefinitionTable objectTable =
+			new DynamicObjectDefinitionTable(
+				_objectDefinition,
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId(),
+					_objectDefinition.getDBTableName()),
+				_objectDefinition.getDBTableName());
 
 		Column<?, ?> objectTableColumn = objectTable.getColumn(
 			_objectDefinition.getPKObjectFieldName() + "_");

@@ -61,7 +61,7 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		FormFields.enableSwitch(fieldName = "multiple");
+		FormFields.enableSwitch(fieldName = "Allow Multiple Selections");
 
 		Form.closeSidebar();
 

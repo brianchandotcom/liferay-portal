@@ -2262,6 +2262,167 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteUserMessageBoardMessagesActivityPage()
+		throws Exception {
+
+		Long siteId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getIrrelevantSiteId();
+		Long userId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getUserId();
+		Long irrelevantUserId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getIrrelevantUserId();
+
+		Page<MessageBoardMessage> page =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if ((irrelevantSiteId != null) && (irrelevantUserId != null)) {
+			MessageBoardMessage irrelevantMessageBoardMessage =
+				testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+					irrelevantSiteId, irrelevantUserId,
+					randomIrrelevantMessageBoardMessage());
+
+			page =
+				messageBoardMessageResource.
+					getSiteUserMessageBoardMessagesActivityPage(
+						irrelevantSiteId, irrelevantUserId,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantMessageBoardMessage),
+				(List<MessageBoardMessage>)page.getItems());
+			assertValid(page);
+		}
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage2 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		page =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+			(List<MessageBoardMessage>)page.getItems());
+		assertValid(page);
+
+		messageBoardMessageResource.deleteMessageBoardMessage(
+			messageBoardMessage1.getId());
+
+		messageBoardMessageResource.deleteMessageBoardMessage(
+			messageBoardMessage2.getId());
+	}
+
+	@Test
+	public void testGetSiteUserMessageBoardMessagesActivityPageWithPagination()
+		throws Exception {
+
+		Long siteId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getSiteId();
+		Long userId =
+			testGetSiteUserMessageBoardMessagesActivityPage_getUserId();
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage2 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage3 =
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				siteId, userId, randomMessageBoardMessage());
+
+		Page<MessageBoardMessage> page1 =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(1, 2));
+
+		List<MessageBoardMessage> messageBoardMessages1 =
+			(List<MessageBoardMessage>)page1.getItems();
+
+		Assert.assertEquals(
+			messageBoardMessages1.toString(), 2, messageBoardMessages1.size());
+
+		Page<MessageBoardMessage> page2 =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<MessageBoardMessage> messageBoardMessages2 =
+			(List<MessageBoardMessage>)page2.getItems();
+
+		Assert.assertEquals(
+			messageBoardMessages2.toString(), 1, messageBoardMessages2.size());
+
+		Page<MessageBoardMessage> page3 =
+			messageBoardMessageResource.
+				getSiteUserMessageBoardMessagesActivityPage(
+					siteId, userId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				messageBoardMessage1, messageBoardMessage2,
+				messageBoardMessage3),
+			(List<MessageBoardMessage>)page3.getItems());
+	}
+
+	protected MessageBoardMessage
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				Long siteId, Long userId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetSiteUserMessageBoardMessagesActivityPage_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	protected Long
+			testGetSiteUserMessageBoardMessagesActivityPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	protected Long testGetSiteUserMessageBoardMessagesActivityPage_getUserId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetSiteUserMessageBoardMessagesActivityPage_getIrrelevantUserId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetSiteMessageBoardMessagePermissionsPage()
 		throws Exception {
 

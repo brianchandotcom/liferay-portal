@@ -1,0 +1,18 @@
+how-oauth-application-user-agent:
+    homePageURL: http://localhost:58082
+    name: How OAuth Application User Agent
+    type: oAuthApplicationUserAgent
+    scopes:
+    - Liferay.Headless.Admin.Workflow.everything
+how-workflow-action-1:
+    homePageURL : http://localhost:58082
+    name: How Workflow Action 1
+    oAuth2ApplicationExternalReferenceCode: how-oauth-application-user-agent
+    resourcePath: /how-workflow/action/1
+    type: workflowAction
+how-workflow-action-2:
+    homePageURL : http://localhost:58082
+    name: How Workflow Action 2
+    oAuth2ApplicationExternalReferenceCode: how-oauth-application-user-agent
+    resourcePath: /how-workflow/action/2
+    type: workflowAction

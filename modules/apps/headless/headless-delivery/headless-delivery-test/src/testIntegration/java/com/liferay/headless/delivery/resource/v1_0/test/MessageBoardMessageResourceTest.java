@@ -272,25 +272,23 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected MessageBoardMessage
-	testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
-		Long siteId, Long userId, MessageBoardMessage messageBoardMessage)
+			testGetSiteUserMessageBoardMessagesActivityPage_addMessageBoardMessage(
+				Long siteId, Long userId,
+				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return _addMessageBoardMessage(messageBoardMessage, siteId);
 	}
 
-
 	@Override
-	protected Long
-	testGetSiteUserMessageBoardMessagesActivityPage_getSiteId()
+	protected Long testGetSiteUserMessageBoardMessagesActivityPage_getSiteId()
 		throws Exception {
 
 		return TestPropsValues.getGroupId();
 	}
 
 	@Override
-	protected Long
-	testGetSiteUserMessageBoardMessagesActivityPage_getUserId()
+	protected Long testGetSiteUserMessageBoardMessagesActivityPage_getUserId()
 		throws Exception {
 
 		return UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId());

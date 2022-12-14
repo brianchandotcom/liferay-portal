@@ -15,7 +15,7 @@
 package com.liferay.layout.internal.struts;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -33,9 +33,9 @@ import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.render.PortletRenderParts;
 import com.liferay.portal.kernel.portlet.render.PortletRenderUtil;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -66,6 +66,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -98,14 +99,14 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		boolean updateLayout = true;
 
 		if (cmd.equals(Constants.ADD)) {
+			if (portletId == null) {
+				throw new IllegalArgumentException("Portlet ID is null");
+			}
+
 			String columnId = ParamUtil.getString(
 				httpServletRequest, "p_p_col_id", null);
 			int columnPos = ParamUtil.getInteger(
 				httpServletRequest, "p_p_col_pos", -1);
-
-			if (portletId == null) {
-				throw new IllegalArgumentException("Portlet ID is null");
-			}
 
 			String originalPortletId = portletId;
 
@@ -179,11 +180,11 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				httpServletRequest);
 
-			LayoutRevisionLocalServiceUtil.updateStatus(
+			_layoutRevisionLocalService.updateStatus(
 				userId, layoutRevisionId, WorkflowConstants.STATUS_DRAFT,
 				serviceContext);
 
-			StagingUtil.setRecentLayoutRevisionId(
+			_staging.setRecentLayoutRevisionId(
 				httpServletRequest, layoutSetBranchId, layout.getPlid(),
 				layoutRevisionId);
 
@@ -195,7 +196,7 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			long layoutSetBranchId = ParamUtil.getLong(
 				httpServletRequest, "layoutSetBranchId");
 
-			StagingUtil.setRecentLayoutRevisionId(
+			_staging.setRecentLayoutRevisionId(
 				httpServletRequest, layoutSetBranchId, layout.getPlid(),
 				layoutRevisionId);
 
@@ -222,11 +223,11 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 				httpServletRequest);
 
 			LayoutRevision layoutRevision =
-				LayoutRevisionLocalServiceUtil.updateStatus(
+				_layoutRevisionLocalService.updateStatus(
 					userId, layoutRevisionId, WorkflowConstants.STATUS_INACTIVE,
 					serviceContext);
 
-			StagingUtil.setRecentLayoutRevisionId(
+			_staging.setRecentLayoutRevisionId(
 				httpServletRequest, layoutSetBranchId, layout.getPlid(),
 				layoutRevision.getParentLayoutRevisionId());
 
@@ -240,7 +241,7 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			layoutTypePortlet.resetModes();
 			layoutTypePortlet.resetStates();
 
-			layout = LayoutServiceUtil.updateLayout(
+			layout = _layoutService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), layout.getTypeSettings());
 		}
@@ -274,13 +275,13 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		// Pass in the portlet id because the portlet id may be the instance id.
 		// Namespace the request if necessary. See LEP-4644.
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortalUtil.getCompanyId(httpServletRequest), portletId);
+		Portlet portlet = _portletLocalService.getPortletById(
+			_portal.getCompanyId(httpServletRequest), portletId);
 
 		DynamicServletRequest dynamicRequest = null;
 
 		if (portlet.isPrivateRequestAttributes()) {
-			String portletNamespace = PortalUtil.getPortletNamespace(
+			String portletNamespace = _portal.getPortletNamespace(
 				portlet.getPortletId());
 
 			dynamicRequest = new NamespaceServletRequest(
@@ -345,10 +346,6 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		// We need to get the portlet setup before doing anything else to ensure
 		// that it is created in the database
 
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletId);
-
 		String[] portletData = StringUtil.split(
 			ParamUtil.getString(httpServletRequest, "portletData"));
 
@@ -363,6 +360,10 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		if ((classPK <= 0) || Validator.isNull(className)) {
 			return;
 		}
+
+		PortletPreferences portletSetup =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletId);
 
 		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
 			className);
@@ -384,5 +385,20 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			SystemBundleUtil.getBundleContext(), AddPortletProvider.class,
 			"model.class.name");
+
+	@Reference
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

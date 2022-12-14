@@ -20,14 +20,14 @@ friendly-url-mapper-class?, friendly-url-mapping?, friendly-url-routes?,
 url-encoder-class?, portlet-data-handler-class?,
 staged-model-data-handler-class*, template-handler?,
 portlet-configuration-listener-class?, portlet-layout-listener-class?,
-poller-processor-class?, pop-message-listener-class?,
-social-activity-interpreter-class*, social-request-interpreter-class?,
-user-notification-definitions?, user-notification-handler-class*,
-webdav-storage-token?, webdav-storage-class?, xml-rpc-method-class?,
-application-type*, control-panel-entry-category?, control-panel-entry-weight?,
-control-panel-entry-class?, asset-renderer-factory*, atom-collection-adapter*,
-custom-attributes-display*, permission-propagator?, trash-handler*,
-workflow-handler*, preferences-company-wide?, preferences-unique-per-layout?,
+pop-message-listener-class?, social-activity-interpreter-class*,
+social-request-interpreter-class?, user-notification-definitions?,
+user-notification-handler-class*, webdav-storage-token?, webdav-storage-class?,
+xml-rpc-method-class?, application-type*, control-panel-entry-category?,
+control-panel-entry-weight?, control-panel-entry-class?,
+asset-renderer-factory*, atom-collection-adapter*, custom-attributes-display*,
+permission-propagator?, trash-handler*, workflow-handler*,
+preferences-company-wide?, preferences-unique-per-layout?,
 preferences-owned-by-group?, use-default-template?, show-portlet-access-denied?,
 show-portlet-inactive?, action-url-redirect?, restore-current-view?,
 maximize-edit?, maximize-help?, pop-up-print?, layout-cacheable?, instanceable?,
@@ -267,18 +267,6 @@ http://github.com/liferay/liferay-portal/blob/7.1.x/modules/apps/journal/journal
 http://docs.liferay.com/portal/7.1-latest/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/PortletLayoutListener.html
 -->
 <!ELEMENT portlet-layout-listener-class (#PCDATA)>
-
-<!--
-The poller-processor-class value must be a class that implements
-com.liferay.portal.kernel.poller.PollerProcessor and is triggered by the
-JavaScript class Liferay.Poller. It allows a portlet to use polling to be
-notified of data changes. See the Chat portlet for a real world implementation.
-
-See:
-
-http://docs.liferay.com/portal/7.1-latest/javadocs/portal-kernel/com/liferay/portal/kernel/poller/PollerProcessor.html
--->
-<!ELEMENT poller-processor-class (#PCDATA)>
 
 <!--
 The pop-message-listener-class value must be a class that implements

@@ -17,6 +17,7 @@ import {fetch} from 'frontend-js-web';
 import {HEADLESS_BATCH_ENGINE_URL} from './constants';
 
 const getEndpoint = (type, externalReferenceCode) => {
+	externalReferenceCode = encodeURIComponent(externalReferenceCode);
 	const endpoints = {
 		batchPlannerTemplate: `/o/batch-planner/v1.0/plans/${externalReferenceCode}/template`,
 		errorReport: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/failed-items/report`,

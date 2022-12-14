@@ -46,34 +46,31 @@ definition {
 			Navigator.gotoPage(pageName = "Clay Sample Test Page");
 		}
 
-		task ("When the alert contains all attributes then the alert displays status icon, type text, description text, close icon") {
-			Click(
-				key_text = "Success Submit",
-				locator1 = "Button#ANY");
-
-			AssertElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-check-circle-full']");
-
-			AssertTextEquals(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				value1 = "Success:Your request completed successfully.");
-
+		task ("When the alert contains all attributes") {
 			AssertElementPresent(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				value1 = "Icon#CLOSE_ALERT");
+				locator1 = "ClayAlertToast#ALERT_STATIC",
+				key_alertType = "success");
+		}
 
-			Click(
-				key_text = "Fail Submit",
-				locator1 = "Button#ANY");
-
-			AssertElementPresent(locator1 = "//*[@id='ToastAlertContainer']//*[@class='lexicon-icon lexicon-icon-exclamation-full']");
-
-			AssertTextEquals(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Error:An unexpected error occurred.");
-
+		task ("Then the alert displays status icon") {
 			AssertElementPresent(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Icon#CLOSE_ALERT");
+				locator1 = "ClayAlertToast#ALERT_STATIC_ICON",
+				key_alertType = "success",
+				key_icon = "check-circle-full");
+		}
+
+		task ("And displays type text") {
+			AssertElementPresent(
+				locator1 = "ClayAlertToast#ALERT_STATIC_BOLD",
+				key_alertType = "success",
+				key_alertBold = "Success");
+		}
+
+		task ("And displays description text") {
+			AssertTextEquals(
+				locator1 = "ClayAlertToast#ALERT_STATIC",
+				key_alertType = "success",
+				value1 = "Success:This is a success message.");
 		}
 	}
 

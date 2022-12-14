@@ -106,13 +106,15 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			return;
 		}
 
-		String name = PrincipalThreadLocal.getName();
+		long principalUserId = PrincipalThreadLocal.getUserId();
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			PrincipalThreadLocal.setName(user.getUserId());
+			if (principalUserId != userId) {
+				PrincipalThreadLocal.setName(userId);
+			}
 
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
@@ -140,7 +142,9 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			}
 		}
 		finally {
-			PrincipalThreadLocal.setName(name);
+			if (principalUserId != userId) {
+				PrincipalThreadLocal.setName(principalUserId);
+			}
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}

@@ -34,6 +34,7 @@ export enum TaskStatuses {
 	COMPLETE = 'COMPLETE',
 	IN_ANALYSIS = 'INANALYSIS',
 	OPEN = 'OPEN',
+	PROCESSING = 'PROCESSING',
 }
 
 export enum SubTaskStatuses {

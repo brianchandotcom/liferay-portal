@@ -426,6 +426,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
+	public void run(String jobName, String groupName, StorageType storageType)
+		throws SchedulerException {
+
+		_schedulerEngine.run(jobName, groupName, storageType);
+	}
+
+	@Override
 	public void schedule(
 			Trigger trigger, StorageType storageType, String description,
 			String destinationName, Message message)

@@ -96,6 +96,9 @@ public interface SchedulerEngine {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
+	public void run(String jobName, String groupName, StorageType storageType)
+		throws SchedulerException;
+
 	public void schedule(
 			Trigger trigger, String description, String destinationName,
 			Message message, StorageType storageType)

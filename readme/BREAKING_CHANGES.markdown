@@ -1255,3 +1255,29 @@ Replace usages of `<aui:container>` with `<clay:container>`.
 ### Why was this change made?
 
 The tag `<aui:container>` was deprecated in a previous version.
+
+---------------------------------------
+
+## Tika configuration removed from System Properties and Text Extraction configuration removed from Portal Properties
+
+- **Date:** 2022-Dec-13
+- **JIRA Ticket:** [LPS-147938](https://issues.liferay.com/browse/LPS-147938) and [LPS-169760](https://issues.liferay.com/browse/LPS-169760)
+
+### What changed?
+
+The Tika library is no longer configurable via `tika.config` in system properties.
+Text Extraction in a separate Java process is no longer configurable via `text.extraction.fork.process.enabled` and `text.extraction.fork.process.mime.types` in portal properties.
+
+### Who is affected?
+
+This affects anyone using `tika.config` in system properties to configure the tika library or enabling the Text Extraction in a separate Java process in portal properties.
+
+### How should I update my code?
+
+No code changes are necessary.
+
+Administrators will have to move the configuration of system properties and portal properties to System Settings => Infrastructure => Tika configuration
+
+### Why was this change made?
+
+This change was made because the Tika library was extracted to the com.liferay.portal.tika module.

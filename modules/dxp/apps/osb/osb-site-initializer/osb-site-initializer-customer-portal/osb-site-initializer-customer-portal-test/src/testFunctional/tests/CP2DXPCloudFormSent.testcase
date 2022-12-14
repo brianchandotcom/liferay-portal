@@ -1,0 +1,63 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account LXC - SM";
+	var testProduct = "LXC - SM";
+	var testUserFirstName = "Test";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+	@description = "Automation ID: LPS-149145 | Test Summary: Verify if when a Liferay Staff fills out the activation form before the first client admin, it will not go through the form in the integration flow"
+	@priority = "3"
+	test CannotSeeTheFormInTheIntegrationFlow {
+
+		// TODO LPS-149145 CannotSeeTheFormInTheIntegrationFlow pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-149144 | Test Summary: Verify if after a user submits the DXP Cloud activation form and then tries to resend it (or another user) in another browser window a helpful message is shown"
+	@priority = "4"
+	test CanViewAUsefulMessage {
+		
+		// TODO LPS-149144 CanViewAUsefulMessage pending implementation
+
+	}
+
+}

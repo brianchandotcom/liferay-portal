@@ -73,14 +73,16 @@ definition {
 			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
-		task ("Navigate to DXP and connect with AC") {
-			Navigator.openURL();
+		task ("Navigate to DXP") {
+			ACUtils.launchDXP();
+		}
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+		task ("Connect DXP to AC") {
+			ACDXPSettings.goToInstanceSettingsAC();
 
-			ContentPerformance.connectDXPtoAnalyticsCloudNoSync();
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.assertSuccessfulConnection();
 		}
 
 		task ("Check in Content Dashboard and open Content Performance Panel") {

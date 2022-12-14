@@ -37,14 +37,6 @@ definition {
 			locator1 = "Sidebar#LINK");
 	}
 
-	macro connectDXPtoAnalyticsCloudNoSync {
-		ACDXPSettings.goToInstanceSettingsAC();
-
-		ACDXPSettings.connectAnalyticsCloud();
-
-		ACDXPSettings.assertSuccessfulConnection();
-	}
-
 	macro openContentPerformance {
 		if (!(IsVisible(locator1 = "ContentPerformance#SIDEBAR"))) {
 			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");

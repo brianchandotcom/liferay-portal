@@ -459,25 +459,18 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		return sb.toString();
 	}
 
-	private List<TermCollector> _getTermCollectors(String... terms)
-		throws Exception {
+	private List<TermCollector> _getTermCollectors(String... terms) {
+		int[] frequencies = new int[terms.length];
 
-		List<TermCollector> termCollectors = new ArrayList<>();
-
-		int frequency = 1;
-
-		for (String term : terms) {
-			termCollectors.add(createTermCollector(term, frequency));
-
-			frequency++;
+		for (int i = 0; i < terms.length; i++) {
+			frequencies[i] = i + 1;
 		}
 
-		return termCollectors;
+		return _getTermCollectors(terms, frequencies);
 	}
 
 	private List<TermCollector> _getTermCollectors(
-			String[] terms, int[] frequencies)
-		throws Exception {
+		String[] terms, int[] frequencies) {
 
 		List<TermCollector> termCollectors = new ArrayList<>();
 

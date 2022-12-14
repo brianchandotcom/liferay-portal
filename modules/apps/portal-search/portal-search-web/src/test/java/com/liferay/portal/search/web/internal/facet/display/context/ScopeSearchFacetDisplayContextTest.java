@@ -493,21 +493,13 @@ public class ScopeSearchFacetDisplayContextTest {
 	private List<TermCollector> _getTermCollectors(String... groupNames)
 		throws Exception {
 
-		List<TermCollector> termCollectors = new ArrayList<>();
+		int[] frequencies = new int[groupNames.length];
 
-		int groupId = 0;
-
-		for (String groupName : groupNames) {
-			_addGroup(groupId, groupName);
-
-			int frequency = groupId + 1;
-
-			termCollectors.add(createTermCollector(groupId, frequency));
-
-			groupId++;
+		for (int i = 0; i < groupNames.length; i++) {
+			frequencies[i] = i + 1;
 		}
 
-		return termCollectors;
+		return _getTermCollectors(groupNames, frequencies);
 	}
 
 	private List<TermCollector> _getTermCollectors(

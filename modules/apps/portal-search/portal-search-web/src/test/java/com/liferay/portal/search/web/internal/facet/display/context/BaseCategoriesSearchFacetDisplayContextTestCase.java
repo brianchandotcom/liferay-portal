@@ -661,20 +661,14 @@ public abstract class BaseCategoriesSearchFacetDisplayContextTestCase {
 		return portal;
 	}
 
-	private List<TermCollector> _getTermCollectors(long... assetCategoryIds)
-		throws Exception {
+	private List<TermCollector> _getTermCollectors(long... assetCategoryIds) {
+		int[] frequencies = new int[assetCategoryIds.length];
 
-		List<TermCollector> termCollectors = new ArrayList<>();
-
-		int frequency = 1;
-
-		for (long assetCategoryId : assetCategoryIds) {
-			termCollectors.add(createTermCollector(assetCategoryId, frequency));
-
-			frequency++;
+		for (int i = 0; i < assetCategoryIds.length; i++) {
+			frequencies[i] = i + 1;
 		}
 
-		return termCollectors;
+		return _getTermCollectors(assetCategoryIds, frequencies);
 	}
 
 	private List<TermCollector> _getTermCollectors(

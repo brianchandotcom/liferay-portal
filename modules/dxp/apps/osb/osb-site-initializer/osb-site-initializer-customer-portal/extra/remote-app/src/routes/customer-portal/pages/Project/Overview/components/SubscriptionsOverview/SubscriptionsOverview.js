@@ -49,7 +49,7 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 
 	const handleDropdownOnClick = (selectedStatus) => {
 		if (selectedStatus) {
-			setLastSubscriptionStatus(`'${selectedStatus.join("', '")}'`);
+			setLastSubscriptionStatus(selectedStatus.join("', '"));
 
 			return;
 		}

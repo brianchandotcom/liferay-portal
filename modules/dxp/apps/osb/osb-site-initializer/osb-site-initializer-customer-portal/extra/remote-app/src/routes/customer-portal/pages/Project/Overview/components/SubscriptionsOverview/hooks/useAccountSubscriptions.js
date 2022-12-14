@@ -16,7 +16,9 @@ export default function useAccountSubscriptions(
 	accountSubcriptionGroup,
 	accountSubscriptionGroupsLoading
 ) {
-	const [lastSubscriptionStatus, setLastSubscriptionStatus] = useState();
+	const [lastSubscriptionStatus, setLastSubscriptionStatus] = useState(
+		'Active'
+	);
 
 	const [
 		handleGetAccountSubscriptions,
@@ -25,7 +27,7 @@ export default function useAccountSubscriptions(
 
 	const getSubscriptionStatusFilter = (subscriptionStatus) => {
 		if (subscriptionStatus) {
-			return ` and subscriptionStatus in (${subscriptionStatus})`;
+			return ` and subscriptionStatus in ('${subscriptionStatus}')`;
 		}
 
 		return '';

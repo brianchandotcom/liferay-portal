@@ -207,12 +207,6 @@ AUI.add(
 
 					const contentBox = instance.get('contentBox');
 
-					contentBox.setAttribute(
-						'aria-label',
-						Liferay.Language.get(
-							'color-picker-use-arrow-keys-to-move-to-different-colors-press-enter-or-space-to-select-a-color-press-escape-to-leave-the-color-picker'
-						)
-					);
 					contentBox.setAttribute('role', 'radiogroup');
 
 					contentBox.setContent(instance.items);
@@ -235,6 +229,18 @@ AUI.add(
 						newNode.addClass(CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED);
 						newNode.setAttribute('aria-checked', 'true');
 					}
+
+					const contentBox = instance.get('contentBox');
+
+					contentBox.setAttribute(
+						'aria-label',
+						Lang.sub(
+							Liferay.Language.get(
+								'color-picker.-color-selected-x.-use-arrow-keys-to-move-to-different-colors.-press-enter-or-space-to-select-a-color.-press-escape-to-leave-the-color-picker'
+							),
+							[val]
+						)
+					);
 				},
 
 				_uiSetPallete() {

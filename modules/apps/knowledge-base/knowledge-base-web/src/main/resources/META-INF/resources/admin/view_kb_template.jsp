@@ -49,8 +49,7 @@ if (portletTitleBasedNavigation) {
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
-			<ul class="navbar-nav navbar-nav-expand">
-				<li class="nav-item nav-item-expand"></li>
+			<ul class="justify-content-end navbar-nav navbar-nav-expand">
 				<li class="nav-item">
 					<clay:link
 						aria-label='<%= LanguageUtil.get(request, "edit") %>'

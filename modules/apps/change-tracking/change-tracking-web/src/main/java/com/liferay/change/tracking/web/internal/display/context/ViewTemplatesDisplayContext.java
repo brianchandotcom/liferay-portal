@@ -20,7 +20,6 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -79,7 +78,7 @@ public class ViewTemplatesDisplayContext
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
-			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
+			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).build();
 	}
 
@@ -93,7 +92,7 @@ public class ViewTemplatesDisplayContext
 			return PortletURLBuilder.createRenderURL(
 				_renderResponse
 			).setMVCRenderCommandName(
-				"/change_tracking/edit_template"
+				"/change_tracking/edit_ct_collection_template"
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setParameter(
@@ -170,7 +169,7 @@ public class ViewTemplatesDisplayContext
 			return PortletURLBuilder.createActionURL(
 				_renderResponse
 			).setActionName(
-				"/change_tracking/delete_template"
+				"/change_tracking/delete_ct_collection_template"
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setParameter(

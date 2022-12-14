@@ -63,8 +63,9 @@ public class ViewTemplatesManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
-					"mvcRenderCommandName", "/change_tracking/edit_template",
-					"redirect", currentURLObj.toString());
+					"mvcRenderCommandName",
+					"/change_tracking/edit_ct_collection_template", "redirect",
+					currentURLObj.toString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest,

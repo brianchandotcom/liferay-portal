@@ -18,6 +18,7 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
+import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -56,7 +57,7 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "ctCollectionId");
 
 		renderRequest.setAttribute(
-			"ctCollection",
+			CTWebKeys.CT_COLLECTION,
 			_ctCollectionLocalService.fetchCTCollection(ctCollectionId));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

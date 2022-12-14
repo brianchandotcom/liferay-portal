@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-CTCollection ctCollection = (CTCollection)request.getAttribute("ctCollection");
+CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLLECTION);
 
 List<CTCollectionTemplate> ctCollectionTemplates = (List<CTCollectionTemplate>)request.getAttribute("ctCollectionTemplates");
 Map<Long, JSONObject> templatesJsonMap = (Map<Long, JSONObject>)request.getAttribute("templatesJsonMap");

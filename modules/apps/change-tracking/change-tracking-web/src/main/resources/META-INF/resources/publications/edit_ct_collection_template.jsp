@@ -21,7 +21,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-CTCollectionTemplate ctCollectionTemplate = (CTCollectionTemplate)request.getAttribute("ctCollectionTemplate");
+CTCollectionTemplate ctCollectionTemplate = (CTCollectionTemplate)request.getAttribute(CTWebKeys.CT_COLLECTION_TEMPLATE);
 
 long ctCollectionTemplateId = 0;
 String description = StringPool.BLANK;
@@ -51,7 +51,7 @@ portletDisplay.setShowBackIcon(true);
 <clay:container-fluid
 	cssClass="container-form-lg edit-publication-template-container"
 >
-	<liferay-portlet:actionURL name="/change_tracking/edit_template" var="actionURL">
+	<liferay-portlet:actionURL name="/change_tracking/edit_ct_collection_template" var="actionURL">
 		<liferay-portlet:param name="redirect" value="<%= redirect %>" />
 	</liferay-portlet:actionURL>
 

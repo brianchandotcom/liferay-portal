@@ -1523,11 +1523,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public DDMStructure updateStructure(
-			long userId, long structureId, long parentStructureId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String definition, ServiceContext serviceContext)
+		long userId, long structureId, long parentStructureId,
+		String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap,
+		String definition, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
@@ -1537,6 +1537,7 @@ public class DDMStructureLocalServiceImpl
 
 		structure.setUserId(userId);
 		structure.setParentStructureId(parentStructureId);
+		structure.setStructureKey(structureKey);
 
 		DDMStructureVersion latestStructureVersion =
 			_ddmStructureVersionLocalService.getLatestStructureVersion(

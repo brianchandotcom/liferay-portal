@@ -1052,8 +1052,9 @@ public interface DDMStructureLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String definition, ServiceContext serviceContext)
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String definition,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Override

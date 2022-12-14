@@ -1556,6 +1556,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				GetterUtil.getLong(
 					ddmStructure.getParentStructureId(),
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID),
+				dataDefinition.getDataDefinitionKey(),
 				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
 				LocalizedValueUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),

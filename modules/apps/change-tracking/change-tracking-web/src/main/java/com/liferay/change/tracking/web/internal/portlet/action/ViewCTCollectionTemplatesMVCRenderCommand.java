@@ -40,11 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/view_templates"
+		"mvc.command.name=/change_tracking/view_ct_collection_templates"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewTemplatesMVCRenderCommand implements MVCRenderCommand {
+public class ViewCTCollectionTemplatesMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -68,7 +68,7 @@ public class ViewTemplatesMVCRenderCommand implements MVCRenderCommand {
 			CTWebKeys.VIEW_TEMPLATES_DISPLAY_CONTEXT,
 			viewTemplatesDisplayContext);
 
-		return "/publications/view_templates.jsp";
+		return "/publications/view_ct_collection_templates.jsp";
 	}
 
 	@Reference

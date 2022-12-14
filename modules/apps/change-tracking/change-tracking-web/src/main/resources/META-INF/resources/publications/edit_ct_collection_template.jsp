@@ -21,7 +21,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-CTCollectionTemplate ctCollectionTemplate = (CTCollectionTemplate)request.getAttribute("ctCollectionTemplate");
+CTCollectionTemplate ctCollectionTemplate = (CTCollectionTemplate)request.getAttribute(CTWebKeys.CT_COLLECTION_TEMPLATE);
 
 long ctCollectionTemplateId = 0;
 String description = StringPool.BLANK;

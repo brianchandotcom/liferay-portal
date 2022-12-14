@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
+import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditTemplateMVCRenderCommand implements MVCRenderCommand {
+public class EditCTCollectionTemplateMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -47,12 +48,12 @@ public class EditTemplateMVCRenderCommand implements MVCRenderCommand {
 
 		if (ctCollectionTemplateId > 0) {
 			renderRequest.setAttribute(
-				"ctCollectionTemplate",
+				CTWebKeys.CT_COLLECTION_TEMPLATE,
 				_ctCollectionTemplateLocalService.fetchCTCollectionTemplate(
 					ctCollectionTemplateId));
 		}
 
-		return "/publications/edit_template.jsp";
+		return "/publications/edit_ct_collection_template.jsp";
 	}
 
 	@Reference

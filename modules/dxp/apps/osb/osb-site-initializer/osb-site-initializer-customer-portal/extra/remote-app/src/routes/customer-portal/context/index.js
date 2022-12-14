@@ -11,7 +11,6 @@
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
 import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
-import useRouterPath from '../../../common/hooks/useRouterPath';
 import {Liferay} from '../../../common/services/liferay';
 import {
 	getAccountByExternalReferenceCode,
@@ -24,6 +23,7 @@ import {getCurrentSession} from '../../../common/services/okta/rest/getCurrentSe
 import {ROLE_TYPES, ROUTE_TYPES} from '../../../common/utils/constants';
 import {getAccountKey} from '../../../common/utils/getAccountKey';
 import {isValidPage} from '../../../common/utils/page.validation';
+import routerPath from '../../../common/utils/routerPath';
 import reducer, {actionTypes} from './reducer';
 
 const AppContext = createContext();
@@ -40,7 +40,7 @@ const AppContextProvider = ({children}) => {
 		userAccount: undefined,
 	});
 
-	const pageRoutes = useRouterPath();
+	const pageRoutes = routerPath();
 
 	useEffect(() => {
 		const getUser = async (projectExternalReferenceCode) => {

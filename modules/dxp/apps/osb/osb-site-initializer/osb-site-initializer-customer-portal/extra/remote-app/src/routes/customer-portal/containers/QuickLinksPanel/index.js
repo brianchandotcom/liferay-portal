@@ -14,10 +14,10 @@ import classNames from 'classnames';
 import DOMPurify from 'dompurify';
 import {useCallback, useEffect, useState} from 'react';
 import i18n from '../../../../common/I18n';
-import useRouterPath from '../../../../common/hooks/useRouterPath';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
 import {storage} from '../../../../common/services/liferay/storage';
 import {STORAGE_KEYS} from '../../../../common/utils/constants';
+import routerPath from '../../../../common/utils/routerPath';
 import {useCustomerPortal} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import QuickLinksSkeleton from './Skeleton';
@@ -36,7 +36,7 @@ const QuickLinksPanel = () => {
 	] = useCustomerPortal();
 	const [quickLinksContents, setQuickLinksContents] = useState([]);
 
-	const pageRoutes = useRouterPath();
+	const pageRoutes = routerPath();
 
 	useEffect(() => {
 		const quickLinksExpandedStorage = storage.getItem(

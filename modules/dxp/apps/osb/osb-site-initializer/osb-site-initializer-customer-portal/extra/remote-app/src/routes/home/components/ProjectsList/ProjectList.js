@@ -14,8 +14,8 @@ import classNames from 'classnames';
 import {useEffect} from 'react';
 import i18n from '../../../../common/I18n';
 import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
-import useRouterPath from '../../../../common/hooks/useRouterPath';
 import {Liferay} from '../../../../common/services/liferay';
+import routerPath from '../../../../common/utils/routerPath';
 import ProjectCard from './components/ProjectCard';
 
 const ProjectList = ({
@@ -27,7 +27,7 @@ const ProjectList = ({
 	onIntersect,
 }) => {
 	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
-	const pageRoutes = useRouterPath();
+	const pageRoutes = routerPath();
 
 	const isLastPage = koroneikiAccounts?.page === koroneikiAccounts?.lastPage;
 	const allowFetching = !isLastPage && !fetching;

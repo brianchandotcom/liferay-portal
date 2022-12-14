@@ -24,16 +24,16 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -68,7 +69,7 @@ public class SitemapStrutsAction implements StrutsAction {
 			LayoutSet layoutSet = null;
 
 			if (groupId > 0) {
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = _groupLocalService.getGroup(groupId);
 
 				if (group.isStagingGroup()) {
 					groupId = group.getLiveGroupId();
@@ -77,28 +78,28 @@ public class SitemapStrutsAction implements StrutsAction {
 				boolean privateLayout = ParamUtil.getBoolean(
 					httpServletRequest, "privateLayout");
 
-				layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				layoutSet = _layoutSetLocalService.getLayoutSet(
 					groupId, privateLayout);
 			}
 			else {
-				String host = PortalUtil.getHost(httpServletRequest);
+				String host = _portal.getHost(httpServletRequest);
 
 				host = StringUtil.toLowerCase(host);
 				host = host.trim();
 
 				VirtualHost virtualHost =
-					VirtualHostLocalServiceUtil.fetchVirtualHost(host);
+					_virtualHostLocalService.fetchVirtualHost(host);
 
 				if ((virtualHost != null) &&
 					(virtualHost.getLayoutSetId() != 0)) {
 
-					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					layoutSet = _layoutSetLocalService.getLayoutSet(
 						virtualHost.getLayoutSetId());
 
 					Group group = layoutSet.getGroup();
 
 					if (group.isStagingGroup()) {
-						GroupPermissionUtil.check(
+						_groupPermission.check(
 							themeDisplay.getPermissionChecker(),
 							group.getGroupId(), ActionKeys.VIEW_STAGING);
 					}
@@ -111,10 +112,10 @@ public class SitemapStrutsAction implements StrutsAction {
 						groupName = GroupConstants.GUEST;
 					}
 
-					Group group = GroupLocalServiceUtil.getGroup(
+					Group group = _groupLocalService.getGroup(
 						themeDisplay.getCompanyId(), groupName);
 
-					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					layoutSet = _layoutSetLocalService.getLayoutSet(
 						group.getGroupId(), false);
 				}
 			}
@@ -128,7 +129,7 @@ public class SitemapStrutsAction implements StrutsAction {
 				sitemap.getBytes(StringPool.UTF8), ContentTypes.TEXT_XML_UTF8);
 		}
 		catch (NoSuchLayoutSetException noSuchLayoutSetException) {
-			PortalUtil.sendError(
+			_portal.sendError(
 				HttpServletResponse.SC_NOT_FOUND, noSuchLayoutSetException,
 				httpServletRequest, httpServletResponse);
 		}
@@ -137,7 +138,7 @@ public class SitemapStrutsAction implements StrutsAction {
 				_log.warn(exception);
 			}
 
-			PortalUtil.sendError(
+			_portal.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception,
 				httpServletRequest, httpServletResponse);
 		}
@@ -147,5 +148,20 @@ public class SitemapStrutsAction implements StrutsAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitemapStrutsAction.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

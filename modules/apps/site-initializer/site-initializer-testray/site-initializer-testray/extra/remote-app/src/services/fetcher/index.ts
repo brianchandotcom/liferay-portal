@@ -97,7 +97,7 @@ fetcher.post = <T = any>(
 		...options,
 		body: data ? JSON.stringify(data) : null,
 		method: 'POST',
-	});
+	}) as Promise<T>;
 
 fetcher.put = (resource: RequestInfo, data: unknown, options?: RequestInit) =>
 	fetcher(resource, {

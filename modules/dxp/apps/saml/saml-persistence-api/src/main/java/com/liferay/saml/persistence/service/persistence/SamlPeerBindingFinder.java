@@ -47,4 +47,10 @@ public interface SamlPeerBindingFinder {
 				<com.liferay.saml.persistence.model.SamlPeerBinding>
 					orderByComparator);
 
+	public java.util.List<com.liferay.saml.persistence.model.SamlPeerBinding>
+		findByC_U_D_SNIF_SNINQ_SPEI(
+			long companyId, long userId, boolean deleted,
+			String samlNameIdFormat, String samlNameIdNameQualifier,
+			String samlPeerEntityId);
+
 }

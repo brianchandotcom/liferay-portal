@@ -49,27 +49,27 @@ definition {
 		task ("When the alert contains all attributes") {
 			AssertElementPresent(
 				key_alertType = "success",
-				locator1 = "ClayAlertToast#ALERT_STATIC");
+				locator1 = "ClayAlert#ALERT_STATIC");
 		}
 
 		task ("Then the alert displays status icon") {
 			AssertElementPresent(
 				key_alertType = "success",
 				key_icon = "check-circle-full",
-				locator1 = "ClayAlertToast#ALERT_STATIC_ICON");
+				locator1 = "ClayAlert#ALERT_STATIC_ICON");
 		}
 
 		task ("And displays type text") {
 			AssertElementPresent(
 				key_alertBold = "Success",
 				key_alertType = "success",
-				locator1 = "ClayAlertToast#ALERT_STATIC_BOLD");
+				locator1 = "ClayAlert#ALERT_STATIC_BOLD");
 		}
 
 		task ("And displays description text") {
 			AssertTextEquals(
 				key_alertType = "success",
-				locator1 = "ClayAlertToast#ALERT_STATIC",
+				locator1 = "ClayAlert#ALERT_STATIC",
 				value1 = "Success:This is a success message.");
 		}
 	}
@@ -98,19 +98,19 @@ definition {
 		task ("When alert contains status icon and keyword") {
 			AssertTextEquals(
 				key_alertType = "success",
-				locator1 = "ClayAlertToast#ALERT_STATIC",
+				locator1 = "ClayAlert#ALERT_STATIC",
 				value1 = "Success:This is a success message.");
 
 			AssertElementPresent(
 				key_alertType = "success",
 				key_icon = "check-circle-full",
-				locator1 = "ClayAlertToast#ALERT_STATIC_ICON");
+				locator1 = "ClayAlert#ALERT_STATIC_ICON");
 		}
 
 		task ("Then keyword must be semi-bold") {
 			AssertCssValue(
 				key_alertType = "success",
-				locator1 = "ClayAlertToast#ALERT_STATIC",
+				locator1 = "ClayAlert#ALERT_STATIC",
 				locator2 = "font-weight",
 				value1 = "400");
 		}

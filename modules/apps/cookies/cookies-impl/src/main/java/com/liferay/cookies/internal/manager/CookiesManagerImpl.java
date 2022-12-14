@@ -40,6 +40,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,6 +51,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration",
+	property = {
+		"cookies.functional=" + CookiesConstants.NAME_GUEST_LANGUAGE_ID,
+		"cookies.necessary=" + CookiesConstants.NAME_COOKIE_SUPPORT
+	},
 	service = CookiesManager.class
 )
 public class CookiesManagerImpl implements CookiesManager {
@@ -81,6 +86,12 @@ public class CookiesManagerImpl implements CookiesManager {
 	public boolean addCookie(
 		Cookie cookie, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, boolean secure) {
+
+		if (_internalCookies.get(cookie.getName()) != null) {
+			return addCookie(
+				_internalCookies.get(cookie.getName()), cookie,
+				httpServletRequest, httpServletResponse);
+		}
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(
@@ -411,6 +422,11 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_readInternalCookiesFromProperties(properties);
+	}
+
 	private Map<String, Cookie> _getCookiesMap(
 		HttpServletRequest httpServletRequest) {
 
@@ -464,6 +480,39 @@ public class CookiesManagerImpl implements CookiesManager {
 		return cookie.getValue();
 	}
 
+	private void _readInternalCookiesFromProperties(
+		Map<String, Object> properties) {
+
+		String[] functionalCookies = GetterUtil.getStringValues(
+			properties.get("cookies.functional"));
+		String[] necessaryCookies = GetterUtil.getStringValues(
+			properties.get("cookies.necessary"));
+		String[] performanceCookies = GetterUtil.getStringValues(
+			properties.get("cookies.performance"));
+		String[] personalizationCookies = GetterUtil.getStringValues(
+			properties.get("cookies.personalization"));
+
+		for (String cookieName : functionalCookies) {
+			_internalCookies.put(
+				cookieName, CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
+		}
+
+		for (String cookieName : necessaryCookies) {
+			_internalCookies.put(
+				cookieName, CookiesConstants.CONSENT_TYPE_NECESSARY);
+		}
+
+		for (String cookieName : performanceCookies) {
+			_internalCookies.put(
+				cookieName, CookiesConstants.CONSENT_TYPE_PERFORMANCE);
+		}
+
+		for (String cookieName : personalizationCookies) {
+			_internalCookies.put(
+				cookieName, CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
+		}
+	}
+
 	private static final String _SESSION_COOKIE_DOMAIN = PropsUtil.get(
 		PropsKeys.SESSION_COOKIE_DOMAIN);
 
@@ -484,6 +533,8 @@ public class CookiesManagerImpl implements CookiesManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CookiesManagerImpl.class);
 
+	private static final HashMap<String, Integer> _internalCookies =
+		new HashMap<>();
 	private static final HashMap<String, Integer> _knownCookies =
 		new HashMap<>();
 

@@ -16,6 +16,17 @@
 			"type": "String"
 		},
 		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Dispatch Trigger ID"
+			},
+			"name": "dispatchTriggerId",
+			"required": false,
+			"type": "Long"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"indexed": true,

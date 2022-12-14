@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>RETRIEVE_QUOTE</td>
-	<td>//span[contains(text(),'Retrieve a Quote')]</td>
+	<td>//*[contains(text(), 'Retrieve a Quote')]</td>
 	<td></td>
 </tr>
 <tr>

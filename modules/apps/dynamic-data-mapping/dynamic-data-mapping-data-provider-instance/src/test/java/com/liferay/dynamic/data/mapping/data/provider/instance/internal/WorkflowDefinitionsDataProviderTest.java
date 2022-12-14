@@ -112,15 +112,16 @@ public class WorkflowDefinitionsDataProviderTest {
 
 		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> newKeyValuePairs = new ArrayList<KeyValuePair>() {
-			{
-				add(new KeyValuePair("no-workflow", "No Workflow"));
-				add(new KeyValuePair("definition1", "Definition 1"));
-				add(new KeyValuePair("definition2", "Definition 2"));
-			}
-		};
+		List<KeyValuePair> expectedKeyValuePairs =
+			new ArrayList<KeyValuePair>() {
+				{
+					add(new KeyValuePair("no-workflow", "No Workflow"));
+					add(new KeyValuePair("definition1", "Definition 1"));
+					add(new KeyValuePair("definition2", "Definition 2"));
+				}
+			};
 
-		Assert.assertEquals(keyValuePairs, newKeyValuePairs);
+		Assert.assertEquals(expectedKeyValuePairs, keyValuePairs);
 	}
 
 	@Test
@@ -142,13 +143,14 @@ public class WorkflowDefinitionsDataProviderTest {
 
 		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> newKeyValuePairs = new ArrayList<KeyValuePair>() {
-			{
-				add(new KeyValuePair("no-workflow", "No Workflow"));
-			}
-		};
+		List<KeyValuePair> expectedKeyValuePairs =
+			new ArrayList<KeyValuePair>() {
+				{
+					add(new KeyValuePair("no-workflow", "No Workflow"));
+				}
+			};
 
-		Assert.assertEquals(keyValuePairs, newKeyValuePairs);
+		Assert.assertEquals(expectedKeyValuePairs, keyValuePairs);
 	}
 
 	@Test(expected = DDMDataProviderException.class)

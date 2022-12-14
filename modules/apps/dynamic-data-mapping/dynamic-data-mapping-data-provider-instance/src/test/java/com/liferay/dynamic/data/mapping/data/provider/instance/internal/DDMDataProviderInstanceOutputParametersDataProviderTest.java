@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -197,17 +198,20 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 
 		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> newKeyValuePairs = new ArrayList<KeyValuePair>() {
-			{
-				add(new KeyValuePair(countryIdOutputParameterId, "Country Id"));
-				add(
-					new KeyValuePair(
-						countryNameOutputParameterId, "Country Name"));
-			}
-		};
+		List<KeyValuePair> expectedKeyValuePairs =
+			new ArrayList<KeyValuePair>() {
+				{
+					add(
+						new KeyValuePair(
+							countryIdOutputParameterId, "Country Id"));
+					add(
+						new KeyValuePair(
+							countryNameOutputParameterId, "Country Name"));
+				}
+			};
 
 		Assert.assertEquals(
-			newKeyValuePairs.toString(), newKeyValuePairs, keyValuePairs);
+			keyValuePairs.toString(), expectedKeyValuePairs, keyValuePairs);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -306,10 +310,8 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 
 		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> newKeyValuePairs = new ArrayList<>();
-
 		Assert.assertEquals(
-			newKeyValuePairs.toString(), newKeyValuePairs, keyValuePairs);
+			keyValuePairs.toString(), Collections.emptyList(), keyValuePairs);
 	}
 
 	private static void _setUpLanguageUtil() {

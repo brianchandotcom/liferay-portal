@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -88,17 +87,15 @@ public class DDMStorageTypesDataProviderTest {
 			expectedSet
 		);
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+		List<KeyValuePair> expectedKeyValuePairs = new ArrayList<>();
 
-		Stream<String> stream = expectedSet.stream();
+		for (String type : expectedSet) {
+			if (type.equals("json")) {
+				continue;
+			}
 
-		stream.filter(
-			type -> !type.equals("json")
-		).map(
-			type -> new KeyValuePair(type, type)
-		).forEach(
-			keyValuePairs::add
-		);
+			expectedKeyValuePairs.add(new KeyValuePair(type, type));
+		}
 
 		DDMDataProviderRequest.Builder builder =
 			DDMDataProviderRequest.Builder.newBuilder();
@@ -108,12 +105,12 @@ public class DDMStorageTypesDataProviderTest {
 
 		Assert.assertTrue(ddmDataProviderResponse.hasOutput("Default-Output"));
 
-		List<KeyValuePair> newKeyValuePairs = ddmDataProviderResponse.getOutput(
+		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
 			"Default-Output", List.class);
 
-		Assert.assertNotNull(newKeyValuePairs);
+		Assert.assertNotNull(keyValuePairs);
 
-		Assert.assertEquals(keyValuePairs, newKeyValuePairs);
+		Assert.assertEquals(expectedKeyValuePairs, keyValuePairs);
 	}
 
 	private static final DDMStorageAdapterRegistry _ddmStorageAdapterRegistry =

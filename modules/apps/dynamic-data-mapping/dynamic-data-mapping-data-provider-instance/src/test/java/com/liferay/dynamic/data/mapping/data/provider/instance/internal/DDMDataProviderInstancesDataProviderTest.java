@@ -101,14 +101,15 @@ public class DDMDataProviderInstancesDataProviderTest {
 
 		Assert.assertNotNull(keyValuePairs);
 
-		List<KeyValuePair> newKeyValuePairs = new ArrayList<KeyValuePair>() {
-			{
-				add(new KeyValuePair("1", "Data Provider Instance 1"));
-				add(new KeyValuePair("2", "Data Provider Instance 2"));
-			}
-		};
+		List<KeyValuePair> expectedKeyValuePairs =
+			new ArrayList<KeyValuePair>() {
+				{
+					add(new KeyValuePair("1", "Data Provider Instance 1"));
+					add(new KeyValuePair("2", "Data Provider Instance 2"));
+				}
+			};
 
-		Assert.assertEquals(newKeyValuePairs, keyValuePairs);
+		Assert.assertEquals(expectedKeyValuePairs, keyValuePairs);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)

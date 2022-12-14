@@ -107,7 +107,6 @@ Import-Package:\
 	!org.jctools.queues.*,\
 	\
 	!org.joda.convert.*,\
-	!org.joda.time.*,\
 	\
 	!org.junit.*,\
 	\
@@ -126,6 +125,8 @@ Import-Package:\
 	!sun.security.*,\
 	\
 	com.liferay.portal.search.analysis,\
+	\
+	org.joda.time.format,\
 	\
 	*
 -dsannotations-options: inherit

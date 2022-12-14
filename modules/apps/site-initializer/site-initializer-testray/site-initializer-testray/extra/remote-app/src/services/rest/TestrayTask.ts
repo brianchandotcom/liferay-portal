@@ -17,12 +17,15 @@ import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder, searchUtil} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
+import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
 import Rest from './Rest';
-import {testrayTaskCaseTypesImpl} from './TestrayTaskCaseTypes';
 import {testrayTaskUsersImpl} from './TestrayTaskUsers';
 import {APIResponse, TestrayTask, TestrayTaskUser} from './types';
 
-type TaskForm = typeof yupSchema.task.__outputType & {projectId: number};
+type TaskForm = typeof yupSchema.task.__outputType & {
+	dispatchTriggerId: number;
+	projectId: number;
+};
 
 type NestedObjectOptions =
 	| 'taskToSubtasks'
@@ -33,11 +36,13 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	constructor() {
 		super({
 			adapter: ({
+				dispatchTriggerId,
 				buildId: r_buildToTasks_c_buildId,
 				caseTypes: taskToTasksCaseTypes,
-				dueStatus,
+				dueStatus = TaskStatuses.OPEN,
 				name,
 			}) => ({
+				dispatchTriggerId,
 				dueStatus,
 				name,
 				r_buildToTasks_c_buildId,
@@ -161,8 +166,6 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 
 		const userIds = data.userIds || [];
 
-		const caseTypeIds = data.caseTypes || [];
-
 		if (userIds.length) {
 			await testrayTaskUsersImpl.createBatch(
 				userIds.map((userId) => ({
@@ -173,30 +176,30 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			);
 		}
 
-		if (caseTypeIds.length) {
-			await testrayTaskCaseTypesImpl.createBatch(
-				caseTypeIds.map((caseTypeId) => ({
-					caseTypeId,
-					name: `${task.id}-${caseTypeId}`,
-					taskId: task.id,
-				}))
-			);
-		}
+		const dispatchTrigger = await liferayDispatchTriggerImpl.create({
+			active: true,
+			dispatchTaskExecutorType: 'testray-testflow',
+			dispatchTaskSettings: {
+				testrayBuildId: data.buildId,
+				testrayCaseTypesId: data.caseTypes,
+				testrayTaskId: task.id,
+			},
+			externalReferenceCode: `T-${task.id}`,
+			name: `T-${task.id} / ${data.name}`,
+			overlapAllowed: false,
+		});
 
-		return task;
-	}
+		const dispatchTriggerId = dispatchTrigger?.id as number;
 
-	public async update(
-		id: number,
-		data: Partial<TaskForm>
-	): Promise<TestrayTask> {
-		const task = await super.update(id, data);
+		await Promise.allSettled([
+			super.update(task.id, {
+				...data,
+				dispatchTriggerId,
+			}),
+			liferayDispatchTriggerImpl.run(dispatchTriggerId),
+		]);
 
-		if (data.dueStatus === TaskStatuses.IN_ANALYSIS) {
-			await this.assignUsers(id, data.userIds as number[]);
-		}
-
-		return task;
+		return {...task, dispatchTriggerId};
 	}
 
 	protected async beforeCreate(task: TaskForm): Promise<void> {

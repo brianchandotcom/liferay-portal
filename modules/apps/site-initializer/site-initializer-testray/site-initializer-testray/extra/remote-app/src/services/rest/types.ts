@@ -304,6 +304,7 @@ export type TestraySuiteCase = {
 export type TestrayTask = {
 	build?: TestrayBuild;
 	dateCreated: string;
+	dispatchTriggerId: number;
 	dueStatus: PickList;
 	id: number;
 	name: string;

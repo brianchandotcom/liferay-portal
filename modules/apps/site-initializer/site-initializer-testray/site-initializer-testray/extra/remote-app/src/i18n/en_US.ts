@@ -245,6 +245,7 @@ export default {
 	'no-permissions': 'No Permissions',
 	'no-results-found': 'No results found',
 	'no-x': 'No {0}',
+	'open': 'Open',
 	'operating-system': 'Operating System',
 	'option': 'Option',
 	'options': 'Options',
@@ -259,6 +260,7 @@ export default {
 		'Please select at least two subtasks to merge.',
 	'please-select-one-or-more-roles': 'Please, select one or more roles.',
 	'priority': 'Priority',
+	'processing': 'Processing',
 	'product-version': 'Product Version',
 	'progress': 'Progress',
 	'progress-score': 'Progress (Score)',
@@ -373,6 +375,9 @@ export default {
 	'this-build-has-been-analyzed': 'This build has been analyzed.',
 	'this-build-is-currently-in-analysis':
 		'This build is currently in analysis.',
+	'this-build-is-currently-in-open': 'This build is currently in open.',
+	'this-build-is-currently-in-processing':
+		'This build is currently in processing.',
 	'this-builds-task-has-been-abandoned':
 		"This build's task has been abandoned.",
 	'this-field-is-required': 'This field is required.',

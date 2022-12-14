@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.action;
+package com.liferay.asset.categories.internal.struts;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.struts.JSONAction;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,13 +31,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Lundgren
  */
-public class GetCategoriesAction extends JSONAction {
+@Component(
+	property = "path=/asset/get_categories", service = StrutsAction.class
+)
+public class GetCategoriesStrutsAction implements StrutsAction {
 
 	@Override
-	public String getJSON(
+	public String execute(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
@@ -66,7 +72,9 @@ public class GetCategoriesAction extends JSONAction {
 				));
 		}
 
-		return jsonArray.toString();
+		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
+
+		return null;
 	}
 
 	protected List<AssetCategory> getCategories(

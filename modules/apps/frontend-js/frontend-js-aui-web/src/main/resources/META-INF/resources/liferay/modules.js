@@ -440,10 +440,6 @@
 						path: 'panel_search.js',
 						requires: ['aui-base', 'liferay-search-filter'],
 					},
-					'liferay-poller': {
-						path: 'poller.js',
-						requires: ['aui-base', 'json'],
-					},
 					'liferay-portlet-base': {
 						path: 'portlet_base.js',
 						requires: ['aui-base'],

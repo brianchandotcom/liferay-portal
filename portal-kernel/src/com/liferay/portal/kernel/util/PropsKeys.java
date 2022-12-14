@@ -2026,12 +2026,6 @@ public interface PropsKeys {
 	public static final String PHONE_NUMBER_FORMAT_USA_REGEXP =
 		"phone.number.format.usa.regexp";
 
-	public static final String POLLER_NOTIFICATIONS_TIMEOUT =
-		"poller.notifications.timeout";
-
-	public static final String POLLER_REQUEST_TIMEOUT =
-		"poller.request.timeout";
-
 	public static final String POP_SERVER_NOTIFICATIONS_ENABLED =
 		"pop.server.notifications.enabled";
 

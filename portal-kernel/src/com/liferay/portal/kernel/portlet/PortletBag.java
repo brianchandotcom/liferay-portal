@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
@@ -70,8 +69,6 @@ public interface PortletBag extends Cloneable {
 	public List<OpenSearch> getOpenSearchInstances();
 
 	public List<PermissionPropagator> getPermissionPropagatorInstances();
-
-	public List<PollerProcessor> getPollerProcessorInstances();
 
 	public List<MessageListener> getPopMessageListenerInstances();
 

@@ -1766,13 +1766,6 @@ public class PropsValues {
 	public static String PHONE_NUMBER_FORMAT_USA_REGEXP = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.PHONE_NUMBER_FORMAT_USA_REGEXP));
 
-	public static final long POLLER_NOTIFICATIONS_TIMEOUT =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.POLLER_NOTIFICATIONS_TIMEOUT));
-
-	public static final long POLLER_REQUEST_TIMEOUT = GetterUtil.getLong(
-		PropsUtil.get(PropsKeys.POLLER_REQUEST_TIMEOUT));
-
 	public static final boolean POP_SERVER_NOTIFICATIONS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED));

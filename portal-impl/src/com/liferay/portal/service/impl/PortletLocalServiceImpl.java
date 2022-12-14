@@ -1545,10 +1545,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("portlet-layout-listener-class"),
 				portletModel.getPortletLayoutListenerClass()));
-		portletModel.setPollerProcessorClass(
-			GetterUtil.getString(
-				portletElement.elementText("poller-processor-class"),
-				portletModel.getPollerProcessorClass()));
 		portletModel.setPopMessageListenerClass(
 			GetterUtil.getString(
 				portletElement.elementText("pop-message-listener-class"),

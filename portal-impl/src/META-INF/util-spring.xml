@@ -103,11 +103,6 @@
 	<bean class="com.liferay.portal.kernel.patcher.PatcherUtil" id="com.liferay.portal.kernel.patcher.PatcherUtil">
 		<property name="patcher" ref="com.liferay.portal.kernel.patcher.Patcher" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil" id="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil">
-		<property name="cometHandlerPool">
-			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.DefaultControlPanelEntry" id="com.liferay.portal.kernel.portlet.DefaultControlPanelEntry" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletContainerUtil" id="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />

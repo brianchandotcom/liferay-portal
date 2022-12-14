@@ -104,11 +104,6 @@ public interface DestinationNames {
 	public static final String OBJECT_ENTRY_ATTACHMENT_DOWNLOAD =
 		"liferay/object_entry_attachment_download";
 
-	public static final String POLLER = "liferay/poller";
-
-	public static final String POLLER_COMET_RESPONSE =
-		"liferay/poller_comet_response";
-
 	public static final String SCHEDULER_DISPATCH =
 		"liferay/scheduler_dispatch";
 

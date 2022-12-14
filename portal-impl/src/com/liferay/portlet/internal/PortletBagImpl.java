@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
@@ -228,20 +227,6 @@ public class PortletBagImpl implements PortletBag {
 		}
 
 		return _toList(_permissionPropagatorInstances);
-	}
-
-	@Override
-	public List<PollerProcessor> getPollerProcessorInstances() {
-		if (_pollerProcessorInstances == null) {
-			synchronized (this) {
-				if (_pollerProcessorInstances == null) {
-					_pollerProcessorInstances = ServiceTrackerListFactory.open(
-						_bundleContext, PollerProcessor.class, _filterString);
-				}
-			}
-		}
-
-		return _toList(_pollerProcessorInstances);
 	}
 
 	@Override
@@ -587,8 +572,6 @@ public class PortletBagImpl implements PortletBag {
 	private volatile ServiceTrackerList<OpenSearch> _openSearchInstances;
 	private volatile ServiceTrackerList<PermissionPropagator>
 		_permissionPropagatorInstances;
-	private volatile ServiceTrackerList<PollerProcessor>
-		_pollerProcessorInstances;
 	private volatile ServiceTrackerList<MessageListener>
 		_popMessageListenerInstances;
 	private volatile ServiceTrackerList<PortletConfigurationListener>

@@ -163,11 +163,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Poller Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.poller.PollerServlet</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Portal Delegator Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortalDelegatorServlet</servlet-class>
 		<async-supported>true</async-supported>
@@ -879,10 +874,6 @@
 	<servlet-mapping>
 		<servlet-name>Netvibes Servlet</servlet-name>
 		<url-pattern>/netvibes/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Poller Servlet</servlet-name>
-		<url-pattern>/poller/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Portal Delegator Servlet</servlet-name>

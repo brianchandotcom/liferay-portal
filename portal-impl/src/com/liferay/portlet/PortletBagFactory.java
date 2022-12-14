@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
@@ -156,9 +155,6 @@ public class PortletBagFactory {
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerPortletLayoutListeners(
-			bundleContext, portlet, properties, serviceRegistrations);
-
-		_registerPollerProcessors(
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerPOPMessageListeners(
@@ -491,24 +487,6 @@ public class PortletBagFactory {
 				bundleContext.registerService(
 					PermissionPropagator.class, permissionPropagatorInstance,
 					properties);
-
-			serviceRegistrations.add(serviceRegistration);
-		}
-	}
-
-	private void _registerPollerProcessors(
-			BundleContext bundleContext, Portlet portlet,
-			Dictionary<String, Object> properties,
-			List<ServiceRegistration<?>> serviceRegistrations)
-		throws Exception {
-
-		if (Validator.isNotNull(portlet.getPollerProcessorClass())) {
-			PollerProcessor pollerProcessorInstance = _newInstance(
-				PollerProcessor.class, portlet.getPollerProcessorClass());
-
-			ServiceRegistration<?> serviceRegistration =
-				bundleContext.registerService(
-					PollerProcessor.class, pollerProcessorInstance, properties);
 
 			serviceRegistrations.add(serviceRegistration);
 		}

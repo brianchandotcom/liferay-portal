@@ -1552,9 +1552,9 @@ public class WabProcessor {
 			"//configuration-action-class", "//control-panel-entry-class",
 			"//custom-attributes-display", "//friendly-url-mapper-class",
 			"//indexer-class", "//open-search-class", "//permission-propagator",
-			"//poller-processor-class", "//pop-message-listener-class",
-			"//portlet-data-handler-class", "//portlet-layout-listener-class",
-			"//portlet-url-class", "//social-activity-interpreter-class",
+			"//pop-message-listener-class", "//portlet-data-handler-class",
+			"//portlet-layout-listener-class", "//portlet-url-class",
+			"//social-activity-interpreter-class",
 			"//social-request-interpreter-class", "//url-encoder-class",
 			"//webdav-storage-class", "//workflow-handler",
 			"//xml-rpc-method-class"

@@ -52,12 +52,14 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessor
 		JSONArray valueJSONArray = _jsonFactory.createJSONArray(
 			value.getString(value.getDefaultLocale()));
 
-		Iterator<String> iterator = valueJSONArray.iterator();
+		if (valuesJSONObject != null) {
+			Iterator<String> iterator = valueJSONArray.iterator();
 
-		while (iterator.hasNext()) {
-			String key = iterator.next();
+			while (iterator.hasNext()) {
+				String key = iterator.next();
 
-			updateData(ddmFormInstanceReportEvent, valuesJSONObject, key);
+				updateData(ddmFormInstanceReportEvent, valuesJSONObject, key);
+			}
 		}
 
 		if (valueJSONArray.length() != 0) {

@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Katie Nesterovich
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.health.status.display.order:Integer=150",
 		"commerce.health.status.key=" + AvalaraTaxCodesCommerceHealthHttpStatus.KEY

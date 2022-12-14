@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Katie Nesterovich
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceAvalaraPortletKeys.COMMERCE_AVALARA,
 		"mvc.command.name=/commerce_avalara/edit_commerce_avalara_connector"

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.action;
+package com.liferay.layout.internal.struts;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,23 +32,26 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionTreeJSClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.struts.Action;
-import com.liferay.portal.struts.model.ActionForward;
-import com.liferay.portal.struts.model.ActionMapping;
 
 import java.util.ConcurrentModificationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class SessionTreeJSClickAction implements Action {
+@Component(
+	property = "path=/portal/session_tree_js_click",
+	service = StrutsAction.class
+)
+public class SessionTreeJSClickStrutsAction implements StrutsAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping actionMapping, HttpServletRequest httpServletRequest,
+	public String execute(
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
@@ -141,15 +145,13 @@ public class SessionTreeJSClickAction implements Action {
 			if (Validator.isNotNull(json)) {
 				ServletResponseUtil.write(httpServletResponse, json);
 			}
-
-			return null;
 		}
 		catch (Exception exception) {
 			PortalUtil.sendError(
 				exception, httpServletRequest, httpServletResponse);
-
-			return null;
 		}
+
+		return null;
 	}
 
 	protected void updateCheckedLayoutPlids(
@@ -205,6 +207,6 @@ public class SessionTreeJSClickAction implements Action {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SessionTreeJSClickAction.class);
+		SessionTreeJSClickStrutsAction.class);
 
 }

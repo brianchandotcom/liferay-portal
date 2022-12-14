@@ -297,6 +297,20 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(storageType);
 	}
 
+	@Override
+	public void run(String jobName, String groupName, StorageType storageType)
+		throws SchedulerException {
+
+		_readLock.lock();
+
+		try {
+			_schedulerEngine.run(jobName, groupName, storageType);
+		}
+		finally {
+			_readLock.unlock();
+		}
+	}
+
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
 	@Override
 	public void schedule(

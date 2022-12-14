@@ -1948,6 +1948,7 @@ public class VerifyProperties {
 		"organizations.form.update.miscellaneous",
 		"organizations.indexer.enabled", "organizations.rootable",
 		"organizations.types", "permissions.object.blocking.cache",
+		"poller.notifications.timeout", "poller.request.timeout",
 		"portal.cache.manager.type.multi.vm",
 		"portal.cache.manager.type.single.vm", "portal.ctx",
 		"portal.fabric.enabled", "portal.fabric.agent.selector.class",

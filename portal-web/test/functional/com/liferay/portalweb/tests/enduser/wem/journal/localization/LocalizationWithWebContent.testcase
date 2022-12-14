@@ -471,10 +471,12 @@ definition {
 		}
 
 		task ("When the site designer changes the default user language to es-ES in web content editor") {
-			JSONWebcontent.addBasicWebContentLocalized(
-				contentMap = "en_US:Web Content Content,es_ES:Contenido de contenido web",
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Web Content Content",
+				contentMap = "es_ES:Contenido de contenido web",
 				groupName = "Test Site Name",
-				titleMap = "en_US:Web Content Title,es_ES:Título del contenido web");
+				title = "Web Content Title",
+				titleMap = "es_ES:Título del contenido web");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -489,6 +491,8 @@ definition {
 			WebContent.viewCP(
 				webContentContent = "Contenido de contenido web",
 				webContentTitle = "Título del contenido web");
+
+			WebContent.editFriendlyURL(webContentFriendlyURL = "titulo-del-contenido-web");
 
 			PortletEntry.publish();
 		}

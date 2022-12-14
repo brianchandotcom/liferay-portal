@@ -16,6 +16,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:layout:layout-admin-api")
+	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:product-navigation:product-navigation-applications-menu-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")

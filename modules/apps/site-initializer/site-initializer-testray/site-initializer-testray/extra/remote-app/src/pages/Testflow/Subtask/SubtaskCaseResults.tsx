@@ -35,22 +35,20 @@ import {SubTaskStatuses} from '../../../util/statuses';
 
 type OutletContext = {
 	mutateSubtask: KeyedMutator<TestraySubTask>;
+	testraySubtask: TestraySubTask;
 };
 
 const SubtasksCaseResults = () => {
 	const navigate = useNavigate();
 	const {subtaskId, taskId} = useParams();
 	const {updateItemFromList} = useMutate();
-	const {mutateSubtask}: OutletContext = useOutletContext();
+	const {mutateSubtask, testraySubtask}: OutletContext = useOutletContext();
 
 	const getFloatingBoxAlerts = (
 		subtasksCaseResults: TestraySubTaskCaseResult[],
 		selectRows: number[]
 	) => {
 		const alerts = [];
-		const selectedRows = selectRows.map((rowId) =>
-			subtasksCaseResults.find(({id}) => rowId === id)
-		) as TestraySubTaskCaseResult[];
 
 		if (subtasksCaseResults.length === selectRows.length) {
 			alerts.push({
@@ -61,16 +59,15 @@ const SubtasksCaseResults = () => {
 		}
 
 		const subtaskStatusCheck = () => {
-			const subtasksOpenStatus = selectedRows.filter(
-				({subTask}) => subTask?.dueStatus?.key === SubTaskStatuses.OPEN
-			);
+			const subtasksWithOpenStatus =
+				testraySubtask.dueStatus?.key === SubTaskStatuses.OPEN;
 
-			if (subtasksOpenStatus.length) {
+			if (subtasksWithOpenStatus) {
 				return [
 					{
 						text: i18n.sub(
 							'subtask-x-must-be-in-analysis-to-be-used-in-a-split',
-							subtasksOpenStatus[0].subTask?.name as string
+							testraySubtask?.name as string
 						),
 					},
 				];
@@ -78,20 +75,16 @@ const SubtasksCaseResults = () => {
 		};
 
 		const subtaskUserCheck = () => {
-			const subtasksWithDifferentAssignedUsers = selectedRows.some(
-				({subTask}) =>
-					subTask?.user?.id?.toString() !==
-					Liferay.ThemeDisplay.getUserId()
-			);
+			const subtasksWithDifferentAssignedUsers =
+				testraySubtask?.user?.id?.toString() !==
+				Liferay.ThemeDisplay.getUserId();
 
 			if (subtasksWithDifferentAssignedUsers) {
-				const [{subTask}] = selectedRows;
-
 				return [
 					{
 						text: i18n.sub(
 							'subtask-x-must-be-assigned-to-you-to-be-user-in-a-split',
-							subTask?.name ?? ''
+							testraySubtask?.name ?? ''
 						),
 					},
 				];

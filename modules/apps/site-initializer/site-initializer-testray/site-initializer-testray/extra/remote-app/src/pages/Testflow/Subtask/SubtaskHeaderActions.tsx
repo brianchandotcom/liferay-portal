@@ -54,19 +54,17 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 			<SubtaskCompleteModal modal={completeModal} subtask={subtask} />
 
 			{buttonDisabled && (
-				<>
-					<ClayButton
-						className="mb-3 ml-3"
-						displayType="secondary"
-						onClick={() => assignUserModal.open()}
-					>
-						{i18n.translate(
-							subtask.dueStatus.key === SubTaskStatuses.OPEN
-								? 'assign-and-begin-analysis'
-								: 'assign-and-reanalyze'
-						)}
-					</ClayButton>
-				</>
+				<ClayButton
+					className="mb-3 ml-3"
+					displayType="secondary"
+					onClick={() => assignUserModal.open()}
+				>
+					{i18n.translate(
+						subtask.dueStatus.key === SubTaskStatuses.OPEN
+							? 'assign-and-begin-analysis'
+							: 'assign-and-reanalyze'
+					)}
+				</ClayButton>
 			)}
 
 			{!buttonDisabled && (

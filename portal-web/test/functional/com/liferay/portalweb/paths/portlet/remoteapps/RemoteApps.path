@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>REMOTE_APPS_HEADER</td>
-	<td>//h1[contains(@data-qa-id,'headerTitle') and contains(@value,'Remote Apps')]</td>
+	<td>//h1[contains(@data-qa-id,'headerTitle') and contains(@value,'Client Extensions')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -41,7 +41,7 @@ public class UADApplicationSummaryHelper {
 	public List<UADAnonymizer<?>> getApplicationUADAnonymizers(
 		String applicationKey) {
 
-		List<UADAnonymizer<?>> uadAnonymizerList = new ArrayList<>();
+		List<UADAnonymizer<?>> uadAnonymizers = new ArrayList<>();
 
 		for (UADDisplay<?> uadDisplay :
 				_uadRegistry.getApplicationUADDisplays(applicationKey)) {
@@ -50,10 +50,10 @@ public class UADApplicationSummaryHelper {
 
 			String entityName = typeClass.getName();
 
-			uadAnonymizerList.add(_uadRegistry.getUADAnonymizer(entityName));
+			uadAnonymizers.add(_uadRegistry.getUADAnonymizer(entityName));
 		}
 
-		return uadAnonymizerList;
+		return uadAnonymizers;
 	}
 
 	public String getDefaultUADRegistryKey(String applicationKey) {
@@ -90,14 +90,14 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
-		String applicationKey, List<UADDisplay<?>> uadDisplayList, long userId,
+		String applicationKey, List<UADDisplay<?>> uadDisplays, long userId,
 		long[] groupIds) {
 
 		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 			new UADApplicationSummaryDisplay();
 
 		uadApplicationSummaryDisplay.setCount(
-			_getReviewableUADEntitiesCount(uadDisplayList, userId, groupIds));
+			_getReviewableUADEntitiesCount(uadDisplays, userId, groupIds));
 		uadApplicationSummaryDisplay.setApplicationKey(applicationKey);
 
 		return uadApplicationSummaryDisplay;
@@ -171,11 +171,11 @@ public class UADApplicationSummaryHelper {
 	}
 
 	private int _getNonreviewableUADEntitiesCount(
-		Collection<UADAnonymizer<?>> uadAnonymizerList, long userId) {
+		Collection<UADAnonymizer<?>> uadAnonymizers, long userId) {
 
 		int sum = 0;
 
-		for (UADAnonymizer<?> uadAnonymizer : uadAnonymizerList) {
+		for (UADAnonymizer<?> uadAnonymizer : uadAnonymizers) {
 			try {
 				int userIds = (int)uadAnonymizer.count(userId);
 
@@ -190,11 +190,11 @@ public class UADApplicationSummaryHelper {
 	}
 
 	private int _getReviewableUADEntitiesCount(
-		Collection<UADDisplay<?>> uadDisplayList, long userId) {
+		Collection<UADDisplay<?>> uadDisplays, long userId) {
 
 		int sum = 0;
 
-		for (UADDisplay<?> uadDisplay : uadDisplayList) {
+		for (UADDisplay<?> uadDisplay : uadDisplays) {
 			int userIds = (int)uadDisplay.count(userId);
 
 			sum += userIds;
@@ -204,11 +204,11 @@ public class UADApplicationSummaryHelper {
 	}
 
 	private int _getReviewableUADEntitiesCount(
-		List<UADDisplay<?>> uadDisplayList, long userId, long[] groupIds) {
+		List<UADDisplay<?>> uadDisplays, long userId, long[] groupIds) {
 
 		int sum = 0;
 
-		for (UADDisplay<?> uadDisplay : uadDisplayList) {
+		for (UADDisplay<?> uadDisplay : uadDisplays) {
 			int userIds = (int)uadDisplay.searchCount(userId, groupIds, null);
 
 			sum += userIds;

@@ -15,7 +15,7 @@ import ClayDropDown from '@clayui/drop-down';
 import React, {useEffect, useRef, useState} from 'react';
 
 /**
- * When Hugging Face is selected as the Sentence Transform Provider, this input
+ * When Hugging Face is selected as the Text Embedding Provider, this input
  * will query for applicable models.
  * This can be found on: System Settings > Search Experiences > Semantic Search
  */

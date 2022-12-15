@@ -38,8 +38,8 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		return _availableLanguageDisplayNames;
 	}
 
-	public Map<String, String> getAvailableSentenceTransformers() {
-		return _availableSentenceTransformers;
+	public Map<String, String> getAvailableTextEmbeddingProviders() {
+		return _availableTextEmbeddingProviders;
 	}
 
 	public Map<String, String> getAvailableTextTruncationStrategies() {
@@ -74,8 +74,8 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		return _modelTimeout;
 	}
 
-	public String getSentenceTransformer() {
-		return _sentenceTransformer;
+	public String getTextEmbeddingProvider() {
+		return _textEmbeddingProvider;
 	}
 
 	public String getTextTruncationStrategy() {
@@ -94,8 +94,8 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		return _txtaiUsername;
 	}
 
-	public boolean isSentenceTransformerEnabled() {
-		return _sentenceTransformerEnabled;
+	public boolean isTextEmbeddingsEnabled() {
+		return _textEmbeddingsEnabled;
 	}
 
 	public void setAssetEntryClassNames(List<String> assetEntryClassNames) {
@@ -121,10 +121,10 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		_availableLanguageDisplayNames = availableLanguageDisplayNames;
 	}
 
-	public void setAvailableSentenceTransformers(
-		Map<String, String> availableSentenceTransformers) {
+	public void setAvailableTextEmbeddingProviders(
+		Map<String, String> availableTextEmbeddingProviders) {
 
-		_availableSentenceTransformers = availableSentenceTransformers;
+		_availableTextEmbeddingProviders = availableTextEmbeddingProviders;
 	}
 
 	public void setAvailableTextTruncationStrategies(
@@ -161,14 +161,12 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		_modelTimeout = modelTimeout;
 	}
 
-	public void setSentenceTransformer(String sentenceTransformer) {
-		_sentenceTransformer = sentenceTransformer;
+	public void setTextEmbeddingProvider(String textEmbeddingProvider) {
+		_textEmbeddingProvider = textEmbeddingProvider;
 	}
 
-	public void setSentenceTransformerEnabled(
-		boolean sentenceTransformerEnabled) {
-
-		_sentenceTransformerEnabled = sentenceTransformerEnabled;
+	public void setTextEmbeddingsEnabled(boolean textEmbeddingsEnabled) {
+		_textEmbeddingsEnabled = textEmbeddingsEnabled;
 	}
 
 	public void setTextTruncationStrategy(String textTruncationStrategy) {
@@ -191,7 +189,7 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 	private Map<String, String> _availableAssetEntryClassNames;
 	private List<String> _availableEmbeddingVectorDimensions;
 	private Map<String, String> _availableLanguageDisplayNames;
-	private Map<String, String> _availableSentenceTransformers;
+	private Map<String, String> _availableTextEmbeddingProviders;
 	private Map<String, String> _availableTextTruncationStrategies;
 	private int _cacheTimeout;
 	private int _embeddingVectorDimensions;
@@ -200,8 +198,8 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 	private int _maxCharacterCount;
 	private String _model;
 	private int _modelTimeout;
-	private String _sentenceTransformer;
-	private boolean _sentenceTransformerEnabled;
+	private String _textEmbeddingProvider;
+	private boolean _textEmbeddingsEnabled;
 	private String _textTruncationStrategy;
 	private String _txtaiHostAddress;
 	private String _txtaiPassword;

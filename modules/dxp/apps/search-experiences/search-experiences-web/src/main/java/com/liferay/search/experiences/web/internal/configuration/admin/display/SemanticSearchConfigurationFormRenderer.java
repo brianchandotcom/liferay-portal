@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
 import com.liferay.search.experiences.web.internal.display.context.SemanticSearchCompanyConfigurationDisplayContext;
 
 import java.io.IOException;
@@ -102,12 +102,11 @@ public class SemanticSearchConfigurationFormRenderer
 			"modelTimeout",
 			ParamUtil.getInteger(httpServletRequest, "modelTimeout")
 		).put(
-			"sentenceTransformer",
-			ParamUtil.getString(httpServletRequest, "sentenceTransformer")
+			"textEmbeddingProvider",
+			ParamUtil.getString(httpServletRequest, "textEmbeddingProvider")
 		).put(
-			"sentenceTransformerEnabled",
-			ParamUtil.getBoolean(
-				httpServletRequest, "sentenceTransformerEnabled")
+			"textEmbeddingsEnabled",
+			ParamUtil.getBoolean(httpServletRequest, "textEmbeddingsEnabled")
 		).put(
 			"textTruncationStrategy",
 			ParamUtil.getString(httpServletRequest, "textTruncationStrategy")
@@ -157,8 +156,8 @@ public class SemanticSearchConfigurationFormRenderer
 			setAvailableLanguageDisplayNames(
 				_getAvailableLanguageDisplayNames(httpServletRequest));
 		semanticSearchCompanyConfigurationDisplayContext.
-			setAvailableSentenceTransformers(
-				_getAvailableSentenceTransformers(httpServletRequest));
+			setAvailableTextEmbeddingProviders(
+				_getAvailableTextEmbeddingProviders(httpServletRequest));
 		semanticSearchCompanyConfigurationDisplayContext.
 			setAvailableTextTruncationStrategies(
 				_getAvailableTextTruncationStrategies(httpServletRequest));
@@ -179,10 +178,11 @@ public class SemanticSearchConfigurationFormRenderer
 		semanticSearchCompanyConfigurationDisplayContext.setModelTimeout(
 			_semanticSearchConfiguration.modelTimeout());
 		semanticSearchCompanyConfigurationDisplayContext.
-			setSentenceTransformerEnabled(
-				_semanticSearchConfiguration.sentenceTransformerEnabled());
-		semanticSearchCompanyConfigurationDisplayContext.setSentenceTransformer(
-			_semanticSearchConfiguration.sentenceTransformer());
+			setTextEmbeddingsEnabled(
+				_semanticSearchConfiguration.textEmbeddingsEnabled());
+		semanticSearchCompanyConfigurationDisplayContext.
+			setTextEmbeddingProvider(
+				_semanticSearchConfiguration.textEmbeddingProvider());
 		semanticSearchCompanyConfigurationDisplayContext.
 			setTextTruncationStrategy(
 				_semanticSearchConfiguration.textTruncationStrategy());
@@ -272,20 +272,19 @@ public class SemanticSearchConfigurationFormRenderer
 		return _sortByValue(availableLanguageDisplayNames);
 	}
 
-	private Map<String, String> _getAvailableSentenceTransformers(
+	private Map<String, String> _getAvailableTextEmbeddingProviders(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, String> availableSentenceTranformProviders =
-			new TreeMap<>();
+		Map<String, String> availableTextEmbeddingProviders = new TreeMap<>();
 
 		ListUtil.isNotEmptyForEach(
-			_sentenceEmbeddingRetriever.getAvailableSentenceTransformerNames(),
-			name -> availableSentenceTranformProviders.put(
+			_sentenceEmbeddingRetriever.getAvailableProviderNames(),
+			name -> availableTextEmbeddingProviders.put(
 				name,
 				_language.get(
 					httpServletRequest, CamelCaseUtil.fromCamelCase(name))));
 
-		return availableSentenceTranformProviders;
+		return availableTextEmbeddingProviders;
 	}
 
 	private Map<String, String> _getAvailableTextTruncationStrategies(
@@ -329,7 +328,7 @@ public class SemanticSearchConfigurationFormRenderer
 	private volatile SemanticSearchConfiguration _semanticSearchConfiguration;
 
 	@Reference
-	private SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
+	private TextEmbeddingRetriever _sentenceEmbeddingRetriever;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.search.experiences.web)",

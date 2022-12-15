@@ -16,7 +16,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {SENTENCE_TRANSFORMER_TYPES} from './constants';
+import {TEXT_EMBEDDING_PROVIDER_TYPES} from './constants';
 
 /**
  * A button to test the connection for the semantic search settings page.
@@ -24,7 +24,7 @@ import {SENTENCE_TRANSFORMER_TYPES} from './constants';
  */
 function TestConfigurationButton({
 	assetEntryClassNames,
-	availableSentenceTransformers,
+	availableTextEmbeddingProviders,
 	cacheTimeout,
 	embeddingVectorDimensions,
 	errors,
@@ -33,7 +33,7 @@ function TestConfigurationButton({
 	maxCharacterCount,
 	model,
 	modelTimeout,
-	sentenceTransformer,
+	textEmbeddingProvider,
 	textTruncationStrategy,
 	txtaiHostAddress,
 	txtaiPassword,
@@ -56,7 +56,7 @@ function TestConfigurationButton({
 		maxCharacterCount,
 		model,
 		modelTimeout,
-		sentenceTransformer,
+		textEmbeddingProvider,
 		textTruncationStrategy,
 		txtaiHostAddress,
 		txtaiPassword,
@@ -64,15 +64,15 @@ function TestConfigurationButton({
 	]);
 
 	/**
-	 * Used for the `/sentence-transformer/validate-configuration` endpoint
+	 * Used for the `/text-embedding/validate-configuration` endpoint
 	 * to conditionally send the appropriate data according to the user-selected
-	 * sentence transform provider type.
+	 * text embedding provider type.
 	 * @returns {object}
 	 */
-	const _getSentenceTransformerSettings = () => {
+	const _getTextEmbeddingProviderSettings = () => {
 		if (
-			sentenceTransformer ===
-			SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API
+			textEmbeddingProvider ===
+			TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
 		) {
 			return {
 				huggingFaceAccessToken,
@@ -81,7 +81,7 @@ function TestConfigurationButton({
 			};
 		}
 
-		if (sentenceTransformer === SENTENCE_TRANSFORMER_TYPES.TXTAI) {
+		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI) {
 			return {
 				txtaiHostAddress,
 				txtaiPassword,
@@ -99,12 +99,12 @@ function TestConfigurationButton({
 
 		const generalSettings = {
 			cacheTimeout,
-			sentenceTransformerEnabled: true, // Always set as `true`. LPS-167506
+			textEmbeddingsEnabled: true, // Always set as `true`. LPS-167506
 		};
 
 		const generalTransformerSettings = {
 			embeddingVectorDimensions,
-			sentenceTransformer,
+			textEmbeddingProvider,
 		};
 
 		const indexingSettings = {
@@ -115,12 +115,12 @@ function TestConfigurationButton({
 		};
 
 		fetch(
-			'/o/search-experiences-rest/v1.0/sentence-transformer/validate-configuration',
+			'/o/search-experiences-rest/v1.0/text-embedding/validate-configuration',
 			{
 				body: JSON.stringify({
 					...generalSettings,
 					...generalTransformerSettings,
-					..._getSentenceTransformerSettings(),
+					..._getTextEmbeddingProviderSettings(),
 					...indexingSettings,
 				}),
 				headers: new Headers({
@@ -136,8 +136,8 @@ function TestConfigurationButton({
 
 				// If there is an error with the connection.
 				//
-				// Example `errorMessage` string (Can vary based on sentence
-				//  transformer provider):
+				// Example `errorMessage` string (Can vary based on text
+				//  embedding provider):
 				// '{"error": "Authorization header is correct, but the token seems invalid"}'
 				// '[{\"generated_text":\"com.liferay.portal.kernel.util.Http$Body@7e13...\"}]'
 
@@ -168,8 +168,8 @@ function TestConfigurationButton({
 									'unable-to-connect-to-x.-connection-failed-with-x'
 								),
 								[
-									availableSentenceTransformers[
-										sentenceTransformer
+									availableTextEmbeddingProviders[
+										textEmbeddingProvider
 									],
 									JSON.stringify(errorMessage),
 								]
@@ -187,8 +187,8 @@ function TestConfigurationButton({
 									'unable-to-connect-to-x.-connection-failed-with-x'
 								),
 								[
-									availableSentenceTransformers[
-										sentenceTransformer
+									availableTextEmbeddingProviders[
+										textEmbeddingProvider
 									],
 									responseData.errorMessage,
 								]
@@ -199,19 +199,19 @@ function TestConfigurationButton({
 				}
 
 				// If the user has no permissions for the REST endpoint.
-				// Example: {"message": "Access denied to com.liferay.search.experiences.rest.internal.resource.v1_0.SentenceTransformerValidationResultResourceImpl#postSentenceTransformerValidateConfiguration"}
+				// Example: {"message": "Access denied to com.liferay.search.experiences.rest.internal.resource.v1_0.TextEmbeddingProviderValidationResultResourceImpl#postTextEmbeddingValidateConfiguration"}
 
 				if (responseData.message) {
 					throw new Error(responseData.message);
 				}
 
 				// If the response expected dimensions is 0. This means no
-				// results were returned from the sentence transformer.
+				// results were returned from the text embedding provider.
 
 				if (Number(responseData.expectedDimensions === 0)) {
 					return setTestResultsMessage({
 						message: Liferay.Language.get(
-							'the-sentence-transform-provider-returned-no-results'
+							'the-text-embedding-provider-returned-no-results'
 						),
 						type: 'danger',
 					});
@@ -265,8 +265,8 @@ function TestConfigurationButton({
 
 	const isMissingRequiredFields = () => {
 		if (
-			sentenceTransformer ===
-			SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API
+			textEmbeddingProvider ===
+			TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
 		) {
 			return (
 				errors.huggingFaceAccessToken ||
@@ -275,7 +275,7 @@ function TestConfigurationButton({
 			);
 		}
 
-		if (sentenceTransformer === SENTENCE_TRANSFORMER_TYPES.TXTAI) {
+		if (textEmbeddingProvider === TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI) {
 			return errors.txtaiHostAddress;
 		}
 

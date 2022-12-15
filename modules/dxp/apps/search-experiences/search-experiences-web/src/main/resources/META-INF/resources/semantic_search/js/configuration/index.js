@@ -17,7 +17,7 @@ import {LearnMessageWithoutContext} from '../../../sxp_blueprint_admin/js/shared
 import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
 import Input from './Input';
 import TestConfigurationButton from './TestConfigurationButton';
-import {SENTENCE_TRANSFORMER_TYPES} from './constants';
+import {TEXT_EMBEDDING_PROVIDER_TYPES} from './constants';
 
 /**
  * Formats the object into an array of label and value, important for inputs
@@ -52,7 +52,7 @@ const transformToLabelValueArray = (items = {}) => {
 };
 
 /**
- * Form within semantic search settings page, configures sentence transformer and
+ * Form within semantic search settings page, configures text embedding provider and
  * indexing settings.
  * This can be found on: System Settings > Search Experiences > Semantic Search
  */
@@ -61,7 +61,7 @@ export default function ({
 	availableAssetEntryClassNames,
 	availableEmbeddingVectorDimensions,
 	availableLanguageDisplayNames,
-	availableSentenceTransformers,
+	availableTextEmbeddingProviders,
 	availableTextTruncationStrategies,
 	cacheTimeout = '',
 	embeddingVectorDimensions,
@@ -72,8 +72,8 @@ export default function ({
 	model,
 	modelTimeout = '',
 	namespace = '',
-	sentenceTransformer = SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API,
-	sentenceTransformerEnabled,
+	textEmbeddingProvider = TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API,
+	textEmbeddingsEnabled,
 	textTruncationStrategy,
 	txtaiHostAddress,
 	txtaiPassword,
@@ -163,8 +163,8 @@ export default function ({
 
 		if (
 			values.modelTimeout === '' &&
-			values.sentenceTransformer ===
-				SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API
+			values.textEmbeddingProvider ===
+				TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
 		) {
 			errors.modelTimeout = Liferay.Language.get(
 				'this-field-is-required'
@@ -211,8 +211,8 @@ export default function ({
 			maxCharacterCount,
 			model,
 			modelTimeout,
-			sentenceTransformer,
-			sentenceTransformerEnabled,
+			textEmbeddingProvider,
+			textEmbeddingsEnabled,
 			textTruncationStrategy,
 			txtaiHostAddress,
 			txtaiPassword,
@@ -238,44 +238,42 @@ export default function ({
 		<div className="semantic-search-settings-root">
 			<div className="sheet-section">
 				<h3 className="sheet-subtitle">
-					{Liferay.Language.get('sentence-transformer-settings')}
+					{Liferay.Language.get('text-embedding-provider-settings')}
 				</h3>
 
 				<ClayForm.Group>
 					<ClayCheckbox
 						aria-label={Liferay.Language.get(
-							'sentence-transformer-enabled'
+							'text-embeddings-enabled'
 						)}
-						checked={!!formik.values.sentenceTransformerEnabled}
-						label={Liferay.Language.get(
-							'sentence-transformer-enabled'
-						)}
-						name={`${namespace}sentenceTransformerEnabled`}
+						checked={!!formik.values.textEmbeddingsEnabled}
+						label={Liferay.Language.get('text-embeddings-enabled')}
+						name={`${namespace}textEmbeddingsEnabled`}
 						onChange={_handleCheckboxChange(
-							'sentenceTransformerEnabled'
+							'textEmbeddingsEnabled'
 						)}
-						value={!!formik.values.sentenceTransformerEnabled}
+						value={!!formik.values.textEmbeddingsEnabled}
 					/>
 				</ClayForm.Group>
 
 				<Input
-					error={formik.errors.sentenceTransformer}
+					error={formik.errors.textEmbeddingProvider}
 					items={transformToLabelValueArray(
-						availableSentenceTransformers
+						availableTextEmbeddingProviders
 					)}
-					label={Liferay.Language.get('sentence-transformer')}
-					name={`${namespace}sentenceTransformer`}
-					onBlur={_handleInputBlur('sentenceTransformer')}
-					onChange={_handleInputChange('sentenceTransformer')}
+					label={Liferay.Language.get('text-embedding-provider')}
+					name={`${namespace}textEmbeddingProvider`}
+					onBlur={_handleInputBlur('textEmbeddingProvider')}
+					onChange={_handleInputChange('textEmbeddingProvider')}
 					type="select"
-					value={formik.values.sentenceTransformer}
+					value={formik.values.textEmbeddingProvider}
 				>
-					{formik.values.sentenceTransformer ===
-						SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API && (
+					{formik.values.textEmbeddingProvider ===
+						TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.Text>
 								{Liferay.Language.get(
-									'sentence-transformer-hugging-face-help'
+									'text-embedding-provider-hugging-face-help'
 								)}
 
 								<LearnMessageWithoutContext
@@ -288,13 +286,13 @@ export default function ({
 					)}
 				</Input>
 
-				{formik.values.sentenceTransformer ===
-					SENTENCE_TRANSFORMER_TYPES.TXTAI && (
+				{formik.values.textEmbeddingProvider ===
+					TEXT_EMBEDDING_PROVIDER_TYPES.TXTAI && (
 					<>
 						<Input
 							error={formik.errors.txtaiHostAddress}
 							helpText={Liferay.Language.get(
-								'sentence-transformer-txtai-host-address-help'
+								'text-embedding-provider-txtai-host-address-help'
 							)}
 							label={Liferay.Language.get('txtai-host-address')}
 							name={`${namespace}txtaiHostAddress`}
@@ -308,7 +306,7 @@ export default function ({
 						<Input
 							error={formik.errors.txtaiUsername}
 							helpText={Liferay.Language.get(
-								'sentence-transformer-txtai-username-help'
+								'text-embedding-provider-txtai-username-help'
 							)}
 							label={Liferay.Language.get('username')}
 							name={`${namespace}txtaiUsername`}
@@ -320,7 +318,7 @@ export default function ({
 						<Input
 							error={formik.errors.txtaiPassword}
 							helpText={Liferay.Language.get(
-								'sentence-transformer-txtai-password-help'
+								'text-embedding-provider-txtai-password-help'
 							)}
 							label={Liferay.Language.get('password')}
 							name={`${namespace}txtaiPassword`}
@@ -332,8 +330,8 @@ export default function ({
 					</>
 				)}
 
-				{formik.values.sentenceTransformer ===
-					SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API && (
+				{formik.values.textEmbeddingProvider ===
+					TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API && (
 					<>
 						<Input
 							error={formik.errors.huggingFaceAccessToken}
@@ -353,7 +351,7 @@ export default function ({
 						<Input
 							error={formik.errors.model}
 							helpText={Liferay.Language.get(
-								'sentence-transformer-model-help'
+								'text-embedding-provider-model-help'
 							)}
 							label={Liferay.Language.get('model')}
 							name={`${namespace}model`}
@@ -376,7 +374,7 @@ export default function ({
 						<Input
 							error={formik.errors.modelTimeout}
 							helpText={Liferay.Language.get(
-								'sentence-transformer-model-timeout-help'
+								'text-embedding-provider-model-timeout-help'
 							)}
 							label={Liferay.Language.get('model-timeout')}
 							name={`${namespace}modelTimeout`}
@@ -394,7 +392,7 @@ export default function ({
 				<Input
 					error={formik.errors.embeddingVectorDimensions}
 					helpText={Liferay.Language.get(
-						'sentence-transformer-embedding-vector-dimensions-help'
+						'text-embedding-provider-embedding-vector-dimensions-help'
 					)}
 					items={transformToLabelValueArray(
 						availableEmbeddingVectorDimensions
@@ -409,8 +407,8 @@ export default function ({
 
 				<TestConfigurationButton
 					assetEntryClassNames={formik.values.assetEntryClassNames}
-					availableSentenceTransformers={
-						availableSentenceTransformers
+					availableTextEmbeddingProviders={
+						availableTextEmbeddingProviders
 					}
 					cacheTimeout={formik.values.cacheTimeout}
 					embeddingVectorDimensions={
@@ -424,10 +422,8 @@ export default function ({
 					maxCharacterCount={formik.values.maxCharacterCount}
 					model={formik.values.model}
 					modelTimeout={formik.values.modelTimeout}
-					sentenceTransformer={formik.values.sentenceTransformer}
-					sentenceTransformerEnabled={
-						formik.values.sentenceTransformerEnabled
-					}
+					textEmbeddingProvider={formik.values.textEmbeddingProvider}
+					textEmbeddingsEnabled={formik.values.textEmbeddingsEnabled}
 					textTruncationStrategy={
 						formik.values.textTruncationStrategy
 					}
@@ -445,7 +441,7 @@ export default function ({
 				<Input
 					error={formik.errors.maxCharacterCount}
 					helpText={Liferay.Language.get(
-						'sentence-transformer-max-character-count-help'
+						'text-embedding-provider-max-character-count-help'
 					)}
 					label={Liferay.Language.get('max-character-count')}
 					name={`${namespace}maxCharacterCount`}
@@ -461,7 +457,7 @@ export default function ({
 				<Input
 					error={formik.errors.textTruncationStrategy}
 					helpText={Liferay.Language.get(
-						'sentence-transformer-text-truncation-strategy-help'
+						'text-embedding-provider-text-truncation-strategy-help'
 					)}
 					items={transformToLabelValueArray(
 						availableTextTruncationStrategies
@@ -477,7 +473,7 @@ export default function ({
 				<Input
 					error={formik.errors.assetEntryClassNames}
 					helpText={Liferay.Language.get(
-						'sentence-transformer-asset-entry-class-names-help'
+						'text-embedding-provider-asset-entry-class-names-help'
 					)}
 					items={transformToLabelValueArray(
 						availableAssetEntryClassNames
@@ -495,7 +491,7 @@ export default function ({
 				<Input
 					error={formik.errors.languageIds}
 					helpText={Liferay.Language.get(
-						'sentence-transformer-language-ids-help'
+						'text-embedding-provider-language-ids-help'
 					)}
 					items={transformToLabelValueArray(
 						availableLanguageDisplayNames
@@ -519,7 +515,7 @@ export default function ({
 				<Input
 					error={formik.errors.cacheTimeout}
 					helpText={Liferay.Language.get(
-						'sentence-transformer-cache-timeout-help'
+						'text-embedding-provider-cache-timeout-help'
 					)}
 					label={Liferay.Language.get('cache-timeout')}
 					name={`${namespace}cacheTimeout`}

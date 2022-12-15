@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -70,8 +69,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
-
-import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -455,18 +452,6 @@ public class ObjectEntryDTOConverter
 							name = dlFileEntry.getFileName();
 						}
 					});
-			}
-			else if (Objects.equals(
-						objectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
-
-				DecimalFormat defaultDecimalFormat =
-					NumericDDMFormFieldUtil.getDecimalFormat(
-						dtoConverterContext.getLocale());
-
-				serializable = defaultDecimalFormat.format(serializable);
-
-				map.put(objectFieldName, serializable);
 			}
 			else if (Objects.equals(
 						objectField.getBusinessType(),

@@ -330,26 +330,28 @@ definition {
 				menuItem = "Define Permissions",
 				rowEntry = "New Account Role");
 
-			Account.definePermissions(
-				key_navItem = "Accounts",
-				key_subItem = "Accounts",
-				permissionKey = "ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_VIEW",
-				permissionNavigationKey = "PERMISSIONS_NAVITEM_SUBITEM");
+			Role.editPermissionCmdCPUI(
+				define = "true",
+				permissionNavHeader = "Accounts",
+				permissionNavItem = "Accounts",
+				permissionSheetSubtitle = "Account Entry",
+				permissionValues = "View");
 
-			AssertElementPresent(
-				key_permissionDefinitionValue = "View",
-				key_permissionNavigationValue = "Accounts",
-				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Accounts");
 
-			Account.defineGroupScopePermissions(
-				key_navItem = "Account Management",
-				permissionKey = "ACCOUNTS_APPLICATION_PERMISSIONS_VIEW",
-				permissionNavigationKey = "PERMISSIONS_NAVITEM");
+			Role.editPermissionCmdCPUI(
+				define = "true",
+				navItem = "Define Group Scope Permissions",
+				permissionNavHeader = "Applications",
+				permissionNavItem = "Account Management",
+				permissionSheetSubtitle = "Application Permissions",
+				permissionValues = "View");
 
-			AssertElementPresent(
-				key_permissionDefinitionValue = "View",
-				key_permissionNavigationValue = "Account Management",
-				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "View",
+				permissionNavigationValue = "Account Management");
 		}
 	}
 

@@ -27,7 +27,6 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -119,12 +118,11 @@ public class UADApplicationSummaryHelper {
 		List<UADApplicationSummaryDisplay>
 			generatedUADApplicationSummaryDisplays = new ArrayList<>();
 
-		Set<String> applicationUADDisplaysKeySet =
-			_uadRegistry.getApplicationUADDisplaysKeySet();
-
 		int count = 0;
 
-		for (String applicationKey : applicationUADDisplaysKeySet) {
+		for (String applicationKey :
+				_uadRegistry.getApplicationUADDisplaysKeySet()) {
+
 			List<UADDisplay<?>> applicationUADDisplays = new ArrayList<>();
 
 			for (UADDisplay<?> uadDisplay :

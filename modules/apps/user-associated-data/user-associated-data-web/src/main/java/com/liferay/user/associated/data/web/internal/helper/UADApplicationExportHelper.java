@@ -28,9 +28,7 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,16 +88,11 @@ public class UADApplicationExportHelper {
 	public List<UADApplicationExportDisplay> getUADApplicationExportDisplays(
 		long groupId, long userId) {
 
-		Set<String> applicationUADDisplaysKeySet =
-			_uadRegistry.getApplicationUADDisplaysKeySet();
-
-		Iterator<String> iterator = applicationUADDisplaysKeySet.iterator();
-
 		List<UADApplicationExportDisplay> uadApplicationExportDisplays =
 			new ArrayList<>();
 
-		while (iterator.hasNext()) {
-			String applicationKey = iterator.next();
+		for (String applicationKey :
+				_uadRegistry.getApplicationUADDisplaysKeySet()) {
 
 			uadApplicationExportDisplays.add(
 				getUADApplicationExportDisplay(

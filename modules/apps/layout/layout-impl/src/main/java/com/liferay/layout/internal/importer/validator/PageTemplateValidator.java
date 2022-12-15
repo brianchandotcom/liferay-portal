@@ -34,7 +34,7 @@ public class PageTemplateValidator {
 	}
 
 	private static final JSONValidator _jsonValidator = new JSONValidator(
-		PageTemplateValidator.class.getResourceAsStream(
+		PageTemplateValidator.class.getResource(
 			"dependencies/page_template_json_schema.json"));
 
 }

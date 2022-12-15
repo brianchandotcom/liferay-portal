@@ -17,7 +17,7 @@ package com.liferay.portal.json.validator;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.InputStream;
+import java.net.URL;
 
 import org.hamcrest.core.StringStartsWith;
 
@@ -41,8 +41,7 @@ public class JSONValidatorTest {
 		expectedException.expectMessage(
 			new StringStartsWith("extraneous key [extra] is not permitted"));
 
-		JSONValidator jsonValidator = new JSONValidator(
-			_readJSONSchemaAsStream());
+		JSONValidator jsonValidator = new JSONValidator(_readJSONSchema());
 
 		jsonValidator.validate(_read("example_invalid_extra_properties.json"));
 	}
@@ -55,8 +54,7 @@ public class JSONValidatorTest {
 		expectedException.expectMessage(
 			new StringStartsWith("required key [example] not found"));
 
-		JSONValidator jsonValidator = new JSONValidator(
-			_readJSONSchemaAsStream());
+		JSONValidator jsonValidator = new JSONValidator(_readJSONSchema());
 
 		jsonValidator.validate(
 			_read("example_invalid_required_property_missing.json"));
@@ -64,8 +62,7 @@ public class JSONValidatorTest {
 
 	@Test
 	public void testValidateExampleValidRequired() throws Exception {
-		JSONValidator jsonValidator = new JSONValidator(
-			_readJSONSchemaAsStream());
+		JSONValidator jsonValidator = new JSONValidator(_readJSONSchema());
 
 		jsonValidator.validate(_read("example_valid_required.json"));
 	}
@@ -78,8 +75,8 @@ public class JSONValidatorTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
-	private InputStream _readJSONSchemaAsStream() {
-		return JSONValidatorTest.class.getResourceAsStream(
+	private URL _readJSONSchema() {
+		return JSONValidatorTest.class.getResource(
 			"dependencies/example_json_schema.json");
 	}
 

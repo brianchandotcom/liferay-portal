@@ -34,7 +34,7 @@ public class PageDefinitionValidator {
 	}
 
 	private static final JSONValidator _jsonValidator = new JSONValidator(
-		PageDefinitionValidator.class.getResourceAsStream(
+		PageDefinitionValidator.class.getResource(
 			"dependencies/page_definition_json_schema.json"));
 
 }

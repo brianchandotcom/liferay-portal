@@ -34,7 +34,7 @@ public class MasterPageValidator {
 	}
 
 	private static final JSONValidator _jsonValidator = new JSONValidator(
-		MasterPageValidator.class.getResourceAsStream(
+		MasterPageValidator.class.getResource(
 			"dependencies/master_page_json_schema.json"));
 
 }

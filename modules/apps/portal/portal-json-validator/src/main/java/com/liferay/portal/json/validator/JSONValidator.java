@@ -18,7 +18,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +39,8 @@ import org.json.JSONTokener;
  */
 public class JSONValidator {
 
-	public JSONValidator(InputStream inputStream) {
-		JSONObject jsonSchemaJSONObject = new JSONObject(
-			new JSONTokener(inputStream));
-
-		_schema = SchemaLoader.load(jsonSchemaJSONObject);
+	public JSONValidator(URL url) {
+		_url = url;
 	}
 
 	public void validate(String json) throws JSONValidatorException {
@@ -49,7 +49,7 @@ public class JSONValidator {
 		}
 
 		try {
-			_validator.performValidation(_schema, new JSONObject(json));
+			_validator.performValidation(_getSchema(), new JSONObject(json));
 		}
 		catch (Exception exception) {
 			if (exception instanceof JSONException) {
@@ -92,10 +92,32 @@ public class JSONValidator {
 		}
 	}
 
+	private Schema _getSchema() throws IOException {
+		Schema schema = _schema;
+
+		if (schema != null) {
+			return schema;
+		}
+
+		synchronized (this) {
+			if (_schema == null) {
+				try (InputStream inputStream = _url.openStream()) {
+					_schema = SchemaLoader.load(
+						new JSONObject(new JSONTokener(inputStream)));
+				}
+			}
+
+			schema = _schema;
+		}
+
+		return schema;
+	}
+
 	private static final org.everit.json.schema.Validator _validator =
 		org.everit.json.schema.Validator.builder(
 		).build();
 
-	private final Schema _schema;
+	private volatile Schema _schema;
+	private final URL _url;
 
 }

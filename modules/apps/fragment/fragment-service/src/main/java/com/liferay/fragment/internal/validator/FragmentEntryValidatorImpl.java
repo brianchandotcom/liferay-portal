@@ -249,11 +249,11 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 	private static final JSONValidator _configurationJSONValidator =
 		new JSONValidator(
-			FragmentEntryValidatorImpl.class.getResourceAsStream(
+			FragmentEntryValidatorImpl.class.getResource(
 				"dependencies/configuration-json-schema.json"));
 	private static final JSONValidator _typeOptionsJSONValidator =
 		new JSONValidator(
-			FragmentEntryValidatorImpl.class.getResourceAsStream(
+			FragmentEntryValidatorImpl.class.getResource(
 				"dependencies/type-options-json-schema.json"));
 
 	@Reference

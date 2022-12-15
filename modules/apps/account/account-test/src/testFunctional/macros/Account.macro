@@ -745,43 +745,6 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
 	}
 
-	macro defineGroupScopePermissions {
-		var permissionKey = "${permissionKey}";
-		var permissionNavigationKey = "${permissionNavigationKey}";
-		var key_navItem = "${key_navItem}";
-
-		Navigator.gotoNavTab(navTab = "Define Group Scope Permissions");
-
-		Type(
-			locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
-			value1 = "${key_navItem}");
-
-		Click.clickAt(locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}");
-
-		Check(locator1 = "RolesPermissions#${permissionKey}");
-
-		Button.clickSave();
-	}
-
-	macro definePermissions {
-		var permissionKey = "${permissionKey}";
-		var permissionNavigationKey = "${permissionNavigationKey}";
-		var key_navItem = "${key_navItem}";
-		var key_subItem = "${key_subItem}";
-
-		Navigator.gotoNavTab(navTab = "Define Permissions");
-
-		Type(
-			locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
-			value1 = "${key_navItem}");
-
-		Click.clickAt(locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}");
-
-		Check(locator1 = "RolesPermissions#${permissionKey}");
-
-		Button.clickSave();
-	}
-
 	macro deleteAccount {
 		if ("${deleteType}" == "Delete Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");

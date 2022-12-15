@@ -24,8 +24,8 @@ import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParamet
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 import com.liferay.search.experiences.internal.blueprint.parameter.DoubleArraySXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.IntegerSXPParameter;
-import com.liferay.search.experiences.internal.web.cache.SentenceTransformerWebCacheItem;
-import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.internal.web.cache.TextEmbeddingProviderWebCacheItem;
+import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.beans.ExceptionListener;
@@ -42,10 +42,10 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 
 	public MLSXPParameterContributor(
 		ConfigurationProvider configurationProvider,
-		SentenceEmbeddingRetriever sentenceEmbeddingRetriever) {
+		TextEmbeddingRetriever textEmbeddingRetriever) {
 
 		_configurationProvider = configurationProvider;
-		_sentenceEmbeddingRetriever = sentenceEmbeddingRetriever;
+		_textEmbeddingRetriever = textEmbeddingRetriever;
 	}
 
 	@Override
@@ -56,26 +56,26 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 		SemanticSearchConfiguration semanticSearchConfiguration =
 			_getSemanticSearchConfiguration(searchContext.getCompanyId());
 
-		if (!semanticSearchConfiguration.sentenceTransformerEnabled()) {
+		if (!semanticSearchConfiguration.textEmbeddingsEnabled()) {
 			return;
 		}
 
 		sxpParameters.add(
 			new IntegerSXPParameter(
-				"ml.keyword_vector_dimensions", true,
+				"ml.text_embeddings.vector_dimensions", true,
 				semanticSearchConfiguration.embeddingVectorDimensions()));
 
-		Double[] sentenceEmbedding = SentenceTransformerWebCacheItem.get(
-			exceptionListener, _sentenceEmbeddingRetriever,
+		Double[] textEmbedding = TextEmbeddingProviderWebCacheItem.get(
+			exceptionListener, _textEmbeddingRetriever,
 			semanticSearchConfiguration, searchContext.getKeywords());
 
-		if (ArrayUtil.isEmpty(sentenceEmbedding)) {
+		if (ArrayUtil.isEmpty(textEmbedding)) {
 			return;
 		}
 
 		sxpParameters.add(
 			new DoubleArraySXPParameter(
-				"ml.keyword_vectors", true, sentenceEmbedding));
+				"ml.text_embeddings.keywords_embedding", true, textEmbedding));
 	}
 
 	@Override
@@ -89,11 +89,11 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 
 		return Arrays.asList(
 			new SXPParameterContributorDefinition(
-				IntegerSXPParameter.class, "keyword-vector-dimensions",
-				"ml.keyword_vector_dimensions"),
+				IntegerSXPParameter.class, "text-embedding-vector-dimensions",
+				"ml.text_embeddings.vector_dimensions"),
 			new SXPParameterContributorDefinition(
-				DoubleArraySXPParameter.class, "keyword-vectors",
-				"ml.keyword_vectors"));
+				DoubleArraySXPParameter.class, "keywords-embedding",
+				"ml.text_embeddings.keywords_embedding"));
 	}
 
 	private SemanticSearchConfiguration _getSemanticSearchConfiguration(
@@ -109,6 +109,6 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 	}
 
 	private final ConfigurationProvider _configurationProvider;
-	private final SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
+	private final TextEmbeddingRetriever _textEmbeddingRetriever;
 
 }

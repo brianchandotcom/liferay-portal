@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Rescore the results of the original query using the text embedding value. This element is effective only if the sentence transformer is enabled and configured to operate on specific content types and languages. See the Search Experiences entry in System Settings."
+		"en_US": "Rescore the results of the original query using the text embedding value. This element is effective only if the text embeddings are enabled and configured to operate on specific content types and languages. See the Search Experiences entry in System Settings."
 	},
 	"elementDefinition": {
 		"category": "semantic search",
@@ -24,7 +24,7 @@
 												"filter": [
 													{
 														"exists": {
-															"field": "text_embedding_${ml.keyword_vector_dimensions}_${context.language_id}"
+															"field": "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}"
 														}
 													}
 												],
@@ -38,9 +38,9 @@
 										},
 										"script": {
 											"params": {
-												"query_vector": "${ml.keyword_vectors}"
+												"query_vector": "${ml.text_embeddings.keywords_embedding}"
 											},
-											"source": "${configuration.vector_field_function}(params.query_vector, 'text_embedding_${ml.keyword_vector_dimensions}_${context.language_id}') + 1"
+											"source": "${configuration.vector_field_function}(params.query_vector, 'text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}') + 1"
 										}
 									}
 								},

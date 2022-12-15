@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalServiceUtil;
+import com.liferay.saml.persistence.service.persistence.SamlPeerBindingFinder;
 import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
 
 import java.io.Serializable;
@@ -474,6 +475,9 @@ public abstract class SamlPeerBindingLocalServiceBaseImpl
 
 	@Reference
 	protected SamlPeerBindingPersistence samlPeerBindingPersistence;
+
+	@Reference
+	protected SamlPeerBindingFinder samlPeerBindingFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

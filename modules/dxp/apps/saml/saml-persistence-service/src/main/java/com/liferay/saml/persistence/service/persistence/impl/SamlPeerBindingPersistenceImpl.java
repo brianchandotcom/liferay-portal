@@ -958,36 +958,29 @@ public class SamlPeerBindingPersistenceImpl
 		_FINDER_COLUMN_C_U_D_SNIF_SNINQ_SPEI_SAMLPEERENTITYID_3 =
 			"(samlPeerBinding.samlPeerEntityId IS NULL OR samlPeerBinding.samlPeerEntityId = '')";
 
-	private FinderPath _finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
-	private FinderPath
-		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
-	private FinderPath _finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI;
+	private FinderPath _finderPathWithPaginationFindByC_D_SNIV;
+	private FinderPath _finderPathWithoutPaginationFindByC_D_SNIV;
+	private FinderPath _finderPathCountByC_D_SNIV;
 
 	/**
-	 * Returns all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @return the matching saml peer bindings
 	 */
 	@Override
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId) {
+	public List<SamlPeerBinding> findByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue) {
 
-		return findByC_D_SNIF_SNINQ_SNIV_SPEI(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, QueryUtil.ALL_POS,
+		return findByC_D_SNIV(
+			companyId, deleted, samlNameIdValue, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns a range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
@@ -995,27 +988,22 @@ public class SamlPeerBindingPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param start the lower bound of the range of saml peer bindings
 	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
 	 * @return the range of matching saml peer bindings
 	 */
 	@Override
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId, int start, int end) {
+	public List<SamlPeerBinding> findByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue, int start,
+		int end) {
 
-		return findByC_D_SNIF_SNINQ_SNIV_SPEI(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, start, end, null);
+		return findByC_D_SNIV(
+			companyId, deleted, samlNameIdValue, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
@@ -1023,30 +1011,24 @@ public class SamlPeerBindingPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param start the lower bound of the range of saml peer bindings
 	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching saml peer bindings
 	 */
 	@Override
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId, int start, int end,
-		OrderByComparator<SamlPeerBinding> orderByComparator) {
+	public List<SamlPeerBinding> findByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue, int start,
+		int end, OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		return findByC_D_SNIF_SNINQ_SNIV_SPEI(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, start, end, orderByComparator,
+		return findByC_D_SNIV(
+			companyId, deleted, samlNameIdValue, start, end, orderByComparator,
 			true);
 	}
 
 	/**
-	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlPeerBindingModelImpl</code>.
@@ -1054,10 +1036,7 @@ public class SamlPeerBindingPersistenceImpl
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param start the lower bound of the range of saml peer bindings
 	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1065,17 +1044,12 @@ public class SamlPeerBindingPersistenceImpl
 	 * @return the ordered range of matching saml peer bindings
 	 */
 	@Override
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId, int start, int end,
-		OrderByComparator<SamlPeerBinding> orderByComparator,
+	public List<SamlPeerBinding> findByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue, int start,
+		int end, OrderByComparator<SamlPeerBinding> orderByComparator,
 		boolean useFinderCache) {
 
-		samlNameIdFormat = Objects.toString(samlNameIdFormat, "");
-		samlNameIdNameQualifier = Objects.toString(samlNameIdNameQualifier, "");
 		samlNameIdValue = Objects.toString(samlNameIdValue, "");
-		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
 
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1084,20 +1058,15 @@ public class SamlPeerBindingPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
-				finderArgs = new Object[] {
-					companyId, deleted, samlNameIdFormat,
-					samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId
-				};
+				finderPath = _finderPathWithoutPaginationFindByC_D_SNIV;
+				finderArgs = new Object[] {companyId, deleted, samlNameIdValue};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath =
-				_finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
+			finderPath = _finderPathWithPaginationFindByC_D_SNIV;
 			finderArgs = new Object[] {
-				companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-				samlNameIdValue, samlPeerEntityId, start, end, orderByComparator
+				companyId, deleted, samlNameIdValue, start, end,
+				orderByComparator
 			};
 		}
 
@@ -1111,14 +1080,8 @@ public class SamlPeerBindingPersistenceImpl
 				for (SamlPeerBinding samlPeerBinding : list) {
 					if ((companyId != samlPeerBinding.getCompanyId()) ||
 						(deleted != samlPeerBinding.isDeleted()) ||
-						!samlNameIdFormat.equals(
-							samlPeerBinding.getSamlNameIdFormat()) ||
-						!samlNameIdNameQualifier.equals(
-							samlPeerBinding.getSamlNameIdNameQualifier()) ||
 						!samlNameIdValue.equals(
-							samlPeerBinding.getSamlNameIdValue()) ||
-						!samlPeerEntityId.equals(
-							samlPeerBinding.getSamlPeerEntityId())) {
+							samlPeerBinding.getSamlNameIdValue())) {
 
 						list = null;
 
@@ -1133,68 +1096,27 @@ public class SamlPeerBindingPersistenceImpl
 
 			if (orderByComparator != null) {
 				sb = new StringBundler(
-					8 + (orderByComparator.getOrderByFields().length * 2));
+					5 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				sb = new StringBundler(8);
+				sb = new StringBundler(5);
 			}
 
 			sb.append(_SQL_SELECT_SAMLPEERBINDING_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_D_SNIV_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_DELETED_2);
-
-			boolean bindSamlNameIdFormat = false;
-
-			if (samlNameIdFormat.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_3);
-			}
-			else {
-				bindSamlNameIdFormat = true;
-
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_2);
-			}
-
-			boolean bindSamlNameIdNameQualifier = false;
-
-			if (samlNameIdNameQualifier.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
-			}
-			else {
-				bindSamlNameIdNameQualifier = true;
-
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
-			}
+			sb.append(_FINDER_COLUMN_C_D_SNIV_DELETED_2);
 
 			boolean bindSamlNameIdValue = false;
 
 			if (samlNameIdValue.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_3);
+				sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_3);
 			}
 			else {
 				bindSamlNameIdValue = true;
 
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_2);
-			}
-
-			boolean bindSamlPeerEntityId = false;
-
-			if (samlPeerEntityId.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_3);
-			}
-			else {
-				bindSamlPeerEntityId = true;
-
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_2);
+				sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -1220,20 +1142,8 @@ public class SamlPeerBindingPersistenceImpl
 
 				queryPos.add(deleted);
 
-				if (bindSamlNameIdFormat) {
-					queryPos.add(samlNameIdFormat);
-				}
-
-				if (bindSamlNameIdNameQualifier) {
-					queryPos.add(samlNameIdNameQualifier);
-				}
-
 				if (bindSamlNameIdValue) {
 					queryPos.add(samlNameIdValue);
-				}
-
-				if (bindSamlPeerEntityId) {
-					queryPos.add(samlPeerEntityId);
 				}
 
 				list = (List<SamlPeerBinding>)QueryUtil.list(
@@ -1257,35 +1167,29 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching saml peer binding
 	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
 	 */
 	@Override
-	public SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SPEI_First(
-			long companyId, boolean deleted, String samlNameIdFormat,
-			String samlNameIdNameQualifier, String samlNameIdValue,
-			String samlPeerEntityId,
+	public SamlPeerBinding findByC_D_SNIV_First(
+			long companyId, boolean deleted, String samlNameIdValue,
 			OrderByComparator<SamlPeerBinding> orderByComparator)
 		throws NoSuchPeerBindingException {
 
-		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, orderByComparator);
+		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIV_First(
+			companyId, deleted, samlNameIdValue, orderByComparator);
 
 		if (samlPeerBinding != null) {
 			return samlPeerBinding;
 		}
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -1295,17 +1199,8 @@ public class SamlPeerBindingPersistenceImpl
 		sb.append(", deleted=");
 		sb.append(deleted);
 
-		sb.append(", samlNameIdFormat=");
-		sb.append(samlNameIdFormat);
-
-		sb.append(", samlNameIdNameQualifier=");
-		sb.append(samlNameIdNameQualifier);
-
 		sb.append(", samlNameIdValue=");
 		sb.append(samlNameIdValue);
-
-		sb.append(", samlPeerEntityId=");
-		sb.append(samlPeerEntityId);
 
 		sb.append("}");
 
@@ -1313,27 +1208,21 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the first saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
 	@Override
-	public SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId,
+	public SamlPeerBinding fetchByC_D_SNIV_First(
+		long companyId, boolean deleted, String samlNameIdValue,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		List<SamlPeerBinding> list = findByC_D_SNIF_SNINQ_SNIV_SPEI(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, 0, 1, orderByComparator);
+		List<SamlPeerBinding> list = findByC_D_SNIV(
+			companyId, deleted, samlNameIdValue, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1343,35 +1232,29 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching saml peer binding
 	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
 	 */
 	@Override
-	public SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
-			long companyId, boolean deleted, String samlNameIdFormat,
-			String samlNameIdNameQualifier, String samlNameIdValue,
-			String samlPeerEntityId,
+	public SamlPeerBinding findByC_D_SNIV_Last(
+			long companyId, boolean deleted, String samlNameIdValue,
 			OrderByComparator<SamlPeerBinding> orderByComparator)
 		throws NoSuchPeerBindingException {
 
-		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, orderByComparator);
+		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIV_Last(
+			companyId, deleted, samlNameIdValue, orderByComparator);
 
 		if (samlPeerBinding != null) {
 			return samlPeerBinding;
 		}
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -1381,17 +1264,8 @@ public class SamlPeerBindingPersistenceImpl
 		sb.append(", deleted=");
 		sb.append(deleted);
 
-		sb.append(", samlNameIdFormat=");
-		sb.append(samlNameIdFormat);
-
-		sb.append(", samlNameIdNameQualifier=");
-		sb.append(samlNameIdNameQualifier);
-
 		sb.append(", samlNameIdValue=");
 		sb.append(samlNameIdValue);
-
-		sb.append(", samlPeerEntityId=");
-		sb.append(samlPeerEntityId);
 
 		sb.append("}");
 
@@ -1399,35 +1273,27 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the last saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
 	@Override
-	public SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId,
+	public SamlPeerBinding fetchByC_D_SNIV_Last(
+		long companyId, boolean deleted, String samlNameIdValue,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		int count = countByC_D_SNIF_SNINQ_SNIV_SPEI(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId);
+		int count = countByC_D_SNIV(companyId, deleted, samlNameIdValue);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SamlPeerBinding> list = findByC_D_SNIF_SNINQ_SNIV_SPEI(
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId, count - 1, count,
+		List<SamlPeerBinding> list = findByC_D_SNIV(
+			companyId, deleted, samlNameIdValue, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1438,31 +1304,24 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the saml peer bindings before and after the current saml peer binding in the ordered set where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * @param samlPeerBindingId the primary key of the current saml peer binding
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next saml peer binding
 	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
 	 */
 	@Override
-	public SamlPeerBinding[] findByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
+	public SamlPeerBinding[] findByC_D_SNIV_PrevAndNext(
 			long samlPeerBindingId, long companyId, boolean deleted,
-			String samlNameIdFormat, String samlNameIdNameQualifier,
-			String samlNameIdValue, String samlPeerEntityId,
+			String samlNameIdValue,
 			OrderByComparator<SamlPeerBinding> orderByComparator)
 		throws NoSuchPeerBindingException {
 
-		samlNameIdFormat = Objects.toString(samlNameIdFormat, "");
-		samlNameIdNameQualifier = Objects.toString(samlNameIdNameQualifier, "");
 		samlNameIdValue = Objects.toString(samlNameIdValue, "");
-		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
 
 		SamlPeerBinding samlPeerBinding = findByPrimaryKey(samlPeerBindingId);
 
@@ -1473,16 +1332,14 @@ public class SamlPeerBindingPersistenceImpl
 
 			SamlPeerBinding[] array = new SamlPeerBindingImpl[3];
 
-			array[0] = getByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
-				session, samlPeerBinding, companyId, deleted, samlNameIdFormat,
-				samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId,
+			array[0] = getByC_D_SNIV_PrevAndNext(
+				session, samlPeerBinding, companyId, deleted, samlNameIdValue,
 				orderByComparator, true);
 
 			array[1] = samlPeerBinding;
 
-			array[2] = getByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
-				session, samlPeerBinding, companyId, deleted, samlNameIdFormat,
-				samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId,
+			array[2] = getByC_D_SNIV_PrevAndNext(
+				session, samlPeerBinding, companyId, deleted, samlNameIdValue,
 				orderByComparator, false);
 
 			return array;
@@ -1495,11 +1352,9 @@ public class SamlPeerBindingPersistenceImpl
 		}
 	}
 
-	protected SamlPeerBinding getByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
+	protected SamlPeerBinding getByC_D_SNIV_PrevAndNext(
 		Session session, SamlPeerBinding samlPeerBinding, long companyId,
-		boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId,
+		boolean deleted, String samlNameIdValue,
 		OrderByComparator<SamlPeerBinding> orderByComparator,
 		boolean previous) {
 
@@ -1507,69 +1362,28 @@ public class SamlPeerBindingPersistenceImpl
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				9 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(8);
+			sb = new StringBundler(5);
 		}
 
 		sb.append(_SQL_SELECT_SAMLPEERBINDING_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_D_SNIV_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_DELETED_2);
-
-		boolean bindSamlNameIdFormat = false;
-
-		if (samlNameIdFormat.isEmpty()) {
-			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_3);
-		}
-		else {
-			bindSamlNameIdFormat = true;
-
-			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_2);
-		}
-
-		boolean bindSamlNameIdNameQualifier = false;
-
-		if (samlNameIdNameQualifier.isEmpty()) {
-			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
-		}
-		else {
-			bindSamlNameIdNameQualifier = true;
-
-			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
-		}
+		sb.append(_FINDER_COLUMN_C_D_SNIV_DELETED_2);
 
 		boolean bindSamlNameIdValue = false;
 
 		if (samlNameIdValue.isEmpty()) {
-			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_3);
+			sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_3);
 		}
 		else {
 			bindSamlNameIdValue = true;
 
-			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_2);
-		}
-
-		boolean bindSamlPeerEntityId = false;
-
-		if (samlPeerEntityId.isEmpty()) {
-			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_3);
-		}
-		else {
-			bindSamlPeerEntityId = true;
-
-			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_2);
+			sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -1645,20 +1459,8 @@ public class SamlPeerBindingPersistenceImpl
 
 		queryPos.add(deleted);
 
-		if (bindSamlNameIdFormat) {
-			queryPos.add(samlNameIdFormat);
-		}
-
-		if (bindSamlNameIdNameQualifier) {
-			queryPos.add(samlNameIdNameQualifier);
-		}
-
 		if (bindSamlNameIdValue) {
 			queryPos.add(samlNameIdValue);
-		}
-
-		if (bindSamlPeerEntityId) {
-			queryPos.add(samlPeerEntityId);
 		}
 
 		if (orderByComparator != null) {
@@ -1681,121 +1483,65 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Removes all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63; from the database.
+	 * Removes all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 */
 	@Override
-	public void removeByC_D_SNIF_SNINQ_SNIV_SPEI(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId) {
+	public void removeByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue) {
 
 		for (SamlPeerBinding samlPeerBinding :
-				findByC_D_SNIF_SNINQ_SNIV_SPEI(
-					companyId, deleted, samlNameIdFormat,
-					samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+				findByC_D_SNIV(
+					companyId, deleted, samlNameIdValue, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
 
 			remove(samlPeerBinding);
 		}
 	}
 
 	/**
-	 * Returns the number of saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
+	 * Returns the number of saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param deleted the deleted
-	 * @param samlNameIdFormat the saml name ID format
-	 * @param samlNameIdNameQualifier the saml name ID name qualifier
 	 * @param samlNameIdValue the saml name ID value
-	 * @param samlPeerEntityId the saml peer entity ID
 	 * @return the number of matching saml peer bindings
 	 */
 	@Override
-	public int countByC_D_SNIF_SNINQ_SNIV_SPEI(
-		long companyId, boolean deleted, String samlNameIdFormat,
-		String samlNameIdNameQualifier, String samlNameIdValue,
-		String samlPeerEntityId) {
+	public int countByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue) {
 
-		samlNameIdFormat = Objects.toString(samlNameIdFormat, "");
-		samlNameIdNameQualifier = Objects.toString(samlNameIdNameQualifier, "");
 		samlNameIdValue = Objects.toString(samlNameIdValue, "");
-		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
 
-		FinderPath finderPath = _finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI;
+		FinderPath finderPath = _finderPathCountByC_D_SNIV;
 
 		Object[] finderArgs = new Object[] {
-			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
-			samlNameIdValue, samlPeerEntityId
+			companyId, deleted, samlNameIdValue
 		};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_SQL_COUNT_SAMLPEERBINDING_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_D_SNIV_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_DELETED_2);
-
-			boolean bindSamlNameIdFormat = false;
-
-			if (samlNameIdFormat.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_3);
-			}
-			else {
-				bindSamlNameIdFormat = true;
-
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_2);
-			}
-
-			boolean bindSamlNameIdNameQualifier = false;
-
-			if (samlNameIdNameQualifier.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
-			}
-			else {
-				bindSamlNameIdNameQualifier = true;
-
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
-			}
+			sb.append(_FINDER_COLUMN_C_D_SNIV_DELETED_2);
 
 			boolean bindSamlNameIdValue = false;
 
 			if (samlNameIdValue.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_3);
+				sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_3);
 			}
 			else {
 				bindSamlNameIdValue = true;
 
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_2);
-			}
-
-			boolean bindSamlPeerEntityId = false;
-
-			if (samlPeerEntityId.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_3);
-			}
-			else {
-				bindSamlPeerEntityId = true;
-
-				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_2);
+				sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_2);
 			}
 
 			String sql = sb.toString();
@@ -1813,20 +1559,8 @@ public class SamlPeerBindingPersistenceImpl
 
 				queryPos.add(deleted);
 
-				if (bindSamlNameIdFormat) {
-					queryPos.add(samlNameIdFormat);
-				}
-
-				if (bindSamlNameIdNameQualifier) {
-					queryPos.add(samlNameIdNameQualifier);
-				}
-
 				if (bindSamlNameIdValue) {
 					queryPos.add(samlNameIdValue);
-				}
-
-				if (bindSamlPeerEntityId) {
-					queryPos.add(samlPeerEntityId);
 				}
 
 				count = (Long)query.uniqueResult();
@@ -1844,45 +1578,17 @@ public class SamlPeerBindingPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_COMPANYID_2 =
-			"samlPeerBinding.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_D_SNIV_COMPANYID_2 =
+		"samlPeerBinding.companyId = ? AND ";
 
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_DELETED_2 =
-			"samlPeerBinding.deleted = ? AND ";
+	private static final String _FINDER_COLUMN_C_D_SNIV_DELETED_2 =
+		"samlPeerBinding.deleted = ? AND ";
 
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_2 =
-			"samlPeerBinding.samlNameIdFormat = ? AND ";
+	private static final String _FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_2 =
+		"samlPeerBinding.samlNameIdValue = ?";
 
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_3 =
-			"(samlPeerBinding.samlNameIdFormat IS NULL OR samlPeerBinding.samlNameIdFormat = '') AND ";
-
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_2 =
-			"samlPeerBinding.samlNameIdNameQualifier = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_3 =
-			"(samlPeerBinding.samlNameIdNameQualifier IS NULL OR samlPeerBinding.samlNameIdNameQualifier = '') AND ";
-
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_2 =
-			"samlPeerBinding.samlNameIdValue = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_3 =
-			"(samlPeerBinding.samlNameIdValue IS NULL OR samlPeerBinding.samlNameIdValue = '') AND ";
-
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_2 =
-			"samlPeerBinding.samlPeerEntityId = ?";
-
-	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_3 =
-			"(samlPeerBinding.samlPeerEntityId IS NULL OR samlPeerBinding.samlPeerEntityId = '')";
+	private static final String _FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_3 =
+		"(samlPeerBinding.samlNameIdValue IS NULL OR samlPeerBinding.samlNameIdValue = '')";
 
 	public SamlPeerBindingPersistenceImpl() {
 		setModelClass(SamlPeerBinding.class);
@@ -2466,53 +2172,30 @@ public class SamlPeerBindingPersistenceImpl
 			},
 			false);
 
-		_finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByC_D_SNIF_SNINQ_SNIV_SPEI",
-				new String[] {
-					Long.class.getName(), Boolean.class.getName(),
-					String.class.getName(), String.class.getName(),
-					String.class.getName(), String.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				},
-				new String[] {
-					"companyId", "deleted", "samlNameIdFormat",
-					"samlNameIdNameQualifier", "samlNameIdValue",
-					"samlPeerEntityId"
-				},
-				true);
-
-		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByC_D_SNIF_SNINQ_SNIV_SPEI",
-				new String[] {
-					Long.class.getName(), Boolean.class.getName(),
-					String.class.getName(), String.class.getName(),
-					String.class.getName(), String.class.getName()
-				},
-				new String[] {
-					"companyId", "deleted", "samlNameIdFormat",
-					"samlNameIdNameQualifier", "samlNameIdValue",
-					"samlPeerEntityId"
-				},
-				true);
-
-		_finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByC_D_SNIF_SNINQ_SNIV_SPEI",
+		_finderPathWithPaginationFindByC_D_SNIV = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_D_SNIV",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName(),
-				String.class.getName(), String.class.getName()
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
 			},
+			new String[] {"companyId", "deleted", "samlNameIdValue"}, true);
+
+		_finderPathWithoutPaginationFindByC_D_SNIV = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_D_SNIV",
 			new String[] {
-				"companyId", "deleted", "samlNameIdFormat",
-				"samlNameIdNameQualifier", "samlNameIdValue", "samlPeerEntityId"
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName()
 			},
-			false);
+			new String[] {"companyId", "deleted", "samlNameIdValue"}, true);
+
+		_finderPathCountByC_D_SNIV = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_D_SNIV",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName()
+			},
+			new String[] {"companyId", "deleted", "samlNameIdValue"}, false);
 
 		_setSamlPeerBindingUtilPersistence(this);
 	}

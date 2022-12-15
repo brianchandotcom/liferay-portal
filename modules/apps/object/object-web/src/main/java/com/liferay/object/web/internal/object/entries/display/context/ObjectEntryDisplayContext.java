@@ -350,12 +350,12 @@ public class ObjectEntryDisplayContext {
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition2.getScope());
 
-		if (ObjectEntryServiceUtil.hasPortletResourcePermission(
+		if (!objectDefinition1.isSystem() && !objectDefinition2.isSystem() &&
+			ObjectEntryServiceUtil.hasPortletResourcePermission(
 				objectScopeProvider.getGroupId(
 					_objectRequestHelper.getRequest()),
 				objectDefinition2.getObjectDefinitionId(),
 				ObjectActionKeys.ADD_OBJECT_ENTRY) &&
-			!objectDefinition1.isSystem() && !objectDefinition2.isSystem() &&
 			!(StringUtil.equals(
 				objectDefinition1.getScope(),
 				ObjectDefinitionConstants.SCOPE_COMPANY) &&

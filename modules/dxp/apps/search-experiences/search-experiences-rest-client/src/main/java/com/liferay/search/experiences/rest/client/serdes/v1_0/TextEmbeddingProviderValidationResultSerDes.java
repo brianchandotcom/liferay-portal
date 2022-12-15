@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.SentenceTransformerValidationResult;
+import com.liferay.search.experiences.rest.client.dto.v1_0.TextEmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,29 +30,30 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SentenceTransformerValidationResultSerDes {
+public class TextEmbeddingProviderValidationResultSerDes {
 
-	public static SentenceTransformerValidationResult toDTO(String json) {
-		SentenceTransformerValidationResultJSONParser
-			sentenceTransformerValidationResultJSONParser =
-				new SentenceTransformerValidationResultJSONParser();
+	public static TextEmbeddingProviderValidationResult toDTO(String json) {
+		TextEmbeddingProviderValidationResultJSONParser
+			textEmbeddingProviderValidationResultJSONParser =
+				new TextEmbeddingProviderValidationResultJSONParser();
 
-		return sentenceTransformerValidationResultJSONParser.parseToDTO(json);
+		return textEmbeddingProviderValidationResultJSONParser.parseToDTO(json);
 	}
 
-	public static SentenceTransformerValidationResult[] toDTOs(String json) {
-		SentenceTransformerValidationResultJSONParser
-			sentenceTransformerValidationResultJSONParser =
-				new SentenceTransformerValidationResultJSONParser();
+	public static TextEmbeddingProviderValidationResult[] toDTOs(String json) {
+		TextEmbeddingProviderValidationResultJSONParser
+			textEmbeddingProviderValidationResultJSONParser =
+				new TextEmbeddingProviderValidationResultJSONParser();
 
-		return sentenceTransformerValidationResultJSONParser.parseToDTOs(json);
+		return textEmbeddingProviderValidationResultJSONParser.parseToDTOs(
+			json);
 	}
 
 	public static String toJSON(
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult) {
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult) {
 
-		if (sentenceTransformerValidationResult == null) {
+		if (textEmbeddingProviderValidationResult == null) {
 			return "null";
 		}
 
@@ -60,7 +61,7 @@ public class SentenceTransformerValidationResultSerDes {
 
 		sb.append("{");
 
-		if (sentenceTransformerValidationResult.getErrorMessage() != null) {
+		if (textEmbeddingProviderValidationResult.getErrorMessage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -70,12 +71,13 @@ public class SentenceTransformerValidationResultSerDes {
 			sb.append("\"");
 
 			sb.append(
-				_escape(sentenceTransformerValidationResult.getErrorMessage()));
+				_escape(
+					textEmbeddingProviderValidationResult.getErrorMessage()));
 
 			sb.append("\"");
 		}
 
-		if (sentenceTransformerValidationResult.getExpectedDimensions() !=
+		if (textEmbeddingProviderValidationResult.getExpectedDimensions() !=
 				null) {
 
 			if (sb.length() > 1) {
@@ -85,7 +87,7 @@ public class SentenceTransformerValidationResultSerDes {
 			sb.append("\"expectedDimensions\": ");
 
 			sb.append(
-				sentenceTransformerValidationResult.getExpectedDimensions());
+				textEmbeddingProviderValidationResult.getExpectedDimensions());
 		}
 
 		sb.append("}");
@@ -94,34 +96,34 @@ public class SentenceTransformerValidationResultSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SentenceTransformerValidationResultJSONParser
-			sentenceTransformerValidationResultJSONParser =
-				new SentenceTransformerValidationResultJSONParser();
+		TextEmbeddingProviderValidationResultJSONParser
+			textEmbeddingProviderValidationResultJSONParser =
+				new TextEmbeddingProviderValidationResultJSONParser();
 
-		return sentenceTransformerValidationResultJSONParser.parseToMap(json);
+		return textEmbeddingProviderValidationResultJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult) {
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult) {
 
-		if (sentenceTransformerValidationResult == null) {
+		if (textEmbeddingProviderValidationResult == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sentenceTransformerValidationResult.getErrorMessage() == null) {
+		if (textEmbeddingProviderValidationResult.getErrorMessage() == null) {
 			map.put("errorMessage", null);
 		}
 		else {
 			map.put(
 				"errorMessage",
 				String.valueOf(
-					sentenceTransformerValidationResult.getErrorMessage()));
+					textEmbeddingProviderValidationResult.getErrorMessage()));
 		}
 
-		if (sentenceTransformerValidationResult.getExpectedDimensions() ==
+		if (textEmbeddingProviderValidationResult.getExpectedDimensions() ==
 				null) {
 
 			map.put("expectedDimensions", null);
@@ -130,37 +132,37 @@ public class SentenceTransformerValidationResultSerDes {
 			map.put(
 				"expectedDimensions",
 				String.valueOf(
-					sentenceTransformerValidationResult.
+					textEmbeddingProviderValidationResult.
 						getExpectedDimensions()));
 		}
 
 		return map;
 	}
 
-	public static class SentenceTransformerValidationResultJSONParser
-		extends BaseJSONParser<SentenceTransformerValidationResult> {
+	public static class TextEmbeddingProviderValidationResultJSONParser
+		extends BaseJSONParser<TextEmbeddingProviderValidationResult> {
 
 		@Override
-		protected SentenceTransformerValidationResult createDTO() {
-			return new SentenceTransformerValidationResult();
+		protected TextEmbeddingProviderValidationResult createDTO() {
+			return new TextEmbeddingProviderValidationResult();
 		}
 
 		@Override
-		protected SentenceTransformerValidationResult[] createDTOArray(
+		protected TextEmbeddingProviderValidationResult[] createDTOArray(
 			int size) {
 
-			return new SentenceTransformerValidationResult[size];
+			return new TextEmbeddingProviderValidationResult[size];
 		}
 
 		@Override
 		protected void setField(
-			SentenceTransformerValidationResult
-				sentenceTransformerValidationResult,
+			TextEmbeddingProviderValidationResult
+				textEmbeddingProviderValidationResult,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "errorMessage")) {
 				if (jsonParserFieldValue != null) {
-					sentenceTransformerValidationResult.setErrorMessage(
+					textEmbeddingProviderValidationResult.setErrorMessage(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -168,7 +170,7 @@ public class SentenceTransformerValidationResultSerDes {
 						jsonParserFieldName, "expectedDimensions")) {
 
 				if (jsonParserFieldValue != null) {
-					sentenceTransformerValidationResult.setExpectedDimensions(
+					textEmbeddingProviderValidationResult.setExpectedDimensions(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}

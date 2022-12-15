@@ -14,10 +14,10 @@
 
 package com.liferay.search.experiences.rest.client.resource.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.SentenceTransformerValidationResult;
+import com.liferay.search.experiences.rest.client.dto.v1_0.TextEmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.problem.Problem;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.SentenceTransformerValidationResultSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.TextEmbeddingProviderValidationResultSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -32,19 +32,18 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface SentenceTransformerValidationResultResource {
+public interface TextEmbeddingProviderValidationResultResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public SentenceTransformerValidationResult
-			postSentenceTransformerValidateConfiguration(String string)
+	public TextEmbeddingProviderValidationResult
+			postTextEmbeddingValidateConfiguration(String string)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postSentenceTransformerValidateConfigurationHttpResponse(
-				String string)
+			postTextEmbeddingValidateConfigurationHttpResponse(String string)
 		throws Exception;
 
 	public static class Builder {
@@ -56,8 +55,8 @@ public interface SentenceTransformerValidationResultResource {
 			return this;
 		}
 
-		public SentenceTransformerValidationResultResource build() {
-			return new SentenceTransformerValidationResultResourceImpl(this);
+		public TextEmbeddingProviderValidationResultResource build() {
+			return new TextEmbeddingProviderValidationResultResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -123,16 +122,15 @@ public interface SentenceTransformerValidationResultResource {
 
 	}
 
-	public static class SentenceTransformerValidationResultResourceImpl
-		implements SentenceTransformerValidationResultResource {
+	public static class TextEmbeddingProviderValidationResultResourceImpl
+		implements TextEmbeddingProviderValidationResultResource {
 
-		public SentenceTransformerValidationResult
-				postSentenceTransformerValidateConfiguration(String string)
+		public TextEmbeddingProviderValidationResult
+				postTextEmbeddingValidateConfiguration(String string)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSentenceTransformerValidateConfigurationHttpResponse(
-					string);
+				postTextEmbeddingValidateConfigurationHttpResponse(string);
 
 			String content = httpResponse.getContent();
 
@@ -160,7 +158,8 @@ public interface SentenceTransformerValidationResultResource {
 			}
 
 			try {
-				return SentenceTransformerValidationResultSerDes.toDTO(content);
+				return TextEmbeddingProviderValidationResultSerDes.toDTO(
+					content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -172,7 +171,7 @@ public interface SentenceTransformerValidationResultResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSentenceTransformerValidateConfigurationHttpResponse(
+				postTextEmbeddingValidateConfigurationHttpResponse(
 					String string)
 			throws Exception {
 
@@ -202,7 +201,7 @@ public interface SentenceTransformerValidationResultResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/search-experiences-rest/v1.0/sentence-transformer/validate-configuration");
+						"/o/search-experiences-rest/v1.0/text-embedding/validate-configuration");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -210,14 +209,14 @@ public interface SentenceTransformerValidationResultResource {
 			return httpInvoker.invoke();
 		}
 
-		private SentenceTransformerValidationResultResourceImpl(
+		private TextEmbeddingProviderValidationResultResourceImpl(
 			Builder builder) {
 
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			SentenceTransformerValidationResultResource.class.getName());
+			TextEmbeddingProviderValidationResultResource.class.getName());
 
 		private Builder _builder;
 

@@ -122,7 +122,7 @@ public class OpenAPIResourceImpl {
 
 			add(SearchableAssetNameDisplayResourceImpl.class);
 
-			add(SentenceTransformerValidationResultResourceImpl.class);
+			add(TextEmbeddingProviderValidationResultResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

@@ -43,19 +43,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SentenceTransformerValidationResult")
+@GraphQLName("TextEmbeddingProviderValidationResult")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SentenceTransformerValidationResult")
-public class SentenceTransformerValidationResult implements Serializable {
+@XmlRootElement(name = "TextEmbeddingProviderValidationResult")
+public class TextEmbeddingProviderValidationResult implements Serializable {
 
-	public static SentenceTransformerValidationResult toDTO(String json) {
+	public static TextEmbeddingProviderValidationResult toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			SentenceTransformerValidationResult.class, json);
+			TextEmbeddingProviderValidationResult.class, json);
 	}
 
-	public static SentenceTransformerValidationResult unsafeToDTO(String json) {
+	public static TextEmbeddingProviderValidationResult unsafeToDTO(
+		String json) {
+
 		return ObjectMapperUtil.unsafeReadValue(
-			SentenceTransformerValidationResult.class, json);
+			TextEmbeddingProviderValidationResult.class, json);
 	}
 
 	@Schema
@@ -120,16 +122,16 @@ public class SentenceTransformerValidationResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SentenceTransformerValidationResult)) {
+		if (!(object instanceof TextEmbeddingProviderValidationResult)) {
 			return false;
 		}
 
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult =
-				(SentenceTransformerValidationResult)object;
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult =
+				(TextEmbeddingProviderValidationResult)object;
 
 		return Objects.equals(
-			toString(), sentenceTransformerValidationResult.toString());
+			toString(), textEmbeddingProviderValidationResult.toString());
 	}
 
 	@Override
@@ -175,7 +177,7 @@ public class SentenceTransformerValidationResult implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.SentenceTransformerValidationResult",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.TextEmbeddingProviderValidationResult",
 		name = "x-class-name"
 	)
 	public String xClassName;

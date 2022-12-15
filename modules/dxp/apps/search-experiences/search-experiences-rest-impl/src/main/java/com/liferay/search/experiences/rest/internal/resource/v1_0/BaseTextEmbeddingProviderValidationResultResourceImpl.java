@@ -29,8 +29,8 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.search.experiences.rest.dto.v1_0.SentenceTransformerValidationResult;
-import com.liferay.search.experiences.rest.resource.v1_0.SentenceTransformerValidationResultResource;
+import com.liferay.search.experiences.rest.dto.v1_0.TextEmbeddingProviderValidationResult;
+import com.liferay.search.experiences.rest.resource.v1_0.TextEmbeddingProviderValidationResultResource;
 
 import java.util.List;
 import java.util.Map;
@@ -48,31 +48,31 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseSentenceTransformerValidationResultResourceImpl
-	implements SentenceTransformerValidationResultResource {
+public abstract class BaseTextEmbeddingProviderValidationResultResourceImpl
+	implements TextEmbeddingProviderValidationResultResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/sentence-transformer/validate-configuration'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/text-embedding/validate-configuration'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "SentenceTransformerValidationResult"
+				name = "TextEmbeddingProviderValidationResult"
 			)
 		}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/sentence-transformer/validate-configuration")
+	@javax.ws.rs.Path("/text-embedding/validate-configuration")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SentenceTransformerValidationResult
-			postSentenceTransformerValidateConfiguration(String string)
+	public TextEmbeddingProviderValidationResult
+			postTextEmbeddingValidateConfiguration(String string)
 		throws Exception {
 
-		return new SentenceTransformerValidationResult();
+		return new TextEmbeddingProviderValidationResult();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -252,6 +252,6 @@ public abstract class BaseSentenceTransformerValidationResultResourceImpl
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(
-			BaseSentenceTransformerValidationResultResourceImpl.class);
+			BaseTextEmbeddingProviderValidationResultResourceImpl.class);
 
 }

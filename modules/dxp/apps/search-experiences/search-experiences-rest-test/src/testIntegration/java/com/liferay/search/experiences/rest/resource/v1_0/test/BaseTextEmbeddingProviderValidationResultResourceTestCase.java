@@ -43,11 +43,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Field;
-import com.liferay.search.experiences.rest.client.dto.v1_0.SentenceTransformerValidationResult;
+import com.liferay.search.experiences.rest.client.dto.v1_0.TextEmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
-import com.liferay.search.experiences.rest.client.resource.v1_0.SentenceTransformerValidationResultResource;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.SentenceTransformerValidationResultSerDes;
+import com.liferay.search.experiences.rest.client.resource.v1_0.TextEmbeddingProviderValidationResultResource;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.TextEmbeddingProviderValidationResultSerDes;
 
 import java.lang.reflect.Method;
 
@@ -82,7 +82,8 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
+public abstract class
+	BaseTextEmbeddingProviderValidationResultResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -103,13 +104,13 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_sentenceTransformerValidationResultResource.setContextCompany(
+		_textEmbeddingProviderValidationResultResource.setContextCompany(
 			testCompany);
 
-		SentenceTransformerValidationResultResource.Builder builder =
-			SentenceTransformerValidationResultResource.builder();
+		TextEmbeddingProviderValidationResultResource.Builder builder =
+			TextEmbeddingProviderValidationResultResource.builder();
 
-		sentenceTransformerValidationResultResource = builder.authentication(
+		textEmbeddingProviderValidationResultResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -140,21 +141,21 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 			}
 		};
 
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult1 =
-				randomSentenceTransformerValidationResult();
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult1 =
+				randomTextEmbeddingProviderValidationResult();
 
 		String json = objectMapper.writeValueAsString(
-			sentenceTransformerValidationResult1);
+			textEmbeddingProviderValidationResult1);
 
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult2 =
-				SentenceTransformerValidationResultSerDes.toDTO(json);
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult2 =
+				TextEmbeddingProviderValidationResultSerDes.toDTO(json);
 
 		Assert.assertTrue(
 			equals(
-				sentenceTransformerValidationResult1,
-				sentenceTransformerValidationResult2));
+				textEmbeddingProviderValidationResult1,
+				textEmbeddingProviderValidationResult2));
 	}
 
 	@Test
@@ -174,14 +175,14 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 			}
 		};
 
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult =
-				randomSentenceTransformerValidationResult();
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult =
+				randomTextEmbeddingProviderValidationResult();
 
 		String json1 = objectMapper.writeValueAsString(
-			sentenceTransformerValidationResult);
-		String json2 = SentenceTransformerValidationResultSerDes.toJSON(
-			sentenceTransformerValidationResult);
+			textEmbeddingProviderValidationResult);
+		String json2 = TextEmbeddingProviderValidationResultSerDes.toJSON(
+			textEmbeddingProviderValidationResult);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -191,47 +192,45 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult =
-				randomSentenceTransformerValidationResult();
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult =
+				randomTextEmbeddingProviderValidationResult();
 
-		sentenceTransformerValidationResult.setErrorMessage(regex);
+		textEmbeddingProviderValidationResult.setErrorMessage(regex);
 
-		String json = SentenceTransformerValidationResultSerDes.toJSON(
-			sentenceTransformerValidationResult);
+		String json = TextEmbeddingProviderValidationResultSerDes.toJSON(
+			textEmbeddingProviderValidationResult);
 
 		Assert.assertFalse(json.contains(regex));
 
-		sentenceTransformerValidationResult =
-			SentenceTransformerValidationResultSerDes.toDTO(json);
+		textEmbeddingProviderValidationResult =
+			TextEmbeddingProviderValidationResultSerDes.toDTO(json);
 
 		Assert.assertEquals(
-			regex, sentenceTransformerValidationResult.getErrorMessage());
+			regex, textEmbeddingProviderValidationResult.getErrorMessage());
 	}
 
 	@Test
-	public void testPostSentenceTransformerValidateConfiguration()
-		throws Exception {
+	public void testPostTextEmbeddingValidateConfiguration() throws Exception {
+		TextEmbeddingProviderValidationResult
+			randomTextEmbeddingProviderValidationResult =
+				randomTextEmbeddingProviderValidationResult();
 
-		SentenceTransformerValidationResult
-			randomSentenceTransformerValidationResult =
-				randomSentenceTransformerValidationResult();
-
-		SentenceTransformerValidationResult
-			postSentenceTransformerValidationResult =
-				testPostSentenceTransformerValidateConfiguration_addSentenceTransformerValidationResult(
-					randomSentenceTransformerValidationResult);
+		TextEmbeddingProviderValidationResult
+			postTextEmbeddingProviderValidationResult =
+				testPostTextEmbeddingValidateConfiguration_addTextEmbeddingProviderValidationResult(
+					randomTextEmbeddingProviderValidationResult);
 
 		assertEquals(
-			randomSentenceTransformerValidationResult,
-			postSentenceTransformerValidationResult);
-		assertValid(postSentenceTransformerValidationResult);
+			randomTextEmbeddingProviderValidationResult,
+			postTextEmbeddingProviderValidationResult);
+		assertValid(postTextEmbeddingProviderValidationResult);
 	}
 
-	protected SentenceTransformerValidationResult
-			testPostSentenceTransformerValidateConfiguration_addSentenceTransformerValidationResult(
-				SentenceTransformerValidationResult
-					sentenceTransformerValidationResult)
+	protected TextEmbeddingProviderValidationResult
+			testPostTextEmbeddingValidateConfiguration_addTextEmbeddingProviderValidationResult(
+				TextEmbeddingProviderValidationResult
+					textEmbeddingProviderValidationResult)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -239,16 +238,17 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 	}
 
 	protected void assertContains(
-		SentenceTransformerValidationResult sentenceTransformerValidationResult,
-		List<SentenceTransformerValidationResult>
-			sentenceTransformerValidationResults) {
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult,
+		List<TextEmbeddingProviderValidationResult>
+			textEmbeddingProviderValidationResults) {
 
 		boolean contains = false;
 
-		for (SentenceTransformerValidationResult item :
-				sentenceTransformerValidationResults) {
+		for (TextEmbeddingProviderValidationResult item :
+				textEmbeddingProviderValidationResults) {
 
-			if (equals(sentenceTransformerValidationResult, item)) {
+			if (equals(textEmbeddingProviderValidationResult, item)) {
 				contains = true;
 
 				break;
@@ -256,8 +256,8 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			sentenceTransformerValidationResults + " does not contain " +
-				sentenceTransformerValidationResult,
+			textEmbeddingProviderValidationResults + " does not contain " +
+				textEmbeddingProviderValidationResult,
 			contains);
 	}
 
@@ -270,66 +270,68 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 	}
 
 	protected void assertEquals(
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult1,
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult2) {
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult1,
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult2) {
 
 		Assert.assertTrue(
-			sentenceTransformerValidationResult1 + " does not equal " +
-				sentenceTransformerValidationResult2,
+			textEmbeddingProviderValidationResult1 + " does not equal " +
+				textEmbeddingProviderValidationResult2,
 			equals(
-				sentenceTransformerValidationResult1,
-				sentenceTransformerValidationResult2));
+				textEmbeddingProviderValidationResult1,
+				textEmbeddingProviderValidationResult2));
 	}
 
 	protected void assertEquals(
-		List<SentenceTransformerValidationResult>
-			sentenceTransformerValidationResults1,
-		List<SentenceTransformerValidationResult>
-			sentenceTransformerValidationResults2) {
+		List<TextEmbeddingProviderValidationResult>
+			textEmbeddingProviderValidationResults1,
+		List<TextEmbeddingProviderValidationResult>
+			textEmbeddingProviderValidationResults2) {
 
 		Assert.assertEquals(
-			sentenceTransformerValidationResults1.size(),
-			sentenceTransformerValidationResults2.size());
+			textEmbeddingProviderValidationResults1.size(),
+			textEmbeddingProviderValidationResults2.size());
 
-		for (int i = 0; i < sentenceTransformerValidationResults1.size(); i++) {
-			SentenceTransformerValidationResult
-				sentenceTransformerValidationResult1 =
-					sentenceTransformerValidationResults1.get(i);
-			SentenceTransformerValidationResult
-				sentenceTransformerValidationResult2 =
-					sentenceTransformerValidationResults2.get(i);
+		for (int i = 0; i < textEmbeddingProviderValidationResults1.size();
+			 i++) {
+
+			TextEmbeddingProviderValidationResult
+				textEmbeddingProviderValidationResult1 =
+					textEmbeddingProviderValidationResults1.get(i);
+			TextEmbeddingProviderValidationResult
+				textEmbeddingProviderValidationResult2 =
+					textEmbeddingProviderValidationResults2.get(i);
 
 			assertEquals(
-				sentenceTransformerValidationResult1,
-				sentenceTransformerValidationResult2);
+				textEmbeddingProviderValidationResult1,
+				textEmbeddingProviderValidationResult2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<SentenceTransformerValidationResult>
-			sentenceTransformerValidationResults1,
-		List<SentenceTransformerValidationResult>
-			sentenceTransformerValidationResults2) {
+		List<TextEmbeddingProviderValidationResult>
+			textEmbeddingProviderValidationResults1,
+		List<TextEmbeddingProviderValidationResult>
+			textEmbeddingProviderValidationResults2) {
 
 		Assert.assertEquals(
-			sentenceTransformerValidationResults1.size(),
-			sentenceTransformerValidationResults2.size());
+			textEmbeddingProviderValidationResults1.size(),
+			textEmbeddingProviderValidationResults2.size());
 
-		for (SentenceTransformerValidationResult
-				sentenceTransformerValidationResult1 :
-					sentenceTransformerValidationResults1) {
+		for (TextEmbeddingProviderValidationResult
+				textEmbeddingProviderValidationResult1 :
+					textEmbeddingProviderValidationResults1) {
 
 			boolean contains = false;
 
-			for (SentenceTransformerValidationResult
-					sentenceTransformerValidationResult2 :
-						sentenceTransformerValidationResults2) {
+			for (TextEmbeddingProviderValidationResult
+					textEmbeddingProviderValidationResult2 :
+						textEmbeddingProviderValidationResults2) {
 
 				if (equals(
-						sentenceTransformerValidationResult1,
-						sentenceTransformerValidationResult2)) {
+						textEmbeddingProviderValidationResult1,
+						textEmbeddingProviderValidationResult2)) {
 
 					contains = true;
 
@@ -338,15 +340,15 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				sentenceTransformerValidationResults2 + " does not contain " +
-					sentenceTransformerValidationResult1,
+				textEmbeddingProviderValidationResults2 + " does not contain " +
+					textEmbeddingProviderValidationResult1,
 				contains);
 		}
 	}
 
 	protected void assertValid(
-			SentenceTransformerValidationResult
-				sentenceTransformerValidationResult)
+			TextEmbeddingProviderValidationResult
+				textEmbeddingProviderValidationResult)
 		throws Exception {
 
 		boolean valid = true;
@@ -355,7 +357,7 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
-				if (sentenceTransformerValidationResult.getErrorMessage() ==
+				if (textEmbeddingProviderValidationResult.getErrorMessage() ==
 						null) {
 
 					valid = false;
@@ -367,7 +369,7 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 			if (Objects.equals(
 					"expectedDimensions", additionalAssertFieldName)) {
 
-				if (sentenceTransformerValidationResult.
+				if (textEmbeddingProviderValidationResult.
 						getExpectedDimensions() == null) {
 
 					valid = false;
@@ -384,13 +386,15 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<SentenceTransformerValidationResult> page) {
+	protected void assertValid(
+		Page<TextEmbeddingProviderValidationResult> page) {
+
 		boolean valid = false;
 
-		java.util.Collection<SentenceTransformerValidationResult>
-			sentenceTransformerValidationResults = page.getItems();
+		java.util.Collection<TextEmbeddingProviderValidationResult>
+			textEmbeddingProviderValidationResults = page.getItems();
 
-		int size = sentenceTransformerValidationResults.size();
+		int size = textEmbeddingProviderValidationResults.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -412,7 +416,7 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.search.experiences.rest.dto.v1_0.
-						SentenceTransformerValidationResult.class)) {
+						TextEmbeddingProviderValidationResult.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -461,13 +465,13 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 	}
 
 	protected boolean equals(
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult1,
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult2) {
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult1,
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult2) {
 
-		if (sentenceTransformerValidationResult1 ==
-				sentenceTransformerValidationResult2) {
+		if (textEmbeddingProviderValidationResult1 ==
+				textEmbeddingProviderValidationResult2) {
 
 			return true;
 		}
@@ -477,8 +481,9 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 
 			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						sentenceTransformerValidationResult1.getErrorMessage(),
-						sentenceTransformerValidationResult2.
+						textEmbeddingProviderValidationResult1.
+							getErrorMessage(),
+						textEmbeddingProviderValidationResult2.
 							getErrorMessage())) {
 
 					return false;
@@ -491,9 +496,9 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 					"expectedDimensions", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						sentenceTransformerValidationResult1.
+						textEmbeddingProviderValidationResult1.
 							getExpectedDimensions(),
-						sentenceTransformerValidationResult2.
+						textEmbeddingProviderValidationResult2.
 							getExpectedDimensions())) {
 
 					return false;
@@ -552,7 +557,7 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_sentenceTransformerValidationResultResource instanceof
+		if (!(_textEmbeddingProviderValidationResultResource instanceof
 				EntityModelResource)) {
 
 			throw new UnsupportedOperationException(
@@ -560,7 +565,7 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_sentenceTransformerValidationResultResource;
+			(EntityModelResource)_textEmbeddingProviderValidationResultResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -590,8 +595,8 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult) {
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult) {
 
 		StringBundler sb = new StringBundler();
 
@@ -607,7 +612,7 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 			sb.append("'");
 			sb.append(
 				String.valueOf(
-					sentenceTransformerValidationResult.getErrorMessage()));
+					textEmbeddingProviderValidationResult.getErrorMessage()));
 			sb.append("'");
 
 			return sb.toString();
@@ -616,7 +621,7 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 		if (entityFieldName.equals("expectedDimensions")) {
 			sb.append(
 				String.valueOf(
-					sentenceTransformerValidationResult.
+					textEmbeddingProviderValidationResult.
 						getExpectedDimensions()));
 
 			return sb.toString();
@@ -663,11 +668,11 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected SentenceTransformerValidationResult
-			randomSentenceTransformerValidationResult()
+	protected TextEmbeddingProviderValidationResult
+			randomTextEmbeddingProviderValidationResult()
 		throws Exception {
 
-		return new SentenceTransformerValidationResult() {
+		return new TextEmbeddingProviderValidationResult() {
 			{
 				errorMessage = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -676,26 +681,26 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 		};
 	}
 
-	protected SentenceTransformerValidationResult
-			randomIrrelevantSentenceTransformerValidationResult()
+	protected TextEmbeddingProviderValidationResult
+			randomIrrelevantTextEmbeddingProviderValidationResult()
 		throws Exception {
 
-		SentenceTransformerValidationResult
-			randomIrrelevantSentenceTransformerValidationResult =
-				randomSentenceTransformerValidationResult();
+		TextEmbeddingProviderValidationResult
+			randomIrrelevantTextEmbeddingProviderValidationResult =
+				randomTextEmbeddingProviderValidationResult();
 
-		return randomIrrelevantSentenceTransformerValidationResult;
+		return randomIrrelevantTextEmbeddingProviderValidationResult;
 	}
 
-	protected SentenceTransformerValidationResult
-			randomPatchSentenceTransformerValidationResult()
+	protected TextEmbeddingProviderValidationResult
+			randomPatchTextEmbeddingProviderValidationResult()
 		throws Exception {
 
-		return randomSentenceTransformerValidationResult();
+		return randomTextEmbeddingProviderValidationResult();
 	}
 
-	protected SentenceTransformerValidationResultResource
-		sentenceTransformerValidationResultResource;
+	protected TextEmbeddingProviderValidationResultResource
+		textEmbeddingProviderValidationResultResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -882,13 +887,13 @@ public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(
-			BaseSentenceTransformerValidationResultResourceTestCase.class);
+			BaseTextEmbeddingProviderValidationResultResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
 	private com.liferay.search.experiences.rest.resource.v1_0.
-		SentenceTransformerValidationResultResource
-			_sentenceTransformerValidationResultResource;
+		TextEmbeddingProviderValidationResultResource
+			_textEmbeddingProviderValidationResultResource;
 
 }

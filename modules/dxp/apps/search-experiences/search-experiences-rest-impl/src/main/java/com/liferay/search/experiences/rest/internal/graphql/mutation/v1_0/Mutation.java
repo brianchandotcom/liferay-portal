@@ -27,11 +27,11 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
-import com.liferay.search.experiences.rest.dto.v1_0.SentenceTransformerValidationResult;
+import com.liferay.search.experiences.rest.dto.v1_0.TextEmbeddingProviderValidationResult;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
-import com.liferay.search.experiences.rest.resource.v1_0.SentenceTransformerValidationResultResource;
+import com.liferay.search.experiences.rest.resource.v1_0.TextEmbeddingProviderValidationResultResource;
 
 import java.util.function.BiFunction;
 
@@ -77,12 +77,13 @@ public class Mutation {
 	}
 
 	public static void
-		setSentenceTransformerValidationResultResourceComponentServiceObjects(
-			ComponentServiceObjects<SentenceTransformerValidationResultResource>
-				sentenceTransformerValidationResultResourceComponentServiceObjects) {
+		setTextEmbeddingProviderValidationResultResourceComponentServiceObjects(
+			ComponentServiceObjects
+				<TextEmbeddingProviderValidationResultResource>
+					textEmbeddingProviderValidationResultResourceComponentServiceObjects) {
 
-		_sentenceTransformerValidationResultResourceComponentServiceObjects =
-			sentenceTransformerValidationResultResourceComponentServiceObjects;
+		_textEmbeddingProviderValidationResultResourceComponentServiceObjects =
+			textEmbeddingProviderValidationResultResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -284,17 +285,17 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public SentenceTransformerValidationResult
-			createSentenceTransformerValidateConfiguration(
+	public TextEmbeddingProviderValidationResult
+			createTextEmbeddingValidateConfiguration(
 				@GraphQLName("string") String string)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_sentenceTransformerValidationResultResourceComponentServiceObjects,
+			_textEmbeddingProviderValidationResultResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			sentenceTransformerValidationResultResource ->
-				sentenceTransformerValidationResultResource.
-					postSentenceTransformerValidateConfiguration(string));
+			textEmbeddingProviderValidationResultResource ->
+				textEmbeddingProviderValidationResultResource.
+					postTextEmbeddingValidateConfiguration(string));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -386,22 +387,24 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			SentenceTransformerValidationResultResource
-				sentenceTransformerValidationResultResource)
+			TextEmbeddingProviderValidationResultResource
+				textEmbeddingProviderValidationResultResource)
 		throws Exception {
 
-		sentenceTransformerValidationResultResource.setContextAcceptLanguage(
+		textEmbeddingProviderValidationResultResource.setContextAcceptLanguage(
 			_acceptLanguage);
-		sentenceTransformerValidationResultResource.setContextCompany(_company);
-		sentenceTransformerValidationResultResource.
+		textEmbeddingProviderValidationResultResource.setContextCompany(
+			_company);
+		textEmbeddingProviderValidationResultResource.
 			setContextHttpServletRequest(_httpServletRequest);
-		sentenceTransformerValidationResultResource.
+		textEmbeddingProviderValidationResultResource.
 			setContextHttpServletResponse(_httpServletResponse);
-		sentenceTransformerValidationResultResource.setContextUriInfo(_uriInfo);
-		sentenceTransformerValidationResultResource.setContextUser(_user);
-		sentenceTransformerValidationResultResource.setGroupLocalService(
+		textEmbeddingProviderValidationResultResource.setContextUriInfo(
+			_uriInfo);
+		textEmbeddingProviderValidationResultResource.setContextUser(_user);
+		textEmbeddingProviderValidationResultResource.setGroupLocalService(
 			_groupLocalService);
-		sentenceTransformerValidationResultResource.setRoleLocalService(
+		textEmbeddingProviderValidationResultResource.setRoleLocalService(
 			_roleLocalService);
 	}
 
@@ -412,8 +415,8 @@ public class Mutation {
 	private static ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
 	private static ComponentServiceObjects
-		<SentenceTransformerValidationResultResource>
-			_sentenceTransformerValidationResultResourceComponentServiceObjects;
+		<TextEmbeddingProviderValidationResultResource>
+			_textEmbeddingProviderValidationResultResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

@@ -35,7 +35,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.search.experiences.rest.resource.v1_0.SentenceTransformerValidationResultResource;
+import com.liferay.search.experiences.rest.resource.v1_0.TextEmbeddingProviderValidationResultResource;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
@@ -62,24 +62,24 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/search-experiences-rest/v1.0/SentenceTransformerValidationResult",
-	service = SentenceTransformerValidationResultResource.Factory.class
+	property = "resource.locator.key=/search-experiences-rest/v1.0/TextEmbeddingProviderValidationResult",
+	service = TextEmbeddingProviderValidationResultResource.Factory.class
 )
 @Generated("")
-public class SentenceTransformerValidationResultResourceFactoryImpl
-	implements SentenceTransformerValidationResultResource.Factory {
+public class TextEmbeddingProviderValidationResultResourceFactoryImpl
+	implements TextEmbeddingProviderValidationResultResource.Factory {
 
 	@Override
-	public SentenceTransformerValidationResultResource.Builder create() {
-		return new SentenceTransformerValidationResultResource.Builder() {
+	public TextEmbeddingProviderValidationResultResource.Builder create() {
+		return new TextEmbeddingProviderValidationResultResource.Builder() {
 
 			@Override
-			public SentenceTransformerValidationResultResource build() {
+			public TextEmbeddingProviderValidationResultResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _sentenceTransformerValidationResultResourceProxyProviderFunction.
+				return _textEmbeddingProviderValidationResultResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -88,7 +88,7 @@ public class SentenceTransformerValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public SentenceTransformerValidationResultResource.Builder
+			public TextEmbeddingProviderValidationResultResource.Builder
 				checkPermissions(boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -97,7 +97,7 @@ public class SentenceTransformerValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public SentenceTransformerValidationResultResource.Builder
+			public TextEmbeddingProviderValidationResultResource.Builder
 				httpServletRequest(HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -106,7 +106,7 @@ public class SentenceTransformerValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public SentenceTransformerValidationResultResource.Builder
+			public TextEmbeddingProviderValidationResultResource.Builder
 				httpServletResponse(HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -115,7 +115,7 @@ public class SentenceTransformerValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public SentenceTransformerValidationResultResource.Builder
+			public TextEmbeddingProviderValidationResultResource.Builder
 				preferredLocale(Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -124,7 +124,7 @@ public class SentenceTransformerValidationResultResourceFactoryImpl
 			}
 
 			@Override
-			public SentenceTransformerValidationResultResource.Builder user(
+			public TextEmbeddingProviderValidationResultResource.Builder user(
 				User user) {
 
 				_user = user;
@@ -142,17 +142,18 @@ public class SentenceTransformerValidationResultResourceFactoryImpl
 	}
 
 	private static Function
-		<InvocationHandler, SentenceTransformerValidationResultResource>
+		<InvocationHandler, TextEmbeddingProviderValidationResultResource>
 			_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SentenceTransformerValidationResultResource.class.getClassLoader(),
-			SentenceTransformerValidationResultResource.class);
+			TextEmbeddingProviderValidationResultResource.class.
+				getClassLoader(),
+			TextEmbeddingProviderValidationResultResource.class);
 
 		try {
-			Constructor<SentenceTransformerValidationResultResource>
+			Constructor<TextEmbeddingProviderValidationResultResource>
 				constructor =
-					(Constructor<SentenceTransformerValidationResultResource>)
+					(Constructor<TextEmbeddingProviderValidationResultResource>)
 						proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -194,47 +195,48 @@ public class SentenceTransformerValidationResultResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		SentenceTransformerValidationResultResource
-			sentenceTransformerValidationResultResource =
+		TextEmbeddingProviderValidationResultResource
+			textEmbeddingProviderValidationResultResource =
 				_componentServiceObjects.getService();
 
-		sentenceTransformerValidationResultResource.setContextAcceptLanguage(
+		textEmbeddingProviderValidationResultResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		sentenceTransformerValidationResultResource.setContextCompany(company);
+		textEmbeddingProviderValidationResultResource.setContextCompany(
+			company);
 
-		sentenceTransformerValidationResultResource.
+		textEmbeddingProviderValidationResultResource.
 			setContextHttpServletRequest(httpServletRequest);
-		sentenceTransformerValidationResultResource.
+		textEmbeddingProviderValidationResultResource.
 			setContextHttpServletResponse(httpServletResponse);
-		sentenceTransformerValidationResultResource.setContextUser(user);
-		sentenceTransformerValidationResultResource.setExpressionConvert(
+		textEmbeddingProviderValidationResultResource.setContextUser(user);
+		textEmbeddingProviderValidationResultResource.setExpressionConvert(
 			_expressionConvert);
-		sentenceTransformerValidationResultResource.setFilterParserProvider(
+		textEmbeddingProviderValidationResultResource.setFilterParserProvider(
 			_filterParserProvider);
-		sentenceTransformerValidationResultResource.setGroupLocalService(
+		textEmbeddingProviderValidationResultResource.setGroupLocalService(
 			_groupLocalService);
-		sentenceTransformerValidationResultResource.
+		textEmbeddingProviderValidationResultResource.
 			setResourceActionLocalService(_resourceActionLocalService);
-		sentenceTransformerValidationResultResource.
+		textEmbeddingProviderValidationResultResource.
 			setResourcePermissionLocalService(_resourcePermissionLocalService);
-		sentenceTransformerValidationResultResource.setRoleLocalService(
+		textEmbeddingProviderValidationResultResource.setRoleLocalService(
 			_roleLocalService);
-		sentenceTransformerValidationResultResource.setSortParserProvider(
+		textEmbeddingProviderValidationResultResource.setSortParserProvider(
 			_sortParserProvider);
 
 		try {
 			return method.invoke(
-				sentenceTransformerValidationResultResource, arguments);
+				textEmbeddingProviderValidationResultResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
 			_componentServiceObjects.ungetService(
-				sentenceTransformerValidationResultResource);
+				textEmbeddingProviderValidationResultResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -243,16 +245,17 @@ public class SentenceTransformerValidationResultResourceFactoryImpl
 	}
 
 	private static final Function
-		<InvocationHandler, SentenceTransformerValidationResultResource>
-			_sentenceTransformerValidationResultResourceProxyProviderFunction =
+		<InvocationHandler, TextEmbeddingProviderValidationResultResource>
+			_textEmbeddingProviderValidationResultResourceProxyProviderFunction =
 				_getProxyProviderFunction();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SentenceTransformerValidationResultResource>
-		_componentServiceObjects;
+	private ComponentServiceObjects
+		<TextEmbeddingProviderValidationResultResource>
+			_componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;

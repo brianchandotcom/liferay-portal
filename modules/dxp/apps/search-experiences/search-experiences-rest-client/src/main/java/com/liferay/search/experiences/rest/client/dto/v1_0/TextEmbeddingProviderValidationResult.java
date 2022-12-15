@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.SentenceTransformerValidationResultSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.TextEmbeddingProviderValidationResultSerDes;
 
 import java.io.Serializable;
 
@@ -28,11 +28,11 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SentenceTransformerValidationResult
+public class TextEmbeddingProviderValidationResult
 	implements Cloneable, Serializable {
 
-	public static SentenceTransformerValidationResult toDTO(String json) {
-		return SentenceTransformerValidationResultSerDes.toDTO(json);
+	public static TextEmbeddingProviderValidationResult toDTO(String json) {
+		return TextEmbeddingProviderValidationResultSerDes.toDTO(json);
 	}
 
 	public String getErrorMessage() {
@@ -78,10 +78,10 @@ public class SentenceTransformerValidationResult
 	protected Integer expectedDimensions;
 
 	@Override
-	public SentenceTransformerValidationResult clone()
+	public TextEmbeddingProviderValidationResult clone()
 		throws CloneNotSupportedException {
 
-		return (SentenceTransformerValidationResult)super.clone();
+		return (TextEmbeddingProviderValidationResult)super.clone();
 	}
 
 	@Override
@@ -90,16 +90,16 @@ public class SentenceTransformerValidationResult
 			return true;
 		}
 
-		if (!(object instanceof SentenceTransformerValidationResult)) {
+		if (!(object instanceof TextEmbeddingProviderValidationResult)) {
 			return false;
 		}
 
-		SentenceTransformerValidationResult
-			sentenceTransformerValidationResult =
-				(SentenceTransformerValidationResult)object;
+		TextEmbeddingProviderValidationResult
+			textEmbeddingProviderValidationResult =
+				(TextEmbeddingProviderValidationResult)object;
 
 		return Objects.equals(
-			toString(), sentenceTransformerValidationResult.toString());
+			toString(), textEmbeddingProviderValidationResult.toString());
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class SentenceTransformerValidationResult
 	}
 
 	public String toString() {
-		return SentenceTransformerValidationResultSerDes.toJSON(this);
+		return TextEmbeddingProviderValidationResultSerDes.toJSON(this);
 	}
 
 }

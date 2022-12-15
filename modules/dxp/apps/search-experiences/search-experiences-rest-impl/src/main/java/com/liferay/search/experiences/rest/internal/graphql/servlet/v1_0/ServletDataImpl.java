@@ -30,7 +30,7 @@ import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchIndexRes
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchResponseResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchableAssetNameDisplayResourceImpl;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.SearchableAssetNameResourceImpl;
-import com.liferay.search.experiences.rest.internal.resource.v1_0.SentenceTransformerValidationResultResourceImpl;
+import com.liferay.search.experiences.rest.internal.resource.v1_0.TextEmbeddingProviderValidationResultResourceImpl;
 import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
 import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.MLModelResource;
@@ -43,7 +43,7 @@ import com.liferay.search.experiences.rest.resource.v1_0.SearchIndexResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameDisplayResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
-import com.liferay.search.experiences.rest.resource.v1_0.SentenceTransformerValidationResultResource;
+import com.liferay.search.experiences.rest.resource.v1_0.TextEmbeddingProviderValidationResultResource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,8 +74,8 @@ public class ServletDataImpl implements ServletData {
 		Mutation.setSearchResponseResourceComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects);
 		Mutation.
-			setSentenceTransformerValidationResultResourceComponentServiceObjects(
-				_sentenceTransformerValidationResultResourceComponentServiceObjects);
+			setTextEmbeddingProviderValidationResultResourceComponentServiceObjects(
+				_textEmbeddingProviderValidationResultResourceComponentServiceObjects);
 
 		Query.setFieldMappingInfoResourceComponentServiceObjects(
 			_fieldMappingInfoResourceComponentServiceObjects);
@@ -208,11 +208,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SearchResponseResourceImpl.class, "postSearch"));
 					put(
-						"mutation#createSentenceTransformerValidateConfiguration",
+						"mutation#createTextEmbeddingValidateConfiguration",
 						new ObjectValuePair<>(
-							SentenceTransformerValidationResultResourceImpl.
+							TextEmbeddingProviderValidationResultResourceImpl.
 								class,
-							"postSentenceTransformerValidateConfiguration"));
+							"postTextEmbeddingValidateConfiguration"));
 
 					put(
 						"query#fieldMappingInfos",
@@ -303,8 +303,9 @@ public class ServletDataImpl implements ServletData {
 		_searchResponseResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SentenceTransformerValidationResultResource>
-		_sentenceTransformerValidationResultResourceComponentServiceObjects;
+	private ComponentServiceObjects
+		<TextEmbeddingProviderValidationResultResource>
+			_textEmbeddingProviderValidationResultResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FieldMappingInfoResource>

@@ -106,17 +106,18 @@ definition {
 				name = "Math");
 		}
 
-		task ("When I request PUT to relate Subject entry to the Account entry with /o/headless-admin-user/v1.0/accounts/{accountId}/subjectAccounts") {
-			AccountAPI.putAccountRelationship(
-				accountId = "${staticAccountId}",
+		task ("When I request PUT to relate Subject entry to the Account entry with /o/c/subjects/{subjectId}/subjectAccounts/{accountId}") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "subjects",
+				objectEntry1 = "${subjectId}",
+				objectEntry2 = "${staticAccountId}",
 				relationshipName = "subjectAccounts");
 		}
 
-		task ("Then Account entry is not associated to the Subject entry in GET /o/c/subjects/{subjectId}/subjectAccounts") {
-			var response = ObjectDefinitionAPI.getObjectEntryRelation(
-				en_US_plural_label = "subjects",
-				objectId = "${subjectId}",
-				relationshipName = "subjectAccounts");
+		task ("Then subject is not associated to the account in GET /o/headless-admin-user/v1.0/accounts/{accountId}/accountSubjects") {
+			var response = AccountAPI.getRelationshipByAccountId(
+				accountId = "${staticAccountId}",
+				relationshipName = "accountSubjects");
 
 			ObjectDefinitionAPI.assertNoItemsInResponse(responseToParse = "${response}");
 		}

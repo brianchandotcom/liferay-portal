@@ -65,6 +65,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 					"useSearchResultPermissionFilter", Boolean.FALSE);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {0});
+				searchContext.setUserId(0);
 
 				if (contextUser.getLocale() != null) {
 					searchContext.setLocale(contextUser.getLocale());

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -563,6 +564,28 @@ public class ResourceActionsImpl implements ResourceActions {
 		_read(
 			classLoader, source,
 			rootElement -> _readModelResources(rootElement, null));
+	}
+
+	@Override
+	public void removeModelResourceAction(String name, String action) {
+		if (Validator.isNull(action) || Validator.isNull(name)) {
+			return;
+		}
+
+		ResourceActionsBag resourceActionsBag = _getResourceActionsBag(name);
+
+		Set<String> resourceActions = resourceActionsBag.getSupportsActions();
+
+		resourceActions.remove(action);
+
+		ResourceAction resourceAction =
+			resourceActionLocalService.fetchResourceAction(name, action);
+
+		if (resourceAction == null) {
+			return;
+		}
+
+		resourceActionLocalService.deleteResourceAction(resourceAction);
 	}
 
 	@BeanReference(type = PortletLocalService.class)

@@ -14,14 +14,6 @@
 
 import {ChangeEventHandler, FormEventHandler} from 'react';
 export declare function invalidateRequired(text: string | void): boolean;
-export declare function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
-	initialValues,
-	onSubmit,
-	validate,
-}: IProps<T, P, K>): IUseForm<T, P, K>;
-export declare type FormError<T> = {
-	[key in keyof T]?: string;
-};
 interface IProps<T, P = {}, K extends Partial<T> = Partial<T>> {
 	initialValues: K;
 	onSubmit: (values: T) => void;
@@ -32,6 +24,15 @@ interface IUseForm<T, P = {}, K extends Partial<T> = Partial<T>> {
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	setValues: (values: Partial<T>) => void;
+	validateSubmit: () => void;
 	values: K;
 }
+export declare function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
+	initialValues,
+	onSubmit,
+	validate,
+}: IProps<T, P, K>): IUseForm<T, P, K>;
+export declare type FormError<T> = {
+	[key in keyof T]?: string;
+};
 export {};

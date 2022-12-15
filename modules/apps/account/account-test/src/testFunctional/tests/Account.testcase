@@ -1597,31 +1597,21 @@ definition {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Define Permissions",
 				rowEntry = "New Account Role");
-
-			Navigator.gotoNavTab(navTab = "Define Group Scope Permissions");
 		}
 
 		task ("Add all Account Management permissions under the Site and Asset Library Administration tab") {
-			var key_navItem = "Site and Asset Library Administration";
+			Role.editPermissionCmdCPUI(
+				define = "true",
+				navItem = "Define Group Scope Permissions",
+				permissionNavHeader = "Applications",
+				permissionNavItem = "Account Management",
+				permissionSheetSubtitle = "Application Permissions",
+				permissionValues = "Action");
 
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
-
-			var key_subItem = "Applications";
-
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED");
-
-			var key_subItem = "Account Management";
-
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
-
-			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
-
-			Button.clickSave();
-
-			AssertElementPresent(
-				key_permissionDefinitionValue = "All Sites and Asset Libraries",
-				key_permissionNavigationValue = "Account Management: Permissions",
-				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "Permissions",
+				permissionNavigationValue = "Account Management",
+				siteNameScope = "All Sites and Asset Libraries");
 		}
 	}
 
@@ -1667,53 +1657,40 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Business Account with Role");
 
 			Account.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
-
-			Navigator.gotoBack();
-
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Define Permissions",
-				rowEntry = "Account Specific Role");
 		}
 
 		task ("Select All permissions for Applications and Resource Permissions for Account Entries") {
-			var key_navItem = "Accounts";
-			var key_subItem = "Accounts";
+			Role.editPermissionCmdCPUI(
+				define = "true",
+				permissionNavHeader = "Accounts",
+				permissionNavItem = "Accounts",
+				permissionSheetSubtitle = "Application Permissions",
+				permissionValues = "Action");
 
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
-
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
-
-			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
-
-			Check(locator1 = "RolesPermissions#ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_SELECT_ALL");
-
-			Button.clickSave();
+			Role.editPermissionCmdCPUI(
+				define = "true",
+				permissionNavHeader = "Accounts",
+				permissionNavItem = "Accounts",
+				permissionSheetSubtitle = "Account Entry",
+				permissionValues = "Action");
 		}
 
 		task ("Select All permissions for Resource Permissions for Account Users") {
-			var key_navItem = "Accounts";
-			var key_subItem = "Account Users";
-
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
-
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
-
-			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
-
-			Button.clickSave();
+			Role.editPermissionCmdCPUI(
+				define = "true",
+				permissionNavHeader = "Accounts",
+				permissionNavItem = "Account Users",
+				permissionSheetSubtitle = "Application Permissions",
+				permissionValues = "Action");
 		}
 
 		task ("Select All permissions for Resource Permissions for Account Groups") {
-			var key_navItem = "Accounts";
-			var key_subItem = "Account Groups";
-
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
-
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
-
-			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
-
-			Button.clickSave();
+			Role.editPermissionCmdCPUI(
+				define = "true",
+				permissionNavHeader = "Accounts",
+				permissionNavItem = "Account Groups",
+				permissionSheetSubtitle = "Account Group",
+				permissionValues = "Action");
 		}
 	}
 

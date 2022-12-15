@@ -342,7 +342,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				cookie.setPath(StringPool.SLASH);
 
 				CookiesManagerUtil.addCookie(
-					CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+					CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
 					httpServletRequest, themeDisplay.getResponse());
 			}
 
@@ -738,7 +738,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		cookie.setPath(StringPool.SLASH);
 
 		CookiesManagerUtil.addCookie(
-			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
 			themeDisplay.getRequest(), themeDisplay.getResponse());
 	}
 

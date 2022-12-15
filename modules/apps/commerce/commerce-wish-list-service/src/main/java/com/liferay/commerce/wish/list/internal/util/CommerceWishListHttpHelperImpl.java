@@ -110,7 +110,7 @@ public class CommerceWishListHttpHelperImpl
 				cookie.setPath(StringPool.SLASH);
 
 				CookiesManagerUtil.addCookie(
-					CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
+					CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
 					httpServletRequest, httpServletResponse);
 			}
 		}

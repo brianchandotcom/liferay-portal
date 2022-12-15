@@ -167,8 +167,8 @@ public class PunchOutLoginPostAction extends Action {
 		cookie.setPath(StringPool.SLASH);
 
 		CookiesManagerUtil.addCookie(
-			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
-			httpServletRequest, httpServletResponse);
+			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie, httpServletRequest,
+			httpServletResponse);
 
 		HttpSession httpSession = httpServletRequest.getSession();
 

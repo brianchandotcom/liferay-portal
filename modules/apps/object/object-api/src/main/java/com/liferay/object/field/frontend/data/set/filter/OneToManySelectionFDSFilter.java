@@ -15,16 +15,16 @@
 package com.liferay.object.field.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
-import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 
 import java.util.Map;
 
 /**
  * @author Paulo ALbuquerque
  */
-public class OneToManyAutocompleteFDSFilter extends BaseAutocompleteFDSFilter {
+public class OneToManySelectionFDSFilter extends BaseSelectionFDSFilter {
 
-	public OneToManyAutocompleteFDSFilter(
+	public OneToManySelectionFDSFilter(
 		Map<String, Object> preloadedData, String restContextPath,
 		String titleObjectFieldLabel, String relationshipObjectFieldName,
 		String titleObjectFieldName) {
@@ -69,6 +69,11 @@ public class OneToManyAutocompleteFDSFilter extends BaseAutocompleteFDSFilter {
 	@Override
 	public Map<String, Object> getPreloadedData() {
 		return _preloadedData;
+	}
+
+	@Override
+	public boolean isAutocompleteEnabled() {
+		return true;
 	}
 
 	private final Map<String, Object> _preloadedData;

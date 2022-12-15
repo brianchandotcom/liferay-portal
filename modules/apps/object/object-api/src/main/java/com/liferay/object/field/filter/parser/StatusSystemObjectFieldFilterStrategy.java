@@ -15,6 +15,7 @@
 package com.liferay.object.field.filter.parser;
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
 import com.liferay.object.field.frontend.data.set.filter.ObjectEntryStatusSelectionFDSFilter;
 import com.liferay.object.model.ObjectViewFilterColumn;
@@ -52,25 +53,34 @@ public class StatusSystemObjectFieldFilterStrategy
 	}
 
 	@Override
-	public List<Integer> getItemsValues() throws JSONException {
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems()
+		throws JSONException {
+
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			new ArrayList<>();
+
 		JSONArray jsonArray = getJSONArray();
 
-		List<Integer> statuses = new ArrayList<>();
-
 		for (int i = 0; i < jsonArray.length(); i++) {
-			statuses.add((Integer)jsonArray.get(i));
+			Integer status = (Integer)jsonArray.get(i);
+
+			selectionFDSFilterItems.add(
+				new SelectionFDSFilterItem(
+					_language.get(
+						locale, WorkflowConstants.getStatusLabel(status)),
+					status));
 		}
 
-		return statuses;
+		return selectionFDSFilterItems;
 	}
 
 	@Override
 	public String toValueSummary() throws PortalException {
 		return StringUtil.merge(
 			ListUtil.toList(
-				getItemsValues(),
-				itemValue -> _language.get(
-					locale, WorkflowConstants.getStatusLabel(itemValue))),
+				getSelectionFDSFilterItems(),
+				getSelectionFDSFilterItem ->
+					getSelectionFDSFilterItem.getLabel()),
 			StringPool.COMMA_AND_SPACE);
 	}
 
@@ -79,7 +89,7 @@ public class StatusSystemObjectFieldFilterStrategy
 		super.validate();
 
 		try {
-			getItemsValues();
+			getSelectionFDSFilterItems();
 		}
 		catch (Exception exception) {
 			throw new ObjectViewFilterColumnException(

@@ -15,8 +15,10 @@
 package com.liferay.object.field.filter.parser;
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,7 +28,8 @@ public interface ObjectFieldFilterStrategy {
 
 	public FDSFilter getFDSFilter() throws PortalException;
 
-	public Object getItemsValues() throws PortalException;
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems()
+		throws PortalException;
 
 	public Map<String, Object> parse() throws PortalException;
 

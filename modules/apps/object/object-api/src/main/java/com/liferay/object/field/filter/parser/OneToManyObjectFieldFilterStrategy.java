@@ -15,8 +15,9 @@
 package com.liferay.object.field.filter.parser;
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
-import com.liferay.object.field.frontend.data.set.filter.OneToManyAutocompleteFDSFilter;
+import com.liferay.object.field.frontend.data.set.filter.OneToManySelectionFDSFilter;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Feliphe Marinho
@@ -119,31 +118,31 @@ public class OneToManyObjectFieldFilterStrategy
 			restContextPath = "/o" + objectDefinition1.getRESTContextPath();
 		}
 
-		return new OneToManyAutocompleteFDSFilter(
+		return new OneToManySelectionFDSFilter(
 			parse(), restContextPath, titleObjectField.getLabel(locale),
 			_objectField.getName(), titleObjectField.getName());
 	}
 
 	@Override
-	public List<Map<String, Object>> getItemsValues() throws PortalException {
-		List<Map<String, Object>> itemsValues = new ArrayList<>();
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems()
+		throws PortalException {
+
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			new ArrayList<>();
 
 		JSONArray jsonArray = getJSONArray();
 
 		if (_objectDefinition1.isSystem()) {
 			for (int i = 0; i < jsonArray.length(); i++) {
-				itemsValues.add(
-					HashMapBuilder.<String, Object>put(
-						"label",
+				selectionFDSFilterItems.add(
+					new SelectionFDSFilterItem(
 						_objectEntryLocalService.getTitleValue(
 							_objectDefinition1.getObjectDefinitionId(),
-							GetterUtil.getLong(jsonArray.get(i)))
-					).put(
-						"value", jsonArray.getLong(i)
-					).build());
+							GetterUtil.getLong(jsonArray.get(i))),
+						jsonArray.getLong(i)));
 			}
 
-			return itemsValues;
+			return selectionFDSFilterItems;
 		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -155,22 +154,21 @@ public class OneToManyObjectFieldFilterStrategy
 				continue;
 			}
 
-			itemsValues.add(
-				HashMapBuilder.<String, Object>put(
-					"label", objectEntry.getTitleValue()
-				).put(
-					"value", objectEntry.getObjectEntryId()
-				).build());
+			selectionFDSFilterItems.add(
+				new SelectionFDSFilterItem(
+					objectEntry.getTitleValue(),
+					objectEntry.getObjectEntryId()));
 		}
 
-		return itemsValues;
+		return selectionFDSFilterItems;
 	}
 
 	@Override
 	public String toValueSummary() throws PortalException {
 		return StringUtil.merge(
 			ListUtil.toList(
-				getItemsValues(), itemValue -> itemValue.get("label")),
+				getSelectionFDSFilterItems(),
+				selectionFDSFilterItem -> selectionFDSFilterItem.getLabel()),
 			StringPool.COMMA_AND_SPACE);
 	}
 

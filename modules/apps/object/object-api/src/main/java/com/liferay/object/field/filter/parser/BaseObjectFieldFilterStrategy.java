@@ -52,7 +52,7 @@ public abstract class BaseObjectFieldFilterStrategy
 			ObjectViewFilterColumnConstants.FILTER_TYPE_EXCLUDES.equals(
 				objectViewFilterColumn.getFilterType())
 		).put(
-			"itemsValues", getItemsValues()
+			"selectedItems", getSelectionFDSFilterItems()
 		).build();
 	}
 

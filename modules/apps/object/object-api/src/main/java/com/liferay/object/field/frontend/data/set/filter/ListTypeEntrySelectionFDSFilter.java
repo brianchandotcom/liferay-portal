@@ -15,17 +15,16 @@
 package com.liferay.object.field.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
-import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 
 import java.util.Map;
 
 /**
  * @author Feliphe Marinho
  */
-public class ListTypeEntryAutocompleteFDSFilter
-	extends BaseAutocompleteFDSFilter {
+public class ListTypeEntrySelectionFDSFilter extends BaseSelectionFDSFilter {
 
-	public ListTypeEntryAutocompleteFDSFilter(
+	public ListTypeEntrySelectionFDSFilter(
 		boolean collection, String id, String label, long listTypeDefinitionId,
 		Map<String, Object> preloadedData) {
 
@@ -74,6 +73,11 @@ public class ListTypeEntryAutocompleteFDSFilter
 	@Override
 	public Map<String, Object> getPreloadedData() {
 		return _preloadedData;
+	}
+
+	@Override
+	public boolean isAutocompleteEnabled() {
+		return true;
 	}
 
 	private final boolean _collection;

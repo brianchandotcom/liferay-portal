@@ -15,26 +15,25 @@
 package com.liferay.object.field.filter.parser;
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.field.frontend.data.set.filter.ListTypeEntryAutocompleteFDSFilter;
+import com.liferay.object.field.frontend.data.set.filter.ListTypeEntrySelectionFDSFilter;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Feliphe Marinho
@@ -63,7 +62,7 @@ public class PicklistObjectFieldFilterStrategy
 			_listTypeDefinitionLocalService.getListTypeDefinition(
 				_objectField.getListTypeDefinitionId());
 
-		return new ListTypeEntryAutocompleteFDSFilter(
+		return new ListTypeEntrySelectionFDSFilter(
 			StringUtil.equals(
 				_objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST),
@@ -72,8 +71,11 @@ public class PicklistObjectFieldFilterStrategy
 	}
 
 	@Override
-	public List<Map<String, String>> getItemsValues() throws JSONException {
-		List<Map<String, String>> itemsValues = new ArrayList<>();
+	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems()
+		throws JSONException {
+
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			new ArrayList<>();
 
 		JSONArray jsonArray = getJSONArray();
 
@@ -82,22 +84,20 @@ public class PicklistObjectFieldFilterStrategy
 				_listTypeEntryLocalService.fetchListTypeEntry(
 					_listTypeDefinitionId, jsonArray.getString(i));
 
-			itemsValues.add(
-				HashMapBuilder.put(
-					"label", listTypeEntry.getName(locale)
-				).put(
-					"value", jsonArray.getString(i)
-				).build());
+			selectionFDSFilterItems.add(
+				new SelectionFDSFilterItem(
+					listTypeEntry.getName(locale), jsonArray.getString(i)));
 		}
 
-		return itemsValues;
+		return selectionFDSFilterItems;
 	}
 
 	@Override
 	public String toValueSummary() throws PortalException {
 		return StringUtil.merge(
 			ListUtil.toList(
-				getItemsValues(), itemValue -> itemValue.get("label")),
+				getSelectionFDSFilterItems(),
+				selectionFDSFilterItem -> selectionFDSFilterItem.getLabel()),
 			StringPool.COMMA_AND_SPACE);
 	}
 

@@ -49,10 +49,6 @@ public class AnonymousUserConfigurationRetriever {
 		return _get(filterString);
 	}
 
-	private String _getFactoryPid() {
-		return AnonymousUserConfiguration.class.getName() + ".scoped";
-	}
-
 	private Configuration _get(String filterString)
 		throws InvalidSyntaxException, IOException {
 
@@ -64,6 +60,10 @@ public class AnonymousUserConfigurationRetriever {
 		}
 
 		return configurations[0];
+	}
+
+	private String _getFactoryPid() {
+		return AnonymousUserConfiguration.class.getName() + ".scoped";
 	}
 
 	@Reference

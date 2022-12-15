@@ -47,8 +47,8 @@ public class UserModelListener extends BaseModelListener<User> {
 	private void _deleteAnonymousUserConfiguration(long companyId, long userId)
 		throws InvalidSyntaxException, IOException {
 
-		Configuration configuration =
-			_anonymousUserConfigurationRetriever.get(companyId, userId);
+		Configuration configuration = _anonymousUserConfigurationRetriever.get(
+			companyId, userId);
 
 		if (configuration == null) {
 			return;

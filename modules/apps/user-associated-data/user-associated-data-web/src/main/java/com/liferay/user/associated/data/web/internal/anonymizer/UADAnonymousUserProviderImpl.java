@@ -129,8 +129,8 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 	}
 
 	private User _getAnonymousUser(long companyId) throws Exception {
-		Configuration configuration =
-			_anonymousUserConfigurationRetriever.get(companyId);
+		Configuration configuration = _anonymousUserConfigurationRetriever.get(
+			companyId);
 
 		if (configuration == null) {
 			User anonymousUser = _createAnonymousUser(companyId);

@@ -74,12 +74,10 @@ public class AnonymousUserConfigurationModelListener
 	private void _validateUniqueConfiguration(String pid, long companyId)
 		throws Exception {
 
-		Configuration configuration =
-			_anonymousUserConfigurationRetriever.get(companyId);
+		Configuration configuration = _anonymousUserConfigurationRetriever.get(
+			companyId);
 
-		if ((configuration == null) ||
-			pid.equals(configuration.getPid())) {
-
+		if ((configuration == null) || pid.equals(configuration.getPid())) {
 			return;
 		}
 

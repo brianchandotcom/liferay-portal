@@ -1636,33 +1636,21 @@ definition {
 			Navigator.gotoNavTab(navTab = "Account Roles");
 
 			Role.add(roleTitle = "Test Role");
-
-			Navigator.gotoNavTab(navTab = "Define Group Scope Permissions");
 		}
 
 		task ("Add all Account Management permissions under the Site and Asset Library Administration tab") {
-			var key_navItem = "Site and Asset Library Administration";
+			Role.editPermissionCmdCPUI(
+				define = "true",
+				navItem = "Define Group Scope Permissions",
+				permissionNavHeader = "Applications",
+				permissionNavItem = "Account Management",
+				permissionSheetSubtitle = "Application Permissions",
+				permissionValues = "Action");
 
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
-
-			var key_subItem = "Applications";
-
-			Click.clickNoWaitForVisible(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED");
-
-			var key_subItem = "Account Management";
-
-			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
-
-			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
-
-			Button.clickSave();
-
-			WaitForElementPresent(locator1 = "NavBar#CONTAINER");
-
-			AssertElementPresent(
-				key_permissionDefinitionValue = "All Sites and Asset Libraries",
-				key_permissionNavigationValue = "Account Management: Permissions",
-				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "Permissions",
+				permissionNavigationValue = "Account Management",
+				siteNameScope = "All Sites and Asset Libraries");
 		}
 	}
 

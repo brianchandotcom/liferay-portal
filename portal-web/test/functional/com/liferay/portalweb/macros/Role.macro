@@ -454,7 +454,11 @@ definition {
 	}
 
 	macro editPermissionCmdCPUI {
-		Navigator.gotoNavItem(navItem = "Define Permissions");
+		if (!(isSet(navItem))) {
+			var navItem = "Define Permissions";
+		}
+
+		Navigator.gotoNavItem(navItem = "${navItem}");
 
 		task ("Navigate to the item in the right header via search bar") {
 			Type(

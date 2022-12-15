@@ -1618,6 +1618,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<property name="functional.test.type" value="@{functional.test.type}" />
 
+			<delete failonerror="false" file="${project.dir}/test.generated.properties" />
+
+			<antcall target="record-test-generated-properties" />
+
 			<get-testcase-property property.name="ci.retries.disabled" />
 
 			<condition else="0" property="functional.batch.retry.count" value="1">
@@ -1693,10 +1697,6 @@ app.server.type=@{app.server.type}]]></echo>
 					</test-action>
 
 					<test-set-up>
-						<delete failonerror="false" file="${project.dir}/test.generated.properties" />
-
-						<antcall target="record-test-generated-properties" />
-
 						<if>
 							<and>
 								<or>

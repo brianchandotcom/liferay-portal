@@ -291,9 +291,8 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		String contentType = null;
 
 		if (batchEngineZipUnit.isValid()) {
-			batchEngineImportConfiguration =
-				batchEngineZipUnit.getBatchEngineConfiguration(
-					BatchEngineImportConfiguration.class);
+			batchEngineImportConfiguration = _getBatchEngineImportConfiguration(
+				batchEngineZipUnit);
 
 			UnsyncByteArrayOutputStream compressedUnsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();

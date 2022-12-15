@@ -30,10 +30,6 @@ public class MessageBusUtil {
 		return _messageBus;
 	}
 
-	public static boolean hasMessageListener(String destination) {
-		return _messageBus.hasMessageListener(destination);
-	}
-
 	public static void registerMessageListener(
 		String destinationName, MessageListener messageListener) {
 

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.messaging.internal.configuration.DestinationWorkerConfiguration;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -88,16 +87,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	}
 
 	@Override
-	public Collection<String> getDestinationNames() {
-		return _destinations.keySet();
-	}
-
-	@Override
-	public Collection<Destination> getDestinations() {
-		return _destinations.values();
-	}
-
-	@Override
 	public String getName() {
 		return "Default Message Bus";
 	}
@@ -105,17 +94,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	@Override
 	public boolean hasDestination(String destinationName) {
 		return _destinations.containsKey(destinationName);
-	}
-
-	@Override
-	public boolean hasMessageListener(String destinationName) {
-		Destination destination = _destinations.get(destinationName);
-
-		if ((destination != null) && destination.isRegistered()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

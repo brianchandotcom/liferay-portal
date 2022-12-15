@@ -114,7 +114,7 @@ function ModalAddObjectRelationship({
 					{parameterRequired &&
 						values.type === ObjectRelationshipType.ONE_TO_MANY && (
 							<SelectRelationship
-								error={errors.parameterObjectFieldId}
+								error={errors.parameterObjectFieldName}
 								objectDefinitionExternalReferenceCode={
 									values.objectDefinitionExternalReferenceCode2 as string
 								}

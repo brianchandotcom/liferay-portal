@@ -87,9 +87,9 @@ export function useObjectRelationshipForm({
 		if (
 			parameterRequired &&
 			relationship.type === ObjectRelationshipType.ONE_TO_MANY &&
-			!relationship.parameterObjectFieldId
+			!relationship.parameterObjectFieldName
 		) {
-			errors.parameterObjectFieldId = REQUIRED_MSG;
+			errors.parameterObjectFieldName = REQUIRED_MSG;
 		}
 
 		return errors;

@@ -766,6 +766,148 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountChannelPaymentMethodId() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountChannelEntry accountChannelEntry =
+			testDeleteAccountChannelPaymentMethodId_addAccountChannelEntry();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountChannelEntryResource.
+				deleteAccountChannelPaymentMethodIdHttpResponse(
+					accountChannelEntry.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountChannelEntryResource.
+				getAccountChannelPaymentMethodIdHttpResponse(
+					accountChannelEntry.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountChannelEntryResource.
+				getAccountChannelPaymentMethodIdHttpResponse(
+					accountChannelEntry.getId()));
+	}
+
+	protected AccountChannelEntry
+			testDeleteAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountChannelPaymentMethodId() throws Exception {
+		AccountChannelEntry postAccountChannelEntry =
+			testGetAccountChannelPaymentMethodId_addAccountChannelEntry();
+
+		AccountChannelEntry getAccountChannelEntry =
+			accountChannelEntryResource.getAccountChannelPaymentMethodId(
+				postAccountChannelEntry.getId());
+
+		assertEquals(postAccountChannelEntry, getAccountChannelEntry);
+		assertValid(getAccountChannelEntry);
+	}
+
+	protected AccountChannelEntry
+			testGetAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountChannelPaymentMethodId() throws Exception {
+		AccountChannelEntry accountChannelEntry =
+			testGraphQLGetAccountChannelPaymentMethodId_addAccountChannelEntry();
+
+		Assert.assertTrue(
+			equals(
+				accountChannelEntry,
+				AccountChannelEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountChannelPaymentMethodId",
+								new HashMap<String, Object>() {
+									{
+										put("id", accountChannelEntry.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountChannelPaymentMethodId"))));
+	}
+
+	@Test
+	public void testGraphQLGetAccountChannelPaymentMethodIdNotFound()
+		throws Exception {
+
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountChannelPaymentMethodId",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AccountChannelEntry
+			testGraphQLGetAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		return testGraphQLAccountChannelEntry_addAccountChannelEntry();
+	}
+
+	@Test
+	public void testPatchAccountChannelPaymentMethodId() throws Exception {
+		AccountChannelEntry postAccountChannelEntry =
+			testPatchAccountChannelPaymentMethodId_addAccountChannelEntry();
+
+		AccountChannelEntry randomPatchAccountChannelEntry =
+			randomPatchAccountChannelEntry();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountChannelEntry patchAccountChannelEntry =
+			accountChannelEntryResource.patchAccountChannelPaymentMethodId(
+				postAccountChannelEntry.getId(),
+				randomPatchAccountChannelEntry);
+
+		AccountChannelEntry expectedPatchAccountChannelEntry =
+			postAccountChannelEntry.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAccountChannelEntry, expectedPatchAccountChannelEntry);
+
+		AccountChannelEntry getAccountChannelEntry =
+			accountChannelEntryResource.getAccountChannelPaymentMethodId(
+				patchAccountChannelEntry.getId());
+
+		assertEquals(expectedPatchAccountChannelEntry, getAccountChannelEntry);
+		assertValid(getAccountChannelEntry);
+	}
+
+	protected AccountChannelEntry
+			testPatchAccountChannelPaymentMethodId_addAccountChannelEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteAccountChannelPaymentTermId() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry =
@@ -1970,6 +2112,168 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 	protected AccountChannelEntry
 			testPostAccountByExternalReferenceCodeAccountChannelDiscount_addAccountChannelEntry(
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getIrrelevantExternalReferenceCode();
+
+		Page<AccountChannelEntry> page =
+			accountChannelEntryResource.
+				getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantExternalReferenceCode != null) {
+			AccountChannelEntry irrelevantAccountChannelEntry =
+				testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantAccountChannelEntry());
+
+			page =
+				accountChannelEntryResource.
+					getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantAccountChannelEntry),
+				(List<AccountChannelEntry>)page.getItems());
+			assertValid(page);
+		}
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				externalReferenceCode, randomAccountChannelEntry());
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				externalReferenceCode, randomAccountChannelEntry());
+
+		page =
+			accountChannelEntryResource.
+				getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+					externalReferenceCode, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
+			(List<AccountChannelEntry>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getExternalReferenceCode();
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				externalReferenceCode, randomAccountChannelEntry());
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				externalReferenceCode, randomAccountChannelEntry());
+
+		AccountChannelEntry accountChannelEntry3 =
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				externalReferenceCode, randomAccountChannelEntry());
+
+		Page<AccountChannelEntry> page1 =
+			accountChannelEntryResource.
+				getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+					externalReferenceCode, Pagination.of(1, 2));
+
+		List<AccountChannelEntry> accountChannelEntries1 =
+			(List<AccountChannelEntry>)page1.getItems();
+
+		Assert.assertEquals(
+			accountChannelEntries1.toString(), 2,
+			accountChannelEntries1.size());
+
+		Page<AccountChannelEntry> page2 =
+			accountChannelEntryResource.
+				getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+					externalReferenceCode, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<AccountChannelEntry> accountChannelEntries2 =
+			(List<AccountChannelEntry>)page2.getItems();
+
+		Assert.assertEquals(
+			accountChannelEntries2.toString(), 1,
+			accountChannelEntries2.size());
+
+		Page<AccountChannelEntry> page3 =
+			accountChannelEntryResource.
+				getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+					externalReferenceCode, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				accountChannelEntry1, accountChannelEntry2,
+				accountChannelEntry3),
+			(List<AccountChannelEntry>)page3.getItems());
+	}
+
+	protected AccountChannelEntry
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				String externalReferenceCode,
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostAccountByExternalReferenceCodeAccountChannelPaymentMethod()
+		throws Exception {
+
+		AccountChannelEntry randomAccountChannelEntry =
+			randomAccountChannelEntry();
+
+		AccountChannelEntry postAccountChannelEntry =
+			testPostAccountByExternalReferenceCodeAccountChannelPaymentMethod_addAccountChannelEntry(
+				randomAccountChannelEntry);
+
+		assertEquals(randomAccountChannelEntry, postAccountChannelEntry);
+		assertValid(postAccountChannelEntry);
+	}
+
+	protected AccountChannelEntry
+			testPostAccountByExternalReferenceCodeAccountChannelPaymentMethod_addAccountChannelEntry(
 				AccountChannelEntry accountChannelEntry)
 		throws Exception {
 
@@ -3240,6 +3544,163 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGetAccountIdAccountChannelPaymentMethodsPage()
+		throws Exception {
+
+		Long id = testGetAccountIdAccountChannelPaymentMethodsPage_getId();
+		Long irrelevantId =
+			testGetAccountIdAccountChannelPaymentMethodsPage_getIrrelevantId();
+
+		Page<AccountChannelEntry> page =
+			accountChannelEntryResource.
+				getAccountIdAccountChannelPaymentMethodsPage(
+					id, Pagination.of(1, 10));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantId != null) {
+			AccountChannelEntry irrelevantAccountChannelEntry =
+				testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+					irrelevantId, randomIrrelevantAccountChannelEntry());
+
+			page =
+				accountChannelEntryResource.
+					getAccountIdAccountChannelPaymentMethodsPage(
+						irrelevantId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantAccountChannelEntry),
+				(List<AccountChannelEntry>)page.getItems());
+			assertValid(page);
+		}
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				id, randomAccountChannelEntry());
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				id, randomAccountChannelEntry());
+
+		page =
+			accountChannelEntryResource.
+				getAccountIdAccountChannelPaymentMethodsPage(
+					id, Pagination.of(1, 10));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(accountChannelEntry1, accountChannelEntry2),
+			(List<AccountChannelEntry>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetAccountIdAccountChannelPaymentMethodsPageWithPagination()
+		throws Exception {
+
+		Long id = testGetAccountIdAccountChannelPaymentMethodsPage_getId();
+
+		AccountChannelEntry accountChannelEntry1 =
+			testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				id, randomAccountChannelEntry());
+
+		AccountChannelEntry accountChannelEntry2 =
+			testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				id, randomAccountChannelEntry());
+
+		AccountChannelEntry accountChannelEntry3 =
+			testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				id, randomAccountChannelEntry());
+
+		Page<AccountChannelEntry> page1 =
+			accountChannelEntryResource.
+				getAccountIdAccountChannelPaymentMethodsPage(
+					id, Pagination.of(1, 2));
+
+		List<AccountChannelEntry> accountChannelEntries1 =
+			(List<AccountChannelEntry>)page1.getItems();
+
+		Assert.assertEquals(
+			accountChannelEntries1.toString(), 2,
+			accountChannelEntries1.size());
+
+		Page<AccountChannelEntry> page2 =
+			accountChannelEntryResource.
+				getAccountIdAccountChannelPaymentMethodsPage(
+					id, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<AccountChannelEntry> accountChannelEntries2 =
+			(List<AccountChannelEntry>)page2.getItems();
+
+		Assert.assertEquals(
+			accountChannelEntries2.toString(), 1,
+			accountChannelEntries2.size());
+
+		Page<AccountChannelEntry> page3 =
+			accountChannelEntryResource.
+				getAccountIdAccountChannelPaymentMethodsPage(
+					id, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				accountChannelEntry1, accountChannelEntry2,
+				accountChannelEntry3),
+			(List<AccountChannelEntry>)page3.getItems());
+	}
+
+	protected AccountChannelEntry
+			testGetAccountIdAccountChannelPaymentMethodsPage_addAccountChannelEntry(
+				Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountIdAccountChannelPaymentMethodsPage_getId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetAccountIdAccountChannelPaymentMethodsPage_getIrrelevantId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostAccountIdAccountChannelPaymentMethod()
+		throws Exception {
+
+		AccountChannelEntry randomAccountChannelEntry =
+			randomAccountChannelEntry();
+
+		AccountChannelEntry postAccountChannelEntry =
+			testPostAccountIdAccountChannelPaymentMethod_addAccountChannelEntry(
+				randomAccountChannelEntry);
+
+		assertEquals(randomAccountChannelEntry, postAccountChannelEntry);
+		assertValid(postAccountChannelEntry);
+	}
+
+	protected AccountChannelEntry
+			testPostAccountIdAccountChannelPaymentMethod_addAccountChannelEntry(
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountIdAccountChannelPaymentTermsPage()
 		throws Exception {
 
@@ -3974,6 +4435,14 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (accountChannelEntry.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"channelExternalReferenceCode",
 					additionalAssertFieldName)) {
@@ -4147,6 +4616,17 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						accountChannelEntry1.getAccountId(),
 						accountChannelEntry2.getAccountId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)accountChannelEntry1.getActions(),
+						(Map)accountChannelEntry2.getActions())) {
 
 					return false;
 				}
@@ -4348,6 +4828,11 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("accountId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

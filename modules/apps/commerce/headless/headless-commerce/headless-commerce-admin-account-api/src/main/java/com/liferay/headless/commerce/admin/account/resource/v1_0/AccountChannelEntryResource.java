@@ -92,6 +92,15 @@ public interface AccountChannelEntryResource {
 			Long id, AccountChannelEntry accountChannelEntry)
 		throws Exception;
 
+	public void deleteAccountChannelPaymentMethodId(Long id) throws Exception;
+
+	public AccountChannelEntry getAccountChannelPaymentMethodId(Long id)
+		throws Exception;
+
+	public AccountChannelEntry patchAccountChannelPaymentMethodId(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception;
+
 	public void deleteAccountChannelPaymentTermId(Long id) throws Exception;
 
 	public AccountChannelEntry getAccountChannelPaymentTermId(Long id)
@@ -173,6 +182,17 @@ public interface AccountChannelEntryResource {
 		throws Exception;
 
 	public Page<AccountChannelEntry>
+			getAccountByExternalReferenceCodeAccountChannelPaymentMethodsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public AccountChannelEntry
+			postAccountByExternalReferenceCodeAccountChannelPaymentMethod(
+				String externalReferenceCode,
+				AccountChannelEntry accountChannelEntry)
+		throws Exception;
+
+	public Page<AccountChannelEntry>
 			getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
@@ -247,6 +267,15 @@ public interface AccountChannelEntryResource {
 		throws Exception;
 
 	public AccountChannelEntry postAccountIdAccountChannelDiscount(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception;
+
+	public Page<AccountChannelEntry>
+			getAccountIdAccountChannelPaymentMethodsPage(
+				Long id, Pagination pagination)
+		throws Exception;
+
+	public AccountChannelEntry postAccountIdAccountChannelPaymentMethod(
 			Long id, AccountChannelEntry accountChannelEntry)
 		throws Exception;
 

@@ -185,6 +185,47 @@ definition {
 		GogoShell.viewOutput(outputContent = "Liferay Portal");
 	}
 
+	@description = "This is a use case for LPS-170924."
+	@priority = "5"
+	test CanCreateVirtualInstanceWithClusterDBPartitioningAndLOLProperties {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
+		property database.partition.enabled = "true";
+		property liferay.online.properties = "true";
+		property test.name.skip.portal.instance = "Clustering#CanCreateVirtualInstanceWithClusterDBPartitioningAndLOLProperties";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = "8080");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.baker.com",
+			virtualHost = "www.baker.com",
+			webId = "www.baker.com");
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.baker.com",
+			virtualHostsURL = "http://www.baker.com:8080");
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:9080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.baker.com:9080",
+			userEmailAddress = "test@www.baker.com");
+
+		Log.viewLogFileContentNotPresent(logContent = "No default user was found for company");
+	}
+
 	@description = "This is a use case for LPS-171011."
 	@priority = "5"
 	test CanCreateVirtualInstanceWithClustering {

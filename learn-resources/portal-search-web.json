@@ -1,4 +1,10 @@
 {
+	"search-bar-suggestions": {
+		"en_US": {
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-bar-suggestions.html"
+		}
+	},
 	"sorting-search-results": {
 		"en_US": {
 			"message": "Learn more.",

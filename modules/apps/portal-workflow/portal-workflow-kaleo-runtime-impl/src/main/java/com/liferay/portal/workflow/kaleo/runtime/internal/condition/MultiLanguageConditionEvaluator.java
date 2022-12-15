@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.condition;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -25,14 +27,10 @@ import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -49,7 +47,7 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 			kaleoCondition.getScriptLanguage(),
 			StringUtil.trim(kaleoCondition.getScript()));
 
-		ConditionEvaluator conditionEvaluator = _conditionEvaluators.get(
+		ConditionEvaluator conditionEvaluator = _serviceTrackerMap.getService(
 			conditionEvaluatorKey);
 
 		if (conditionEvaluator == null) {
@@ -61,41 +59,44 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 		return conditionEvaluator.evaluate(kaleoCondition, executionContext);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(scripting.language=*)"
-	)
-	protected void addConditionEvaluator(
-			ConditionEvaluator conditionEvaluator,
-			Map<String, Object> properties)
-		throws KaleoDefinitionValidationException {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ConditionEvaluator.class, "(scripting.language=*)",
+			(serviceReference, emitter) -> {
+				Object propertyValue = serviceReference.getProperty(
+					"scripting.language");
 
-		String[] scriptingLanguages = _getScriptingLanguages(properties);
+				ConditionEvaluator conditionEvaluator =
+					bundleContext.getService(serviceReference);
 
-		for (String scriptingLanguage : scriptingLanguages) {
-			_conditionEvaluators.put(
-				_getConditionEvaluatorKey(
-					scriptingLanguage,
-					ClassUtil.getClassName(conditionEvaluator)),
-				conditionEvaluator);
-		}
+				try {
+					for (String scriptingLanguage :
+							GetterUtil.getStringValues(
+								propertyValue,
+								new String[] {String.valueOf(propertyValue)})) {
+
+						emitter.emit(
+							_getConditionEvaluatorKey(
+								scriptingLanguage,
+								ClassUtil.getClassName(conditionEvaluator)));
+					}
+				}
+				catch (KaleoDefinitionValidationException
+							kaleoDefinitionValidationException) {
+
+					throw new RuntimeException(
+						kaleoDefinitionValidationException);
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
 	}
 
-	protected void removeConditionEvaluator(
-			ConditionEvaluator conditionEvaluator,
-			Map<String, Object> properties)
-		throws KaleoDefinitionValidationException {
-
-		String[] scriptingLanguages = _getScriptingLanguages(properties);
-
-		for (String scriptingLanguage : scriptingLanguages) {
-			_conditionEvaluators.remove(
-				_getConditionEvaluatorKey(
-					scriptingLanguage,
-					ClassUtil.getClassName(conditionEvaluator)));
-		}
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private String _getConditionEvaluatorKey(
@@ -111,14 +112,6 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 		return language;
 	}
 
-	private String[] _getScriptingLanguages(Map<String, Object> properties) {
-		Object value = properties.get("scripting.language");
-
-		return GetterUtil.getStringValues(
-			value, new String[] {String.valueOf(value)});
-	}
-
-	private final Map<String, ConditionEvaluator> _conditionEvaluators =
-		new HashMap<>();
+	private ServiceTrackerMap<String, ConditionEvaluator> _serviceTrackerMap;
 
 }

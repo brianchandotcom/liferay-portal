@@ -15,7 +15,6 @@
 package com.liferay.notification.rest.dto.v1_0.util;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
@@ -174,9 +173,7 @@ public class NotificationUtil {
 		serviceBuilderNotificationTemplate.setDescription(
 			notificationTemplate.getDescription());
 		serviceBuilderNotificationTemplate.setEditorType(
-			GetterUtil.getString(
-				notificationTemplate.getEditorTypeAsString(),
-				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT));
+			GetterUtil.getString(notificationTemplate.getEditorTypeAsString()));
 		serviceBuilderNotificationTemplate.setName(
 			notificationTemplate.getName());
 		serviceBuilderNotificationTemplate.setRecipientType(

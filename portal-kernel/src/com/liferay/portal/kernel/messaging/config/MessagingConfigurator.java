@@ -29,11 +29,7 @@ import java.util.Set;
  */
 public interface MessagingConfigurator {
 
-	public void connect();
-
 	public void destroy();
-
-	public void disconnect();
 
 	public void setDestinationConfigurations(
 		Set<DestinationConfiguration> destinationConfigurations);

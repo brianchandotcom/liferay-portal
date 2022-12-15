@@ -54,39 +54,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 	}
 
 	@Override
-	public void connect() {
-		for (Map.Entry<String, List<MessageListener>> messageListeners :
-				_messageListeners.entrySet()) {
-
-			String destinationName = messageListeners.getKey();
-
-			ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
-
-			serviceLatch.waitFor(
-				StringBundler.concat(
-					"(&(destination.name=", destinationName, ")(objectClass=",
-					Destination.class.getName(), "))"));
-
-			serviceLatch.openOn(
-				bundleContext -> {
-					Dictionary<String, Object> properties =
-						HashMapDictionaryBuilder.<String, Object>put(
-							"destination.name", destinationName
-						).build();
-
-					for (MessageListener messageListener :
-							messageListeners.getValue()) {
-
-						_serviceRegistrations.add(
-							bundleContext.registerService(
-								MessageListener.class, messageListener,
-								properties));
-					}
-				});
-		}
-	}
-
-	@Override
 	public void destroy() {
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
@@ -106,22 +73,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 
 		_destinations.clear();
 		_messageBusEventListeners.clear();
-	}
-
-	@Override
-	public void disconnect() {
-		for (Map.Entry<String, List<MessageListener>> messageListeners :
-				_messageListeners.entrySet()) {
-
-			String destinationName = messageListeners.getKey();
-
-			for (MessageListener messageListener :
-					messageListeners.getValue()) {
-
-				_messageBus.unregisterMessageListener(
-					destinationName, messageListener);
-			}
-		}
 	}
 
 	@Override
@@ -164,7 +115,35 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 
 		registerDestinationEventListeners();
 
-		connect();
+		for (Map.Entry<String, List<MessageListener>> messageListeners :
+				_messageListeners.entrySet()) {
+
+			String destinationName = messageListeners.getKey();
+
+			ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
+
+			serviceLatch.waitFor(
+				StringBundler.concat(
+					"(&(destination.name=", destinationName, ")(objectClass=",
+					Destination.class.getName(), "))"));
+
+			serviceLatch.openOn(
+				bundleContext -> {
+					Dictionary<String, Object> properties =
+						HashMapDictionaryBuilder.<String, Object>put(
+							"destination.name", destinationName
+						).build();
+
+					for (MessageListener messageListener :
+							messageListeners.getValue()) {
+
+						_serviceRegistrations.add(
+							bundleContext.registerService(
+								MessageListener.class, messageListener,
+								properties));
+					}
+				});
+		}
 	}
 
 	protected void registerDestinationEventListeners() {

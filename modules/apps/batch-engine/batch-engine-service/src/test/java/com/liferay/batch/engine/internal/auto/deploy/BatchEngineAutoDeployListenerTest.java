@@ -21,13 +21,16 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
@@ -105,10 +108,16 @@ public class BatchEngineAutoDeployListenerTest {
 			"_batchEngineImportTaskLocalService",
 			_batchEngineImportTaskLocalService);
 		ReflectionTestUtil.setFieldValue(
+			_batchEngineAutoDeployListener, "_companyLocalService",
+			_companyLocalService);
+		ReflectionTestUtil.setFieldValue(
 			_batchEngineAutoDeployListener, "_file", FileImpl.getInstance());
 		ReflectionTestUtil.setFieldValue(
 			_batchEngineAutoDeployListener, "_portalExecutorManager",
 			_portalExecutorManager);
+		ReflectionTestUtil.setFieldValue(
+			_batchEngineAutoDeployListener, "_userLocalService",
+			_userLocalService);
 
 		Mockito.when(
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -167,6 +176,26 @@ public class BatchEngineAutoDeployListenerTest {
 		);
 
 		Mockito.when(
+			_companyLocalService.getCompanyByWebId(Mockito.anyString())
+		).then(
+			new Answer<Company>() {
+
+				@Override
+				public Company answer(InvocationOnMock invocation)
+					throws Throwable {
+
+					Company company = new CompanyImpl();
+
+					company.setCompanyId(123456);
+					company.setWebId((String)invocation.getArguments()[0]);
+
+					return company;
+				}
+
+			}
+		);
+
+		Mockito.when(
 			_portalExecutorManager.getPortalExecutor(Mockito.anyString())
 		).thenReturn(
 			_noticeableExecutorService
@@ -187,6 +216,13 @@ public class BatchEngineAutoDeployListenerTest {
 				}
 
 			}
+		);
+
+		Mockito.when(
+			_userLocalService.getUserIdByScreenName(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			200045L
 		);
 	}
 
@@ -258,15 +294,7 @@ public class BatchEngineAutoDeployListenerTest {
 
 		Assert.assertFalse(deployable);
 
-		try {
-			_batchEngineAutoDeployListener.deploy(autoDeploymentContext);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				AutoDeployException.class, exception.getClass());
-		}
+		_batchEngineAutoDeployListener.deploy(autoDeploymentContext);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(0)
@@ -317,21 +345,7 @@ public class BatchEngineAutoDeployListenerTest {
 
 		Assert.assertFalse(deployable);
 
-		try {
-			_batchEngineAutoDeployListener.deploy(autoDeploymentContext);
-
-			Assert.fail();
-		}
-		catch (AutoDeployException autoDeployException) {
-			Throwable throwable = autoDeployException.getCause();
-
-			Assert.assertEquals(
-				IllegalStateException.class, throwable.getClass());
-
-			String message = throwable.getMessage();
-
-			Assert.assertTrue(message.startsWith("Invalid batch engine file"));
-		}
+		_batchEngineAutoDeployListener.deploy(autoDeploymentContext);
 
 		Mockito.verify(
 			_noticeableExecutorService, Mockito.times(0)
@@ -367,6 +381,34 @@ public class BatchEngineAutoDeployListenerTest {
 
 		Assert.assertEquals(
 			_batchEngineImportTasks.toString(), 2,
+			_batchEngineImportTasks.size());
+	}
+
+	@Test
+	public void testWithMultipleDataAndInvalidZIPEntries() throws Exception {
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
+
+		autoDeploymentContext.setFile(_toZipFile("batch8"));
+
+		boolean deployable = _batchEngineAutoDeployListener.isDeployable(
+			autoDeploymentContext);
+
+		Assert.assertTrue(deployable);
+
+		int result = _batchEngineAutoDeployListener.deploy(
+			autoDeploymentContext);
+
+		Assert.assertEquals(AutoDeployer.CODE_DEFAULT, result);
+
+		Mockito.verify(
+			_noticeableExecutorService, Mockito.times(3)
+		).submit(
+			Mockito.any(Runnable.class)
+		);
+
+		Assert.assertEquals(
+			_batchEngineImportTasks.toString(), 3,
 			_batchEngineImportTasks.size());
 	}
 
@@ -490,9 +532,15 @@ public class BatchEngineAutoDeployListenerTest {
 		new ArrayList<>();
 
 	@Mock
+	private CompanyLocalService _companyLocalService;
+
+	@Mock
 	private NoticeableExecutorService _noticeableExecutorService;
 
 	@Mock
 	private PortalExecutorManager _portalExecutorManager;
+
+	@Mock
+	private UserLocalService _userLocalService;
 
 }

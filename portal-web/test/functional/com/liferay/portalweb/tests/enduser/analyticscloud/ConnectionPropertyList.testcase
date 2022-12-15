@@ -221,4 +221,71 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-12019 | Automation ID: LRAC-12585 | Test Summary: Check that it is possible to search for properties"
+	@priority = "3"
+	test CanSearchForPropertiesInDXP {
+		var foundPropertyName = "AC Search Property 1";
+		var notFoundPropertiesName = "AC Search Property 2,AC Search Property 3";
+
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Create 3 new properties") {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${foundPropertyName},${notFoundPropertiesName}");
+		}
+
+		task ("Search by property name") {
+			ACUtils.searchBar(searchItem = "${foundPropertyName}");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundPropertyName}");
+		}
+
+		task ("Check that unsearched property names do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundPropertiesName}");
+		}
+
+		task ("Search by name of a property that does not exist") {
+			ACUtils.searchBar(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No properties were found.");
+		}
+
+		task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Search by property name") {
+			ACUtils.searchBar(searchItem = "${foundPropertyName}");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${foundPropertyName}");
+		}
+
+		task ("Check that unsearched property names do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${notFoundPropertiesName}");
+		}
+
+		task ("Search by name of a property that does not exist") {
+			ACUtils.searchBar(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No properties were found.");
+		}
+	}
+
 }

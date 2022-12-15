@@ -51,17 +51,17 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDis
 						</li>
 
 						<%
-						java.util.List<UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts = userSearchFacetDisplayContext.getTermDisplayContexts();
+						java.util.List<BucketDisplayContext> bucketDisplayContexts = userSearchFacetDisplayContext.getTermDisplayContexts();
 
-						for (UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext : userSearchFacetTermDisplayContexts) {
+						for (BucketDisplayContext bucketDisplayContext : bucketDisplayContexts) {
 						%>
 
 							<li class="facet-value">
-								<a class="<%= userSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getBucketText()) %>" href="javascript:void(0);">
-									<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getBucketText()) %>
+								<a class="<%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getBucketText()) %>" href="javascript:void(0);">
+									<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
 
-									<c:if test="<%= userSearchFacetTermDisplayContext.isFrequencyVisible() %>">
-										<span class="frequency">(<%= userSearchFacetTermDisplayContext.getFrequency() %>)</span>
+									<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
+										<span class="frequency">(<%= bucketDisplayContext.getFrequency() %>)</span>
 									</c:if>
 								</a>
 							</li>

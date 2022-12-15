@@ -26,8 +26,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.user.facet.configuration.UserFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.user.facet.portlet.UserFacetPortlet" %>
 
@@ -86,7 +86,7 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 								<%
 								int i = 0;
 
-								for (UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext : userSearchFacetDisplayContext.getTermDisplayContexts()) {
+								for (BucketDisplayContext bucketDisplayContext : userSearchFacetDisplayContext.getTermDisplayContexts()) {
 									i++;
 								%>
 
@@ -95,24 +95,24 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 											<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
 												<input
 													autocomplete="off"
-													<%= userSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+													<%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 													class="custom-control-input facet-term"
-													data-term-id="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getBucketText()) %>"
+													data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getBucketText()) %>"
 													disabled
 													id="<portlet:namespace />term_<%= i %>"name="<portlet:namespace />term_<%= i %>"
 													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 													type="checkbox"
 												/>
 
-												<span class="custom-control-label term-name <%= userSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+												<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 													<span class="custom-control-label-text">
-														<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getBucketText()) %>
+														<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
 													</span>
 												</span>
 
-												<c:if test="<%= userSearchFacetTermDisplayContext.isFrequencyVisible() %>">
+												<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
 													<small class="term-count">
-														(<%= userSearchFacetTermDisplayContext.getFrequency() %>)
+														(<%= bucketDisplayContext.getFrequency() %>)
 													</small>
 												</c:if>
 											</label>

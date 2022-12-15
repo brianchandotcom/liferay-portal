@@ -45,8 +45,8 @@ public class UserSearchFacetDisplayContext implements Serializable {
 		return _paramValues;
 	}
 
-	public List<UserSearchFacetTermDisplayContext> getTermDisplayContexts() {
-		return _userSearchFacetTermDisplayContexts;
+	public List<BucketDisplayContext> getTermDisplayContexts() {
+		return _bucketDisplayContexts;
 	}
 
 	public UserFacetPortletInstanceConfiguration
@@ -94,11 +94,11 @@ public class UserSearchFacetDisplayContext implements Serializable {
 	}
 
 	public void setTermDisplayContexts(
-		List<UserSearchFacetTermDisplayContext>
-			userSearchFacetTermDisplayContexts) {
+		List<BucketDisplayContext>
+			bucketDisplayContexts) {
 
-		_userSearchFacetTermDisplayContexts =
-			userSearchFacetTermDisplayContexts;
+		_bucketDisplayContexts =
+			bucketDisplayContexts;
 	}
 
 	public void setUserFacetPortletInstanceConfiguration(
@@ -118,7 +118,7 @@ public class UserSearchFacetDisplayContext implements Serializable {
 	private boolean _renderNothing;
 	private UserFacetPortletInstanceConfiguration
 		_userFacetPortletInstanceConfiguration;
-	private List<UserSearchFacetTermDisplayContext>
-		_userSearchFacetTermDisplayContexts;
+	private List<BucketDisplayContext>
+		_bucketDisplayContexts;
 
 }

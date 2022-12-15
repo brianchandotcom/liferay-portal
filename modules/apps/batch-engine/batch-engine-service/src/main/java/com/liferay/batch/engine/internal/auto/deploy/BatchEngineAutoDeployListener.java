@@ -165,7 +165,22 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		for (BatchEngineZipUnit batchEngineZipUnit :
 				_getBatchEngineZipUnits(zipFile)) {
 
-			_processBatchEngineZipUnit(batchEngineZipUnit);
+			try {
+				_processBatchEngineZipUnit(batchEngineZipUnit);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Successfully enqueued batch file " +
+							batchEngineZipUnit);
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Ignoring invalid batch file " + batchEngineZipUnit,
+						exception);
+				}
+			}
 		}
 	}
 

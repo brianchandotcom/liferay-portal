@@ -90,7 +90,13 @@ const ClaimsTable = () => {
 
 	const filterSearchAndProduct = `${filterSearch} and ${filterProduct}`;
 
+	const filterProductAndStatus = `${filterProduct} and ${filterStatus}`;
+
 	const filterSearchAndStatusAndProduct = `${filterSearch} and ${filterProduct} and ${filterStatus}`;
+
+	const PARAMETERS_GET_ALL_ITEMS = {
+		pageSize: '0',
+	};
 
 	const generateParameters = (filtered?: string) => {
 		const parameters: Parameters =
@@ -110,59 +116,33 @@ const ClaimsTable = () => {
 		return parameters;
 	};
 
-	const [parameters, setParameters] = useState<Parameters>(
-		generateParameters()
-	);
-
 	const setFilterSearch = () => {
-		if (
-			searchInput &&
-			!filterProductCheck.length &&
-			!filterStatusCheck.length &&
-			!policyERCByProduct.length
-		) {
-			return filterSearch;
-		}
-
-		if (
-			!searchInput &&
-			filterProductCheck.length &&
-			policyERCByProduct.length
-		) {
-			return filterProduct;
-		}
-
-		if (!searchInput && filterStatusCheck.length) {
-			return filterStatus;
-		}
-
 		if (searchInput) {
-			if (
-				filterStatusCheck.length &&
-				!filterProductCheck.length &&
-				!policyERCByProduct.length
-			) {
+			if (!filterProductCheck.length && !filterStatusCheck.length) {
+				return filterSearch;
+			}
+			if (filterStatusCheck.length && !filterProductCheck.length) {
 				return filterSearchAndStatus;
 			}
-			if (
-				filterProductCheck.length &&
-				policyERCByProduct.length &&
-				!filterStatusCheck.length
-			) {
+			if (filterProductCheck.length && !filterStatusCheck.length) {
 				return filterSearchAndProduct;
 			}
-			if (
-				filterStatusCheck.length &&
-				filterProductCheck.length &&
-				policyERCByProduct.length
-			) {
+			if (filterStatusCheck.length && filterProductCheck.length) {
 				return filterSearchAndStatusAndProduct;
 			}
 		}
+		if (!searchInput) {
+			if (!filterProductCheck.length && filterStatusCheck.length) {
+				return filterStatus;
+			}
+			if (!filterStatusCheck.length && filterProductCheck.length) {
+				return filterProduct;
+			}
+			if (filterProductCheck.length && filterStatusCheck.length) {
+				return filterProductAndStatus;
+			}
+		}
 	};
-
-	parameters.pageSize = pageSize.toString();
-	parameters.page = page.toString();
 
 	const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchInput(event.target.value);
@@ -186,16 +166,14 @@ const ClaimsTable = () => {
 	};
 
 	const getPolicyERCByProductName = async () => {
-		const policies = await getPolicies();
+		const policies = await getPolicies(PARAMETERS_GET_ALL_ITEMS);
 
 		const policyERCs: string[] = [];
 
 		filterProductCheck.forEach((productCheck) => {
 			for (const result of policies?.data?.items) {
 				if (productCheck === `'${result?.productName}'`) {
-					policyERCs.push(
-						"'" + result.r_quoteToPolicies_c_raylifeQuoteERC + "'"
-					);
+					policyERCs.push("'" + result?.externalReferenceCode + "'");
 				}
 			}
 		});
@@ -361,16 +339,18 @@ const ClaimsTable = () => {
 		const secondPaginationLabel =
 			totalCount > page * pageSize ? page * pageSize : totalCount;
 		setSecondPaginationLabel(secondPaginationLabel);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
-		filterSearch,
 		page,
 		pageSize,
 		sortByDate,
 		searchInput,
-		filterCheckedLabel,
+		filterSearch,
 		filterProduct,
 		filterStatus,
+		filterProductCheck,
+		filterStatusCheck,
 	]);
 
 	useEffect(() => {
@@ -379,15 +359,15 @@ const ClaimsTable = () => {
 		getPolicyERCByProductName();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
-		sortByDate,
-		getClaimsAndPolicies,
 		page,
 		pageSize,
+		sortByDate,
 		searchInput,
 		filterSearch,
-		filterCheckedLabel,
 		filterProduct,
 		filterStatus,
+		filterProductCheck,
+		filterStatusCheck,
 	]);
 
 	const checkItemProduct = (productCheck: string) => {
@@ -720,7 +700,6 @@ const ClaimsTable = () => {
 									setFilterCheckedLabel([]);
 									setFilterProductCheck([]);
 									setFilterStatusCheck([]);
-									setParameters(generateParameters());
 								}}
 							>
 								<ClayIcon

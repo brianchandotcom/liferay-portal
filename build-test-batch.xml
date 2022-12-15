@@ -2368,6 +2368,25 @@ log.sanitizer.enabled=false</echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
+							<property name="spring.extender.enabled" value="@{spring.extender.enabled}" />
+
+							<if>
+								<equals arg1="${spring.extender.enabled}" arg2="true" />
+								<then>
+									<gradle-execute dir="modules/util/portal-tools-service-builder-test-api" task="deploy">
+										<arg value="clean" />
+									</gradle-execute>
+
+									<gradle-execute dir="modules/util/portal-tools-service-builder-test-service" task="deploy">
+										<arg value="clean" />
+									</gradle-execute>
+
+									<gradle-execute dir="modules/util/portal-tools-service-builder-test-uad" task="deploy">
+										<arg value="clean" />
+									</gradle-execute>
+								</then>
+							</if>
+
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>

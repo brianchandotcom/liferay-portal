@@ -61,7 +61,7 @@ public class MessageBusManager
 
 	@Override
 	public int getDestinationCount() {
-		return _messageBus.getDestinationCount();
+		return _mbeanServiceRegistrations.size();
 	}
 
 	@Override

@@ -82,11 +82,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	}
 
 	@Override
-	public int getDestinationCount() {
-		return _destinations.size();
-	}
-
-	@Override
 	public String getName() {
 		return "Default Message Bus";
 	}

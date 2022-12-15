@@ -1,0 +1,93 @@
+@component-name = "portal-publications"
+definition {
+
+	property custom.properties = "feature.flag.LPS-161313=true${line.separator}jsonws.web.service.paths.excludes=";
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@priority = "5"
+	test AddPublicationWithPublicationTemplate {
+		for (var userNumber : list "1,2") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNumber}@liferay.com",
+				userFirstName = "userfn${userNumber}",
+				userLastName = "userln${userNumber}",
+				userScreenName = "usersn${userNumber}");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Guest",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+		}
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Publications User",
+			userEmailAddress = "userea1@liferay.com");
+
+		PublicationsTemplate.gotoPublicationTemplate();
+
+		PublicationsTemplate.addPublicationTemplate(
+			publicationDescription = "Publications Description ${CURRENT_USERNAME}",
+			publicationName = "Publication Name ${CURRENT_USERNAME}",
+			publicationRole1 = "Editor",
+			publicationRole2 = "Viewer",
+			templateDescription = "Template Description",
+			templateName = "Template Name",
+			titleRole1 = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
+			titleRole2 = "Editors can view and edit. Editors cannot publish or invite other users.",
+			userInvite = "userea2@liferay.com",
+			userInvite1 = "userea1@liferay.com",
+			userInvite2 = "userea2@liferay.com",
+			userMissingPublicationsRole = "true");
+
+		PublicationsTemplate.viewPublicationTemplate(templateName = "Template Name");
+
+		Publications.createNewPublicationWithTemplate(
+			publicationDescription = "Publications Description test",
+			publicationName = "Publication Name test",
+			templateName = "Template Name");
+
+		PublicationsNavigator._gotoPublicationEllipsisItem(
+			menuItem = "Invite Users",
+			publicationName = "Publication Name test");
+
+		Publications.viewInvitedUser(
+			publicationRole = "Editor",
+			userInvite = "userea1@liferay.com");
+
+		Publications.viewInvitedUser(
+			publicationRole = "Viewer",
+			userInvite = "userea2@liferay.com");
+	}
+
+}

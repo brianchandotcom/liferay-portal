@@ -67,6 +67,8 @@ public class UserSearchFacetDisplayContextBuilder {
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			new UserSearchFacetDisplayContext();
 
+		userSearchFacetDisplayContext.setBucketDisplayContexts(
+			buildBucketDisplayContexts(termCollectors));
 		userSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
 		userSearchFacetDisplayContext.setNothingSelected(nothingSelected);
@@ -76,8 +78,6 @@ public class UserSearchFacetDisplayContextBuilder {
 		userSearchFacetDisplayContext.setParamValue(_getFirstParamValue());
 		userSearchFacetDisplayContext.setParamValues(_paramValues);
 		userSearchFacetDisplayContext.setRenderNothing(renderNothing);
-		userSearchFacetDisplayContext.setBucketDisplayContexts(
-			buildBucketDisplayContexts(termCollectors));
 		userSearchFacetDisplayContext.setUserFacetPortletInstanceConfiguration(
 			_userFacetPortletInstanceConfiguration);
 
@@ -127,17 +127,15 @@ public class UserSearchFacetDisplayContextBuilder {
 	protected BucketDisplayContext buildBucketDisplayContext(
 		TermCollector termCollector) {
 
+		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
+
 		String term = GetterUtil.getString(termCollector.getTerm());
 
-		BucketDisplayContext bucketDisplayContext =
-			new BucketDisplayContext();
-
-		bucketDisplayContext.setFrequency(
-			termCollector.getFrequency());
-		bucketDisplayContext.setFrequencyVisible(
-			_frequenciesVisible);
-		bucketDisplayContext.setSelected(isSelected(term));
 		bucketDisplayContext.setBucketText(term);
+
+		bucketDisplayContext.setFrequency(termCollector.getFrequency());
+		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setSelected(isSelected(term));
 
 		return bucketDisplayContext;
 	}
@@ -149,9 +147,8 @@ public class UserSearchFacetDisplayContextBuilder {
 			return getEmptyBucketDisplayContexts();
 		}
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts = new ArrayList<>(
-				termCollectors.size());
+		List<BucketDisplayContext> bucketDisplayContexts = new ArrayList<>(
+			termCollectors.size());
 
 		for (int i = 0; i < termCollectors.size(); i++) {
 			TermCollector termCollector = termCollectors.get(i);
@@ -163,8 +160,7 @@ public class UserSearchFacetDisplayContextBuilder {
 				break;
 			}
 
-			bucketDisplayContexts.add(
-				buildBucketDisplayContext(termCollector));
+			bucketDisplayContexts.add(buildBucketDisplayContext(termCollector));
 		}
 
 		return bucketDisplayContexts;
@@ -181,21 +177,17 @@ public class UserSearchFacetDisplayContextBuilder {
 		return displayStyleGroupId;
 	}
 
-	protected List<BucketDisplayContext>
-	getEmptyBucketDisplayContexts() {
-
+	protected List<BucketDisplayContext> getEmptyBucketDisplayContexts() {
 		if (_paramValues.isEmpty()) {
 			return Collections.emptyList();
 		}
 
-		BucketDisplayContext bucketDisplayContext =
-			new BucketDisplayContext();
+		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		bucketDisplayContext.setFrequency(0);
-		bucketDisplayContext.setFrequencyVisible(
-			_frequenciesVisible);
-		bucketDisplayContext.setSelected(true);
 		bucketDisplayContext.setBucketText(_paramValues.get(0));
+		bucketDisplayContext.setFrequency(0);
+		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setSelected(true);
 
 		return Collections.singletonList(bucketDisplayContext);
 	}

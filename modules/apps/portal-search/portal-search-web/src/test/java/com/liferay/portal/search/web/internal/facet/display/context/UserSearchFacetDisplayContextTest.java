@@ -65,13 +65,11 @@ public class UserSearchFacetDisplayContextTest {
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			createDisplayContext(paramValue);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				userSearchFacetDisplayContext.getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 0,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
 
 		Assert.assertEquals(
 			paramValue, userSearchFacetDisplayContext.getParamValue());
@@ -88,24 +86,19 @@ public class UserSearchFacetDisplayContextTest {
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			createDisplayContext(paramValue);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				userSearchFacetDisplayContext.getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
 
-		BucketDisplayContext bucketDisplayContext =
-			bucketDisplayContexts.get(0);
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
 
-		Assert.assertEquals(
-			userName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			0, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(userName, bucketDisplayContext.getBucketText());
+		Assert.assertEquals(0, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 		Assert.assertTrue(bucketDisplayContext.isSelected());
-		Assert.assertTrue(
-			bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			paramValue, userSearchFacetDisplayContext.getParamValue());
@@ -126,24 +119,19 @@ public class UserSearchFacetDisplayContextTest {
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			createDisplayContext(paramValue);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				userSearchFacetDisplayContext.getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
 
-		BucketDisplayContext bucketDisplayContext =
-			bucketDisplayContexts.get(0);
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
 
-		Assert.assertEquals(
-			userName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(userName, bucketDisplayContext.getBucketText());
+		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
 		Assert.assertFalse(bucketDisplayContext.isSelected());
-		Assert.assertTrue(
-			bucketDisplayContext.isFrequencyVisible());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			paramValue, userSearchFacetDisplayContext.getParamValue());
@@ -164,24 +152,19 @@ public class UserSearchFacetDisplayContextTest {
 		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
 			createDisplayContext(paramValue);
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts =
-				userSearchFacetDisplayContext.getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts =
+			userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(), 1,
-			bucketDisplayContexts.size());
+			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
 
-		BucketDisplayContext bucketDisplayContext =
-			bucketDisplayContexts.get(0);
+		BucketDisplayContext bucketDisplayContext = bucketDisplayContexts.get(
+			0);
 
-		Assert.assertEquals(
-			userName, bucketDisplayContext.getBucketText());
-		Assert.assertEquals(
-			count, bucketDisplayContext.getFrequency());
+		Assert.assertEquals(userName, bucketDisplayContext.getBucketText());
+		Assert.assertEquals(count, bucketDisplayContext.getFrequency());
+		Assert.assertTrue(bucketDisplayContext.isFrequencyVisible());
 		Assert.assertTrue(bucketDisplayContext.isSelected());
-		Assert.assertTrue(
-			bucketDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
 			paramValue, userSearchFacetDisplayContext.getParamValue());
@@ -198,10 +181,10 @@ public class UserSearchFacetDisplayContextTest {
 				new UserSearchFacetDisplayContextBuilder(getRenderRequest());
 
 		userSearchFacetDisplayContextBuilder.setFacet(_facet);
-		userSearchFacetDisplayContextBuilder.setParamValue(paramValue);
 		userSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		userSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
 		userSearchFacetDisplayContextBuilder.setMaxTerms(0);
+		userSearchFacetDisplayContextBuilder.setParamValue(paramValue);
 
 		return userSearchFacetDisplayContextBuilder.build();
 	}

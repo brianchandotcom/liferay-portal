@@ -42,12 +42,12 @@
 </tr>
 <tr>
 	<td>TEMPLATE_DESCRIPTION</td>
-	<td>//textarea[contains(@aria-label,'publication-template-description-placeholder')]</td>
+	<td>//textarea[contains(@aria-label,'Enter the description of the publication template')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_NAME</td>
-	<td>//input[contains(@aria-label,'publication-template-name-placeholder')]</td>
+	<td>//input[contains(@aria-label,'Enter the name of the publication template')]</td>
 	<td></td>
 </tr>
 <tr>

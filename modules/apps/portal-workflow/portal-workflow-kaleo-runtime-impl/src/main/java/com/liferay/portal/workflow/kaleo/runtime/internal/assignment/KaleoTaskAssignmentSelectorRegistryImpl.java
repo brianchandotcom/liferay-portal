@@ -14,17 +14,15 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelectorRegistry;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Leonardo Barros
@@ -37,36 +35,22 @@ public class KaleoTaskAssignmentSelectorRegistryImpl
 	public KaleoTaskAssignmentSelector getKaleoTaskAssignmentSelector(
 		String assigneeClassName) {
 
-		return _kaleoTaskAssignmentSelectors.get(assigneeClassName);
+		return _serviceTrackerMap.getService(assigneeClassName);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(assignee.class.name=*)"
-	)
-	protected void addKaleoTaskAssignmentSelector(
-		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
-		Map<String, Object> properties) {
-
-		Object assigneeClassName = properties.get("assignee.class.name");
-
-		_kaleoTaskAssignmentSelectors.put(
-			assigneeClassName.toString(), kaleoTaskAssignmentSelector);
-	}
-
-	protected void removeKaleoTaskAssignmentSelector(
-		KaleoTaskAssignmentSelector kaleoTaskAssignmentSelector,
-		Map<String, Object> properties) {
-
-		String assigneeClassName = (String)properties.get(
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, KaleoTaskAssignmentSelector.class,
 			"assignee.class.name");
-
-		_kaleoTaskAssignmentSelectors.remove(assigneeClassName);
 	}
 
-	private final Map<String, KaleoTaskAssignmentSelector>
-		_kaleoTaskAssignmentSelectors = new ConcurrentHashMap<>();
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private ServiceTrackerMap<String, KaleoTaskAssignmentSelector>
+		_serviceTrackerMap;
 
 }

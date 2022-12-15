@@ -156,4 +156,69 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-12019 | Automation ID: LRAC-12584 | Test Summary: Can paginate the list of properties"
+	@priority = "3"
+	test CanPaginatePropertyListInDXP {
+		var firstPageList = "AC Property Pagination 2,AC Property Pagination 3,AC Property Pagination 4,AC Property Pagination 5,AC Property Pagination 6";
+		var secondPageList = "AC Property Pagination 1";
+
+		task ("Connect DXP to AC and get the first property name from the list") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			var autoGeneratePropertyName = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Create 6 new properties") {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${secondPageList},${firstPageList}");
+		}
+
+		task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
+		}
+
+		task ("Check that 5 properties appear on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		}
+
+		task ("Click next page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 7 of 7 entries.");
+		}
+
+		task ("Check that 2 property appear on the second page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList},${autoGeneratePropertyName}");
+		}
+
+		task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
+		}
+
+		task ("Check that 5 properties appear on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		}
+
+		task ("Click next page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 7 of 7 entries.");
+		}
+
+		task ("Check that 2 property appear on the second page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList},${autoGeneratePropertyName}");
+		}
+	}
+
 }

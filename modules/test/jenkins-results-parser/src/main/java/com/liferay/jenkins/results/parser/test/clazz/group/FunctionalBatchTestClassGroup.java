@@ -528,6 +528,13 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 					"PORTAL_BATCH_TEST_SELECTOR");
 			}
 
+			if ((portalBatchTestSelector != null) &&
+				portalBatchTestSelector.startsWith("LocalFile.")) {
+
+				portalBatchTestSelector = portalBatchTestSelector.replace(
+					"LocalFile.", "");
+			}
+
 			_testBatchRunPropertyQueries.put(
 				new File(
 					portalGitWorkingDirectory.getWorkingDirectory(),

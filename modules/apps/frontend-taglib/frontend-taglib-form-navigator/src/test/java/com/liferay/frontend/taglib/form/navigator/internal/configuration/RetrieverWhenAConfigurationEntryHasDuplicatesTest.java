@@ -58,8 +58,7 @@ public class RetrieverWhenAConfigurationEntryHasDuplicatesTest
 	public void testOnlyTheFirstOcurrenceIsRetrieved() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", "add"
-			).get();
+				"form1", "general", "add");
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 4,

@@ -18,7 +18,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,8 +50,7 @@ public class RetrieverWhenNeitherACategoryNorAContextAreSpecifiedInTheConfigTest
 	public void testContainsValuesForTheEmptyCategoryAndAnyContext() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "", "add"
-			).get();
+				"form1", "", "add");
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 2,
@@ -68,8 +66,7 @@ public class RetrieverWhenNeitherACategoryNorAContextAreSpecifiedInTheConfigTest
 	public void testContainsValuesForTheEmptyCategoryAndNoContext() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "", null
-			).get();
+				"form1", "", null);
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 2,
@@ -83,11 +80,9 @@ public class RetrieverWhenNeitherACategoryNorAContextAreSpecifiedInTheConfigTest
 
 	@Test
 	public void testDoesNotContainValuesForANonemptyCategory() {
-		Optional<List<String>> formNavigatorEntryKeysOptional =
+		Assert.assertNull(
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", null);
-
-		Assert.assertFalse(formNavigatorEntryKeysOptional.isPresent());
+				"form1", "general", null));
 	}
 
 }

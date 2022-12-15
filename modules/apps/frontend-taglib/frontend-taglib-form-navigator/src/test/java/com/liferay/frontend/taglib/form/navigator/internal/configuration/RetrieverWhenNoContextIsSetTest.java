@@ -52,8 +52,7 @@ public class RetrieverWhenNoContextIsSetTest
 	public void testReturnsTheKeysInThatLineWhenAskedForAContext() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", "add"
-			).get();
+				"form1", "general", "add");
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 2,
@@ -69,8 +68,7 @@ public class RetrieverWhenNoContextIsSetTest
 	public void testReturnsTheKeysInThatLineWhenAskedForNoConext() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", null
-			).get();
+				"form1", "general", null);
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 2,

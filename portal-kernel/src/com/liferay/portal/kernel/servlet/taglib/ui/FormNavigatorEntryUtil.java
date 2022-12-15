@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -133,7 +132,7 @@ public class FormNavigatorEntryUtil {
 		return filteredFormNavigatorEntries;
 	}
 
-	private static <T> Optional<List<FormNavigatorEntry<T>>>
+	private static <T> List<FormNavigatorEntry<T>>
 		_getConfigurationFormNavigatorEntries(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
@@ -142,7 +141,7 @@ public class FormNavigatorEntryUtil {
 				_formNavigatorEntryConfigurationHelper;
 
 		if (formNavigatorEntryConfigurationHelper == null) {
-			return Optional.empty();
+			return null;
 		}
 
 		return formNavigatorEntryConfigurationHelper.getFormNavigatorEntries(
@@ -152,12 +151,12 @@ public class FormNavigatorEntryUtil {
 	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		Optional<List<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
+		List<FormNavigatorEntry<T>> formNavigationEntries =
 			_getConfigurationFormNavigatorEntries(
 				formNavigatorId, categoryKey, formModelBean);
 
-		if (formNavigationEntriesOptional.isPresent()) {
-			return formNavigationEntriesOptional.get();
+		if (formNavigationEntries != null) {
+			return formNavigationEntries;
 		}
 
 		return (List)_formNavigatorEntries.getService(

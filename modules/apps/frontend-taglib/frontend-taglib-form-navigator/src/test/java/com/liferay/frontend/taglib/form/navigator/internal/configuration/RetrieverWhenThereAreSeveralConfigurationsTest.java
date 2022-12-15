@@ -18,7 +18,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,8 +59,7 @@ public class RetrieverWhenThereAreSeveralConfigurationsTest
 	public void testContainsValuesForEntry1() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", "add"
-			).get();
+				"form1", "general", "add");
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 3,
@@ -78,8 +76,7 @@ public class RetrieverWhenThereAreSeveralConfigurationsTest
 	public void testContainsValuesForEntry2() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", "update"
-			).get();
+				"form1", "general", "update");
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 3,
@@ -94,29 +91,23 @@ public class RetrieverWhenThereAreSeveralConfigurationsTest
 
 	@Test
 	public void testReturnsEmptyOptionalForAnUnknownCategory() {
-		Optional<List<String>> formNavigatorEntryKeysOptional =
+		Assert.assertNull(
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "unknownCategory", "add");
-
-		Assert.assertFalse(formNavigatorEntryKeysOptional.isPresent());
+				"form1", "unknownCategory", "add"));
 	}
 
 	@Test
 	public void testReturnsEmptyOptionalForAnUnknownContext() {
-		Optional<List<String>> formNavigatorEntryKeysOptional =
+		Assert.assertNull(
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", "unknownContext");
-
-		Assert.assertFalse(formNavigatorEntryKeysOptional.isPresent());
+				"form1", "general", "unknownContext"));
 	}
 
 	@Test
 	public void testReturnsEmptyOptionalForAnUnknownFormId() {
-		Optional<List<String>> formNavigatorEntryKeysOptional =
+		Assert.assertNull(
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"unknownForm", "general", "add");
-
-		Assert.assertFalse(formNavigatorEntryKeysOptional.isPresent());
+				"unknownForm", "general", "add"));
 	}
 
 }

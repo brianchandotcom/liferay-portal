@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -54,18 +53,17 @@ import org.osgi.util.tracker.ServiceTracker;
 public class FormNavigatorEntryProviderImpl
 	implements FormNavigatorEntryProvider {
 
-	public <T> Optional<List<FormNavigatorEntry<T>>> getFormNavigatorEntries(
+	public <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
 		String context = _getContext(formNavigatorId, formModelBean);
 
-		Optional<List<String>> formNavigatorEntryKeysOptional =
+		List<String> formNavigatorEntryKeys =
 			_formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
 				formNavigatorId, categoryKey, context);
 
-		return formNavigatorEntryKeysOptional.map(
-			formNavigatorEntryKeys -> _getFormNavigatorEntries(
-				formNavigatorId, formNavigatorEntryKeys));
+		return _getFormNavigatorEntries(
+			formNavigatorId, formNavigatorEntryKeys);
 	}
 
 	@Override
@@ -205,7 +203,7 @@ public class FormNavigatorEntryProviderImpl
 		return filteredFormNavigatorEntries;
 	}
 
-	private <T> Optional<List<FormNavigatorEntry<T>>>
+	private <T> List<FormNavigatorEntry<T>>
 		_getConfigurationFormNavigatorEntries(
 			String formNavigatorId, String categoryKey, T formModelBean) {
 
@@ -232,6 +230,10 @@ public class FormNavigatorEntryProviderImpl
 	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, List<String> formNavigatorEntryKeys) {
 
+		if (formNavigatorEntryKeys == null) {
+			return null;
+		}
+
 		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
 
 		for (String key : formNavigatorEntryKeys) {
@@ -249,12 +251,12 @@ public class FormNavigatorEntryProviderImpl
 	private <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, T formModelBean) {
 
-		Optional<List<FormNavigatorEntry<T>>> formNavigationEntriesOptional =
+		List<FormNavigatorEntry<T>> formNavigationEntries =
 			_getConfigurationFormNavigatorEntries(
 				formNavigatorId, categoryKey, formModelBean);
 
-		if (formNavigationEntriesOptional.isPresent()) {
-			return formNavigationEntriesOptional.get();
+		if (formNavigationEntries != null) {
+			return formNavigationEntries;
 		}
 
 		return (List)_formNavigatorEntries.getService(

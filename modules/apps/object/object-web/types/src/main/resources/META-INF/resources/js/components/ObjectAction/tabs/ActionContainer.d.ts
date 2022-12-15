@@ -12,41 +12,43 @@
  * details.
  */
 
-/// <reference types="react" />
-
+import {ActionError} from '..';
 import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
+import React from 'react';
 import './ActionBuilder.scss';
-import {ActionError} from '../index';
-interface ActionBuilderProps {
+import {WarningStates} from './ActionBuilder';
+interface ActionContainerProps {
+	currentObjectDefinitionFields: ObjectField[];
 	errors: ActionError;
-	isApproved: boolean;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
+	objectFieldsMap: Map<string, ObjectField>;
+	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
+	setErrorAlert: (value: boolean) => void;
 	setValues: (values: Partial<ObjectAction>) => void;
+	setWarningAlerts: (value: React.SetStateAction<WarningStates>) => void;
 	systemObject: boolean;
 	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }
-export interface WarningStates {
-	mandatoryRelationships: boolean;
-	requiredFields: boolean;
-}
-export default function ActionBuilder({
+export declare function ActionContainer({
+	currentObjectDefinitionFields,
 	errors,
-	isApproved,
 	objectActionCodeEditorElements,
 	objectActionExecutors,
-	objectActionTriggers,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	objectFieldsMap,
+	setCurrentObjectDefinitionFields,
+	setErrorAlert,
 	setValues,
+	setWarningAlerts,
 	systemObject,
 	validateExpressionURL,
 	values,
-}: ActionBuilderProps): JSX.Element;
+}: ActionContainerProps): JSX.Element;
 export {};

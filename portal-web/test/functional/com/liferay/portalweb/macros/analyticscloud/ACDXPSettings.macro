@@ -333,6 +333,26 @@ definition {
 		}
 	}
 
+	macro viewGenericListItemInOrder {
+		var itemValueList = ListUtil.newListFromString("${itemValueList}");
+		var indexList = ListUtil.newListFromString("${indexList}");
+		var size = ListUtil.size("${itemValueList}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var itemValue = ListUtil.get("${itemValueList}", "${i}");
+			var index = ListUtil.get("${indexList}", "${i}");
+
+			AssertTextEquals(
+				locator1 = "ACDXPSettings#VIEW_LIST_ITEM_ORDER",
+				value1 = "${itemValue}");
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf("${i}");
+		}
+	}
+
 	macro viewGenericListItemNotPresent {
 		for (var itemValue : list "${itemValueList}") {
 			var key_itemValue = "${itemValue}";

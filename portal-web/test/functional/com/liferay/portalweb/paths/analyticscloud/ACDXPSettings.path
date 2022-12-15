@@ -107,6 +107,11 @@
 	<td>//tr[@data-testid='${key_itemValue}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_LIST_ITEM_ORDER</td>
+	<td>xpath=(//td[@class='table-column-text-start'])[${index}]</td>
+	<td></td>
+</tr>
 
 <!-- NEW PROPERTY SCREEN -->
 

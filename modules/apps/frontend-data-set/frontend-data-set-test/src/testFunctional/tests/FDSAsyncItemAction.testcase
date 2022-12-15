@@ -45,6 +45,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-170536. Request Invalid IP Can Return Error Connection Refused."
+	@priority = "3"
+	test RequestInvalidIPCanReturnErrorConnectionRefused {
+		task ("When open action list dropdown menu in 1st row item") {
+			Click(
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("And When access async connection refused to request invalid ip address") {
+			Click(
+				key_viewMode = "Async Connection Refused",
+				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
+		}
+
+		task ("Then returns unexpected error alert toast") {
+			AssertElementPresent(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "An unexpected error occurred.");
+		}
+	}
+
 	@description = "LPS-170537. Request Non Existing Resource Can Return Error Not Found."
 	@priority = "3"
 	test RequestNonExistingResourceCanReturnErrorNotFound {
@@ -86,28 +108,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#SUCCESS_DISMISSIBLE",
 				value1 = "Success:Your request completed successfully.");
-		}
-	}
-
-	@description = "LPS-170536. Request Invalid IP Can Return Error Connection Refused."
-	@priority = "3"
-	test RequestInvalidIPCanReturnErrorConnectionRefused {
-		task ("When open action list dropdown menu in 1st row item") {
-			Click(
-				key_title = "Sample1",
-				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
-		}
-
-		task ("And When access async connection refused to request invalid ip address") {
-			Click(
-				key_viewMode = "Async Connection Refused",
-				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
-		}
-
-		task ("Then returns unexpected error alert toast") {
-			AssertElementPresent(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "An unexpected error occurred.");
 		}
 	}
 

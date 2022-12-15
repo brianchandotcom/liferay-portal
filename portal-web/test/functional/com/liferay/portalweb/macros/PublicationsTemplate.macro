@@ -55,7 +55,9 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		Button.click(button = "Create");
+		Click.javaScriptClick(
+			key_text = "Create",
+			locator1 = "Button#ANY");
 
 		Alert.viewSuccessMessage();
 	}

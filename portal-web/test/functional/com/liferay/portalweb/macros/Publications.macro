@@ -93,11 +93,11 @@ definition {
 			MenuItem.click(menuItem = "Create New Publication");
 		}
 
-		Click(locator1 = "PublicationsTemplate#TEMPLATE_SELECTOR");
+		AssertElementPresent(locator1 = "Publications#TEMPLATE_SELECTOR");
 
 		Select(
-			key_templateName = "${templateName}",
-			locator1 = "Publications#TEMPLATE_OPTION");
+			locator1 = "Publications#TEMPLATE_OPTION",
+			value1 = "${templateName}");
 
 		if (isSet(publicationName)) {
 			AssertTextEquals(

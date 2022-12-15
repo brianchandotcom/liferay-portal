@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,18 +42,20 @@ public class UADApplicationSummaryHelper {
 	public List<UADAnonymizer<?>> getApplicationUADAnonymizers(
 		String applicationKey) {
 
-		Stream<UADDisplay<?>> uadDisplayStream =
-			_uadRegistry.getApplicationUADDisplayStream(applicationKey);
+		List<UADDisplay<?>> uadDisplayList =
+			_uadRegistry.getApplicationUADDisplayList(applicationKey);
 
-		return uadDisplayStream.map(
-			UADDisplay::getTypeClass
-		).map(
-			Class::getName
-		).map(
-			key -> _uadRegistry.getUADAnonymizer(key)
-		).collect(
-			Collectors.toList()
-		);
+		List<UADAnonymizer<?>> uadAnonymizerList = new ArrayList<>();
+
+		for (UADDisplay<?> uadDisplay : uadDisplayList) {
+			Class<?> typeClass = uadDisplay.getTypeClass();
+
+			String entityName = typeClass.getName();
+
+			uadAnonymizerList.add(_uadRegistry.getUADAnonymizer(entityName));
+		}
+
+		return uadAnonymizerList;
 	}
 
 	public String getDefaultUADRegistryKey(String applicationKey) {
@@ -82,12 +83,12 @@ public class UADApplicationSummaryHelper {
 
 	public int getTotalNonreviewableUADEntitiesCount(long userId) {
 		return _getNonreviewableUADEntitiesCount(
-			_uadRegistry.getNonreviewableUADAnonymizerStream(), userId);
+			_uadRegistry.getNonreviewableUADAnonymizerList(), userId);
 	}
 
 	public int getTotalReviewableUADEntitiesCount(long userId) {
 		return _getReviewableUADEntitiesCount(
-			_uadRegistry.getUADDisplayStream(), userId);
+			_uadRegistry.getUADDisplayList(), userId);
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
@@ -131,17 +132,18 @@ public class UADApplicationSummaryHelper {
 		while (iterator.hasNext()) {
 			String applicationKey = iterator.next();
 
-			Stream<UADDisplay<?>> uadDisplayStream =
-				_uadRegistry.getApplicationUADDisplayStream(applicationKey);
+			List<UADDisplay<?>> uadDisplayList =
+				_uadRegistry.getApplicationUADDisplayList(applicationKey);
 
-			List<UADDisplay<?>> applicationUADDisplays =
-				uadDisplayStream.filter(
-					uadDisplay ->
-						ArrayUtil.isNotEmpty(groupIds) ==
-							uadDisplay.isSiteScoped()
-				).collect(
-					Collectors.toList()
-				);
+			List<UADDisplay<?>> applicationUADDisplays = new ArrayList<>();
+
+			for (UADDisplay<?> uadDisplay : uadDisplayList) {
+				if (ArrayUtil.isNotEmpty(groupIds) ==
+						uadDisplay.isSiteScoped()) {
+
+					applicationUADDisplays.add(uadDisplay);
+				}
+			}
 
 			if (ListUtil.isNotEmpty(applicationUADDisplays)) {
 				UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
@@ -177,26 +179,36 @@ public class UADApplicationSummaryHelper {
 	}
 
 	private int _getNonreviewableUADEntitiesCount(
-		Stream<UADAnonymizer<?>> uadAnonymizerStream, long userId) {
+		List<UADAnonymizer<?>> uadAnonymizerList, long userId) {
 
-		return uadAnonymizerStream.mapToInt(
-			uadAnonymizer -> {
-				try {
-					return (int)uadAnonymizer.count(userId);
-				}
-				catch (PortalException portalException) {
-					throw new SystemException(portalException);
-				}
+		int sum = 0;
+
+		for (UADAnonymizer<?> uadAnonymizer : uadAnonymizerList) {
+			try {
+				int userIds = (int)uadAnonymizer.count(userId);
+
+				sum += userIds;
 			}
-		).sum();
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
+			}
+		}
+
+		return sum;
 	}
 
 	private int _getReviewableUADEntitiesCount(
-		Stream<UADDisplay<?>> uadDisplayStream, long userId) {
+		List<UADDisplay<?>> uadDisplayList, long userId) {
 
-		return uadDisplayStream.mapToInt(
-			uadDisplay -> (int)uadDisplay.count(userId)
-		).sum();
+		int sum = 0;
+
+		for (UADDisplay<?> uadDisplay : uadDisplayList) {
+			int userIds = (int)uadDisplay.count(userId);
+
+			sum += userIds;
+		}
+
+		return sum;
 	}
 
 	private int _getReviewableUADEntitiesCount(

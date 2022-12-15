@@ -61,18 +61,18 @@ public class UADApplicationExportHelper {
 	public UADApplicationExportDisplay getUADApplicationExportDisplay(
 		String applicationKey, long groupId, long userId) {
 
-		Stream<UADDisplay<?>> uadDisplayStream =
-			_uadRegistry.getApplicationUADDisplayStream(applicationKey);
+		List<UADDisplay<?>> uadDisplayList =
+			_uadRegistry.getApplicationUADDisplayList(applicationKey);
 
-		List<UADExporter<?>> uadExporters = uadDisplayStream.map(
-			UADDisplay::getTypeClass
-		).map(
-			Class::getName
-		).map(
-			key -> _uadRegistry.getUADExporter(key)
-		).collect(
-			Collectors.toList()
-		);
+		List<UADExporter<?>> uadExporters = new ArrayList<>();
+
+		for (UADDisplay<?> uadDisplay : uadDisplayList) {
+			Class<?> typeClass = uadDisplay.getTypeClass();
+
+			String entityName = typeClass.getName();
+
+			uadExporters.add(_uadRegistry.getUADExporter(entityName));
+		}
 
 		int applicationDataCount = 0;
 

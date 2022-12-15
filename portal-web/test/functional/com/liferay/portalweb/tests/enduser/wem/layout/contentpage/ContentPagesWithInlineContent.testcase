@@ -467,6 +467,10 @@ definition {
 		}
 
 		task ("View the visual style of editable field") {
+			WaitForElementPresent(
+				key_nodeName = "element-text",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
+
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",

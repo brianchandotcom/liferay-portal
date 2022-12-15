@@ -959,8 +959,6 @@ definition {
 	}
 
 	macro attemptImpersonateCP {
-		Search.searchCP(searchTerm = "${userScreenName}");
-
 		if (isSet(notAdmin)) {
 			AssertElementNotPresent(
 				key_tableEntry = "${userScreenName}",
@@ -1292,8 +1290,6 @@ definition {
 	}
 
 	macro deletePersonalDataCP {
-		Search.searchCP(searchTerm = "${userFirstName}");
-
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete Personal Data",
 			rowEntry = "${userFirstName}");
@@ -1393,8 +1389,6 @@ definition {
 	}
 
 	macro editDisplaySettingsCP {
-		User.searchCP(searchTerm = "${userScreenName}");
-
 		LexiconTable.clickEllipsisItem(
 			item = "Edit",
 			tableEntry = "${userScreenName}");
@@ -1786,8 +1780,6 @@ definition {
 	}
 
 	macro exportPersonalDataCP {
-		Search.searchCP(searchTerm = "${userFirstName}");
-
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Export Personal Data",
 			rowEntry = "${userFirstName}");
@@ -1986,8 +1978,6 @@ definition {
 		if (isSet(userName)) {
 			var userScreenName = "${userName}";
 		}
-
-		Search.searchCP(searchTerm = "${userScreenName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Impersonate User",

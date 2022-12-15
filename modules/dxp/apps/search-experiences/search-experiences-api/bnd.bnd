@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Search Experiences API
 Bundle-SymbolicName: com.liferay.search.experiences.api
-Bundle-Version: 20.0.0
+Bundle-Version: 19.0.1
 Export-Package:\
 	com.liferay.search.experiences.blueprint.exception,\
 	com.liferay.search.experiences.blueprint.parameter,\
@@ -9,7 +9,7 @@ Export-Package:\
 	com.liferay.search.experiences.configuration,\
 	com.liferay.search.experiences.constants,\
 	com.liferay.search.experiences.exception,\
-	com.liferay.search.experiences.ml.sentence.embedding,\
+	com.liferay.search.experiences.ml.text.embedding,\
 	com.liferay.search.experiences.model,\
 	com.liferay.search.experiences.service,\
 	com.liferay.search.experiences.service.persistence,\

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
 
 import java.util.Map;
 
@@ -39,22 +39,22 @@ import org.osgi.service.component.annotations.Reference;
 	property = "indexer.class.name=com.liferay.message.boards.model.MBMessage",
 	service = ModelDocumentContributor.class
 )
-public class MBMessageSentenceEmbeddingModelDocumentContributor
-	extends BaseSentenceEmbeddingModelDocumentContributor
+public class MBMessageTextEmbeddingModelDocumentContributor
+	extends BaseTextEmbeddingModelDocumentContributor
 	implements ModelDocumentContributor<MBMessage> {
 
 	@Override
 	public void contribute(Document document, MBMessage mbMessage) {
-		if (!isAddSentenceEmbedding(MBMessage.class) ||
+		if (!isAddTextEmbedding(MBMessage.class) ||
 			(mbMessage.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
 
 			return;
 		}
 
-		addSentenceEmbeddingForAvailableLanguages(
+		addTextEmbeddingForAvailableLanguages(
 			mbMessage.getCompanyId(), document,
-			getSentenceEmbedding(
-				_sentenceEmbeddingRetriever::getSentenceEmbedding,
+			getTextEmbedding(
+				_textEmbeddingRetriever::getTextEmbedding,
 				StringBundler.concat(
 					mbMessage.getSubject(), StringPool.SPACE,
 					mbMessage.getBody())));
@@ -67,6 +67,6 @@ public class MBMessageSentenceEmbeddingModelDocumentContributor
 	}
 
 	@Reference
-	private SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
+	private TextEmbeddingRetriever _textEmbeddingRetriever;
 
 }

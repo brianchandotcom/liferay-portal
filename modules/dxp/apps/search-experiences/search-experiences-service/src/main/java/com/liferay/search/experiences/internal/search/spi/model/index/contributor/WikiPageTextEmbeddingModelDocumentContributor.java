@@ -14,15 +14,14 @@
 
 package com.liferay.search.experiences.internal.search.spi.model.index.contributor;
 
-import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
+import com.liferay.wiki.model.WikiPage;
 
 import java.util.Map;
 
@@ -36,28 +35,26 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false,
-	property = "indexer.class.name=com.liferay.knowledge.base.model.KBArticle",
+	property = "indexer.class.name=com.liferay.wiki.model.WikiPage",
 	service = ModelDocumentContributor.class
 )
-public class KBArticleSentenceEmbeddingModelDocumentContributor
-	extends BaseSentenceEmbeddingModelDocumentContributor
-	implements ModelDocumentContributor<KBArticle> {
+public class WikiPageTextEmbeddingModelDocumentContributor
+	extends BaseTextEmbeddingModelDocumentContributor
+	implements ModelDocumentContributor<WikiPage> {
 
 	@Override
-	public void contribute(Document document, KBArticle kbArticle) {
-		if (!isAddSentenceEmbedding(KBArticle.class) ||
-			(kbArticle.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
-
+	public void contribute(Document document, WikiPage wikiPage) {
+		if (!isAddTextEmbedding(WikiPage.class)) {
 			return;
 		}
 
-		addSentenceEmbeddingForAvailableLanguages(
-			kbArticle.getCompanyId(), document,
-			getSentenceEmbedding(
-				_sentenceEmbeddingRetriever::getSentenceEmbedding,
+		addTextEmbeddingForAvailableLanguages(
+			wikiPage.getCompanyId(), document,
+			getTextEmbedding(
+				_textEmbeddingRetriever::getTextEmbedding,
 				StringBundler.concat(
-					kbArticle.getTitle(), StringPool.SPACE,
-					kbArticle.getContent())));
+					wikiPage.getTitle(), StringPool.SPACE,
+					wikiPage.getContent())));
 	}
 
 	@Activate
@@ -67,6 +64,6 @@ public class KBArticleSentenceEmbeddingModelDocumentContributor
 	}
 
 	@Reference
-	private SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
+	private TextEmbeddingRetriever _textEmbeddingRetriever;
 
 }

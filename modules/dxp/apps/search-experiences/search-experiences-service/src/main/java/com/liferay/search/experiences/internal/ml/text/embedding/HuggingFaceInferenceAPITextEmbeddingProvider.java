@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.ml.sentence.embedding;
+package com.liferay.search.experiences.internal.ml.text.embedding;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
@@ -41,37 +41,27 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "search.experiences.sentence.transformer.name=huggingFaceInferenceAPI",
-	service = SentenceTransformer.class
+	property = "search.experiences.text.embedding.provider.name=huggingFaceInferenceAPI",
+	service = TextEmbeddingProvider.class
 )
-public class HuggingFaceInferenceAPISentenceTransformer
-	extends BaseSentenceTransformer implements SentenceTransformer {
+public class HuggingFaceInferenceAPITextEmbeddingProvider
+	extends BaseTextEmbeddingProvider implements TextEmbeddingProvider {
 
-	public Double[] getSentenceEmbedding(
+	public Double[] getEmbedding(
 		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
-		String input = getInput(
+		String sentences = extractSentences(
 			semanticSearchConfiguration.maxCharacterCount(), text,
 			semanticSearchConfiguration.textTruncationStrategy());
 
-		if (Validator.isBlank(input)) {
+		if (Validator.isBlank(sentences)) {
 			return new Double[0];
 		}
 
-		return _getSentenceEmbedding(semanticSearchConfiguration, input);
+		return _getEmbedding(semanticSearchConfiguration, sentences);
 	}
 
-	private JSONArray _getJSONArray(JSONArray jsonArray1) {
-		JSONArray jsonArray2 = jsonArray1.getJSONArray(0);
-
-		if (jsonArray2 != null) {
-			return _getJSONArray(jsonArray2);
-		}
-
-		return jsonArray1;
-	}
-
-	private Double[] _getSentenceEmbedding(
+	private Double[] _getEmbedding(
 		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
 		try {
@@ -117,8 +107,8 @@ public class HuggingFaceInferenceAPISentenceTransformer
 				}
 
 				throw new IllegalArgumentException(
-					"The selected model is not valid for creating sentence " +
-						"embeddings");
+					"The selected model is not valid for creating text " +
+						"embedding");
 			}
 			else {
 				List<Double> list = JSONUtil.toDoubleList(
@@ -130,6 +120,16 @@ public class HuggingFaceInferenceAPISentenceTransformer
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
+	}
+
+	private JSONArray _getJSONArray(JSONArray jsonArray1) {
+		JSONArray jsonArray2 = jsonArray1.getJSONArray(0);
+
+		if (jsonArray2 != null) {
+			return _getJSONArray(jsonArray2);
+		}
+
+		return jsonArray1;
 	}
 
 	private boolean _isJSONArray(String s) {
@@ -149,7 +149,7 @@ public class HuggingFaceInferenceAPISentenceTransformer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		HuggingFaceInferenceAPISentenceTransformer.class);
+		HuggingFaceInferenceAPITextEmbeddingProvider.class);
 
 	@Reference
 	private Http _http;

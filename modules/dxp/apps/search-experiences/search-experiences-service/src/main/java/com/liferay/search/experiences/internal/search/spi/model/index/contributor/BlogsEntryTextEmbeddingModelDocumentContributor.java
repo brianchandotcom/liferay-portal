@@ -14,14 +14,15 @@
 
 package com.liferay.search.experiences.internal.search.spi.model.index.contributor;
 
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
-import com.liferay.wiki.model.WikiPage;
+import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
 
 import java.util.Map;
 
@@ -35,26 +36,28 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false,
-	property = "indexer.class.name=com.liferay.wiki.model.WikiPage",
+	property = "indexer.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = ModelDocumentContributor.class
 )
-public class WikiPageSentenceEmbeddingModelDocumentContributor
-	extends BaseSentenceEmbeddingModelDocumentContributor
-	implements ModelDocumentContributor<WikiPage> {
+public class BlogsEntryTextEmbeddingModelDocumentContributor
+	extends BaseTextEmbeddingModelDocumentContributor
+	implements ModelDocumentContributor<BlogsEntry> {
 
 	@Override
-	public void contribute(Document document, WikiPage wikiPage) {
-		if (!isAddSentenceEmbedding(WikiPage.class)) {
+	public void contribute(Document document, BlogsEntry blogsEntry) {
+		if (!isAddTextEmbedding(BlogsEntry.class) ||
+			(blogsEntry.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
 			return;
 		}
 
-		addSentenceEmbeddingForAvailableLanguages(
-			wikiPage.getCompanyId(), document,
-			getSentenceEmbedding(
-				_sentenceEmbeddingRetriever::getSentenceEmbedding,
+		addTextEmbeddingForAvailableLanguages(
+			blogsEntry.getCompanyId(), document,
+			getTextEmbedding(
+				_textEmbeddingRetriever::getTextEmbedding,
 				StringBundler.concat(
-					wikiPage.getTitle(), StringPool.SPACE,
-					wikiPage.getContent())));
+					blogsEntry.getTitle(), StringPool.SPACE,
+					blogsEntry.getContent())));
 	}
 
 	@Activate
@@ -64,6 +67,6 @@ public class WikiPageSentenceEmbeddingModelDocumentContributor
 	}
 
 	@Reference
-	private SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
+	private TextEmbeddingRetriever _textEmbeddingRetriever;
 
 }

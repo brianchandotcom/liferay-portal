@@ -45,7 +45,7 @@ import com.liferay.search.experiences.internal.blueprint.parameter.contributor.O
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.TimeSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.UserSXPParameterContributor;
-import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.ParameterConfiguration;
@@ -140,7 +140,7 @@ public class SXPParameterDataCreator
 			new ContextSXPParameterContributor(_groupLocalService, _language),
 			new IpstackSXPParameterContributor(_configurationProvider),
 			new MLSXPParameterContributor(
-				_configurationProvider, _sentenceEmbeddingRetriever),
+				_configurationProvider, _textEmbeddingRetriever),
 			new OpenWeatherMapSXPParameterContributor(_configurationProvider),
 			new TimeSXPParameterContributor(),
 			new UserSXPParameterContributor(
@@ -737,10 +737,10 @@ public class SXPParameterDataCreator
 	@Reference
 	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
-	@Reference
-	private SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
-
 	private SXPParameterContributor[] _sxpParameterContributors;
+
+	@Reference
+	private TextEmbeddingRetriever _textEmbeddingRetriever;
 
 	@Reference
 	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;

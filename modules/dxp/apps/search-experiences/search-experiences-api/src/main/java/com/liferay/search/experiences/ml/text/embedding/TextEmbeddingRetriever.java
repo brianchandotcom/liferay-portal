@@ -12,16 +12,22 @@
  *
  */
 
-package com.liferay.search.experiences.internal.ml.sentence.embedding;
+package com.liferay.search.experiences.ml.text.embedding;
 
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+
+import java.util.List;
 
 /**
  * @author Petteri Karttunen
  */
-public interface SentenceTransformer {
+public interface TextEmbeddingRetriever {
 
-	public Double[] getSentenceEmbedding(
+	public List<String> getAvailableProviderNames();
+
+	public Double[] getTextEmbedding(
 		SemanticSearchConfiguration semanticSearchConfiguration, String text);
+
+	public Double[] getTextEmbedding(String text);
 
 }

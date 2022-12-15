@@ -33,55 +33,56 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SemanticSearchConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "sentence-transformer-enabled-help",
-		name = "sentence-transformer-enabled", required = false
+		deflt = "false", description = "text-embeddings-enabled-help",
+		name = "text-embeddings-enabled", required = false
 	)
-	public boolean sentenceTransformerEnabled();
+	public boolean textEmbeddingsEnabled();
 
 	@Meta.AD(
-		deflt = "huggingFaceInferenceAPI", name = "sentence-transformer",
+		deflt = "huggingFaceInferenceAPI", name = "text-embedding-provider",
 		optionLabels = {"Hugging Face Inference API", "txtai"},
 		optionValues = {"huggingFaceInferenceAPI", "txtai"}, required = false
 	)
-	public String sentenceTransformer();
+	public String textEmbeddingProvider();
 
 	@Meta.AD(deflt = "", name = "hugging-face-access-token", required = false)
 	public String huggingFaceAccessToken();
 
 	@Meta.AD(
 		deflt = "http://localhost:8000",
-		description = "sentence-transformer-txtai-host-address-help",
+		description = "text-embedding-provider-txtai-host-address-help",
 		name = "txtai-host-address", required = false
 	)
 	public String txtaiHostAddress();
 
 	@Meta.AD(
-		deflt = "", description = "sentence-transformer-txtai-username-help",
+		deflt = "", description = "text-embedding-provider-txtai-username-help",
 		name = "username", required = false
 	)
 	public String txtaiUsername();
 
 	@Meta.AD(
-		deflt = "", description = "sentence-transformer-txtai-password-help",
+		deflt = "", description = "text-embedding-provider-txtai-password-help",
 		name = "password", required = false
 	)
 	public String txtaiPassword();
 
 	@Meta.AD(
-		deflt = "", description = "sentence-transformer-model-help",
+		deflt = "", description = "text-embedding-provider-model-help",
 		name = "model", required = false
 	)
 	public String model();
 
 	@Meta.AD(
-		deflt = "25", description = "sentence-transformer-model-timeout-help",
+		deflt = "25",
+		description = "text-embedding-provider-model-timeout-help",
 		name = "model-timeout", required = false
 	)
 	public int modelTimeout();
 
 	@Meta.AD(
 		deflt = "768",
-		description = "sentence-transformer-embedding-vector-dimensions-help",
+		description = "text-embedding-provider-embedding-vector-dimensions-help",
 		name = "embedding-vector-dimensions",
 		optionLabels = {"384", "512", "768"},
 		optionValues = {"384", "512", "768"}, required = false
@@ -90,14 +91,14 @@ public interface SemanticSearchConfiguration {
 
 	@Meta.AD(
 		deflt = "500",
-		description = "sentence-transformer-max-character-count-help",
+		description = "text-embedding-provider-max-character-count-help",
 		name = "max-character-count", required = false
 	)
 	public int maxCharacterCount();
 
 	@Meta.AD(
 		deflt = "beginning",
-		description = "sentence-transformer-text-truncation-strategy-help",
+		description = "text-embedding-provider-text-truncation-strategy-help",
 		name = "text-truncation-strategy",
 		optionLabels = {"beginning", "middle", "End"},
 		optionValues = {"beginning", "middle", "end"}, required = false
@@ -106,18 +107,23 @@ public interface SemanticSearchConfiguration {
 
 	@Meta.AD(
 		deflt = "com.liferay.blogs.model.BlogsEntry|com.liferay.journal.model.JournalArticle|com.liferay.knowledge.base.model.KBArticle|com.liferay.wiki.model.WikiPage",
-		description = "sentence-transformer-asset-entry-class-names-help",
+		description = "text-embedding-provider-asset-entry-class-names-help",
 		name = "asset-entry-class-names", required = false
 	)
 	public String[] assetEntryClassNames();
 
 	@Meta.AD(
-		deflt = "en_US", description = "sentence-transformer-language-ids-help",
+		deflt = "en_US",
+		description = "text-embedding-provider-language-ids-help",
 		name = "language-ids", required = false
 	)
 	public String[] languageIds();
 
-	@Meta.AD(deflt = "604800", name = "cache-timeout", required = false)
+	@Meta.AD(
+		deflt = "604800",
+		description = "text-embedding-provider-cache-timeout-help",
+		name = "cache-timeout", required = false
+	)
 	public int cacheTimeout();
 
 }

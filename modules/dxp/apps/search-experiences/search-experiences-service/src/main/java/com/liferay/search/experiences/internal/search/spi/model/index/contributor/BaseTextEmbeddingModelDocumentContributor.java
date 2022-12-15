@@ -35,22 +35,22 @@ import java.util.function.Function;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseSentenceEmbeddingModelDocumentContributor {
+public abstract class BaseTextEmbeddingModelDocumentContributor {
 
-	protected void addSentenceEmbedding(
-		Document document, String languageId, Double[] sentenceEmbedding) {
+	protected void addTextEmbedding(
+		Document document, String languageId, Double[] textEmbedding) {
 
-		if (sentenceEmbedding.length == 0) {
+		if (textEmbedding.length == 0) {
 			return;
 		}
 
-		_addSentenceEmbeddingField(document, languageId, sentenceEmbedding);
+		_addTextEmbeddingField(document, languageId, textEmbedding);
 	}
 
-	protected void addSentenceEmbeddingForAvailableLanguages(
-		long companyId, Document document, Double[] sentenceEmbedding) {
+	protected void addTextEmbeddingForAvailableLanguages(
+		long companyId, Document document, Double[] textEmbedding) {
 
-		if (sentenceEmbedding.length == 0) {
+		if (textEmbedding.length == 0) {
 			return;
 		}
 
@@ -66,11 +66,11 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 				continue;
 			}
 
-			_addSentenceEmbeddingField(document, languageId, sentenceEmbedding);
+			_addTextEmbeddingField(document, languageId, textEmbedding);
 		}
 	}
 
-	protected Double[] getSentenceEmbedding(
+	protected Double[] getTextEmbedding(
 		Function<String, Double[]> function, String text) {
 
 		try {
@@ -83,9 +83,9 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 		return new Double[0];
 	}
 
-	protected boolean isAddSentenceEmbedding(Class<?> clazz) {
+	protected boolean isAddTextEmbedding(Class<?> clazz) {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) &&
-			semanticSearchConfiguration.sentenceTransformerEnabled() &&
+			semanticSearchConfiguration.textEmbeddingsEnabled() &&
 			ArrayUtil.contains(
 				semanticSearchConfiguration.assetEntryClassNames(),
 				clazz.getName(), true)) {
@@ -98,15 +98,15 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 
 	protected volatile SemanticSearchConfiguration semanticSearchConfiguration;
 
-	private void _addSentenceEmbeddingField(
-		Document document, String languageId, Double[] sentenceEmbedding) {
+	private void _addTextEmbeddingField(
+		Document document, String languageId, Double[] textEmbedding) {
 
 		Field field = new Field(_getFieldName(languageId));
 
 		field.setNumeric(true);
 		field.setNumericClass(Double.class);
 		field.setTokenized(false);
-		field.setValues(ArrayUtil.toStringArray(sentenceEmbedding));
+		field.setValues(ArrayUtil.toStringArray(textEmbedding));
 
 		document.add(field);
 	}
@@ -119,6 +119,6 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseSentenceEmbeddingModelDocumentContributor.class);
+		BaseTextEmbeddingModelDocumentContributor.class);
 
 }

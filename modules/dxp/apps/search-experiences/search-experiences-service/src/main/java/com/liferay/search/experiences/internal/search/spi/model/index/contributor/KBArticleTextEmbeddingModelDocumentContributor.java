@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.internal.search.spi.model.index.contributor;
 
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
 
 import java.util.Map;
 
@@ -36,28 +36,28 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
 	enabled = false,
-	property = "indexer.class.name=com.liferay.blogs.model.BlogsEntry",
+	property = "indexer.class.name=com.liferay.knowledge.base.model.KBArticle",
 	service = ModelDocumentContributor.class
 )
-public class BlogsEntrySentenceEmbeddingModelDocumentContributor
-	extends BaseSentenceEmbeddingModelDocumentContributor
-	implements ModelDocumentContributor<BlogsEntry> {
+public class KBArticleTextEmbeddingModelDocumentContributor
+	extends BaseTextEmbeddingModelDocumentContributor
+	implements ModelDocumentContributor<KBArticle> {
 
 	@Override
-	public void contribute(Document document, BlogsEntry blogsEntry) {
-		if (!isAddSentenceEmbedding(BlogsEntry.class) ||
-			(blogsEntry.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+	public void contribute(Document document, KBArticle kbArticle) {
+		if (!isAddTextEmbedding(KBArticle.class) ||
+			(kbArticle.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
 
 			return;
 		}
 
-		addSentenceEmbeddingForAvailableLanguages(
-			blogsEntry.getCompanyId(), document,
-			getSentenceEmbedding(
-				_sentenceEmbeddingRetriever::getSentenceEmbedding,
+		addTextEmbeddingForAvailableLanguages(
+			kbArticle.getCompanyId(), document,
+			getTextEmbedding(
+				_textEmbeddingRetriever::getTextEmbedding,
 				StringBundler.concat(
-					blogsEntry.getTitle(), StringPool.SPACE,
-					blogsEntry.getContent())));
+					kbArticle.getTitle(), StringPool.SPACE,
+					kbArticle.getContent())));
 	}
 
 	@Activate
@@ -67,6 +67,6 @@ public class BlogsEntrySentenceEmbeddingModelDocumentContributor
 	}
 
 	@Reference
-	private SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
+	private TextEmbeddingRetriever _textEmbeddingRetriever;
 
 }

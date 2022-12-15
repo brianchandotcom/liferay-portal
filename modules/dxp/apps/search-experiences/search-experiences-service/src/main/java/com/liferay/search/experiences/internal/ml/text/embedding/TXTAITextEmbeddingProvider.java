@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.ml.sentence.embedding;
+package com.liferay.search.experiences.internal.ml.text.embedding;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -35,40 +35,27 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "search.experiences.sentence.transformer.name=txtai",
-	service = SentenceTransformer.class
+	property = "search.experiences.text.embedding.provider.name=txtai",
+	service = TextEmbeddingProvider.class
 )
-public class TXTAISentenceTransformer
-	extends BaseSentenceTransformer implements SentenceTransformer {
+public class TXTAITextEmbeddingProvider
+	extends BaseTextEmbeddingProvider implements TextEmbeddingProvider {
 
-	public Double[] getSentenceEmbedding(
+	public Double[] getEmbedding(
 		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
-		String input = getInput(
+		String sentences = extractSentences(
 			semanticSearchConfiguration.maxCharacterCount(), text,
 			semanticSearchConfiguration.textTruncationStrategy());
 
-		if (Validator.isBlank(input)) {
+		if (Validator.isBlank(sentences)) {
 			return new Double[0];
 		}
 
-		return _getSentenceEmbedding(semanticSearchConfiguration, input);
+		return _getEmbedding(semanticSearchConfiguration, sentences);
 	}
 
-	private String _getLocation(
-		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
-
-		String hostAddress = semanticSearchConfiguration.txtaiHostAddress();
-
-		if (!hostAddress.endsWith("/")) {
-			hostAddress += "/";
-		}
-
-		return StringBundler.concat(
-			hostAddress, "transform?text=", URLCodec.encodeURL(text, false));
-	}
-
-	private Double[] _getSentenceEmbedding(
+	private Double[] _getEmbedding(
 		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
 		try {
@@ -97,6 +84,19 @@ public class TXTAISentenceTransformer
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
+	}
+
+	private String _getLocation(
+		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
+
+		String hostAddress = semanticSearchConfiguration.txtaiHostAddress();
+
+		if (!hostAddress.endsWith("/")) {
+			hostAddress += "/";
+		}
+
+		return StringBundler.concat(
+			hostAddress, "transform?text=", URLCodec.encodeURL(text, false));
 	}
 
 	private boolean _isJSONArray(String s) {

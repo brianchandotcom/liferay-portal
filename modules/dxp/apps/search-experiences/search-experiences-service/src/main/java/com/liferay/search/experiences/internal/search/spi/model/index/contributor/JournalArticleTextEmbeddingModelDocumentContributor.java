@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.ml.text.embedding.TextEmbeddingRetriever;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,13 +47,13 @@ import org.osgi.service.component.annotations.Reference;
 	property = "indexer.class.name=com.liferay.journal.model.JournalArticle",
 	service = ModelDocumentContributor.class
 )
-public class JournalArticleSentenceEmbeddingModelDocumentContributor
-	extends BaseSentenceEmbeddingModelDocumentContributor
+public class JournalArticleTextEmbeddingModelDocumentContributor
+	extends BaseTextEmbeddingModelDocumentContributor
 	implements ModelDocumentContributor<JournalArticle> {
 
 	@Override
 	public void contribute(Document document, JournalArticle journalArticle) {
-		if (!isAddSentenceEmbedding(JournalArticle.class) ||
+		if (!isAddTextEmbedding(JournalArticle.class) ||
 			(journalArticle.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
 
 			return;
@@ -72,10 +72,10 @@ public class JournalArticleSentenceEmbeddingModelDocumentContributor
 				continue;
 			}
 
-			addSentenceEmbedding(
+			addTextEmbedding(
 				document, languageId,
-				getSentenceEmbedding(
-					_sentenceEmbeddingRetriever::getSentenceEmbedding,
+				getTextEmbedding(
+					_textEmbeddingRetriever::getTextEmbedding,
 					StringBundler.concat(
 						journalArticle.getTitle(languageId, true),
 						StringPool.SPACE,
@@ -115,6 +115,6 @@ public class JournalArticleSentenceEmbeddingModelDocumentContributor
 	private Language _language;
 
 	@Reference
-	private SentenceEmbeddingRetriever _sentenceEmbeddingRetriever;
+	private TextEmbeddingRetriever _textEmbeddingRetriever;
 
 }

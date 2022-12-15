@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.ml.sentence.embedding;
+package com.liferay.search.experiences.internal.ml.text.embedding;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,9 +22,9 @@ import java.text.BreakIterator;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseSentenceTransformer {
+public abstract class BaseTextEmbeddingProvider {
 
-	protected String getInput(
+	protected String extractSentences(
 		int maxCharacterCount, String text, String truncationStrategy) {
 
 		text = StringUtil.trim(HtmlUtil.stripHtml(text));

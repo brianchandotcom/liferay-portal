@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = IndicesExistsIndexRequestExecutor.class)
+@Component(service = IndicesExistsIndexRequestExecutor.class)
 public class IndicesExistsIndexRequestExecutorImpl
 	implements IndicesExistsIndexRequestExecutor {
 

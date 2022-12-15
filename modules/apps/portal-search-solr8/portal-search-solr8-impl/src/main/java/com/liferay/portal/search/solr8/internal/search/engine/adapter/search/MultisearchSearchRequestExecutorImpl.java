@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = MultisearchSearchRequestExecutor.class)
+@Component(service = MultisearchSearchRequestExecutor.class)
 public class MultisearchSearchRequestExecutorImpl
 	implements MultisearchSearchRequestExecutor {
 

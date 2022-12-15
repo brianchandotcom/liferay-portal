@@ -75,9 +75,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(
-	immediate = true, service = SearchSearchResponseAssemblerHelper.class
-)
+@Component(service = SearchSearchResponseAssemblerHelper.class)
 public class DefaultSearchSearchResponseAssemblerHelperImpl
 	implements SearchSearchResponseAssemblerHelper {
 

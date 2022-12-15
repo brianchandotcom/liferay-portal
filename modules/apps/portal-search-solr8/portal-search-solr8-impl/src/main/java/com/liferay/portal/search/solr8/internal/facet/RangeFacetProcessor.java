@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tibor Lipusz
  */
 @Component(
-	immediate = true,
 	property = "class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
 	service = FacetProcessor.class
 )

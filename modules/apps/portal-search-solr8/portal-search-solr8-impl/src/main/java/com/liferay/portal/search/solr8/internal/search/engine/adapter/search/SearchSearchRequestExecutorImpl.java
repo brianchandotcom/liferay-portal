@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = SearchSearchRequestExecutor.class)
+@Component(service = SearchSearchRequestExecutor.class)
 public class SearchSearchRequestExecutorImpl
 	implements SearchSearchRequestExecutor {
 

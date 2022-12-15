@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = SuggestSearchRequestExecutor.class)
+@Component(service = SuggestSearchRequestExecutor.class)
 public class SuggestSearchRequestExecutorImpl
 	implements SuggestSearchRequestExecutor {
 

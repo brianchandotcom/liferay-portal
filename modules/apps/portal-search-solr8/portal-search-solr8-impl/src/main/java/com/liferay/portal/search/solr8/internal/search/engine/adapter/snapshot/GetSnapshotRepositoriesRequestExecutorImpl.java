@@ -22,9 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(
-	immediate = true, service = GetSnapshotRepositoriesRequestExecutor.class
-)
+@Component(service = GetSnapshotRepositoriesRequestExecutor.class)
 public class GetSnapshotRepositoriesRequestExecutorImpl
 	implements GetSnapshotRepositoriesRequestExecutor {
 

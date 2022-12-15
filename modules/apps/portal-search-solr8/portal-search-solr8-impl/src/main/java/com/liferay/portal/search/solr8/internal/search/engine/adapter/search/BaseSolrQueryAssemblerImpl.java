@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = BaseSolrQueryAssembler.class)
+@Component(service = BaseSolrQueryAssembler.class)
 public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 
 	@Override

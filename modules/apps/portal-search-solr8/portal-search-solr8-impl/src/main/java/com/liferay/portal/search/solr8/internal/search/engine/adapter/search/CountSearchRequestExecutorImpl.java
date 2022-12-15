@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = CountSearchRequestExecutor.class)
+@Component(service = CountSearchRequestExecutor.class)
 public class CountSearchRequestExecutorImpl
 	implements CountSearchRequestExecutor {
 

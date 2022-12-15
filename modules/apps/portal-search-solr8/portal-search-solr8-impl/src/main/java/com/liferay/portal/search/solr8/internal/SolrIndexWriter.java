@@ -54,8 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrConfiguration",
-	immediate = true, property = "search.engine.impl=Solr",
-	service = IndexWriter.class
+	property = "search.engine.impl=Solr", service = IndexWriter.class
 )
 public class SolrIndexWriter extends BaseIndexWriter {
 

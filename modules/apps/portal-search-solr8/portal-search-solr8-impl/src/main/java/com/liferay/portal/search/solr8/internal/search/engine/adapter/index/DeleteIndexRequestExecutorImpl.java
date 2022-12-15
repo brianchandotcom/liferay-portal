@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = DeleteIndexRequestExecutor.class)
+@Component(service = DeleteIndexRequestExecutor.class)
 public class DeleteIndexRequestExecutorImpl
 	implements DeleteIndexRequestExecutor {
 

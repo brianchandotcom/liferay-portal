@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = BaseSearchResponseAssembler.class)
+@Component(service = BaseSearchResponseAssembler.class)
 public class BaseSearchResponseAssemblerImpl
 	implements BaseSearchResponseAssembler {
 

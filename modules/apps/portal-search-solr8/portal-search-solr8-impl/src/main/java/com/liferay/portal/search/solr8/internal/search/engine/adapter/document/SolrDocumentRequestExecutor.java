@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(
-	immediate = true, property = "search.engine.impl=Solr",
+	property = "search.engine.impl=Solr",
 	service = DocumentRequestExecutor.class
 )
 public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {

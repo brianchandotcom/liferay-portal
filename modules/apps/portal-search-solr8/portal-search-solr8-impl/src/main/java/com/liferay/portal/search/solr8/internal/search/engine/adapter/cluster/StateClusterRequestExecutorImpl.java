@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = StateClusterRequestExecutor.class)
+@Component(service = StateClusterRequestExecutor.class)
 public class StateClusterRequestExecutorImpl
 	implements StateClusterRequestExecutor {
 

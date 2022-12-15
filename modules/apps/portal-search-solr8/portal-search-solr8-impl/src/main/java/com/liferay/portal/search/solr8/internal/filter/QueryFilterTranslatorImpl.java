@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = QueryFilterTranslator.class)
+@Component(service = QueryFilterTranslator.class)
 public class QueryFilterTranslatorImpl implements QueryFilterTranslator {
 
 	@Override

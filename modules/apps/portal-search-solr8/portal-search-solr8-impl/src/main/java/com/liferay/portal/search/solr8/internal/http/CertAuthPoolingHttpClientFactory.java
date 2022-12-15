@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrHttpClientFactoryConfiguration",
-	immediate = true, property = "type=CERT", service = HttpClientFactory.class
+	property = "type=CERT", service = HttpClientFactory.class
 )
 public class CertAuthPoolingHttpClientFactory
 	extends BasePoolingHttpClientFactory {

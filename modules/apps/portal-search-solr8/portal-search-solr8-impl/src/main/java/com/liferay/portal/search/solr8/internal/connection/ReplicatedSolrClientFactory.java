@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrConfiguration",
-	immediate = true, property = "type=REPLICATED",
-	service = SolrClientFactory.class
+	property = "type=REPLICATED", service = SolrClientFactory.class
 )
 public class ReplicatedSolrClientFactory implements SolrClientFactory {
 

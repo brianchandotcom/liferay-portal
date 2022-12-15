@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrConfiguration",
-	immediate = true, service = DeleteByQueryDocumentRequestExecutor.class
+	service = DeleteByQueryDocumentRequestExecutor.class
 )
 public class DeleteByQueryDocumentRequestExecutorImpl
 	implements DeleteByQueryDocumentRequestExecutor {

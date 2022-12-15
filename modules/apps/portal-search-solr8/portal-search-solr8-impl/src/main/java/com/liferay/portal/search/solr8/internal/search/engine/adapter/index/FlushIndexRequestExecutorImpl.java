@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = FlushIndexRequestExecutor.class)
+@Component(service = FlushIndexRequestExecutor.class)
 public class FlushIndexRequestExecutorImpl
 	implements FlushIndexRequestExecutor {
 

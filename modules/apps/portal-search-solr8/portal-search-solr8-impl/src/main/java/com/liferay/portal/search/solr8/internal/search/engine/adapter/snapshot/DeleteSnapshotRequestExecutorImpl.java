@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = DeleteSnapshotRequestExecutor.class)
+@Component(service = DeleteSnapshotRequestExecutor.class)
 public class DeleteSnapshotRequestExecutorImpl
 	implements DeleteSnapshotRequestExecutor {
 

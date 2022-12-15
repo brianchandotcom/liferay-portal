@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrConfiguration",
-	immediate = true, service = SolrClientManager.class
+	service = SolrClientManager.class
 )
 public class SolrClientManager {
 

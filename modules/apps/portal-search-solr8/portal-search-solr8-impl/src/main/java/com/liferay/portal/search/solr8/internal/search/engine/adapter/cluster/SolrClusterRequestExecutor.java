@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(
-	immediate = true, property = "search.engine.impl=Solr",
-	service = ClusterRequestExecutor.class
+	property = "search.engine.impl=Solr", service = ClusterRequestExecutor.class
 )
 public class SolrClusterRequestExecutor implements ClusterRequestExecutor {
 

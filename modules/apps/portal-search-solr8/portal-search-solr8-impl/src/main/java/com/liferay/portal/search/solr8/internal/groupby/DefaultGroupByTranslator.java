@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
-@Component(immediate = true, service = GroupByTranslator.class)
+@Component(service = GroupByTranslator.class)
 public class DefaultGroupByTranslator implements GroupByTranslator {
 
 	@Override

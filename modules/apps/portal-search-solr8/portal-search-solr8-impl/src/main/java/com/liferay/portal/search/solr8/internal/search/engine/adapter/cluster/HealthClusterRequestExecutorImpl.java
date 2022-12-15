@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = HealthClusterRequestExecutor.class)
+@Component(service = HealthClusterRequestExecutor.class)
 public class HealthClusterRequestExecutorImpl
 	implements HealthClusterRequestExecutor {
 

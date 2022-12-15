@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrSSLSocketFactoryConfiguration",
-	immediate = true, service = SSLSocketFactoryBuilder.class
+	service = SSLSocketFactoryBuilder.class
 )
 public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 

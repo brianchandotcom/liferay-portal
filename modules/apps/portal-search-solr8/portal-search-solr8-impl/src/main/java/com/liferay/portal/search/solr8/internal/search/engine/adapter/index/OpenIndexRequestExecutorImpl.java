@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = OpenIndexRequestExecutor.class)
+@Component(service = OpenIndexRequestExecutor.class)
 public class OpenIndexRequestExecutorImpl implements OpenIndexRequestExecutor {
 
 	@Override

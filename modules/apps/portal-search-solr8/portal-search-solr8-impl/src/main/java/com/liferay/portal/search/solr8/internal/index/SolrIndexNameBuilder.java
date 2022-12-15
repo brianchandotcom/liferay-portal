@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = IndexNameBuilder.class)
+@Component(service = IndexNameBuilder.class)
 public class SolrIndexNameBuilder implements IndexNameBuilder {
 
 	@Override

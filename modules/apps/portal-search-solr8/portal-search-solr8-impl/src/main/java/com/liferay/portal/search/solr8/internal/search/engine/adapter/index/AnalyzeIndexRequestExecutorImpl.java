@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = AnalyzeIndexRequestExecutor.class)
+@Component(service = AnalyzeIndexRequestExecutor.class)
 public class AnalyzeIndexRequestExecutorImpl
 	implements AnalyzeIndexRequestExecutor {
 

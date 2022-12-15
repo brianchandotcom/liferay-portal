@@ -22,9 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(
-	immediate = true, service = UpdateByQueryDocumentRequestExecutor.class
-)
+@Component(service = UpdateByQueryDocumentRequestExecutor.class)
 public class UpdateByQueryDocumentRequestExecutorImpl
 	implements UpdateByQueryDocumentRequestExecutor {
 

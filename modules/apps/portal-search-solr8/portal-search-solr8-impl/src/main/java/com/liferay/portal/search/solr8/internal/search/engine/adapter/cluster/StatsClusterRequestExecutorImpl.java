@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = StatsClusterRequestExecutor.class)
+@Component(service = StatsClusterRequestExecutor.class)
 public class StatsClusterRequestExecutorImpl
 	implements StatsClusterRequestExecutor {
 

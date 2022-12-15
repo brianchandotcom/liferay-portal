@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrConfiguration",
-	immediate = true, service = BulkDocumentRequestExecutor.class
+	service = BulkDocumentRequestExecutor.class
 )
 public class BulkDocumentRequestExecutorImpl
 	implements BulkDocumentRequestExecutor {

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = DeleteDocumentRequestExecutor.class)
+@Component(service = DeleteDocumentRequestExecutor.class)
 public class DeleteDocumentRequestExecutorImpl
 	implements DeleteDocumentRequestExecutor {
 

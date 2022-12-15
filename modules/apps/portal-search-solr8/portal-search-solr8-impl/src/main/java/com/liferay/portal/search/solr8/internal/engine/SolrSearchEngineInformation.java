@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrConfiguration",
-	immediate = true, service = SearchEngineInformation.class
+	service = SearchEngineInformation.class
 )
 public class SolrSearchEngineInformation implements SearchEngineInformation {
 

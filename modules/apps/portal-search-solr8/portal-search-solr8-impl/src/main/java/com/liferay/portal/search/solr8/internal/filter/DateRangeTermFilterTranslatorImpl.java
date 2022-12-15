@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = DateRangeTermFilterTranslator.class)
+@Component(service = DateRangeTermFilterTranslator.class)
 public class DateRangeTermFilterTranslatorImpl
 	implements DateRangeTermFilterTranslator {
 

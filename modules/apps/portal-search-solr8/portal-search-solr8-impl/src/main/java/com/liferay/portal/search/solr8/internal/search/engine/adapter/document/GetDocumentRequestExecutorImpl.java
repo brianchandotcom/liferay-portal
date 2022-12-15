@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = GetDocumentRequestExecutor.class)
+@Component(service = GetDocumentRequestExecutor.class)
 public class GetDocumentRequestExecutorImpl
 	implements GetDocumentRequestExecutor {
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = RefreshIndexRequestExecutor.class)
+@Component(service = RefreshIndexRequestExecutor.class)
 public class RefreshIndexRequestExecutorImpl
 	implements RefreshIndexRequestExecutor {
 

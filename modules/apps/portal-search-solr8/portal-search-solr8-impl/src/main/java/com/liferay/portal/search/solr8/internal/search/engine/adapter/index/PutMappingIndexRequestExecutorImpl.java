@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = PutMappingIndexRequestExecutor.class)
+@Component(service = PutMappingIndexRequestExecutor.class)
 public class PutMappingIndexRequestExecutorImpl
 	implements PutMappingIndexRequestExecutor {
 

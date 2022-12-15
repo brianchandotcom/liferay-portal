@@ -27,25 +27,13 @@ public interface SamlPeerBindingFinder {
 		fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 			long companyId, boolean deleted, String samlNameIdFormat,
 			String samlNameIdNameQualifier, String samlNameIdValue,
-			String samlPeerEntityId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.saml.persistence.model.SamlPeerBinding>
-					orderByComparator);
-
-	public java.util.List<com.liferay.saml.persistence.model.SamlPeerBinding>
-		findByC_D_SNIF_SNINQ_SNIV_SPEI(
-			long companyId, boolean deleted, String samlNameIdFormat,
-			String samlNameIdNameQualifier, String samlNameIdValue,
 			String samlPeerEntityId);
 
 	public java.util.List<com.liferay.saml.persistence.model.SamlPeerBinding>
 		findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			long companyId, boolean deleted, String samlNameIdFormat,
 			String samlNameIdNameQualifier, String samlNameIdValue,
-			String samlPeerEntityId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.saml.persistence.model.SamlPeerBinding>
-					orderByComparator);
+			String samlPeerEntityId);
 
 	public java.util.List<com.liferay.saml.persistence.model.SamlPeerBinding>
 		findByC_U_D_SNIF_SNINQ_SPEI(

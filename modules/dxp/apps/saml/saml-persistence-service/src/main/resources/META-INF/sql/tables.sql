@@ -48,7 +48,7 @@ create table SamlPeerBinding (
 	userId LONG,
 	userName VARCHAR(75) null,
 	deleted BOOLEAN,
-	samlNameIdFormat VARCHAR(1024) null,
+	samlNameIdFormat VARCHAR(128) null,
 	samlNameIdNameQualifier VARCHAR(75) null,
 	samlNameIdSpNameQualifier VARCHAR(75) null,
 	samlNameIdSpProvidedId VARCHAR(75) null,

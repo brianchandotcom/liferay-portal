@@ -223,7 +223,13 @@ definition {
 			specificURL = "http://www.baker.com:9080",
 			userEmailAddress = "test@www.baker.com");
 
-		Log.viewLogFileContentNotPresent(logContent = "No default user was found for company");
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "No default user was found for company",
+			nodePort = "8080");
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "No default user was found for company",
+			nodePort = "9080");
 	}
 
 	@description = "This is a use case for LPS-171011."
@@ -255,14 +261,20 @@ definition {
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
-		Log.viewLogFileContentNotPresent(logContent = "No default user was found for company");
-
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@www.able.com");
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "No default user was found for company",
+			nodePort = "8080");
+
+		Clustering.viewTextNotPresentOnSpecificNode(
+			exceptionText = "No default user was found for company",
+			nodePort = "9080");
 	}
 
 	@priority = "4"

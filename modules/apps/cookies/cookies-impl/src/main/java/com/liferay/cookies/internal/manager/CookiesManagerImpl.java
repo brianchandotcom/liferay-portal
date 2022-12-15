@@ -504,33 +504,25 @@ public class CookiesManagerImpl implements CookiesManager {
 	private void _readInternalCookiesFromProperties(
 		Map<String, Object> properties) {
 
-		String[] functionalCookies = _getProperty(
-			properties, "cookies.functional");
-		String[] necessaryCookies = _getProperty(
-			properties, "cookies.necessary");
-		String[] performanceCookies = _getProperty(
-			properties, "cookies.performance");
-		String[] personalizationCookies = _getProperty(
-			properties, "cookies.personalization");
-
-		for (String cookieName : functionalCookies) {
+		for (String name : _getProperty(properties, "cookies.functional")) {
 			_internalCookies.put(
-				cookieName, CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
+				name, CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
 		}
 
-		for (String cookieName : necessaryCookies) {
-			_internalCookies.put(
-				cookieName, CookiesConstants.CONSENT_TYPE_NECESSARY);
+		for (String name : _getProperty(properties, "cookies.necessary")) {
+			_internalCookies.put(name, CookiesConstants.CONSENT_TYPE_NECESSARY);
 		}
 
-		for (String cookieName : performanceCookies) {
+		for (String name : _getProperty(properties, "cookies.performance")) {
 			_internalCookies.put(
-				cookieName, CookiesConstants.CONSENT_TYPE_PERFORMANCE);
+				name, CookiesConstants.CONSENT_TYPE_PERFORMANCE);
 		}
 
-		for (String cookieName : personalizationCookies) {
+		for (String name :
+				_getProperty(properties, "cookies.personalization")) {
+
 			_internalCookies.put(
-				cookieName, CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
+				name, CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
 		}
 	}
 

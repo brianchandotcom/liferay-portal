@@ -122,7 +122,7 @@ public class UADApplicationExportController {
 		String applicationKey) {
 
 		List<UADDisplay<?>> uadDisplayList =
-			_uadRegistry.getApplicationUADDisplayList(applicationKey);
+			_uadRegistry.getApplicationUADDisplays(applicationKey);
 
 		List<String> typeClassNames = new ArrayList<>();
 

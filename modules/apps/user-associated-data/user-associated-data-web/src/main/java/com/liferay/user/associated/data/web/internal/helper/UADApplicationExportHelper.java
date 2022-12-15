@@ -60,7 +60,7 @@ public class UADApplicationExportHelper {
 		String applicationKey, long groupId, long userId) {
 
 		List<UADDisplay<?>> uadDisplayList =
-			_uadRegistry.getApplicationUADDisplayList(applicationKey);
+			_uadRegistry.getApplicationUADDisplays(applicationKey);
 
 		List<UADExporter<?>> uadExporters = new ArrayList<>();
 

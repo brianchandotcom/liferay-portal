@@ -42,7 +42,7 @@ public class UADApplicationSummaryHelper {
 		String applicationKey) {
 
 		List<UADDisplay<?>> uadDisplayList =
-			_uadRegistry.getApplicationUADDisplayList(applicationKey);
+			_uadRegistry.getApplicationUADDisplays(applicationKey);
 
 		List<UADAnonymizer<?>> uadAnonymizerList = new ArrayList<>();
 
@@ -131,7 +131,7 @@ public class UADApplicationSummaryHelper {
 			String applicationKey = iterator.next();
 
 			List<UADDisplay<?>> uadDisplayList =
-				_uadRegistry.getApplicationUADDisplayList(applicationKey);
+				_uadRegistry.getApplicationUADDisplays(applicationKey);
 
 			List<UADDisplay<?>> applicationUADDisplays = new ArrayList<>();
 

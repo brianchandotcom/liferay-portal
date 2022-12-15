@@ -59,23 +59,17 @@ public class UADRegistry {
 		return _bundleUADAnonymizerServiceTrackerMap.keySet();
 	}
 
-	public List<UADDisplay<?>> getApplicationUADDisplayList(
+	public List<UADDisplay<?>> getApplicationUADDisplays(
 		String applicationKey) {
 
-		List<UADDisplay<?>> uadDisplayList = getApplicationUADDisplays(
-			applicationKey);
+		List<UADDisplay<?>> uadDisplayList =
+			_bundleUADDisplayServiceTrackerMap.getService(applicationKey);
 
 		if (uadDisplayList == null) {
 			return Collections.emptyList();
 		}
 
 		return uadDisplayList;
-	}
-
-	public List<UADDisplay<?>> getApplicationUADDisplays(
-		String applicationKey) {
-
-		return _bundleUADDisplayServiceTrackerMap.getService(applicationKey);
 	}
 
 	public Set<String> getApplicationUADDisplaysKeySet() {
@@ -98,7 +92,7 @@ public class UADRegistry {
 		return new ArrayList<>(
 			_getNonreviewableUADAnonymizers(
 				getApplicationUADAnonymizers(applicationKey),
-				getApplicationUADDisplayList(applicationKey)));
+				getApplicationUADDisplays(applicationKey)));
 	}
 
 	public List<UADAnonymizer<?>> getNonreviewableUADAnonymizerList() {

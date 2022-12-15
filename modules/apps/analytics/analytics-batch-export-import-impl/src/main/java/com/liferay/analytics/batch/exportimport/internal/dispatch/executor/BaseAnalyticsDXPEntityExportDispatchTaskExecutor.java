@@ -67,7 +67,7 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
 			getBatchEngineExportTaskItemDelegateName(),
-			dispatchTrigger.getCompanyId(), null,
+			dispatchTrigger.getCompanyId(), null, null,
 			message -> _updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),

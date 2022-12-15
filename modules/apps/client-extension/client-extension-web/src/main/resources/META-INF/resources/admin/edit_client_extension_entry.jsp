@@ -44,6 +44,8 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 		<liferay-ui:message arguments="<%= clientExtensionEntryTypeSettingsException.getMessageArguments() %>" key="<%= clientExtensionEntryTypeSettingsException.getMessageKey() %>" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= ClientExtensionEntryNameException.class %>" message="client-extension-name-is-required" />
+
 	<liferay-frontend:edit-form-body>
 		<h3 class="mb-3"><%= editClientExtensionEntryDisplayContext.getTitle() %></h3>
 

@@ -40,6 +40,7 @@ export declare type TNotificationTemplate = {
 	body: LocalizedValue<string>;
 	description: string;
 	editorType: editorTypeOptions;
+	externalReferenceCode: string;
 	name: string;
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number | null;

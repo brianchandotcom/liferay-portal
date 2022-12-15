@@ -93,6 +93,7 @@ export type TNotificationTemplate = {
 	body: LocalizedValue<string>;
 	description: string;
 	editorType: editorTypeOptions;
+	externalReferenceCode: string;
 	name: string;
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number | null;
@@ -278,6 +279,7 @@ export default function EditNotificationTemplate({
 		},
 		description: '',
 		editorType: 'richText' as editorTypeOptions,
+		externalReferenceCode: '',
 		name: '',
 		objectDefinitionExternalReferenceCode: '',
 		objectDefinitionId: 0,
@@ -366,6 +368,7 @@ export default function EditNotificationTemplate({
 					body,
 					description,
 					editorType,
+					externalReferenceCode,
 					name,
 					objectDefinitionExternalReferenceCode,
 					objectDefinitionId,
@@ -383,6 +386,7 @@ export default function EditNotificationTemplate({
 					body,
 					description,
 					editorType,
+					externalReferenceCode,
 					name,
 					objectDefinitionExternalReferenceCode,
 					objectDefinitionId,

@@ -30,12 +30,6 @@ public class MessageBusUtil {
 		return _messageBus;
 	}
 
-	public static void registerMessageListener(
-		String destinationName, MessageListener messageListener) {
-
-		_messageBus.registerMessageListener(destinationName, messageListener);
-	}
-
 	public static void sendMessage(String destinationName, Message message) {
 		_messageBus.sendMessage(destinationName, message);
 	}
@@ -54,13 +48,6 @@ public class MessageBusUtil {
 
 	public static void shutdown(boolean force) {
 		_messageBus.shutdown(force);
-	}
-
-	public static boolean unregisterMessageListener(
-		String destinationName, MessageListener messageListener) {
-
-		return _messageBus.unregisterMessageListener(
-			destinationName, messageListener);
 	}
 
 	private static volatile MessageBus _messageBus =

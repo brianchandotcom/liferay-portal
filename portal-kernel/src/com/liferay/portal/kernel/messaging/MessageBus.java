@@ -25,16 +25,10 @@ public interface MessageBus {
 
 	public Destination getDestination(String destinationName);
 
-	public boolean registerMessageListener(
-		String destinationName, MessageListener messageListener);
-
 	public void sendMessage(String destinationName, Message message);
 
 	public void shutdown();
 
 	public void shutdown(boolean force);
-
-	public boolean unregisterMessageListener(
-		String destinationName, MessageListener messageListener);
 
 }

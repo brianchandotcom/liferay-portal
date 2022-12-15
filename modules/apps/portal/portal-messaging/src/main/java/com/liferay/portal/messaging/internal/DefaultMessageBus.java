@@ -87,37 +87,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	}
 
 	@Override
-	public synchronized boolean registerMessageListener(
-		String destinationName, MessageListener messageListener) {
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination != null) {
-			return destination.register(messageListener);
-		}
-
-		List<MessageListener> queuedMessageListeners =
-			_queuedMessageListeners.get(destinationName);
-
-		if (queuedMessageListeners == null) {
-			queuedMessageListeners = new ArrayList<>();
-
-			_queuedMessageListeners.put(
-				destinationName, queuedMessageListeners);
-		}
-
-		queuedMessageListeners.add(messageListener);
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"Queuing message listener until destination " +
-					destinationName + " is added");
-		}
-
-		return false;
-	}
-
-	@Override
 	public void sendMessage(String destinationName, Message message) {
 		MessageBusThreadLocalUtil.populateMessageFromThreadLocals(message);
 
@@ -183,26 +152,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	}
 
 	@Override
-	public synchronized boolean unregisterMessageListener(
-		String destinationName, MessageListener messageListener) {
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination != null) {
-			return destination.unregister(messageListener);
-		}
-
-		List<MessageListener> queuedMessageListeners =
-			_queuedMessageListeners.get(destinationName);
-
-		if (ListUtil.isEmpty(queuedMessageListeners)) {
-			return false;
-		}
-
-		return queuedMessageListeners.remove(messageListener);
-	}
-
-	@Override
 	public void updated(String factoryPid, Dictionary<String, ?> dictionary)
 		throws ConfigurationException {
 
@@ -245,7 +194,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 					MessageListener messageListener = bundleContext.getService(
 						serviceReference);
 
-					registerMessageListener(destinationName, messageListener);
+					_registerMessageListener(destinationName, messageListener);
 
 					return new ObjectValuePair<>(
 						destinationName, messageListener);
@@ -269,7 +218,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 					ServiceReference<MessageListener> serviceReference,
 					ObjectValuePair<String, MessageListener> objectValuePair) {
 
-					unregisterMessageListener(
+					_unregisterMessageListener(
 						objectValuePair.getKey(), objectValuePair.getValue());
 
 					bundleContext.ungetService(serviceReference);
@@ -440,6 +389,36 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		}
 	}
 
+	private synchronized boolean _registerMessageListener(
+		String destinationName, MessageListener messageListener) {
+
+		Destination destination = _destinations.get(destinationName);
+
+		if (destination != null) {
+			return destination.register(messageListener);
+		}
+
+		List<MessageListener> queuedMessageListeners =
+			_queuedMessageListeners.get(destinationName);
+
+		if (queuedMessageListeners == null) {
+			queuedMessageListeners = new ArrayList<>();
+
+			_queuedMessageListeners.put(
+				destinationName, queuedMessageListeners);
+		}
+
+		queuedMessageListeners.add(messageListener);
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Queuing message listener until destination " +
+					destinationName + " is added");
+		}
+
+		return false;
+	}
+
 	private Destination _removeDestination(String destinationName) {
 		Destination destination = _destinations.remove(destinationName);
 
@@ -456,6 +435,25 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		}
 
 		return destination;
+	}
+
+	private synchronized boolean _unregisterMessageListener(
+		String destinationName, MessageListener messageListener) {
+
+		Destination destination = _destinations.get(destinationName);
+
+		if (destination != null) {
+			return destination.unregister(messageListener);
+		}
+
+		List<MessageListener> queuedMessageListeners =
+			_queuedMessageListeners.get(destinationName);
+
+		if (ListUtil.isEmpty(queuedMessageListeners)) {
+			return false;
+		}
+
+		return queuedMessageListeners.remove(messageListener);
 	}
 
 	private void _updateDestination(

@@ -51,7 +51,11 @@ public class ColorSelectionFDSFilter extends BaseSelectionFDSFilter {
 		return HashMapBuilder.<String, Object>put(
 			"exclude", false
 		).put(
-			"itemsValues", new String[] {"Blue", "Green", "Yellow"}
+			"selectedItems",
+			ListUtil.fromArray(
+				new SelectionFDSFilterItem("Blue", "Blue"),
+				new SelectionFDSFilterItem("Green", "Green"),
+				new SelectionFDSFilterItem("Yellow", "Yellow"))
 		).build();
 	}
 

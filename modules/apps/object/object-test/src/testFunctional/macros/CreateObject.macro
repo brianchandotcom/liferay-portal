@@ -234,6 +234,8 @@ definition {
 	macro assertRelationshipNotPresent {
 		LexiconEntry.gotoAdd();
 
+		MenuItem.clickNoError(menuItem = "Select Existing One");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(

@@ -240,8 +240,6 @@ definition {
 	@description = "LPS-156569 - Verify that it's possible to create an Action with Groovy Script"
 	@priority = "5"
 	test CanCreateActionWithGroovyScript {
-		property portal.acceptance = "quarantine";
-
 		task ("Given a Groovy Script") {
 			var groovyScript = '''
 			import com.liferay.object.service.ObjectEntryLocalServiceUtil;
@@ -436,8 +434,6 @@ definition {
 	@description = "LPS-156560 - Verify that it's possible to edit an Action with Groovy Script"
 	@priority = "5"
 	test CanEditActionWithGroovyScript {
-		property portal.acceptance = "quarantine";
-
 		task ("Given a Groovy Script") {
 			var groovyScript = '''
 			import com.liferay.object.service.ObjectEntryLocalServiceUtil;
@@ -502,16 +498,14 @@ definition {
 				objectLabel = "Custom Object",
 				scriptValidation = "${groovyScript}",
 				thenAction = "Groovy Script",
-				whenAction = "On After Add");
+				whenAction = "On After Update");
 		}
 
 		task ("When the Action is edited") {
-			ObjectAdmin.goToActionsTab();
-
 			ObjectAdmin.editObjectAction(
-				actionName = "New Action Update",
-				viewEntry = "Custom Action",
-				whenAction = "On After Update");
+				click = "save",
+				inputExpression = "customObjectField == 'Entry Update'",
+				viewEntry = "Custom Action");
 		}
 
 		task ("Then the object entry name is updated when the condition is met") {
@@ -519,7 +513,7 @@ definition {
 
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
 
-			ObjectAdmin.editEntryName(newEntryValue = "New Entry Update");
+			ObjectAdmin.editEntryName(newEntryValue = "Entry Update");
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 

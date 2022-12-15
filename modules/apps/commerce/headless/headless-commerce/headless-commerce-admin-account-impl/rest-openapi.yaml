@@ -288,6 +288,13 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 channelExternalReferenceCode:
                     type: string
                 channelId:

@@ -175,6 +175,70 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title");
 	}
 
+	@description = "This ensures that Users can re-add the same friendly URL for different languages in a layout."
+	@priority = "5"
+	test CanReAddSameFriendlyURLForDifferentLanguageInLayoutAfterRemoveTheTranslation {
+		var portalURL = PropsUtil.get("portal.url");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			siteURLKey = "test-site-name");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "es-ES",
+			localizedFriendlyURLList = "/prueba",
+			localizedNameList = "Prueba");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "ca-ES",
+			localizedFriendlyURLList = "/prueba",
+			localizedNameList = "Prueba");
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/prueba");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/prueba");
+
+		Navigator.openSpecificURL(url = "${portalURL}/en/web/test-site-name");
+
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			siteURLKey = "test-site-name");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			configureWithoutSave = "true",
+			friendlyURLLocalizedList = "es-ES",
+			localizedFriendlyURLList = "",
+			localizedNameList = "");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			configureWithoutSave = "true",
+			friendlyURLLocalizedList = "ca-ES",
+			localizedFriendlyURLList = "",
+			localizedNameList = "");
+
+		PortletEntry.changeLocale(
+			fieldName = "Friendly URL",
+			locale = "en-US");
+
+		PortletEntry.save();
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "es-ES",
+			localizedFriendlyURLList = "/prueba",
+			localizedNameList = "Prueba");
+
+		PagesAdmin.addLocalizedFriendlyURL(
+			friendlyURLLocalizedList = "ca-ES",
+			localizedFriendlyURLList = "/prueba",
+			localizedNameList = "Prueba");
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/prueba");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/prueba");
+	}
+
 	@description = "This ensures that a user is redirected to the updated friendlyURL when he accesses the former friendlyURL."
 	@priority = "5"
 	test CanRedirectToUpdatedFriendlyURL {

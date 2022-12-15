@@ -307,5 +307,13 @@ definition {
 
 		AssertElementPresent(locator1 = "ACEventAnalysis#VIEW_TOTAL_NUMBER_RELATED_COLUMN_INFORMATION");
 	}
+	
+	macro selectAutocompleteOption {		
+		Click(locator1 = "ACEventAnalysis#INPUT_CONDITION");
 
+		WaitForElementPresent(locator1 = "ACEventAnalysis#DROPDOWN_BY_INDEX", key_index = "${dropdownIndex}");
+		AssertClick(
+			locator1 = "ACEventAnalysis#DROPDOWN_BY_INDEX",
+			value1 = "${dropdownData}");
+	}	
 }

@@ -251,7 +251,7 @@ definition {
 			import java.io.Serializable;
 			import java.util.Map;
 
-			ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(objectEntryId);
+			ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);
 
 			Map<String, Serializable> values = objectEntry.getValues();
 
@@ -259,7 +259,7 @@ definition {
 
 			System.out.println(objectEntry);
 
-			ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), objectEntryId, values, new ServiceContext());
+			ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), id, values, new ServiceContext());
 			''';
 		}
 
@@ -447,7 +447,7 @@ definition {
 			import java.io.Serializable;
 			import java.util.Map;
 
-			ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(objectEntryId);
+			ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);
 
 			Map<String, Serializable> values = objectEntry.getValues();
 
@@ -455,7 +455,7 @@ definition {
 
 			System.out.println(objectEntry);
 
-			ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), objectEntryId, values, new ServiceContext());
+			ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), id, values, new ServiceContext());
 			''';
 		}
 

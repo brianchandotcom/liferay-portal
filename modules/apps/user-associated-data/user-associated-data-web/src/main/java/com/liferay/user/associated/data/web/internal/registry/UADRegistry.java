@@ -43,12 +43,6 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = UADRegistry.class)
 public class UADRegistry {
 
-	public List<UADAnonymizer<?>> getApplicationUADAnonymizerList(
-		String applicationKey) {
-
-		return getApplicationUADAnonymizers(applicationKey);
-	}
-
 	public List<UADAnonymizer<?>> getApplicationUADAnonymizers(
 		String applicationKey) {
 
@@ -76,16 +70,6 @@ public class UADRegistry {
 		return _bundleUADDisplayServiceTrackerMap.keySet();
 	}
 
-	public List<UADExporter<?>> getApplicationUADExporters(
-		String applicationKey) {
-
-		return _bundleUADExporterServiceTrackerMap.getService(applicationKey);
-	}
-
-	public Set<String> getApplicationUADExportersKeySet() {
-		return _bundleUADDisplayServiceTrackerMap.keySet();
-	}
-
 	public List<UADAnonymizer<?>> getNonreviewableApplicationUADAnonymizers(
 		String applicationKey) {
 
@@ -106,10 +90,6 @@ public class UADRegistry {
 
 	public UADAnonymizer<?> getUADAnonymizer(String key) {
 		return _uadAnonymizerServiceTrackerMap.getService(key);
-	}
-
-	public List<UADAnonymizer<?>> getUADAnonymizerList() {
-		return new ArrayList<>(getUADAnonymizers());
 	}
 
 	public Collection<UADAnonymizer<?>> getUADAnonymizers() {
@@ -150,8 +130,6 @@ public class UADRegistry {
 			(Class<UADAnonymizer<?>>)(Class<?>)UADAnonymizer.class);
 		_bundleUADDisplayServiceTrackerMap = _getMultiValueServiceTrackerMap(
 			bundleContext, (Class<UADDisplay<?>>)(Class<?>)UADDisplay.class);
-		_bundleUADExporterServiceTrackerMap = _getMultiValueServiceTrackerMap(
-			bundleContext, (Class<UADExporter<?>>)(Class<?>)UADExporter.class);
 		_bundleUADHierarchyDeclarationServiceTrackerMap =
 			_getUADHierachyDeclarationServiceTrackerMap(
 				bundleContext, UADHierarchyDeclaration.class);
@@ -168,7 +146,6 @@ public class UADRegistry {
 	protected void deactivate() {
 		_bundleUADAnonymizerServiceTrackerMap.close();
 		_bundleUADDisplayServiceTrackerMap.close();
-		_bundleUADExporterServiceTrackerMap.close();
 		_bundleUADHierarchyDeclarationServiceTrackerMap.close();
 		_uadAnonymizerServiceTrackerMap.close();
 		_uadDisplayServiceTrackerMap.close();
@@ -255,8 +232,6 @@ public class UADRegistry {
 		_bundleUADAnonymizerServiceTrackerMap;
 	private ServiceTrackerMap<String, List<UADDisplay<?>>>
 		_bundleUADDisplayServiceTrackerMap;
-	private ServiceTrackerMap<String, List<UADExporter<?>>>
-		_bundleUADExporterServiceTrackerMap;
 	private ServiceTrackerMap<String, UADHierarchyDeclaration>
 		_bundleUADHierarchyDeclarationServiceTrackerMap;
 	private ServiceTrackerMap<String, UADAnonymizer<?>>

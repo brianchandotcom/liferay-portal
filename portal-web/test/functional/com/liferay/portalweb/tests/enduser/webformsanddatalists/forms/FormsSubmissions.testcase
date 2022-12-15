@@ -904,6 +904,69 @@ definition {
 			locator1 = "Form#REPORT_DATA_RESPONDENTS");
 	}
 
+	@description = "Verify if the option to allow submitters to see partial form results after submission works with more than one response."
+	@priority = "4"
+	test CheckSeePartialResultsButtonWithMoreThanOneAnswer {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Form.selectOptionSubmissions(checkboxOption = "Show Forms Report Data to Respondents");
+
+		Button.clickDone();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormPortlet.submitSuccessfully();
+
+		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+
+		AssertElementPresent(
+			key_reportData = "Test",
+			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+
+		AssertElementNotPresent(
+			key_reportData = "FormTest",
+			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+
+		Click(locator1 = "Button#BACK");
+
+		Form.submitAgain();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "FormTest");
+
+		FormPortlet.submitSuccessfully();
+
+		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+
+		AssertElementPresent(
+			key_reportData = "Test",
+			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+
+		AssertElementPresent(
+			key_reportData = "FormTest",
+			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+	}
+
 	@description = "Verify if with 'Limit to one submit per user' enabled, the translation options are the same as those present in the Form Builder"
 	@priority = "3"
 	test CheckTranslationOptionsOneSubmissionPerUserMessage {

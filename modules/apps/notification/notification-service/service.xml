@@ -170,7 +170,9 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>NotificationRecipientSettingValue</exception>
 		<exception>NotificationTemplateAttachmentObjectFieldId</exception>
+		<exception>NotificationTemplateEditorType</exception>
 		<exception>NotificationTemplateFrom</exception>
 		<exception>NotificationTemplateName</exception>
 		<exception>NotificationTemplateObjectDefinitionId</exception>

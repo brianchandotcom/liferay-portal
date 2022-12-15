@@ -90,7 +90,7 @@ public class CookiesManagerImpl implements CookiesManager {
 		if (_internalCookies.get(cookie.getName()) != null) {
 			return addCookie(
 				_internalCookies.get(cookie.getName()), cookie,
-				httpServletRequest, httpServletResponse);
+				httpServletRequest, httpServletResponse, secure);
 		}
 
 		if (_log.isWarnEnabled()) {
@@ -480,17 +480,37 @@ public class CookiesManagerImpl implements CookiesManager {
 		return cookie.getValue();
 	}
 
+	private String[] _getProperty(
+		Map<String, Object> properties, String propertyName) {
+
+		String[] propertyStringArray = GetterUtil.getStringValues(
+			properties.get(propertyName));
+
+		if ((propertyStringArray != null) && (propertyStringArray.length > 0)) {
+			return propertyStringArray;
+		}
+
+		String propertyString = GetterUtil.getString(
+			properties.get(propertyName));
+
+		if (Validator.isNotNull(propertyString)) {
+			return new String[] {propertyString};
+		}
+
+		return new String[0];
+	}
+
 	private void _readInternalCookiesFromProperties(
 		Map<String, Object> properties) {
 
-		String[] functionalCookies = GetterUtil.getStringValues(
-			properties.get("cookies.functional"));
-		String[] necessaryCookies = GetterUtil.getStringValues(
-			properties.get("cookies.necessary"));
-		String[] performanceCookies = GetterUtil.getStringValues(
-			properties.get("cookies.performance"));
-		String[] personalizationCookies = GetterUtil.getStringValues(
-			properties.get("cookies.personalization"));
+		String[] functionalCookies = _getProperty(
+			properties, "cookies.functional");
+		String[] necessaryCookies = _getProperty(
+			properties, "cookies.necessary");
+		String[] performanceCookies = _getProperty(
+			properties, "cookies.performance");
+		String[] personalizationCookies = _getProperty(
+			properties, "cookies.personalization");
 
 		for (String cookieName : functionalCookies) {
 			_internalCookies.put(

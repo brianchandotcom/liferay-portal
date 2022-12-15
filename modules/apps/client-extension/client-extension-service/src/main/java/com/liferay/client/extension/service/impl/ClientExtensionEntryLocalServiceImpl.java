@@ -15,7 +15,6 @@
 package com.liferay.client.extension.service.impl;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryNameException;
-import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;

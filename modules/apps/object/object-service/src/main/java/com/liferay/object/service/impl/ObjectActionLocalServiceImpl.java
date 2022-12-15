@@ -28,6 +28,7 @@ import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
 import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
+import com.liferay.object.internal.definition.util.ObjectDefinitionPermissionUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -36,6 +37,7 @@ import com.liferay.object.scripting.validator.ObjectScriptingValidator;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectActionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -49,6 +51,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -123,7 +127,28 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setParameters(parametersUnicodeProperties.toString());
 		objectAction.setStatus(ObjectActionConstants.STATUS_NEVER_RAN);
 
-		return objectActionPersistence.update(objectAction);
+		objectAction = objectActionPersistence.update(objectAction);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectAction.getObjectDefinitionId());
+
+		if (objectDefinition.isApproved() &&
+			Objects.equals(
+				objectAction.getObjectActionTriggerKey(),
+				ObjectActionTriggerConstants.KEY_STANDALONE)) {
+
+			try {
+				ObjectDefinitionPermissionUtil.populateResourceActions(
+					objectActionLocalService, objectDefinition,
+					_portletLocalService, _resourceActions);
+			}
+			catch (Exception exception) {
+				ReflectionUtil.throwException(exception);
+			}
+		}
+
+		return objectAction;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -141,7 +166,22 @@ public class ObjectActionLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectAction deleteObjectAction(ObjectAction objectAction) {
-		return objectActionPersistence.remove(objectAction);
+		objectAction = objectActionPersistence.remove(objectAction);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(
+				objectAction.getObjectDefinitionId());
+
+		if (objectDefinition.isApproved() &&
+			Objects.equals(
+				objectAction.getObjectActionTriggerKey(),
+				ObjectActionTriggerConstants.KEY_STANDALONE)) {
+
+			_resourceActions.removeModelResource(
+				objectDefinition.getClassName(), objectAction.getName());
+		}
+
+		return objectAction;
 	}
 
 	@Override
@@ -595,6 +635,12 @@ public class ObjectActionLocalServiceImpl
 
 	@Reference
 	private ObjectScriptingValidator _objectScriptingValidator;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 	@Reference
 	private UserLocalService _userLocalService;

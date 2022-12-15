@@ -24,6 +24,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.internal.definition.util.ObjectDefinitionPermissionUtil;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
@@ -49,6 +50,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -57,7 +59,6 @@ import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -75,11 +76,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -114,6 +111,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		GroupLocalService groupLocalService,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
+		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
@@ -143,6 +141,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_groupLocalService = groupLocalService;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
+		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
@@ -176,7 +175,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			objectDefinition.getClassName(), _objectEntryLocalService);
 
 		try {
-			_readResourceActions(objectDefinition);
+			ObjectDefinitionPermissionUtil.populateResourceActions(
+				_objectActionLocalService, objectDefinition,
+				_portletLocalService, _resourceActions);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -363,59 +364,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			objectDefinition.getClassName());
 	}
 
-	private String _getPermissionsGuestUnsupported(
-		ObjectDefinition objectDefinition) {
-
-		if (objectDefinition.isEnableComments()) {
-			return "<action-key>DELETE_DISCUSSION</action-key>" +
-				"<action-key>UPDATE_DISCUSSION</action-key>";
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private String _getPermissionsSupports(ObjectDefinition objectDefinition) {
-		if (objectDefinition.isEnableComments()) {
-			return StringBundler.concat(
-				"<action-key>ADD_DISCUSSION</action-key>",
-				"<action-key>DELETE_DISCUSSION</action-key>",
-				"<action-key>UPDATE_DISCUSSION</action-key>");
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private void _readResourceActions(ObjectDefinition objectDefinition)
-		throws Exception {
-
-		ClassLoader classLoader =
-			ObjectDefinitionDeployerImpl.class.getClassLoader();
-
-		Document document = SAXReaderUtil.read(
-			StringUtil.replace(
-				StringUtil.read(
-					classLoader, "resource-actions/resource-actions.xml.tpl"),
-				new String[] {
-					"[$MODEL_NAME$]", "[$PERMISSIONS_GUEST_UNSUPPORTED$]",
-					"[$PERMISSIONS_SUPPORTS$]", "[$PORTLET_NAME$]",
-					"[$RESOURCE_NAME$]"
-				},
-				new String[] {
-					objectDefinition.getClassName(),
-					_getPermissionsGuestUnsupported(objectDefinition),
-					_getPermissionsSupports(objectDefinition),
-					objectDefinition.getPortletId(),
-					objectDefinition.getResourceName()
-				}));
-
-		_resourceActions.populateModelResources(document);
-		_resourceActions.populatePortletResource(
-			_portletLocalService.getPortletById(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getPortletId()),
-			classLoader, document);
-	}
-
 	private final AccountEntryLocalService _accountEntryLocalService;
 	private final AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
@@ -428,6 +376,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final GroupLocalService _groupLocalService;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
+	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;

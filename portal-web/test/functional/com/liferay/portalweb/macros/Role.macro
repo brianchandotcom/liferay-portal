@@ -382,6 +382,16 @@ definition {
 						locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
 						value1 = "${permissionNavigationValue}");
 
+					if (IsElementNotPresent(locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}", value1 = "${permissionNavigationValue}")) {
+						Refresh();
+
+						WaitForPageLoad();
+
+						Type(
+							locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+							value1 = "${permissionNavigationValue}");
+					}
+
 					AssertClick(
 						locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}",
 						value1 = "${permissionNavigationValue}");

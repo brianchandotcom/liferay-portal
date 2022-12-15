@@ -63,7 +63,7 @@
 
 <tr>
 	<td>CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS</td>
-	<td>//a[contains(.,'Control Panel') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Custom Objects')]</td>
+	<td>//a[contains(.,'Control Panel') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Custom Object')]</td>
 	<td></td>
 </tr>
 <tr>

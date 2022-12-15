@@ -2191,7 +2191,20 @@ public class ObjectEntryLocalServiceImpl
 				UserGroupRoleTable.INSTANCE.companyId.eq(
 					permissionChecker.getCompanyId())
 			).and(
-				GroupTable.INSTANCE.classPK.eq(column)
+				GroupTable.INSTANCE.classPK.eq(
+					column
+				).or(
+					GroupTable.INSTANCE.classPK.in(
+						DSLQueryFactoryUtil.select(
+							AccountEntryOrganizationRelTable.INSTANCE.
+								organizationId
+						).from(
+							AccountEntryOrganizationRelTable.INSTANCE
+						).where(
+							AccountEntryOrganizationRelTable.INSTANCE.
+								accountEntryId.eq(column)
+						))
+				).withParentheses()
 			)
 		).union(
 			DSLQueryFactoryUtil.select(
@@ -2199,8 +2212,11 @@ public class ObjectEntryLocalServiceImpl
 			).from(
 				RoleTable.INSTANCE
 			).where(
-				RoleTable.INSTANCE.name.eq(
-					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)
+				RoleTable.INSTANCE.name.in(
+					new String[] {
+						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
+						RoleConstants.ORGANIZATION_USER
+					})
 			)
 		);
 

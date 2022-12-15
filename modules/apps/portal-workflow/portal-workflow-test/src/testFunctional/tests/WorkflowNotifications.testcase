@@ -112,12 +112,42 @@ definition {
 	}
 
 	@description = "Verify that the user can open new user details by notifications"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOpenNewUserDetailsByNotifications {
+		property test.name.skip.portal.instance = "WorkflowNotifications#CanOpenNewUserDetailsByNotifications";
 
-		// TODO LRQA-70881 CanOpenNewUserDetailsByNotifications pending implementation
+		task ("Given Workflow is configured to Single Approver for User") {
+			Workflow.openWorkflowListView();
 
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "User");
+		}
+
+		task ("When a new user is created") {
+			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();
+
+			User.logoutPG();
+
+			WorkflowAsset.createNewUserAccount(
+				newPassword = "password",
+				userEmailAddress = "user@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Then a notification is sent to the Admin User containing the new user's details") {
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			WorkflowAsset.gotoViaNotification(assetType = "User");
+
+			WorkflowAsset.viewUserDetails(userEmailAddress = "user@liferay.com");
+		}
 	}
 
 	@description = "LPS-135888 - Verify that when the user delete the order, the notifications are not displayed"

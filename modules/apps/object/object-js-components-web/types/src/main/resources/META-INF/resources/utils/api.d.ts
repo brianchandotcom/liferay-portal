@@ -19,6 +19,7 @@ export interface NotificationTemplate {
 	cc: string;
 	description: string;
 	editorType: 'freemarker' | 'richText';
+	externalReferenceCode: string;
 	from: string;
 	fromName: LocalizedValue<string>;
 	id: number;

@@ -112,6 +112,16 @@
 	<td>xpath=(//td[@class='table-column-text-start'])[${index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SORT_BUTTON</td>
+	<td>//button[@aria-label='sort']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_DIRECTION</td>
+	<td>//*[contains(@class,'order-list-${key_sortDirection}')]</td>
+	<td></td>
+</tr>
 
 <!-- NEW PROPERTY SCREEN -->
 

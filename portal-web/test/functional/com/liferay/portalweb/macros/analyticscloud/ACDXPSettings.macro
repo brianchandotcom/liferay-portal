@@ -361,4 +361,10 @@ definition {
 		}
 	}
 
+	macro setSortDirection {
+		if (IsElementNotPresent(key_sortDirection = "${sortDirection}", locator1 = "ACDXPSettings#SORT_DIRECTION")) {
+			Click(locator1 = "ACDXPSettings#SORT_BUTTON");
+		}
+	}
+
 }

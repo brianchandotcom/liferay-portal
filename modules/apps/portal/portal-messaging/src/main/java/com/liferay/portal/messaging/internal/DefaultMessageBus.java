@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -344,14 +343,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 		String destinationName = MapUtil.getString(
 			properties, "destination.name");
-
-		if (BaseDestination.class.isInstance(destination)) {
-			BaseDestination baseDestination = (BaseDestination)destination;
-
-			baseDestination.setName(destinationName);
-
-			baseDestination.afterPropertiesSet();
-		}
 
 		_addDestination(destination);
 

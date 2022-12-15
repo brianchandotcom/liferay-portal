@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.messaging;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Set;
@@ -33,12 +32,6 @@ public abstract class BaseDestination implements Destination {
 		DestinationEventListener destinationEventListener) {
 
 		return _destinationEventListeners.add(destinationEventListener);
-	}
-
-	public void afterPropertiesSet() {
-		if (Validator.isNull(name)) {
-			throw new IllegalArgumentException("Name is null");
-		}
 	}
 
 	@Override

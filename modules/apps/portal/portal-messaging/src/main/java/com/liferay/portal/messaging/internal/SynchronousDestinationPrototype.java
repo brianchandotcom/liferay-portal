@@ -34,8 +34,6 @@ public class SynchronousDestinationPrototype implements DestinationPrototype {
 		synchronousDestination.setName(
 			destinationConfiguration.getDestinationName());
 
-		synchronousDestination.afterPropertiesSet();
-
 		return synchronousDestination;
 	}
 

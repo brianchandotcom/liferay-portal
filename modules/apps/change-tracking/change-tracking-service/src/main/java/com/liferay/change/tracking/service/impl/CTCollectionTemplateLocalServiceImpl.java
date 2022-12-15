@@ -113,20 +113,20 @@ public class CTCollectionTemplateLocalServiceImpl
 			companyId, start, end);
 	}
 
-	public Set<String> getTemplateStringTokens() {
-		Map<String, String> templateMap = _getTemplateMap(0);
+	public Set<String> getTokens() {
+		Map<String, String> tokensMap = _getTokensMap(0);
 
-		return templateMap.keySet();
+		return tokensMap.keySet();
 	}
 
 	@Override
-	public String parseTemplateString(long ctCollectionTemplateId, String s) {
+	public String parseTokens(long ctCollectionTemplateId, String s) {
 		if (s.contains(StringPool.DOLLAR_AND_OPEN_CURLY_BRACE)) {
 			StringBundler sb = new StringBundler();
 
 			int current = 0;
 
-			Map<String, String> templateMap = _getTemplateMap(
+			Map<String, String> tokensMap = _getTokensMap(
 				ctCollectionTemplateId);
 
 			while (current < s.length()) {
@@ -138,9 +138,9 @@ public class CTCollectionTemplateLocalServiceImpl
 
 				sb.append(s.substring(current, openBrace));
 
-				String template = s.substring(openBrace, closeBrace + 1);
+				String token = s.substring(openBrace, closeBrace + 1);
 
-				sb.append(templateMap.get(template));
+				sb.append(tokensMap.get(token));
 
 				current = closeBrace + 1;
 			}
@@ -176,7 +176,7 @@ public class CTCollectionTemplateLocalServiceImpl
 		return ctCollectionTemplatePersistence.update(ctCollectionTemplate);
 	}
 
-	private Map<String, String> _getTemplateMap(long ctCollectionTemplateId) {
+	private Map<String, String> _getTokensMap(long ctCollectionTemplateId) {
 		return HashMapBuilder.put(
 			"${CURRENT_USERNAME}",
 			() -> {

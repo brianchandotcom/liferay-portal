@@ -352,13 +352,13 @@ public class CTCollectionTemplateLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Set<String> getTemplateStringTokens() {
-		return _ctCollectionTemplateLocalService.getTemplateStringTokens();
+	public java.util.Set<String> getTokens() {
+		return _ctCollectionTemplateLocalService.getTokens();
 	}
 
 	@Override
-	public String parseTemplateString(long ctCollectionTemplateId, String s) {
-		return _ctCollectionTemplateLocalService.parseTemplateString(
+	public String parseTokens(long ctCollectionTemplateId, String s) {
+		return _ctCollectionTemplateLocalService.parseTokens(
 			ctCollectionTemplateId, s);
 	}
 

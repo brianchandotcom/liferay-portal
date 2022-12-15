@@ -79,7 +79,7 @@ portletDisplay.setShowBackIcon(true);
 			).put(
 				"saveButtonLabel", LanguageUtil.get(request, saveButtonLabel)
 			).put(
-				"templateStringTokens", CTCollectionTemplateLocalServiceUtil.getTemplateStringTokens()
+				"tokens", CTCollectionTemplateLocalServiceUtil.getTokens()
 			).build()
 		%>'
 	/>

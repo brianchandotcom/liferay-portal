@@ -305,14 +305,12 @@ public class CTCollectionTemplateLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static Set<String> getTemplateStringTokens() {
-		return getService().getTemplateStringTokens();
+	public static Set<String> getTokens() {
+		return getService().getTokens();
 	}
 
-	public static String parseTemplateString(
-		long ctCollectionTemplateId, String s) {
-
-		return getService().parseTemplateString(ctCollectionTemplateId, s);
+	public static String parseTokens(long ctCollectionTemplateId, String s) {
+		return getService().parseTokens(ctCollectionTemplateId, s);
 	}
 
 	/**

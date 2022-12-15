@@ -53,9 +53,6 @@ page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONObject" %><%@
-page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.MultiSessionErrors" %><%@
@@ -71,8 +68,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Date" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
@@ -82,7 +77,5 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
 portletDisplay.setShowStagingIcon(false);
 %>

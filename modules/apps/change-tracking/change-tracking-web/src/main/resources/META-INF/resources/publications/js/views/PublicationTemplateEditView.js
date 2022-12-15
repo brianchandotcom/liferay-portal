@@ -33,7 +33,7 @@ export default function PublicationTemplateEditView({
 	publicationName,
 	redirect,
 	saveButtonLabel,
-	templateStringTokens,
+	tokens,
 }) {
 	const [showModal, setShowModal] = useState(false);
 	const [collaboratorData, setCollaboratorData] = useState(null);
@@ -153,7 +153,7 @@ export default function PublicationTemplateEditView({
 					{Liferay.Language.get('publication-template-token-help')}
 
 					<ul>
-						{templateStringTokens.map((token, i) => (
+						{tokens.map((token, i) => (
 							<li key={i}>{token}</li>
 						))}
 					</ul>

@@ -21,8 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLLECTION);
 
-List<CTCollectionTemplate> ctCollectionTemplates = (List<CTCollectionTemplate>)request.getAttribute("ctCollectionTemplates");
-Map<Long, JSONObject> templatesJsonMap = (Map<Long, JSONObject>)request.getAttribute("templatesJsonMap");
+String ctCollectionTemplates = (String)request.getAttribute(CTWebKeys.CT_COLLECTION_TEMPLATES);
+String templatesJsons = (String)request.getAttribute(CTWebKeys.CT_COLLECTION_TEMPLATES_JSONS);
 
 String actionName = "/change_tracking/edit_ct_collection";
 long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
@@ -80,7 +80,7 @@ portletDisplay.setShowBackIcon(true);
 			).put(
 				"ctCollectionId", ctCollectionId
 			).put(
-				"ctCollectionTemplates", jsonSerializer.serializeDeep(ctCollectionTemplates)
+				"ctCollectionTemplates", ctCollectionTemplates
 			).put(
 				"descriptionFieldMaxLength", ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description")
 			).put(
@@ -102,7 +102,7 @@ portletDisplay.setShowBackIcon(true);
 			).put(
 				"showTemplates", showTemplates
 			).put(
-				"templatesJsonMap", JSONFactoryUtil.looseSerializeDeep(templatesJsonMap)
+				"templatesJsonMap", templatesJsons
 			).build()
 		%>'
 	/>

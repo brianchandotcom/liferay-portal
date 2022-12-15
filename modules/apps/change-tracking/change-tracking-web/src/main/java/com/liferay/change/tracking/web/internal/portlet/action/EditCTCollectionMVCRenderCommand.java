@@ -19,7 +19,9 @@ import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -67,8 +69,11 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 			_ctCollectionTemplateLocalService.getCTCollectionTemplates(
 				themeDisplay.getCompanyId(), 0, 100);
 
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
 		renderRequest.setAttribute(
-			"ctCollectionTemplates", ctCollectionTemplates);
+			CTWebKeys.CT_COLLECTION_TEMPLATES,
+			jsonSerializer.serializeDeep(ctCollectionTemplates));
 
 		Map<Long, JSONObject> templatesJsonMap = new HashMap<>();
 
@@ -88,7 +93,9 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 				ctCollectionTemplate.getCtCollectionTemplateId(), jsonObject);
 		}
 
-		renderRequest.setAttribute("templatesJsonMap", templatesJsonMap);
+		renderRequest.setAttribute(
+			CTWebKeys.CT_COLLECTION_TEMPLATES_JSONS,
+			_jsonFactory.looseSerializeDeep(templatesJsonMap));
 
 		return "/publications/edit_ct_collection.jsp";
 	}
@@ -98,5 +105,8 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

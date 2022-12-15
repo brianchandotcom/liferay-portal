@@ -272,9 +272,9 @@ public interface CTCollectionTemplateLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Set<String> getTemplateStringTokens();
+	public Set<String> getTokens();
 
-	public String parseTemplateString(long ctCollectionTemplateId, String s);
+	public String parseTokens(long ctCollectionTemplateId, String s);
 
 	/**
 	 * Updates the ct collection template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

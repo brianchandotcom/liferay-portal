@@ -34,12 +34,12 @@ public class CTCollectionTemplateImpl extends CTCollectionTemplateBaseImpl {
 	}
 
 	public String getParsedPublicationDescription() {
-		return CTCollectionTemplateLocalServiceUtil.parseTemplateString(
+		return CTCollectionTemplateLocalServiceUtil.parseTokens(
 			getCtCollectionTemplateId(), getPublicationDescription());
 	}
 
 	public String getParsedPublicationName() {
-		return CTCollectionTemplateLocalServiceUtil.parseTemplateString(
+		return CTCollectionTemplateLocalServiceUtil.parseTokens(
 			getCtCollectionTemplateId(), getPublicationName());
 	}
 

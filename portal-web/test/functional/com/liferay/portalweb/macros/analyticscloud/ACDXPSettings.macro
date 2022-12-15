@@ -154,6 +154,12 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro setSortDirection {
+		if (IsElementNotPresent(key_sortDirection = "${sortDirection}", locator1 = "ACDXPSettings#SORT_DIRECTION")) {
+			Click(locator1 = "ACDXPSettings#SORT_BUTTON");
+		}
+	}
+
 	macro switchTab {
 		var key_tab = "${tabName}";
 
@@ -358,12 +364,6 @@ definition {
 			var key_itemValue = "${itemValue}";
 
 			AssertElementNotPresent(locator1 = "ACDXPSettings#VIEW_LIST_ITEM");
-		}
-	}
-
-	macro setSortDirection {
-		if (IsElementNotPresent(key_sortDirection = "${sortDirection}", locator1 = "ACDXPSettings#SORT_DIRECTION")) {
-			Click(locator1 = "ACDXPSettings#SORT_BUTTON");
 		}
 	}
 

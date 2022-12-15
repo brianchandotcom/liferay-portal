@@ -59,12 +59,11 @@ public class UADApplicationExportHelper {
 	public UADApplicationExportDisplay getUADApplicationExportDisplay(
 		String applicationKey, long groupId, long userId) {
 
-		List<UADDisplay<?>> uadDisplayList =
-			_uadRegistry.getApplicationUADDisplays(applicationKey);
-
 		List<UADExporter<?>> uadExporters = new ArrayList<>();
 
-		for (UADDisplay<?> uadDisplay : uadDisplayList) {
+		for (UADDisplay<?> uadDisplay :
+				_uadRegistry.getApplicationUADDisplays(applicationKey)) {
+
 			Class<?> typeClass = uadDisplay.getTypeClass();
 
 			String entityName = typeClass.getName();

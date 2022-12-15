@@ -121,12 +121,11 @@ public class UADApplicationExportController {
 	private List<String> _getApplicationUADEntityRegistryKeys(
 		String applicationKey) {
 
-		List<UADDisplay<?>> uadDisplayList =
-			_uadRegistry.getApplicationUADDisplays(applicationKey);
-
 		List<String> typeClassNames = new ArrayList<>();
 
-		for (UADDisplay<?> uadDisplay : uadDisplayList) {
+		for (UADDisplay<?> uadDisplay :
+				_uadRegistry.getApplicationUADDisplays(applicationKey)) {
+
 			Class<?> typeClass = uadDisplay.getTypeClass();
 
 			String entityName = typeClass.getName();

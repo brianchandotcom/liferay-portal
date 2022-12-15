@@ -25,7 +25,6 @@ import com.liferay.user.associated.data.web.internal.display.UADApplicationSumma
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -41,12 +40,11 @@ public class UADApplicationSummaryHelper {
 	public List<UADAnonymizer<?>> getApplicationUADAnonymizers(
 		String applicationKey) {
 
-		List<UADDisplay<?>> uadDisplayList =
-			_uadRegistry.getApplicationUADDisplays(applicationKey);
-
 		List<UADAnonymizer<?>> uadAnonymizerList = new ArrayList<>();
 
-		for (UADDisplay<?> uadDisplay : uadDisplayList) {
+		for (UADDisplay<?> uadDisplay :
+				_uadRegistry.getApplicationUADDisplays(applicationKey)) {
+
 			Class<?> typeClass = uadDisplay.getTypeClass();
 
 			String entityName = typeClass.getName();
@@ -125,17 +123,12 @@ public class UADApplicationSummaryHelper {
 
 		int count = 0;
 
-		Iterator<String> iterator = applicationUADDisplaysKeySet.iterator();
-
-		while (iterator.hasNext()) {
-			String applicationKey = iterator.next();
-
-			List<UADDisplay<?>> uadDisplayList =
-				_uadRegistry.getApplicationUADDisplays(applicationKey);
-
+		for (String applicationKey : applicationUADDisplaysKeySet) {
 			List<UADDisplay<?>> applicationUADDisplays = new ArrayList<>();
 
-			for (UADDisplay<?> uadDisplay : uadDisplayList) {
+			for (UADDisplay<?> uadDisplay :
+					_uadRegistry.getApplicationUADDisplays(applicationKey)) {
+
 				if (ArrayUtil.isNotEmpty(groupIds) ==
 						uadDisplay.isSiteScoped()) {
 

@@ -20,11 +20,14 @@ import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductChannel;
 import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.ProductChannelDTOConverter;
+import com.liferay.headless.commerce.machine.learning.internal.odata.entity.v1_0.ProductChannelEntityModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.odata.entity.EntityModel;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +44,13 @@ public class ProductChannelBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<ProductChannel> {
 
 	public static final String KEY = "analytics-product-channel";
+
+	@Override
+	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
+		throws Exception {
+
+		return new ProductChannelEntityModel();
+	}
 
 	@Override
 	public Class<ProductChannel> getItemClass() {

@@ -20,11 +20,14 @@ import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.Order;
 import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.OrderDTOConverter;
+import com.liferay.headless.commerce.machine.learning.internal.odata.entity.v1_0.OrderEntityModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.odata.entity.EntityModel;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +44,13 @@ public class OrderBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<Order> {
 
 	public static final String KEY = "analytics-order";
+
+	@Override
+	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
+		throws Exception {
+
+		return new OrderEntityModel();
+	}
 
 	@Override
 	public Class<Order> getItemClass() {

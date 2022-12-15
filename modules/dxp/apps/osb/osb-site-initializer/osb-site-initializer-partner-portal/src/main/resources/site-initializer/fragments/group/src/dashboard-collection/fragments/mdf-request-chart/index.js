@@ -10,6 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
@@ -28,6 +29,7 @@ const colors = {
 export default function () {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
 	const [titleChart, setTitleChart] = useState('');
+	const [loading, setLoading] = useState(false);
 
 	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 		.split('/')
@@ -35,6 +37,7 @@ export default function () {
 		.join('/');
 
 	const getMDFRequests = async () => {
+		setLoading(true);
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(
 			`/o/c/mdfrequests?nestedFields=accountEntry,mdfRequestToActivities,activityToBudgets,mdfRequestToMdfClaims&nestedFieldsDepth=2&pageSize=9999`,
@@ -50,6 +53,7 @@ export default function () {
 			const mdfRequests = await response.json();
 
 			getChartColumns(mdfRequests, setColumnsMDFChart, setTitleChart);
+			setLoading(false);
 
 			return;
 		}
@@ -101,6 +105,8 @@ export default function () {
 			}
 			title="Market Development Funds"
 		>
+			{loading && <ClayLoadingIndicator className="mt-10" size="md" />}
+
 			<DonutChart chartData={chartData} titleChart={titleChart} />
 		</Container>
 	);

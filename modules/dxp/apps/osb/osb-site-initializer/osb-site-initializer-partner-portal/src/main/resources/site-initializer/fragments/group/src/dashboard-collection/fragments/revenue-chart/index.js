@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useState} from 'react';
 
 import Container from '../../common/components/container';
@@ -23,8 +24,10 @@ const colors = {
 export default function () {
 	const [titleChart, setTitleChart] = useState('');
 	const [columnsRevenueChart, setColumnsRevenueChart] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	const getRevenueData = async () => {
+		setLoading(true);
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch('/o/c/opportunitysfs', {
 			headers: {
@@ -41,6 +44,7 @@ export default function () {
 				setTitleChart,
 				setColumnsRevenueChart
 			);
+			setLoading(false);
 
 			return;
 		}
@@ -62,6 +66,8 @@ export default function () {
 
 	return (
 		<Container className="revenue-chart-card-height" title="Revenue">
+			{loading && <ClayLoadingIndicator className="mt-10" size="md" />}
+
 			<DonutChart chartData={chartData} titleChart={titleChart} />
 		</Container>
 	);

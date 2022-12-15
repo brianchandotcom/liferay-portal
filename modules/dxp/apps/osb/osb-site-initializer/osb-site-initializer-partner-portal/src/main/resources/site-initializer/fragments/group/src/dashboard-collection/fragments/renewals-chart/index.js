@@ -72,7 +72,7 @@ export default function () {
 			}
 			title="Renewals"
 		>
-			{!data && <ClayLoadingIndicator />}
+			{!data && <ClayLoadingIndicator size="md" />}
 
 			<div className="align-items-start d-flex flex-column mt-3">
 				{data?.items?.map((item, index) => {

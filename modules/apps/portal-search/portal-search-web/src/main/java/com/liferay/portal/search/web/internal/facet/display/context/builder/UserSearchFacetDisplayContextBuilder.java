@@ -137,7 +137,7 @@ public class UserSearchFacetDisplayContextBuilder {
 		userSearchFacetTermDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
 		userSearchFacetTermDisplayContext.setSelected(isSelected(term));
-		userSearchFacetTermDisplayContext.setUserName(term);
+		userSearchFacetTermDisplayContext.setBucketText(term);
 
 		return userSearchFacetTermDisplayContext;
 	}
@@ -195,7 +195,7 @@ public class UserSearchFacetDisplayContextBuilder {
 		userSearchFacetTermDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
 		userSearchFacetTermDisplayContext.setSelected(true);
-		userSearchFacetTermDisplayContext.setUserName(_paramValues.get(0));
+		userSearchFacetTermDisplayContext.setBucketText(_paramValues.get(0));
 
 		return Collections.singletonList(userSearchFacetTermDisplayContext);
 	}

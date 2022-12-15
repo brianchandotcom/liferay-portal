@@ -57,8 +57,8 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDis
 						%>
 
 							<li class="facet-value">
-								<a class="<%= userSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getUserName()) %>" href="javascript:void(0);">
-									<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getUserName()) %>
+								<a class="<%= userSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getBucketText()) %>" href="javascript:void(0);">
+									<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getBucketText()) %>
 
 									<c:if test="<%= userSearchFacetTermDisplayContext.isFrequencyVisible() %>">
 										<span class="frequency">(<%= userSearchFacetTermDisplayContext.getFrequency() %>)</span>

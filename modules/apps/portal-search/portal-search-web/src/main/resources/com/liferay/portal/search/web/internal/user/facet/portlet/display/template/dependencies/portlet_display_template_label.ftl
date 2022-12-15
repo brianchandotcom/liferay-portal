@@ -17,13 +17,13 @@
 				<#list entries as entry>
 					<button
 						class="btn label label-lg facet-term term-name ${(entry.isSelected())?then('label-primary facet-term-selected', 'label-secondary facet-term-unselected')}"
-						data-term-id="${entry.getUserName()}"
+						data-term-id="${entry.getBucketText()}"
 						disabled
 						onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						type="button"
 					>
 						<span class="label-item label-item-expand">
-							${htmlUtil.escape(entry.getUserName())}
+							${htmlUtil.escape(entry.getBucketText())}
 
 							<#if entry.isFrequencyVisible()>
 								(${entry.getFrequency()})

@@ -110,6 +110,14 @@ public class BucketDisplayContext {
 	}
 
 	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getBucketText()}
+	 */
+	@Deprecated
+	public String getUserName() {
+		return _bucketText;
+	}
+
+	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getFilterValue()}
 	 */
 	@Deprecated

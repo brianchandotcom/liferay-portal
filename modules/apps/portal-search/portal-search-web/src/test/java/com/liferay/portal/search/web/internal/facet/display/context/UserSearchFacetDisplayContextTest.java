@@ -102,7 +102,7 @@ public class UserSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			0, userSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			userName, userSearchFacetTermDisplayContext.getUserName());
+			userName, userSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertTrue(userSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			userSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -140,7 +140,7 @@ public class UserSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			count, userSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			userName, userSearchFacetTermDisplayContext.getUserName());
+			userName, userSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertFalse(userSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			userSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -178,7 +178,7 @@ public class UserSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			count, userSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
-			userName, userSearchFacetTermDisplayContext.getUserName());
+			userName, userSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertTrue(userSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			userSearchFacetTermDisplayContext.isFrequencyVisible());

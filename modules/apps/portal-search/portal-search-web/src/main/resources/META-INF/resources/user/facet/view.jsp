@@ -97,7 +97,7 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 													autocomplete="off"
 													<%= userSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 													class="custom-control-input facet-term"
-													data-term-id="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getUserName()) %>"
+													data-term-id="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getBucketText()) %>"
 													disabled
 													id="<portlet:namespace />term_<%= i %>"name="<portlet:namespace />term_<%= i %>"
 													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
@@ -106,7 +106,7 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 
 												<span class="custom-control-label term-name <%= userSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 													<span class="custom-control-label-text">
-														<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getUserName()) %>
+														<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getBucketText()) %>
 													</span>
 												</span>
 

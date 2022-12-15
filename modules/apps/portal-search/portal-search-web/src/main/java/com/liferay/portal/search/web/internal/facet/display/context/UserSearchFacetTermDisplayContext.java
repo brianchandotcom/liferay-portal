@@ -14,21 +14,8 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import java.io.Serializable;
-
 /**
  * @author Lino Alves
  */
 public class UserSearchFacetTermDisplayContext extends BucketDisplayContext {
-
-	public String getUserName() {
-		return _userName;
-	}
-
-	public void setUserName(String userName) {
-		_userName = userName;
-	}
-	
-	private String _userName;
-
 }

@@ -47,7 +47,11 @@ definition {
 
 		ACUtils.selectGenericOption(optionValue = "${optionValue}");
 
-		if ((IsElementNotPresent(key_text = "calendar", locator1 = "Icon#ANY")) && ("${optionValue}" != "True") && ("${optionValue}" != "False")) {
+		if ("${dropdownIndex}" != "") {
+			ACEventAnalysis.selectAutocompleteOption(key_index = "${dropdownIndex}", dropdownData = "${dropdownData}");
+		}
+
+		else if ((IsElementNotPresent(key_text = "calendar", locator1 = "Icon#ANY")) && ("${optionValue}" != "True") && ("${optionValue}" != "False")) {
 			Type(
 				locator1 = "ACEventAnalysis#INPUT_CONDITION",
 				value1 = "${inputValue}");

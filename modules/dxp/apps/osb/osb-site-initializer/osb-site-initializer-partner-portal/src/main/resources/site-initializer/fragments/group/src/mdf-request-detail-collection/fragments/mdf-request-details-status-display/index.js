@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,9 +8,15 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+/* eslint-disable no-undef */
+const findRequestIdUrl = (paramsUrl) => {
+	const splitParamsUrl = paramsUrl.split('?');
+
+	return splitParamsUrl[0];
+};
 
 const currentPath = Liferay.currentURL.split('/');
-const mdfRequestId = +currentPath.at(-1);
+const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 
 const getMDFRequestStatus = async () => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch

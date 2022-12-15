@@ -9,41 +9,47 @@
  * distribution rights of the Software.
  */
 /* eslint-disable no-undef */
+const findRequestIdUrl = (paramsUrl) => {
+	const splitParamsUrl = paramsUrl.split('?');
 
+	return splitParamsUrl[0];
+};
 const currentPath = Liferay.currentURL.split('/');
-const mdfRequestId = +currentPath.at(-1);
+const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 
 const getContactInfo = async () => {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(
-		`/o/c/mdfrequests/${mdfRequestId}?nestedFields=user`,
-		{
-			headers: {
-				'accept': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
+	if (!isNaN(mdfRequestId)) {
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		const response = await fetch(
+			`/o/c/mdfrequests/${mdfRequestId}?nestedFields=user`,
+			{
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			}
+		);
+		if (response.ok) {
+			const data = await response.json();
+			const firstName = data?.r_userToMDFRequests_user?.givenName;
+			const infoEmail = data?.r_userToMDFRequests_user?.emailAddress;
+
+			fragmentElement.querySelector(
+				'#firstName'
+			).innerHTML = `${Liferay.Util.escape(firstName)}`;
+
+			fragmentElement.querySelector(
+				'#infoEmail'
+			).innerHTML = `${Liferay.Util.escape(infoEmail)}`;
+
+			return;
 		}
-	);
-	if (response.ok) {
-		const data = await response.json();
-		const firstName = data?.r_userToMDFRequests_user?.givenName;
-		const infoEmail = data?.r_userToMDFRequests_user?.emailAddress;
 
-		fragmentElement.querySelector(
-			'#firstName'
-		).innerHTML = `${Liferay.Util.escape(firstName)}`;
-
-		fragmentElement.querySelector(
-			'#infoEmail'
-		).innerHTML = `${Liferay.Util.escape(infoEmail)}`;
-
-		return;
+		Liferay.Util.openToast({
+			message: 'An unexpected error occured.',
+			type: 'danger',
+		});
 	}
-
-	Liferay.Util.openToast({
-		message: 'An unexpected error occured.',
-		type: 'danger',
-	});
 };
 
 getContactInfo();

@@ -4,7 +4,10 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
+						"borderRadius": "",
+						"borderWidth": "0",
+						"shadow": "",
+						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
@@ -26,7 +29,7 @@
 						"definition": {
 							"fragment": {
 								"key": "layout",
-								"siteKey": "Raylife AP"
+								"siteKey": "AP"
 							},
 							"fragmentConfig": {
 								"layoutName": "Claims"
@@ -37,6 +40,8 @@
 						},
 						"pageElements": [
 							{
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -68,12 +73,14 @@
 								"type": "FragmentDropZone"
 							},
 							{
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
 											"fragment": {
 												"key": "plus-button",
-												"siteKey": "Raylife AP"
+												"siteKey": "AP"
 											},
 											"fragmentConfig": {
 												"buttonName": "NEW CLAIMS",
@@ -95,6 +102,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -247,7 +256,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "Raylife AP"
+																						"siteKey": "AP"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
@@ -258,26 +267,19 @@
 																				},
 																				"pageElements": [
 																					{
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
 																									"fragment": {
-																										"key": "fake-content",
-																										"siteKey": "Raylife AP"
+																										"key": "claims-total",
+																										"siteKey": "AP"
 																									},
 																									"fragmentConfig": {
-																										"fakeContentId": "fake content",
-																										"height": "257px"
+																										"textColor": ""
 																									},
 																									"fragmentFields": [
-																									],
-																									"fragmentViewports": [
-																										{
-																											"fragmentViewportStyle": {
-																												"marginBottom": "4"
-																											},
-																											"id": "landscapeMobile"
-																										}
 																									],
 																									"indexed": true
 																								},
@@ -319,7 +321,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "section",
-																						"siteKey": "Raylife AP"
+																						"siteKey": "AP"
 																					},
 																					"fragmentConfig": {
 																						"sectionId": "primary"
@@ -330,12 +332,14 @@
 																				},
 																				"pageElements": [
 																					{
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
 																									"fragment": {
 																										"key": "fake-content",
-																										"siteKey": "Raylife AP"
+																										"siteKey": "AP"
 																									},
 																									"fragmentConfig": {
 																										"fakeContentId": "fake content",
@@ -390,7 +394,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "section",
-																		"siteKey": "Raylife AP"
+																		"siteKey": "AP"
 																	},
 																	"fragmentConfig": {
 																		"sectionId": "primary"
@@ -401,12 +405,14 @@
 																},
 																"pageElements": [
 																	{
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
 																					"fragment": {
 																						"key": "claims-total-settlements-paid",
-																						"siteKey": "Raylife AP"
+																						"siteKey": "AP"
 																					},
 																					"fragmentConfig": {
 																						"textColor": ""
@@ -460,7 +466,7 @@
 														"definition": {
 															"fragment": {
 																"key": "section",
-																"siteKey": "Raylife AP"
+																"siteKey": "AP"
 															},
 															"fragmentConfig": {
 																"sectionId": "primary"
@@ -471,6 +477,8 @@
 														},
 														"pageElements": [
 															{
+																"definition": {
+																},
 																"pageElements": [
 																	{
 																		"definition": {

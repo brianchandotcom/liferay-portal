@@ -530,8 +530,10 @@ const PoliciesTable = () => {
 
 					const monthlyPremium = termPremium / 12;
 
+					const commissionValue = Number(commission);
+
 					policiesList.push({
-						commission: `$${commission.toFixed(2)}`,
+						commission: `$${commissionValue.toFixed(2)}`,
 						externalReferenceCode,
 						isExpiring: (renewalDue < 0).toString(),
 						isRedLine: (

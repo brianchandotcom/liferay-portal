@@ -87,6 +87,6 @@ export function getPoliciesChartExpiringPolicies(
 
 export function getPolicies() {
 	return axios.get(
-		`${DeliveryAPI}/?fields=endDate,totalCount,productName,termPremium&pageSize=200`
+		`${DeliveryAPI}/?fields=endDate,totalCount,productName,termPremium,externalReferenceCode&pageSize=200`
 	);
 }

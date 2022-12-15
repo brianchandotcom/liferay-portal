@@ -35,6 +35,6 @@ export function getClaimsByPeriod(
 
 export function getClaims() {
 	return axios.get(
-		`${DeliveryAPI}/?fields=claimStatus,claimCreateDate,claimAmount&pageSize=200`
+		`${DeliveryAPI}/?fields=claimStatus,claimCreateDate,claimAmount,r_policyToClaims_c_raylifePolicyERC&pageSize=200`
 	);
 }

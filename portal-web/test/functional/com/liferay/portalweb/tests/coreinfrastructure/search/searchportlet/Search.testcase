@@ -352,6 +352,7 @@ definition {
 		AssertAlertNotPresent();
 	}
 
+	@priority = "3"
 	test AssertModifiedFacetTermsWithDifferentDisplayTemplates {
 		task ("Create the Web Contents") {
 			for (var count : list "1,2,3") {
@@ -362,7 +363,7 @@ definition {
 			}
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "web content");
+		SearchPortlets.searchEmbedded(searchTerm = "Web Content");
 
 		task ("Change Display Template to 'Radio Layout' and assert the Web Contents are present") {
 			SearchFacetPortlet.updateFacetConfiguration(
@@ -419,7 +420,7 @@ definition {
 				locator1 = "Search#MODIFIED_FACET_SELECTION",
 				range = "Past 23 Hours");
 
-			Questions.viewNoSearchResults(questionsList = "Web Content 1,Web Content 2,Web Content 3");
+			SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Web Content 1/Web Content Article,Web Content 2/Web Content Article,Web Content 3/Web Content Article");
 		}
 	}
 

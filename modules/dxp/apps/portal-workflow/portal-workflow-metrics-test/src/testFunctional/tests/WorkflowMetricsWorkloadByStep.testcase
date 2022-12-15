@@ -111,6 +111,8 @@ definition {
 	@description = "LPS-86642 - Verify that the Overdue is the total number of pending instances that breached one or more SLAs target times"
 	@priority = "4"
 	test PendingItemsThatDoBreachSlaIsOverdue {
+		property portal.upstream = "quarantine";
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");

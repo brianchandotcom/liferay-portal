@@ -160,6 +160,8 @@ definition {
 	@description = "Verify that the user is able to click on the Current Node link and the node will be in evidence"
 	@priority = "3"
 	test CanClickCurrentNodeLink {
+		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -187,6 +189,8 @@ definition {
 	@description = "Verify that the users are able to identify the current node of the instance in the workflow"
 	@priority = "4"
 	test CanIdentifyCurrentNode {
+		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -489,6 +493,8 @@ definition {
 	@description = "Verify that the user is able to see the label of the transitions of a specific node while hovering it"
 	@priority = "4"
 	test CanSeeTransitionsLabelOnHoverNode {
+		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -945,6 +951,7 @@ definition {
 	@description = "LPS-92043 - Verify that the Due Date displays the next SLA in line when a SLA didn't start counting"
 	@priority = "3"
 	test DisplayNextSLAInLineWhenSLANotStarted {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#DisplayNextSLAInLineWhenSLANotStarted";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
@@ -1061,6 +1068,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will provide a summary for the total number of entries for each group next to the section title"
 	@priority = "3"
 	test DueDateBySlaProvidesSummaryForTotalNumberOfEntries {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#DueDateBySlaProvidesSummaryForTotalNumberOfEntries";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
@@ -1128,6 +1136,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, Resolved each due date has an icon according to the status On Time or Overdue, SLA name, due date and resolution status resolved on time or overdue"
 	@priority = "4"
 	test DueDateHasIconSlaNameDueDateAndResolutionStatus {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#DueDateHasIconSlaNameDueDateAndResolutionStatus";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1753,6 +1762,8 @@ definition {
 	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: On Time"
 	@priority = "3"
 	test ItemModalPlacesIconReferringToSlaStatusOnTime {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -2152,6 +2163,7 @@ definition {
 	@description = "LPS-130166 - Verify that popover for Due Date will display up to 2 SLAs and the order should be from the most to the least critical SLA"
 	@priority = "3"
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -3177,6 +3189,8 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, Open when an SLA is paused, the SLA status will be related to the moment when it triggered the pause timer"
 	@priority = "4"
 	test WhenSlaIsPausedSlaStatusIsRelatedToThePauseTimer {
+		property portal.upstream = "quarantine";
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");

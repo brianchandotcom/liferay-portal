@@ -172,6 +172,7 @@ definition {
 	@description = "LPS-89014 - Verify that deleting a SLA will not be reflected in all completed instances"
 	@priority = "4"
 	test DeletingSLANotReflectCompletedInstances {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#DeletingSLANotReflectCompletedInstances";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(

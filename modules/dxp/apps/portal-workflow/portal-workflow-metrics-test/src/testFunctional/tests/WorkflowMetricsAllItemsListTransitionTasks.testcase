@@ -630,6 +630,7 @@ definition {
 	@description = "LPS-108138 - Verify that the tasks on -Choose Transition Per Step- are grouped by versioned tasks -when there are changes in the workflow process-"
 	@priority = "4"
 	test TasksAreGroupedByVersionedTasks {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListTransitionTasks#TasksAreGroupedByVersionedTasks";
 
 		ApplicationsMenu.gotoPortlet(

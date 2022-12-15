@@ -110,7 +110,7 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 					<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />
 
 					<div class="form-text">
-						<liferay-ui:message key="a-url-to-the-external-application-source-code-for-convenience" />
+						<liferay-ui:message key="source-code-repository-url-for-the-client-extension" />
 					</div>
 				</aui:field-wrapper>
 

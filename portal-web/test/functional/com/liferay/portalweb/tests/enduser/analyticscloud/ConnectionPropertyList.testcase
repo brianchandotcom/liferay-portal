@@ -288,4 +288,125 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-12019 | Automation ID: LRAC-12586 | Test Summary: Can sort the list of properties"
+	@priority = "3"
+	test CanSortPropertyListInDXP {
+		var propertyNameListByCreateDateUp = "AC Sort Property,LXC Sort Property,DXP Sort Property";
+		var propertyNameListByCreateDateDown = "DXP Sort Property,LXC Sort Property,AC Sort Property";
+		var propertyNameListByAvailablePropertiesUp = "AC Sort Property,DXP Sort Property,LXC Sort Property";
+		var propertyNameListByAvailablePropertiesDown = "LXC Sort Property,DXP Sort Property,AC Sort Property";
+
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Create 3 new properties") {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${propertyNameListByCreateDateUp}");
+		}
+
+		task ("Search for a common term in property names so only manually created properties appear") {
+			ACUtils.searchBar(searchItem = "Sort");
+		}
+
+		task ("Sort the list by the Create Date column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "Create Date");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${propertyNameListByCreateDateUp}");
+		}
+
+		task ("Sort the list by the Create Date column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${propertyNameListByCreateDateDown}");
+		}
+
+		task ("Sort the list by the Available Properties column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "Available Properties");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${propertyNameListByAvailablePropertiesUp}");
+		}
+
+		task ("Sort the list by the Available Properties column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${propertyNameListByAvailablePropertiesDown}");
+		}
+
+		task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Search for a common term in property names so only manually created properties appear") {
+			ACUtils.searchBar(searchItem = "Sort");
+		}
+
+		task ("Sort the list by the Create Date column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "Create Date");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${propertyNameListByCreateDateUp}");
+		}
+
+		task ("Sort the list by the Create Date column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${propertyNameListByCreateDateDown}");
+		}
+
+		task ("Sort the list by the Available Properties column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "Available Properties");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${propertyNameListByAvailablePropertiesUp}");
+		}
+
+		task ("Sort the list by the Available Properties column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = "${propertyNameListByAvailablePropertiesDown}");
+		}
+	}
+
 }

@@ -425,7 +425,26 @@ public class CookiesManagerImpl implements CookiesManager {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_readInternalCookiesFromProperties(properties);
+		for (String name : _getProperty(properties, "cookies.functional")) {
+			_internalCookies.put(
+				name, CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
+		}
+
+		for (String name : _getProperty(properties, "cookies.necessary")) {
+			_internalCookies.put(name, CookiesConstants.CONSENT_TYPE_NECESSARY);
+		}
+
+		for (String name : _getProperty(properties, "cookies.performance")) {
+			_internalCookies.put(
+				name, CookiesConstants.CONSENT_TYPE_PERFORMANCE);
+		}
+
+		for (String name :
+				_getProperty(properties, "cookies.personalization")) {
+
+			_internalCookies.put(
+				name, CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
+		}
 	}
 
 	private Map<String, Cookie> _getCookiesMap(
@@ -499,31 +518,6 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 
 		return new String[0];
-	}
-
-	private void _readInternalCookiesFromProperties(
-		Map<String, Object> properties) {
-
-		for (String name : _getProperty(properties, "cookies.functional")) {
-			_internalCookies.put(
-				name, CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
-		}
-
-		for (String name : _getProperty(properties, "cookies.necessary")) {
-			_internalCookies.put(name, CookiesConstants.CONSENT_TYPE_NECESSARY);
-		}
-
-		for (String name : _getProperty(properties, "cookies.performance")) {
-			_internalCookies.put(
-				name, CookiesConstants.CONSENT_TYPE_PERFORMANCE);
-		}
-
-		for (String name :
-				_getProperty(properties, "cookies.personalization")) {
-
-			_internalCookies.put(
-				name, CookiesConstants.CONSENT_TYPE_PERSONALIZATION);
-		}
 	}
 
 	private static final String _SESSION_COOKIE_DOMAIN = PropsUtil.get(

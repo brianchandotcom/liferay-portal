@@ -45,6 +45,8 @@ SearchBarPortletInstanceConfigurationDisplayContext searchBarPortletInstanceConf
 			module="js/components/SystemSettingsFieldList"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
+					"fieldHelp", LanguageUtil.get(request, "suggestions-contributor-configuration-system-settings-help")
+				).put(
 					"fieldLabel", LanguageUtil.get(request, "suggestions-contributor-configuration")
 				).put(
 					"fieldName", "suggestionsContributorConfigurations"
@@ -57,5 +59,5 @@ SearchBarPortletInstanceConfigurationDisplayContext searchBarPortletInstanceConf
 		/>
 	</div>
 
-	<aui:input label="character-threshold-for-displaying-suggestions" name="suggestionsDisplayThreshold" value="<%= searchBarPortletInstanceConfigurationDisplayContext.getSuggestionsDisplayThreshold() %>" />
+	<aui:input helpMessage="character-threshold-for-displaying-suggestions-help" label="character-threshold-for-displaying-suggestions" name="suggestionsDisplayThreshold" value="<%= searchBarPortletInstanceConfigurationDisplayContext.getSuggestionsDisplayThreshold() %>" />
 </c:if>

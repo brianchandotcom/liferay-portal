@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -258,7 +259,21 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem>
-					<label>{Liferay.Language.get('include-asset-url')}</label>
+					<label>
+						{Liferay.Language.get('include-asset-url')}
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'include-asset-url-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
+					</label>
 
 					<ClaySelect
 						aria-label={Liferay.Language.get('include-asset-url')}
@@ -280,6 +295,18 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 				<ClayInput.GroupItem>
 					<label>
 						{Liferay.Language.get('include-asset-summary')}
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'include-asset-summary-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
 					</label>
 
 					<ClaySelect
@@ -306,7 +333,21 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 
 			<div className="form-group-autofit">
 				<ClayInput.GroupItem>
-					<label>{Liferay.Language.get('fields')}</label>
+					<label>
+						{Liferay.Language.get('fields')}
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'fields-suggestion-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
+					</label>
 
 					<ClayMultiSelect
 						items={multiSelectItems}
@@ -364,6 +405,18 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 						<span className="reference-mark">
 							<ClayIcon symbol="asterisk" />
 						</span>
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'suggestion-contributor-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
 					</label>
 
 					<ClaySelect
@@ -390,6 +443,18 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 						<span className="reference-mark">
 							<ClayIcon symbol="asterisk" />
 						</span>
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'display-group-name-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
 					</label>
 
 					<ClayInput
@@ -413,6 +478,18 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 						<span className="reference-mark">
 							<ClayIcon symbol="asterisk" />
 						</span>
+
+						<ClayTooltipProvider>
+							<span
+								className="ml-2"
+								data-tooltip-align="top"
+								title={Liferay.Language.get(
+									'size-suggestion-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</ClayTooltipProvider>
 					</label>
 
 					<ClayInput

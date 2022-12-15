@@ -14,6 +14,8 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
 const ADD_DELETE_BUTTON_STYLING = {
@@ -25,6 +27,7 @@ const ADD_DELETE_BUTTON_STYLING = {
 };
 
 function SystemSettingsFieldList({
+	fieldHelp,
 	fieldLabel,
 	fieldName,
 	initialValue,
@@ -80,6 +83,16 @@ function SystemSettingsFieldList({
 
 						<label htmlFor={`${fieldName}${index}`}>
 							{fieldLabel}
+
+							<ClayTooltipProvider>
+								<span
+									className="ml-2"
+									data-tooltip-align="top"
+									title={fieldHelp}
+								>
+									<ClayIcon symbol="question-circle-full" />
+								</span>
+							</ClayTooltipProvider>
 						</label>
 
 						<textarea

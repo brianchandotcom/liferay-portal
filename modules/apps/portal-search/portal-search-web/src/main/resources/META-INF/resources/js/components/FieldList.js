@@ -84,6 +84,7 @@ function Field({children, index, onDelete, showDeleteButton, showDragButton}) {
 				>
 					{showDragButton && (
 						<ClayButton
+							aria-label={Liferay.Language.get('move')}
 							borderless
 							className="drag-handle"
 							displayType="secondary"
@@ -100,6 +101,7 @@ function Field({children, index, onDelete, showDeleteButton, showDragButton}) {
 				{showDeleteButton && (
 					<ClayInput.GroupItem shrink>
 						<ClayButton
+							aria-label={Liferay.Language.get('delete')}
 							borderless
 							displayType="secondary"
 							monospaced
@@ -188,6 +190,7 @@ function FieldList({
 
 				{showAddButton && (
 					<ClayButton
+						aria-label={addButtonLabel}
 						displayType="secondary"
 						onClick={_handleAddField}
 					>

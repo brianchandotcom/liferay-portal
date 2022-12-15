@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INVITED_USER</td>
+	<td>//td[contains(.,'${key_userInvite}')]//following-sibling::td[contains(.,'${key_publicationRole}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_OUT_OF_DATE_STATUS</td>
 	<td>//a[contains(.,'${key_publicationName}')]//span/span[contains(.,'Out of Date')]</td>
 	<td></td>
@@ -92,12 +97,12 @@
 </tr>
 <tr>
 	<td>PUBLICATION_DESCRIPTION</td>
-	<td>//textarea[contains(@placeholder,'Enter the description of the publication')]</td>
+	<td>//textarea[contains(@placeholder,'Enter the description of the publication.')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLICATION_NAME</td>
-	<td>//input[contains(@placeholder,'Enter the name of the publication')]</td>
+	<td>//input[contains(@placeholder,'Enter the name of the publication (e.g.')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -473,6 +473,13 @@ definition {
 		AssertVisible(locator1 = "Publications#DISABLED_PUBLISH_BUTTON");
 	}
 
+	macro viewInvitedUser {
+		AssertElementPresent(
+			key_publicationRole = "${publicationRole}",
+			key_userInvite = "${userInvite}",
+			locator1 = "Publications#INVITED_USER");
+	}
+
 	macro viewNeedsManualResolution {
 		AssertElementPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 

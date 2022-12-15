@@ -141,6 +141,10 @@ public abstract class BaseTestClass implements TestClass {
 
 		BatchHistory batchHistory = batchTestClassGroup.getBatchHistory();
 
+		if (batchHistory == null) {
+			return null;
+		}
+
 		_testHistory = batchHistory.getTestHistory(getTestName());
 
 		return _testHistory;

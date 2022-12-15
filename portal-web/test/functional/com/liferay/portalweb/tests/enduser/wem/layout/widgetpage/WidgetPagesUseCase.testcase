@@ -143,7 +143,6 @@ definition {
 	@priority = "5"
 	@uitest
 	test ConfigureEmbeddedAndPanelPage {
-		property osgi.app.includes = "bookmarks";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -176,7 +175,7 @@ definition {
 			PagesAdmin.viewPanelPortletList(
 				componentName = "Community",
 				pageName = "Test Page Name 2",
-				portletNameList = "Bookmarks,My Sites,Page Comments,Page Flags,Page Ratings");
+				portletNameList = "My Sites,Page Comments,Page Flags,Page Ratings");
 		}
 
 		task ("View california page is shown") {
@@ -199,7 +198,7 @@ definition {
 			Page.viewPanelPortletListPG(
 				componentName = "Community",
 				pageName = "Test Page Name 2",
-				portletNameList = "Bookmarks,My Sites,Page Comments,Page Flags,Page Ratings");
+				portletNameList = "My Sites,Page Comments,Page Flags,Page Ratings");
 		}
 	}
 

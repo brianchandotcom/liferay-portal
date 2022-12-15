@@ -235,7 +235,6 @@ definition {
 	@priority = "3"
 	@uitest
 	test DontShowFolders {
-		property portal.release = "false";
 		property testray.component.names = "Related Assets";
 
 		task ("Add two widget pages with one widget each") {
@@ -300,11 +299,6 @@ definition {
 		}
 
 		task ("Create folders") {
-			JSONBookmarks.addFolder(
-				folderDescription = "Bookmarks Folder Description",
-				folderName = "Bookmarks Folder Name",
-				groupName = "Guest");
-
 			JSONFolder.addFolder(
 				dmFolderDescription = "DM Folder Description",
 				dmFolderName = "DM Folder Name",
@@ -331,7 +325,7 @@ definition {
 		}
 
 		task ("Assert folders are not shown in Page1") {
-			RelatedAssets.viewNoPG(assetTitleList = "Blogs Entry Title,Web Content Title,DM Folder Name,WC Folder Name,Bookmarks Folder Name");
+			RelatedAssets.viewNoPG(assetTitleList = "Blogs Entry Title,Web Content Title,DM Folder Name,WC Folder Name");
 		}
 
 		task ("Edit Web Content") {

@@ -240,26 +240,6 @@ definition {
 		}
 	}
 
-	@description = "Add a vocabulary for Bookmarks Entry."
-	@priority = "3"
-	test AddVocabularyForBookmarksEntry {
-		property portal.release = "false";
-
-		task ("Add a vocabulary for Bookmarks Entry") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addWithAssociatedAssetTypeCP(
-				assetType = "Bookmarks Entry",
-				vocabularyName = "Vocabulary Name 1");
-		}
-
-		task ("View the new vocabulary for Bookmarks Entry") {
-			Vocabulary.viewWithAssociatedAssetTypeCP(
-				vocabularyAssociatedAssetType = "Bookmarks Entry",
-				vocabularyName = "Vocabulary Name 1");
-		}
-	}
-
 	@description = "Add a vocabulary for Document."
 	@priority = "3"
 	test AddVocabularyForDocument {

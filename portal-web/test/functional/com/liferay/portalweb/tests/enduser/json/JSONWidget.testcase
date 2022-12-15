@@ -30,10 +30,8 @@ definition {
 	@description = "Add widgets to differents columns in a widget page via JSON."
 	@priority = "5"
 	test AddWidgetsToDifferentColumns {
-		property osgi.app.includes = "bookmarks";
-
 		task ("Add seven widgets to first column") {
-			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Category Filter,Documents and Media") {
+			for (var widgetName : list "Asset Publisher,Blogs,Breadcrumb,Category Filter,Documents and Media") {
 				JSONLayout.addWidgetToPublicLayout(
 					column = "1",
 					groupName = "Test Site Name",
@@ -57,7 +55,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets") {
+			for (var widgetName : list "Asset Publisher,Blogs,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets") {
 				Portlet.viewTitle(portletName = "${widgetName}");
 			}
 		}
@@ -66,7 +64,6 @@ definition {
 	@description = "Add different types of widget to private page via JSON."
 	@priority = "5"
 	test AddWidgetsToPrivateLayout {
-		property osgi.app.includes = "bookmarks";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a private page") {
@@ -76,7 +73,7 @@ definition {
 		}
 
 		task ("Add different types of widget to private page") {
-			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
+			for (var widgetName : list "Asset Publisher,Blogs,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
 				JSONLayout.addWidgetToPrivateLayout(
 					groupName = "Test Site Name",
 					layoutName = "Private Page Name",
@@ -89,7 +86,7 @@ definition {
 				pageName = "Private Page Name",
 				siteName = "Test Site Name");
 
-			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
+			for (var widgetName : list "Asset Publisher,Blogs,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
 				Portlet.viewTitle(portletName = "${widgetName}");
 			}
 		}
@@ -98,10 +95,8 @@ definition {
 	@description = "Add different types of widget to public page via JSON."
 	@priority = "5"
 	test AddWidgetsToPublicLayout {
-		property osgi.app.includes = "bookmarks";
-
 		task ("Add different types of widget to public page") {
-			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
+			for (var widgetName : list "Asset Publisher,Blogs,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name",
@@ -114,7 +109,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			for (var widgetName : list "Asset Publisher,Blogs,Bookmarks,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
+			for (var widgetName : list "Asset Publisher,Blogs,Breadcrumb,Category Filter,Documents and Media,Language Selector,Media Gallery,Message Boards,My Sites,Menu Display,Related Assets,Search Results,Site Map,Sites Directory,Tag Filter,Type Facet,Web Content Display,Wiki") {
 				Portlet.viewTitle(portletName = "${widgetName}");
 			}
 		}

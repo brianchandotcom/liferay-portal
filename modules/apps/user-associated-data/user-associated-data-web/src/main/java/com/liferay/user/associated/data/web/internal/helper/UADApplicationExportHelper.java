@@ -31,8 +31,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -109,14 +107,11 @@ public class UADApplicationExportHelper {
 					applicationKey, groupId, userId));
 		}
 
-		Stream<UADApplicationExportDisplay> uadApplicationExportDisplaysStream =
-			uadApplicationExportDisplays.stream();
+		uadApplicationExportDisplays.sort(
+			Comparator.comparing(
+				UADApplicationExportDisplay::getApplicationKey));
 
-		return uadApplicationExportDisplaysStream.sorted(
-			Comparator.comparing(UADApplicationExportDisplay::getApplicationKey)
-		).collect(
-			Collectors.toList()
-		);
+		return uadApplicationExportDisplays;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

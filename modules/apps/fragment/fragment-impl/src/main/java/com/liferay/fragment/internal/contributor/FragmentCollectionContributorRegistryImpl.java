@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.internal.contributor;
 
-import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistration;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -179,22 +177,6 @@ public class FragmentCollectionContributorRegistryImpl
 				dynamicQuery.add(
 					property.eq(fragmentEntry.getFragmentEntryKey()));
 			});
-
-		try {
-			FragmentServiceConfiguration fragmentServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					FragmentServiceConfiguration.class,
-					fragmentEntry.getCompanyId());
-
-			actionableDynamicQuery.setInterval(
-				fragmentServiceConfiguration.fragmentEntryLinkBatchSize());
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<FragmentEntryLink>)
 				fragmentEntryLink -> {

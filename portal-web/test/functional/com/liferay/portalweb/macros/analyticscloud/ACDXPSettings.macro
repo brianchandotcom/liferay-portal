@@ -333,4 +333,12 @@ definition {
 		}
 	}
 
+	macro viewGenericListItemNotPresent {
+		for (var itemValue : list "${itemValueList}") {
+			var key_itemValue = "${itemValue}";
+
+			AssertElementNotPresent(locator1 = "ACDXPSettings#VIEW_LIST_ITEM");
+		}
+	}
+
 }

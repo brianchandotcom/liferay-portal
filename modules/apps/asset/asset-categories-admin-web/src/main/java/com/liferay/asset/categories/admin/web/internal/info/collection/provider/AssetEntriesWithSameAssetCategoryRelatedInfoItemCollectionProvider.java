@@ -25,10 +25,13 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
+import com.liferay.info.localized.bundle.ResourceBundleInfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
@@ -122,9 +125,15 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Override
 	public InfoForm getConfigurationInfoForm() {
+		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
+
+		infoFieldSetEntries.add(_getItemTypesInfoField());
+
+		infoFieldSetEntries.addAll(_getAssetCategoryRuleInfoFields());
+
 		return InfoForm.builder(
-		).infoFieldSetEntry(
-			_getItemTypesInfoField()
+		).infoFieldSetEntries(
+			infoFieldSetEntries
 		).build();
 	}
 
@@ -136,6 +145,52 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	@Override
 	public Class<?> getSourceItemClass() {
 		return AssetCategory.class;
+	}
+
+	private List<InfoFieldSetEntry> _getAssetCategoryRuleInfoFields() {
+		InfoField assetCategoryRuleInfoField = InfoField.builder(
+		).infoFieldType(
+			SelectInfoFieldType.INSTANCE
+		).namespace(
+			StringPool.BLANK
+		).name(
+			"assetCategoryRule"
+		).attribute(
+			SelectInfoFieldType.OPTIONS,
+			ListUtil.fromArray(
+				new SelectInfoFieldType.Option(
+					new ResourceBundleInfoLocalizedValue(
+						getClass(), "not-selected"),
+					StringPool.BLANK),
+				new SelectInfoFieldType.Option(
+					new ResourceBundleInfoLocalizedValue(
+						getClass(), "any-category-of-the-same-vocabulary"),
+					"anyAssetCategory"),
+				new SelectInfoFieldType.Option(
+					new ResourceBundleInfoLocalizedValue(
+						getClass(), "a-specific-category"),
+					"specificAssetCategory"))
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "and-contains")
+		).localizable(
+			true
+		).build();
+
+		InfoField specificAssetCategoryIdInfoField = InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).namespace(
+			StringPool.BLANK
+		).name(
+			"specificAssetCategoryId"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "category")
+		).localizable(
+			false
+		).build();
+
+		return ListUtil.fromArray(
+			assetCategoryRuleInfoField, specificAssetCategoryIdInfoField);
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(

@@ -967,6 +967,68 @@ definition {
 			locator1 = "Form#REPORT_DATA_RESPONDENTS");
 	}
 
+	@description = "Verify if that the See Partial results page displays graphs correctly."
+	@priority = "3"
+	test CheckSeePartialResultsPageWithGraph {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Form.selectOptionSubmissions(checkboxOption = "Show Forms Report Data to Respondents");
+
+		Button.clickDone();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection",
+			formPageNumber = "0");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 1",
+			optionValue = "1");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 2",
+			optionValue = "2");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 3",
+			optionValue = "3");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 4",
+			optionValue = "4");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		ClickNoError(
+			key_optionValue = "Option 3",
+			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_OPTION");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_radioOption = "3",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Button.clickSubmitButton();
+
+		WaitForElementPresent(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+
+		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+
+		AssertElementPresent(
+			locator1 = "Form#REPORT_RESPONDENTS_SINGLE_SELECTION",
+			optionValue = "3");
+	}
+
 	@description = "Verify if with 'Limit to one submit per user' enabled, the translation options are the same as those present in the Form Builder"
 	@priority = "3"
 	test CheckTranslationOptionsOneSubmissionPerUserMessage {

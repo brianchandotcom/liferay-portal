@@ -455,7 +455,7 @@ definition {
 			attribute1 = "value",
 			key_fieldFieldLabel = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
-			value1 = "Document_3.png");
+			value1 = "Document_3 (1).png");
 
 		FormFields.viewTextValueDescription(
 			fieldName = "Image",
@@ -487,7 +487,7 @@ definition {
 			attribute1 = "value",
 			key_fieldFieldLabel = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
-			value1 = "Document_3.png");
+			value1 = "Document_3 (2).png");
 
 		FormFields.viewTextValueDescription(
 			fieldName = "Image",

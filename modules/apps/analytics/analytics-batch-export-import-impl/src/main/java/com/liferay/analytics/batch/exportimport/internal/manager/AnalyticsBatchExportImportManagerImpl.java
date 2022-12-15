@@ -76,7 +76,7 @@ public class AnalyticsBatchExportImportManagerImpl
 	@Override
 	public void exportToAnalyticsCloud(
 			String batchEngineExportTaskItemDelegateName, long companyId,
-			List<String> fieldNamesList,
+			List<String> fieldNamesList, String filterString,
 			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
 			Date resourceLastModifiedDate, String resourceName, long userId)
 		throws Exception {
@@ -92,6 +92,23 @@ public class AnalyticsBatchExportImportManagerImpl
 				StringBundler.concat(
 					Field.getSortableFieldName(Field.MODIFIED_DATE), " ge ",
 					resourceLastModifiedDate.getTime()));
+		}
+
+		if (filterString != null) {
+			if (resourceLastModifiedDate != null) {
+				parameters.put(
+					"filter",
+					StringBundler.concat(
+						"(", parameters.get("filter"), ") and (", filterString,
+						")"));
+			}
+			else {
+				parameters.put("filter", filterString);
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Filtering by: " + parameters.get("filter"));
 		}
 
 		BatchEngineExportTask batchEngineExportTask =

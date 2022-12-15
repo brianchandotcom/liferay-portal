@@ -55,11 +55,6 @@
 	<td>//div[@class='publication-template-name' and contains(.,'${key_templateName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>TEMPLATE_SELECTOR</td>
-	<td>//select[contains(@id,'templateSelector')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

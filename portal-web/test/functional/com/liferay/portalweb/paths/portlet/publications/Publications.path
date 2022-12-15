@@ -207,7 +207,12 @@
 </tr>
 <tr>
 	<td>TEMPLATE_OPTION</td>
-	<td>//select[contains(@id,'templateSelector')]//option[contains(.,'${key_templateName}')]</td>
+	<td>//div[label[contains(.,'Template')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_SELECTOR</td>
+	<td>//select[contains(@id,'templateSelector')]</td>
 	<td></td>
 </tr>
 </tbody>

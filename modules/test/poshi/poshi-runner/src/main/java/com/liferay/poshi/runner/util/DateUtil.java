@@ -34,6 +34,19 @@ import java.util.TimeZone;
  */
 public class DateUtil {
 
+	public static String format(
+			String date, String oldPattern, String newPattern)
+		throws Exception {
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(oldPattern);
+
+		Date d = simpleDateFormat.parse(date);
+
+		simpleDateFormat.applyPattern(newPattern);
+
+		return simpleDateFormat.format(d);
+	}
+
 	public static String getCurrentDate() {
 		return getFormattedCurrentDate("d");
 	}

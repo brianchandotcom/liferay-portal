@@ -1,21 +1,31 @@
+@component-name = "portal-lima"
 definition {
 
 	property portal.upstream = "true";
 	property testray.main.component.name = "Announcements";
 
 	setUp {
+		TestCase.setUpPortalInstance();
+
 		User.firstLoginPG();
 	}
 
 	tearDown {
-		AnnouncementsNavigator.opentoAdmin(
-			groupName = "Guest",
-			siteURLKey = "guest");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		while (IsElementPresent(locator1 = "Announcements#ANNOUNCEMENT_TITLE_ANY")) {
-			JSONAnnouncement.deleteAnnouncement(
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			AnnouncementsNavigator.opentoAdmin(
 				groupName = "Guest",
 				siteURLKey = "guest");
+
+			while (IsElementPresent(locator1 = "Announcements#ANNOUNCEMENT_TITLE_ANY")) {
+				JSONAnnouncement.deleteAnnouncement(
+					groupName = "Guest",
+					siteURLKey = "guest");
+			}
 		}
 	}
 

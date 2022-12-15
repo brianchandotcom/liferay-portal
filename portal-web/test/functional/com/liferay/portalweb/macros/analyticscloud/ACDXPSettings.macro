@@ -83,17 +83,19 @@ definition {
 	}
 
 	macro createNewProperty {
-		Click(
-			ariaLabel = "Create a New Property",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		for (var newPropertyName : list "${newPropertyNameList}") {
+			Click(
+				ariaLabel = "Create a New Property",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-		Type(
-			locator1 = "ACDXPSettings#NEW_PROPERTY_NAME",
-			value1 = "${newPropertyName}");
+			Type(
+				locator1 = "ACDXPSettings#NEW_PROPERTY_NAME",
+				value1 = "${newPropertyName}");
 
-		Click(
-			key_text = "Create",
-			locator1 = "Button#ANY");
+			Click(
+				key_text = "Create",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	macro disconnectDXPFromAnalyticsCloud {
@@ -192,8 +194,8 @@ definition {
 	}
 
 	macro syncChannel {
-		if (isSet(newPropertyName)) {
-			ACDXPSettings.createNewProperty();
+		if (isSet(newPropertyNameList)) {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyNameList}");
 		}
 
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
@@ -302,8 +304,8 @@ definition {
 	}
 
 	macro syncSites {
-		if (isSet(newPropertyName)) {
-			ACDXPSettings.createNewProperty();
+		if (isSet(newPropertyNameList)) {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyNameList}");
 		}
 
 		ACDXPSettings.clickToAssignSitesAndChannel();

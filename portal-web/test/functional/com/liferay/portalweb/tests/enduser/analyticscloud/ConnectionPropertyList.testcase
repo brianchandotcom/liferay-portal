@@ -42,7 +42,7 @@ definition {
 		}
 
 		task ("Create a new property from the list of available properties") {
-			ACDXPSettings.createNewProperty(newPropertyName = "AC Property");
+			ACDXPSettings.createNewProperty(newPropertyNameList = "AC Property");
 		}
 
 		task ("Check that the new property appears in the list") {
@@ -50,7 +50,7 @@ definition {
 		}
 
 		task ("Create a new property from the list of available properties") {
-			ACDXPSettings.createNewProperty(newPropertyName = "DXP");
+			ACDXPSettings.createNewProperty(newPropertyNameList = "DXP");
 		}
 
 		task ("Check that the new property appears in the list") {
@@ -58,7 +58,7 @@ definition {
 		}
 
 		task ("Try to create a property with less than 3 letters (limit)") {
-			ACDXPSettings.createNewProperty(newPropertyName = "AC");
+			ACDXPSettings.createNewProperty(newPropertyNameList = "AC");
 		}
 
 		task ("Check that an error alert appears in the modal") {
@@ -112,7 +112,7 @@ definition {
 		}
 
 		task ("Create a new property from the list of available properties and get the first property name from the list") {
-			ACDXPSettings.createNewProperty(newPropertyName = "AC Property Sort Default 1");
+			ACDXPSettings.createNewProperty(newPropertyNameList = "AC Property Sort Default 1");
 
 			var propertyName1 = ACDXPSettings.getAssignedPropertyName();
 		}
@@ -124,7 +124,7 @@ definition {
 		}
 
 		task ("Create a new property from the list of available properties and get the first property name from the list") {
-			ACDXPSettings.createNewProperty(newPropertyName = "AC Property Sort Default 2");
+			ACDXPSettings.createNewProperty(newPropertyNameList = "AC Property Sort Default 2");
 
 			var propertyName2 = ACDXPSettings.getAssignedPropertyName();
 		}
@@ -144,7 +144,7 @@ definition {
 		}
 
 		task ("Create a new property from the list of available properties and get the first property name from the list") {
-			ACDXPSettings.createNewProperty(newPropertyName = "AC Property Sort Default 3");
+			ACDXPSettings.createNewProperty(newPropertyNameList = "AC Property Sort Default 3");
 
 			var propertyName3 = ACDXPSettings.getAssignedPropertyName();
 		}

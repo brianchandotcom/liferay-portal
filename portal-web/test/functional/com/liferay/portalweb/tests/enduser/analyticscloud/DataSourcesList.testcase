@@ -59,4 +59,51 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-10507 | Automation ID: LRAC-12349 | Test Summary: The data source list has pagination"
+	@priority = "3"
+	test PaginateDataSourceList {
+		var dataSourceList = "";
+
+		TestCase.setUpPortalInstance();
+
+		for (var n : list "1,2,3,4,5,6") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+
+			var dataSourceList = StringUtil.add("${dataSourceList}", "${dataSource}");
+
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+		}
+
+		task ("Remove the last data source from the list to iterate just the first five") {
+			var newDataSourceList = ListUtil.newListFromString("${dataSourceList}");
+
+			ListUtil.remove("${newDataSourceList}", "${dataSource}");
+		}
+
+		task ("Change data source pagination to 5 items per page and assert the data sources on the page") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			for (var dataSourceName : list "${newDataSourceList}") {
+				ACUtils.assertDataSourceName(dataSourceName = "${dataSourceName}");
+			}
+
+			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
+		}
+
+		task ("Go to the second page and assert the last data source") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+
+			ACUtils.assertDataSourceName(dataSourceName = "${dataSource}");
+		}
+	}
 }

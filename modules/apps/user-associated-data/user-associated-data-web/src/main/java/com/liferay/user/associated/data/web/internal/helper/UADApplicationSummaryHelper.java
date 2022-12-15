@@ -25,6 +25,7 @@ import com.liferay.user.associated.data.web.internal.display.UADApplicationSumma
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -80,12 +81,12 @@ public class UADApplicationSummaryHelper {
 
 	public int getTotalNonreviewableUADEntitiesCount(long userId) {
 		return _getNonreviewableUADEntitiesCount(
-			_uadRegistry.getNonreviewableUADAnonymizerList(), userId);
+			_uadRegistry.getNonreviewableUADAnonymizers(), userId);
 	}
 
 	public int getTotalReviewableUADEntitiesCount(long userId) {
 		return _getReviewableUADEntitiesCount(
-			_uadRegistry.getUADDisplayList(), userId);
+			_uadRegistry.getUADDisplays(), userId);
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
@@ -170,7 +171,7 @@ public class UADApplicationSummaryHelper {
 	}
 
 	private int _getNonreviewableUADEntitiesCount(
-		List<UADAnonymizer<?>> uadAnonymizerList, long userId) {
+		Collection<UADAnonymizer<?>> uadAnonymizerList, long userId) {
 
 		int sum = 0;
 
@@ -189,7 +190,7 @@ public class UADApplicationSummaryHelper {
 	}
 
 	private int _getReviewableUADEntitiesCount(
-		List<UADDisplay<?>> uadDisplayList, long userId) {
+		Collection<UADDisplay<?>> uadDisplayList, long userId) {
 
 		int sum = 0;
 

@@ -326,9 +326,11 @@ definition {
 	}
 
 	macro viewGenericListItem {
-		var key_itemValue = "${itemValue}";
+		for (var itemValue : list "${itemValueList}") {
+			var key_itemValue = "${itemValue}";
 
-		AssertElementPresent(locator1 = "ACDXPSettings#VIEW_LIST_ITEM");
+			AssertElementPresent(locator1 = "ACDXPSettings#VIEW_LIST_ITEM");
+		}
 	}
 
 }

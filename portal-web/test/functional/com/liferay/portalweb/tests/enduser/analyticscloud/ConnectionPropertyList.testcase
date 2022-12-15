@@ -46,7 +46,7 @@ definition {
 		}
 
 		task ("Check that the new property appears in the list") {
-			ACDXPSettings.viewGenericListItem(itemValue = "AC Property");
+			ACDXPSettings.viewGenericListItem(itemValueList = "AC Property");
 		}
 
 		task ("Create a new property from the list of available properties") {
@@ -54,7 +54,7 @@ definition {
 		}
 
 		task ("Check that the new property appears in the list") {
-			ACDXPSettings.viewGenericListItem(itemValue = "DXP");
+			ACDXPSettings.viewGenericListItem(itemValueList = "DXP");
 		}
 
 		task ("Try to create a property with less than 3 letters (limit)") {

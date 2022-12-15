@@ -29,6 +29,7 @@ import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.constants.NotificationTermEvaluatorConstants;
 import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.exception.NotificationRecipientSettingValueException;
 import com.liferay.notification.exception.NotificationTemplateFromException;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
@@ -342,6 +343,13 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		if (Validator.isNull(notificationRecipientSettingsMap.get("from"))) {
 			throw new NotificationTemplateFromException("From is null");
+		}
+
+		if (Validator.isNull(
+				notificationRecipientSettingsMap.get("fromName"))) {
+
+			throw new NotificationRecipientSettingValueException(
+				"From Name is null");
 		}
 	}
 

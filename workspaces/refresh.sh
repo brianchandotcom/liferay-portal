@@ -104,6 +104,7 @@ function refresh_sample_minimal_workspace {
 	copy_template iframe sample-minimal-workspace/client-extensions/able-iframe "Able IFrame"
 	copy_template theme-css sample-minimal-workspace/client-extensions/able-theme-css "Able Theme CSS"
 	copy_template theme-favicon sample-minimal-workspace/client-extensions/able-theme-favicon "Able Theme Favicon"
+	copy_template theme-spritemap sample-minimal-workspace/client-extensions/able-theme-spritemap "Able Theme Spritemap"
 
 	#
 	# Fox remote app client extension

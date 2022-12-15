@@ -15,6 +15,7 @@
 package com.liferay.cookies.internal.manager;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.cookies.CookiesManager;
@@ -178,16 +179,16 @@ public class CookiesManagerImpl implements CookiesManager {
 			cookiesMap.put(StringUtil.toUpperCase(cookie.getName()), cookie);
 		}
 
-		if ((_knownCookies.get(cookie.getName()) != null) &&
-			(_knownCookies.get(cookie.getName()) != consentType) &&
-			_log.isWarnEnabled()) {
+		if (_log.isWarnEnabled() &&
+			(_knownCookies.get(cookie.getName()) != null) &&
+			(_knownCookies.get(cookie.getName()) != consentType)) {
 
 			_log.warn(
-				"This cookie has been previously added with different " +
-					"consent type " + cookie.getName());
-			_log.warn("Known consent type: " + consentType);
-			_log.warn(
-				"Current consent type: " + _knownCookies.get(cookie.getName()));
+				StringBundler.concat(
+					"The ", cookie.getName(),
+					" cookie was previously added with consent type ",
+					_knownCookies.get(cookie.getName()),
+					" and will now be upgraded to consent type ", consentType));
 		}
 
 		_knownCookies.put(cookie.getName(), consentType);

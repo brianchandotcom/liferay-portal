@@ -30,6 +30,8 @@ definition {
 
 		var dataSourceList = "";
 
+		TestCase.setUpPortalInstance();
+
 		for (var n : list "1,2,3") {
 			ACSettings.takeTokenFromAnalyticsCloud();
 

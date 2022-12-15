@@ -381,6 +381,76 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11746 | Automation ID: LRAC-12356 | Test Summary: The analysis result should not appear if any of the attribute conditions are not contained within the result"
+	@priority = "4"
+	test CheckResultNotAppearIfAnyAttributeConditionsNotContainedValue {
+		var firstFilterName = "pageTitle";
+		var secondFilterName = "url";
+		var firstFilterCondition = "contains";
+		var secondFilterCondition = "not contains";
+
+		task ("Fill fields and create custom event") {
+			var currentURL = Navigator.getCurrentURL();
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			ACCustomEvents.createCustomEvent(
+				customEventName = "${customEventName}",
+				timeToSendCustomEvent = "1");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event, create an analysis and add a brekdown") {
+			var analysisInformation = StringUtil.lowerCase("AC Page - Site Name - ${dataSourceName}");
+
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+
+			ACEventAnalysis.addBreakdown(attributeNameList = "${firstFilterName}");
+		}
+
+		task ("Change the time filter to last 24h") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Add a default attribute in the filter and use the contains condition") {
+			ACEventAnalysis.addFilter(
+				dropdownData = "${analysisInformation}",
+				dropdownIndex = "1",
+				filterName = "${firstFilterName}",
+				optionValue = "${firstFilterCondition}");
+		}
+
+		task ("View the information displayed") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${analysisInformation}");
+		}
+
+		task ("Add another attribute in the filter and use not contains condition") {
+			ACEventAnalysis.addFilter(
+				dropdownData = "${currentURL}",
+				dropdownIndex = "1",
+				filterName = "${secondFilterName}",
+				optionValue = "${secondFilterCondition}");
+		}
+
+		task ("View the information displayed and see that there are no results") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "No Results,No Results");
+		}
+	}
+
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10307 | Test Summary: Total Chart, Unique Chart and Average Chart data shown"
 	@priority = "5"
 	test CheckTotalAndUniqueAndAverageChartDataIsShown {
@@ -1014,75 +1084,4 @@ definition {
 		}
 	}
 
-	@description = "Bug: LRAC-11746 | Automation ID: LRAC-12356 | Test Summary: The analysis result should not appear if any of the attribute conditions are not contained within the result"
-	@priority = "4"
-	test CheckResultNotAppearIfAnyAttributeConditionsNotContainedValue {
-		var firstFilterName = "pageTitle";
-		var secondFilterName = "url";
-		var firstFilterCondition = "contains";
-		var secondFilterCondition = "not contains";
-
-		
-		task ("Fill fields and create custom event") {
-			var currentURL = Navigator.getCurrentURL();
-
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC and go to event analysis") {
-			ACUtils.launchAC();
-
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-
-			ACNavigation.goToEventAnalysis();
-		}
-
-		task ("Add the custom event, create an analysis and add a brekdown") {
-			var analysisInformation =  StringUtil.lowerCase("AC Page - Site Name - ${dataSourceName}");
-
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
-
-			ACEventAnalysis.addBreakdown(attributeNameList = "${firstFilterName}");
-		}
-
-		task ("Change the time filter to last 24h") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Add a default attribute in the filter and use the contains condition") {
-			ACEventAnalysis.addFilter(
-				filterName = "${firstFilterName}",
-				optionValue = "${firstFilterCondition}",
-				dropdownIndex = "1",
-				dropdownData = "${analysisInformation}");
-		}
-
-		task ("View the information displayed") {			
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${analysisInformation}");
-		}
-
-		task ("Add another attribute in the filter and use not contains condition") {
-			ACEventAnalysis.addFilter(
-				filterName = "${secondFilterName}",
-				optionValue = "${secondFilterCondition}",
-				dropdownIndex = "1",
-				dropdownData = "${currentURL}");	
-		}
-
-		task ("View the information displayed and see that there are no results") {			
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "No Results,No Results");
-		}
-	}
 }

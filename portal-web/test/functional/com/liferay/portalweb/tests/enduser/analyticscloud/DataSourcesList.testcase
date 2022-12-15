@@ -35,7 +35,6 @@ definition {
 		for (var n : list "1,2,3") {
 			ACSettings.takeTokenFromAnalyticsCloud();
 
-
 			ACUtils.launchDXP();
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
@@ -105,4 +104,5 @@ definition {
 			ACUtils.assertDataSourceName(dataSourceName = "${dataSource}");
 		}
 	}
+
 }

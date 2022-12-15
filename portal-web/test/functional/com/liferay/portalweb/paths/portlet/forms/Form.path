@@ -744,6 +744,16 @@
 	<td>//div[contains(@class, 'dropdown-menu')]//button[contains(@class, 'dropdown-item') and contains(text(), '${key_language}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PREVIEW_EXISTING_SUBMISSIONS</td>
+	<td>//button[contains(text(), 'Preview Existing Submissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_DATA_RESPONDENTS</td>
+	<td>//li[contains(text(),'${key_reportData}')]</td>
+	<td></td>
+</tr>
 
 <!--LANGUAGE-->
 

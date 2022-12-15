@@ -839,6 +839,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro selectOptionSubmissions {
+		Click(
+			key_checkboxOption = "${checkboxOption}",
+			locator1 = "Form#CHECKBOX_SUBMISSIONS");
+	}
+
 	macro selectTranslation {
 		var key_localizedLanguage = "${localizedLanguage}";
 

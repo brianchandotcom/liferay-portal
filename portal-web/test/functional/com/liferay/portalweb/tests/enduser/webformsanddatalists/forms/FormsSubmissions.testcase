@@ -796,9 +796,7 @@ definition {
 
 		Form.gotoSubmissionsTab();
 
-		Click(
-			key_checkboxOption = "Limit to One Submission per User",
-			locator1 = "Form#CHECKBOX_SUBMISSIONS");
+		Form.selectOptionSubmissions(checkboxOption = "Limit to One Submission per User");
 
 		Button.clickDone();
 
@@ -865,6 +863,47 @@ definition {
 			successPageTitle = "You have already responded.");
 	}
 
+	@description = "Verify if there is an option to allow submitters to see partial form results after submission."
+	@priority = "5"
+	test CheckSeePartialResultsButton {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Form.selectOptionSubmissions(checkboxOption = "Show Forms Report Data to Respondents");
+
+		Button.clickDone();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertElementPresent(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormPortlet.submitSuccessfully();
+
+		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
+
+		AssertElementPresent(
+			key_reportData = "Test",
+			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+	}
+
 	@description = "Verify if with 'Limit to one submit per user' enabled, the translation options are the same as those present in the Form Builder"
 	@priority = "3"
 	test CheckTranslationOptionsOneSubmissionPerUserMessage {
@@ -886,9 +925,7 @@ definition {
 
 		Form.gotoSubmissionsTab();
 
-		Click(
-			key_checkboxOption = "Limit to One Submission per User",
-			locator1 = "Form#CHECKBOX_SUBMISSIONS");
+		Form.selectOptionSubmissions(checkboxOption = "Limit to One Submission per User");
 
 		Click(
 			key_fieldLabel = "Header",

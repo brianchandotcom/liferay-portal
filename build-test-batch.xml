@@ -1616,8 +1616,6 @@ app.server.type=@{app.server.type}]]></echo>
 				</then>
 			</if>
 
-			<property name="functional.test.type" value="@{functional.test.type}" />
-
 			<delete failonerror="false" file="${project.dir}/test.generated.properties" />
 
 			<antcall target="record-test-generated-properties" />

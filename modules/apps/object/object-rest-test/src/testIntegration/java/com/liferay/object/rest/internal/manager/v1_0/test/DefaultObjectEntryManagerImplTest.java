@@ -19,6 +19,7 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -66,6 +67,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -77,6 +79,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -85,6 +89,7 @@ import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -810,21 +815,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testGetObjectEntriesAccountRestrictions() throws Exception {
-		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.randomString(),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-
-		AccountEntry accountEntry2 = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.randomString(),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
+		AccountEntry accountEntry1 = _addAccountEntry();
+		AccountEntry accountEntry2 = _addAccountEntry();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -884,6 +876,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(0);
 
+		// Regular roles permissions should not be restricted by account
+
 		Role randomRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_resourcePermissionLocalService.addResourcePermission(
@@ -900,6 +894,9 @@ public class DefaultObjectEntryManagerImplTest {
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(_companyId),
 			randomRole.getRoleId(), ActionKeys.VIEW);
 
+		// Regular roles' individual permissions should not be restricted by
+		// account
+
 		_resourcePermissionLocalService.setResourcePermissions(
 			_companyId, _objectDefinition1.getClassName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
@@ -911,6 +908,11 @@ public class DefaultObjectEntryManagerImplTest {
 		_userLocalService.deleteRoleUser(randomRole.getRoleId(), _user);
 
 		_assertObjectEntriesSize(0);
+
+		// Users who only have SHARED account roles (e.g.: Account Member)
+		// should be able to view all entries related to the account entry that
+		// the users belong if those account roles have the view resource
+		// permission
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry1.getAccountEntryId(), _user.getUserId());
@@ -932,6 +934,11 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_assertObjectEntriesSize(0);
 
+		// Users who only have OWNED account roles (e.g.: Foo Account Role)
+		// should be able to view all entries related to the account entry that
+		// they (User and owned roles) belong if those account roles have the
+		// view resource permission
+
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			_user.getUserId(), accountEntry2.getAccountEntryId(),
 			RandomTestUtil.randomString(), Collections.emptyMap(),
@@ -950,6 +957,174 @@ public class DefaultObjectEntryManagerImplTest {
 			accountEntry2.getAccountEntryId(), _user.getUserId());
 
 		_assertObjectEntriesSize(1);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountRole.getRoleId(), ActionKeys.VIEW);
+
+		_assertObjectEntriesSize(0);
+
+		_accountEntryUserRelLocalService.
+			deleteAccountEntryUserRelsByAccountUserId(_user.getUserId());
+
+		// The User who is associated an organization must be able to view all
+		// entries related to account entries that belong to that organization
+		// if the user has the VIEW resource permission in at least one
+		// organization role assigned to them
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			organization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			organization2.getOrganizationId());
+
+		Role organizationUserRole = _roleLocalService.getRole(
+			_companyId, RoleConstants.ORGANIZATION_USER);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			organizationUserRole.getRoleId(), ActionKeys.VIEW);
+
+		_assertObjectEntriesSize(1);
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			organization1.getOrganizationId());
+
+		_assertObjectEntriesSize(2);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			organizationUserRole.getRoleId(), ActionKeys.VIEW);
+
+		_assertObjectEntriesSize(0);
+
+		Role accountManagerRole = _roleLocalService.getRole(
+			_companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+
+		Group group = _groupLocalService.getOrganizationGroup(
+			_companyId, organization1.getOrganizationId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), group.getGroupId(),
+			accountManagerRole.getRoleId());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountManagerRole.getRoleId(), ActionKeys.VIEW);
+
+		_assertObjectEntriesSize(2);
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountEntry2.getAccountEntryId(),
+				organization1.getOrganizationId());
+
+		_assertObjectEntriesSize(1);
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountEntry1.getAccountEntryId(),
+				organization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountEntry2.getAccountEntryId(),
+				organization2.getOrganizationId());
+
+		_assertObjectEntriesSize(0);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			accountManagerRole.getRoleId(), ActionKeys.VIEW);
+
+		_organizationLocalService.deleteUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
+
+		// The User who is associated an organization must be able to view all
+		// entries related to account entries that belong to that organization
+		// and its sub organizations if the user has the VIEW resource
+		// permission in at least one organization role assigned to them
+
+		Organization suborganization1 = OrganizationTestUtil.addOrganization(
+			organization1.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		Organization suborganization2 = OrganizationTestUtil.addOrganization(
+			organization2.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			suborganization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			suborganization2.getOrganizationId());
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			organizationUserRole.getRoleId(), ActionKeys.VIEW);
+
+		_assertObjectEntriesSize(1);
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), suborganization2.getOrganizationId());
+
+		_assertObjectEntriesSize(2);
+
+		_organizationLocalService.deleteUserOrganization(
+			_user.getUserId(), organization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountEntry1.getAccountEntryId(),
+				suborganization1.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry1.getAccountEntryId(),
+			organization1.getOrganizationId());
+
+		_assertObjectEntriesSize(1);
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountEntry2.getAccountEntryId(),
+				suborganization2.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry2.getAccountEntryId(),
+			organization2.getOrganizationId());
+
+		_assertObjectEntriesSize(0);
+	}
+
+	private AccountEntry _addAccountEntry() throws Exception {
+		return _accountEntryLocalService.addAccountEntry(
+			_adminUser.getUserId(), 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null, null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _addAggregationObjectField(
@@ -1171,7 +1346,7 @@ public class DefaultObjectEntryManagerImplTest {
 		}
 	}
 
-	private void _assertObjectEntriesSize(long expectedSize) throws Exception {
+	private void _assertObjectEntriesSize(long size) throws Exception {
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 			_companyId, _objectDefinition1, null, null,
 			new DefaultDTOConverterContext(
@@ -1185,7 +1360,7 @@ public class DefaultObjectEntryManagerImplTest {
 		Collection<ObjectEntry> objectEntries = page.getItems();
 
 		Assert.assertEquals(
-			objectEntries.toString(), expectedSize, objectEntries.size());
+			objectEntries.toString(), size, objectEntries.size());
 	}
 
 	private String _buildEqualsExpressionFilterString(
@@ -1372,6 +1547,10 @@ public class DefaultObjectEntryManagerImplTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Inject
@@ -1388,6 +1567,9 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Inject
 	private FilterPredicateFactory _filterPredicateFactory;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private ListTypeDefinition _listTypeDefinition;
 
@@ -1428,6 +1610,9 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -31,9 +31,7 @@ const DonutChart = ({
 			const titleElement = chartRef?.current?.element?.querySelector(
 				'.bb-chart-arcs-title'
 			);
-
-			titleElement.textContent = titleChart;
-			titleElement.classList.add('font-weight-bold');
+			titleElement.innerHTML = titleChart;
 			titleElement.style.fontSize = '16px';
 		}
 	}, [titleChart]);
@@ -60,7 +58,7 @@ const DonutChart = ({
 						data={chartData}
 						donut={{
 							label: {show: showLabel},
-							title: '0',
+							title: '$0 Total',
 							width: 35,
 						}}
 						legend={{show: showLegend}}
@@ -82,11 +80,11 @@ const DonutChart = ({
 
 					{!hasLegend && (
 						<div className="d-flex flex-column justify-content-around pb-4 pl-4">
-							<div className="d-flex flex-column flex-wrap h-100 justify-content-around mb-1">
+							<div className="d-flex flex-column flex-wrap h-100 justify-content-center mb-1">
 								{legendItems?.map((item, index) => {
 									return (
 										<div key={index}>
-											<div className="align-items-center d-flex">
+											<div className="align-items-center d-flex mb-4">
 												<span
 													className="mr-2 rounded-xs square-status-legend"
 													style={{

@@ -14,7 +14,7 @@ import React from 'react';
 function Container({children, className, footer, title}) {
 	return (
 		<div
-			className={`bg-neutral-0 d-flex flex-column justify-content-between p-4 rounded shadow-sm ${className}`}
+			className={`bg-neutral-0 d-flex flex-column justify-content-between py-4 rounded shadow-sm ${className}`}
 		>
 			<div>
 				<div className="font-weight-semi-bold h5 m-0">{title}</div>

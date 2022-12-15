@@ -29,6 +29,11 @@ export default function () {
 	const [columnsMDFChart, setColumnsMDFChart] = useState([]);
 	const [titleChart, setTitleChart] = useState('');
 
+	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
+		.split('/')
+		.slice(0, 3)
+		.join('/');
+
 	const getMDFRequests = async () => {
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(
@@ -70,12 +75,25 @@ export default function () {
 			className="mdf-request-chart-card-height"
 			footer={
 				<>
-					<ClayButton className="mr-4 mt-2" displayType="primary">
+					<ClayButton
+						className="mr-4 mt-2"
+						displayType="primary"
+						onClick={() =>
+							Liferay.Util.navigate(
+								`${siteURL}/marketing/mdf-requests/new`
+							)
+						}
+					>
 						New MDF Request
 					</ClayButton>
 					<ClayButton
 						className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
 						displayType="secondary"
+						onClick={() =>
+							Liferay.Util.navigate(
+								`${siteURL}/marketing/mdf-requests`
+							)
+						}
 					>
 						View all
 					</ClayButton>

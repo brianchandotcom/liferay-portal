@@ -20,13 +20,15 @@ import com.liferay.commerce.account.exception.NoSuchAccountGroupCommerceAccountR
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
-import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
@@ -73,6 +75,7 @@ public class AccountChannelEntryDTOConverter
 		return new AccountChannelEntry() {
 			{
 				accountId = commerceChannelAccountEntryRel.getAccountEntryId();
+				actions = dtoConverterContext.getActions();
 				channelId =
 					commerceChannelAccountEntryRel.getCommerceChannelId();
 				classPK = commerceChannelAccountEntryRel.getClassPK();
@@ -102,7 +105,7 @@ public class AccountChannelEntryDTOConverter
 				setChannelExternalReferenceCode(
 					() -> {
 						CommerceChannel commerceChannel =
-							_commerceChannelService.fetchCommerceChannel(
+							_commerceChannelLocalService.fetchCommerceChannel(
 								commerceChannelAccountEntryRel.
 									getCommerceChannelId());
 
@@ -174,6 +177,19 @@ public class AccountChannelEntryDTOConverter
 				return commerceDiscount.getExternalReferenceCode();
 			}
 		}
+		else if (type == CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT) {
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelLocalService.
+					getCommercePaymentMethodGroupRel(
+						GetterUtil.getLong(
+							commerceChannelAccountEntryRel.getClassPK()));
+
+			if (!Validator.isBlank(
+					commercePaymentMethodGroupRel.getEngineKey())) {
+
+				return commercePaymentMethodGroupRel.getEngineKey();
+			}
+		}
 		else if (type ==
 					CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM) {
 
@@ -226,10 +242,14 @@ public class AccountChannelEntryDTOConverter
 		_commerceChannelAccountEntryRelService;
 
 	@Reference
-	private CommerceChannelService _commerceChannelService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceDiscountService _commerceDiscountService;
+
+	@Reference
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

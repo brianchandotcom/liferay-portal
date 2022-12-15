@@ -17,6 +17,7 @@ package com.liferay.notification.type;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
+import com.liferay.notification.exception.NotificationTemplateEditorTypeException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
 import com.liferay.notification.exception.NotificationTemplateObjectDefinitionIdException;
 import com.liferay.notification.model.NotificationQueueEntry;
@@ -136,6 +137,11 @@ public abstract class BaseNotificationType implements NotificationType {
 
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
+
+		if (Validator.isNull(notificationTemplate.getEditorType())) {
+			throw new NotificationTemplateEditorTypeException(
+				"Editor Type is null");
+		}
 
 		if (Validator.isNull(notificationTemplate.getName())) {
 			throw new NotificationTemplateNameException("Name is null");

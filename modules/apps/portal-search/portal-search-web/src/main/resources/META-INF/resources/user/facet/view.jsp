@@ -64,7 +64,7 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 				%>'
 				displayStyle="<%= userFacetPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= userSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-				entries="<%= userSearchFacetDisplayContext.getTermDisplayContexts() %>"
+				entries="<%= userSearchFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
 				<liferay-ui:panel-container
 					extended="<%= true %>"
@@ -86,7 +86,7 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 								<%
 								int i = 0;
 
-								for (BucketDisplayContext bucketDisplayContext : userSearchFacetDisplayContext.getTermDisplayContexts()) {
+								for (BucketDisplayContext bucketDisplayContext : userSearchFacetDisplayContext.getBucketDisplayContexts()) {
 									i++;
 								%>
 

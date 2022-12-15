@@ -51,7 +51,7 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDis
 						</li>
 
 						<%
-						java.util.List<BucketDisplayContext> bucketDisplayContexts = userSearchFacetDisplayContext.getTermDisplayContexts();
+						java.util.List<BucketDisplayContext> bucketDisplayContexts = userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 						for (BucketDisplayContext bucketDisplayContext : bucketDisplayContexts) {
 						%>

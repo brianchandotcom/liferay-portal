@@ -76,8 +76,8 @@ public class UserSearchFacetDisplayContextBuilder {
 		userSearchFacetDisplayContext.setParamValue(_getFirstParamValue());
 		userSearchFacetDisplayContext.setParamValues(_paramValues);
 		userSearchFacetDisplayContext.setRenderNothing(renderNothing);
-		userSearchFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts(termCollectors));
+		userSearchFacetDisplayContext.setBucketDisplayContexts(
+			buildBucketDisplayContexts(termCollectors));
 		userSearchFacetDisplayContext.setUserFacetPortletInstanceConfiguration(
 			_userFacetPortletInstanceConfiguration);
 
@@ -124,7 +124,7 @@ public class UserSearchFacetDisplayContextBuilder {
 		_paramValues = paramValues;
 	}
 
-	protected BucketDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildBucketDisplayContext(
 		TermCollector termCollector) {
 
 		String term = GetterUtil.getString(termCollector.getTerm());
@@ -142,11 +142,11 @@ public class UserSearchFacetDisplayContextBuilder {
 		return bucketDisplayContext;
 	}
 
-	protected List<BucketDisplayContext> buildTermDisplayContexts(
+	protected List<BucketDisplayContext> buildBucketDisplayContexts(
 		List<TermCollector> termCollectors) {
 
 		if (termCollectors.isEmpty()) {
-			return getEmptyTermDisplayContexts();
+			return getEmptyBucketDisplayContexts();
 		}
 
 		List<BucketDisplayContext>
@@ -164,7 +164,7 @@ public class UserSearchFacetDisplayContextBuilder {
 			}
 
 			bucketDisplayContexts.add(
-				buildTermDisplayContext(termCollector));
+				buildBucketDisplayContext(termCollector));
 		}
 
 		return bucketDisplayContexts;
@@ -182,7 +182,7 @@ public class UserSearchFacetDisplayContextBuilder {
 	}
 
 	protected List<BucketDisplayContext>
-		getEmptyTermDisplayContexts() {
+	getEmptyBucketDisplayContexts() {
 
 		if (_paramValues.isEmpty()) {
 			return Collections.emptyList();

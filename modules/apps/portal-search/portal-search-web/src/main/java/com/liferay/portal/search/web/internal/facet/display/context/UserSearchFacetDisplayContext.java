@@ -45,7 +45,7 @@ public class UserSearchFacetDisplayContext implements Serializable {
 		return _paramValues;
 	}
 
-	public List<BucketDisplayContext> getTermDisplayContexts() {
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
 		return _bucketDisplayContexts;
 	}
 
@@ -93,7 +93,7 @@ public class UserSearchFacetDisplayContext implements Serializable {
 		_renderNothing = renderNothing;
 	}
 
-	public void setTermDisplayContexts(
+	public void setBucketDisplayContexts(
 		List<BucketDisplayContext>
 			bucketDisplayContexts) {
 

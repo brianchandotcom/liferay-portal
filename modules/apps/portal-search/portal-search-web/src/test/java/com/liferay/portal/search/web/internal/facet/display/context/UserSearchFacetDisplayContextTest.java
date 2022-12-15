@@ -67,7 +67,7 @@ public class UserSearchFacetDisplayContextTest {
 
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
-				userSearchFacetDisplayContext.getTermDisplayContexts();
+				userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 0,
@@ -90,7 +90,7 @@ public class UserSearchFacetDisplayContextTest {
 
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
-				userSearchFacetDisplayContext.getTermDisplayContexts();
+				userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1,
@@ -128,7 +128,7 @@ public class UserSearchFacetDisplayContextTest {
 
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
-				userSearchFacetDisplayContext.getTermDisplayContexts();
+				userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1,
@@ -166,7 +166,7 @@ public class UserSearchFacetDisplayContextTest {
 
 		List<BucketDisplayContext>
 			bucketDisplayContexts =
-				userSearchFacetDisplayContext.getTermDisplayContexts();
+				userSearchFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1,

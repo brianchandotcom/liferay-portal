@@ -1,10 +1,9 @@
 @component-name = "portal-security"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property test.jvm.max.retries = "0";
-	property test.testcase.max.retries = "0";
 	property testray.main.component.name = "OAuth 2";
 
 	setUp {

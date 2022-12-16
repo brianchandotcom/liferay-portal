@@ -65,6 +65,11 @@
 <!--GRAPHQL-->
 
 <tr>
+	<td>GRAPHQL_EDITOR</td>
+	<td>//div[contains(@class,'CodeMirror cm-s-graphiql')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GRAPHQL_EDITOR_LINE</td>
 	<td>//section[contains(@class,'query-editor')]//span[contains(@class,'cm-comment')][1]</td>
 	<td></td>

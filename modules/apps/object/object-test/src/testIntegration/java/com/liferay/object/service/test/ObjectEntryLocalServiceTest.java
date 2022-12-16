@@ -667,7 +667,7 @@ public class ObjectEntryLocalServiceTest {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 		}
 
 		ObjectEntry objectEntry = _addObjectEntry(

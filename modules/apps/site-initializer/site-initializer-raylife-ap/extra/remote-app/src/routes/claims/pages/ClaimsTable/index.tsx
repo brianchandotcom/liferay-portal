@@ -98,18 +98,23 @@ const ClaimsTable = () => {
 		pageSize: '0',
 	};
 
+	const pageAndPageSize = {
+		page: page.toString(),
+		pageSize: pageSize.toString(),
+	};
+
 	const generateParameters = (filtered?: string) => {
 		const parameters: Parameters =
 			filtered === undefined
 				? {
-						page: '0',
-						pageSize: '0',
+						page: pageAndPageSize?.page,
+						pageSize: pageAndPageSize?.pageSize,
 						sort: `claimCreateDate:${sortByDate}`,
 				  }
 				: {
 						filter: filtered,
-						page: '0',
-						pageSize: '0',
+						page: pageAndPageSize?.page,
+						pageSize: pageAndPageSize?.pageSize,
 						sort: `claimCreateDate:${sortByDate}`,
 				  };
 
@@ -218,14 +223,6 @@ const ClaimsTable = () => {
 			value: 'Status',
 		},
 	];
-
-	const PARAMETERS = {
-		page: '0',
-		pageSize: '0',
-	};
-
-	PARAMETERS.pageSize = pageSize.toString();
-	PARAMETERS.page = page.toString();
 
 	const handleDeleteClaim = (externalReferenceCode: string) => {
 		deleteClaimByExternalReferenceCode(externalReferenceCode);

@@ -2262,6 +2262,75 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteMessageBoardMessagePermissionsPage()
+		throws Exception {
+
+		Page<Permission> page =
+			messageBoardMessageResource.
+				getSiteMessageBoardMessagePermissionsPage(
+					testGroup.getGroupId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected MessageBoardMessage
+			testGetSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutSiteMessageBoardMessagePermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardMessage messageBoardMessage =
+			testPutSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			messageBoardMessageResource.
+				putSiteMessageBoardMessagePermissionsPageHttpResponse(
+					messageBoardMessage.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				putSiteMessageBoardMessagePermissionsPageHttpResponse(
+					messageBoardMessage.getSiteId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected MessageBoardMessage
+			testPutSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteUserMessageBoardMessagesActivityPage()
 		throws Exception {
 
@@ -2420,75 +2489,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		return null;
-	}
-
-	@Test
-	public void testGetSiteMessageBoardMessagePermissionsPage()
-		throws Exception {
-
-		Page<Permission> page =
-			messageBoardMessageResource.
-				getSiteMessageBoardMessagePermissionsPage(
-					testGroup.getGroupId(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected MessageBoardMessage
-			testGetSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutSiteMessageBoardMessagePermissionsPage()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MessageBoardMessage messageBoardMessage =
-			testPutSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			messageBoardMessageResource.
-				putSiteMessageBoardMessagePermissionsPageHttpResponse(
-					messageBoardMessage.getSiteId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"PERMISSIONS"});
-								setRoleName(role.getName());
-							}
-						}
-					}));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				putSiteMessageBoardMessagePermissionsPageHttpResponse(
-					messageBoardMessage.getSiteId(),
-					new Permission[] {
-						new Permission() {
-							{
-								setActionIds(new String[] {"-"});
-								setRoleName("-");
-							}
-						}
-					}));
-	}
-
-	protected MessageBoardMessage
-			testPutSiteMessageBoardMessagePermissionsPage_addMessageBoardMessage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Rule

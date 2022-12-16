@@ -1865,16 +1865,16 @@ public class CommerceOrderLocalServiceImpl
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
+				DTOConverter<?, ?> dtoConverter =
+					_dtoConverterRegistry.getDTOConverter(
+						CommerceOrder.class.getName());
+
 				Message message = new Message();
 
 				message.setPayload(
 					JSONUtil.put(
 						"commerceOrder",
 						() -> {
-							DTOConverter<?, ?> dtoConverter =
-								_dtoConverterRegistry.getDTOConverter(
-									CommerceOrder.class.getName());
-
 							Object object = dtoConverter.toDTO(
 								new DefaultDTOConverterContext(
 									_dtoConverterRegistry,
@@ -1882,10 +1882,25 @@ public class CommerceOrderLocalServiceImpl
 									LocaleUtil.getSiteDefault(), null, null));
 
 							return _jsonFactory.createJSONObject(
-								object.toString());
+								_jsonFactory.looseSerializeDeep(object));
 						}
 					).put(
 						"commerceOrderId", commerceOrder.getCommerceOrderId()
+					).put(
+						"model" + CommerceOrder.class.getSimpleName(),
+						commerceOrder.getModelAttributes()
+					).put(
+						"modelDTO" + dtoConverter.getContentType(),
+						() -> {
+							Object object = dtoConverter.toDTO(
+								new DefaultDTOConverterContext(
+									_dtoConverterRegistry,
+									commerceOrder.getCommerceOrderId(),
+									LocaleUtil.getSiteDefault(), null, null));
+
+							return _jsonFactory.createJSONObject(
+								_jsonFactory.looseSerializeDeep(object));
+						}
 					).put(
 						"paymentStatus", commerceOrder.getPaymentStatus()
 					).put(

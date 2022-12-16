@@ -729,16 +729,16 @@ public class CommerceShipmentLocalServiceImpl
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
+				DTOConverter<?, ?> dtoConverter =
+					_dtoConverterRegistry.getDTOConverter(
+						CommerceShipment.class.getName());
+
 				Message message = new Message();
 
 				message.setPayload(
 					JSONUtil.put(
 						"commerceShipment",
 						() -> {
-							DTOConverter<?, ?> dtoConverter =
-								_dtoConverterRegistry.getDTOConverter(
-									CommerceShipment.class.getName());
-
 							Object object = dtoConverter.toDTO(
 								new DefaultDTOConverterContext(
 									_dtoConverterRegistry,
@@ -751,6 +751,21 @@ public class CommerceShipmentLocalServiceImpl
 					).put(
 						"commerceShipmentId",
 						commerceShipment.getCommerceShipmentId()
+					).put(
+						"model" + CommerceShipment.class.getName(),
+						commerceShipment.getModelAttributes()
+					).put(
+						"modelDTO" + dtoConverter.getContentType(),
+						() -> {
+							Object object = dtoConverter.toDTO(
+								new DefaultDTOConverterContext(
+									_dtoConverterRegistry,
+									commerceShipment.getCommerceShipmentId(),
+									LocaleUtil.getSiteDefault(), null, null));
+
+							return _jsonFactory.createJSONObject(
+								_jsonFactory.looseSerializeDeep(object));
+						}
 					));
 
 				MessageBusUtil.sendMessage(

@@ -164,6 +164,21 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 		_reindexCommerceChannels(companyId);
 	}
 
+	@Override
+	protected boolean isUseSearchResultPermissionFilter(
+		SearchContext searchContext) {
+
+		Boolean useSearchResultPermissionFilter =
+			(Boolean)searchContext.getAttribute(
+				"useSearchResultPermissionFilter");
+
+		if (useSearchResultPermissionFilter != null) {
+			return useSearchResultPermissionFilter;
+		}
+
+		return super.isUseSearchResultPermissionFilter(searchContext);
+	}
+
 	private void _reindexCommerceChannels(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceChannelLocalService.getIndexableActionableDynamicQuery();

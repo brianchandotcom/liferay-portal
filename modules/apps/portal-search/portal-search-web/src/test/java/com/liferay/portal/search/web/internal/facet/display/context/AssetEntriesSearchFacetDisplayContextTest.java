@@ -77,7 +77,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = createDisplayContext(
-				classNames, StringPool.BLANK, "count:asc");
+				classNames, "count:asc");
 
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
@@ -105,7 +105,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = createDisplayContext(
-				classNames, StringPool.BLANK, "count:desc");
+				classNames, "count:desc");
 
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
@@ -129,7 +129,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext = createDisplayContext(
-				classNames, StringPool.BLANK, "key:asc");
+				classNames, "key:asc");
 
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext.getBucketDisplayContexts();
@@ -152,7 +152,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext1 = createDisplayContext(
-				classNames, StringPool.BLANK, "key:desc");
+				classNames, "key:desc");
 
 		List<BucketDisplayContext> bucketDisplayContexts =
 			assetEntriesSearchFacetDisplayContext1.getBucketDisplayContexts();
@@ -166,7 +166,7 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 	}
 
 	protected AssetEntriesSearchFacetDisplayContext createDisplayContext(
-			String[] classNames, String facetParam, String order)
+			String[] classNames, String order)
 		throws ConfigurationException {
 
 		AssetEntriesSearchFacetDisplayContextBuilder
@@ -174,18 +174,17 @@ public class AssetEntriesSearchFacetDisplayContextTest {
 				new AssetEntriesSearchFacetDisplayContextBuilder(
 					getRenderRequest());
 
+		assetEntriesSearchFacetDisplayContextBuilder.setClassNames(classNames);
 		assetEntriesSearchFacetDisplayContextBuilder.setFacet(_facet);
 		assetEntriesSearchFacetDisplayContextBuilder.setFrequenciesVisible(
 			true);
 		assetEntriesSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
+		assetEntriesSearchFacetDisplayContextBuilder.setLocale(LocaleUtil.US);
 		assetEntriesSearchFacetDisplayContextBuilder.setOrder(order);
 		assetEntriesSearchFacetDisplayContextBuilder.setParameterName(
 			_facet.getFieldId());
 		assetEntriesSearchFacetDisplayContextBuilder.setParameterValue(
-			facetParam);
-
-		assetEntriesSearchFacetDisplayContextBuilder.setLocale(LocaleUtil.US);
-		assetEntriesSearchFacetDisplayContextBuilder.setClassNames(classNames);
+			StringPool.BLANK);
 
 		return assetEntriesSearchFacetDisplayContextBuilder.build();
 	}

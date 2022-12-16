@@ -48,7 +48,7 @@ const initialState = {
 	token: '',
 };
 
-const AppContextData = React.createContext<TData>(initialState);
+export const AppContextData = React.createContext<TData>(initialState);
 const AppContextDispatch = React.createContext<any>(null);
 
 const useData = () => useContext(AppContextData);

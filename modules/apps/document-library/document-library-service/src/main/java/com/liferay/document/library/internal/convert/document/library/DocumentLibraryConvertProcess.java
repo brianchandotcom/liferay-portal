@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.convert.documentlibrary;
+package com.liferay.document.library.internal.convert.document.library;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.comparator.FileVersionVersionComparator;
@@ -23,8 +23,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.BaseConvertProcess;
+import com.liferay.portal.convert.ConvertProcess;
+import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,29 +34,24 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Minhchau Dang
  * @author Alexander Chow
  * @author László Csontos
  */
+@Component(service = ConvertProcess.class)
 public class DocumentLibraryConvertProcess extends BaseConvertProcess {
-
-	public void afterPropertiesSet() {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			SystemBundleUtil.getBundleContext(), Store.class, "(ct.aware=true)",
-			(serviceReference1, emitter) -> emitter.emit(
-				String.valueOf(serviceReference1.getProperty("store.type"))));
-	}
-
-	public void destroy() {
-		_serviceTrackerMap.close();
-	}
 
 	@Override
 	public String getConfigurationErrorMessage() {
@@ -74,8 +70,6 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 
 	@Override
 	public String[] getParameterNames() {
-		Store store = StoreFactory.getStore();
-
 		Set<String> storeTypes = _serviceTrackerMap.keySet();
 
 		StringBundler sb = new StringBundler((storeTypes.size() * 2) + 2);
@@ -84,7 +78,7 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 		sb.append(StringPool.EQUAL);
 
 		for (String storeType : storeTypes) {
-			Class<?> clazz = store.getClass();
+			Class<?> clazz = _store.getClass();
 
 			if (!storeType.equals(clazz.getName())) {
 				sb.append(storeType);
@@ -106,13 +100,30 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 	public void validate() {
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, Store.class, "(ct.aware=true)",
+			(serviceReference1, emitter) -> emitter.emit(
+				String.valueOf(serviceReference1.getProperty("store.type"))));
+
+		_dlStoreConvertProcesses = ServiceTrackerListFactory.open(
+			bundleContext, DLStoreConvertProcess.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_dlStoreConvertProcesses.close();
+
+		_serviceTrackerMap.close();
+	}
+
 	@Override
 	protected void doConvert() throws Exception {
 		String targetStoreClassName = getTargetStoreClassName();
 
 		migrateDLStoreConvertProcesses(
-			StoreFactory.getStore(),
-			_serviceTrackerMap.getService(targetStoreClassName));
+			_store, _serviceTrackerMap.getService(targetStoreClassName));
 
 		MaintenanceUtil.appendStatus(
 			StringBundler.concat(
@@ -164,10 +175,10 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 		return _dlStoreConvertProcesses.toList();
 	}
 
-	private static final ServiceTrackerList<DLStoreConvertProcess>
-		_dlStoreConvertProcesses = ServiceTrackerListFactory.open(
-			SystemBundleUtil.getBundleContext(), DLStoreConvertProcess.class);
-
+	private ServiceTrackerList<DLStoreConvertProcess> _dlStoreConvertProcesses;
 	private ServiceTrackerMap<String, Store> _serviceTrackerMap;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

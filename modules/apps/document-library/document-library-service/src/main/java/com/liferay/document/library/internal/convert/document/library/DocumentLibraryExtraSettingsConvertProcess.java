@@ -12,16 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.convert.documentlibrary;
+package com.liferay.document.library.internal.convert.document.library;
 
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.convert.BaseConvertProcess;
+import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
  */
+@Component(service = ConvertProcess.class)
 public class DocumentLibraryExtraSettingsConvertProcess
 	extends BaseConvertProcess {
 
@@ -38,7 +43,7 @@ public class DocumentLibraryExtraSettingsConvertProcess
 	@Override
 	public boolean isEnabled() {
 		try {
-			return DLFileEntryLocalServiceUtil.hasExtraSettings();
+			return _dlFileEntryLocalService.hasExtraSettings();
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -58,5 +63,8 @@ public class DocumentLibraryExtraSettingsConvertProcess
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentLibraryExtraSettingsConvertProcess.class);
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

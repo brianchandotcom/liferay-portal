@@ -20,15 +20,12 @@ definition {
 			value1 = "${feedTitle}");
 
 		if ("${feedType}" == "file") {
-			Type(
-				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-				value1 = "file:////");
-
+			var projectDir = PropsUtil.get("project.dir");
 			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${feedURLLink}");
 
-			UploadFile(
+			Type(
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-				value1 = "${dependencyFilePath}");
+				value1 = "file:////${projectDir}/portal-web/${dependencyFilePath}");
 		}
 		else {
 			Type(

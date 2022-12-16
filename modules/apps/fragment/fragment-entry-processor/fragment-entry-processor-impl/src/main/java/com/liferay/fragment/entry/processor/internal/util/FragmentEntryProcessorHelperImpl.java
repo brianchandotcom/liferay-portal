@@ -59,6 +59,7 @@ import java.time.format.FormatStyle;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -375,6 +376,19 @@ public class FragmentEntryProcessorHelperImpl
 		}
 	}
 
+	private String _getDefaultPattern(Locale locale) {
+		if (_defaultPatternMap.containsKey(locale)) {
+			return _defaultPatternMap.get(locale);
+		}
+
+		String pattern = DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+			FormatStyle.SHORT, null, IsoChronology.INSTANCE, locale);
+
+		_defaultPatternMap.put(locale, pattern);
+
+		return pattern;
+	}
+
 	private long _getFileEntryId(
 		String className, Object displayObject, String fieldName,
 		Locale locale) {
@@ -541,10 +555,7 @@ public class FragmentEntryProcessorHelperImpl
 
 					return _getDateValue(
 						editableValueJSONObject, date,
-						DateTimeFormatterBuilder.getLocalizedDateTimePattern(
-							FormatStyle.SHORT, null, IsoChronology.INSTANCE,
-							locale),
-						locale);
+						_getDefaultPattern(locale), locale);
 				}
 				catch (ParseException parseException) {
 					if (_log.isDebugEnabled()) {
@@ -579,10 +590,7 @@ public class FragmentEntryProcessorHelperImpl
 
 			return _getDateValue(
 				editableValueJSONObject, date,
-				DateTimeFormatterBuilder.getLocalizedDateTimePattern(
-					FormatStyle.SHORT, FormatStyle.SHORT,
-					IsoChronology.INSTANCE, locale),
-				locale);
+				_getShortTimeStylePattern(locale), locale);
 		}
 
 		Class<?> fieldValueClass = value.getClass();
@@ -599,12 +607,31 @@ public class FragmentEntryProcessorHelperImpl
 		return value.toString();
 	}
 
+	private String _getShortTimeStylePattern(Locale locale) {
+		if (_shortTimeStylePatternMap.containsKey(locale)) {
+			return _shortTimeStylePatternMap.get(locale);
+		}
+
+		String pattern = DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+			FormatStyle.SHORT, FormatStyle.SHORT, IsoChronology.INSTANCE,
+			locale);
+
+		_shortTimeStylePatternMap.put(locale, pattern);
+
+		return pattern;
+	}
+
 	private static final InfoCollectionTextFormatter<Object>
 		_INFO_COLLECTION_TEXT_FORMATTER =
 			new CommaSeparatedInfoCollectionTextFormatter();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryProcessorHelperImpl.class);
+
+	private static final Map<Locale, String> _defaultPatternMap =
+		new HashMap<>();
+	private static final Map<Locale, String> _shortTimeStylePatternMap =
+		new HashMap<>();
 
 	@Reference
 	private Html _html;

@@ -348,10 +348,10 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		try {
-			DateFormat dateFormatPattern =
-				DateFormatFactoryUtil.getSimpleDateFormat(pattern);
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				pattern);
 
-			return dateFormatPattern.format(date);
+			return dateFormat.format(date);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -520,11 +520,11 @@ public class FragmentEntryProcessorHelperImpl
 
 			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 				try {
-					DateFormat simpleDateFormat =
+					DateFormat dateFormat =
 						DateFormatFactoryUtil.getSimpleDateFormat(
 							"MM/dd/yy hh:mm a", locale);
 
-					Date date = simpleDateFormat.parse(value.toString());
+					Date date = dateFormat.parse(value.toString());
 
 					return _getDateValue(
 						editableValueJSONObject, date, locale,

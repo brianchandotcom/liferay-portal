@@ -200,37 +200,6 @@ export function ActionContainer({
 	};
 
 	useEffect(() => {
-		if (values.objectActionExecutorKey === 'add-object-entry') {
-			fetchObjectDefinitions(
-				objectDefinitionsRelationshipsURL,
-				values,
-				setRelationships,
-				setObjectOptions
-			);
-			fetchObjectDefinitionFields(
-				objectDefinitionId,
-				objectDefinitionExternalReferenceCode,
-				values,
-				isValidField,
-				setCurrentObjectDefinitionFields,
-				setValues
-			);
-		}
-		else if (values.objectActionExecutorKey === 'update-object-entry') {
-			updateParameters(objectDefinitionExternalReferenceCode);
-			fetchObjectDefinitionFields(
-				objectDefinitionId,
-				objectDefinitionExternalReferenceCode,
-				values,
-				isValidField,
-				setCurrentObjectDefinitionFields,
-				setValues
-			);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.objectActionExecutorKey]);
-
-	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
 			const makeFetch = async () => {
 				const NotificationTemplatesResponse = await API.getNotificationTemplates();
@@ -255,7 +224,43 @@ export function ActionContainer({
 
 			makeFetch();
 		}
-	}, [values, systemObject]);
+
+		if (values.objectActionExecutorKey === 'add-object-entry') {
+			fetchObjectDefinitions(
+				objectDefinitionsRelationshipsURL,
+				values,
+				setRelationships,
+				setObjectOptions
+			);
+
+			fetchObjectDefinitionFields(
+				objectDefinitionId,
+				objectDefinitionExternalReferenceCode,
+				values,
+				isValidField,
+				setCurrentObjectDefinitionFields,
+				setValues
+			);
+		}
+		else if (values.objectActionExecutorKey === 'update-object-entry') {
+			updateParameters(objectDefinitionExternalReferenceCode);
+			fetchObjectDefinitionFields(
+				objectDefinitionId,
+				objectDefinitionExternalReferenceCode,
+				values,
+				isValidField,
+				setCurrentObjectDefinitionFields,
+				setValues
+			);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [
+		values.objectActionExecutorKey,
+		systemObject,
+		objectDefinitionId,
+		objectDefinitionExternalReferenceCode,
+		objectDefinitionsRelationshipsURL,
+	]);
 
 	return (
 		<Card title={Liferay.Language.get('action')}>

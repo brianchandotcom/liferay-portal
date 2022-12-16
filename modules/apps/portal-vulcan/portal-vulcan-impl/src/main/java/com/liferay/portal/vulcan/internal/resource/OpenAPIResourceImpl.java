@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.internal.extension.util.ExtensionUtil;
 import com.liferay.portal.vulcan.jaxrs.JaxRsResourceRegistry;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
+import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
@@ -61,6 +62,8 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.parameters.RequestBody;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.servers.Server;
+
+import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -358,22 +361,32 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			).build();
 		}
 
+		OpenAPIContext openAPIContext = null;
+
 		if (uriInfo != null) {
 			Server server = new Server();
 
 			server.setUrl(_getBasePath(httpServletRequest, uriInfo));
 
 			openAPI.setServers(Collections.singletonList(server));
+
+			URI uri = uriInfo.getBaseUri();
+
+			openAPIContext = new OpenAPIContext();
+
+			openAPIContext.setPath(uri.getPath());
+			openAPIContext.setVersion(
+				StringUtil.extractFirst(uriInfo.getPath(), StringPool.SLASH));
 		}
 
 		if (openAPIContributor != null) {
-			openAPIContributor.contribute(openAPI, uriInfo);
+			openAPIContributor.contribute(openAPI, openAPIContext);
 		}
 
 		for (OpenAPIContributor trackedOpenAPIContributor :
 				_trackedOpenAPIContributors) {
 
-			trackedOpenAPIContributor.contribute(openAPI, uriInfo);
+			trackedOpenAPIContributor.contribute(openAPI, openAPIContext);
 		}
 
 		if (StringUtil.equalsIgnoreCase("yaml", type)) {

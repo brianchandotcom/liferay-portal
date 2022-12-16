@@ -12,18 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.openapi.contributor;
-
-import com.liferay.portal.vulcan.openapi.OpenAPIContext;
-
-import io.swagger.v3.oas.models.OpenAPI;
+package com.liferay.portal.vulcan.openapi;
 
 /**
- * @author Luis Miguel Barcos
+ * @author Carlos Correa
  */
-public interface OpenAPIContributor {
+public class OpenAPIContext {
 
-	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)
-		throws Exception;
+	public String getPath() {
+		return _path;
+	}
+
+	public String getVersion() {
+		return _version;
+	}
+
+	public void setPath(String path) {
+		_path = path;
+	}
+
+	public void setVersion(String version) {
+		_version = version;
+	}
+
+	private String _path;
+	private String _version;
 
 }

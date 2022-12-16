@@ -99,8 +99,12 @@ public class ObjectActionLocalServiceImpl
 		_validateLabel(labelMap);
 		_validateName(0, objectDefinitionId, name);
 		_validateObjectActionExecutorKey(objectActionExecutorKey);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		_validateObjectActionTriggerKey(
-			conditionExpression, objectActionTriggerKey);
+			conditionExpression, objectActionTriggerKey, objectDefinition);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -128,10 +132,6 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setStatus(ObjectActionConstants.STATUS_NEVER_RAN);
 
 		objectAction = objectActionPersistence.update(objectAction);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectAction.getObjectDefinitionId());
 
 		if (objectDefinition.isApproved() &&
 			Objects.equals(
@@ -264,7 +264,7 @@ public class ObjectActionLocalServiceImpl
 		_validateName(
 			objectActionId, objectDefinition.getObjectDefinitionId(), name);
 		_validateObjectActionTriggerKey(
-			conditionExpression, objectActionTriggerKey);
+			conditionExpression, objectActionTriggerKey, objectDefinition);
 
 		objectAction.setName(name);
 		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
@@ -367,19 +367,28 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	private void _validateObjectActionTriggerKey(
-			String conditionExpression, String objectActionTriggerKey)
+			String conditionExpression, String objectActionTriggerKey,
+			ObjectDefinition objectDefinition)
 		throws PortalException {
 
 		if (Objects.equals(
 				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_STANDALONE) &&
-			Validator.isNotNull(conditionExpression)) {
+				ObjectActionTriggerConstants.KEY_STANDALONE)) {
 
-			throw new ObjectActionTriggerKeyException(
-				StringBundler.concat(
-					"The object action trigger key ",
-					ObjectActionTriggerConstants.KEY_STANDALONE,
-					" cannot have a condition expression"));
+			if (objectDefinition.isSystem()) {
+				throw new ObjectActionTriggerKeyException(
+					StringBundler.concat(
+						"The object action trigger key ",
+						ObjectActionTriggerConstants.KEY_STANDALONE,
+						" cannot be used by a system object definition"));
+			}
+			else if (Validator.isNotNull(conditionExpression)) {
+				throw new ObjectActionTriggerKeyException(
+					StringBundler.concat(
+						"The object action trigger key ",
+						ObjectActionTriggerConstants.KEY_STANDALONE,
+						" cannot have a condition expression"));
+			}
 		}
 
 		if (!ListUtil.exists(

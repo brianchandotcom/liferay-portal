@@ -21,6 +21,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -183,12 +185,19 @@ public class ObjectDefinitionsActionsDisplayContext
 
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
-		List<ObjectActionTrigger> objectActionTriggers =
-			_objectActionTriggerRegistry.getObjectActionTriggers(
-				objectDefinition.getClassName());
+		for (ObjectActionTrigger objectActionTrigger :
+				_objectActionTriggerRegistry.getObjectActionTriggers(
+					objectDefinition.getClassName())) {
 
-		objectActionTriggers.forEach(
-			objectActionTrigger -> objectActionTriggersJSONArray.put(
+			if (Objects.equals(
+					objectActionTrigger.getKey(),
+					ObjectActionTriggerConstants.KEY_STANDALONE) &&
+				objectDefinition.isSystem()) {
+
+				continue;
+			}
+
+			objectActionTriggersJSONArray.put(
 				JSONUtil.put(
 					"description",
 					LanguageUtil.get(
@@ -203,7 +212,8 @@ public class ObjectDefinitionsActionsDisplayContext
 							objectActionTrigger.getKey() + "]")
 				).put(
 					"value", objectActionTrigger.getKey()
-				)));
+				));
+		}
 
 		return objectActionTriggersJSONArray;
 	}

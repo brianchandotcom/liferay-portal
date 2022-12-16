@@ -142,60 +142,6 @@ definition {
 		}
 	}
 
-	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
-	@priority = 2
-	test DeletedPropertiesNotAppearAsOptionInSyncSites {
-		task ("Go to properties page and add 2 new properties") {
-			var propertyList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1,Property DeletedPropertiesNotAppearAsOptionInSyncSites 2";
-
-			ACNavigation.goToSettings();
-
-			for (var propertyName : list ${propertyList}) {
-				ACSettings.goToProperties();
-
-				ACProperties.addNewProperty(propertyName = ${propertyName});
-			}
-		}
-
-		task ("Delete a property") {
-			ACSettings.goToProperties();
-
-			ACSettings.deletePropertyByCheckbox(propertyName = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 2");
-		}
-
-		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
-		}
-
-		task ("Set up instance and sign in DXP") {
-			TestCase.setUpPortalInstance();
-
-			ACUtils.launchDXP();
-		}
-
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.goToInstanceSettingsAC();
-
-			ACDXPSettings.connectAnalyticsCloud();
-		}
-
-		task ("Go to Synced Sites") {
-			ACDXPSettings.navToSyncedSitesMenu();
-		}
-
-		task ("Check that the existing properties in the AC appear in the list") {
-			ACUtils.assertItemsName(itemList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1");
-		}
-
-		task ("Check that the deleted AC properties do not appear in the list") {
-			ACUtils.assertItemsNameNotPresent(itemList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 2");
-		}
-
-		task ("Disconnect the DXP to AC") {
-			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-		}
-	}
-
 	@description = "Bug: LRAC-11142 | Automation ID: LRAC-11162 | Test Summary: New property created when reconnect and old property remains"
 	@priority = 4
 	test OnlyAvailablePropertiesAppearInDXP {

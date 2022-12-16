@@ -15,11 +15,11 @@
 /* eslint-disable no-undef */
 
 adtSpatialNavigationProvider = new navigation.default.SpatialNavigationProvider(
-    '.adt-submenu-item-link'
+	'.adt-submenu-item-link'
 );
 
 spatialNavigationProvider = new navigation.default.SpatialNavigationProvider(
-    '.adt-nav-text'
+	'.adt-nav-text'
 );
 
 const primaryNav = fragmentElement.querySelector('.primary-nav');
@@ -53,19 +53,18 @@ window.addEventListener('load', () => {
 		true
 	);
 
-    new navigation.default.DropdownProvider(
-        '.adt-nav-text',
-        '.adt-submenu',
-        'dropdown-open',
-        false,
-        (menu) => {
-            adtSpatialNavigationProvider.addFocusableClasses(menu);
-
-        },
-        (menu) => {
-            adtSpatialNavigationProvider.removeFocusableClasses(menu);
-        }
-    );
+	new navigation.default.DropdownProvider(
+		'.adt-nav-text',
+		'.adt-submenu',
+		'dropdown-open',
+		false,
+		(menu) => {
+			adtSpatialNavigationProvider.addFocusableClasses(menu);
+		},
+		(menu) => {
+			adtSpatialNavigationProvider.removeFocusableClasses(menu);
+		}
+	);
 
 	new navigation.default.DropdownProvider(
 		'.language',

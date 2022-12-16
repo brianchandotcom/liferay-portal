@@ -43,9 +43,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"dispatch.task.executor.cluster.mode=single-node",
-		"dispatch.task.executor.name=testray-autofill",
+		"dispatch.task.executor.feature.flag=LPS-170809",
+		"dispatch.task.executor.name=testray-auto-fill",
 		"dispatch.task.executor.overlapping=false",
-		"dispatch.task.executor.type=testray-autofill"
+		"dispatch.task.executor.type=testray-auto-fill"
 	},
 	service = DispatchTaskExecutor.class
 )
@@ -61,9 +62,9 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		if (Validator.isNull(unicodeProperties.getProperty("objectEntryId1")) ||
-			Validator.isNull(unicodeProperties.getProperty("objectEntryId2")) ||
-			Validator.isNull(unicodeProperties.getProperty("autoFillType"))) {
+		if (Validator.isNull(unicodeProperties.getProperty("autoFillType")) ||
+			Validator.isNull(unicodeProperties.getProperty("objectEntryId1")) ||
+			Validator.isNull(unicodeProperties.getProperty("objectEntryId2"))) {
 
 			_log.error("The required properties are not set");
 
@@ -101,18 +102,18 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testray-autofill";
+		return "testray-auto-fill";
 	}
 
 	private void _process(long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
 
+		String autoFillType = GetterUtil.getString(
+			unicodeProperties.getProperty("autoFillType"));
 		long objectEntryId1 = GetterUtil.getLong(
 			unicodeProperties.getProperty("objectEntryId1"));
 		long objectEntryId2 = GetterUtil.getLong(
 			unicodeProperties.getProperty("objectEntryId2"));
-		String autoFillType = GetterUtil.getString(
-			unicodeProperties.getProperty("autoFillType"));
 
 		ObjectEntry objectEntry1 =
 			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(

@@ -106,9 +106,13 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			_siteInitializerTestrayDispatchTaskExecutorHelper.
 				loadObjectDefinitions(dispatchTrigger.getCompanyId());
 
+			_updateTestrayTaskStatus(
+				unicodeProperties, _TESTRAY_TASK_STATUS_PROCESSING);
+
 			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 
-			_updateTestrayTaskStatus(unicodeProperties);
+			_updateTestrayTaskStatus(
+				unicodeProperties, _TESTRAY_TASK_STATUS_IN_ANALYSIS);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -338,8 +342,11 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 			long testraySubtaskName =
 				_siteInitializerTestrayDispatchTaskExecutorHelper.
 					incrementTestrayFieldValue(
-						companyId, "name", "taskId eq '" + testrayTaskId + "'",
-						"Subtask", new Sort[] {new Sort("createDate", true)});
+						companyId, "number",
+						"taskId eq '" + testrayTaskId + "'", "Subtask",
+						new Sort[] {
+							new Sort("nestedFieldArray.value_long#number", true)
+						});
 
 			ObjectEntry testraySubtaskObjectEntry =
 				_siteInitializerTestrayDispatchTaskExecutorHelper.
@@ -362,16 +369,18 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 					addObjectEntry(
 						"SubtasksCasesResults",
 						HashMapBuilder.<String, Object>put(
-							"caseResultId", objectEntry.getId()
+							"r_caseResultToSubtasksCasesResults_c_caseResultId",
+							objectEntry.getId()
 						).put(
-							"subtaskId",
+							"r_subtaskToSubtasksCasesResults_c_subtaskId",
 							String.valueOf(testraySubtaskObjectEntry.getId())
 						).build());
 			}
 		}
 	}
 
-	private void _updateTestrayTaskStatus(UnicodeProperties unicodeProperties)
+	private void _updateTestrayTaskStatus(
+			UnicodeProperties unicodeProperties, String testrayTaskStatus)
 		throws Exception {
 
 		long testrayTaskId = GetterUtil.getLong(
@@ -383,7 +392,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		Map<String, Object> map = objectEntry.getProperties();
 
-		map.replace("dueStatus", _TESTRAY_TASK_STATUS_IN_ANALYSIS);
+		map.replace("dueStatus", testrayTaskStatus);
 
 		objectEntry.setProperties(map);
 
@@ -392,6 +401,8 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 	}
 
 	private static final String _TESTRAY_TASK_STATUS_IN_ANALYSIS = "INANALYSIS";
+
+	private static final String _TESTRAY_TASK_STATUS_PROCESSING = "PROCESSING";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayTestFlowDispatchTaskExecutor.class);

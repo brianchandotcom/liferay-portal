@@ -227,11 +227,10 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 			long testrayNumber =
 				_siteInitializerTestrayDispatchTaskExecutorHelper.
 					incrementTestrayFieldValue(
-						companyId, "caseNumber",
+						companyId, "number",
 						"projectId eq '" + testrayProjectId + "'", "Case",
 						new Sort[] {
-							new Sort(
-								"nestedFieldArray.value_long#caseNumber", true)
+							new Sort("nestedFieldArray.value_long#number", true)
 						});
 
 			ObjectEntry objectEntry =
@@ -239,8 +238,6 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 					addObjectEntry(
 						"Case",
 						HashMapBuilder.<String, Object>put(
-							"caseNumber", testrayNumber
-						).put(
 							"description",
 							testrayCasePropertiesMap.get(
 								"testray.testcase.description")
@@ -248,6 +245,8 @@ public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 							"name",
 							(String)testrayCasePropertiesMap.get(
 								"testray.testcase.name")
+						).put(
+							"number", testrayNumber
 						).put(
 							"priority",
 							testrayCasePropertiesMap.get(

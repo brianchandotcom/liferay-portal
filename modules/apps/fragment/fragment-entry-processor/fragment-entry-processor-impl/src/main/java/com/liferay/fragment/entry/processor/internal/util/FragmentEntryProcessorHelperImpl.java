@@ -313,47 +313,44 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	private String _getDateValue(
-		JSONObject editableValueJSONObject, Date date, Locale locale,
-		String type) {
-
-		String defaultDateFormat;
-
-		if (type.equals("dateType")) {
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"MM/dd/yy hh:mm a", locale);
-
-			defaultDateFormat = dateFormat.format(date);
-		}
-		else {
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"MM/dd/yy", locale);
-
-			defaultDateFormat = dateFormat.format(date);
-		}
+		JSONObject editableValueJSONObject, Date date, String defaultPattern,
+		Locale locale) {
 
 		if (editableValueJSONObject == null) {
-			return defaultDateFormat;
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				defaultPattern, locale);
+
+			return dateFormat.format(date);
 		}
 
 		JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
 			"config");
 
 		if (configJSONObject == null) {
-			return defaultDateFormat;
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				defaultPattern, locale);
+
+			return dateFormat.format(date);
 		}
 
 		JSONObject dateFormatJSONObject = configJSONObject.getJSONObject(
 			"dateFormat");
 
 		if (dateFormatJSONObject == null) {
-			return defaultDateFormat;
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				defaultPattern, locale);
+
+			return dateFormat.format(date);
 		}
 
 		String pattern = dateFormatJSONObject.getString(
 			_language.getLanguageId(locale), null);
 
 		if (Validator.isNull(pattern)) {
-			return defaultDateFormat;
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				defaultPattern, locale);
+
+			return dateFormat.format(date);
 		}
 
 		try {
@@ -367,7 +364,10 @@ public class FragmentEntryProcessorHelperImpl
 				_log.debug(exception);
 			}
 
-			return defaultDateFormat;
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				defaultPattern, locale);
+
+			return dateFormat.format(date);
 		}
 	}
 
@@ -536,8 +536,7 @@ public class FragmentEntryProcessorHelperImpl
 					Date date = dateFormat.parse(value.toString());
 
 					return _getDateValue(
-						editableValueJSONObject, date, locale,
-						"dateInfoFieldType");
+						editableValueJSONObject, date, "MM/dd/yy", locale);
 				}
 				catch (ParseException parseException) {
 					if (_log.isDebugEnabled()) {
@@ -571,7 +570,7 @@ public class FragmentEntryProcessorHelperImpl
 			Date date = (Date)value;
 
 			return _getDateValue(
-				editableValueJSONObject, date, locale, "dateType");
+				editableValueJSONObject, date, "MM/dd/yy hh:mm a", locale);
 		}
 
 		Class<?> fieldValueClass = value.getClass();

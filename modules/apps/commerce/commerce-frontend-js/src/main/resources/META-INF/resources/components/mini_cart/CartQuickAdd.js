@@ -18,18 +18,13 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {addToCart} from '../add_to_cart/data';
 import MiniCartContext from './MiniCartContext';
 
 const CHANNEL_RESOURCE_ENDPOINT =
 	'/o/headless-commerce-delivery-catalog/v1.0/channels';
-
-const channelsApiURL = new URL(
-	`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}`,
-	themeDisplay.getPortalURL()
-);
 
 const formattedProducts = [];
 
@@ -64,44 +59,32 @@ export default function CartQuickAdd() {
 	const [selectedProducts, setSelectedProducts] = useState([]);
 	const [products, setProducts] = useState();
 
-	const channelIdRef = useRef();
+	const {cartItems = [], channel} = cartState;
 
-	const {cartItems = []} = cartState;
+	const channelId = channel.channel.id;
 
 	useEffect(() => {
-		async function fetchProducts() {
-			const channelsResponse = await fetch(channelsApiURL.toString());
+		const productsApiURL = new URL(
+			`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products?nestedFields=skus`,
+			themeDisplay.getPortalURL()
+		);
 
-			const channels = await channelsResponse.json();
+		fetch(productsApiURL.toString())
+			.then((response) => response.json())
+			.then((availableProducts) => {
+				availableProducts.items.forEach((product) => {
+					const {name, skus} = product;
 
-			channelIdRef.current = channels.items[0].id;
-
-			const productsApiURL = new URL(
-				`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${
-					channelIdRef.current
-				}/products?nestedFields=skus`,
-				themeDisplay.getPortalURL()
-			);
-
-			const productsResponse = await fetch(productsApiURL.toString());
-
-			const availableProducts = await productsResponse.json();
-
-			availableProducts.items.forEach((product) => {
-				const {name, skus} = product;
-
-				formattedProducts.push({
-					...product,
-					label: name,
-					value: skus[0].sku,
+					formattedProducts.push({
+						...product,
+						label: name,
+						value: skus[0].sku,
+					});
 				});
+
+				setProducts(availableProducts.items);
 			});
-
-			setProducts(availableProducts.items);
-		}
-
-		fetchProducts();
-	}, []);
+	}, [channelId]);
 
 	const handleAddToCartClick = () => {
 		const itemSKUs = selectedProducts.map((item) => item.value);
@@ -131,7 +114,7 @@ export default function CartQuickAdd() {
 		addToCart(
 			readyProducts,
 			cartState.id,
-			channelIdRef,
+			channel.channel.id,
 			cartState.accountId
 		);
 
@@ -140,7 +123,7 @@ export default function CartQuickAdd() {
 
 	return (
 		<ClayForm.Group
-			className={classNames('p-3', quickAddToCartError && 'has-error')}
+			className={classNames('p-3', {'has-error': quickAddToCartError})}
 		>
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
@@ -153,18 +136,16 @@ export default function CartQuickAdd() {
 						onItemsChange={(newItems) => {
 							setQuickAddToCartError(false);
 
-							const validItems = [];
-
-							newItems.map((item) => {
+							newItems = newItems.filter((item) => {
 								if (item.id) {
-									validItems.push(item);
+									return item;
 								}
 								else {
 									setQuickAddToCartError(true);
 								}
 							});
 
-							setSelectedProducts(validItems);
+							setSelectedProducts(newItems);
 						}}
 						placeholder={Liferay.Language.get('search-products')}
 						size="sm"

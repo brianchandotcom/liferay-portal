@@ -35,7 +35,7 @@ export default function CartItemsList() {
 		<div className="mini-cart-items-list">
 			<CartViews.ItemsListActions />
 
-			{cartState.accountId && id && <CartQuickAdd />}
+			{cartState.accountId && !!id && <CartQuickAdd />}
 
 			{cartItems.length ? (
 				<>

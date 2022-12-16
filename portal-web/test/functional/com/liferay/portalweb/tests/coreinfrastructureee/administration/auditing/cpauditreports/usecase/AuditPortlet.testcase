@@ -48,9 +48,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Audit");
 
+		var browserIPAddress = PropsUtil.get("browser.ip.address");
+
 		Audit.viewAuditDetails(
 			additionalInformation = "User Group1",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "ASSIGN",
 			key_resourceName = "User",
 			resourceAction = "ASSIGN",
@@ -73,7 +75,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "User Group1",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "UNASSIGN",
 			key_resourceName = "User",
 			resourceAction = "UNASSIGN",
@@ -104,7 +106,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Role1 Name",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "ASSIGN",
 			key_resourceName = "User",
 			resourceAction = "ASSIGN",
@@ -128,7 +130,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "Role1 Name",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "UNASSIGN",
 			key_resourceName = "User",
 			resourceAction = "UNASSIGN",
@@ -158,9 +160,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Audit");
 
+		var browserIPAddress = PropsUtil.get("browser.ip.address");
+
 		Audit.viewAuditDetails(
 			additionalInformation = "test1@liferay.com",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "ADD",
 			key_resourceName = "User",
 			resourceAction = "ADD",
@@ -183,7 +187,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "middleName",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "UPDATE",
 			key_resourceName = "User",
 			resourceAction = "UPDATE",
@@ -210,7 +214,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "test1 test1 test1",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "IMPERSONATE",
 			key_resourceName = "User",
 			resourceAction = "IMPERSONATE",
@@ -237,7 +241,7 @@ definition {
 
 		Audit.viewAuditDetails(
 			additionalInformation = "test1@liferay.com",
-			clientIp = "127.0.0.1",
+			clientIp = "${browserIPAddress}",
 			key_resourceAction = "DELETE",
 			key_resourceName = "User",
 			resourceAction = "DELETE",

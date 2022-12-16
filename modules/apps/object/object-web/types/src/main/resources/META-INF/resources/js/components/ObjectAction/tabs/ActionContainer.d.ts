@@ -13,13 +13,24 @@
  */
 
 import {ActionError} from '..';
+import {ClaySelect} from '@clayui/form';
 import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 import React from 'react';
 import './ActionBuilder.scss';
 import {WarningStates} from './ActionBuilder';
+export declare type ObjectsOptionsList = Array<
+	(
+		| React.ComponentProps<typeof ClaySelect.Option>
+		| React.ComponentProps<typeof ClaySelect.OptGroup>
+	) & {
+		options?: Array<React.ComponentProps<typeof ClaySelect.Option>>;
+		type?: 'group';
+	}
+>;
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];
 	errors: ActionError;
+	newObjectActionExecutors: CustomItem<string>[];
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectDefinitionExternalReferenceCode: string;
@@ -27,7 +38,6 @@ interface ActionContainerProps {
 	objectDefinitionsRelationshipsURL: string;
 	objectFieldsMap: Map<string, ObjectField>;
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
-	setErrorAlert: (value: boolean) => void;
 	setValues: (values: Partial<ObjectAction>) => void;
 	setWarningAlerts: (value: React.SetStateAction<WarningStates>) => void;
 	systemObject: boolean;
@@ -37,6 +47,7 @@ interface ActionContainerProps {
 export declare function ActionContainer({
 	currentObjectDefinitionFields,
 	errors,
+	newObjectActionExecutors,
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectDefinitionExternalReferenceCode,
@@ -44,7 +55,6 @@ export declare function ActionContainer({
 	objectDefinitionsRelationshipsURL,
 	objectFieldsMap,
 	setCurrentObjectDefinitionFields,
-	setErrorAlert,
 	setValues,
 	setWarningAlerts,
 	systemObject,

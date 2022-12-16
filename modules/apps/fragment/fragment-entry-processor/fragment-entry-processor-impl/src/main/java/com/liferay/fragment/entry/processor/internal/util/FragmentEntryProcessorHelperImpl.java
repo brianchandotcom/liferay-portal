@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -351,7 +352,8 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		try {
-			DateFormat dateFormatPattern = new SimpleDateFormat(pattern);
+			DateFormat dateFormatPattern =
+				DateFormatFactoryUtil.getSimpleDateFormat(pattern);
 
 			return dateFormatPattern.format(date);
 		}
@@ -522,8 +524,9 @@ public class FragmentEntryProcessorHelperImpl
 
 			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 				try {
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-						"MM/dd/yy", locale);
+					DateFormat simpleDateFormat =
+						DateFormatFactoryUtil.getSimpleDateFormat(
+							"MM/dd/yy", locale);
 
 					Date date = simpleDateFormat.parse(value.toString());
 

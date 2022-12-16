@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor;
+package com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util;
 
-import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -32,46 +32,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Nilton Vieira
  */
-public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
-	extends BaseDispatchTaskExecutor {
+@Component(service = SiteInitializerTestrayDispatchTaskExecutorHelper.class)
+public class SiteInitializerTestrayDispatchTaskExecutorHelperImpl
+	implements SiteInitializerTestrayDispatchTaskExecutorHelper {
 
-	protected ObjectEntry addObjectEntry(
+	public ObjectEntry addObjectEntry(
 			String objectDefinitionShortName, Map<String, Object> properties)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = getObjectDefinition(
+		ObjectDefinition objectDefinition = _getObjectDefinition(
 			objectDefinitionShortName);
 
 		ObjectEntry objectEntry = new ObjectEntry();
 
 		objectEntry.setProperties(properties);
 
-		return objectEntryManager.addObjectEntry(
-			defaultDTOConverterContext, objectDefinition, objectEntry, null);
+		return _objectEntryManager.addObjectEntry(
+			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
-	protected ObjectDefinition getObjectDefinition(
-			String objectDefinitionShortName)
-		throws Exception {
-
-		ObjectDefinition objectDefinition = objectDefinitionsMap.get(
-			objectDefinitionShortName);
-
-		if (objectDefinition == null) {
-			throw new PortalException(
-				"No object definition found with short name " +
-					objectDefinitionShortName);
-		}
-
-		return objectDefinition;
+	public void createDefaultDTOConverterContext(User user) {
+		_defaultDTOConverterContext = new DefaultDTOConverterContext(
+			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
+			user);
 	}
 
-	protected List<ObjectEntry> getObjectEntries(
+	public List<ObjectEntry> getObjectEntries(
 			Aggregation aggregation, long companyId, String filter,
 			String objectDefinitionShortName, Sort[] sorts)
 		throws Exception {
@@ -82,32 +74,33 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 		return (List<ObjectEntry>)objectEntriesPage.getItems();
 	}
 
-	protected Page<ObjectEntry> getObjectEntriesPage(
+	public Page<ObjectEntry> getObjectEntriesPage(
 			Aggregation aggregation, long companyId, String filter,
 			String objectDefinitionShortName, Sort[] sorts)
 		throws Exception {
 
-		return objectEntryManager.getObjectEntries(
-			companyId, getObjectDefinition(objectDefinitionShortName), null,
-			aggregation, defaultDTOConverterContext, filter, null, null, sorts);
+		return _objectEntryManager.getObjectEntries(
+			companyId, _getObjectDefinition(objectDefinitionShortName), null,
+			aggregation, _defaultDTOConverterContext, filter, null, null,
+			sorts);
 	}
 
-	protected ObjectEntry getObjectEntry(
+	public ObjectEntry getObjectEntry(
 			String objectDefinitionShortName, long objectEntryId)
 		throws Exception {
 
-		return objectEntryManager.getObjectEntry(
-			defaultDTOConverterContext,
-			getObjectDefinition(objectDefinitionShortName), objectEntryId);
+		return _objectEntryManager.getObjectEntry(
+			_defaultDTOConverterContext,
+			_getObjectDefinition(objectDefinitionShortName), objectEntryId);
 	}
 
-	protected Object getProperty(String key, ObjectEntry objectEntry) {
+	public Object getProperty(String key, ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		return properties.get(key);
 	}
 
-	protected long incrementTestrayFieldValue(
+	public long incrementTestrayFieldValue(
 			long companyId, String fieldName, String filterString,
 			String objectDefinitionShortName, Sort[] sorts)
 		throws Exception {
@@ -121,18 +114,18 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 			return 1;
 		}
 
-		String fieldValue = String.valueOf(getProperty(fieldName, objectEntry));
+		Long fieldValue = (Long)getProperty(fieldName, objectEntry);
 
 		if (fieldValue == null) {
 			return 1;
 		}
 
-		return Long.valueOf(StringUtil.extractDigits(fieldValue)) + 1;
+		return fieldValue.longValue() + 1;
 	}
 
-	protected void loadObjectDefinitions(long companyId) {
+	public void loadObjectDefinitions(long companyId) {
 		List<ObjectDefinition> objectDefinitions =
-			objectDefinitionLocalService.getObjectDefinitions(
+			_objectDefinitionLocalService.getObjectDefinitions(
 				companyId, true, WorkflowConstants.STATUS_APPROVED);
 
 		if (ListUtil.isEmpty(objectDefinitions)) {
@@ -140,31 +133,47 @@ public abstract class BaseSiteInitializerTestrayDispatchTaskExecutor
 		}
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			objectDefinitionsMap.put(
+			_objectDefinitionsMap.put(
 				objectDefinition.getShortName(), objectDefinition);
 		}
 	}
 
-	protected void updateObjectEntry(
+	public void updateObjectEntry(
 			String objectDefinitionShortName, ObjectEntry objectEntry,
 			long objectEntryId)
 		throws Exception {
 
-		objectEntryManager.updateObjectEntry(
-			defaultDTOConverterContext,
-			getObjectDefinition(objectDefinitionShortName), objectEntryId,
+		_objectEntryManager.updateObjectEntry(
+			_defaultDTOConverterContext,
+			_getObjectDefinition(objectDefinitionShortName), objectEntryId,
 			objectEntry);
 	}
 
-	protected DefaultDTOConverterContext defaultDTOConverterContext;
+	private ObjectDefinition _getObjectDefinition(
+			String objectDefinitionShortName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _objectDefinitionsMap.get(
+			objectDefinitionShortName);
+
+		if (objectDefinition == null) {
+			throw new PortalException(
+				"No object definition found with short name " +
+					objectDefinitionShortName);
+		}
+
+		return objectDefinition;
+	}
+
+	private DefaultDTOConverterContext _defaultDTOConverterContext;
 
 	@Reference
-	protected ObjectDefinitionLocalService objectDefinitionLocalService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	protected final Map<String, ObjectDefinition> objectDefinitionsMap =
+	private final Map<String, ObjectDefinition> _objectDefinitionsMap =
 		new HashMap<>();
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
-	protected ObjectEntryManager objectEntryManager;
+	private ObjectEntryManager _objectEntryManager;
 
 }

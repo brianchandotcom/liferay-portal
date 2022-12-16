@@ -15,9 +15,11 @@
 package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -34,6 +36,7 @@ import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
+import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.dao.search.JournalRowChecker;
 import com.liferay.journal.web.internal.item.selector.JournalArticleItemSelectorView;
@@ -168,6 +171,10 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		).put(
 			"value",
 			() -> {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					JournalArticle.class.getName(),
+					JournalArticleAssetRenderer.getClassPK(journalArticle));
+
 				DDMStructure ddmStructure =
 					DDMStructureLocalServiceUtil.fetchStructure(
 						journalArticle.getGroupId(),
@@ -175,6 +182,31 @@ public class JournalArticleItemSelectorViewDisplayContext {
 						journalArticle.getDDMStructureKey(), true);
 
 				return JSONUtil.put(
+					"assetEntryId", String.valueOf(assetEntry.getEntryId())
+				).put(
+					"assetType",
+					() -> {
+						AssetRendererFactory<?> assetRendererFactory =
+							AssetRendererFactoryRegistryUtil.
+								getAssetRendererFactoryByClassName(
+									JournalArticle.class.getName());
+
+						if (!assetRendererFactory.isSupportsClassTypes()) {
+							return assetRendererFactory.getTypeName(
+								_themeDisplay.getLocale(),
+								assetEntry.getClassTypeId());
+						}
+
+						ClassTypeReader classTypeReader =
+							assetRendererFactory.getClassTypeReader();
+
+						ClassType classType = classTypeReader.getClassType(
+							assetEntry.getClassTypeId(),
+							_themeDisplay.getLocale());
+
+						return classType.getName();
+					}
+				).put(
 					"className", JournalArticle.class.getName()
 				).put(
 					"classNameId",
@@ -183,6 +215,15 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"classTypeId", _getClassTypeId(ddmStructure)
+				).put(
+					"groupDescriptiveName",
+					() -> {
+						Group group = GroupLocalServiceUtil.fetchGroup(
+							assetEntry.getGroupId());
+
+						return group.getDescriptiveName(
+							_themeDisplay.getLocale());
+					}
 				).put(
 					"subtype", _getSubtype(ddmStructure)
 				).put(

@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = AnalyticsSettingsManager.class)
+@Component(service = AnalyticsSettingsManager.class)
 public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 	public void deleteCompanyConfiguration(long companyId)

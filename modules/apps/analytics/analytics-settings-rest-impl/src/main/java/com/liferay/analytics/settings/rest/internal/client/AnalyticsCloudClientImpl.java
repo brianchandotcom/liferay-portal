@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = AnalyticsCloudClient.class)
+@Component(service = AnalyticsCloudClient.class)
 public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 	@Override

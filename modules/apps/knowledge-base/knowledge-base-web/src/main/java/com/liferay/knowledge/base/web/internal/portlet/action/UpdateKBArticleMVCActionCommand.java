@@ -161,7 +161,7 @@ public class UpdateKBArticleMVCActionCommand
 		}
 
 		_assetDisplayPageEntryFormProcessor.process(
-			KBArticle.class.getName(), kbArticle.getKbArticleId(),
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
 			actionRequest);
 
 		int workflowAction = ParamUtil.getInteger(

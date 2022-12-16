@@ -30,6 +30,7 @@ interface ManagementToolbarProps {
 	helpMessage: string;
 	isApproved?: boolean;
 	label: string;
+	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
 	onSubmit: (props: boolean) => void;
 	portletNamespace: string;
@@ -49,6 +50,7 @@ export declare function ManagementToolbar({
 	helpMessage,
 	isApproved,
 	label,
+	onExternalReferenceCodeChange,
 	onGetEntity,
 	onSubmit,
 	portletNamespace,

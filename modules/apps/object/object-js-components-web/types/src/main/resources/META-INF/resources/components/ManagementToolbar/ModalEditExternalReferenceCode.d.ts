@@ -21,6 +21,7 @@ interface ModalEditExternalReferenceCodeProps {
 	helpMessage: string;
 	observer: Observer;
 	onClose: () => void;
+	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
 	saveURL: string;
 	setExternalReferenceCode: (value: string) => void;
@@ -30,6 +31,7 @@ export declare function ModalEditExternalReferenceCode({
 	helpMessage,
 	observer,
 	onClose,
+	onExternalReferenceCodeChange,
 	onGetEntity,
 	saveURL,
 	setExternalReferenceCode,

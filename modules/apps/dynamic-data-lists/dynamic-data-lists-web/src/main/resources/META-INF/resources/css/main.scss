@@ -6,6 +6,22 @@
 	}
 }
 
+.form-control[readonly] {
+	background-color: #f1f2f5;
+	border-color: #e7e7ed;
+	cursor: not-allowed;
+}
+
+.has-error .form-control[readonly] {
+	background-color: #feefef;
+	border-color: #f48989;
+}
+
+.has-success .form-control[readonly] {
+	background-color: #f1f2f5;
+	border-color: #e7e7ed;
+}
+
 .portal-popup .portlet-dynamic-data-lists .lfr-form-content {
 	position: relative;
 }

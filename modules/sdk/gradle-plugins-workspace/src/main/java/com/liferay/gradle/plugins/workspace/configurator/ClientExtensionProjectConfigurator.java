@@ -121,6 +121,9 @@ public class ClientExtensionProjectConfigurator
 			"themeJS",
 			Arrays.asList(
 				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
+		_clientExtensionConfigurers.put(
+			"themeSpritemap",
+			Collections.singletonList(new AssetsFolderConfigurer()));
 
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,

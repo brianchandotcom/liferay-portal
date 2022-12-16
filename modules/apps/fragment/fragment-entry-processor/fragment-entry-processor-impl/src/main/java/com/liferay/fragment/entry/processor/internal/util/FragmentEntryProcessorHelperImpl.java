@@ -53,6 +53,10 @@ import com.liferay.portal.kernel.util.Validator;
 import java.text.DateFormat;
 import java.text.ParseException;
 
+import java.time.chrono.IsoChronology;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -532,7 +536,11 @@ public class FragmentEntryProcessorHelperImpl
 					Date date = dateFormat.parse(value.toString());
 
 					return _getDateValue(
-						editableValueJSONObject, date, "MM/dd/yy", locale);
+						editableValueJSONObject, date,
+						DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+							FormatStyle.SHORT, null, IsoChronology.INSTANCE,
+							locale),
+						locale);
 				}
 				catch (ParseException parseException1) {
 					if (_log.isDebugEnabled()) {
@@ -547,7 +555,11 @@ public class FragmentEntryProcessorHelperImpl
 						return _getDateValue(
 							editableValueJSONObject,
 							simpleDateFormat.parse(value.toString()),
-							"MM/dd/yy", locale);
+							DateTimeFormatterBuilder.
+								getLocalizedDateTimePattern(
+									FormatStyle.SHORT, null,
+									IsoChronology.INSTANCE, locale),
+							locale);
 					}
 					catch (ParseException parseException2) {
 						if (_log.isDebugEnabled()) {
@@ -582,7 +594,11 @@ public class FragmentEntryProcessorHelperImpl
 			Date date = (Date)value;
 
 			return _getDateValue(
-				editableValueJSONObject, date, "MM/dd/yy hh:mm a", locale);
+				editableValueJSONObject, date,
+				DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+					FormatStyle.SHORT, FormatStyle.SHORT,
+					IsoChronology.INSTANCE, locale),
+				locale);
 		}
 
 		Class<?> fieldValueClass = value.getClass();

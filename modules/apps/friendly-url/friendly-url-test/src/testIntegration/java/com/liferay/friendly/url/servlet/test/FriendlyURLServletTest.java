@@ -26,12 +26,16 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -145,6 +149,52 @@ public class FriendlyURLServletTest {
 			PropsUtil.get(PropsKeys.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE));
 
 		LanguageUtil.init();
+	}
+
+	@Test
+	public void testGetRedirectOnHiddenLayout() throws Throwable {
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group);
+
+		layout1.setHidden(true);
+
+		_layoutLocalService.updateLayout(layout1);
+
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), RoleConstants.GUEST);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				group.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout1.getPrimaryKey()), guestRole.getRoleId());
+
+		resourcePermission.setActionIds(0);
+		resourcePermission.setViewActionId(false);
+
+		_resourcePermissionLocalService.updateResourcePermission(
+			resourcePermission);
+
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group);
+
+		layout2.setHidden(true);
+
+		_layoutLocalService.updateLayout(layout2);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		_user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		testGetRedirect(
+			mockHttpServletRequest, group.getFriendlyURL(), Portal.PATH_MAIN,
+			_redirectConstructor1.newInstance(getURL(layout2)));
 	}
 
 	@Test
@@ -665,6 +715,9 @@ public class FriendlyURLServletTest {
 
 	@Inject
 	private RedirectEntryLocalService _redirectEntryLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@DeleteAfterTestRun
 	private Role _role;

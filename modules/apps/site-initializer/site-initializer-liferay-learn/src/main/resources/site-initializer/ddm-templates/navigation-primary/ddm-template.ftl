@@ -45,7 +45,7 @@
 							<#assign
 								tertiaryCustomFields = navTertiaryItem.getExpandoAttributes()
 								descriptionText = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Description"])!""
-								imageURL = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Image Url"])!""
+								imageURL = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Image URL"])!""
 								menuItemType = tertiaryCustomFields["Menu Item Type"]?first!""
 								preheaderText = getLocalizedExpandoValue(tertiaryCustomFields["Menu Item Preheader"])!""
 							/>

@@ -73,15 +73,35 @@ public class HorizontalCardTag extends BaseCardTag {
 
 	public String getTitle() {
 		String title = _title;
-
 		HorizontalCard horizontalCard = getHorizontalCard();
 
 		if ((_title == null) && (horizontalCard != null)) {
 			title = horizontalCard.getTitle();
 		}
 
-		return LanguageUtil.get(
-			TagResourceBundleUtil.getResourceBundle(pageContext), title);
+		Boolean translated = isTranslated();
+
+		if (Boolean.TRUE.equals(translated)) {
+			title = LanguageUtil.get(
+				TagResourceBundleUtil.getResourceBundle(pageContext), title);
+		}
+
+		return title;
+	}
+
+	public Boolean getTranslated() {
+		return _translated;
+	}
+
+	public Boolean isTranslated() {
+		Boolean translated = _translated;
+		HorizontalCard horizontalCard = getHorizontalCard();
+
+		if ((_translated == null) && (horizontalCard != null)) {
+			translated = horizontalCard.isTranslated();
+		}
+
+		return translated;
 	}
 
 	public void setHorizontalCard(HorizontalCard horizontalCard) {
@@ -92,11 +112,16 @@ public class HorizontalCardTag extends BaseCardTag {
 		_title = title;
 	}
 
+	public void setTranslated(Boolean translated) {
+		_translated = translated;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_title = null;
+		_translated = null;
 	}
 
 	@Override
@@ -205,6 +230,10 @@ public class HorizontalCardTag extends BaseCardTag {
 		if ((href != null) && !disabled) {
 			LinkTag linkTag = new LinkTag();
 
+			if (isTranslated() != null) {
+				linkTag.setTranslated(isTranslated());
+			}
+
 			linkTag.setCssClass("text-truncate");
 			linkTag.setHref(href);
 
@@ -249,5 +278,6 @@ public class HorizontalCardTag extends BaseCardTag {
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:horizontal-card:";
 
 	private String _title;
+	private Boolean _translated;
 
 }

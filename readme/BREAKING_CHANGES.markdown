@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `893cd542d0a557a17542d5e1af14283aa720c400`.*
+*This document has been reviewed through the breaking change entry at commit `62dc43e1cc4c4b81ef5bcae459dbc0cbeff9f1fe`.*
 
 Each change must have a brief descriptive title and contain the following information:
 
@@ -1242,7 +1242,7 @@ The tags `<aui:fieldset-group>` and `<liferay-frontend:fieldset-group>` added un
 
 ### What changed?
 
-`ContainerTag` was removed because `<aui:container>` was removed from tld definition.
+`ContainerTag` was removed, and with it the `<aui:container>` tag. The tag was also removed from the [AUI tld](https://learn.liferay.com/reference/latest/en/dxp/taglibs/util-taglib/aui/tld-summary.html).
 
 ### Who is affected?
 
@@ -1254,4 +1254,4 @@ Replace usages of `<aui:container>` with `<clay:container>`.
 
 ### Why was this change made?
 
-The tag `<aui:container>` was deprecated in previous versions.
+The tag `<aui:container>` was deprecated in a previous version.

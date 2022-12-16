@@ -111,6 +111,10 @@ public class LinkTag extends BaseContainerTag {
 		return _small;
 	}
 
+	public boolean getTranslated() {
+		return _translated;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -167,6 +171,10 @@ public class LinkTag extends BaseContainerTag {
 		_small = small;
 	}
 
+	public void setTranslated(boolean translated) {
+		_translated = translated;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -191,6 +199,7 @@ public class LinkTag extends BaseContainerTag {
 		_monospaced = false;
 		_outline = false;
 		_small = false;
+		_translated = true;
 		_type = "link";
 		_weight = null;
 	}
@@ -300,9 +309,13 @@ public class LinkTag extends BaseContainerTag {
 			}
 
 			if (Validator.isNotNull(_label)) {
-				String label = LanguageUtil.get(
-					TagResourceBundleUtil.getResourceBundle(pageContext),
-					_label);
+				String label = getLabel();
+
+				if (_translated) {
+					label = LanguageUtil.get(
+						TagResourceBundleUtil.getResourceBundle(pageContext),
+						_label);
+				}
 
 				jspWriter.write(HtmlUtil.escape(label));
 			}
@@ -327,6 +340,7 @@ public class LinkTag extends BaseContainerTag {
 	private boolean _monospaced;
 	private boolean _outline;
 	private boolean _small;
+	private boolean _translated = true;
 	private String _type = "link";
 	private String _weight;
 

@@ -25,4 +25,8 @@ public interface HorizontalCard extends BaseClayCard {
 
 	public String getTitle();
 
+	public default boolean isTranslated() {
+		return true;
+	}
+
 }

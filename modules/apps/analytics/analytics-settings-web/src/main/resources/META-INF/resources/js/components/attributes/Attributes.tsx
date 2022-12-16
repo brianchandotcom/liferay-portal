@@ -156,6 +156,7 @@ const Attributes: React.FC = () => {
 						className="align-items-center"
 						flex
 						key={title}
+						role={title}
 					>
 						<ClayList.ItemField className="mr-2">
 							<ClayIcon symbol={icon} />

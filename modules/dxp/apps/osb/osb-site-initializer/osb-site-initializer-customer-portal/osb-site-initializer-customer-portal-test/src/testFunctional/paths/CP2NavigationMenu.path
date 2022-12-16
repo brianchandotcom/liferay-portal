@@ -95,6 +95,56 @@
 	<td>//a[contains(@class, 'font-weight-bold')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH_FILTER</td>
+	<td>//div[contains(@class,'bg-neutral-1')]//div[@class="input-group-item"]//input[@placeholder="Search"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULT</td>
+	<td>//p[contains(@class, 'text-paragraph-sm') and contains(.,'result')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_CHECKBOX</td>
+	<td>//span[normalize-space()='${key_menu}']//ancestor::div[contains(@class,'dropdown-header')]//following-sibling::ul//span[contains(text(),'${key_checkbox}')]//ancestor::label/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_RESULT</td>
+	<td>//div/*[contains(.,'Activation Keys')]/following::div[contains(@class,' badge-light')]/p[contains(.,'${result}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_APPLY</td>
+	<td>//span[normalize-space()='${key_menu}']//ancestor::div[contains(@class,'dropdown-header')]//following-sibling::ul//div[contains(text(),'${key_label}')]/following-sibling::div/button[normalize-space()='Apply']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_FIELD</td>
+	<td>//span[normalize-space()='${key_menu}']//ancestor::div[contains(@class,'dropdown-header')]//following-sibling::ul//div[contains(text(),'${key_label}')]//input[contains(@placeholder,'mm-dd')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODES_CLUSTER_DISABLE</td>
+	<td>//span[normalize-space()='Key Type']//ancestor::div[contains(@class,'dropdown-header')]//following-sibling::ul//div[contains(text(),'')]/following-sibling::div//input[@disabled and @placeholder]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODES_CLUSTER_ENABLE</td>
+	<td>//span[normalize-space()='Key Type']//ancestor::div[contains(@class,'dropdown-header')]//following-sibling::ul//div[contains(text(),'')]/following-sibling::div//input[not(@disabled) and @placeholder]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODES_ERRO</td>
+	<td>//span[normalize-space()='Key Type']//ancestor::div[contains(@class,'dropdown-header')]//following-sibling::ul//div[contains(text(),'')]/following-sibling::div//div[text()='${key_erro}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_NO_RESULT</td>
+	<td>//div[normalize-space()="No activation keys found with this search criteria."]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -32,6 +32,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 	}
 
 	@description = "Story: LRAC-12019 | Automation ID: LRAC-12584 | Test Summary: Can paginate the list of properties"
@@ -460,4 +463,73 @@ definition {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${autoGeneratePropertyName}");
 		}
 	}
+
+	@description = "Bug: LRAC-11142 | Automation ID: LRAC-11162 | Test Summary: New property created when reconnect and old property remains"
+	@priority = "4"
+	test OnlyAvailablePropertiesAppearInDXP {
+		task ("Go to AC > Go to properties page and add 2 new properties") {
+			var propertyList = "Property OnlyAvailablePropertiesAppearInDXP 1,Property OnlyAvailablePropertiesAppearInDXP 2";
+
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			for (var propertyName : list "${propertyList}") {
+				ACSettings.goToProperties();
+
+				ACProperties.addNewProperty(propertyName = "${propertyName}");
+			}
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "Property OnlyAvailablePropertiesAppearInDXP 1");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "Property OnlyAvailablePropertiesAppearInDXP 2");
+
+			ACDXPSettings.syncSites(
+				propertyName = "Property OnlyAvailablePropertiesAppearInDXP 1",
+				siteName = "Site Name");
+		}
+
+		task ("Disconnect DXP from AC") {
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		}
+
+		task ("Launch AC and Connect new data source") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Connect DXP to AC") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Assert a new property is created along with old property") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "Property OnlyAvailablePropertiesAppearInDXP 1");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = "Property OnlyAvailablePropertiesAppearInDXP 2");
+		}
+	}
+
 }

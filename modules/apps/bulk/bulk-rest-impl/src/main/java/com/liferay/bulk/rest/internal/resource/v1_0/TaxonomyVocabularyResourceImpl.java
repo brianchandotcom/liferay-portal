@@ -16,7 +16,6 @@ package com.liferay.bulk.rest.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
-import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -38,14 +37,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,26 +78,37 @@ public class TaxonomyVocabularyResourceImpl
 			Long siteId, DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
-		Stream<AssetVocabulary> assetVocabulariesStream =
-			_getAssetVocabulariesStream(siteId);
+		List<AssetVocabulary> assetVocabularies =
+			_getAssetVocabularies(siteId);
 
-		Stream<AssetCategory> assetCategoriesStream = _getAssetCategoriesStream(
+		Set<AssetCategory> assetCategories1 = _getAssetCategories(
 			documentBulkSelection,
 			PermissionCheckerFactoryUtil.create(contextUser));
 
-		Map<Long, List<AssetCategory>> assetCategoriesMap =
-			assetCategoriesStream.collect(
-				Collectors.groupingBy(AssetCategoryModel::getVocabularyId));
+		Map<Long, List<AssetCategory>> idAssetCategoriesMap = new HashMap<>();
 
-		return assetVocabulariesStream.collect(
-			Collectors.toMap(
-				Function.identity(),
-				assetVocabulary -> assetCategoriesMap.computeIfAbsent(
+		for (AssetCategory assetCategory : assetCategories1) {
+			List<AssetCategory> assetCategories2 =
+				idAssetCategoriesMap.computeIfAbsent(
+					assetCategory.getVocabularyId(), key -> new ArrayList<>());
+
+			assetCategories2.add(assetCategory);
+		}
+
+		Map<AssetVocabulary, List<AssetCategory>> assetCategoriesMap =
+			new HashMap<>();
+
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			assetCategoriesMap.put(assetVocabulary,
+				idAssetCategoriesMap.computeIfAbsent(
 					assetVocabulary.getVocabularyId(),
-					key -> new ArrayList<>())));
+					key -> new ArrayList<>()));
+		}
+
+		return assetCategoriesMap;
 	}
 
-	private Stream<AssetCategory> _getAssetCategoriesStream(
+	private Set<AssetCategory> _getAssetCategories(
 			DocumentBulkSelection documentBulkSelection,
 			PermissionChecker permissionChecker)
 		throws Exception {
@@ -137,34 +145,31 @@ public class TaxonomyVocabularyResourceImpl
 				}
 			});
 
-		return assetCategories.stream();
+		return assetCategories;
 	}
 
-	private Stream<AssetVocabulary> _getAssetVocabulariesStream(Long siteId)
+	private List<AssetVocabulary> _getAssetVocabularies(Long siteId)
 		throws Exception {
 
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyLocalService.getGroupVocabularies(
 				_portal.getCurrentAndAncestorSiteGroupIds(siteId));
 
-		Stream<AssetVocabulary> stream = assetVocabularies.stream();
+		List<AssetVocabulary> filteredAssetVocabularies = new ArrayList<>();
 
-		List<AssetVocabulary> filteredAssetVocabularies = stream.filter(
-			assetVocabulary -> assetVocabulary.isAssociatedToClassNameId(
-				_getClassNameId())
-		).filter(
-			assetVocabulary -> {
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			if (assetVocabulary.isAssociatedToClassNameId(_getClassNameId())) {
 				int count =
 					_assetCategoryLocalService.getVocabularyCategoriesCount(
 						assetVocabulary.getVocabularyId());
 
-				return count > 0;
+				if (count > 0) {
+					filteredAssetVocabularies.add(assetVocabulary);
+				}
 			}
-		).collect(
-			Collectors.toList()
-		);
+		}
 
-		return filteredAssetVocabularies.stream();
+		return filteredAssetVocabularies;
 	}
 
 	private long _getClassNameId() {

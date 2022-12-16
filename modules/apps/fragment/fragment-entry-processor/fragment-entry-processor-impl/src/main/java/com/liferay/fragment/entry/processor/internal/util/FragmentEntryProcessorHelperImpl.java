@@ -316,10 +316,16 @@ public class FragmentEntryProcessorHelperImpl
 		String defaultDateFormat;
 
 		if (type.equals("dateType")) {
-			defaultDateFormat = _DATE_FORMAT.format(date);
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"MM/dd/yy hh:mm a", locale);
+
+			defaultDateFormat = dateFormat.format(date);
 		}
 		else {
-			defaultDateFormat = _DDM_DATE_FORMAT.format(date);
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"MM/dd/yy", locale);
+
+			defaultDateFormat = dateFormat.format(date);
 		}
 
 		if (editableValueJSONObject == null) {
@@ -349,7 +355,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		try {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				pattern);
+				pattern, locale);
 
 			return dateFormat.format(date);
 		}

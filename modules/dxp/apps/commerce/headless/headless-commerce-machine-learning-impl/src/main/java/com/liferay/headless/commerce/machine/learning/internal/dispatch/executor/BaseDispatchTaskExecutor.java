@@ -15,6 +15,8 @@
 package com.liferay.headless.commerce.machine.learning.internal.dispatch.executor;
 
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
@@ -22,11 +24,17 @@ import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,6 +43,40 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDispatchTaskExecutor
 	extends com.liferay.dispatch.executor.BaseDispatchTaskExecutor {
+
+	protected String getCommerceChannelFilter(
+			long companyId, Function<Long, String> filterFunction)
+		throws Exception {
+
+		AnalyticsConfiguration analyticsConfiguration =
+			analyticsSettingsManager.getAnalyticsConfiguration(companyId);
+
+		return Stream.of(
+			analyticsConfiguration.commerceSyncEnabledAnalyticsChannelIds()
+		).map(
+			analyticsChannelId -> {
+				try {
+					return analyticsSettingsManager.getCommerceChannelIds(
+						analyticsChannelId, companyId);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception);
+					}
+				}
+
+				return null;
+			}
+		).filter(
+			Objects::nonNull
+		).flatMap(
+			Stream::of
+		).map(
+			filterFunction
+		).collect(
+			Collectors.joining(" or ")
+		);
+	}
 
 	protected Date getLatestSuccessfulDispatchLogEndDate(
 		long dispatchTriggerId) {
@@ -80,7 +122,13 @@ public abstract class BaseDispatchTaskExecutor
 		analyticsBatchExportImportManager;
 
 	@Reference
+	protected AnalyticsSettingsManager analyticsSettingsManager;
+
+	@Reference
 	protected DispatchLogLocalService dispatchLogLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseDispatchTaskExecutor.class);
 
 	private static final DateFormat _dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");

@@ -5,9 +5,14 @@ definition {
 	function selectFieldText {
 		WaitForSPARefresh();
 
-		Click();
+		var input = "keys=CONTROL,a";
+		var mac = OSDetector.isApple();
 
-		selenium.selectFieldText();
+		if (contains("${mac}", "true")) {
+			var input = "keys=COMMAND,a";
+		}
+
+		selenium.sendKeys("${locator1}", "${input}");
 
 		selenium.assertJavaScriptErrors();
 

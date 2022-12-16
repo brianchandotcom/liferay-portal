@@ -7169,9 +7169,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</exec>
 
 			<if>
-				<not>
-					<equals arg1="${docker.start.result}" arg2="0" />
-				</not>
+				<or>
+					<contains string="${docker.start.error}" substring="Error" />
+					<not>
+						<equals arg1="${docker.start.result}" arg2="0" />
+					</not>
+				</or>
 				<then>
 					<fail>Unable to start docker container:
 ${docker.start.error}</fail>

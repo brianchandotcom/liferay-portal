@@ -67,9 +67,13 @@ definition {
 			editor = "query-editor",
 			locator1 = "OpenAPI#GRAPHQL_EDITOR_LINE");
 
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
+		Type.sendKeys(
+			locator1 = "//body",
+			value1 = "keys=CONTROL,a");
 
-		RobotType(locator1 = "${query}");
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "OpenAPI#GRAPHQL_EDITOR",
+			value1 = "${query}");
 
 		Click(
 			locator1 = "Button#BUTTON_WITH_VALUE",

@@ -23,7 +23,7 @@ definition {
 	function openInTheNewTab {
 		WaitForSPARefresh();
 
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + t");
+		selenium.executeJavaScript("window.open()");
 
 		SelectWindow.selectPopUp(locator1 = "null");
 

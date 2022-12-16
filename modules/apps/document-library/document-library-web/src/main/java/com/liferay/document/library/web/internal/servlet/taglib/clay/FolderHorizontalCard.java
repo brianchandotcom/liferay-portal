@@ -108,6 +108,11 @@ public class FolderHorizontalCard implements HorizontalCard {
 	}
 
 	@Override
+	public boolean isLocalized() {
+		return false;
+	}
+
+	@Override
 	public boolean isSelectable() {
 		if (_rowChecker == null) {
 			return false;

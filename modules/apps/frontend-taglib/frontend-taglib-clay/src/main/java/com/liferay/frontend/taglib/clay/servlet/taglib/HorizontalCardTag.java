@@ -73,15 +73,29 @@ public class HorizontalCardTag extends BaseCardTag {
 
 	public String getTitle() {
 		String title = _title;
-
 		HorizontalCard horizontalCard = getHorizontalCard();
 
 		if ((_title == null) && (horizontalCard != null)) {
 			title = horizontalCard.getTitle();
 		}
 
-		return LanguageUtil.get(
-			TagResourceBundleUtil.getResourceBundle(pageContext), title);
+		if (isLocalized()) {
+			title = LanguageUtil.get(
+				TagResourceBundleUtil.getResourceBundle(pageContext), title);
+		}
+
+		return title;
+	}
+
+	public Boolean isLocalized() {
+		Boolean localized = _localized;
+		HorizontalCard horizontalCard = getHorizontalCard();
+
+		if ((_localized == null) && (horizontalCard != null)) {
+			localized = horizontalCard.isLocalized();
+		}
+
+		return localized;
 	}
 
 	public void setHorizontalCard(HorizontalCard horizontalCard) {
@@ -96,6 +110,7 @@ public class HorizontalCardTag extends BaseCardTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_localized = null;
 		_title = null;
 	}
 
@@ -205,6 +220,7 @@ public class HorizontalCardTag extends BaseCardTag {
 		if ((href != null) && !disabled) {
 			LinkTag linkTag = new LinkTag();
 
+			linkTag.setLocalized(isLocalized());
 			linkTag.setCssClass("text-truncate");
 			linkTag.setHref(href);
 
@@ -248,6 +264,7 @@ public class HorizontalCardTag extends BaseCardTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:horizontal-card:";
 
+	private Boolean _localized;
 	private String _title;
 
 }

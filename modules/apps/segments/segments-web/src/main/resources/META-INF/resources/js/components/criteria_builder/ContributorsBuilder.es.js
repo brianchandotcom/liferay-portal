@@ -218,18 +218,21 @@ class ContributorBuilder extends React.Component {
 														{scopeName}
 													</p>
 
-													<ClayButton
-														displayType="secondary"
-														onClick={
-															this
-																._handleScopeChange
-														}
-														size="sm"
-													>
-														{Liferay.Language.get(
-															'select'
-														)}
-													</ClayButton>
+													{this.props
+														.siteItemSelectorURL && (
+														<ClayButton
+															displayType="secondary"
+															onClick={
+																this
+																	._handleScopeChange
+															}
+															size="sm"
+														>
+															{Liferay.Language.get(
+																'select'
+															)}
+														</ClayButton>
+													)}
 												</ClayPanel.Body>
 											</ClayPanel>
 

@@ -185,6 +185,10 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	public String getSiteItemSelectorURL() {
+		if (getSegmentsEntryId() != 0) {
+			return null;
+		}
+
 		SiteItemSelectorCriterion siteItemSelectorCriterion =
 			new SiteItemSelectorCriterion();
 

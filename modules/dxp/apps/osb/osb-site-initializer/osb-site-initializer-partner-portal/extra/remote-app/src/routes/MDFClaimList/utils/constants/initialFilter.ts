@@ -17,5 +17,17 @@ export const INITIAL_FILTER = {
 		},
 	},
 	hasValue: false,
+	partner: {
+		name: 'Partner',
+		value: [],
+	},
 	searchTerm: '',
+	status: {
+		name: 'Status',
+		value: [],
+	},
+	type: {
+		name: 'Partner',
+		value: [],
+	},
 };

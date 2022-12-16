@@ -17,7 +17,9 @@ package com.liferay.object.service.impl;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
@@ -36,15 +38,18 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -417,14 +422,40 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			_roleLocalService.getRole(
 				objectDefinition.getCompanyId(),
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER));
+		roles.add(
+			_roleLocalService.getRole(
+				objectDefinition.getCompanyId(),
+				RoleConstants.ORGANIZATION_USER));
+
+		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRels(accountEntryId);
+
+		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
+				accountEntryOrganizationRels) {
+
+			Group group = _groupLocalService.getOrganizationGroup(
+				objectDefinition.getCompanyId(),
+				accountEntryOrganizationRel.getOrganizationId());
+
+			roles.addAll(
+				TransformUtil.transform(
+					_userGroupRoleLocalService.getUserGroupRoles(
+						userId, group.getGroupId()),
+					UserGroupRole::getRole));
+		}
 
 		for (Role role : roles) {
 			ResourcePermission resourcePermission =
-				_resourcePermissionLocalService.getResourcePermission(
+				_resourcePermissionLocalService.fetchResourcePermission(
 					objectDefinition.getCompanyId(),
 					objectDefinition.getClassName(),
 					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 					role.getRoleId());
+
+			if (resourcePermission == null) {
+				continue;
+			}
 
 			if (resourcePermission.hasActionId(actionId)) {
 				return;
@@ -485,6 +516,13 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	private volatile ServiceTrackerMap
 		<String, ModelResourcePermission<ObjectEntry>>

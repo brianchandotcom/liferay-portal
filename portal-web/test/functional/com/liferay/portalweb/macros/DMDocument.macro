@@ -4137,10 +4137,8 @@ definition {
 		for (var tagName : list "${tagName}") {
 			var tagName = StringUtil.lowerCase("${tagName}");
 
-			var key_tagName = "${tagName}";
-
-			AssertTextEquals(
-				locator1 = "DocumentsAndMedia#TAG",
+			AssertTextEquals.assertPartialText(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TAGS",
 				value1 = "${tagName}");
 		}
 	}

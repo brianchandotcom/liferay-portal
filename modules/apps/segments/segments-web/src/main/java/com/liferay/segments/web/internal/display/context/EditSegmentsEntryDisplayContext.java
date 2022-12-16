@@ -191,11 +191,14 @@ public class EditSegmentsEntryDisplayContext {
 		siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
 
-		return String.valueOf(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_renderRequest),
 				_renderResponse.getNamespace() + "selectedSiteItem",
-				siteItemSelectorCriterion));
+				siteItemSelectorCriterion)
+		).setParameter(
+			"displayStyle", "list"
+		).buildString();
 	}
 
 	public String getTitle(Locale locale) throws PortalException {

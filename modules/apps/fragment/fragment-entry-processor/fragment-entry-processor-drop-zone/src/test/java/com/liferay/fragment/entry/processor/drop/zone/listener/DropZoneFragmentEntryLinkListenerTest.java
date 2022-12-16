@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -63,8 +60,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_setUpPortalUUIDUtil();
-
-		_setUpPropsUtil();
 	}
 
 	@Before
@@ -107,8 +102,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
-		_setFeatureFlag(true);
-
 		_assertUpdateLayoutPageTemplateStructureData(
 			fragmentEntryLink,
 			new KeyValuePair(
@@ -116,53 +109,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 			new KeyValuePair(newDropZoneId, StringPool.BLANK),
 			new KeyValuePair(
 				dropZoneId2, fragmentDropZoneLayoutStructureItem2.getItemId()));
-	}
-
-	@Test
-	public void testProcessFragmentEntryLinkHTMLInEditAddingDropZoneFFDisabled()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryProcessorDropZoneTestUtil.getMockFragmentEntryLink();
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		String dropZoneId1 = RandomTestUtil.randomString();
-		String dropZoneId2 = RandomTestUtil.randomString();
-
-		FragmentDropZoneLayoutStructureItem[]
-			fragmentDropZoneLayoutStructureItems =
-				FragmentEntryProcessorDropZoneTestUtil.
-					addFragmentDropZoneLayoutStructureItems(
-						fragmentEntryLink, layoutStructure, dropZoneId1,
-						dropZoneId2);
-
-		FragmentDropZoneLayoutStructureItem
-			fragmentDropZoneLayoutStructureItem1 =
-				fragmentDropZoneLayoutStructureItems[0];
-		FragmentDropZoneLayoutStructureItem
-			fragmentDropZoneLayoutStructureItem2 =
-				fragmentDropZoneLayoutStructureItems[1];
-
-		String newDropZoneId = RandomTestUtil.randomString();
-
-		_setUpFragmentEntryProcessorRegistry(
-			fragmentEntryLink,
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(
-				dropZoneId1, newDropZoneId, dropZoneId2));
-
-		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
-
-		_setFeatureFlag(false);
-
-		_assertUpdateLayoutPageTemplateStructureData(
-			fragmentEntryLink,
-			new KeyValuePair(
-				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()),
-			new KeyValuePair(
-				newDropZoneId,
-				fragmentDropZoneLayoutStructureItem2.getItemId()),
-			new KeyValuePair(dropZoneId2, StringPool.BLANK));
 	}
 
 	@Test
@@ -207,37 +153,8 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
-		_setFeatureFlag(true);
-
 		_assertUpdateLayoutPageTemplateStructureData(
 			elementDropZoneId, fragmentEntryLink, StringPool.BLANK);
-	}
-
-	@Test
-	public void testProcessFragmentEntryLinkHTMLInEditModeDifferentIdsFFDisabled()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryProcessorDropZoneTestUtil.getMockFragmentEntryLink();
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		FragmentEntryProcessorDropZoneTestUtil.
-			addFragmentDropZoneLayoutStructureItem(
-				fragmentEntryLink, layoutStructure,
-				RandomTestUtil.randomString());
-
-		String elementDropZoneId = RandomTestUtil.randomString();
-
-		_setUpFragmentEntryProcessorRegistry(
-			fragmentEntryLink,
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(elementDropZoneId));
-
-		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
-
-		_setFeatureFlag(false);
-
-		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
 	}
 
 	@Test
@@ -261,34 +178,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
-		_setFeatureFlag(true);
-
-		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
-	}
-
-	@Test
-	public void testProcessFragmentEntryLinkHTMLInEditModeSameIdsFFDisabled()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryProcessorDropZoneTestUtil.getMockFragmentEntryLink();
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		String dropZoneId = RandomTestUtil.randomString();
-
-		FragmentEntryProcessorDropZoneTestUtil.
-			addFragmentDropZoneLayoutStructureItem(
-				fragmentEntryLink, layoutStructure, dropZoneId);
-
-		_setUpFragmentEntryProcessorRegistry(
-			fragmentEntryLink,
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(dropZoneId));
-
-		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
-
-		_setFeatureFlag(false);
-
 		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
 	}
 
@@ -310,32 +199,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 			FragmentEntryProcessorDropZoneTestUtil.getHTML(StringPool.BLANK));
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
-
-		_setFeatureFlag(true);
-
-		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
-	}
-
-	@Test
-	public void testProcessFragmentEntryLinkHTMLInEditMultipleDropZonesWithoutIdsFFDisabled()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryProcessorDropZoneTestUtil.getMockFragmentEntryLink();
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		FragmentEntryProcessorDropZoneTestUtil.
-			addFragmentDropZoneLayoutStructureItem(
-				fragmentEntryLink, layoutStructure, StringPool.BLANK);
-
-		_setUpFragmentEntryProcessorRegistry(
-			fragmentEntryLink,
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(StringPool.BLANK));
-
-		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
-
-		_setFeatureFlag(false);
 
 		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
 	}
@@ -374,59 +237,12 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
-		_setFeatureFlag(true);
-
 		_assertUpdateLayoutPageTemplateStructureData(
 			fragmentEntryLink,
 			new KeyValuePair(
 				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()),
 			new KeyValuePair(
 				dropZoneId2, fragmentDropZoneLayoutStructureItem2.getItemId()));
-	}
-
-	@Test
-	public void testProcessFragmentEntryLinkHTMLInEditRemovingDropZoneFFDisabled()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryProcessorDropZoneTestUtil.getMockFragmentEntryLink();
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		String dropZoneId1 = RandomTestUtil.randomString();
-		String dropZoneId2 = RandomTestUtil.randomString();
-
-		FragmentDropZoneLayoutStructureItem[]
-			fragmentDropZoneLayoutStructureItems =
-				FragmentEntryProcessorDropZoneTestUtil.
-					addFragmentDropZoneLayoutStructureItems(
-						fragmentEntryLink, layoutStructure, dropZoneId1,
-						RandomTestUtil.randomString(), dropZoneId2);
-
-		FragmentDropZoneLayoutStructureItem
-			fragmentDropZoneLayoutStructureItem1 =
-				fragmentDropZoneLayoutStructureItems[0];
-
-		FragmentDropZoneLayoutStructureItem
-			removedFragmentDropZoneLayoutStructureItem =
-				fragmentDropZoneLayoutStructureItems[1];
-
-		_setUpFragmentEntryProcessorRegistry(
-			fragmentEntryLink,
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(
-				dropZoneId1, dropZoneId2));
-
-		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
-
-		_setFeatureFlag(false);
-
-		_assertUpdateLayoutPageTemplateStructureData(
-			fragmentEntryLink,
-			new KeyValuePair(
-				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()),
-			new KeyValuePair(
-				dropZoneId2,
-				removedFragmentDropZoneLayoutStructureItem.getItemId()));
 	}
 
 	@Test
@@ -468,8 +284,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
 
-		_setFeatureFlag(true);
-
 		_assertUpdateLayoutPageTemplateStructureData(
 			fragmentEntryLink,
 			new KeyValuePair(
@@ -480,46 +294,10 @@ public class DropZoneFragmentEntryLinkListenerTest {
 				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()));
 	}
 
-	@Test
-	public void testProcessFragmentEntryLinkHTMLInEditSwappingDropZonesFFDisabled()
-		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryProcessorDropZoneTestUtil.getMockFragmentEntryLink();
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		String dropZoneId1 = RandomTestUtil.randomString();
-		String dropZoneId2 = RandomTestUtil.randomString();
-		String dropZoneId3 = RandomTestUtil.randomString();
-
-		FragmentEntryProcessorDropZoneTestUtil.
-			addFragmentDropZoneLayoutStructureItems(
-				fragmentEntryLink, layoutStructure, dropZoneId1, dropZoneId2,
-				dropZoneId3);
-
-		_setUpFragmentEntryProcessorRegistry(
-			fragmentEntryLink,
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(
-				dropZoneId2, dropZoneId3, dropZoneId1));
-
-		_setUpLayoutPageTemplateStructure(layoutStructure.toString());
-
-		_setFeatureFlag(false);
-
-		_assertUpdateLayoutPageTemplateStructureData(true, fragmentEntryLink);
-	}
-
 	private static void _setUpPortalUUIDUtil() {
 		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
 
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
-	}
-
-	private static void _setUpPropsUtil() {
-		_props = Mockito.mock(Props.class);
-
-		ReflectionTestUtil.setFieldValue(PropsUtil.class, "_props", _props);
 	}
 
 	private void _assertUpdateLayoutPageTemplateStructureData(
@@ -580,9 +358,7 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 			String dropZoneId = dropZoneIdItemIdKeyValuePairs[i].getKey();
 
-			if (GetterUtil.getBoolean(_props.get("feature.flag.LPS-167932")) &&
-				!Validator.isBlank(dropZoneId)) {
-
+			if (!Validator.isBlank(dropZoneId)) {
 				FragmentDropZoneLayoutStructureItem
 					fragmentDropZoneLayoutStructureItem =
 						(FragmentDropZoneLayoutStructureItem)
@@ -654,14 +430,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 			fragmentStyledLayoutStructureItem;
 	}
 
-	private void _setFeatureFlag(boolean enabled) {
-		Mockito.when(
-			_props.get("feature.flag.LPS-167932")
-		).thenReturn(
-			Boolean.toString(enabled)
-		);
-	}
-
 	private void _setUpDropZoneFragmentEntryLinkListener() {
 		_dropZoneFragmentEntryLinkListener =
 			new DropZoneFragmentEntryLinkListener();
@@ -713,8 +481,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 			layoutPageTemplateStructure
 		);
 	}
-
-	private static Props _props;
 
 	private DropZoneFragmentEntryLinkListener
 		_dropZoneFragmentEntryLinkListener;

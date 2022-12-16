@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -62,8 +60,6 @@ public class DropZoneFragmentEntryProcessorTest {
 		_setUpDropZoneFragmentEntryProcessor();
 
 		_setUpPortalUUIDUtil();
-
-		_setUpPropsUtil();
 	}
 
 	@Test
@@ -97,26 +93,6 @@ public class DropZoneFragmentEntryProcessorTest {
 
 		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
 			dropZoneId1, newDropZoneId, dropZoneId2);
-
-		_setFeatureFlag(false);
-
-		Assert.assertEquals(
-			_getExpectedHTML(
-				new KeyValuePair(
-					dropZoneId1,
-					fragmentDropZoneLayoutStructureItem1.getItemId()),
-				new KeyValuePair(
-					newDropZoneId,
-					fragmentDropZoneLayoutStructureItem2.getItemId()),
-				new KeyValuePair(dropZoneId2, StringPool.BLANK)),
-			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
-				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(layoutStructure), null,
-					FragmentEntryLinkConstants.EDIT,
-					LocaleUtil.getMostRelevantLocale())));
-
-		_setFeatureFlag(true);
 
 		Assert.assertEquals(
 			_getExpectedHTML(
@@ -182,21 +158,6 @@ public class DropZoneFragmentEntryProcessorTest {
 
 		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
 			elementDropZoneId);
-
-		_setFeatureFlag(false);
-
-		Assert.assertEquals(
-			_getExpectedHTML(
-				elementDropZoneId,
-				fragmentDropZoneLayoutStructureItem.getItemId()),
-			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
-				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(layoutStructure), null,
-					FragmentEntryLinkConstants.EDIT,
-					LocaleUtil.getMostRelevantLocale())));
-
-		_setFeatureFlag(true);
 
 		Assert.assertEquals(
 			_getExpectedHTML(elementDropZoneId, StringPool.BLANK),
@@ -274,19 +235,6 @@ public class DropZoneFragmentEntryProcessorTest {
 		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
 			dropZoneId1, dropZoneId2);
 
-		_setFeatureFlag(false);
-
-		Assert.assertEquals(
-			expectedHTML,
-			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
-				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(layoutStructure), null,
-					FragmentEntryLinkConstants.EDIT,
-					LocaleUtil.getMostRelevantLocale())));
-
-		_setFeatureFlag(true);
-
 		Assert.assertEquals(
 			expectedHTML,
 			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
@@ -326,25 +274,6 @@ public class DropZoneFragmentEntryProcessorTest {
 
 		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
 			dropZoneId1, dropZoneId2);
-
-		_setFeatureFlag(false);
-
-		Assert.assertEquals(
-			_getExpectedHTML(
-				new KeyValuePair(
-					dropZoneId1,
-					fragmentDropZoneLayoutStructureItem1.getItemId()),
-				new KeyValuePair(
-					dropZoneId2,
-					removedFragmentDropZoneLayoutStructureItem.getItemId())),
-			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
-				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(layoutStructure), null,
-					FragmentEntryLinkConstants.EDIT,
-					LocaleUtil.getMostRelevantLocale())));
-
-		_setFeatureFlag(true);
 
 		FragmentDropZoneLayoutStructureItem
 			fragmentDropZoneLayoutStructureItem2 =
@@ -401,28 +330,6 @@ public class DropZoneFragmentEntryProcessorTest {
 		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
 			dropZoneId2, dropZoneId3, dropZoneId1);
 
-		_setFeatureFlag(false);
-
-		Assert.assertEquals(
-			_getExpectedHTML(
-				new KeyValuePair(
-					dropZoneId2,
-					fragmentDropZoneLayoutStructureItem1.getItemId()),
-				new KeyValuePair(
-					dropZoneId3,
-					fragmentDropZoneLayoutStructureItem2.getItemId()),
-				new KeyValuePair(
-					dropZoneId1,
-					fragmentDropZoneLayoutStructureItem3.getItemId())),
-			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
-				new DefaultFragmentEntryProcessorContext(
-					_getMockHttpServletRequest(layoutStructure), null,
-					FragmentEntryLinkConstants.EDIT,
-					LocaleUtil.getMostRelevantLocale())));
-
-		_setFeatureFlag(true);
-
 		Assert.assertEquals(
 			_getExpectedHTML(
 				new KeyValuePair(
@@ -444,8 +351,6 @@ public class DropZoneFragmentEntryProcessorTest {
 
 	@Test(expected = FragmentEntryContentException.class)
 	public void testValidateFragmentEntryHTMLDuplicatedId() throws Exception {
-		_setFeatureFlag(true);
-
 		String dropZoneId = RandomTestUtil.randomString();
 
 		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
@@ -456,8 +361,6 @@ public class DropZoneFragmentEntryProcessorTest {
 
 	@Test(expected = FragmentEntryContentException.class)
 	public void testValidateFragmentEntryHTMLMissingId() throws Exception {
-		_setFeatureFlag(true);
-
 		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
 			FragmentEntryProcessorDropZoneTestUtil.getHTML(
 				StringPool.BLANK, RandomTestUtil.randomString()),
@@ -465,31 +368,7 @@ public class DropZoneFragmentEntryProcessorTest {
 	}
 
 	@Test
-	public void testValidateFragmentEntryHTMLNoValidationWhenFFDisabled()
-		throws Exception {
-
-		_setFeatureFlag(false);
-
-		String dropZoneId = RandomTestUtil.randomString();
-
-		String duplicatedIdHTML =
-			FragmentEntryProcessorDropZoneTestUtil.getHTML(
-				dropZoneId, dropZoneId);
-
-		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
-			duplicatedIdHTML, null);
-
-		String missingIdHTML = FragmentEntryProcessorDropZoneTestUtil.getHTML(
-			StringPool.BLANK, dropZoneId);
-
-		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
-			missingIdHTML, null);
-	}
-
-	@Test
 	public void testValidateFragmentEntryHTMLValidWithIds() throws Exception {
-		_setFeatureFlag(true);
-
 		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
 			FragmentEntryProcessorDropZoneTestUtil.getHTML(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()),
@@ -499,8 +378,6 @@ public class DropZoneFragmentEntryProcessorTest {
 	@Test
 	public void testValidateFragmentEntryHTMLValidWithoutIds()
 		throws Exception {
-
-		_setFeatureFlag(true);
 
 		_dropZoneFragmentEntryProcessor.validateFragmentEntryHTML(
 			FragmentEntryProcessorDropZoneTestUtil.getHTML(
@@ -534,12 +411,6 @@ public class DropZoneFragmentEntryProcessorTest {
 		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
 
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
-	}
-
-	private static void _setUpPropsUtil() {
-		_props = Mockito.mock(Props.class);
-
-		ReflectionTestUtil.setFieldValue(PropsUtil.class, "_props", _props);
 	}
 
 	private String _getExpectedHTML(
@@ -593,20 +464,11 @@ public class DropZoneFragmentEntryProcessorTest {
 		return httpServletRequest;
 	}
 
-	private void _setFeatureFlag(boolean enabled) {
-		Mockito.when(
-			_props.get("feature.flag.LPS-167932")
-		).thenReturn(
-			Boolean.toString(enabled)
-		);
-	}
-
 	private static DropZoneFragmentEntryProcessor
 		_dropZoneFragmentEntryProcessor;
 	private static Language _language;
 	private static LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 	private static Portal _portal;
-	private static Props _props;
 
 }

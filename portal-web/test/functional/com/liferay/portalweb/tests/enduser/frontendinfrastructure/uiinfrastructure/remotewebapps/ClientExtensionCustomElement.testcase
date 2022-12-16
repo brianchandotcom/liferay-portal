@@ -59,13 +59,13 @@ definition {
 
 		task ("Then custom element is available under category 'Client Extensions'") {
 			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL",
 				key_collectionName = "Client Extensions",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL",
 				value1 = "Client Extensions");
 
 			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_RESULTS",
 				key_fragmentName = "Vanilla Counter",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_RESULTS",
 				value1 = "Vanilla Counter");
 		}
 	}

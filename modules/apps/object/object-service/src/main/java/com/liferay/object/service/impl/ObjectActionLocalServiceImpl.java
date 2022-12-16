@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -348,6 +349,19 @@ public class ObjectActionLocalServiceImpl
 
 			if (!_messageBus.hasDestination(objectActionTriggerKey)) {
 				throw new ObjectActionTriggerKeyException();
+			}
+
+			if (StringUtil.equals(
+					objectActionTriggerKey,
+					DestinationNames.COMMERCE_ORDER_STATUS) ||
+				StringUtil.equals(
+					objectActionTriggerKey,
+					DestinationNames.COMMERCE_PAYMENT_STATUS) ||
+				StringUtil.equals(
+					objectActionTriggerKey,
+					DestinationNames.COMMERCE_SHIPMENT_STATUS)) {
+
+				return;
 			}
 
 			if (Validator.isNotNull(conditionExpression)) {

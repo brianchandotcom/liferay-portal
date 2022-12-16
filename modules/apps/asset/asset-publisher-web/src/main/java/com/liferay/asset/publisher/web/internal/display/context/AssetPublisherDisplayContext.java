@@ -99,6 +99,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -118,8 +119,11 @@ import com.liferay.segments.context.RequestContextMapper;
 
 import java.io.Serializable;
 
+import java.text.Collator;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -939,7 +943,9 @@ public class AssetPublisherDisplayContext {
 			}
 		}
 
-		return dropdownItemList;
+		return ListUtil.sort(
+			dropdownItemList,
+			new SelectorEntriesLabelComparator(_themeDisplay.getLocale()));
 	}
 
 	public LocalizedValuesMap getEmailAssetEntryAddedBody() {
@@ -2448,5 +2454,29 @@ public class AssetPublisherDisplayContext {
 	private String _socialBookmarksTypes;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;
+
+	private class SelectorEntriesLabelComparator
+		implements Comparator<Map<String, Object>>, Serializable {
+
+		public SelectorEntriesLabelComparator(Locale locale) {
+			_collator = CollatorUtil.getInstance(locale);
+		}
+
+		@Override
+		public int compare(Map<String, Object> map1, Map<String, Object> map2) {
+			String label1 = StringPool.BLANK;
+			String label2 = StringPool.BLANK;
+
+			if (map1.containsKey("label") && map2.containsKey("label")) {
+				label1 = (String)map1.get("label");
+				label2 = (String)map2.get("label");
+			}
+
+			return _collator.compare(label1, label2);
+		}
+
+		private final Collator _collator;
+
+	}
 
 }

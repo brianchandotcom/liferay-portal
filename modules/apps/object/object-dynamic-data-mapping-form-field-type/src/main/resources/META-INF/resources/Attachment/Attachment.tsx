@@ -101,7 +101,6 @@ function File({attachment, loading, onDelete, readOnly}: IFileProps) {
 			<>
 				<div className="lfr-objects__attachment-title">
 					<ClayButton
-						disabled={readOnly}
 						displayType="unstyled"
 						onClick={() => {
 							window.open(attachment.contentURL, '_blank');
@@ -110,15 +109,15 @@ function File({attachment, loading, onDelete, readOnly}: IFileProps) {
 						{attachment.title}
 					</ClayButton>
 
+					<a
+						className="lfr-objects__attachment-download"
+						href={attachment.contentURL}
+					>
+						<ClayIcon symbol="download" />
+					</a>
+
 					{!readOnly && (
 						<>
-							<a
-								className="lfr-objects__attachment-download"
-								href={attachment.contentURL}
-							>
-								<ClayIcon symbol="download" />
-							</a>
-
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('delete')}
 								borderless

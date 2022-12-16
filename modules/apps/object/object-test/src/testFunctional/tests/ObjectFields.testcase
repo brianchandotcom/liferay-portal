@@ -1587,8 +1587,6 @@ definition {
 	@description = "LPS-158821 - Verify that the user is able to use the ERC field in Expression Builder, on the Validations tab"
 	@priority = "4"
 	test CanUseERCFieldWithExpressionBuilder {
-		property portal.upstream = "quarantine";
-
 		task ("Create Custom Object and Custom Field (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 162179",
@@ -1596,10 +1594,10 @@ definition {
 				pluralLabelName = "Custom Objects 162179");
 
 			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Integer",
-				fieldLabelName = "Custom Integer",
-				fieldName = "customInteger",
-				fieldType = "Integer",
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
 				isRequired = "false",
 				objectName = "CustomObject162179");
 
@@ -1625,7 +1623,7 @@ definition {
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customInteger > externalReferenceCode");
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customObjectField == externalReferenceCode");
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
 
@@ -1645,7 +1643,7 @@ definition {
 
 			ObjectCustomViews.goToViewsBuilderTab();
 
-			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Integer,External Reference Code");
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field,External Reference Code");
 
 			Button.clickSave();
 		}
@@ -1654,22 +1652,12 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject162179");
 
 			ObjectPortlet.addCustomFieldEntryViaUI(
-				customField = "Custom Integer",
-				entry = "123");
+				customField = "Custom Field",
+				entry = "Entry Test");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "This entry is not possible.");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.addCustomFieldEntryViaUI(
-				customField = "Custom Integer",
-				entry = "2147483647");
-
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject162179");
-
-			ObjectPortlet.viewEntry(entry = "2147483647");
 		}
 	}
 

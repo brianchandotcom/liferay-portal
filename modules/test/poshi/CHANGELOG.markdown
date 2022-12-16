@@ -1,5 +1,31 @@
 # Poshi Runner Change Log
 
+## 1.0.394
+
+### Core
+
+* [POSHI-435](https://issues.liferay.com/browse/POSHI-435) - Allow for multi-line strings in Poshi Properties
+
+### Gradle
+
+* [POSHI-443](https://issues.liferay.com/browse/POSHI-443) - Update chromedriver 103 version
+
+### Prose
+
+* [POSHI-452](https://issues.liferay.com/browse/POSHI-452) - Investigate failure in com.liferay.poshi.core.prose.PoshiProseDefinitionTest
+
+### Script
+
+* [POSHI-386](https://issues.liferay.com/browse/POSHI-386) - Add break & continue & return to While/For loops
+* [POSHI-424](https://issues.liferay.com/browse/POSHI-424) - Add difflibs to PoshiElementFactoryTest
+* [POSHI-450](https://issues.liferay.com/browse/POSHI-450) - Fix regex to parse PoshiScript for annotation
+* [POSHI-453](https://issues.liferay.com/browse/POSHI-453) - Investigate failure in com.liferay.poshi.core.elements.PoshiElementFactoryTest
+* [POSHI-455](https://issues.liferay.com/browse/POSHI-455) - Fix parsing for namespaced macro/function names
+
+### Validation
+
+* [POSHI-456](https://issues.liferay.com/browse/POSHI-456) - Fix bug when validating property elements
+
 ## 1.0.391
 
 ### Gradle

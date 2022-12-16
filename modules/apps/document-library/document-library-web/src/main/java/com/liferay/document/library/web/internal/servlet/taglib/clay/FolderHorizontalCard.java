@@ -125,6 +125,11 @@ public class FolderHorizontalCard implements HorizontalCard {
 		return _rowChecker.isChecked(_folder);
 	}
 
+	@Override
+	public boolean isTranslated() {
+		return false;
+	}
+
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final Folder _folder;

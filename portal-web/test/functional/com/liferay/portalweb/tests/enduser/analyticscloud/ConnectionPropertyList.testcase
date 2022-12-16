@@ -136,6 +136,34 @@ definition {
 		task ("Check that the property creation button is disabled") {
 			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
 		}
+
+		task ("Cancel to exit the wizard") {
+			ACDXPSettings.cancelWizardConfiguration();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Create a new property from the list of available properties") {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "LXC");
+		}
+
+		task ("Check that the new property appears in the list") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "LXC");
+		}
+
+		task ("Try to create a property with less than 3 letters (limit)") {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "AC");
+		}
+
+		task ("Check that an error alert appears in the modal") {
+			ACUtils.viewGenericText(textValueList = "Property name does not meet minimum length required.");
+		}
+
+		task ("Check that the property creation button is disabled") {
+			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
+		}
 	}
 
 	@description = "Story: LRAC-12019 | Automation ID: LRAC-12585 | Test Summary: Check that it is possible to search for properties"

@@ -361,7 +361,7 @@ public class MessageBoardMessageResourceImpl
 
 		return Page.of(
 			transform(
-				_mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(
+				_mbMessageService.getSiteUserMessageBoardMessagesActivity(
 					siteId, userId, start, end),
 				this::_toMessageBoardMessage),
 			pagination,

@@ -107,11 +107,18 @@ definition {
 				locator1 = "RemoteAppsEntry#URL",
 				value1 = "${entryURL}");
 		}
+
+		if (isSet(entryHTMLElementName)) {
+			Type(
+				key_id = "ClientExtensionAdminPortlet_htmlElementName",
+				locator1 = "RemoteAppsEntry#URL",
+				value1 = "${entryHTMLElementName}");
+		}
 	}
 
 	macro addPortletCategory {
 		Select(
-			locator1 = "RemoteAppsEntry#REMOTE_APPS_PORTLET_CATEGORY_NAME",
+			locator1 = "RemoteAppsEntry#REMOTE_APPS_WIDGET_CATEGORY_NAME",
 			value1 = "${categoryName}");
 	}
 

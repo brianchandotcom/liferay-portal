@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.service.impl;
 
+import com.liferay.client.extension.exception.ClientExtensionEntryNameException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,22 +86,21 @@ public class ClientExtensionEntryLocalServiceImpl
 			String sourceCodeURL, String type, String typeSettings)
 		throws PortalException {
 
+		_validateName(nameMap);
+		_validateTypeSettings(typeSettings, null, type);
+
 		ClientExtensionEntry clientExtensionEntry =
 			clientExtensionEntryPersistence.create(
 				counterLocalService.increment());
 
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = clientExtensionEntry.getUuid();
-		}
+		clientExtensionEntry.setExternalReferenceCode(externalReferenceCode);
 
 		User user = _userLocalService.getUser(userId);
 
-		_validateTypeSettings(typeSettings, null, type);
-
-		clientExtensionEntry.setExternalReferenceCode(externalReferenceCode);
 		clientExtensionEntry.setCompanyId(user.getCompanyId());
 		clientExtensionEntry.setUserId(user.getUserId());
 		clientExtensionEntry.setUserName(user.getFullName());
+
 		clientExtensionEntry.setDescription(description);
 		clientExtensionEntry.setNameMap(nameMap);
 		clientExtensionEntry.setProperties(properties);
@@ -460,6 +461,14 @@ public class ClientExtensionEntryLocalServiceImpl
 			ClientExtensionEntry.class.getName(),
 			clientExtensionEntry.getClientExtensionEntryId(),
 			clientExtensionEntry, serviceContext, new HashMap<>());
+	}
+
+	private void _validateName(Map<Locale, String> nameMap)
+		throws PortalException {
+
+		if (Validator.isBlank(nameMap.get(LocaleUtil.getDefault()))) {
+			throw new ClientExtensionEntryNameException();
+		}
 	}
 
 	private void _validateTypeSettings(

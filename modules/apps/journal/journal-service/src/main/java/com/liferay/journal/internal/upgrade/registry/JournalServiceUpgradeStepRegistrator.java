@@ -337,6 +337,11 @@ public class JournalServiceUpgradeStepRegistrator
 			new GlobalJournalArticleUrlTitleUpgradeProcess(
 				_classNameLocalService, _companyLocalService,
 				_groupLocalService));
+
+		registry.register(
+			"4.4.0", "4.4.1",
+			UpgradeProcessFactory.alterColumnType(
+				"JournalArticleLocalization", "title", "VARCHAR(800) null"));
 	}
 
 	private void _deleteTempImages() throws Exception {

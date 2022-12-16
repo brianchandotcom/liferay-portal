@@ -45,7 +45,6 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 import java.net.URI;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -235,7 +234,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								});
 						}
 					});
-				tags(Collections.singletonList(schemaName));
+				tags(Arrays.asList(schemaName));
 			}
 		};
 	}
@@ -252,7 +251,7 @@ public class RelatedObjectEntryOpenAPIContributor
 					_getOperationId(
 						"get", objectRelationship.getName(), schemaName));
 				parameters(
-					Collections.singletonList(
+					Arrays.asList(
 						new Parameter() {
 							{
 								in("path");
@@ -275,7 +274,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								});
 						}
 					});
-				tags(Collections.singletonList(schemaName));
+				tags(Arrays.asList(schemaName));
 			}
 		};
 	}
@@ -345,7 +344,7 @@ public class RelatedObjectEntryOpenAPIContributor
 								});
 						}
 					});
-				tags(Collections.singletonList(schemaName));
+				tags(Arrays.asList(schemaName));
 			}
 		};
 	}

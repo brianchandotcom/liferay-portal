@@ -29,6 +29,8 @@ const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 
 export default function () {
 	const [data, setData] = useState();
+	const newArray = [];
+
 	const currentDate = new Date();
 	const milisecondsPerDay = 1000 * 3600 * 24;
 
@@ -55,6 +57,27 @@ export default function () {
 		getRenewalsData();
 	}, []);
 
+	const setNewArray = () => {
+		data?.items?.map((item) => {
+			const expirationInTime = new Date(item.closeDate) - currentDate;
+
+			const expirationInDays =
+				Math.floor(expirationInTime / milisecondsPerDay) + 1;
+
+			newArray.push({
+				closeDate: item.closeDate,
+				expirationDays: expirationInDays,
+				opportunityName: item.opportunityName,
+			});
+		});
+	};
+
+	setNewArray();
+
+	const filteredArray = newArray
+		.filter((item) => item.expirationDays > 0 && item.expirationDays <= 30)
+		.slice(0, 4);
+
 	return (
 		<Container
 			footer={
@@ -75,57 +98,50 @@ export default function () {
 			{!data && <ClayLoadingIndicator size="md" />}
 
 			<div className="align-items-start d-flex flex-column mt-3">
-				{data?.items?.map((item, index) => {
-					const expirationInTime =
-						new Date(item.closeDate) - currentDate;
-
-					const expirationInDays =
-						Math.floor(expirationInTime / milisecondsPerDay) + 1;
-
+				{filteredArray?.map((item, index) => {
 					const currentStatusColor = () => {
-						if (expirationInDays <= 5) {
+						if (item.expirationDays <= 5) {
 							return status[5];
-						}
-						else if (expirationInDays <= 15) {
+						} else if (item.expirationDays <= 15) {
 							return status[15];
-						}
-						else if (expirationInDays <= 30) {
+						} else if (item.expirationDays <= 30) {
 							return status[30];
 						}
 					};
 
-					if (expirationInDays > 0 && expirationInDays <= 30) {
-						return (
+					// eslint-disable-next-line no-console
+					console.log(item.expirationDays);
+
+					return (
+						<div
+							className="align-items-center d-flex flex-row justify-content-center mb-4"
+							key={index}
+						>
 							<div
-								className="align-items-center d-flex flex-row justify-content-center mb-4"
-								key={index}
-							>
-								<div
-									className={ClassNames(
-										'mr-3 status-bar-vertical',
-										currentStatusColor()
-									)}
-								></div>
+								className={ClassNames(
+									'mr-3 status-bar-vertical',
+									currentStatusColor()
+								)}
+							></div>
+
+							<div>
+								<div className="font-weight-semi-bold">
+									{item.opportunityName}
+								</div>
 
 								<div>
-									<div className="font-weight-semi-bold">
-										{item.opportunityName}
-									</div>
-
-									<div>
-										Expires in &nbsp;
-										<span className="font-weight-semi-bold">
-											{expirationInDays} days.
-										</span>
-										&nbsp;
-										<span className="ml-2">
-											{item.closeDate}
-										</span>
-									</div>
+									Expires in &nbsp;
+									<span className="font-weight-semi-bold">
+										{item.expirationDays} days.
+									</span>
+									&nbsp;
+									<span className="ml-2">
+										{item.closeDate}
+									</span>
 								</div>
 							</div>
-						);
-					}
+						</div>
+					);
 				})}
 			</div>
 		</Container>

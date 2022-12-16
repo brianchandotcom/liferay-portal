@@ -23,6 +23,7 @@ import {
 	ManagementToolbar,
 	RichTextLocalized,
 	SingleSelect,
+	invalidateRequired,
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -495,7 +496,11 @@ export default function EditNotificationTemplate({
 						: undefined
 				}
 				entityId={notificationTemplateId}
-				externalReferenceCode={externalReferenceCode}
+				externalReferenceCode={
+					invalidateRequired(values.externalReferenceCode)
+						? externalReferenceCode
+						: values.externalReferenceCode
+				}
 				externalReferenceCodeSaveURL={`/o/notification/v1.0/notification-templates/${notificationTemplateId}`}
 				hasPublishPermission={true}
 				hasUpdatePermission={true}
@@ -503,6 +508,11 @@ export default function EditNotificationTemplate({
 					'internal-key-to-reference-the-notification-template'
 				)}
 				label={templateTitle}
+				onExternalReferenceCodeChange={(value) => {
+					setValues({
+						externalReferenceCode: value,
+					});
+				}}
 				onGetEntity={() =>
 					API.getNotificationTemplateById(notificationTemplateId)
 				}

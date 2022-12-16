@@ -30,6 +30,7 @@ interface ModalEditExternalReferenceCodeProps {
 	helpMessage: string;
 	observer: Observer;
 	onClose: () => void;
+	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
 	saveURL: string;
 	setExternalReferenceCode: (value: string) => void;
@@ -44,6 +45,7 @@ export function ModalEditExternalReferenceCode({
 	helpMessage,
 	observer,
 	onClose,
+	onExternalReferenceCodeChange,
 	onGetEntity,
 	saveURL,
 	setExternalReferenceCode,
@@ -63,6 +65,11 @@ export function ModalEditExternalReferenceCode({
 			});
 
 			setExternalReferenceCode(externalReferenceCode);
+
+			if (onExternalReferenceCodeChange) {
+				onExternalReferenceCodeChange(externalReferenceCode);
+			}
+
 			onClose();
 			openToast({
 				message: Liferay.Language.get(

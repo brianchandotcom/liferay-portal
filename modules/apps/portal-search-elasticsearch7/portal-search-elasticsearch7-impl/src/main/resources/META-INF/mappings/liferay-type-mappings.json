@@ -1186,11 +1186,18 @@
 				}
 			},
 			{
+				"template_text_embedding_256": {
+					"mapping": {
+						"dims": 256,
+						"type": "dense_vector"
+					},
+					"path_match": "text_embedding_256*"
+				}
+			},
+			{
 				"template_text_embedding_384": {
 					"mapping": {
 						"dims": 384,
-						"index": true,
-						"similarity": "cosine",
 						"type": "dense_vector"
 					},
 					"path_match": "text_embedding_384*"
@@ -1200,8 +1207,6 @@
 				"template_text_embedding_512": {
 					"mapping": {
 						"dims": 512,
-						"index": true,
-						"similarity": "cosine",
 						"type": "dense_vector"
 					},
 					"path_match": "text_embedding_512*"
@@ -1211,11 +1216,18 @@
 				"template_text_embedding_768": {
 					"mapping": {
 						"dims": 768,
-						"index": true,
-						"similarity": "cosine",
 						"type": "dense_vector"
 					},
 					"path_match": "text_embedding_768*"
+				}
+			},
+			{
+				"template_text_embedding_1024": {
+					"mapping": {
+						"dims": 1024,
+						"type": "dense_vector"
+					},
+					"path_match": "text_embedding_1024*"
 				}
 			}
 		],

@@ -58,7 +58,7 @@ const DonutChart = ({
 						data={chartData}
 						donut={{
 							label: {show: showLabel},
-							title: '$0 Total',
+							title: '0',
 							width: 35,
 						}}
 						legend={{show: showLegend}}

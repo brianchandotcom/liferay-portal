@@ -1,3 +1,19 @@
+.label-chart {
+	font-weight: 500;
+}
+
+.label-chart.pending {
+	background-color: #ffd764;
+	border-color: #ffd764;
+	color: #2e414e;
+}
+
+.label-chart.approved {
+	background-color: #37d27e;
+	border-color: #37d27e;
+	color: #fff;
+}
+
 .mdf-request-chart-card-height {
 	box-sizing: border-box;
 	height: 560px;

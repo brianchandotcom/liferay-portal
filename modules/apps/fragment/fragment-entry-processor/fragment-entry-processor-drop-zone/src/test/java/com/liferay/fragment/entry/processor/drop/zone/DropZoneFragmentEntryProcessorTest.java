@@ -147,12 +147,10 @@ public class DropZoneFragmentEntryProcessorTest {
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
-		FragmentDropZoneLayoutStructureItem
-			fragmentDropZoneLayoutStructureItem =
-				FragmentEntryProcessorDropZoneTestUtil.
-					addFragmentDropZoneLayoutStructureItem(
-						fragmentEntryLink, layoutStructure,
-						RandomTestUtil.randomString());
+		FragmentEntryProcessorDropZoneTestUtil.
+			addFragmentDropZoneLayoutStructureItem(
+				fragmentEntryLink, layoutStructure,
+				RandomTestUtil.randomString());
 
 		String elementDropZoneId = RandomTestUtil.randomString();
 
@@ -267,10 +265,6 @@ public class DropZoneFragmentEntryProcessorTest {
 		FragmentDropZoneLayoutStructureItem
 			fragmentDropZoneLayoutStructureItem1 =
 				fragmentDropZoneLayoutStructureItems[0];
-
-		FragmentDropZoneLayoutStructureItem
-			removedFragmentDropZoneLayoutStructureItem =
-				fragmentDropZoneLayoutStructureItems[1];
 
 		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
 			dropZoneId1, dropZoneId2);

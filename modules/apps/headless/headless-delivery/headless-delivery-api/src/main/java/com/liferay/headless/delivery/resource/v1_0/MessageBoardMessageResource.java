@@ -164,11 +164,6 @@ public interface MessageBoardMessageResource {
 			Long siteId, String friendlyUrlPath)
 		throws Exception;
 
-	public Page<MessageBoardMessage>
-			getSiteUserMessageBoardMessagesActivityPage(
-				Long siteId, Long userId, Pagination pagination)
-		throws Exception;
-
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteMessageBoardMessagePermissionsPage(
 				Long siteId, String roleNames)
@@ -178,6 +173,11 @@ public interface MessageBoardMessageResource {
 			putSiteMessageBoardMessagePermissionsPage(
 				Long siteId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public Page<MessageBoardMessage>
+			getSiteUserMessageBoardMessagesActivityPage(
+				Long siteId, Long userId, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

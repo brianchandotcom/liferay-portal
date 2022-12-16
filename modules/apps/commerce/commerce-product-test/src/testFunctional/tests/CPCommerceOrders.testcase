@@ -1571,6 +1571,139 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10147 The orders can be sorted by Create/Order Date in Pending and Placed Orders Pages"
+	@priority = "3"
+	test CanSortOrdersByCreationDateInPendingAndPlacedOrdersPages {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a payment method is activated") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Store Management",
+				panel = "Commerce",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And the acccount has a pending and a placed order") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55861:1",
+				orderStatus = "2",
+				paymentMethod = "money-order",
+				paymentStatus = "2");
+
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55861:1",
+				orderStatus = "1",
+				paymentMethod = "money-order",
+				paymentStatus = "2");
+		}
+
+		task ("And the buyer has also a pending and a placed order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the buyer goes to the pending orders page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+		}
+
+		task ("Then the orders in the pending orders page are sorted from the last to the first as default") {
+			for (var orderAuthorName : list "Buyer User,Test Test") {
+				ObjectPortlet.assertAuthorColumnDisplaysUserName(
+					authorName = "${orderAuthorName}",
+					column = "Created By");
+			}
+		}
+
+		task ("When the buyer clicks Create Date button in the pending orders page") {
+			CommerceNavigator.sortField(sortFieldName = "Create Date");
+		}
+
+		task ("Then the orders are sorted from the first to the last order") {
+			for (var orderAuthorName : list "Test Test,Buyer User") {
+				ObjectPortlet.assertAuthorColumnDisplaysUserName(
+					authorName = "${orderAuthorName}",
+					column = "Created By");
+			}
+		}
+
+		task ("When the buyer goes to the placed orders page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+		}
+
+		task ("Then the orders are sorted from the last to the first as default") {
+			for (var orderAuthorName : list "Buyer User,Test Test") {
+				ObjectPortlet.assertAuthorColumnDisplaysUserName(
+					authorName = "${orderAuthorName}",
+					column = "Submitted By");
+			}
+		}
+
+		task ("When the buyer clicks Order Date button in the placed orders page") {
+			CommerceNavigator.sortField(sortFieldName = "Order Date");
+		}
+
+		task ("Then the orders are sorted from the first to the last order") {
+			for (var orderAuthorName : list "Test Test,Buyer User") {
+				ObjectPortlet.assertAuthorColumnDisplaysUserName(
+					authorName = "${orderAuthorName}",
+					column = "Submitted By");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9699 CanUpdateOrderItemCustomFieldValue"
 	@priority = "3"
 	test CanUpdateOrderItemCustomFieldValue {

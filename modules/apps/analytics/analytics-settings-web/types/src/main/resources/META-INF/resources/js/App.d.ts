@@ -27,6 +27,7 @@ export declare enum EPageView {
 	Default = 'VIEW_DEFAULT_MODE',
 }
 export declare const View: TView;
+export declare const AppContextData: React.Context<TData>;
 declare const useData: () => TData;
 declare const useDispatch: () => any;
 export declare enum Events {

@@ -15501,7 +15501,7 @@ paths:
         # @review
         get:
             description:
-                Retrieves the site's message board messages user activity.
+                Retrieves the site's message board messages user's activity.
             operationId: getSiteUserMessageBoardMessagesActivityPage
             parameters:
                 - in: path

@@ -306,8 +306,6 @@ public abstract class BaseFragmentCollectionContributor
 	private List<FragmentComposition> _getFragmentCompositions(
 		List<FragmentComposition> fragmentCompositions, Locale locale) {
 
-		List<FragmentComposition> newFragmentCompositions = new ArrayList<>();
-
 		for (FragmentComposition fragmentComposition : fragmentCompositions) {
 			Map<Locale, String> names = _fragmentCompositionNames.getOrDefault(
 				fragmentComposition.getFragmentCompositionKey(),
@@ -319,17 +317,13 @@ public abstract class BaseFragmentCollectionContributor
 					names.getOrDefault(
 						LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 						fragmentComposition.getName())));
-
-			newFragmentCompositions.add(fragmentComposition);
 		}
 
-		return newFragmentCompositions;
+		return new ArrayList<>(fragmentCompositions);
 	}
 
 	private List<FragmentEntry> _getFragmentEntries(
 		List<FragmentEntry> fragmentEntries, Locale locale) {
-
-		List<FragmentEntry> newFragmentEntries = new ArrayList<>();
 
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
 			Map<Locale, String> names = _fragmentEntryNames.getOrDefault(
@@ -341,11 +335,9 @@ public abstract class BaseFragmentCollectionContributor
 					names.getOrDefault(
 						LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 						fragmentEntry.getName())));
-
-			newFragmentEntries.add(fragmentEntry);
 		}
 
-		return newFragmentEntries;
+		return new ArrayList<>(fragmentEntries);
 	}
 
 	private FragmentEntry _getFragmentEntry(URL url) throws Exception {

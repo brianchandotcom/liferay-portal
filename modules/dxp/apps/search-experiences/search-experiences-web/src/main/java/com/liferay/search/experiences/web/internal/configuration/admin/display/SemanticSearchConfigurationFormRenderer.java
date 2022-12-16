@@ -244,9 +244,11 @@ public class SemanticSearchConfigurationFormRenderer
 	private List<String> _getAvailableEmbeddingVectorDimensions() {
 		return new ArrayList<String>() {
 			{
+				add("256");
 				add("384");
 				add("512");
 				add("768");
+				add("1024");
 			}
 		};
 	}

@@ -55,7 +55,7 @@ class ContributorBuilder extends React.Component {
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 		renderEmptyValuesErrors: PropTypes.bool,
 		scopeName: PropTypes.string,
-		siteSelectorURL: PropTypes.string,
+		siteItemSelectorURL: PropTypes.string,
 		supportedConjunctions: PropTypes.arrayOf(conjunctionShape).isRequired,
 		supportedOperators: PropTypes.arrayOf(operatorShape).isRequired,
 		supportedPropertyTypes: propertyTypesShape.isRequired,
@@ -114,7 +114,7 @@ class ContributorBuilder extends React.Component {
 			},
 			selectEventName: 'selectSegmentScope',
 			title: Liferay.Language.get('select-site'),
-			url: this.props.siteSelectorURL,
+			url: this.props.siteItemSelectorURL,
 		});
 	};
 

@@ -184,7 +184,7 @@ public class EditSegmentsEntryDisplayContext {
 		return _segmentsEntryKey;
 	}
 
-	public String getSiteSelectorURL() throws PortalException {
+	public String getSiteItemSelectorURL() throws PortalException {
 		SiteItemSelectorCriterion siteItemSelectorCriterion =
 			new SiteItemSelectorCriterion();
 
@@ -482,7 +482,7 @@ public class EditSegmentsEntryDisplayContext {
 		).put(
 			"showInEditMode", _isShowInEditMode()
 		).put(
-			"siteSelectorURL", String.valueOf(getSiteSelectorURL())
+			"siteItemSelectorURL", String.valueOf(getSiteItemSelectorURL())
 		).build();
 	}
 

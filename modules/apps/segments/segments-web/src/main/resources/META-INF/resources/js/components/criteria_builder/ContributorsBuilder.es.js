@@ -112,7 +112,7 @@ class ContributorBuilder extends React.Component {
 					scopeName: selectedItem.groupscopelabel,
 				});
 			},
-			selectEventName: 'selectSegmentScope',
+			selectEventName: 'sitesSelectItem',
 			title: Liferay.Language.get('select-site'),
 			url: this.props.siteItemSelectorURL,
 		});

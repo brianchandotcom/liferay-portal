@@ -198,7 +198,7 @@ public class EditSegmentsEntryDisplayContext {
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_renderRequest),
-				_renderResponse.getNamespace() + "selectedSiteItem",
+				_renderResponse.getNamespace() + "sitesSelectItem",
 				siteItemSelectorCriterion)
 		).setParameter(
 			"displayStyle", "list"

@@ -148,7 +148,7 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 		JSONArray supportedFiltersJSONArray = jsonObject.getJSONArray(
 			collectionId);
 
-		Assert.assertEquals(2, supportedFiltersJSONArray.length());
+		Assert.assertEquals(3, supportedFiltersJSONArray.length());
 		Assert.assertTrue(
 			JSONUtil.hasValue(
 				supportedFiltersJSONArray,

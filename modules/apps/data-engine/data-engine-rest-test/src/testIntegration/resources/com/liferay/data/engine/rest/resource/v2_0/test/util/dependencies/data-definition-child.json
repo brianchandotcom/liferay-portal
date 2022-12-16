@@ -8,6 +8,7 @@
 				"collapsible": true,
 				"ddmStructureId": 36004,
 				"ddmStructureLayoutId": "",
+				"fieldReference": "Parent",
 				"rows": [
 					{
 						"columns": [
@@ -36,6 +37,7 @@
 						"ddmDataProviderInstanceOutput": "[]",
 						"displayStyle": "singleline",
 						"fieldNamespace": "",
+						"fieldReference": "Text",
 						"options": {
 							"en_US": [
 								{

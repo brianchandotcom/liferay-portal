@@ -88,13 +88,11 @@ definition {
 	@description = "Automation ID: LPS-151318 | Test Summary: Verify that when you insert a not valid value, a erro message appear."
 	@ignore = "true"
 	@priority = "3"
-	test AssertTheErroMessage{
-		// Needs refactor since it depends on example Avangrid Portals account
-		
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
+	test AssertTheErrorMessage {
 
-			Navigator.openURL();
+		// Needs refactor since it depends on example Avangrid Portals account
+
+		task ("Go to CP2.0 and join a project") {
 
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
@@ -106,50 +104,23 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
-		task ("Open Environment Type tab and Assert the nodes field is disable") {
-			CustomerPortal.clickAtButton(text = "Filter");
 
-			Click.pauseClickAt(
-				locator1 = "CustomerPortalSite#ANY_BUTTON",
-				key_text= "Key Type");
-		}
-		task ("Open Environment Type tab and Assert the nodes field is enable") {
-			Click.clickNoWaitForVisible(
-				key_checkbox = "Virtual Cluster",
-				key_menu = "Key Type",
-				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
-		}
-		task("Type a invalid value in the field and assert the erro message") {
-			Type(
-				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
-				value1 = "0");
+		task ("Type a invalid value in the field and assert the error message") {
+			CP2Utils.typeEnableNodeField(
+				value = "0",
+				error = "enter-a-minimum-node-value-greater-than-0");
+				
 
-			AssertElementPresent(
-				locator1 = "CP2NavigationMenu#NODES_ERRO",
-				key_erro = "enter-a-minimum-node-value-greater-than-0");
-			
-			Type(
-				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
-				value1 = "1");
-
-			AssertElementPresent(
-				locator1 = "CP2NavigationMenu#NODES_ERRO",
-				key_erro = "max-nodes-must-be-greater-than-min-nodes");
+			CP2Utils.typeEnableNodeField(
+				value = "1",
+				error = "max-nodes-must-be-greater-than-min-nodes");
 
 			CustomerPortal.clickAtButton(text = "Filter");
 
 		}
 
-		task("Type a invalid value on search bar and assert the erro message") {
-			Click(locator1 = "CP2NavigationMenu#SEARCH_FILTER");
-
-		Type(
-			locator1 = "CP2NavigationMenu#SEARCH_FILTER",
-			value1 = "NothingAreFound");
-
-		KeyPress(
-			locator1 = "CP2NavigationMenu#SEARCH_FILTER",
-			value1 = "\ENTER");
+		task ("Type a invalid value on search bar and assert the error message") {
+			CP2Utils.searchKeys(searchinput = "NothingAreFound");
 
 		AssertElementPresent(locator1 ="CP2NavigationMenu#SEARCH_NO_RESULT");
 
@@ -161,12 +132,8 @@ definition {
 	@priority = " 4"
 	test CanViewAndSearchForEnvironmentType {
 		// Needs refactor since it depends on example Avangrid Portals account
-		
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
 
-			Navigator.openURL();
-
+		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
@@ -193,16 +160,9 @@ definition {
 			}
 
 		}
-		task("Search for a key and assert the result of the search"){
-			Click(locator1 = "CP2NavigationMenu#SEARCH_FILTER");
 
-			Type(
-				locator1 = "CP2NavigationMenu#SEARCH_FILTER",
-				value1 = "test");
-
-			KeyPress(
-				locator1 = "CP2NavigationMenu#SEARCH_FILTER",
-				value1 = "\ENTER");
+		task ("Search for a key and assert the result of the search") {
+			CP2Utils.searchKeys(searchinput = "test");
 			
 			AssertElementPresent(
 				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE",
@@ -253,12 +213,8 @@ definition {
 	test TheMinAndMaxFieldsCanBeDisableAndEnable{
 
 		// Needs refactor since it depends on example Avangrid Portals account
-		
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
 
-			Navigator.openURL();
-
+		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
@@ -272,15 +228,11 @@ definition {
 		task ("Open Environment Type tab and Assert the nodes field is disable") {
 			CustomerPortal.clickAtButton(text = "Filter");
 
-			Click.pauseClickAt(
-				locator1 = "CustomerPortalSite#ANY_BUTTON",
-				key_text= "Key Type");
-			
-			Click.clickNoWaitForVisible(
-				key_checkbox = "On-Premise",
-				key_menu = "Key Type",
-				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
-			
+			CP2Utils.clickAtFilterMenu(
+				text = "Key Type",
+				checkbox = "On-Premise",
+				menu = "Key Type");
+
 			AssertElementPresent(locator1 = "CP2NavigationMenu#NODES_CLUSTER_DISABLE");
 		}
 		task ("Open Environment Type tab and Assert the nodes field is enable") {

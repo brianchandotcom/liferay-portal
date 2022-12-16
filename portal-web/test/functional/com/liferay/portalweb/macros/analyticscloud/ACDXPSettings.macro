@@ -37,8 +37,8 @@ definition {
 
 		if (isSet(channelName)) {
 			ACDXPSettings.syncChannel(
-				propertyName = "${assignedPropertyName}",
-				channelName = "${channelName}");
+				channelName = "${channelName}",
+				propertyName = "${assignedPropertyName}");
 		}
 
 		ACDXPSettings.syncSites(

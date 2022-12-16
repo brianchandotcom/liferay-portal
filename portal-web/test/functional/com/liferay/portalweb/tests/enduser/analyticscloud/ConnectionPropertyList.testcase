@@ -326,6 +326,58 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12572 | Test Summary: Check that a deleted property in AC will not appear in the DXP"
+	@priority = "3"
+	test CheckDeletedPropertyInACSideNotAppearInDXP {
+		var propertyName = "AC Deleted Property";
+
+		task ("Connect DXP to AC and get the first property name from the list") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			var autoGeneratePropertyName = ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Create a new property from the list of available properties") {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${propertyName}");
+		}
+
+		task ("Go to AC > Go to Settings > Go to Properties") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("Check that the new properties are created in the properties list") {
+			ACUtils.viewNameList(nameList = "${propertyName},${autoGeneratePropertyName}");
+		}
+
+		task ("Delete one property") {
+			ACUtils.searchBar(searchItem = "${autoGeneratePropertyName}");
+
+			ACSettings.deletePropertyByCheckbox(propertyName = "${autoGeneratePropertyName}");
+		}
+
+		task ("Go to DXP > Instance Settings > Analytics Cloud") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+		}
+
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Check that the not deleted property is present in the list") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${propertyName}");
+		}
+
+		task ("Check that the deleted property is not present in the list") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${autoGeneratePropertyName}");
+		}
+	}
+
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12570 | Test Summary: Check that a property is created automatically after connection"
 	@priority = "5"
 	test CheckIfPropertyCreatedAutomaticallyAfterConnection {
@@ -409,58 +461,6 @@ definition {
 			TestUtils.assertNotEquals(
 				actual = "${propertyName3}",
 				expected = "${propertyName2}");
-		}
-	}
-
-	@description = "Story: LRAC-10858 | Automation ID: LRAC-12572 | Test Summary: Check that a deleted property in AC will not appear in the DXP"
-	@priority = "3"
-	test CheckDeletedPropertyInACSideNotAppearInDXP {
-		var propertyName = "AC Deleted Property";
-
-		task ("Connect DXP to AC and get the first property name from the list") {
-			ACDXPSettings.connectAnalyticsCloud();
-
-			var autoGeneratePropertyName = ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Create a new property from the list of available properties") {
-			ACDXPSettings.createNewProperty(newPropertyNameList = "${propertyName}");
-		}
-
-		task ("Go to AC > Go to Settings > Go to Properties") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Check that the new properties are created in the properties list") {
-			ACUtils.viewNameList(nameList = "${propertyName},${autoGeneratePropertyName}");
-		}
-
-		task ("Delete one property") {
-			ACUtils.searchBar(searchItem = "${autoGeneratePropertyName}");
-
-			ACSettings.deletePropertyByCheckbox(propertyName = "${autoGeneratePropertyName}");
-		}
-
-		task ("Go to DXP > Instance Settings > Analytics Cloud") {
-			ACUtils.launchDXP();
-
-			ACDXPSettings.goToInstanceSettingsAC();
-		}
-
-		task ("Go to the properties page in the sidebar") {
-			ACDXPSettings.navToSyncedSitesMenu();
-		}
-
-		task ("Check that the not deleted property is present in the list") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "${propertyName}");
-		}
-
-		task ("Check that the deleted property is not present in the list") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${autoGeneratePropertyName}");
 		}
 	}
 

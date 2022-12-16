@@ -80,6 +80,8 @@ definition {
 
 			Button.clickSave();
 
+			Alert.viewSuccessMessage();
+
 			WaitForSPARefresh();
 
 			Navigator.gotoBack();

@@ -32,9 +32,13 @@ import React, {useEffect, useMemo, useState} from 'react';
 import PredefinedValuesTable from '../PredefinedValuesTable';
 
 import './ActionBuilder.scss';
+import {
+	fetchObjectDefinitionFields,
+	fetchObjectDefinitions,
+} from '../fetchUtil';
 import {WarningStates} from './ActionBuilder';
 
-type ObjectsOptionsList = Array<
+export type ObjectsOptionsList = Array<
 	(
 		| React.ComponentProps<typeof ClaySelect.Option>
 		| React.ComponentProps<typeof ClaySelect.OptGroup>
@@ -47,6 +51,7 @@ type ObjectsOptionsList = Array<
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];
 	errors: ActionError;
+	newObjectActionExecutors: CustomItem<string>[];
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectDefinitionExternalReferenceCode: string;
@@ -54,7 +59,6 @@ interface ActionContainerProps {
 	objectDefinitionsRelationshipsURL: string;
 	objectFieldsMap: Map<string, ObjectField>;
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
-	setErrorAlert: (value: boolean) => void;
 	setValues: (values: Partial<ObjectAction>) => void;
 	setWarningAlerts: (value: React.SetStateAction<WarningStates>) => void;
 	systemObject: boolean;
@@ -65,6 +69,7 @@ interface ActionContainerProps {
 export function ActionContainer({
 	currentObjectDefinitionFields,
 	errors,
+	newObjectActionExecutors,
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectDefinitionExternalReferenceCode,
@@ -72,17 +77,12 @@ export function ActionContainer({
 	objectDefinitionsRelationshipsURL,
 	objectFieldsMap,
 	setCurrentObjectDefinitionFields,
-	setErrorAlert,
 	setValues,
 	setWarningAlerts,
 	systemObject,
 	validateExpressionURL,
 	values,
 }: ActionContainerProps) {
-	const [newObjectActionExecutors, setNewObjectActionExecutors] = useState<
-		CustomItem[]
-	>(objectActionExecutors);
-
 	const [notificationTemplates, setNotificationTemplates] = useState<
 		CustomItem<number>[]
 	>([]);
@@ -129,107 +129,6 @@ export function ActionContainer({
 			businessType !== 'Relationship' &&
 			!system
 		);
-	};
-
-	const fetchObjectDefinitions = async () => {
-		const relationships = await API.fetchJSON<
-			ObjectDefinitionsRelationship[]
-		>(objectDefinitionsRelationshipsURL);
-
-		const relatedObjects: LabelValueObject[] = [];
-		const unrelatedObjects: LabelValueObject[] = [];
-
-		relationships?.forEach((object) => {
-			const {externalReferenceCode, id, label} = object;
-
-			const target = object.related ? relatedObjects : unrelatedObjects;
-
-			target.push({label, value: `${externalReferenceCode},${id}`});
-		});
-
-		const objectsOptionsList = [];
-
-		if (!values.parameters?.objectDefinitionExternalReferenceCode) {
-			objectsOptionsList.push({
-				disabled: true,
-				label: Liferay.Language.get('choose-an-object'),
-				selected: true,
-				value: '',
-			});
-		}
-		const fillSelect = (label: string, options: LabelValueObject[]) => {
-			if (options.length) {
-				objectsOptionsList.push({label, options, type: 'group'});
-			}
-		};
-
-		fillSelect(Liferay.Language.get('related-objects'), relatedObjects);
-
-		fillSelect(Liferay.Language.get('unrelated-objects'), unrelatedObjects);
-
-		setObjectOptions(objectsOptionsList);
-		setRelationships(relationships);
-	};
-
-	const fetchObjectDefinitionFields = async () => {
-		let validFields: ObjectField[] = [];
-		let definitionId = objectDefinitionId;
-		let externalReferenceCode = objectDefinitionExternalReferenceCode;
-
-		if (values.objectActionExecutorKey === 'add-object-entry') {
-			definitionId = values?.parameters?.objectDefinitionId as number;
-			externalReferenceCode = values.parameters
-				?.objectDefinitionExternalReferenceCode as string;
-		}
-
-		if (externalReferenceCode) {
-			const items = await API.getObjectFieldsByExternalReferenceCode(
-				externalReferenceCode
-			);
-
-			validFields = items.filter(isValidField);
-		}
-
-		setCurrentObjectDefinitionFields(validFields);
-
-		const {
-			predefinedValues = [],
-		} = values.parameters as ObjectActionParameters;
-
-		const predefinedValuesMap = new Map<string, PredefinedValue>();
-
-		predefinedValues.forEach((field) => {
-			predefinedValuesMap.set(field.name, field);
-		});
-
-		const newPredefinedValues: PredefinedValue[] = [];
-
-		validFields.forEach(({label, name, required}) => {
-			if (predefinedValuesMap.has(name)) {
-				const field = predefinedValuesMap.get(name);
-
-				newPredefinedValues.push(field as PredefinedValue);
-			}
-			else if (
-				required &&
-				values.objectActionExecutorKey === 'add-object-entry'
-			) {
-				newPredefinedValues.push({
-					inputAsValue: false,
-					label,
-					name,
-					value: '',
-				});
-			}
-		});
-		setValues({
-			parameters: {
-				...values.parameters,
-				objectDefinitionExternalReferenceCode: externalReferenceCode,
-				objectDefinitionId: definitionId,
-				predefinedValues: newPredefinedValues,
-			},
-		});
 	};
 
 	const updateParameters = async (value: string) => {
@@ -301,58 +200,32 @@ export function ActionContainer({
 	};
 
 	useEffect(() => {
-		if (values.objectActionTriggerKey === 'onAfterDelete') {
-			newObjectActionExecutors.map((action) => {
-				if (action.value === 'update-object-entry') {
-					action.disabled = true;
-					action.popover = {
-						body:
-							Liferay.Language.get(
-								'it-is-not-possible-to-create-an-update-action-with-an-on-after-delete-trigger'
-							) +
-							' ' +
-							Liferay.Language.get(
-								'please-change-the-action-trigger'
-							),
-						header: Liferay.Language.get('action-not-allowed'),
-					};
-				}
-			});
-
-			if (values.objectActionExecutorKey === 'update-object-entry') {
-				setErrorAlert(true);
-			}
-
-			setNewObjectActionExecutors(newObjectActionExecutors);
-		}
-		else if (
-			values.objectActionTriggerKey === 'onAfterAdd' ||
-			values.objectActionTriggerKey === 'onAfterUpdate'
-		) {
-			newObjectActionExecutors.map((action) => {
-				if (action.value === 'update-object-entry') {
-					delete action.disabled;
-					delete action.popover;
-				}
-			});
-
-			if (values.objectActionExecutorKey === 'update-object-entry') {
-				setErrorAlert(false);
-			}
-
-			setNewObjectActionExecutors(newObjectActionExecutors);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.objectActionTriggerKey]);
-
-	useEffect(() => {
 		if (values.objectActionExecutorKey === 'add-object-entry') {
-			fetchObjectDefinitions();
-			fetchObjectDefinitionFields();
+			fetchObjectDefinitions(
+				objectDefinitionsRelationshipsURL,
+				values,
+				setRelationships,
+				setObjectOptions
+			);
+			fetchObjectDefinitionFields(
+				objectDefinitionId,
+				objectDefinitionExternalReferenceCode,
+				values,
+				isValidField,
+				setCurrentObjectDefinitionFields,
+				setValues
+			);
 		}
 		else if (values.objectActionExecutorKey === 'update-object-entry') {
 			updateParameters(objectDefinitionExternalReferenceCode);
-			fetchObjectDefinitionFields();
+			fetchObjectDefinitionFields(
+				objectDefinitionId,
+				objectDefinitionExternalReferenceCode,
+				values,
+				isValidField,
+				setCurrentObjectDefinitionFields,
+				setValues
+			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.objectActionExecutorKey]);
@@ -395,7 +268,12 @@ export function ActionContainer({
 						error={errors.objectActionExecutorKey}
 						onChange={({value}) => {
 							if (value === 'add-object-entry') {
-								fetchObjectDefinitions();
+								fetchObjectDefinitions(
+									objectDefinitionsRelationshipsURL,
+									values,
+									setRelationships,
+									setObjectOptions
+								);
 							}
 							setValues({
 								objectActionExecutorKey: value,

@@ -12,27 +12,51 @@
 import {array, date, number, object, string} from 'yup';
 
 import {TypeActivityKey} from '../../../../../common/enums/TypeActivityKey';
-import LiferayPicklist from '../../../../../common/interfaces/liferayPicklist';
 import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
+import getContentMarketingFieldsValidation from './fieldValidation/contentMarketingFields';
+import getDigitalMarketingFieldsValidation from './fieldValidation/digitalMarketingFields';
+import getEventFieldsValidation from './fieldValidation/eventFields';
+import leadListFieldsValidation from './fieldValidation/leadListvalidation';
+import getMiscellaneousMarketingFieldsValidation from './fieldValidation/miscellaneousMarketingFields';
 
 const activitiesSchema = object({
 	activities: array()
 		.of(
 			object({
-				activityPromotion: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.EVENT,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
-				assetsLiferayRequired: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.DIGITAL_MARKETING,
-					then: (schema) => schema.required('Required'),
-				}),
+				activityDescription: object().when(
+					['typeActivity', 'tactic'],
+					(typeActivity, tactic) => {
+						let targetFields = {};
+
+						switch (typeActivity.key) {
+							case TypeActivityKey.EVENT:
+								targetFields = getEventFieldsValidation(
+									tactic.name
+								);
+								break;
+							case TypeActivityKey.DIGITAL_MARKETING:
+								targetFields = getDigitalMarketingFieldsValidation(
+									tactic.name
+								);
+								break;
+							case TypeActivityKey.CONTENT_MARKETING:
+								targetFields = getContentMarketingFieldsValidation();
+								break;
+							default:
+								targetFields = getMiscellaneousMarketingFieldsValidation(
+									tactic.name
+								);
+								break;
+						}
+
+						targetFields = {
+							...targetFields,
+							...leadListFieldsValidation,
+						};
+
+						return object(targetFields);
+					}
+				),
 				budgets: array()
 					.of(
 						object({
@@ -55,19 +79,6 @@ const activitiesSchema = object({
 						})
 					)
 					.min(1, 'Required'),
-				description: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.EVENT,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
-				detailsLeadFollowUp: string()
-					.max(255, 'You have exceeded the character limit')
-					.trim()
-					.required('Required'),
 				endDate: date()
 					.test(
 						'end-date-six-month',
@@ -128,65 +139,6 @@ const activitiesSchema = object({
 						}
 					)
 					.required('Required'),
-				gatedLandingPage: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.CONTENT_MARKETING,
-					then: (schema) => schema.required('Required').trim(),
-				}),
-				goalOfContent: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.CONTENT_MARKETING,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
-				hiringOutsideWriterOrAgency: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.CONTENT_MARKETING,
-					then: (schema) => schema.required('Required'),
-				}),
-				howLiferayBrandUsed: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.DIGITAL_MARKETING,
-					then: (schema) => schema.required('Required').trim(),
-				}),
-				leadFollowUpStrategies: array().min(1, 'Required'),
-				leadGenerated: string().required('Required'),
-				liferayBranding: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.EVENT,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
-				liferayParticipationRequirements: string().when(
-					'typeActivity',
-					{
-						is: (typeActivity: LiferayPicklist) =>
-							typeActivity.key === TypeActivityKey.EVENT,
-						then: (schema) =>
-							schema
-								.trim()
-								.max(
-									255,
-									'You have exceeded the character limit'
-								)
-								.required('Required'),
-					}
-				),
-				location: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.EVENT,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
 				mdfRequestAmount: number()
 					.moreThan(0, 'Required')
 					.required('Required')
@@ -208,42 +160,6 @@ const activitiesSchema = object({
 					.trim()
 					.max(255, 'You have exceeded the character limit')
 					.required('Required'),
-				overallMessageContentCTA: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.DIGITAL_MARKETING,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
-				primaryThemeOrMessage: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.CONTENT_MARKETING,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
-				sourceAndSizeOfInviteeList: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.EVENT,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
-				specificSites: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.DIGITAL_MARKETING,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
 				startDate: date()
 					.test(
 						'is-today',
@@ -281,10 +197,6 @@ const activitiesSchema = object({
 					'Required',
 					(value) => !isObjectEmpty(value)
 				),
-				targetOfLeads: string()
-					.trim()
-					.max(255, 'You have exceeded the character limit')
-					.required('Required'),
 				typeActivity: object({
 					id: number(),
 					name: string(),
@@ -294,15 +206,6 @@ const activitiesSchema = object({
 					'Required',
 					(value) => !isObjectEmpty(value)
 				),
-				venueName: string().when('typeActivity', {
-					is: (typeActivity: LiferayPicklist) =>
-						typeActivity.key === TypeActivityKey.EVENT,
-					then: (schema) =>
-						schema
-							.trim()
-							.max(255, 'You have exceeded the character limit')
-							.required('Required'),
-				}),
 			})
 		)
 		.min(1),

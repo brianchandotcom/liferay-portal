@@ -35,6 +35,9 @@ import java.time.format.FormatStyle;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -58,9 +61,7 @@ public class DateInfoFieldTypeTemplateNodeTransformer
 
 		if (value instanceof Date) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				DateTimeFormatterBuilder.getLocalizedDateTimePattern(
-					FormatStyle.SHORT, FormatStyle.SHORT,
-					IsoChronology.INSTANCE, themeDisplay.getLocale()),
+				_getShortTimeStylePattern(themeDisplay.getLocale()),
 				themeDisplay.getLocale());
 
 			stringValue = dateFormat.format((Date)value);
@@ -73,9 +74,7 @@ public class DateInfoFieldTypeTemplateNodeTransformer
 				Date date = dateFormat.parse(value.toString());
 
 				dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-					DateTimeFormatterBuilder.getLocalizedDateTimePattern(
-						FormatStyle.SHORT, null, IsoChronology.INSTANCE,
-						themeDisplay.getLocale()),
+					_getDefaultPattern(themeDisplay.getLocale()),
 					themeDisplay.getLocale());
 
 				stringValue = dateFormat.format(date);
@@ -92,9 +91,7 @@ public class DateInfoFieldTypeTemplateNodeTransformer
 					Date date = dateFormat.parse(value.toString());
 
 					dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-						DateTimeFormatterBuilder.getLocalizedDateTimePattern(
-							FormatStyle.SHORT, null, IsoChronology.INSTANCE,
-							themeDisplay.getLocale()),
+						_getDefaultPattern(themeDisplay.getLocale()),
 						themeDisplay.getLocale());
 
 					stringValue = dateFormat.format(date);
@@ -118,7 +115,39 @@ public class DateInfoFieldTypeTemplateNodeTransformer
 			infoFieldType.getName(), Collections.emptyMap());
 	}
 
+	private String _getDefaultPattern(Locale locale) {
+		if (_defaultPatternMap.containsKey(locale)) {
+			return _defaultPatternMap.get(locale);
+		}
+
+		String pattern = DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+			FormatStyle.SHORT, null, IsoChronology.INSTANCE, locale);
+
+		_defaultPatternMap.put(locale, pattern);
+
+		return pattern;
+	}
+
+	private String _getShortTimeStylePattern(Locale locale) {
+		if (_shortTimeStylePatternMap.containsKey(locale)) {
+			return _shortTimeStylePatternMap.get(locale);
+		}
+
+		String pattern = DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+			FormatStyle.SHORT, FormatStyle.SHORT, IsoChronology.INSTANCE,
+			locale);
+
+		_shortTimeStylePatternMap.put(locale, pattern);
+
+		return pattern;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DateInfoFieldTypeTemplateNodeTransformer.class);
+
+	private static final Map<Locale, String> _defaultPatternMap =
+		new HashMap<>();
+	private static final Map<Locale, String> _shortTimeStylePatternMap =
+		new HashMap<>();
 
 }

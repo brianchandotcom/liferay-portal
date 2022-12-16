@@ -24,7 +24,7 @@ const ContentMarketingFields = ({currentActivityIndex}: IProps) => {
 				component={PRMForm.RadioGroup}
 				items={getBooleanEntries()}
 				label="Will this content be gated and have a landing page?"
-				name={`activities[${currentActivityIndex}].gatedLandingPage`}
+				name={`activities[${currentActivityIndex}].activityDescription.gatedLandingPage`}
 				required
 				small
 			/>
@@ -32,14 +32,14 @@ const ContentMarketingFields = ({currentActivityIndex}: IProps) => {
 			<PRMFormik.Field
 				component={PRMForm.InputText}
 				label="Describe the primary theme or message of your content"
-				name={`activities[${currentActivityIndex}].primaryThemeOrMessage`}
+				name={`activities[${currentActivityIndex}].activityDescription.primaryThemeOrMessage`}
 				required
 			/>
 
 			<PRMFormik.Field
 				component={PRMForm.InputText}
 				label="Goal of Content"
-				name={`activities[${currentActivityIndex}].goalOfContent`}
+				name={`activities[${currentActivityIndex}].activityDescription.goalOfContent`}
 				required
 			/>
 
@@ -47,7 +47,7 @@ const ContentMarketingFields = ({currentActivityIndex}: IProps) => {
 				component={PRMForm.RadioGroup}
 				items={getBooleanEntries()}
 				label="Are you hiring an outside writer or agency to prepare the content?"
-				name={`activities[${currentActivityIndex}].hiringOutsideWriterOrAgency`}
+				name={`activities[${currentActivityIndex}].activityDescription.hiringOutsideWriterOrAgency`}
 				required
 				small
 			/>

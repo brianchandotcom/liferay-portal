@@ -18,22 +18,27 @@ export default function getContentMarketFields(
 	return [
 		{
 			title: 'Will this content be gated and have a landing page?',
-			value: getBooleanValue(mdfRequestActivity.gatedLandingPage),
+			value: getBooleanValue(
+				mdfRequestActivity.activityDescription
+					?.gatedLandingPage as string
+			),
 		},
 		{
 			title: 'Primary theme or message of your content',
-			value: mdfRequestActivity.primaryThemeOrMessage,
+			value:
+				mdfRequestActivity.activityDescription?.primaryThemeOrMessage,
 		},
 
 		{
 			title: 'Goal of Content',
-			value: mdfRequestActivity.goalOfContent,
+			value: mdfRequestActivity.activityDescription?.goalOfContent,
 		},
 		{
 			title:
 				'Are you hiring an outside writer or agency to prepare the content?',
 			value: getBooleanValue(
-				mdfRequestActivity.hiringOutsideWriterOrAgency
+				mdfRequestActivity.activityDescription
+					?.hiringOutsideWriterOrAgency as string
 			),
 		},
 	];

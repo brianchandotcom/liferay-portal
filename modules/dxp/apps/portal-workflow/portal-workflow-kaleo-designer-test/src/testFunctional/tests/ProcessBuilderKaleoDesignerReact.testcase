@@ -4676,19 +4676,10 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "TASK-END CONNECTOR");
 	}
 
-	@description = "LPS-129928 - Verify that the translation dropdown closes when the user selects a language"
-	@ignore = "Test Stub"
+	@description = "LPS-129928 - Verify that the translation dropdown closes when the user selects a language."
 	@priority = "2"
 	test TranslationDropdownClosesAfterSelection {
-
-		// TODO LRQA-73002 TranslationDropdownClosesAfterSelection pending implementation
-
-	}
-
-	@description = "LPS-129928 - Verify that the translation dropdown closes when the user clicks out of it"
-	@priority = "2"
-	test TranslationDropdownClosesClickOut {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TranslationDropdownClosesClickOut";
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TranslationDropdownClosesAfterSelection";
 
 		Workflow.openWorkflowListView();
 

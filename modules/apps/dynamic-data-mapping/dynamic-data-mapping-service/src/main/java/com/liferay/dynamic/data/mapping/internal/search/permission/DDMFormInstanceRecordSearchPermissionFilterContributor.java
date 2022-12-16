@@ -18,8 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,14 +28,12 @@ public class DDMFormInstanceRecordSearchPermissionFilterContributor
 	implements SearchPermissionFilterContributor {
 
 	@Override
-	public Optional<String> getParentEntryClassNameOptional(
-		String entryClassName) {
-
+	public String getParentEntryClassName(String entryClassName) {
 		if (entryClassName.equals(DDMFormInstanceRecord.class.getName())) {
-			return Optional.of(DDMFormInstance.class.getName());
+			return DDMFormInstance.class.getName();
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 }

@@ -79,7 +79,9 @@
 			</a>
 
 			<div class="align-items-center d-flex search-account-container">
-				<span class="pr-2 search-icon opacity-50" tabindex="8"> [@clay["icon"] symbol="search"/] </span>
+				<div class="mr-2 search-icon-container">
+					<span class="search-icon" tabindex="8"> [@clay["icon"] symbol="search"/] </span>
+				</div>
 					[#if configuration.showAccountMenu]
 						<div class="account position-relative" tabindex="9">
 							<div class="account-info align-items-center d-flex">
@@ -322,4 +324,73 @@
 			</div>
 		</div>
 	</header>
+
+	<div class="search-wrapper">
+		<form class="search" id="siteSearch" name="siteSearch">
+			<input class="search-input search-suggestions-input w-100" id="searchInput" placeholder="${languageUtil.get(locale, 'search')}" type="text" />
+
+			<a class="search-submit" href="/search" id="searchSubmitBtn" type="submit">
+				<span>[@clay["icon"] symbol="search"/]
+			</a>
+		</form>
+
+		<div class="suggestions">
+			<div class="mb-4 mt-5 suggestions-popular">
+				<div class="mb-3 suggestions-popular-text">
+					${languageUtil.get(locale, "popular", "Popular")}
+				</div>
+
+				<div class="d-flex justify-content-between suggestions-popular-items">
+					<div class="d-flex suggestions-popular-item">
+						<a class="suggestions-popular-item-text text-decoration-none" data-lfr-editable-id="suggestionsPopularItem1" data-lfr-editable-type="link">
+							Popular
+						</a>
+					</div>
+
+					<div class="d-flex suggestions-popular-item">
+						<a class="suggestions-popular-item-text text-decoration-none" data-lfr-editable-id="suggestionsPopularItem2" data-lfr-editable-type="link">
+							Gartner MQ
+						</a>
+					</div>
+
+					<div class="d-flex suggestions-popular-item">
+						<a class="suggestions-popular-item-text text-decoration-none" data-lfr-editable-id="suggestionsPopularItem3" data-lfr-editable-type="link">
+							DXP Features
+						</a>
+					</div>
+
+					<div class="d-flex suggestions-popular-item">
+						<a class="suggestions-popular-item-text text-decoration-none" data-lfr-editable-id="suggestionsPopularItem4" data-lfr-editable-type="link">
+							Commerce
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-none mb-4 suggested-text">
+				${languageUtil.get(locale, "suggested", "Suggested")}
+			</div>
+
+			<div class="search-suggestions">
+			</div>
+
+			<div class="d-none no-results-message">
+				${languageUtil.get(locale, "there-are-no-results", "There are no results.")}
+			</div>
+
+			<div class="d-none mt-3 search-suggestions-see-all-results">
+				<a class="d-inline-block search-suggestions-see-all-results-text text-decoration-none" data-lfr-editable-id="searchSeeAllResultsButton" data-lfr-editable-type="link" href="/search">
+					${languageUtil.get(locale, "see-all-results", "See All Results")}
+				</a>
+
+				<span class="pl-1 d-inline-block search-suggestions-see-all-results-arrow">[@clay["icon"] symbol="order-arrow-right"/]</span>
+			</div>
+		</div>
+
+		<a class="close-search w-inline-block" id="closeSearch">
+			<svg fill="none" height="14" viewBox="0 0 14 14" width="14" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L8.41421 7L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L7 8.41421L1.70711 13.7071C1.31658 14.0976 0.683418 14.0976 0.292894 13.7071C-0.0976312 13.3166 -0.0976312 12.6834 0.292894 12.2929L5.58579 7L0.292894 1.70711C-0.0976306 1.31658 -0.0976306 0.683417 0.292894 0.292893C0.683418 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7 5.58579L12.2929 0.292893Z" fill="white" />
+			</svg>
+		</a>
+	</div>
 </nav>

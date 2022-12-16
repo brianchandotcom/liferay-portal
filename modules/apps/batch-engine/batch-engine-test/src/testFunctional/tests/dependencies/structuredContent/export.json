@@ -1,0 +1,100 @@
+[
+	{
+		"availableLanguages": [
+			"en-US"
+		],
+		"contentFields": [
+			{
+				"contentFieldValue": {
+					"data": "content"
+				},
+				"dataType": "string",
+				"inputControl": "text",
+				"label": "Text",
+				"name": "Text",
+				"nestedContentFields": [
+				],
+				"repeatable": false
+			}
+		],
+		"contentStructureId": 43787,
+		"creator": {
+			"additionalName": "",
+			"contentType": "UserAccount",
+			"familyName": "Test",
+			"givenName": "Test",
+			"id": 20125,
+			"name": "Test Test"
+		},
+		"customFields": [
+		],
+		"dateCreated": "2022-12-08T11:14:25.601+00:00",
+		"dateModified": "2022-12-08T11:14:25.657+00:00",
+		"datePublished": "2022-12-08T11:13:00.000+00:00",
+		"description": "",
+		"externalReferenceCode": "772fd792-c3c6-8505-208c-b6b7a11d9117",
+		"friendlyUrlPath": "first-web-content",
+		"id": 43796,
+		"key": "43794",
+		"keywords": [
+		],
+		"priority": 0.0,
+		"relatedContents": [
+		],
+		"structuredContentFolderId": 0,
+		"subscribed": false,
+		"taxonomyCategoryBriefs": [
+		],
+		"title": "First web content",
+		"uuid": "772fd792-c3c6-8505-208c-b6b7a11d9117"
+	},
+	{
+		"availableLanguages": [
+			"en-US"
+		],
+		"contentFields": [
+			{
+				"contentFieldValue": {
+					"data": "content"
+				},
+				"dataType": "string",
+				"inputControl": "text",
+				"label": "Text",
+				"name": "Text",
+				"nestedContentFields": [
+				],
+				"repeatable": false
+			}
+		],
+		"contentStructureId": 43787,
+		"creator": {
+			"additionalName": "",
+			"contentType": "UserAccount",
+			"familyName": "Test",
+			"givenName": "Test",
+			"id": 20125,
+			"name": "Test Test"
+		},
+		"customFields": [
+		],
+		"dateCreated": "2022-12-08T11:14:37.389+00:00",
+		"dateModified": "2022-12-08T11:14:37.398+00:00",
+		"datePublished": "2022-12-08T11:14:00.000+00:00",
+		"description": "",
+		"externalReferenceCode": "949258f7-c29e-836c-4777-df1f48e2b037",
+		"friendlyUrlPath": "second-web-content",
+		"id": 43806,
+		"key": "43804",
+		"keywords": [
+		],
+		"priority": 0.0,
+		"relatedContents": [
+		],
+		"structuredContentFolderId": 0,
+		"subscribed": false,
+		"taxonomyCategoryBriefs": [
+		],
+		"title": "Second web content",
+		"uuid": "949258f7-c29e-836c-4777-df1f48e2b037"
+	}
+]

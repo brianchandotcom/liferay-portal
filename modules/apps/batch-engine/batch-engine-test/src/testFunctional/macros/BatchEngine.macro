@@ -1,0 +1,70 @@
+definition {
+
+	macro archiveAndDeleteOriginalFile {
+		Variables.assertDefined(parameterList = "${sourceFilePath},${fileNameWithExtension}");
+
+		if (!(isSet(destinationPath))) {
+			var destinationPath = PropsUtil.get("liferay.home.dir.name");
+		}
+
+		var archivedFilePath = "${destinationPath}/${fileNameWithExtension}";
+
+		ArchiveUtil.archive("${sourceFilePath}", "${archivedFilePath}");
+
+		FileUtil.delete("${sourceFilePath}");
+
+		return "${archivedFilePath}";
+	}
+
+	macro copyDependenciesDirToFolder {
+		Variables.assertDefined(parameterList = "${file}");
+
+		var filePath = TestCase.getDependenciesDirPath(fileName = "${file}");
+
+		if (!(isSet(destinationDir))) {
+			var destinationDir = PropsUtil.get("liferay.home.dir.name");
+		}
+
+		var destinationFilePath = "${destinationDir}/${file}";
+
+		FileUtil.copyDirectory("${filePath}", "${destinationFilePath}");
+
+		return "${destinationFilePath}";
+	}
+
+	macro moveFileToDeployFolder {
+		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName}");
+
+		if (!(isSet(destinationPath))) {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			var deployFolder = "${liferayHome}/deploy";
+		}
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "move-file -Dfile=${sourceFilePath} -Dtofile=${deployFolder}/${fileName}");
+
+		WaitForConsoleTextPresent(value1 = "Processing ${fileName}");
+
+		// Need to add pause here to finish deploying zip through batch engine LPS-161983
+
+		Pause(locator1 = "1000");
+	}
+
+	macro setUpGlobalIds {
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+		var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = "${portalURL}");
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
+		static var staticUserId = "${userId}";
+		static var staticCompanyId = "${companyId}";
+		static var staticSiteId = "${siteId}";
+
+		return "${staticUserId}";
+
+		return "${staticCompanyId}";
+
+		return "${staticSiteId}";
+	}
+
+}

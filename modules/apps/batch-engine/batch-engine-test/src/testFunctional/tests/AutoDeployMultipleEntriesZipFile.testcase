@@ -1,0 +1,206 @@
+@component-name = "portal-batch-engine"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Batch Engine";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		BatchEngine.setUpGlobalIds();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogPostingAPI.deleteAllBlogPostings();
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "TestObject");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Coupon");
+
+			WebContent.tearDownCP();
+
+			WebContentStructures.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test CanAutoDeployBlogPostingZipWithCsv {
+		property portal.acceptance = "true";
+
+		task ("Given a blogPosting.zip file") {
+			var filePath = BatchEngine.copyDependenciesDirToFolder(file = "blogPosting");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20125", "${staticUserId}");
+
+			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+				fileNameWithExtension = "blogPosting.zip",
+				sourceFilePath = "${filePath}");
+		}
+
+		task ("When I add it to deploy folder") {
+			BatchEngine.moveFileToDeployFolder(
+				fileName = "blogPosting.zip",
+				sourceFilePath = "${arhivedFilePath}");
+		}
+
+		task ("Then all blog postings are imported") {
+			var response = BlogPostingAPI.getBlogPostings();
+
+			var blogTotalCount = JSONUtil.getWithJSONPath("${response}", "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${blogTotalCount}",
+				expected = "1");
+		}
+	}
+
+	@priority = "4"
+	test CanAutoDeployMultipleBatchPairsZip {
+		property portal.acceptance = "true";
+
+		task ("Given a multipleBatchPairs.zip file including blog and object definition") {
+			var filePath = BatchEngine.copyDependenciesDirToFolder(file = "multipleElmentsParis");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20125", "${staticUserId}");
+
+			FileUtil.replaceStringInFile("${filePath}/blog/batch-engine.json", "20097", "${staticCompanyId}");
+
+			FileUtil.replaceStringInFile("${filePath}/blog/batch-engine.json", "20125", "${staticUserId}");
+
+			FileUtil.replaceStringInFile("${filePath}/object/objectDefinition/batch-engine.json", "20097", "${staticCompanyId}");
+
+			FileUtil.replaceStringInFile("${filePath}/object/objectDefinition/batch-engine.json", "20125", "${staticUserId}");
+
+			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+				fileNameWithExtension = "multipleElmentsParis.zip",
+				sourceFilePath = "${filePath}");
+		}
+
+		task ("When I add it to deploy folder") {
+			BatchEngine.moveFileToDeployFolder(
+				fileName = "multipleElmentsParis.zip",
+				sourceFilePath = "${arhivedFilePath}");
+		}
+
+		task ("Then all elements included in the file are imported") {
+			var response = BlogPostingAPI.getBlogPostings();
+
+			var blogTotalCount = JSONUtil.getWithJSONPath("${response}", "$..totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${blogTotalCount}",
+				expected = "2");
+
+			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "TestObject");
+
+			var objectStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId}");
+
+			TestUtils.assertEquals(
+				actual = "${objectStatus}",
+				expected = "true");
+		}
+	}
+
+	@priority = "4"
+	test CanAutoDeployObjectDefinitionZipWithJsonl {
+		property portal.acceptance = "true";
+
+		task ("Given an objectDefinition.zip file") {
+			var filePath = BatchEngine.copyDependenciesDirToFolder(file = "objectDefinition");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20125", "${staticUserId}");
+
+			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+				fileNameWithExtension = "objectDefinition.zip",
+				sourceFilePath = "${filePath}");
+		}
+
+		task ("When I add it to deploy folder") {
+			BatchEngine.moveFileToDeployFolder(
+				fileName = "objectDefinition.zip",
+				sourceFilePath = "${arhivedFilePath}");
+		}
+
+		task ("Then all object definitions are imported") {
+			var objectDefinitionId1 = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "TestObject");
+			var objectDefinitionId2 = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Coupon");
+			var objectStatus1 = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId1}");
+			var objectStatus2 = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId2}");
+
+			TestUtils.assertEquals(
+				actual = "${objectStatus1}",
+				expected = "true");
+
+			TestUtils.assertEquals(
+				actual = "${objectStatus2}",
+				expected = "false");
+		}
+	}
+
+	@priority = "4"
+	test CanAutoDeployStructuredWebContentZipWithJson {
+		property portal.acceptance = "true";
+
+		task ("Given a content structure is created") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			FormFields.editFieldReference(key_fieldReference = "Text");
+
+			Button.clickSave();
+		}
+
+		task ("Given a Structured.zip file with content structure id and siteId") {
+			var filePath = BatchEngine.copyDependenciesDirToFolder(file = "structuredContent");
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20097", "${staticCompanyId}");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20125", "${staticUserId}");
+
+			FileUtil.replaceStringInFile("${filePath}/batch-engine.json", "20121", "${staticSiteId}");
+
+			FileUtil.replaceStringInFile("${filePath}/export.json", "43787", "${ddmStructureId}");
+
+			var arhivedFilePath = BatchEngine.archiveAndDeleteOriginalFile(
+				fileNameWithExtension = "structuredContent.zip",
+				sourceFilePath = "${filePath}");
+		}
+
+		task ("When I add it to deploy folder") {
+			BatchEngine.moveFileToDeployFolder(
+				fileName = "structuredContent.zip",
+				sourceFilePath = "${arhivedFilePath}");
+		}
+
+		task ("Then all structured contents are imported") {
+			var response = HeadlessWebcontentAPI.filterStructuredContent(filtervalue = "priority%20eq%200.0");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = "2",
+				responseToParse = "${response}");
+		}
+	}
+
+}

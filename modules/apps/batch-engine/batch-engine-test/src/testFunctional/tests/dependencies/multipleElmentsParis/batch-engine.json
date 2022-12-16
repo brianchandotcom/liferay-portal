@@ -1,0 +1,10 @@
+{
+	"callbackURL": null,
+	"className": "com.liferay.headless.delivery.dto.v1_0.BlogPosting",
+	"companyId": 20097,
+	"parameters": {
+		"createStrategy": "UPSERT"
+	},
+	"userId": 20125,
+	"version": "v1.0"
+}

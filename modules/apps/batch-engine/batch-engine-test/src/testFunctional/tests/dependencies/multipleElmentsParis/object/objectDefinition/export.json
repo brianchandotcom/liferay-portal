@@ -1,0 +1,202 @@
+[
+	{
+		"accountEntryRestricted": false,
+		"accountEntryRestrictedObjectFieldName": "",
+		"active": true,
+		"dateCreated": "2022-12-08T14:35:30.832+00:00",
+		"dateModified": "2022-12-08T14:35:30.907+00:00",
+		"defaultLanguageId": "en_US",
+		"enableCategorization": true,
+		"enableComments": false,
+		"enableObjectEntryHistory": false,
+		"externalReferenceCode": "d3b5917b-a337-0dfe-3812-989552263c3b",
+		"id": 44573,
+		"label": {
+			"en_US": "TestObject"
+		},
+		"name": "TestObject",
+		"objectActions": [
+		],
+		"objectFields": [
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"defaultValue": "",
+				"externalReferenceCode": "c05ca968-5dd7-5003-0c36-821b66ca833a",
+				"id": 44577,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Create Date"
+				},
+				"listTypeDefinitionExternalReferenceCode": "",
+				"listTypeDefinitionId": 0,
+				"name": "createDate",
+				"objectFieldSettings": [
+				],
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date"
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"defaultValue": "",
+				"externalReferenceCode": "d1021e36-589c-56ec-0ea0-90462984e576",
+				"id": 44575,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Author"
+				},
+				"listTypeDefinitionExternalReferenceCode": "",
+				"listTypeDefinitionId": 0,
+				"name": "creator",
+				"objectFieldSettings": [
+				],
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String"
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"defaultValue": "",
+				"externalReferenceCode": "b3e9ddec-8861-9982-b9a2-50cae3d261be",
+				"id": 44579,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "External Reference Code"
+				},
+				"listTypeDefinitionExternalReferenceCode": "",
+				"listTypeDefinitionId": 0,
+				"name": "externalReferenceCode",
+				"objectFieldSettings": [
+				],
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String"
+			},
+			{
+				"DBType": "Long",
+				"businessType": "LongInteger",
+				"defaultValue": "",
+				"externalReferenceCode": "44bfad9c-9a9f-5fc6-3ccd-9467afb440ca",
+				"id": 44581,
+				"indexed": true,
+				"indexedAsKeyword": true,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "ID"
+				},
+				"listTypeDefinitionExternalReferenceCode": "",
+				"listTypeDefinitionId": 0,
+				"name": "id",
+				"objectFieldSettings": [
+				],
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Long"
+			},
+			{
+				"DBType": "Date",
+				"businessType": "Date",
+				"defaultValue": "",
+				"externalReferenceCode": "82b6b712-c46b-24cd-ad47-140282ef20ab",
+				"id": 44583,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Modified Date"
+				},
+				"listTypeDefinitionExternalReferenceCode": "",
+				"listTypeDefinitionId": 0,
+				"name": "modifiedDate",
+				"objectFieldSettings": [
+				],
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "Date"
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"defaultValue": "",
+				"externalReferenceCode": "dfe16957-e219-fd42-c754-4f6188403e94",
+				"id": 44592,
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "en_US",
+				"label": {
+					"en_US": "name"
+				},
+				"listTypeDefinitionExternalReferenceCode": "",
+				"listTypeDefinitionId": 0,
+				"name": "name",
+				"objectFieldSettings": [
+					{
+						"name": "showCounter",
+						"value": "false"
+					}
+				],
+				"required": false,
+				"state": false,
+				"system": false,
+				"type": "String"
+			},
+			{
+				"DBType": "String",
+				"businessType": "Text",
+				"defaultValue": "",
+				"externalReferenceCode": "990b2aa3-985e-ff15-35d6-0d6394550dc4",
+				"id": 44585,
+				"indexed": false,
+				"indexedAsKeyword": false,
+				"indexedLanguageId": "",
+				"label": {
+					"en_US": "Status"
+				},
+				"listTypeDefinitionExternalReferenceCode": "",
+				"listTypeDefinitionId": 0,
+				"name": "status",
+				"objectFieldSettings": [
+				],
+				"required": false,
+				"state": false,
+				"system": true,
+				"type": "String"
+			}
+		],
+		"objectLayouts": [
+		],
+		"objectRelationships": [
+		],
+		"objectViews": [
+		],
+		"panelCategoryKey": "",
+		"parameterRequired": false,
+		"pluralLabel": {
+			"en_US": "TestObjects"
+		},
+		"portlet": false,
+		"restContextPath": "/o/c/testobjects",
+		"scope": "company",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		},
+		"system": false,
+		"titleObjectFieldName": "createDate"
+	}
+]

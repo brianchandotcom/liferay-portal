@@ -65,10 +65,6 @@ public interface ObjectEntryService extends BaseService {
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void checkPermission(
-			String actionId, ObjectEntry objectEntry, long userId)
-		throws PortalException;
-
 	public ObjectEntry deleteObjectEntry(long objectEntryId)
 		throws PortalException;
 

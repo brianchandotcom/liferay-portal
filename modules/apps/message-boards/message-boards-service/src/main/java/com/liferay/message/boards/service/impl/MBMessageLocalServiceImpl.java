@@ -1577,8 +1577,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						)
 					)
 				)
-			).orderBy(
-				MBMessageTable.INSTANCE.modifiedDate.descending()
 			));
 	}
 

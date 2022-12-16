@@ -103,6 +103,41 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test DeleteWCFolderWithinPublication {
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Global");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "WC Folder Name");
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
+
+		AssertElementNotPresent(
+			key_webContentTitle = "WC Folder Name",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+	}
+
 	@description = "This is use case for LPS-159561. Making the changes in the description doesn't yield a missing requirement conflict."
 	@priority = "3"
 	test MakingChangesInDescriptionCannotYieldConflict {

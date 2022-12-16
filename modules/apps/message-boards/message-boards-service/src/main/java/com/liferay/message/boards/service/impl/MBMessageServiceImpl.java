@@ -696,13 +696,13 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
 	public List<MBMessage> getSiteUserMessageBoardMessagesActivity(
-			long userId, long siteId, int start, int end)
+			long userId, long groupId, int start, int end)
 		throws PortalException {
 
 		_userPermission.check(getPermissionChecker(), userId, ActionKeys.VIEW);
 
 		return mbMessageLocalService.getSiteUserMessageBoardMessagesActivity(
-			userId, siteId, start, end);
+			userId, groupId, start, end);
 	}
 
 	@Override

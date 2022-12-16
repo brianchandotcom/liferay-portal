@@ -8,6 +8,7 @@
 			"customProperties": {
 				"dataType": "string",
 				"fieldNamespace": "",
+				"fieldReference": "MultipleSelection",
 				"inline": true,
 				"options": {
 					"en_US": [
@@ -76,6 +77,7 @@
 			"customProperties": {
 				"dataType": "string",
 				"fieldNamespace": "",
+				"fieldReference": "Color",
 				"visibilityExpression": ""
 			},
 			"defaultValue": {
@@ -106,6 +108,7 @@
 			"customProperties": {
 				"dataType": "string",
 				"fieldNamespace": "",
+				"fieldReference": "Date",
 				"validation": {
 					"errorMessage": {
 					},
@@ -144,6 +147,7 @@
 			"customProperties": {
 				"dataType": "string",
 				"fieldNamespace": "",
+				"fieldReference": "Upload",
 				"validation": {
 					"errorMessage": {
 					},
@@ -180,7 +184,8 @@
 		},
 		{
 			"customProperties": {
-				"dataType": "string"
+				"dataType": "string",
+				"fieldReference": "Geolocation"
 			},
 			"defaultValue": {
 				"en_US": "",
@@ -236,6 +241,7 @@
 				},
 				"dataType": "string",
 				"fieldNamespace": "",
+				"fieldReference": "Grid",
 				"rows": {
 					"en_US": [
 						{
@@ -303,6 +309,7 @@
 			"customProperties": {
 				"dataType": "string",
 				"fieldNamespace": "",
+				"fieldReference": "Image",
 				"visibilityExpression": ""
 			},
 			"defaultValue": {
@@ -333,6 +340,7 @@
 			"customProperties": {
 				"dataType": "journal-article",
 				"fieldNamespace": "",
+				"fieldReference": "WebContent",
 				"visibilityExpression": ""
 			},
 			"defaultValue": {
@@ -363,6 +371,7 @@
 			"customProperties": {
 				"dataType": "link-to-page",
 				"fieldNamespace": "",
+				"fieldReference": "LinkToPage",
 				"visibilityExpression": ""
 			},
 			"defaultValue": {
@@ -396,6 +405,7 @@
 					"vertical"
 				],
 				"fieldNamespace": "",
+				"fieldReference": "Numeric",
 				"placeholder": {
 					"en_US": "Placeholder Text",
 					"pt_BR": "Texto Placeholder"
@@ -442,6 +452,7 @@
 			"customProperties": {
 				"dataType": "string",
 				"fieldNamespace": "",
+				"fieldReference": "SingleSelection",
 				"inline": true,
 				"options": {
 					"en_US": [
@@ -509,6 +520,7 @@
 			"customProperties": {
 				"dataType": "string",
 				"fieldNamespace": "",
+				"fieldReference": "RichText",
 				"visibilityExpression": ""
 			},
 			"defaultValue": {
@@ -544,6 +556,7 @@
 				"ddmDataProviderInstanceOutput": [
 				],
 				"fieldNamespace": "",
+				"fieldReference": "SelectFromList",
 				"multiple": true,
 				"options": {
 					"en_US": [
@@ -610,6 +623,7 @@
 		{
 			"customProperties": {
 				"dataType": "",
+				"fieldReference": "Separator",
 				"style": {
 					"en_US": "",
 					"pt_BR": ""
@@ -644,6 +658,7 @@
 				],
 				"displayStyle": "multiline",
 				"fieldNamespace": "",
+				"fieldReference": "Text",
 				"options": {
 				},
 				"placeholder": {

@@ -656,6 +656,9 @@ function EditSXPElementForm({
 							<div className="sxp-element-header">
 								{!readOnly && (
 									<ClayButton
+										aria-label={Liferay.Language.get(
+											'predefined-variables'
+										)}
 										borderless
 										className={getCN({
 											active: showVariablesSidebar,
@@ -689,6 +692,7 @@ function EditSXPElementForm({
 								</div>
 
 								<ClayButton
+									aria-label={Liferay.Language.get('info')}
 									borderless
 									className={getCN({active: showInfoSidebar})}
 									displayType="secondary"

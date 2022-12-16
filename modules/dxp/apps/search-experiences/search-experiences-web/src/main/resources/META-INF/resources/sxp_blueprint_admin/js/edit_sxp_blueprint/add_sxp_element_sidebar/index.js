@@ -69,6 +69,11 @@ const SXPElementList = ({
 		<>
 			{!!category && (
 				<ClayButton
+					aria-label={
+						showList
+							? Liferay.Language.get('collapse')
+							: Liferay.Language.get('expand')
+					}
 					className="panel-header sidebar-dt"
 					displayType="unstyled"
 					onClick={() => setShowList(!showList)}

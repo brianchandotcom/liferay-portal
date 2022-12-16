@@ -45,6 +45,7 @@ function SearchInput({disabled, onChange, onEnter}) {
 				{value && !onEnter ? (
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButton
+							aria-label={Liferay.Language.get('clear')}
 							displayType="unstyled"
 							onClick={() => {
 								onChange('');
@@ -58,6 +59,7 @@ function SearchInput({disabled, onChange, onEnter}) {
 				) : (
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButton
+							aria-label={Liferay.Language.get('search')}
 							disabled={disabled}
 							displayType="unstyled"
 							onClick={onEnter}

@@ -293,6 +293,9 @@ public class LayoutsTreeDisplayContext {
 		).build();
 
 		Map<String, Object> treeDate = HashMapBuilder.<String, Object>put(
+			"hasAdministrationPortletPermission",
+			hasAdministrationPortletPermission()
+		).put(
 			"isSiteNavigationMenu", isSiteNavigationMenu()
 		).put(
 			"pageTypeOptions", _getPageTypeOptionsJSONArray()

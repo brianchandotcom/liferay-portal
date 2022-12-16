@@ -1,3 +1,4 @@
+/* eslint-disable lines-around-comment */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -16,7 +17,7 @@ import React, {createContext, useContext, useReducer} from 'react';
 
 import {DEFAULT_FILTER, TFilter} from '../../utils/filter';
 import {DEFAULT_PAGINATION, TPagination} from '../../utils/pagination';
-import {TFormattedItems, TItem} from './types';
+import {TColumnItem, TFormattedItems, TItem} from './types';
 import {
 	getFormattedItems,
 	getGlobalChecked,
@@ -77,15 +78,24 @@ function reducer(state: TState, action: TAction) {
 		}
 		case Events.ChangeItem: {
 			const {
+				columns,
 				id,
-				values,
 			}: {
-				id: string;
-				values: {
-					id: string;
-					value: number | boolean | string;
+				columns: {
+					column: TColumnItem;
+					index: number;
 				}[];
+				id: string;
 			} = action.payload;
+
+			const newColumns = [...state.formattedItems[id].columns];
+
+			columns.forEach(({column, index}) => {
+				newColumns[index] = {
+					...newColumns[index],
+					...column,
+				};
+			});
 
 			return {
 				...state,
@@ -93,20 +103,7 @@ function reducer(state: TState, action: TAction) {
 					...state.formattedItems,
 					[id]: {
 						...state.formattedItems[id],
-						columns: state.formattedItems[id].columns.map(
-							(column) => {
-								for (const {id, value} of values) {
-									if (column.id === id) {
-										return {
-											...column,
-											value,
-										};
-									}
-								}
-
-								return column;
-							}
-						),
+						columns: newColumns,
 					},
 				},
 			};

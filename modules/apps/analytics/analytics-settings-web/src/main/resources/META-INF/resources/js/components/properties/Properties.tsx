@@ -109,8 +109,8 @@ const ToggleSwitch = ({
 	);
 };
 
-const getCommerceChannelIdsValue = (enabled: boolean, ids: number[]): string =>
-	enabled ? String(ids.length) : '-';
+const getTotalCommerceChannels = (enabled: boolean, value: string): string =>
+	enabled ? value : '-';
 
 const getSafeProperty = (
 	property: TProperty
@@ -152,42 +152,52 @@ const Properties: React.FC = () => {
 
 	const [selectedProperty, setSelectedProperty] = useState<TProperty>();
 
-	const toggleSwitch = (
-		item: TItem,
-		{channelId, dataSources: [{commerceChannelIds}]}: TProperty
-	) => (
-		<ToggleSwitch
-			onToggle={async (commerceSyncEnabled) => {
-				const {ok} = await updatecommerceSyncEnabled({
-					channelId,
-					commerceSyncEnabled,
-				});
+	const toggleSwitch = (item: TItem, property: TProperty) => {
+		const {channelId} = property;
 
-				if (ok) {
-					dispatch({
-						payload: {
-							id: item.id,
-							values: [
-								{
-									id: EColumn.ToggleSwitch,
-									value: commerceSyncEnabled,
-								},
-								{
-									id: EColumn.CommerceChannelIds,
-									value: getCommerceChannelIdsValue(
-										commerceSyncEnabled,
-										commerceChannelIds
-									),
-								},
-							],
-						},
-						type: Events.ChangeItem,
+		return (
+			<ToggleSwitch
+				onToggle={async (commerceSyncEnabled) => {
+					const {ok} = await updatecommerceSyncEnabled({
+						channelId,
+						commerceSyncEnabled,
 					});
-				}
-			}}
-			toggle={item.columns[3].value as boolean}
-		/>
-	);
+
+					if (ok) {
+						dispatch({
+							payload: {
+								columns: [
+									{
+										column: {
+											cellRenderer: () => (
+												<span>
+													{getTotalCommerceChannels(
+														commerceSyncEnabled,
+														item.columns[1]
+															.value as string
+													)}
+												</span>
+											),
+										},
+										index: 1,
+									},
+									{
+										column: {
+											value: commerceSyncEnabled,
+										},
+										index: 3,
+									},
+								],
+								id: item.id,
+							},
+							type: Events.ChangeItem,
+						});
+					}
+				}}
+				toggle={item.columns[3].value as boolean}
+			/>
+		);
+	};
 
 	const assignButton = (item: TItem, property: TProperty) => (
 		<ClayButton
@@ -239,12 +249,6 @@ const Properties: React.FC = () => {
 							name,
 						} = safeProperty;
 
-						const commerceChannelIdsValue = getCommerceChannelIdsValue(
-							commerceSyncEnabled,
-							commerceChannelIds
-						);
-						const siteIdsValue = String(siteIds.length);
-
 						return {
 							columns: [
 								{
@@ -252,12 +256,20 @@ const Properties: React.FC = () => {
 									value: name,
 								},
 								{
+									cellRenderer: (item: any) => (
+										<span>
+											{getTotalCommerceChannels(
+												commerceSyncEnabled,
+												item.columns[1].value
+											)}
+										</span>
+									),
 									id: EColumn.CommerceChannelIds,
-									value: commerceChannelIdsValue,
+									value: commerceChannelIds.length,
 								},
 								{
 									id: EColumn.SiteIds,
-									value: siteIdsValue,
+									value: siteIds.length,
 								},
 								{
 									cellRenderer: (item) =>
@@ -300,20 +312,29 @@ const Properties: React.FC = () => {
 
 						dispatch({
 							payload: {
-								id: selectedProperty?.channelId,
-								values: [
+								columns: [
 									{
-										id: EColumn.CommerceChannelIds,
-										value: getCommerceChannelIdsValue(
-											!!selectedProperty?.commerceSyncEnabled,
-											commerceChannelIds
-										),
+										column: {
+											cellRenderer: () => (
+												<span>
+													{getTotalCommerceChannels(
+														selectedProperty?.commerceSyncEnabled,
+														String(
+															commerceChannelIds.length
+														)
+													)}
+												</span>
+											),
+											value: commerceChannelIds.length,
+										},
+										index: 1,
 									},
 									{
-										id: EColumn.SiteIds,
+										index: 2,
 										value: siteIds.length,
 									},
 								],
+								id: selectedProperty?.channelId,
 							},
 							type: Events.ChangeItem,
 						});

@@ -21,6 +21,7 @@ export default function ActionsDropdown({actions}) {
 	return actions?.length ? (
 		<ClayDropDownWithItems
 			items={actions}
+			renderMenuOnClick
 			trigger={
 				<ClayButtonWithIcon
 					displayType="unstyled"

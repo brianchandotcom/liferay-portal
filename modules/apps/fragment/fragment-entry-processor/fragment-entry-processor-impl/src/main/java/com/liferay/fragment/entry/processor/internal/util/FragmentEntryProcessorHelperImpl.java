@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import java.util.Collection;
 import java.util.Date;
@@ -600,12 +599,6 @@ public class FragmentEntryProcessorHelperImpl
 
 		return value.toString();
 	}
-
-	private static final DateFormat _DATE_FORMAT = new SimpleDateFormat(
-		"MM/dd/yy hh:mm a", LocaleUtil.US);
-
-	private static final DateFormat _DDM_DATE_FORMAT = new SimpleDateFormat(
-		"MM/dd/yy", LocaleUtil.US);
 
 	private static final InfoCollectionTextFormatter<Object>
 		_INFO_COLLECTION_TEXT_FORMATTER =

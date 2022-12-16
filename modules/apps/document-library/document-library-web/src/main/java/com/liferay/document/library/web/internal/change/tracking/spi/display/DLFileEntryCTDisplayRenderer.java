@@ -20,6 +20,7 @@ import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
@@ -58,8 +59,9 @@ public class DLFileEntryCTDisplayRenderer
 		throws PortalException {
 
 		return DLFileVersionCTDisplayRenderer.getDownloadInputStream(
-			_audioProcessor, _dlAppLocalService, dlFileEntry.getFileVersion(),
-			_imageProcessor, key, _pdfProcessor, _videoProcessor);
+			_store, _audioProcessor, _dlAppLocalService,
+			dlFileEntry.getFileVersion(), _imageProcessor, key, _pdfProcessor,
+			_videoProcessor);
 	}
 
 	@Override
@@ -141,6 +143,9 @@ public class DLFileEntryCTDisplayRenderer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 	@Reference
 	private TrashHelper _trashHelper;

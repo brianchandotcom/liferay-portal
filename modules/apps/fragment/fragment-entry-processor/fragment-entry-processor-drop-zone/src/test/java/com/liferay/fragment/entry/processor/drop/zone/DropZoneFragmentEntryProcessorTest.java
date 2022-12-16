@@ -91,9 +91,6 @@ public class DropZoneFragmentEntryProcessorTest {
 
 		String newDropZoneId = RandomTestUtil.randomString();
 
-		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
-			dropZoneId1, newDropZoneId, dropZoneId2);
-
 		Assert.assertEquals(
 			_getExpectedHTML(
 				new KeyValuePair(
@@ -104,7 +101,9 @@ public class DropZoneFragmentEntryProcessorTest {
 					dropZoneId2,
 					fragmentDropZoneLayoutStructureItem2.getItemId())),
 			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
+				fragmentEntryLink,
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					dropZoneId1, newDropZoneId, dropZoneId2),
 				new DefaultFragmentEntryProcessorContext(
 					_getMockHttpServletRequest(layoutStructure), null,
 					FragmentEntryLinkConstants.EDIT,
@@ -154,13 +153,12 @@ public class DropZoneFragmentEntryProcessorTest {
 
 		String elementDropZoneId = RandomTestUtil.randomString();
 
-		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
-			elementDropZoneId);
-
 		Assert.assertEquals(
 			_getExpectedHTML(elementDropZoneId, StringPool.BLANK),
 			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
+				fragmentEntryLink,
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					elementDropZoneId),
 				new DefaultFragmentEntryProcessorContext(
 					_getMockHttpServletRequest(layoutStructure), null,
 					FragmentEntryLinkConstants.EDIT,
@@ -224,19 +222,18 @@ public class DropZoneFragmentEntryProcessorTest {
 		String dropZoneId1 = RandomTestUtil.randomString();
 		String dropZoneId2 = RandomTestUtil.randomString();
 
-		String expectedHTML = _getExpectedHTML(
-			new KeyValuePair(
-				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()),
-			new KeyValuePair(
-				dropZoneId2, fragmentDropZoneLayoutStructureItem2.getItemId()));
-
-		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
-			dropZoneId1, dropZoneId2);
-
 		Assert.assertEquals(
-			expectedHTML,
+			_getExpectedHTML(
+				new KeyValuePair(
+					dropZoneId1,
+					fragmentDropZoneLayoutStructureItem1.getItemId()),
+				new KeyValuePair(
+					dropZoneId2,
+					fragmentDropZoneLayoutStructureItem2.getItemId())),
 			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
+				fragmentEntryLink,
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					dropZoneId1, dropZoneId2),
 				new DefaultFragmentEntryProcessorContext(
 					_getMockHttpServletRequest(layoutStructure), null,
 					FragmentEntryLinkConstants.EDIT,
@@ -266,9 +263,6 @@ public class DropZoneFragmentEntryProcessorTest {
 			fragmentDropZoneLayoutStructureItem1 =
 				fragmentDropZoneLayoutStructureItems[0];
 
-		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
-			dropZoneId1, dropZoneId2);
-
 		FragmentDropZoneLayoutStructureItem
 			fragmentDropZoneLayoutStructureItem2 =
 				fragmentDropZoneLayoutStructureItems[2];
@@ -282,7 +276,9 @@ public class DropZoneFragmentEntryProcessorTest {
 					dropZoneId2,
 					fragmentDropZoneLayoutStructureItem2.getItemId())),
 			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
+				fragmentEntryLink,
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					dropZoneId1, dropZoneId2),
 				new DefaultFragmentEntryProcessorContext(
 					_getMockHttpServletRequest(layoutStructure), null,
 					FragmentEntryLinkConstants.EDIT,
@@ -321,9 +317,6 @@ public class DropZoneFragmentEntryProcessorTest {
 			fragmentDropZoneLayoutStructureItem3 =
 				fragmentDropZoneLayoutStructureItems[2];
 
-		String html = FragmentEntryProcessorDropZoneTestUtil.getHTML(
-			dropZoneId2, dropZoneId3, dropZoneId1);
-
 		Assert.assertEquals(
 			_getExpectedHTML(
 				new KeyValuePair(
@@ -336,7 +329,9 @@ public class DropZoneFragmentEntryProcessorTest {
 					dropZoneId1,
 					fragmentDropZoneLayoutStructureItem1.getItemId())),
 			_dropZoneFragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html,
+				fragmentEntryLink,
+				FragmentEntryProcessorDropZoneTestUtil.getHTML(
+					dropZoneId2, dropZoneId3, dropZoneId1),
 				new DefaultFragmentEntryProcessorContext(
 					_getMockHttpServletRequest(layoutStructure), null,
 					FragmentEntryLinkConstants.EDIT,

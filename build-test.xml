@@ -12508,6 +12508,26 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<prepare-selenium-site-initializer-raylife-d2c-paypal-properties />
 		<prepare-selenium-testcase-properties />
 
+		<get-browser-property property.name="browser.docker.image" />
+
+		<if>
+			<isset property="browser.docker.image" />
+			<then>
+				<get-browser-property property.name="browser.host" />
+
+				<get-docker-container-ip-address container.name="${browser.host}" property.name="browser.ip.address" />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					browser.ip.address=${browser.ip.address}
+				</echo>
+			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					browser.ip.address=127.0.0.1
+				</echo>
+			</else>
+		</if>
+
 		<get-operating-system-property property.name="operating.system.docker.image" />
 
 		<if>

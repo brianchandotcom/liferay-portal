@@ -754,6 +754,18 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-docker-container-ip-address">
+		<attribute name="container.name" />
+		<attribute name="property.name" />
+
+		<sequential>
+			<exec executable="/bin/bash" outputproperty="@{property.name}">
+				<arg value="-c" />
+				<arg value="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' @{container.name}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-dxp-license-product-name">
 		<sequential>
 			<get-testcase-property property.name="dxp.license.file" />
@@ -7045,10 +7057,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<else>
 					<get-operating-system-property property.name="operating.system.host" />
 
-					<exec executable="/bin/bash" outputproperty="ip.address">
-						<arg value="-c" />
-						<arg value="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${operating.system.host}" />
-					</exec>
+					<get-docker-container-ip-address container.name="${operating.system.host}" property.name="ip.address" />
 				</else>
 			</if>
 

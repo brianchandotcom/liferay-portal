@@ -112,6 +112,21 @@ export default function () {
 	const chartData = {
 		colors,
 		columns,
+		onclick: (event) => {
+			const EVENT_OPTION = {
+				async: true,
+				fireOn: true,
+			};
+
+			const eventPublish = Liferay.publish(
+				'openSettingsFilterClaimsEvent',
+				EVENT_OPTION
+			);
+
+			eventPublish.fire({
+				eventName: event.name,
+			});
+		},
 		type: 'donut',
 	};
 

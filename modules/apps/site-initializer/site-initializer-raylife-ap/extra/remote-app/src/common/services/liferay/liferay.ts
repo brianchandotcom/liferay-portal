@@ -21,11 +21,13 @@ interface IThemeDisplay {
 	getUserName: () => string;
 }
 
+export type LiferayOnAction<T> = (payload: T) => void;
+
 interface ILiferay {
 	ThemeDisplay: IThemeDisplay;
 	authToken: string;
-	detach: (eventName: string, options?: any) => void;
-	on: (eventName: string, options?: any) => void;
+	detach: <T = any>(eventName: string, action?: (payload: T) => void) => void;
+	on: <T = any>(eventName: string, action?: (payload: T) => void) => void;
 	publish: (eventName: string, optopms?: any) => void;
 }
 

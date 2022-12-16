@@ -31,6 +31,10 @@ import {
 } from '../../../../common/services/Claim';
 import {getPicklistByName} from '../../../../common/services/Picklists';
 import {getProducts} from '../../../../common/services/Products';
+import {
+	Liferay,
+	LiferayOnAction,
+} from '../../../../common/services/liferay/liferay';
 import formatDate from '../../../../common/utils/dateFormatter';
 
 type ClaimTableType = {
@@ -45,16 +49,21 @@ type ClaimTableType = {
 	};
 };
 
-type itemsProducts = {
+type ItemsProducts = {
 	[keys: string]: string;
 };
 
-type itemsPicklists = {
+type ItemsPicklists = {
 	[keys: string]: string;
 };
 
 type TableContentType = {
 	[key: string]: string;
+};
+
+type ItemsFilteredType = {
+	checked: boolean;
+	item: string;
 };
 
 const ClaimsTable = () => {
@@ -75,8 +84,10 @@ const ClaimsTable = () => {
 	const [filterProductCheck, setFilterProductCheck] = useState<string[]>([]);
 	const [filterStatusCheck, setFilterStatusCheck] = useState<string[]>([]);
 	const [filterCheckedLabel, setFilterCheckedLabel] = useState<string[]>([]);
-	const [checkedStateProduct, setCheckedStateProduct] = useState<any>();
-	const [checkedStateStatus, setCheckedStateStatus] = useState<any>();
+	const [checkedStateProduct, setCheckedStateProduct] = useState<boolean[]>(
+		[]
+	);
+	const [checkedStateStatus, setCheckedStateStatus] = useState<boolean[]>([]);
 	const [policyERCByPON, setPolicyERCByPON] = useState<string>();
 	const [policyERCByProduct, setPolicyERCByProduct] = useState<string[]>([]);
 
@@ -158,7 +169,7 @@ const ClaimsTable = () => {
 	};
 
 	const getPolicyERCByPolicyOwnerName = async () => {
-		const policies = await getPolicies();
+		const policies = await getPolicies(PARAMETERS_GET_ALL_ITEMS);
 
 		const filterPolicyByPolicyOwnerName = policies?.data?.items?.filter(
 			(data: {policyOwnerName: string}) =>
@@ -240,40 +251,35 @@ const ClaimsTable = () => {
 	};
 
 	useEffect(() => {
-		if (!activeFilter) {
-			getProducts().then((results) => {
-				const productsResult = results?.data?.items;
+		getProducts().then((results) => {
+			const productsResult = results?.data?.items;
 
-				const products = productsResult?.map(
-					(product: itemsProducts) => {
-						return product?.name;
-					}
-				);
-
-				setProductFilterItems(products);
+			const products = productsResult?.map((product: ItemsProducts) => {
+				return product?.name;
 			});
 
-			getPicklistByName('ClaimStatus').then((results) => {
-				const claimStatusResult = results?.data?.listTypeEntries;
+			setProductFilterItems(products);
+		});
 
-				const claimStatuses = claimStatusResult?.map(
-					(claimStatusPicklist: itemsPicklists) => {
-						return claimStatusPicklist?.name;
-					}
-				);
+		getPicklistByName('ClaimStatus').then((results) => {
+			const claimStatusResult = results?.data?.listTypeEntries;
 
-				setStatusFilterItems(claimStatuses);
-			});
+			const claimStatuses = claimStatusResult?.map(
+				(claimStatusPicklist: ItemsPicklists) => {
+					return claimStatusPicklist?.name;
+				}
+			);
 
-			return;
-		}
+			setStatusFilterItems(claimStatuses);
+		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [activeFilter]);
+	}, []);
 
-	const itemsCreate = (listItem: string[], checkedItem: []) => {
+	const itemsCreate = (listItem: string[], checkedItem: boolean[]) => {
 		const itemsFilters = listItem.map(
 			(statusName: string, index: number) => {
-				const item: any = [];
+				const item: ItemsFilteredType[] = [];
 				item.push({
 					checked: checkedItem[index],
 					item: statusName,
@@ -294,7 +300,7 @@ const ClaimsTable = () => {
 			new Array(productFilterItems.length).fill(false)
 		);
 		setCheckedStateStatus(new Array(statusFilterItems.length).fill(false));
-	}, [productFilterItems.length, statusFilterItems.length]);
+	}, [productFilterItems, statusFilterItems]);
 
 	const getClaimsAndPolicies = useCallback(async () => {
 		const claimList: TableContentType[] = [];
@@ -368,10 +374,13 @@ const ClaimsTable = () => {
 	]);
 
 	const checkItemProduct = (productCheck: string) => {
-		setFilterCheckedLabel((old: any) => [...old, productCheck]);
+		setFilterCheckedLabel((old: string[]) => [...old, productCheck]);
 
 		if (!filterProductCheck.includes(productCheck)) {
-			setFilterProductCheck((old: any) => [...old, `'${productCheck}'`]);
+			setFilterProductCheck((old: string[]) => [
+				...old,
+				`'${productCheck}'`,
+			]);
 		}
 
 		return filterProductCheck;
@@ -420,9 +429,9 @@ const ClaimsTable = () => {
 	}
 
 	const checkItemStatus = (statusName: string) => {
-		setFilterCheckedLabel((old: any) => [...old, statusName]);
+		setFilterCheckedLabel((old: string[]) => [...old, statusName]);
 		if (!filterStatusCheck.includes(statusName)) {
-			setFilterStatusCheck((old: any) => [
+			setFilterStatusCheck((old: string[]) => [
 				...old,
 				`'${convertToCamelCase(statusName)}'`,
 			]);
@@ -525,6 +534,62 @@ const ClaimsTable = () => {
 	};
 
 	const title = `Claims (${totalCount})`;
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const updateCheckedProduct = (currentFilterName: string) => {
+		const isChecked = checkedStateProduct.map(
+			(checked: boolean, index: number) => {
+				const productName = itemProducts[index]?.[0]?.item;
+
+				if (currentFilterName === productName) {
+					return !checked;
+				}
+
+				return checked;
+			}
+		);
+
+		return setCheckedStateProduct(isChecked);
+	};
+
+	useEffect(() => {
+		type ActionType = {eventName: string};
+
+		const handler: LiferayOnAction<ActionType> = ({eventName}) => {
+			const hasDoubleClick = filterCheckedLabel.some(
+				(productName) => productName === eventName
+			);
+
+			if (!hasDoubleClick) {
+				setFilterCheckedLabel((prevFilterCheckedLabels: string[]) => [
+					...prevFilterCheckedLabels,
+					eventName,
+				]);
+				setFilterProductCheck((prevFilterProductsCheck: string[]) => [
+					...prevFilterProductsCheck,
+					`'${eventName}'`,
+				]);
+				setActiveFilter(false);
+
+				updateCheckedProduct(eventName);
+			}
+		};
+
+		Liferay.on<ActionType>('openSettingsFilterClaimsEvent', handler);
+
+		return () =>
+			Liferay.detach<ActionType>(
+				'openSettingsFilterClaimsEvent',
+				handler
+			);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [
+		productFilterItems,
+		checkedStateProduct,
+		updateCheckedProduct,
+		filterCheckedLabel,
+	]);
 
 	return (
 		<div className="px-3">

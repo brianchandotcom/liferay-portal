@@ -22,13 +22,13 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.Order;
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.OrderBatchEngineTaskItemDelegate;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
@@ -51,13 +51,27 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
-		AnalyticsConfiguration analyticsConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				AnalyticsConfiguration.class, dispatchTrigger.getCompanyId());
+		String filterString = getCommerceChannelFilterString(
+			dispatchTrigger.getCompanyId(),
+			commerceChannelId ->
+				"commerceChannelId eq '" + commerceChannelId + "'");
+
 		DispatchLog dispatchLog =
 			dispatchLogLocalService.fetchLatestDispatchLog(
 				dispatchTrigger.getDispatchTriggerId(),
 				DispatchTaskStatus.IN_PROGRESS);
+
+		if (Objects.equals(StringPool.BLANK, filterString)) {
+			updateDispatchLog(
+				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
+				"No Commerce Channels enabled for synchronisation");
+
+			return;
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			analyticsSettingsManager.getAnalyticsConfiguration(
+				dispatchTrigger.getCompanyId());
 
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
 			OrderBatchEngineTaskItemDelegate.KEY,
@@ -66,6 +80,7 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 				ArrayUtil.append(
 					analyticsConfiguration.syncedOrderFieldNames(),
 					analyticsConfiguration.syncedOrderItemFieldNames())),
+			filterString,
 			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -78,8 +93,5 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 	public String getName() {
 		return KEY;
 	}
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 }

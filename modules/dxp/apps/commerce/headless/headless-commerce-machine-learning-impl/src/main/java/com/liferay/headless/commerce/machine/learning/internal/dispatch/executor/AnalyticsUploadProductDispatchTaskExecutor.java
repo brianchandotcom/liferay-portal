@@ -26,11 +26,17 @@ import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductChannel;
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.CategoryBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.ProductBatchEngineTaskItemDelegate;
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.ProductChannelBatchEngineTaskItemDelegate;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,13 +61,33 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
-		AnalyticsConfiguration analyticsConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				AnalyticsConfiguration.class, dispatchTrigger.getCompanyId());
 		DispatchLog dispatchLog =
 			dispatchLogLocalService.fetchLatestDispatchLog(
 				dispatchTrigger.getDispatchTriggerId(),
 				DispatchTaskStatus.IN_PROGRESS);
+		String filterString = getCommerceChannelFilterString(
+			dispatchTrigger.getCompanyId(),
+			commerceChannelId -> {
+				Group group = _groupLocalService.fetchGroup(
+					dispatchTrigger.getCompanyId(), _commerceChannelClassNameId,
+					commerceChannelId);
+
+				return "commerceChannelGroupIds/any(c:contains(c,'" +
+					group.getGroupId() + "'))";
+			});
+
+		if (Objects.equals(StringPool.BLANK, filterString)) {
+			updateDispatchLog(
+				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
+				"No Commerce Channels enabled for synchronisation");
+
+			return;
+		}
+
+		AnalyticsConfiguration analyticsConfiguration =
+			analyticsSettingsManager.getAnalyticsConfiguration(
+				dispatchTrigger.getCompanyId());
+
 		Date resourceLastModifiedDate = getLatestSuccessfulDispatchLogEndDate(
 			dispatchTrigger.getDispatchTriggerId());
 
@@ -69,6 +95,7 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 			CategoryBatchEngineTaskItemDelegate.KEY,
 			dispatchTrigger.getCompanyId(),
 			Arrays.asList(analyticsConfiguration.syncedCategoryFieldNames()),
+			null,
 			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -79,6 +106,7 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 			ProductBatchEngineTaskItemDelegate.KEY,
 			dispatchTrigger.getCompanyId(),
 			Arrays.asList(analyticsConfiguration.syncedProductFieldNames()),
+			filterString,
 			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -90,6 +118,10 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 			dispatchTrigger.getCompanyId(),
 			Arrays.asList(
 				analyticsConfiguration.syncedProductChannelFieldNames()),
+			getCommerceChannelFilterString(
+				dispatchTrigger.getCompanyId(),
+				commerceChannelId ->
+					"entryClassPK eq '" + commerceChannelId + "'"),
 			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
@@ -102,7 +134,18 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 		return KEY;
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_commerceChannelClassNameId = _portal.getClassNameId(
+			"com.liferay.commerce.product.model.CommerceChannel");
+	}
+
+	private long _commerceChannelClassNameId;
+
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.headless.commerce.machine.learning.internal.dispatch.executor;
 
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
@@ -22,11 +24,15 @@ import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,6 +41,30 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDispatchTaskExecutor
 	extends com.liferay.dispatch.executor.BaseDispatchTaskExecutor {
+
+	protected String getCommerceChannelFilterString(
+			long companyId, Function<Long, String> filterFunction)
+		throws Exception {
+
+		AnalyticsConfiguration analyticsConfiguration =
+			analyticsSettingsManager.getAnalyticsConfiguration(companyId);
+
+		List<String> filterStrings = new ArrayList<>();
+
+		for (String analyticsChannelId :
+				analyticsConfiguration.
+					commerceSyncEnabledAnalyticsChannelIds()) {
+
+			for (Long commerceChannelId :
+					analyticsSettingsManager.getCommerceChannelIds(
+						analyticsChannelId, companyId)) {
+
+				filterStrings.add(filterFunction.apply(commerceChannelId));
+			}
+		}
+
+		return StringUtil.merge(filterStrings, " or ");
+	}
 
 	protected Date getLatestSuccessfulDispatchLogEndDate(
 		long dispatchTriggerId) {
@@ -78,6 +108,9 @@ public abstract class BaseDispatchTaskExecutor
 	@Reference
 	protected AnalyticsBatchExportImportManager
 		analyticsBatchExportImportManager;
+
+	@Reference
+	protected AnalyticsSettingsManager analyticsSettingsManager;
 
 	@Reference
 	protected DispatchLogLocalService dispatchLogLocalService;

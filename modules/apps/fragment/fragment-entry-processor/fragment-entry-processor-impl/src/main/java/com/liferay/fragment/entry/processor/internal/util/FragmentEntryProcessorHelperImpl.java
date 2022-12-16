@@ -548,13 +548,13 @@ public class FragmentEntryProcessorHelperImpl
 					}
 
 					try {
-						DateFormat simpleDateFormat =
+						DateFormat dateFormat =
 							DateFormatFactoryUtil.getSimpleDateFormat(
 								"MM/dd/yy", locale);
 
 						return _getDateValue(
 							editableValueJSONObject,
-							simpleDateFormat.parse(value.toString()),
+							dateFormat.parse(value.toString()),
 							DateTimeFormatterBuilder.
 								getLocalizedDateTimePattern(
 									FormatStyle.SHORT, null,

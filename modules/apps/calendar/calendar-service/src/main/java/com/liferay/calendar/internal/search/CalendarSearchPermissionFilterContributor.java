@@ -18,8 +18,6 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 
-import java.util.Optional;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,14 +28,12 @@ public class CalendarSearchPermissionFilterContributor
 	implements SearchPermissionFilterContributor {
 
 	@Override
-	public Optional<String> getParentEntryClassNameOptional(
-		String entryClassName) {
-
+	public String getParentEntryClassName(String entryClassName) {
 		if (entryClassName.equals(CalendarBooking.class.getName())) {
-			return Optional.of(Calendar.class.getName());
+			return Calendar.class.getName();
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 }

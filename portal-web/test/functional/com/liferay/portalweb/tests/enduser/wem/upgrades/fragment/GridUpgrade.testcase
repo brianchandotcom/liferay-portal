@@ -50,7 +50,7 @@ definition {
 	@priority = "4"
 	test ViewDefinedGridLayoutAfterUpgrade740321 {
 		property data.archive.type = "data-archive-grid-layout-style";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.3.21";
 
 		Upgrade.viewDefinedGridLayout();

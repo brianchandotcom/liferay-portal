@@ -34,8 +34,8 @@ definition {
 
 	macro clickToAssignSitesAndChannel {
 		Click(
-			key_text = "Assign",
-			locator1 = "Button#ANY");
+			key_propertyName = "${propertyName}",
+			locator1 = "ACDXPSettings#SYNC_ANY_PROPERTIES");
 
 		WaitForPageLoad();
 	}
@@ -56,10 +56,14 @@ definition {
 		var assignedPropertyName = ACDXPSettings.getAssignedPropertyName();
 
 		if (isSet(channelName)) {
-			ACDXPSettings.syncChannel(channelName = "${channelName}");
+			ACDXPSettings.syncChannel(
+				propertyName = "${assignedPropertyName}",
+				channelName = "${channelName}");
 		}
 
-		ACDXPSettings.syncSites(siteName = "${siteName}");
+		ACDXPSettings.syncSites(
+			propertyName = "${assignedPropertyName}",
+			siteName = "${siteName}");
 
 		Click(
 			key_text = "Next",
@@ -206,7 +210,7 @@ definition {
 
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 
-		ACDXPSettings.clickToAssignSitesAndChannel();
+		ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${propertyName}");
 
 		ACDXPSettings.switchTab(tabName = "Channel");
 
@@ -314,7 +318,7 @@ definition {
 			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyNameList}");
 		}
 
-		ACDXPSettings.clickToAssignSitesAndChannel();
+		ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${propertyName}");
 
 		ACDXPSettings.switchTab(tabName = "Sites");
 

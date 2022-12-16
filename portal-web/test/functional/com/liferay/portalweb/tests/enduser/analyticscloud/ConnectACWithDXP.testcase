@@ -90,7 +90,7 @@ definition {
 
 			ACDXPSettings.navToSyncedSitesMenu();
 
-			ACDXPSettings.syncSites();
+			ACDXPSettings.syncSites(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Launch AC, go to settings and data source and click in the data source searched") {

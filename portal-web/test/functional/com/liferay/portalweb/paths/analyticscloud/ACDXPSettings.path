@@ -75,6 +75,11 @@
 	<td>//td[@class='table-column-text-start']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SYNC_ANY_PROPERTIES</td>
+	<td>//tr[@data-testid='${key_propertyName}']//button[@role='assign-button']</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

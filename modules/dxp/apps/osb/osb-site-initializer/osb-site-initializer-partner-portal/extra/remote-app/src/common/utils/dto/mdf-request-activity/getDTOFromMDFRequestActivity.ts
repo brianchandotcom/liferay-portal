@@ -20,44 +20,18 @@ export default function getDTOFromMDFRequestActivity(
 	mdfRequestExternalReferenceCodeSF?: string,
 	externalReferenceCodeSF?: string
 ): MDFRequestActivityDTO {
+	const activityDescription = {...mdfRequestActivity.activityDescription};
+	delete mdfRequestActivity.activityDescription;
+
 	return {
-		activityPromotion: mdfRequestActivity.activityPromotion,
-		ad: mdfRequestActivity.ad,
-		assetsLiferayRequired: mdfRequestActivity.assetsLiferayRequired,
-		description: mdfRequestActivity.description,
-		detailsLeadFollowUp: mdfRequestActivity.detailsLeadFollowUp,
-		endDate: mdfRequestActivity.endDate,
+		...activityDescription,
+		...mdfRequestActivity,
 		externalReferenceCodeSF,
-		gatedLandingPage: mdfRequestActivity.gatedLandingPage,
-		goalOfContent: mdfRequestActivity.goalOfContent,
-		hiringOutsideWriterOrAgency:
-			mdfRequestActivity.hiringOutsideWriterOrAgency,
-		howLiferayBrandUsed: mdfRequestActivity.howLiferayBrandUsed,
-		keywordsForPPCCampaigns: mdfRequestActivity.keywordsForPPCCampaigns,
-		leadFollowUpStrategies: mdfRequestActivity.leadFollowUpStrategies.join(
+		leadFollowUpStrategies: activityDescription?.leadFollowUpStrategies?.join(
 			', '
 		),
-		leadGenerated: mdfRequestActivity.leadGenerated,
-		liferayBranding: mdfRequestActivity.liferayBranding,
-		liferayParticipationRequirements:
-			mdfRequestActivity.liferayParticipationRequirements,
-		location: mdfRequestActivity.location,
-		marketingActivity: mdfRequestActivity.marketingActivity,
-		mdfRequestAmount: mdfRequestActivity.mdfRequestAmount,
 		mdfRequestExternalReferenceCodeSF,
-		name: mdfRequestActivity.name,
-		overallMessageContentCTA: mdfRequestActivity.overallMessageContentCTA,
-		primaryThemeOrMessage: mdfRequestActivity.primaryThemeOrMessage,
 		r_accountToActivities_accountEntryId: company.id,
 		r_mdfRequestToActivities_c_mdfRequestId: mdfRequestId,
-		sourceAndSizeOfInviteeList:
-			mdfRequestActivity.sourceAndSizeOfInviteeList,
-		specificSites: mdfRequestActivity.specificSites,
-		startDate: mdfRequestActivity.startDate,
-		tactic: mdfRequestActivity.tactic,
-		targetOfLeads: mdfRequestActivity.targetOfLeads,
-		totalCostOfExpense: mdfRequestActivity.totalCostOfExpense,
-		typeActivity: mdfRequestActivity.typeActivity,
-		venueName: mdfRequestActivity.venueName,
 	};
 }

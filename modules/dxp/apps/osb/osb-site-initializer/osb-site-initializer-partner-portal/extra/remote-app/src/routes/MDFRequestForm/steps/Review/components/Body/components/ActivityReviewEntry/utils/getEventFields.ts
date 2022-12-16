@@ -15,27 +15,31 @@ export default function getEventFields(mdfRequestActivity: MDFRequestActivity) {
 	return [
 		{
 			title: 'Activity Description',
-			value: mdfRequestActivity.description,
+			value: mdfRequestActivity.activityDescription?.description,
 		},
 		{
 			title: 'Venue Name',
-			value: mdfRequestActivity.venueName,
+			value: mdfRequestActivity.activityDescription?.venueName,
 		},
 		{
 			title: 'Liferay Branding',
-			value: mdfRequestActivity.liferayBranding,
+			value: mdfRequestActivity.activityDescription?.liferayBranding,
 		},
 		{
 			title: 'Liferay Participation / Requirements',
-			value: mdfRequestActivity.liferayParticipationRequirements,
+			value:
+				mdfRequestActivity.activityDescription
+					?.liferayParticipationRequirements,
 		},
 		{
 			title: 'Source and Size of Invitee List',
-			value: mdfRequestActivity.sourceAndSizeOfInviteeList,
+			value:
+				mdfRequestActivity.activityDescription
+					?.sourceAndSizeOfInviteeList,
 		},
 		{
 			title: 'Activity Promotion',
-			value: mdfRequestActivity.activityPromotion,
+			value: mdfRequestActivity.activityDescription?.activityPromotion,
 		},
 	];
 }

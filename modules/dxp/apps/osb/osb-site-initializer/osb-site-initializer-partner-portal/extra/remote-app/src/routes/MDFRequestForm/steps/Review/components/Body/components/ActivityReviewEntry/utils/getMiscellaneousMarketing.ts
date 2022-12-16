@@ -17,7 +17,7 @@ export default function getMiscellaneousMarketing(
 	return [
 		{
 			title: 'Marketing activity',
-			value: mdfRequestActivity.marketingActivity,
+			value: mdfRequestActivity.activityDescription?.marketingActivity,
 		},
 	];
 }

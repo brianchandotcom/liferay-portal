@@ -18,27 +18,33 @@ export default function getDigitalMarketFields(
 	return [
 		{
 			title: 'Overall message, content or CTA',
-			value: mdfRequestActivity.overallMessageContentCTA,
+			value:
+				mdfRequestActivity.activityDescription
+					?.overallMessageContentCTA,
 		},
 		{
 			title: 'Specific sites to be used',
-			value: mdfRequestActivity.specificSites,
+			value: mdfRequestActivity.activityDescription?.specificSites,
 		},
 		{
 			title: 'Keywords for PPC campaigns',
-			value: mdfRequestActivity.keywordsForPPCCampaigns,
+			value:
+				mdfRequestActivity.activityDescription?.keywordsForPPCCampaigns,
 		},
 		{
 			title: 'Ad (any size/type)',
-			value: mdfRequestActivity.ad,
+			value: mdfRequestActivity.activityDescription?.ad,
 		},
 		{
 			title: 'Do you require any assets from Liferay?',
-			value: getBooleanValue(mdfRequestActivity.assetsLiferayRequired),
+			value: getBooleanValue(
+				mdfRequestActivity.activityDescription
+					?.assetsLiferayRequired as string
+			),
 		},
 		{
 			title: 'How will the Liferay brand be used in the campaign?',
-			value: mdfRequestActivity.howLiferayBrandUsed,
+			value: mdfRequestActivity.activityDescription?.howLiferayBrandUsed,
 		},
 	];
 }

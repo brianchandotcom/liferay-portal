@@ -55,19 +55,27 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => (
 			rows={[
 				{
 					title: 'Is a lead list an outcome of this activity?',
-					value: getBooleanValue(mdfRequestActivity.leadGenerated),
+					value: getBooleanValue(
+						mdfRequestActivity?.activityDescription
+							?.leadGenerated as string
+					),
 				},
 				{
 					title: 'Target # of Leads',
-					value: mdfRequestActivity.targetOfLeads,
+					value:
+						mdfRequestActivity?.activityDescription?.targetOfLeads,
 				},
 				{
 					title: 'Lead Follow Up strategy',
-					value: mdfRequestActivity.leadFollowUpStrategies.join('; '),
+					value: mdfRequestActivity?.activityDescription?.leadFollowUpStrategies.join(
+						'; '
+					),
 				},
 				{
 					title: 'Details on Lead Follow Up',
-					value: mdfRequestActivity.detailsLeadFollowUp,
+					value:
+						mdfRequestActivity?.activityDescription
+							?.detailsLeadFollowUp,
 				},
 			]}
 			truncate

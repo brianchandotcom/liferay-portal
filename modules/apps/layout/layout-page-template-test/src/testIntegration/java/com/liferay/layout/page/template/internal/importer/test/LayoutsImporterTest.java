@@ -77,19 +77,16 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -587,10 +584,7 @@ public class LayoutsImporterTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-167932", Boolean.TRUE.toString())) {
-
+		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -671,10 +665,7 @@ public class LayoutsImporterTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-167932", Boolean.TRUE.toString())) {
-
+		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -1162,12 +1153,6 @@ public class LayoutsImporterTest {
 			Assert.assertTrue(
 				layoutStructureItem instanceof
 					FragmentDropZoneLayoutStructureItem);
-
-			if (!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-167932"))) {
-
-				continue;
-			}
 
 			String dropZoneId = dropZoneIds[i];
 

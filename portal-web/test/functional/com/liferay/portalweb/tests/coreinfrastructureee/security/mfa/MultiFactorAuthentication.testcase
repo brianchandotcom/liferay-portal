@@ -165,7 +165,11 @@ definition {
 				baseURL = "http://www.able.com:8080",
 				portlet = "IP Address");
 
-			MultiFactorAuthentication.configureIPAddress(enableIp = "true");
+			var browserIPAddress = PropsUtil.get("browser.ip.address");
+
+			MultiFactorAuthentication.configureIPAddress(
+				allowedIp = "${browserIPAddress}/255.0.0.0",
+				enableIp = "true");
 		}
 
 		task ("Enable OTP") {
@@ -786,14 +790,18 @@ definition {
 			MultiFactorAuthentication.configureOTP(enableOtp = "true");
 		}
 
-		task ("Enable IP address 127.0.0.1/255.0.0.0") {
+		var browserIPAddress = PropsUtil.get("browser.ip.address");
+
+		task ("Enable IP address ${browserIPAddress}/255.0.0.0") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "IP Address");
 
-			MultiFactorAuthentication.configureIPAddress(enableIp = "true");
+			MultiFactorAuthentication.configureIPAddress(
+				allowedIp = "${browserIPAddress}/255.0.0.0",
+				enableIp = "true");
 
 			AssertTextEquals(
 				locator1 = "MultiFactorAuthentication#IP_ADDRESS_CONFIGURATION_ALLOWED_IP_FIELD_1",
-				value1 = "127.0.0.1/255.0.0.0");
+				value1 = "${browserIPAddress}/255.0.0.0");
 		}
 
 		task ("Log Out and Login") {
@@ -816,7 +824,7 @@ definition {
 		task ("Assert audit details") {
 			Audit.viewAuditDetails(
 				additionalInformation = "",
-				clientIp = "127.0.0.1",
+				clientIp = "${browserIPAddress}",
 				resourceAction = "MFA_IP_OTP_VERIFICATION_SUCCESS",
 				resourceName = "IPAddressHeadlessMFAChecker",
 				userName = "Test Test");
@@ -860,7 +868,7 @@ definition {
 		task ("Assert audit details") {
 			Audit.viewAuditDetails(
 				additionalInformation = "IP is not allowed",
-				clientIp = "127.0.0.1",
+				clientIp = "${browserIPAddress}",
 				resourceAction = "MFA_IP_OTP_VERIFICATION_FAILURE",
 				resourceName = "IPAddressHeadlessMFAChecker",
 				userName = "Test Test");

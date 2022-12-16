@@ -25,7 +25,7 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = SystemChecker.class)
+@Component(service = SystemChecker.class)
 public class DeclarativeServiceUnsatisfiedComponentSystemChecker
 	implements SystemChecker {
 

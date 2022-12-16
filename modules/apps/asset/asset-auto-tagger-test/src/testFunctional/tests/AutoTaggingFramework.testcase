@@ -230,12 +230,11 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document DOCX",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
+		LexiconCard.checkCardCheckbox(card = "DM Document DOCX");
+
+		ManagementBar.clickInfo();
 
 		for (var tagName : list "alice,adventures") {
 			DMDocument.viewTagInfo(tagName = "${tagName}");

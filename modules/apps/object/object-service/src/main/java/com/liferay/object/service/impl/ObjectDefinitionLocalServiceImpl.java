@@ -642,7 +642,21 @@ public class ObjectDefinitionLocalServiceImpl
 						}
 					}
 
-					_bundleContext.ungetService(serviceReference);
+					_companyLocalService.forEachCompanyId(
+						companyId -> {
+							List<ObjectDefinition> objectDefinitions =
+								objectDefinitionLocalService.
+									getObjectDefinitions(
+										companyId, true,
+										WorkflowConstants.STATUS_APPROVED);
+
+							for (ObjectDefinition objectDefinition :
+									objectDefinitions) {
+
+								objectDefinitionDeployer.undeploy(
+									objectDefinition);
+							}
+						});
 				}
 
 			});

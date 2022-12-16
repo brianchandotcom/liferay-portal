@@ -168,6 +168,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public synchronized void undeploy(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isSystem()) {
+			return;
+		}
+
 		String restContextPath = objectDefinition.getRESTContextPath();
 
 		Map<Long, ObjectDefinition> objectDefinitions =

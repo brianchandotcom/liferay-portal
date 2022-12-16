@@ -56,6 +56,15 @@ definition {
 		AssertVisible(locator1 = "CP2Utils#MODAL_TEXT");
 	}
 
+	macro assigneToRoleViaUsersTab {
+		Account.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "${testAccount}");
+
+		Account.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "${accountRoleTitle}",
+			accountUserName = "${accountUserName}");
+	}
 	macro changeCardStatus {
 		var key_text = "${text}";
 
@@ -200,6 +209,94 @@ definition {
 		Type(
 			locator1 = "CustomerPortalSite#SETUP_FIELDS",
 			value1 = "${value}");
+	}
+
+	macro assigneToRoleViaUsersTab {
+		Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "${testAccount}");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "${accountRoleTitle}",
+				accountUserName = "${accountUserName}");
+	}
+
+	macro unassignUserRole{
+		Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "${testAccount}");
+
+			Account.unassignUserRole(
+				accountRoleTitle = "${accountRoleTitle}",
+				accountUserName = "${accountUserName}");
+	}
+
+	macro onlySeeExportAllKeys{
+			WaitForVisible(
+				key_text = "Redacted",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+
+			CustomerPortal.clickAtButton(text = "${text}");
+		
+		if (IsElementPresent(
+			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN",
+			key_text = "Generate New")) {
+
+			AssertVisible(
+				key_action = "Export All Key Details (csv)",
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+		}
+
+		else{
+
+		for (var actions : list "Generate New,Deactivate") {
+			AssertElementNotPresent(
+				key_text = "${actions}",
+				locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+			}
+		}
+	}
+
+	macro goToDXPProductAndAssertAction{
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		 
+			CP2Utils.onlySeeExportAllKeys(text = "Actions");
+		 
+	}
+	macro searchKeys {
+		Click(locator1 = "CP2NavigationMenu#SEARCH_FILTER");
+
+			Type(
+				locator1 = "CP2NavigationMenu#SEARCH_FILTER",
+				value1 = "${searchinput}");
+
+			KeyPress(
+				locator1 = "CP2NavigationMenu#SEARCH_FILTER",
+				value1 = "\ENTER");
+	}
+
+	macro typeEnableNodeField{
+		Type(
+				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
+				value1 = "${value}");
+
+			AssertElementPresent(
+				key_error = "${error}",
+				locator1 = "CP2NavigationMenu#NODES_ERROR");
+	}
+
+	macro clickAtFilterMenu{
+			Click.pauseClickAt(
+				key_text = "${text}",
+				locator1 = "CustomerPortalSite#ANY_BUTTON");
+
+			Click.clickNoWaitForVisible(
+				key_checkbox = "${checkbox}",
+				key_menu = "${menu}",
+				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
+			
 	}
 
 }

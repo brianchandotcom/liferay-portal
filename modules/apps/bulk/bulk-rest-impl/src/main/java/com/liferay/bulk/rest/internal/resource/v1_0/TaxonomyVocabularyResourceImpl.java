@@ -74,40 +74,6 @@ public class TaxonomyVocabularyResourceImpl
 					entry.getValue(), entry.getKey())));
 	}
 
-	private Map<AssetVocabulary, List<AssetCategory>> _getAssetCategoriesMap(
-			Long siteId, DocumentBulkSelection documentBulkSelection)
-		throws Exception {
-
-		List<AssetVocabulary> assetVocabularies =
-			_getAssetVocabularies(siteId);
-
-		Set<AssetCategory> assetCategories1 = _getAssetCategories(
-			documentBulkSelection,
-			PermissionCheckerFactoryUtil.create(contextUser));
-
-		Map<Long, List<AssetCategory>> idAssetCategoriesMap = new HashMap<>();
-
-		for (AssetCategory assetCategory : assetCategories1) {
-			List<AssetCategory> assetCategories2 =
-				idAssetCategoriesMap.computeIfAbsent(
-					assetCategory.getVocabularyId(), key -> new ArrayList<>());
-
-			assetCategories2.add(assetCategory);
-		}
-
-		Map<AssetVocabulary, List<AssetCategory>> assetCategoriesMap =
-			new HashMap<>();
-
-		for (AssetVocabulary assetVocabulary : assetVocabularies) {
-			assetCategoriesMap.put(assetVocabulary,
-				idAssetCategoriesMap.computeIfAbsent(
-					assetVocabulary.getVocabularyId(),
-					key -> new ArrayList<>()));
-		}
-
-		return assetCategoriesMap;
-	}
-
 	private Set<AssetCategory> _getAssetCategories(
 			DocumentBulkSelection documentBulkSelection,
 			PermissionChecker permissionChecker)
@@ -146,6 +112,40 @@ public class TaxonomyVocabularyResourceImpl
 			});
 
 		return assetCategories;
+	}
+
+	private Map<AssetVocabulary, List<AssetCategory>> _getAssetCategoriesMap(
+			Long siteId, DocumentBulkSelection documentBulkSelection)
+		throws Exception {
+
+		List<AssetVocabulary> assetVocabularies = _getAssetVocabularies(siteId);
+
+		Set<AssetCategory> assetCategories1 = _getAssetCategories(
+			documentBulkSelection,
+			PermissionCheckerFactoryUtil.create(contextUser));
+
+		Map<Long, List<AssetCategory>> idAssetCategoriesMap = new HashMap<>();
+
+		for (AssetCategory assetCategory : assetCategories1) {
+			List<AssetCategory> assetCategories2 =
+				idAssetCategoriesMap.computeIfAbsent(
+					assetCategory.getVocabularyId(), key -> new ArrayList<>());
+
+			assetCategories2.add(assetCategory);
+		}
+
+		Map<AssetVocabulary, List<AssetCategory>> assetCategoriesMap =
+			new HashMap<>();
+
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			assetCategoriesMap.put(
+				assetVocabulary,
+				idAssetCategoriesMap.computeIfAbsent(
+					assetVocabulary.getVocabularyId(),
+					key -> new ArrayList<>()));
+		}
+
+		return assetCategoriesMap;
 	}
 
 	private List<AssetVocabulary> _getAssetVocabularies(Long siteId)

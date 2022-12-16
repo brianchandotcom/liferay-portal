@@ -181,8 +181,13 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		// Portlet file entry
 
 		if (layoutUtilityPageEntry.getPreviewFileEntryId() > 0) {
-			_portletFileRepository.deletePortletFileEntry(
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
 				layoutUtilityPageEntry.getPreviewFileEntryId());
+
+			if (dlFileEntry != null) {
+				_portletFileRepository.deletePortletFolder(
+					dlFileEntry.getFolderId());
+			}
 		}
 
 		return layoutUtilityPageEntry;

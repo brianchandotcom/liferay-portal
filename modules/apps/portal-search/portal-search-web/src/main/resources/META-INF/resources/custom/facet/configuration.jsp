@@ -89,6 +89,8 @@ CustomFacetPortletPreferences customFacetPortletPreferences = new CustomFacetPor
 			<aui:select label="order-terms-by" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_ORDER) %>" value="<%= customFacetPortletPreferences.getOrder() %>">
 				<aui:option label="term-frequency-descending" value="count:desc" />
 				<aui:option label="term-frequency-ascending" value="count:asc" />
+				<aui:option label="term-value-ascending" value="key:asc" />
+				<aui:option label="term-value-descending" value="key:desc" />
 			</aui:select>
 
 			<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= customFacetPortletPreferences.isFrequenciesVisible() %>" />

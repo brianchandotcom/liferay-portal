@@ -99,6 +99,8 @@ public class NotificationTemplateResourceTest
 		notificationTemplate.setBody(
 			LocalizedMapUtil.getI18nMap(
 				RandomTestUtil.randomLocaleStringMap()));
+		notificationTemplate.setEditorType(
+			NotificationTemplate.EditorType.RICH_TEXT);
 		notificationTemplate.setObjectDefinitionExternalReferenceCode(
 			StringPool.BLANK);
 		notificationTemplate.setObjectDefinitionId(0L);

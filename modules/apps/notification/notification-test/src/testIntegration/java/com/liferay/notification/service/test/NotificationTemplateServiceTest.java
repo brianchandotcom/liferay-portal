@@ -17,6 +17,7 @@ package com.liferay.notification.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
@@ -165,6 +166,8 @@ public class NotificationTemplateServiceTest {
 				RandomTestUtil.randomInt());
 
 		notificationTemplate.setUserId(user.getUserId());
+		notificationTemplate.setEditorType(
+			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
 		notificationTemplate.setName(RandomTestUtil.randomString());
 		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
 

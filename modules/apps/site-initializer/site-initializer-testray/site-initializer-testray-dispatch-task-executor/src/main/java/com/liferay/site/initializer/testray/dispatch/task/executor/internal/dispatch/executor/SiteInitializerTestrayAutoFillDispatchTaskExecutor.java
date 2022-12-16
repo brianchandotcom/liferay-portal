@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor;
 
+import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -26,10 +27,15 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.SiteInitializerTestrayDispatchTaskExecutorHelper;
+import com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor.util.autofill.SiteInitializerTestrayAutoFillHelper;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Nilton Vieira
@@ -37,14 +43,15 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 @Component(
 	property = {
 		"dispatch.task.executor.cluster.mode=single-node",
-		"dispatch.task.executor.name=testray-autofill",
+		"dispatch.task.executor.feature.flag=LPS-170809",
+		"dispatch.task.executor.name=testray-auto-fill",
 		"dispatch.task.executor.overlapping=false",
-		"dispatch.task.executor.type=testray-autofill"
+		"dispatch.task.executor.type=testray-auto-fill"
 	},
 	service = DispatchTaskExecutor.class
 )
 public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
-	extends BaseSiteInitializerTestrayDispatchTaskExecutor {
+	extends BaseDispatchTaskExecutor {
 
 	@Override
 	public void doExecute(
@@ -55,8 +62,9 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		if (Validator.isNull(unicodeProperties.getProperty("testrayEntity1")) ||
-			Validator.isNull(unicodeProperties.getProperty("testrayEntity2"))) {
+		if (Validator.isNull(unicodeProperties.getProperty("autoFillType")) ||
+			Validator.isNull(unicodeProperties.getProperty("objectEntryId1")) ||
+			Validator.isNull(unicodeProperties.getProperty("objectEntryId2"))) {
 
 			_log.error("The required properties are not set");
 
@@ -65,9 +73,8 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 
 		User user = _userLocalService.getUser(dispatchTrigger.getUserId());
 
-		defaultDTOConverterContext = new DefaultDTOConverterContext(
-			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
-			user);
+		_siteInitializerTestrayDispatchTaskExecutorHelper.
+			createDefaultDTOConverterContext(user);
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -80,7 +87,10 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
-			loadObjectDefinitions(dispatchTrigger.getCompanyId());
+			_siteInitializerTestrayDispatchTaskExecutorHelper.
+				loadObjectDefinitions(dispatchTrigger.getCompanyId());
+
+			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -92,17 +102,49 @@ public class SiteInitializerTestrayAutoFillDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testray-autofill";
+		return "testray-auto-fill";
 	}
 
-	private void _autoFillRuns(
-			long companyId, ObjectEntry testrayRunObjectEntry1,
-			ObjectEntry testrayRunObjectEntry2)
+	private void _process(long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
+
+		String autoFillType = GetterUtil.getString(
+			unicodeProperties.getProperty("autoFillType"));
+		long objectEntryId1 = GetterUtil.getLong(
+			unicodeProperties.getProperty("objectEntryId1"));
+		long objectEntryId2 = GetterUtil.getLong(
+			unicodeProperties.getProperty("objectEntryId2"));
+
+		ObjectEntry objectEntry1 =
+			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(
+				autoFillType, objectEntryId1);
+		ObjectEntry objectEntry2 =
+			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(
+				autoFillType, objectEntryId2);
+
+		if (StringUtil.equals(autoFillType, "Build")) {
+			_siteInitializerTestrayAutoFillHelper.testrayAutoFillBuilds(
+				companyId, objectEntry1, objectEntry2);
+		}
+		else if (StringUtil.equals(autoFillType, "Run")) {
+			_siteInitializerTestrayAutoFillHelper.testrayAutoFillRuns(
+				companyId, objectEntry1, objectEntry2);
+		}
+		else {
+			_log.error("Auto Fill type selected is not available");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerTestrayAutoFillDispatchTaskExecutor.class);
+
+	@Reference
+	private SiteInitializerTestrayAutoFillHelper
+		_siteInitializerTestrayAutoFillHelper;
+
+	@Reference
+	private SiteInitializerTestrayDispatchTaskExecutorHelper
+		_siteInitializerTestrayDispatchTaskExecutorHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

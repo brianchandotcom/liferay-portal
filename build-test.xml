@@ -7107,6 +7107,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				ssh -fN -4 -L 9202:${ip.address}:9202 ${browser.host}
 				ssh -fN -4 -L 10080:${ip.address}:10080 ${browser.host}
 				ssh -fN -4 -L 12080:${ip.address}:12080 ${browser.host}
+				ssh -fN -4 -L 18080:${ip.address}:18080 ${browser.host}
+				ssh -fN -4 -L 18443:${ip.address}:18443 ${browser.host}
 			</docker-execute>
 		</sequential>
 	</macrodef>

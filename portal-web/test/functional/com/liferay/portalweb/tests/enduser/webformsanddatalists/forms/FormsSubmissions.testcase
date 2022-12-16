@@ -901,7 +901,7 @@ definition {
 
 		AssertElementPresent(
 			key_reportData = "Test",
-			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+			locator1 = "Form#FORM_ANSWER");
 	}
 
 	@description = "Verify if the option to allow submitters to see partial form results after submission works with more than one response."
@@ -940,11 +940,11 @@ definition {
 
 		AssertElementPresent(
 			key_reportData = "Test",
-			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+			locator1 = "Form#FORM_ANSWER");
 
 		AssertElementNotPresent(
 			key_reportData = "FormTest",
-			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+			locator1 = "Form#FORM_ANSWER");
 
 		Click(locator1 = "Button#BACK");
 
@@ -960,11 +960,11 @@ definition {
 
 		AssertElementPresent(
 			key_reportData = "Test",
-			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+			locator1 = "Form#FORM_ANSWER");
 
 		AssertElementPresent(
 			key_reportData = "FormTest",
-			locator1 = "Form#REPORT_DATA_RESPONDENTS");
+			locator1 = "Form#FORM_ANSWER");
 	}
 
 	@description = "Verify if that the See Partial results page displays graphs correctly."
@@ -1025,7 +1025,7 @@ definition {
 		Click(locator1 = "Form#PREVIEW_EXISTING_SUBMISSIONS");
 
 		AssertElementPresent(
-			locator1 = "Form#REPORT_RESPONDENTS_SINGLE_SELECTION",
+			locator1 = "Form#FORM_ANSWER_SINGLE_SELECTION",
 			optionValue = "3");
 	}
 

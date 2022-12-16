@@ -750,12 +750,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPORT_DATA_RESPONDENTS</td>
+	<td>FORM_ANSWER</td>
 	<td>//li[contains(text(),'${key_reportData}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>REPORT_RESPONDENTS_SINGLE_SELECTION</td>
+	<td>FORM_ANSWER_SINGLE_SELECTION</td>
 	<td>//div[contains(@class, 'card-header') and contains(., 'Single Selection')]/..//following-sibling::div/div[@class='legend-list' and contains(., '${optionValue}')]</td>
 	<td></td>
 </tr>

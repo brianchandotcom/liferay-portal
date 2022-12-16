@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -302,18 +301,17 @@ public class InviteUsersMVCResourceCommand
 
 			User user = themeDisplay.getUser();
 
-			NotificationEvent notificationEvent =
-				NotificationEventFactoryUtil.createNotificationEvent(
-					System.currentTimeMillis(), CTPortletKeys.PUBLICATIONS,
-					JSONUtil.put(
-						"classPK", ctCollectionId
-					).put(
-						"roleValue", roleValue
-					).put(
-						"userId", user.getUserId()
-					).put(
-						"userName", user.getFullName()
-					));
+			NotificationEvent notificationEvent = new NotificationEvent(
+				System.currentTimeMillis(), CTPortletKeys.PUBLICATIONS,
+				JSONUtil.put(
+					"classPK", ctCollectionId
+				).put(
+					"roleValue", roleValue
+				).put(
+					"userId", user.getUserId()
+				).put(
+					"userName", user.getFullName()
+				));
 
 			notificationEvent.setDeliveryType(
 				UserNotificationDeliveryConstants.TYPE_WEBSITE);

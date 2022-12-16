@@ -17,7 +17,6 @@ package com.liferay.alloy.mvc;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 
@@ -56,10 +55,9 @@ public abstract class AlloyNotificationEventHelper {
 				notificationEventJSONObject.put(key, value);
 			}
 
-			NotificationEvent notificationEvent =
-				NotificationEventFactoryUtil.createNotificationEvent(
-					System.currentTimeMillis(), portletKey,
-					notificationEventJSONObject);
+			NotificationEvent notificationEvent = new NotificationEvent(
+				System.currentTimeMillis(), portletKey,
+				notificationEventJSONObject);
 
 			notificationEvent.setDeliveryRequired(0);
 

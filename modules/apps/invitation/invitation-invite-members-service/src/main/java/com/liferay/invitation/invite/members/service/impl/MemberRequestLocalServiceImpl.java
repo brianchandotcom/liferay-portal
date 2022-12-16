@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -447,14 +446,13 @@ public class MemberRequestLocalServiceImpl
 				MembershipRequestConstants.STATUS_PENDING,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
-			NotificationEvent notificationEvent =
-				NotificationEventFactoryUtil.createNotificationEvent(
-					System.currentTimeMillis(), portletId,
-					JSONUtil.put(
-						"classPK", memberRequest.getMemberRequestId()
-					).put(
-						"userId", memberRequest.getUserId()
-					));
+			NotificationEvent notificationEvent = new NotificationEvent(
+				System.currentTimeMillis(), portletId,
+				JSONUtil.put(
+					"classPK", memberRequest.getMemberRequestId()
+				).put(
+					"userId", memberRequest.getUserId()
+				));
 
 			notificationEvent.setDeliveryRequired(0);
 			notificationEvent.setDeliveryType(

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.notifications.BaseChannelImpl;
 import com.liferay.portal.kernel.notifications.ChannelException;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventComparator;
-import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -553,11 +552,9 @@ public class ChannelImpl extends BaseChannelImpl {
 				JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
 					persistedNotificationEvent.getPayload());
 
-				NotificationEvent notificationEvent =
-					NotificationEventFactoryUtil.createNotificationEvent(
-						persistedNotificationEvent.getTimestamp(),
-						persistedNotificationEvent.getType(),
-						payloadJSONObject);
+				NotificationEvent notificationEvent = new NotificationEvent(
+					persistedNotificationEvent.getTimestamp(),
+					persistedNotificationEvent.getType(), payloadJSONObject);
 
 				notificationEvent.setDeliveryRequired(
 					persistedNotificationEvent.getDeliverBy());

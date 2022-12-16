@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -553,10 +552,8 @@ public class UserNotificationEventLocalServiceImpl
 			boolean actionRequired, JSONObject notificationEventJSONObject)
 		throws PortalException {
 
-		NotificationEvent notificationEvent =
-			NotificationEventFactoryUtil.createNotificationEvent(
-				System.currentTimeMillis(), portletId,
-				notificationEventJSONObject);
+		NotificationEvent notificationEvent = new NotificationEvent(
+			System.currentTimeMillis(), portletId, notificationEventJSONObject);
 
 		notificationEvent.setDeliveryType(deliveryType);
 

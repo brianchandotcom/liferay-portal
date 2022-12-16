@@ -35,6 +35,8 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 	<aui:input name="redirect" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getRedirect() %>" />
 	<aui:input name="externalReferenceCode" type="hidden" value="<%= editClientExtensionEntryDisplayContext.getExternalReferenceCode() %>" />
 
+	<liferay-ui:error exception="<%= ClientExtensionEntryNameException.class %>" message="client-extension-name-is-required" />
+
 	<liferay-ui:error exception="<%= ClientExtensionEntryTypeSettingsException.class %>">
 
 		<%
@@ -43,8 +45,6 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 
 		<liferay-ui:message arguments="<%= clientExtensionEntryTypeSettingsException.getMessageArguments() %>" key="<%= clientExtensionEntryTypeSettingsException.getMessageKey() %>" />
 	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= ClientExtensionEntryNameException.class %>" message="client-extension-name-is-required" />
 
 	<liferay-frontend:edit-form-body>
 		<h3 class="mb-3"><%= editClientExtensionEntryDisplayContext.getTitle() %></h3>

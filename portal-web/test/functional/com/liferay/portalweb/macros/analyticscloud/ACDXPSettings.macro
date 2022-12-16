@@ -204,8 +204,10 @@ definition {
 	}
 
 	macro syncChannel {
-		if (isSet(newPropertyNameList)) {
-			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyNameList}");
+		if (isSet(newPropertyName)) {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyName}");
+
+			var propertyName = "${newPropertyName}";
 		}
 
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
@@ -314,8 +316,10 @@ definition {
 	}
 
 	macro syncSites {
-		if (isSet(newPropertyNameList)) {
-			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyNameList}");
+		if (isSet(newPropertyName)) {
+			ACDXPSettings.createNewProperty(newPropertyNameList = "${newPropertyName}");
+
+			var propertyName = "${newPropertyName}";
 		}
 
 		ACDXPSettings.clickToAssignSitesAndChannel(propertyName = "${propertyName}");

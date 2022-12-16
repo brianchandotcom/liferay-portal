@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.instances.internal.configuration.PortalInstancesConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = PortalInstancesConfigurationFactory.class
 )
 public class PortalInstancesConfigurationFactory {

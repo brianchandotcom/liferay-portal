@@ -15,6 +15,7 @@
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
 import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
+import com.liferay.portal.instance.lifecycle.Clusterable;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class CompanyFeatureFlagsProvider
-	implements PortalInstanceLifecycleListener {
+	implements Clusterable, PortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) {

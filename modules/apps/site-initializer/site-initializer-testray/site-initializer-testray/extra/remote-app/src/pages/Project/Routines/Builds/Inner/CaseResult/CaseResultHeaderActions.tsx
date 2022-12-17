@@ -60,9 +60,6 @@ const CaseResultHeaderActions: React.FC<{
 			caseResult.dueStatus.key !== CaseResultStatuses.IN_PROGRESS,
 		editValidation: assignedUserId > 0 && assignedUserId !== userId,
 		reopenTest: workflowDisabled || isReopened,
-		startTest:
-			workflowDisabled ||
-			caseResult.dueStatus.key !== CaseResultStatuses.UNTESTED,
 	};
 
 	return (
@@ -99,12 +96,7 @@ const CaseResultHeaderActions: React.FC<{
 					)}
 				</ClayButton>
 
-				<ClayButton
-					disabled={buttonValidations.startTest}
-					displayType={
-						buttonValidations.startTest ? 'unstyled' : 'primary'
-					}
-				>
+				<ClayButton disabled displayType="unstyled">
 					{i18n.translate('start-test')}
 				</ClayButton>
 

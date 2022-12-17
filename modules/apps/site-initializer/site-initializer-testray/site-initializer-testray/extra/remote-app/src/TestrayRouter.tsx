@@ -67,7 +67,9 @@ import Subtasks from './pages/Testflow/Subtask';
 import SubtaskOutlet from './pages/Testflow/Subtask/SubtaskOutlet';
 import TestflowArchived from './pages/Testflow/TestflowArchived';
 import TestflowForm from './pages/Testflow/TestflowForm';
-import TestflowOutlet from './pages/Testflow/TestflowOutlet';
+import TestflowOutlet, {
+	TestflowNavigationOutlet,
+} from './pages/Testflow/TestflowOutlet';
 import TestFlowTasks from './pages/Testflow/TestflowTasks';
 
 const TestrayRoute = () => (
@@ -282,17 +284,22 @@ const TestrayRoute = () => (
 						</Route>
 					</Route>
 
-					<Route element={<TestflowOutlet />} path="testflow">
-						<Route element={<Testflow />} index />
+					<Route element={<OutletBridge />} path="testflow">
+						<Route element={<TestflowNavigationOutlet />}>
+							<Route element={<Testflow />} index />
 
-						<Route element={<TestflowArchived />} path="archived" />
+							<Route
+								element={<TestflowArchived />}
+								path="archived"
+							/>
+						</Route>
 
 						<Route
 							element={<TestflowForm />}
 							path=":buildId/create"
 						/>
 
-						<Route element={<OutletBridge />} path=":taskId">
+						<Route element={<TestflowOutlet />} path=":taskId">
 							<Route element={<TestFlowTasks />} index />
 
 							<Route element={<TestflowForm />} path="update" />

@@ -359,6 +359,10 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		// We need to get the portlet setup before doing anything else to ensure
 		// that it is created in the database
 
+		PortletPreferences portletSetup =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletId);
+
 		String[] portletData = StringUtil.split(
 			ParamUtil.getString(httpServletRequest, "portletData"));
 
@@ -373,10 +377,6 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		if ((classPK <= 0) || Validator.isNull(className)) {
 			return;
 		}
-
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletId);
 
 		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
 			className);

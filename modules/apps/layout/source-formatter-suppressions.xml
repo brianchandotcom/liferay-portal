@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="VariableDeclarationAsUsedCheck" files="layout-impl/src/main/java/com/liferay/layout/internal/struts/UpdateLayoutStrutsAction\.java" />
+	</checkstyle>
+</suppressions>

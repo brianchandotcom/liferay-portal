@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {OptionHTMLAttributes} from 'react';
+import {OptionHTMLAttributes, useEffect, useState} from 'react';
 
 import LiferayPicklist from '../../../../../../../common/interfaces/liferayPicklist';
 
@@ -17,19 +17,30 @@ export default function useTacticsOptions(
 	tactics: OptionHTMLAttributes<HTMLOptionElement>[] | undefined,
 	handleSelected: (option: LiferayPicklist) => void
 ) {
+	const [selectedTactic, setSelectedTactic] = useState<
+		OptionHTMLAttributes<HTMLOptionElement>
+	>();
+
+	useEffect(() => {
+		if (selectedTactic) {
+			handleSelected({
+				key: selectedTactic?.value as string,
+				name: selectedTactic?.label as string,
+			});
+		}
+	}, [handleSelected, selectedTactic]);
+
 	const onTacticSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const optionSelected = tactics?.find(
 			(tactic) => tactic.value === event.target.value
 		);
 
-		handleSelected({
-			key: optionSelected?.value as string,
-			name: optionSelected?.label as string,
-		});
+		setSelectedTactic(optionSelected);
 	};
 
 	return {
 		onTacticSelected,
+		selectedTactic,
 		tacticsOptions: tactics,
 	};
 }

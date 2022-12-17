@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,18 +10,21 @@
  * distribution rights of the Software.
  */
 
-import {useCallback} from 'react';
+import {useFormikContext} from 'formik';
+import {useCallback, useEffect} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
 import {TypeActivityKey} from '../../../../../../common/enums/TypeActivityKey';
 import {LiferayPicklistName} from '../../../../../../common/enums/liferayPicklistName';
+import MDFRequest from '../../../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../../../common/interfaces/mdfRequestActivity';
-import getBooleanEntries from '../../../../../../common/utils/getBooleanEntries';
+import getNewActivity from '../../utils/getNewActivity';
 import BudgetBreakdownSection from './components/BudgetBreakdownSection';
 import ContentMarketingFields from './components/ContentMarketingFields';
 import DigitalMarketingFields from './components/DigitalMarketingFields';
 import EventFields from './components/EventFields';
+import LeadListSection from './components/LeadListSection';
 import MiscellaneousMarketingFields from './components/MiscellaneousMarketingFields';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useTacticsOptions from './hooks/useTacticsOptions';
@@ -46,6 +50,7 @@ const Form = ({
 	setFieldValue,
 }: IProps) => {
 	const {fieldEntries} = useDynamicFieldEntries();
+	const {values} = useFormikContext<MDFRequest>();
 
 	const {
 		onTypeActivitySelected,
@@ -68,7 +73,11 @@ const Form = ({
 		)
 	);
 
-	const {onTacticSelected, tacticsOptions} = useTacticsOptions(
+	const {
+		onTacticSelected,
+		selectedTactic,
+		tacticsOptions,
+	} = useTacticsOptions(
 		tacticsBySelectedTypeActivity,
 		useCallback(
 			(selectedTactic) =>
@@ -79,10 +88,35 @@ const Form = ({
 			[currentActivityIndex, setFieldValue]
 		)
 	);
+
+	useEffect(() => {
+		if (values.activities[currentActivityIndex].typeActivity) {
+			setFieldValue(
+				`activities[${currentActivityIndex}].activityDescription`,
+				getNewActivity().activityDescription
+			);
+
+			const displaySection =
+				selectedTypeActivity?.value === TypeActivityKey.EVENT
+					? 'true'
+					: '';
+
+			setFieldValue(
+				`activities[${currentActivityIndex}].activityDescription.leadGenerated`,
+				displaySection
+			);
+		}
+	}, [
+		values.activities[currentActivityIndex].typeActivity,
+		values.activities[currentActivityIndex].tactic,
+		setFieldValue,
+	]);
+
 	const typeActivityComponents: TypeActivityComponent = {
 		[TypeActivityKey.DIGITAL_MARKETING]: (
 			<DigitalMarketingFields
 				currentActivityIndex={currentActivityIndex}
+				tactic={selectedTactic?.label}
 			/>
 		),
 		[TypeActivityKey.CONTENT_MARKETING]: (
@@ -91,11 +125,15 @@ const Form = ({
 			/>
 		),
 		[TypeActivityKey.EVENT]: (
-			<EventFields currentActivityIndex={currentActivityIndex} />
+			<EventFields
+				currentActivityIndex={currentActivityIndex}
+				tactic={selectedTactic?.label}
+			/>
 		),
 		[TypeActivityKey.MISCELLANEOUS_MARKETING]: (
 			<MiscellaneousMarketingFields
 				currentActivityIndex={currentActivityIndex}
+				tactic={selectedTactic?.label}
 			/>
 		),
 	};
@@ -137,6 +175,12 @@ const Form = ({
 					]
 				}
 
+				<LeadListSection
+					currentActivityIndex={currentActivityIndex}
+					fieldEntries={fieldEntries}
+					selectedTypeActivity={String(selectedTypeActivity?.value)}
+				/>
+
 				<PRMForm.Group>
 					<PRMFormik.Field
 						component={PRMForm.DatePicker}
@@ -163,43 +207,6 @@ const Form = ({
 				name={`activities[${currentActivityIndex}].budgets`}
 				setFieldValue={setFieldValue}
 			/>
-			<PRMForm.Section title="Lead List">
-				<PRMFormik.Field
-					component={PRMForm.RadioGroup}
-					items={getBooleanEntries()}
-					label="Is a lead list an outcome of this activity?"
-					name={`activities[${currentActivityIndex}].leadGenerated`}
-					required
-					small
-				/>
-
-				<PRMFormik.Field
-					component={PRMForm.InputText}
-					label="Target # of Leads"
-					name={`activities[${currentActivityIndex}].targetOfLeads`}
-					required
-				/>
-
-				<PRMFormik.Field
-					component={PRMForm.CheckboxGroup}
-					items={
-						fieldEntries[
-							LiferayPicklistName.LEAD_FOLLOW_UP_STRATEGIES
-						]
-					}
-					label="Lead Follow Up strategy (select all that apply)"
-					name={`activities[${currentActivityIndex}].leadFollowUpStrategies`}
-					required
-				/>
-
-				<PRMFormik.Field
-					component={PRMForm.InputText}
-					description="(i) Please describe the follow-up plan in detail:  Do you need any assets from Liferay (i.e.  landing page, collateral, content) Will Liferay participate in the follow up? If so, please provide details"
-					label="Details on Lead Follow Up. What to include (i)"
-					name={`activities[${currentActivityIndex}].detailsLeadFollowUp`}
-					required
-				/>
-			</PRMForm.Section>
 		</>
 	);
 };

@@ -912,12 +912,6 @@ public class PropsValues {
 	public static final boolean IMAGE_AUTO_SCALE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.IMAGE_AUTO_SCALE));
 
-	public static final String IMAGE_HOOK_FILE_SYSTEM_ROOT_DIR = PropsUtil.get(
-		PropsKeys.IMAGE_HOOK_FILE_SYSTEM_ROOT_DIR);
-
-	public static String IMAGE_HOOK_IMPL = GetterUtil.getString(
-		PropsUtil.get(PropsKeys.IMAGE_HOOK_IMPL));
-
 	public static final boolean IMAGE_IO_USE_DISK_CACHE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.IMAGE_IO_USE_DISK_CACHE));
 

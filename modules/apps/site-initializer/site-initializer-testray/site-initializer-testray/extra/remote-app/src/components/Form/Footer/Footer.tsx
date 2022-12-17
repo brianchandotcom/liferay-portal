@@ -40,9 +40,7 @@ const Footer: React.FC<FooterProps> = ({
 			displayType="primary"
 			onClick={onSubmit}
 		>
-			{i18n.translate(
-				primaryButtonProps?.title ?? i18n.translate('save')
-			)}
+			{i18n.translate(primaryButtonProps?.title ?? 'save')}
 		</ClayButton>
 
 		<ClayButton
@@ -50,7 +48,7 @@ const Footer: React.FC<FooterProps> = ({
 			displayType="secondary"
 			onClick={() => onClose()}
 		>
-			{secondaryButtonProps?.title ?? i18n.translate('cancel')}
+			{i18n.translate(secondaryButtonProps?.title ?? 'cancel')}
 		</ClayButton>
 	</ClayButton.Group>
 );

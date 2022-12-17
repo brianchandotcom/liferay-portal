@@ -22,16 +22,18 @@ import i18n from '../../../i18n';
 import UserGroups from './TestflowAssignUserGroups';
 import TestflowAssignUsers from './TestflowAssignUsers';
 
-type SuiteSelectCasesModalProps = {
+export type TestflowAssigUserType = 'select-users' | 'select-user-groups';
+
+type TestflowAssignUserModalProps = {
 	modal: FormModalOptions;
-	type: 'select-users' | 'select-user-groups';
+	type: TestflowAssigUserType;
 };
 
-const TestflowAssignUserModal: React.FC<SuiteSelectCasesModalProps> = ({
+const TestflowAssignUserModal: React.FC<TestflowAssignUserModalProps> = ({
 	modal: {modalState, observer, onClose, onSave, visible},
 	type,
 }) => {
-	const [state, setState] = useState<any>([]);
+	const [state, setState] = useState([]);
 
 	return (
 		<Modal

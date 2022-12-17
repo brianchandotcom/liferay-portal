@@ -15,8 +15,9 @@
 import {InferType} from 'yup';
 
 import yupSchema from '../../schema/yup';
+import {searchUtil} from '../../util/search';
 import Rest from './Rest';
-import {TestrayTaskUser} from './types';
+import {APIResponse, TestrayTaskUser} from './types';
 
 type TaskToUser = InferType<typeof yupSchema.taskToUser>;
 
@@ -59,6 +60,42 @@ class TestrayTaskUsersImpl extends Rest<TaskToUser, TestrayTaskUser> {
 			}),
 			uri: 'tasksuserses',
 		});
+	}
+
+	public async assign(taskId: number, userIds: number[]) {
+		let response = await this.getAll(searchUtil.eq('taskId', taskId));
+
+		response = this.transformDataFromList(
+			response as APIResponse<TestrayTaskUser>
+		);
+
+		const currentTaskUserIds = (userIds || []) as number[];
+
+		const taskUsers = response.items;
+
+		const taskUserIds = taskUsers.map(({user}) => user?.id as number);
+
+		const userIdsToAdd = currentTaskUserIds.filter(
+			(currentTaskUserId) => !taskUserIds.includes(currentTaskUserId)
+		);
+
+		const userIdsToRemove = taskUsers.filter(
+			({user}) => !currentTaskUserIds.includes(user?.id as number)
+		);
+
+		if (userIdsToRemove.length) {
+			await this.removeBatch(userIdsToRemove.map(({id}) => id));
+		}
+
+		if (userIdsToAdd.length) {
+			await this.createBatch(
+				userIdsToAdd.map((userId) => ({
+					name: `${taskId}-${userId}`,
+					taskId,
+					userId,
+				}))
+			);
+		}
 	}
 }
 

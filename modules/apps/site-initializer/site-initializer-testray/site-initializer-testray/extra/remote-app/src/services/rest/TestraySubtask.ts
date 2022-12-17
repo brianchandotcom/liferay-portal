@@ -96,7 +96,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			Number(caseResult.caseResult?.id)
 		);
 
-		await this.update(subTask.id, {
+		const response = await this.update(subTask.id, {
 			dueStatus: SubTaskStatuses.IN_ANALYSIS,
 			userId,
 		});
@@ -107,10 +107,12 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 				userId,
 			}))
 		);
+
+		return response;
 	}
 
 	public async assignToMe(subTask: TestraySubTask) {
-		await this.update(subTask.id, {
+		const assignToMeUpdate = await this.update(subTask.id, {
 			dueStatus: SubTaskStatuses.IN_ANALYSIS,
 			userId: Number(Liferay.ThemeDisplay.getUserId()),
 		});
@@ -127,6 +129,8 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			caseResultIds,
 			caseResultIds.map(() => ({userId}))
 		);
+
+		return assignToMeUpdate;
 	}
 
 	private async addComment(data: Partial<SubtaskForm>) {
@@ -203,7 +207,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			subTaskcomment.mbMessageId = 0;
 		}
 
-		await this.update(subTaskId, {
+		const subTaskUpdate = await this.update(subTaskId, {
 			dueStatus: SubTaskStatuses.COMPLETE,
 			mbMessageId: subTaskcomment.mbMessageId,
 			mbThreadId: subTaskcomment.mbThreadId,
@@ -231,6 +235,8 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 				issues
 			);
 		}
+
+		return subTaskUpdate;
 	}
 
 	public returnToOpen(subTask: TestraySubTask) {

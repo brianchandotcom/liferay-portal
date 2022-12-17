@@ -13,6 +13,7 @@
  */
 
 import {useRef} from 'react';
+import {useOutletContext} from 'react-router-dom';
 
 import useFormActions from '../../../hooks/useFormActions';
 import useFormModal from '../../../hooks/useFormModal';
@@ -26,16 +27,25 @@ import {Action} from '../../../types';
 import {SubTaskStatuses} from '../../../util/statuses';
 import {UserListView} from '../../Manage/User';
 
+type OutletContext = {
+	revalidate: {
+		revalidateSubtask: () => void;
+	};
+};
+
 const useSubtasksActions = () => {
+	const {
+		revalidate: {revalidateSubtask},
+	} = useOutletContext<OutletContext>();
 	const {form} = useFormActions();
 	const {updateItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
-	const {modal: completeModal} = useFormModal();
+	const {forceRefetch, modal: completeModal} = useFormModal();
 
 	const actionsRef = useRef([
 		{
 			action: (subtask, mutate) =>
-				testraySubTaskImpl.assignToMe(subtask).then(() =>
+				testraySubTaskImpl.assignToMe(subtask).then(() => {
 					updateItemFromList(
 						mutate,
 						0,
@@ -43,8 +53,10 @@ const useSubtasksActions = () => {
 						{
 							revalidate: true,
 						}
-					)
-				),
+					);
+
+					revalidateSubtask();
+				}),
 			hidden: ({dueStatus}) =>
 				dueStatus?.key === SubTaskStatuses.IN_ANALYSIS,
 			icon: 'user',
@@ -71,14 +83,17 @@ const useSubtasksActions = () => {
 								onClickRow: (user) => {
 									testraySubTaskImpl
 										.assignTo(subtask, user.id)
-										.then(() =>
+										.then(() => {
 											updateItemFromList(
 												mutate,
 												subtask.id,
 												{user},
 												{revalidate: true}
-											)
-										)
+											);
+
+											revalidateSubtask();
+										})
+
 										.then(form.onSuccess)
 										.catch(form.onError)
 										.finally(state.onClose);
@@ -133,6 +148,7 @@ const useSubtasksActions = () => {
 	return {
 		actions: actionsRef.current,
 		completeModal,
+		forceRefetch,
 		form,
 	};
 };

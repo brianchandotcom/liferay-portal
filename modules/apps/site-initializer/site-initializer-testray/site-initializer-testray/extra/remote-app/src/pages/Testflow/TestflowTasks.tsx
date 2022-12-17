@@ -30,21 +30,17 @@ import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import QATable from '../../components/Table/QATable';
 import {ListViewTypes} from '../../context/ListViewContext';
 import useCaseResultGroupBy from '../../data/useCaseResultGroupBy';
-import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import useMutate from '../../hooks/useMutate';
 import i18n from '../../i18n';
 import {filters} from '../../schema/filter';
 import {Liferay} from '../../services/liferay';
 import {
-	APIResponse,
 	PickList,
 	TestraySubTask,
 	TestrayTask,
 	TestrayTaskUser,
 	UserAccount,
-	testrayTaskImpl,
-	testrayTaskUsersImpl,
 } from '../../services/rest';
 import {testraySubTaskImpl} from '../../services/rest/TestraySubtask';
 import {StatusesProgressScore, chartClassNames} from '../../util/constants';
@@ -56,8 +52,11 @@ import useSubtasksActions from './Subtask/useSubtasksActions';
 import TaskHeaderActions from './TaskHeaderActions';
 
 type OutletContext = {
-	mutateTask: KeyedMutator<TestrayTask>;
-	testrayTask: TestrayTask;
+	data: {
+		testrayTask: TestrayTask;
+		testrayTaskUser: TestrayTaskUser[];
+	};
+	revalidate: {revalidateSubtask: () => void};
 };
 
 const ShortcutIcon = () => (
@@ -65,28 +64,23 @@ const ShortcutIcon = () => (
 );
 
 const TestFlowTasks = () => {
-	const {mutateTask, testrayTask} = useOutletContext<OutletContext>();
-	const {updateItemFromList} = useMutate();
+	const {
+		data: {testrayTask, testrayTaskUser},
+		revalidate: {revalidateSubtask},
+	} = useOutletContext<OutletContext>();
+	const {actions, completeModal, forceRefetch} = useSubtasksActions();
 	const {taskId} = useParams();
-	const {actions, completeModal} = useSubtasksActions();
+	const {updateItemFromList} = useMutate();
 
-	const {data: taskUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
-		testrayTask?.id
-			? `${testrayTaskImpl.getNestedObject(
-					'taskToTasksUsers',
-					testrayTask.id
-			  )}?nestedFields=task,user`
-			: null,
-		(response) => testrayTaskUsersImpl.transformDataFromList(response)
-	);
-
-	const taskUsers: TestrayTaskUser[] = taskUserResponse?.items || [];
-
-	const users = taskUsers
-		.filter(({user}) => user)
-		.map(({user}) => user as UserAccount);
-
-	useHeader({useTabs: []});
+	useHeader({
+		useHeading: [
+			{
+				category: i18n.translate('task'),
+				title: testrayTask?.name,
+			},
+		],
+		useTabs: [],
+	});
 
 	const {
 		donut: {columns},
@@ -179,13 +173,16 @@ const TestFlowTasks = () => {
 									title: i18n.translate('assigned-users'),
 									value: (
 										<Avatar.Group
-											assignedUsers={users.map(
-												({givenName}) => ({
+											assignedUsers={testrayTaskUser
+												.map(
+													({user}) =>
+														user as UserAccount
+												)
+												.map(({givenName}) => ({
 													name: givenName,
 													url:
 														'https://picsum.photos/200',
-												})
-											)}
+												}))}
 											groupSize={3}
 										/>
 									),
@@ -287,6 +284,7 @@ const TestFlowTasks = () => {
 
 			<Container className="mt-3">
 				<ListView
+					forceRefetch={forceRefetch}
 					managementToolbarProps={{
 						filterFields: filters.subtasks as any,
 						title: i18n.translate('subtasks'),
@@ -429,7 +427,7 @@ const TestFlowTasks = () => {
 
 			<SubtaskCompleteModal
 				modal={completeModal}
-				mutate={mutateTask}
+				revalidateSubtask={revalidateSubtask}
 				subtask={completeModal.modalState}
 			/>
 		</>

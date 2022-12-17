@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import AssignModal from '../../../components/AssignModal';
@@ -24,88 +25,97 @@ import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
 import {SubTaskStatuses} from '../../../util/statuses';
 import SubtaskCompleteModal from './SubtaskCompleteModal';
 
-type SubTaskHeaderActionsProps = {
-	mutateSubtask: KeyedMutator<any>;
-	subtask: TestraySubTask;
+type OutletContext = {
+	data: {
+		testraySubtask: TestraySubTask;
+	};
+	mutate: {
+		mutateSubtask: KeyedMutator<TestraySubTask>;
+	};
+	revalidate: {
+		revalidateTaskUser: () => void;
+	};
 };
 
-const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
-	mutateSubtask,
-	subtask,
-}) => {
+const SubtaskHeaderActions = () => {
+	const {
+		data: {testraySubtask},
+		mutate: {mutateSubtask},
+		revalidate: {revalidateTaskUser},
+	} = useOutletContext<OutletContext>();
 	const {modal: assignUserModal} = useFormModal({
 		onSave: (user: UserAccount) =>
-			testraySubTaskImpl.assignTo(subtask, user.id).then(mutateSubtask),
+			testraySubTaskImpl
+				.assignTo(testraySubtask, user.id)
+				.then(mutateSubtask),
 	});
 
 	const {modal: completeModal} = useFormModal();
-
-	const buttonDisabled = [
-		SubTaskStatuses.OPEN,
-		SubTaskStatuses.COMPLETE,
-	].includes(subtask.dueStatus.key as SubTaskStatuses);
-
-	const userId = Number(Liferay.ThemeDisplay.getUserId());
 
 	return (
 		<>
 			<AssignModal modal={assignUserModal} />
 
-			<SubtaskCompleteModal modal={completeModal} subtask={subtask} />
+			<SubtaskCompleteModal
+				modal={completeModal}
+				revalidateSubtask={revalidateTaskUser}
+				subtask={testraySubtask}
+			/>
 
-			{buttonDisabled && (
+			{[SubTaskStatuses.COMPLETE, SubTaskStatuses.OPEN].includes(
+				testraySubtask.dueStatus.key as SubTaskStatuses
+			) ? (
 				<ClayButton
 					className="mb-3 ml-3"
 					displayType="secondary"
 					onClick={() => assignUserModal.open()}
 				>
 					{i18n.translate(
-						subtask.dueStatus.key === SubTaskStatuses.OPEN
+						testraySubtask.dueStatus.key === SubTaskStatuses.OPEN
 							? 'assign-and-begin-analysis'
 							: 'assign-and-reanalyze'
 					)}
 				</ClayButton>
-			)}
+			) : (
+				<ClayButton.Group className="mb-3 ml-3" spaced>
+					<ClayButton
+						displayType="secondary"
+						onClick={() => assignUserModal.open()}
+					>
+						{i18n.translate('assign')}
+					</ClayButton>
 
-			{!buttonDisabled && (
-				<>
-					<ClayButton.Group className="mb-3 ml-3" spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => assignUserModal.open()}
-						>
-							{i18n.translate('assign')}
-						</ClayButton>
-
-						<ClayButton
-							onClick={() => {
-								if (subtask.user.id === userId) {
-									return completeModal.open();
-								}
-
-								Liferay.Util.openToast({
-									message: i18n.translate(
-										'you-are-not-the-assigned-user'
-									),
-									type: 'danger',
-								});
-							}}
-						>
-							{i18n.translate('complete')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="secondary"
-							onClick={() =>
-								testraySubTaskImpl
-									.returnToOpen(subtask)
-									.then(mutateSubtask)
+					<ClayButton
+						onClick={() => {
+							if (
+								testraySubtask.user.id ===
+								Number(Liferay.ThemeDisplay.getUserId())
+							) {
+								return completeModal.open();
 							}
-						>
-							{i18n.translate('return-to-open')}
-						</ClayButton>
-					</ClayButton.Group>
-				</>
+
+							Liferay.Util.openToast({
+								message: i18n.translate(
+									'you-are-not-the-assigned-user'
+								),
+								type: 'danger',
+							});
+						}}
+					>
+						{i18n.translate('complete')}
+					</ClayButton>
+
+					<ClayButton
+						displayType="secondary"
+						onClick={() =>
+							testraySubTaskImpl
+								.returnToOpen(testraySubtask)
+								.then(mutateSubtask)
+						}
+					>
+						{i18n.translate('return-to-open')}
+					</ClayButton>
+				</ClayButton.Group>
 			)}
 		</>
 	);

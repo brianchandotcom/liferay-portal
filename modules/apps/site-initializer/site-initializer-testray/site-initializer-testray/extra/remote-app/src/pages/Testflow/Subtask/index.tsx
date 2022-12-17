@@ -38,26 +38,31 @@ import SubtasksCaseResults from './SubtaskCaseResults';
 import SubtaskHeaderActions from './SubtaskHeaderActions';
 
 type OutletContext = {
-	mbMessage: MessageBoardMessage;
-	mergedSubtaskNames: string;
-	mutateSubtask: KeyedMutator<TestraySubTask>;
-	mutateSubtaskIssues: KeyedMutator<TestraySubTask>;
-	splitSubtaskNames: string;
-	subtaskIssues: TestraySubTaskIssue[];
-	testraySubtask: TestraySubTask;
-	testrayTask: TestrayTask;
+	data: {
+		mbMessage: MessageBoardMessage;
+		mergedSubtaskNames: string;
+		splitSubtaskNames: string;
+		subtaskIssues: TestraySubTaskIssue[];
+		testraySubtask: TestraySubTask;
+		testrayTask: TestrayTask;
+	};
+	mutate: {
+		mutateSubtask: KeyedMutator<TestraySubTask>;
+	};
 };
 
 const Subtasks = () => {
 	const {jiraBaseURL} = useContext(ApplicationPropertiesContext);
 
 	const {
-		mbMessage,
-		mergedSubtaskNames,
-		mutateSubtask,
-		splitSubtaskNames,
-		subtaskIssues,
-		testraySubtask,
+		data: {
+			mbMessage,
+			mergedSubtaskNames,
+			splitSubtaskNames,
+			subtaskIssues,
+			testraySubtask,
+		},
+		mutate: {mutateSubtask},
 	} = useOutletContext<OutletContext>();
 
 	if (!testraySubtask) {
@@ -66,10 +71,7 @@ const Subtasks = () => {
 
 	return (
 		<>
-			<SubtaskHeaderActions
-				mutateSubtask={mutateSubtask}
-				subtask={testraySubtask}
-			/>
+			<SubtaskHeaderActions />
 
 			<Container
 				className="pb-6"

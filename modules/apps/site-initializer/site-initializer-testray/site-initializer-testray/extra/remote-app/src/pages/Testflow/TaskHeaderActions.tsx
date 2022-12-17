@@ -20,48 +20,66 @@ import {KeyedMutator} from 'swr';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import {
+	APIResponse,
+	TestraySubTask,
 	TestrayTask,
 	TestrayTaskUser,
 	testrayTaskImpl,
 } from '../../services/rest';
-import TestflowAssignUserModal from './modal';
+import TestflowAssignUserModal, {TestflowAssigUserType} from './modal';
 
 type OutletContext = {
-	mutateTask: KeyedMutator<any>;
-	mutateTaskUsers: KeyedMutator<TestrayTaskUser>;
-	taskUser: number[];
-	testrayTask: TestrayTask;
+	data: {
+		testraySubtasks: APIResponse<TestraySubTask>;
+		testrayTask: TestrayTask;
+		testrayTaskUser: TestrayTaskUser[];
+	};
+	mutate: {
+		mutateTask: KeyedMutator<TestrayTask>;
+		mutateTaskUser: KeyedMutator<APIResponse<TestrayTaskUser>>;
+	};
+	revalidate: {
+		revalidateTaskUser: () => void;
+	};
 };
 
 const TaskHeaderActions = () => {
 	const {
-		mutateTask,
-		mutateTaskUsers,
-		taskUser,
-		testrayTask,
+		data: {testraySubtasks, testrayTask, testrayTaskUser},
+		mutate: {mutateTask},
+		revalidate: {revalidateTaskUser},
 	} = useOutletContext<OutletContext>();
 
-	const [modalType, setModalType] = useState('assign-users');
-	const [users, setUsers] = useState<number[]>([]);
+	const subTaskAllCompleted = testraySubtasks?.totalCount === 0;
+
+	const [modalType, setModalType] = useState<TestflowAssigUserType>(
+		'select-users'
+	);
+	const [userIds, setUsersId] = useState<number[]>([]);
 	const {modal} = useFormModal({
-		onSave: (userIds: number[]) =>
+		onSave: (newUserIds: number[]) =>
 			testrayTaskImpl
-				.assignTo(testrayTask, userIds)
-				.then(mutateTask)
-				.then(mutateTaskUsers),
+				.assignTo(testrayTask, newUserIds)
+				.then((response) => {
+					mutateTask(response);
+
+					revalidateTaskUser();
+				}),
 	});
 
 	const navigate = useNavigate();
 
-	const onOpenModal = (option: 'select-users') => {
-		setModalType(option);
+	const onOpenModal = (type: TestflowAssigUserType) => {
+		setModalType(type);
 
-		modal.open(users);
+		modal.open(userIds);
 	};
 
 	useEffect(() => {
-		setUsers(taskUser);
-	}, [setUsers, taskUser]);
+		if (testrayTaskUser) {
+			setUsersId(testrayTaskUser.map(({user}) => user?.id as number));
+		}
+	}, [setUsersId, testrayTaskUser]);
 
 	return (
 		<>
@@ -83,15 +101,23 @@ const TaskHeaderActions = () => {
 
 				<ClayButton
 					displayType="secondary"
-					onClick={() =>
-						testrayTaskImpl.abandon(testrayTask).then(mutateTask)
-					}
+					onClick={() => {
+						const fn = subTaskAllCompleted
+							? (task: TestrayTask) =>
+									testrayTaskImpl.complete(task)
+							: (task: TestrayTask) =>
+									testrayTaskImpl.abandon(task);
+
+						fn(testrayTask).then(mutateTask);
+					}}
 				>
-					{i18n.translate('abandon')}
+					{i18n.translate(
+						subTaskAllCompleted ? 'complete' : 'abandon'
+					)}
 				</ClayButton>
 			</ClayButton.Group>
 
-			<TestflowAssignUserModal modal={modal} type={modalType as any} />
+			<TestflowAssignUserModal modal={modal} type={modalType} />
 		</>
 	);
 };

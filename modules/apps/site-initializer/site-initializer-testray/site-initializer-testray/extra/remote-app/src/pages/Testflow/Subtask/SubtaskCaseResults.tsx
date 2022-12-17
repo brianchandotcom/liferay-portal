@@ -34,15 +34,22 @@ import {searchUtil} from '../../../util/search';
 import {SubTaskStatuses} from '../../../util/statuses';
 
 type OutletContext = {
-	mutateSubtask: KeyedMutator<TestraySubTask>;
-	testraySubtask: TestraySubTask;
+	data: {
+		testraySubtask: TestraySubTask;
+	};
+	mutate: {
+		mutateSubtask: KeyedMutator<TestraySubTask>;
+	};
 };
 
 const SubtasksCaseResults = () => {
 	const navigate = useNavigate();
 	const {subtaskId, taskId} = useParams();
 	const {updateItemFromList} = useMutate();
-	const {mutateSubtask, testraySubtask}: OutletContext = useOutletContext();
+	const {
+		data: {testraySubtask},
+		mutate: {mutateSubtask},
+	} = useOutletContext<OutletContext>();
 
 	const getFloatingBoxAlerts = (
 		subtasksCaseResults: TestraySubTaskCaseResult[],

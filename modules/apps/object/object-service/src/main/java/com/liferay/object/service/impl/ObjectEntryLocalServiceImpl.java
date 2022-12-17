@@ -15,7 +15,6 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.model.AccountEntryUserRelTable;
@@ -2205,18 +2204,6 @@ public class ObjectEntryLocalServiceImpl
 								accountEntryId.eq(column)
 						))
 				).withParentheses()
-			)
-		).union(
-			DSLQueryFactoryUtil.select(
-				RoleTable.INSTANCE.roleId
-			).from(
-				RoleTable.INSTANCE
-			).where(
-				RoleTable.INSTANCE.name.in(
-					new String[] {
-						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
-						RoleConstants.ORGANIZATION_USER
-					})
 			)
 		);
 

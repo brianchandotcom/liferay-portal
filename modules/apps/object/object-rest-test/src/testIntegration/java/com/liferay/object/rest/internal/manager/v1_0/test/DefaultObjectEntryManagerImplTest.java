@@ -874,6 +874,8 @@ public class DefaultObjectEntryManagerImplTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
 
+		PrincipalThreadLocal.setName(_user.getUserId());
+
 		_assertObjectEntriesSize(0);
 
 		// Regular roles permissions should not be restricted by account
@@ -917,20 +919,25 @@ public class DefaultObjectEntryManagerImplTest {
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry1.getAccountEntryId(), _user.getUserId());
 
-		Role accountMemberRole = _roleLocalService.getRole(
-			_companyId, AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);
+		Role accountAdministrator = _roleLocalService.getRole(
+			_companyId,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_companyId, _objectDefinition1.getClassName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			accountMemberRole.getRoleId(), ActionKeys.VIEW);
+			accountAdministrator.getRoleId(), ActionKeys.VIEW);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), accountEntry1.getAccountEntryGroupId(),
+			accountAdministrator.getRoleId());
 
 		_assertObjectEntriesSize(1);
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			_companyId, _objectDefinition1.getClassName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			accountMemberRole.getRoleId(), ActionKeys.VIEW);
+			accountAdministrator.getRoleId(), ActionKeys.VIEW);
 
 		_assertObjectEntriesSize(0);
 
@@ -985,28 +992,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry2.getAccountEntryId(),
-			organization2.getOrganizationId());
-
-		Role organizationUserRole = _roleLocalService.getRole(
-			_companyId, RoleConstants.ORGANIZATION_USER);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			organizationUserRole.getRoleId(), ActionKeys.VIEW);
-
-		_assertObjectEntriesSize(1);
-
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
 			organization1.getOrganizationId());
-
-		_assertObjectEntriesSize(2);
-
-		_resourcePermissionLocalService.removeResourcePermission(
-			_companyId, _objectDefinition1.getClassName(),
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			organizationUserRole.getRoleId(), ActionKeys.VIEW);
 
 		_assertObjectEntriesSize(0);
 
@@ -1014,11 +1000,11 @@ public class DefaultObjectEntryManagerImplTest {
 			_companyId,
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
 
-		Group group = _groupLocalService.getOrganizationGroup(
+		Group organizationGroup1 = _groupLocalService.getOrganizationGroup(
 			_companyId, organization1.getOrganizationId());
 
 		_userGroupRoleLocalService.addUserGroupRole(
-			_user.getUserId(), group.getGroupId(),
+			_user.getUserId(), organizationGroup1.getGroupId(),
 			accountManagerRole.getRoleId());
 
 		_resourcePermissionLocalService.addResourcePermission(
@@ -1039,11 +1025,6 @@ public class DefaultObjectEntryManagerImplTest {
 			deleteAccountEntryOrganizationRel(
 				accountEntry1.getAccountEntryId(),
 				organization1.getOrganizationId());
-
-		_accountEntryOrganizationRelLocalService.
-			deleteAccountEntryOrganizationRel(
-				accountEntry2.getAccountEntryId(),
-				organization2.getOrganizationId());
 
 		_assertObjectEntriesSize(0);
 
@@ -1079,15 +1060,28 @@ public class DefaultObjectEntryManagerImplTest {
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), organization1.getOrganizationId());
 
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), organizationGroup1.getGroupId(),
+			accountManagerRole.getRoleId());
+
 		_resourcePermissionLocalService.addResourcePermission(
 			_companyId, _objectDefinition1.getClassName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			organizationUserRole.getRoleId(), ActionKeys.VIEW);
+			accountManagerRole.getRoleId(), ActionKeys.VIEW);
 
 		_assertObjectEntriesSize(1);
 
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), suborganization2.getOrganizationId());
+
+		_assertObjectEntriesSize(1);
+
+		Group organizationGroup2 = _groupLocalService.getOrganizationGroup(
+			_companyId, organization2.getOrganizationId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			_user.getUserId(), organizationGroup2.getGroupId(),
+			accountManagerRole.getRoleId());
 
 		_assertObjectEntriesSize(2);
 

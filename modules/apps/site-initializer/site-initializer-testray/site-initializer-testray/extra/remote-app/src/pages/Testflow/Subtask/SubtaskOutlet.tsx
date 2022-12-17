@@ -29,18 +29,28 @@ import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIss
 import {searchUtil} from '../../../util/search';
 
 type OutletContext = {
-	testrayTask: TestrayTask;
+	data: {
+		testrayTask: TestrayTask;
+	};
+	revalidate: {
+		revalidateTaskUser: () => void;
+	};
 };
 
 const SubtaskOutlet = () => {
 	const {setHeading} = useHeader();
 	const {subtaskId} = useParams();
-	const {testrayTask} = useOutletContext<OutletContext>();
+	const {
+		data: {testrayTask},
+	} = useOutletContext<OutletContext>();
 
-	const {data: testraySubtask, mutate: mutateSubtask} = useFetch<
-		TestraySubTask
-	>(testraySubTaskImpl.getResource(subtaskId as string), (response) =>
-		testraySubTaskImpl.transformData(response)
+	const {
+		data: testraySubtask,
+		mutate: mutateSubtask,
+		revalidate: revalidateSubtask,
+	} = useFetch<TestraySubTask>(
+		testraySubTaskImpl.getResource(subtaskId as string),
+		(response) => testraySubTaskImpl.transformData(response)
 	);
 
 	const {data: testraySubtaskToMerged} = useFetch<
@@ -108,14 +118,21 @@ const SubtaskOutlet = () => {
 	return (
 		<Outlet
 			context={{
-				mbMessage,
-				mergedSubtaskNames,
-				mutateSubtask,
-				mutateSubtaskIssues,
-				splitSubtaskNames,
-				subtaskIssues,
-				testraySubtask,
-				testrayTask,
+				data: {
+					mbMessage,
+					mergedSubtaskNames,
+					splitSubtaskNames,
+					subtaskIssues,
+					testraySubtask,
+					testrayTask,
+				},
+				mutate: {
+					mutateSubtask,
+					mutateSubtaskIssues,
+				},
+				revalidate: {
+					revalidateSubtask,
+				},
 			}}
 		/>
 	);

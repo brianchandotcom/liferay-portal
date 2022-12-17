@@ -60,7 +60,7 @@ public class FeatureFlagsManagementToolbarDisplayContext
 					return true;
 				}
 				else if (Objects.equals(currentValue, "enabled") &&
-					featureFlag.isEnabled()) {
+						 featureFlag.isEnabled()) {
 
 					return true;
 				}

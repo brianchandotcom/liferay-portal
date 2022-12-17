@@ -37,5 +37,6 @@ export function useFetch<Data = any, Error = any>(
 		isValidating,
 		loading: !data,
 		mutate,
+		revalidate: () => mutate((response) => response, {revalidate: true}),
 	};
 }

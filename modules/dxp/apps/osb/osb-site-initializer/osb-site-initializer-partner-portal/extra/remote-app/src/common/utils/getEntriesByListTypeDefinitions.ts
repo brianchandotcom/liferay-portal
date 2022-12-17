@@ -10,7 +10,7 @@
  */
 
 import ListTypeDefinition from '../interfaces/listTypeDefinition';
-interface EntryField {
+export interface EntryField {
 	[key: string]: React.OptionHTMLAttributes<HTMLOptionElement>[];
 }
 

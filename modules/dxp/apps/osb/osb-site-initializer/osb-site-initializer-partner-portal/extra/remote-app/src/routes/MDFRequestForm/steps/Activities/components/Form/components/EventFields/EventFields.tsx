@@ -14,56 +14,77 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 
 interface IProps {
 	currentActivityIndex: number;
+	tactic?: string;
 }
 
-const EventFields = ({currentActivityIndex}: IProps) => (
+const EventFields = ({currentActivityIndex, tactic}: IProps) => (
 	<>
 		<PRMFormik.Field
 			component={PRMForm.InputText}
 			label="Activity Description"
-			name={`activities[${currentActivityIndex}].description`}
+			name={`activities[${currentActivityIndex}].activityDescription.description`}
+			required
+		/>
+
+		{tactic === 'Webinar' ? (
+			<>
+				<PRMFormik.Field
+					component={PRMForm.InputText}
+					label="Webinar Topic"
+					name={`activities[${currentActivityIndex}].activityDescription.webinarTopic`}
+					required
+				/>
+
+				<PRMFormik.Field
+					component={PRMForm.InputText}
+					label="Webinar Host/Platform"
+					name={`activities[${currentActivityIndex}].activityDescription.webinarHostPlatform`}
+					required
+				/>
+			</>
+		) : (
+			<>
+				<PRMFormik.Field
+					component={PRMForm.InputText}
+					label="Activity Location"
+					name={`activities[${currentActivityIndex}].activityDescription.location`}
+					required
+				/>
+
+				<PRMFormik.Field
+					component={PRMForm.InputText}
+					label="Venue Name"
+					name={`activities[${currentActivityIndex}].activityDescription.venueName`}
+					required
+				/>
+			</>
+		)}
+
+		<PRMFormik.Field
+			component={PRMForm.InputText}
+			label="What Liferay Branding is required?"
+			name={`activities[${currentActivityIndex}].activityDescription.liferayBranding`}
 			required
 		/>
 
 		<PRMFormik.Field
 			component={PRMForm.InputText}
-			label="Activity Location"
-			name={`activities[${currentActivityIndex}].location`}
-			required
-		/>
-
-		<PRMFormik.Field
-			component={PRMForm.InputText}
-			label="Venue Name"
-			name={`activities[${currentActivityIndex}].venueName`}
-			required
-		/>
-
-		<PRMFormik.Field
-			component={PRMForm.InputText}
-			label="Liferay Branding"
-			name={`activities[${currentActivityIndex}].liferayBranding`}
-			required
-		/>
-
-		<PRMFormik.Field
-			component={PRMForm.InputText}
-			label="Liferay Participation/Requirements"
-			name={`activities[${currentActivityIndex}].liferayParticipationRequirements`}
+			label="Who from Liferay will Participate/What is Required from Liferay?"
+			name={`activities[${currentActivityIndex}].activityDescription.liferayParticipationRequirements`}
 			required
 		/>
 
 		<PRMFormik.Field
 			component={PRMForm.InputText}
 			label="Source and Size of Invite List"
-			name={`activities[${currentActivityIndex}].sourceAndSizeOfInviteeList`}
+			name={`activities[${currentActivityIndex}].activityDescription.sourceAndSizeOfInviteeList`}
 			required
 		/>
 
 		<PRMFormik.Field
 			component={PRMForm.InputText}
 			label="Activity Promotion"
-			name={`activities[${currentActivityIndex}].activityPromotion`}
+			name={`activities[${currentActivityIndex}].activityDescription.activityPromotion`}
 			required
 		/>
 	</>

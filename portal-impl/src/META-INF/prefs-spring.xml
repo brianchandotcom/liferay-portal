@@ -11,5 +11,4 @@
 	<bean class="com.liferay.portal.kernel.util.PrefsPropsUtil" id="com.liferay.portal.kernel.util.PrefsPropsUtil">
 		<property name="prefsProps" ref="com.liferay.portal.kernel.util.PrefsProps" />
 	</bean>
-	<bean class="com.liferay.portal.util.PrefsPropsUtil" id="com.liferay.portal.util.PrefsPropsUtil" />
 </beans>

@@ -527,7 +527,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		CompanyLocalServiceUtil.forEachCompany(
 			company -> {
 				PortletPreferences portletPreferences =
-					PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
+					PrefsPropsUtil.getPreferences(company.getCompanyId());
 
 				Assert.assertTrue(
 					Validator.isNull(

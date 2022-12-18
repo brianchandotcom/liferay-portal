@@ -78,7 +78,7 @@ public class MentionsSiteSettingsConfigurationScreenContributor
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(group.getCompanyId(), true);
+			PrefsPropsUtil.getPreferences(group.getCompanyId());
 
 		return PrefsParamUtil.getBoolean(
 			companyPortletPreferences, themeDisplay.getRequest(),

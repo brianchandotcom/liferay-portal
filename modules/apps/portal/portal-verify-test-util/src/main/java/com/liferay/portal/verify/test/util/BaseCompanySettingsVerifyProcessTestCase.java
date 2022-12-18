@@ -95,7 +95,7 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 		companyLocalService.forEachCompanyId(
 			companyId -> {
 				PortletPreferences portletPreferences =
-					prefsProps.getPreferences(companyId, true);
+					prefsProps.getPreferences(companyId);
 
 				Settings settings = getSettings(companyId);
 

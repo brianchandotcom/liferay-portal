@@ -155,18 +155,8 @@ public class PrefsPropsUtil {
 		return _prefsProps.getPreferences();
 	}
 
-	public static PortletPreferences getPreferences(boolean readOnly) {
-		return _prefsProps.getPreferences(readOnly);
-	}
-
 	public static PortletPreferences getPreferences(long companyId) {
 		return _prefsProps.getPreferences(companyId);
-	}
-
-	public static PortletPreferences getPreferences(
-		long companyId, boolean readOnly) {
-
-		return _prefsProps.getPreferences(companyId, readOnly);
 	}
 
 	public static PrefsProps getPrefsProps() {

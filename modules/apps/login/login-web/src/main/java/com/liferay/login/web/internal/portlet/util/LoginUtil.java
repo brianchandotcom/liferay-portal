@@ -142,7 +142,7 @@ public class LoginUtil {
 
 		if (xml == null) {
 			PortletPreferences companyPortletPreferences =
-				PrefsPropsUtil.getPreferences(companyId, true);
+				PrefsPropsUtil.getPreferences(companyId);
 
 			String defaultContent = null;
 

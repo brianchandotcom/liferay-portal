@@ -208,7 +208,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		throws Exception {
 
 		PortletPreferences portletPreferences = _prefsProps.getPreferences(
-			_user.getCompanyId(), false);
+			_user.getCompanyId());
 
 		portletPreferences.setValue(
 			PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,

@@ -39,14 +39,14 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public boolean getBoolean(long companyId, String name) {
-		return getBoolean(getPreferences(companyId, true), name);
+		return getBoolean(getPreferences(companyId), name);
 	}
 
 	@Override
 	public boolean getBoolean(
 		long companyId, String name, boolean defaultValue) {
 
-		return getBoolean(getPreferences(companyId, true), name, defaultValue);
+		return getBoolean(getPreferences(companyId), name, defaultValue);
 	}
 
 	@Override
@@ -64,17 +64,17 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public boolean getBoolean(String name) {
-		return getBoolean(getPreferences(true), name);
+		return getBoolean(getPreferences(), name);
 	}
 
 	@Override
 	public boolean getBoolean(String name, boolean defaultValue) {
-		return getBoolean(getPreferences(true), name, defaultValue);
+		return getBoolean(getPreferences(), name, defaultValue);
 	}
 
 	@Override
 	public String getContent(long companyId, String name) {
-		return getContent(getPreferences(companyId, true), name);
+		return getContent(getPreferences(companyId), name);
 	}
 
 	@Override
@@ -100,17 +100,17 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public String getContent(String name) {
-		return getContent(getPreferences(true), name);
+		return getContent(getPreferences(), name);
 	}
 
 	@Override
 	public double getDouble(long companyId, String name) {
-		return getDouble(getPreferences(companyId, true), name);
+		return getDouble(getPreferences(companyId), name);
 	}
 
 	@Override
 	public double getDouble(long companyId, String name, double defaultValue) {
-		return getDouble(getPreferences(companyId, true), name, defaultValue);
+		return getDouble(getPreferences(companyId), name, defaultValue);
 	}
 
 	@Override
@@ -127,22 +127,22 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public double getDouble(String name) {
-		return getDouble(getPreferences(true), name);
+		return getDouble(getPreferences(), name);
 	}
 
 	@Override
 	public double getDouble(String name, double defaultValue) {
-		return getDouble(getPreferences(true), name, defaultValue);
+		return getDouble(getPreferences(), name, defaultValue);
 	}
 
 	@Override
 	public int getInteger(long companyId, String name) {
-		return getInteger(getPreferences(companyId, true), name);
+		return getInteger(getPreferences(companyId), name);
 	}
 
 	@Override
 	public int getInteger(long companyId, String name, int defaultValue) {
-		return getInteger(getPreferences(companyId, true), name, defaultValue);
+		return getInteger(getPreferences(companyId), name, defaultValue);
 	}
 
 	@Override
@@ -160,22 +160,22 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public int getInteger(String name) {
-		return getInteger(getPreferences(true), name);
+		return getInteger(getPreferences(), name);
 	}
 
 	@Override
 	public int getInteger(String name, int defaultValue) {
-		return getInteger(getPreferences(true), name, defaultValue);
+		return getInteger(getPreferences(), name, defaultValue);
 	}
 
 	@Override
 	public long getLong(long companyId, String name) {
-		return getLong(getPreferences(companyId, true), name);
+		return getLong(getPreferences(companyId), name);
 	}
 
 	@Override
 	public long getLong(long companyId, String name, long defaultValue) {
-		return getLong(getPreferences(companyId, true), name, defaultValue);
+		return getLong(getPreferences(companyId), name, defaultValue);
 	}
 
 	@Override
@@ -192,21 +192,16 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public long getLong(String name) {
-		return getLong(getPreferences(true), name);
+		return getLong(getPreferences(), name);
 	}
 
 	@Override
 	public long getLong(String name, long defaultValue) {
-		return getLong(getPreferences(true), name, defaultValue);
+		return getLong(getPreferences(), name, defaultValue);
 	}
 
 	@Override
 	public PortletPreferences getPreferences() {
-		return getPreferences(false);
-	}
-
-	@Override
-	public PortletPreferences getPreferences(boolean readOnly) {
 		return _portalPreferencesLocalService.getPreferences(
 			PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
@@ -214,11 +209,6 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public PortletPreferences getPreferences(long companyId) {
-		return getPreferences(companyId, false);
-	}
-
-	@Override
-	public PortletPreferences getPreferences(long companyId, boolean readOnly) {
 		return _portalPreferencesLocalService.getPreferences(
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 	}
@@ -250,17 +240,17 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public Properties getProperties(String prefix, boolean removePrefix) {
-		return getProperties(getPreferences(true), prefix, removePrefix);
+		return getProperties(getPreferences(), prefix, removePrefix);
 	}
 
 	@Override
 	public short getShort(long companyId, String name) {
-		return getShort(getPreferences(companyId, true), name);
+		return getShort(getPreferences(companyId), name);
 	}
 
 	@Override
 	public short getShort(long companyId, String name, short defaultValue) {
-		return getShort(getPreferences(companyId, true), name, defaultValue);
+		return getShort(getPreferences(companyId), name, defaultValue);
 	}
 
 	@Override
@@ -277,22 +267,22 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public short getShort(String name) {
-		return getShort(getPreferences(true), name);
+		return getShort(getPreferences(), name);
 	}
 
 	@Override
 	public short getShort(String name, short defaultValue) {
-		return getShort(getPreferences(true), name, defaultValue);
+		return getShort(getPreferences(), name, defaultValue);
 	}
 
 	@Override
 	public String getString(long companyId, String name) {
-		return getString(getPreferences(companyId, true), name);
+		return getString(getPreferences(companyId), name);
 	}
 
 	@Override
 	public String getString(long companyId, String name, String defaultValue) {
-		return getString(getPreferences(companyId, true), name, defaultValue);
+		return getString(getPreferences(companyId), name, defaultValue);
 	}
 
 	@Override
@@ -382,19 +372,19 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public String getString(String name) {
-		return getString(getPreferences(true), name);
+		return getString(getPreferences(), name);
 	}
 
 	@Override
 	public String getString(String name, String defaultValue) {
-		return getString(getPreferences(true), name, defaultValue);
+		return getString(getPreferences(), name, defaultValue);
 	}
 
 	@Override
 	public String[] getStringArray(
 		long companyId, String name, String delimiter) {
 
-		return getStringArray(getPreferences(companyId, true), name, delimiter);
+		return getStringArray(getPreferences(companyId), name, delimiter);
 	}
 
 	@Override
@@ -402,7 +392,7 @@ public class PrefsPropsImpl implements PrefsProps {
 		long companyId, String name, String delimiter, String[] defaultValue) {
 
 		return getStringArray(
-			getPreferences(companyId, true), name, delimiter, defaultValue);
+			getPreferences(companyId), name, delimiter, defaultValue);
 	}
 
 	@Override
@@ -430,15 +420,14 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public String[] getStringArray(String name, String delimiter) {
-		return getStringArray(getPreferences(true), name, delimiter);
+		return getStringArray(getPreferences(), name, delimiter);
 	}
 
 	@Override
 	public String[] getStringArray(
 		String name, String delimiter, String[] defaultValue) {
 
-		return getStringArray(
-			getPreferences(true), name, delimiter, defaultValue);
+		return getStringArray(getPreferences(), name, delimiter, defaultValue);
 	}
 
 	@Override

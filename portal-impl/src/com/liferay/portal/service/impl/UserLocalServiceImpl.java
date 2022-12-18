@@ -3675,7 +3675,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(user.getCompanyId(), true);
+			PrefsPropsUtil.getPreferences(user.getCompanyId());
 
 		Map<Locale, String> localizedSubjectMap =
 			LocalizationUtil.getLocalizationMap(
@@ -6098,7 +6098,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String portalURL = serviceContext.getPortalURL();
 
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(user.getCompanyId(), true);
+			PrefsPropsUtil.getPreferences(user.getCompanyId());
 
 		Map<Locale, String> localizedSubjectMap =
 			LocalizationUtil.getLocalizationMap(
@@ -6278,7 +6278,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String toAddress = user.getEmailAddress();
 
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(companyId, true);
+			PrefsPropsUtil.getPreferences(companyId);
 
 		String bodyProperty = null;
 		String prefix = null;

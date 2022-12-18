@@ -33,7 +33,7 @@ public class MentionsUtil {
 		Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
 
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(group.getCompanyId(), true);
+			PrefsPropsUtil.getPreferences(group.getCompanyId());
 
 		boolean companyMentionsEnabled = GetterUtil.getBoolean(
 			companyPortletPreferences.getValue("mentionsEnabled", null), true);

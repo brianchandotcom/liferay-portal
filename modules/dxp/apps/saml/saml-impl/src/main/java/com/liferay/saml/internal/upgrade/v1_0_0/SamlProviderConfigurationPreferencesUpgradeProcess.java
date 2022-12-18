@@ -59,7 +59,7 @@ public class SamlProviderConfigurationPreferencesUpgradeProcess
 		Filter propsFilter = null;
 
 		PortletPreferences portletPreferences = _prefsProps.getPreferences(
-			companyId, true);
+			companyId);
 
 		String entityId = portletPreferences.getValue(
 			LegacySamlPropsKeys.SAML_ENTITY_ID, null);

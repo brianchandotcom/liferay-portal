@@ -413,7 +413,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 		private CompanySecurityBag(Company company) {
 			PortletPreferences preferences = PrefsPropsUtil.getPreferences(
-				company.getCompanyId(), true);
+				company.getCompanyId());
 
 			_authType = _getPrefsPropsString(
 				preferences, company, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,

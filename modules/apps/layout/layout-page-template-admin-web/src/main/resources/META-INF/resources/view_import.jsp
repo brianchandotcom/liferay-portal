@@ -93,9 +93,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					<c:if test="<%= ListUtil.isNotEmpty(layoutsImporterResultEntriesWithWarnings) %>">
 
 						<%
-						for (int i = 0; i < layoutsImporterResultEntriesWithWarnings.size(); i++) {
-							LayoutsImporterResultEntry layoutsImporterResultEntry = layoutsImporterResultEntriesWithWarnings.get(i);
-
+						for (LayoutsImporterResultEntry layoutsImporterResultEntry : layoutsImporterResultEntriesWithWarnings) {
 							String[] warningMessages = layoutsImporterResultEntry.getWarningMessages();
 						%>
 

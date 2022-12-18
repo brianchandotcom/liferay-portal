@@ -92,7 +92,7 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 			<div class="btn-group" role="group">
 				<clay:button
 					aria-label='<%= LanguageUtil.get(request, "undo-deletion") %>'
-					cssClass="alert-btn trash-undo-button"
+					cssClass="alert-btn"
 					displayType="primary"
 					label="undo"
 					small="<%= true %>"

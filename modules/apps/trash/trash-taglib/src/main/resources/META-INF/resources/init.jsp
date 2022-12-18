@@ -76,7 +76,3 @@ else {
 	currentURL = PortalUtil.getCurrentURL(request);
 }
 %>
-
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>

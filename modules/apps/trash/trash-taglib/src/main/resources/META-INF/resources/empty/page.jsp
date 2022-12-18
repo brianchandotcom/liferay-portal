@@ -35,7 +35,7 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<clay:button
-				cssClass="trash-empty-button"
+				cssClass="align-baseline p-0"
 				displayType="link"
 				id='<%= liferayPortletResponse.getNamespace() + "empty" %>'
 				label='<%= (String)request.getAttribute("liferay-trash:empty:emptyMessage") %>'

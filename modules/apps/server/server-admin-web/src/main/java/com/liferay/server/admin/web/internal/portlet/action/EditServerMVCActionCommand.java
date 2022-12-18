@@ -94,6 +94,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -105,7 +106,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.util.MaintenanceUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.server.admin.web.internal.constants.ImageMagickResourceLimitConstants;
@@ -175,7 +175,7 @@ public class EditServerMVCActionCommand
 			return;
 		}
 
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+		PortletPreferences portletPreferences = _prefsProps.getPreferences(
 			ParamUtil.getLong(actionRequest, "preferencesCompanyId"));
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -914,6 +914,9 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.LinkedList;
@@ -40,6 +40,7 @@ import org.im4java.process.ProcessExecutor;
 import org.im4java.process.ProcessTask;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -86,7 +87,7 @@ public class ImageMagickImpl implements ImageMagick {
 
 	@Override
 	public String getGlobalSearchPath() throws Exception {
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences(true);
+		PortletPreferences preferences = _prefsProps.getPreferences(true);
 
 		String globalSearchPath = preferences.getValue(
 			PropsKeys.IMAGEMAGICK_GLOBAL_SEARCH_PATH, null);
@@ -113,7 +114,7 @@ public class ImageMagickImpl implements ImageMagick {
 
 	@Override
 	public Properties getResourceLimitsProperties() throws Exception {
-		Properties resourceLimitsProperties = PrefsPropsUtil.getProperties(
+		Properties resourceLimitsProperties = _prefsProps.getProperties(
 			PropsKeys.IMAGEMAGICK_RESOURCE_LIMIT, true);
 
 		if (resourceLimitsProperties.isEmpty()) {
@@ -161,7 +162,7 @@ public class ImageMagickImpl implements ImageMagick {
 		boolean enabled = false;
 
 		try {
-			enabled = PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED);
+			enabled = _prefsProps.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -247,6 +248,10 @@ public class ImageMagickImpl implements ImageMagick {
 		ImageMagickImpl.class);
 
 	private String _globalSearchPath;
+
+	@Reference
+	private PrefsProps _prefsProps;
+
 	private volatile ProcessExecutor _processExecutor;
 	private Properties _resourceLimitsProperties;
 	private boolean _warned;

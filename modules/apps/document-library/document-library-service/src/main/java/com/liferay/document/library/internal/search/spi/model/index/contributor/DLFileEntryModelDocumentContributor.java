@@ -38,11 +38,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.TrashHelper;
 
@@ -73,7 +73,7 @@ public class DLFileEntryModelDocumentContributor
 
 		boolean indexContent = true;
 
-		String[] ignoreExtensions = PrefsPropsUtil.getStringArray(
+		String[] ignoreExtensions = _prefsProps.getStringArray(
 			PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS, StringPool.COMMA);
 
 		if (ArrayUtil.contains(
@@ -303,6 +303,9 @@ public class DLFileEntryModelDocumentContributor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	@Reference
 	private RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;

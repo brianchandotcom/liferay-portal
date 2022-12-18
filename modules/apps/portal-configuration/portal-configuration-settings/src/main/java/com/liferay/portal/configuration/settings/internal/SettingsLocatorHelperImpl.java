@@ -48,8 +48,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.Serializable;
 
@@ -165,7 +165,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		long companyId, Settings parentSettings) {
 
 		return new PortletPreferencesSettings(
-			PrefsPropsUtil.getPreferences(companyId), parentSettings);
+			_prefsProps.getPreferences(companyId), parentSettings);
 	}
 
 	@Override
@@ -553,6 +553,10 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private Settings _portalPropertiesSettings;
 	private PortletPreferencesFactory _portletPreferencesFactory;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PrefsProps _prefsProps;
+
 	private final Map<String, ScopedConfigurationManagedServiceFactory>
 		_scopedConfigurationManagedServiceFactories = new ConcurrentHashMap<>();
 

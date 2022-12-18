@@ -60,11 +60,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.site.initializer.SiteInitializer;
@@ -311,7 +311,7 @@ public class PortalInstancesLocalServiceImpl
 			(LayoutTypePortlet)controlPanelLayout.getLayoutType());
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
 
-		String themeId = PrefsPropsUtil.getString(
+		String themeId = _prefsProps.getString(
 			company.getCompanyId(),
 			PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
 
@@ -394,6 +394,9 @@ public class PortalInstancesLocalServiceImpl
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

@@ -56,18 +56,14 @@ for (String portletId : PortletCategoryUtil.getFirstChildPortletIds(portletCateg
 portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <c:if test="<%= !portletCategories.isEmpty() || !portlets.isEmpty() %>">
 	<liferay-ui:panel
 		collapsible="<%= true %>"
-		cssClass="lfr-content-category list-unstyled panel-page-category"
+		cssClass="panel-page-category"
 		extended="<%= true %>"
 		title="<%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(request, portletCategory.getName()) %>"
 	>
-		<div class="list-group">
+		<div class="list-group mb-0">
 
 			<%
 			for (PortletCategory curPortletCategory : portletCategories) {

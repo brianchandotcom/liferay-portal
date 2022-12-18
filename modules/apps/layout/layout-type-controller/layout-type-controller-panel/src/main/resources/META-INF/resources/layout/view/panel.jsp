@@ -19,7 +19,7 @@
 <c:choose>
 	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
 		<clay:container-fluid
-			cssClass="lfr-panel-page"
+			cssClass="mt-3"
 			id="main-content"
 		>
 			<clay:row>

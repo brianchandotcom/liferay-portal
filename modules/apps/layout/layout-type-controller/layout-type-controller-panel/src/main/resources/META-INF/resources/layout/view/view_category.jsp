@@ -82,14 +82,17 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 					<div>
 						<a
 							href="<%=
-PortletURLBuilder.create(
-						PortletURLFactoryUtil.create(request, portlet.getRootPortlet(), PortletRequest.ACTION_PHASE)
-					).setPortletMode(
-						PortletMode.VIEW
-					).setWindowState(
-						WindowState.MAXIMIZED
-					).buildPortletURL() %>"><%= PortalUtil.getPortletTitle(portlet, application, locale) %></a
+								PortletURLBuilder.create(
+									PortletURLFactoryUtil.create(request, portlet.getRootPortlet(), PortletRequest.ACTION_PHASE)
+								).setPortletMode(
+									PortletMode.VIEW
+								).setWindowState(
+									WindowState.MAXIMIZED
+								).buildPortletURL()
+							%>"
 						>
+							<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+						</a>
 					</div>
 				</c:if>
 

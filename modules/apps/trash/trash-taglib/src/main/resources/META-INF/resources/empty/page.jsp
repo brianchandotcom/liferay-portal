@@ -37,7 +37,7 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 			<clay:button
 				cssClass="align-baseline p-0"
 				displayType="link"
-				id='<%= liferayPortletResponse.getNamespace() + "empty" %>'
+				id='<%= namespace + "empty" %>'
 				label='<%= (String)request.getAttribute("liferay-trash:empty:emptyMessage") %>'
 				small="<%= true %>"
 				type="submit"

@@ -30,9 +30,10 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import org.junit.Assert;
@@ -67,7 +68,7 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 			_company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			PortletPreferencesFactoryUtil.toXML(portalPreferences));
 
-		String[] roleNames = PrefsPropsUtil.getStringArray(
+		String[] roleNames = _prefsProps.getStringArray(
 			_company.getCompanyId(), PropsKeys.ADMIN_DEFAULT_ROLE_NAMES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_DEFAULT_ROLE_NAMES);
 
@@ -86,6 +87,9 @@ public class UserServiceWhenAddingUserWithDefaultRolesTest {
 
 	@DeleteAfterTestRun
 	private Company _company;
+
+	@Inject
+	private PrefsProps _prefsProps;
 
 	@DeleteAfterTestRun
 	private User _user;

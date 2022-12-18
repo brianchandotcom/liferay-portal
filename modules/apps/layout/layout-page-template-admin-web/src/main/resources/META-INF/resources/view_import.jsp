@@ -122,8 +122,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					</c:if>
 
 					<%
-					int total = 0;
-					int viewTotal = 0;
+					int i = 0;
 
 					List<LayoutsImporterResultEntry> notImportedLayoutsImporterResultEntries = importDisplayContext.getNotImportedLayoutsImporterResultEntries();
 					%>
@@ -131,11 +130,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					<c:if test="<%= ListUtil.isNotEmpty(notImportedLayoutsImporterResultEntries) %>">
 
 						<%
-						total = notImportedLayoutsImporterResultEntries.size();
-
-						viewTotal = (total > 10) ? 10 : total;
-
-						for (int i = 0; i < viewTotal; i++) {
+						for (; (i < notImportedLayoutsImporterResultEntries.size()) && (i < 10); i++) {
 							LayoutsImporterResultEntry layoutsImporterResultEntry = notImportedLayoutsImporterResultEntries.get(i);
 						%>
 
@@ -150,8 +145,8 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					</c:if>
 				</ul>
 
-				<c:if test="<%= total > 10 %>">
-					<span><%= LanguageUtil.format(request, "x-more-entries-could-also-not-be-imported", "<strong>" + (total - viewTotal) + "</strong>", false) %></span>
+				<c:if test="<%= notImportedLayoutsImporterResultEntries.size() > 10 %>">
+					<span><%= LanguageUtil.format(request, "x-more-entries-could-also-not-be-imported", "<strong>" + (notImportedLayoutsImporterResultEntries.size() - i) + "</strong>", false) %></span>
 				</c:if>
 			</div>
 		</c:if>

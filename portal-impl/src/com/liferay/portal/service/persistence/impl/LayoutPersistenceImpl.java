@@ -20146,7 +20146,7 @@ public class LayoutPersistenceImpl
 		ctStrictColumnNames.add("keywords");
 		ctStrictColumnNames.add("robots");
 		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("typeSettings");
+		ctMergeColumnNames.add("typeSettings");
 		ctStrictColumnNames.add("hidden_");
 		ctStrictColumnNames.add("system_");
 		ctStrictColumnNames.add("friendlyURL");

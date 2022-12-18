@@ -62,9 +62,9 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 			%>
 
 			<div class="alert alert-<%= dialogType %> <%= dialogType %>-dialog">
-				<span class="<%= dialogType %>-message"><%= importDisplayContext.getDialogMessage() %></span>
+				<span class="font-weight-bold"><%= importDisplayContext.getDialogMessage() %></span>
 
-				<ul class="<%= dialogType %>-list-items">
+				<ul>
 
 					<%
 					Map<Integer, List<LayoutsImporterResultEntry>> importedLayoutsImporterResultEntriesMap = importDisplayContext.getImportedLayoutsImporterResultEntriesMap();
@@ -77,7 +77,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 						%>
 
 							<li>
-								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(importDisplayContext.getSuccessMessage(entrySet)) %></span>
+								<span class="font-italic"><%= HtmlUtil.escape(importDisplayContext.getSuccessMessage(entrySet)) %></span>
 							</li>
 
 						<%
@@ -100,7 +100,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 						%>
 
 							<li>
-								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(importDisplayContext.getWarningMessage(layoutsImporterResultEntry.getName())) %></span>
+								<span class="font-italic"><%= HtmlUtil.escape(importDisplayContext.getWarningMessage(layoutsImporterResultEntry.getName())) %></span>
 
 								<ul>
 
@@ -108,7 +108,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 									for (String warningMessage : warningMessages) {
 									%>
 
-										<li><span class="<%= dialogType %>-info"><%= HtmlUtil.escape(warningMessage) %></span></li>
+										<li><span class="font-italic"><%= HtmlUtil.escape(warningMessage) %></span></li>
 
 									<%
 									}
@@ -142,7 +142,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 						%>
 
 							<li>
-								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(layoutsImporterResultEntry.getErrorMessage()) %></span>
+								<span class="font-italic"><%= HtmlUtil.escape(layoutsImporterResultEntry.getErrorMessage()) %></span>
 							</li>
 
 						<%
@@ -153,7 +153,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 				</ul>
 
 				<c:if test="<%= total > 10 %>">
-					<span class="<%= dialogType %>-info"><%= LanguageUtil.format(request, "x-more-entries-could-also-not-be-imported", "<strong>" + (total - viewTotal) + "</strong>", false) %></span>
+					<span><%= LanguageUtil.format(request, "x-more-entries-could-also-not-be-imported", "<strong>" + (total - viewTotal) + "</strong>", false) %></span>
 				</c:if>
 			</div>
 		</c:if>

@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 

@@ -1228,7 +1228,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		if (DBPartitionUtil.isPartitionEnabled()) {
 			try (SafeCloseable safeCloseable =
-					DBPartitionUtil.setInDeletionCompany(companyId)) {
+					DBPartitionUtil.setCompanyInDeletionProcess(companyId)) {
 
 				_clearCompanyCache(companyId);
 				_clearVirtualHostCache(companyId);

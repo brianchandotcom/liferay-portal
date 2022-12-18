@@ -61,7 +61,7 @@ public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 			_companyLocalService.forEachCompany(
 				company -> {
 					if (!company.isActive() ||
-						DBPartitionUtil.isCompanyInDeletion(
+						DBPartitionUtil.isCompanyInDeletionProcess(
 							company.getCompanyId())) {
 
 						return;

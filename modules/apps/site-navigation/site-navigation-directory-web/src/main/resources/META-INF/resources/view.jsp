@@ -141,7 +141,7 @@
 									}
 
 									if (scopeGroupId == childGroup.getGroupId()) {
-										className += "selected";
+										className += "font-weight-bold selected";
 									}
 								%>
 

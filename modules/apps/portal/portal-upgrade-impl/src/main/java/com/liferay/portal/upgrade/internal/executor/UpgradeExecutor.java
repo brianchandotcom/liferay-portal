@@ -236,8 +236,8 @@ public class UpgradeExecutor {
 					release.setBuildNumber(buildNumber);
 				}
 
-				release.setState(state);
 				release.setVerified(false);
+				release.setState(state);
 
 				_releaseLocalService.updateRelease(release);
 			}

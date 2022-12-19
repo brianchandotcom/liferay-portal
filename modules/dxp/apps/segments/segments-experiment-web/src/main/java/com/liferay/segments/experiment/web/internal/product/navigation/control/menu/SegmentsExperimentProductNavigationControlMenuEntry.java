@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -366,9 +367,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		}
 
 		ResourceURL resourceURL = (ResourceURL)PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				httpServletRequest, themeDisplay.getScopeGroup(),
-				SegmentsPortletKeys.SEGMENTS_EXPERIMENT, 0, 0,
+			_portletURLFactory.create(
+				httpServletRequest, SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
 				PortletRequest.RESOURCE_PHASE)
 		).setRedirect(
 			_getRedirect(httpServletRequest, themeDisplay)
@@ -538,6 +538,9 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 	private Portal _portal;
 
 	private String _portletNamespace;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	@Reference
 	private ReactRenderer _reactRenderer;

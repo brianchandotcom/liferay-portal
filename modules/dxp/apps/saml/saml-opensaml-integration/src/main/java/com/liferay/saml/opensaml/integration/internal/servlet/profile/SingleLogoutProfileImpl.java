@@ -602,6 +602,13 @@ public class SingleLogoutProfileImpl
 		MessageContext<LogoutRequest> outboundMessageContext =
 			inOutOperationContext.getOutboundMessageContext();
 
+		SAMLBindingContext samlBindingContext =
+			outboundMessageContext.getSubcontext(
+				SAMLBindingContext.class, true);
+
+		samlBindingContext.setRelayState(
+			portal.getPortalURL(httpServletRequest));
+
 		outboundMessageContext.setMessage(logoutRequest);
 
 		SAMLPeerEntityContext samlPeerEntityContext =

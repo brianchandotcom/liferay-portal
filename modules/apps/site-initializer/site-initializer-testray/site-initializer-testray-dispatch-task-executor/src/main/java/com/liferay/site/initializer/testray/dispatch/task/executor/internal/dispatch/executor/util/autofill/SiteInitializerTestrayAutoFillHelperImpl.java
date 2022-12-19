@@ -44,7 +44,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 			return;
 		}
 
-		siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
+		_siteInitializerTestrayDispatchTaskExecutorHelper.addObjectEntry(
 			"CaseResultsIssues",
 			HashMapBuilder.<String, Object>put(
 				"r_caseResultToCaseResultsIssues_c_caseResultId",
@@ -53,7 +53,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 				"r_issueToCaseResultsIssues_c_issueId",
 				() -> {
 					Page<ObjectEntry> objectEntriesPage =
-						siteInitializerTestrayDispatchTaskExecutorHelper.
+						_siteInitializerTestrayDispatchTaskExecutorHelper.
 							getObjectEntriesPage(
 								null, companyId,
 								"name eq '" + testrayIssueName + "'", "Issue",
@@ -67,7 +67,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 					}
 
 					objectEntry =
-						siteInitializerTestrayDispatchTaskExecutorHelper.
+						_siteInitializerTestrayDispatchTaskExecutorHelper.
 							addObjectEntry(
 								"Issue",
 								HashMapBuilder.<String, Object>put(
@@ -109,7 +109,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 
 				String testrayCaseResultErrors1 =
 					(String)
-						siteInitializerTestrayDispatchTaskExecutorHelper.
+						_siteInitializerTestrayDispatchTaskExecutorHelper.
 							getProperty("errors", testrayCaseResultCompositeA);
 
 				if (Validator.isNull(testrayCaseResultErrors1)) {
@@ -121,7 +121,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 
 					String testrayCaseResultErrors2 =
 						(String)
-							siteInitializerTestrayDispatchTaskExecutorHelper.
+							_siteInitializerTestrayDispatchTaskExecutorHelper.
 								getProperty(
 									"errors", testrayCaseResultCompositeB);
 
@@ -168,12 +168,12 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 
 			String testrayCaseResultErrors1 =
 				(String)
-					siteInitializerTestrayDispatchTaskExecutorHelper.
+					_siteInitializerTestrayDispatchTaskExecutorHelper.
 						getProperty("errors", testrayCaseResultObjectEntry1);
 
 			String testrayCaseResultErrors2 =
 				(String)
-					siteInitializerTestrayDispatchTaskExecutorHelper.
+					_siteInitializerTestrayDispatchTaskExecutorHelper.
 						getProperty("errors", testrayCaseResultObjectEntry2);
 
 			if (Validator.isNull(testrayCaseResultErrors1) ||
@@ -190,10 +190,6 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 		}
 	}
 
-	@Reference
-	protected SiteInitializerTestrayDispatchTaskExecutorHelper
-		siteInitializerTestrayDispatchTaskExecutorHelper;
-
 	private Map<Long, List<ObjectEntry>>
 			_getTestrayCaseResultObjectEntriesByBuild(
 				long companyId, ObjectEntry testrayBuildObjectEntry)
@@ -203,7 +199,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 			new HashMap<>();
 
 		List<ObjectEntry> objectEntries =
-			siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
+			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
 				null, companyId,
 				"buildId eq '" + testrayBuildObjectEntry.getId() + "'",
 				"CaseResult", null);
@@ -211,7 +207,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 		for (ObjectEntry objectEntry : objectEntries) {
 			long testrayCaseId =
 				(Long)
-					siteInitializerTestrayDispatchTaskExecutorHelper.
+					_siteInitializerTestrayDispatchTaskExecutorHelper.
 						getProperty("r_caseToCaseResult_c_caseId", objectEntry);
 
 			List<ObjectEntry> matchingTestrayCaseResults =
@@ -237,7 +233,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 		Map<Long, ObjectEntry> testrayCaseResultObjectEntries = new HashMap<>();
 
 		for (ObjectEntry objectEntry :
-				siteInitializerTestrayDispatchTaskExecutorHelper.
+				_siteInitializerTestrayDispatchTaskExecutorHelper.
 					getObjectEntries(
 						null, companyId,
 						"runId eq '" + testrayRunObjectEntry.getId() + "'",
@@ -245,7 +241,7 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 
 			testrayCaseResultObjectEntries.put(
 				(Long)
-					siteInitializerTestrayDispatchTaskExecutorHelper.
+					_siteInitializerTestrayDispatchTaskExecutorHelper.
 						getProperty("r_caseToCaseResult_c_caseId", objectEntry),
 				objectEntry);
 		}
@@ -263,26 +259,28 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 		List<ObjectEntry> sourceTestrayCaseResultsIssuesObjectEntries = null;
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries1 =
-			siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
+			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
 				null, companyId,
 				"caseResultId eq '" + testrayCaseResultObjectEntry1.getId() +
 					"'",
 				"CaseResultsIssues", null);
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries2 =
-			siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
+			_siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntries(
 				null, companyId,
 				"caseResultId eq '" + testrayCaseResultObjectEntry2.getId() +
 					"'",
 				"CaseResultsIssues", null);
 
-		if (((Long)siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
-				"r_userToCaseResults_userId", testrayCaseResultObjectEntry1) >
-					0) &&
+		if (((Long)
+				_siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
+					"r_userToCaseResults_userId",
+					testrayCaseResultObjectEntry1) > 0) &&
 			!testrayCaseResultsIssuesObjectEntries1.isEmpty() &&
-			((Long)siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
-				"r_userToCaseResults_userId", testrayCaseResultObjectEntry2) <=
-					0) &&
+			((Long)
+				_siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
+					"r_userToCaseResults_userId",
+					testrayCaseResultObjectEntry2) <= 0) &&
 			testrayCaseResultsIssuesObjectEntries2.isEmpty()) {
 
 			destinationTestrayCaseResultObjectEntry =
@@ -292,13 +290,13 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 				testrayCaseResultsIssuesObjectEntries1;
 		}
 		else if (((Long)
-					siteInitializerTestrayDispatchTaskExecutorHelper.
+					_siteInitializerTestrayDispatchTaskExecutorHelper.
 						getProperty(
 							"r_userToCaseResults_userId",
 							testrayCaseResultObjectEntry1) <= 0) &&
 				 testrayCaseResultsIssuesObjectEntries1.isEmpty() &&
 				 ((Long)
-					 siteInitializerTestrayDispatchTaskExecutorHelper.
+					 _siteInitializerTestrayDispatchTaskExecutorHelper.
 						 getProperty(
 							 "r_userToCaseResults_userId",
 							 testrayCaseResultObjectEntry2) > 0) &&
@@ -322,15 +320,15 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 
 		properties.put(
 			"dueStatus",
-			siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
+			_siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
 				"dueStatus", sourceTestrayCaseResultObjectEntry));
 		properties.put(
 			"r_userToCaseResults_userId",
-			siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
+			_siteInitializerTestrayDispatchTaskExecutorHelper.getProperty(
 				"r_userToCaseResults_userId",
 				sourceTestrayCaseResultObjectEntry));
 
-		siteInitializerTestrayDispatchTaskExecutorHelper.updateObjectEntry(
+		_siteInitializerTestrayDispatchTaskExecutorHelper.updateObjectEntry(
 			"CaseResult", destinationTestrayCaseResultObjectEntry,
 			destinationTestrayCaseResultObjectEntry.getId());
 
@@ -339,14 +337,14 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 
 			long testrayIssueId =
 				(long)
-					siteInitializerTestrayDispatchTaskExecutorHelper.
+					_siteInitializerTestrayDispatchTaskExecutorHelper.
 						getProperty(
 							"r_issueToCaseResultsIssues_c_issueId",
 							sourceTestrayCaseResultsIssuesObjectEntry);
 
 			ObjectEntry testrayIssueObjectEntry =
-				siteInitializerTestrayDispatchTaskExecutorHelper.getObjectEntry(
-					"Issue", testrayIssueId);
+				_siteInitializerTestrayDispatchTaskExecutorHelper.
+					getObjectEntry("Issue", testrayIssueId);
 
 			if (testrayIssueObjectEntry == null) {
 				continue;
@@ -355,9 +353,13 @@ public class SiteInitializerTestrayAutoFillHelperImpl
 			addTestrayCaseResultIssue(
 				companyId, destinationTestrayCaseResultObjectEntry.getId(),
 				(String)
-					siteInitializerTestrayDispatchTaskExecutorHelper.
+					_siteInitializerTestrayDispatchTaskExecutorHelper.
 						getProperty("name", testrayIssueObjectEntry));
 		}
 	}
+
+	@Reference
+	private SiteInitializerTestrayDispatchTaskExecutorHelper
+		_siteInitializerTestrayDispatchTaskExecutorHelper;
 
 }

@@ -25,7 +25,7 @@ definition {
 				value1 = "${portlet}");
 
 			AssertTextEquals(
-				locator1 = "RolesPermissions#PERMISSION_HEADER",
+				locator1 = "Header#H3_TITLE",
 				permissionNavigationValue = "${portlet}",
 				value1 = "${portlet}");
 		}

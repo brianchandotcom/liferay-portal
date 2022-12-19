@@ -121,6 +121,15 @@ public class NotificationTemplateLocalServiceImpl
 		return notificationTemplate;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public NotificationTemplate addNotificationTemplate(
+		String externalReferenceCode, String type, long userId)
+		throws PortalException {
+
+		return null;
+	}
+
 	@Override
 	public NotificationTemplate deleteNotificationTemplate(
 			long notificationTemplateId)

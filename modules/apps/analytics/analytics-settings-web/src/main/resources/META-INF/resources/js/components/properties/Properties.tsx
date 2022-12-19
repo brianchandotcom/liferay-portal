@@ -327,8 +327,10 @@ const Properties: React.FC = () => {
 										index: 1,
 									},
 									{
+										column: {
+											value: siteIds.length,
+										},
 										index: 2,
-										value: siteIds.length,
 									},
 								],
 								id: selectedProperty?.channelId,

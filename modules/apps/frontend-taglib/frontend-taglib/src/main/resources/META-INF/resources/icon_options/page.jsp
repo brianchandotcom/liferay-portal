@@ -21,6 +21,7 @@ List<PortletConfigurationIcon> portletConfigurationIcons = (List<PortletConfigur
 %>
 
 <clay:dropdown-menu
+	aria-label='<%= LanguageUtil.get(request, "options") %>'
 	borderless="<%= true %>"
 	cssClass="component-action portlet-options"
 	displayType="secondary"
@@ -29,6 +30,7 @@ List<PortletConfigurationIcon> portletConfigurationIcons = (List<PortletConfigur
 	monospaced='<%= (boolean)request.getAttribute("liferay-frontend:icon-options:monospaced") %>'
 	propsTransformer="icon_options/js/PortletOptionsDropdownPropsTransformer"
 	small="<%= true %>"
+	title='<%= LanguageUtil.get(request, "options") %>'
 />
 
 <%

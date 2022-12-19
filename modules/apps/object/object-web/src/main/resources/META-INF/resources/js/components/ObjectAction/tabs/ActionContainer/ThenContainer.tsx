@@ -31,8 +31,7 @@ import {
 	fetchObjectDefinitions,
 } from '../../fetchUtil';
 
-import './ActionBuilder.scss';
-
+import './ThenContainer.scss';
 import {ActionError} from '../..';
 
 interface ThenContainerProps {

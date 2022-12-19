@@ -15,7 +15,6 @@
 import {ActionError} from '../..';
 import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 import React from 'react';
-import './ActionBuilder.scss';
 import {WarningStates} from '../ActionBuilder';
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {ActionError} from '../..';
 import {
 	API,
 	Card,
@@ -23,9 +22,8 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+import {ActionError} from '../..';
 import PredefinedValuesTable from '../../PredefinedValuesTable';
-
-import './ActionBuilder.scss';
 import {fetchObjectDefinitionFields} from '../../fetchUtil';
 import {WarningStates} from '../ActionBuilder';
 import {ThenContainer} from './ThenContainer';

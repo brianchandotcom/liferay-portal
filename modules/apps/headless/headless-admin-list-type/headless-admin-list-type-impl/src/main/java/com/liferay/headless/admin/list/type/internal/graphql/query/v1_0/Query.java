@@ -29,6 +29,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -101,6 +102,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinitionByExternalReferenceCode(externalReferenceCode: ___){actions, dateCreated, dateModified, externalReferenceCode, id, listTypeEntries, name, name_i18n}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ListTypeDefinition listTypeDefinitionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource ->
+				listTypeDefinitionResource.
+					getListTypeDefinitionByExternalReferenceCode(
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinition(listTypeDefinitionId: ___){actions, dateCreated, dateModified, externalReferenceCode, id, listTypeEntries, name, name_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -150,7 +170,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeEntry(listTypeEntryId: ___){actions, dateCreated, dateModified, id, key, name, name_i18n, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeEntry(listTypeEntryId: ___){actions, dateCreated, dateModified, externalReferenceCode, id, key, name, name_i18n, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ListTypeEntry listTypeEntry(
@@ -162,6 +182,76 @@ public class Query {
 			this::_populateResourceContext,
 			listTypeEntryResource -> listTypeEntryResource.getListTypeEntry(
 				listTypeEntryId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeEntryByExternalReferenceCode(externalReferenceCode: ___){actions, dateCreated, dateModified, externalReferenceCode, id, key, name, name_i18n, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ListTypeEntry listTypeEntryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeEntryResource ->
+				listTypeEntryResource.getListTypeEntryByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	@GraphQLTypeExtension(ListTypeEntry.class)
+	public class GetListTypeDefinitionByExternalReferenceCodeTypeExtension {
+
+		public GetListTypeDefinitionByExternalReferenceCodeTypeExtension(
+			ListTypeEntry listTypeEntry) {
+
+			_listTypeEntry = listTypeEntry;
+		}
+
+		@GraphQLField
+		public ListTypeDefinition listTypeDefinitionByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_listTypeDefinitionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				listTypeDefinitionResource ->
+					listTypeDefinitionResource.
+						getListTypeDefinitionByExternalReferenceCode(
+							_listTypeEntry.getExternalReferenceCode()));
+		}
+
+		private ListTypeEntry _listTypeEntry;
+
+	}
+
+	@GraphQLTypeExtension(ListTypeDefinition.class)
+	public class GetListTypeEntryByExternalReferenceCodeTypeExtension {
+
+		public GetListTypeEntryByExternalReferenceCodeTypeExtension(
+			ListTypeDefinition listTypeDefinition) {
+
+			_listTypeDefinition = listTypeDefinition;
+		}
+
+		@GraphQLField
+		public ListTypeEntry listTypeEntryByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_listTypeEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				listTypeEntryResource ->
+					listTypeEntryResource.
+						getListTypeEntryByExternalReferenceCode(
+							_listTypeDefinition.getExternalReferenceCode()));
+		}
+
+		private ListTypeDefinition _listTypeDefinition;
+
 	}
 
 	@GraphQLName("ListTypeDefinitionPage")

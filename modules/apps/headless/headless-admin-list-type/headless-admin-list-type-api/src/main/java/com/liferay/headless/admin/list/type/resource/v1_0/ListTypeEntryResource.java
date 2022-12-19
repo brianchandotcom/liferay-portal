@@ -85,6 +85,14 @@ public interface ListTypeEntryResource {
 	public Response putListTypeEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public ListTypeEntry getListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ListTypeEntry putListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode, ListTypeEntry listTypeEntry)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

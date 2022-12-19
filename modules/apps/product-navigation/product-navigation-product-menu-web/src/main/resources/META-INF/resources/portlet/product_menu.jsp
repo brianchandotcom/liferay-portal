@@ -17,16 +17,18 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <c:if test="<%= productMenuDisplayContext.isShowProductMenu() %>">
-	<div aria-multiselectable="true" class="panel-group" data-qa-id="productMenuBody" id="<portlet:namespace />Accordion" role="tablist">
 
-		<%
-		List<PanelCategory> childPanelCategories = productMenuDisplayContext.getChildPanelCategories();
+	<%
+	List<PanelCategory> childPanelCategories = productMenuDisplayContext.getChildPanelCategories();
 
-		request.setAttribute("product_menu.jsp-childPanelCategoriesSize", childPanelCategories.size());
-		%>
+	request.setAttribute("product_menu.jsp-childPanelCategoriesSize", childPanelCategories.size());
 
+	boolean singleChildCategory = childPanelCategories.size() == 1;
+	%>
+
+	<div class="panel-group" data-qa-id="productMenuBody" id="<portlet:namespace />Accordion" role="<%= singleChildCategory ? StringPool.BLANK : "tablist" %>">
 		<c:choose>
-			<c:when test="<%= childPanelCategories.size() > 1 %>">
+			<c:when test="<%= !singleChildCategory %>">
 
 				<%
 				for (PanelCategory childPanelCategory : childPanelCategories) {
@@ -80,7 +82,7 @@
 				%>
 
 				<div class="panel panel-secondary">
-					<div class="panel-header panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Heading" role="tab">
+					<div class="panel-header panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Heading">
 						<div class="panel-title">
 							<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>">
 

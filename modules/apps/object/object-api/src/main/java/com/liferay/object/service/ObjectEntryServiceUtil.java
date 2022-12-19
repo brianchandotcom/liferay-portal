@@ -101,6 +101,14 @@ public class ObjectEntryServiceUtil {
 			groupId, objectRelationshipId, primaryKey, related, reverse);
 	}
 
+	public static com.liferay.portal.kernel.security.permission.resource.
+		ModelResourcePermission<ObjectEntry> getModelResourcePermission(
+				ObjectEntry objectEntry)
+			throws PortalException {
+
+		return getService().getModelResourcePermission(objectEntry);
+	}
+
 	public static ObjectEntry getObjectEntry(long objectEntryId)
 		throws PortalException {
 

@@ -65,8 +65,8 @@ function MiniCart({
 	const [actionURLs, setActionURLs] = useState(cartActionURLs);
 	const [CartViews, setCartViews] = useState({});
 	const [cartState, setCartState] = useState({
-		id: orderId,
 		channel: {channel},
+		id: orderId,
 		summary: {itemsQuantity},
 	});
 
@@ -111,6 +111,7 @@ function MiniCart({
 
 				setCartState((currentState) => {
 					latestCartState = {...currentState, ...updatedCart};
+
 					return latestCartState;
 				});
 

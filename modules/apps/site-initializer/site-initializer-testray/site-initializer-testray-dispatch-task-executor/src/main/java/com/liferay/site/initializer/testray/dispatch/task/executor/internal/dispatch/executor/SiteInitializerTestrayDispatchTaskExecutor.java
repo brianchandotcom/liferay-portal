@@ -86,7 +86,6 @@ import org.w3c.dom.NodeList;
  */
 @Component(
 	property = {
-		"dispatch.task.executor.cluster.mode=single-node",
 		"dispatch.task.executor.feature.flag=LPS-163118",
 		"dispatch.task.executor.name=testray",
 		"dispatch.task.executor.overlapping=false",
@@ -154,6 +153,11 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 	@Override
 	public String getName() {
 		return "testray";
+	}
+
+	@Override
+	public boolean isClusterModeSingle() {
+		return true;
 	}
 
 	private ObjectEntry _addObjectEntry(

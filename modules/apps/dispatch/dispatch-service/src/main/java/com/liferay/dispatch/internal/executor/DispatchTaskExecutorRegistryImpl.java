@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.internal.executor;
 
-import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.osgi.util.ServiceTrackerFactory;
@@ -26,11 +25,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -70,8 +67,11 @@ public class DispatchTaskExecutorRegistryImpl
 
 	@Override
 	public boolean isClusterModeSingle(String type) {
-		if (_clusterModeSingleNodeDispatchTaskExecutors.contains(type)) {
-			return true;
+		DispatchTaskExecutor dispatchTaskExecutor = fetchDispatchTaskExecutor(
+			type);
+
+		if (dispatchTaskExecutor != null) {
+			return dispatchTaskExecutor.isClusterModeSingle();
 		}
 
 		return false;
@@ -120,9 +120,6 @@ public class DispatchTaskExecutorRegistryImpl
 				clazz2.getName(), StringPool.PERIOD));
 	}
 
-	private static final String _KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE =
-		"dispatch.task.executor.cluster.mode";
-
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_HIDDEN_IN_UI =
 		"dispatch.task.executor.hidden-in-ui";
 
@@ -138,8 +135,6 @@ public class DispatchTaskExecutorRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DispatchTaskExecutorRegistryImpl.class);
 
-	private final List<String> _clusterModeSingleNodeDispatchTaskExecutors =
-		new CopyOnWriteArrayList<>();
 	private final Map<String, String> _dispatchTaskExecutorNames =
 		new ConcurrentHashMap<>();
 	private final Map<String, DispatchTaskExecutor> _dispatchTaskExecutors =
@@ -190,16 +185,6 @@ public class DispatchTaskExecutorRegistryImpl
 					dispatchTaskExecutorType,
 					(String)serviceReference.getProperty(
 						_KEY_DISPATCH_TASK_EXECUTOR_NAME));
-			}
-
-			String label = GetterUtil.getString(
-				serviceReference.getProperty(
-					_KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE),
-				DispatchTaskClusterMode.ALL_NODES.getLabel());
-
-			if (label.startsWith("single-node")) {
-				_clusterModeSingleNodeDispatchTaskExecutors.add(
-					dispatchTaskExecutorType);
 			}
 
 			_dispatchTaskExecutors.put(

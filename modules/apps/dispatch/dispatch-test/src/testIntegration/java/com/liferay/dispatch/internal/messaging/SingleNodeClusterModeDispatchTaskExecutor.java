@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"dispatch.task.executor.cluster.mode=single-node",
-		"dispatch.task.executor.type=" + SingleNodeClusterModeDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE
-	},
+	property = "dispatch.task.executor.type=" + SingleNodeClusterModeDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE,
 	service = DispatchTaskExecutor.class
 )
 public class SingleNodeClusterModeDispatchTaskExecutor
@@ -51,6 +48,11 @@ public class SingleNodeClusterModeDispatchTaskExecutor
 	@Override
 	public String getName() {
 		return DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE;
+	}
+
+	@Override
+	public boolean isClusterModeSingle() {
+		return true;
 	}
 
 	protected static final AtomicInteger executionCounter = new AtomicInteger(

@@ -348,6 +348,11 @@ public class FragmentEntryProcessorHelperImpl
 			_language.getLanguageId(locale), null);
 
 		if (Validator.isNull(pattern)) {
+			pattern = dateFormatJSONObject.getString(
+				_language.getLanguageId(LocaleUtil.getSiteDefault()), null);
+		}
+
+		if (Validator.isNull(pattern)) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				defaultPattern, locale);
 

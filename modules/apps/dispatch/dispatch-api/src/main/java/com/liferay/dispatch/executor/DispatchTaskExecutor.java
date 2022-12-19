@@ -43,4 +43,8 @@ public interface DispatchTaskExecutor {
 		return false;
 	}
 
+	public default boolean isHiddenInUI() {
+		return false;
+	}
+
 }

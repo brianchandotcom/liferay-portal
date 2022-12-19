@@ -376,13 +376,15 @@ definition {
 				value1 = "Organization Sites");
 
 			Type(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
+				key_text = "organization.group.names",
+				locator1 = "TextArea#ANY",
 				value1 = "${orgName}");
 
 			PortletEntry.save();
 
 			AssertTextEquals(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
+				key_text = "organization.group.names",
+				locator1 = "TextArea#ANY",
 				value1 = "${orgName}");
 		}
 
@@ -392,13 +394,15 @@ definition {
 				value1 = "Roles");
 
 			Type(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
+				key_text = "role.names",
+				locator1 = "TextArea#ANY",
 				value1 = "${roleTitle}");
 
 			PortletEntry.save();
 
 			AssertTextEquals(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
+				key_text = "role.names",
+				locator1 = "TextArea#ANY",
 				value1 = "${roleTitle}");
 		}
 
@@ -408,13 +412,15 @@ definition {
 				value1 = "User Groups");
 
 			Type(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
+				key_text = "user.group.names",
+				locator1 = "TextArea#ANY",
 				value1 = "${userGroupName}");
 
 			PortletEntry.save();
 
 			AssertTextEquals(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
+				key_text = "user.group.names",
+				locator1 = "TextArea#ANY",
 				value1 = "${userGroupName}");
 		}
 
@@ -424,13 +430,15 @@ definition {
 				value1 = "Organization Sites");
 
 			Type(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
+				key_text = "group.names",
+				locator1 = "TextArea#ANY",
 				value1 = "${siteName}");
 
 			PortletEntry.save();
 
 			AssertTextEquals(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
+				key_text = "group.names",
+				locator1 = "TextArea#ANY",
 				value1 = "${siteName}");
 		}
 	}
@@ -595,7 +603,8 @@ definition {
 			value1 = "Email Addresses");
 
 		Type(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
+			key_text = "admin.reserved.email.addresses",
+			locator1 = "TextArea#ANY",
 			value1 = "${userEmailAddress}");
 
 		PortletEntry.save();
@@ -606,7 +615,8 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
+			key_text = "admin.reserved.email.addresses",
+			locator1 = "TextArea#ANY",
 			value1 = "${userEmailAddress}");
 	}
 
@@ -621,7 +631,8 @@ definition {
 			value1 = "Screen Names");
 
 		Type(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
+			key_text = "admin.reserved.screen.names",
+			locator1 = "TextArea#ANY",
 			value1 = "${userScreenName}");
 
 		PortletEntry.save();
@@ -632,7 +643,8 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
+			key_text = "admin.reserved.screen.names",
+			locator1 = "TextArea#ANY",
 			value1 = "${userScreenName}");
 	}
 
@@ -720,19 +732,23 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		Type(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
+			key_text = "organization.group.names",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 
 		Type(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
+			key_text = "role.names",
+			locator1 = "TextArea#ANY",
 			value1 = "Power User\nUser");
 
 		Type(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
+			key_text = "group.names",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 
 		Type(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
+			key_text = "user.group.names",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 
 		PortalSettings.gotoConfiguration(
@@ -741,11 +757,13 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		Type(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
+			key_text = "admin.reserved.email.addresses",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 
 		Type(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
+			key_text = "admin.reserved.screen.names",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 
 		PortletEntry.save();
@@ -1012,7 +1030,8 @@ definition {
 			value1 = "Sites");
 
 		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
+			key_text = "group.names",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 
 		AssertTextEquals.assertPartialText(
@@ -1020,7 +1039,8 @@ definition {
 			value1 = "Organization Sites");
 
 		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
+			key_text = "organization.group.names",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 
 		AssertTextEquals.assertPartialText(
@@ -1028,7 +1048,8 @@ definition {
 			value1 = "Roles");
 
 		Type.clickAtType(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
+			key_text = "role.names",
+			locator1 = "TextArea#ANY",
 			value1 = "Power User\nUser");
 
 		AssertTextEquals.assertPartialText(
@@ -1036,7 +1057,8 @@ definition {
 			value1 = "User Groups");
 
 		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
+			key_text = "user.group.names",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 	}
 
@@ -1156,7 +1178,8 @@ definition {
 			value1 = "Screen Names");
 
 		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
+			key_text = "admin.reserved.screen.names",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 
 		AssertTextEquals.assertPartialText(
@@ -1164,7 +1187,8 @@ definition {
 			value1 = "Email Addresses");
 
 		AssertTextEquals(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
+			key_text = "admin.reserved.email.addresses",
+			locator1 = "TextArea#ANY",
 			value1 = "");
 	}
 

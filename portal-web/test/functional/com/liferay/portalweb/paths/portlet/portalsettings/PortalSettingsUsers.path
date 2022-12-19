@@ -29,18 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD</td>
-	<td>//textarea[contains(@id,'admin-reserved-screen-names')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER</td>
 	<td>//label[contains(@for,'admin-reserved-email-addresses')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD</td>
-	<td>//textarea[contains(@id,'admin-reserved-email-addresses')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,18 +47,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_USER_ASSOCIATIONS_SITES_FIELD</td>
-	<td>//textarea[contains(@id,'admin-default-group-names')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER</td>
 	<td>//label[contains(@for,'admin-default-organization-group-names')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD</td>
-	<td>//textarea[contains(@id,'admin-default-organization-group-names')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,18 +57,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD</td>
-	<td>//textarea[contains(@id,'admin-default-role-names')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER</td>
 	<td>//label[contains(@for,'admin-default-user-group-names')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD</td>
-	<td>//textarea[contains(@id,'admin-default-user-group-names')]</td>
 	<td></td>
 </tr>
 </tbody>

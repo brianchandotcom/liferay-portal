@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
@@ -79,26 +78,27 @@ public class SearchResponseImpl implements SearchResponse, Serializable {
 	}
 
 	@Override
+	public List<Document> getDocuments() {
+		if (_searchHits == null) {
+			return Collections.emptyList();
+		}
+
+		List<Document> documents = new ArrayList<>();
+
+		for (SearchHit searchHit : _searchHits.getSearchHits()) {
+			documents.add(searchHit.getDocument());
+		}
+
+		return documents;
+	}
+
+	@Override
 	public List<com.liferay.portal.kernel.search.Document> getDocuments71() {
 		if (_hits == null) {
 			return Collections.emptyList();
 		}
 
 		return Arrays.asList(_hits.getDocs());
-	}
-
-	@Override
-	public Stream<Document> getDocumentsStream() {
-		if (_searchHits == null) {
-			return Stream.empty();
-		}
-
-		List<SearchHit> list = _searchHits.getSearchHits();
-
-		return list.stream(
-		).map(
-			SearchHit::getDocument
-		);
 	}
 
 	@Override
@@ -116,11 +116,8 @@ public class SearchResponseImpl implements SearchResponse, Serializable {
 	}
 
 	@Override
-	public Stream<SearchResponse> getFederatedSearchResponsesStream() {
-		Collection<SearchResponse> searchResponses =
-			_federatedSearchResponsesMap.values();
-
-		return searchResponses.stream();
+	public Collection<SearchResponse> getFederatedSearchResponses() {
+		return _federatedSearchResponsesMap.values();
 	}
 
 	@Override

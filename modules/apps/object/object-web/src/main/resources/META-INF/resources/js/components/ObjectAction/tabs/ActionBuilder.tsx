@@ -73,6 +73,16 @@ type ObjectsOptionsList = Array<
 	}
 >;
 
+const triggerKeys = [
+	'liferay/commerce_order_status',
+	'liferay/commerce_payment_status',
+	'liferay/commerce_shipment_status',
+	'onAfterAdd',
+	'onAfterAttachmentDownload',
+	'onAfterDelete',
+	'onAfterUpdate',
+];
+
 export default function ActionBuilder({
 	errors,
 	isApproved,
@@ -190,6 +200,10 @@ export default function ActionBuilder({
 
 		return fields;
 	}, [currentObjectDefinitionFields]);
+
+	const showConditionContainer = values.objectActionTriggerKey
+		? triggerKeys.includes(values.objectActionTriggerKey)
+		: true;
 
 	useEffect(() => {
 		if (values.objectActionTriggerKey === 'onAfterDelete') {
@@ -525,57 +539,63 @@ export default function ActionBuilder({
 				</Card>
 			</Card>
 
-			<Card
-				disabled={values.objectActionTriggerKey === 'standalone'}
-				title={Liferay.Language.get('condition')}
-			>
-				<ClayForm.Group>
-					<ClayToggle
-						disabled={
-							values.objectActionTriggerKey === 'standalone'
-						}
-						label={Liferay.Language.get('enable-condition')}
-						name="condition"
-						onToggle={(enable) =>
-							setValues({
-								conditionExpression: enable ? '' : undefined,
-							})
-						}
-						toggled={!(values.conditionExpression === undefined)}
-					/>
-				</ClayForm.Group>
+			{showConditionContainer && (
+				<Card
+					disabled={values.objectActionTriggerKey === 'standalone'}
+					title={Liferay.Language.get('condition')}
+				>
+					<ClayForm.Group>
+						<ClayToggle
+							disabled={
+								values.objectActionTriggerKey === 'standalone'
+							}
+							label={Liferay.Language.get('enable-condition')}
+							name="condition"
+							onToggle={(enable) =>
+								setValues({
+									conditionExpression: enable
+										? ''
+										: undefined,
+								})
+							}
+							toggled={
+								!(values.conditionExpression === undefined)
+							}
+						/>
+					</ClayForm.Group>
 
-				{values.conditionExpression !== undefined && (
-					<ExpressionBuilder
-						error={errors.conditionExpression}
-						feedbackMessage={Liferay.Language.get(
-							'use-expressions-to-create-a-condition'
-						)}
-						label={Liferay.Language.get('expression-builder')}
-						name="conditionExpression"
-						onChange={({target: {value}}) =>
-							setValues({conditionExpression: value})
-						}
-						onOpenModal={() => {
-							const parentWindow = Liferay.Util.getOpener();
+					{values.conditionExpression !== undefined && (
+						<ExpressionBuilder
+							error={errors.conditionExpression}
+							feedbackMessage={Liferay.Language.get(
+								'use-expressions-to-create-a-condition'
+							)}
+							label={Liferay.Language.get('expression-builder')}
+							name="conditionExpression"
+							onChange={({target: {value}}) =>
+								setValues({conditionExpression: value})
+							}
+							onOpenModal={() => {
+								const parentWindow = Liferay.Util.getOpener();
 
-							parentWindow.Liferay.fire(
-								'openExpressionBuilderModal',
-								{
-									onSave: handleSave,
-									required: true,
-									source: values.conditionExpression,
-									validateExpressionURL,
-								}
-							);
-						}}
-						placeholder={Liferay.Language.get(
-							'create-an-expression'
-						)}
-						value={values.conditionExpression as string}
-					/>
-				)}
-			</Card>
+								parentWindow.Liferay.fire(
+									'openExpressionBuilderModal',
+									{
+										onSave: handleSave,
+										required: true,
+										source: values.conditionExpression,
+										validateExpressionURL,
+									}
+								);
+							}}
+							placeholder={Liferay.Language.get(
+								'create-an-expression'
+							)}
+							value={values.conditionExpression as string}
+						/>
+					)}
+				</Card>
+			)}
 
 			{warningAlerts.requiredFields && (
 				<ClayAlert

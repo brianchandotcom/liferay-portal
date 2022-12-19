@@ -12,18 +12,16 @@
  * details.
  */
 
-import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {useRef} from 'react';
+import {useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 
 import useStorage from '../../hooks/useStorage';
 import i18n from '../../i18n';
 import {TestrayIcon, TestrayIconBrand} from '../../images';
+import CompareRunsFloatingBox from '../CompareRunsFloatingBox';
 import TestrayIcons from '../Icons/TestrayIcon';
-import Tooltip from '../Tooltip';
-import CompareRun from './CompareRuns';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
 import TaskSidebar from './TasksSidebar';
@@ -31,7 +29,7 @@ import TaskSidebar from './TasksSidebar';
 const Sidebar = () => {
 	const {pathname} = useLocation();
 	const [expanded, setExpanded] = useStorage('sidebar', true);
-	const tooltipRef = useRef(null);
+	const [visible, setVisible] = useState(false);
 
 	const CompareRunsContent = (
 		<div className={classNames('cursor-pointer testray-sidebar-item')}>
@@ -71,34 +69,9 @@ const Sidebar = () => {
 						'testray-sidebar-item-expand': expanded,
 						'testray-sidebar-item-normal': !expanded,
 					})}
+					onClick={() => setVisible((show) => !show)}
 				>
-					<ClayPopover
-						alignPosition="right"
-						className={classNames('compare-runs-popover popover', {
-							'testray-sidebar-text': expanded,
-							'testray-sidebar-text-expanded': !expanded,
-						})}
-						closeOnClickOutside
-						disableScroll
-						header={i18n.translate('compare-runs')}
-						trigger={
-							<div>
-								{expanded ? (
-									CompareRunsContent
-								) : (
-									<Tooltip
-										position="right"
-										ref={tooltipRef}
-										title={i18n.translate('compare-runs')}
-									>
-										{CompareRunsContent}
-									</Tooltip>
-								)}
-							</div>
-						}
-					>
-						<CompareRun />
-					</ClayPopover>
+					{CompareRunsContent}
 				</div>
 			),
 		},
@@ -168,6 +141,12 @@ const Sidebar = () => {
 								);
 							}
 						)}
+
+						<CompareRunsFloatingBox
+							expanded={expanded}
+							setVisible={setVisible}
+							visible={visible}
+						/>
 
 						<div className="pb-5 pt-3">
 							<div className="divider divider-full" />

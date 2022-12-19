@@ -276,6 +276,12 @@ definition {
 		Click(
 			key_picklistOption = "${entryOption}",
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+
+		if (IsElementPresent(key_feedbackMessage = "The field value is invalid.", locator1 = "Form#FEEDBACK_MESSAGE")) {
+			WaitForElementNotPresent(
+				key_feedbackMessage = "The field value is invalid.",
+				locator1 = "Form#FEEDBACK_MESSAGE");
+		}
 	}
 
 	macro chooseEntryOnRelationshipFieldSpecific {
@@ -291,6 +297,12 @@ definition {
 		Click(
 			key_picklistOption = "${entryOption}",
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+
+		if (IsElementPresent(key_feedbackMessage = "The field value is invalid.", locator1 = "Form#FEEDBACK_MESSAGE")) {
+			WaitForElementNotPresent(
+				key_feedbackMessage = "The field value is invalid.",
+				locator1 = "Form#FEEDBACK_MESSAGE");
+		}
 
 		Button.clickSave();
 

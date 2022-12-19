@@ -1228,8 +1228,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 				samlSsoRequestContext, assertionConsumerService, issueDate);
 
 		return _webSsoProfileImpl.getSuccessSubject(
-			samlSsoRequestContext, assertionConsumerService, nameID,
-			subjectConfirmationData);
+			nameID, subjectConfirmationData);
 	}
 
 	private void _testVerifyAssertionSignature(String entityId)

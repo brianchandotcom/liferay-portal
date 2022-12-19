@@ -13,34 +13,55 @@
  * details.
  */
 
-import {ReactNode, createContext, useEffect, useReducer} from 'react';
+import {ReactNode, createContext, useEffect, useMemo, useReducer} from 'react';
 import {KeyedMutator} from 'swr';
 
 import {useFetch} from '../hooks/useFetch';
+import useStorage from '../hooks/useStorage';
 import {UserAccount} from '../services/rest';
 import {ActionMap} from '../types';
 
+export type RunId = number | null | undefined;
+
+export type CompareRuns = {
+	runA?: RunId;
+	runB?: RunId;
+	runId?: RunId;
+};
+
 type InitialState = {
+	compareRuns: CompareRuns;
 	myUserAccount?: UserAccount;
 };
 
 const initialState: InitialState = {
+	compareRuns: {
+		runA: undefined,
+		runB: undefined,
+		runId: undefined,
+	},
 	myUserAccount: undefined,
 };
 
-export enum AccountTypes {
+export const enum TestrayTypes {
 	SET_MY_USER_ACCOUNT = 'SET_MY_USER_ACCOUNT',
+	SET_RUN_A = 'SET_RUN_A',
+	SET_RUN_B = 'SET_RUN_B',
+	SET_RUN_ID = 'SET_RUN_ID',
 }
 
-type AccountPayload = {
-	[AccountTypes.SET_MY_USER_ACCOUNT]: {
+type TestrayPayload = {
+	[TestrayTypes.SET_MY_USER_ACCOUNT]: {
 		account: UserAccount;
 	};
+	[TestrayTypes.SET_RUN_A]: RunId;
+	[TestrayTypes.SET_RUN_B]: RunId;
+	[TestrayTypes.SET_RUN_ID]: RunId;
 };
 
-type AppActions = ActionMap<AccountPayload>[keyof ActionMap<AccountPayload>];
+type AppActions = ActionMap<TestrayPayload>[keyof ActionMap<TestrayPayload>];
 
-export const AccountContext = createContext<
+export const TestrayContext = createContext<
 	[
 		InitialState,
 		(param: AppActions) => void,
@@ -50,7 +71,7 @@ export const AccountContext = createContext<
 
 const reducer = (state: InitialState, action: AppActions) => {
 	switch (action.type) {
-		case AccountTypes.SET_MY_USER_ACCOUNT:
+		case TestrayTypes.SET_MY_USER_ACCOUNT:
 			const {account} = action.payload;
 
 			return {
@@ -58,15 +79,41 @@ const reducer = (state: InitialState, action: AppActions) => {
 				myUserAccount: account,
 			};
 
+		case TestrayTypes.SET_RUN_A:
+			return {
+				...state,
+				compareRuns: {...state.compareRuns, runA: action.payload},
+			};
+
+		case TestrayTypes.SET_RUN_B:
+			return {
+				...state,
+				compareRuns: {...state.compareRuns, runB: action.payload},
+			};
+
+		case TestrayTypes.SET_RUN_ID:
+			return {
+				...state,
+				compareRuns: {...state.compareRuns, runId: action.payload},
+			};
+
 		default:
 			return state;
 	}
 };
 
-const AccountContextProvider: React.FC<{
+const TestrayContextProvider: React.FC<{
 	children: ReactNode;
 }> = ({children}) => {
-	const [state, dispatch] = useReducer(reducer, initialState);
+	const [storageValue, setStorageValue] = useStorage<{
+		compareRuns: CompareRuns;
+	}>('compareRuns', undefined, sessionStorage);
+
+	const [state, dispatch] = useReducer(reducer, {
+		...initialState,
+		compareRuns: storageValue.compareRuns,
+	});
+
 	const {data: myUserAccount, mutate} = useFetch(
 		'/my-user-account',
 		(user: UserAccount) => ({
@@ -83,22 +130,30 @@ const AccountContextProvider: React.FC<{
 		})
 	);
 
+	const compareRuns = useMemo(() => state.compareRuns, [state.compareRuns]);
+
+	useEffect(() => {
+		if (compareRuns) {
+			setStorageValue({compareRuns});
+		}
+	}, [setStorageValue, compareRuns]);
+
 	useEffect(() => {
 		if (myUserAccount) {
 			dispatch({
 				payload: {
 					account: myUserAccount,
 				},
-				type: AccountTypes.SET_MY_USER_ACCOUNT,
+				type: TestrayTypes.SET_MY_USER_ACCOUNT,
 			});
 		}
 	}, [myUserAccount]);
 
 	return (
-		<AccountContext.Provider value={[state, dispatch, mutate]}>
+		<TestrayContext.Provider value={[state, dispatch, mutate]}>
 			{children}
-		</AccountContext.Provider>
+		</TestrayContext.Provider>
 	);
 };
 
-export default AccountContextProvider;
+export default TestrayContextProvider;

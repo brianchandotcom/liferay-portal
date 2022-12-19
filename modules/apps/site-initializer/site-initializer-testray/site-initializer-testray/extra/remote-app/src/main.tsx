@@ -16,8 +16,8 @@ import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 
 import TestrayRouter from './TestrayRouter';
-import AccountContextProvider from './context/AccountContext';
 import ClayIconProvider from './context/ClayIconProvider';
+import TestrayContextProvider from './context/TestrayContext';
 
 import './styles/index.scss';
 import ApplicationContextProvider from './context/ApplicationPropertiesContext';
@@ -44,11 +44,11 @@ class Testray extends HTMLElement {
 					}}
 				>
 					<ApplicationContextProvider properties={properties}>
-						<AccountContextProvider>
+						<TestrayContextProvider>
 							<ClayIconProvider>
 								<TestrayRouter />
 							</ClayIconProvider>
-						</AccountContextProvider>
+						</TestrayContextProvider>
 					</ApplicationContextProvider>
 				</SWRConfig>
 			);

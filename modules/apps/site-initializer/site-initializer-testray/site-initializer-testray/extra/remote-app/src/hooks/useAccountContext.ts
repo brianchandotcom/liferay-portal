@@ -14,12 +14,12 @@
 
 import {useContext} from 'react';
 
-import {AccountContext} from '../context/AccountContext';
+import {TestrayContext} from '../context/TestrayContext';
 
 const useAccountContext = () => {
-	const [accountContext] = useContext(AccountContext);
+	const [accountContext] = useContext(TestrayContext);
 
-	return accountContext;
+	return accountContext.myUserAccount;
 };
 
 export {useAccountContext};

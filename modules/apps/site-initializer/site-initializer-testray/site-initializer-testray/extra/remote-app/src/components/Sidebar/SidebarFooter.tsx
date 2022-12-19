@@ -16,7 +16,7 @@ import {Align} from '@clayui/drop-down';
 import classNames from 'classnames';
 import {useContext} from 'react';
 
-import {AccountContext} from '../../context/AccountContext';
+import {TestrayContext} from '../../context/TestrayContext';
 import i18n from '../../i18n';
 import {ForwardIcon} from '../../images';
 import {Liferay} from '../../services/liferay';
@@ -32,7 +32,7 @@ type SidebarProps = {
 };
 
 const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
-	const [{myUserAccount}] = useContext(AccountContext);
+	const [{myUserAccount}] = useContext(TestrayContext);
 	const MANAGE_DROPDOWN = useSidebarActions();
 
 	const loggedUserName = myUserAccount

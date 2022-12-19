@@ -16,7 +16,7 @@ import {useContext} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
-import {AccountContext} from '../../../context/AccountContext';
+import {TestrayContext} from '../../../context/TestrayContext';
 import {useFetch} from '../../../hooks/useFetch';
 import {Liferay} from '../../../services/liferay';
 import {UserAccount, liferayUserAccountsRest} from '../../../services/rest';
@@ -24,7 +24,7 @@ import {UserAccount, liferayUserAccountsRest} from '../../../services/rest';
 const UserOutlet = () => {
 	const {userId} = useParams();
 
-	const [{myUserAccount}, , mutateMyUserAccount] = useContext(AccountContext);
+	const [{myUserAccount}, , mutateMyUserAccount] = useContext(TestrayContext);
 	const {data, mutate} = useFetch(
 		userId ? liferayUserAccountsRest.getResource(userId as string) : null,
 		undefined

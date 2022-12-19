@@ -21,7 +21,7 @@ import {KeyedMutator} from 'swr';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
-import {AccountContext} from '../../../context/AccountContext';
+import {TestrayContext} from '../../../context/TestrayContext';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema from '../../../schema/yup';
@@ -47,7 +47,7 @@ const ChangeUserPassword: React.FC = () => {
 		userAccount: UserAccount;
 	} = useOutletContext();
 
-	const [{myUserAccount}] = useContext(AccountContext);
+	const [{myUserAccount}] = useContext(TestrayContext);
 
 	const {
 		form: {onClose, onError, onSave, onSubmit},

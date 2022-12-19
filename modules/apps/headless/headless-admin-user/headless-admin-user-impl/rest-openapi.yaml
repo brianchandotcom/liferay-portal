@@ -1166,7 +1166,7 @@ paths:
                     description:
                         "Account successfully created"
             tags: ["Account"]
-    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}":
+    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review
             description:
@@ -1185,7 +1185,7 @@ paths:
                       format: int64
                       type: integer
                 - in: path
-                  name: userAccountExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -1213,7 +1213,7 @@ paths:
                       format: int64
                       type: integer
                 - in: path
-                  name: userAccountExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -1223,7 +1223,7 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["AccountRole"]
-    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}":
+    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review
             description:
@@ -1236,7 +1236,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: userAccountExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -1258,7 +1258,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: userAccountExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
@@ -1268,7 +1268,7 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["UserAccount"]
-    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/account-roles":
+    "/accounts/by-external-reference-code/{accountExternalReferenceCode}/user-accounts/by-external-reference-code/{externalReferenceCode}/account-roles":
         get:
             # @review
             description:
@@ -1281,7 +1281,7 @@ paths:
                   schema:
                       type: string
                 - in: path
-                  name: userAccountExternalReferenceCode
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string

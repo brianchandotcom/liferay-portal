@@ -403,6 +403,7 @@ export default {
 	'user-groups': 'User Groups',
 	'user-information': 'User Information',
 	'users': 'Users',
+	'view-associete-build': 'View Associete Build',
 	'view-case': 'View Case',
 	'view-page': 'View Page',
 	'view-task': 'View Task',

@@ -87,15 +87,14 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	public void
 			deleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception {
 
 		deleteAccountAccountRoleUserAccountAssociation(
 			_accountResourceDTOConverter.getAccountEntryId(
 				accountExternalReferenceCode),
 			accountRoleId,
-			_userResourceDTOConverter.getUserId(
-				userAccountExternalReferenceCode));
+			_userResourceDTOConverter.getUserId(externalReferenceCode));
 	}
 
 	@Override
@@ -182,7 +181,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	public Page<AccountRole>
 			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception {
 
 		return Page.of(
@@ -190,8 +189,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 				_accountRoleLocalService.getAccountRoles(
 					_accountResourceDTOConverter.getAccountEntryId(
 						accountExternalReferenceCode),
-					_userResourceDTOConverter.getUserId(
-						userAccountExternalReferenceCode)),
+					_userResourceDTOConverter.getUserId(externalReferenceCode)),
 				accountRole -> _toAccountRole(accountRole)));
 	}
 
@@ -256,15 +254,14 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	public void
 			postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode, Long accountRoleId,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception {
 
 		postAccountAccountRoleUserAccountAssociation(
 			_accountResourceDTOConverter.getAccountEntryId(
 				accountExternalReferenceCode),
 			accountRoleId,
-			_userResourceDTOConverter.getUserId(
-				userAccountExternalReferenceCode));
+			_userResourceDTOConverter.getUserId(externalReferenceCode));
 	}
 
 	private AccountRole _toAccountRole(

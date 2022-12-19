@@ -48,18 +48,9 @@ export default function CSSClassSelectorField({
 	const helpTextId = useId();
 
 	const alignElementRef = useRef();
+	const dropdownRef = useRef();
 	const firstOptionRef = useRef();
 	const multiSelectRef = useRef();
-	const dropdownRef = useRef();
-
-	const onKeyDown = (event) => {
-		if (event.key === 'Escape') {
-			setDropdownActive(false);
-			setValue((previousValue) => previousValue.trim());
-
-			multiSelectRef.current?.focus();
-		}
-	};
 
 	const addItem = (newItem) => {
 		if (!newItem.trim()) {
@@ -84,6 +75,15 @@ export default function CSSClassSelectorField({
 		addItem(newItem);
 
 		multiSelectRef.current?.focus();
+	};
+
+	const onKeyDown = (event) => {
+		if (event.key === 'Escape') {
+			setDropdownActive(false);
+			setValue((previousValue) => previousValue.trim());
+
+			multiSelectRef.current?.focus();
+		}
 	};
 
 	return (

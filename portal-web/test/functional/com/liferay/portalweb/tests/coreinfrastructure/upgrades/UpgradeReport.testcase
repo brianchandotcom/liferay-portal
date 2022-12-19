@@ -187,12 +187,12 @@ definition {
 		task ("Look for the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-			var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
+			var upgradeReportOriginal = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
 		}
 
 		task ("Read the report. All upgrade processes are expected") {
-			if (!(contains("${fileContent}", "Top 20 longest running upgrade processes:"))) {
-				echo("${fileContent}");
+			if (!(contains("${upgradeReportOriginal}", "Top 20 longest running upgrade processes:"))) {
+				echo("${upgradeReportOriginal}");
 
 				fail("Upgrade report does not contains expected upgrades.");
 			}
@@ -207,50 +207,38 @@ definition {
 		}
 
 		task ("Look for the new upgrade report") {
-			var newFileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
+			var upgradeReportNew = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
 		}
 
 		task ("Read the new report. No upgrade processes are expected") {
-			if (!(contains("${newFileContent}", "No upgrade processes registered"))) {
-				echo("${newFileContent}");
+			if (!(contains("${upgradeReportNew}", "No upgrade processes registered"))) {
+				echo("${upgradeReportNew}");
 
-				fail("Upgrade report does contains unexpected upgrades.");
+				fail("New upgrade report contains unexpected upgrades.");
 			}
 		}
 
-		task ("Extract the list of reports present and split the files names") {
-			var reportsList = FileUtil.listFiles("${liferayHome}/tools/portal-tools-db-upgrade-client/reports");
+		task ("Look for the original upgrade report that has been renamed") {
+			var upgradeReportFilePattern = StringUtil.split("**/upgrade_report.info.[0-9]*");
 
-			var firstReportExtract = StringUtil.extractFirst("${reportsList}", ",");
+			var upgradeReportRenamedFilePath = FileUtil.getIncludedResourceURLs("${upgradeReportFilePattern}", "${liferayHome}/tools/portal-tools-db-upgrade-client/reports");
 
-			var firstReportFile = StringUtil.extractLast("${firstReportExtract}", "[");
-			var secondReportExtract = StringUtil.extractLast("${reportsList}", ",");
+			var upgradeReportRenamedFilePath = StringUtil.valueOf("${upgradeReportRenamedFilePath}");
 
-			var secondReportExtract = StringUtil.extractFirst("${secondReportExtract}", "]");
+			var upgradeReportRenamedFilePath = RegexUtil.replace("${upgradeReportRenamedFilePath}", "\[(.*)\]", "1");
 
-			var secondReportFile = StringUtil.trim("${secondReportExtract}");
+			var upgradeReportRenamedFilePath = StringUtil.replace("${upgradeReportRenamedFilePath}", "file:", "");
+
+			var upgradeReportRenamed = FileUtil.read("${upgradeReportRenamedFilePath}");
 		}
 
-		task ("Look for the first upgrade report generated") {
-			if ("${firstReportFile}" == "upgrade_report.info") {
-				var originReportFile = "${secondReportFile}";
-			}
-			else if ("${secondReportFile}" == "upgrade_report.info") {
-				var originReportFile = "${firstReportFile}";
-			}
+		task ("Compare original and renamed upgrade reports") {
+			if ("${upgradeReportRenamed}" != "${upgradeReportOriginal}") {
+				echo("Original upgrade report content: ${upgradeReportOriginal}");
 
-			var originFileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/${originReportFile}");
+				echo("Renamed upgrade report content: ${upgradeReportRenamed}");
 
-			echo("The first upgrade report generated now is: ${originReportFile}");
-		}
-
-		task ("Read the first upgrade report generated. Same list of upgrade processes present are expected") {
-			if (!(contains("${originFileContent}", "Top 20 longest running upgrade processes:"))) {
-				echo("The state of the first upgrade report generated was: ${fileContent}");
-
-				echo("The state of the first upgrade report generated now: ${originFileContent}");
-
-				fail("Original upgrade report does not contains expected upgrades.");
+				fail("Renamed upgrade report does not match original upgrade report.");
 			}
 		}
 	}

@@ -75,15 +75,21 @@
 			</div>
 		</c:when>
 		<c:when test="<%= statusDisplayContext.isNoSuchResourceException() %>">
-			<h3 class="alert alert-danger">
-				<liferay-ui:message key="not-found" />
-			</h3>
+			<liferay-layout:render-layout-utility-page-entry
+				type="<%= LayoutUtilityPageEntryTypesConstants.LAYOUT %>"
+			>
+				<div class="container pb-3 pt-3">
+					<h3 class="alert alert-danger">
+						<liferay-ui:message key="not-found" />
+					</h3>
 
-			<liferay-ui:message key="the-requested-resource-could-not-be-found" />
+					<liferay-ui:message key="the-requested-resource-could-not-be-found" />
 
-			<br /><br />
+					<br /><br />
 
-			<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+					<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+				</div>
+			</liferay-layout:render-layout-utility-page-entry>
 		</c:when>
 		<c:otherwise>
 			<h3 class="alert alert-danger">

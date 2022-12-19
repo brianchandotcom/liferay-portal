@@ -48,4 +48,13 @@ public class FieldAccountConstants {
 		"Integer", "Long", "String", "StringDate"
 	};
 
+	public static final String[] FILED_ACCOUNT_DEFAULTS = {
+		"accountEntryId", "companyId", "userId", "userName", "createDate",
+		"modifiedDate", "defaultBillingAddressId", "defaultCPaymentMethodKey",
+		"defaultShippingAddressId", "parentAccountEntryId", "description",
+		"domains", "emailAddress", "logoId", "name", "restrictMembership",
+		"taxExemptionCode", "taxIdNumber", "type_", "status", "statusByUserId",
+		"statusByUserName", "statusDate"
+	};
+
 }

@@ -19,6 +19,12 @@ package com.liferay.analytics.settings.rest.constants;
  */
 public class FieldPeopleConstants {
 
+	public static final String[] FIELD_CONTACT_DEFAULTS = {
+		"birthday", "classNameId", "classPK", "employeeNumber",
+		"employeeStatusId", "facebookSn", "hoursOfOperation", "jabberSn",
+		"jobClass", "male", "parentContactId", "skypeSn", "smsSn", "twitterSn"
+	};
+
 	public static final String[] FIELD_CONTACT_EXAMPLES = {
 		"31st Oct 2008", "12345", "12345", "12346-A", "0", "12345",
 		"9:00 AM - 5:00 PM", "johndoe", "Manager", "True", "12345", "12345",
@@ -32,7 +38,9 @@ public class FieldPeopleConstants {
 		"smsSn", "suffixListTypeId", "twitterSn"
 	};
 
-	public static final String[] FIELD_CONTACT_REQUIRED_NAMES = {"classPK"};
+	public static final String[] FIELD_CONTACT_REQUIRED_NAMES = {
+		"classNameId", "classPK"
+	};
 
 	public static final String[] FIELD_CONTACT_TYPES = {
 		"Date", "Long", "Long", "String", "String", "String", "String",
@@ -67,6 +75,13 @@ public class FieldPeopleConstants {
 		"Boolean", "String", "String", "Long", "String", "String", "String",
 		"String", "String", "String", "Long", "String", "String", "Date",
 		"String", "Long", "String", "Integer", "Long", "Long", "String"
+	};
+
+	public static final String[] FILED_USER_DEFAULTS = {
+		"agreedToTermsOfUse", "companyId", "contactId", "createDate",
+		"defaultUser", "emailAddress", "emailAddressVerified", "firstName",
+		"jobTitle", "languageId", "lastName", "middleName", "modifiedDate",
+		"status", "timeZoneId", "userId"
 	};
 
 }

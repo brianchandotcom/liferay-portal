@@ -14,6 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.util;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -363,6 +364,8 @@ public class SamlUtil {
 				authnRequest.getAssertionConsumerServiceIndex();
 			assertionConsumerServiceURL =
 				authnRequest.getAssertionConsumerServiceURL();
+			binding = GetterUtil.getString(
+				authnRequest.getProtocolBinding(), binding);
 		}
 
 		SAMLPeerEntityContext samlPeerEntityContext =
@@ -396,6 +399,11 @@ public class SamlUtil {
 
 				return assertionConsumerService;
 			}
+		}
+
+		if (Validator.isNotNull(assertionConsumerServiceURL)) {
+			return OpenSamlUtil.buildAssertionConsumerService(
+				binding, -1, false, assertionConsumerServiceURL);
 		}
 
 		for (AssertionConsumerService assertionConsumerService :

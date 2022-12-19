@@ -38,6 +38,12 @@ const FieldListSidebar = ({title}) => {
 			<Sidebar.Header>
 				<Sidebar.Title className="mb-3" title={title} />
 
+				<div
+					aria-live="polite"
+					className="sr-only"
+					id="screenReaderSearchResult"
+				></div>
+
 				<ClayForm onSubmit={(event) => event.preventDefault()}>
 					<Sidebar.SearchInput
 						onSearch={(keywords) => setSearchTerm(keywords)}

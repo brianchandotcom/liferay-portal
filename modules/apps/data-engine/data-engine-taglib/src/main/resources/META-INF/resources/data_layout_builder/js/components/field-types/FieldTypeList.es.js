@@ -96,6 +96,44 @@ const FieldTypeList = ({
 		})
 		.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
 
+	const screenReaderSearchResult = document.getElementById(
+		'screenReaderSearchResult'
+	);
+
+	if (screenReaderSearchResult) {
+		if (keywords !== '') {
+			if (filteredFieldTypes.length) {
+				screenReaderSearchResult.innerText = sub(
+					Liferay.Language.get(
+						'x-results-returned-for-the-search-term-x'
+					),
+					[filteredFieldTypes.length, keywords]
+				);
+			}
+			else {
+				screenReaderSearchResult.innerText = sub(
+					Liferay.Language.get(
+						`${sub(
+							Liferay.Language.get(
+								'there-are-no-results-for-the-search-term-x'
+							),
+							[keywords]
+						)} ${Liferay.Language.get(
+							'check-your-spelling-or-search-for-a-different-term'
+						)}`
+					),
+					[filteredFieldTypes.length, keywords]
+				);
+			}
+		}
+		else {
+			screenReaderSearchResult.innerText = sub(
+				Liferay.Language.get('search-field-is-empty'),
+				[filteredFieldTypes.length, keywords]
+			);
+		}
+	}
+
 	if (showEmptyState && !filteredFieldTypes.length) {
 		return (
 			<ClayEmptyState

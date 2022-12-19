@@ -29,7 +29,11 @@ export declare function updateFormattedItems(
 	formattedItems: TFormattedItems,
 	checked: boolean
 ): TFormattedItems;
-export declare function getFormattedItems(items: TItem[]): TFormattedItems;
+export declare function formattingItems(items: TItem[]): TFormattedItems;
+export declare function selectFormattedItems(
+	formattedItems: TFormattedItems,
+	rows: string[]
+): TFormattedItems;
 export declare function getIds(
 	items: TFormattedItems,
 	initialIds: number[]

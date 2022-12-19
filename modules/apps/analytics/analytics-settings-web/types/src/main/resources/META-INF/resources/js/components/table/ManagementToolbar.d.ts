@@ -18,7 +18,6 @@ interface IManagementToolbarProps {
 	addItemTitle?: string;
 	columns: TColumn[];
 	disabled: boolean;
-	makeRequest: () => void;
 	onAddItem?: () => void;
 	showCheckbox: boolean;
 }

@@ -19,15 +19,6 @@ declare type TResult<TData> = {
 	loading: boolean;
 	refetch: () => void;
 };
-export declare type TUseLazyRequest<TData> = {
-	data: TData | null;
-	error: boolean;
-	loading: boolean;
-};
-export declare function useLazyRequest<TData, TParams = any>(
-	requestFn: TRequestFn,
-	params?: TParams
-): [() => void, TUseLazyRequest<TData>];
 export declare function useRequest<TData, TParams = any>(
 	requestFn: TRequestFn,
 	params?: TParams

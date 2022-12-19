@@ -61,7 +61,7 @@ const TaskHeaderActions = () => {
 		onSave: async (newUserIds: number[]) => {
 			await testrayTaskUsersImpl.assign(testrayTask.id, newUserIds);
 
-					revalidateTaskUser();
+			revalidateTaskUser();
 		},
 	});
 
@@ -97,22 +97,52 @@ const TaskHeaderActions = () => {
 					{i18n.sub('edit-x', 'task')}
 				</ClayButton>
 
-				<ClayButton
-					displayType="secondary"
-					onClick={() => {
-						const fn = subTaskAllCompleted
-							? (task: TestrayTask) =>
-									testrayTaskImpl.complete(task)
-							: (task: TestrayTask) =>
-									testrayTaskImpl.abandon(task);
+				{[TaskStatuses.ABANDONED, TaskStatuses.COMPLETE].includes(
+					testrayTask.dueStatus.key as TaskStatuses
+				) ? (
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={async () => {
+								const response = await testrayTaskImpl.reanalyze(
+									testrayTask
+								);
 
-						fn(testrayTask).then(mutateTask);
-					}}
-				>
-					{i18n.translate(
-						subTaskAllCompleted ? 'complete' : 'abandon'
-					)}
-				</ClayButton>
+								mutateTask(response);
+
+								await testrayTaskUsersImpl.assign(
+									response.id,
+									Number(Liferay.ThemeDisplay.getUserId())
+								);
+
+								revalidateTaskUser();
+							}}
+						>
+							{i18n.translate('reanalyze')}
+						</ClayButton>
+
+						<ClayButton disabled displayType="secondary">
+							{i18n.translate('delete')}
+						</ClayButton>
+					</ClayButton.Group>
+				) : (
+					<ClayButton
+						displayType="secondary"
+						onClick={() => {
+							const fn = subTaskAllCompleted
+								? (task: TestrayTask) =>
+										testrayTaskImpl.complete(task)
+								: (task: TestrayTask) =>
+										testrayTaskImpl.abandon(task);
+
+							fn(testrayTask).then(mutateTask);
+						}}
+					>
+						{i18n.translate(
+							subTaskAllCompleted ? 'complete' : 'abandon'
+						)}
+					</ClayButton>
+				)}
 			</ClayButton.Group>
 
 			<TestflowAssignUserModal modal={modal} type={modalType} />

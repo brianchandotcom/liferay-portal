@@ -144,17 +144,11 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		);
 	}
 
-	public async update(
-		id: number,
-		data: Partial<TaskForm>
-	): Promise<TestrayTask> {
-		const task = await super.update(id, data);
-
-		if (data.dueStatus === TaskStatuses.IN_ANALYSIS) {
-			await this.assignUsers(id, data.userIds as number[]);
-		}
-
-		return task;
+	public async reanalyze(task: TestrayTask) {
+		return this.update(task.id, {
+			dueStatus: TaskStatuses.IN_ANALYSIS,
+			name: task.name as string,
+		});
 	}
 
 	protected async validate(task: TaskForm, id?: number) {

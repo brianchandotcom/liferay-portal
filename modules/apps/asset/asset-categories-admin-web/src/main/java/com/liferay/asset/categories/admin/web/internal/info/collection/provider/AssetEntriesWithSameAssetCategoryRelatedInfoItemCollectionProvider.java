@@ -127,17 +127,20 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Override
 	public InfoForm getConfigurationInfoForm() {
-		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
-
-		infoFieldSetEntries.add(_getItemTypesInfoField());
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166275"))) {
-			infoFieldSetEntries.addAll(_getAssetCategoryRuleInfoFields());
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166275"))) {
+			return InfoForm.builder(
+			).infoFieldSetEntry(
+				_getItemTypesInfoField()
+			).build();
 		}
 
 		return InfoForm.builder(
-		).infoFieldSetEntries(
-			infoFieldSetEntries
+		).infoFieldSetEntry(
+			_getItemTypesInfoField()
+		).infoFieldSetEntry(
+			_getAssetCategoryRuleInfoField()
+		).infoFieldSetEntry(
+			_getSpecificAssetCategoryIdInfoField()
 		).build();
 	}
 
@@ -151,8 +154,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return AssetCategory.class;
 	}
 
-	private List<InfoFieldSetEntry> _getAssetCategoryRuleInfoFields() {
-		InfoField assetCategoryRuleInfoField = InfoField.builder(
+	private InfoFieldSetEntry _getAssetCategoryRuleInfoField() {
+		return InfoField.builder(
 		).infoFieldType(
 			SelectInfoFieldType.INSTANCE
 		).namespace(
@@ -179,22 +182,6 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		).localizable(
 			true
 		).build();
-
-		InfoField specificAssetCategoryIdInfoField = InfoField.builder(
-		).infoFieldType(
-			TextInfoFieldType.INSTANCE
-		).namespace(
-			StringPool.BLANK
-		).name(
-			"specificAssetCategoryId"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "category")
-		).localizable(
-			false
-		).build();
-
-		return ListUtil.fromArray(
-			assetCategoryRuleInfoField, specificAssetCategoryIdInfoField);
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(
@@ -346,6 +333,21 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			).build(),
 			serviceContext.getCompanyId(), null, themeDisplay.getLayout(), null,
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
+	}
+
+	private InfoFieldSetEntry _getSpecificAssetCategoryIdInfoField() {
+		return InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).namespace(
+			StringPool.BLANK
+		).name(
+			"specificAssetCategoryId"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "category")
+		).localizable(
+			false
+		).build();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

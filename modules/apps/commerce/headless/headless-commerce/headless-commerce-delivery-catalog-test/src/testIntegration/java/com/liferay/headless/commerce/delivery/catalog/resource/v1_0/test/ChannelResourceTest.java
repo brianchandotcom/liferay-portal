@@ -76,7 +76,7 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				siteGroupId = RandomTestUtil.randomLong();
+				siteGroupId = testGroup.getGroupId();
 				type = CommerceChannelConstants.CHANNEL_TYPE_SITE;
 			}
 		};
@@ -85,14 +85,14 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 	protected Channel testGetChannelsPage_addChannel(Channel channel)
 		throws Exception {
 
-		return _addChannel(channel);
+		return _addCommerceChannel(channel);
 	}
 
 	protected Channel testGraphQLChannel_addChannel() throws Exception {
-		return _addChannel(randomChannel());
+		return _addCommerceChannel(randomChannel());
 	}
 
-	private Channel _addChannel(Channel channel) throws Exception {
+	private Channel _addCommerceChannel(Channel channel) throws Exception {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.addCommerceChannel(
 				channel.getExternalReferenceCode(), channel.getSiteGroupId(),
@@ -101,10 +101,6 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 
 		_commerceChannels.add(commerceChannel);
 
-		return _toChannel(commerceChannel);
-	}
-
-	private Channel _toChannel(CommerceChannel commerceChannel) {
 		return new Channel() {
 			{
 				currencyCode = commerceChannel.getCommerceCurrencyCode();

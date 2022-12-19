@@ -626,12 +626,22 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry objectEntry, UriInfo uriInfo)
 		throws Exception {
 
-		return ActionUtil.addAction(
+		Map<String, String> actionMap = ActionUtil.addAction(
 			actionName, ObjectEntryResourceImpl.class,
 			objectEntry.getObjectEntryId(), methodName, null,
 			objectEntry.getUserId(),
 			_getObjectEntryPermissionName(objectEntry.getObjectDefinitionId()),
 			objectEntry.getGroupId(), uriInfo);
+
+		if (actionMap != null) {
+			return actionMap;
+		}
+
+		return ActionUtil.addAction(
+			actionName, ObjectEntryResourceImpl.class,
+			objectEntry.getObjectEntryId(), methodName, null,
+			_objectEntryService.getModelResourcePermission(objectEntry),
+			uriInfo);
 	}
 
 	private void _checkObjectEntryObjectDefinitionId(

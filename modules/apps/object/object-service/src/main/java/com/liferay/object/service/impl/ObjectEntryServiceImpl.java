@@ -193,6 +193,19 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
+	public ModelResourcePermission<ObjectEntry> getModelResourcePermission(
+			ObjectEntry objectEntry)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		return _modelResourcePermissionsServiceTrackerMap.getService(
+			objectDefinition.getClassName());
+	}
+
+	@Override
 	public ObjectEntry getObjectEntry(long objectEntryId)
 		throws PortalException {
 

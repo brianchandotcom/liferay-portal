@@ -22,10 +22,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 
 <react:component
 	module="js/ProductMenuTree"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"productMenuTreeData", layoutsTreeDisplayContext.getProductMenuTreeData()
-		).build()
-	%>'
+	props="<%= layoutsTreeDisplayContext.getData() %>"
 	servletContext="<%= application %>"
 />

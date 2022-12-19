@@ -117,7 +117,7 @@ public class LayoutsTreeDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getProductMenuTreeData() throws Exception {
+	public Map<String, Object> getData() throws Exception {
 		Map<String, Object> config = HashMapBuilder.<String, Object>put(
 			"addCollectionLayoutURL", _setSelPlid(_getAddCollectionLayoutURL())
 		).put(

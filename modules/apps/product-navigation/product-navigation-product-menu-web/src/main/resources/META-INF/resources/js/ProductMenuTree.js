@@ -35,7 +35,7 @@ export default function ProductMenuTree({portletNamespace, ...props}) {
 		selectedSiteNavigationMenuItemId,
 		showAddIcon,
 		siteNavigationMenuItems,
-	} = props.productMenuTreeData;
+	} = props;
 
 	const {
 		addCollectionLayoutURL,

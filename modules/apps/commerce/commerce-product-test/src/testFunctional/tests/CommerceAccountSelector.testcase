@@ -137,9 +137,7 @@ definition {
 		}
 
 		task ("THEN the modal closes and the account is not created") {
-			AssertTextEquals(
-				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_MENU_SELECTED_ACCOUNT",
-				value1 = "Select Account");
+			AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND");
 
 			Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
@@ -201,8 +199,92 @@ definition {
 
 	@description = "COMMERCE-9022. As a Sales Agent, I want to be able to create a new Account from the account selector"
 	@priority = "3"
+	test CanCheckoutAfterInFlowAccountCreation {
+		property portal.acceptance = "true";
+
+		task ("GIVEN a Minium site created and the catalog page is reached") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
+
+		task ("WHEN an account is in-flow created") {
+			Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+			Button.click(button = "Create New Account");
+
+			CommerceAcceleratorsInitializer.createNewAccountInFlow(accountName = "Commerce Account");
+		}
+
+		task ("AND a buyer user is associated with the account") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceNavigator.gotoEntry(entryName = "Commerce Account");
+
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Commerce Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "ttest",
+				requirePasswordReset = "true",
+				userScreenName = "buyeruser");
+		}
+
+		task ("AND the buyer user logs in and reaches the catalog page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				newPassword = "test",
+				password = "ttest",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "2");
+
+		CommerceCheckout.gotoCheckoutViaMiniCart();
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			paymentMethod = "Money Order",
+			productName = "ABS Sensor",
+			productQuantity = "2",
+			productUnitPrice = "50",
+			shippingMethod = "Standard");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+			value1 = "Success! Your order has been processed.");
+	}
+
+	@description = "COMMERCE-9022. As a Sales Agent, I want to be able to create a new Account from the account selector"
+	@priority = "3"
 	test CanCreateNewAccountInFlow {
 		property portal.acceptance = "true";
+
+		task ("Setup: Add an organization") {
+			JSONOrganization.addOrganization(
+				organizationName = "Minium",
+				organizationSite = "false");
+		}
 
 		task ("GIVEN a minium site is created and the Catalog page reached") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -219,14 +301,16 @@ definition {
 		}
 
 		task ("AND the user input at least the required field and saves") {
-			CommerceAcceleratorsInitializer.createNewAccountInFlow(accountName = "Commerce Account");
+			CommerceAcceleratorsInitializer.createNewAccountInFlow(
+				accountDescription = "Account Description",
+				accountExternalReferenceCode = "EXTERNALREFCODE",
+				accountName = "Commerce Account",
+				accountOrganizationsList = "Minium");
 		}
 
 		task (" THEN the new account is created and the user is able to place an order") {
-			Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
-
 			AssertTextEquals(
-				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_MENU_SELECTED_ACCOUNT",
+				locator1 = "CommerceFrontStore#ACCOUNT_SELECTOR_SELECTED_ACCOUNT",
 				value1 = "Commerce Account");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
@@ -234,6 +318,13 @@ definition {
 			AssertElementPresent(
 				key_tableEntry = "Commerce Account",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+
+			CommerceNavigator.gotoEntry(entryName = "Commerce Account");
+
+			CommerceEntry.viewAccountManagementAcccountEntry(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				organizationsList = "Minium");
 
 			ApplicationsMenu.gotoSite(site = "Minium");
 

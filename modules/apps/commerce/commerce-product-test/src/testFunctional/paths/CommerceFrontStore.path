@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ACCOUNT_SELECTOR_SELECTED_ACCOUNT</td>
+	<td>//div[contains(@class,'account-name')]/span/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COUPON_CODE_BODY</td>
 	<td>//div[@class='coupon-code-body']/h3[text()='${key_couponCode}']</td>
 	<td></td>

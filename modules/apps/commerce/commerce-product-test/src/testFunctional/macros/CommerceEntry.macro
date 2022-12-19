@@ -1507,6 +1507,51 @@ definition {
 		}
 	}
 
+	macro viewAccountManagementAcccountEntry {
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${accountName}");
+
+		AssertTextEquals(
+			key_typeName = "${accountType}",
+			locator1 = "TextInput#TYPE",
+			value1 = "${accountType}");
+
+		if (isSet(accountTaxID)) {
+			AssertTextEquals(
+				key_fieldLabel = "Tax ID",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${accountTaxID}");
+		}
+
+		if (isSet(accountDefaultBilling)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Default Billing",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${accountDefaultBilling}");
+		}
+
+		if (isSet(accountDefaultShipping)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Default Shipping",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${accountDefaultShipping}");
+		}
+
+		if (isSet(accountOrganizationsList)) {
+			AssertClick(
+				locator1 = "NavBar#ORGANIZATIONS",
+				value1 = "Organizations");
+
+			for (var accountOrganizations : list "${accountOrganizationsList}") {
+				AssertClickNoError(
+					key_entryName = "${accountOrganizations}",
+					locator1 = "CommerceNavigation#ENTRY_NAME",
+					value1 = "${accountOrganizations}");
+			}
+		}
+	}
+
 	macro viewAccountsEntry {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -1525,11 +1570,11 @@ definition {
 			locator1 = "TextInput#TYPE",
 			value1 = "${accountType}");
 
-		if (isSet(accountVatNumber)) {
+		if (isSet(accountTaxID)) {
 			AssertTextEquals(
-				key_fieldLabel = "VAT Number",
+				key_fieldLabel = "Tax ID",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${accountVatNumber}");
+				value1 = "${accountTaxID}");
 		}
 
 		if (isSet(accountDefaultBilling)) {

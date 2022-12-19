@@ -177,6 +177,37 @@ definition {
 
 		PortletEntry.inputName(name = "${accountName}");
 
+		if (isSet(accountOrganizationsList)) {
+			for (var accountOrganizations : list "${accountOrganizationsList}") {
+				Type(
+					key_fieldLabel = "Organizations",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "${accountOrganizations}");
+
+				Click.mouseDownMouseUp(
+					key_organizationName = "${accountOrganizations}",
+					locator1 = "CommerceAccelerators#ORGANIZATION_AUTOCOMPLETE_SPECIFIC");
+			}
+		}
+
+		if (isSet(accountTaxId)) {
+			PortletEntry.inputText(
+				fieldLabel = "Tax ID",
+				text = "${accountTaxId}");
+		}
+
+		if (isSet(accountExternalReferenceCode)) {
+			PortletEntry.inputText(
+				fieldLabel = "External Reference Code",
+				text = "${accountExternalReferenceCode}");
+		}
+
+		if (isSet(accountDescription)) {
+			Type(
+				locator1 = "CommerceAccelerators#IN_FLOW_ACCOUNTS_MODAL_DESCRIPTION",
+				value1 = "${accountDescription}");
+		}
+
 		Button.click(button = "Create");
 	}
 

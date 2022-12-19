@@ -21,6 +21,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION_AUTOCOMPLETE_SPECIFIC</td>
+	<td>//div[contains(@class,'autocomplete-dropdown-menu')]//ul/li//button[.='${key_organizationName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IN_FLOW_ACCOUNTS_MODAL_DESCRIPTION</td>
+	<td>//textarea[contains(@name,'accountDescription')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_ORDER_NAME</td>
 	<td>xpath=(//div[contains(@class,'dnd-td') and contains(text(),'${accountName}')])[1]</td>
 	<td></td>

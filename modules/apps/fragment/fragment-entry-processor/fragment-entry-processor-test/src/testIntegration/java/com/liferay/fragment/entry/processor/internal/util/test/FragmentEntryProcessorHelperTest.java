@@ -15,6 +15,7 @@
 package com.liferay.fragment.entry.processor.internal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
@@ -198,8 +199,9 @@ public class FragmentEntryProcessorHelperTest {
 			"<script>alert(\"", RandomTestUtil.randomString(), "\")</script>");
 
 		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-			ddmFormField, _ddmFormValuesToFieldsConverter, fieldValue,
-			_group.getGroupId(), _journalConverter);
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, fieldValue, _group.getGroupId(),
+			_journalConverter);
 
 		Assert.assertEquals(
 			_html.escape(fieldValue),
@@ -226,8 +228,9 @@ public class FragmentEntryProcessorHelperTest {
 			"<p>", RandomTestUtil.randomString(), "</p>");
 
 		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-			ddmFormField, _ddmFormValuesToFieldsConverter, fieldValue,
-			_group.getGroupId(), _journalConverter);
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, fieldValue, _group.getGroupId(),
+			_journalConverter);
 
 		Assert.assertEquals(
 			fieldValue,
@@ -573,6 +576,9 @@ public class FragmentEntryProcessorHelperTest {
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -464,7 +465,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 			DDMFormFieldTypeConstants.SELECT);
 
 		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-			ddmFormField, _ddmFormValuesToFieldsConverter,
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter,
 			JSONUtil.putAll(
 				expectedKey1, expectedKey2
 			).toString(),
@@ -532,7 +534,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 			DDMFormFieldTypeConstants.SELECT);
 
 		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-			ddmFormField, _ddmFormValuesToFieldsConverter, StringPool.BLANK,
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, StringPool.BLANK,
 			_group.getGroupId(), _journalConverter);
 
 		TemplateEntry journalArticleTemplateEntry =
@@ -587,7 +590,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 			DDMFormFieldTypeConstants.SELECT);
 
 		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
-			ddmFormField, _ddmFormValuesToFieldsConverter,
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter,
 			JSONUtil.put(
 				expectedKey
 			).toString(),
@@ -723,6 +727,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;

@@ -87,7 +87,7 @@ export function updateFormattedItems(
 	return updatedItems;
 }
 
-export function getFormattedItems(items: TItem[]): TFormattedItems {
+export function formattingItems(items: TItem[]): TFormattedItems {
 	const formattedItems: TFormattedItems = {};
 
 	for (let i = 0; i < items.length; i++) {
@@ -97,6 +97,22 @@ export function getFormattedItems(items: TItem[]): TFormattedItems {
 	}
 
 	return formattedItems;
+}
+
+export function selectFormattedItems(
+	formattedItems: TFormattedItems,
+	rows: string[]
+): TFormattedItems {
+	let selectedFormattedItems = {};
+
+	rows.forEach((rowId) => {
+		selectedFormattedItems = {
+			...selectedFormattedItems,
+			[rowId]: formattedItems[rowId],
+		};
+	});
+
+	return selectedFormattedItems;
 }
 
 export function getIds(items: TFormattedItems, initialIds: number[]): number[] {

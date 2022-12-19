@@ -14,8 +14,8 @@
 
 import React, {useEffect} from 'react';
 
-import {DEFAULT_PAGINATION, TPagination} from '../../utils/pagination';
-import {useLazyRequest, useRequest} from '../../utils/useRequest';
+import {TPagination} from '../../utils/pagination';
+import {useRequest} from '../../utils/useRequest';
 import Content from './Content';
 import TableContext, {Events, useData, useDispatch} from './Context';
 import ManagementToolbar from './ManagementToolbar';
@@ -50,13 +50,7 @@ export function Table<TRawItem>({
 	requestFn,
 	showCheckbox = true,
 }: ITableProps<TRawItem>) {
-	const {
-		filter,
-		formattedItems,
-		globalChecked,
-		keywords,
-		pagination,
-	} = useData();
+	const {filter, formattedItems, keywords, pagination} = useData();
 	const dispatch = useDispatch();
 
 	const {data, error, loading, refetch} = useRequest<
@@ -70,31 +64,6 @@ export function Table<TRawItem>({
 			pageSize: pagination.pageSize,
 		},
 	});
-
-	const [makeRequest, lazyResult] = useLazyRequest<
-		TData<TRawItem>,
-		TTableRequestParams
-	>(requestFn, {
-		filter,
-		keywords: '',
-		pagination: {
-			page: DEFAULT_PAGINATION.page,
-			pageSize: pagination.maxCount,
-		},
-	});
-
-	useEffect(() => {
-		if (lazyResult.data) {
-			dispatch({
-				payload: {
-					globalChecked: !globalChecked,
-					items: mapperItems(lazyResult.data.items),
-				},
-				type: Events.ToggleGlobalCheckbox,
-			});
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lazyResult.data]);
 
 	useEffect(() => {
 		if (data) {
@@ -133,10 +102,7 @@ export function Table<TRawItem>({
 			<ManagementToolbar
 				addItemTitle={addItemTitle}
 				columns={columns}
-				disabled={
-					disabled || (empty && !keywords) || lazyResult.loading
-				}
-				makeRequest={makeRequest}
+				disabled={disabled || (empty && !keywords)}
 				onAddItem={onAddItem}
 				showCheckbox={showCheckbox}
 			/>
@@ -144,8 +110,8 @@ export function Table<TRawItem>({
 			<StateRenderer
 				empty={empty}
 				emptyState={emptyState}
-				error={error || lazyResult.error}
-				loading={loading || lazyResult.loading}
+				error={error}
+				loading={loading}
 				refetch={refetch}
 			>
 				<Content

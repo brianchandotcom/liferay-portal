@@ -29,7 +29,6 @@ interface IManagementToolbarProps {
 	addItemTitle?: string;
 	columns: TColumn[];
 	disabled: boolean;
-	makeRequest: () => void;
 	onAddItem?: () => void;
 	showCheckbox: boolean;
 }
@@ -38,7 +37,6 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 	addItemTitle = Liferay.Language.get('add-item'),
 	columns,
 	disabled,
-	makeRequest,
 	onAddItem,
 	showCheckbox,
 }) => {
@@ -62,7 +60,11 @@ const ManagementToolbar: React.FC<IManagementToolbarProps> = ({
 							<ClayCheckbox
 								checked={globalChecked}
 								disabled={disabled}
-								onChange={makeRequest}
+								onChange={() => {
+									dispatch({
+										type: Events.ToggleGlobalCheckbox,
+									});
+								}}
 							/>
 						</ClayManagementToolbar.Item>
 					)}

@@ -16,7 +16,7 @@ import {DEFAULT_FILTER, OrderBy} from '../../utils/filter';
 import {DEFAULT_PAGINATION} from '../../utils/pagination';
 import {TFormattedItems, TTableRequestParams} from './types';
 import {
-	getFormattedItems,
+	formattingItems,
 	getGlobalChecked,
 	getIds,
 	getOrderBy,
@@ -371,10 +371,10 @@ describe('updateFormattedItems', () => {
 	});
 });
 
-describe('getFormattedItems', () => {
+describe('formattingItems', () => {
 	it('returns formatted items', () => {
 		expect(
-			getFormattedItems([
+			formattingItems([
 				{
 					checked: false,
 					columns: [
@@ -447,7 +447,7 @@ describe('getFormattedItems', () => {
 	});
 
 	it('returns empty formatted items', () => {
-		expect(getFormattedItems([])).toEqual({});
+		expect(formattingItems([])).toEqual({});
 	});
 });
 

@@ -64,31 +64,6 @@ function useInternalRequest<TData>(
 	return [_requestFn, {data, error, loading}];
 }
 
-export type TUseLazyRequest<TData> = {
-	data: TData | null;
-	error: boolean;
-	loading: boolean;
-};
-
-export function useLazyRequest<TData, TParams = any>(
-	requestFn: TRequestFn,
-	params?: TParams
-): [() => void, TUseLazyRequest<TData>] {
-	const [_requestFn, {data, error, loading}] = useInternalRequest<TData>(
-		requestFn,
-		params
-	);
-
-	return [
-		_requestFn,
-		{
-			data,
-			error,
-			loading,
-		},
-	];
-}
-
 export function useRequest<TData, TParams = any>(
 	requestFn: TRequestFn,
 	params?: TParams

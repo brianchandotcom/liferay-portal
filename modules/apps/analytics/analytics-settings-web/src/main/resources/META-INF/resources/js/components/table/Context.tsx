@@ -19,8 +19,9 @@ import {DEFAULT_FILTER, TFilter} from '../../utils/filter';
 import {DEFAULT_PAGINATION, TPagination} from '../../utils/pagination';
 import {TColumnItem, TFormattedItems, TItem} from './types';
 import {
-	getFormattedItems,
+	formattingItems,
 	getGlobalChecked,
+	selectFormattedItems,
 	updateFormattedItems,
 } from './utils';
 
@@ -109,18 +110,22 @@ function reducer(state: TState, action: TAction) {
 			};
 		}
 		case Events.ChangeItems: {
-			const formattedItems = {
-				...state.formattedItems,
+			const {formattedItems, rows} = state;
+
+			const newFormattedItems = {
+				...formattedItems,
 				[action.payload]: {
-					...state.formattedItems[action.payload],
-					checked: !state.formattedItems[action.payload].checked,
+					...formattedItems[action.payload],
+					checked: !formattedItems[action.payload].checked,
 				},
 			};
 
 			return {
 				...state,
-				formattedItems,
-				globalChecked: getGlobalChecked(formattedItems),
+				formattedItems: newFormattedItems,
+				globalChecked: getGlobalChecked(
+					selectFormattedItems(newFormattedItems, rows)
+				),
 			};
 		}
 		case Events.ChangeKeywords: {
@@ -130,27 +135,31 @@ function reducer(state: TState, action: TAction) {
 			};
 		}
 		case Events.FormatData: {
+			const {formattedItems, pagination} = state;
 			const {items, page, pageSize, totalCount} = action.payload;
+			const rows = items.map(({id}: TItem) => id);
 
 			// It is necessary to maintain the formatting order of
 			// items so that state items override request items
 
-			const formattedItems = {
-				...getFormattedItems(items),
-				...state.formattedItems,
+			const newFormattedItems = {
+				...formattingItems(items),
+				...formattedItems,
 			};
 
 			return {
 				...state,
-				formattedItems,
-				globalChecked: getGlobalChecked(formattedItems),
+				formattedItems: newFormattedItems,
+				globalChecked: getGlobalChecked(
+					selectFormattedItems(newFormattedItems, rows)
+				),
 				pagination: {
-					maxCount: state.pagination.maxCount || totalCount,
+					maxCount: pagination.maxCount || totalCount,
 					page,
 					pageSize,
 					totalCount,
 				},
-				rows: items.map(({id}: TItem) => id),
+				rows,
 			};
 		}
 		case Events.ChangePagination: {
@@ -169,18 +178,19 @@ function reducer(state: TState, action: TAction) {
 			};
 		}
 		case Events.ToggleGlobalCheckbox: {
-			const {globalChecked, items} = action.payload;
+			const {formattedItems, rows} = state;
+			const newValue = !state.globalChecked;
 
 			return {
 				...state,
-				formattedItems: updateFormattedItems(
-					{
-						...getFormattedItems(items),
-						...state.formattedItems,
-					},
-					globalChecked
-				),
-				globalChecked,
+				formattedItems: {
+					...formattedItems,
+					...updateFormattedItems(
+						selectFormattedItems(formattedItems, rows),
+						newValue
+					),
+				},
+				globalChecked: newValue,
 			};
 		}
 		default:

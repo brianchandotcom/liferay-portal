@@ -25,6 +25,15 @@ import {toCamelCase} from '../../../utils/string';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
+interface BasicInfoProps {
+	errors: FormError<ObjectAction & ObjectActionParameters>;
+	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	isApproved: boolean;
+	readOnly?: boolean;
+	setValues: (values: Partial<ObjectAction>) => void;
+	values: Partial<ObjectAction>;
+}
+
 export default function BasicInfo({
 	errors,
 	handleChange,
@@ -32,7 +41,7 @@ export default function BasicInfo({
 	readOnly,
 	setValues,
 	values,
-}: IProps) {
+}: BasicInfoProps) {
 	return (
 		<Card title={Liferay.Language.get('basic-info')}>
 			{Liferay.FeatureFlags['LPS-148804'] && (
@@ -86,13 +95,4 @@ export default function BasicInfo({
 			</ClayForm.Group>
 		</Card>
 	);
-}
-
-interface IProps {
-	errors: FormError<ObjectAction & ObjectActionParameters>;
-	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	isApproved: boolean;
-	readOnly?: boolean;
-	setValues: (values: Partial<ObjectAction>) => void;
-	values: Partial<ObjectAction>;
 }

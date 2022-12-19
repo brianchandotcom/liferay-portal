@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ActionError} from '..';
+import {ActionError} from '../..';
 import {
 	API,
 	Card,
@@ -23,11 +23,11 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import PredefinedValuesTable from '../PredefinedValuesTable';
+import PredefinedValuesTable from '../../PredefinedValuesTable';
 
 import './ActionBuilder.scss';
-import {fetchObjectDefinitionFields} from '../fetchUtil';
-import {WarningStates} from './ActionBuilder';
+import {fetchObjectDefinitionFields} from '../../fetchUtil';
+import {WarningStates} from '../ActionBuilder';
 import {ThenContainer} from './ThenContainer';
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];

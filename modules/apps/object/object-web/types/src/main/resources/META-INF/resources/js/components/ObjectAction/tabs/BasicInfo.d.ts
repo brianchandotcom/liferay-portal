@@ -14,15 +14,7 @@
 
 import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
-export default function BasicInfo({
-	errors,
-	handleChange,
-	isApproved,
-	readOnly,
-	setValues,
-	values,
-}: IProps): JSX.Element;
-interface IProps {
+interface BasicInfoProps {
 	errors: FormError<ObjectAction & ObjectActionParameters>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
@@ -30,4 +22,12 @@ interface IProps {
 	setValues: (values: Partial<ObjectAction>) => void;
 	values: Partial<ObjectAction>;
 }
+export default function BasicInfo({
+	errors,
+	handleChange,
+	isApproved,
+	readOnly,
+	setValues,
+	values,
+}: BasicInfoProps): JSX.Element;
 export {};

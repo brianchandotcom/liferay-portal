@@ -183,6 +183,43 @@ definition {
 		}
 	}
 
+	macro viewFolderInfo {
+		VerifyElementPresent(
+			key_entryTitle = "${kbFolderName}",
+			key_infoText = "${entryDefaultInfo}",
+			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ENTRY_INFO");
+
+		VerifyElementNotPresent(
+			key_entryTitle = "${kbFolderName}",
+			key_infoText = "${folderQuantity} Folders",
+			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ENTRY_INFO");
+
+		VerifyElementNotPresent(
+			key_entryTitle = "${kbFolderName}",
+			key_infoText = "${articleQuantity} Articles",
+			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ENTRY_INFO");
+
+		if (isSet(infoPanel)) {
+			LexiconEntry.selectEntry(rowEntry = "${kbFolderName}");
+
+			ManagementBar.clickInfo();
+
+			if (isSet(foldersQuantity)) {
+				AssertVisible(
+					key_sectionContent = "${foldersQuantity}",
+					key_sectionTitle = "of Folders",
+					locator1 = "KnowledgeBase#SIDE_PANEL_INFO");
+			}
+
+			if (isSet(articlesQuantity)) {
+				AssertVisible(
+					key_sectionContent = "${foldersQuantity}",
+					key_sectionTitle = "of Articles",
+					locator1 = "KnowledgeBase#SIDE_PANEL_INFO");
+			}
+		}
+	}
+
 	macro viewFolderNameCP {
 		var key_kbFolderName = "${kbFolderName}";
 

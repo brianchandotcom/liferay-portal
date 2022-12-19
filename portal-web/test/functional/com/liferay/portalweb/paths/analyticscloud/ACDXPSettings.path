@@ -27,6 +27,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOKEN_INPUT_EMPTY_FIELD</td>
+	<td>//input[contains(@id,'inputToken') and @value='']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONNECT_DISCONNECT_BUTTON</td>
 	<td>//button[@type='button' and text()='Connect'] | //button[@type='button' and text()='Disconnect']</td>
 	<td></td>

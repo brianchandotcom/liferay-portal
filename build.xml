@@ -922,6 +922,67 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="util-taglib" inheritAll="false" target="publish-portal-release" />
 	</target>
 
+	<target name="publish-sample-workspaces">
+		<tstamp>
+			<format pattern="yyyyMMdd.kkmm" property="tstamp.value" />
+		</tstamp>
+
+		<delete dir="${user.home}/.m2/repository/com/liferay/com.liferay.sample.default.workspace" />
+		<delete dir="${user.home}/.m2/repository/com/liferay/com.liferay.sample.minimal.workspace" />
+		<delete file="${project.dir}/dist/com.liferay.sample.default.workspace.pom" />
+		<delete file="${project.dir}/dist/com.liferay.sample.default.workspace.zip" />
+		<delete file="${project.dir}/dist/com.liferay.sample.minimal.workspace.pom" />
+		<delete file="${project.dir}/dist/com.liferay.sample.minimal.workspace.zip" />
+
+		<execute dir="${project.dir}/workspaces">
+			<![CDATA[
+				git clean -dfqx .
+			]]>
+		</execute>
+
+		<mkdir dir="${project.dir}/dist" />
+
+		<zip
+			destfile="${project.dir}/dist/com.liferay.sample.default.workspace.zip"
+			duplicate="preserve"
+		>
+			<zipfileset
+				dir="${project.dir}/workspaces/sample-default-workspace"
+			/>
+		</zip>
+
+		<artifact:pom artifactId="com.liferay.sample.default.workspace" groupId="com.liferay" id="com.liferay.sample.default.workspace.pom" packaging="zip" version="${tstamp.value}" />
+
+		<artifact:writepom file="dist/com.liferay.sample.default.workspace.pom" pomRefId="com.liferay.sample.default.workspace.pom" />
+
+		<artifact:deploy file="dist/com.liferay.sample.default.workspace.zip">
+			<pom file="dist/com.liferay.sample.default.workspace.pom" />
+			<remoteRepository url="https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases">
+				<authentication password="${sonatype.release.password}" username="${sonatype.release.username}" />
+			</remoteRepository>
+		</artifact:deploy>
+
+		<zip
+			destfile="${project.dir}/dist/com.liferay.sample.minimal.workspace.zip"
+			duplicate="preserve"
+		>
+			<zipfileset
+				dir="${project.dir}/workspaces/sample-minimal-workspace"
+			/>
+		</zip>
+
+		<artifact:pom artifactId="com.liferay.sample.minimal.workspace" groupId="com.liferay" id="com.liferay.sample.minimal.workspace.pom" packaging="zip" version="${tstamp.value}" />
+
+		<artifact:writepom file="dist/com.liferay.sample.minimal.workspace.pom" pomRefId="com.liferay.sample.minimal.workspace.pom" />
+
+		<artifact:deploy file="dist/com.liferay.sample.minimal.workspace.zip">
+			<pom file="dist/com.liferay.sample.minimal.workspace.pom" />
+			<remoteRepository url="https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases">
+				<authentication password="${sonatype.release.password}" username="${sonatype.release.username}" />
+			</remoteRepository>
+		</artifact:deploy>
+	</target>
+
 	<target name="restore-latest-artifact-version">
 		<ant dir="portal-impl" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="portal-kernel" inheritAll="false" target="restore-latest-artifact-version" />

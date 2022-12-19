@@ -37,8 +37,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -143,11 +141,9 @@ public class OrganizationIndexerTest {
 	protected void assertHits(String keywords, int length) throws Exception {
 		SearchResponse searchResponse = search(keywords);
 
-		Stream<Document> stream = searchResponse.getDocumentsStream();
-
 		AssertUtils.assertEquals(
 			() -> StringBundler.concat(
-				keywords, "->", stream.collect(Collectors.toList())),
+				keywords, "->", searchResponse.getDocuments()),
 			length, searchResponse.getTotalHits());
 	}
 
@@ -160,13 +156,13 @@ public class OrganizationIndexerTest {
 	protected List<String> getNames(String keywords) throws Exception {
 		SearchResponse searchResponse = search(keywords);
 
-		Stream<Document> stream = searchResponse.getDocumentsStream();
+		List<String> names = new ArrayList<>();
 
-		return stream.map(
-			document -> document.getString(Field.NAME)
-		).collect(
-			Collectors.toList()
-		);
+		for (Document document : searchResponse.getDocuments()) {
+			names.add(document.getString(Field.NAME));
+		}
+
+		return names;
 	}
 
 	protected SearchResponse search(String keywords) throws Exception {

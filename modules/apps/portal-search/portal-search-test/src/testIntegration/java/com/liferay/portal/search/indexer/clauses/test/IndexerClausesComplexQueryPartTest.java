@@ -291,7 +291,7 @@ public class IndexerClausesComplexQueryPartTest {
 		}
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			requestString, searchResponse.getDocumentsStream(), _TITLE_EN_US,
+			requestString, searchResponse.getDocuments(), _TITLE_EN_US,
 			expected);
 	}
 

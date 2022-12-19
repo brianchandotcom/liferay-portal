@@ -2231,8 +2231,7 @@ public class SXPBlueprintSearchResultTest {
 			_getScore(searchResponse) + searchResponse.getRequestString();
 
 		DocumentsAssert.assertValues(
-			message, searchResponse.getDocumentsStream(), "title_en_US",
-			expected);
+			message, searchResponse.getDocuments(), "title_en_US", expected);
 
 		if (!Objects.equals("{}", _sxpBlueprint.getElementInstancesJSON())) {
 			searchResponse = _getSearchResponsePreview(
@@ -2242,7 +2241,7 @@ public class SXPBlueprintSearchResultTest {
 				_getScore(searchResponse) + searchResponse.getRequestString();
 
 			DocumentsAssert.assertValues(
-				message, searchResponse.getDocumentsStream(), "title_en_US",
+				message, searchResponse.getDocuments(), "title_en_US",
 				expected);
 		}
 	}
@@ -2256,8 +2255,8 @@ public class SXPBlueprintSearchResultTest {
 			searchRequestBuilderConsumer);
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), "title_en_US", expected);
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			"title_en_US", expected);
 
 		if (!Objects.equals("{}", _sxpBlueprint.getElementInstancesJSON())) {
 			searchResponse = _getSearchResponsePreview(
@@ -2265,7 +2264,7 @@ public class SXPBlueprintSearchResultTest {
 
 			DocumentsAssert.assertValuesIgnoreRelevance(
 				searchResponse.getRequestString(),
-				searchResponse.getDocumentsStream(), "title_en_US", expected);
+				searchResponse.getDocuments(), "title_en_US", expected);
 		}
 	}
 

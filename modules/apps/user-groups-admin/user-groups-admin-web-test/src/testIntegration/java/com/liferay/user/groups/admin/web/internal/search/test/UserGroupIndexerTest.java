@@ -117,9 +117,8 @@ public class UserGroupIndexerTest {
 		Stream<UserGroup> stream = userGroups.stream();
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse1.getRequestString(),
-			searchResponse1.getDocumentsStream(), Field.NAME,
-			stream.map(UserGroup::getName));
+			searchResponse1.getRequestString(), searchResponse1.getDocuments(),
+			Field.NAME, stream.map(UserGroup::getName));
 
 		SearchRequestBuilder searchRequestBuilder2 = _getSearchRequestBuilder(
 			companyId);

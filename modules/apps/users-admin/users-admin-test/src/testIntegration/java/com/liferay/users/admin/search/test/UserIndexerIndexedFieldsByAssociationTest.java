@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -257,10 +258,10 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 				_queries.term(Field.USER_ID, TestPropsValues.getUserId())
 			).build());
 
-		Stream<Document> stream = searchResponse1.getDocumentsStream();
+		List<Document> documents = searchResponse1.getDocuments();
 
-		Document document = stream.findAny(
-		).get();
+		Document document = documents.get(
+			RandomTestUtil.randomInt(0, documents.size() - 1));
 
 		List<Long> groupIds = document.getLongs(Field.GROUP_ID);
 
@@ -268,8 +269,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		if (!groupIds.contains(groupId)) {
 			DocumentsAssert.assertValuesIgnoreRelevance(
-				searchResponse1.getRequestString(),
-				searchResponse1.getDocumentsStream(), Field.GROUP_ID,
+				searchResponse1.getRequestString(), documents, Field.GROUP_ID,
 				_toSingletonListString(_toSortedListString(groupIds.stream())));
 		}
 
@@ -279,8 +279,8 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 			).build());
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse2.getRequestString(),
-			searchResponse2.getDocumentsStream(), Field.GROUP_ID,
+			searchResponse2.getRequestString(), searchResponse2.getDocuments(),
+			Field.GROUP_ID,
 			_toSingletonListString(_toSortedListString(groupIds.stream())));
 	}
 
@@ -324,10 +324,9 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 				_queries.term(Field.ENTRY_CLASS_PK, user.getPrimaryKeyObj())
 			).build());
 
-		Stream<Document> stream = searchResponse.getDocumentsStream();
+		List<Document> documents = searchResponse.getDocuments();
 
-		Document document = stream.findFirst(
-		).get();
+		Document document = documents.get(0);
 
 		return indexedFieldsFixture.postProcessDocument(document);
 	}

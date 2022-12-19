@@ -290,8 +290,8 @@ public class JournalArticleExpandoGeolocationSearchTest {
 			).build());
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), fieldName, expected);
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			fieldName, expected);
 	}
 
 	@Inject

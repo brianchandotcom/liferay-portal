@@ -275,8 +275,8 @@ public class FacetPermissionCharacteristicTest {
 			).build());
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), "title_en_US", expected);
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			"title_en_US", expected);
 	}
 
 	private String _getName(Object object) {

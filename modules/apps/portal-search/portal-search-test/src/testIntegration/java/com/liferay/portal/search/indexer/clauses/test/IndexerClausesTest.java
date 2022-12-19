@@ -228,8 +228,8 @@ public class IndexerClausesTest {
 			).build());
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), _TITLE_EN_US, expected);
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			_TITLE_EN_US, expected);
 	}
 
 	protected Consumer<SearchRequestBuilder> withoutIndexerClauses() {

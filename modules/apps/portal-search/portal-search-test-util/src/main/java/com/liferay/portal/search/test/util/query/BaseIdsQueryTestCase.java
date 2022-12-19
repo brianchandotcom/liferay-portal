@@ -30,9 +30,9 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import org.junit.Test;
 
@@ -110,20 +110,20 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
 			searchSearchRequest);
 
-		Stream<Document> stream = getDocumentsStream(
-			searchSearchResponse.getSearchHits());
-
 		DocumentsAssert.assertValues(
-			searchSearchResponse.getSearchRequestString(), stream,
+			searchSearchResponse.getSearchRequestString(),
+			getDocumentsStream(searchSearchResponse.getSearchHits()),
 			Field.USER_NAME, expected);
 	}
 
-	protected Stream<Document> getDocumentsStream(SearchHits searchHits) {
-		List<SearchHit> list = searchHits.getSearchHits();
+	protected List<Document> getDocumentsStream(SearchHits searchHits) {
+		List<Document> documents = new ArrayList<>();
 
-		Stream<SearchHit> stream = list.stream();
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			documents.add(searchHit.getDocument());
+		}
 
-		return stream.map(SearchHit::getDocument);
+		return documents;
 	}
 
 	protected SearchSearchRequest getSearchSearchRequest(Query query) {

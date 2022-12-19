@@ -425,8 +425,7 @@ public class SearchCTTest {
 
 			DocumentsAssert.assertValuesIgnoreRelevance(
 				searchResponse.getRequestString(),
-				searchResponse.getDocumentsStream(), Field.UID,
-				Stream.of(uids));
+				searchResponse.getDocuments(), Field.UID, Stream.of(uids));
 		}
 	}
 

@@ -200,9 +200,8 @@ public class SXPBlueprintSearchRequestContributorTest {
 				).build()));
 
 		DocumentsAssert.assertValues(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), "localized_title_en_US",
-			expected);
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			"localized_title_en_US", expected);
 	}
 
 	private ConfigurationTemporarySwapper _getConfigurationTemporarySwapper(

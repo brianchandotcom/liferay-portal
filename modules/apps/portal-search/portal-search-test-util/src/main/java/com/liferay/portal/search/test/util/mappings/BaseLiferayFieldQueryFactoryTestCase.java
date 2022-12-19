@@ -291,7 +291,7 @@ public abstract class BaseLiferayFieldQueryFactoryTestCase
 				indexingTestHelper.verifyResponse(
 					searchResponse -> DocumentsAssert.assertValues(
 						searchResponse.getRequestString(),
-						searchResponse.getDocumentsStream(), _fieldName,
+						searchResponse.getDocuments(), _fieldName,
 						StringPool.OPEN_BRACKET + getExpected(hit) +
 							StringPool.CLOSE_BRACKET));
 			});

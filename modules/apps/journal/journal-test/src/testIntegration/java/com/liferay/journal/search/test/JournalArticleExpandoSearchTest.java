@@ -171,8 +171,7 @@ public class JournalArticleExpandoSearchTest {
 			).build());
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(),
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
 			"expando__keyword__custom_fields__" + _EXPANDO_COLUMN, expected);
 	}
 

@@ -385,8 +385,8 @@ public class SearchRequestBuilderTest {
 			searchRequestBuilder.build());
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), fieldName, expected);
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			fieldName, expected);
 	}
 
 	private void _assertSearch(
@@ -417,8 +417,8 @@ public class SearchRequestBuilderTest {
 			searchRequestBuilder.build());
 
 		DocumentsAssert.assertValues(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), fieldName, expected);
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			fieldName, expected);
 	}
 
 	private void _assertSearch(
@@ -437,8 +437,8 @@ public class SearchRequestBuilderTest {
 			).build());
 
 		DocumentsAssert.assertValues(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), fieldName, expected);
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			fieldName, expected);
 	}
 
 	private Rescore _buildRescore(String fieldName, String value) {

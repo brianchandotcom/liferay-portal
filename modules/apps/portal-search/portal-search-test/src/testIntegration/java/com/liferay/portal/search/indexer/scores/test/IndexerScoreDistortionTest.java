@@ -140,11 +140,11 @@ public class IndexerScoreDistortionTest {
 			Field.ENTRY_CLASS_NAME,
 			getClassNamesAsString(
 				BlogsEntry.class, MBMessage.class, WikiPage.class),
-			_limit(searchResponse1.getDocumentsStream(), 3), searchResponse1);
+			_limit(searchResponse1.getDocuments(), 3), searchResponse1);
 		assertValuesIgnoreRelevance(
 			Field.ENTRY_CLASS_NAME,
 			getClassNamesAsString(DLFileEntry.class, JournalArticle.class),
-			_skip(searchResponse1.getDocumentsStream(), 3), searchResponse1);
+			_skip(searchResponse1.getDocuments(), 3), searchResponse1);
 
 		SearchResponse searchResponse2 = search(
 			title, locale, classes,
@@ -255,15 +255,16 @@ public class IndexerScoreDistortionTest {
 
 		DocumentsAssert.assertValues(
 			getMessage(fieldName, searchResponse),
-			searchResponse.getDocumentsStream(), fieldName, expected);
+			searchResponse.getDocuments(), fieldName, expected);
 	}
 
 	protected void assertValuesIgnoreRelevance(
-		String fieldName, String expected, Stream<Document> stream,
+		String fieldName, String expected, List<Document> documents,
 		SearchResponse searchResponse) {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			getMessage(fieldName, searchResponse), stream, fieldName, expected);
+			getMessage(fieldName, searchResponse), documents, fieldName,
+			expected);
 	}
 
 	protected String getClassNamesAsString(Class... classes) {
@@ -344,12 +345,12 @@ public class IndexerScoreDistortionTest {
 			_group.getGroupId(), _user.getUserId());
 	}
 
-	private Stream<Document> _limit(Stream<Document> stream, long maxSize) {
-		return stream.limit(maxSize);
+	private List<Document> _limit(List<Document> documents, int maxSize) {
+		return documents.subList(0, maxSize);
 	}
 
-	private Stream<Document> _skip(Stream<Document> stream, long n) {
-		return stream.skip(n);
+	private List<Document> _skip(List<Document> documents, int n) {
+		return documents.subList(n, documents.size());
 	}
 
 	@DeleteAfterTestRun

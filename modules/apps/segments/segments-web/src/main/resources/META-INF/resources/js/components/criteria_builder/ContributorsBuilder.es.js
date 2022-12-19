@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
 import getCN from 'classnames';
@@ -207,32 +208,48 @@ class ContributorBuilder extends React.Component {
 												displayType="secondary"
 												showCollapseIcon
 											>
-												<ClayPanel.Body className="align-items-center d-flex justify-content-between p-4">
+												<ClayPanel.Body className="p-4">
 													<input
 														name={`${portletNamespace}groupId`}
 														type="hidden"
 														value={groupId}
 													/>
 
-													<p className="mb-0 mr-6">
-														{scopeName}
-													</p>
-
 													{this.props
 														.siteItemSelectorURL && (
-														<ClayButton
-															displayType="secondary"
-															onClick={
-																this
-																	._handleScopeChange
-															}
-															size="sm"
-														>
-															{Liferay.Language.get(
-																'select'
-															)}
-														</ClayButton>
+														<div className="align-items-center d-flex justify-content-between mb-3">
+															<p className="mb-0 mr-6 text-dark">
+																{Liferay.Language.get(
+																	'select-the-scope-of-your-segment'
+																)}
+															</p>
+
+															<ClayButton
+																displayType="secondary"
+																onClick={
+																	this
+																		._handleScopeChange
+																}
+																size="sm"
+															>
+																{Liferay.Language.get(
+																	'select'
+																)}
+															</ClayButton>
+														</div>
 													)}
+
+													<ClayList>
+														<ClayList.Item flex>
+															<ClayList.ItemField
+																expand
+															>
+																<ClayList.ItemTitle>
+																	{scopeName}
+																</ClayList.ItemTitle>
+															</ClayList.ItemField>
+														</ClayList.Item>
+													</ClayList>
 												</ClayPanel.Body>
 											</ClayPanel>
 

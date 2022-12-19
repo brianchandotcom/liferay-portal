@@ -30,9 +30,6 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingResultUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -98,11 +95,11 @@ public class RankingGetSearchResultsBuilder {
 	}
 
 	protected JSONArray buildDocuments(SearchResponse searchResponse) {
-		List<JSONObject> jsonObjects = _getElements(searchResponse);
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonObjects.forEach(jsonArray::put);
+		for (Document document : searchResponse.getDocuments()) {
+			jsonArray.put(translate(document));
+		}
 
 		return jsonArray;
 	}
@@ -137,16 +134,6 @@ public class RankingGetSearchResultsBuilder {
 		).viewURL(
 			_getViewURL(document)
 		).build();
-	}
-
-	private List<JSONObject> _getElements(SearchResponse searchResponse) {
-		List<JSONObject> jsonObjects = new ArrayList<>();
-
-		for (Document document : searchResponse.getDocuments()) {
-			jsonObjects.add(translate(document));
-		}
-
-		return jsonObjects;
 	}
 
 	private String _getViewURL(Document document) {

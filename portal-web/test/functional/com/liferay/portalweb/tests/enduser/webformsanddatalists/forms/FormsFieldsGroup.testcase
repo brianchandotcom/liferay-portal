@@ -326,77 +326,81 @@ definition {
 	test EntryWithGroupFieldCanBeViewedInFormsDetails {
 		property portal.acceptance = "true";
 
-		FormsAdmin.addForm();
+		task ("Given add a form with two fields, and these two fields belong to one group field") {
+			FormsAdmin.addForm();
 
-		Form.editName(formName = "Form 1");
+			Form.editName(formName = "Form 1");
 
-		Form.gotoAddField(fieldType = "Text");
+			Form.gotoAddField(fieldType = "Text");
 
-		Form.closeSidebar();
+			Form.closeSidebar();
 
-		Form.addFieldFromSidebarToFieldsGroup(
-			key_fieldLabel = "Text",
-			key_fieldName = "Numeric");
+			Form.addFieldFromSidebarToFieldsGroup(
+				key_fieldLabel = "Text",
+				key_fieldName = "Numeric");
 
-		Form.save();
+			Form.save();
 
-		Form.publishForm();
+			Form.publishForm();
+		}
 
-		FormsAdminNavigator.gotoPublishedForm();
+		task ("When go to the publish form page and publish the form after filling in the fields") {
+			FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "Test");
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test");
 
-		FormFields.editText(
-			fieldName = "Numeric",
-			fieldValue = "123");
+			FormFields.editText(
+				fieldName = "Numeric",
+				fieldValue = "123");
 
-		FormPortlet.submitSuccessfully();
+			FormPortlet.submitSuccessfully();
+		}
 
-		Navigator.openURL();
+		task ("Then assert the entry fields are shown after clicking the form creates before via the view entry action") {
+			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+			FormsAdminNavigator.gotoViewEntries();
 
-		FormsAdminNavigator.gotoViewEntries();
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Text",
+				fieldValue = "Test");
 
-		FormsAdmin.viewFormTableEntry(
-			fieldLabel = "Text",
-			fieldValue = "Test");
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Numeric",
+				fieldValue = "123");
+		}
 
-		FormsAdmin.viewFormTableEntry(
-			fieldLabel = "Numeric",
-			fieldValue = "123");
+		task ("And assert the entry fields also can be shown via both view and Edit actions") {
+			FormsAdminNavigator.gotoView();
 
-		FormsAdminNavigator.gotoView();
+			FormsAdmin.viewTextEntry(
+				fieldLabel = "Text",
+				fieldName = "Text",
+				fieldValue = "Test");
 
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Text",
-			fieldName = "Text",
-			fieldValue = "Test");
+			FormsAdmin.viewTextEntry(
+				fieldLabel = "Numeric",
+				fieldName = "Numeric",
+				fieldValue = "123");
 
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "123");
+			Navigator.gotoBack();
 
-		Navigator.gotoBack();
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+			FormsAdmin.viewTextEntry(
+				fieldLabel = "Text",
+				fieldName = "Text",
+				fieldValue = "Test",
+				onSitePage = "true");
 
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Text",
-			fieldName = "Text",
-			fieldValue = "Test",
-			onSitePage = "true");
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric",
-			fieldValue = "123",
-			onSitePage = "true");
+			FormsAdmin.viewTextEntry(
+				fieldLabel = "Numeric",
+				fieldName = "Numeric",
+				fieldValue = "123",
+				onSitePage = "true");
+		}
 	}
 
 	@description = "Verify that fields within a Fields Group can be reordered"

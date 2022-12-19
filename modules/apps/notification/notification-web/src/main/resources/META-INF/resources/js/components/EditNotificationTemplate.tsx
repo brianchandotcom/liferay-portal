@@ -184,25 +184,18 @@ export default function EditNotificationTemplate({
 			errors.name = Liferay.Language.get('required');
 		}
 
-		if (
-			notificationTemplateType === 'email' &&
-			!values.recipients[0].to[defaultLanguageId]
-		) {
-			errors.to = Liferay.Language.get('required');
-		}
+		if (notificationTemplateType === 'email' || values.type === 'email') {
+			if (!values.recipients[0].from) {
+				errors.from = Liferay.Language.get('required');
+			}
 
-		if (
-			notificationTemplateType === 'email' &&
-			!values.recipients[0].from
-		) {
-			errors.from = Liferay.Language.get('required');
-		}
+			if (!values.recipients[0].fromName[defaultLanguageId]) {
+				errors.fromName = Liferay.Language.get('required');
+			}
 
-		if (
-			notificationTemplateType === 'email' &&
-			!values.recipients[0].fromName[defaultLanguageId]
-		) {
-			errors.fromName = Liferay.Language.get('required');
+			if (!values.recipients[0].to[defaultLanguageId]) {
+				errors.to = Liferay.Language.get('required');
+			}
 		}
 
 		return errors;

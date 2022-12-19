@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -397,6 +398,103 @@ public class TemplateInfoItemFieldSetProviderTest {
 	}
 
 	@Test
+	public void testGetInfoFieldValuesRenderingDateInfoFieldType()
+		throws Exception {
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			ListUtil.fromArray(LocaleUtil.US, LocaleUtil.SPAIN), LocaleUtil.US);
+
+		TemplateEntry journalArticleTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				JournalArticle.class.getName(),
+				_journalArticle.getDDMStructureKey(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TemplateTestUtil.getSampleScriptFTL("createDate"),
+				_serviceContext);
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_templateInfoItemFieldSetProvider.getInfoFieldValues(
+				JournalArticle.class.getName(),
+				_journalArticle.getDDMStructureKey(), _journalArticle);
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+
+		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
+
+		InfoField<?> infoField = infoFieldValue.getInfoField();
+
+		Assert.assertEquals(
+			infoField.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				journalArticleTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+
+		String value = (String)infoFieldValue.getValue(LocaleUtil.US);
+
+		Assert.assertNotNull(value);
+
+		Assert.assertEquals(
+			DateUtil.getDate(
+				_journalArticle.getCreateDate(), "MM/dd/yy H:mm a",
+				LocaleUtil.US),
+			value);
+	}
+
+	@Test
+	public void testGetInfoFieldValuesRenderingDateInfoFieldTypeSpainLocale()
+		throws Exception {
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			ListUtil.fromArray(LocaleUtil.US, LocaleUtil.SPAIN), LocaleUtil.US);
+
+		TemplateEntry journalArticleTemplateEntry =
+			TemplateTestUtil.addTemplateEntry(
+				JournalArticle.class.getName(),
+				_journalArticle.getDDMStructureKey(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TemplateTestUtil.getSampleScriptFTL("createDate"),
+				_serviceContext);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		themeDisplay.setLocale(LocaleUtil.SPAIN);
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_templateInfoItemFieldSetProvider.getInfoFieldValues(
+				JournalArticle.class.getName(),
+				_journalArticle.getDDMStructureKey(), _journalArticle);
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+
+		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
+
+		InfoField<?> infoField = infoFieldValue.getInfoField();
+
+		Assert.assertEquals(
+			infoField.toString(),
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				journalArticleTemplateEntry.getTemplateEntryId(),
+			infoField.getName());
+
+		String value = (String)infoFieldValue.getValue(LocaleUtil.SPAIN);
+
+		Assert.assertNotNull(value);
+
+		Assert.assertEquals(
+			DateUtil.getDate(
+				_journalArticle.getCreateDate(), "dd/MM/yy H:mm",
+				LocaleUtil.SPAIN),
+			value);
+	}
+
+	@Test
 	public void testGetInfoFieldValuesRenderingOtherListInfoFieldType()
 		throws Exception {
 
@@ -700,6 +798,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		themeDisplay.setLayoutSet(layoutSet);
 		themeDisplay.setLookAndFeel(
 			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		themeDisplay.setLocale(_portal.getSiteDefaultLocale(_group));
 
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());

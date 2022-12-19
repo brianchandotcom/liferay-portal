@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -111,13 +110,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		boolean updatePrincipal = !Objects.equals(name, String.valueOf(userId));
-
 		try {
-			if (updatePrincipal) {
-				PrincipalThreadLocal.setName(userId);
-			}
-
+			PrincipalThreadLocal.setName(userId);
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
 
@@ -144,10 +138,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			}
 		}
 		finally {
-			if (updatePrincipal) {
-				PrincipalThreadLocal.setName(name);
-			}
-
+			PrincipalThreadLocal.setName(name);
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 	}

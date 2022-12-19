@@ -93,7 +93,6 @@ definition {
 		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
-
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "${testAccount}");
@@ -107,23 +106,20 @@ definition {
 
 		task ("Type a invalid value in the field and assert the error message") {
 			CP2Utils.typeEnableNodeField(
-				value = "0",
-				error = "enter-a-minimum-node-value-greater-than-0");
-				
+				error = "enter-a-minimum-node-value-greater-than-0",
+				value = "0");
 
 			CP2Utils.typeEnableNodeField(
-				value = "1",
-				error = "max-nodes-must-be-greater-than-min-nodes");
+				error = "max-nodes-must-be-greater-than-min-nodes",
+				value = "1");
 
 			CustomerPortal.clickAtButton(text = "Filter");
-
 		}
 
 		task ("Type a invalid value on search bar and assert the error message") {
 			CP2Utils.searchKeys(searchinput = "NothingAreFound");
 
-		AssertElementPresent(locator1 ="CP2NavigationMenu#SEARCH_NO_RESULT");
-
+			AssertElementPresent(locator1 = "CP2NavigationMenu#SEARCH_NO_RESULT");
 		}
 	}
 
@@ -131,6 +127,7 @@ definition {
 	@ignore = "true"
 	@priority = " 4"
 	test CanViewAndSearchForEnvironmentType {
+
 		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
@@ -144,31 +141,29 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
+
 		task ("Open Environment Type tab and Assert the environment type options") {
 			CustomerPortal.clickAtButton(text = "Filter");
 
 			Click.pauseClickAt(
-				locator1 = "CustomerPortalSite#ANY_BUTTON",
-				key_text= "Environment Type");
+				key_text = "Environment Type",
+				locator1 = "CustomerPortalSite#ANY_BUTTON");
 
-			for (var environmentName : list "Non-Production,Production,Subscription" ) {
-	
-			AssertElementPresent(
-				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX",
-				key_menu = "Environment Type",
-				key_checkbox = "${environmentName}");
+			for (var environmentName : list "Non-Production,Production,Subscription") {
+				AssertElementPresent(
+					key_checkbox = "${environmentName}",
+					key_menu = "Environment Type",
+					locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
 			}
-
 		}
 
 		task ("Search for a key and assert the result of the search") {
 			CP2Utils.searchKeys(searchinput = "test");
-			
-			AssertElementPresent(
-				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE",
-				key_text = "test");
-		}
 
+			AssertElementPresent(
+				key_text = "test",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
 	}
 
 	@description = "Automation ID: LPS-146199 | Test Summary: Verify that when clicking on the Deploying Activation Keys article link, the user is redirected to another page."
@@ -210,7 +205,7 @@ definition {
 	@description = "Automation ID: LPS-151315 | Test Summary: Verify that the Fields Min and Max are enabled and disabled based on the filter selection.S"
 	@ignore = "true"
 	@priority = "3"
-	test TheMinAndMaxFieldsCanBeDisableAndEnable{
+	test TheMinAndMaxFieldsCanBeDisableAndEnable {
 
 		// Needs refactor since it depends on example Avangrid Portals account
 
@@ -225,26 +220,28 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
+
 		task ("Open Environment Type tab and Assert the nodes field is disable") {
 			CustomerPortal.clickAtButton(text = "Filter");
 
 			CP2Utils.clickAtFilterMenu(
-				text = "Key Type",
 				checkbox = "On-Premise",
-				menu = "Key Type");
+				menu = "Key Type",
+				text = "Key Type");
 
 			AssertElementPresent(locator1 = "CP2NavigationMenu#NODES_CLUSTER_DISABLE");
 		}
+
 		task ("Open Environment Type tab and Assert the nodes field is enable") {
 			Uncheck.uncheckToggleSwitch(
-			checkboxName = "On-Premise",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-						
+				checkboxName = "On-Premise",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
 			Click.clickNoWaitForVisible(
 				key_checkbox = "Virtual Cluster",
 				key_menu = "Key Type",
 				locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
-			
+
 			AssertElementPresent(locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE");
 		}
 	}

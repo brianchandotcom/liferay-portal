@@ -367,13 +367,10 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testAddAccountEntryWithWorkflowEnabled() throws Exception {
-		String name = PrincipalThreadLocal.getName();
+		String originalName = PrincipalThreadLocal.getName();
 
 		try {
-			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
-				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-				GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				AccountEntry.class.getName(), 0, 0, "Single Approver", 1);
+			_enableWorkflow();
 
 			User user = UserTestUtil.addUser();
 
@@ -384,7 +381,7 @@ public class AccountEntryLocalServiceTest {
 			Assert.assertTrue(_hasWorkflowInstance(accountEntry));
 		}
 		finally {
-			PrincipalThreadLocal.setName(name);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
@@ -1231,6 +1228,13 @@ public class AccountEntryLocalServiceTest {
 			accountEntryId);
 
 		Assert.assertEquals(expectedStatus, accountEntry.getStatus());
+	}
+
+	private void _enableWorkflow() throws Exception {
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, AccountEntry.class.getName(),
+			0, 0, "Single Approver", 1);
 	}
 
 	private long[] _getAccountUserIds(AccountEntry accountEntry) {

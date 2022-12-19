@@ -1,0 +1,83 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Create DXP Site with Commerce") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium Demo");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONGroup.deleteGroupByName(groupName = "Minium Demo");
+
+			CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+		}
+	}
+
+	@description = "Story: LRAC-10858 | Automation ID: LRAC-12574 | Test Summary: Assert number of channels and sites counts match selected channels and sites"
+	@priority = "5"
+	test SelectedSitesAndChannelsNumbersCorrectAfterSync {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectAnalyticsCloud();
+
+			ACDXPSettings.getAssignedPropertyName();
+		}
+
+		task ("Toggle Commerce On > Assign channels to the property") {
+			ACDXPSettings.syncChannel(
+				channelName = "Minium Demo Portal",
+				propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Assign sites to the property") {
+			for (var siteName : list "Site Name, Minium Demo") {
+				ACDXPSettings.syncSites(
+					propertyName = "${assignedPropertyName}",
+					siteName = "${siteName}");
+			}
+		}
+
+		task ("Check that the number of channels and sites matches the selected ones") {
+			ACDXPSettings.viewSyncedChannelsAndSitesNumber(
+				propertyName = "${assignedPropertyName}",
+				syncedChannelsNumber = "1",
+				syncedSitesNumber = "2");
+		}
+	}
+
+}

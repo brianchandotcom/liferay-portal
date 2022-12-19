@@ -25,7 +25,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import './ActionBuilder.scss';
 import {ActionError} from '../index';
-import {ActionContainer} from './ActionContainer';
+import {ActionContainer} from './ActionContainer/ActionContainer';
 import {ConditionContainer} from './ConditionContainer';
 interface ActionBuilderProps {
 	errors: ActionError;

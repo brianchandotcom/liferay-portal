@@ -29,11 +29,11 @@ import {
 	ObjectsOptionsList,
 	fetchObjectDefinitionFields,
 	fetchObjectDefinitions,
-} from '../fetchUtil';
+} from '../../fetchUtil';
 
 import './ActionBuilder.scss';
 
-import {ActionError} from '..';
+import {ActionError} from '../..';
 
 interface ThenContainerProps {
 	errors: ActionError;

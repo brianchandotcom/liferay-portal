@@ -12,43 +12,43 @@
  * details.
  */
 
-import {ActionError} from '..';
-import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
-import React from 'react';
+/// <reference types="react" />
+
+import {CustomItem} from '@liferay/object-js-components-web';
 import './ActionBuilder.scss';
-import {WarningStates} from './ActionBuilder';
-interface ActionContainerProps {
-	currentObjectDefinitionFields: ObjectField[];
+import {ActionError} from '../..';
+interface ThenContainerProps {
 	errors: ActionError;
+	isValidField: ({
+		businessType,
+		objectFieldSettings,
+		system,
+	}: ObjectField) => boolean;
 	newObjectActionExecutors: CustomItem<string>[];
-	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
-	objectFieldsMap: Map<string, ObjectField>;
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
+	setRelationships: (values: ObjectDefinitionsRelationship[]) => void;
 	setValues: (values: Partial<ObjectAction>) => void;
-	setWarningAlerts: (value: React.SetStateAction<WarningStates>) => void;
 	systemObject: boolean;
-	validateExpressionURL: string;
+	updateParameters: (value: string) => Promise<void>;
 	values: Partial<ObjectAction>;
 }
-export declare function ActionContainer({
-	currentObjectDefinitionFields,
+export declare function ThenContainer({
 	errors,
+	isValidField,
 	newObjectActionExecutors,
-	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
-	objectFieldsMap,
 	setCurrentObjectDefinitionFields,
+	setRelationships,
 	setValues,
-	setWarningAlerts,
 	systemObject,
-	validateExpressionURL,
+	updateParameters,
 	values,
-}: ActionContainerProps): JSX.Element;
+}: ThenContainerProps): JSX.Element;
 export {};

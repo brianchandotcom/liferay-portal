@@ -32,7 +32,6 @@ import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.TotalHits;
@@ -163,13 +162,15 @@ public class SearchHitsTranslator {
 		org.elasticsearch.search.fetch.subphase.highlight.HighlightField
 			elasticsearchHighlightField) {
 
+		List<String> fragments = new ArrayList<>();
+
+		for (Text text : elasticsearchHighlightField.getFragments()) {
+			fragments.add(text.string());
+		}
+
 		return _highlightFieldBuilderFactory.builder(
 		).fragments(
-			Stream.of(
-				elasticsearchHighlightField.getFragments()
-			).map(
-				Text::string
-			)
+			fragments
 		).name(
 			elasticsearchHighlightField.getName()
 		).build();

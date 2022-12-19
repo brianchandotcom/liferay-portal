@@ -38,7 +38,6 @@ import com.liferay.portal.search.tuning.rankings.web.internal.searcher.helper.Ra
 import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingResultUtil;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -130,14 +129,11 @@ public class RankingGetVisibleResultsBuilder {
 	protected JSONArray buildDocuments(
 		Ranking ranking, SearchResponse searchResponse) {
 
-		Stream<Document> documentsStream = searchResponse.getDocumentsStream();
-
-		Stream<JSONObject> jsonObjectStream = documentsStream.map(
-			document -> translate(document, ranking));
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonObjectStream.forEach(jsonArray::put);
+		for (Document document : searchResponse.getDocuments()) {
+			jsonArray.put(translate(document, ranking));
+		}
 
 		return jsonArray;
 	}

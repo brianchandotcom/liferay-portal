@@ -509,10 +509,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SPSSODescriptor spSSODescriptor =
 			(SPSSODescriptor)samlSelfMetadataContext.getRoleDescriptor();
 
-		AssertionConsumerService assertionConsumerService =
-			SamlUtil.getAssertionConsumerServiceForBinding(
-				spSSODescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
-
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
@@ -534,7 +530,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		nameIDPolicy.setFormat(metadataManager.getNameIdFormat(entityId));
 
 		AuthnRequest authnRequest = OpenSamlUtil.buildAuthnRequest(
-			samlSelfEntityContext.getEntityId(), assertionConsumerService,
+			samlSelfEntityContext.getEntityId(),
+			SamlUtil.getAssertionConsumerServiceForBinding(
+				spSSODescriptor, SAMLConstants.SAML2_POST_BINDING_URI),
 			singleSignOnService, nameIDPolicy);
 
 		if (samlSpIdpConnection.isForceAuthn() ||

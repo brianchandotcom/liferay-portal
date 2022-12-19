@@ -1405,6 +1405,20 @@ definition {
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS",
 				value1 = "${workflowStatus}");
 		}
+
+		if (isSet(viewsQuantity)) {
+			AssertVisible(
+				key_sectionContent = "${viewQuantity}",
+				key_sectionTitle = "Views",
+				locator1 = "KnowledgeBase#SIDE_PANEL_INFO");
+		}
+
+		if (isSet(childArticlesQuantity)) {
+			AssertVisible(
+				key_sectionContent = "${childArticlesQuantity}",
+				key_sectionTitle = "Child Articles",
+				locator1 = "KnowledgeBase#SIDE_PANEL_INFO");
+		}
 	}
 
 	macro viewInfoPanelVersions {

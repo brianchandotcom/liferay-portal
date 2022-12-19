@@ -91,6 +91,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject214");
@@ -150,6 +152,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject215");
@@ -203,6 +207,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject216");
@@ -255,6 +261,8 @@ definition {
 			fieldValue = "01/01/2001");
 
 		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
 
@@ -313,6 +321,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject218");
@@ -366,6 +376,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject219");
@@ -418,6 +430,8 @@ definition {
 			fieldValue = "1234567891234567");
 
 		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
 
@@ -486,6 +500,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject221");
@@ -540,6 +556,8 @@ definition {
 			fieldValue = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test");
 
 		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
 
 		Alert.viewSuccessMessage();
 
@@ -618,6 +636,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject223");
@@ -670,6 +690,8 @@ definition {
 			fieldValue = "Test text");
 
 		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
 
@@ -727,6 +749,8 @@ definition {
 			fieldValue = "01/01/2001");
 
 		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
 

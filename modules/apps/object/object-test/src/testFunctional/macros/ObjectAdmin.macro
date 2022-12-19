@@ -333,6 +333,8 @@ definition {
 
 		Button.clickSave();
 
+		Alert.viewSuccessMessage();
+
 		WaitForSPARefresh();
 	}
 
@@ -925,6 +927,8 @@ definition {
 			value1 = "${newEntryValue}");
 
 		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro editObjectAction {

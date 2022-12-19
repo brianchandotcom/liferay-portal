@@ -213,6 +213,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject209");
@@ -261,6 +263,8 @@ definition {
 			fieldValue = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 
 		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
 

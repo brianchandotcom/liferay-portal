@@ -136,7 +136,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 					>
 						<liferay-asset:select-asset-display-page
 							classNameId="<%= PortalUtil.getClassNameId(KBArticle.class) %>"
-							classPK="<%= editKBArticleDisplayContext.getKBArticleId() %>"
+							classPK="<%= editKBArticleDisplayContext.getResourcePrimKey() %>"
 							groupId="<%= scopeGroupId %>"
 							showViewInContextLink="<%= true %>"
 						/>

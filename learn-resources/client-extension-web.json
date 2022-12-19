@@ -1,5 +1,5 @@
 {
-  "learn-browser-based-client-extensions": {
+	"learn-browser-based-client-extensions": {
 		"en_US": {
 			"message": "Learn more about browser-based client extensions",
 			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/browser-based-client-extensions.html"
@@ -11,7 +11,7 @@
 			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/browser-based-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-custom-element-type"
 		}
 	},
-  "learn-iframe": {
+	"learn-iframe": {
 		"en_US": {
 			"message": "Learn more about iframe client extension type",
 			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/browser-based-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-iframe-type"

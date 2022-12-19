@@ -188,7 +188,8 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		if (_clientExtensionEntry == null) {
-			return CETLabelUtil.getNewLabel(themeDisplay.getLocale(), _cet.getType());
+			return CETLabelUtil.getNewLabel(
+				themeDisplay.getLocale(), _cet.getType());
 		}
 
 		return _cet.getName(themeDisplay.getLocale());

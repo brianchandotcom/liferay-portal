@@ -136,6 +136,7 @@ path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
 cluster.name: LiferayElasticsearchCluster
+http.host: _local_,_site_
 ingest.geoip.downloader.enabled: false
 xpack.license.self_generated.type: trial</echo>
 		</sequential>

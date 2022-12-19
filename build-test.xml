@@ -15198,6 +15198,15 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
+		<get-browser-property property.name="browser.docker.image" />
+
+		<if>
+			<isset property="browser.docker.image" />
+			<then>
+				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}additionalConfigurations="http.host:\ _local_,_site_"</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="keystore.enabled" />
 
 		<if>

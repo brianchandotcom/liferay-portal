@@ -23,24 +23,24 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface JournalFolderFinder {
 
-	public int countF_A_ByG_F(
+	public int countF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public int filterCountF_A_ByG_F(
+	public int filterCountF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<Object> filterFindF_A_ByG_F(
+	public java.util.List<Object> filterFindF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<Object> filterFindF_A_ByG_F_L(
+	public java.util.List<Object> filterFindF_A_ByG_F_DDMSK_L(
 		long groupId, long folderId, String ddmStructureKey,
 		java.util.Locale locale,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<Object> findF_A_ByG_F(
+	public java.util.List<Object> findF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 

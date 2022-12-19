@@ -20,13 +20,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Matthew Tambara
@@ -34,25 +36,52 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(service = {})
 public class PortalStartupMonitor {
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED
-	)
-	public void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-
-		_componentContext.disableComponent(
-			PortalStartupMonitor.class.getName());
-	}
-
-	public void unsetModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		_componentContext = componentContext;
+	protected void activate(ComponentContext componentContext)
+		throws InvalidSyntaxException {
+
+		BundleContext bundleContext = componentContext.getBundleContext();
+
+		String filterString = StringBundler.concat(
+			"(&", ModuleServiceLifecycle.PORTAL_INITIALIZED, "(objectClass=",
+			ModuleServiceLifecycle.class.getName(), "))");
+
+		_serviceTracker =
+			new ServiceTracker<ModuleServiceLifecycle, ModuleServiceLifecycle>(
+				bundleContext, bundleContext.createFilter(filterString),
+				new ServiceTrackerCustomizer
+					<ModuleServiceLifecycle, ModuleServiceLifecycle>() {
+
+					@Override
+					public ModuleServiceLifecycle addingService(
+						ServiceReference<ModuleServiceLifecycle>
+							serviceReference) {
+
+						componentContext.disableComponent(
+							PortalStartupMonitor.class.getName());
+
+						return bundleContext.getService(serviceReference);
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<ModuleServiceLifecycle>
+							serviceReference,
+						ModuleServiceLifecycle moduleServiceLifecycle) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<ModuleServiceLifecycle>
+							serviceReference,
+						ModuleServiceLifecycle moduleServiceLifecycle) {
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
+
+		_serviceTracker.open();
 
 		_thread = new Thread("Portal Startup Monitoring Thread") {
 
@@ -92,6 +121,8 @@ public class PortalStartupMonitor {
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceTracker.close();
+
 		_thread.interrupt();
 	}
 
@@ -100,7 +131,8 @@ public class PortalStartupMonitor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalStartupMonitor.class);
 
-	private ComponentContext _componentContext;
+	private ServiceTracker<ModuleServiceLifecycle, ModuleServiceLifecycle>
+		_serviceTracker;
 	private Thread _thread;
 
 }

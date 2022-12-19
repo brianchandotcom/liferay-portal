@@ -1,7 +1,7 @@
 dependencies {
 	compileInclude group: "com.google.protobuf", name: "protobuf-java", version: "3.21.7"
 	compileInclude group: "com.liferay", name: "org.drools.core", version: "5.4.0.Final.LIFERAY-PATCHED-2"
-	compileInclude group: "com.liferay", name: "org.mvel2", version: "2.1.0.drools16.LIFERAY-PATCHED-1"
+	compileInclude group: "com.liferay", name: "org.mvel2", version: "2.1.0.drools16.LIFERAY-PATCHED-2"
 	compileInclude group: "org.antlr", name: "antlr-runtime", version: "3.3"
 	compileInclude group: "org.drools", name: "drools-compiler", version: "5.4.0.Final"
 	compileInclude group: "org.drools", name: "knowledge-api", version: "5.4.0.Final"

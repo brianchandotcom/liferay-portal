@@ -46,10 +46,9 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -333,18 +332,21 @@ public class WorkflowDefinitionResourceImpl
 				title = workflowDefinition.getTitle(
 					_language.getLanguageId(
 						contextAcceptLanguage.getPreferredLocale()));
-				title_i18n = Stream.of(
+
+				title_i18n = new HashMap<>();
+
+				Map<Locale, String> localeStringMap =
 					_localization.getLocalizationMap(
-						workflowDefinition.getTitle())
-				).map(
-					Map::entrySet
-				).flatMap(
-					Set::stream
-				).collect(
-					Collectors.toMap(
-						entry -> _language.getLanguageId(entry.getKey()),
-						Map.Entry::getValue)
-				);
+						workflowDefinition.getTitle());
+
+				for (Map.Entry<Locale, String> entry :
+						localeStringMap.entrySet()) {
+
+					title_i18n.put(
+						_language.getLanguageId(entry.getKey()),
+						entry.getValue());
+				}
+
 				transitions = transformToArray(
 					workflowDefinition.getWorkflowTransitions(),
 					workflowTransition -> TransitionUtil.toTransition(

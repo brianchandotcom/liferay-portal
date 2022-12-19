@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {
 	Outlet,
 	useLocation,
@@ -22,6 +22,7 @@ import {
 
 import {useFetch} from '../../../../hooks/useFetch';
 import useHeader from '../../../../hooks/useHeader';
+import useRuns from '../../../../hooks/useRuns';
 import i18n from '../../../../i18n';
 import {
 	APIResponse,
@@ -49,7 +50,7 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {buildId, projectId, routineId, ...otherParams} = useParams();
 	const {pathname} = useLocation();
 	const {testrayProject, testrayRoutine}: OutletContext = useOutletContext();
-	const [runId, setRunId] = useState<Number>();
+	const {setRunId} = useRuns();
 
 	const {
 		data: testrayBuild,
@@ -140,6 +141,10 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 		}
 	}, [basePath, isCurrentPathIgnored, pathname, setTabs]);
 
+	useEffect(() => {
+		return () => setRunId(null);
+	}, [setRunId]);
+
 	if (testrayBuild) {
 		return (
 			<>
@@ -159,8 +164,6 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 				<Outlet
 					context={{
 						mutateBuild,
-						runId,
-						setRunId,
 						testrayBuild,
 						testrayProject,
 						testrayRoutine,

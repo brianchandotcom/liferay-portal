@@ -12,7 +12,8 @@
  * details.
  */
 
-import {useOutletContext, useParams} from 'react-router-dom';
+import {useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 
 import Avatar from '../../../../components/Avatar';
 import AssignToMe from '../../../../components/Avatar/AssigneToMe';
@@ -22,6 +23,7 @@ import ListViewRest from '../../../../components/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../../components/StatusBadge/StatusBadge';
 import useMutate from '../../../../hooks/useMutate';
+import useRuns from '../../../../hooks/useRuns';
 import i18n from '../../../../i18n';
 import {filters} from '../../../../schema/filter';
 import {
@@ -32,15 +34,18 @@ import {
 import {SearchBuilder} from '../../../../util/search';
 import useBuildTestActions from './useBuildTestActions';
 
-type OutletContext = {
-	runId: number | undefined;
-};
-
 const Build = () => {
 	const {buildId} = useParams();
 	const {updateItemFromList} = useMutate();
 	const {actions, form} = useBuildTestActions();
-	const {runId} = useOutletContext<OutletContext>();
+	const {
+		compareRuns: {runId},
+		setRunId,
+	} = useRuns();
+
+	useEffect(() => {
+		return () => setRunId(null);
+	}, [setRunId]);
 
 	const caseResultFilter = new SearchBuilder();
 

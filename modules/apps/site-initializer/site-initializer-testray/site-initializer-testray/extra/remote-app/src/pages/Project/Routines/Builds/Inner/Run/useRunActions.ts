@@ -14,12 +14,14 @@
 
 import useFormModal from '../../../../../../hooks/useFormModal';
 import useMutate from '../../../../../../hooks/useMutate';
+import useRuns from '../../../../../../hooks/useRuns';
 import i18n from '../../../../../../i18n';
 import {TestrayRun, testrayRunImpl} from '../../../../../../services/rest';
 import {Action} from '../../../../../../types';
 
 const useRunActions = () => {
 	const {removeItemFromList} = useMutate();
+	const {setRunA, setRunB} = useRuns();
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
@@ -40,6 +42,16 @@ const useRunActions = () => {
 			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',
+		},
+		{
+			action: ({id}) => setRunA(id),
+			icon: 'select-from-list',
+			name: i18n.translate('select-run-a'),
+		},
+		{
+			action: ({id}) => setRunB(id),
+			icon: 'select-from-list',
+			name: i18n.translate('select-run-b'),
 		},
 	] as Action<TestrayRun>[];
 

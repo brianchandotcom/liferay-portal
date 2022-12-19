@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 
 type UseStorage<T> = [T, (value: T) => void];
 
@@ -28,24 +28,25 @@ const useStorage = <T = string>(
 			storageValue = storage.getItem(key);
 
 			return storageValue ? JSON.parse(storageValue) : initialValue;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 
 			return storageValue || initialValue;
 		}
 	});
 
-	const setStorageValue = (value: T) => {
-		try {
-			setStoredValue(value);
+	const setStorageValue = useCallback(
+		(value: T) => {
+			try {
+				setStoredValue(value);
 
-			storage.setItem(key, JSON.stringify(value));
-		}
-		catch (error) {
-			console.error(error);
-		}
-	};
+				storage.setItem(key, JSON.stringify(value));
+			} catch (error) {
+				console.error(error);
+			}
+		},
+		[key, storage]
+	);
 
 	return [storedValue, setStorageValue];
 };

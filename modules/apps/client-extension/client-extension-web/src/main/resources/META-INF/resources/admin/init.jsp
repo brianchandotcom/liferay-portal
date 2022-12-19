@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %>
+
 <%@ page import="com.liferay.client.extension.exception.ClientExtensionEntryNameException" %><%@
 page import="com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException" %><%@
 page import="com.liferay.client.extension.type.CustomElementCET" %><%@

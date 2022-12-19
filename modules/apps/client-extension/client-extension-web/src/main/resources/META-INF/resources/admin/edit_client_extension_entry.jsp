@@ -49,7 +49,19 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 	<liferay-frontend:edit-form-body>
 		<h3 class="mb-3"><%= editClientExtensionEntryDisplayContext.getTitle() %></h3>
 
-		<p class="text-secondary"><%= editClientExtensionEntryDisplayContext.getHelpLabel() %> <a href="https://learn.liferay.com/dxp/latest/en/building-applications/remote-apps/understanding-remote-app-types.html" target="_blank"><liferay-ui:message arguments="Client Extensions" key="learn-more-about-x" /></a></p>
+		<p class="text-secondary"><%= editClientExtensionEntryDisplayContext.getHelpLabel() %>
+			<liferay-learn:message
+				key="<%= editClientExtensionEntryDisplayContext.getLearnResourceKey() %>"
+				resource="client-extension-web"
+			/>
+		</p>
+
+		<p class="text-secondary">
+			<liferay-learn:message
+				key="learn-browser-based-client-extensions"
+				resource="client-extension-web"
+			/>
+		</p>
 
 		<liferay-ui:panel-container
 			cssClass="panel-group-flush "

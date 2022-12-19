@@ -34,6 +34,10 @@ public class CETLabelUtil {
 		return LanguageUtil.get(locale, "help-" + _getCETTypeLanguageKey(type));
 	}
 
+	public static String getLearnResourceKey(String type) {
+		return "learn-" + _getCETTypeLanguageKey(type);
+	}
+
 	public static String getNewLabel(Locale locale, String type) {
 		return LanguageUtil.format(
 			locale, "new-x", _getCETTypeLanguageKey(type));

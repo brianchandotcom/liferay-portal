@@ -25,8 +25,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Michael C. Han
@@ -120,21 +118,6 @@ public class SearchHitImpl implements SearchHit, Serializable {
 			Collection<HighlightField> highlightFields) {
 
 			_searchHitImpl.addHighlightFields(highlightFields);
-
-			return this;
-		}
-
-		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 *             #addHighlightFields(Collection)}
-		 */
-		@Deprecated
-		@Override
-		public SearchHitBuilder addHighlightFields(
-			Stream<HighlightField> highlightFieldStream) {
-
-			_searchHitImpl.addHighlightFields(
-				highlightFieldStream.collect(Collectors.toList()));
 
 			return this;
 		}

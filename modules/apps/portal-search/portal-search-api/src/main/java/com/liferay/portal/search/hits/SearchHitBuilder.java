@@ -19,7 +19,6 @@ import com.liferay.portal.search.highlight.HighlightField;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,14 +32,6 @@ public interface SearchHitBuilder {
 
 	public SearchHitBuilder addHighlightFields(
 		Collection<HighlightField> highlightFields);
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addHighlightFields(Collection)}
-	 */
-	@Deprecated
-	public SearchHitBuilder addHighlightFields(
-		Stream<HighlightField> highlightFieldStream);
 
 	public SearchHitBuilder addSource(String name, Object value);
 

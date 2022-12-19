@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -344,22 +345,12 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			if (layoutFriendlyURL == null) {
 				if (exception instanceof LayoutPermissionException) {
-					List<Layout> layouts = layoutLocalService.getLayouts(
+					List<Layout> layouts = layoutService.getLayouts(
 						group.getGroupId(), _private,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 1);
 
-					PermissionChecker permissionChecker =
-						PermissionCheckerFactoryUtil.create(
-							_getUser(httpServletRequest));
-
-					for (Layout layout : layouts) {
-						if (LayoutPermissionUtil.contains(
-								permissionChecker, layout, ActionKeys.VIEW)) {
-
-							redirectLayout = layout;
-
-							break;
-						}
+					if (!layouts.isEmpty()) {
+						redirectLayout = layouts.get(0);
 					}
 				}
 				else {
@@ -701,6 +692,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;
+
+	@Reference
+	protected LayoutService layoutService;
 
 	@Reference
 	protected Portal portal;

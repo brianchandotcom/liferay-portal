@@ -747,6 +747,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public List<Layout> getLayouts(
+			long groupId, boolean privateLayout, long parentLayoutId, int start,
+			int end)
+		throws PortalException {
+
+		return filterLayouts(
+			layoutLocalService.getLayouts(
+				groupId, privateLayout, parentLayoutId),
+			start, end);
+	}
+
+	@Override
+	public List<Layout> getLayouts(
 			long groupId, boolean privateLayout, String type)
 		throws PortalException {
 

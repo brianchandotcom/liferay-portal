@@ -14,54 +14,29 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountEntryOrganizationRel;
-import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
-import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -130,7 +105,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		_checkPermission(
 			ActionKeys.DELETE,
-			objectEntryLocalService.getObjectEntry(objectEntryId), getUserId());
+			objectEntryLocalService.getObjectEntry(objectEntryId));
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntryId);
 	}
@@ -143,7 +118,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
 			externalReferenceCode, companyId, groupId);
 
-		_checkPermission(ActionKeys.DELETE, objectEntry, getUserId());
+		_checkPermission(ActionKeys.DELETE, objectEntry);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntry);
 	}
@@ -156,7 +131,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntryId);
 
 		if (objectEntry != null) {
-			_checkPermission(ActionKeys.VIEW, objectEntry, getUserId());
+			_checkPermission(ActionKeys.VIEW, objectEntry);
 		}
 
 		return objectEntry;
@@ -212,7 +187,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
 			objectEntryId);
 
-		_checkPermission(ActionKeys.VIEW, objectEntry, getUserId());
+		_checkPermission(ActionKeys.VIEW, objectEntry);
 
 		return objectEntry;
 	}
@@ -225,7 +200,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
 			externalReferenceCode, companyId, groupId);
 
-		_checkPermission(ActionKeys.VIEW, objectEntry, getUserId());
+		_checkPermission(ActionKeys.VIEW, objectEntry);
 
 		return objectEntry;
 	}
@@ -365,8 +340,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			getPermissionChecker(), objectEntryId, actionId);
 	}
 
-	private void _checkPermission(
-			String actionId, ObjectEntry objectEntry, long userId)
+	private void _checkPermission(String actionId, ObjectEntry objectEntry)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -377,114 +351,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			_modelResourcePermissionsServiceTrackerMap.getService(
 				objectDefinition.getClassName());
 
-		if (modelResourcePermission.contains(
-				getPermissionChecker(), objectEntry, actionId)) {
-
-			return;
-		}
-
-		if (!objectDefinition.isAccountEntryRestricted()) {
-			throw new PrincipalException.MustHavePermission(
-				getPermissionChecker(), modelResourcePermission.getModelName(),
-				objectEntry.getObjectEntryId(), actionId);
-		}
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-		long accountEntryId = MapUtil.getLong(
-			objectEntry.getValues(), objectField.getName());
-
-		if (accountEntryId == 0) {
-			return;
-		}
-
-		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
-			accountEntryId);
-
-		long[] accountEntryIds = ListUtil.toLongArray(
-			_accountEntryLocalService.getUserAccountEntries(
-				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-				new String[] {
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-				},
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS),
-			AccountEntry::getAccountEntryId);
-
-		if (!ArrayUtil.contains(accountEntryIds, accountEntryId)) {
-			throw new ObjectDefinitionAccountEntryRestrictedException(
-				StringBundler.concat(
-					"The user ", userId,
-					" does not have access to the account entry ",
-					accountEntryId));
-		}
-
-		Set<Long> rolesIds = new HashSet<>();
-
-		rolesIds.addAll(
-			TransformUtil.transform(
-				_userGroupRoleLocalService.getUserGroupRoles(
-					userId, accountEntry.getAccountEntryGroupId()),
-				UserGroupRole::getRoleId));
-
-		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
-			_accountEntryOrganizationRelLocalService.
-				getAccountEntryOrganizationRels(accountEntryId);
-
-		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-				accountEntryOrganizationRels) {
-
-			Organization organization =
-				accountEntryOrganizationRel.getOrganization();
-
-			Group group = _groupLocalService.getOrganizationGroup(
-				objectDefinition.getCompanyId(),
-				organization.getOrganizationId());
-
-			rolesIds.addAll(
-				TransformUtil.transform(
-					_userGroupRoleLocalService.getUserGroupRoles(
-						userId, group.getGroupId()),
-					UserGroupRole::getRoleId));
-
-			for (Organization ancestorOrganization :
-					organization.getAncestors()) {
-
-				group = _groupLocalService.getOrganizationGroup(
-					objectDefinition.getCompanyId(),
-					ancestorOrganization.getOrganizationId());
-
-				rolesIds.addAll(
-					TransformUtil.transform(
-						_userGroupRoleLocalService.getUserGroupRoles(
-							userId, group.getGroupId()),
-						UserGroupRole::getRoleId));
-			}
-		}
-
-		for (Long roleId : rolesIds) {
-			ResourcePermission resourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					objectDefinition.getCompanyId(),
-					objectDefinition.getClassName(),
-					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", roleId);
-
-			if (resourcePermission == null) {
-				continue;
-			}
-
-			if (resourcePermission.hasActionId(actionId)) {
-				return;
-			}
-		}
-
-		throw new ObjectDefinitionAccountEntryRestrictedException(
-			StringBundler.concat(
-				"User ", userId, " must have ", actionId, " permission for ",
-				objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId()));
+		modelResourcePermission.check(
+			getPermissionChecker(), objectEntry, actionId);
 	}
 
 	private void _checkPortletResourcePermission(
@@ -532,16 +400,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 	}
 
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private AccountEntryOrganizationRelLocalService
-		_accountEntryOrganizationRelLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
 	private volatile ServiceTrackerMap
 		<String, ModelResourcePermission<ObjectEntry>>
 			_modelResourcePermissionsServiceTrackerMap;
@@ -550,16 +408,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
-
 	private volatile ServiceTrackerMap<String, PortletResourcePermission>
 		_portletResourcePermissionsServiceTrackerMap;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

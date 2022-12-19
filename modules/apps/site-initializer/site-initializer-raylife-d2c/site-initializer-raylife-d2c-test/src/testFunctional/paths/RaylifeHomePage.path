@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>HOME_PAGE_MESSAGE_MAX_NUMBER_CHARACTERS</td>
-	<td>//input[@maxlength='5']</td>
+	<td>//*[@maxlength='5']</td>
 	<td></td>
 </tr>
 <tr>

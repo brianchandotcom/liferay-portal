@@ -39,9 +39,28 @@ definition {
 	@description = "Automation ID: LPS-157645 | Test Summary: Verify that when the user is a Liferay Staff all projects are visible to him"
 	@priority = "4"
 	test LiferayStaffCanSeeAllProjects {
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+		}
 
-		// TODO LPS-157645 LiferayStaffCanSeeAllProjects pending implementation
+		task ("Then I go to the Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
+			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+		}
+
+		task ("And I assert that the Liferay Staff user is able to visualize all projects") {
+			CustomerPortal.tableListInHomepage(projectList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0,Test Account No SLA");
+		
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			Navigator.gotoNavTab(navTab = "Organizations");
+
+			CP2Utils.assertOrganization(text = "Liferay Staff");
+		}
 	}
 
     @description = "Automation ID: LPS-157646 | Test Summary: Verify that when the user is not a Liferay Staff only the project he is associated with is displayed to him"

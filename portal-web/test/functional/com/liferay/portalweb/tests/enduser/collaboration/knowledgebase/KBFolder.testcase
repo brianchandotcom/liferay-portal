@@ -348,4 +348,33 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that some folder info only display in panel."
+	@priority = "5"
+	test SomeFolderInfoOnlyDisplayInPanel {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Subfolder Title",
+			parentFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.viewFolderInfo(
+			articlesQuantity = "1",
+			entryDefaultInfo = "Test Test, modified",
+			foldersQuantity = "1",
+			infoPanel = "true",
+			kbFolderName = "KB Folder");
+	}
+
 }

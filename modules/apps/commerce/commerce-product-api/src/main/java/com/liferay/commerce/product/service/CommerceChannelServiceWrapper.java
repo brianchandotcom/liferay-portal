@@ -108,35 +108,10 @@ public class CommerceChannelServiceWrapper
 	}
 
 	@Override
-	public java.util.List<CommerceChannel> getCommerceChannels(
-			int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceChannelService.getCommerceChannels(start, end);
-	}
-
-	@Override
 	public java.util.List<CommerceChannel> getCommerceChannels(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceChannelService.getCommerceChannels(companyId);
-	}
-
-	@Override
-	public java.util.List<CommerceChannel> getCommerceChannels(
-			long companyId, String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceChannelService.getCommerceChannels(
-			companyId, keywords, start, end);
-	}
-
-	@Override
-	public int getCommerceChannelsCount(long companyId, String keywords)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceChannelService.getCommerceChannelsCount(
-			companyId, keywords);
 	}
 
 	/**

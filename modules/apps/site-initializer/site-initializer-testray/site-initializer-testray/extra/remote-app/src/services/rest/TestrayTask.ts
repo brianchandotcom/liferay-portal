@@ -19,8 +19,9 @@ import {SearchBuilder, searchUtil} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
 import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
 import Rest from './Rest';
+import {testrayTaskCaseTypesImpl} from './TestrayTaskCaseTypes';
 import {testrayTaskUsersImpl} from './TestrayTaskUsers';
-import {APIResponse, TestrayTask, TestrayTaskUser} from './types';
+import {APIResponse, TestrayTask} from './types';
 
 type TaskForm = typeof yupSchema.task.__outputType & {
 	dispatchTriggerId: number;
@@ -78,54 +79,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	}
 
 	public async assignTo(task: TestrayTask, userIds: number[]) {
-		const response = await this.update(task.id, {
-			dueStatus: TaskStatuses.IN_ANALYSIS,
-			name: task.name as string,
-		});
-
-		await this.assignUsers(task.id, userIds);
-
-		return response;
-	}
-
-	private async assignUsers(taskId: number, userIds: number[]) {
-		let response = await testrayTaskUsersImpl.getAll(
-			searchUtil.eq('taskId', taskId)
-		);
-
-		response = testrayTaskUsersImpl.transformDataFromList(
-			response as APIResponse<TestrayTaskUser>
-		);
-
-		const currentTaskUserIds = (userIds || []) as number[];
-
-		const taskUsers = response.items;
-
-		const taskUserIds = taskUsers.map(({user}) => user?.id as number);
-
-		const userIdsToAdd = currentTaskUserIds.filter(
-			(currentTaskUserId) => !taskUserIds.includes(currentTaskUserId)
-		);
-
-		const userIdsToRemove = taskUsers.filter(
-			({user}) => !currentTaskUserIds.includes(user?.id as number)
-		);
-
-		if (userIdsToRemove.length) {
-			await testrayTaskUsersImpl.removeBatch(
-				userIdsToRemove.map(({id}) => id)
-			);
-		}
-
-		if (userIdsToAdd.length) {
-			await testrayTaskUsersImpl.createBatch(
-				userIdsToAdd.map((userId) => ({
-					name: `${taskId}-${userId}`,
-					taskId,
-					userId,
-				}))
-			);
-		}
+		return testrayTaskUsersImpl.assign(task.id, userIds);
 	}
 
 	protected async beforeCreate(task: TaskForm): Promise<void> {
@@ -146,14 +100,14 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	public async create(data: TaskForm): Promise<TestrayTask> {
 		const task = await super.create(data);
 
-		const userIds = data.userIds || [];
+		const caseTypeIds = data.caseTypes || [];
 
-		if (userIds.length) {
-			await testrayTaskUsersImpl.createBatch(
-				userIds.map((userId) => ({
-					name: `${task.id}-${userId}`,
+		if (caseTypeIds.length) {
+			await testrayTaskCaseTypesImpl.createBatch(
+				caseTypeIds.map((caseTypeId) => ({
+					caseTypeId,
+					name: `${task.id}-${caseTypeId}`,
 					taskId: task.id,
-					userId,
 				}))
 			);
 		}

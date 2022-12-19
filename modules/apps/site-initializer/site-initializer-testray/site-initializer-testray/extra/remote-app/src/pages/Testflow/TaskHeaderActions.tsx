@@ -19,13 +19,16 @@ import {KeyedMutator} from 'swr';
 
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
+import {Liferay} from '../../services/liferay';
 import {
 	APIResponse,
 	TestraySubTask,
 	TestrayTask,
 	TestrayTaskUser,
 	testrayTaskImpl,
+	testrayTaskUsersImpl,
 } from '../../services/rest';
+import {TaskStatuses} from '../../util/statuses';
 import TestflowAssignUserModal, {TestflowAssigUserType} from './modal';
 
 type OutletContext = {
@@ -38,9 +41,7 @@ type OutletContext = {
 		mutateTask: KeyedMutator<TestrayTask>;
 		mutateTaskUser: KeyedMutator<APIResponse<TestrayTaskUser>>;
 	};
-	revalidate: {
-		revalidateTaskUser: () => void;
-	};
+	revalidate: {revalidateTaskUser: () => void};
 };
 
 const TaskHeaderActions = () => {
@@ -57,14 +58,11 @@ const TaskHeaderActions = () => {
 	);
 	const [userIds, setUsersId] = useState<number[]>([]);
 	const {modal} = useFormModal({
-		onSave: (newUserIds: number[]) =>
-			testrayTaskImpl
-				.assignTo(testrayTask, newUserIds)
-				.then((response) => {
-					mutateTask(response);
+		onSave: async (newUserIds: number[]) => {
+			await testrayTaskUsersImpl.assign(testrayTask.id, newUserIds);
 
 					revalidateTaskUser();
-				}),
+		},
 	});
 
 	const navigate = useNavigate();

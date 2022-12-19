@@ -15,6 +15,7 @@
 import {InferType} from 'yup';
 
 import yupSchema from '../../schema/yup';
+import {getUniqueList} from '../../util';
 import {searchUtil} from '../../util/search';
 import Rest from './Rest';
 import {APIResponse, TestrayTaskUser} from './types';
@@ -62,18 +63,22 @@ class TestrayTaskUsersImpl extends Rest<TaskToUser, TestrayTaskUser> {
 		});
 	}
 
-	public async assign(taskId: number, userIds: number[]) {
-		let response = await this.getAll(searchUtil.eq('taskId', taskId));
+	public async assign(taskId: number, userIds: number[] | number) {
+		let response = await this.getAll(
+			`${searchUtil.eq('taskId', taskId)}&pageSize=100`
+		);
 
 		response = this.transformDataFromList(
 			response as APIResponse<TestrayTaskUser>
 		);
 
-		const currentTaskUserIds = (userIds || []) as number[];
-
 		const taskUsers = response.items;
 
 		const taskUserIds = taskUsers.map(({user}) => user?.id as number);
+
+		const currentTaskUserIds = Array.isArray(userIds)
+			? userIds
+			: getUniqueList([...taskUserIds, userIds]);
 
 		const userIdsToAdd = currentTaskUserIds.filter(
 			(currentTaskUserId) => !taskUserIds.includes(currentTaskUserId)

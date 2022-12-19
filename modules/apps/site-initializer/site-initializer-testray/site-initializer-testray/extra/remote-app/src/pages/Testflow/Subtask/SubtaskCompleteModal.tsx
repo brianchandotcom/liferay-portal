@@ -80,7 +80,11 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 		resolver: yupResolver(yupSchema.subtask),
 	});
 
-	const _onSubmit = ({comment, dueStatus, issues = ''}: SubtaskForm) => {
+	const _onSubmit = async ({
+		comment,
+		dueStatus,
+		issues = '',
+	}: SubtaskForm) => {
 		const _issues = issues
 			.split(',')
 			.map((name) => name.trim())
@@ -93,12 +97,23 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			userId: Number(Liferay.ThemeDisplay.getUserId()),
 		};
 
-		testraySubTaskImpl
-			.complete(dueStatus as string, _issues, commentSubtask, subtask?.id)
-			.then(revalidateSubtask)
-			.then(revalidateSubtaskIssues)
-			.then(onSave)
-			.catch(onError);
+		try {
+			await testraySubTaskImpl.complete(
+				dueStatus as string,
+				_issues,
+				commentSubtask,
+				subtask?.id
+			);
+
+			revalidateSubtask();
+
+			revalidateSubtaskIssues();
+
+			onSave();
+		}
+		catch (error) {
+			onError(error);
+		}
 	};
 
 	useEffect(() => {

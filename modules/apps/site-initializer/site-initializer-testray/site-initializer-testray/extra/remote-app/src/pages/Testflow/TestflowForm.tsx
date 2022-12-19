@@ -36,6 +36,7 @@ import {
 	TestrayTaskCaseTypes,
 	TestrayTaskUser,
 	testrayTaskImpl,
+	testrayTaskUsersImpl,
 } from '../../services/rest';
 import {searchUtil} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
@@ -55,9 +56,7 @@ type OutletContext = {
 		mutateTask: KeyedMutator<TestrayTask>;
 		mutateTaskUser: KeyedMutator<APIResponse<TestrayTaskUser>>;
 	};
-	revalidate: {
-		revalidateTaskUser: () => void;
-	};
+	revalidate: {revalidateTaskUser: () => void};
 };
 
 const TestflowForm = () => {
@@ -126,7 +125,7 @@ const TestflowForm = () => {
 		modal.open(userIds);
 	};
 
-	const _onSubmit = (form: TestflowFormType) => {
+	const _onSubmit = async (form: TestflowFormType) => {
 		let hasError = false;
 
 		if (!form.caseTypes?.length) {
@@ -155,19 +154,25 @@ const TestflowForm = () => {
 			return;
 		}
 
-		onSubmit(form, {
-			create: (data) => testrayTaskImpl.create(data),
-			update: (id, data) => testrayTaskImpl.update(id, data),
-		})
-			.then((response) => {
-				if (form.id) {
-					mutateTask(response);
+		try {
+			const response = await onSubmit(form, {
+				create: (data) => testrayTaskImpl.create(data),
+				update: (id, data) => testrayTaskImpl.update(id, data),
+			});
 
-					revalidateTaskUser();
-				}
-			})
-			.then(onSave)
-			.catch(onError);
+			if (form.id) {
+				mutateTask(response);
+
+				await testrayTaskUsersImpl.assign(form.id, userIds);
+
+				revalidateTaskUser();
+			}
+
+			onSave();
+		}
+		catch (error) {
+			onError(error);
+		}
 	};
 
 	const inputProps = {

@@ -213,6 +213,8 @@ export default {
 	'mark-at-least-one-case-to-export': 'Mark at least one case to export.',
 	'mark-at-least-one-case-type-for-processing':
 		'Mark at least one case type for processing.',
+	'mark-at-least-one-user-for-assignment':
+		'Mark At Least One User For Assignment.',
 	'merge-selected-subtasks-into-the-highest-scoring-subtask':
 		'Merge selected subtasks into the highest scoring subtask.',
 	'merge-subtasks': 'Merge Subtasks',

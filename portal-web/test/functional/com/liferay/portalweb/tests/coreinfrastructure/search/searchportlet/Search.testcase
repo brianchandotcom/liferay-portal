@@ -1150,6 +1150,82 @@ definition {
 	}
 
 	@priority = "3"
+	test CanOrderCategoryFacetTerms {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary");
+
+		var categoryId1 = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Engineering",
+			vocabularyName = "Vocabulary");
+		var categoryId2 = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Product",
+			vocabularyName = "Vocabulary");
+		var categoryId3 = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "2021",
+			vocabularyName = "Vocabulary");
+		var categoryId4 = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "2022",
+			vocabularyName = "Vocabulary");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3},${categoryId4}",
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC WebContent Title 1");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId1},${categoryId3},${categoryId4}",
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC WebContent Title 2");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId3},${categoryId4}",
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC WebContent Title 3");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId4}",
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC WebContent Title 4");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2022,2021,Engineering,Product");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "Category Facet",
+			sortOption = "Term Frequency Ascending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2021,2022");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "Category Facet",
+			sortOption = "Term Value Ascending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2021,2022,Engineering,Product");
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			portletName = "Category Facet",
+			sortOption = "Term Value Descending");
+
+		Refresh();
+
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2022,2021");
+	}
+
+	@priority = "3"
 	test CanOrderFolderFacetTerms {
 		for (var folder : list "Product,Engineering,2021,2022") {
 			JSONFolder.addFolder(

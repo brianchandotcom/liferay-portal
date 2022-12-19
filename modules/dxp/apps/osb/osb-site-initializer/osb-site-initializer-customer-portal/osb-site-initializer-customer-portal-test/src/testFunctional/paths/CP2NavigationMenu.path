@@ -136,13 +136,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NODES_ERRO</td>
+	<td>NODES_ERROR</td>
 	<td>//span[normalize-space()='Key Type']//ancestor::div[contains(@class,'dropdown-header')]//following-sibling::ul//div[contains(text(),'')]/following-sibling::div//div[text()='${key_erro}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_NO_RESULT</td>
-	<td>//div[normalize-space()="No activation keys found with this search criteria."]</td>
+	<td>//div[normalize-space()="${key_nosearch}"]</td>
 	<td></td>
 </tr>
 </tbody>

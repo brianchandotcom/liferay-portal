@@ -28,8 +28,15 @@ import {useDebounceCallback} from './useDebounceCallback';
 
 const MAX_ITEMS_TO_SHOW = 10;
 
-function LayoutFinder(props) {
-	const [keywords, setKeywords] = useState('');
+function LayoutFinder({
+	administrationPortletNamespace,
+	administrationPortletURL,
+	findLayoutsURL,
+	keywords,
+	namespace,
+	productMenuPortletURL,
+	setKeywords,
+}) {
 	const [layouts, setLayouts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [totalCount, setTotalCount] = useState(0);
@@ -41,9 +48,9 @@ function LayoutFinder(props) {
 
 	const [updatePageResults, cancelUpdatePageResults] = useDebounceCallback(
 		(newKeywords) => {
-			fetch(props.findLayoutsURL, {
+			fetch(findLayoutsURL, {
 				body: objectToFormData({
-					[`${props.namespace}keywords`]: newKeywords,
+					[`${namespace}keywords`]: newKeywords,
 				}),
 				method: 'post',
 			})
@@ -70,39 +77,29 @@ function LayoutFinder(props) {
 
 			setKeywords(newKeywords);
 
-			const tree = document.querySelector(
-				`#${props.namespace}layoutsTree`
-			);
-
 			if (!newKeywords.length) {
 				setLoading(false);
 				setLayouts([]);
 				setTotalCount(0);
 
 				cancelUpdatePageResults();
-
-				tree.classList.remove('hide');
 			}
 			else {
 				setLoading(true);
 				updatePageResults(newKeywords);
-
-				if (!tree.classList.contains('hide')) {
-					tree.classList.add('hide');
-				}
 			}
 		},
-		[cancelUpdatePageResults, props.namespace, updatePageResults]
+		[cancelUpdatePageResults, setKeywords, updatePageResults]
 	);
 
 	const handleOnClick = useCallback(() => {
-		Liferay.Portlet.destroy(`#p_p_id${props.namespace}`, true);
+		Liferay.Portlet.destroy(`#p_p_id${namespace}`, true);
 
 		setSessionValue(
 			'com.liferay.product.navigation.product.menu.web_pagesTreeState',
 			'closed'
 		).then(() => {
-			fetch(props.productMenuPortletURL)
+			fetch(productMenuPortletURL)
 				.then((response) => {
 					if (!response.ok) {
 						throw new Error();
@@ -134,7 +131,7 @@ function LayoutFinder(props) {
 					});
 				});
 		});
-	}, [props]);
+	}, [namespace, productMenuPortletURL]);
 
 	return (
 		<div className="layout-finder">
@@ -150,7 +147,7 @@ function LayoutFinder(props) {
 			<form onSubmit={handleFormSubmit} role="search">
 				<label
 					className="sr-only"
-					htmlFor={`${props.namespace}-layout-finder-page-input`}
+					htmlFor={`${namespace}-layout-finder-page-input`}
 				>
 					{`${Liferay.Language.get('page-name')}: `}
 				</label>
@@ -158,7 +155,7 @@ function LayoutFinder(props) {
 				<input
 					autoComplete="off"
 					className="form-control form-control-sm"
-					id={`${props.namespace}-layout-finder-page-input`}
+					id={`${namespace}-layout-finder-page-input`}
 					onChange={handleOnChange}
 					placeholder={Liferay.Language.get(
 						'start-typing-to-find-a-page'
@@ -230,7 +227,7 @@ function LayoutFinder(props) {
 
 							<div className="text-center">
 								<a
-									href={`${props.administrationPortletURL}&${props.administrationPortletNamespace}keywords=${keywords}`}
+									href={`${administrationPortletURL}&${administrationPortletNamespace}keywords=${keywords}`}
 								>
 									{Liferay.Language.get(
 										'view-in-page-administration'

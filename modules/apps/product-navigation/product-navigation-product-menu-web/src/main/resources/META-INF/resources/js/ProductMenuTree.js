@@ -12,7 +12,8 @@
  * details.
  */
 
-import React from 'react';
+import classNames from 'classnames';
+import React, {useState} from 'react';
 
 import LayoutFinder from './LayoutFinder';
 import NavigationMenuItemsTree from './NavigationMenuItemsTree';
@@ -52,51 +53,57 @@ export default function ProductMenuTree({portletNamespace, ...props}) {
 		viewInPageAdministrationURL,
 	} = config;
 
+	const [searchKeywords, setSearchKeywords] = useState('');
+
 	return (
 		<>
 			<LayoutFinder
 				administrationPortletNamespace={administrationPortletNamespace}
 				administrationPortletURL={administrationPortletURL}
 				findLayoutsURL={findLayoutsURL}
+				keywords={searchKeywords}
 				namespace={portletNamespace}
 				productMenuPortletURL={productMenuPortletURL}
+				setKeywords={setSearchKeywords}
 				viewInPageAdministrationURL={viewInPageAdministrationURL}
 			/>
 
-			<PageTypeSelector
-				addCollectionLayoutURL={addCollectionLayoutURL}
-				addLayoutURL={addLayoutURL}
-				configureLayoutSetURL={configureLayoutSetURL}
-				namespace={portletNamespace}
-				pageTypeOptions={pageTypeOptions}
-				pageTypeSelectedOption={pageTypeSelectedOption}
-				pageTypeSelectedOptionLabel={pageTypeSelectedOptionLabel}
-				pagesTreeURL={pagesTreeURL}
-				showAddIcon={showAddIcon}
-			/>
+			<div className={classNames({hide: searchKeywords.length})}>
+				<PageTypeSelector
+					addCollectionLayoutURL={addCollectionLayoutURL}
+					addLayoutURL={addLayoutURL}
+					configureLayoutSetURL={configureLayoutSetURL}
+					namespace={portletNamespace}
+					pageTypeOptions={pageTypeOptions}
+					pageTypeSelectedOption={pageTypeSelectedOption}
+					pageTypeSelectedOptionLabel={pageTypeSelectedOptionLabel}
+					pagesTreeURL={pagesTreeURL}
+					showAddIcon={showAddIcon}
+				/>
 
-			{isSiteNavigationMenu ? (
-				<NavigationMenuItemsTree
-					portletNamespace={portletNamespace}
-					selectedSiteNavigationMenuItemId={
-						selectedSiteNavigationMenuItemId
-					}
-					siteNavigationMenuItems={siteNavigationMenuItems}
-				/>
-			) : (
-				<PagesTree
-					config={{
-						loadMoreItemsURL,
-						maxPageSize,
-						moveItemURL,
-						namespace: portletNamespace,
-					}}
-					isPrivateLayoutsTree={isPrivateLayoutsTree}
-					items={items}
-					selectedLayoutId={selectedLayoutId}
-					selectedLayoutPath={selectedLayoutPath}
-				/>
-			)}
+				{isSiteNavigationMenu ? (
+					<NavigationMenuItemsTree
+						portletNamespace={portletNamespace}
+						selectedSiteNavigationMenuItemId={
+							selectedSiteNavigationMenuItemId
+						}
+						siteNavigationMenuItems={siteNavigationMenuItems}
+					/>
+				) : (
+					<PagesTree
+						config={{
+							loadMoreItemsURL,
+							maxPageSize,
+							moveItemURL,
+							namespace: portletNamespace,
+						}}
+						isPrivateLayoutsTree={isPrivateLayoutsTree}
+						items={items}
+						selectedLayoutId={selectedLayoutId}
+						selectedLayoutPath={selectedLayoutPath}
+					/>
+				)}
+			</div>
 
 			<PagesAdministrationLink
 				administrationPortletURL={administrationPortletURL}

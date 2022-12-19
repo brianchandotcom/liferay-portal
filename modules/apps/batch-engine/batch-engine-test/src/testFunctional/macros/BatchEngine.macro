@@ -49,7 +49,7 @@ definition {
 
 		// Need to add pause here to finish deploying zip through batch engine LPS-161983
 
-		Pause(locator1 = "1000");
+		Pause(locator1 = "5000");
 	}
 
 	macro setUpGlobalIds {

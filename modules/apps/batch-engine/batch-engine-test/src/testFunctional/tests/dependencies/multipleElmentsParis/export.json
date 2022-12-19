@@ -2,14 +2,6 @@
 	{
 		"alternativeHeadline": "",
 		"articleBody": "<p>Blog Entry 2 content</p>",
-		"creator": {
-			"additionalName": "",
-			"contentType": "UserAccount",
-			"familyName": "Test",
-			"givenName": "Test",
-			"id": 20125,
-			"name": "Test Test"
-		},
 		"customFields": [
 		],
 		"dateCreated": "2022-11-07T16:27:51.902+00:00",
@@ -26,7 +18,6 @@
 		"numberOfComments": 0,
 		"relatedContents": [
 		],
-		"siteId": 20121,
 		"taxonomyCategoryBriefs": [
 		]
 	}

@@ -321,7 +321,7 @@ definition {
 			repeatableFieldNumber = "2");
 	}
 
-	@description = "LPS-115196, Verify that an Entry using a Group Field can be viewed in Forms Details"
+	@description = "This is a test case for LPS-115196 and LPS-115198. Verify that an Entry using a Group Field can be viewed in Forms Details"
 	@priority = "5"
 	test EntryWithGroupFieldCanBeViewedInFormsDetails {
 		property portal.acceptance = "true";
@@ -369,6 +369,34 @@ definition {
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Numeric",
 			fieldValue = "123");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Text",
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		Navigator.gotoBack();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Text",
+			fieldName = "Text",
+			fieldValue = "Test",
+			onSitePage = "true");
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			fieldValue = "123",
+			onSitePage = "true");
 	}
 
 	@description = "Verify that fields within a Fields Group can be reordered"

@@ -61,12 +61,13 @@ public class ListTypeEntryLocalServiceUtil {
 	}
 
 	public static ListTypeEntry addListTypeEntry(
-			long userId, long listTypeDefinitionId, String key,
+			String externalReferenceCode, long userId,
+			long listTypeDefinitionId, String key,
 			Map<java.util.Locale, String> nameMap)
 		throws PortalException {
 
 		return getService().addListTypeEntry(
-			userId, listTypeDefinitionId, key, nameMap);
+			externalReferenceCode, userId, listTypeDefinitionId, key, nameMap);
 	}
 
 	/**
@@ -227,6 +228,13 @@ public class ListTypeEntryLocalServiceUtil {
 		return getService().fetchListTypeEntry(listTypeDefinitionId, key);
 	}
 
+	public static ListTypeEntry fetchListTypeEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchListTypeEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the list type entry with the matching UUID and company.
 	 *
@@ -323,6 +331,14 @@ public class ListTypeEntryLocalServiceUtil {
 		return getService().getListTypeEntry(listTypeDefinitionId, key);
 	}
 
+	public static ListTypeEntry getListTypeEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getListTypeEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the list type entry with the matching UUID and company.
 	 *
@@ -373,10 +389,12 @@ public class ListTypeEntryLocalServiceUtil {
 	}
 
 	public static ListTypeEntry updateListTypeEntry(
-			long listTypeEntryId, Map<java.util.Locale, String> nameMap)
+			String externalReferenceCode, long listTypeEntryId,
+			Map<java.util.Locale, String> nameMap)
 		throws PortalException {
 
-		return getService().updateListTypeEntry(listTypeEntryId, nameMap);
+		return getService().updateListTypeEntry(
+			externalReferenceCode, listTypeEntryId, nameMap);
 	}
 
 	public static ListTypeEntryLocalService getService() {

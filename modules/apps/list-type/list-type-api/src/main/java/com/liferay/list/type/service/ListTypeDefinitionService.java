@@ -70,6 +70,11 @@ public interface ListTypeDefinitionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeDefinition getListTypeDefinitionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ListTypeDefinition> getListTypeDefinitions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

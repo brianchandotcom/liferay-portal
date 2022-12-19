@@ -81,6 +81,7 @@ public class ListTypeEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"listTypeEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -94,6 +95,7 @@ public class ListTypeEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("listTypeEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -107,7 +109,7 @@ public class ListTypeEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ListTypeEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,listTypeEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,key_ VARCHAR(75) null,name STRING null,type_ VARCHAR(75) null)";
+		"create table ListTypeEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,listTypeEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,key_ VARCHAR(75) null,name STRING null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ListTypeEntry";
 
@@ -133,25 +135,31 @@ public class ListTypeEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KEY_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 4L;
+	public static final long KEY_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LISTTYPEENTRYID_COLUMN_BITMASK = 8L;
+	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long LISTTYPEENTRYID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -272,6 +280,12 @@ public class ListTypeEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<ListTypeEntry, String>)ListTypeEntry::setUuid);
 		attributeGetterFunctions.put(
+			"externalReferenceCode", ListTypeEntry::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<ListTypeEntry, String>)
+				ListTypeEntry::setExternalReferenceCode);
+		attributeGetterFunctions.put(
 			"listTypeEntryId", ListTypeEntry::getListTypeEntryId);
 		attributeSetterBiConsumers.put(
 			"listTypeEntryId",
@@ -362,6 +376,35 @@ public class ListTypeEntryModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -812,6 +855,7 @@ public class ListTypeEntryModelImpl
 
 		listTypeEntryImpl.setMvccVersion(getMvccVersion());
 		listTypeEntryImpl.setUuid(getUuid());
+		listTypeEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		listTypeEntryImpl.setListTypeEntryId(getListTypeEntryId());
 		listTypeEntryImpl.setCompanyId(getCompanyId());
 		listTypeEntryImpl.setUserId(getUserId());
@@ -835,6 +879,8 @@ public class ListTypeEntryModelImpl
 		listTypeEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		listTypeEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		listTypeEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		listTypeEntryImpl.setListTypeEntryId(
 			this.<Long>getColumnOriginalValue("listTypeEntryId"));
 		listTypeEntryImpl.setCompanyId(
@@ -938,6 +984,18 @@ public class ListTypeEntryModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			listTypeEntryCacheModel.uuid = null;
+		}
+
+		listTypeEntryCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			listTypeEntryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			listTypeEntryCacheModel.externalReferenceCode = null;
 		}
 
 		listTypeEntryCacheModel.listTypeEntryId = getListTypeEntryId();
@@ -1062,6 +1120,7 @@ public class ListTypeEntryModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _listTypeEntryId;
 	private long _companyId;
 	private long _userId;
@@ -1106,6 +1165,8 @@ public class ListTypeEntryModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("listTypeEntryId", _listTypeEntryId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1146,25 +1207,27 @@ public class ListTypeEntryModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("listTypeEntryId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("listTypeEntryId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("listTypeDefinitionId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("key_", 512L);
+		columnBitmasks.put("listTypeDefinitionId", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("key_", 1024L);
 
-		columnBitmasks.put("type_", 2048L);
+		columnBitmasks.put("name", 2048L);
+
+		columnBitmasks.put("type_", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

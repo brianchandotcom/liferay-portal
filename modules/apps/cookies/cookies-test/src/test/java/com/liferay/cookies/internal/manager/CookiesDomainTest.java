@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.cookies.internal.events;
+package com.liferay.cookies.internal.manager;
 
-import com.liferay.cookies.internal.manager.CookiesManagerImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;

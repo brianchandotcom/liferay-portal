@@ -12,9 +12,18 @@
  * details.
  */
 
+import {ClaySelect} from '@clayui/form';
 import {API} from '@liferay/object-js-components-web';
 
-import {ObjectsOptionsList} from './tabs/ActionContainer';
+export type ObjectsOptionsList = Array<
+	(
+		| React.ComponentProps<typeof ClaySelect.Option>
+		| React.ComponentProps<typeof ClaySelect.OptGroup>
+	) & {
+		options?: Array<React.ComponentProps<typeof ClaySelect.Option>>;
+		type?: 'group';
+	}
+>;
 
 function fillSelect(
 	label: string,

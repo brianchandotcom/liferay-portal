@@ -176,17 +176,9 @@ public class PreFilterContributorHelperImpl
 			return;
 		}
 
-		String permissionedEntryClassName = entryClassName;
-
-		String parentEntryClassName = _getParentEntryClassName(entryClassName);
-
-		if (parentEntryClassName != null) {
-			permissionedEntryClassName = parentEntryClassName;
-		}
-
 		searchPermissionChecker.getPermissionBooleanFilter(
 			searchContext.getCompanyId(), searchContext.getGroupIds(),
-			searchContext.getUserId(), permissionedEntryClassName,
+			searchContext.getUserId(), _getParentEntryClassName(entryClassName),
 			booleanFilter, searchContext);
 	}
 
@@ -249,7 +241,7 @@ public class PreFilterContributorHelperImpl
 			}
 		}
 
-		return null;
+		return entryClassName;
 	}
 
 	private ServiceTrackerList<SearchPermissionFilterContributor>

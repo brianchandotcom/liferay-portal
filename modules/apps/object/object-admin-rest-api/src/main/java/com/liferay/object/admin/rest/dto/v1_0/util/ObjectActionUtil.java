@@ -14,6 +14,8 @@
 
 package com.liferay.object.admin.rest.dto.v1_0.util;
 
+import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.constants.ObjectActionConstants;
@@ -42,6 +44,7 @@ public class ObjectActionUtil {
 
 	public static ObjectAction toObjectAction(
 		Map<String, Map<String, String>> actions, Locale locale,
+		NotificationTemplateLocalService notificationTemplateLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		com.liferay.object.model.ObjectAction serviceBuilderObjectAction) {
 
@@ -68,6 +71,7 @@ public class ObjectActionUtil {
 				objectActionTriggerKey =
 					serviceBuilderObjectAction.getObjectActionTriggerKey();
 				parameters = toParameters(
+					notificationTemplateLocalService,
 					objectDefinitionLocalService,
 					serviceBuilderObjectAction.
 						getParametersUnicodeProperties());
@@ -91,6 +95,7 @@ public class ObjectActionUtil {
 	}
 
 	public static Map<String, Object> toParameters(
+		NotificationTemplateLocalService notificationTemplateLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		UnicodeProperties parametersUnicodeProperties) {
 
@@ -102,6 +107,20 @@ public class ObjectActionUtil {
 			Object value = entry.getValue();
 
 			if (Objects.equals(entry.getKey(), "notificationTemplateId")) {
+				try {
+					NotificationTemplate notificationTemplate =
+						notificationTemplateLocalService.
+							getNotificationTemplate(GetterUtil.getLong(value));
+
+					parameters.put(
+						"notificationTemplateExternalReferenceCode",
+						notificationTemplate.getExternalReferenceCode());
+					parameters.put("type", notificationTemplate.getType());
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+				}
+
 				value = GetterUtil.getLong(value);
 			}
 			else if (Objects.equals(entry.getKey(), "objectDefinitionId")) {

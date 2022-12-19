@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectPortletKeys;
@@ -72,6 +73,7 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsActionsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest), _jsonFactory,
+					_notificationTemplateLocalService,
 					_objectActionExecutorRegistry, _objectActionTriggerRegistry,
 					_objectDefinitionLocalService,
 					_objectDefinitionModelResourcePermission));
@@ -85,6 +87,9 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
 	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;

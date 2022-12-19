@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
@@ -54,6 +55,7 @@ public class ObjectDefinitionsActionsDisplayContext
 
 	public ObjectDefinitionsActionsDisplayContext(
 		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
+		NotificationTemplateLocalService notificationTemplateLocalService,
 		ObjectActionExecutorRegistry objectActionExecutorRegistry,
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -63,6 +65,7 @@ public class ObjectDefinitionsActionsDisplayContext
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_jsonFactory = jsonFactory;
+		_notificationTemplateLocalService = notificationTemplateLocalService;
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
@@ -174,6 +177,7 @@ public class ObjectDefinitionsActionsDisplayContext
 		).put(
 			"parameters",
 			ObjectActionUtil.toParameters(
+				_notificationTemplateLocalService,
 				_objectDefinitionLocalService,
 				objectAction.getParametersUnicodeProperties())
 		);
@@ -271,6 +275,8 @@ public class ObjectDefinitionsActionsDisplayContext
 	}
 
 	private final JSONFactory _jsonFactory;
+	private final NotificationTemplateLocalService
+		_notificationTemplateLocalService;
 	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

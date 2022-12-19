@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.definitions.frontend.taglib.servl
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.model.ObjectDefinition;
@@ -88,8 +89,10 @@ public class ObjectDefinitionsActionsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsActionsDisplayContext(
-				httpServletRequest, _jsonFactory, _objectActionExecutorRegistry,
-				_objectActionTriggerRegistry, _objectDefinitionLocalService,
+				httpServletRequest, _jsonFactory,
+				_notificationTemplateLocalService,
+				_objectActionExecutorRegistry, _objectActionTriggerRegistry,
+				_objectDefinitionLocalService,
 				_objectDefinitionModelResourcePermission));
 
 		super.render(httpServletRequest, httpServletResponse);
@@ -100,6 +103,9 @@ public class ObjectDefinitionsActionsScreenNavigationCategory
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
 	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;

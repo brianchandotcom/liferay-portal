@@ -80,16 +80,22 @@ definition {
 			CP2NavigationMenu.goToTeamMembers();
 		}
 
-		task ("Search for the user's first name") {
-			CP2TeamMembers.searchCP(search = "abcd");
-
-			KeyPress(
-				locator1 = "CP2TeamMembers#SEARCH_TM",
-				value1 = "\ENTER");
+		task ("Search for the invalid name") {
+			CP2Utils.searchKeys(searchInput = "NothingAreFound");
 		}
 
-		task ("Then I should see the alert with the text No team members found with this search criteria.") {
-			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "No team members found with this search criteria.");
+		task ("Then I should see the text No team members found with this search criteria.") {
+			AssertElementPresent(
+				locator1 = "CP2NavigationMenu#SEARCH_NO_RESULT",
+				key_nosearch = "No team members were found.");
+		}
+
+		task("Then i delete the previous search and see the memeber appears on the label") {
+			CP2Utils.searchKeys(searchInput = "");
+
+			AssertElementPresent(
+				locator1 = "CP2TeamMembers#SEARCH_RESULT",
+				result = "User 2");
 		}
 	}
 

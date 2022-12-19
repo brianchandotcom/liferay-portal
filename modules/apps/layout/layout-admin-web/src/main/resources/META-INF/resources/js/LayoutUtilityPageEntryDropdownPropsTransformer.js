@@ -39,6 +39,12 @@ const ACTIONS = {
 		});
 	},
 
+	deleteLayoutUtilityPageEntryPreview({
+		deleteLayoutUtilityPageEntryPreviewURL,
+	}) {
+		send(deleteLayoutUtilityPageEntryPreviewURL);
+	},
+
 	markAsDefaultLayoutUtilityPageEntry({
 		markAsDefaultLayoutUtilityPageEntryURL,
 		message,

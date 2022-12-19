@@ -15,11 +15,13 @@
 package com.liferay.frontend.data.set.sample.web.internal.view;
 
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
+import com.liferay.frontend.data.set.sample.web.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 
 import java.util.Locale;
 
@@ -53,7 +55,16 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 		).add(
 			"date", "date"
 		).add(
-			"color", "color"
+			"color", "color",
+			fdsTableSchemaField -> {
+				NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+
+				String moduleName = npmResolver.resolveModuleName(
+					"@liferay/frontend-data-set-sample-web/js" +
+						"/GreenCheckDataRenderer");
+
+				fdsTableSchemaField.setContentRendererModuleURL(moduleName);
+			}
 		).add(
 			"size", "size"
 		).add(

@@ -84,14 +84,16 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws Exception {
+		boolean hasUpdatePermission = LayoutUtilityPageEntryPermission.contains(
+			_themeDisplay.getPermissionChecker(), _layoutUtilityPageEntry,
+			ActionKeys.UPDATE);
+
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> LayoutUtilityPageEntryPermission.contains(
-							_themeDisplay.getPermissionChecker(),
-							_layoutUtilityPageEntry, ActionKeys.UPDATE),
+						() -> hasUpdatePermission,
 						_getEditLayoutUtilityPageEntryActionUnsafeConsumer()
 					).add(
 						() -> LayoutUtilityPageEntryPermission.contains(
@@ -105,25 +107,17 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> LayoutUtilityPageEntryPermission.contains(
-							_themeDisplay.getPermissionChecker(),
-							_layoutUtilityPageEntry, ActionKeys.UPDATE),
+						() -> hasUpdatePermission,
 						_getMarkAsDefaultLayoutUtilityPageEntryActionUnsafeConsumer()
 					).add(
-						() -> LayoutUtilityPageEntryPermission.contains(
-							_themeDisplay.getPermissionChecker(),
-							_layoutUtilityPageEntry, ActionKeys.UPDATE),
+						() -> hasUpdatePermission,
 						_getRenameLayoutUtilityPageEntryActionUnsafeConsumer()
 					).add(
-						() -> LayoutUtilityPageEntryPermission.contains(
-							_themeDisplay.getPermissionChecker(),
-							_layoutUtilityPageEntry, ActionKeys.UPDATE),
+						() -> hasUpdatePermission,
 						_getUpdateLayoutUtilityPageEntryPreviewActionUnsafeConsumer()
 					).add(
 						() ->
-							LayoutUtilityPageEntryPermission.contains(
-								_themeDisplay.getPermissionChecker(),
-								_layoutUtilityPageEntry, ActionKeys.UPDATE) &&
+							hasUpdatePermission &&
 							(_layoutUtilityPageEntry.getPreviewFileEntryId() >
 								0),
 						_getDeleteLayoutUtilityPageEntryPreviewActionUnsafeConsumer()

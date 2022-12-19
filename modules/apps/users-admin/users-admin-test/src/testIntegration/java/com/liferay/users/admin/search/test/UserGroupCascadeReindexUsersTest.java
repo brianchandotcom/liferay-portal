@@ -168,9 +168,8 @@ public class UserGroupCascadeReindexUsersTest {
 		SearchResponse searchResponse = searchUsersInUserGroup(userGroup);
 
 		DocumentsAssert.assertValues(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), "userGroupIds",
-			_repeat(String.valueOf(userGroupId), users.size()));
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			"userGroupIds", _repeat(String.valueOf(userGroupId), users.size()));
 
 		List<Group> groups = addGroups(_groupCount);
 
@@ -182,8 +181,8 @@ public class UserGroupCascadeReindexUsersTest {
 		searchResponse = searchUsersInGroup(groups.get(0));
 
 		DocumentsAssert.assertValues(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), Field.GROUP_ID,
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			Field.GROUP_ID,
 			_repeat(_getAllGroupIdsString(groups), users.size()));
 	}
 

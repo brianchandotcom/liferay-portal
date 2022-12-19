@@ -162,7 +162,7 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 					searchResponse ->
 						DocumentsAssert.assertValuesIgnoreRelevance(
 							searchResponse.getRequestString(),
-							searchResponse.getDocumentsStream(), Field.GROUP_ID,
+							searchResponse.getDocuments(), Field.GROUP_ID,
 							expected));
 			});
 	}

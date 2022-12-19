@@ -95,7 +95,7 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 				indexingTestHelper.verifyResponse(
 					searchResponse -> DocumentsAssert.assertValues(
 						searchResponse.getRequestString(),
-						searchResponse.getDocumentsStream(), fieldName,
+						searchResponse.getDocuments(), fieldName,
 						"[" + expected + "]"));
 			});
 	}

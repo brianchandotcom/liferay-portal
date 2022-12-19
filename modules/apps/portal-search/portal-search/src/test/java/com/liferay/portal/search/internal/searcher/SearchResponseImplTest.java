@@ -23,8 +23,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -50,13 +48,14 @@ public class SearchResponseImplTest {
 		_assertIs(searchResponse.getAggregationResultsMap(), _emptyMap());
 		_assertIs(searchResponse.getCount(), _zeroLong());
 		_assertIs(searchResponse.getDocuments71(), emptyList());
-		_assertIs(searchResponse.getDocumentsStream(), _emptyStream());
+		_assertIs(searchResponse.getDocuments(), emptyList());
 		_assertIs(searchResponse.getFederatedSearchKey(), _blank());
 		_assertIs(
 			searchResponse.getFederatedSearchResponse(null),
 			same(searchResponse));
 		_assertIs(
-			searchResponse.getFederatedSearchResponsesStream(), _emptyStream());
+			searchResponse.getFederatedSearchResponses(),
+			values -> Assert.assertTrue(values.isEmpty()));
 		_assertIs(searchResponse.getGroupByResponses(), emptyList());
 		_assertIs(searchResponse.getRequest(), _nullValue());
 		_assertIs(searchResponse.getRequestString(), _blank());
@@ -85,17 +84,6 @@ public class SearchResponseImplTest {
 
 	private Consumer<Map<String, ?>> _emptyMap() {
 		return map -> Assert.assertEquals("{}", String.valueOf(map));
-	}
-
-	private Consumer<Stream<?>> _emptyStream() {
-		return stream -> Assert.assertEquals(
-			"[]",
-			String.valueOf(
-				stream.map(
-					String::valueOf
-				).collect(
-					Collectors.toList()
-				)));
 	}
 
 	private Consumer<Object> _instanceOf(Class<?> clazz) {

@@ -73,7 +73,7 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 
 						DocumentsAssert.assertValues(
 							searchResponse.getRequestString(),
-							searchResponse.getDocumentsStream(), Field.PRIORITY,
+							searchResponse.getDocuments(), Field.PRIORITY,
 							String.valueOf(list));
 					});
 			});
@@ -112,7 +112,7 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 
 						DocumentsAssert.assertValues(
 							searchResponse.getRequestString(),
-							searchResponse.getDocumentsStream(), Field.PRIORITY,
+							searchResponse.getDocuments(), Field.PRIORITY,
 							"[]");
 					});
 			});

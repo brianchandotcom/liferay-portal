@@ -64,9 +64,7 @@ public class FieldValuesAssert {
 		Map<String, String> expectedFieldValuesMap = _toStringValuesMap(
 			expected);
 
-		Stream<Document> stream = searchResponse.getDocumentsStream();
-
-		List<Document> documents = stream.collect(Collectors.toList());
+		List<Document> documents = searchResponse.getDocuments();
 
 		if (documents.size() == 1) {
 			Map<String, String> actualFieldValuesMap = _toFieldValuesMap(

@@ -66,8 +66,8 @@ public abstract class BaseTermsQueryTestCase extends BaseIndexingTestCase {
 					searchResponse -> {
 						DocumentsAssert.assertValues(
 							searchResponse.getRequestString(),
-							searchResponse.getDocumentsStream(),
-							Field.USER_NAME, expected);
+							searchResponse.getDocuments(), Field.USER_NAME,
+							expected);
 
 						SearchHits searchHits = searchResponse.getSearchHits();
 

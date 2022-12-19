@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FieldArray;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
@@ -266,9 +267,11 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 					searchResponse -> {
 						assertOneResult(searchResponse);
 
-						Document document = searchResponse.getDocumentsStream(
-						).findAny(
-						).get();
+						List<Document> documents =
+							searchResponse.getDocuments();
+
+						Document document = documents.get(
+							RandomTestUtil.randomInt(0, documents.size() - 1));
 
 						List<?> values = document.getValues("ddmFieldArray");
 

@@ -68,10 +68,10 @@ public class DocumentsAssert {
 	}
 
 	public static void assertValues(
-		String message, Stream<Document> stream, String fieldName,
+		String message, List<Document> documentList, String fieldName,
 		String expected) {
 
-		Document[] documents = stream.toArray(Document[]::new);
+		Document[] documents = documentList.toArray(new Document[0]);
 
 		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
@@ -92,10 +92,10 @@ public class DocumentsAssert {
 	}
 
 	public static void assertValuesIgnoreRelevance(
-		String message, Stream<Document> stream, String fieldName,
+		String message, List<Document> documentList, String fieldName,
 		Stream<?> expectedValues) {
 
-		Document[] documents = stream.toArray(Document[]::new);
+		Document[] documents = documentList.toArray(new Document[0]);
 
 		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
@@ -105,10 +105,10 @@ public class DocumentsAssert {
 	}
 
 	public static void assertValuesIgnoreRelevance(
-		String message, Stream<Document> stream, String fieldName,
+		String message, List<Document> documentList, String fieldName,
 		String expected) {
 
-		Document[] documents = stream.toArray(Document[]::new);
+		Document[] documents = documentList.toArray(new Document[0]);
 
 		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 

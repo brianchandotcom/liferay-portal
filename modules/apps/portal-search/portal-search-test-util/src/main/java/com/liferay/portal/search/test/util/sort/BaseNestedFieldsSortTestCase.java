@@ -22,10 +22,10 @@ import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.mappings.NestedDDMFieldArrayUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -110,13 +110,13 @@ public abstract class BaseNestedFieldsSortTestCase
 	protected List<?> getDDMFieldValues(
 		String fieldName, SearchResponse searchResponse) {
 
-		Stream<Document> stream = searchResponse.getDocumentsStream();
+		List<Object> ddmFieldValues = new ArrayList<>();
 
-		return stream.map(
-			document -> getDDMFieldValue(fieldName, document)
-		).collect(
-			Collectors.toList()
-		);
+		for (Document document : searchResponse.getDocuments()) {
+			ddmFieldValues.add(getDDMFieldValue(fieldName, document));
+		}
+
+		return ddmFieldValues;
 	}
 
 }

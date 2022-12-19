@@ -453,21 +453,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
 
-		DDMUserPersonalFolderItemSelectorCriterion
-			ddmUserPersonalFolderItemSelectorCriterion =
-				new DDMUserPersonalFolderItemSelectorCriterion(
-					folderId, groupId);
-
-		ddmUserPersonalFolderItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(
-				new FileEntryItemSelectorReturnType());
-		ddmUserPersonalFolderItemSelectorCriterion.setObjectFieldId(
-			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
-		ddmUserPersonalFolderItemSelectorCriterion.setRepositoryId(
-			repositoryId);
-
-		itemSelectorCriteria.add(ddmUserPersonalFolderItemSelectorCriterion);
-
 		String portletNamespace =
 			ddmFormFieldRenderingContext.getPortletNamespace();
 
@@ -484,6 +469,21 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 			itemSelectorCriteria.add(fileItemSelectorCriterion);
 		}
+
+		DDMUserPersonalFolderItemSelectorCriterion
+			ddmUserPersonalFolderItemSelectorCriterion =
+				new DDMUserPersonalFolderItemSelectorCriterion(
+					folderId, groupId);
+
+		ddmUserPersonalFolderItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				new FileEntryItemSelectorReturnType());
+		ddmUserPersonalFolderItemSelectorCriterion.setObjectFieldId(
+			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
+		ddmUserPersonalFolderItemSelectorCriterion.setRepositoryId(
+			repositoryId);
+
+		itemSelectorCriteria.add(ddmUserPersonalFolderItemSelectorCriterion);
 
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(

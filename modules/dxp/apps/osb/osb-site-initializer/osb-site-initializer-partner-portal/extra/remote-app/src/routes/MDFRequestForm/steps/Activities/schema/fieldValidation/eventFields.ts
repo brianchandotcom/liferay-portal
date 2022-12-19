@@ -11,7 +11,9 @@
 
 import {string} from 'yup';
 
-const getEventFieldsValidation = (tactic: string) => {
+import {TacticKeys} from '../../../../../../common/enums/mdfRequestTactics';
+
+const getEventFieldsValidation = (tactic: TacticKeys) => {
 	const basicEventFields = {
 		activityPromotion: string()
 			.trim()
@@ -33,7 +35,7 @@ const getEventFieldsValidation = (tactic: string) => {
 
 	let targetFields = {};
 
-	if (tactic === 'Webinar') {
+	if (tactic === TacticKeys.WEBINAR) {
 		targetFields = {
 			...basicEventFields,
 			liferayBranding: string()

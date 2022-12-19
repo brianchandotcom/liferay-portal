@@ -15,12 +15,13 @@ import {useEffect} from 'react';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
+import {TacticKeys} from '../../../../../../../../common/enums/mdfRequestTactics';
 import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
 import getBooleanEntries from '../../../../../../../../common/utils/getBooleanEntries';
 
 interface IProps {
 	currentActivityIndex: number;
-	tactic?: string;
+	tactic?: TacticKeys;
 }
 
 const DigitalMarketingFields = ({currentActivityIndex, tactic}: IProps) => {
@@ -65,7 +66,7 @@ const DigitalMarketingFields = ({currentActivityIndex, tactic}: IProps) => {
 				required
 			/>
 
-			{tactic === 'Email Campaign' ? (
+			{tactic === TacticKeys.EMAIL_CAMPAIGN ? (
 				<>
 					<PRMFormik.Field
 						component={PRMForm.InputText}
@@ -135,7 +136,7 @@ const DigitalMarketingFields = ({currentActivityIndex, tactic}: IProps) => {
 				/>
 			)}
 
-			{tactic === 'Email Campaign' && (
+			{tactic === TacticKeys.EMAIL_CAMPAIGN && (
 				<PRMFormik.Field
 					component={PRMForm.RadioGroup}
 					items={getBooleanEntries()}

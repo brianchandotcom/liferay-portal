@@ -11,7 +11,9 @@
 
 import {string} from 'yup';
 
-const getMiscellaneousMarketingFieldsValidation = (tactic: string) => {
+import {TacticKeys} from '../../../../../../common/enums/mdfRequestTactics';
+
+const getMiscellaneousMarketingFieldsValidation = (tactic: TacticKeys) => {
 	const basicEventFields = {
 		marketingActivity: string()
 			.trim()
@@ -22,10 +24,10 @@ const getMiscellaneousMarketingFieldsValidation = (tactic: string) => {
 	let targetFields = {};
 
 	const CTATactics = [
-		'Broadcast Advertising',
-		'Campaign with Industry Publication',
-		'Direct Mail',
-		'Print Advertising',
+		TacticKeys.BROADCAST_ADVERTISING,
+		TacticKeys.CAMPAIGN_WITH_INDUSTRY_PUBLICATION,
+		TacticKeys.DIRECT_MAIL,
+		TacticKeys.PRINT_ADVERTISING,
 	];
 
 	if (CTATactics.includes(tactic)) {
@@ -37,7 +39,7 @@ const getMiscellaneousMarketingFieldsValidation = (tactic: string) => {
 				.required('Required'),
 		};
 
-		if (tactic === 'Broadcast Advertising') {
+		if (tactic === TacticKeys.BROADCAST_ADVERTISING) {
 			targetFields = {
 				...targetFields,
 				broadcastChannel: string()
@@ -53,7 +55,7 @@ const getMiscellaneousMarketingFieldsValidation = (tactic: string) => {
 					.max(255, 'You have exceeded the character limit'),
 			};
 		}
-		else if (tactic === 'Direct Mail') {
+		else if (tactic === TacticKeys.DIRECT_MAIL) {
 			targetFields = {
 				...targetFields,
 				targetOfSends: string()
@@ -76,7 +78,7 @@ const getMiscellaneousMarketingFieldsValidation = (tactic: string) => {
 			};
 		}
 	}
-	else if (tactic === 'Co-branded Merchandise') {
+	else if (tactic === TacticKeys.CO_BRANDED_MERCHANDISE) {
 		targetFields = {
 			...basicEventFields,
 			quantity: string()
@@ -89,7 +91,7 @@ const getMiscellaneousMarketingFieldsValidation = (tactic: string) => {
 				.required('Required'),
 		};
 	}
-	else if (tactic === 'Outbound Telemarketing Sales') {
+	else if (tactic === TacticKeys.OUTBOUND_TELEMARKETING_SALES) {
 		targetFields = {
 			...basicEventFields,
 			audienceTarget: string()

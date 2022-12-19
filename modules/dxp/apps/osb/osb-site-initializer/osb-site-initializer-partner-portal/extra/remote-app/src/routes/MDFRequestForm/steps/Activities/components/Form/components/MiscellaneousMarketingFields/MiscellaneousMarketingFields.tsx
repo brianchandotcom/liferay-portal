@@ -11,26 +11,27 @@
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
+import {TacticKeys} from '../../../../../../../../common/enums/mdfRequestTactics';
 
 interface IProps {
 	currentActivityIndex: number;
-	tactic?: string;
+	tactic: TacticKeys;
 }
 
 const MiscellaneousMarketingFields = ({
 	currentActivityIndex,
-	tactic = '',
+	tactic,
 }: IProps) => {
 	const CTATactics = [
-		'Broadcast Advertising',
-		'Campaign with Industry Publication',
-		'Direct Mail',
-		'Print Advertising',
+		TacticKeys.BROADCAST_ADVERTISING,
+		TacticKeys.CAMPAIGN_WITH_INDUSTRY_PUBLICATION,
+		TacticKeys.DIRECT_MAIL,
+		TacticKeys.PRINT_ADVERTISING,
 	];
 
 	const PublicationExpectedImpressionsTactics = [
-		'Campaign with Industry Publication',
-		'Print Advertising',
+		TacticKeys.CAMPAIGN_WITH_INDUSTRY_PUBLICATION,
+		TacticKeys.PRINT_ADVERTISING,
 	];
 
 	return (
@@ -42,7 +43,7 @@ const MiscellaneousMarketingFields = ({
 				required
 			/>
 
-			{tactic === 'Broadcast Advertising' && (
+			{tactic === TacticKeys.BROADCAST_ADVERTISING && (
 				<PRMFormik.Field
 					component={PRMForm.InputText}
 					label="Broadcast channel"
@@ -60,7 +61,7 @@ const MiscellaneousMarketingFields = ({
 				/>
 			)}
 
-			{tactic === 'Direct Mail' && (
+			{tactic === TacticKeys.DIRECT_MAIL && (
 				<PRMFormik.Field
 					component={PRMForm.InputText}
 					label="Target # of sends"
@@ -78,7 +79,7 @@ const MiscellaneousMarketingFields = ({
 				/>
 			)}
 
-			{tactic === 'Broadcast Advertising' && (
+			{tactic === TacticKeys.BROADCAST_ADVERTISING && (
 				<>
 					<PRMFormik.Field
 						component={PRMForm.InputText}
@@ -104,7 +105,7 @@ const MiscellaneousMarketingFields = ({
 				/>
 			)}
 
-			{tactic === 'Co-branded Merchandise' && (
+			{tactic === TacticKeys.CO_BRANDED_MERCHANDISE && (
 				<>
 					<PRMFormik.Field
 						component={PRMForm.InputText}
@@ -122,7 +123,7 @@ const MiscellaneousMarketingFields = ({
 				</>
 			)}
 
-			{tactic === 'Outbound Telemarketing Sales' && (
+			{tactic === TacticKeys.OUTBOUND_TELEMARKETING_SALES && (
 				<>
 					<PRMFormik.Field
 						component={PRMForm.InputText}

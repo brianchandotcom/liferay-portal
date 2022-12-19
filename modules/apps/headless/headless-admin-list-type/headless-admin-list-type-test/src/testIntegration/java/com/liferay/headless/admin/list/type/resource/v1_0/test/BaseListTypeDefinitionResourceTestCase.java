@@ -618,6 +618,158 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCode()
+		throws Exception {
+
+		ListTypeDefinition postListTypeDefinition =
+			testGetListTypeDefinitionByExternalReferenceCode_addListTypeDefinition();
+
+		ListTypeDefinition getListTypeDefinition =
+			listTypeDefinitionResource.
+				getListTypeDefinitionByExternalReferenceCode(
+					postListTypeDefinition.getExternalReferenceCode());
+
+		assertEquals(postListTypeDefinition, getListTypeDefinition);
+		assertValid(getListTypeDefinition);
+	}
+
+	protected ListTypeDefinition
+			testGetListTypeDefinitionByExternalReferenceCode_addListTypeDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetListTypeDefinitionByExternalReferenceCode()
+		throws Exception {
+
+		ListTypeDefinition listTypeDefinition =
+			testGraphQLGetListTypeDefinitionByExternalReferenceCode_addListTypeDefinition();
+
+		Assert.assertTrue(
+			equals(
+				listTypeDefinition,
+				ListTypeDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"listTypeDefinitionByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												listTypeDefinition.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/listTypeDefinitionByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetListTypeDefinitionByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"listTypeDefinitionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ListTypeDefinition
+			testGraphQLGetListTypeDefinitionByExternalReferenceCode_addListTypeDefinition()
+		throws Exception {
+
+		return testGraphQLListTypeDefinition_addListTypeDefinition();
+	}
+
+	@Test
+	public void testPutListTypeDefinitionByExternalReferenceCode()
+		throws Exception {
+
+		ListTypeDefinition postListTypeDefinition =
+			testPutListTypeDefinitionByExternalReferenceCode_addListTypeDefinition();
+
+		ListTypeDefinition randomListTypeDefinition =
+			randomListTypeDefinition();
+
+		ListTypeDefinition putListTypeDefinition =
+			listTypeDefinitionResource.
+				putListTypeDefinitionByExternalReferenceCode(
+					postListTypeDefinition.getExternalReferenceCode(),
+					randomListTypeDefinition);
+
+		assertEquals(randomListTypeDefinition, putListTypeDefinition);
+		assertValid(putListTypeDefinition);
+
+		ListTypeDefinition getListTypeDefinition =
+			listTypeDefinitionResource.
+				getListTypeDefinitionByExternalReferenceCode(
+					putListTypeDefinition.getExternalReferenceCode());
+
+		assertEquals(randomListTypeDefinition, getListTypeDefinition);
+		assertValid(getListTypeDefinition);
+
+		ListTypeDefinition newListTypeDefinition =
+			testPutListTypeDefinitionByExternalReferenceCode_createListTypeDefinition();
+
+		putListTypeDefinition =
+			listTypeDefinitionResource.
+				putListTypeDefinitionByExternalReferenceCode(
+					newListTypeDefinition.getExternalReferenceCode(),
+					newListTypeDefinition);
+
+		assertEquals(newListTypeDefinition, putListTypeDefinition);
+		assertValid(putListTypeDefinition);
+
+		getListTypeDefinition =
+			listTypeDefinitionResource.
+				getListTypeDefinitionByExternalReferenceCode(
+					putListTypeDefinition.getExternalReferenceCode());
+
+		assertEquals(newListTypeDefinition, getListTypeDefinition);
+
+		Assert.assertEquals(
+			newListTypeDefinition.getExternalReferenceCode(),
+			putListTypeDefinition.getExternalReferenceCode());
+	}
+
+	protected ListTypeDefinition
+			testPutListTypeDefinitionByExternalReferenceCode_createListTypeDefinition()
+		throws Exception {
+
+		return randomListTypeDefinition();
+	}
+
+	protected ListTypeDefinition
+			testPutListTypeDefinitionByExternalReferenceCode_addListTypeDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteListTypeDefinition() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ListTypeDefinition listTypeDefinition =

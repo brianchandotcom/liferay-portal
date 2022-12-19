@@ -70,6 +70,14 @@ public interface ListTypeDefinitionResource {
 			String callbackURL, Object object)
 		throws Exception;
 
+	public ListTypeDefinition getListTypeDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ListTypeDefinition putListTypeDefinitionByExternalReferenceCode(
+			String externalReferenceCode, ListTypeDefinition listTypeDefinition)
+		throws Exception;
+
 	public void deleteListTypeDefinition(Long listTypeDefinitionId)
 		throws Exception;
 

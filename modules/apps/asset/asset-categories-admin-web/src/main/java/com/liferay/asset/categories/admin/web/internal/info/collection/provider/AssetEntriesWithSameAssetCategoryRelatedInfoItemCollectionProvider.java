@@ -172,7 +172,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				new SelectInfoFieldType.Option(
 					new ResourceBundleInfoLocalizedValue(
 						getClass(), "any-category-of-the-same-vocabulary"),
-					"anyAssetCategory"),
+					"anyAssetCategoryOfTheSameVocabulary"),
 				new SelectInfoFieldType.Option(
 					new ResourceBundleInfoLocalizedValue(
 						getClass(), "a-specific-category"),

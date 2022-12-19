@@ -1,12 +1,17 @@
 {
 	"object-entries": [
 		{
+			"accountOwnerName": "Maria",
+			"bankCodeName": "Liferay Banking 24h",
+			"bankingAccount": "40022-22",
+			"bankingAgency": "99",
 			"city": "New York",
 			"contactEmail": "lorem@contact.com",
 			"contactName": "Johnny Oliver",
 			"contactPhone": "000000000",
 			"country": "United States of America",
 			"externalReferenceCode": "EVPORG-01",
+			"instantTransferIDPIX": "033.324.455-00",
 			"organizationName": "Lorem Organization",
 			"organizationSiteSocialMediaLink": "www.lorem.org",
 			"organizationStatus": "awaitingEVPApproval",
@@ -14,16 +19,22 @@
 			"state": "New York",
 			"street": "Street Streeting, 123",
 			"subsidiaryGroupId": 1,
+			"taxId": "9090",
 			"taxIdentificationNumber": "91221221",
 			"zip": "11111"
 		},
 		{
+			"accountOwnerName": "Maria",
+			"bankCodeName": "Liferay Banking 24h",
+			"bankingAccount": "40022-22",
+			"bankingAgency": "99",
 			"city": "Recife",
 			"contactEmail": "ipsum@contact.com",
 			"contactName": "Enza Juliana",
 			"contactPhone": "12121212",
 			"country": "Brazil",
 			"externalReferenceCode": "EVPORG-02",
+			"instantTransferIDPIX": "033.324.000-00",
 			"organizationName": "Ipsum Organization",
 			"organizationSiteSocialMediaLink": "www.ipsum.org",
 			"organizationStatus": "verified",
@@ -31,6 +42,7 @@
 			"state": "Pernambuco",
 			"street": "Rua lorem ipsum, 165",
 			"subsidiaryGroupId": 2,
+			"taxId": "9090",
 			"taxIdentificationNumber": "72.921.854/0001-11",
 			"zip": "11111"
 		}

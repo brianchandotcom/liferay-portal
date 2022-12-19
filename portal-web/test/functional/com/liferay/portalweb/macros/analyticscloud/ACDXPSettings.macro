@@ -355,4 +355,22 @@ definition {
 		}
 	}
 
+	macro viewSyncedChannelsAndSitesNumber {
+		if (isSet(syncedChannelsNumber)) {
+			AssertTextEquals(
+				index = "1",
+				key_propertyName = "${propertyName}",
+				locator1 = "ACDXPSettings#CHANNELS_OR_SITES_SYNCED_NUMBER",
+				value1 = "${syncedChannelsNumber}");
+		}
+
+		if (isSet(syncedSitesNumber)) {
+			AssertTextEquals(
+				index = "2",
+				key_propertyName = "${propertyName}",
+				locator1 = "ACDXPSettings#CHANNELS_OR_SITES_SYNCED_NUMBER",
+				value1 = "${syncedSitesNumber}");
+		}
+	}
+
 }

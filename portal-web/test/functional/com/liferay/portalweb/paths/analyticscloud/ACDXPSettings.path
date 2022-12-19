@@ -85,6 +85,11 @@
 	<td>//tr[@data-testid='${key_propertyName}']//button[@role='assign-button']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CHANNELS_OR_SITES_SYNCED_NUMBER</td>
+	<td>xpath=(//tr[@data-testid='${key_propertyName}']//td[@class='table-column-text-end'])[${index}]</td>
+	<td></td>
+</tr>
 
 <!-- GENERIC CHECKBOX -->
 

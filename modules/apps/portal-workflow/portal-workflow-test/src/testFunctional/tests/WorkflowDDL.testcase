@@ -118,13 +118,46 @@ definition {
 		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 	}
 
-	@description = "Verify that the user can Publish a Entry after Save as Draft"
-	@ignore = "true"
+	@description = "LRQA-69476 - Verify that the user can Publish a Entry after Save as Draft"
 	@priority = "4"
 	test CanPublishAfterSaveAsDraft {
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
-		// TODO LRQA-69476 CanPublishAfterSaveAsDraft pending implementation
+		DDLList.addCP(
+			ddlListDescription = "DDL List Description",
+			ddlListName = "DDL List",
+			workflowDefinition = "Single Approver");
 
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Contacts");
+
+		DDLDataDefinition.save();
+
+		DDLList.viewCP(ddlListName = "DDL List");
+
+		LexiconEntry.gotoAdd();
+
+		KaleoFormsNewSubmissions.addNewContacts(
+			ddlCompany = "Liferay",
+			ddlEmail = "qa@liferay.com",
+			ddlFirstName = "Test",
+			ddlInstantMesseger = "Liferay",
+			ddlJobTitle = "QA",
+			ddlLastName = "Test",
+			ddlPhoneMobile = "12345678",
+			ddlPhoneOffice = "12345678");
+
+		DDLRecord.saveAsDraftCP();
+
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Draft");
+
+		KaleoFormsNewSubmissions.editDLLRecordContacts(
+			ddlCompanyEdit = "Liferay Edit",
+			ddlFirstNameEdit = "Test Edit",
+			ddlListName = "DDL List");
+
+		DDLRecord.submitForPublication();
+
+		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 	}
 
 	@description = "Verify that, when the user Save as Draft, the DDL status is Draft"

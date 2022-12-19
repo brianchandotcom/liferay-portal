@@ -23,8 +23,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Michael C. Han
@@ -84,21 +82,6 @@ public class SearchHitsImpl implements SearchHits, Serializable {
 			Collection<SearchHit> searchHits) {
 
 			_searchHitsImpl.addSearchHits(searchHits);
-
-			return this;
-		}
-
-		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 *             #addSearchHits(Collection)}
-		 */
-		@Deprecated
-		@Override
-		public SearchHitsBuilder addSearchHits(
-			Stream<SearchHit> searchHitStream) {
-
-			_searchHitsImpl.addSearchHits(
-				searchHitStream.collect(Collectors.toList()));
 
 			return this;
 		}

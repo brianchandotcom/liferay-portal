@@ -14,7 +14,6 @@
 
 /// <reference types="react" />
 
-import './ActionBuilder.scss';
 import {ActionError} from '..';
 interface ConditionContainerProps {
 	errors: ActionError;

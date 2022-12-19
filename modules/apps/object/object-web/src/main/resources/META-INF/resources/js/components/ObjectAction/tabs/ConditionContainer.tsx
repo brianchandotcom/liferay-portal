@@ -12,13 +12,10 @@
  * details.
  */
 
+import {ActionError} from '..';
 import ClayForm, {ClayToggle} from '@clayui/form';
 import {Card, ExpressionBuilder} from '@liferay/object-js-components-web';
 import React from 'react';
-
-import './ActionBuilder.scss';
-
-import {ActionError} from '..';
 
 interface ConditionContainerProps {
 	errors: ActionError;

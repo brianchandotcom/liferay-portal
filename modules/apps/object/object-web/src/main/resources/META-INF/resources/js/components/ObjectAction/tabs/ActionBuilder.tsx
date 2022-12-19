@@ -23,7 +23,6 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import './ActionBuilder.scss';
 import {ActionError} from '../index';
 import {ActionContainer} from './ActionContainer/ActionContainer';
 import {ConditionContainer} from './ConditionContainer';

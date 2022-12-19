@@ -15,7 +15,7 @@
 /// <reference types="react" />
 
 import {CustomItem} from '@liferay/object-js-components-web';
-import './ActionBuilder.scss';
+import './ThenContainer.scss';
 import {ActionError} from '../..';
 interface ThenContainerProps {
 	errors: ActionError;

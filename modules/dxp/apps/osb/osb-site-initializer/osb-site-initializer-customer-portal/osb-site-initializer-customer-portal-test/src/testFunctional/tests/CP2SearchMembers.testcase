@@ -86,11 +86,11 @@ definition {
 
 		task ("Then I should see the text No team members found with this search criteria.") {
 			AssertElementPresent(
-				locator1 = "CP2NavigationMenu#SEARCH_NO_RESULT",
-				key_nosearch = "No team members were found.");
+				key_nosearch = "No team members were found.",
+				locator1 = "CP2NavigationMenu#SEARCH_NO_RESULT");
 		}
 
-		task("Then i delete the previous search and see the memeber appears on the label") {
+		task ("I delete the previous search and see if the members are back") {
 			CP2Utils.searchKeys(searchInput = "");
 
 			AssertElementPresent(

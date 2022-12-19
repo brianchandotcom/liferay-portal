@@ -11,6 +11,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:list-type:list-type-api")
+	compileOnly project(":apps:notification:notification-api")
 	compileOnly project(":apps:object:object-admin-rest-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")

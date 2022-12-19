@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
@@ -664,6 +665,7 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getObjectDefinitionId()),
 					objectAction -> ObjectActionUtil.toObjectAction(
 						null, contextAcceptLanguage.getPreferredLocale(),
+						_notificationTemplateLocalService,
 						_objectDefinitionLocalService, objectAction),
 					ObjectAction.class);
 				objectFields = transformToArray(
@@ -778,6 +780,9 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
-import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
@@ -125,20 +124,7 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 		String requestPath = _samlHttpRequestUtil.getRequestPath(
 			httpServletRequest);
 
-		SamlSpSession samlSpSession = _singleLogoutProfile.getSamlSpSession(
-			httpServletRequest);
-
-		if ((samlSpSession != null) && samlSpSession.isTerminated()) {
-			_singleLogoutProfile.terminateSpSession(
-				httpServletRequest, httpServletResponse);
-
-			_singleLogoutProfile.logout(
-				httpServletRequest, httpServletResponse);
-
-			httpServletResponse.sendRedirect(
-				_portal.getCurrentCompleteURL(httpServletRequest));
-		}
-		else if (requestPath.equals("/c/portal/login")) {
+		if (requestPath.equals("/c/portal/login")) {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/c/portal/saml/login");
 

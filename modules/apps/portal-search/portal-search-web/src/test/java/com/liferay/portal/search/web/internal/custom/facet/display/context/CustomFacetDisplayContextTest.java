@@ -202,7 +202,6 @@ public class CustomFacetDisplayContextTest {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"alpha:3|delta:4|bravo:5|charlie:6", nameFrequencyString);
 
 		termCollectors = _getTermCollectors(
@@ -221,7 +220,6 @@ public class CustomFacetDisplayContextTest {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"alpha:4|bravo:5|delta:5|charlie:6", nameFrequencyString);
 	}
 
@@ -245,7 +243,6 @@ public class CustomFacetDisplayContextTest {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"delta:6|bravo:5|charlie:4|alpha:3", nameFrequencyString);
 
 		termCollectors = _getTermCollectors(
@@ -264,7 +261,6 @@ public class CustomFacetDisplayContextTest {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"charlie:6|bravo:5|delta:5|alpha:4", nameFrequencyString);
 	}
 
@@ -287,7 +283,6 @@ public class CustomFacetDisplayContextTest {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"alpha:3|bravo:1|charlie:4|delta:2", nameFrequencyString);
 
 		termCollectors = _getTermCollectors(
@@ -305,7 +300,6 @@ public class CustomFacetDisplayContextTest {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"alpha:2|bravo:3|bravo:1|charlie:4", nameFrequencyString);
 	}
 
@@ -328,7 +322,6 @@ public class CustomFacetDisplayContextTest {
 			bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"delta:2|charlie:4|bravo:1|alpha:3", nameFrequencyString);
 
 		termCollectors = _getTermCollectors(
@@ -346,7 +339,6 @@ public class CustomFacetDisplayContextTest {
 		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
 			"charlie:4|bravo:3|bravo:1|alpha:2", nameFrequencyString);
 	}
 

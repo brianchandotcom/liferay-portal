@@ -245,6 +245,13 @@ public class SamlSpSessionLocalServiceUtil {
 			companyId, sessionIndex);
 	}
 
+	public static List<SamlSpSession> fetchSamlSpSessionsBySessionIndex(
+		long companyId, String sessionIndex) {
+
+		return getService().fetchSamlSpSessionsBySessionIndex(
+			companyId, sessionIndex);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -1081,98 +1081,137 @@ public class SamlSpSessionPersistenceImpl
 		_FINDER_COLUMN_SAMLSPSESSIONKEY_SAMLSPSESSIONKEY_3 =
 			"(samlSpSession.samlSpSessionKey IS NULL OR samlSpSession.samlSpSessionKey = '')";
 
-	private FinderPath _finderPathFetchByC_SI;
+	private FinderPath _finderPathWithPaginationFindByC_SI;
+	private FinderPath _finderPathWithoutPaginationFindByC_SI;
 	private FinderPath _finderPathCountByC_SI;
 
 	/**
-	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
+	 * Returns all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sessionIndex the session index
-	 * @return the matching saml sp session
-	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
+	 * @return the matching saml sp sessions
 	 */
 	@Override
-	public SamlSpSession findByC_SI(long companyId, String sessionIndex)
-		throws NoSuchSpSessionException {
-
-		SamlSpSession samlSpSession = fetchByC_SI(companyId, sessionIndex);
-
-		if (samlSpSession == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", sessionIndex=");
-			sb.append(sessionIndex);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchSpSessionException(sb.toString());
-		}
-
-		return samlSpSession;
+	public List<SamlSpSession> findByC_SI(long companyId, String sessionIndex) {
+		return findByC_SI(
+			companyId, sessionIndex, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param sessionIndex the session index
-	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @return the range of matching saml sp sessions
 	 */
 	@Override
-	public SamlSpSession fetchByC_SI(long companyId, String sessionIndex) {
-		return fetchByC_SI(companyId, sessionIndex, true);
+	public List<SamlSpSession> findByC_SI(
+		long companyId, String sessionIndex, int start, int end) {
+
+		return findByC_SI(companyId, sessionIndex, start, end, null);
 	}
 
 	/**
-	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param sessionIndex the session index
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saml sp sessions
+	 */
+	@Override
+	public List<SamlSpSession> findByC_SI(
+		long companyId, String sessionIndex, int start, int end,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		return findByC_SI(
+			companyId, sessionIndex, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 * @return the ordered range of matching saml sp sessions
 	 */
 	@Override
-	public SamlSpSession fetchByC_SI(
-		long companyId, String sessionIndex, boolean useFinderCache) {
+	public List<SamlSpSession> findByC_SI(
+		long companyId, String sessionIndex, int start, int end,
+		OrderByComparator<SamlSpSession> orderByComparator,
+		boolean useFinderCache) {
 
 		sessionIndex = Objects.toString(sessionIndex, "");
 
+		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, sessionIndex};
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_SI;
+				finderArgs = new Object[] {companyId, sessionIndex};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_SI;
+			finderArgs = new Object[] {
+				companyId, sessionIndex, start, end, orderByComparator
+			};
 		}
 
-		Object result = null;
+		List<SamlSpSession> list = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_SI, finderArgs, this);
-		}
+			list = (List<SamlSpSession>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-		if (result instanceof SamlSpSession) {
-			SamlSpSession samlSpSession = (SamlSpSession)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (SamlSpSession samlSpSession : list) {
+					if ((companyId != samlSpSession.getCompanyId()) ||
+						!sessionIndex.equals(samlSpSession.getSessionIndex())) {
 
-			if ((companyId != samlSpSession.getCompanyId()) ||
-				!Objects.equals(
-					sessionIndex, samlSpSession.getSessionIndex())) {
+						list = null;
 
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
 
 			sb.append(_SQL_SELECT_SAMLSPSESSION_WHERE);
 
@@ -1187,6 +1226,14 @@ public class SamlSpSessionPersistenceImpl
 				bindSessionIndex = true;
 
 				sb.append(_FINDER_COLUMN_C_SI_SESSIONINDEX_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(SamlSpSessionModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = sb.toString();
@@ -1206,37 +1253,13 @@ public class SamlSpSessionPersistenceImpl
 					queryPos.add(sessionIndex);
 				}
 
-				List<SamlSpSession> list = query.list();
+				list = (List<SamlSpSession>)QueryUtil.list(
+					query, getDialect(), start, end);
 
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_SI, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
+				cacheResult(list);
 
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									companyId, sessionIndex
-								};
-							}
-
-							_log.warn(
-								"SamlSpSessionPersistenceImpl.fetchByC_SI(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					SamlSpSession samlSpSession = list.get(0);
-
-					result = samlSpSession;
-
-					cacheResult(samlSpSession);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -1247,28 +1270,322 @@ public class SamlSpSessionPersistenceImpl
 			}
 		}
 
-		if (result instanceof List<?>) {
+		return list;
+	}
+
+	/**
+	 * Returns the first saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml sp session
+	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
+	 */
+	@Override
+	public SamlSpSession findByC_SI_First(
+			long companyId, String sessionIndex,
+			OrderByComparator<SamlSpSession> orderByComparator)
+		throws NoSuchSpSessionException {
+
+		SamlSpSession samlSpSession = fetchByC_SI_First(
+			companyId, sessionIndex, orderByComparator);
+
+		if (samlSpSession != null) {
+			return samlSpSession;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", sessionIndex=");
+		sb.append(sessionIndex);
+
+		sb.append("}");
+
+		throw new NoSuchSpSessionException(sb.toString());
+	}
+
+	/**
+	 * Returns the first saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 */
+	@Override
+	public SamlSpSession fetchByC_SI_First(
+		long companyId, String sessionIndex,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		List<SamlSpSession> list = findByC_SI(
+			companyId, sessionIndex, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml sp session
+	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
+	 */
+	@Override
+	public SamlSpSession findByC_SI_Last(
+			long companyId, String sessionIndex,
+			OrderByComparator<SamlSpSession> orderByComparator)
+		throws NoSuchSpSessionException {
+
+		SamlSpSession samlSpSession = fetchByC_SI_Last(
+			companyId, sessionIndex, orderByComparator);
+
+		if (samlSpSession != null) {
+			return samlSpSession;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", sessionIndex=");
+		sb.append(sessionIndex);
+
+		sb.append("}");
+
+		throw new NoSuchSpSessionException(sb.toString());
+	}
+
+	/**
+	 * Returns the last saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 */
+	@Override
+	public SamlSpSession fetchByC_SI_Last(
+		long companyId, String sessionIndex,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		int count = countByC_SI(companyId, sessionIndex);
+
+		if (count == 0) {
 			return null;
 		}
+
+		List<SamlSpSession> list = findByC_SI(
+			companyId, sessionIndex, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the saml sp sessions before and after the current saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param samlSpSessionId the primary key of the current saml sp session
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saml sp session
+	 * @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
+	 */
+	@Override
+	public SamlSpSession[] findByC_SI_PrevAndNext(
+			long samlSpSessionId, long companyId, String sessionIndex,
+			OrderByComparator<SamlSpSession> orderByComparator)
+		throws NoSuchSpSessionException {
+
+		sessionIndex = Objects.toString(sessionIndex, "");
+
+		SamlSpSession samlSpSession = findByPrimaryKey(samlSpSessionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SamlSpSession[] array = new SamlSpSessionImpl[3];
+
+			array[0] = getByC_SI_PrevAndNext(
+				session, samlSpSession, companyId, sessionIndex,
+				orderByComparator, true);
+
+			array[1] = samlSpSession;
+
+			array[2] = getByC_SI_PrevAndNext(
+				session, samlSpSession, companyId, sessionIndex,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SamlSpSession getByC_SI_PrevAndNext(
+		Session session, SamlSpSession samlSpSession, long companyId,
+		String sessionIndex, OrderByComparator<SamlSpSession> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
 		else {
-			return (SamlSpSession)result;
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_SAMLSPSESSION_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_SI_COMPANYID_2);
+
+		boolean bindSessionIndex = false;
+
+		if (sessionIndex.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_SI_SESSIONINDEX_3);
+		}
+		else {
+			bindSessionIndex = true;
+
+			sb.append(_FINDER_COLUMN_C_SI_SESSIONINDEX_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(SamlSpSessionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		if (bindSessionIndex) {
+			queryPos.add(sessionIndex);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						samlSpSession)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<SamlSpSession> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
 		}
 	}
 
 	/**
-	 * Removes the saml sp session where companyId = &#63; and sessionIndex = &#63; from the database.
+	 * Removes all the saml sp sessions where companyId = &#63; and sessionIndex = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param sessionIndex the session index
-	 * @return the saml sp session that was removed
 	 */
 	@Override
-	public SamlSpSession removeByC_SI(long companyId, String sessionIndex)
-		throws NoSuchSpSessionException {
+	public void removeByC_SI(long companyId, String sessionIndex) {
+		for (SamlSpSession samlSpSession :
+				findByC_SI(
+					companyId, sessionIndex, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
 
-		SamlSpSession samlSpSession = findByC_SI(companyId, sessionIndex);
-
-		return remove(samlSpSession);
+			remove(samlSpSession);
+		}
 	}
 
 	/**
@@ -1380,13 +1697,6 @@ public class SamlSpSessionPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchBySamlSpSessionKey,
 			new Object[] {samlSpSession.getSamlSpSessionKey()}, samlSpSession);
-
-		finderCache.putResult(
-			_finderPathFetchByC_SI,
-			new Object[] {
-				samlSpSession.getCompanyId(), samlSpSession.getSessionIndex()
-			},
-			samlSpSession);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -1473,15 +1783,6 @@ public class SamlSpSessionPersistenceImpl
 			_finderPathCountBySamlSpSessionKey, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchBySamlSpSessionKey, args, samlSpSessionModelImpl);
-
-		args = new Object[] {
-			samlSpSessionModelImpl.getCompanyId(),
-			samlSpSessionModelImpl.getSessionIndex()
-		};
-
-		finderCache.putResult(_finderPathCountByC_SI, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByC_SI, args, samlSpSessionModelImpl);
 	}
 
 	/**
@@ -1981,8 +2282,17 @@ public class SamlSpSessionPersistenceImpl
 			"countBySamlSpSessionKey", new String[] {String.class.getName()},
 			new String[] {"samlSpSessionKey"}, false);
 
-		_finderPathFetchByC_SI = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_SI",
+		_finderPathWithPaginationFindByC_SI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_SI",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "sessionIndex"}, true);
+
+		_finderPathWithoutPaginationFindByC_SI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_SI",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sessionIndex"}, true);
 

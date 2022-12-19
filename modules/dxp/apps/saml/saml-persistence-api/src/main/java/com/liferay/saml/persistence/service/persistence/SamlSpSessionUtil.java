@@ -416,59 +416,179 @@ public class SamlSpSessionUtil {
 	}
 
 	/**
-	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
+	 * Returns all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sessionIndex the session index
-	 * @return the matching saml sp session
-	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
+	 * @return the matching saml sp sessions
 	 */
-	public static SamlSpSession findByC_SI(long companyId, String sessionIndex)
-		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
+	public static List<SamlSpSession> findByC_SI(
+		long companyId, String sessionIndex) {
 
 		return getPersistence().findByC_SI(companyId, sessionIndex);
 	}
 
 	/**
-	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param sessionIndex the session index
-	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @return the range of matching saml sp sessions
 	 */
-	public static SamlSpSession fetchByC_SI(
-		long companyId, String sessionIndex) {
+	public static List<SamlSpSession> findByC_SI(
+		long companyId, String sessionIndex, int start, int end) {
 
-		return getPersistence().fetchByC_SI(companyId, sessionIndex);
+		return getPersistence().findByC_SI(companyId, sessionIndex, start, end);
 	}
 
 	/**
-	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
 	 *
 	 * @param companyId the company ID
 	 * @param sessionIndex the session index
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saml sp sessions
+	 */
+	public static List<SamlSpSession> findByC_SI(
+		long companyId, String sessionIndex, int start, int end,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		return getPersistence().findByC_SI(
+			companyId, sessionIndex, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 * @return the ordered range of matching saml sp sessions
 	 */
-	public static SamlSpSession fetchByC_SI(
-		long companyId, String sessionIndex, boolean useFinderCache) {
+	public static List<SamlSpSession> findByC_SI(
+		long companyId, String sessionIndex, int start, int end,
+		OrderByComparator<SamlSpSession> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByC_SI(
-			companyId, sessionIndex, useFinderCache);
+		return getPersistence().findByC_SI(
+			companyId, sessionIndex, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
-	 * Removes the saml sp session where companyId = &#63; and sessionIndex = &#63; from the database.
+	 * Returns the first saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sessionIndex the session index
-	 * @return the saml sp session that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml sp session
+	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
 	 */
-	public static SamlSpSession removeByC_SI(
-			long companyId, String sessionIndex)
+	public static SamlSpSession findByC_SI_First(
+			long companyId, String sessionIndex,
+			OrderByComparator<SamlSpSession> orderByComparator)
 		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
 
-		return getPersistence().removeByC_SI(companyId, sessionIndex);
+		return getPersistence().findByC_SI_First(
+			companyId, sessionIndex, orderByComparator);
+	}
+
+	/**
+	 * Returns the first saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 */
+	public static SamlSpSession fetchByC_SI_First(
+		long companyId, String sessionIndex,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		return getPersistence().fetchByC_SI_First(
+			companyId, sessionIndex, orderByComparator);
+	}
+
+	/**
+	 * Returns the last saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml sp session
+	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
+	 */
+	public static SamlSpSession findByC_SI_Last(
+			long companyId, String sessionIndex,
+			OrderByComparator<SamlSpSession> orderByComparator)
+		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
+
+		return getPersistence().findByC_SI_Last(
+			companyId, sessionIndex, orderByComparator);
+	}
+
+	/**
+	 * Returns the last saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 */
+	public static SamlSpSession fetchByC_SI_Last(
+		long companyId, String sessionIndex,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		return getPersistence().fetchByC_SI_Last(
+			companyId, sessionIndex, orderByComparator);
+	}
+
+	/**
+	 * Returns the saml sp sessions before and after the current saml sp session in the ordered set where companyId = &#63; and sessionIndex = &#63;.
+	 *
+	 * @param samlSpSessionId the primary key of the current saml sp session
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saml sp session
+	 * @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
+	 */
+	public static SamlSpSession[] findByC_SI_PrevAndNext(
+			long samlSpSessionId, long companyId, String sessionIndex,
+			OrderByComparator<SamlSpSession> orderByComparator)
+		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
+
+		return getPersistence().findByC_SI_PrevAndNext(
+			samlSpSessionId, companyId, sessionIndex, orderByComparator);
+	}
+
+	/**
+	 * Removes all the saml sp sessions where companyId = &#63; and sessionIndex = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param sessionIndex the session index
+	 */
+	public static void removeByC_SI(long companyId, String sessionIndex) {
+		getPersistence().removeByC_SI(companyId, sessionIndex);
 	}
 
 	/**

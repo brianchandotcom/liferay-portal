@@ -2337,6 +2337,279 @@ public class ListTypeEntryPersistenceImpl
 		_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_2 =
 			"listTypeEntry.listTypeDefinitionId = ?";
 
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching list type entry
+	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
+	 */
+	@Override
+	public ListTypeEntry findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchListTypeEntryException {
+
+		ListTypeEntry listTypeEntry = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (listTypeEntry == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchListTypeEntryException(sb.toString());
+		}
+
+		return listTypeEntry;
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	@Override
+	public ListTypeEntry fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	@Override
+	public ListTypeEntry fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, companyId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_C, finderArgs, this);
+		}
+
+		if (result instanceof ListTypeEntry) {
+			ListTypeEntry listTypeEntry = (ListTypeEntry)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					listTypeEntry.getExternalReferenceCode()) ||
+				(companyId != listTypeEntry.getCompanyId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_LISTTYPEENTRY_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				List<ListTypeEntry> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_C, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									externalReferenceCode, companyId
+								};
+							}
+
+							_log.warn(
+								"ListTypeEntryPersistenceImpl.fetchByERC_C(String, long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ListTypeEntry listTypeEntry = list.get(0);
+
+					result = listTypeEntry;
+
+					cacheResult(listTypeEntry);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ListTypeEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the list type entry where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the list type entry that was removed
+	 */
+	@Override
+	public ListTypeEntry removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchListTypeEntryException {
+
+		ListTypeEntry listTypeEntry = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(listTypeEntry);
+	}
+
+	/**
+	 * Returns the number of list type entries where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching list type entries
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByERC_C;
+
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_LISTTYPEENTRY_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"listTypeEntry.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(listTypeEntry.externalReferenceCode IS NULL OR listTypeEntry.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"listTypeEntry.companyId = ?";
+
 	private FinderPath _finderPathFetchByLTDI_K;
 	private FinderPath _finderPathCountByLTDI_K;
 
@@ -2603,6 +2876,316 @@ public class ListTypeEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_LTDI_K_KEY_3 =
 		"(listTypeEntry.key IS NULL OR listTypeEntry.key = '')";
 
+	private FinderPath _finderPathFetchByERC_C_LTDI;
+	private FinderPath _finderPathCountByERC_C_LTDI;
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or throws a <code>NoSuchListTypeEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching list type entry
+	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
+	 */
+	@Override
+	public ListTypeEntry findByERC_C_LTDI(
+			String externalReferenceCode, long companyId,
+			long listTypeDefinitionId)
+		throws NoSuchListTypeEntryException {
+
+		ListTypeEntry listTypeEntry = fetchByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
+
+		if (listTypeEntry == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append(", listTypeDefinitionId=");
+			sb.append(listTypeDefinitionId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchListTypeEntryException(sb.toString());
+		}
+
+		return listTypeEntry;
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	@Override
+	public ListTypeEntry fetchByERC_C_LTDI(
+		String externalReferenceCode, long companyId,
+		long listTypeDefinitionId) {
+
+		return fetchByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId, true);
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	@Override
+	public ListTypeEntry fetchByERC_C_LTDI(
+		String externalReferenceCode, long companyId, long listTypeDefinitionId,
+		boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				externalReferenceCode, companyId, listTypeDefinitionId
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_C_LTDI, finderArgs, this);
+		}
+
+		if (result instanceof ListTypeEntry) {
+			ListTypeEntry listTypeEntry = (ListTypeEntry)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					listTypeEntry.getExternalReferenceCode()) ||
+				(companyId != listTypeEntry.getCompanyId()) ||
+				(listTypeDefinitionId !=
+					listTypeEntry.getListTypeDefinitionId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_SELECT_LISTTYPEENTRY_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_LTDI_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_LTDI_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_LTDI_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_ERC_C_LTDI_LISTTYPEDEFINITIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				queryPos.add(listTypeDefinitionId);
+
+				List<ListTypeEntry> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_C_LTDI, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									externalReferenceCode, companyId,
+									listTypeDefinitionId
+								};
+							}
+
+							_log.warn(
+								"ListTypeEntryPersistenceImpl.fetchByERC_C_LTDI(String, long, long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ListTypeEntry listTypeEntry = list.get(0);
+
+					result = listTypeEntry;
+
+					cacheResult(listTypeEntry);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ListTypeEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the list type entry that was removed
+	 */
+	@Override
+	public ListTypeEntry removeByERC_C_LTDI(
+			String externalReferenceCode, long companyId,
+			long listTypeDefinitionId)
+		throws NoSuchListTypeEntryException {
+
+		ListTypeEntry listTypeEntry = findByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
+
+		return remove(listTypeEntry);
+	}
+
+	/**
+	 * Returns the number of list type entries where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the number of matching list type entries
+	 */
+	@Override
+	public int countByERC_C_LTDI(
+		String externalReferenceCode, long companyId,
+		long listTypeDefinitionId) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByERC_C_LTDI;
+
+		Object[] finderArgs = new Object[] {
+			externalReferenceCode, companyId, listTypeDefinitionId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_LISTTYPEENTRY_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_LTDI_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_LTDI_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_LTDI_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_ERC_C_LTDI_LISTTYPEDEFINITIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				queryPos.add(listTypeDefinitionId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_ERC_C_LTDI_EXTERNALREFERENCECODE_2 =
+			"listTypeEntry.externalReferenceCode = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_ERC_C_LTDI_EXTERNALREFERENCECODE_3 =
+			"(listTypeEntry.externalReferenceCode IS NULL OR listTypeEntry.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_LTDI_COMPANYID_2 =
+		"listTypeEntry.companyId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_ERC_C_LTDI_LISTTYPEDEFINITIONID_2 =
+			"listTypeEntry.listTypeDefinitionId = ?";
+
 	public ListTypeEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2632,9 +3215,26 @@ public class ListTypeEntryPersistenceImpl
 			listTypeEntry);
 
 		finderCache.putResult(
+			_finderPathFetchByERC_C,
+			new Object[] {
+				listTypeEntry.getExternalReferenceCode(),
+				listTypeEntry.getCompanyId()
+			},
+			listTypeEntry);
+
+		finderCache.putResult(
 			_finderPathFetchByLTDI_K,
 			new Object[] {
 				listTypeEntry.getListTypeDefinitionId(), listTypeEntry.getKey()
+			},
+			listTypeEntry);
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C_LTDI,
+			new Object[] {
+				listTypeEntry.getExternalReferenceCode(),
+				listTypeEntry.getCompanyId(),
+				listTypeEntry.getListTypeDefinitionId()
 			},
 			listTypeEntry);
 	}
@@ -2711,6 +3311,15 @@ public class ListTypeEntryPersistenceImpl
 		ListTypeEntryModelImpl listTypeEntryModelImpl) {
 
 		Object[] args = new Object[] {
+			listTypeEntryModelImpl.getExternalReferenceCode(),
+			listTypeEntryModelImpl.getCompanyId()
+		};
+
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByERC_C, args, listTypeEntryModelImpl);
+
+		args = new Object[] {
 			listTypeEntryModelImpl.getListTypeDefinitionId(),
 			listTypeEntryModelImpl.getKey()
 		};
@@ -2718,6 +3327,17 @@ public class ListTypeEntryPersistenceImpl
 		finderCache.putResult(_finderPathCountByLTDI_K, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByLTDI_K, args, listTypeEntryModelImpl);
+
+		args = new Object[] {
+			listTypeEntryModelImpl.getExternalReferenceCode(),
+			listTypeEntryModelImpl.getCompanyId(),
+			listTypeEntryModelImpl.getListTypeDefinitionId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByERC_C_LTDI, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByERC_C_LTDI, args, listTypeEntryModelImpl);
 	}
 
 	/**
@@ -2855,6 +3475,10 @@ public class ListTypeEntryPersistenceImpl
 			String uuid = _portalUUID.generate();
 
 			listTypeEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(listTypeEntry.getExternalReferenceCode())) {
+			listTypeEntry.setExternalReferenceCode(listTypeEntry.getUuid());
 		}
 
 		ServiceContext serviceContext =
@@ -3268,6 +3892,16 @@ public class ListTypeEntryPersistenceImpl
 			"countByListTypeDefinitionId", new String[] {Long.class.getName()},
 			new String[] {"listTypeDefinitionId"}, false);
 
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
+
 		_finderPathFetchByLTDI_K = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLTDI_K",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -3277,6 +3911,28 @@ public class ListTypeEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLTDI_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"listTypeDefinitionId", "key_"}, false);
+
+		_finderPathFetchByERC_C_LTDI = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_LTDI",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			},
+			new String[] {
+				"externalReferenceCode", "companyId", "listTypeDefinitionId"
+			},
+			true);
+
+		_finderPathCountByERC_C_LTDI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C_LTDI",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			},
+			new String[] {
+				"externalReferenceCode", "companyId", "listTypeDefinitionId"
+			},
+			false);
 
 		_setListTypeEntryUtilPersistence(this);
 	}

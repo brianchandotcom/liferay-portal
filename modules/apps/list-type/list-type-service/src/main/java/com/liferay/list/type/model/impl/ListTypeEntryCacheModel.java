@@ -77,12 +77,14 @@ public class ListTypeEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", listTypeEntryId=");
 		sb.append(listTypeEntryId);
 		sb.append(", companyId=");
@@ -119,6 +121,13 @@ public class ListTypeEntryCacheModel
 		}
 		else {
 			listTypeEntryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			listTypeEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			listTypeEntryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		listTypeEntryImpl.setListTypeEntryId(listTypeEntryId);
@@ -178,6 +187,7 @@ public class ListTypeEntryCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		listTypeEntryId = objectInput.readLong();
 
@@ -203,6 +213,13 @@ public class ListTypeEntryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(listTypeEntryId);
@@ -247,6 +264,7 @@ public class ListTypeEntryCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long listTypeEntryId;
 	public long companyId;
 	public long userId;

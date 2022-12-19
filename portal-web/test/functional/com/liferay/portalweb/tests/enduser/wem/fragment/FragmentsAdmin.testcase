@@ -118,7 +118,7 @@ definition {
 					folderName = "Folder 1",
 					resourceFile = "Document_1.png");
 
-				FragmentsAdmin.viewEntryPresent(entry = "Document_1.png");
+				FragmentsAdmin.viewEntryPresent(entry = "Document_1");
 			}
 
 			task ("Add a fragment and type to invoke hint") {
@@ -139,7 +139,7 @@ definition {
 
 			task ("Assert there is a hint for resources with path") {
 				AssertElementPresent(
-					autocompleteField = "Folder 1/Document_1.png",
+					autocompleteField = "Folder 1/Document_1",
 					locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
 			}
 
@@ -171,7 +171,7 @@ definition {
 
 			task ("Assert there is a hint for resources with path") {
 				AssertElementPresent(
-					autocompleteField = "Folder 1/Subfolder 1/Document_2.png",
+					autocompleteField = "Folder 1/Subfolder 1/Document_2",
 					locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
 			}
 		}

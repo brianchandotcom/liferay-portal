@@ -12,9 +12,10 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 
 import '@testing-library/jest-dom/extend-expect';
+import {openSelectionModal} from 'frontend-js-web';
 import React from 'react';
 
 import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder.es';
@@ -182,6 +183,11 @@ const propertyGroups = [
 	},
 ];
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	openSelectionModal: jest.fn(),
+}));
+
 describe('ContributorsBuilder', () => {
 	afterEach(cleanup);
 
@@ -193,6 +199,7 @@ describe('ContributorsBuilder', () => {
 				editing={editing}
 				emptyContributors={false}
 				initialContributors={initialContributors}
+				portletNamespace="segments_portlet"
 				propertyGroups={propertyGroups}
 				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
 				supportedOperators={SUPPORTED_OPERATORS}
@@ -211,6 +218,7 @@ describe('ContributorsBuilder', () => {
 				editing={editing}
 				emptyContributors={false}
 				initialContributors={initialContributors}
+				portletNamespace="segments_portlet"
 				propertyGroups={propertyGroups}
 				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
 				supportedOperators={SUPPORTED_OPERATORS}
@@ -233,8 +241,10 @@ describe('ContributorsBuilder', () => {
 				editing={editing}
 				emptyContributors={false}
 				initialContributors={initialContributors}
+				portletNamespace="segments_portlet"
 				propertyGroups={propertyGroups}
 				scopeName={scopeName}
+				siteItemSelectorURL="http://example.org"
 				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
 				supportedOperators={SUPPORTED_OPERATORS}
 				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
@@ -243,5 +253,76 @@ describe('ContributorsBuilder', () => {
 
 		expect(getByText('scope')).toBeInTheDocument();
 		expect(getByText(scopeName)).toBeInTheDocument();
+	});
+
+	it('renders the Scope Card with select site button enabled', () => {
+		window.Liferay.FeatureFlags['LPS-166954'] = true;
+
+		const editing = true;
+
+		const {getByText} = render(
+			<ContributorsBuilder
+				editing={editing}
+				emptyContributors={false}
+				initialContributors={initialContributors}
+				portletNamespace="segments_portlet"
+				propertyGroups={propertyGroups}
+				scopeName="Liferray DXP"
+				siteItemSelectorURL="http://example.org"
+				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
+				supportedOperators={SUPPORTED_OPERATORS}
+				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
+			/>
+		);
+
+		expect(getByText('select')).toBeInTheDocument();
+	});
+
+	it('renders the Scope Card without the select site button if no site selector url is provided', () => {
+		window.Liferay.FeatureFlags['LPS-166954'] = true;
+
+		const editing = true;
+
+		const {queryByText} = render(
+			<ContributorsBuilder
+				editing={editing}
+				emptyContributors={false}
+				initialContributors={initialContributors}
+				portletNamespace="segments_portlet"
+				propertyGroups={propertyGroups}
+				scopeName="Liferray DXP"
+				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
+				supportedOperators={SUPPORTED_OPERATORS}
+				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
+			/>
+		);
+
+		expect(queryByText('select')).not.toBeInTheDocument();
+	});
+
+	it('renders a select site button that opens a selection modal', () => {
+		window.Liferay.FeatureFlags['LPS-166954'] = true;
+
+		const editing = true;
+
+		const {getByText} = render(
+			<ContributorsBuilder
+				editing={editing}
+				emptyContributors={false}
+				initialContributors={initialContributors}
+				portletNamespace="segments_portlet"
+				propertyGroups={propertyGroups}
+				scopeName="Liferray DXP"
+				siteItemSelectorURL="http://example.org"
+				supportedConjunctions={SUPPORTED_CONJUNCTIONS}
+				supportedOperators={SUPPORTED_OPERATORS}
+				supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
+			/>
+		);
+
+		const selectButton = getByText('select');
+		fireEvent.click(selectButton);
+
+		expect(openSelectionModal).toHaveBeenCalledTimes(1);
 	});
 });

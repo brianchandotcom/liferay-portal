@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -100,6 +102,16 @@ public class DispatchTaskExecutorRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		Properties properties = PropsUtil.getProperties("feature.flag.", true);
+
+		_disabledFeatureFlags = new HashSet<>();
+
+		for (String propertyName : properties.stringPropertyNames()) {
+			if (GetterUtil.getBoolean(properties.getProperty(propertyName))) {
+				_disabledFeatureFlags.add(propertyName);
+			}
+		}
+
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, DispatchTaskExecutor.class,
 			new DispatchTaskExecutorServiceTrackerCustomizer(bundleContext));
@@ -141,6 +153,7 @@ public class DispatchTaskExecutorRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DispatchTaskExecutorRegistryImpl.class);
 
+	private Set<String> _disabledFeatureFlags;
 	private final Map<String, DispatchTaskExecutor> _dispatchTaskExecutors =
 		new ConcurrentHashMap<>();
 	private ServiceTracker<DispatchTaskExecutor, DispatchTaskExecutor>
@@ -168,8 +181,7 @@ public class DispatchTaskExecutorRegistryImpl
 					_KEY_DISPATCH_TASK_FEATURE_FLAG);
 
 			if (Validator.isNotNull(dispatchTaskFeatureFlag) &&
-				!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag." + dispatchTaskFeatureFlag))) {
+				_disabledFeatureFlags.contains(dispatchTaskFeatureFlag)) {
 
 				return dispatchTaskExecutor;
 			}

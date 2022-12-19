@@ -35,9 +35,9 @@ import javax.portlet.PortletRequest;
 /**
  * @author Ambrín Chaudhary
  */
-public class KBArticleDisplayContext {
+public class ViewKBArticleDisplayContext {
 
-	public KBArticleDisplayContext(
+	public ViewKBArticleDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 

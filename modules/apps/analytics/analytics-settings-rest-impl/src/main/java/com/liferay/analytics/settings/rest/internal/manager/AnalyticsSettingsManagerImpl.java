@@ -403,11 +403,11 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		AnalyticsSettingsManagerImpl.class);
 
 	private static final Map<String, String[]> _defaults = HashMapBuilder.put(
-		"syncedAccountFieldNames", FieldAccountConstants.FIELD_ACCOUNT_NAMES
+		"syncedAccountFieldNames", FieldAccountConstants.FILED_ACCOUNT_DEFAULTS
 	).put(
 		"syncedCategoryFieldNames", FieldProductConstants.FIELD_CATEGORY_NAMES
 	).put(
-		"syncedContactFieldNames", FieldPeopleConstants.FIELD_CONTACT_NAMES
+		"syncedContactFieldNames", FieldPeopleConstants.FIELD_CONTACT_DEFAULTS
 	).put(
 		"syncedOrderFieldNames", FieldOrderConstants.FIELD_ORDER_NAMES
 	).put(
@@ -418,7 +418,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	).put(
 		"syncedProductFieldNames", FieldProductConstants.FIELD_PRODUCT_NAMES
 	).put(
-		"syncedUserFieldNames", FieldPeopleConstants.FIELD_USER_NAMES
+		"syncedUserFieldNames", FieldPeopleConstants.FILED_USER_DEFAULTS
 	).build();
 
 	private long _commerceChannelClassNameId;

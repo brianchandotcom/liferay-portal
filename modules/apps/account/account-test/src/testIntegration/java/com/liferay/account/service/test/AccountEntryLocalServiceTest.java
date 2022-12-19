@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -367,22 +366,15 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testAddAccountEntryWithWorkflowEnabled() throws Exception {
-		String originalName = PrincipalThreadLocal.getName();
+		_enableWorkflow();
 
-		try {
-			_enableWorkflow();
+		User user = UserTestUtil.addUser();
 
-			User user = UserTestUtil.addUser();
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withOwner(user));
 
-			AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-				AccountEntryArgs.withOwner(user));
-
-			_assertStatus(accountEntry, WorkflowConstants.STATUS_PENDING, user);
-			Assert.assertTrue(_hasWorkflowInstance(accountEntry));
-		}
-		finally {
-			PrincipalThreadLocal.setName(originalName);
-		}
+		_assertStatus(accountEntry, WorkflowConstants.STATUS_PENDING, user);
+		Assert.assertTrue(_hasWorkflowInstance(accountEntry));
 	}
 
 	@Test

@@ -1,0 +1,69 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+
+    @description = "Story: LRAC-10871 | Automation ID: LRAC-12518 | Test Summary: Disconnect the connection between AC and DXP from the DXP side"
+	@priority = "5"
+	test DisconnectACAndDXPFromDXPSide {
+        task ("Connect AC and DXP") {
+            ACDXPSettings.connectAnalyticsCloud();
+
+            Refresh();
+        }
+
+        task ("Disconnect AC from DXP side") {
+            ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+        }
+
+        task ("Assert the disconnection success message") {
+			Alert.viewSuccessMessageText(successMessage = "Success:Workspace disconnected.");            
+        }
+
+		task("See that the connection screen returned to the wizard") {
+			AssertElementPresent(locator1 = "ACUtils#GENERIC_TEXT", key_textValue = "Connect Analytics Cloud");
+		}
+
+		task("See that there is no token in the field") {
+			AssertElementPresent(locator1 = "ACDXPSettings#TOKEN_INPUT_EMPTY_FIELD");
+		}
+
+		task("See that the connection button is disabled") {
+			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
+		}
+
+    }
+}
+

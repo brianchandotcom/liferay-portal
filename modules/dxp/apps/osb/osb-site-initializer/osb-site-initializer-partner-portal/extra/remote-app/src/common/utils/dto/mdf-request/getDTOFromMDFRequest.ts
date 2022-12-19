@@ -26,16 +26,16 @@ export function getDTOFromMDFRequest(
 		country: mdfRequest.country,
 		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCodeSF,
-		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
+		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.join(
 			'; '
 		),
 		liferaysUserIdSF: Number(Liferay.ThemeDisplay.getUserId()),
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		overallCampaignName: mdfRequest.overallCampaignName,
-		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
+		r_accountToMDFRequests_accountEntryId: mdfRequest.company?.id,
 		r_userToMDFRequests_userId: Number(Liferay.ThemeDisplay.getUserId()),
 		requestStatus: mdfRequest.requestStatus,
-		targetAudienceRoles: mdfRequest.targetAudienceRoles.join('; '),
-		targetMarkets: mdfRequest.targetMarkets.join('; '),
+		targetAudienceRoles: mdfRequest.targetAudienceRoles?.join('; '),
+		targetMarkets: mdfRequest.targetMarkets?.join('; '),
 	};
 }

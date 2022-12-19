@@ -16,7 +16,7 @@ import {ResourceName} from '../../../common/services/liferay/object/enum/resourc
 
 export default async function createMDFRequestActivitiesProxyAPI(
 	mdfRequestActivity: MDFRequestActivity,
-	company: LiferayAccountBrief,
+	company?: LiferayAccountBrief,
 	mdfRequestId?: number,
 	mdFRequestExternalReferenceCodeSF?: string
 ) {

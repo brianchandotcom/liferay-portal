@@ -17,7 +17,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	activityPromotion: string;
 	ad: string;
 	assetsLiferayRequired: string;
-	budgets: MDFRequestBudget[];
+	budgets?: MDFRequestBudget[];
 	description: string;
 	detailsLeadFollowUp: string;
 	endDate?: Date;
@@ -26,7 +26,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	hiringOutsideWriterOrAgency: string;
 	howLiferayBrandUsed: string;
 	keywordsForPPCCampaigns: string;
-	leadFollowUpStrategies: string[];
+	leadFollowUpStrategies?: string[];
 	leadGenerated: string;
 	liferayBranding: string;
 	liferayParticipationRequirements: string;

@@ -21,9 +21,9 @@ interface DateActivities {
 }
 
 export default function getSummaryActivities(
-	mdfRequestActivities: MDFRequestActivity[]
+	mdfRequestActivities?: MDFRequestActivity[]
 ) {
-	if (mdfRequestActivities.length) {
+	if (mdfRequestActivities?.length) {
 		const datesActivities = mdfRequestActivities.reduce<DateActivities>(
 			(previousValue, currentValue) => {
 				const endDateAccumulator = previousValue.endDates;

@@ -15,7 +15,7 @@ import MDFRequestActivity from '../../../interfaces/mdfRequestActivity';
 
 export default function getDTOFromMDFRequestActivity(
 	mdfRequestActivity: MDFRequestActivity,
-	company: LiferayAccountBrief,
+	company?: LiferayAccountBrief,
 	mdfRequestId?: number,
 	mdfRequestExternalReferenceCodeSF?: string,
 	externalReferenceCodeSF?: string
@@ -34,7 +34,7 @@ export default function getDTOFromMDFRequestActivity(
 			mdfRequestActivity.hiringOutsideWriterOrAgency,
 		howLiferayBrandUsed: mdfRequestActivity.howLiferayBrandUsed,
 		keywordsForPPCCampaigns: mdfRequestActivity.keywordsForPPCCampaigns,
-		leadFollowUpStrategies: mdfRequestActivity.leadFollowUpStrategies.join(
+		leadFollowUpStrategies: mdfRequestActivity.leadFollowUpStrategies?.join(
 			', '
 		),
 		leadGenerated: mdfRequestActivity.leadGenerated,
@@ -48,7 +48,7 @@ export default function getDTOFromMDFRequestActivity(
 		name: mdfRequestActivity.name,
 		overallMessageContentCTA: mdfRequestActivity.overallMessageContentCTA,
 		primaryThemeOrMessage: mdfRequestActivity.primaryThemeOrMessage,
-		r_accountToActivities_accountEntryId: company.id,
+		r_accountToActivities_accountEntryId: company?.id,
 		r_mdfRequestToActivities_c_mdfRequestId: mdfRequestId,
 		sourceAndSizeOfInviteeList:
 			mdfRequestActivity.sourceAndSizeOfInviteeList,

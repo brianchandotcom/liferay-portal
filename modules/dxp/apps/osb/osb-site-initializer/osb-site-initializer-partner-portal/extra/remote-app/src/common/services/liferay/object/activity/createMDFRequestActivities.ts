@@ -20,7 +20,7 @@ import {ResourceName} from '../enum/resourceName';
 export default async function createMDFRequestActivities(
 	apiOption: ResourceName,
 	mdfRequestActivity: MDFRequestActivity,
-	company: LiferayAccountBrief,
+	company?: LiferayAccountBrief,
 	mdfRequestId?: number,
 	mdfRequestExternalReferenceCodeSF?: string,
 	externalReferenceCodeSF?: string

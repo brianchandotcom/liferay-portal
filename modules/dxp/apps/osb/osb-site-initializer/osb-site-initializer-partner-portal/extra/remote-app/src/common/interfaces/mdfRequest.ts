@@ -17,18 +17,18 @@ import MDFRequestActivity from './mdfRequestActivity';
 
 export default interface MDFRequest extends Partial<LiferayObject> {
 	accountExternalReferenceCodeSF?: string;
-	activities: MDFRequestActivity[];
+	activities?: MDFRequestActivity[];
 	additionalOption: LiferayPicklist;
-	company: LiferayAccountBrief;
+	company?: LiferayAccountBrief;
 	country: LiferayPicklist;
-	liferayBusinessSalesGoals: string[];
+	liferayBusinessSalesGoals?: string[];
 	maxDateActivity?: Date;
 	minDateActivity?: Date;
 	overallCampaignDescription: string;
 	overallCampaignName: string;
 	requestStatus?: Status;
-	targetAudienceRoles: string[];
-	targetMarkets: string[];
+	targetAudienceRoles?: string[];
+	targetMarkets?: string[];
 	totalCostOfExpense?: number;
 	totalMDFRequestAmount?: number;
 	totalRequested?: number;

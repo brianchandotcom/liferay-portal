@@ -20,7 +20,7 @@ import {
 	Input,
 	SidebarCategory,
 } from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {ActionError} from '../..';
 import PredefinedValuesTable from '../../PredefinedValuesTable';
@@ -88,73 +88,80 @@ export function ActionContainer({
 		);
 	};
 
-	const updateParameters = async (value: string) => {
-		const [externalReferenceCode, definitionIdValue] = value.split(',');
+	const updateParameters = useCallback(
+		async (value: string) => {
+			const [externalReferenceCode, definitionIdValue] = value.split(',');
 
-		const definitionId = Number(definitionIdValue);
+			const definitionId = Number(definitionIdValue);
 
-		const object = relationships.find(
-			(relationship) =>
-				relationship.externalReferenceCode === externalReferenceCode
-		);
+			const object = relationships.find(
+				(relationship) =>
+					relationship.externalReferenceCode === externalReferenceCode
+			);
 
-		const parameters: ObjectActionParameters = {
-			objectDefinitionExternalReferenceCode: externalReferenceCode,
-			objectDefinitionId: definitionId,
-			predefinedValues: [],
-		};
+			const parameters: ObjectActionParameters = {
+				objectDefinitionExternalReferenceCode: externalReferenceCode,
+				objectDefinitionId: definitionId,
+				predefinedValues: [],
+			};
 
-		if (object?.related) {
-			parameters.relatedObjectEntries = false;
-		}
-		const items = await API.getObjectFieldsByExternalReferenceCode(
-			externalReferenceCode
-		);
-
-		const validFields: ObjectField[] = [];
-
-		items.forEach((field) => {
-			if (isValidField(field)) {
-				validFields.push(field);
-
-				if (
-					field.required &&
-					values.objectActionExecutorKey === 'add-object-entry'
-				) {
-					(parameters.predefinedValues as PredefinedValue[]).push({
-						inputAsValue: false,
-						label: field.label,
-						name: field.name,
-						value: '',
-					});
-				}
+			if (object?.related) {
+				parameters.relatedObjectEntries = false;
 			}
-		});
+			const items = await API.getObjectFieldsByExternalReferenceCode(
+				externalReferenceCode
+			);
 
-		setCurrentObjectDefinitionFields(validFields);
+			const validFields: ObjectField[] = [];
 
-		const normalizedParameters = {...values.parameters};
+			items.forEach((field) => {
+				if (isValidField(field)) {
+					validFields.push(field);
 
-		delete normalizedParameters.relatedObjectEntries;
+					if (
+						field.required &&
+						values.objectActionExecutorKey === 'add-object-entry'
+					) {
+						(parameters.predefinedValues as PredefinedValue[]).push(
+							{
+								inputAsValue: false,
+								label: field.label,
+								name: field.name,
+								value: '',
+							}
+						);
+					}
+				}
+			});
 
-		setValues({
-			parameters: {
-				...normalizedParameters,
-				...(values.objectActionExecutorKey === 'add-object-entry' && {
-					...parameters,
-				}),
-			},
-		});
+			setCurrentObjectDefinitionFields(validFields);
 
-		setWarningAlerts((previousWarnings) => ({
-			...previousWarnings,
-			mandatoryRelationships: items.some(
-				(field) =>
-					field.businessType === 'Relationship' &&
-					field.required === true
-			),
-		}));
-	};
+			const normalizedParameters = {...values.parameters};
+
+			delete normalizedParameters.relatedObjectEntries;
+
+			setValues({
+				parameters: {
+					...normalizedParameters,
+					...(values.objectActionExecutorKey ===
+						'add-object-entry' && {
+						...parameters,
+					}),
+				},
+			});
+
+			setWarningAlerts((previousWarnings) => ({
+				...previousWarnings,
+				mandatoryRelationships: items.some(
+					(field) =>
+						field.businessType === 'Relationship' &&
+						field.required === true
+				),
+			}));
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[relationships, values.objectActionExecutorKey, values.parameters]
+	);
 
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'update-object-entry') {

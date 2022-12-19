@@ -12,9 +12,9 @@
  * details.
  */
 
-import {ActionError} from '../..';
 import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 import React from 'react';
+import {ActionError} from '../..';
 import {WarningStates} from '../ActionBuilder';
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];

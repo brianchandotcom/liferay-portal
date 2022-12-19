@@ -113,6 +113,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTIVE_VIEW_ENTRY_INFO</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_entryTitle}')]//span[contains(@class,'text-default')][contains(normalize-space(),'${key_infoText}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

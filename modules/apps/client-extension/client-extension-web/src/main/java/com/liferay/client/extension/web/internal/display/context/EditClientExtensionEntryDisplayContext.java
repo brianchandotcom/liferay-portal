@@ -88,6 +88,10 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 		return CETLabelUtil.getHelpLabel(themeDisplay.getLocale(), getType());
 	}
 
+	public String getLearnResourceKey() {
+		return CETLabelUtil.getLearnResourceKey(getType());
+	}
+
 	public String getName() {
 		return BeanParamUtil.getString(
 			_clientExtensionEntry, _portletRequest, "name");

@@ -85,6 +85,11 @@
 	<td>//*[contains(@class, 'modal-content')]//*[text()='${key_text}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TEXT</td>
+	<td>//*[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

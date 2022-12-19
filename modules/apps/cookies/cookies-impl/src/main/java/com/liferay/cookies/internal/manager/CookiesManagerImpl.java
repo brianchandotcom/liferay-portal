@@ -54,7 +54,12 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration",
 	property = {
 		"cookies.functional=" + CookiesConstants.NAME_GUEST_LANGUAGE_ID,
-		"cookies.necessary=" + CookiesConstants.NAME_COOKIE_SUPPORT
+		"cookies.necessary=" + CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+		"cookies.necessary=" + CookiesConstants.NAME_CONSENT_TYPE_NECESSARY,
+		"cookies.necessary=" + CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+		"cookies.necessary=" + CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
+		"cookies.necessary=" + CookiesConstants.NAME_COOKIE_SUPPORT,
+		"cookies.necessary=" + CookiesConstants.NAME_USER_CONSENT_CONFIGURED
 	},
 	service = CookiesManager.class
 )

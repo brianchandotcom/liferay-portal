@@ -284,8 +284,14 @@ export default function () {
 
 	const [loading, setLoading] = useState(true);
 
+	const findRequestIdUrl = (paramsUrl) => {
+		const splitParamsUrl = paramsUrl.split('?');
+
+		return splitParamsUrl[0];
+	};
+
 	const currentPath = Liferay.currentURL.split('/');
-	const mdfRequestId = +currentPath.at(-1);
+	const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 
 	useEffect(() => {
 		const getActivities = async () => {
@@ -314,7 +320,7 @@ export default function () {
 			});
 		};
 
-		if (mdfRequestId) {
+		if (!isNaN(mdfRequestId)) {
 			getActivities();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

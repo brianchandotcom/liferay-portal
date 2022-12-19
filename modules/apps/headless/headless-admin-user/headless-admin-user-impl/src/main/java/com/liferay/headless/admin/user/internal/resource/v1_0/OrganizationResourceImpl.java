@@ -726,33 +726,33 @@ public class OrganizationResourceImpl
 		OrganizationContactInformation organizationContactInformation =
 			organization.getOrganizationContactInformation();
 
-		if (organizationContactInformation != null) {
-			Phone[] telephones = organizationContactInformation.getTelephones();
-
-			if (telephones != null) {
-				return ListUtil.filter(
-					transformToList(
-						telephones,
-						telephone ->
-							ServiceBuilderPhoneUtil.toServiceBuilderPhone(
-								telephone,
-								ListTypeConstants.ORGANIZATION_PHONE)),
-					Objects::nonNull);
-			}
+		if (organizationContactInformation == null) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		Phone[] telephones = organizationContactInformation.getTelephones();
+
+		if (telephones == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				telephones,
+				telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
+					telephone, ListTypeConstants.ORGANIZATION_PHONE)),
+			Objects::nonNull);
 	}
 
 	private long _getRegionId(Organization organization, long countryId) {
 		Location location = organization.getLocation();
 
-		if (location != null) {
-			return ServiceBuilderRegionUtil.getServiceBuilderRegionId(
-				location.getAddressRegion(), countryId);
+		if (location == null) {
+			return 0;
 		}
 
-		return 0;
+		return ServiceBuilderRegionUtil.getServiceBuilderRegionId(
+			location.getAddressRegion(), countryId);
 	}
 
 	private long _getServiceBuilderOrganizationId(String organizationId)
@@ -777,22 +777,22 @@ public class OrganizationResourceImpl
 		OrganizationContactInformation organizationContactInformation =
 			organization.getOrganizationContactInformation();
 
-		if (organizationContactInformation != null) {
-			WebUrl[] webUrls = organizationContactInformation.getWebUrls();
-
-			if (webUrls != null) {
-				return ListUtil.filter(
-					transformToList(
-						webUrls,
-						webUrl ->
-							ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
-								ListTypeConstants.ORGANIZATION_WEBSITE,
-								webUrl)),
-					Objects::nonNull);
-			}
+		if (organizationContactInformation == null) {
+			return Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		WebUrl[] webUrls = organizationContactInformation.getWebUrls();
+
+		if (webUrls == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				webUrls,
+				webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+					ListTypeConstants.ORGANIZATION_WEBSITE, webUrl)),
+			Objects::nonNull);
 	}
 
 	private Organization _toOrganization(String organizationId)

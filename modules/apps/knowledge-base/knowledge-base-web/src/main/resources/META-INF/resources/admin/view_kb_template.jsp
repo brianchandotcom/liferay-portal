@@ -46,7 +46,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<c:if test="<%= portletTitleBasedNavigation %>">
+<c:if test='<%= portletTitleBasedNavigation && GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) %>'>
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
 			<ul class="justify-content-end navbar-nav navbar-nav-expand">

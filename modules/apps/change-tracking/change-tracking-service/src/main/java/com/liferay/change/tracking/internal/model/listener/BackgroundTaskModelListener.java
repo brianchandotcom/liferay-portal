@@ -49,6 +49,12 @@ public class BackgroundTaskModelListener
 			 (backgroundTask.getStatus() ==
 				 BackgroundTaskConstants.STATUS_FAILED))) {
 
+			String name = backgroundTask.getName();
+
+			if (name.contains("_")) {
+				return;
+			}
+
 			CTCollection ctCollection =
 				_ctCollectionLocalService.fetchCTCollection(
 					Long.valueOf(backgroundTask.getName()));

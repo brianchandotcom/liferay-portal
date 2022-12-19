@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTProcess;
@@ -51,10 +52,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 
-	@Override
 	public List<CTProcess> getCTProcesses(
-			long companyId, long userId, String keywords, int status, int start,
-			int end, OrderByComparator<CTProcess> orderByComparator)
+			long companyId, long userId, String keywords, int status, int type,
+			int start, int end, OrderByComparator<CTProcess> orderByComparator)
 		throws PortalException {
 
 		_portletPermission.check(
@@ -74,7 +74,7 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 			BackgroundTaskTable.INSTANCE.backgroundTaskId.eq(
 				CTProcessTable.INSTANCE.backgroundTaskId)
 		).where(
-			_getPredicate(companyId, keywords, status, userId)
+			_getPredicate(companyId, keywords, status, type, userId)
 		).orderBy(
 			orderByStep -> {
 				if (orderByComparator != null) {
@@ -100,8 +100,28 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 	}
 
 	@Override
+	public List<CTProcess> getCTProcesses(
+			long companyId, long userId, String keywords, int status, int start,
+			int end, OrderByComparator<CTProcess> orderByComparator)
+		throws PortalException {
+
+		return getCTProcesses(
+			companyId, userId, keywords, status, CTConstants.CT_PROCESS_PUBLISH,
+			start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCTProcessesCount(
 		long companyId, long userId, String keywords, int status) {
+
+		return getCTProcessesCount(
+			companyId, userId, keywords, status,
+			CTConstants.CT_PROCESS_PUBLISH);
+	}
+
+	@Override
+	public int getCTProcessesCount(
+		long companyId, long userId, String keywords, int status, int type) {
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
 		).from(
@@ -115,29 +135,37 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 			BackgroundTaskTable.INSTANCE.backgroundTaskId.eq(
 				CTProcessTable.INSTANCE.backgroundTaskId)
 		).where(
-			_getPredicate(companyId, keywords, status, userId)
+			_getPredicate(companyId, keywords, status, type, userId)
 		);
 
 		return ctProcessPersistence.dslQueryCount(dslQuery);
 	}
 
 	private Predicate _getPredicate(
-		long companyId, String keywords, int status, long userId) {
+		long companyId, String keywords, int status, int type, long userId) {
 
 		Predicate predicate = CTProcessTable.INSTANCE.companyId.eq(
 			companyId
 		).and(
 			() -> {
-				if (userId > 0) {
-					return CTProcessTable.INSTANCE.userId.eq(userId);
+				if (status != WorkflowConstants.STATUS_ANY) {
+					return BackgroundTaskTable.INSTANCE.status.eq(status);
 				}
 
 				return null;
 			}
 		).and(
 			() -> {
-				if (status != WorkflowConstants.STATUS_ANY) {
-					return BackgroundTaskTable.INSTANCE.status.eq(status);
+				if (type > -1) {
+					return CTProcessTable.INSTANCE.type.eq(type);
+				}
+
+				return null;
+			}
+		).and(
+			() -> {
+				if (userId > 0) {
+					return CTProcessTable.INSTANCE.userId.eq(userId);
 				}
 
 				return null;

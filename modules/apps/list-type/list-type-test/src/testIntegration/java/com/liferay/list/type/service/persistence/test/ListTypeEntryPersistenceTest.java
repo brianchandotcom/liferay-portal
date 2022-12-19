@@ -128,6 +128,9 @@ public class ListTypeEntryPersistenceTest {
 
 		newListTypeEntry.setUuid(RandomTestUtil.randomString());
 
+		newListTypeEntry.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newListTypeEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newListTypeEntry.setUserId(RandomTestUtil.nextLong());
@@ -156,6 +159,9 @@ public class ListTypeEntryPersistenceTest {
 			newListTypeEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingListTypeEntry.getUuid(), newListTypeEntry.getUuid());
+		Assert.assertEquals(
+			existingListTypeEntry.getExternalReferenceCode(),
+			newListTypeEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingListTypeEntry.getListTypeEntryId(),
 			newListTypeEntry.getListTypeEntryId());
@@ -232,6 +238,16 @@ public class ListTypeEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C_LTDI() throws Exception {
+		_persistence.countByERC_C_LTDI(
+			"", RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C_LTDI("null", 0L, 0L);
+
+		_persistence.countByERC_C_LTDI((String)null, 0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ListTypeEntry newListTypeEntry = addListTypeEntry();
 
@@ -257,10 +273,10 @@ public class ListTypeEntryPersistenceTest {
 	protected OrderByComparator<ListTypeEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"ListTypeEntry", "mvccVersion", true, "uuid", true,
-			"listTypeEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"listTypeDefinitionId", true, "key", true, "name", true, "type",
-			true);
+			"externalReferenceCode", true, "listTypeEntryId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "listTypeDefinitionId", true, "key", true,
+			"name", true, "type", true);
 	}
 
 	@Test
@@ -537,6 +553,22 @@ public class ListTypeEntryPersistenceTest {
 			ReflectionTestUtil.invoke(
 				listTypeEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "key_"));
+
+		Assert.assertEquals(
+			listTypeEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				listTypeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(listTypeEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				listTypeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			Long.valueOf(listTypeEntry.getListTypeDefinitionId()),
+			ReflectionTestUtil.<Long>invoke(
+				listTypeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "listTypeDefinitionId"));
 	}
 
 	protected ListTypeEntry addListTypeEntry() throws Exception {
@@ -547,6 +579,8 @@ public class ListTypeEntryPersistenceTest {
 		listTypeEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		listTypeEntry.setUuid(RandomTestUtil.randomString());
+
+		listTypeEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		listTypeEntry.setCompanyId(RandomTestUtil.nextLong());
 

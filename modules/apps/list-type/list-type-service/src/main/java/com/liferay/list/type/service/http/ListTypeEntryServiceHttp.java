@@ -51,7 +51,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class ListTypeEntryServiceHttp {
 
 	public static com.liferay.list.type.model.ListTypeEntry addListTypeEntry(
-			HttpPrincipal httpPrincipal, long listTypeDefinitionId, String key,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long listTypeDefinitionId, String key,
 			java.util.Map<java.util.Locale, String> nameMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -61,7 +62,8 @@ public class ListTypeEntryServiceHttp {
 				_addListTypeEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, listTypeDefinitionId, key, nameMap);
+				methodKey, externalReferenceCode, listTypeDefinitionId, key,
+				nameMap);
 
 			Object returnObj = null;
 
@@ -255,7 +257,8 @@ public class ListTypeEntryServiceHttp {
 	}
 
 	public static com.liferay.list.type.model.ListTypeEntry updateListTypeEntry(
-			HttpPrincipal httpPrincipal, long listTypeEntryId,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long listTypeEntryId,
 			java.util.Map<java.util.Locale, String> nameMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -265,7 +268,7 @@ public class ListTypeEntryServiceHttp {
 				_updateListTypeEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, listTypeEntryId, nameMap);
+				methodKey, externalReferenceCode, listTypeEntryId, nameMap);
 
 			Object returnObj = null;
 
@@ -299,7 +302,9 @@ public class ListTypeEntryServiceHttp {
 		ListTypeEntryServiceHttp.class);
 
 	private static final Class<?>[] _addListTypeEntryParameterTypes0 =
-		new Class[] {long.class, String.class, java.util.Map.class};
+		new Class[] {
+			String.class, long.class, String.class, java.util.Map.class
+		};
 	private static final Class<?>[] _deleteListTypeEntryParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getListTypeEntriesParameterTypes2 =
@@ -309,6 +314,6 @@ public class ListTypeEntryServiceHttp {
 	private static final Class<?>[] _getListTypeEntryParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateListTypeEntryParameterTypes5 =
-		new Class[] {long.class, java.util.Map.class};
+		new Class[] {String.class, long.class, java.util.Map.class};
 
 }

@@ -262,7 +262,7 @@
 		<finder name="SamlSpSessionKey" return-type="SamlSpSession" unique="true">
 			<finder-column name="samlSpSessionKey" />
 		</finder>
-		<finder name="C_SI" return-type="SamlSpSession">
+		<finder name="C_SI" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="sessionIndex" />
 		</finder>

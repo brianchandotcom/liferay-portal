@@ -121,8 +121,6 @@ definition {
 
 		LAR.importPortlet(larFileName = "DM_Test_DB_Store.lar");
 
-		Navigator.openURL();
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name-1");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");

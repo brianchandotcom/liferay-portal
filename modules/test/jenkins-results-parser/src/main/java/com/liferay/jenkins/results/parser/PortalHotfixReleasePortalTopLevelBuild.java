@@ -318,7 +318,37 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername)) {
 
-			return null;
+			String patcherPortalVersion = getParameterValue(
+				"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(patcherPortalVersion)) {
+				return null;
+			}
+
+			Matcher patcherPortalVersion74Matcher =
+				_patcherPortalVersion74Pattern.matcher(patcherPortalVersion);
+
+			if (!patcherPortalVersion74Matcher.find()) {
+				return null;
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(patcherPortalVersion74Matcher.group("majorVersion"));
+			sb.append(".");
+			sb.append(patcherPortalVersion74Matcher.group("minorVersion"));
+			sb.append(".");
+			sb.append(patcherPortalVersion74Matcher.group("fixVersion"));
+
+			String updateVersion = patcherPortalVersion74Matcher.group(
+				"updateVersion");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(updateVersion)) {
+				sb.append(updateVersion);
+			}
+
+			portalBranchUsername = "liferay";
+			portalBranchName = sb.toString();
 		}
 
 		String branchName = getBranchName();

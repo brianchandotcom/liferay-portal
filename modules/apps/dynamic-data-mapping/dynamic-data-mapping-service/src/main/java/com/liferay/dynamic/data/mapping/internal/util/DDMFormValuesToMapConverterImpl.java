@@ -120,17 +120,17 @@ public class DDMFormValuesToMapConverterImpl
 		Map<String, DDMFormField> ddmFormFieldsMap,
 		DDMFormFieldValue ddmFormFieldValue, Map<String, Object> values) {
 
-		Map<String, Object> fieldInstanceValue =
-			(Map<String, Object>)values.computeIfAbsent(
-				_getDDMFormFieldValueInstanceKey(ddmFormFieldValue),
-				k -> new LinkedHashMap<>());
-
 		DDMFormField ddmFormField = ddmFormFieldsMap.get(
 			ddmFormFieldValue.getName());
 
 		if (ddmFormField == null) {
 			return;
 		}
+
+		Map<String, Object> fieldInstanceValue =
+			(Map<String, Object>)values.computeIfAbsent(
+				_getDDMFormFieldValueInstanceKey(ddmFormFieldValue),
+				k -> new LinkedHashMap<>());
 
 		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
 			_addValue(ddmFormField, ddmFormFieldValue, fieldInstanceValue);

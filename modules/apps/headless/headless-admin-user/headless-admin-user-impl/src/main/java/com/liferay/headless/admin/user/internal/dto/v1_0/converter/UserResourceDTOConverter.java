@@ -51,8 +51,8 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -158,11 +158,11 @@ public class UserResourceDTOConverter
 						dtoConverterContext, organization, user),
 					OrganizationBrief.class);
 				roleBriefs = TransformUtil.transformToArray(
-					_roleService.getUserRoles(user.getUserId()),
+					_roleLocalService.getUserRoles(user.getUserId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
 					RoleBrief.class);
 				siteBriefs = TransformUtil.transformToArray(
-					_groupService.getGroups(
+					_groupLocalService.getGroups(
 						user.getCompanyId(),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),
 					group -> _toSiteBrief(dtoConverterContext, group),
@@ -289,7 +289,7 @@ public class UserResourceDTOConverter
 				id = organization.getOrganizationId();
 				name = organization.getName();
 				roleBriefs = TransformUtil.transformToArray(
-					_roleService.getUserGroupRoles(
+					_roleLocalService.getUserGroupRoles(
 						user.getUserId(), organization.getGroupId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
 					RoleBrief.class);
@@ -373,13 +373,13 @@ public class UserResourceDTOConverter
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
-	private GroupService _groupService;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;
 
 	@Reference
-	private RoleService _roleService;
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

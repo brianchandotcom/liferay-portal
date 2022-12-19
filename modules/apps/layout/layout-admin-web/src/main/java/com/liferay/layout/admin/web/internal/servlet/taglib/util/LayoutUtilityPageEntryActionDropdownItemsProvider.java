@@ -119,6 +119,14 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 							_themeDisplay.getPermissionChecker(),
 							_layoutUtilityPageEntry, ActionKeys.UPDATE),
 						_getUpdateLayoutUtilityPageEntryPreviewActionUnsafeConsumer()
+					).add(
+						() ->
+							LayoutUtilityPageEntryPermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								_layoutUtilityPageEntry, ActionKeys.UPDATE) &&
+							(_layoutUtilityPageEntry.getPreviewFileEntryId() >
+								0),
+						_getDeleteLayoutUtilityPageEntryPreviewActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -224,6 +232,33 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteLayoutUtilityPageEntryPreviewActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData(
+				"action", "deleteLayoutUtilityPageEntryPreview");
+			dropdownItem.putData(
+				"deleteLayoutUtilityPageEntryPreviewURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/layout_admin/delete_layout_utility_page_entry_preview"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutUtilityPageEntryId",
+					_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()
+				).buildString());
+			dropdownItem.putData(
+				"layoutUtilityPageEntryId",
+				String.valueOf(
+					_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
 		};
 	}
 

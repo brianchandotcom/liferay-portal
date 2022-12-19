@@ -43,7 +43,6 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWrite
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * @author Michael C. Han
@@ -154,11 +153,14 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			return;
 		}
 
-		Optional<BaseModel<?>> baseModelOptional =
-			_baseModelRetriever.fetchBaseModel(
-				_modelSearchSettings.getClassName(), classPK);
+		BaseModel<?> baseModel = _baseModelRetriever.fetchBaseModel(
+			_modelSearchSettings.getClassName(), classPK);
 
-		baseModelOptional.ifPresent(baseModel -> reindex((T)baseModel));
+		if (baseModel == null) {
+			return;
+		}
+
+		reindex((T)baseModel);
 	}
 
 	@Override

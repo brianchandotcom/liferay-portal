@@ -184,6 +184,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setLabel(externalReferenceCode);
 		objectDefinition.setName(externalReferenceCode);
 		objectDefinition.setPluralLabel(externalReferenceCode);
+		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 		objectDefinition.setStorageType(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
 		objectDefinition.setSystem(false);

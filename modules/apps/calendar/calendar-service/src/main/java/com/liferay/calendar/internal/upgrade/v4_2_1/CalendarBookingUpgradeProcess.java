@@ -45,8 +45,8 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 					SQLTransformer.transform(
 						StringBundler.concat(
 							"select calendarBookingId, startTime, endTime, ",
-							"userId from CalendarBooking where allDay = ",
-							"[$TRUE$]")));
+							"userId, companyId from CalendarBooking where ",
+							"allDay = [$TRUE$]")));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -62,8 +62,14 @@ public class CalendarBookingUpgradeProcess extends UpgradeProcess {
 					continue;
 				}
 
-				User user = _userLocalService.getUser(
+				User user = _userLocalService.fetchUser(
 					resultSet.getLong("userId"));
+
+				if (user == null) {
+					long companyId = resultSet.getLong("companyId");
+
+					user = _userLocalService.getDefaultUser(companyId);
+				}
 
 				Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
 					startTime, user.getTimeZone());

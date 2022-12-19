@@ -16,6 +16,7 @@ package com.liferay.asset.info.internal.item;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -25,9 +26,9 @@ import com.liferay.info.localized.InfoLocalizedValue;
  */
 public class AssetEntryInfoItemFields {
 
-	public static final InfoField<TextInfoFieldType> createDateInfoField =
+	public static final InfoField<DateInfoFieldType> createDateInfoField =
 		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
+			DateInfoFieldType.INSTANCE
 		).name(
 			"createDate"
 		).labelInfoLocalizedValue(
@@ -52,18 +53,18 @@ public class AssetEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				AssetEntryInfoItemFields.class, "display-page-url")
 		).build();
-	public static final InfoField<TextInfoFieldType> expirationDateInfoField =
+	public static final InfoField<DateInfoFieldType> expirationDateInfoField =
 		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
+			DateInfoFieldType.INSTANCE
 		).name(
 			"expirationDate"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				AssetEntryInfoItemFields.class, "expiration-date")
 		).build();
-	public static final InfoField<TextInfoFieldType> modifiedDateInfoField =
+	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
 		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
+			DateInfoFieldType.INSTANCE
 		).name(
 			"modifiedDate"
 		).labelInfoLocalizedValue(

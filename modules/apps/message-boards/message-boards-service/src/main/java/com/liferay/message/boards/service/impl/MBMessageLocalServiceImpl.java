@@ -1472,56 +1472,55 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessageTable aliasMBMessageTable1 = MBMessageTable.INSTANCE.as(
 			"aliasMBMessageTable1");
-		MBMessageTable aliasMBMessageTable2 = MBMessageTable.INSTANCE.as(
-			"aliasMBMessageTable2");
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-			aliasMBMessageTable1
+			MBMessageTable.INSTANCE
 		).from(
-			aliasMBMessageTable1
+			MBMessageTable.INSTANCE
 		).where(
-			aliasMBMessageTable1.modifiedDate.in(
+			MBMessageTable.INSTANCE.modifiedDate.in(
 				DSLQueryFactoryUtil.select(
 					DSLFunctionFactoryUtil.max(
-						aliasMBMessageTable1.modifiedDate)
+						MBMessageTable.INSTANCE.modifiedDate)
 				).from(
-					aliasMBMessageTable2
+					aliasMBMessageTable1
 				).where(
-					aliasMBMessageTable1.rootMessageId.eq(
-						aliasMBMessageTable1.parentMessageId
+					MBMessageTable.INSTANCE.rootMessageId.eq(
+						MBMessageTable.INSTANCE.parentMessageId
 					).and(
-						aliasMBMessageTable1.groupId.eq(
+						MBMessageTable.INSTANCE.groupId.eq(
 							groupId
 						).and(
-							aliasMBMessageTable1.userId.eq(userId)
+							MBMessageTable.INSTANCE.userId.eq(userId)
 						)
 					).and(
-						aliasMBMessageTable1.categoryId.eq(aliasMBMessageTable2.categoryId)
+						MBMessageTable.INSTANCE.categoryId.eq(
+							aliasMBMessageTable1.categoryId)
 					)
 				)
 			).or(
-				aliasMBMessageTable1.parentMessageId.eq(
+				MBMessageTable.INSTANCE.parentMessageId.eq(
 					0L
 				).and(
-					aliasMBMessageTable1.rootMessageId.notIn(
+					MBMessageTable.INSTANCE.rootMessageId.notIn(
 						DSLQueryFactoryUtil.select(
-							aliasMBMessageTable1.parentMessageId
+							MBMessageTable.INSTANCE.parentMessageId
 						).from(
-							aliasMBMessageTable1
+							MBMessageTable.INSTANCE
 						).where(
-							aliasMBMessageTable1.rootMessageId.eq(
-								aliasMBMessageTable1.parentMessageId)
+							MBMessageTable.INSTANCE.rootMessageId.eq(
+								MBMessageTable.INSTANCE.parentMessageId)
 						))
 				).and(
-					aliasMBMessageTable1.groupId.eq(
+					MBMessageTable.INSTANCE.groupId.eq(
 						groupId
 					).and(
-						aliasMBMessageTable1.userId.eq(userId)
+						MBMessageTable.INSTANCE.userId.eq(userId)
 					)
 				)
 			)
 		).orderBy(
-			aliasMBMessageTable1.modifiedDate.descending()
+			MBMessageTable.INSTANCE.modifiedDate.descending()
 		).limit(
 			start, end
 		);
@@ -1535,54 +1534,54 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessageTable aliasMBMessageTable1 = MBMessageTable.INSTANCE.as(
 			"aliasMBMessageTable1");
-		MBMessageTable aliasMBMessageTable2 = MBMessageTable.INSTANCE.as(
-			"aliasMBMessageTable2");
 
 		return mbMessagePersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
-				aliasMBMessageTable1
+				MBMessageTable.INSTANCE
 			).where(
-				aliasMBMessageTable1.modifiedDate.in(
+				MBMessageTable.INSTANCE.modifiedDate.in(
 					DSLQueryFactoryUtil.select(
 						DSLFunctionFactoryUtil.max(
-							aliasMBMessageTable1.modifiedDate)
+							MBMessageTable.INSTANCE.modifiedDate)
 					).from(
-						aliasMBMessageTable2
+						aliasMBMessageTable1
 					).where(
-						aliasMBMessageTable1.rootMessageId.eq(
-							aliasMBMessageTable1.parentMessageId
+						MBMessageTable.INSTANCE.rootMessageId.eq(
+							MBMessageTable.INSTANCE.parentMessageId
 						).and(
-							aliasMBMessageTable1.groupId.eq(
+							MBMessageTable.INSTANCE.groupId.eq(
 								groupId
 							).and(
-								aliasMBMessageTable1.userId.eq(userId)
+								MBMessageTable.INSTANCE.userId.eq(userId)
 							)
 						).and(
-							aliasMBMessageTable1.categoryId.eq(aliasMBMessageTable2.categoryId)
+							MBMessageTable.INSTANCE.categoryId.eq(
+								aliasMBMessageTable1.categoryId)
 						)
 					)
 				).or(
-					aliasMBMessageTable1.parentMessageId.eq(
+					MBMessageTable.INSTANCE.parentMessageId.eq(
 						0L
 					).and(
-						aliasMBMessageTable1.rootMessageId.notIn(
+						MBMessageTable.INSTANCE.rootMessageId.notIn(
 							DSLQueryFactoryUtil.select(
-								aliasMBMessageTable1.parentMessageId
+								MBMessageTable.INSTANCE.parentMessageId
 							).from(
-								aliasMBMessageTable1
+								MBMessageTable.INSTANCE
 							).where(
-								aliasMBMessageTable1.rootMessageId.eq(
-									aliasMBMessageTable1.parentMessageId)
+								MBMessageTable.INSTANCE.rootMessageId.eq(
+									MBMessageTable.INSTANCE.parentMessageId)
 							))
 					).and(
-						aliasMBMessageTable1.groupId.eq(
+						MBMessageTable.INSTANCE.groupId.eq(
 							groupId
 						).and(
-							aliasMBMessageTable1.userId.eq(userId)
+							MBMessageTable.INSTANCE.userId.eq(userId)
 						)
 					)
-				)));
+				)
+			));
 	}
 
 	@Override

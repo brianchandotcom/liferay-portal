@@ -96,12 +96,18 @@ definition {
 			}
 
 			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
 		}
 
-		task ("Go to the second page and assert the last data source") {
+		task ("Go to the second page and assert the last data source and assert that the other data sources are not in this page") {
 			ACUtils.checkAnyPage(pageNumber = "2");
 
 			ACUtils.assertDataSourceName(dataSourceName = "${dataSource}");
+
+			ACUtils.assertItemsNameNotPresent(itemList = "${newDataSourceList}");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}
 	}
 

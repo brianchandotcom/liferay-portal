@@ -25,6 +25,63 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-170104."
+	@priority = "3"
+	test CanApproveContentPage {
+		task ("Add new Content Page and enable workflow for Content Pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				type = "content");
+
+			Workflow.openWorkflowProcessBuilderConfiguration();
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Content Page");
+		}
+
+		task ("Add a new Publication") {
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+		}
+
+		task ("Modify the Content Page and submit for approval") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			PortletEntry.submitForPublication();
+		}
+
+		task ("Approve modifications and assert that it is approved") {
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+			WorkflowAsset.gotoViaNotification(
+				assetType = "Content Page",
+				user = "Test Test");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+			Workflow.confirmWorkflowAction();
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+			Workflow.confirmWorkflowAction();
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+			AssertElementPresent(
+				key_submissionName = "Approved",
+				locator1 = "WorkflowSubmissions#SUBMISSION_BY_STATUS");
+		}
+	}
+
 	@description = "This is a use case for LPS-159649."
 	@priority = "4"
 	test CannotPublishPublicationWithPendingAssetEntries {

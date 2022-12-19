@@ -85,9 +85,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	public String getHelpLabel() {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		return LanguageUtil.get(
-			_getHttpServletRequest(),
-			CETLabelUtil.getHelpLabel(themeDisplay.getLocale(), getType()));
+		return CETLabelUtil.getHelpLabel(themeDisplay.getLocale(), getType());
 	}
 
 	public String getName() {
@@ -185,10 +183,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		if (_clientExtensionEntry == null) {
-			return LanguageUtil.get(
-				_getHttpServletRequest(),
-				CETLabelUtil.getNewLabel(
-					themeDisplay.getLocale(), _cet.getType()));
+			return CETLabelUtil.getNewLabel(themeDisplay.getLocale(), _cet.getType());
 		}
 
 		return _cet.getName(themeDisplay.getLocale());
@@ -202,9 +197,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	public String getTypeLabel() {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		return LanguageUtil.get(
-			_getHttpServletRequest(),
-			CETLabelUtil.getTypeLabel(themeDisplay.getLocale(), getType()));
+		return CETLabelUtil.getTypeLabel(themeDisplay.getLocale(), getType());
 	}
 
 	public boolean isNew() {

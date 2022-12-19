@@ -2173,6 +2173,22 @@ public class ObjectEntryLocalServiceImpl
 		Column<?, Long> column = (Column<?, Long>)table.getColumn(
 			objectField.getDBColumnName());
 
+		Table<OrganizationTable> tempOrganizationTable =
+			DSLQueryFactoryUtil.select(
+				OrganizationTable.INSTANCE.treePath
+			).from(
+				OrganizationTable.INSTANCE
+			).innerJoinON(
+				AccountEntryOrganizationRelTable.INSTANCE,
+				AccountEntryOrganizationRelTable.INSTANCE.organizationId.eq(
+					OrganizationTable.INSTANCE.organizationId)
+			).where(
+				AccountEntryOrganizationRelTable.INSTANCE.accountEntryId.eq(
+					column)
+			).as(
+				"tempOrganizationTable", OrganizationTable.INSTANCE
+			);
+
 		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
 			RoleTable.INSTANCE.roleId
 		).from(
@@ -2194,14 +2210,20 @@ public class ObjectEntryLocalServiceImpl
 					column
 				).or(
 					GroupTable.INSTANCE.classPK.in(
-						DSLQueryFactoryUtil.select(
-							AccountEntryOrganizationRelTable.INSTANCE.
-								organizationId
+						DSLQueryFactoryUtil.selectDistinct(
+							OrganizationTable.INSTANCE.organizationId
 						).from(
-							AccountEntryOrganizationRelTable.INSTANCE
-						).where(
-							AccountEntryOrganizationRelTable.INSTANCE.
-								accountEntryId.eq(column)
+							OrganizationTable.INSTANCE
+						).innerJoinON(
+							tempOrganizationTable,
+							tempOrganizationTable.getColumn(
+								"treePath", String.class
+							).like(
+								DSLFunctionFactoryUtil.concat(
+									new Scalar<>("%"),
+									OrganizationTable.INSTANCE.treePath,
+									new Scalar<>("%"))
+							)
 						))
 				).withParentheses()
 			)

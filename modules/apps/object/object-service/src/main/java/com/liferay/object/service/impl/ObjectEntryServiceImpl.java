@@ -38,9 +38,9 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -58,9 +58,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -407,13 +408,13 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 					accountEntryId));
 		}
 
-		List<Role> roles = new ArrayList<>();
+		Set<Long> rolesIds = new HashSet<>();
 
-		roles.addAll(
+		rolesIds.addAll(
 			TransformUtil.transform(
 				_userGroupRoleLocalService.getUserGroupRoles(
 					userId, accountEntry.getAccountEntryGroupId()),
-				UserGroupRole::getRole));
+				UserGroupRole::getRoleId));
 
 		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
 			_accountEntryOrganizationRelLocalService.
@@ -422,24 +423,40 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
 				accountEntryOrganizationRels) {
 
+			Organization organization =
+				accountEntryOrganizationRel.getOrganization();
+
 			Group group = _groupLocalService.getOrganizationGroup(
 				objectDefinition.getCompanyId(),
-				accountEntryOrganizationRel.getOrganizationId());
+				organization.getOrganizationId());
 
-			roles.addAll(
+			rolesIds.addAll(
 				TransformUtil.transform(
 					_userGroupRoleLocalService.getUserGroupRoles(
 						userId, group.getGroupId()),
-					UserGroupRole::getRole));
+					UserGroupRole::getRoleId));
+
+			for (Organization ancestorOrganization :
+					organization.getAncestors()) {
+
+				group = _groupLocalService.getOrganizationGroup(
+					objectDefinition.getCompanyId(),
+					ancestorOrganization.getOrganizationId());
+
+				rolesIds.addAll(
+					TransformUtil.transform(
+						_userGroupRoleLocalService.getUserGroupRoles(
+							userId, group.getGroupId()),
+						UserGroupRole::getRoleId));
+			}
 		}
 
-		for (Role role : roles) {
+		for (Long roleId : rolesIds) {
 			ResourcePermission resourcePermission =
 				_resourcePermissionLocalService.fetchResourcePermission(
 					objectDefinition.getCompanyId(),
 					objectDefinition.getClassName(),
-					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-					role.getRoleId());
+					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", roleId);
 
 			if (resourcePermission == null) {
 				continue;

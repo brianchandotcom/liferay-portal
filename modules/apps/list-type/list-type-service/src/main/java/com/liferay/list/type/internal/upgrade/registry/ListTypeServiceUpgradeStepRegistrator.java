@@ -40,6 +40,19 @@ public class ListTypeServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"ListTypeEntry", "listTypeEntryId"}
+					};
+				}
+
+			});
 	}
 
 }

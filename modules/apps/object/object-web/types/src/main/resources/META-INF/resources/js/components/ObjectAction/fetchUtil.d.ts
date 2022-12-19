@@ -12,7 +12,18 @@
  * details.
  */
 
-import {ObjectsOptionsList} from './tabs/ActionContainer';
+/// <reference types="react" />
+
+import {ClaySelect} from '@clayui/form';
+export declare type ObjectsOptionsList = Array<
+	(
+		| React.ComponentProps<typeof ClaySelect.Option>
+		| React.ComponentProps<typeof ClaySelect.OptGroup>
+	) & {
+		options?: Array<React.ComponentProps<typeof ClaySelect.Option>>;
+		type?: 'group';
+	}
+>;
 export declare function fetchObjectDefinitions(
 	objectDefinitionsRelationshipsURL: string,
 	values: Partial<ObjectAction>,

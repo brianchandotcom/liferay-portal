@@ -80,14 +80,14 @@ public class JournalFolderFinderTest {
 	}
 
 	@Test
-	public void testCountF_A_ByG_F() throws Exception {
+	public void testCountF_A_ByG_F_DDMSK() throws Exception {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(
 			3,
-			_journalFolderFinder.countF_A_ByG_F(
+			_journalFolderFinder.countF_A_ByG_F_DDMSK(
 				_group.getGroupId(), _folder1.getFolderId(), StringPool.BLANK,
 				queryDefinition));
 
@@ -95,7 +95,7 @@ public class JournalFolderFinderTest {
 
 		Assert.assertEquals(
 			1,
-			_journalFolderFinder.countF_A_ByG_F(
+			_journalFolderFinder.countF_A_ByG_F_DDMSK(
 				_group.getGroupId(), _folder1.getFolderId(), StringPool.BLANK,
 				queryDefinition));
 
@@ -103,18 +103,18 @@ public class JournalFolderFinderTest {
 
 		Assert.assertEquals(
 			2,
-			_journalFolderFinder.countF_A_ByG_F(
+			_journalFolderFinder.countF_A_ByG_F_DDMSK(
 				_group.getGroupId(), _folder1.getFolderId(), StringPool.BLANK,
 				queryDefinition));
 	}
 
 	@Test
-	public void testFindF_A_ByG_F() throws Exception {
+	public void testFindF_A_ByG_F_DDMSK() throws Exception {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
-		List<Object> results = _journalFolderFinder.findF_A_ByG_F(
+		List<Object> results = _journalFolderFinder.findF_A_ByG_F_DDMSK(
 			_group.getGroupId(), _folder1.getFolderId(), StringPool.BLANK,
 			queryDefinition);
 
@@ -139,7 +139,7 @@ public class JournalFolderFinderTest {
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-		results = _journalFolderFinder.findF_A_ByG_F(
+		results = _journalFolderFinder.findF_A_ByG_F_DDMSK(
 			_group.getGroupId(), _folder1.getFolderId(), StringPool.BLANK,
 			queryDefinition);
 
@@ -161,7 +161,7 @@ public class JournalFolderFinderTest {
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
-		results = _journalFolderFinder.findF_A_ByG_F(
+		results = _journalFolderFinder.findF_A_ByG_F_DDMSK(
 			_group.getGroupId(), _folder1.getFolderId(), StringPool.BLANK,
 			queryDefinition);
 

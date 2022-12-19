@@ -54,17 +54,17 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalFolderFinderImpl
 	extends JournalFolderFinderBaseImpl implements JournalFolderFinder {
 
-	public static final String COUNT_A_BY_G_U_F =
-		JournalFolderFinder.class.getName() + ".countA_ByG_U_F";
+	public static final String COUNT_A_BY_G_U_F_DDMSK =
+		JournalFolderFinder.class.getName() + ".countA_ByG_U_F_DDMSK";
 
 	public static final String COUNT_F_BY_G_F =
 		JournalFolderFinder.class.getName() + ".countF_ByG_F";
 
-	public static final String FIND_A_BY_G_U_F =
-		JournalFolderFinder.class.getName() + ".findA_ByG_U_F";
+	public static final String FIND_A_BY_G_U_F_DDMSK =
+		JournalFolderFinder.class.getName() + ".findA_ByG_U_F_DDMSK";
 
-	public static final String FIND_A_BY_G_U_F_L =
-		JournalFolderFinder.class.getName() + ".findA_ByG_U_F_L";
+	public static final String FIND_A_BY_G_U_F_DDMSK_L =
+		JournalFolderFinder.class.getName() + ".findA_ByG_U_F_DDMSK_L";
 
 	public static final String FIND_F_BY_NO_ASSETS =
 		JournalFolderFinder.class.getName() + ".findF_ByNoAssets";
@@ -76,47 +76,47 @@ public class JournalFolderFinderImpl
 		JournalFolderFinder.class.getName() + ".findF_ByG_F_L";
 
 	@Override
-	public int countF_A_ByG_F(
+	public int countF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		QueryDefinition<?> queryDefinition) {
 
-		return doCountF_A_ByG_F(
+		return doCountF_A_ByG_F_DDMSK(
 			groupId, folderId, ddmStructureKey, queryDefinition, false);
 	}
 
 	@Override
-	public int filterCountF_A_ByG_F(
+	public int filterCountF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		QueryDefinition<?> queryDefinition) {
 
-		return doCountF_A_ByG_F(
+		return doCountF_A_ByG_F_DDMSK(
 			groupId, folderId, ddmStructureKey, queryDefinition, true);
 	}
 
 	@Override
-	public List<Object> filterFindF_A_ByG_F(
+	public List<Object> filterFindF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		QueryDefinition<?> queryDefinition) {
 
-		return doFindF_A_ByG_F(
+		return doFindF_A_ByG_F_DDMSK(
 			groupId, folderId, ddmStructureKey, queryDefinition, true);
 	}
 
 	@Override
-	public List<Object> filterFindF_A_ByG_F_L(
+	public List<Object> filterFindF_A_ByG_F_DDMSK_L(
 		long groupId, long folderId, String ddmStructureKey, Locale locale,
 		QueryDefinition<?> queryDefinition) {
 
-		return doFindF_A_ByG_F_L(
+		return doFindF_A_ByG_F_DDMSK_L(
 			groupId, folderId, ddmStructureKey, locale, queryDefinition, true);
 	}
 
 	@Override
-	public List<Object> findF_A_ByG_F(
+	public List<Object> findF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		QueryDefinition<?> queryDefinition) {
 
-		return doFindF_A_ByG_F(
+		return doFindF_A_ByG_F_DDMSK(
 			groupId, folderId, ddmStructureKey, queryDefinition, false);
 	}
 
@@ -148,7 +148,7 @@ public class JournalFolderFinderImpl
 		}
 	}
 
-	protected int doCountF_A_ByG_F(
+	protected int doCountF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
 
@@ -165,7 +165,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						COUNT_A_BY_G_U_F, groupId, queryDefinition,
+						COUNT_A_BY_G_U_F_DDMSK, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureKey);
@@ -222,7 +222,7 @@ public class JournalFolderFinderImpl
 		}
 	}
 
-	protected List<Object> doFindF_A_ByG_F(
+	protected List<Object> doFindF_A_ByG_F_DDMSK(
 		long groupId, long folderId, String ddmStructureKey,
 		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
 
@@ -239,7 +239,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						FIND_A_BY_G_U_F, groupId, queryDefinition,
+						FIND_A_BY_G_U_F_DDMSK, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureKey);
@@ -319,7 +319,7 @@ public class JournalFolderFinderImpl
 		}
 	}
 
-	protected List<Object> doFindF_A_ByG_F_L(
+	protected List<Object> doFindF_A_ByG_F_DDMSK_L(
 		long groupId, long folderId, String ddmStructureKey, Locale locale,
 		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
 
@@ -336,7 +336,7 @@ public class JournalFolderFinderImpl
 						inlineSQLHelper),
 					") UNION ALL (",
 					getArticlesSQL(
-						FIND_A_BY_G_U_F_L, groupId, queryDefinition,
+						FIND_A_BY_G_U_F_DDMSK_L, groupId, queryDefinition,
 						inlineSQLHelper),
 					StringPool.CLOSE_PARENTHESIS),
 				folderId, ddmStructureKey);

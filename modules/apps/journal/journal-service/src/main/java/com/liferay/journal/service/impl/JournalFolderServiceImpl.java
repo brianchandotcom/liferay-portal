@@ -225,7 +225,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			status, userId, true, start, end,
 			(OrderByComparator<Object>)orderByComparator);
 
-		return journalFolderFinder.filterFindF_A_ByG_F(
+		return journalFolderFinder.filterFindF_A_ByG_F_DDMSK(
 			groupId, folderId, StringPool.BLANK, queryDefinition);
 	}
 
@@ -238,7 +238,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			status, userId, true, start, end,
 			(OrderByComparator<Object>)orderByComparator);
 
-		return journalFolderFinder.filterFindF_A_ByG_F_L(
+		return journalFolderFinder.filterFindF_A_ByG_F_DDMSK_L(
 			groupId, folderId, StringPool.BLANK, locale, queryDefinition);
 	}
 
@@ -252,7 +252,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			status, userId, true, start, end,
 			(OrderByComparator<Object>)orderByComparator);
 
-		return journalFolderFinder.filterFindF_A_ByG_F_L(
+		return journalFolderFinder.filterFindF_A_ByG_F_DDMSK_L(
 			groupId, folderId, ddmStructureKey, locale, queryDefinition);
 	}
 
@@ -303,7 +303,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
 			status, userId, true);
 
-		return journalFolderFinder.filterCountF_A_ByG_F(
+		return journalFolderFinder.filterCountF_A_ByG_F_DDMSK(
 			groupId, folderId, StringPool.BLANK, queryDefinition);
 	}
 
@@ -315,7 +315,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
 			status, userId, true);
 
-		return journalFolderFinder.filterCountF_A_ByG_F(
+		return journalFolderFinder.filterCountF_A_ByG_F_DDMSK(
 			groupId, folderId, ddmStructureKey, queryDefinition);
 	}
 

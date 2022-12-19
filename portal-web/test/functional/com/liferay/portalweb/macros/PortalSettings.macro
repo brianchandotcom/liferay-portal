@@ -1023,7 +1023,9 @@ definition {
 			configurationName = "Default User Associations",
 			configurationScope = "Virtual Instance Scope");
 
-		AssertElementPresent(locator1 = "PortalSettingsUsers#APPLY_TO_EXISTING_USERS_CHECKBOX");
+		AssertElementPresent(
+			checkboxName = "Apply to Existing Users",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER",

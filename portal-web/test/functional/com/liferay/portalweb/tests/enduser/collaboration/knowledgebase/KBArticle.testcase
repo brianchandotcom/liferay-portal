@@ -1028,6 +1028,40 @@ definition {
 			kbArticleTitle = "KB Article Title Edited");
 	}
 
+	@description = "This test ensures that some article info only display in panel."
+	@priority = "5"
+	test SomeArticleInfoOnlyDisplayInPanel {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "KB Child Article Content",
+			kbChildArticleTitle = "KB Child Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		VerifyElementNotPresent(
+			key_entryTitle = "Knowledge Base Article Title",
+			key_infoText = "Priority 1.0",
+			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ENTRY_INFO");
+
+		VerifyElementNotPresent(
+			key_entryTitle = "Knowledge Base Article Title",
+			key_infoText = "0 Views",
+			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ENTRY_INFO");
+
+		KBArticle.gotoViaKBAdminCP(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewInfoPanel(
+			childArticlesQuantity = "1 Child Articles",
+			kbArticleTitle = "Knowledge Base Article Title",
+			viewQuantity = "0");
+	}
+
 	@priority = "3"
 	@refactorneeded
 	test ViewKBArticleGitHubSourceURL {

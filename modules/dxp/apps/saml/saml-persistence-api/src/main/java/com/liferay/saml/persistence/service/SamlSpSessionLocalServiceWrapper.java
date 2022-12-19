@@ -275,6 +275,14 @@ public class SamlSpSessionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.saml.persistence.model.SamlSpSession>
+		fetchSamlSpSessionsBySessionIndex(long companyId, String sessionIndex) {
+
+		return _samlSpSessionLocalService.fetchSamlSpSessionsBySessionIndex(
+			companyId, sessionIndex);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -220,6 +220,10 @@ public interface SamlSpSessionLocalService
 		long companyId, String sessionIndex);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SamlSpSession> fetchSamlSpSessionsBySessionIndex(
+		long companyId, String sessionIndex);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

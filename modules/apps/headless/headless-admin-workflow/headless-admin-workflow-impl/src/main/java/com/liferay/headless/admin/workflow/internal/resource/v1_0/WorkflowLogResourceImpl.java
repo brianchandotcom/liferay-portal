@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
@@ -37,8 +38,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,18 +121,14 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 	}
 
 	private List<Integer> _toLogTypes(String[] types) {
-		return Stream.of(
-			types
-		).map(
-			WorkflowLog.Type::create
-		).map(
-			this::_toLogTypeName
-		).map(
-			KaleoLogUtil::convert
-		).distinct(
-		).collect(
-			Collectors.toList()
-		);
+		List<Integer> logTypes = transformToList(
+			types,
+			type -> KaleoLogUtil.convert(
+				_toLogTypeName(WorkflowLog.Type.create(type))));
+
+		ListUtil.distinct(logTypes);
+
+		return logTypes;
 	}
 
 	private Role _toRole(long roleId) throws Exception {

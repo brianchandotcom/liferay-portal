@@ -12,6 +12,7 @@
 import {array, date, number, object, string} from 'yup';
 
 import {TypeActivityKey} from '../../../../../common/enums/TypeActivityKey';
+import {TacticKeys} from '../../../../../common/enums/mdfRequestTactics';
 import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 import getContentMarketingFieldsValidation from './fieldValidation/contentMarketingFields';
 import getDigitalMarketingFieldsValidation from './fieldValidation/digitalMarketingFields';
@@ -31,12 +32,12 @@ const activitiesSchema = object({
 						switch (typeActivity.key) {
 							case TypeActivityKey.EVENT:
 								targetFields = getEventFieldsValidation(
-									tactic.name
+									tactic.key as TacticKeys
 								);
 								break;
 							case TypeActivityKey.DIGITAL_MARKETING:
 								targetFields = getDigitalMarketingFieldsValidation(
-									tactic.name
+									tactic.key as TacticKeys
 								);
 								break;
 							case TypeActivityKey.CONTENT_MARKETING:
@@ -44,7 +45,7 @@ const activitiesSchema = object({
 								break;
 							default:
 								targetFields = getMiscellaneousMarketingFieldsValidation(
-									tactic.name
+									tactic.key as TacticKeys
 								);
 								break;
 						}

@@ -11,10 +11,11 @@
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
+import {TacticKeys} from '../../../../../../../../common/enums/mdfRequestTactics';
 
 interface IProps {
 	currentActivityIndex: number;
-	tactic?: string;
+	tactic?: TacticKeys;
 }
 
 const EventFields = ({currentActivityIndex, tactic}: IProps) => (
@@ -26,7 +27,7 @@ const EventFields = ({currentActivityIndex, tactic}: IProps) => (
 			required
 		/>
 
-		{tactic === 'Webinar' ? (
+		{tactic === TacticKeys.WEBINAR ? (
 			<>
 				<PRMFormik.Field
 					component={PRMForm.InputText}

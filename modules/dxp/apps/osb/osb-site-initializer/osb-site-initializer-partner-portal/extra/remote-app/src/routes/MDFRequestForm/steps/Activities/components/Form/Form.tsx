@@ -17,6 +17,7 @@ import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
 import {TypeActivityKey} from '../../../../../../common/enums/TypeActivityKey';
 import {LiferayPicklistName} from '../../../../../../common/enums/liferayPicklistName';
+import {TacticKeys} from '../../../../../../common/enums/mdfRequestTactics';
 import MDFRequest from '../../../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../../../common/interfaces/mdfRequestActivity';
 import getNewActivity from '../../utils/getNewActivity';
@@ -111,7 +112,7 @@ const Form = ({
 		[TypeActivityKey.DIGITAL_MARKETING]: (
 			<DigitalMarketingFields
 				currentActivityIndex={currentActivityIndex}
-				tactic={currentActivity.tactic.name}
+				tactic={currentActivity.tactic.name as TacticKeys}
 			/>
 		),
 		[TypeActivityKey.CONTENT_MARKETING]: (
@@ -122,13 +123,13 @@ const Form = ({
 		[TypeActivityKey.EVENT]: (
 			<EventFields
 				currentActivityIndex={currentActivityIndex}
-				tactic={currentActivity.tactic.name}
+				tactic={currentActivity.tactic.name as TacticKeys}
 			/>
 		),
 		[TypeActivityKey.MISCELLANEOUS_MARKETING]: (
 			<MiscellaneousMarketingFields
 				currentActivityIndex={currentActivityIndex}
-				tactic={currentActivity.tactic.name}
+				tactic={currentActivity.tactic.name as TacticKeys}
 			/>
 		),
 	};

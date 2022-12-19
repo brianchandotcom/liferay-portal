@@ -11,7 +11,9 @@
 
 import {string} from 'yup';
 
-const getDigitalMarketingFieldsValidation = (tactic: string) => {
+import {TacticKeys} from '../../../../../../common/enums/mdfRequestTactics';
+
+const getDigitalMarketingFieldsValidation = (tactic: TacticKeys) => {
 	const basicDigitalMarketingFields = {
 		assetsLiferayDescription: string().when('assetsLiferayRequired', {
 			is: (assetsLiferayRequired: string) =>
@@ -35,7 +37,7 @@ const getDigitalMarketingFieldsValidation = (tactic: string) => {
 
 	let targetFields = {};
 
-	if (tactic === 'Email Campaign') {
+	if (tactic === TacticKeys.EMAIL_CAMPAIGN) {
 		targetFields = {
 			...basicDigitalMarketingFields,
 			landingPageCopy: string()

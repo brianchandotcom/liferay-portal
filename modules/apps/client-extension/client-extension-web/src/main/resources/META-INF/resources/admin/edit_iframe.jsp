@@ -42,7 +42,7 @@ IFrameCET iFrameCET = editClientExtensionEntryDisplayContext.getCET();
 </c:choose>
 
 <aui:field-wrapper cssClass="form-group">
-  <aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= iFrameCET.getFriendlyURLMapping() %>" />
+	<aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= iFrameCET.getFriendlyURLMapping() %>" />
 
 	<div class="form-text">
 		<liferay-ui:message key="define-the-widgets-friendly-url-mapping-so-you-can-refer-to-it-using-a-more-user-readable-url" />

@@ -34,36 +34,36 @@ definition {
 		}
 	}
 
-
-    @description = "Story: LRAC-10871 | Automation ID: LRAC-12518 | Test Summary: Disconnect the connection between AC and DXP from the DXP side"
+	@description = "Story: LRAC-10871 | Automation ID: LRAC-12518 | Test Summary: Disconnect the connection between AC and DXP from the DXP side"
 	@priority = "5"
 	test DisconnectACAndDXPFromDXPSide {
-        task ("Connect AC and DXP") {
-            ACDXPSettings.connectAnalyticsCloud();
+		task ("Connect AC and DXP") {
+			ACDXPSettings.connectAnalyticsCloud();
 
-            Refresh();
-        }
-
-        task ("Disconnect AC from DXP side") {
-            ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-        }
-
-        task ("Assert the disconnection success message") {
-			Alert.viewSuccessMessageText(successMessage = "Success:Workspace disconnected.");            
-        }
-
-		task("See that the connection screen returned to the wizard") {
-			AssertElementPresent(locator1 = "ACUtils#GENERIC_TEXT", key_textValue = "Connect Analytics Cloud");
+			Refresh();
 		}
 
-		task("See that there is no token in the field") {
+		task ("Disconnect AC from DXP side") {
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		}
+
+		task ("Assert the disconnection success message") {
+			Alert.viewSuccessMessageText(successMessage = "Success:Workspace disconnected.");
+		}
+
+		task ("See that the connection screen returned to the wizard") {
+			AssertElementPresent(
+				key_textValue = "Connect Analytics Cloud",
+				locator1 = "ACUtils#GENERIC_TEXT");
+		}
+
+		task ("See that there is no token in the field") {
 			AssertElementPresent(locator1 = "ACDXPSettings#TOKEN_INPUT_EMPTY_FIELD");
 		}
 
-		task("See that the connection button is disabled") {
+		task ("See that the connection button is disabled") {
 			AssertElementPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
 		}
+	}
 
-    }
 }
-

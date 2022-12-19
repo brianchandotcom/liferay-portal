@@ -77,9 +77,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		if (Validator.isNull(unicodeProperties.getProperty("testrayBuildId")) ||
-			Validator.isNull(
+		if (Validator.isNull(
 				unicodeProperties.getProperty("testrayCaseTypeIds")) ||
+			Validator.isNull(unicodeProperties.getProperty("testrayBuildId")) ||
 			Validator.isNull(unicodeProperties.getProperty("testrayTaskId"))) {
 
 			_log.error("The required properties are not set");
@@ -339,7 +339,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 		for (List<ObjectEntry> testrayCaseResultObjectEntry :
 				testrayCaseResultGroups) {
 
-			long testraySubtaskName =
+			long testraySubtaskNumber =
 				_siteInitializerTestrayDispatchTaskExecutorHelper.
 					incrementTestrayFieldValue(
 						companyId, "number",
@@ -355,7 +355,9 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 						HashMapBuilder.<String, Object>put(
 							"dueStatus", "OPEN"
 						).put(
-							"name", "ST-" + testraySubtaskName
+							"name", "ST-" + testraySubtaskNumber
+						).put(
+							"number", testraySubtaskNumber
 						).put(
 							"r_taskToSubtasks_c_taskId", testrayTaskId
 						).put(

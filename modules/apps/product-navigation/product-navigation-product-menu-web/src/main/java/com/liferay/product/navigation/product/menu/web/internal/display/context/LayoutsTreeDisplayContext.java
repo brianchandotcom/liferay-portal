@@ -431,10 +431,6 @@ public class LayoutsTreeDisplayContext {
 			));
 	}
 
-	private String _getNamespace() {
-		return _namespace;
-	}
-
 	private JSONObject _getOptionGroupJSONObject(
 		String nameKey, JSONArray itemsJSONArray) {
 
@@ -508,7 +504,7 @@ public class LayoutsTreeDisplayContext {
 
 		String pageTypeSelectedOptionSessionValue = SessionClicks.get(
 			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
-			_getNamespace() +
+			_namespace +
 				ProductNavigationProductMenuWebKeys.PAGE_TYPE_SELECTED_OPTION,
 			ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT);
 
@@ -748,8 +744,7 @@ public class LayoutsTreeDisplayContext {
 		}
 		else if (Validator.isNotNull(url)) {
 			url = HttpComponentsUtil.addParameter(
-				url,
-				_getNamespace() + _SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME,
+				url, _namespace + _SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
 

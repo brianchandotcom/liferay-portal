@@ -190,16 +190,13 @@ public class CustomFacetDisplayContextTest {
 
 		_setUpMultipleTermCollectors(termCollectors);
 
-		CustomFacetDisplayContext customSearchFacetDisplayContext =
+		CustomFacetDisplayContext customFacetDisplayContext =
 			_createDisplayContext(
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"count:asc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			customSearchFacetDisplayContext.getBucketDisplayContexts();
-
 		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"alpha:3|delta:4|bravo:5|charlie:6", nameFrequencyString);
@@ -210,14 +207,12 @@ public class CustomFacetDisplayContextTest {
 
 		_setUpMultipleTermCollectors(termCollectors);
 
-		customSearchFacetDisplayContext = _createDisplayContext(
+		customFacetDisplayContext = _createDisplayContext(
 			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 			"count:asc");
 
-		bucketDisplayContexts =
-			customSearchFacetDisplayContext.getBucketDisplayContexts();
-
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
+		nameFrequencyString = _buildNameFrequencyString(
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"alpha:4|bravo:5|delta:5|charlie:6", nameFrequencyString);
@@ -236,11 +231,8 @@ public class CustomFacetDisplayContextTest {
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"count:desc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
 		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"delta:6|bravo:5|charlie:4|alpha:3", nameFrequencyString);
@@ -255,10 +247,8 @@ public class CustomFacetDisplayContextTest {
 			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 			"count:desc");
 
-		bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
+		nameFrequencyString = _buildNameFrequencyString(
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"charlie:6|bravo:5|delta:5|alpha:4", nameFrequencyString);
@@ -276,11 +266,8 @@ public class CustomFacetDisplayContextTest {
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"key:asc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
 		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"alpha:3|bravo:1|charlie:4|delta:2", nameFrequencyString);
@@ -294,10 +281,8 @@ public class CustomFacetDisplayContextTest {
 			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 			"key:asc");
 
-		bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
+		nameFrequencyString = _buildNameFrequencyString(
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"alpha:2|bravo:3|bravo:1|charlie:4", nameFrequencyString);
@@ -315,11 +300,8 @@ public class CustomFacetDisplayContextTest {
 				"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 				"key:desc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
 		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"delta:2|charlie:4|bravo:1|alpha:3", nameFrequencyString);
@@ -333,10 +315,8 @@ public class CustomFacetDisplayContextTest {
 			"customDisplayCaption", "fieldToAggregate", StringPool.BLANK,
 			"key:desc");
 
-		bucketDisplayContexts =
-			customFacetDisplayContext.getBucketDisplayContexts();
-
-		nameFrequencyString = _buildNameFrequencyString(bucketDisplayContexts);
+		nameFrequencyString = _buildNameFrequencyString(
+			customFacetDisplayContext.getBucketDisplayContexts());
 
 		Assert.assertEquals(
 			"charlie:4|bravo:3|bravo:1|alpha:2", nameFrequencyString);

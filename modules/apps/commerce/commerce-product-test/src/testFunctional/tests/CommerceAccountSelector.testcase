@@ -264,7 +264,6 @@ definition {
 			newAddressCountry = "United States",
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
-			paymentMethod = "Money Order",
 			productName = "ABS Sensor",
 			productQuantity = "2",
 			productUnitPrice = "50",

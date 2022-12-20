@@ -74,6 +74,10 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 			_httpServletRequest);
 	}
 
+	public long getFolderId(){
+		return _ddmUserPersonalFolderItemSelectorCriterion.getFolderId();
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}

@@ -31,4 +31,5 @@ DDMUserPersonalFolderItemSelectorViewDisplayContext ddmUserPersonalFolderItemSel
 	showSearch="<%= false %>"
 	tabName="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
+	folderId="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getFolderId() %>"
 />

@@ -19,7 +19,7 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -54,7 +54,7 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommand
 				layoutUtilityPageEntryId);
 
 		if (layoutUtilityPageEntry != null) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
+			_portletFileRepository.deletePortletFileEntry(
 				layoutUtilityPageEntry.getPreviewFileEntryId());
 
 			_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
@@ -64,5 +64,8 @@ public class DeleteLayoutUtilityPageEntryPreviewMVCActionCommand
 
 	@Reference
 	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

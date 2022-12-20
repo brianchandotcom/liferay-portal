@@ -70,8 +70,6 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
-		FileEntry tempFileEntry = fileEntry;
-
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				themeDisplay.getScopeGroupId(),
@@ -136,7 +134,7 @@ public class UpdateLayoutUtilityPageEntryPreviewMVCActionCommand
 		_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntryId, fileEntry.getFileEntryId());
 
-		TempFileEntryUtil.deleteTempFileEntry(tempFileEntry.getFileEntryId());
+		TempFileEntryUtil.deleteTempFileEntry(fileEntryId);
 
 		sendRedirect(actionRequest, actionResponse);
 	}

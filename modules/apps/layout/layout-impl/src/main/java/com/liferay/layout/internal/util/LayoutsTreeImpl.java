@@ -290,12 +290,16 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					StringPool.CLOSE_PARENTHESIS));
 		}
 
+		int count = _layoutService.getLayoutsCount(
+			groupId, privateLayout, parentLayoutId);
+
+		if (count <= 0) {
+			return new LayoutTreeNodes(Collections.emptyList(), count);
+		}
+
 		List<LayoutTreeNode> layoutTreeNodes = new ArrayList<>();
 
 		List<Layout> ancestorLayouts = _getAncestorLayouts(httpServletRequest);
-
-		int count = _layoutService.getLayoutsCount(
-			groupId, privateLayout, parentLayoutId);
 
 		List<Layout> layouts = _getPaginatedLayouts(
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
